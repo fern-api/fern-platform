@@ -1,0 +1,23 @@
+version: 2.1
+orbs:
+  node: circleci/node@5.0.1
+jobs:
+  compile:
+    docker:
+      - image: cimg/node:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          command: yarn compile
+          name: Compile
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - compile:
+          filters:
+            tags:
+              only: /.*/

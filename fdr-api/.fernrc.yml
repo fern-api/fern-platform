@@ -1,0 +1,8 @@
+name: fern-definition-registry-api
+definition: src
+generators:
+  - name: fernapi/fern-typescript
+    version: 0.0.155
+    generate: true
+    config:
+      mode: server
