@@ -1,6 +1,6 @@
 # node
 node_modules/
-lib/
+/lib
 tsconfig.tsbuildinfo
 build/
 
