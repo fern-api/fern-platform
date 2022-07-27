@@ -31,6 +31,7 @@ jobs:
             docker/create_docker.sh "${git_version}"
             npm install -g aws-cdk
             cd fdr-deploy
+            npm install
             VERSION="${git_version}" cdk deploy fdr-dev --require-approval never --progress events
           name: cdk deploy 
 
