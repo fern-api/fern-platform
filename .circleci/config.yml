@@ -11,7 +11,7 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn
       - run:
-          command: yarn compile
+          command: yarn run compile
           name: Compile
   
   deploy-dev: 
@@ -21,6 +21,9 @@ jobs:
       - checkout
       - node/install-packages:
           pkg-manager: yarn
+      - run:
+          command: yarn run compile
+          name: Compile
       - aws-cli/setup
       - run:
           command: |
