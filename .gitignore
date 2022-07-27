@@ -1,6 +1,8 @@
 # node
 node_modules/
 lib/
+tsconfig.tsbuildinfo
+build/
 
 # webpack
 bundle.js

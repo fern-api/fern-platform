@@ -20,7 +20,7 @@ yarn webpack --config "$WEBPACK_CONFIG" --mode "$webpack_mode"
 docker build -f "$DOCKER_DIR/Dockerfile" -t "$DOCKER_NAME" "$DOCKER_DIR"
 
 mkdir -p "$DOCKER_DIR/build/tar/"
-docker save "$DOCKER_NAME" -o ../build/tar/"$DOCKER_NAME".tar
+docker save "$DOCKER_NAME" -o "$DOCKER_DIR/build/tar/$DOCKER_NAME.tar"
 
 echo
 echo "Built docker: $DOCKER_NAME"

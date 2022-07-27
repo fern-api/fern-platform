@@ -11,7 +11,7 @@ void main();
 
 async function main() {
   const version = process.env["VERSION"];
-  if (version == null) {
+  if (version === undefined) {
     throw new Error("Version is not specified!");
   }
   const environments = await getEnvironments();
