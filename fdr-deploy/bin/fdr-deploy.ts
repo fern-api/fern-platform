@@ -6,6 +6,7 @@ import {
   Environments,
   EnvironmentType,
 } from "@fern-fern/fern-cloud-resources-api-client/model";
+import fetch from "node-fetch";
 
 void main();
 

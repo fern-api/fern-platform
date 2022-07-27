@@ -24,6 +24,7 @@
     "@fern-fern/fern-cloud-resources-api-client": "^0.0.8",
     "aws-cdk-lib": "2.33.0",
     "constructs": "^10.0.0",
+    "node-fetch": "^3.2.9",
     "source-map-support": "^0.5.21"
   }
 }
