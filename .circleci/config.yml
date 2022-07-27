@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   node: circleci/node@5.0.1
+  aws-cli: circleci/aws-cli@3.1.1
 jobs:
   compile:
     docker:
@@ -12,6 +13,24 @@ jobs:
       - run:
           command: yarn compile
           name: Compile
+  
+  deploy-dev: 
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - aws-cli/setup
+      - run:
+          command: |
+            git_version="$(scripts/git-version.sh)"
+            docker/create_docker.sh "${git_version}"
+            npm install -g aws-cdk
+            cd fdr-deploy
+            VERSION="${git_version}" cdk deploy fdr-dev --require-approval never --progress events
+          name: cdk deploy 
+
 
 workflows:
   version: 2
@@ -21,3 +40,13 @@ workflows:
           filters:
             tags:
               only: /.*/
+      
+      - deploy-dev:
+          requires: [ compile ]
+          filters:
+            branches:
+              only:
+                - main
+          context:
+            - aws
+            - github
