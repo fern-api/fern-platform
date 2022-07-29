@@ -1,13 +1,31 @@
+import { DefinitionRegistryService } from "@fern-fern/fern-definition-registry-api-server/services";
+import { PrismaClient } from "@prisma/client";
 import express from "express";
-import { registryService } from "./registry";
+import { initializeDirectories } from "./initializeDirectories";
+import { getRegistryService } from "./services/registry";
 
-const app = express();
+void main();
 
-app.use(registryService);
+async function main() {
+  try {
+    await initializeDirectories();
+    console.log("Initialized Directories...");
 
-app.get("/health", (_req, res) => {
-  res.status(200).send("Ok");
-});
+    const app = express();
+    app.get("/health", (_req, res) => {
+      res.status(200).send("Ok");
+    });
 
-console.log("Listening for requests...");
-app.listen(8080);
+    const prisma = new PrismaClient({
+      log: ["info", "warn", "error"],
+    });
+    app.use(
+      DefinitionRegistryService.expressMiddleware(getRegistryService(prisma))
+    );
+
+    console.log("Listening for requests...");
+    app.listen(8080);
+  } catch (e) {
+    console.error("Server failed to start...", e);
+  }
+}

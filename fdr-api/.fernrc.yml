@@ -6,3 +6,9 @@ generators:
     generate: true
     config:
       mode: server
+  - name: fernapi/fern-postman
+    version: 0.0.17
+    generate:
+      enabled: true
+      output: ./generated-postman.json
+    config: {}

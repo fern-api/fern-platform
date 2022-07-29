@@ -1,0 +1,12 @@
+version: "3.2"  # optional since v1.27.0
+services:
+  fern-definition-registry:
+    image: fern-definition-registry:local
+    ports:
+      - 8080:8080
+  postgres:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: fern

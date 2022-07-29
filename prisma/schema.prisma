@@ -1,0 +1,31 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+
+model Api {
+  apiId   String
+  orgName String
+  clock   Int
+
+  @@id([apiId, orgName])
+}
+
+model ApiVersions {
+  apiId              String
+  orgName            String
+  version            String
+  apiDefinitionS3Url String   @unique
+  createdAt          DateTime @default(now())
+  state              String
+  versionInfo        Bytes
+
+  @@id([apiId, orgName, version])
+}

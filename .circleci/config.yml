@@ -4,8 +4,8 @@ orbs:
   aws-cli: circleci/aws-cli@3.1.1
 jobs:
   compile:
-    docker:
-      - image: cimg/node:current
+    machine:
+      image: ubuntu-2004:current
     steps:
       - checkout
       - node/install-packages:
@@ -13,6 +13,9 @@ jobs:
       - run:
           command: yarn run compile
           name: Compile
+      - run: 
+          command: yarn run test
+          name: Test
   
   deploy-dev: 
     machine:
@@ -25,10 +28,13 @@ jobs:
           command: yarn run compile
           name: Compile
       - aws-cli/setup
+      - run: 
+          command: yarn run dev:db:migrate
+          name: prisma deploy
       - run:
           command: |
             git_version="$(scripts/git-version.sh)"
-            docker/create_docker.sh "${git_version}"
+            yarn run dev:docker "${git_version}"
             npm install -g aws-cdk
             cd fdr-deploy
             npm install
@@ -54,3 +60,4 @@ workflows:
           context:
             - aws
             - github
+            - fern-dev

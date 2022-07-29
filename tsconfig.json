@@ -3,7 +3,7 @@
     "composite": true, 
     "outDir": "lib", 
     "rootDir": "src", 
-    "module": "esnext",
+    "module": "CommonJS",
     "target": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "jsx": "react-jsx",
