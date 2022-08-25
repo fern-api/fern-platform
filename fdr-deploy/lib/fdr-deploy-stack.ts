@@ -111,7 +111,7 @@ export class FdrDeployStack extends Stack {
       efsVolumeConfiguration: {
         fileSystemId: environmentInfo.efsInfo.fileSystemId,
         authorizationConfig: {
-          accessPointId: environmentInfo.efsInfo.fiddleAccessPointId,
+          accessPointId: environmentInfo.efsInfo.fdrAccessPointId,
         },
         transitEncryption: "ENABLED",
       },
