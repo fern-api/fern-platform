@@ -1,0 +1,59 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  type: type.yml
+  commons: commons.yml
+
+types:
+  EndpointDefinition:
+    extends: commons.WithDocs
+    properties:
+      id: string
+      name: optional<string>
+      path: EndpointPath
+      queryParameters: list<QueryParameter>
+      headers: list<Header>
+      request: optional<type.Type>
+      response: optional<type.Type>
+      examples: list<ExampleEndpointCall>
+
+  EndpointPath:
+    properties:
+      parts: list<EndpointPathPart>
+      pathParameters: list<PathParameter>
+
+  EndpointPathPart:
+    union:
+      literal: string
+      pathParameter: PathParameterKey
+
+  PathParameter:
+    extends: commons.WithDocs
+    properties:
+      key: PathParameterKey
+      type: type.Type
+
+  PathParameterKey: string
+
+  QueryParameter:
+    extends: commons.WithDocs
+    properties:
+      key: string
+      type: type.Type
+
+  Header:
+    extends: commons.WithDocs
+    properties:
+      key: string
+      type: type.Type
+
+  ExampleEndpointCall:
+    extends: commons.WithDocs
+    properties:
+      url: string
+      pathParameters: map<PathParameterKey, unknown>
+      queryParameters: map<string, unknown>
+      headers: map<string, unknown>
+      requestBody: unknown
+      responseStatusCode: integer
+      responseBody: unknown

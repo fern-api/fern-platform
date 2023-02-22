@@ -1,0 +1,75 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  endpoint: endpoint.yml
+  type: type.yml
+  environment: environment.yml
+
+service:
+  base-path: /apis
+  auth: false
+  endpoints:
+    getAllApis:
+      method: GET
+      path: ""
+      response: GetAllApisResponse
+
+    getApiMetadata:
+      method: GET
+      path: /{apiId}
+      path-parameters:
+        apiId: ApiId
+      response: ApiMetadata
+      errors:
+        - ApiDoesNotExistError
+
+    getApiForEnvironment:
+      method: GET
+      path: /{apiId}/{environment}
+      path-parameters:
+        apiId: ApiId
+        environment: environment.EnvironmentId
+      response: ApiDefinition
+      errors:
+        - ApiDoesNotExistError
+        - environment.EnvironmentDoesNotExistError
+
+types:
+  ApiId: string
+
+  ApiDefinition:
+    properties:
+      rootPackage: ApiDefinitionPackage
+      types: map<type.TypeId, type.TypeDefinition>
+      subpackages: map<SubpackageId, ApiDefinitionSubpackage>
+
+  ApiDefinitionPackage:
+    properties:
+      endpoints: list<endpoint.EndpointDefinition>
+      types: list<type.TypeId>
+      subpackages: list<SubpackageId>
+
+  ApiDefinitionSubpackage:
+    extends: ApiDefinitionPackage
+    properties:
+      name: string
+
+  SubpackageId: string
+
+  GetAllApisResponse:
+    properties:
+      apis: list<ApiMetadata>
+
+  ApiMetadata:
+    properties:
+      id: ApiId
+      name: string
+      deployments: map<environment.EnvironmentId, DeploymentInfo>
+
+  DeploymentInfo:
+    properties:
+      registrationTime: datetime
+
+errors:
+  ApiDoesNotExistError:
+    status-code: 404

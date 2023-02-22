@@ -1,0 +1,99 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+types:
+  TypeId: string
+
+  TypeDefinition:
+    extends: commons.WithDocs
+    properties:
+      name: string
+      shape: Type
+      examples: list<ExampleType>
+
+  Type:
+    union:
+      reference: TypeId
+      enum: EnumType
+      union: UnionType
+      discriminatedUnion: DiscriminatedUnionType
+      object: ObjectType
+      primitive: PrimitiveType
+      optional: OptionalType
+      list: ListType
+      set: SetType
+      map: MapType
+      unknown: {}
+
+  ObjectType:
+    properties:
+      extends: list<TypeId>
+      properties: list<ObjectProperty>
+
+  ObjectProperty:
+    extends: commons.WithDocs
+    properties:
+      key: string
+      valueType: Type
+
+  PrimitiveType:
+    union:
+      integer: {}
+      double: {}
+      long: {}
+      string: {}
+      boolean: {}
+      datetime: {}
+      uuid: {}
+
+  OptionalType:
+    properties:
+      itemType: Type
+
+  ListType:
+    properties:
+      itemType: Type
+
+  SetType:
+    properties:
+      itemType: Type
+
+  MapType:
+    properties:
+      keyType: Type
+      valueType: Type
+
+  EnumType:
+    properties:
+      values: list<EnumValue>
+
+  EnumValue:
+    extends: commons.WithDocs
+    properties:
+      value: string
+
+  UnionType:
+    properties:
+      members: list<UnionMember>
+
+  UnionMember:
+    extends: commons.WithDocs
+    properties:
+      type: Type
+
+  DiscriminatedUnionType:
+    properties:
+      discriminant: string
+      members: list<DiscriminatedUnionMember>
+
+  DiscriminatedUnionMember:
+    extends: commons.WithDocs
+    properties:
+      discriminantValue: string
+      additionalProperties: ObjectType
+
+  ExampleType:
+    properties:
+      json: unknown

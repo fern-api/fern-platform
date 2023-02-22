@@ -1,0 +1,4 @@
+name: registry
+error-discrimination:
+  strategy: property
+  property-name: error

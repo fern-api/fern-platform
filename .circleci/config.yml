@@ -3,7 +3,7 @@ orbs:
   node: circleci/node@5.0.1
   aws-cli: circleci/aws-cli@3.1.1
 jobs:
-  compile:
+  check:
     machine:
       image: ubuntu-2004:current
     steps:
@@ -11,13 +11,24 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn
       - run:
-          command: yarn run compile
+          name: fern generate
+          command: |
+            npm install -g fern-api
+            fern generate --log-level debug
+      - run:
+          command: yarn compile
           name: Compile
-      - run: 
-          command: yarn run test
+      - run:
+          command: yarn format:check
+          name: Check formatting
+      - run:
+          command: yarn lint
+          name: Lint
+      - run:
+          command: yarn test
           name: Test
-  
-  deploy-dev: 
+
+  deploy-dev:
     machine:
       image: ubuntu-2004:current
     steps:
@@ -28,7 +39,7 @@ jobs:
           command: yarn run compile
           name: Compile
       - aws-cli/setup
-      - run: 
+      - run:
           command: yarn run dev:db:migrate
           name: prisma deploy
       - run:
@@ -39,20 +50,21 @@ jobs:
             cd fdr-deploy
             npm install
             VERSION="${git_version}" cdk deploy fdr-dev --require-approval never --progress events
-          name: cdk deploy 
-
+          name: cdk deploy
 
 workflows:
   version: 2
   build:
     jobs:
-      - compile:
+      - check:
           filters:
             tags:
               only: /.*/
-      
+          context:
+            - fern-tokens
+
       - deploy-dev:
-          requires: [ compile ]
+          requires: [check]
           filters:
             branches:
               only:
@@ -61,3 +73,4 @@ workflows:
             - aws
             - github
             - fern-dev
+            - fern-tokens

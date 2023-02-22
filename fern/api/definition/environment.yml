@@ -1,0 +1,24 @@
+service:
+  base-path: /environments
+  auth: false
+  endpoints:
+    getAll:
+      path: ""
+      method: GET
+      response: GetAllEnvironmentsResponse
+
+types:
+  EnvironmentId: string
+
+  Environment:
+    properties:
+      id: EnvironmentId
+      name: string
+
+  GetAllEnvironmentsResponse:
+    properties:
+      environments: list<Environment>
+
+errors:
+  EnvironmentDoesNotExistError:
+    status-code: 404

@@ -9,3 +9,9 @@ bundle.js
 
 # Mac
 .DS_Store
+
+# generated code
+src/generated
+
+hello
+/goodbye
