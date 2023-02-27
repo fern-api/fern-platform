@@ -49,10 +49,12 @@
     "lint": "eslint --max-warnings 0 src",
     "lint:fix": "yarn lint --fix",
     "dev:db:migrate": "dotenv -e .env.dev -- yarn prisma migrate deploy",
+    "prod:db:migrate": "dotenv -e .env.prod -- yarn prisma migrate deploy",
     "local:db:migrate": "dotenv -e .env.local -- yarn prisma migrate dev",
     "local:db:up": "docker-compose -f docker-compose.local.yml up -d",
     "local:db:down": "docker-compose -f docker-compose.local.yml down -d",
     "local:docker": "dotenv -e .env.local -- ./create_docker.sh local",
-    "dev:docker": "dotenv -e .env.dev -- ./create_docker.sh"
+    "dev:docker": "dotenv -e .env.dev -- ./create_docker.sh",
+    "prod:docker": "dotenv -e .env.prod -- ./create_docker.sh"
   }
 }

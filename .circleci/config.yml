@@ -56,6 +56,35 @@ jobs:
             npm install
             VERSION="${git_version}" cdk deploy fdr-dev --require-approval never --progress events
           name: cdk deploy
+  
+  deploy-prod:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          name: fern generate
+          command: |
+            npm install -g fern-api
+            fern generate --log-level debug
+      - run:
+          command: yarn run compile
+          name: Compile
+      - aws-cli/setup
+      - run:
+          command: yarn run prod:db:migrate
+          name: prisma deploy
+      - run:
+          command: |
+            git_version="$(scripts/git-version.sh)"
+            yarn run prod:docker "${git_version}"
+            npm install -g aws-cdk
+            cd fdr-deploy
+            npm install
+            VERSION="${git_version}" cdk deploy fdr-prod --require-approval never --progress events
+          name: cdk deploy
 
 workflows:
   version: 2
@@ -79,3 +108,18 @@ workflows:
             - github
             - fern-dev
             - fern-tokens
+      
+      - deploy-prod:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only:
+                - /.*/
+          context:
+            - aws
+            - github
+            - fern-prod
+            - fern-tokens
+          requires:
+            - check
