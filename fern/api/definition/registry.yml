@@ -4,38 +4,94 @@ imports:
   endpoint: endpoint.yml
   type: type.yml
   environment: environment.yml
+  commons: commons.yml
 
 service:
-  base-path: /apis
-  auth: false
+  base-path: /orgs/{orgId}/apis
+  auth: true
+  path-parameters:
+    orgId: commons.OrgId
   endpoints:
-    getAllApis:
+    getAllApiMetadata:
       method: GET
-      path: ""
+      path: /metadata
       response: GetAllApisResponse
 
     getApiMetadata:
       method: GET
-      path: /{apiId}
+      path: /{apiId}/metadata
       path-parameters:
         apiId: ApiId
       response: ApiMetadata
       errors:
-        - ApiDoesNotExistError
+        - commons.ApiDoesNotExistError
 
-    getApiForEnvironment:
+    getApiWithEnvironment:
       method: GET
-      path: /{apiId}/{environment}
+      docs: Loads an API that has configured environments
+      path: /{apiId}/{environment}/definition
       path-parameters:
         apiId: ApiId
         environment: environment.EnvironmentId
       response: ApiDefinition
       errors:
-        - ApiDoesNotExistError
+        - commons.ApiDoesNotExistError
         - environment.EnvironmentDoesNotExistError
+    
+    getApiWithoutEnvironments: 
+      method: GET
+      path: /{apiId}/definition
+      path-parameters:
+        apiId: ApiId
+      response: ApiDefinition
+      errors: 
+        - commons.ApiDoesNotExistError
+
+    registerApi: 
+      method: POST
+      path: /{apiId}/register
+      path-parameters:
+        apiId: ApiId
+      request: 
+        name: RegisterApiRequest
+        body: 
+          properties: 
+            apiDefinition: ApiDefinition
+            environmentId: 
+              type: optional<environment.EnvironmentId>
+              docs: | 
+                If the API has environments, then you must provide an environment id.
+            apiName: string
+      errors: 
+        - commons.ApiDoesNotExistError
+        - environment.EnvironmentDoesNotExistError
+    
+    updateApiMetadata: 
+      method: POST
+      path: /{apiId}/update-metadata
+      path-parameters:
+        apiId: ApiId
+      request: 
+        name: UpdateApiMetadataRequest
+        body: 
+          properties: 
+            name: string
+            description: optional<string>
+            git_repo: optional<GitRepo>
+      errors: 
+        - commons.ApiDoesNotExistError
+    
+    getLogoUploadS3Url: 
+      method: GET
+      path: /{apiId}/upload-logo-url
+      path-parameters:
+        apiId: ApiId
+      response: GetLogoUploadS3UrlResponse
 
 types:
-  ApiId: string
+  ApiId: 
+    type: string
+    docs: This should be the API Name in the fern definition.
 
   ApiDefinition:
     properties:
@@ -64,12 +120,24 @@ types:
     properties:
       id: ApiId
       name: string
-      deployments: map<environment.EnvironmentId, DeploymentInfo>
+      description: optional<string>
+      logo_s3_url: optional<string>
+      git_repo: optional<GitRepo>
+      environments: optional<ApiEnvironments>
+  
+  GitRepo: 
+    union: 
+      github: string
+      gitlab: string
+      bitbucket: string
+  
+  ApiEnvironments: map<environment.EnvironmentId, DeploymentInfo>
 
   DeploymentInfo:
     properties:
       registrationTime: datetime
+  
+  GetLogoUploadS3UrlResponse: 
+    properties: 
+      s3UploadUrl: string
 
-errors:
-  ApiDoesNotExistError:
-    status-code: 404

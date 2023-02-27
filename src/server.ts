@@ -1,8 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import cors from "cors";
 import express from "express";
+import { AuthUtilsImpl } from "./AuthUtils";
+import { getConfig } from "./config";
 import { register } from "./generated";
-import { initializeDirectories } from "./initializeDirectories";
 import { getEnvironmentService } from "./services/environment";
 import { getRegistryService } from "./services/registry";
 
@@ -12,8 +13,7 @@ void main();
 
 async function main() {
     try {
-        await initializeDirectories();
-        console.log("Initialized directories.");
+        const config = getConfig();
 
         const app = express();
 
@@ -27,9 +27,11 @@ async function main() {
             log: ["info", "warn", "error"],
         });
 
+        const authUtils = new AuthUtilsImpl(config);
+
         register(app, {
-            registry: getRegistryService(prisma),
-            environment: getEnvironmentService(prisma),
+            registry: getRegistryService(prisma, authUtils),
+            environment: getEnvironmentService(prisma, authUtils),
         });
 
         console.log(`Listening for requests on port ${PORT}`);

@@ -1,19 +1,50 @@
+imports: 
+  registry: registry.yml
+  commons: commons.yml
+
 service:
-  base-path: /environments
-  auth: false
+  base-path: /org/{orgId}/environments
+  path-parameters:
+    orgId: commons.OrgId
+  auth: true
   endpoints:
     getAll:
       path: ""
       method: GET
       response: GetAllEnvironmentsResponse
+      errors: 
+        - commons.UserNotInOrgError
+    
+    create: 
+      path: /create
+      method: POST
+      request: 
+        name: CreateEnvironmentRequest
+        body: 
+          properties: 
+            name: string
+            url: string
+      response: EnvironmentId
+      errors: 
+        - commons.UserNotInOrgError
+    
+    delete: 
+      path: /{environmentId}
+      path-parameters:
+        environmentId: EnvironmentId
+      method: DELETE
+      errors: 
+        - EnvironmentDoesNotExistError
+        - commons.UserNotInOrgError
 
 types:
-  EnvironmentId: string
+  EnvironmentId: uuid
 
   Environment:
     properties:
       id: EnvironmentId
       name: string
+      url: string
 
   GetAllEnvironmentsResponse:
     properties:

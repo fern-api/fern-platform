@@ -12,6 +12,8 @@ bundle.js
 
 # generated code
 src/generated
+src/__test__/generated
+
 
 hello
 /goodbye

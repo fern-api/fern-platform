@@ -10,22 +10,37 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Api {
-  apiId   String
-  orgName String
-  clock   Int
+model Environments {
+  orgId          String
+  environmentId  String
+  name           String
+  url            String
+  ApiDefinitions ApiDefinitions[]
 
-  @@id([apiId, orgName])
+  @@id([orgId, environmentId])
 }
 
-model ApiVersions {
-  apiId              String
-  orgName            String
-  version            String
-  apiDefinitionS3Url String   @unique
-  createdAt          DateTime @default(now())
-  state              String
-  versionInfo        Bytes
+model Apis {
+  orgId          String
+  apiId          String
+  name           String
+  description    String?
+  logo_s3_url    String?
+  git_repo       Bytes?
+  ApiDefinitions ApiDefinitions[]
 
-  @@id([apiId, orgName, version])
+  @@id([orgId, apiId])
+}
+
+model ApiDefinitions {
+  orgId           String
+  apiId           String
+  api             Apis?         @relation(fields: [orgId, apiId], references: [orgId, apiId])
+  apiDefinitionId String
+  environmentId   String?
+  environment     Environments? @relation(fields: [orgId, environmentId], references: [orgId, environmentId])
+  createdAt       DateTime      @default(now())
+  definition      Bytes
+
+  @@id([orgId, apiId, apiDefinitionId])
 }

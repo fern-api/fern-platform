@@ -17,7 +17,7 @@ module.exports = {
         project: "./tsconfig.json",
     },
     plugins: ["@typescript-eslint"],
-    ignorePatterns: ["src/generated/**", "*.js"],
+    ignorePatterns: ["src/generated/**", "src/__test__/generated/**", "*.js"],
     rules: {
         "@typescript-eslint/no-namespace": [
             "error",
