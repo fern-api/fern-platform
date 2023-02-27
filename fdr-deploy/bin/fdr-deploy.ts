@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { EnvironmentInfo, EnvironmentType } from "@fern-fern/fern-cloud-client/model/environments";
+import { EnvironmentInfo, Environments, EnvironmentType } from "@fern-fern/fern-cloud-client/model/environments";
 import * as cdk from "aws-cdk-lib";
 import axios from "axios";
 import { FdrDeployStack } from "../lib/fdr-deploy-stack";
