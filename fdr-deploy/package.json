@@ -21,7 +21,7 @@
 		"typescript": "~3.9.7"
 	},
 	"dependencies": {
-		"@fern-fern/fern-cloud-resources-api-client": "^0.0.9",
+		"@fern-fern/fern-cloud-client": "^0.0.8",
 		"aws-cdk-lib": "2.33.0",
 		"axios": "^0.27.2",
 		"constructs": "^10.0.0",
