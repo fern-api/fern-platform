@@ -1,13 +1,13 @@
 FROM node:18.1.0-alpine AS builder
 
-COPY package.json .npmrc tsconfig.json prisma/ /app/
+COPY package.json .npmrc tsconfig.json yarn.lock prisma/ /app/
 
 WORKDIR /app
-RUN npm install
+RUN yarn install
 COPY src/ src
 RUN npm run compile 
 RUN rm -rf node_modules 
-RUN npm install --production
+RUN yarn install --production
 
 FROM node:18.1.0-alpine
 

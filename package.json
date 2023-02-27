@@ -13,7 +13,8 @@
     "@types/jest": "^28.1.6",
     "cors": "^2.8.5",
     "express": "^4.18.1",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "@fern-api/venus-api-sdk": "0.0.20"
   },
   "devDependencies": {
     "@babel/core": "^7.18.9",
@@ -24,7 +25,6 @@
     "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.51.0",
-    "@fern-api/venus-api-sdk": "0.0.20",
     "dotenv-cli": "^6.0.0",
     "eslint": "^8.33.0",
     "fern-api": "^0.4.18",
