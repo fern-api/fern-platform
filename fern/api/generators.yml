@@ -3,19 +3,19 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-express
-        version: 0.2.0
+        version: 0.2.2-2-g953e1186
         output:
           location: local-file-system
           path: ../../src/generated
       - name: fernapi/fern-typescript-sdk
-        version: 0.1.5-1-g48509413
+        version: 0.2.2-2-g953e1186
         output:
           location: local-file-system
           path: ../../src/__test__/generated
   internal:
     generators:
       - name: fernapi/fern-typescript-sdk
-        version: 0.1.5-1-g48509413
+        version: 0.2.2-2-g953e1186
         output:
           location: npm
           url: npm.buildwithfern.com
