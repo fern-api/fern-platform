@@ -49,6 +49,7 @@ function getVenusClient({ config, token }: { config: FdrConfig; token?: string }
     });
 }
 
-export function getTokenFromAuthHeader(authHeader: string) {
-    return authHeader.replaceAll("Bearer ", "");
+const BEARER_REGEX = /^bearer\s+/i;
+function getTokenFromAuthHeader(authHeader: string) {
+    return authHeader.replace(BEARER_REGEX, "");
 }
