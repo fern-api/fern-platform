@@ -64,6 +64,10 @@ jobs:
             npm install
             VERSION="${git_version}" cdk deploy fdr-dev --require-approval never --progress events
           name: cdk deploy
+      - run: 
+          name: fern register --environment Dev
+          command: |
+            fern register-v2 --environment Dev
   
   deploy-prod:
     machine:
@@ -97,6 +101,19 @@ jobs:
             npm install
             VERSION="${git_version}" cdk deploy fdr-prod --require-approval never --progress events
           name: cdk deploy
+      - run: 
+          name: fern register --environment Production
+          command: |
+            fern register-v2 --environment Production
+  
+  register-latest: 
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - run: 
+          name: fern register latest
+          command: |
+            fern register-v2
 
 workflows:
   version: 2
@@ -135,3 +152,14 @@ workflows:
             - fern-tokens
           requires:
             - check
+      
+      - register-latest: 
+          filters:
+            branches:
+              only:
+                - main
+          context:
+            - fern-tokens
+          requires:
+            - check
+    
