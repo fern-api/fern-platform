@@ -67,6 +67,7 @@ jobs:
       - run: 
           name: fern register --environment Dev
           command: |
+            npm install -g fern-api
             fern register-v2 --environment Dev
   
   deploy-prod:
@@ -104,6 +105,7 @@ jobs:
       - run: 
           name: fern register --environment Production
           command: |
+            npm install -g fern-api
             fern register-v2 --environment Production
   
   register-latest: 
@@ -113,6 +115,7 @@ jobs:
       - run: 
           name: fern register latest
           command: |
+            npm install -g fern-api
             fern register-v2
 
 workflows:
