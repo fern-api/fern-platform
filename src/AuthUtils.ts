@@ -25,7 +25,7 @@ export class AuthUtilsImpl implements AuthUtils {
         }
         console.log(`Auth Header is ${authHeader}`);
         const token = getTokenFromAuthHeader(authHeader);
-        console.log(`Token is ${authHeader}`);
+        console.log(`Token is ${token}`);
         const venus = getVenusClient({
             config: this.config,
             token,
