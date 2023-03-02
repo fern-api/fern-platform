@@ -16,6 +16,10 @@ jobs:
             npm install -g fern-api
             fern generate --log-level debug
       - run:
+          name: prisma generate
+          command: |
+            yarn prisma generate
+      - run:
           command: yarn compile
           name: Compile
       - run:

@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { v4 as uuidv4 } from "uuid";
 import { AuthUtils } from "../AuthUtils";
 import { EnvironmentService } from "../generated/api/resources/environment/service/EnvironmentService";
 
@@ -12,24 +11,36 @@ export function getEnvironmentService(prisma: PrismaClient, authUtils: AuthUtils
                 environments: environments.map((environment) => {
                     return {
                         id: environment.environmentId,
-                        name: environment.name,
-                        url: environment.url,
+                        description: environment.description ?? undefined,
                     };
                 }),
             });
         },
         create: async (req, res) => {
             await authUtils.checkUserBelongsToOrg({ authHeader: req.headers.authorization, orgId: req.params.orgId });
-            const environmentId = uuidv4();
             await prisma.environments.create({
                 data: {
-                    environmentId,
+                    environmentId: req.body.id,
                     orgId: req.params.orgId,
-                    name: req.body.name,
-                    url: req.body.url,
+                    description: req.body.description,
                 },
             });
-            await res.send(environmentId);
+            await res.send();
+        },
+        update: async (req, res) => {
+            await authUtils.checkUserBelongsToOrg({ authHeader: req.headers.authorization, orgId: req.params.orgId });
+            await prisma.environments.update({
+                where: {
+                    orgId_environmentId: {
+                        orgId: req.params.orgId,
+                        environmentId: req.params.environmentId,
+                    },
+                },
+                data: {
+                    description: req.body.description,
+                },
+            });
+            await res.send();
         },
         delete: async (req, res) => {
             await authUtils.checkUserBelongsToOrg({ authHeader: req.headers.authorization, orgId: req.params.orgId });

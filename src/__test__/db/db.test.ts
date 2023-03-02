@@ -46,9 +46,10 @@ afterAll(async () => {
 
 it("environment crud", async () => {
     // create environment
-    const environmentId = await CLIENT.environment.create("fern", {
-        name: "Production",
-        url: "https://buildwithfern.com/",
+    const environmentId = "Production";
+    await CLIENT.environment.create("fern", {
+        id: environmentId,
+        description: "This is the production environment deployed to AWS",
     });
     // check it exists
     const response = await CLIENT.environment.getAll("fern");
@@ -99,9 +100,9 @@ const MOCK_API_DEFINITION: ApiDefinition = {
 
 it("definition crud", async () => {
     // create environment
-    const environmentId = await CLIENT.environment.create("fern", {
-        name: "Production",
-        url: "https://buildwithfern.com/",
+    const environmentId = "Production";
+    await CLIENT.environment.create("fern", {
+        id: environmentId,
     });
 
     // register api

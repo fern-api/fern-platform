@@ -13,8 +13,7 @@ datasource db {
 model Environments {
   orgId          String
   environmentId  String
-  name           String
-  url            String
+  description    String?
   ApiDefinitions ApiDefinitions[]
 
   @@id([orgId, environmentId])
