@@ -37,51 +37,52 @@ service:
       errors:
         - commons.ApiDoesNotExistError
         - environment.EnvironmentDoesNotExistError
-    
-    getApiWithoutEnvironments: 
+
+    getApiWithoutEnvironments:
       method: GET
       path: /{apiId}/definition
       path-parameters:
         apiId: ApiId
       response: ApiDefinition
-      errors: 
+      errors:
         - commons.ApiDoesNotExistError
 
-    registerApi: 
+    registerApi:
       method: POST
       path: /{apiId}/register
       path-parameters:
         apiId: ApiId
-      request: 
+      request:
         name: RegisterApiRequest
-        body: 
-          properties: 
+        body:
+          properties:
             apiDefinition: ApiDefinition
-            environmentId: 
+            environmentId:
               type: optional<environment.EnvironmentId>
-              docs: | 
+              docs: |
                 If the API has environments, then you must provide an environment id.
             apiName: string
-      errors: 
+      errors:
         - commons.ApiDoesNotExistError
         - environment.EnvironmentDoesNotExistError
-    
-    updateApiMetadata: 
+
+    updateApiMetadata:
       method: POST
       path: /{apiId}/update-metadata
       path-parameters:
         apiId: ApiId
-      request: 
+      request:
         name: UpdateApiMetadataRequest
-        body: 
-          properties: 
+        body:
+          properties:
             name: string
             description: optional<string>
             git_repo: optional<GitRepo>
-      errors: 
+            image: optional<ApiImage>
+      errors:
         - commons.ApiDoesNotExistError
-    
-    getLogoUploadS3Url: 
+
+    getLogoUploadS3Url:
       method: GET
       path: /{apiId}/upload-logo-url
       path-parameters:
@@ -89,7 +90,7 @@ service:
       response: GetLogoUploadS3UrlResponse
 
 types:
-  ApiId: 
+  ApiId:
     type: string
     docs: This should be the API Name in the fern definition.
 
@@ -121,23 +122,28 @@ types:
       id: ApiId
       name: string
       description: optional<string>
-      logo_s3_url: optional<string>
+      image: optional<ApiImage>
       git_repo: optional<GitRepo>
       environments: optional<ApiEnvironments>
-  
-  GitRepo: 
-    union: 
+
+  GitRepo:
+    union:
       github: string
       gitlab: string
       bitbucket: string
-  
+
   ApiEnvironments: map<environment.EnvironmentId, DeploymentInfo>
 
   DeploymentInfo:
     properties:
       registrationTime: datetime
-  
-  GetLogoUploadS3UrlResponse: 
-    properties: 
-      s3UploadUrl: string
 
+  GetLogoUploadS3UrlResponse:
+    properties:
+      s3UploadUrl: string
+  
+  ApiImage: 
+    union: 
+      emoji: optional<string>
+      url: optional<string>
+      #TODO: support S3

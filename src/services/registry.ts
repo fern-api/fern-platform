@@ -29,7 +29,7 @@ export function getRegistryService(prisma: PrismaClient, authUtils: AuthUtils): 
                     },
                     apiId: true,
                     description: true,
-                    logo_s3_url: true,
+                    image_info: true,
                     orgId: true,
                     name: true,
                 },
@@ -52,7 +52,10 @@ export function getRegistryService(prisma: PrismaClient, authUtils: AuthUtils): 
                 id: api.apiId,
                 name: api.name,
                 description: api.description ?? undefined,
-                logoS3Url: api.logo_s3_url ?? undefined,
+                image:
+                    api.image_info != null
+                        ? await FernSerializers.ApiImage.parseOrThrow(JSON.parse(api.image_info.toString()))
+                        : undefined,
                 environments,
             });
         },
@@ -76,29 +79,34 @@ export function getRegistryService(prisma: PrismaClient, authUtils: AuthUtils): 
                     },
                     apiId: true,
                     description: true,
-                    logo_s3_url: true,
+                    image_info: true,
                     orgId: true,
                     name: true,
                 },
             });
-            const apiMetadatas = apis.map((api) => {
-                const environments: Record<EnvironmentId, DeploymentInfo> = {};
-                api.ApiDefinitions.forEach((apiDefinitionForEnvironment) => {
-                    if (apiDefinitionForEnvironment.environmentId == null) {
-                        return;
-                    }
-                    environments[apiDefinitionForEnvironment.environmentId] = {
-                        registrationTime: apiDefinitionForEnvironment.createdAt,
+            const apiMetadatas = await Promise.all(
+                apis.map(async (api) => {
+                    const environments: Record<EnvironmentId, DeploymentInfo> = {};
+                    api.ApiDefinitions.forEach((apiDefinitionForEnvironment) => {
+                        if (apiDefinitionForEnvironment.environmentId == null) {
+                            return;
+                        }
+                        environments[apiDefinitionForEnvironment.environmentId] = {
+                            registrationTime: apiDefinitionForEnvironment.createdAt,
+                        };
+                    });
+                    return {
+                        id: api.apiId,
+                        name: api.name,
+                        description: api.description ?? undefined,
+                        image:
+                            api.image_info != null
+                                ? await FernSerializers.ApiImage.parseOrThrow(JSON.parse(api.image_info.toString()))
+                                : undefined,
+                        environments,
                     };
-                });
-                return {
-                    id: api.apiId,
-                    name: api.name,
-                    description: api.description ?? undefined,
-                    logoS3Url: api.logo_s3_url ?? undefined,
-                    environments,
-                };
-            });
+                })
+            );
             await res.send({
                 apis: apiMetadatas,
             });
@@ -193,10 +201,14 @@ export function getRegistryService(prisma: PrismaClient, authUtils: AuthUtils): 
         async updateApiMetadata(req, res) {
             await authUtils.checkUserBelongsToOrg({ authHeader: req.headers.authorization, orgId: req.params.orgId });
 
+            const jsonImageInfo =
+                req.body.image != null ? await FernSerializers.ApiImage.jsonOrThrow(req.body.image) : undefined;
+
             await prisma.apis.update({
                 data: {
                     description: req.body.description,
                     name: req.body.name,
+                    image_info: jsonImageInfo != null ? Buffer.from(JSON.stringify(jsonImageInfo), "utf-8") : undefined,
                 },
                 where: {
                     orgId_apiId: {

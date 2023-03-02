@@ -45,6 +45,10 @@ jobs:
             npm install -g fern-api
             fern generate --log-level debug
       - run:
+          name: prisma generate
+          command: |
+            yarn prisma generate
+      - run:
           command: yarn run compile
           name: Compile
       - aws-cli/setup
@@ -73,6 +77,10 @@ jobs:
           command: |
             npm install -g fern-api
             fern generate --log-level debug
+      - run:
+          name: prisma generate
+          command: |
+            yarn prisma generate
       - run:
           command: yarn run compile
           name: Compile

@@ -24,7 +24,7 @@ model Apis {
   apiId          String
   name           String
   description    String?
-  logo_s3_url    String?
+  image_info     Bytes?
   git_repo       Bytes?
   ApiDefinitions ApiDefinitions[]
 
