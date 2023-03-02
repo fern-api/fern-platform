@@ -29,11 +29,12 @@ async function main() {
 
         const authUtils = new AuthUtilsImpl(config);
 
+        app.use(express.json({ limit: "50mb" }));
         register(app, {
             registry: getRegistryService(prisma, authUtils),
             environment: getEnvironmentService(prisma, authUtils),
         });
-        app.use(express.json({ limit: "50mb" }));
+        
 
         console.log(`Listening for requests on port ${PORT}`);
         app.listen(PORT);
