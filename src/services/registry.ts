@@ -132,10 +132,10 @@ export function getRegistryService(prisma: PrismaClient, authUtils: AuthUtils): 
         },
         async getApiWithoutEnvironments(req, res) {
             await authUtils.checkUserBelongsToOrg({ authHeader: req.headers.authorization, orgId: req.params.orgId });
-            await authUtils.checkUserBelongsToOrg({ authHeader: req.headers.authorization, orgId: req.params.orgId });
             const apiDefinition = await prisma.apiDefinitions.findFirst({
                 where: {
                     apiId: req.params.apiId,
+                    orgId: req.params.orgId,
                     environmentId: null,
                 },
                 orderBy: {
