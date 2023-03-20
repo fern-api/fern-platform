@@ -13,8 +13,8 @@ types:
       path: EndpointPath
       queryParameters: list<QueryParameter>
       headers: list<Header>
-      request: optional<HttpBodyShape>
-      response: optional<HttpBodyShape>
+      request: optional<HttpBody>
+      response: optional<HttpBody>
       examples: list<ExampleEndpointCall>
 
   EndpointPath:
