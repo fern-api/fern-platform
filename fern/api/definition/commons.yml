@@ -1,16 +1,16 @@
 types:
   OrgId: string
 
-  WithDocs:
+  WithDescription:
     properties:
-      docs: optional<string>
+      description: optional<string>
 
-errors: 
+errors:
   ApiDoesNotExistError:
     status-code: 404
-  
-  UserNotInOrgError: 
+
+  UserNotInOrgError:
     status-code: 403
 
-  UnauthorizedError: 
+  UnauthorizedError:
     status-code: 401

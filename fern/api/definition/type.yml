@@ -7,19 +7,23 @@ types:
   TypeId: string
 
   TypeDefinition:
-    extends: commons.WithDocs
+    extends: commons.WithDescription
     properties:
       name: string
-      shape: Type
+      shape: TypeShape
       examples: list<ExampleType>
 
-  Type:
+  TypeShape:
     union:
-      reference: TypeId
+      alias: TypeReference
       enum: EnumType
-      union: UnionType
+      undiscriminatedUnion: UndiscriminatedUnionType
       discriminatedUnion: DiscriminatedUnionType
       object: ObjectType
+
+  TypeReference:
+    union:
+      id: TypeId
       primitive: PrimitiveType
       optional: OptionalType
       list: ListType
@@ -33,10 +37,10 @@ types:
       properties: list<ObjectProperty>
 
   ObjectProperty:
-    extends: commons.WithDocs
+    extends: commons.WithDescription
     properties:
       key: string
-      valueType: Type
+      valueType: TypeReference
 
   PrimitiveType:
     union:
@@ -50,38 +54,38 @@ types:
 
   OptionalType:
     properties:
-      itemType: Type
+      itemType: TypeReference
 
   ListType:
     properties:
-      itemType: Type
+      itemType: TypeReference
 
   SetType:
     properties:
-      itemType: Type
+      itemType: TypeReference
 
   MapType:
     properties:
-      keyType: Type
-      valueType: Type
+      keyType: TypeReference
+      valueType: TypeReference
 
   EnumType:
     properties:
       values: list<EnumValue>
 
   EnumValue:
-    extends: commons.WithDocs
+    extends: commons.WithDescription
     properties:
       value: string
 
-  UnionType:
+  UndiscriminatedUnionType:
     properties:
-      members: list<UnionMember>
+      members: list<UndiscriminatedUnionMember>
 
-  UnionMember:
-    extends: commons.WithDocs
+  UndiscriminatedUnionMember:
+    extends: commons.WithDescription
     properties:
-      type: Type
+      type: TypeReference
 
   DiscriminatedUnionType:
     properties:
@@ -89,7 +93,7 @@ types:
       members: list<DiscriminatedUnionMember>
 
   DiscriminatedUnionMember:
-    extends: commons.WithDocs
+    extends: commons.WithDescription
     properties:
       discriminantValue: string
       additionalProperties: ObjectType
