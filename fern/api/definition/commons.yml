@@ -1,14 +1,17 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
 types:
-  OrgId: string
+  ApiDefinitionId: uuid
+  
+  OrgId: 
+    type: string
+    docs: Human readable org id (e.g. fern)
 
-  WithDescription:
-    properties:
-      description: optional<string>
+  ApiId: 
+    type: string
+    docs: Human readable api identifier (e.g. venus)
 
-errors:
-  ApiDoesNotExistError:
-    status-code: 404
-
+errors: 
   UserNotInOrgError:
     status-code: 403
 

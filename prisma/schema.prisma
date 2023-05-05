@@ -10,36 +10,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Environments {
-  orgId          String
-  environmentId  String
-  description    String?
-  ApiDefinitions ApiDefinitions[]
-
-  @@id([orgId, environmentId])
-}
-
-model Apis {
-  orgId          String
-  apiId          String
-  name           String
-  description    String?
-  image_info     Bytes?
-  git_repo       Bytes?
-  ApiDefinitions ApiDefinitions[]
-
-  @@id([orgId, apiId])
-}
-
-model ApiDefinitions {
+model ApiDefinitionsV2 {
   orgId           String
-  apiId           String
-  api             Apis?         @relation(fields: [orgId, apiId], references: [orgId, apiId])
+  apiName         String
   apiDefinitionId String
-  environmentId   String?
-  environment     Environments? @relation(fields: [orgId, environmentId], references: [orgId, environmentId])
-  createdAt       DateTime      @default(now())
+  createdAt       DateTime @default(now())
   definition      Bytes
 
-  @@id([orgId, apiId, apiDefinitionId])
+  @@id([apiDefinitionId])
+}
+
+model Docs {
+  url            String
+  docsDefinition Bytes
+
+  @@id([url])
 }

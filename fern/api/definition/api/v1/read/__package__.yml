@@ -1,0 +1,46 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  endpoint: endpoint.yml
+  type: type.yml
+  rootCommons: ../../../commons.yml
+
+service:
+  base-path: /registry/api
+  auth: false
+  endpoints:
+    getApi:
+      method: GET
+      path: /load/{apiDefinitionId}
+      path-parameters:
+        apiDefinitionId: rootCommons.ApiDefinitionId
+      response: ApiDefinition
+      errors:
+        - ApiDoesNotExistError
+
+types:
+  ApiDefinition:
+    properties:
+      id: rootCommons.ApiDefinitionId
+      rootPackage: ApiDefinitionPackage
+      types: map<type.TypeId, type.TypeDefinition>
+      subpackages: map<SubpackageId, ApiDefinitionSubpackage>
+
+  ApiDefinitionPackage:
+    properties:
+      endpoints: list<endpoint.EndpointDefinition>
+      types: list<type.TypeId>
+      subpackages: list<SubpackageId>
+
+  ApiDefinitionSubpackage:
+    extends: ApiDefinitionPackage
+    properties:
+      parent: optional<SubpackageId>
+      subpackageId: SubpackageId
+      name: string
+
+  SubpackageId: string
+
+errors:
+  ApiDoesNotExistError:
+    status-code: 404

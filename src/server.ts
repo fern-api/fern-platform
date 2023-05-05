@@ -4,8 +4,9 @@ import express from "express";
 import { AuthUtilsImpl } from "./AuthUtils";
 import { getConfig } from "./config";
 import { register } from "./generated";
-import { getEnvironmentService } from "./services/environment";
-import { getRegistryService } from "./services/registry";
+import { getReadApiService } from "./services/getApiReadService";
+import { getDocsService } from "./services/getDocsService";
+import { getRegisterApiService } from "./services/getRegisterApiService";
 
 const PORT = 8080;
 
@@ -31,10 +32,16 @@ async function main() {
 
         app.use(express.json({ limit: "50mb" }));
         register(app, {
-            registry: getRegistryService(prisma, authUtils),
-            environment: getEnvironmentService(prisma, authUtils),
+            docs: {
+                v1: getDocsService(prisma, authUtils),
+            },
+            api: {
+                v1: {
+                    read: getReadApiService(prisma),
+                    register: getRegisterApiService(prisma, authUtils),
+                },
+            },
         });
-        
 
         console.log(`Listening for requests on port ${PORT}`);
         app.listen(PORT);

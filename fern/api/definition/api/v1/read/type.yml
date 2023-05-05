@@ -11,7 +11,6 @@ types:
     properties:
       name: string
       shape: TypeShape
-      examples: list<ExampleType>
 
   TypeShape:
     union:
@@ -29,6 +28,7 @@ types:
       list: ListType
       set: SetType
       map: MapType
+      literal: LiteralType
       unknown: {}
 
   ObjectType:
@@ -80,9 +80,9 @@ types:
 
   UndiscriminatedUnionType:
     properties:
-      members: list<UndiscriminatedUnionMember>
+      variants: list<UndiscriminatedUnionVariant>
 
-  UndiscriminatedUnionMember:
+  UndiscriminatedUnionVariant:
     extends: commons.WithDescription
     properties:
       type: TypeReference
@@ -90,14 +90,14 @@ types:
   DiscriminatedUnionType:
     properties:
       discriminant: string
-      members: list<DiscriminatedUnionMember>
+      variants: list<DiscriminatedUnionVariant>
 
-  DiscriminatedUnionMember:
+  DiscriminatedUnionVariant:
     extends: commons.WithDescription
     properties:
       discriminantValue: string
       additionalProperties: ObjectType
 
-  ExampleType:
-    properties:
-      json: unknown
+  LiteralType:
+    union:
+      stringLiteral: string
