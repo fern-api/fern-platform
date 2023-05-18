@@ -9,10 +9,8 @@ export function transformApiDefinitionForReading(
         FernRegistry.api.v1.register.SubpackageId
     > = {};
     for (const [parentId, parentContents] of entries(writeShape.subpackages)) {
-        if (parentContents != null) {
-            for (const subpackageId of parentContents.subpackages) {
-                subpackageToParent[subpackageId] = parentId;
-            }
+        for (const subpackageId of parentContents.subpackages) {
+            subpackageToParent[subpackageId] = parentId;
         }
     }
 
@@ -23,13 +21,11 @@ export function transformApiDefinitionForReading(
         subpackages: entries(writeShape.subpackages).reduce<
             Record<FernRegistry.api.v1.read.SubpackageId, FernRegistry.api.v1.read.ApiDefinitionSubpackage>
         >((subpackages, [subpackageId, subpackage]) => {
-            if (subpackage != null) {
-                subpackages[subpackageId] = transformSubpackage({
-                    writeShape: subpackage,
-                    id: subpackageId,
-                    subpackageToParent,
-                });
-            }
+            subpackages[subpackageId] = transformSubpackage({
+                writeShape: subpackage,
+                id: subpackageId,
+                subpackageToParent,
+            });
             return subpackages;
         }, {}),
     };

@@ -8,6 +8,8 @@ imports:
 service:
   auth: true
   base-path: /registry/api
+  audiences:
+    - write
   endpoints:
     registerApiDefinition:
       path: /register
@@ -20,18 +22,17 @@ service:
             apiId: rootCommons.ApiId
             definition: ApiDefinition
       response: RegisterApiDefinitionResponse
-      errors: 
+      errors:
         - rootCommons.UnauthorizedError
         - rootCommons.UserNotInOrgError
 
 types:
-
-  RegisterApiDefinitionResponse: 
-    properties: 
+  RegisterApiDefinitionResponse:
+    properties:
       apiDefinitionId: rootCommons.ApiDefinitionId
 
   # This type is also stored in the database
-  ApiDefinition: 
+  ApiDefinition:
     properties:
       rootPackage: ApiDefinitionPackage
       types: map<type.TypeId, type.TypeDefinition>

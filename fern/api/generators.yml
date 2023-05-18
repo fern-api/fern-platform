@@ -3,16 +3,18 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-express
-        version: 0.2.2-2-g953e1186
+        version: 0.4.0
         output:
           location: local-file-system
           path: ../../src/generated
-      - name: fernapi/fern-typescript-sdk
-        version: 0.2.2-2-g953e1186
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.6.3
         output:
           location: local-file-system
           path: ../../src/__test__/generated
-  internal:
+  internal-write:
+    audiences:
+      - write
     generators:
       - name: fernapi/fern-typescript-node-sdk
         version: 0.6.3
@@ -25,6 +27,10 @@ groups:
           neverThrowErrors: true
           includeUtilsOnUnionMembers: true
           includeOtherInUnionTypes: true
+  internal-read:
+    audiences:
+      - read
+    generators:
       - name: fernapi/fern-typescript-browser-sdk
         version: 0.6.3
         output:

@@ -8,6 +8,8 @@ imports:
 service:
   base-path: /registry/api
   auth: false
+  audiences:
+    - read
   endpoints:
     getApi:
       method: GET

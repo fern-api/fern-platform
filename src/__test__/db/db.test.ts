@@ -4,7 +4,8 @@ import http from "http";
 import { AuthUtils } from "../../AuthUtils";
 import { register } from "../../generated";
 import { getReadApiService } from "../../services/getApiReadService";
-import { getDocsService } from "../../services/getDocsService";
+import { getDocsReadService } from "../../services/getDocsReadService";
+import { getDocsWriteService } from "../../services/getDocsWriteService";
 import { getRegisterApiService } from "../../services/getRegisterApiService";
 import { FernRegistry, FernRegistryClient } from "../generated";
 
@@ -31,7 +32,10 @@ beforeAll(async () => {
     const authUtils = new MockAuthUtils();
     register(app, {
         docs: {
-            v1: getDocsService(prisma, authUtils),
+            v1: {
+                read: getDocsReadService(prisma),
+                write: getDocsWriteService(prisma, authUtils),
+            },
         },
         api: {
             v1: {
@@ -68,7 +72,7 @@ const MOCK_REGISTER_API_DEFINITION: FernRegistry.api.v1.register.ApiDefinition =
                 id: "dummy",
                 method: "POST",
                 path: {
-                    parts: [FernRegistry.api.v1.register.EndpointPathPart.literal("dummy")],
+                    parts: [{ type: "literal", value: "dummy" }],
                     pathParameters: [],
                 },
                 headers: [],
@@ -122,7 +126,7 @@ it("definition register", async () => {
     );
 });
 
-const DOCS_REGISTER_DEFINITION: FernRegistry.docs.v1.DocsDefinition = {
+const DOCS_REGISTER_DEFINITION: FernRegistry.docs.v1.write.DocsDefinition = {
     pages: {},
     config: {
         navigation: {
@@ -133,18 +137,18 @@ const DOCS_REGISTER_DEFINITION: FernRegistry.docs.v1.DocsDefinition = {
 
 it("docs register", async () => {
     // register docs
-    await CLIENT.docs.v1.registerDocs({
+    await CLIENT.docs.v1.write.registerDocs({
         docsDefinition: DOCS_REGISTER_DEFINITION,
         orgId: "fern",
         domain: "docs.fern.com",
     });
     // load docs
-    const docs = await CLIENT.docs.v1.getDocsForDomain("docs.fern.com");
+    const docs = await CLIENT.docs.v1.read.getDocsForDomain("docs.fern.com");
     // assert docs are equal
     expect(JSON.stringify(docs)).toEqual(JSON.stringify(DOCS_REGISTER_DEFINITION));
 
     //re-register docs
-    await CLIENT.docs.v1.registerDocs({
+    await CLIENT.docs.v1.write.registerDocs({
         docsDefinition: DOCS_REGISTER_DEFINITION,
         orgId: "fern",
         domain: "docs.fern.com",

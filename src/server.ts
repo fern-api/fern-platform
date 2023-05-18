@@ -5,7 +5,8 @@ import { AuthUtilsImpl } from "./AuthUtils";
 import { getConfig } from "./config";
 import { register } from "./generated";
 import { getReadApiService } from "./services/getApiReadService";
-import { getDocsService } from "./services/getDocsService";
+import { getDocsReadService } from "./services/getDocsReadService";
+import { getDocsWriteService } from "./services/getDocsWriteService";
 import { getRegisterApiService } from "./services/getRegisterApiService";
 
 const PORT = 8080;
@@ -33,7 +34,10 @@ async function main() {
         app.use(express.json({ limit: "50mb" }));
         register(app, {
             docs: {
-                v1: getDocsService(prisma, authUtils),
+                v1: {
+                    read: getDocsReadService(prisma),
+                    write: getDocsWriteService(prisma, authUtils),
+                },
             },
             api: {
                 v1: {

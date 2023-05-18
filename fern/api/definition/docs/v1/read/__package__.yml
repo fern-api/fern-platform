@@ -1,27 +1,15 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 imports:
-  rootCommons: ../../commons.yml
+  rootCommons: ../../../commons.yml
+  apiReadV1: ../../../api/v1/read/__package__.yml
 
 service:
-  base-path: /registry/read/docs
+  base-path: /registry/docs
   auth: false
+  audiences:
+    - read
   endpoints:
-    registerDocs:
-      auth: true
-      method: POST
-      path: /register
-      request:
-        name: RegisterDocsRequest
-        body:
-          properties:
-            domain: string
-            docsDefinition: DocsDefinition
-            orgId: rootCommons.OrgId
-      errors: 
-        - rootCommons.UnauthorizedError
-        - rootCommons.UserNotInOrgError
-
     getDocsForDomain:
       method: GET
       path: /load/{domain}
@@ -39,6 +27,13 @@ types:
   DocsDefinition:
     properties:
       pages: map<PageId, PageContent>
+      apis: map<rootCommons.ApiDefinitionId, apiReadV1.ApiDefinition>
+      config: DocsConfig
+
+  DocsDefinitionDb: 
+    properties: 
+      pages: map<PageId, PageContent>
+      referencedApis: set<rootCommons.ApiDefinitionId>
       config: DocsConfig
 
   PageContent:
@@ -57,19 +52,26 @@ types:
 
   NavigationItem:
     union:
-      page: PageId
+      page: PageMetadata
       api: ApiSection
       section: DocsSection
+
+  PageMetadata:
+    properties:
+      id: PageId
+      urlSlug: string
 
   ApiSection:
     properties:
       title: string
       api: rootCommons.ApiDefinitionId
+      urlSlug: string
 
   DocsSection:
     properties:
       title: string
       items: list<NavigationItem>
+      urlSlug: string
 
   ColorsConfig:
     properties: {}
