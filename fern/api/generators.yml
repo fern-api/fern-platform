@@ -23,6 +23,8 @@ groups:
         config:
           useBrandedStringAliases: true
           neverThrowErrors: true
+          includeUtilsOnUnionMembers: true
+          includeOtherInUnionTypes: true
       - name: fernapi/fern-typescript-browser-sdk
         version: 0.6.3
         output:
@@ -32,3 +34,5 @@ groups:
         config:
           useBrandedStringAliases: true
           neverThrowErrors: true
+          includeUtilsOnUnionMembers: true
+          includeOtherInUnionTypes: true
