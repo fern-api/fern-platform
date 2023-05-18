@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { DomainNotRegisteredError } from "src/generated/api/resources/docs/resources/v1/resources/read";
+import { DomainNotRegisteredError } from "../generated/api/resources/docs/resources/v1/resources/read";
 import { ReadService } from "../generated/api/resources/docs/resources/v1/resources/read/service/ReadService";
 import * as FernSerializers from "../generated/serialization";
 import { readBuffer } from "../serdeUtils";

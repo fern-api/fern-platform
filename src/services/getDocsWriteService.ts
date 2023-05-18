@@ -1,8 +1,8 @@
 import { PrismaClient } from "@prisma/client";
-import { AuthUtils } from "src/AuthUtils";
-import { WriteService } from "src/generated/api/resources/docs/resources/v1/resources/write/service/WriteService";
-import { writeBuffer } from "src/serdeUtils";
+import { AuthUtils } from "../AuthUtils";
+import { WriteService } from "../generated/api/resources/docs/resources/v1/resources/write/service/WriteService";
 import * as FernSerializers from "../generated/serialization";
+import { writeBuffer } from "../serdeUtils";
 import { transformWriteDocsDefinitionToDb } from "./transformDocsDefinitionToDb";
 
 export function getDocsWriteService(prisma: PrismaClient, authUtils: AuthUtils): WriteService {

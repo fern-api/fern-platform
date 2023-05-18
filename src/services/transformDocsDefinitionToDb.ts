@@ -1,6 +1,6 @@
 import { kebabCase } from "lodash-es";
 import path from "path";
-import { FernRegistry } from "src/generated";
+import { FernRegistry } from "../generated";
 import * as FernRegistryDocsRead from "../generated/api/resources/docs/resources/v1/resources/read";
 
 export function transformWriteDocsDefinitionToDb(

@@ -1,4 +1,4 @@
-import { FernRegistry } from "src/generated";
+import { FernRegistry } from "../generated";
 
 export function transformApiDefinitionForReading(
     writeShape: FernRegistry.api.v1.register.ApiDefinition,
