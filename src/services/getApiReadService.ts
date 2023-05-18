@@ -16,13 +16,8 @@ export function getReadApiService(prisma: PrismaClient): ReadService {
                 throw new ApiDoesNotExistError();
             }
             const apiDefinitionJson = readBuffer(apiDefinition.definition);
-            const parsedApiDefinition = await FernSerializers.api.v1.register.ApiDefinition.parseOrThrow(
-                apiDefinitionJson
-            );
-            return res.send({
-                id: req.params.apiDefinitionId,
-                ...parsedApiDefinition,
-            });
+            const parsedApiDefinition = await FernSerializers.api.v1.read.ApiDefinition.parseOrThrow(apiDefinitionJson);
+            return res.send(parsedApiDefinition);
         },
     });
 }
