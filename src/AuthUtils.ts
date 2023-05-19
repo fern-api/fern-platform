@@ -23,9 +23,7 @@ export class AuthUtilsImpl implements AuthUtils {
         if (authHeader == null) {
             throw new UnauthorizedError();
         }
-        console.log(`Auth Header is ${authHeader}`);
         const token = getTokenFromAuthHeader(authHeader);
-        console.log(`Token is ${token}`);
         const venus = getVenusClient({
             config: this.config,
             token,

@@ -10,6 +10,11 @@ export function getDocsWriteService(prisma: PrismaClient, authUtils: AuthUtils):
         registerDocs: async (req, res) => {
             await authUtils.checkUserBelongsToOrg({ authHeader: req.headers.authorization, orgId: req.body.orgId });
             const dbDocsDefinition = transformWriteDocsDefinitionToDb(req.body.docsDefinition);
+            console.log(
+                `Docs for ${req.body.orgId} has references to apis ${Array.from(dbDocsDefinition.referencedApis).join(
+                    ", "
+                )}`
+            );
             const jsonDocsDefinition = await FernSerializers.docs.v1.read.DocsDefinitionDb.jsonOrThrow(
                 dbDocsDefinition
             );

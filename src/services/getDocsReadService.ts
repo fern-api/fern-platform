@@ -20,10 +20,15 @@ export function getDocsReadService(prisma: PrismaClient): ReadService {
             const parsedDocsDbDefinition = await FernSerializers.docs.v1.read.DocsDefinitionDb.parseOrThrow(
                 docsDefinitionJson
             );
+            console.log(
+                `Docs for ${req.params.domain} has stored api references ${Array.from(
+                    parsedDocsDbDefinition.referencedApis
+                ).join(", ")}`
+            );
             const apiDefinitions = await prisma.apiDefinitionsV2.findMany({
                 where: {
                     apiDefinitionId: {
-                        in: [...parsedDocsDbDefinition.referencedApis],
+                        in: Array.from(parsedDocsDbDefinition.referencedApis),
                     },
                 },
             });
