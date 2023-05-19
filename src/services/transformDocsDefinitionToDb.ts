@@ -11,7 +11,7 @@ export function transformWriteDocsDefinitionToDb(
     };
     return {
         ...writeShape,
-        referencedApis: new Set(...getReferencedApiDefinitionIds(navigationConfig)),
+        referencedApis: new Set(getReferencedApiDefinitionIds(navigationConfig)),
         config: {
             ...writeShape.config,
             navigation: navigationConfig,
