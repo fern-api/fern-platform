@@ -126,7 +126,17 @@ it("definition register", async () => {
     );
 });
 
-const DOCS_REGISTER_DEFINITION: FernRegistry.docs.v1.write.DocsDefinition = {
+const WRITE_DOCS_REGISTER_DEFINITION: FernRegistry.docs.v1.write.DocsDefinition = {
+    pages: {},
+    config: {
+        navigation: {
+            items: [],
+        },
+    },
+};
+
+const READ_DOCS_REGISTER_DEFINITION: FernRegistry.docs.v1.read.DocsDefinition = {
+    apis: {},
     pages: {},
     config: {
         navigation: {
@@ -138,18 +148,18 @@ const DOCS_REGISTER_DEFINITION: FernRegistry.docs.v1.write.DocsDefinition = {
 it("docs register", async () => {
     // register docs
     await CLIENT.docs.v1.write.registerDocs({
-        docsDefinition: DOCS_REGISTER_DEFINITION,
+        docsDefinition: WRITE_DOCS_REGISTER_DEFINITION,
         orgId: "fern",
         domain: "docs.fern.com",
     });
     // load docs
     const docs = await CLIENT.docs.v1.read.getDocsForDomain("docs.fern.com");
     // assert docs are equal
-    expect(JSON.stringify(docs)).toEqual(JSON.stringify(DOCS_REGISTER_DEFINITION));
+    expect(docs).toEqual(READ_DOCS_REGISTER_DEFINITION);
 
     //re-register docs
     await CLIENT.docs.v1.write.registerDocs({
-        docsDefinition: DOCS_REGISTER_DEFINITION,
+        docsDefinition: WRITE_DOCS_REGISTER_DEFINITION,
         orgId: "fern",
         domain: "docs.fern.com",
     });

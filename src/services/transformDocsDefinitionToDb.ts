@@ -46,7 +46,7 @@ export function transformNavigationItemForReading(
     }
 }
 
-function getReferencedApiDefinitionIds(
+export function getReferencedApiDefinitionIds(
     navigationConfig: FernRegistryDocsRead.NavigationConfig
 ): FernRegistry.ApiDefinitionId[] {
     return navigationConfig.items.flatMap((item) => getReferencedApiDefinitionIdFromItem(item));
@@ -57,7 +57,7 @@ function getReferencedApiDefinitionIdFromItem(
 ): FernRegistry.ApiDefinitionId[] {
     switch (item.type) {
         case "api":
-            return [...item.api];
+            return [item.api];
         case "page":
             return [];
         case "section":
