@@ -153,7 +153,9 @@ it("docs register", async () => {
         domain: "docs.fern.com",
     });
     // load docs
-    const docs = await CLIENT.docs.v1.read.getDocsForDomain("docs.fern.com");
+    const docs = await CLIENT.docs.v1.read.getDocsForDomain({
+        domain: "docs.fern.com",
+    });
     // assert docs are equal
     expect(docs).toEqual(READ_DOCS_REGISTER_DEFINITION);
 

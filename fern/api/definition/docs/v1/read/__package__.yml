@@ -10,11 +10,22 @@ service:
   audiences:
     - read
   endpoints:
-    getDocsForDomain:
+    getDocsForDomainLegacy:
       method: GET
       path: /load/{domain}
       path-parameters:
         domain: string
+      response: DocsDefinition
+      errors:
+        - DomainNotRegisteredError
+    getDocsForDomain:
+      method: POST
+      path: /load
+      request:
+        name: LoadDocsForDomainRequest
+        body: 
+          properties: 
+            domain: string
       response: DocsDefinition
       errors:
         - DomainNotRegisteredError
