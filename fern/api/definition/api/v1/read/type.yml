@@ -51,6 +51,8 @@ types:
       boolean: {}
       datetime: {}
       uuid: {}
+      base64: {}
+      date: {}
 
   OptionalType:
     properties:
