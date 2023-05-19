@@ -40,6 +40,7 @@ types:
       parent: optional<SubpackageId>
       subpackageId: SubpackageId
       name: string
+      urlSlug: string
 
   SubpackageId: string
 

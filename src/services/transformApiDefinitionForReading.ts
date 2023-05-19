@@ -1,3 +1,4 @@
+import { kebabCase } from "lodash";
 import { FernRegistry } from "../generated";
 
 export function transformApiDefinitionForReading(
@@ -16,7 +17,11 @@ export function transformApiDefinitionForReading(
 
     return {
         id,
-        rootPackage: writeShape.rootPackage,
+        rootPackage: {
+            endpoints: writeShape.rootPackage.endpoints.map((endpoint) => transformEndpoint({ writeShape: endpoint })),
+            subpackages: writeShape.rootPackage.subpackages,
+            types: writeShape.rootPackage.types,
+        },
         types: writeShape.types,
         subpackages: entries(writeShape.subpackages).reduce<
             Record<FernRegistry.api.v1.read.SubpackageId, FernRegistry.api.v1.read.ApiDefinitionSubpackage>
@@ -45,9 +50,30 @@ function transformSubpackage({
         subpackageId: id,
         parent: parent,
         name: writeShape.name,
-        endpoints: writeShape.endpoints,
+        endpoints: writeShape.endpoints.map((endpoint) => transformEndpoint({ writeShape: endpoint })),
         types: writeShape.types,
         subpackages: writeShape.subpackages,
+        urlSlug: kebabCase(id),
+    };
+}
+
+function transformEndpoint({
+    writeShape,
+}: {
+    writeShape: FernRegistry.api.v1.register.EndpointDefinition;
+}): WithoutQuestionMarks<FernRegistry.api.v1.read.EndpointDefinition> {
+    return {
+        urlSlug: kebabCase(writeShape.id),
+        method: writeShape.method,
+        id: writeShape.id,
+        name: writeShape.name,
+        path: writeShape.path,
+        queryParameters: writeShape.queryParameters,
+        headers: writeShape.headers,
+        request: writeShape.request,
+        response: writeShape.response,
+        examples: writeShape.examples,
+        description: writeShape.description,
     };
 }
 

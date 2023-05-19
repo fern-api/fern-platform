@@ -12,6 +12,7 @@ types:
     properties:
       method: HttpMethod
       id: EndpointId
+      urlSlug: string
       name: optional<string>
       path: EndpointPath
       queryParameters: list<QueryParameter>
