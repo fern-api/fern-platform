@@ -29,7 +29,7 @@ export function getDocsReadService(prisma: PrismaClient): ReadService {
             });
 
             return res.send({
-                ...parsedDocsDbDefinition,
+                config: parsedDocsDbDefinition.config,
                 apis: Object.fromEntries(
                     await Promise.all(
                         apiDefinitions.map(async (apiDefinition) => {
@@ -38,6 +38,7 @@ export function getDocsReadService(prisma: PrismaClient): ReadService {
                         })
                     )
                 ),
+                pages: parsedDocsDbDefinition.pages,
             });
         },
     });
