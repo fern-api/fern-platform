@@ -1,5 +1,4 @@
 import { kebabCase } from "lodash";
-import path from "path";
 import { FernRegistry } from "../generated";
 import * as FernRegistryDocsRead from "../generated/api/resources/docs/resources/v1/resources/read";
 
@@ -33,7 +32,7 @@ export function transformNavigationItemForReading(
                 type: "page",
                 id: writeShape.id,
                 title: writeShape.title,
-                urlSlug: path.basename(writeShape.title, ".md"), // remove extension
+                urlSlug: kebabCase(writeShape.title),
             };
         case "section":
             return {
