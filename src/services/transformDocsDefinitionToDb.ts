@@ -31,8 +31,9 @@ export function transformNavigationItemForReading(
         case "page":
             return {
                 type: "page",
-                id: writeShape.value,
-                urlSlug: path.basename(writeShape.value, ".md"), // remove extension
+                id: writeShape.id,
+                title: writeShape.title,
+                urlSlug: path.basename(writeShape.title, ".md"), // remove extension
             };
         case "section":
             return {

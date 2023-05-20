@@ -23,8 +23,8 @@ service:
       path: /load
       request:
         name: LoadDocsForDomainRequest
-        body: 
-          properties: 
+        body:
+          properties:
             domain: string
       response: DocsDefinition
       errors:
@@ -41,8 +41,8 @@ types:
       apis: map<rootCommons.ApiDefinitionId, apiReadV1.ApiDefinition>
       config: DocsConfig
 
-  DocsDefinitionDb: 
-    properties: 
+  DocsDefinitionDb:
+    properties:
       pages: map<PageId, PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
       config: DocsConfig
@@ -70,6 +70,7 @@ types:
   PageMetadata:
     properties:
       id: PageId
+      title: string
       urlSlug: string
 
   ApiSection:

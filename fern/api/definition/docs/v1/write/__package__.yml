@@ -50,9 +50,14 @@ types:
 
   NavigationItem:
     union:
-      page: PageId
+      page: PageMetadata
       api: ApiSection
       section: DocsSection
+
+  PageMetadata:
+    properties:
+      title: string
+      id: PageId
 
   ApiSection:
     properties:
