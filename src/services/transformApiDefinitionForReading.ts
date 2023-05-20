@@ -53,7 +53,7 @@ function transformSubpackage({
         endpoints: writeShape.endpoints.map((endpoint) => transformEndpoint({ writeShape: endpoint })),
         types: writeShape.types,
         subpackages: writeShape.subpackages,
-        urlSlug: kebabCase(id),
+        urlSlug: kebabCase(writeShape.name),
     };
 }
 
@@ -63,7 +63,7 @@ function transformEndpoint({
     writeShape: FernRegistry.api.v1.register.EndpointDefinition;
 }): WithoutQuestionMarks<FernRegistry.api.v1.read.EndpointDefinition> {
     return {
-        urlSlug: kebabCase(writeShape.id),
+        urlSlug: kebabCase(writeShape.name),
         method: writeShape.method,
         id: writeShape.id,
         name: writeShape.name,

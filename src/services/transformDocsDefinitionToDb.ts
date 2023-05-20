@@ -24,10 +24,9 @@ export function transformNavigationItemForReading(
 ): FernRegistry.docs.v1.read.NavigationItem {
     switch (writeShape.type) {
         case "api":
-            writeShape.title; // kebab case of title
             return {
                 ...writeShape,
-                urlSlug: "",
+                urlSlug: kebabCase(writeShape.title),
             };
         case "page":
             return {
@@ -36,7 +35,6 @@ export function transformNavigationItemForReading(
                 urlSlug: path.basename(writeShape.value, ".md"), // remove extension
             };
         case "section":
-            writeShape.title; // kebab case of title
             return {
                 type: "section",
                 title: writeShape.title,
