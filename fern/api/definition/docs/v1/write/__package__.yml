@@ -9,25 +9,60 @@ service:
   audiences:
     - write
   endpoints:
-    registerDocs:
+    startDocsRegister: 
       auth: true
       method: POST
-      path: /register
+      path: /init
+      request: 
+        name: StartDocsRegisterRequest
+        body: 
+          properties: 
+            domain: string
+            orgId: rootCommons.OrgId
+            filepaths: 
+              type: list<FilePath>
+              docs: Relative filepath from docs folder.
+      response: StartDocsRegisterResponse
+
+    finishDocsRegister:
+      auth: true
+      method: POST
+      path: /register/{docsRegistrationId}
+      path-parameters:
+        docsRegistrationId: DocsRegistrationId
       request:
         name: RegisterDocsRequest
         body:
           properties:
-            domain: string
             docsDefinition: DocsDefinition
-            orgId: rootCommons.OrgId
       errors:
         - rootCommons.UnauthorizedError
         - rootCommons.UserNotInOrgError
+        - DocsRegistrationIdNotFound
 
 types:
-  PageId: string
+  FilePath: 
+    type: string
+    docs: Each string is a unique key for the file. You can use the filepath as a key. 
 
-  Url: string
+  DocsRegistrationId: string
+
+  StartDocsRegisterResponse: 
+    properties: 
+      docsRegistrationId: DocsRegistrationId
+      uploadUrls: map<FilePath, FileS3UploadUrl> 
+
+  FileS3UploadUrl: 
+    properties: 
+      uploadUrl: string
+      fileId: 
+        type: FileId
+        docs: | 
+          When reading docs we will return a map<FileId, URL> that you can use to look up the docs. 
+  
+  FileId: string
+
+  PageId: string
 
   DocsDefinition:
     properties:
@@ -36,12 +71,12 @@ types:
 
   PageContent:
     properties:
-      markdown: string
+      markdown: string # eventually PageContent should just be a FileId ? 
 
   DocsConfig:
     properties:
       navigation: NavigationConfig
-      logo: optional<Url>
+      logo: optional<FileId>
       colors: optional<ColorsConfig>
 
   NavigationConfig:
@@ -71,3 +106,7 @@ types:
 
   ColorsConfig:
     properties: {}
+
+errors: 
+  DocsRegistrationIdNotFound: 
+    status-code: 404

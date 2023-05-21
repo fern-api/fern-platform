@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
-import { AuthUtils } from "../AuthUtils";
-import { RegisterService } from "../generated/api/resources/api/resources/v1/resources/register/service/RegisterService";
-import * as FernSerializers from "../generated/serialization";
-import { writeBuffer } from "../serdeUtils";
+import { AuthUtils } from "../../AuthUtils";
+import { RegisterService } from "../../generated/api/resources/api/resources/v1/resources/register/service/RegisterService";
+import * as FernSerializers from "../../generated/serialization";
+import { writeBuffer } from "../../serdeUtils";
 import { transformApiDefinitionForReading } from "./transformApiDefinitionForReading";
 
 export function getRegisterApiService(prisma: PrismaClient, authUtils: AuthUtils): RegisterService {

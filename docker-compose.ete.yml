@@ -12,3 +12,10 @@ services:
       - 5432:5432
     environment:
       POSTGRES_PASSWORD: fern
+  s3-mock:
+    image: adobe/s3mock
+    ports:
+      - 9090:9090
+      - 9191:9191
+    environment:
+      initialBuckets: fdr

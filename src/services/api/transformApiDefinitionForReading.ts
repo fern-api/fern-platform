@@ -1,5 +1,5 @@
 import { kebabCase } from "lodash";
-import { FernRegistry } from "../generated";
+import { FernRegistry } from "../../generated";
 
 export function transformApiDefinitionForReading(
     writeShape: FernRegistry.api.v1.register.ApiDefinition,

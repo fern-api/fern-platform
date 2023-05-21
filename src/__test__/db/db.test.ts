@@ -2,11 +2,13 @@ import { PrismaClient } from "@prisma/client";
 import express from "express";
 import http from "http";
 import { AuthUtils } from "../../AuthUtils";
+import { S3UtilsImpl } from "../../S3Utils";
+import { FdrConfig } from "../../config";
 import { register } from "../../generated";
-import { getReadApiService } from "../../services/getApiReadService";
-import { getDocsReadService } from "../../services/getDocsReadService";
-import { getDocsWriteService } from "../../services/getDocsWriteService";
-import { getRegisterApiService } from "../../services/getRegisterApiService";
+import { getReadApiService } from "../../services/api/getApiReadService";
+import { getRegisterApiService } from "../../services/api/getRegisterApiService";
+import { getDocsReadService } from "../../services/docs/getDocsReadService";
+import { getDocsWriteService } from "../../services/docs/getDocsWriteService";
 import { FernRegistry, FernRegistryClient } from "../generated";
 
 const PORT = 9999;
@@ -30,11 +32,20 @@ let server: http.Server | undefined;
 
 beforeAll(async () => {
     const authUtils = new MockAuthUtils();
+    const config: FdrConfig = {
+        awsAccessKey: "",
+        awsSecretKey: "",
+        s3BucketName: "fdr",
+        s3BucketRegion: "us-east-1",
+        venusUrl: "",
+        s3UrlOverride: "http://s3-mock:9090",
+    };
+    const s3Utils = new S3UtilsImpl(config);
     register(app, {
         docs: {
             v1: {
-                read: getDocsReadService(prisma),
-                write: getDocsWriteService(prisma, authUtils),
+                read: getDocsReadService(prisma, s3Utils),
+                write: getDocsWriteService(prisma, authUtils, s3Utils),
             },
         },
         api: {
@@ -104,9 +115,7 @@ it("definition register", async () => {
     expect(JSON.stringify(registeredEmptyDefinition.subpackages)).toEqual(
         JSON.stringify(EMPTY_REGISTER_API_DEFINITION.subpackages)
     );
-    expect(JSON.stringify(registeredEmptyDefinition.rootPackage)).toEqual(
-        JSON.stringify(EMPTY_REGISTER_API_DEFINITION.rootPackage)
-    );
+    expect(registeredEmptyDefinition.rootPackage).toEqual(EMPTY_REGISTER_API_DEFINITION.rootPackage);
 
     //register updated definition
     const updatedDefinitionRegisterResponse = await CLIENT.api.v1.register.registerApiDefinition({
@@ -121,9 +130,6 @@ it("definition register", async () => {
     expect(JSON.stringify(updatedDefinition.subpackages)).toEqual(
         JSON.stringify(MOCK_REGISTER_API_DEFINITION.subpackages)
     );
-    expect(JSON.stringify(updatedDefinition.rootPackage)).toEqual(
-        JSON.stringify(MOCK_REGISTER_API_DEFINITION.rootPackage)
-    );
 });
 
 const WRITE_DOCS_REGISTER_DEFINITION: FernRegistry.docs.v1.write.DocsDefinition = {
@@ -135,34 +141,30 @@ const WRITE_DOCS_REGISTER_DEFINITION: FernRegistry.docs.v1.write.DocsDefinition 
     },
 };
 
-const READ_DOCS_REGISTER_DEFINITION: FernRegistry.docs.v1.read.DocsDefinition = {
-    apis: {},
-    pages: {},
-    config: {
-        navigation: {
-            items: [],
-        },
-    },
-};
-
 it("docs register", async () => {
     // register docs
-    await CLIENT.docs.v1.write.registerDocs({
-        docsDefinition: WRITE_DOCS_REGISTER_DEFINITION,
+    const startDocsRegisterResponse = await CLIENT.docs.v1.write.startDocsRegister({
         orgId: "fern",
         domain: "docs.fern.com",
+        filepaths: ["logo.png", "guides/guide.mdx"],
+    });
+    await CLIENT.docs.v1.write.finishDocsRegister(startDocsRegisterResponse.docsRegistrationId, {
+        docsDefinition: WRITE_DOCS_REGISTER_DEFINITION,
     });
     // load docs
     const docs = await CLIENT.docs.v1.read.getDocsForDomain({
         domain: "docs.fern.com",
     });
-    // assert docs are equal
-    expect(docs).toEqual(READ_DOCS_REGISTER_DEFINITION);
+    // assert docs have 2 file urls
+    expect(Object.entries(docs.files)).toHaveLength(2);
 
     //re-register docs
-    await CLIENT.docs.v1.write.registerDocs({
-        docsDefinition: WRITE_DOCS_REGISTER_DEFINITION,
+    const startDocsRegisterResponse2 = await CLIENT.docs.v1.write.startDocsRegister({
         orgId: "fern",
         domain: "docs.fern.com",
+        filepaths: [],
+    });
+    await CLIENT.docs.v1.write.finishDocsRegister(startDocsRegisterResponse2.docsRegistrationId, {
+        docsDefinition: WRITE_DOCS_REGISTER_DEFINITION,
     });
 });

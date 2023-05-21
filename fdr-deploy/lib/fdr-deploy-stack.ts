@@ -1,7 +1,8 @@
-import { Stack, StackProps } from "aws-cdk-lib";
+import { RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { EnvironmentInfo, EnvironmentType } from "@fern-fern/fern-cloud-client/model/environments";
 import { SecurityGroup, Vpc, Peer, Port } from "aws-cdk-lib/aws-ec2";
+import { Bucket } from "aws-cdk-lib/aws-s3";
 import { Cluster, ContainerImage, LogDriver, Volume } from "aws-cdk-lib/aws-ecs";
 import { LogGroup } from "aws-cdk-lib/aws-logs";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
@@ -50,6 +51,11 @@ export class FdrDeployStack extends Stack {
             environmentInfo.route53Info.certificateArn
         );
 
+        const fdrBucket = new Bucket(this, "fdr-docs-files", {
+            bucketName: `fdr-${environmentType.toLowerCase()}-docs-files`,
+            removalPolicy: RemovalPolicy.RETAIN,
+        });
+
         const cloudmapNamespace = environmentInfo.cloudMapNamespaceInfo.namespaceName;
         const fargateService = new ApplicationLoadBalancedFargateService(this, SERVICE_NAME, {
             serviceName: SERVICE_NAME,
@@ -62,6 +68,10 @@ export class FdrDeployStack extends Stack {
                 image: ContainerImage.fromTarball(`../docker/build/tar/fern-definition-registry:${version}.tar`),
                 environment: {
                     VENUS_URL: `http://venus.${cloudmapNamespace}:8080/`,
+                    AWS_ACCESS_KEY_ID: getEnvironmentVariableOrThrow("AWS_ACCESS_KEY_ID"),
+                    AWS_SECRET_ACCESS_KEY: getEnvironmentVariableOrThrow("AWS_SECRET_ACCESS_KEY"),
+                    S3_BUCKET_NAME: fdrBucket.bucketName,
+                    S3_BUCKET_REGION: fdrBucket.stack.region,
                 },
                 containerName: CONTAINER_NAME,
                 containerPort: 8080,
@@ -116,4 +126,12 @@ function getServiceDomainName(environmentType: EnvironmentType, environmentInfo:
         return "registry" + "." + environmentInfo.route53Info.hostedZoneName;
     }
     return "registry" + "-" + environmentType.toLowerCase() + "." + environmentInfo.route53Info.hostedZoneName;
+}
+
+function getEnvironmentVariableOrThrow(environmentVariable: string): string {
+    const value = process.env[environmentVariable];
+    if (value == null) {
+        throw new Error(`Environment variable ${environmentVariable} not found`);
+    }
+    return value;
 }

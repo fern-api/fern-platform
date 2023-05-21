@@ -1,16 +1,29 @@
 import { kebabCase } from "lodash";
-import { FernRegistry } from "../generated";
-import * as FernRegistryDocsRead from "../generated/api/resources/docs/resources/v1/resources/read";
+import { S3FileInfo } from "../../S3Utils";
+import { FernRegistry } from "../../generated";
+import * as FernRegistryDocsRead from "../../generated/api/resources/docs/resources/v1/resources/read";
+import { FileId, FilePath } from "../../generated/api/resources/docs/resources/v1/resources/write";
 
-export function transformWriteDocsDefinitionToDb(
-    writeShape: FernRegistry.docs.v1.write.DocsDefinition
-): FernRegistry.docs.v1.read.DocsDefinitionDb {
+export function transformWriteDocsDefinitionToDb({
+    writeShape,
+    files,
+}: {
+    writeShape: FernRegistry.docs.v1.write.DocsDefinition;
+    files: Record<FilePath, S3FileInfo>;
+}): FernRegistry.docs.v1.read.DocsDefinitionDb {
     const navigationConfig: FernRegistryDocsRead.NavigationConfig = {
         items: writeShape.config.navigation.items.map((item) => transformNavigationItemForReading(item)),
     };
+    const transformedFiles: Record<FileId, FernRegistryDocsRead.DbFileInfo> = {};
+    Object.entries(files).forEach(([, s3FileInfo]) => {
+        transformedFiles[s3FileInfo.presignedUrl.fileId] = {
+            s3Key: s3FileInfo.key,
+        };
+    });
     return {
         ...writeShape,
         referencedApis: new Set(getReferencedApiDefinitionIds(navigationConfig)),
+        files: transformedFiles,
         config: {
             ...writeShape.config,
             navigation: navigationConfig,

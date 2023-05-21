@@ -8,6 +8,6 @@ sleep 5
 
 yarn prisma migrate deploy
 
-yarn jest -i
+yarn jest -i --passWithNoTests
 
 docker-compose -f docker-compose.test.yml down

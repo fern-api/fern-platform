@@ -2,12 +2,13 @@ import { PrismaClient } from "@prisma/client";
 import cors from "cors";
 import express from "express";
 import { AuthUtilsImpl } from "./AuthUtils";
+import { S3UtilsImpl } from "./S3Utils";
 import { getConfig } from "./config";
 import { register } from "./generated";
-import { getReadApiService } from "./services/getApiReadService";
-import { getDocsReadService } from "./services/getDocsReadService";
-import { getDocsWriteService } from "./services/getDocsWriteService";
-import { getRegisterApiService } from "./services/getRegisterApiService";
+import { getReadApiService } from "./services/api/getApiReadService";
+import { getRegisterApiService } from "./services/api/getRegisterApiService";
+import { getDocsReadService } from "./services/docs/getDocsReadService";
+import { getDocsWriteService } from "./services/docs/getDocsWriteService";
 
 const PORT = 8080;
 
@@ -30,13 +31,14 @@ async function main() {
         });
 
         const authUtils = new AuthUtilsImpl(config);
+        const s3Utils = new S3UtilsImpl(config);
 
         app.use(express.json({ limit: "50mb" }));
         register(app, {
             docs: {
                 v1: {
-                    read: getDocsReadService(prisma),
-                    write: getDocsWriteService(prisma, authUtils),
+                    read: getDocsReadService(prisma, s3Utils),
+                    write: getDocsWriteService(prisma, authUtils, s3Utils),
                 },
             },
             api: {

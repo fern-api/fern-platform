@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
-import * as FernRegistryApiRead from "../generated/api/resources/api/resources/v1/resources/read";
-import { ApiDoesNotExistError } from "../generated/api/resources/api/resources/v1/resources/read/errors/ApiDoesNotExistError";
-import { ReadService } from "../generated/api/resources/api/resources/v1/resources/read/service/ReadService";
-import * as FernSerializers from "../generated/serialization";
-import { readBuffer } from "../serdeUtils";
+import * as FernRegistryApiRead from "../../generated/api/resources/api/resources/v1/resources/read";
+import { ApiDoesNotExistError } from "../../generated/api/resources/api/resources/v1/resources/read/errors/ApiDoesNotExistError";
+import { ReadService } from "../../generated/api/resources/api/resources/v1/resources/read/service/ReadService";
+import * as FernSerializers from "../../generated/serialization";
+import { readBuffer } from "../../serdeUtils";
 
 export function getReadApiService(prisma: PrismaClient): ReadService {
     return new ReadService({
