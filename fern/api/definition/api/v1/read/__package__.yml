@@ -33,6 +33,11 @@ types:
       endpoints: list<endpoint.EndpointDefinition>
       types: list<type.TypeId>
       subpackages: list<SubpackageId>
+      pointsTo:
+        docs: |
+          if present, this package should be replaced with the provided subpackage
+          in the docs navigation.
+        type: optional<SubpackageId>
 
   ApiDefinitionSubpackage:
     extends: ApiDefinitionPackage

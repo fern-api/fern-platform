@@ -53,6 +53,7 @@ function transformSubpackage({
         endpoints: writeShape.endpoints.map((endpoint) => transformEndpoint({ writeShape: endpoint })),
         types: writeShape.types,
         subpackages: writeShape.subpackages,
+        pointsTo: writeShape.pointsTo,
         urlSlug: kebabCase(writeShape.name),
     };
 }
