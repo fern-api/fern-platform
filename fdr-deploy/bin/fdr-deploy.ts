@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-import { EnvironmentInfo, Environments, EnvironmentType } from "@fern-fern/fern-cloud-client/model/environments";
+import { EnvironmentInfo, Environments, EnvironmentType } from "@fern-fern/fern-cloud-sdk/api/";
 import * as cdk from "aws-cdk-lib";
 import axios from "axios";
 import { FdrDeployStack } from "../lib/fdr-deploy-stack";
+import { env } from "process";
 
 void main();
 
@@ -13,7 +14,10 @@ async function main() {
     }
     const environments = await getEnvironments();
     const app = new cdk.App();
-    for (const environmentType of Object.keys(environments)) {
+    for (const [environmentType, environmentInfo] of Object.entries(environments)) {
+        if (environmentInfo == null) {
+            throw new Error(`No info for environment ${environmentType}`);
+        }
         switch (environmentType) {
             case EnvironmentType.Dev:
             case EnvironmentType.Prod:
@@ -22,7 +26,7 @@ async function main() {
                     `fdr-${environmentType.toLowerCase()}`,
                     version,
                     environmentType,
-                    environments[environmentType],
+                    environmentInfo,
                     {
                         env: { account: "985111089818", region: "us-east-1" },
                     }

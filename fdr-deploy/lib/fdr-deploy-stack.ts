@@ -1,6 +1,5 @@
 import { RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
 import { Construct } from "constructs";
-import { EnvironmentInfo, EnvironmentType } from "@fern-fern/fern-cloud-client/model/environments";
 import { SecurityGroup, Vpc, Peer, Port } from "aws-cdk-lib/aws-ec2";
 import { Bucket } from "aws-cdk-lib/aws-s3";
 import { Cluster, ContainerImage, LogDriver, Volume } from "aws-cdk-lib/aws-ecs";
@@ -9,6 +8,8 @@ import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 import { ApplicationLoadBalancedFargateService } from "aws-cdk-lib/aws-ecs-patterns";
 import { ApplicationProtocol } from "aws-cdk-lib/aws-elasticloadbalancingv2";
 import { HostedZone } from "aws-cdk-lib/aws-route53";
+import { EnvironmentInfo, EnvironmentType } from "@fern-fern/fern-cloud-sdk/api";
+import { CloudFrontWebDistribution, OriginAccessIdentity, ViewerCertificate } from "aws-cdk-lib/aws-cloudfront";
 
 const CONTAINER_NAME = "fern-definition-registry";
 const SERVICE_NAME = "fdr";
@@ -50,6 +51,29 @@ export class FdrDeployStack extends Stack {
             "ceritificate",
             environmentInfo.route53Info.certificateArn
         );
+
+        const docsFeBucket = Bucket.fromBucketName(this, "docs-fe", environmentInfo.docsS3BucketName);
+        const originAccessIdentity = new OriginAccessIdentity(this, "OIA");
+
+        new CloudFrontWebDistribution(this, "distribution", {
+            originConfigs: [
+                {
+                    s3OriginSource: {
+                        s3BucketSource: docsFeBucket,
+                        originAccessIdentity,
+                    },
+                    behaviors: [{ isDefaultBehavior: true }],
+                },
+            ],
+            errorConfigurations: [
+                {
+                    errorCode: 404,
+                    responseCode: 200,
+                    responsePagePath: "/index.html",
+                },
+            ],
+            viewerCertificate: ViewerCertificate.fromAcmCertificate(certificate),
+        });
 
         const fdrBucket = new Bucket(this, "fdr-docs-files", {
             bucketName: `fdr-${environmentType.toLowerCase()}-docs-files`,
