@@ -1,7 +1,6 @@
 import { EnvironmentInfo, EnvironmentType } from "@fern-fern/fern-cloud-sdk/api";
 import { RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
-import { CloudFrontWebDistribution, OriginAccessIdentity, ViewerCertificate } from "aws-cdk-lib/aws-cloudfront";
 import { Peer, Port, SecurityGroup, Vpc } from "aws-cdk-lib/aws-ec2";
 import { Cluster, ContainerImage, LogDriver, Volume } from "aws-cdk-lib/aws-ecs";
 import { ApplicationLoadBalancedFargateService } from "aws-cdk-lib/aws-ecs-patterns";
@@ -51,30 +50,6 @@ export class FdrDeployStack extends Stack {
             "ceritificate",
             environmentInfo.route53Info.certificateArn
         );
-
-        const docsFeBucket = Bucket.fromBucketName(this, "docs-fe", environmentInfo.docsS3BucketName);
-        const originAccessIdentity = new OriginAccessIdentity(this, "OIA");
-        docsFeBucket.grantRead(originAccessIdentity);
-
-        new CloudFrontWebDistribution(this, "distribution", {
-            originConfigs: [
-                {
-                    s3OriginSource: {
-                        s3BucketSource: docsFeBucket,
-                        originAccessIdentity,
-                    },
-                    behaviors: [{ isDefaultBehavior: true }],
-                },
-            ],
-            errorConfigurations: [
-                {
-                    errorCode: 404,
-                    responseCode: 200,
-                    responsePagePath: "/index.html",
-                },
-            ],
-            viewerCertificate: ViewerCertificate.fromAcmCertificate(certificate),
-        });
 
         const fdrBucket = new Bucket(this, "fdr-docs-files", {
             bucketName: `fdr-${environmentType.toLowerCase()}-docs-files`,
