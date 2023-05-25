@@ -1,3 +1,4 @@
+import { assertNever } from "../../../assertNever";
 import * as ApiV1Write from "../../../generated/api/resources/api/resources/v1/resources/register";
 
 export function generateHttpBodyExample(
@@ -59,7 +60,7 @@ export function generateExampleFromTypeReference(
         case "primitive":
             return generateExamplePrimitive(reference.value);
         case "id":
-            return generateExampleFromId("id", resolveTypeById);
+            return generateExampleFromId(reference.value, resolveTypeById);
         case "optional":
             return generateExampleFromTypeReference(reference.itemType, resolveTypeById);
         case "list":
@@ -75,11 +76,14 @@ export function generateExampleFromTypeReference(
         case "unknown":
             return {};
         case "literal":
-            switch (reference.value.type) {
-                case "stringLiteral":
-                    return reference.value;
-            }
+            return generateExampleFromLiteral(reference.value);
+        default:
+            assertNever(reference);
     }
+}
+
+export function generateExampleFromLiteral(reference: ApiV1Write.LiteralType): string {
+    return reference.value;
 }
 
 function generateExamplePrimitive(reference: ApiV1Write.PrimitiveType): string | number | boolean | null {
