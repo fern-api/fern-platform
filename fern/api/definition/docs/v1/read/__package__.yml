@@ -3,6 +3,7 @@
 imports:
   rootCommons: ../../../commons.yml
   apiReadV1: ../../../api/v1/read/__package__.yml
+  apiReadV1Endpoint: ../../../api/v1/read/endpoint.yml
 
 service:
   base-path: /registry/docs
@@ -50,13 +51,13 @@ types:
       referencedApis: set<rootCommons.ApiDefinitionId>
       files: map<FileId, DbFileInfo>
       config: DocsConfig
-  DbFileInfo: 
-    properties: 
+  DbFileInfo:
+    properties:
       s3Key: string
 
   PageContent:
     properties:
-      markdown: string # eventually PageContent should just be a FileId ? 
+      markdown: string # eventually PageContent should just be a FileId ?
 
   DocsConfig:
     properties:

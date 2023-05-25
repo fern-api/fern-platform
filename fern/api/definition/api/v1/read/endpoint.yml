@@ -80,3 +80,8 @@ types:
       requestBody: unknown
       responseStatusCode: integer
       responseBody: unknown
+      codeExamples: CodeExamples
+
+  CodeExamples:
+    properties:
+      nodeAxios: string

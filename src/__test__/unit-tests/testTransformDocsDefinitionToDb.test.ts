@@ -1,5 +1,5 @@
-import * as FernRegistryDocsRead from "../generated/api/resources/docs/resources/v1/resources/read";
-import { getReferencedApiDefinitionIds } from "../services/docs/transformDocsDefinitionToDb";
+import * as FernRegistryDocsRead from "../../generated/api/resources/docs/resources/v1/resources/read";
+import { getReferencedApiDefinitionIds } from "../../services/docs/transformDocsDefinitionToDb";
 
 it("definition register", async () => {
     const navigationConfig: FernRegistryDocsRead.NavigationConfig = {

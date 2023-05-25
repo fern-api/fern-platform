@@ -31,6 +31,9 @@ jobs:
       - run:
           command: yarn test
           name: Test
+      - run:
+          command: yarn test:db
+          name: Test DB
 
   deploy-dev:
     machine:
@@ -64,12 +67,12 @@ jobs:
             npm install
             VERSION="${git_version}" cdk deploy fdr-dev --require-approval never --progress events
           name: cdk deploy
-      - run: 
+      - run:
           name: fern register --environment Dev
           command: |
             npm install -g fern-api
             fern register-v2 --environment Dev
-  
+
   deploy-prod:
     machine:
       image: ubuntu-2004:current
@@ -102,18 +105,18 @@ jobs:
             npm install
             VERSION="${git_version}" cdk deploy fdr-prod --require-approval never --progress events
           name: cdk deploy
-      - run: 
+      - run:
           name: fern register --environment Production
           command: |
             npm install -g fern-api
             fern register-v2 --environment Production
-  
-  register-latest: 
+
+  register-latest:
     machine:
       image: ubuntu-2004:current
     steps:
       - checkout
-      - run: 
+      - run:
           name: fern register latest
           command: |
             npm install -g fern-api
@@ -141,7 +144,7 @@ workflows:
             - github
             - fern-dev
             - fern-tokens
-      
+
       - deploy-prod:
           filters:
             branches:
@@ -156,8 +159,8 @@ workflows:
             - fern-tokens
           requires:
             - check
-      
-      - register-latest: 
+
+      - register-latest:
           filters:
             branches:
               only:
@@ -166,4 +169,3 @@ workflows:
             - fern-tokens
           requires:
             - check
-    

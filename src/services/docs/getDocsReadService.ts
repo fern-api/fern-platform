@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
-import { S3Utils } from "../../S3Utils";
 import { FernRegistry } from "../../generated";
 import { DomainNotRegisteredError } from "../../generated/api/resources/docs/resources/v1/resources/read";
 import { ReadService } from "../../generated/api/resources/docs/resources/v1/resources/read/service/ReadService";
 import * as FernSerializers from "../../generated/serialization";
+import { S3Utils } from "../../S3Utils";
 import { readBuffer } from "../../serdeUtils";
 import { convertDbApiDefinitionToRead } from "../api/getApiReadService";
 
@@ -26,7 +26,7 @@ async function getDocsForDomain({
     domain: string;
     prisma: PrismaClient;
     s3Utils: S3Utils;
-}): Promise<Promise<Promise<FernRegistry.docs.v1.read.DocsDefinition>>> {
+}): Promise<FernRegistry.docs.v1.read.DocsDefinition> {
     const docs = await prisma.docs.findFirst({
         where: {
             url: domain,
