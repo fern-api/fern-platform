@@ -36,7 +36,7 @@ async function getDocsForDomain({
         throw new DomainNotRegisteredError();
     }
     const docsDefinitionJson = readBuffer(docs.docsDefinition);
-    const parsedDocsDbDefinition = await FernSerializers.docs.v1.read.DocsDefinitionDb.parseOrThrow(docsDefinitionJson);
+    const parsedDocsDbDefinition = await parseDocsDbDefinition(docsDefinitionJson);
     console.log(
         `Docs for ${domain} has stored api references ${Array.from(parsedDocsDbDefinition.referencedApis).join(", ")}`
     );
@@ -67,4 +67,14 @@ async function getDocsForDomain({
         ),
         pages: parsedDocsDbDefinition.pages,
     };
+}
+
+function parseDocsDbDefinition(dbValue: unknown): Promise<FernRegistry.docs.v1.read.DocsDefinitionDb> {
+    if (dbValue != null && typeof dbValue === "object" && !("type" in dbValue)) {
+        return FernSerializers.docs.v1.read.DocsDefinitionDb.parseOrThrow({
+            ...dbValue,
+            type: "v1",
+        });
+    }
+    return FernSerializers.docs.v1.read.DocsDefinitionDb.parseOrThrow(dbValue);
 }

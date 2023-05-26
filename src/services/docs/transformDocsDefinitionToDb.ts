@@ -1,8 +1,9 @@
 import { kebabCase } from "lodash";
-import { S3FileInfo } from "../../S3Utils";
 import { FernRegistry } from "../../generated";
 import * as FernRegistryDocsRead from "../../generated/api/resources/docs/resources/v1/resources/read";
 import { FileId, FilePath } from "../../generated/api/resources/docs/resources/v1/resources/write";
+import { S3FileInfo } from "../../S3Utils";
+import { WithoutQuestionMarks } from "../../WithoutQuestionMarks";
 
 export function transformWriteDocsDefinitionToDb({
     writeShape,
@@ -10,7 +11,7 @@ export function transformWriteDocsDefinitionToDb({
 }: {
     writeShape: FernRegistry.docs.v1.write.DocsDefinition;
     files: Record<FilePath, S3FileInfo>;
-}): FernRegistry.docs.v1.read.DocsDefinitionDb {
+}): WithoutQuestionMarks<FernRegistry.docs.v1.read.DocsDefinitionDb.V2> {
     const navigationConfig: FernRegistryDocsRead.NavigationConfig = {
         items: writeShape.config.navigation.items.map((item) => transformNavigationItemForReading(item)),
     };
@@ -21,12 +22,16 @@ export function transformWriteDocsDefinitionToDb({
         };
     });
     return {
-        ...writeShape,
+        type: "v2",
         referencedApis: new Set(getReferencedApiDefinitionIds(navigationConfig)),
         files: transformedFiles,
         config: {
             ...writeShape.config,
             navigation: navigationConfig,
+        },
+        pages: writeShape.pages,
+        colors: {
+            accentPrimary: writeShape.config.colors?.accentPrimary,
         },
     };
 }

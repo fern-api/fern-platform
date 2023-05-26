@@ -46,11 +46,26 @@ types:
       config: DocsConfig
 
   DocsDefinitionDb:
+    union:
+      v1: DocsDefinitionDbV1
+      v2: DocsDefinitionDbV2
+
+  DocsDefinitionDbV1:
     properties:
       pages: map<PageId, PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
       files: map<FileId, DbFileInfo>
       config: DocsConfig
+      colors: optional<ColorsConfig>
+
+  DocsDefinitionDbV2:
+    properties:
+      pages: map<PageId, PageContent>
+      referencedApis: set<rootCommons.ApiDefinitionId>
+      files: map<FileId, DbFileInfo>
+      config: DocsConfig
+      colors: ColorsConfig
+
   DbFileInfo:
     properties:
       s3Key: string
@@ -94,7 +109,8 @@ types:
       urlSlug: string
 
   ColorsConfig:
-    properties: {}
+    properties:
+      accentPrimary: optional<string>
 
 errors:
   DomainNotRegisteredError:

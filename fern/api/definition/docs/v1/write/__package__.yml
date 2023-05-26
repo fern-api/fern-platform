@@ -9,17 +9,17 @@ service:
   audiences:
     - write
   endpoints:
-    startDocsRegister: 
+    startDocsRegister:
       auth: true
       method: POST
       path: /init
-      request: 
+      request:
         name: StartDocsRegisterRequest
-        body: 
-          properties: 
+        body:
+          properties:
             domain: string
             orgId: rootCommons.OrgId
-            filepaths: 
+            filepaths:
               type: list<FilePath>
               docs: Relative filepath from docs folder.
       response: StartDocsRegisterResponse
@@ -41,25 +41,25 @@ service:
         - DocsRegistrationIdNotFound
 
 types:
-  FilePath: 
+  FilePath:
     type: string
-    docs: Each string is a unique key for the file. You can use the filepath as a key. 
+    docs: Each string is a unique key for the file. You can use the filepath as a key.
 
   DocsRegistrationId: string
 
-  StartDocsRegisterResponse: 
-    properties: 
+  StartDocsRegisterResponse:
+    properties:
       docsRegistrationId: DocsRegistrationId
-      uploadUrls: map<FilePath, FileS3UploadUrl> 
+      uploadUrls: map<FilePath, FileS3UploadUrl>
 
-  FileS3UploadUrl: 
-    properties: 
+  FileS3UploadUrl:
+    properties:
       uploadUrl: string
-      fileId: 
+      fileId:
         type: FileId
-        docs: | 
-          When reading docs we will return a map<FileId, URL> that you can use to look up the docs. 
-  
+        docs: |
+          When reading docs we will return a map<FileId, URL> that you can use to look up the docs.
+
   FileId: string
 
   PageId: string
@@ -71,7 +71,7 @@ types:
 
   PageContent:
     properties:
-      markdown: string # eventually PageContent should just be a FileId ? 
+      markdown: string # eventually PageContent should just be a FileId ?
 
   DocsConfig:
     properties:
@@ -105,8 +105,9 @@ types:
       items: list<NavigationItem>
 
   ColorsConfig:
-    properties: {}
+    properties:
+      accentPrimary: optional<string>
 
-errors: 
-  DocsRegistrationIdNotFound: 
+errors:
+  DocsRegistrationIdNotFound:
     status-code: 404

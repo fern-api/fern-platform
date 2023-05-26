@@ -1,6 +1,7 @@
 import HTTPSnippet from "httpsnippet";
 import { kebabCase } from "lodash";
 import { FernRegistry } from "../../../generated";
+import { WithoutQuestionMarks } from "../../../WithoutQuestionMarks";
 import { generateDummyEndpointExampleCall } from "./generateDummyEndpointExampleCall";
 
 export function transformApiDefinitionForReading(
@@ -161,9 +162,7 @@ function convertHttpSnippet(
     return example;
 }
 
-type WithoutQuestionMarks<T> = {
-    [K in keyof Required<T>]: undefined extends T[K] ? T[K] | undefined : T[K];
-};
+
 
 function entries<T extends object>(obj: T): [keyof T, T[keyof T]][] {
     return Object.entries(obj) as [keyof T, T[keyof T]][];
