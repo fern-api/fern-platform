@@ -106,7 +106,13 @@ types:
 
   ColorsConfig:
     properties:
-      accentPrimary: optional<string>
+      accentPrimary: optional<RgbColor>
+
+  RgbColor:
+    properties:
+      r: string
+      g: string
+      b: string
 
 errors:
   DocsRegistrationIdNotFound:
