@@ -110,9 +110,9 @@ types:
 
   RgbColor:
     properties:
-      r: string
-      g: string
-      b: string
+      r: integer
+      g: integer
+      b: integer
 
 errors:
   DocsRegistrationIdNotFound:
