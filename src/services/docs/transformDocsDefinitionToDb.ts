@@ -1,9 +1,9 @@
 import { kebabCase } from "lodash";
+import { S3FileInfo } from "../../S3Utils";
+import { WithoutQuestionMarks } from "../../WithoutQuestionMarks";
 import { FernRegistry } from "../../generated";
 import * as FernRegistryDocsRead from "../../generated/api/resources/docs/resources/v1/resources/read";
 import { FileId, FilePath } from "../../generated/api/resources/docs/resources/v1/resources/write";
-import { S3FileInfo } from "../../S3Utils";
-import { WithoutQuestionMarks } from "../../WithoutQuestionMarks";
 
 export function transformWriteDocsDefinitionToDb({
     writeShape,
@@ -44,6 +44,8 @@ export function transformNavigationItemForReading(
             return {
                 ...writeShape,
                 urlSlug: kebabCase(writeShape.title),
+                artifacts:
+                    writeShape.artifacts != null ? transformArtifactsForReading(writeShape.artifacts) : undefined,
             };
         case "page":
             return {
@@ -79,4 +81,41 @@ function getReferencedApiDefinitionIdFromItem(
         case "section":
             return item.items.flatMap((sectionItem) => getReferencedApiDefinitionIdFromItem(sectionItem));
     }
+}
+
+function transformArtifactsForReading(
+    writeShape: FernRegistry.docs.v1.write.ApiArtifacts
+): FernRegistry.docs.v1.read.ApiArtifacts {
+    return {
+        sdks: writeShape.sdks.map((sdk) => transformPublishedSdkForReading(sdk)),
+        postman:
+            writeShape.postman != null ? transformPublishedPostmanCollectionForReading(writeShape.postman) : undefined,
+    };
+}
+
+function transformPublishedSdkForReading(
+    writeShape: FernRegistry.docs.v1.write.PublishedSdk
+): FernRegistry.docs.v1.read.PublishedSdk {
+    return {
+        ...writeShape,
+        githubRepo: {
+            name: writeShape.githubRepoName,
+            url: `https://github.com/${writeShape.githubRepoName}`,
+        },
+    };
+}
+
+function transformPublishedPostmanCollectionForReading(
+    writeShape: FernRegistry.docs.v1.write.PublishedPostmanCollection
+): FernRegistry.docs.v1.read.PublishedPostmanCollection {
+    return {
+        ...writeShape,
+        githubRepo:
+            writeShape.githubRepoName != null
+                ? {
+                      name: writeShape.githubRepoName,
+                      url: `https://github.com/${writeShape.githubRepoName}`,
+                  }
+                : undefined,
+    };
 }

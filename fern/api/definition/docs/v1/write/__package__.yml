@@ -98,6 +98,7 @@ types:
     properties:
       title: string
       api: rootCommons.ApiDefinitionId
+      artifacts: optional<ApiArtifacts>
 
   DocsSection:
     properties:
@@ -113,6 +114,40 @@ types:
       r: integer
       g: integer
       b: integer
+
+  ApiArtifacts:
+    properties:
+      sdks: list<PublishedSdk>
+      postman: optional<PublishedPostmanCollection>
+  
+  PublishedPostmanCollection: 
+    properties: 
+      url: string
+      githubRepoName: optional<string>
+
+  PublishedSdk:
+    union:
+      npm: NpmPackage
+      maven: MavenPackage
+      pypi: PypiPackage
+
+  NpmPackage:
+    properties:
+      packageName: string
+      githubRepoName: string
+      version: string
+
+  MavenPackage:
+    properties:
+      coordinate: string
+      githubRepoName: string
+      version: string
+
+  PypiPackage:
+    properties:
+      packageName: string
+      githubRepoName: string
+      version: string
 
 errors:
   DocsRegistrationIdNotFound:
