@@ -1,7 +1,7 @@
 import HTTPSnippet from "httpsnippet";
 import { kebabCase } from "lodash";
-import { FernRegistry } from "../../../generated";
 import { WithoutQuestionMarks } from "../../../WithoutQuestionMarks";
+import { FernRegistry } from "../../../generated";
 import { generateDummyEndpointExampleCall } from "./generateDummyEndpointExampleCall";
 
 export function transformApiDefinitionForReading(
@@ -120,6 +120,8 @@ export function transformExampleEndpointCall({
         codeExamples: {
             nodeAxios: convertHttpSnippet(httpSnippet, "node", "axios"),
         },
+        requestBodyV2: undefined,
+        responseBodyV2: undefined,
     };
 }
 
@@ -161,8 +163,6 @@ function convertHttpSnippet(
     }
     return example;
 }
-
-
 
 function entries<T extends object>(obj: T): [keyof T, T[keyof T]][] {
     return Object.entries(obj) as [keyof T, T[keyof T]][];

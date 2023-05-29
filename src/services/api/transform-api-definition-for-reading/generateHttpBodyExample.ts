@@ -1,8 +1,8 @@
 import { assertNever } from "../../../assertNever";
 import * as ApiV1Write from "../../../generated/api/resources/api/resources/v1/resources/register";
 
-export function generateHttpBodyExample(
-    type: ApiV1Write.HttpBodyShape,
+export function generateHttpRequestBodyExample(
+    type: ApiV1Write.HttpRequestBodyShape,
     resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition
 ): unknown {
     switch (type.type) {
@@ -10,6 +10,22 @@ export function generateHttpBodyExample(
             return generateExampleObject(type, resolveTypeById);
         case "reference":
             return generateExampleFromTypeReference(type.value, resolveTypeById);
+        case "fileUpload":
+            return "<filename>";
+    }
+}
+
+export function generateHttpResponseBodyExample(
+    type: ApiV1Write.HttpResponseBodyShape,
+    resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition
+): unknown {
+    switch (type.type) {
+        case "object":
+            return generateExampleObject(type, resolveTypeById);
+        case "reference":
+            return generateExampleFromTypeReference(type.value, resolveTypeById);
+        case "fileDownload":
+            return "";
     }
 }
 

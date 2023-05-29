@@ -16,8 +16,8 @@ types:
       path: EndpointPath
       queryParameters: list<QueryParameter>
       headers: list<Header>
-      request: optional<HttpBody>
-      response: optional<HttpBody>
+      request: optional<HttpRequest>
+      response: optional<HttpResponse>
       examples: list<ExampleEndpointCall>
 
   HttpMethod:
@@ -58,15 +58,28 @@ types:
       key: string
       type: type.TypeReference
 
-  HttpBody:
+  HttpRequest:
     extends: commons.WithDescription
     properties:
-      type: HttpBodyShape
+      type: HttpRequestBodyShape
 
-  HttpBodyShape:
+  HttpRequestBodyShape:
     union:
       object: type.ObjectType
       reference: type.TypeReference
+      fileUpload: {}
+
+  HttpResponse:
+    extends: commons.WithDescription
+    properties:
+      type: HttpResponseBodyShape
+
+  HttpResponseBodyShape:
+    union:
+      object: type.ObjectType
+      reference: type.TypeReference
+      fileDownload: {}
+
   # examples
 
   ExampleEndpointCall:
@@ -77,5 +90,22 @@ types:
       queryParameters: map<string, unknown>
       headers: map<string, unknown>
       requestBody: unknown
+      requestBodyV2: optional<ExampleEndpointRequest> 
       responseStatusCode: integer
       responseBody: unknown
+      responseBodyV2: optional<ExampleEndpointResponse>
+  
+  ExampleEndpointRequest: 
+    properties: 
+      json: unknown
+      form: map<string, FormValue>
+  
+  FormValue: 
+    union: 
+      json: unknown
+      filename: string
+  
+  ExampleEndpointResponse: 
+    properties: 
+      json: unknown
+      filename: string

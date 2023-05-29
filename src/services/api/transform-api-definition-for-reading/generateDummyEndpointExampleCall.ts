@@ -1,7 +1,11 @@
 /* eslint-disable no-case-declarations */
 import { assertNever } from "../../../assertNever";
 import * as ApiV1Write from "../../../generated/api/resources/api/resources/v1/resources/register";
-import { generateExampleFromTypeReference, generateHttpBodyExample } from "./generateHttpBodyExample";
+import {
+    generateExampleFromTypeReference,
+    generateHttpRequestBodyExample,
+    generateHttpResponseBodyExample,
+} from "./generateHttpBodyExample";
 
 export function generateDummyEndpointExampleCall(
     endpointDefinition: ApiV1Write.EndpointDefinition,
@@ -39,12 +43,12 @@ export function generateDummyEndpointExampleCall(
         ),
         requestBody:
             endpointDefinition.request != null
-                ? generateHttpBodyExample(endpointDefinition.request.type, resolveTypeById)
+                ? generateHttpRequestBodyExample(endpointDefinition.request.type, resolveTypeById)
                 : undefined,
         responseStatusCode: 200,
         responseBody:
             endpointDefinition.response != null
-                ? generateHttpBodyExample(endpointDefinition.response.type, resolveTypeById)
+                ? generateHttpResponseBodyExample(endpointDefinition.response.type, resolveTypeById)
                 : undefined,
     };
 
