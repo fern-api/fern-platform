@@ -85,7 +85,7 @@ function getReferencedApiDefinitionIdFromItem(
 
 function transformArtifactsForReading(
     writeShape: FernRegistry.docs.v1.write.ApiArtifacts
-): FernRegistry.docs.v1.read.ApiArtifacts {
+): WithoutQuestionMarks<FernRegistry.docs.v1.read.ApiArtifacts> {
     return {
         sdks: writeShape.sdks.map((sdk) => transformPublishedSdkForReading(sdk)),
         postman:
@@ -95,21 +95,46 @@ function transformArtifactsForReading(
 
 function transformPublishedSdkForReading(
     writeShape: FernRegistry.docs.v1.write.PublishedSdk
-): FernRegistry.docs.v1.read.PublishedSdk {
-    return {
-        ...writeShape,
-        githubRepo: {
-            name: writeShape.githubRepoName,
-            url: `https://github.com/${writeShape.githubRepoName}`,
-        },
-    };
+): WithoutQuestionMarks<FernRegistry.docs.v1.read.PublishedSdk> {
+    switch (writeShape.type) {
+        case "maven":
+            return {
+                type: "maven",
+                coordinate: writeShape.coordinate,
+                githubRepo: {
+                    name: writeShape.githubRepoName,
+                    url: `https://github.com/${writeShape.githubRepoName}`,
+                },
+                version: writeShape.version,
+            };
+        case "npm":
+            return {
+                type: "npm",
+                packageName: writeShape.packageName,
+                githubRepo: {
+                    name: writeShape.githubRepoName,
+                    url: `https://github.com/${writeShape.githubRepoName}`,
+                },
+                version: writeShape.version,
+            };
+        case "pypi":
+            return {
+                type: "pypi",
+                packageName: writeShape.packageName,
+                githubRepo: {
+                    name: writeShape.githubRepoName,
+                    url: `https://github.com/${writeShape.githubRepoName}`,
+                },
+                version: writeShape.version,
+            };
+    }
 }
 
 function transformPublishedPostmanCollectionForReading(
     writeShape: FernRegistry.docs.v1.write.PublishedPostmanCollection
-): FernRegistry.docs.v1.read.PublishedPostmanCollection {
+): WithoutQuestionMarks<FernRegistry.docs.v1.read.PublishedPostmanCollection> {
     return {
-        ...writeShape,
+        url: writeShape.url,
         githubRepo:
             writeShape.githubRepoName != null
                 ? {
