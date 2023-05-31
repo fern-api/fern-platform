@@ -78,6 +78,17 @@ types:
       navigation: NavigationConfig
       logo: optional<FileId>
       colors: optional<ColorsConfig>
+      navbarLinks: optional<list<NavbarLink>>
+  
+  NavbarLink: 
+    properties: 
+      text: string
+      url: string
+      style: optional<NavbarLinkStyle>
+   
+  NavbarLinkStyle: 
+    enum: 
+      - PRIMARY
 
   NavigationConfig:
     properties:
