@@ -2,6 +2,7 @@ import { kebabCase } from "lodash";
 import { S3FileInfo } from "../../S3Utils";
 import { WithoutQuestionMarks } from "../../WithoutQuestionMarks";
 import { FernRegistry } from "../../generated";
+import * as FernRegistryDocsDb from "../../generated/api/resources/docs/resources/v1/resources/db";
 import * as FernRegistryDocsRead from "../../generated/api/resources/docs/resources/v1/resources/read";
 import { FileId, FilePath } from "../../generated/api/resources/docs/resources/v1/resources/write";
 
@@ -11,11 +12,11 @@ export function transformWriteDocsDefinitionToDb({
 }: {
     writeShape: FernRegistry.docs.v1.write.DocsDefinition;
     files: Record<FilePath, S3FileInfo>;
-}): WithoutQuestionMarks<FernRegistry.docs.v1.read.DocsDefinitionDb.V2> {
+}): WithoutQuestionMarks<FernRegistry.docs.v1.db.DocsDefinitionDb.V2> {
     const navigationConfig: FernRegistryDocsRead.NavigationConfig = {
         items: writeShape.config.navigation.items.map((item) => transformNavigationItemForReading(item)),
     };
-    const transformedFiles: Record<FileId, FernRegistryDocsRead.DbFileInfo> = {};
+    const transformedFiles: Record<FileId, FernRegistryDocsDb.DbFileInfo> = {};
     Object.entries(files).forEach(([, s3FileInfo]) => {
         transformedFiles[s3FileInfo.presignedUrl.fileId] = {
             s3Key: s3FileInfo.key,

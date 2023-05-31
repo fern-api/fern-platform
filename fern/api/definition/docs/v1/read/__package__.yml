@@ -45,38 +45,6 @@ types:
       files: map<FileId, Url>
       config: DocsConfig
 
-  DocsDefinitionDb:
-    union:
-      v1: DocsDefinitionDbV1
-      v2: DocsDefinitionDbV2
-
-  DocsDefinitionDbV1:
-    properties:
-      pages: map<PageId, PageContent>
-      referencedApis: set<rootCommons.ApiDefinitionId>
-      files: map<FileId, DbFileInfo>
-      config: DocsConfig
-      colors: optional<ColorsConfig>
-
-  DocsDefinitionDbV2:
-    properties:
-      pages: map<PageId, PageContent>
-      referencedApis: set<rootCommons.ApiDefinitionId>
-      files: map<FileId, DbFileInfo>
-      config: DocsDbConfig
-      colors: ColorsConfig
-  
-  DocsDbConfig:
-    properties:
-      navigation: NavigationConfig
-      logo: optional<FileId>
-      colors: optional<ColorsConfig>
-      navbarLinks: optional<list<NavbarLink>>
-
-  DbFileInfo:
-    properties:
-      s3Key: string
-
   PageContent:
     properties:
       markdown: string # eventually PageContent should just be a FileId ?

@@ -59,9 +59,7 @@ export function getDocsWriteService(prisma: PrismaClient, authUtils: AuthUtils, 
                     dbDocsDefinition.referencedApis
                 ).join(", ")}`
             );
-            const jsonDocsDefinition = await FernSerializers.docs.v1.read.DocsDefinitionDb.jsonOrThrow(
-                dbDocsDefinition
-            );
+            const jsonDocsDefinition = await FernSerializers.docs.v1.db.DocsDefinitionDb.jsonOrThrow(dbDocsDefinition);
             await prisma.docs.upsert({
                 create: {
                     url: docsRegistrationInfo.domain,

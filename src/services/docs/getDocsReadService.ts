@@ -74,12 +74,12 @@ async function getDocsForDomain({
     };
 }
 
-function parseDocsDbDefinition(dbValue: unknown): Promise<FernRegistry.docs.v1.read.DocsDefinitionDb> {
+function parseDocsDbDefinition(dbValue: unknown): Promise<FernRegistry.docs.v1.db.DocsDefinitionDb> {
     if (dbValue != null && typeof dbValue === "object" && !("type" in dbValue)) {
-        return FernSerializers.docs.v1.read.DocsDefinitionDb.parseOrThrow({
+        return FernSerializers.docs.v1.db.DocsDefinitionDb.parseOrThrow({
             ...dbValue,
             type: "v1",
         });
     }
-    return FernSerializers.docs.v1.read.DocsDefinitionDb.parseOrThrow(dbValue);
+    return FernSerializers.docs.v1.db.DocsDefinitionDb.parseOrThrow(dbValue);
 }

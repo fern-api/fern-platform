@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  rootCommons: ../../../commons.yml
+  apiReadV1: ../../../api/v1/read/__package__.yml
+  apiReadV1Endpoint: ../../../api/v1/read/endpoint.yml
+  docsReadV1: ../read/__package__.yml
+
+types: 
+  DocsDefinitionDb:
+    union:
+      v1: DocsDefinitionDbV1
+      v2: DocsDefinitionDbV2
+
+  DocsDefinitionDbV1:
+    properties:
+      pages: map<docsReadV1.PageId, docsReadV1.PageContent>
+      referencedApis: set<rootCommons.ApiDefinitionId>
+      files: map<docsReadV1.FileId, DbFileInfo>
+      config: DocsDbConfig
+      colors: optional<docsReadV1.ColorsConfig>
+
+  DocsDefinitionDbV2:
+    properties:
+      pages: map<docsReadV1.PageId, docsReadV1.PageContent>
+      referencedApis: set<rootCommons.ApiDefinitionId>
+      files: map<docsReadV1.FileId, DbFileInfo>
+      config: DocsDbConfig
+      colors: optional<docsReadV1.ColorsConfig>
+  
+  DocsDbConfig:
+    properties:
+      navigation: docsReadV1.NavigationConfig
+      logo: optional<docsReadV1.FileId>
+      colors: optional<docsReadV1.ColorsConfig>
+      navbarLinks: optional<list<docsReadV1.NavbarLink>>
+
+  DbFileInfo:
+    properties:
+      s3Key: string
