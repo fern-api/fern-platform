@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
+import { S3Utils } from "../../S3Utils";
 import { FernRegistry } from "../../generated";
 import { DomainNotRegisteredError } from "../../generated/api/resources/docs/resources/v1/resources/read";
 import { ReadService } from "../../generated/api/resources/docs/resources/v1/resources/read/service/ReadService";
 import * as FernSerializers from "../../generated/serialization";
-import { S3Utils } from "../../S3Utils";
 import { readBuffer } from "../../serdeUtils";
 import { convertDbApiDefinitionToRead } from "../api/getApiReadService";
 
@@ -48,7 +48,12 @@ async function getDocsForDomain({
         },
     });
     return {
-        config: parsedDocsDbDefinition.config,
+        config: {
+            navigation: parsedDocsDbDefinition.config.navigation,
+            logo: parsedDocsDbDefinition.config.logo,
+            colors: parsedDocsDbDefinition.config.colors,
+            navbarLinks: parsedDocsDbDefinition.config.navbarLinks ?? [],
+        },
         apis: Object.fromEntries(
             await Promise.all(
                 apiDefinitions.map(async (apiDefinition) => {

@@ -63,8 +63,15 @@ types:
       pages: map<PageId, PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
       files: map<FileId, DbFileInfo>
-      config: DocsConfig
+      config: DocsDbConfig
       colors: ColorsConfig
+  
+  DocsDbConfig:
+    properties:
+      navigation: NavigationConfig
+      logo: optional<FileId>
+      colors: optional<ColorsConfig>
+      navbarLinks: optional<list<NavbarLink>>
 
   DbFileInfo:
     properties:
