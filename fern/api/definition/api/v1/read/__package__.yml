@@ -4,6 +4,7 @@ imports:
   endpoint: endpoint.yml
   type: type.yml
   rootCommons: ../../../commons.yml
+  commons: commons.yml
 
 service:
   base-path: /registry/api
@@ -40,7 +41,9 @@ types:
         type: optional<SubpackageId>
 
   ApiDefinitionSubpackage:
-    extends: ApiDefinitionPackage
+    extends: 
+      - commons.WithDescription
+      - ApiDefinitionPackage
     properties:
       parent: optional<SubpackageId>
       subpackageId: SubpackageId

@@ -63,6 +63,7 @@ function transformSubpackage({
         subpackages: writeShape.subpackages,
         pointsTo: writeShape.pointsTo,
         urlSlug: kebabCase(writeShape.name),
+        description: writeShape.description,
     };
 }
 

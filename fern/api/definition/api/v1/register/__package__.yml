@@ -4,6 +4,7 @@ imports:
   endpoint: endpoint.yml
   type: type.yml
   rootCommons: ../../../commons.yml
+  commons: commons.yml
 
 service:
   auth: true
@@ -50,7 +51,9 @@ types:
         type: optional<SubpackageId>
 
   ApiDefinitionSubpackage:
-    extends: ApiDefinitionPackage
+    extends: 
+      - ApiDefinitionPackage
+      - commons.WithDescription
     properties:
       subpackageId: SubpackageId
       name: string
