@@ -12,6 +12,9 @@ types:
   EndpointDefinition:
     extends: commons.WithDescription
     properties:
+      authed: 
+        type: boolean
+        docs: When this is true, the api definition will have a union for auth
       defaultEnvironment: optional<EnvironmentId>
       environments: list<Environment>
       method: HttpMethod

@@ -5,9 +5,10 @@ imports:
   readEndpoint: ../read/endpoint.yml
 
 types:
-  EndpointDefinition:
+  DbEndpointDefinition:
     extends: readCommons.WithDescription
     properties:
+      authed: optional<boolean>
       defaultEnvironment: optional<readEndpoint.EnvironmentId>
       environments: optional<list<readEndpoint.Environment>>
       method: readEndpoint.HttpMethod

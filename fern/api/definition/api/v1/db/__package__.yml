@@ -14,10 +14,11 @@ types:
       rootPackage: DbApiDefinitionPackage
       types: map<readType.TypeId, readType.TypeDefinition>
       subpackages: map<readRoot.SubpackageId, DbApiDefinitionSubpackage>
+      auth: optional<readRoot.ApiAuth>
   
   DbApiDefinitionPackage:
     properties:
-      endpoints: list<endpoint.EndpointDefinition>
+      endpoints: list<endpoint.DbEndpointDefinition>
       types: list<readType.TypeId>
       subpackages: list<readRoot.SubpackageId>
       pointsTo:

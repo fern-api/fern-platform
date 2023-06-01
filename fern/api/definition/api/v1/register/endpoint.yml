@@ -12,6 +12,7 @@ types:
   EndpointDefinition:
     extends: commons.WithDescription
     properties:
+      auth: optional<boolean>
       defaultEnvironment: optional<EnvironmentId>
       environments: optional<list<Environment>>
       method: HttpMethod

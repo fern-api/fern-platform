@@ -39,6 +39,7 @@ export function transformApiDefinitionForDb(
             });
             return subpackages;
         }, {}),
+        auth: writeShape.auth,
     };
 }
 
@@ -76,7 +77,7 @@ function transformEndpoint({
 }: {
     writeShape: FernRegistry.api.v1.register.EndpointDefinition;
     apiDefinition: FernRegistry.api.v1.register.ApiDefinition;
-}): WithoutQuestionMarks<FernRegistry.api.v1.db.EndpointDefinition> {
+}): WithoutQuestionMarks<FernRegistry.api.v1.db.DbEndpointDefinition> {
     const examples =
         writeShape.examples.length > 0
             ? writeShape.examples
@@ -101,6 +102,7 @@ function transformEndpoint({
             })
         ),
         description: writeShape.description,
+        authed: writeShape.auth,
     };
 }
 

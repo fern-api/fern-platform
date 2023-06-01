@@ -28,6 +28,7 @@ types:
       rootPackage: ApiDefinitionPackage
       types: map<type.TypeId, type.TypeDefinition>
       subpackages: map<SubpackageId, ApiDefinitionSubpackage>
+      auth: optional<ApiAuth>
 
   ApiDefinitionPackage:
     properties:
@@ -51,6 +52,26 @@ types:
       urlSlug: string
 
   SubpackageId: string
+
+  ApiAuth: 
+    union: 
+      bearerAuth: BearerAuth
+      basicAuth: BasicAuth
+      header: HeaderAuth
+  
+  BasicAuth: 
+    properties: 
+      usernameName: optional<string>
+      passwordName: optional<string>
+  
+  BearerAuth: 
+    properties: 
+      tokenName: optional<string>
+  
+  HeaderAuth: 
+    properties: 
+      nameOverride: optional<string>
+      headerWireValue: string
 
 errors:
   ApiDoesNotExistError:

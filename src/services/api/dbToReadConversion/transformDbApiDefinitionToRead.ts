@@ -17,6 +17,7 @@ export function transformApiDefinitionForReading(
                 return [id, transformSubpackage({ dbShape: subpackage })];
             })
         ),
+        auth: dbShape.auth,
     };
 }
 
@@ -41,7 +42,7 @@ function transformSubpackage({
 function transformEndpoint({
     dbShape,
 }: {
-    dbShape: FernRegistry.api.v1.db.EndpointDefinition;
+    dbShape: FernRegistry.api.v1.db.DbEndpointDefinition;
 }): WithoutQuestionMarks<FernRegistry.api.v1.read.EndpointDefinition> {
     return {
         environments: dbShape.environments ?? [],
@@ -57,5 +58,6 @@ function transformEndpoint({
         response: dbShape.response,
         examples: dbShape.examples,
         description: dbShape.description,
+        authed: dbShape.authed ?? false,
     };
 }
