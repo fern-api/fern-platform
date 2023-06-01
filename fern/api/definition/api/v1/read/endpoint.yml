@@ -5,15 +5,11 @@ imports:
   commons: commons.yml
 
 types:
-  EnvironmentId: string
-
   EndpointId: string
 
   EndpointDefinition:
     extends: commons.WithDescription
     properties:
-      defaultEnvironment: optional<EnvironmentId>
-      environments: list<Environment>
       method: HttpMethod
       id: EndpointId
       urlSlug: string
@@ -24,11 +20,6 @@ types:
       request: optional<HttpRequest>
       response: optional<HttpResponse>
       examples: list<ExampleEndpointCall>
-  
-  Environment: 
-    properties: 
-      id: EnvironmentId
-      baseUrl: string
 
   HttpMethod:
     enum:
