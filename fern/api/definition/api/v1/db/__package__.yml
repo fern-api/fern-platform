@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  endpoint: endpoint.yml
+  rootCommons: ../../../commons.yml
+  readRoot: ../read/__package__.yml
+  readType: ../read/type.yml
+  readCommons: ../read/commons.yml
+
+types:
+  DbApiDefinition:
+    properties:
+      id: rootCommons.ApiDefinitionId
+      rootPackage: DbApiDefinitionPackage
+      types: map<readType.TypeId, readType.TypeDefinition>
+      subpackages: map<readRoot.SubpackageId, DbApiDefinitionSubpackage>
+  
+  DbApiDefinitionPackage:
+    properties:
+      endpoints: list<endpoint.EndpointDefinition>
+      types: list<readType.TypeId>
+      subpackages: list<readRoot.SubpackageId>
+      pointsTo:
+        docs: |
+          if present, this package should be replaced with the provided subpackage
+          in the docs navigation.
+        type: optional<readRoot.SubpackageId>
+
+  DbApiDefinitionSubpackage:
+    extends: 
+      - readCommons.WithDescription
+      - DbApiDefinitionPackage
+    properties:
+      parent: optional<readRoot.SubpackageId>
+      subpackageId: readRoot.SubpackageId
+      name: string
+      urlSlug: string

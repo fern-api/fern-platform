@@ -1,4 +1,4 @@
-import { transformExampleEndpointCall } from "../../services/api/transform-api-definition-for-reading/transformApiDefinitionForReading";
+import { transformExampleEndpointCall } from "../../services/api/registerToDbConversion/transformApiDefinitionToDb";
 import { FernRegistry } from "../generated";
 
 describe("transformEndpointEndpointCall", () => {
