@@ -72,6 +72,7 @@ export class FdrDeployStack extends Stack {
                     AWS_SECRET_ACCESS_KEY: getEnvironmentVariableOrThrow("AWS_SECRET_ACCESS_KEY"),
                     S3_BUCKET_NAME: fdrBucket.bucketName,
                     S3_BUCKET_REGION: fdrBucket.stack.region,
+                    DOMAIN_SUFFIX: environmentType === "DEV" ? "docs.dev.buildwithfern.com" : "docs.buildwithfern.com",
                 },
                 containerName: CONTAINER_NAME,
                 containerPort: 8080,
