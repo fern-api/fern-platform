@@ -1,0 +1,39 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  rootCommons: ../../../commons.yml
+  v1DocsRead: ../../v1/read/__package__.yml
+
+
+service:
+  base-path: /v2/registry/docs
+  auth: false
+  audiences:
+    - read
+  endpoints:
+    getDocsForUrl:
+      method: POST
+      path: /load-with-url
+      request:
+        name: LoadDocsForUrlRequest
+        body:
+          properties:
+            url: string
+      response: LoadDocsForUrlResponse
+      errors:
+        - DomainNotRegisteredError
+
+types:
+  LoadDocsForUrlResponse: 
+    properties: 
+      baseUrl: BaseUrl
+      definition: v1DocsRead.DocsDefinition
+  
+  BaseUrl: 
+    properties: 
+      domain: string
+      basePath: optional<string>
+
+errors:
+  DomainNotRegisteredError:
+    status-code: 404

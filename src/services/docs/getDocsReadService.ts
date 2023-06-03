@@ -18,7 +18,7 @@ export function getDocsReadService(prisma: PrismaClient, s3Utils: S3Utils): Read
     });
 }
 
-async function getDocsForDomain({
+export async function getDocsForDomain({
     domain,
     prisma,
     s3Utils,
@@ -37,9 +37,19 @@ async function getDocsForDomain({
     }
     const docsDefinitionJson = readBuffer(docs.docsDefinition);
     const parsedDocsDbDefinition = await parseDocsDbDefinition(docsDefinitionJson);
-    console.log(
-        `Docs for ${domain} has stored api references ${Array.from(parsedDocsDbDefinition.referencedApis).join(", ")}`
-    );
+
+    return getDocsDefinition({ parsedDocsDbDefinition, prisma, s3Utils });
+}
+
+export async function getDocsDefinition({
+    parsedDocsDbDefinition,
+    prisma,
+    s3Utils,
+}: {
+    parsedDocsDbDefinition: FernRegistry.docs.v1.db.DocsDefinitionDb;
+    prisma: PrismaClient;
+    s3Utils: S3Utils;
+}): Promise<FernRegistry.docs.v1.read.DocsDefinition> {
     const apiDefinitions = await prisma.apiDefinitionsV2.findMany({
         where: {
             apiDefinitionId: {
@@ -74,7 +84,7 @@ async function getDocsForDomain({
     };
 }
 
-function parseDocsDbDefinition(dbValue: unknown): Promise<FernRegistry.docs.v1.db.DocsDefinitionDb> {
+export function parseDocsDbDefinition(dbValue: unknown): Promise<FernRegistry.docs.v1.db.DocsDefinitionDb> {
     if (dbValue != null && typeof dbValue === "object" && !("type" in dbValue)) {
         return FernSerializers.docs.v1.db.DocsDefinitionDb.parseOrThrow({
             ...dbValue,

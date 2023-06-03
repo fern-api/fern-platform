@@ -8,7 +8,9 @@ import { register } from "./generated";
 import { getReadApiService } from "./services/api/getApiReadService";
 import { getRegisterApiService } from "./services/api/getRegisterApiService";
 import { getDocsReadService } from "./services/docs/getDocsReadService";
+import { getDocsReadV2Service } from "./services/docs/getDocsReadV2Service";
 import { getDocsWriteService } from "./services/docs/getDocsWriteService";
+import { getDocsWriteV2Service } from "./services/docs/getDocsWriteV2Service";
 
 const PORT = 8080;
 
@@ -39,6 +41,10 @@ async function main() {
                 v1: {
                     read: getDocsReadService(prisma, s3Utils),
                     write: getDocsWriteService(prisma, authUtils, s3Utils),
+                },
+                v2: {
+                    read: getDocsReadV2Service(prisma, s3Utils),
+                    write: getDocsWriteV2Service(prisma, authUtils, s3Utils, config),
                 },
             },
             api: {

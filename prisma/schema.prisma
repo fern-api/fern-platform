@@ -26,3 +26,14 @@ model Docs {
 
   @@id([url])
 }
+
+model DocsV2 {
+  orgID          String
+  apiName        String
+  updatedTime    DateTime @updatedAt
+  domain         String
+  path           String
+  docsDefinition Bytes
+
+  @@id([domain, path])
+}

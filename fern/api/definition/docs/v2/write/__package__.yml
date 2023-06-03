@@ -1,0 +1,69 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  rootCommons: ../../../commons.yml
+  v1DocsWrite: ../../v1/write/__package__.yml
+
+service:
+  base-path: /v2/registry/docs
+  auth: false
+  audiences:
+    - write
+  endpoints:
+    startDocsRegister: 
+      auth: true
+      path: /v2/init
+      request:
+        name: StartDocsRegisterRequestV2
+        body:
+          properties:
+            domain: 
+              type: string
+              docs: A `buildwithfern.com` url
+            customDomains: list<string>
+            orgId: rootCommons.OrgId
+            apiId: rootCommons.ApiId
+            filepaths:
+              type: list<v1DocsWrite.FilePath>
+              docs: Relative filepath from docs folder.
+      response: v1DocsWrite.StartDocsRegisterResponse
+      errors: 
+        - InvalidDomainError
+        - InvalidCustomDomainError
+
+    finishDocsRegister:
+      auth: true
+      method: POST
+      path: /register/{docsRegistrationId}
+      path-parameters:
+        docsRegistrationId: v1DocsWrite.DocsRegistrationId
+      request:
+        name: RegisterDocsRequest
+        body:
+          properties:
+            docsDefinition: v1DocsWrite.DocsDefinition
+      errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.UserNotInOrgError
+        - v1DocsWrite.DocsRegistrationIdNotFound
+types: 
+  InvalidDomainErrorBody: 
+    properties: 
+      requiredDomainSuffix: 
+        type: string
+        docs: Value the domain should end with (i.e. docs.buildwithfern.com or dev.docs.buildwithfern.com)
+  
+  InvliadCustomDomainErrorBody: 
+    properties: 
+      overlappingDomains: list<OverlappingCustomDomains>
+  
+  OverlappingCustomDomains: list<string>
+
+errors:
+  InvalidDomainError: 
+    status-code: 400
+    # type: InvalidDomainErrorBody
+  
+  InvalidCustomDomainError: 
+    status-code: 400
+    # type: InvliadCustomDomainErrorBody

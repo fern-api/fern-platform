@@ -4,6 +4,7 @@ const AWS_SECRET_KEY_ENV_VAR = "AWS_SECRET_ACCESS_KEY";
 const S3_BUCKET_NAME_ENV_VAR = "S3_BUCKET_NAME";
 const S3_BUCKET_REGION_ENV_VAR = "S3_BUCKET_REGION";
 const S3_URL_OVERRIDE_ENV_VAR = "S3_URL_OVERRIDE";
+const DOMAIN_SUFFIX_ENV_VAR = "DOMAIN_SUFFIX";
 
 export interface FdrConfig {
     venusUrl: string;
@@ -12,6 +13,7 @@ export interface FdrConfig {
     s3BucketName: string;
     s3BucketRegion: string;
     s3UrlOverride: string | undefined;
+    domainSuffix: string;
 }
 
 export function getConfig(): FdrConfig {
@@ -22,6 +24,7 @@ export function getConfig(): FdrConfig {
         s3BucketName: getEnvironmentVariableOrThrow(S3_BUCKET_NAME_ENV_VAR),
         s3BucketRegion: getEnvironmentVariableOrThrow(S3_BUCKET_REGION_ENV_VAR),
         s3UrlOverride: process.env[S3_URL_OVERRIDE_ENV_VAR],
+        domainSuffix: getEnvironmentVariableOrThrow(DOMAIN_SUFFIX_ENV_VAR),
     };
 }
 
