@@ -27,20 +27,26 @@ export function generateDummyEndpointExampleCall(
             }),
             {}
         ),
-        queryParameters: endpointDefinition.queryParameters.reduce(
-            (acc, queryParameter) => ({
+        queryParameters: endpointDefinition.queryParameters.reduce((acc, queryParameter) => {
+            const value = generateExampleFromTypeReference(queryParameter.type, resolveTypeById);
+            if (value == null) {
+                return acc;
+            }
+            return {
                 ...acc,
-                [queryParameter.key]: generateExampleFromTypeReference(queryParameter.type, resolveTypeById),
-            }),
-            {}
-        ),
-        headers: endpointDefinition.headers.reduce(
-            (acc, header) => ({
+                [queryParameter.key]: value,
+            };
+        }, {}),
+        headers: endpointDefinition.headers.reduce((acc, header) => {
+            const value = generateExampleFromTypeReference(header.type, resolveTypeById);
+            if (value == null) {
+                return acc;
+            }
+            return {
                 ...acc,
-                [header.key]: generateExampleFromTypeReference(header.type, resolveTypeById),
-            }),
-            {}
-        ),
+                [header.key]: value,
+            };
+        }, {}),
         requestBody:
             endpointDefinition.request != null
                 ? generateHttpRequestBodyExample(endpointDefinition.request.type, resolveTypeById)

@@ -35,7 +35,10 @@ function generateExampleObject(
 ): Record<string, unknown> {
     const example: Record<string, unknown> = {};
     for (const property of getAllObjectProperties(object, resolveTypeById)) {
-        example[property.key] = generateExampleFromTypeReference(property.valueType, resolveTypeById);
+        const value = generateExampleFromTypeReference(property.valueType, resolveTypeById);
+        if (value != null) {
+            example[property.key] = value;
+        }
     }
     return example;
 }
@@ -78,7 +81,7 @@ export function generateExampleFromTypeReference(
         case "id":
             return generateExampleFromId(reference.value, resolveTypeById);
         case "optional":
-            return generateExampleFromTypeReference(reference.itemType, resolveTypeById);
+            return undefined;
         case "list":
             return [generateExampleFromTypeReference(reference.itemType, resolveTypeById)];
         case "set":
