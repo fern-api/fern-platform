@@ -23,8 +23,17 @@ interface DocsRegistrationInfo {
     s3FileInfos: Record<FilePath, S3FileInfo>;
 }
 
+const HAS_HTTPS_REGEX = /^https?:\/\//i;
+
+function getParsedUrl(domain: string): URL {
+    if (!HAS_HTTPS_REGEX.test(domain)) {
+        domain = "https://" + domain;
+    }
+    return new URL(domain);
+}
+
 function validateDocsDomain({ domain, config }: { domain: string; config: FdrConfig }): string {
-    const parsedUrl = new URL(domain);
+    const parsedUrl = getParsedUrl(domain);
     if (parsedUrl.hostname.endsWith(config.domainSuffix)) {
         return parsedUrl.hostname;
     }
@@ -52,7 +61,7 @@ function validateCustomDomains({ customDomains }: { customDomains: string[] }): 
 
     const parsedDomains: ParsedCustomDomain[] = [];
     for (const customDomain of customDomains) {
-        const parsedDomain = new URL(customDomain);
+        const parsedDomain = getParsedUrl(customDomain);
         parsedDomains.push({
             hostname: parsedDomain.hostname,
             path: parsedDomain.pathname,
