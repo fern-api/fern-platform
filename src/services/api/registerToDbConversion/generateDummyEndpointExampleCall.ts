@@ -7,6 +7,8 @@ import {
     generateHttpResponseBodyExample,
 } from "./generateHttpBodyExample";
 
+const MAX_OPTIONAL_EXAMPLES_FOR_QUERY_PARAMS = 2;
+
 export function generateDummyEndpointExampleCall(
     endpointDefinition: ApiV1Write.EndpointDefinition,
     apiDefinition: ApiV1Write.ApiDefinition
@@ -19,26 +21,31 @@ export function generateDummyEndpointExampleCall(
         return typeDefinition;
     };
 
+    const exampleQueryParameters: Record<string, unknown> = {};
+    let optionalCount = 0;
+    for (const queryParameter of endpointDefinition.queryParameters) {
+        const value = generateExampleFromTypeReference(
+            queryParameter.type,
+            resolveTypeById,
+            optionalCount >= MAX_OPTIONAL_EXAMPLES_FOR_QUERY_PARAMS
+        );
+        if (queryParameter.type.type === "optional") {
+            optionalCount += 1;
+        }
+        exampleQueryParameters[queryParameter.key] = value;
+    }
+
     const exampleEndpointCall: Omit<ApiV1Write.ExampleEndpointCall, "path"> = {
         pathParameters: endpointDefinition.path.pathParameters.reduce(
             (acc, pathParameter) => ({
                 ...acc,
-                [pathParameter.key]: generateExampleFromTypeReference(pathParameter.type, resolveTypeById),
+                [pathParameter.key]: generateExampleFromTypeReference(pathParameter.type, resolveTypeById, false),
             }),
             {}
         ),
-        queryParameters: endpointDefinition.queryParameters.reduce((acc, queryParameter) => {
-            const value = generateExampleFromTypeReference(queryParameter.type, resolveTypeById);
-            if (value == null) {
-                return acc;
-            }
-            return {
-                ...acc,
-                [queryParameter.key]: value,
-            };
-        }, {}),
+        queryParameters: exampleQueryParameters,
         headers: endpointDefinition.headers.reduce((acc, header) => {
-            const value = generateExampleFromTypeReference(header.type, resolveTypeById);
+            const value = generateExampleFromTypeReference(header.type, resolveTypeById, false);
             if (value == null) {
                 return acc;
             }

@@ -7,9 +7,9 @@ export function generateHttpRequestBodyExample(
 ): unknown {
     switch (type.type) {
         case "object":
-            return generateExampleObject(type, resolveTypeById);
+            return generateExampleObject(type, resolveTypeById, true);
         case "reference":
-            return generateExampleFromTypeReference(type.value, resolveTypeById);
+            return generateExampleFromTypeReference(type.value, resolveTypeById, true);
         case "fileUpload":
             return "<filename>";
     }
@@ -21,9 +21,9 @@ export function generateHttpResponseBodyExample(
 ): unknown {
     switch (type.type) {
         case "object":
-            return generateExampleObject(type, resolveTypeById);
+            return generateExampleObject(type, resolveTypeById, false);
         case "reference":
-            return generateExampleFromTypeReference(type.value, resolveTypeById);
+            return generateExampleFromTypeReference(type.value, resolveTypeById, false);
         case "fileDownload":
             return "";
     }
@@ -31,11 +31,12 @@ export function generateHttpResponseBodyExample(
 
 function generateExampleObject(
     object: ApiV1Write.ObjectType,
-    resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition
+    resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition,
+    ignoreOptionals: boolean
 ): Record<string, unknown> {
     const example: Record<string, unknown> = {};
     for (const property of getAllObjectProperties(object, resolveTypeById)) {
-        const value = generateExampleFromTypeReference(property.valueType, resolveTypeById);
+        const value = generateExampleFromTypeReference(property.valueType, resolveTypeById, ignoreOptionals);
         if (value != null) {
             example[property.key] = value;
         }
@@ -45,27 +46,28 @@ function generateExampleObject(
 
 function generateExampleFromId(
     id: ApiV1Write.TypeId,
-    resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition
+    resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition,
+    ignoreOptionals: boolean
 ): unknown {
     const shape = resolveTypeById(id).shape;
     switch (shape.type) {
         case "object":
-            return generateExampleObject(shape, resolveTypeById);
+            return generateExampleObject(shape, resolveTypeById, ignoreOptionals);
         case "undiscriminatedUnion":
             if (shape.variants[0] == null) {
                 return {};
             }
-            return generateExampleFromTypeReference(shape.variants[0].type, resolveTypeById);
+            return generateExampleFromTypeReference(shape.variants[0].type, resolveTypeById, ignoreOptionals);
         case "discriminatedUnion":
             if (shape.variants[0] == null) {
                 return {};
             }
             return {
                 [shape.discriminant]: shape.variants[0].discriminantValue,
-                ...generateExampleObject(shape.variants[0].additionalProperties, resolveTypeById),
+                ...generateExampleObject(shape.variants[0].additionalProperties, resolveTypeById, ignoreOptionals),
             };
         case "alias":
-            return generateExampleFromTypeReference(shape.value, resolveTypeById);
+            return generateExampleFromTypeReference(shape.value, resolveTypeById, ignoreOptionals);
         case "enum":
             return shape.values[0]?.value ?? "";
     }
@@ -73,24 +75,27 @@ function generateExampleFromId(
 
 export function generateExampleFromTypeReference(
     reference: ApiV1Write.TypeReference,
-    resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition
+    resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition,
+    ignoreOptionals: boolean
 ): unknown {
     switch (reference.type) {
         case "primitive":
             return generateExamplePrimitive(reference.value);
         case "id":
-            return generateExampleFromId(reference.value, resolveTypeById);
+            return generateExampleFromId(reference.value, resolveTypeById, ignoreOptionals);
         case "optional":
-            return undefined;
+            return ignoreOptionals
+                ? undefined
+                : generateExampleFromTypeReference(reference.itemType, resolveTypeById, ignoreOptionals);
         case "list":
-            return [generateExampleFromTypeReference(reference.itemType, resolveTypeById)];
+            return [generateExampleFromTypeReference(reference.itemType, resolveTypeById, ignoreOptionals)];
         case "set":
-            return [generateExampleFromTypeReference(reference.itemType, resolveTypeById)];
+            return [generateExampleFromTypeReference(reference.itemType, resolveTypeById, ignoreOptionals)];
         case "map":
             return {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                [generateExampleFromTypeReference(reference.keyType, resolveTypeById) as any]:
-                    generateExampleFromTypeReference(reference.valueType, resolveTypeById),
+                [generateExampleFromTypeReference(reference.keyType, resolveTypeById, ignoreOptionals) as any]:
+                    generateExampleFromTypeReference(reference.valueType, resolveTypeById, ignoreOptionals),
             };
         case "unknown":
             return {};
