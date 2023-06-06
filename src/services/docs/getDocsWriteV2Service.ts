@@ -10,6 +10,7 @@ import { InvalidCustomDomainError } from "../../generated/api/resources/docs/res
 import { InvalidDomainError } from "../../generated/api/resources/docs/resources/v2/resources/write/errors/InvalidDomainError";
 import { WriteService } from "../../generated/api/resources/docs/resources/v2/resources/write/service/WriteService";
 import * as FernSerializers from "../../generated/serialization";
+import { getParsedUrl } from "../../getParsedUrl";
 import { writeBuffer } from "../../serdeUtils";
 import { transformWriteDocsDefinitionToDb } from "./transformDocsDefinitionToDb";
 
@@ -21,15 +22,6 @@ interface DocsRegistrationInfo {
     apiId: ApiId;
     orgId: OrgId;
     s3FileInfos: Record<FilePath, S3FileInfo>;
-}
-
-const HAS_HTTPS_REGEX = /^https?:\/\//i;
-
-function getParsedUrl(domain: string): URL {
-    if (!HAS_HTTPS_REGEX.test(domain)) {
-        domain = "https://" + domain;
-    }
-    return new URL(domain);
 }
 
 function validateDocsDomain({ domain, config }: { domain: string; config: FdrConfig }): string {

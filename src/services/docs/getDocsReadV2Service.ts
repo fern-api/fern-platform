@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { S3Utils } from "../../S3Utils";
 import { DomainNotRegisteredError } from "../../generated/api/resources/docs/resources/v1/resources/read/errors/DomainNotRegisteredError";
 import { ReadService as ReadV2Service } from "../../generated/api/resources/docs/resources/v2/resources/read/service/ReadService";
+import { getParsedUrl } from "../../getParsedUrl";
 import { readBuffer } from "../../serdeUtils";
 import { getDocsDefinition, getDocsForDomain, parseDocsDbDefinition } from "./getDocsReadService";
 
@@ -10,7 +11,7 @@ const DOCS_DOMAIN_REGX = /^([^.\s]+)/;
 export function getDocsReadV2Service(prisma: PrismaClient, s3Utils: S3Utils): ReadV2Service {
     return new ReadV2Service({
         getDocsForUrl: async (req, res) => {
-            const parsedUrl = new URL(req.body.url);
+            const parsedUrl = getParsedUrl(req.body.url);
             const possibleDocs = await prisma.docsV2.findMany({
                 where: {
                     domain: parsedUrl.hostname,
