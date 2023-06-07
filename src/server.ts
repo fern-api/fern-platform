@@ -2,9 +2,9 @@ import { PrismaClient } from "@prisma/client";
 import cors from "cors";
 import express from "express";
 import { AuthUtilsImpl } from "./AuthUtils";
-import { S3UtilsImpl } from "./S3Utils";
 import { getConfig } from "./config";
 import { register } from "./generated";
+import { S3UtilsImpl } from "./S3Utils";
 import { getReadApiService } from "./services/api/getApiReadService";
 import { getRegisterApiService } from "./services/api/getRegisterApiService";
 import { getDocsReadService } from "./services/docs/getDocsReadService";
@@ -39,18 +39,30 @@ async function main() {
         register(app, {
             docs: {
                 v1: {
-                    read: getDocsReadService(prisma, s3Utils),
-                    write: getDocsWriteService(prisma, authUtils, s3Utils),
+                    read: {
+                        _root: getDocsReadService(prisma, s3Utils),
+                    },
+                    write: {
+                        _root: getDocsWriteService(prisma, authUtils, s3Utils),
+                    },
                 },
                 v2: {
-                    read: getDocsReadV2Service(prisma, s3Utils),
-                    write: getDocsWriteV2Service(prisma, authUtils, s3Utils, config),
+                    read: {
+                        _root: getDocsReadV2Service(prisma, s3Utils),
+                    },
+                    write: {
+                        _root: getDocsWriteV2Service(prisma, authUtils, s3Utils, config),
+                    },
                 },
             },
             api: {
                 v1: {
-                    read: getReadApiService(prisma),
-                    register: getRegisterApiService(prisma, authUtils),
+                    read: {
+                        _root: getReadApiService(prisma),
+                    },
+                    register: {
+                        _root: getRegisterApiService(prisma, authUtils),
+                    },
                 },
             },
         });
