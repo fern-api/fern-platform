@@ -75,19 +75,21 @@ types:
 
   DocsConfig:
     properties:
+      title: optional<string>
       navigation: NavigationConfig
       logo: optional<FileId>
+      favicon: optional<FileId>
       colors: optional<ColorsConfig>
       navbarLinks: optional<list<NavbarLink>>
-  
-  NavbarLink: 
-    properties: 
+
+  NavbarLink:
+    properties:
       text: string
       url: string
       style: optional<NavbarLinkStyle>
-   
-  NavbarLinkStyle: 
-    enum: 
+
+  NavbarLinkStyle:
+    enum:
       - PRIMARY
 
   NavigationConfig:
@@ -130,9 +132,9 @@ types:
     properties:
       sdks: list<PublishedSdk>
       postman: optional<PublishedPostmanCollection>
-  
-  PublishedPostmanCollection: 
-    properties: 
+
+  PublishedPostmanCollection:
+    properties:
       url: string
       githubRepoName: optional<string>
 
@@ -159,17 +161,17 @@ types:
       packageName: string
       githubRepoName: string
       version: string
-  
-  InvalidDomainErrorBody: 
-    properties: 
-      requiredDomainSuffix: 
+
+  InvalidDomainErrorBody:
+    properties:
+      requiredDomainSuffix:
         type: string
         docs: Value the domain should end with (i.e. docs.buildwithfern.com or dev.docs.buildwithfern.com)
-  
-  InvliadCustomDomainErrorBody: 
-    properties: 
+
+  InvliadCustomDomainErrorBody:
+    properties:
       overlappingDomains: list<OverlappingCustomDomains>
-  
+
   OverlappingCustomDomains: list<string>
 
 errors:

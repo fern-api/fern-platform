@@ -63,6 +63,8 @@ export async function getDocsDefinition({
             logo: parsedDocsDbDefinition.config.logo,
             colors: parsedDocsDbDefinition.config.colors,
             navbarLinks: parsedDocsDbDefinition.config.navbarLinks ?? [],
+            title: parsedDocsDbDefinition.config.title,
+            favicon: parsedDocsDbDefinition.config.favicon,
         },
         apis: Object.fromEntries(
             await Promise.all(

@@ -6,7 +6,7 @@ imports:
   apiReadV1Endpoint: ../../../api/v1/read/endpoint.yml
   docsReadV1: ../read/__package__.yml
 
-types: 
+types:
   DocsDefinitionDb:
     union:
       v1: DocsDefinitionDbV1
@@ -27,11 +27,13 @@ types:
       files: map<docsReadV1.FileId, DbFileInfo>
       config: DocsDbConfig
       colors: optional<docsReadV1.ColorsConfig>
-  
+
   DocsDbConfig:
     properties:
+      title: optional<string>
       navigation: docsReadV1.NavigationConfig
       logo: optional<docsReadV1.FileId>
+      favicon: optional<docsReadV1.FileId>
       colors: optional<docsReadV1.ColorsConfig>
       navbarLinks: optional<list<docsReadV1.NavbarLink>>
 

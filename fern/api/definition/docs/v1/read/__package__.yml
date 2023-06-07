@@ -20,7 +20,7 @@ service:
       response: DocsDefinition
       errors:
         - DomainNotRegisteredError
-    
+
     getDocsForDomain:
       availability: deprecated
       method: POST
@@ -41,8 +41,8 @@ types:
 
   FileId: string
 
-  LoadDocsForUrlResponse: 
-    properties: 
+  LoadDocsForUrlResponse:
+    properties:
       baseUrl: string
       definition: DocsDefinition
 
@@ -59,8 +59,10 @@ types:
 
   DocsConfig:
     properties:
+      title: optional<string>
       navigation: NavigationConfig
       logo: optional<FileId>
+      favicon: optional<FileId>
       colors: optional<ColorsConfig>
       navbarLinks: list<NavbarLink>
 
@@ -79,23 +81,23 @@ types:
       id: PageId
       title: string
       urlSlug: string
-  
-  NavbarLink: 
-    properties: 
+
+  NavbarLink:
+    properties:
       text: string
       url: string
       style: NavbarLinkStyle
       linkType: LinkType
-  
+
   LinkType:
-    union: 
+    union:
       github: {}
       discord: {}
       twitter: {}
       generic: {}
-  
-  NavbarLinkStyle: 
-    enum: 
+
+  NavbarLinkStyle:
+    enum:
       - PRIMARY
       - DEFAULT
 
@@ -126,9 +128,9 @@ types:
     properties:
       sdks: list<PublishedSdk>
       postman: optional<PublishedPostmanCollection>
-  
-  PublishedPostmanCollection: 
-    properties: 
+
+  PublishedPostmanCollection:
+    properties:
       url: string
       githubRepo: optional<GitHubRepo>
 
