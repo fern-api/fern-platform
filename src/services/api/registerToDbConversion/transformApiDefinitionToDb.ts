@@ -2,6 +2,7 @@ import HTTPSnippet from "httpsnippet";
 import { kebabCase } from "lodash";
 import { WithoutQuestionMarks } from "../../../WithoutQuestionMarks";
 import { FernRegistry } from "../../../generated";
+import * as ApiV1Write from "../../../generated/api/resources/api/resources/v1/resources/register";
 import { generateDummyEndpointExampleCall } from "./generateDummyEndpointExampleCall";
 
 export function transformApiDefinitionForDb(
@@ -78,11 +79,16 @@ function transformEndpoint({
     writeShape: FernRegistry.api.v1.register.EndpointDefinition;
     apiDefinition: FernRegistry.api.v1.register.ApiDefinition;
 }): WithoutQuestionMarks<FernRegistry.api.v1.db.DbEndpointDefinition> {
-    const examples =
-        writeShape.examples.length > 0
-            ? writeShape.examples
-            : [generateDummyEndpointExampleCall(writeShape, apiDefinition)];
-
+    let examples: ApiV1Write.ExampleEndpointCall[] = [];
+    if (writeShape.examples.length > 0) {
+        examples = [...writeShape.examples];
+    } else {
+        try {
+            examples = [generateDummyEndpointExampleCall(writeShape, apiDefinition)];
+        } catch (err) {
+            console.error("Failed to generate example", err);
+        }
+    }
     return {
         environments: writeShape.environments,
         defaultEnvironment: writeShape.defaultEnvironment,

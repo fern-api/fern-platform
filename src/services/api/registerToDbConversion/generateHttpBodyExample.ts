@@ -140,11 +140,25 @@ function getAllObjectProperties(
     return [
         ...object.properties,
         ...object.extends.flatMap((typeId) => {
-            const type = resolveTypeById(typeId);
+            let type = resolveTypeById(typeId);
+            if (type.shape.type === "alias" && type.shape.value.type === "id") {
+                type = resolveAlias(type.shape.value.value, resolveTypeById);
+            }
             if (type.shape.type !== "object") {
                 throw new Error("Object extends non-object " + typeId);
             }
             return getAllObjectProperties(type.shape, resolveTypeById);
         }),
     ];
+}
+
+function resolveAlias(
+    typeId: ApiV1Write.TypeId,
+    resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition
+) {
+    const resolvedTypeDefinition = resolveTypeById(typeId);
+    if (resolvedTypeDefinition.shape.type === "alias" && resolvedTypeDefinition.shape.value.type === "id") {
+        return resolveTypeById(resolvedTypeDefinition.shape.value.value);
+    }
+    return resolvedTypeDefinition;
 }
