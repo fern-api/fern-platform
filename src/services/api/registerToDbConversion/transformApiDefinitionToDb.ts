@@ -1,4 +1,3 @@
-import HTTPSnippet from "httpsnippet";
 import { kebabCase } from "lodash";
 import { WithoutQuestionMarks } from "../../../WithoutQuestionMarks";
 import { FernRegistry } from "../../../generated";
@@ -115,13 +114,10 @@ function transformEndpoint({
 // exported for testing
 export function transformExampleEndpointCall({
     writeShape,
-    endpointDefinition,
 }: {
     writeShape: FernRegistry.api.v1.register.ExampleEndpointCall;
     endpointDefinition: FernRegistry.api.v1.register.EndpointDefinition;
 }): WithoutQuestionMarks<FernRegistry.api.v1.read.ExampleEndpointCall> {
-    const httpSnippet = createHttpSnippet(endpointDefinition, writeShape);
-
     return {
         description: writeShape.description,
         path: writeShape.path,
@@ -132,50 +128,11 @@ export function transformExampleEndpointCall({
         responseStatusCode: writeShape.responseStatusCode,
         responseBody: writeShape.responseBody,
         codeExamples: {
-            nodeAxios: convertHttpSnippet(httpSnippet, "node", "axios"),
+            nodeAxios: "",
         },
         requestBodyV2: undefined,
         responseBodyV2: undefined,
     };
-}
-
-function createHttpSnippet(
-    endpointDefinition: FernRegistry.api.v1.register.EndpointDefinition,
-    writeShape: FernRegistry.api.v1.register.ExampleEndpointCall
-) {
-    return new HTTPSnippet({
-        method: endpointDefinition.method,
-        url: `http://localhost:8080${writeShape.path}`,
-        postData: {
-            mimeType: "application/json",
-            text: writeShape.requestBody != null ? JSON.stringify(writeShape.requestBody) : "",
-        },
-        headers: Object.entries(writeShape.headers).map(([name, value]) => ({
-            name,
-            value: `${value}`,
-        })),
-        cookies: [],
-        httpVersion: "2.1",
-        queryString: Object.entries(writeShape.queryParameters).map(([name, value]) => ({
-            name,
-            value: `${value}`,
-        })),
-        headersSize: -1,
-        bodySize: -1,
-    });
-}
-
-function convertHttpSnippet(
-    httpSnippet: HTTPSnippet,
-    target: string,
-    client?: string,
-    options?: HTTPSnippet.Options
-): string {
-    const example = httpSnippet.convert(target, client, options);
-    if (example === false) {
-        throw new Error(`Failed to create ${target} example`);
-    }
-    return example;
 }
 
 function entries<T extends object>(obj: T): [keyof T, T[keyof T]][] {

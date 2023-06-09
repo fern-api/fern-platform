@@ -62,20 +62,7 @@ describe("transformEndpointEndpointCall", () => {
 
         expect(transformed).toEqual({
             codeExamples: {
-                nodeAxios: `var axios = require("axios").default;
-
-var options = {
-  method: 'POST',
-  url: 'http://localhost:8080/prefix/path-param-value/suffix',
-  params: {queryParam: '123'},
-  headers: {header: 'true'}
-};
-
-axios.request(options).then(function (response) {
-  console.log(response.data);
-}).catch(function (error) {
-  console.error(error);
-});`,
+                nodeAxios: "",
             },
             description: undefined,
             headers: {
