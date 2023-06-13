@@ -1,4 +1,5 @@
 FROM node:18.1.0-alpine AS builder
+ENV DEBUG=express:*
 
 COPY package.json .npmrc tsconfig.json yarn.lock prisma/ /app/
 
