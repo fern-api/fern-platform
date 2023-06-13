@@ -12,6 +12,7 @@ export function getDocsReadV2Service(prisma: PrismaClient, s3Utils: S3Utils): Re
     return new ReadV2Service({
         getDocsForUrl: async (req, res) => {
             const parsedUrl = getParsedUrl(req.body.url);
+            console.debug(__filename, "Loading possible docs");
             const possibleDocs = await prisma.docsV2.findMany({
                 where: {
                     domain: parsedUrl.hostname,
@@ -20,12 +21,17 @@ export function getDocsReadV2Service(prisma: PrismaClient, s3Utils: S3Utils): Re
                     updatedTime: "desc",
                 },
             });
+            console.debug(__filename, "Loaded possible docs");
             const docsDomain = possibleDocs.find((registeredDocs) => {
                 return parsedUrl.pathname.startsWith(registeredDocs.path);
             });
             if (docsDomain != null) {
+                console.debug(__filename, "Reading buffer for docsDomain.docsDefinition");
                 const docsDefinitionJson = readBuffer(docsDomain.docsDefinition);
+                console.debug(__filename, "Read buffer for docsDomain.docsDefinition");
+                console.debug(__filename, "Parsing docsDefinitionJson");
                 const parsedDocsDbDefinition = await parseDocsDbDefinition(docsDefinitionJson);
+                console.debug(__filename, "Parsed docsDefinitionJson");
                 return res.send({
                     baseUrl: {
                         domain: docsDomain.domain,
