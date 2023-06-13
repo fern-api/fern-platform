@@ -24,7 +24,11 @@ export function getReadApiService(prisma: PrismaClient): ReadService {
 }
 
 export async function convertDbApiDefinitionToRead(buffer: Buffer): Promise<FernRegistryApiRead.ApiDefinition> {
+    console.debug(__filename, "Reading buffer to convert db api definition to read");
     const apiDefinitionJson = readBuffer(buffer);
+    console.debug(__filename, "Read buffer to convert db api definition to read");
+    console.debug(__filename, "Parsing db api definition");
     const dbApiDefinition = await FernSerializers.api.v1.db.DbApiDefinition.parseOrThrow(apiDefinitionJson);
+    console.debug(__filename, "Parsed db api definition");
     return transformApiDefinitionForReading(dbApiDefinition);
 }
