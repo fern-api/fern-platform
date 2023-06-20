@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 import { AuthUtils } from "../../AuthUtils";
-import { S3FileInfo, S3Utils } from "../../S3Utils";
 import { FdrConfig } from "../../config";
 import { ApiId, OrgId } from "../../generated/api";
 import { DocsRegistrationId, FilePath } from "../../generated/api/resources/docs/resources/v1/resources/write";
@@ -9,8 +8,8 @@ import { DocsRegistrationIdNotFound } from "../../generated/api/resources/docs/r
 import { InvalidCustomDomainError } from "../../generated/api/resources/docs/resources/v2/resources/write/errors/InvalidCustomDomainError";
 import { InvalidDomainError } from "../../generated/api/resources/docs/resources/v2/resources/write/errors/InvalidDomainError";
 import { WriteService } from "../../generated/api/resources/docs/resources/v2/resources/write/service/WriteService";
-import * as FernSerializers from "../../generated/serialization";
 import { getParsedUrl } from "../../getParsedUrl";
+import { S3FileInfo, S3Utils } from "../../S3Utils";
 import { writeBuffer } from "../../serdeUtils";
 import { transformWriteDocsDefinitionToDb } from "./transformDocsDefinitionToDb";
 
@@ -112,8 +111,7 @@ export function getDocsWriteV2Service(
                     dbDocsDefinition.referencedApis
                 ).join(", ")}`
             );
-            const jsonDocsDefinition = await FernSerializers.docs.v1.db.DocsDefinitionDb.jsonOrThrow(dbDocsDefinition);
-            const bufferDocsDefinition = writeBuffer(jsonDocsDefinition);
+            const bufferDocsDefinition = writeBuffer(dbDocsDefinition);
             await prisma.$transaction(async (tx) => {
                 await tx.docsV2.upsert({
                     where: {

@@ -1,10 +1,10 @@
 import { kebabCase } from "lodash";
-import { S3FileInfo } from "../../S3Utils";
-import { WithoutQuestionMarks } from "../../WithoutQuestionMarks";
 import { FernRegistry } from "../../generated";
 import * as FernRegistryDocsDb from "../../generated/api/resources/docs/resources/v1/resources/db";
 import * as FernRegistryDocsRead from "../../generated/api/resources/docs/resources/v1/resources/read";
 import { FileId, FilePath } from "../../generated/api/resources/docs/resources/v1/resources/write";
+import { S3FileInfo } from "../../S3Utils";
+import { WithoutQuestionMarks } from "../../WithoutQuestionMarks";
 
 export function transformWriteDocsDefinitionToDb({
     writeShape,
@@ -24,7 +24,7 @@ export function transformWriteDocsDefinitionToDb({
     });
     return {
         type: "v2",
-        referencedApis: new Set(getReferencedApiDefinitionIds(navigationConfig)),
+        referencedApis: getReferencedApiDefinitionIds(navigationConfig),
         files: transformedFiles,
         config: {
             navigation: navigationConfig,
