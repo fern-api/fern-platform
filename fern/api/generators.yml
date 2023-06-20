@@ -34,7 +34,7 @@ groups:
       - read
     generators:
       - name: fernapi/fern-typescript-browser-sdk
-        version: 0.6.3
+        version: 0.7.1-4-gaf955d38
         output:
           location: npm
           url: npm.buildwithfern.com
@@ -43,4 +43,4 @@ groups:
           useBrandedStringAliases: true
           neverThrowErrors: true
           includeUtilsOnUnionMembers: true
-          includeOtherInUnionTypes: true
+          noSerdeLayer: true
