@@ -5,6 +5,7 @@ describe("transformEndpointEndpointCall", () => {
     it("correctly transforms", () => {
         const endpointDefinition: FernRegistry.api.v1.register.EndpointDefinition = {
             id: "endpoint-id",
+            description: "This is some ```markdown```",
             method: FernRegistry.api.v1.register.HttpMethod.Post,
             path: {
                 parts: [

@@ -36,6 +36,7 @@ function transformSubpackage({
         pointsTo: dbShape.pointsTo,
         urlSlug: dbShape.urlSlug,
         description: dbShape.description,
+        htmlDescription: dbShape.htmlDescription,
     };
 }
 
@@ -58,6 +59,7 @@ function transformEndpoint({
         response: dbShape.response,
         examples: dbShape.examples,
         description: dbShape.description,
+        htmlDescription: dbShape.htmlDescription,
         authed: dbShape.authed ?? false,
     };
 }

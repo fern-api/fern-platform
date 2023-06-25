@@ -4,3 +4,4 @@ types:
   WithDescription:
     properties:
       description: optional<string>
+      htmlDescription: optional<string> 

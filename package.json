@@ -18,6 +18,7 @@
     "express": "^4.18.1",
     "httpsnippet": "^2.0.0",
     "lodash": "^4.17.21",
+    "marked": "^5.1.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
@@ -28,6 +29,7 @@
     "@types/express": "^4.17.13",
     "@types/httpsnippet": "^1.23.1",
     "@types/lodash": "^4.14.194",
+    "@types/marked": "^5.0.0",
     "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.51.0",

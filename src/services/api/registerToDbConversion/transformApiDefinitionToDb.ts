@@ -1,5 +1,7 @@
 import { kebabCase } from "lodash";
+import { marked } from "marked";
 import { WithoutQuestionMarks } from "../../../WithoutQuestionMarks";
+import { assertNever } from "../../../assertNever";
 import { FernRegistry } from "../../../generated";
 import * as ApiV1Write from "../../../generated/api/resources/api/resources/v1/resources/register";
 import { generateDummyEndpointExampleCall } from "./generateDummyEndpointExampleCall";
@@ -27,7 +29,12 @@ export function transformApiDefinitionForDb(
             subpackages: writeShape.rootPackage.subpackages,
             types: writeShape.rootPackage.types,
         },
-        types: writeShape.types,
+        types: Object.fromEntries(
+            Object.entries(writeShape.types).map(([typeId, typeDefinition]) => {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                return [typeId, transformTypeDefinition({ writeShape: typeDefinition })];
+            })
+        ),
         subpackages: entries(writeShape.subpackages).reduce<
             Record<FernRegistry.api.v1.read.SubpackageId, FernRegistry.api.v1.db.DbApiDefinitionSubpackage>
         >((subpackages, [subpackageId, subpackage]) => {
@@ -68,6 +75,7 @@ function transformSubpackage({
         pointsTo: writeShape.pointsTo,
         urlSlug: kebabCase(writeShape.name),
         description: writeShape.description,
+        htmlDescription: getHtmlDescription(writeShape.description),
     };
 }
 
@@ -107,6 +115,7 @@ function transformEndpoint({
             })
         ),
         description: writeShape.description,
+        htmlDescription: getHtmlDescription(writeShape.description),
         authed: writeShape.auth,
     };
 }
@@ -120,6 +129,7 @@ export function transformExampleEndpointCall({
 }): WithoutQuestionMarks<FernRegistry.api.v1.read.ExampleEndpointCall> {
     return {
         description: writeShape.description,
+        htmlDescription: getHtmlDescription(writeShape.description),
         path: writeShape.path,
         pathParameters: writeShape.pathParameters,
         queryParameters: writeShape.queryParameters,
@@ -133,6 +143,118 @@ export function transformExampleEndpointCall({
         requestBodyV2: undefined,
         responseBodyV2: undefined,
     };
+}
+
+function transformTypeDefinition({
+    writeShape,
+}: {
+    writeShape: FernRegistry.api.v1.register.TypeDefinition;
+}): WithoutQuestionMarks<FernRegistry.api.v1.read.TypeDefinition> {
+    return {
+        description: writeShape.description,
+        htmlDescription: getHtmlDescription(writeShape.description),
+        name: writeShape.name,
+        shape: transformShape({ writeShape: writeShape.shape }),
+    };
+}
+
+function transformShape({
+    writeShape,
+}: {
+    writeShape: FernRegistry.api.v1.register.TypeShape;
+}): WithoutQuestionMarks<FernRegistry.api.v1.read.TypeShape> {
+    switch (writeShape.type) {
+        case "object":
+            return {
+                type: "object",
+                extends: writeShape.extends,
+                properties: writeShape.properties.map((property) => transformProperty({ writeShape: property })),
+            };
+        case "alias":
+            return {
+                type: "alias",
+                value: writeShape.value,
+            };
+        case "enum":
+            return {
+                type: "enum",
+                values: writeShape.values.map((enumValue) => transformEnumValue({ writeShape: enumValue })),
+            };
+        case "discriminatedUnion":
+            return {
+                type: "discriminatedUnion",
+                discriminant: writeShape.discriminant,
+                variants: writeShape.variants.map((variant) => transformDiscriminatedVariant({ writeShape: variant })),
+            };
+        case "undiscriminatedUnion":
+            return {
+                type: "undiscriminatedUnion",
+                variants: writeShape.variants.map((variant) =>
+                    transformUnDiscriminatedVariant({ writeShape: variant })
+                ),
+            };
+        default:
+            assertNever(writeShape);
+    }
+}
+
+function transformProperty({
+    writeShape,
+}: {
+    writeShape: FernRegistry.api.v1.register.ObjectProperty;
+}): WithoutQuestionMarks<FernRegistry.api.v1.read.ObjectProperty> {
+    return {
+        description: writeShape.description,
+        htmlDescription: getHtmlDescription(writeShape.description),
+        key: writeShape.key,
+        valueType: writeShape.valueType,
+    };
+}
+
+function transformEnumValue({
+    writeShape,
+}: {
+    writeShape: FernRegistry.api.v1.register.EnumValue;
+}): WithoutQuestionMarks<FernRegistry.api.v1.read.EnumValue> {
+    return {
+        description: writeShape.description,
+        htmlDescription: getHtmlDescription(writeShape.description),
+        value: writeShape.value,
+    };
+}
+
+function transformDiscriminatedVariant({
+    writeShape,
+}: {
+    writeShape: FernRegistry.api.v1.register.DiscriminatedUnionVariant;
+}): WithoutQuestionMarks<FernRegistry.api.v1.read.DiscriminatedUnionVariant> {
+    return {
+        description: writeShape.description,
+        htmlDescription: getHtmlDescription(writeShape.description),
+        discriminantValue: writeShape.discriminantValue,
+        additionalProperties: {
+            extends: writeShape.additionalProperties.extends,
+            properties: writeShape.additionalProperties.properties.map((property) =>
+                transformProperty({ writeShape: property })
+            ),
+        },
+    };
+}
+
+function transformUnDiscriminatedVariant({
+    writeShape,
+}: {
+    writeShape: FernRegistry.api.v1.register.UndiscriminatedUnionVariant;
+}): WithoutQuestionMarks<FernRegistry.api.v1.read.UndiscriminatedUnionVariant> {
+    return {
+        description: writeShape.description,
+        htmlDescription: getHtmlDescription(writeShape.description),
+        type: writeShape.type,
+    };
+}
+
+function getHtmlDescription(description: string | undefined): string | undefined {
+    return description != null ? marked(description, { mangle: false, headerIds: false }) : undefined;
 }
 
 function entries<T extends object>(obj: T): [keyof T, T[keyof T]][] {
