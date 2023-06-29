@@ -52,7 +52,7 @@ export class S3UtilsImpl implements S3Utils {
             Bucket: this.config.s3BucketName,
             Key: key,
         });
-        return getSignedUrl(this.client, command, { expiresIn: 3600 });
+        return getSignedUrl(this.client, command, { expiresIn: 604800 });
     }
 
     async getPresignedUploadUrls({
