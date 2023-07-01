@@ -1,15 +1,15 @@
 import { GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { v4 as uuidv4 } from "uuid";
-import { FdrConfig } from "./config";
-import { FilePath, FileS3UploadUrl } from "./generated/api/resources/docs/resources/v1/resources/write";
+import type { FdrApplication } from "../app";
+import { FilePath, FileS3UploadUrl } from "../generated/api/resources/docs/resources/v1/resources/write";
 
 export interface S3FileInfo {
     presignedUrl: FileS3UploadUrl;
     key: string;
 }
 
-export interface S3Utils {
+export interface S3Service {
     getPresignedUploadUrls({
         domain,
         filepaths,
@@ -21,35 +21,24 @@ export interface S3Utils {
     getPresignedDownloadUrl({ key }: { key: string }): Promise<string>;
 }
 
-export class S3UtilsImpl implements S3Utils {
-    private config: FdrConfig;
+export class S3ServiceImpl implements S3Service {
     private client: S3Client;
 
-    constructor(config: FdrConfig) {
-        this.config = config;
-        if (config.s3UrlOverride != null) {
-            this.client = new S3Client({
-                endpoint: config.s3UrlOverride,
-                region: config.s3BucketRegion,
-                credentials: {
-                    accessKeyId: config.awsAccessKey,
-                    secretAccessKey: config.awsSecretKey,
-                },
-            });
-        } else {
-            this.client = new S3Client({
-                region: config.s3BucketRegion,
-                credentials: {
-                    accessKeyId: config.awsAccessKey,
-                    secretAccessKey: config.awsSecretKey,
-                },
-            });
-        }
+    constructor(private readonly app: FdrApplication) {
+        const { config } = app;
+        this.client = new S3Client({
+            ...(config.s3UrlOverride != null ? { endpoint: config.s3UrlOverride } : {}),
+            region: config.s3BucketRegion,
+            credentials: {
+                accessKeyId: config.awsAccessKey,
+                secretAccessKey: config.awsSecretKey,
+            },
+        });
     }
 
     async getPresignedDownloadUrl({ key }: { key: string }): Promise<string> {
         const command = new GetObjectCommand({
-            Bucket: this.config.s3BucketName,
+            Bucket: this.app.config.s3BucketName,
             Key: key,
         });
         return getSignedUrl(this.client, command, { expiresIn: 604800 });
@@ -88,7 +77,7 @@ export class S3UtilsImpl implements S3Utils {
     }): Promise<{ url: string; key: string }> {
         const key = this.constructS3Key({ domain, time, filepath });
         const command = new PutObjectCommand({
-            Bucket: this.config.s3BucketName,
+            Bucket: this.app.config.s3BucketName,
             Key: key,
         });
         return {

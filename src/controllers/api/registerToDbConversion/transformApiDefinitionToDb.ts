@@ -1,9 +1,8 @@
 import { kebabCase } from "lodash";
 import { marked } from "marked";
-import { WithoutQuestionMarks } from "../../../WithoutQuestionMarks";
-import { assertNever } from "../../../assertNever";
 import { FernRegistry } from "../../../generated";
 import * as ApiV1Write from "../../../generated/api/resources/api/resources/v1/resources/register";
+import { assertNever, type WithoutQuestionMarks } from "../../../util";
 import { generateDummyEndpointExampleCall } from "./generateDummyEndpointExampleCall";
 
 export function transformApiDefinitionForDb(

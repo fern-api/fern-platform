@@ -1,21 +1,21 @@
 import { PrismaClient } from "@prisma/client";
 import express from "express";
 import http from "http";
-import { AuthUtils } from "../../AuthUtils";
-import { FdrConfig } from "../../config";
+import { FdrApplication } from "src/app";
+import { type FdrConfig } from "../../app";
+import { getReadApiService } from "../../controllers/api/getApiReadService";
+import { getRegisterApiService } from "../../controllers/api/getRegisterApiService";
+import { getDocsReadService } from "../../controllers/docs/getDocsReadService";
+import { getDocsReadV2Service } from "../../controllers/docs/getDocsReadV2Service";
+import { getDocsWriteService } from "../../controllers/docs/getDocsWriteService";
+import { getDocsWriteV2Service } from "../../controllers/docs/getDocsWriteV2Service";
 import { register } from "../../generated";
-import { S3UtilsImpl } from "../../S3Utils";
-import { getReadApiService } from "../../services/api/getApiReadService";
-import { getRegisterApiService } from "../../services/api/getRegisterApiService";
-import { getDocsReadService } from "../../services/docs/getDocsReadService";
-import { getDocsReadV2Service } from "../../services/docs/getDocsReadV2Service";
-import { getDocsWriteService } from "../../services/docs/getDocsWriteService";
-import { getDocsWriteV2Service } from "../../services/docs/getDocsWriteV2Service";
+import { type AuthService } from "../../services/AuthService";
 import { FernRegistry, FernRegistryClient } from "../generated";
 
 const PORT = 9999;
 
-class MockAuthUtils implements AuthUtils {
+class MockAuthService implements AuthService {
     async checkUserBelongsToOrg(): Promise<void> {
         return;
     }
@@ -33,7 +33,6 @@ const prisma = new PrismaClient({
 let server: http.Server | undefined;
 
 beforeAll(async () => {
-    const authUtils = new MockAuthUtils();
     const config: FdrConfig = {
         awsAccessKey: "",
         awsSecretKey: "",
@@ -42,23 +41,27 @@ beforeAll(async () => {
         venusUrl: "",
         s3UrlOverride: "http://s3-mock:9090",
         domainSuffix: ".docs.buildwithfern.com",
+        algoliaAppId: "",
+        algoliaAdminApiKey: "",
     };
-    const s3Utils = new S3UtilsImpl(config);
+    const serverApp = new FdrApplication(config, {
+        auth: new MockAuthService(),
+    });
     register(app, {
         docs: {
             v1: {
-                read: { _root: getDocsReadService(prisma, s3Utils) },
-                write: { _root: getDocsWriteService(prisma, authUtils, s3Utils) },
+                read: { _root: getDocsReadService(serverApp) },
+                write: { _root: getDocsWriteService(serverApp) },
             },
             v2: {
-                read: { _root: getDocsReadV2Service(prisma, s3Utils) },
-                write: { _root: getDocsWriteV2Service(prisma, authUtils, s3Utils, config) },
+                read: { _root: getDocsReadV2Service(serverApp) },
+                write: { _root: getDocsWriteV2Service(serverApp) },
             },
         },
         api: {
             v1: {
-                read: { _root: getReadApiService(prisma) },
-                register: { _root: getRegisterApiService(prisma, authUtils) },
+                read: { _root: getReadApiService(serverApp) },
+                register: { _root: getRegisterApiService(serverApp) },
             },
         },
     });

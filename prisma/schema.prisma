@@ -33,6 +33,7 @@ model DocsV2 {
   updatedTime    DateTime @updatedAt
   domain         String
   path           String
+  algoliaIndex   String?
   docsDefinition Bytes
 
   @@id([domain, path])

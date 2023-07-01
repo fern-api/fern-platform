@@ -1,12 +1,11 @@
-import { PrismaClient } from "@prisma/client";
+import type { FdrApplication } from "src/app";
 import { v4 as uuidv4 } from "uuid";
-import { AuthUtils } from "../../AuthUtils";
 import { OrgId } from "../../generated/api";
 import { DocsRegistrationId, FilePath } from "../../generated/api/resources/docs/resources/v1/resources/write";
 import { DocsRegistrationIdNotFound } from "../../generated/api/resources/docs/resources/v1/resources/write/errors/DocsRegistrationIdNotFound";
 import { WriteService } from "../../generated/api/resources/docs/resources/v1/resources/write/service/WriteService";
-import { S3FileInfo, S3Utils } from "../../S3Utils";
-import { writeBuffer } from "../../serdeUtils";
+import { type S3FileInfo } from "../../services/S3Service";
+import { writeBuffer } from "../../util";
 import { transformWriteDocsDefinitionToDb } from "./transformDocsDefinitionToDb";
 
 const DOCS_REGISTRATIONS: Record<DocsRegistrationId, DocsRegistrationInfo> = {};
@@ -17,12 +16,15 @@ interface DocsRegistrationInfo {
     s3FileInfos: Record<FilePath, S3FileInfo>;
 }
 
-export function getDocsWriteService(prisma: PrismaClient, authUtils: AuthUtils, s3Utils: S3Utils): WriteService {
+export function getDocsWriteService(app: FdrApplication): WriteService {
     return new WriteService({
         startDocsRegister: async (req, res) => {
-            await authUtils.checkUserBelongsToOrg({ authHeader: req.headers.authorization, orgId: req.body.orgId });
+            await app.services.auth.checkUserBelongsToOrg({
+                authHeader: req.headers.authorization,
+                orgId: req.body.orgId,
+            });
             const docsRegistrationId = uuidv4();
-            const s3FileInfos = await s3Utils.getPresignedUploadUrls({
+            const s3FileInfos = await app.services.s3.getPresignedUploadUrls({
                 domain: req.body.domain,
                 filepaths: req.body.filepaths,
             });
@@ -45,7 +47,7 @@ export function getDocsWriteService(prisma: PrismaClient, authUtils: AuthUtils, 
             if (docsRegistrationInfo == null) {
                 throw new DocsRegistrationIdNotFound();
             }
-            await authUtils.checkUserBelongsToOrg({
+            await app.services.auth.checkUserBelongsToOrg({
                 authHeader: req.headers.authorization,
                 orgId: docsRegistrationInfo.orgId,
             });
@@ -58,7 +60,7 @@ export function getDocsWriteService(prisma: PrismaClient, authUtils: AuthUtils, 
                     dbDocsDefinition.referencedApis
                 ).join(", ")}`
             );
-            await prisma.docs.upsert({
+            await app.services.db.prisma.docs.upsert({
                 create: {
                     url: docsRegistrationInfo.domain,
                     docsDefinition: writeBuffer(dbDocsDefinition),

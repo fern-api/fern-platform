@@ -1,33 +1,30 @@
-import { PrismaClient } from "@prisma/client";
+import type { FdrApplication } from "src/app";
 import { FernRegistry } from "../../generated";
 import { DomainNotRegisteredError } from "../../generated/api/resources/docs/resources/v1/resources/read";
 import { ReadService } from "../../generated/api/resources/docs/resources/v1/resources/read/service/ReadService";
-import { S3Utils } from "../../S3Utils";
-import { readBuffer } from "../../serdeUtils";
+import { readBuffer } from "../../util";
 import { convertDbApiDefinitionToRead } from "../api/getApiReadService";
 
-export function getDocsReadService(prisma: PrismaClient, s3Utils: S3Utils): ReadService {
+export function getDocsReadService(app: FdrApplication): ReadService {
     return new ReadService({
         getDocsForDomainLegacy: async (req, res) => {
-            return res.send(await getDocsForDomain({ domain: req.params.domain, prisma, s3Utils }));
+            return res.send(await getDocsForDomain({ app, domain: req.params.domain }));
         },
         getDocsForDomain: async (req, res) => {
-            return res.send(await getDocsForDomain({ domain: req.body.domain, prisma, s3Utils }));
+            return res.send(await getDocsForDomain({ app, domain: req.body.domain }));
         },
     });
 }
 
 export async function getDocsForDomain({
+    app,
     domain,
-    prisma,
-    s3Utils,
 }: {
+    app: FdrApplication;
     domain: string;
-    prisma: PrismaClient;
-    s3Utils: S3Utils;
 }): Promise<FernRegistry.docs.v1.read.DocsDefinition> {
     console.debug(__filename, "Finding first docs for domain", domain);
-    const docs = await prisma.docs.findFirst({
+    const docs = await app.services.db.prisma.docs.findFirst({
         where: {
             url: domain,
         },
@@ -43,19 +40,17 @@ export async function getDocsForDomain({
     const docsDbDefinition = migrateDocsDbDefinition(docsDefinitionJson);
     console.debug(__filename, "Parse docs definition for domain", domain);
 
-    return getDocsDefinition({ docsDbDefinition, prisma, s3Utils });
+    return getDocsDefinition({ app, docsDbDefinition });
 }
 
 export async function getDocsDefinition({
+    app,
     docsDbDefinition,
-    prisma,
-    s3Utils,
 }: {
+    app: FdrApplication;
     docsDbDefinition: FernRegistry.docs.v1.db.DocsDefinitionDb;
-    prisma: PrismaClient;
-    s3Utils: S3Utils;
 }): Promise<FernRegistry.docs.v1.read.DocsDefinition> {
-    const apiDefinitions = await prisma.apiDefinitionsV2.findMany({
+    const apiDefinitions = await app.services.db.prisma.apiDefinitionsV2.findMany({
         where: {
             apiDefinitionId: {
                 in: Array.from(docsDbDefinition.referencedApis),
@@ -85,7 +80,7 @@ export async function getDocsDefinition({
             await Promise.all(
                 Object.entries(docsDbDefinition.files).map(async ([fileId, fileDbInfo]) => {
                     console.debug(__filename, "Gettings S3 download URL", fileId);
-                    const s3DownloadUrl = await s3Utils.getPresignedDownloadUrl({ key: fileDbInfo.s3Key });
+                    const s3DownloadUrl = await app.services.s3.getPresignedDownloadUrl({ key: fileDbInfo.s3Key });
                     console.debug(__filename, "Gettings S3 download URL", fileId);
                     return [fileId, s3DownloadUrl];
                 })

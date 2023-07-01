@@ -1,5 +1,5 @@
-import { WithoutQuestionMarks } from "../../../WithoutQuestionMarks";
 import { FernRegistry } from "../../../generated";
+import { type WithoutQuestionMarks } from "../../../util";
 
 export function transformApiDefinitionForReading(
     dbShape: FernRegistry.api.v1.db.DbApiDefinition

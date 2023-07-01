@@ -73,6 +73,8 @@ export class FdrDeployStack extends Stack {
                     S3_BUCKET_NAME: fdrBucket.bucketName,
                     S3_BUCKET_REGION: fdrBucket.stack.region,
                     DOMAIN_SUFFIX: environmentType === "DEV" ? "docs.dev.buildwithfern.com" : "docs.buildwithfern.com",
+                    ALGOLIA_APP_ID: getEnvironmentVariableOrThrow("ALGOLIA_APP_ID"),
+                    ALGOLIA_ADMIN_API_KEY: getEnvironmentVariableOrThrow("ALGOLIA_ADMIN_API_KEY"),
                 },
                 containerName: CONTAINER_NAME,
                 containerPort: 8080,

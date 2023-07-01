@@ -1,16 +1,13 @@
-import { PrismaClient } from "@prisma/client";
 import cors from "cors";
 import express from "express";
-import { AuthUtilsImpl } from "./AuthUtils";
-import { getConfig } from "./config";
+import { FdrApplication, getConfig } from "./app";
+import { getReadApiService } from "./controllers/api/getApiReadService";
+import { getRegisterApiService } from "./controllers/api/getRegisterApiService";
+import { getDocsReadService } from "./controllers/docs/getDocsReadService";
+import { getDocsReadV2Service } from "./controllers/docs/getDocsReadV2Service";
+import { getDocsWriteService } from "./controllers/docs/getDocsWriteService";
+import { getDocsWriteV2Service } from "./controllers/docs/getDocsWriteV2Service";
 import { register } from "./generated";
-import { S3UtilsImpl } from "./S3Utils";
-import { getReadApiService } from "./services/api/getApiReadService";
-import { getRegisterApiService } from "./services/api/getRegisterApiService";
-import { getDocsReadService } from "./services/docs/getDocsReadService";
-import { getDocsReadV2Service } from "./services/docs/getDocsReadV2Service";
-import { getDocsWriteService } from "./services/docs/getDocsWriteService";
-import { getDocsWriteV2Service } from "./services/docs/getDocsWriteV2Service";
 
 const PORT = 8080;
 
@@ -20,55 +17,50 @@ async function main() {
     try {
         const config = getConfig();
 
-        const app = express();
+        const expressApp = express();
 
-        app.use(cors());
+        expressApp.use(cors());
 
-        app.get("/health", (_req, res) => {
+        expressApp.get("/health", (_req, res) => {
             res.sendStatus(200);
         });
 
-        const prisma = new PrismaClient({
-            log: ["info", "warn", "error"],
-        });
+        const app = new FdrApplication(config);
 
-        const authUtils = new AuthUtilsImpl(config);
-        const s3Utils = new S3UtilsImpl(config);
-
-        app.use(express.json({ limit: "50mb" }));
-        register(app, {
+        expressApp.use(express.json({ limit: "50mb" }));
+        register(expressApp, {
             docs: {
                 v1: {
                     read: {
-                        _root: getDocsReadService(prisma, s3Utils),
+                        _root: getDocsReadService(app),
                     },
                     write: {
-                        _root: getDocsWriteService(prisma, authUtils, s3Utils),
+                        _root: getDocsWriteService(app),
                     },
                 },
                 v2: {
                     read: {
-                        _root: getDocsReadV2Service(prisma, s3Utils),
+                        _root: getDocsReadV2Service(app),
                     },
                     write: {
-                        _root: getDocsWriteV2Service(prisma, authUtils, s3Utils, config),
+                        _root: getDocsWriteV2Service(app),
                     },
                 },
             },
             api: {
                 v1: {
                     read: {
-                        _root: getReadApiService(prisma),
+                        _root: getReadApiService(app),
                     },
                     register: {
-                        _root: getRegisterApiService(prisma, authUtils),
+                        _root: getRegisterApiService(app),
                     },
                 },
             },
         });
 
         console.log(`Listening for requests on port ${PORT}`);
-        app.listen(PORT);
+        expressApp.listen(PORT);
     } catch (e) {
         console.error("Server failed to start...", e);
     }

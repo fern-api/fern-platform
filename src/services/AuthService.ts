@@ -1,17 +1,13 @@
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
-import { FdrConfig } from "./config";
-import { UnauthorizedError, UserNotInOrgError } from "./generated/api";
+import type { FdrApplication, FdrConfig } from "../app";
+import { UnauthorizedError, UserNotInOrgError } from "../generated/api";
 
-export interface AuthUtils {
+export interface AuthService {
     checkUserBelongsToOrg({ authHeader, orgId }: { authHeader: string | undefined; orgId: string }): Promise<void>;
 }
 
-export class AuthUtilsImpl implements AuthUtils {
-    private config: FdrConfig;
-
-    constructor(config: FdrConfig) {
-        this.config = config;
-    }
+export class AuthServiceImpl implements AuthService {
+    constructor(private readonly app: FdrApplication) {}
 
     async checkUserBelongsToOrg({
         authHeader,
@@ -25,7 +21,7 @@ export class AuthUtilsImpl implements AuthUtils {
         }
         const token = getTokenFromAuthHeader(authHeader);
         const venus = getVenusClient({
-            config: this.config,
+            config: this.app.config,
             token,
         });
         const response = await venus.organization.isMember(FernVenusApi.OrganizationId(orgId));

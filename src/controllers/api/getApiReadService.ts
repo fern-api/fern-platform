@@ -1,15 +1,15 @@
-import { PrismaClient } from "@prisma/client";
+import type { FdrApplication } from "src/app";
 import { FernRegistry } from "../../generated";
 import * as FernRegistryApiRead from "../../generated/api/resources/api/resources/v1/resources/read";
 import { ApiDoesNotExistError } from "../../generated/api/resources/api/resources/v1/resources/read/errors/ApiDoesNotExistError";
 import { ReadService } from "../../generated/api/resources/api/resources/v1/resources/read/service/ReadService";
-import { readBuffer } from "../../serdeUtils";
+import { readBuffer } from "../../util";
 import { transformApiDefinitionForReading } from "./dbToReadConversion/transformDbApiDefinitionToRead";
 
-export function getReadApiService(prisma: PrismaClient): ReadService {
+export function getReadApiService(app: FdrApplication): ReadService {
     return new ReadService({
         getApi: async (req, res) => {
-            const apiDefinition = await prisma.apiDefinitionsV2.findFirst({
+            const apiDefinition = await app.services.db.prisma.apiDefinitionsV2.findFirst({
                 where: {
                     apiDefinitionId: req.params.apiDefinitionId,
                 },

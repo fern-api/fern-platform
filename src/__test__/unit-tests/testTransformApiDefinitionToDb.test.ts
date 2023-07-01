@@ -1,5 +1,5 @@
+import { transformApiDefinitionForDb } from "../../controllers/api/registerToDbConversion/transformApiDefinitionToDb";
 import * as FernRegistryApiWrite from "../../generated/api/resources/api/resources/v1/resources/register";
-import { transformApiDefinitionForDb } from "../../services/api/registerToDbConversion/transformApiDefinitionToDb";
 
 it("api register", async () => {
     const apiDefinition: FernRegistryApiWrite.ApiDefinition = {

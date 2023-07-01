@@ -5,6 +5,8 @@ const S3_BUCKET_NAME_ENV_VAR = "S3_BUCKET_NAME";
 const S3_BUCKET_REGION_ENV_VAR = "S3_BUCKET_REGION";
 const S3_URL_OVERRIDE_ENV_VAR = "S3_URL_OVERRIDE";
 const DOMAIN_SUFFIX_ENV_VAR = "DOMAIN_SUFFIX";
+const ALGOLIA_APP_ID_ENV_VAR = "ALGOLIA_APP_ID";
+const ALGOLIA_ADMIN_API_KEY_ENV_VAR = "ALGOLIA_ADMIN_API_KEY";
 
 export interface FdrConfig {
     venusUrl: string;
@@ -14,6 +16,8 @@ export interface FdrConfig {
     s3BucketRegion: string;
     s3UrlOverride: string | undefined;
     domainSuffix: string;
+    algoliaAppId: string;
+    algoliaAdminApiKey: string;
 }
 
 export function getConfig(): FdrConfig {
@@ -25,6 +29,8 @@ export function getConfig(): FdrConfig {
         s3BucketRegion: getEnvironmentVariableOrThrow(S3_BUCKET_REGION_ENV_VAR),
         s3UrlOverride: process.env[S3_URL_OVERRIDE_ENV_VAR],
         domainSuffix: getEnvironmentVariableOrThrow(DOMAIN_SUFFIX_ENV_VAR),
+        algoliaAppId: getEnvironmentVariableOrThrow(ALGOLIA_APP_ID_ENV_VAR),
+        algoliaAdminApiKey: getEnvironmentVariableOrThrow(ALGOLIA_ADMIN_API_KEY_ENV_VAR),
     };
 }
 

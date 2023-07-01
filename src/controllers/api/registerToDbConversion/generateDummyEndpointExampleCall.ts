@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
-import { assertNever } from "../../../assertNever";
 import * as ApiV1Write from "../../../generated/api/resources/api/resources/v1/resources/register";
+import { assertNever } from "../../../util";
 import {
     generateExampleFromTypeReference,
     generateHttpRequestBodyExample,

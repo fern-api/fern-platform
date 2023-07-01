@@ -14,6 +14,7 @@
     "@fern-api/venus-api-sdk": "0.0.20",
     "@prisma/client": "4.15.0",
     "@types/jest": "^28.1.6",
+    "algoliasearch": "^4.18.0",
     "cors": "^2.8.5",
     "express": "^4.18.1",
     "httpsnippet": "^2.0.0",

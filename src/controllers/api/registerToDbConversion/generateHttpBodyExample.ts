@@ -1,5 +1,5 @@
-import { assertNever } from "../../../assertNever";
 import * as ApiV1Write from "../../../generated/api/resources/api/resources/v1/resources/register";
+import { assertNever } from "../../../util";
 
 export function generateHttpRequestBodyExample(
     type: ApiV1Write.HttpRequestBodyShape,
