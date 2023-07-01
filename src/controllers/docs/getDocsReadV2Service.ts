@@ -1,7 +1,7 @@
-import type { FdrApplication } from "src/app";
 import { DomainNotRegisteredError } from "../../generated/api/resources/docs/resources/v1/resources/read/errors/DomainNotRegisteredError";
 import { ReadService as ReadV2Service } from "../../generated/api/resources/docs/resources/v2/resources/read/service/ReadService";
 import { getParsedUrl, readBuffer } from "../../util";
+import type { FdrApplication } from "../../app";
 import { getDocsDefinition, getDocsForDomain, migrateDocsDbDefinition } from "./getDocsReadService";
 
 const DOCS_DOMAIN_REGX = /^([^.\s]+)/;

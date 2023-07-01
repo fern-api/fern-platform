@@ -1,4 +1,4 @@
-import { AlgoliaServiceImpl, type AlgoliaService } from "src/services/AlgoliaService";
+import { AlgoliaServiceImpl, type AlgoliaService } from "../services/AlgoliaService";
 import { AuthServiceImpl, type AuthService } from "../services/AuthService";
 import { DatabaseServiceImpl, type DatabaseService } from "../services/DatabaseService";
 import { S3ServiceImpl, type S3Service } from "../services/S3Service";

@@ -1,9 +1,9 @@
-import type { FdrApplication } from "src/app";
 import { FernRegistry } from "../../generated";
 import * as FernRegistryApiRead from "../../generated/api/resources/api/resources/v1/resources/read";
 import { ApiDoesNotExistError } from "../../generated/api/resources/api/resources/v1/resources/read/errors/ApiDoesNotExistError";
 import { ReadService } from "../../generated/api/resources/api/resources/v1/resources/read/service/ReadService";
 import { readBuffer } from "../../util";
+import type { FdrApplication } from "../../app";
 import { transformApiDefinitionForReading } from "./dbToReadConversion/transformDbApiDefinitionToRead";
 
 export function getReadApiService(app: FdrApplication): ReadService {

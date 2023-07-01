@@ -1,7 +1,7 @@
-import type { FdrApplication } from "src/app";
 import { v4 as uuidv4 } from "uuid";
 import { RegisterService } from "../../generated/api/resources/api/resources/v1/resources/register/service/RegisterService";
 import { writeBuffer } from "../../util";
+import type { FdrApplication } from "../../app";
 import { transformApiDefinitionForDb } from "./registerToDbConversion/transformApiDefinitionToDb";
 
 export function getRegisterApiService(app: FdrApplication): RegisterService {
