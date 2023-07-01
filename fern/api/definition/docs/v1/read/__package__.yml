@@ -41,6 +41,8 @@ types:
 
   FileId: string
 
+  AlgoliaSearchIndex: string
+
   LoadDocsForUrlResponse:
     properties:
       baseUrl: string
@@ -48,6 +50,7 @@ types:
 
   DocsDefinition:
     properties:
+      algoliaSearchIndex: optional<AlgoliaSearchIndex>
       pages: map<PageId, PageContent>
       apis: map<rootCommons.ApiDefinitionId, apiReadV1.ApiDefinition>
       files: map<FileId, Url>
@@ -162,6 +165,20 @@ types:
     properties:
       name: string
       url: string
+
+  AlgoliaRecordType:
+    enum:
+      - endpoint
+      - page
+
+  AlgoliaRecord:
+    audiences:
+      - read
+    properties:
+      type: AlgoliaRecordType
+      title: string
+      subtitle: string
+      path: string
 
 errors:
   DomainNotRegisteredError:
