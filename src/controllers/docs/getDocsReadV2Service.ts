@@ -1,7 +1,7 @@
+import type { FdrApplication } from "../../app";
 import { DomainNotRegisteredError } from "../../generated/api/resources/docs/resources/v1/resources/read/errors/DomainNotRegisteredError";
 import { ReadService as ReadV2Service } from "../../generated/api/resources/docs/resources/v2/resources/read/service/ReadService";
 import { getParsedUrl, readBuffer } from "../../util";
-import type { FdrApplication } from "../../app";
 import { getDocsDefinition, getDocsForDomain, migrateDocsDbDefinition } from "./getDocsReadService";
 
 const DOCS_DOMAIN_REGX = /^([^.\s]+)/;
@@ -29,12 +29,13 @@ export function getDocsReadV2Service(app: FdrApplication): ReadV2Service {
                 console.debug(__filename, "Read buffer for docsDomain.docsDefinition");
                 console.debug(__filename, "Parsing docsDefinitionJson");
                 const docsDbDefinition = migrateDocsDbDefinition(docsDefinitionJson);
+                const { definition } = await getDocsDefinition({ app, docsDbDefinition, docsV2: docsDomain });
                 return res.send({
                     baseUrl: {
                         domain: docsDomain.domain,
                         basePath: docsDomain.path === "" ? undefined : docsDomain.path,
                     },
-                    definition: await getDocsDefinition({ app, docsDbDefinition }),
+                    definition,
                 });
             } else {
                 // delegate to V1
@@ -42,12 +43,13 @@ export function getDocsReadV2Service(app: FdrApplication): ReadV2Service {
                 if (v1Domain == null) {
                     throw new DomainNotRegisteredError();
                 }
+                const { definition } = await getDocsForDomain({ app, domain: v1Domain });
                 return res.send({
                     baseUrl: {
                         domain: parsedUrl.hostname,
                         basePath: undefined,
                     },
-                    definition: await getDocsForDomain({ app, domain: v1Domain }),
+                    definition,
                 });
             }
         },
