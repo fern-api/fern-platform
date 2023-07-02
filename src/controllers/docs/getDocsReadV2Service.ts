@@ -29,7 +29,7 @@ export function getDocsReadV2Service(app: FdrApplication): ReadV2Service {
                 console.debug(__filename, "Read buffer for docsDomain.docsDefinition");
                 console.debug(__filename, "Parsing docsDefinitionJson");
                 const docsDbDefinition = migrateDocsDbDefinition(docsDefinitionJson);
-                const { definition } = await getDocsDefinition({ app, docsDbDefinition, docsV2: docsDomain });
+                const definition = await getDocsDefinition({ app, docsDbDefinition, docsV2: docsDomain });
                 return res.send({
                     baseUrl: {
                         domain: docsDomain.domain,
@@ -43,7 +43,7 @@ export function getDocsReadV2Service(app: FdrApplication): ReadV2Service {
                 if (v1Domain == null) {
                     throw new DomainNotRegisteredError();
                 }
-                const { definition } = await getDocsForDomain({ app, domain: v1Domain });
+                const definition = await getDocsForDomain({ app, domain: v1Domain });
                 return res.send({
                     baseUrl: {
                         domain: parsedUrl.hostname,

@@ -9,22 +9,23 @@ import { convertDbApiDefinitionToRead } from "../api/getApiReadService";
 export function getDocsReadService(app: FdrApplication): ReadService {
     return new ReadService({
         getDocsForDomainLegacy: async (req, res) => {
-            const { definition } = await getDocsForDomain({ app, domain: req.params.domain });
+            const definition = await getDocsForDomain({ app, domain: req.params.domain });
             return res.send(definition);
         },
         getDocsForDomain: async (req, res) => {
-            const { definition } = await getDocsForDomain({ app, domain: req.body.domain });
+            const definition = await getDocsForDomain({ app, domain: req.body.domain });
             return res.send(definition);
         },
     });
 }
 
-interface DocsInfo {
-    definition: FernRegistry.docs.v1.read.DocsDefinition;
-    algoliaSearchIndex: string | null;
-}
-
-export async function getDocsForDomain({ app, domain }: { app: FdrApplication; domain: string }): Promise<DocsInfo> {
+export async function getDocsForDomain({
+    app,
+    domain,
+}: {
+    app: FdrApplication;
+    domain: string;
+}): Promise<FernRegistry.docs.v1.read.DocsDefinition> {
     console.debug(__filename, "Finding first docs for domain", domain);
 
     const [docs, docsV2] = await Promise.all([
@@ -62,7 +63,7 @@ export async function getDocsDefinition({
     app: FdrApplication;
     docsDbDefinition: FernRegistry.docs.v1.db.DocsDefinitionDb;
     docsV2: DocsV2 | null;
-}): Promise<DocsInfo> {
+}): Promise<FernRegistry.docs.v1.read.DocsDefinition> {
     const apiDefinitions = await app.services.db.prisma.apiDefinitionsV2.findMany({
         where: {
             apiDefinitionId: {
@@ -71,38 +72,36 @@ export async function getDocsDefinition({
         },
     });
     return {
-        algoliaSearchIndex: docsV2?.algoliaIndex ?? null,
-        definition: {
-            config: {
-                navigation: docsDbDefinition.config.navigation,
-                logo: docsDbDefinition.config.logo,
-                colors: docsDbDefinition.config.colors,
-                navbarLinks: docsDbDefinition.config.navbarLinks ?? [],
-                title: docsDbDefinition.config.title,
-                favicon: docsDbDefinition.config.favicon,
-            },
-            apis: Object.fromEntries(
-                await Promise.all(
-                    apiDefinitions.map(async (apiDefinition) => {
-                        console.debug(__filename, "Converting API Definition to 'read'", apiDefinition.apiDefinitionId);
-                        const parsedApiDefinition = await convertDbApiDefinitionToRead(apiDefinition.definition);
-                        console.debug(__filename, "Converted API Definition to 'read'", apiDefinition.apiDefinitionId);
-                        return [apiDefinition.apiDefinitionId, parsedApiDefinition];
-                    })
-                )
-            ),
-            files: Object.fromEntries(
-                await Promise.all(
-                    Object.entries(docsDbDefinition.files).map(async ([fileId, fileDbInfo]) => {
-                        console.debug(__filename, "Gettings S3 download URL", fileId);
-                        const s3DownloadUrl = await app.services.s3.getPresignedDownloadUrl({ key: fileDbInfo.s3Key });
-                        console.debug(__filename, "Gettings S3 download URL", fileId);
-                        return [fileId, s3DownloadUrl];
-                    })
-                )
-            ),
-            pages: docsDbDefinition.pages,
+        algoliaSearchIndex: docsV2?.algoliaIndex ?? undefined,
+        config: {
+            navigation: docsDbDefinition.config.navigation,
+            logo: docsDbDefinition.config.logo,
+            colors: docsDbDefinition.config.colors,
+            navbarLinks: docsDbDefinition.config.navbarLinks ?? [],
+            title: docsDbDefinition.config.title,
+            favicon: docsDbDefinition.config.favicon,
         },
+        apis: Object.fromEntries(
+            await Promise.all(
+                apiDefinitions.map(async (apiDefinition) => {
+                    console.debug(__filename, "Converting API Definition to 'read'", apiDefinition.apiDefinitionId);
+                    const parsedApiDefinition = await convertDbApiDefinitionToRead(apiDefinition.definition);
+                    console.debug(__filename, "Converted API Definition to 'read'", apiDefinition.apiDefinitionId);
+                    return [apiDefinition.apiDefinitionId, parsedApiDefinition];
+                })
+            )
+        ),
+        files: Object.fromEntries(
+            await Promise.all(
+                Object.entries(docsDbDefinition.files).map(async ([fileId, fileDbInfo]) => {
+                    console.debug(__filename, "Gettings S3 download URL", fileId);
+                    const s3DownloadUrl = await app.services.s3.getPresignedDownloadUrl({ key: fileDbInfo.s3Key });
+                    console.debug(__filename, "Gettings S3 download URL", fileId);
+                    return [fileId, s3DownloadUrl];
+                })
+            )
+        ),
+        pages: docsDbDefinition.pages,
     };
 }
 
