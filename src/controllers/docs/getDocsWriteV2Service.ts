@@ -6,8 +6,8 @@ import { DocsRegistrationIdNotFound } from "../../generated/api/resources/docs/r
 import { InvalidCustomDomainError } from "../../generated/api/resources/docs/resources/v2/resources/write/errors/InvalidCustomDomainError";
 import { InvalidDomainError } from "../../generated/api/resources/docs/resources/v2/resources/write/errors/InvalidDomainError";
 import { WriteService } from "../../generated/api/resources/docs/resources/v2/resources/write/service/WriteService";
-import { type S3FileInfo } from "../../services/S3Service";
 import { getAlgoliaRecords } from "../../services/algolia/getAlgoliaRecords";
+import { type S3FileInfo } from "../../services/s3";
 import { getParsedUrl, writeBuffer } from "../../util";
 import { transformWriteDocsDefinitionToDb } from "./transformDocsDefinitionToDb";
 
@@ -117,7 +117,7 @@ export function getDocsWriteV2Service(app: FdrApplication): WriteService {
                             path: "",
                         },
                     });
-                    const algoliaIndexCandidate = uuidv4();
+                    const algoliaIndexCandidate = docsRegistrationInfo.fernDomain;
                     if (docs) {
                         await tx.docsV2.updateMany({
                             where: {
@@ -184,9 +184,9 @@ export function getDocsWriteV2Service(app: FdrApplication): WriteService {
 
             const [records] = await Promise.all([
                 getAlgoliaRecords(dbDocsDefinition, (id) => app.services.db.getApiDefinition(id)),
-                app.services.algolia.deleteIndex(algoliaIndex),
+                app.services.algolia.clearIndexRecords(algoliaIndex),
             ]);
-            await app.services.algolia.indexRecords(algoliaIndex, records);
+            await app.services.algolia.saveIndexRecords(algoliaIndex, records);
 
             // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
             delete DOCS_REGISTRATIONS[req.params.docsRegistrationId];

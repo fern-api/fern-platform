@@ -3,7 +3,7 @@ import { FernRegistry } from "../../generated";
 import * as FernRegistryDocsDb from "../../generated/api/resources/docs/resources/v1/resources/db";
 import * as FernRegistryDocsRead from "../../generated/api/resources/docs/resources/v1/resources/read";
 import { FileId, FilePath } from "../../generated/api/resources/docs/resources/v1/resources/write";
-import { type S3FileInfo } from "../../services/S3Service";
+import { type S3FileInfo } from "../../services/s3";
 import { type WithoutQuestionMarks } from "../../util";
 
 export function transformWriteDocsDefinitionToDb({

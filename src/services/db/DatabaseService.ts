@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import type { FernRegistry } from "../generated";
+import type { FernRegistry } from "../../generated";
 
 export interface DatabaseService {
     readonly prisma: PrismaClient;

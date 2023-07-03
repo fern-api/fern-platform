@@ -1,7 +1,7 @@
 import { v4 as uuid } from "uuid";
 import type { FernRegistry } from "../../generated";
 import { type WithoutQuestionMarks } from "../../util";
-import { AlgoliaRecord } from "../AlgoliaService";
+import { type AlgoliaSearchRecord } from "./AlgoliaService";
 
 type ApiDefinitionLoader = (apiDefinitionId: string) => Promise<FernRegistry.api.v1.db.DbApiDefinition | null>;
 
@@ -21,7 +21,7 @@ async function getAlgoliaRecordsForNavigationItem(
     docsDefinition: WithoutQuestionMarks<FernRegistry.docs.v1.db.DocsDefinitionDb.V2>,
     loadApiDefinition: ApiDefinitionLoader,
     cumulativeSlugs: string[],
-    cumulativeRecords: AlgoliaRecord[],
+    cumulativeRecords: AlgoliaSearchRecord[],
     item: FernRegistry.docs.v1.read.NavigationItem
 ) {
     if (item.type === "section") {
@@ -65,10 +65,10 @@ async function getAlgoliaRecordsForNavigationItem(
 function getAlgoliaRecordsForApiDefinition(
     cumulativeSlugs: string[],
     apiDef: FernRegistry.api.v1.db.DbApiDefinition
-): AlgoliaRecord[] {
+): AlgoliaSearchRecord[] {
     const apiUrlSlug = cumulativeSlugs.join("/");
     const { subpackages } = apiDef;
-    const records: AlgoliaRecord[] = [];
+    const records: AlgoliaSearchRecord[] = [];
     Object.values(subpackages).forEach((subpackage) => {
         subpackage.endpoints.forEach((endpoint) => {
             if (endpoint.name || endpoint.description) {

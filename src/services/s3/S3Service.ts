@@ -1,8 +1,8 @@
 import { GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { v4 as uuidv4 } from "uuid";
-import type { FdrApplication } from "../app";
-import { FilePath, FileS3UploadUrl } from "../generated/api/resources/docs/resources/v1/resources/write";
+import type { FdrApplication } from "../../app";
+import { type FilePath, type FileS3UploadUrl } from "../../generated/api/resources/docs/resources/v1/resources/write";
 
 export interface S3FileInfo {
     presignedUrl: FileS3UploadUrl;

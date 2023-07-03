@@ -1,11 +1,11 @@
 import { v4 as uuidv4 } from "uuid";
+import type { FdrApplication } from "../../app";
 import { OrgId } from "../../generated/api";
 import { DocsRegistrationId, FilePath } from "../../generated/api/resources/docs/resources/v1/resources/write";
 import { DocsRegistrationIdNotFound } from "../../generated/api/resources/docs/resources/v1/resources/write/errors/DocsRegistrationIdNotFound";
 import { WriteService } from "../../generated/api/resources/docs/resources/v1/resources/write/service/WriteService";
-import { type S3FileInfo } from "../../services/S3Service";
+import { type S3FileInfo } from "../../services/s3";
 import { writeBuffer } from "../../util";
-import type { FdrApplication } from "../../app";
 import { transformWriteDocsDefinitionToDb } from "./transformDocsDefinitionToDb";
 
 const DOCS_REGISTRATIONS: Record<DocsRegistrationId, DocsRegistrationInfo> = {};
