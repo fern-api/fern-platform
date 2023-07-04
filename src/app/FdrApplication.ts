@@ -1,4 +1,5 @@
 import { AlgoliaServiceImpl, type AlgoliaService } from "../services/algolia";
+import { AlgoliaIndexDeleterServiceImpl, type AlgoliaIndexDeleterService } from "../services/algolia-index-deleter";
 import { AuthServiceImpl, type AuthService } from "../services/auth";
 import { DatabaseServiceImpl, type DatabaseService } from "../services/db";
 import { S3ServiceImpl, type S3Service } from "../services/s3";
@@ -9,6 +10,7 @@ export interface FdrServices {
     readonly db: DatabaseService;
     readonly algolia: AlgoliaService;
     readonly s3: S3Service;
+    readonly algoliaIndexDeleter: AlgoliaIndexDeleterService;
 }
 
 export class FdrApplication {
@@ -20,6 +22,7 @@ export class FdrApplication {
             db: services?.db ?? new DatabaseServiceImpl(),
             algolia: services?.algolia ?? new AlgoliaServiceImpl(this),
             s3: services?.s3 ?? new S3ServiceImpl(this),
+            algoliaIndexDeleter: services?.algoliaIndexDeleter ?? new AlgoliaIndexDeleterServiceImpl(this),
         };
     }
 }

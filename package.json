@@ -21,6 +21,7 @@
     "httpsnippet": "^2.0.0",
     "lodash": "^4.17.21",
     "marked": "^5.1.0",
+    "node-cron": "^3.0.2",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
@@ -33,6 +34,7 @@
     "@types/httpsnippet": "^1.23.1",
     "@types/lodash": "^4.14.194",
     "@types/marked": "^5.0.0",
+    "@types/node-cron": "^3.0.8",
     "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.51.0",

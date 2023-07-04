@@ -1,6 +1,7 @@
 import cors from "cors";
 import express from "express";
 import { FdrApplication, getConfig } from "./app";
+import { registerBackgroundTasks } from "./background";
 import { getReadApiService } from "./controllers/api/getApiReadService";
 import { getRegisterApiService } from "./controllers/api/getRegisterApiService";
 import { getDocsReadService } from "./controllers/docs/getDocsReadService";
@@ -58,6 +59,8 @@ async function main() {
                 },
             },
         });
+
+        registerBackgroundTasks(app);
 
         console.log(`Listening for requests on port ${PORT}`);
         expressApp.listen(PORT);

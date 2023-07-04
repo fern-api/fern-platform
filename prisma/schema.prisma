@@ -38,3 +38,10 @@ model DocsV2 {
 
   @@id([domain, path])
 }
+
+model OverwrittenAlgoliaIndex {
+  overwrittenTime DateTime @default(now())
+  indexId         String   @unique
+
+  @@map("overwritten_algolia_indexes")
+}

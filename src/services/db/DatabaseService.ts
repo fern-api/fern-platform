@@ -5,6 +5,8 @@ export interface DatabaseService {
     readonly prisma: PrismaClient;
 
     getApiDefinition(id: string): Promise<FernRegistry.api.v1.db.DbApiDefinition | null>;
+
+    markIndexForDeletion(indexId: string): Promise<void>;
 }
 
 export class DatabaseServiceImpl implements DatabaseService {
@@ -28,5 +30,11 @@ export class DatabaseServiceImpl implements DatabaseService {
         } catch {
             return null;
         }
+    }
+
+    public async markIndexForDeletion(indexId: string) {
+        await this.prisma.overwrittenAlgoliaIndex.create({
+            data: { indexId },
+        });
     }
 }
