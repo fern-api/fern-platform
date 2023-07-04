@@ -6,7 +6,7 @@ import { DocsRegistrationIdNotFound } from "../../generated/api/resources/docs/r
 import { InvalidCustomDomainError } from "../../generated/api/resources/docs/resources/v2/resources/write/errors/InvalidCustomDomainError";
 import { InvalidDomainError } from "../../generated/api/resources/docs/resources/v2/resources/write/errors/InvalidDomainError";
 import { WriteService } from "../../generated/api/resources/docs/resources/v2/resources/write/service/WriteService";
-import { getAlgoliaRecords } from "../../services/algolia/getAlgoliaRecords";
+import { generateAlgoliaRecords } from "../../services/algolia/generateAlgoliaRecords";
 import { type S3FileInfo } from "../../services/s3";
 import { getParsedUrl, writeBuffer } from "../../util";
 import { transformWriteDocsDefinitionToDb } from "./transformDocsDefinitionToDb";
@@ -109,84 +109,97 @@ export function getDocsWriteV2Service(app: FdrApplication): WriteService {
             );
             const bufferDocsDefinition = writeBuffer(dbDocsDefinition);
 
-            const { algoliaIndex } = await app.services.db.prisma.$transaction(async (tx) => {
-                const writeOriginalDocs = async () => {
-                    const docs = await tx.docsV2.findFirst({
-                        where: {
-                            domain: docsRegistrationInfo.fernDomain,
-                            path: "",
-                        },
-                    });
-                    const algoliaIndexCandidate = docsRegistrationInfo.fernDomain;
-                    if (docs) {
-                        await tx.docsV2.updateMany({
-                            where: {
-                                domain: docsRegistrationInfo.fernDomain,
-                                path: "",
-                            },
-                            data: {
-                                docsDefinition: bufferDocsDefinition,
-                                apiName: docsRegistrationInfo.apiId,
-                                orgID: docsRegistrationInfo.orgId,
-                                algoliaIndex: docs.algoliaIndex == null ? algoliaIndexCandidate : docs.algoliaIndex,
-                            },
-                        });
-                        return { algoliaIndex: docs.algoliaIndex ?? algoliaIndexCandidate };
-                    } else {
-                        await tx.docsV2.create({
-                            data: {
-                                docsDefinition: bufferDocsDefinition,
-                                domain: docsRegistrationInfo.fernDomain,
-                                path: "",
-                                apiName: docsRegistrationInfo.apiId,
-                                orgID: docsRegistrationInfo.orgId,
-                                algoliaIndex: algoliaIndexCandidate,
-                            },
-                        });
-                        return { algoliaIndex: algoliaIndexCandidate };
-                    }
-                };
+            const newAlgoliaIndex = `${docsRegistrationInfo.fernDomain}_${uuidv4()}`;
 
-                const writeCustomDomainDocs = async (algoliaIndex: string) => {
-                    await Promise.all(
-                        docsRegistrationInfo.customDomains.map(async (customDomain) => {
-                            await tx.docsV2.upsert({
+            const createNewIndex = async () => {
+                const records = await generateAlgoliaRecords(dbDocsDefinition, (id) =>
+                    app.services.db.getApiDefinition(id)
+                );
+                await app.services.algolia.saveIndexRecords(newAlgoliaIndex, records);
+            };
+
+            const updateDbDocs = async () => {
+                return await app.services.db.prisma.$transaction(async (tx) => {
+                    const writeOriginalDocs = async () => {
+                        const retrievePrevDocs = () =>
+                            tx.docsV2.findFirst({
+                                where: {
+                                    domain: docsRegistrationInfo.fernDomain,
+                                    path: "",
+                                },
+                            });
+
+                        const upsertDocs = () =>
+                            tx.docsV2.upsert({
                                 where: {
                                     domain_path: {
-                                        domain: customDomain.hostname,
-                                        path: customDomain.path,
+                                        domain: docsRegistrationInfo.fernDomain,
+                                        path: "",
                                     },
-                                },
-                                create: {
-                                    docsDefinition: bufferDocsDefinition,
-                                    domain: customDomain.hostname,
-                                    path: customDomain.path,
-                                    apiName: docsRegistrationInfo.apiId,
-                                    orgID: docsRegistrationInfo.orgId,
-                                    algoliaIndex,
                                 },
                                 update: {
                                     docsDefinition: bufferDocsDefinition,
                                     apiName: docsRegistrationInfo.apiId,
                                     orgID: docsRegistrationInfo.orgId,
-                                    algoliaIndex,
+                                    algoliaIndex: newAlgoliaIndex,
+                                },
+                                create: {
+                                    docsDefinition: bufferDocsDefinition,
+                                    domain: docsRegistrationInfo.fernDomain,
+                                    path: "",
+                                    apiName: docsRegistrationInfo.apiId,
+                                    orgID: docsRegistrationInfo.orgId,
+                                    algoliaIndex: newAlgoliaIndex,
                                 },
                             });
-                        })
-                    );
-                };
 
-                const { algoliaIndex } = await writeOriginalDocs();
-                await writeCustomDomainDocs(algoliaIndex);
+                        const [prevDocs, newDocs] = await Promise.all([retrievePrevDocs(), upsertDocs()]);
+                        return { prevDocs, newDocs };
+                    };
 
-                return { algoliaIndex };
-            });
+                    const writeCustomDomainDocs = async () => {
+                        await Promise.all(
+                            docsRegistrationInfo.customDomains.map(async (customDomain) => {
+                                await tx.docsV2.upsert({
+                                    where: {
+                                        domain_path: {
+                                            domain: customDomain.hostname,
+                                            path: customDomain.path,
+                                        },
+                                    },
+                                    create: {
+                                        docsDefinition: bufferDocsDefinition,
+                                        domain: customDomain.hostname,
+                                        path: customDomain.path,
+                                        apiName: docsRegistrationInfo.apiId,
+                                        orgID: docsRegistrationInfo.orgId,
+                                        algoliaIndex: newAlgoliaIndex,
+                                    },
+                                    update: {
+                                        docsDefinition: bufferDocsDefinition,
+                                        apiName: docsRegistrationInfo.apiId,
+                                        orgID: docsRegistrationInfo.orgId,
+                                        algoliaIndex: newAlgoliaIndex,
+                                    },
+                                });
+                            })
+                        );
+                    };
 
-            const [records] = await Promise.all([
-                getAlgoliaRecords(dbDocsDefinition, (id) => app.services.db.getApiDefinition(id)),
-                app.services.algolia.clearIndexRecords(algoliaIndex),
-            ]);
-            await app.services.algolia.saveIndexRecords(algoliaIndex, records);
+                    const [result] = await Promise.all([writeOriginalDocs(), writeCustomDomainDocs()]);
+                    return result;
+                });
+            };
+
+            const [{ prevDocs }] = await Promise.all([updateDbDocs(), createNewIndex()]);
+
+            const deletePreviousIndex = async () => {
+                if (prevDocs?.algoliaIndex) {
+                    await app.services.algolia.scheduleIndexDeletion(prevDocs.algoliaIndex);
+                }
+            };
+
+            await deletePreviousIndex();
 
             // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
             delete DOCS_REGISTRATIONS[req.params.docsRegistrationId];

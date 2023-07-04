@@ -5,7 +5,7 @@ import { type AlgoliaSearchRecord } from "./AlgoliaService";
 
 type ApiDefinitionLoader = (apiDefinitionId: string) => Promise<FernRegistry.api.v1.db.DbApiDefinition | null>;
 
-export async function getAlgoliaRecords(
+export async function generateAlgoliaRecords(
     docsDefinition: WithoutQuestionMarks<FernRegistry.docs.v1.db.DocsDefinitionDb.V2>,
     loadApiDefinition: ApiDefinitionLoader
 ) {
