@@ -7,8 +7,14 @@ type WithObjectId<T> = { objectID: string } & T;
 export type AlgoliaSearchRecord = WithObjectId<FernRegistryDocsRead.AlgoliaRecord>;
 
 export interface AlgoliaService {
+    /**
+     * Does not fail if the index does not exist.
+     */
     clearIndexRecords(indexName: string): Promise<void>;
 
+    /**
+     * Does not fail if the index does not exist.
+     */
     saveIndexRecords(indexName: string, records: AlgoliaSearchRecord[]): Promise<void>;
 }
 

@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 import type { FernRegistry } from "../../generated";
-import { type WithoutQuestionMarks } from "../../util";
+import { convertMarkdownToText, type WithoutQuestionMarks } from "../../util";
 import { type AlgoliaSearchRecord } from "./AlgoliaService";
 
 type ApiDefinitionLoader = (apiDefinitionId: string) => Promise<FernRegistry.api.v1.db.DbApiDefinition | null>;
@@ -50,12 +50,13 @@ async function getAlgoliaRecordsForNavigationItem(
         const pageContent = docsDefinition.pages[page.id];
         if (pageContent) {
             const path = [...cumulativeSlugs, page.urlSlug].join("/");
+            const processedContent = convertMarkdownToText(pageContent.markdown);
             cumulativeRecords.push({
                 objectID: uuid(),
                 type: "page",
                 path,
                 title: page.title,
-                subtitle: pageContent.markdown,
+                subtitle: processedContent,
             });
         }
     }
@@ -73,11 +74,12 @@ function getAlgoliaRecordsForApiDefinition(
         subpackage.endpoints.forEach((endpoint) => {
             if (endpoint.name || endpoint.description) {
                 const path = [apiUrlSlug, subpackage.urlSlug, endpoint.urlSlug].join("/");
+                const processedDescription = endpoint.description ? convertMarkdownToText(endpoint.description) : "";
                 records.push({
                     objectID: uuid(),
                     type: "endpoint",
                     title: endpoint.name ?? "",
-                    subtitle: endpoint.description ?? "",
+                    subtitle: processedDescription,
                     path,
                 });
             }

@@ -15,5 +15,7 @@ src/generated
 src/__test__/generated
 
 
+src/playground
+
 hello
 /goodbye
