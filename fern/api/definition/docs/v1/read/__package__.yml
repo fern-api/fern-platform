@@ -65,6 +65,7 @@ types:
       title: optional<string>
       navigation: NavigationConfig
       logo: optional<FileId>
+      logoHref: optional<Url>
       favicon: optional<FileId>
       colors: optional<ColorsConfig>
       navbarLinks: list<NavbarLink>

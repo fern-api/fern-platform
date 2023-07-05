@@ -64,6 +64,8 @@ types:
 
   PageId: string
 
+  Url: string
+
   DocsDefinition:
     properties:
       pages: map<PageId, PageContent>
@@ -78,6 +80,7 @@ types:
       title: optional<string>
       navigation: NavigationConfig
       logo: optional<FileId>
+      logoHref: optional<Url>
       favicon: optional<FileId>
       colors: optional<ColorsConfig>
       navbarLinks: optional<list<NavbarLink>>

@@ -33,6 +33,7 @@ types:
       title: optional<string>
       navigation: docsReadV1.NavigationConfig
       logo: optional<docsReadV1.FileId>
+      logoHref: optional<docsReadV1.Url>
       favicon: optional<docsReadV1.FileId>
       colors: optional<docsReadV1.ColorsConfig>
       navbarLinks: optional<list<docsReadV1.NavbarLink>>

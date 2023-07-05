@@ -76,6 +76,7 @@ export async function getDocsDefinition({
         config: {
             navigation: docsDbDefinition.config.navigation,
             logo: docsDbDefinition.config.logo,
+            logoHref: docsDbDefinition.config.logoHref,
             colors: docsDbDefinition.config.colors,
             navbarLinks: docsDbDefinition.config.navbarLinks ?? [],
             title: docsDbDefinition.config.title,
