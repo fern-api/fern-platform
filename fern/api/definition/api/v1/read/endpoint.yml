@@ -6,13 +6,13 @@ imports:
 
 types:
   EnvironmentId: string
- 
+
   EndpointId: string
 
   EndpointDefinition:
     extends: commons.WithDescription
     properties:
-      authed: 
+      authed:
         type: boolean
         docs: When this is true, the api definition will have a union for auth
       defaultEnvironment: optional<EnvironmentId>
@@ -28,8 +28,8 @@ types:
       response: optional<HttpResponse>
       examples: list<ExampleEndpointCall>
 
-  Environment: 
-    properties: 
+  Environment:
+    properties:
       id: EnvironmentId
       baseUrl: string
 
@@ -92,6 +92,7 @@ types:
       object: type.ObjectType
       reference: type.TypeReference
       fileDownload: {}
+      streamingText: {}
 
   # examples
 
@@ -103,7 +104,7 @@ types:
       queryParameters: map<string, unknown>
       headers: map<string, unknown>
       requestBody: unknown
-      requestBodyV2: optional<ExampleEndpointRequest> 
+      requestBodyV2: optional<ExampleEndpointRequest>
       responseStatusCode: integer
       responseBody: unknown
       responseBodyV2: optional<ExampleEndpointResponse>
@@ -113,17 +114,17 @@ types:
     properties:
       nodeAxios: optional<string>
 
-  ExampleEndpointRequest: 
-    properties: 
+  ExampleEndpointRequest:
+    properties:
       json: unknown
       form: map<string, FormValue>
-  
-  FormValue: 
-    union: 
+
+  FormValue:
+    union:
       json: unknown
       filename: string
-  
-  ExampleEndpointResponse: 
-    properties: 
+
+  ExampleEndpointResponse:
+    properties:
       json: unknown
       filename: string

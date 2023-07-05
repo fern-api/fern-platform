@@ -26,6 +26,8 @@ export function generateHttpResponseBodyExample(
             return generateExampleFromTypeReference(type.value, resolveTypeById, false);
         case "fileDownload":
             return "";
+        case "streamingText":
+            return "example-text";
     }
 }
 
