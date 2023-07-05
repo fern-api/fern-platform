@@ -41,6 +41,11 @@ class MockAlgoliaService implements AlgoliaService {
     async saveIndexRecords(_indexName: string, _records: AlgoliaSearchRecord[]): Promise<void> {
         return;
     }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    async saveIndexSettings(_indexName: string): Promise<void> {
+        return;
+    }
 }
 
 const CLIENT = new FernRegistryClient({

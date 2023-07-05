@@ -25,10 +25,19 @@ export interface AlgoliaService {
      * Does not fail if the index does not exist.
      */
     saveIndexRecords(indexName: string, records: AlgoliaSearchRecord[]): Promise<void>;
+
+    /**
+     * Does not fail if the index does not exist.
+     */
+    saveIndexSettings(indexName: string): Promise<void>;
 }
+
+type AttributeToSnippet = `${keyof AlgoliaSearchRecord}:${number}`;
 
 export class AlgoliaServiceImpl implements AlgoliaService {
     private readonly client: SearchClient;
+
+    private static readonly attributesToSnippet: AttributeToSnippet[] = ["title:20", "subtitle:20"];
 
     public constructor(app: FdrApplication) {
         const { config } = app;
@@ -49,5 +58,11 @@ export class AlgoliaServiceImpl implements AlgoliaService {
 
     public async saveIndexRecords(indexName: string, records: AlgoliaSearchRecord[]) {
         await this.client.initIndex(indexName).saveObjects(records).wait();
+    }
+
+    public async saveIndexSettings(indexName: string) {
+        await this.client.initIndex(indexName).setSettings({
+            attributesToSnippet: AlgoliaServiceImpl.attributesToSnippet,
+        });
     }
 }

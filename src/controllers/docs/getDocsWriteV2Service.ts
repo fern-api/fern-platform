@@ -115,7 +115,10 @@ export function getDocsWriteV2Service(app: FdrApplication): WriteService {
                 const records = await generateAlgoliaRecords(dbDocsDefinition, (id) =>
                     app.services.db.getApiDefinition(id)
                 );
-                await app.services.algolia.saveIndexRecords(newAlgoliaIndex, records);
+                await Promise.all([
+                    app.services.algolia.saveIndexRecords(newAlgoliaIndex, records),
+                    app.services.algolia.saveIndexSettings(newAlgoliaIndex),
+                ]);
             };
 
             const updateDbDocs = async () => {
