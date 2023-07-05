@@ -6,12 +6,12 @@ export function registerBackgroundTasks(app: FdrApplication) {
 }
 
 export function registerAlgoliaIndexDeletionBackgroundTask(app: FdrApplication) {
-    // Runs every hour
-    cron.schedule("0 * * * *", async () => {
+    // Runs every 10 minutes
+    cron.schedule("*/10 * * * *", async () => {
         try {
             const deletedIndexCount = await app.services.algoliaIndexDeleter.deleteOldIndices({
                 limit: 100,
-                olderThanDays: 2,
+                olderThanMinutes: 10,
             });
 
             console.log(`Successfully deleted ${deletedIndexCount} old indices.`);

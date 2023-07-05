@@ -1,9 +1,9 @@
 import type { FdrApplication } from "../../app";
 
-export const MILLISECONDS_IN_ONE_DAY = 24 * 60 * 60 * 1_000;
+const MILLISECONDS_IN_ONE_MINUTE = 60 * 1_000;
 
 interface DeleteOldIndicesParams {
-    olderThanDays?: number;
+    olderThanMinutes?: number;
     limit?: number;
 }
 
@@ -23,12 +23,12 @@ export class AlgoliaIndexDeleterServiceImpl implements AlgoliaIndexDeleterServic
     constructor(private readonly app: FdrApplication) {}
 
     public async deleteOldIndices(params: DeleteOldIndicesParams) {
-        const { limit, olderThanDays = 2 } = params;
+        const { limit, olderThanMinutes = 10 } = params;
         const records = await this.db.prisma.overwrittenAlgoliaIndex.findMany({
             take: limit,
             where: {
                 overwrittenTime: {
-                    lte: new Date(Date.now() - olderThanDays * MILLISECONDS_IN_ONE_DAY),
+                    lte: new Date(Date.now() - olderThanMinutes * MILLISECONDS_IN_ONE_MINUTE),
                 },
             },
         });
