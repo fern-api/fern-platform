@@ -94,19 +94,17 @@ export function getDocsWriteV2Service(app: FdrApplication): WriteService {
             if (docsRegistrationInfo == null) {
                 throw new DocsRegistrationIdNotFound();
             }
+            app.logger.info(`[${docsRegistrationInfo.fernDomain}] Called finishDocsRegister`);
             await app.services.auth.checkUserBelongsToOrg({
                 authHeader: req.headers.authorization,
                 orgId: docsRegistrationInfo.orgId,
             });
+            app.logger.info(`[${docsRegistrationInfo.fernDomain}] Transforming Docs Definition to DB`);
             const dbDocsDefinition = transformWriteDocsDefinitionToDb({
                 writeShape: req.body.docsDefinition,
                 files: docsRegistrationInfo.s3FileInfos,
             });
-            console.log(
-                `Docs for ${docsRegistrationInfo.orgId} has references to apis ${Array.from(
-                    dbDocsDefinition.referencedApis
-                ).join(", ")}`
-            );
+
             const bufferDocsDefinition = writeBuffer(dbDocsDefinition);
 
             const newAlgoliaIndex = `${docsRegistrationInfo.fernDomain}_${uuidv4()}`;
@@ -194,6 +192,7 @@ export function getDocsWriteV2Service(app: FdrApplication): WriteService {
                 });
             };
 
+            app.logger.info(`[${docsRegistrationInfo.fernDomain}] Updating db docs and creating new algolia index`);
             const [{ prevDocs }] = await Promise.all([updateDbDocs(), createNewIndex()]);
 
             const markIndexForDeletion = async () => {
@@ -202,6 +201,7 @@ export function getDocsWriteV2Service(app: FdrApplication): WriteService {
                 }
             };
 
+            app.logger.info(`[${docsRegistrationInfo.fernDomain}] Marking previous docs for deletion`);
             await markIndexForDeletion();
 
             // eslint-disable-next-line @typescript-eslint/no-dynamic-delete

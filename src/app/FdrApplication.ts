@@ -1,3 +1,4 @@
+import winston from "winston";
 import { AlgoliaServiceImpl, type AlgoliaService } from "../services/algolia";
 import { AlgoliaIndexDeleterServiceImpl, type AlgoliaIndexDeleterService } from "../services/algolia-index-deleter";
 import { AuthServiceImpl, type AuthService } from "../services/auth";
@@ -15,6 +16,16 @@ export interface FdrServices {
 
 export class FdrApplication {
     public readonly services: FdrServices;
+    public readonly logger = winston.createLogger({
+        level: "info",
+        format: winston.format.json(),
+        defaultMeta: { service: "user-service" },
+        transports: [
+            new winston.transports.Console({
+                format: winston.format.simple(),
+            }),
+        ],
+    });
 
     public constructor(public readonly config: FdrConfig, services?: Partial<FdrServices>) {
         this.services = {
