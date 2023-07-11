@@ -124,7 +124,7 @@ export class DatabaseServiceImpl implements DatabaseService {
         });
 
         if (prevAlgoliaIndex != null) {
-            this.markIndexForDeletion(prevAlgoliaIndex);
+            await this.markIndexForDeletion(prevAlgoliaIndex);
         }
     }
 }
