@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { type FdrApplication } from "../../app";
+import { FernRegistry } from "../../generated";
 import { ApiId, OrgId } from "../../generated/api";
 import { DocsRegistrationId, FilePath } from "../../generated/api/resources/docs/resources/v1/resources/write";
 import { DocsRegistrationIdNotFound } from "../../generated/api/resources/docs/resources/v1/resources/write/errors/DocsRegistrationIdNotFound";
@@ -8,12 +9,12 @@ import { InvalidDomainError } from "../../generated/api/resources/docs/resources
 import { WriteService } from "../../generated/api/resources/docs/resources/v2/resources/write/service/WriteService";
 import { generateAlgoliaRecords } from "../../services/algolia/generateAlgoliaRecords";
 import { type S3FileInfo } from "../../services/s3";
-import { getParsedUrl, writeBuffer } from "../../util";
+import { getParsedUrl } from "../../util";
 import { transformWriteDocsDefinitionToDb } from "./transformDocsDefinitionToDb";
 
 const DOCS_REGISTRATIONS: Record<DocsRegistrationId, DocsRegistrationInfo> = {};
 
-interface DocsRegistrationInfo {
+export interface DocsRegistrationInfo {
     fernDomain: string;
     customDomains: ParsedCustomDomain[];
     apiId: ApiId;
@@ -94,119 +95,58 @@ export function getDocsWriteV2Service(app: FdrApplication): WriteService {
             if (docsRegistrationInfo == null) {
                 throw new DocsRegistrationIdNotFound();
             }
+
             app.logger.info(`[${docsRegistrationInfo.fernDomain}] Called finishDocsRegister`);
             await app.services.auth.checkUserBelongsToOrg({
                 authHeader: req.headers.authorization,
                 orgId: docsRegistrationInfo.orgId,
             });
+
             app.logger.info(`[${docsRegistrationInfo.fernDomain}] Transforming Docs Definition to DB`);
             const dbDocsDefinition = transformWriteDocsDefinitionToDb({
                 writeShape: req.body.docsDefinition,
                 files: docsRegistrationInfo.s3FileInfos,
             });
 
-            const bufferDocsDefinition = writeBuffer(dbDocsDefinition);
-
             const newAlgoliaIndex = `${docsRegistrationInfo.fernDomain}_${uuidv4()}`;
 
-            const createNewIndex = async () => {
-                const records = await generateAlgoliaRecords(dbDocsDefinition, (id) =>
-                    app.services.db.getApiDefinition(id)
-                );
-                await Promise.all([
-                    app.services.algolia.saveIndexRecords(newAlgoliaIndex, records),
-                    app.services.algolia.saveIndexSettings(newAlgoliaIndex),
-                ]);
-            };
+            app.logger.info(`[${docsRegistrationInfo.fernDomain}] Creating new algolia index`);
+            await createNewAlgoliaIndex({
+                docsRegistrationInfo,
+                indexName: newAlgoliaIndex,
+                dbDocsDefinition,
+                app,
+            });
 
-            const updateDbDocs = async () => {
-                return await app.services.db.prisma.$transaction(async (tx) => {
-                    const writeOriginalDocs = async () => {
-                        const retrievePrevDocs = () =>
-                            tx.docsV2.findFirst({
-                                where: {
-                                    domain: docsRegistrationInfo.fernDomain,
-                                    path: "",
-                                },
-                            });
-
-                        const upsertDocs = () =>
-                            tx.docsV2.upsert({
-                                where: {
-                                    domain_path: {
-                                        domain: docsRegistrationInfo.fernDomain,
-                                        path: "",
-                                    },
-                                },
-                                update: {
-                                    docsDefinition: bufferDocsDefinition,
-                                    apiName: docsRegistrationInfo.apiId,
-                                    orgID: docsRegistrationInfo.orgId,
-                                    algoliaIndex: newAlgoliaIndex,
-                                },
-                                create: {
-                                    docsDefinition: bufferDocsDefinition,
-                                    domain: docsRegistrationInfo.fernDomain,
-                                    path: "",
-                                    apiName: docsRegistrationInfo.apiId,
-                                    orgID: docsRegistrationInfo.orgId,
-                                    algoliaIndex: newAlgoliaIndex,
-                                },
-                            });
-
-                        const [prevDocs, newDocs] = await Promise.all([retrievePrevDocs(), upsertDocs()]);
-                        return { prevDocs, newDocs };
-                    };
-
-                    const writeCustomDomainDocs = async () => {
-                        await Promise.all(
-                            docsRegistrationInfo.customDomains.map(async (customDomain) => {
-                                await tx.docsV2.upsert({
-                                    where: {
-                                        domain_path: {
-                                            domain: customDomain.hostname,
-                                            path: customDomain.path,
-                                        },
-                                    },
-                                    create: {
-                                        docsDefinition: bufferDocsDefinition,
-                                        domain: customDomain.hostname,
-                                        path: customDomain.path,
-                                        apiName: docsRegistrationInfo.apiId,
-                                        orgID: docsRegistrationInfo.orgId,
-                                        algoliaIndex: newAlgoliaIndex,
-                                    },
-                                    update: {
-                                        docsDefinition: bufferDocsDefinition,
-                                        apiName: docsRegistrationInfo.apiId,
-                                        orgID: docsRegistrationInfo.orgId,
-                                        algoliaIndex: newAlgoliaIndex,
-                                    },
-                                });
-                            })
-                        );
-                    };
-
-                    const [result] = await Promise.all([writeOriginalDocs(), writeCustomDomainDocs()]);
-                    return result;
-                });
-            };
-
-            app.logger.info(`[${docsRegistrationInfo.fernDomain}] Updating db docs and creating new algolia index`);
-            const [{ prevDocs }] = await Promise.all([updateDbDocs(), createNewIndex()]);
-
-            const markIndexForDeletion = async () => {
-                if (prevDocs?.algoliaIndex) {
-                    await app.services.db.markIndexForDeletion(prevDocs.algoliaIndex);
-                }
-            };
-
-            app.logger.info(`[${docsRegistrationInfo.fernDomain}] Marking previous docs for deletion`);
-            await markIndexForDeletion();
+            app.logger.info(`[${docsRegistrationInfo.fernDomain}] Updating db docs definitions`);
+            await app.services.db.updateDocsDefinition({
+                algoliaIndex: newAlgoliaIndex,
+                dbDocsDefinition,
+                docsRegistrationInfo,
+            });
 
             // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
             delete DOCS_REGISTRATIONS[req.params.docsRegistrationId];
             return res.send();
         },
     });
+}
+
+async function createNewAlgoliaIndex({
+    docsRegistrationInfo,
+    indexName,
+    dbDocsDefinition,
+    app,
+}: {
+    docsRegistrationInfo: DocsRegistrationInfo;
+    indexName: string;
+    dbDocsDefinition: FernRegistry.docs.v1.db.DocsDefinitionDb.V2;
+    app: FdrApplication;
+}) {
+    app.logger.info(`[${docsRegistrationInfo.fernDomain}] Generating algolia search records for index ${indexName}`);
+    const records = await generateAlgoliaRecords(dbDocsDefinition, (id) => app.services.db.getApiDefinition(id));
+    app.logger.info(`[${docsRegistrationInfo.fernDomain}] Saving algolia search records for index ${indexName}`);
+    await app.services.algolia.saveIndexRecords(indexName, records);
+    app.logger.info(`[${docsRegistrationInfo.fernDomain}] Saving algolia search index settings ${indexName}`);
+    await app.services.algolia.saveIndexSettings(indexName);
 }

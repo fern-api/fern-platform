@@ -1,12 +1,12 @@
 import { v4 as uuid } from "uuid";
 import type { FernRegistry } from "../../generated";
-import { convertMarkdownToText, type WithoutQuestionMarks } from "../../util";
+import { convertMarkdownToText } from "../../util";
 import { type AlgoliaSearchRecord } from "./AlgoliaService";
 
 type ApiDefinitionLoader = (apiDefinitionId: string) => Promise<FernRegistry.api.v1.db.DbApiDefinition | null>;
 
 export async function generateAlgoliaRecords(
-    docsDefinition: WithoutQuestionMarks<FernRegistry.docs.v1.db.DocsDefinitionDb.V2>,
+    docsDefinition: FernRegistry.docs.v1.db.DocsDefinitionDb.V2,
     loadApiDefinition: ApiDefinitionLoader
 ) {
     const records = await Promise.all(
@@ -18,7 +18,7 @@ export async function generateAlgoliaRecords(
 }
 
 async function generateAlgoliaRecordsForNavigationItem(
-    docsDefinition: WithoutQuestionMarks<FernRegistry.docs.v1.db.DocsDefinitionDb.V2>,
+    docsDefinition: FernRegistry.docs.v1.db.DocsDefinitionDb.V2,
     loadApiDefinition: ApiDefinitionLoader,
     cumulativeSlugs: string[],
     cumulativeRecords: AlgoliaSearchRecord[],
