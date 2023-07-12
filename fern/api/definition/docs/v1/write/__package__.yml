@@ -84,6 +84,18 @@ types:
       favicon: optional<FileId>
       colors: optional<ColorsConfig>
       navbarLinks: optional<list<NavbarLink>>
+      typography: optional<DocsTypographyConfig>
+
+  DocsTypographyConfig:
+    properties:
+      headingsFont: optional<FontConfig>
+      bodyFont: optional<FontConfig>
+      codeFont: optional<FontConfig>
+
+  FontConfig:
+    properties:
+      name: string
+      fontFile: FileId
 
   NavbarLink:
     properties:

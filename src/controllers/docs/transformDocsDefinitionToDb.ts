@@ -39,6 +39,7 @@ export function transformWriteDocsDefinitionToDb({
         colors: {
             accentPrimary: writeShape.config.colors?.accentPrimary,
         },
+        typography: writeShape.config.typography,
     };
 }
 

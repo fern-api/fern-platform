@@ -27,6 +27,7 @@ types:
       files: map<docsReadV1.FileId, DbFileInfo>
       config: DocsDbConfig
       colors: optional<docsReadV1.ColorsConfig>
+      typography: optional<DocsTypographyConfig>
 
   DocsDbConfig:
     properties:
@@ -37,6 +38,18 @@ types:
       favicon: optional<docsReadV1.FileId>
       colors: optional<docsReadV1.ColorsConfig>
       navbarLinks: optional<list<docsReadV1.NavbarLink>>
+      typography: optional<DocsTypographyConfig>
+
+  DocsTypographyConfig:
+    properties:
+      headingsFont: optional<FontConfig>
+      bodyFont: optional<FontConfig>
+      codeFont: optional<FontConfig>
+
+  FontConfig:
+    properties:
+      name: string
+      fontFile: docsReadV1.FileId
 
   DbFileInfo:
     properties:

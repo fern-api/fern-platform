@@ -3,7 +3,7 @@ import type { FdrApplication } from "../../app";
 import { FernRegistry } from "../../generated";
 import { DomainNotRegisteredError } from "../../generated/api/resources/docs/resources/v1/resources/read";
 import { ReadService } from "../../generated/api/resources/docs/resources/v1/resources/read/service/ReadService";
-import { readBuffer } from "../../util";
+import { WithoutQuestionMarks, readBuffer } from "../../util";
 import { convertDbApiDefinitionToRead } from "../api/getApiReadService";
 
 export function getDocsReadService(app: FdrApplication): ReadService {
@@ -73,15 +73,7 @@ export async function getDocsDefinition({
     });
     return {
         algoliaSearchIndex: docsV2?.algoliaIndex ?? undefined,
-        config: {
-            navigation: docsDbDefinition.config.navigation,
-            logo: docsDbDefinition.config.logo,
-            logoHref: docsDbDefinition.config.logoHref,
-            colors: docsDbDefinition.config.colors,
-            navbarLinks: docsDbDefinition.config.navbarLinks ?? [],
-            title: docsDbDefinition.config.title,
-            favicon: docsDbDefinition.config.favicon,
-        },
+        config: getDocsDefinitionConfig(docsDbDefinition),
         apis: Object.fromEntries(
             await Promise.all(
                 apiDefinitions.map(async (apiDefinition) => {
@@ -103,6 +95,21 @@ export async function getDocsDefinition({
             )
         ),
         pages: docsDbDefinition.pages,
+    };
+}
+
+function getDocsDefinitionConfig(
+    docsDbDefinition: FernRegistry.docs.v1.db.DocsDefinitionDb
+): WithoutQuestionMarks<FernRegistry.docs.v1.read.DocsConfig> {
+    return {
+        navigation: docsDbDefinition.config.navigation,
+        logo: docsDbDefinition.config.logo,
+        logoHref: docsDbDefinition.config.logoHref,
+        colors: docsDbDefinition.config.colors,
+        navbarLinks: docsDbDefinition.config.navbarLinks ?? [],
+        title: docsDbDefinition.config.title,
+        favicon: docsDbDefinition.config.favicon,
+        typography: docsDbDefinition.config.typography,
     };
 }
 
