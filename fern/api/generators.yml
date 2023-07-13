@@ -44,3 +44,7 @@ groups:
           neverThrowErrors: true
           includeUtilsOnUnionMembers: true
           noSerdeLayer: true
+  staging-docs:
+    docs:
+      domain: fdr-staging.docs.buildwithfern.com
+    generators: []

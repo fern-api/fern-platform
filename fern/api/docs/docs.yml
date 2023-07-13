@@ -1,0 +1,9 @@
+navigation:
+  - section: Introduction
+    contents:
+      - page: Getting Started
+        path: ./getting-started.mdx
+  - api: API Reference
+title: FDR | API Reference
+colors:
+  accentPrimary: "#8EB976"
