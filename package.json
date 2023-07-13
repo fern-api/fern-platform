@@ -71,5 +71,6 @@
     "local:docker": "dotenv -e .env.local -- ./create_docker.sh local",
     "dev:docker": "dotenv -e .env.dev -- ./create_docker.sh",
     "prod:docker": "dotenv -e .env.prod -- ./create_docker.sh"
-  }
+  },
+  "packageManager": "yarn@1.22.19"
 }

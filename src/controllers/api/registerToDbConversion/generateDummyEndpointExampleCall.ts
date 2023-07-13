@@ -1,4 +1,5 @@
 /* eslint-disable no-case-declarations */
+/* eslint-disable @typescript-eslint/no-base-to-string */
 import * as ApiV1Write from "../../../generated/api/resources/api/resources/v1/resources/register";
 import { assertNever } from "../../../util";
 import {

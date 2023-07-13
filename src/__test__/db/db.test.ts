@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import express from "express";
 import http from "http";
+import { uniqueId } from "lodash";
 import { FdrApplication, type FdrConfig } from "../../app";
 import { getReadApiService } from "../../controllers/api/getApiReadService";
 import { getRegisterApiService } from "../../controllers/api/getRegisterApiService";
@@ -170,11 +171,18 @@ it("definition register", async () => {
     );
 });
 
+const fontFileId = uniqueId();
 const WRITE_DOCS_REGISTER_DEFINITION: FernRegistry.docs.v1.write.DocsDefinition = {
     pages: {},
     config: {
         navigation: {
             items: [],
+        },
+        typography: {
+            headingsFont: {
+                name: "Syne",
+                fontFile: fontFileId,
+            },
         },
     },
 };
@@ -214,7 +222,7 @@ it("docs register V2", async () => {
         apiId: "api",
         domain: "https://acme.docs.buildwithfern.com",
         customDomains: ["https://docs.useacme.com/docs"],
-        filepaths: ["logo.png", "guides/guide.mdx"],
+        filepaths: ["logo.png", "guides/guide.mdx", "fonts/Syne.woff2"],
     });
     await CLIENT.docs.v2.write.finishDocsRegister(startDocsRegisterResponse.docsRegistrationId, {
         docsDefinition: WRITE_DOCS_REGISTER_DEFINITION,
@@ -224,15 +232,20 @@ it("docs register V2", async () => {
         url: "https://acme.docs.buildwithfern.com/my/random/slug",
     });
     expect(docs.baseUrl.domain).toEqual("acme.docs.buildwithfern.com");
-    expect(Object.entries(docs.definition.files)).toHaveLength(2);
-
+    expect(Object.entries(docs.definition.files)).toHaveLength(3);
+    expect(docs.definition.config.typography).toEqual({
+        headingsFont: {
+            name: "Syne",
+            fontFile: fontFileId,
+        },
+    });
     // load docs again
     docs = await CLIENT.docs.v2.read.getDocsForUrl({
         url: "https://docs.useacme.com/docs/1/",
     });
     expect(docs.baseUrl.domain).toEqual("docs.useacme.com");
     expect(docs.baseUrl.basePath).toEqual("/docs");
-    expect(Object.entries(docs.definition.files)).toHaveLength(2);
+    expect(Object.entries(docs.definition.files)).toHaveLength(3);
 
     //re-register docs
     const startDocsRegisterResponse2 = await CLIENT.docs.v2.write.startDocsRegister({
