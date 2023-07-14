@@ -26,6 +26,7 @@ types:
       headers: list<Header>
       request: optional<HttpRequest>
       response: optional<HttpResponse>
+      errors: list<ErrorDeclaration>
       examples: list<ExampleEndpointCall>
 
   Environment:
@@ -93,6 +94,11 @@ types:
       reference: type.TypeReference
       fileDownload: {}
       streamingText: {}
+
+  ErrorDeclaration:
+    properties:
+      type: type.TypeReference
+      statusCode: integer
 
   # examples
 

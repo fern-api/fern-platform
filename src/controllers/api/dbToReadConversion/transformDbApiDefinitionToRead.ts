@@ -57,6 +57,7 @@ function transformEndpoint({
         headers: dbShape.headers,
         request: dbShape.request,
         response: dbShape.response,
+        errors: dbShape.errors ?? [],
         examples: dbShape.examples,
         description: dbShape.description,
         htmlDescription: dbShape.htmlDescription,

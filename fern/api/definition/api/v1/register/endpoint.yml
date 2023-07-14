@@ -23,6 +23,7 @@ types:
       headers: list<Header>
       request: optional<HttpRequest>
       response: optional<HttpResponse>
+      errors: optional<list<ErrorDeclaration>>
       examples: list<ExampleEndpointCall>
 
   Environment:
@@ -83,6 +84,11 @@ types:
     extends: commons.WithDescription
     properties:
       type: HttpResponseBodyShape
+
+  ErrorDeclaration:
+    properties:
+      type: type.TypeReference
+      statusCode: integer
 
   HttpResponseBodyShape:
     union:

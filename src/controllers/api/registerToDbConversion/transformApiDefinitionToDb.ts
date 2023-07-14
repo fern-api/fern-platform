@@ -107,6 +107,7 @@ function transformEndpoint({
         headers: writeShape.headers,
         request: writeShape.request,
         response: writeShape.response,
+        errors: writeShape.errors ?? [],
         examples: examples.map((example) =>
             transformExampleEndpointCall({
                 writeShape: example,

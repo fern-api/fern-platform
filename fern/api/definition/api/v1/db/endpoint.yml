@@ -20,4 +20,5 @@ types:
       headers: list<readEndpoint.Header>
       request: optional<readEndpoint.HttpRequest>
       response: optional<readEndpoint.HttpResponse>
+      errors: optional<list<readEndpoint.ErrorDeclaration>>
       examples: list<readEndpoint.ExampleEndpointCall>
