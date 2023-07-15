@@ -86,8 +86,9 @@ types:
       type: HttpResponseBodyShape
 
   ErrorDeclaration:
+    extends: commons.WithDescription
     properties:
-      type: type.TypeReference
+      type: optional<type.TypeReference>
       statusCode: integer
 
   HttpResponseBodyShape:
