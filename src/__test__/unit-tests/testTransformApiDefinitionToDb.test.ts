@@ -25,7 +25,7 @@ it("api register", async () => {
         },
         subpackages: {},
     };
-    const dbApiDefinition = transformApiDefinitionForDb(apiDefinition, "id");
+    const dbApiDefinition = transformApiDefinitionForDb(apiDefinition, "id", "testTransformApiDefinitionToDb");
     expect(dbApiDefinition).toEqual({
         auth: undefined,
         id: "id",

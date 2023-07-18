@@ -7,9 +7,9 @@ export function generateHttpRequestBodyExample(
 ): unknown {
     switch (type.type) {
         case "object":
-            return generateExampleObject(type, resolveTypeById, true);
+            return generateExampleObject(type, resolveTypeById, true, new Set(), 0);
         case "reference":
-            return generateExampleFromTypeReference(type.value, resolveTypeById, true);
+            return generateExampleFromTypeReference(type.value, resolveTypeById, true, new Set(), 0);
         case "fileUpload":
             return "<filename>";
     }
@@ -21,9 +21,9 @@ export function generateHttpResponseBodyExample(
 ): unknown {
     switch (type.type) {
         case "object":
-            return generateExampleObject(type, resolveTypeById, false);
+            return generateExampleObject(type, resolveTypeById, false, new Set(), 0);
         case "reference":
-            return generateExampleFromTypeReference(type.value, resolveTypeById, false);
+            return generateExampleFromTypeReference(type.value, resolveTypeById, false, new Set(), 0);
         case "fileDownload":
             return "";
         case "streamingText":
@@ -34,11 +34,19 @@ export function generateHttpResponseBodyExample(
 function generateExampleObject(
     object: ApiV1Write.ObjectType,
     resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition,
-    ignoreOptionals: boolean
+    ignoreOptionals: boolean,
+    visited: Set<string>,
+    depth: number
 ): Record<string, unknown> {
     const example: Record<string, unknown> = {};
     for (const property of getAllObjectProperties(object, resolveTypeById)) {
-        const value = generateExampleFromTypeReference(property.valueType, resolveTypeById, ignoreOptionals);
+        const value = generateExampleFromTypeReference(
+            property.valueType,
+            resolveTypeById,
+            ignoreOptionals,
+            depth === 0 ? new Set() : new Set(visited),
+            depth + 1
+        );
         if (value != null) {
             example[property.key] = value;
         }
@@ -46,65 +54,133 @@ function generateExampleObject(
     return example;
 }
 
+export function generateExampleFromTypeReference(
+    reference: ApiV1Write.TypeReference,
+    resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition,
+    ignoreOptionals: boolean,
+    visited: Set<string>,
+    depth: number
+): unknown {
+    let example;
+
+    switch (reference.type) {
+        case "primitive":
+            example = generateExamplePrimitive(reference.value);
+            break;
+        case "id": {
+            visited.add(reference.value);
+            example = generateExampleFromId(reference.value, resolveTypeById, ignoreOptionals, visited, depth);
+            break;
+        }
+        case "optional":
+            if (reference.itemType.type === "id") {
+                if (visited.has(reference.itemType.value)) {
+                    example = undefined;
+                    break;
+                } else {
+                    visited.add(reference.itemType.value);
+                }
+            }
+            if (ignoreOptionals) {
+                example = undefined;
+            } else {
+                example = generateExampleFromTypeReference(
+                    reference.itemType,
+                    resolveTypeById,
+                    ignoreOptionals,
+                    visited,
+                    depth
+                );
+            }
+            break;
+        case "list":
+            if (reference.itemType.type === "id") {
+                if (visited.has(reference.itemType.value)) {
+                    example = [];
+                    break;
+                } else {
+                    visited.add(reference.itemType.value);
+                }
+            }
+            example = [
+                generateExampleFromTypeReference(reference.itemType, resolveTypeById, ignoreOptionals, visited, depth),
+            ];
+            break;
+        case "set":
+            example = [
+                generateExampleFromTypeReference(reference.itemType, resolveTypeById, ignoreOptionals, visited, depth),
+            ];
+            break;
+        case "map":
+            example = {
+                [generateExampleFromTypeReference(
+                    reference.keyType,
+                    resolveTypeById,
+                    ignoreOptionals,
+                    visited,
+                    depth + 1
+                ) as string]: generateExampleFromTypeReference(
+                    reference.valueType,
+                    resolveTypeById,
+                    ignoreOptionals,
+                    visited,
+                    depth + 1
+                ),
+            };
+            break;
+        case "unknown":
+            example = {};
+            break;
+        case "literal":
+            example = generateExampleFromLiteral(reference.value);
+            break;
+        default:
+            assertNever(reference);
+    }
+
+    return example;
+}
+
 function generateExampleFromId(
     id: ApiV1Write.TypeId,
     resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition,
-    ignoreOptionals: boolean
+    ignoreOptionals: boolean,
+    visited: Set<string>,
+    depth: number
 ): unknown {
     const shape = resolveTypeById(id).shape;
     switch (shape.type) {
         case "object":
-            return generateExampleObject(shape, resolveTypeById, ignoreOptionals);
+            return generateExampleObject(shape, resolveTypeById, ignoreOptionals, visited, depth);
         case "undiscriminatedUnion":
             if (shape.variants[0] == null) {
                 return {};
             }
-            return generateExampleFromTypeReference(shape.variants[0].type, resolveTypeById, ignoreOptionals);
+            return generateExampleFromTypeReference(
+                shape.variants[0].type,
+                resolveTypeById,
+                ignoreOptionals,
+                visited,
+                depth
+            );
         case "discriminatedUnion":
             if (shape.variants[0] == null) {
                 return {};
             }
             return {
                 [shape.discriminant]: shape.variants[0].discriminantValue,
-                ...generateExampleObject(shape.variants[0].additionalProperties, resolveTypeById, ignoreOptionals),
+                ...generateExampleObject(
+                    shape.variants[0].additionalProperties,
+                    resolveTypeById,
+                    ignoreOptionals,
+                    visited,
+                    depth
+                ),
             };
         case "alias":
-            return generateExampleFromTypeReference(shape.value, resolveTypeById, ignoreOptionals);
+            return generateExampleFromTypeReference(shape.value, resolveTypeById, ignoreOptionals, visited, depth);
         case "enum":
             return shape.values[0]?.value ?? "";
-    }
-}
-
-export function generateExampleFromTypeReference(
-    reference: ApiV1Write.TypeReference,
-    resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition,
-    ignoreOptionals: boolean
-): unknown {
-    switch (reference.type) {
-        case "primitive":
-            return generateExamplePrimitive(reference.value);
-        case "id":
-            return generateExampleFromId(reference.value, resolveTypeById, ignoreOptionals);
-        case "optional":
-            return ignoreOptionals
-                ? undefined
-                : generateExampleFromTypeReference(reference.itemType, resolveTypeById, ignoreOptionals);
-        case "list":
-            return [generateExampleFromTypeReference(reference.itemType, resolveTypeById, ignoreOptionals)];
-        case "set":
-            return [generateExampleFromTypeReference(reference.itemType, resolveTypeById, ignoreOptionals)];
-        case "map":
-            return {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                [generateExampleFromTypeReference(reference.keyType, resolveTypeById, ignoreOptionals) as any]:
-                    generateExampleFromTypeReference(reference.valueType, resolveTypeById, ignoreOptionals),
-            };
-        case "unknown":
-            return {};
-        case "literal":
-            return generateExampleFromLiteral(reference.value);
-        default:
-            assertNever(reference);
     }
 }
 

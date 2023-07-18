@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
+import type { FdrApplication } from "../../app";
 import { RegisterService } from "../../generated/api/resources/api/resources/v1/resources/register/service/RegisterService";
 import { writeBuffer } from "../../util";
-import type { FdrApplication } from "../../app";
 import { transformApiDefinitionForDb } from "./registerToDbConversion/transformApiDefinitionToDb";
 
 export function getRegisterApiService(app: FdrApplication): RegisterService {
@@ -12,7 +12,11 @@ export function getRegisterApiService(app: FdrApplication): RegisterService {
                 orgId: req.body.orgId,
             });
             const apiDefinitionId = uuidv4();
-            const transformedApiDefinition = transformApiDefinitionForDb(req.body.definition, apiDefinitionId);
+            const transformedApiDefinition = transformApiDefinitionForDb(
+                req.body.definition,
+                apiDefinitionId,
+                "registerApiDefinition"
+            );
             await app.services.db.prisma.apiDefinitionsV2.create({
                 data: {
                     apiDefinitionId,

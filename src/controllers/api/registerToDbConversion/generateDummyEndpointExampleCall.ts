@@ -28,7 +28,9 @@ export function generateDummyEndpointExampleCall(
         const value = generateExampleFromTypeReference(
             queryParameter.type,
             resolveTypeById,
-            optionalCount >= MAX_OPTIONAL_EXAMPLES_FOR_QUERY_PARAMS
+            optionalCount >= MAX_OPTIONAL_EXAMPLES_FOR_QUERY_PARAMS,
+            new Set(),
+            0
         );
         if (queryParameter.type.type === "optional") {
             optionalCount += 1;
@@ -40,13 +42,19 @@ export function generateDummyEndpointExampleCall(
         pathParameters: endpointDefinition.path.pathParameters.reduce(
             (acc, pathParameter) => ({
                 ...acc,
-                [pathParameter.key]: generateExampleFromTypeReference(pathParameter.type, resolveTypeById, false),
+                [pathParameter.key]: generateExampleFromTypeReference(
+                    pathParameter.type,
+                    resolveTypeById,
+                    false,
+                    new Set(),
+                    0
+                ),
             }),
             {}
         ),
         queryParameters: exampleQueryParameters,
         headers: endpointDefinition.headers.reduce((acc, header) => {
-            const value = generateExampleFromTypeReference(header.type, resolveTypeById, false);
+            const value = generateExampleFromTypeReference(header.type, resolveTypeById, false, new Set(), 0);
             if (value == null) {
                 return acc;
             }

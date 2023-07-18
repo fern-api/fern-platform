@@ -10,14 +10,14 @@ service:
   audiences:
     - write
   endpoints:
-    startDocsRegister: 
+    startDocsRegister:
       auth: true
       path: /v2/init
       request:
         name: StartDocsRegisterRequestV2
         body:
           properties:
-            domain: 
+            domain:
               type: string
               docs: A `buildwithfern.com` url
             customDomains: list<string>
@@ -27,7 +27,7 @@ service:
               type: list<v1DocsWrite.FilePath>
               docs: Relative filepath from docs folder.
       response: v1DocsWrite.StartDocsRegisterResponse
-      errors: 
+      errors:
         - InvalidDomainError
         - InvalidCustomDomainError
 
@@ -46,24 +46,24 @@ service:
         - rootCommons.UnauthorizedError
         - rootCommons.UserNotInOrgError
         - v1DocsWrite.DocsRegistrationIdNotFound
-types: 
-  InvalidDomainErrorBody: 
-    properties: 
-      requiredDomainSuffix: 
+types:
+  InvalidDomainErrorBody:
+    properties:
+      requiredDomainSuffix:
         type: string
         docs: Value the domain should end with (i.e. docs.buildwithfern.com or dev.docs.buildwithfern.com)
-  
-  InvliadCustomDomainErrorBody: 
-    properties: 
+
+  InvliadCustomDomainErrorBody:
+    properties:
       overlappingDomains: list<OverlappingCustomDomains>
-  
+
   OverlappingCustomDomains: list<string>
 
 errors:
-  InvalidDomainError: 
+  InvalidDomainError:
     status-code: 400
     # type: InvalidDomainErrorBody
-  
-  InvalidCustomDomainError: 
+
+  InvalidCustomDomainError:
     status-code: 400
-    # type: InvliadCustomDomainErrorBody
+    # type: InvalidCustomDomainErrorBody

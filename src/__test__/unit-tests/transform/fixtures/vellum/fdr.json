@@ -1,0 +1,4550 @@
+{
+  "types": {
+    "type_:BlockTypeEnum": {
+      "description": "* `CHAT_MESSAGE` - CHAT_MESSAGE\n* `CHAT_HISTORY` - CHAT_HISTORY\n* `JINJA` - JINJA\n* `FUNCTION_DEFINITION` - FUNCTION_DEFINITION",
+      "name": "BlockTypeEnum",
+      "shape": {
+        "values": [
+          {
+            "value": "CHAT_MESSAGE"
+          },
+          {
+            "value": "CHAT_HISTORY"
+          },
+          {
+            "value": "JINJA"
+          },
+          {
+            "value": "FUNCTION_DEFINITION"
+          }
+        ],
+        "type": "enum"
+      }
+    },
+    "type_:ChatMessage": {
+      "name": "ChatMessage",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "text",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "role",
+            "valueType": {
+              "value": "type_:ChatMessageRole",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:ChatMessageRequest": {
+      "name": "ChatMessageRequest",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "text",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "role",
+            "valueType": {
+              "value": "type_:ChatMessageRole",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:ChatMessageRole": {
+      "description": "* `SYSTEM` - System\n* `ASSISTANT` - Assistant\n* `USER` - User\n* `FUNCTION` - Function",
+      "name": "ChatMessageRole",
+      "shape": {
+        "values": [
+          {
+            "value": "SYSTEM"
+          },
+          {
+            "value": "ASSISTANT"
+          },
+          {
+            "value": "USER"
+          },
+          {
+            "value": "FUNCTION"
+          }
+        ],
+        "type": "enum"
+      }
+    },
+    "type_:ContentType": {
+      "description": "* `STRING` - STRING\n* `JSON` - JSON",
+      "name": "ContentType",
+      "shape": {
+        "values": [
+          {
+            "value": "STRING"
+          },
+          {
+            "value": "JSON"
+          }
+        ],
+        "type": "enum"
+      }
+    },
+    "type_:DeploymentRead": {
+      "name": "DeploymentRead",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "created",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "A human-readable label for the deployment <span style=\"white-space: nowrap\">`<= 150 characters`</span> ",
+            "key": "label",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "A name that uniquely identifies this deployment within its workspace <span style=\"white-space: nowrap\">`<= 150 characters`</span> ",
+            "key": "name",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "The current status of the deployment\n\n* `ACTIVE` - Active\n* `INACTIVE` - Inactive\n* `ARCHIVED` - Archived",
+            "key": "status",
+            "valueType": {
+              "itemType": {
+                "value": "type_:DeploymentReadStatusEnum",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "The environment this deployment is used in\n\n* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production",
+            "key": "environment",
+            "valueType": {
+              "itemType": {
+                "value": "type_:EnvironmentEnum",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "The type of model this deployment serves\n\n* `GENERATE` - Generate\n* `CLASSIFY` - Classify",
+            "key": "model_type",
+            "valueType": {
+              "value": "type_:ModelTypeEnum",
+              "type": "id"
+            }
+          },
+          {
+            "key": "active_model_version_ids",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "last_deployed_on",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:DeploymentReadStatusEnum": {
+      "description": "* `ACTIVE` - Active\n* `INACTIVE` - Inactive\n* `ARCHIVED` - Archived",
+      "name": "DeploymentReadStatusEnum",
+      "shape": {
+        "values": [
+          {
+            "value": "ACTIVE"
+          },
+          {
+            "value": "INACTIVE"
+          },
+          {
+            "value": "ARCHIVED"
+          }
+        ],
+        "type": "enum"
+      }
+    },
+    "type_:Document": {
+      "name": "Document",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The ID of the document.",
+            "key": "id",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "The human-readable name for the document. <span style=\"white-space: nowrap\">`<= 1000 characters`</span> ",
+            "key": "label",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "The unique ID of the document as represented in an external system and specified when it was originally uploaded.",
+            "key": "external_id",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:DocumentDocumentToDocumentIndex": {
+      "name": "DocumentDocumentToDocumentIndex",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "Vellum-generated ID that uniquely identifies this link.",
+            "key": "id",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "Vellum-generated ID that uniquely identifies the index this document is included in.",
+            "key": "document_index_id",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "An enum value representing where this document is along its indexing lifecycle for this index.\n\n* `AWAITING_PROCESSING` - Awaiting Processing\n* `QUEUED` - Queued\n* `INDEXING` - Indexing\n* `INDEXED` - Indexed\n* `FAILED` - Failed",
+            "key": "indexing_state",
+            "valueType": {
+              "itemType": {
+                "value": "type_:IndexingStateEnum",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:DocumentIndexRead": {
+      "name": "DocumentIndexRead",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "created",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "A human-readable label for the document index <span style=\"white-space: nowrap\">`<= 150 characters`</span> ",
+            "key": "label",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "A name that uniquely identifies this index within its workspace <span style=\"white-space: nowrap\">`<= 150 characters`</span> ",
+            "key": "name",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "The current status of the document index\n\n* `ACTIVE` - Active\n* `ARCHIVED` - Archived",
+            "key": "status",
+            "valueType": {
+              "itemType": {
+                "value": "type_:DocumentIndexStatus",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "The environment this document index is used in\n\n* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production",
+            "key": "environment",
+            "valueType": {
+              "itemType": {
+                "value": "type_:EnvironmentEnum",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "Configuration representing how documents should be indexed",
+            "key": "indexing_config",
+            "valueType": {
+              "keyType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "valueType": {
+                "type": "unknown"
+              },
+              "type": "map"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:DocumentIndexStatus": {
+      "description": "* `ACTIVE` - Active\n* `ARCHIVED` - Archived",
+      "name": "DocumentIndexStatus",
+      "shape": {
+        "values": [
+          {
+            "value": "ACTIVE"
+          },
+          {
+            "value": "ARCHIVED"
+          }
+        ],
+        "type": "enum"
+      }
+    },
+    "type_:EnrichedNormalizedCompletion": {
+      "name": "EnrichedNormalizedCompletion",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The Vellum-generated ID of the completion.",
+            "key": "id",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "The external ID that was originally provided along with the generation request, which uniquely identifies this generation in an external system.",
+            "key": "external_id",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "The text generated by the LLM.",
+            "key": "text",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "The reason the generation finished.\n\n* `LENGTH` - LENGTH\n* `STOP` - STOP\n* `UNKNOWN` - UNKNOWN",
+            "key": "finish_reason",
+            "valueType": {
+              "itemType": {
+                "value": "type_:FinishReasonEnum",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "The logprobs of the completion. Only present if specified in the original request options.",
+            "key": "logprobs",
+            "valueType": {
+              "itemType": {
+                "value": "type_:NormalizedLogProbs",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "The ID of the model version used to generate this completion.",
+            "key": "model_version_id",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "itemType": {
+                "value": "type_:ContentType",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:EnvironmentEnum": {
+      "description": "* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production",
+      "name": "EnvironmentEnum",
+      "shape": {
+        "values": [
+          {
+            "value": "DEVELOPMENT"
+          },
+          {
+            "value": "STAGING"
+          },
+          {
+            "value": "PRODUCTION"
+          }
+        ],
+        "type": "enum"
+      }
+    },
+    "type_:EvaluationParams": {
+      "name": "EvaluationParams",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The target value to compare the LLM output against. Typically what you expect or desire the LLM output to be.",
+            "key": "target",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:EvaluationParamsRequest": {
+      "name": "EvaluationParamsRequest",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The target value to compare the LLM output against. Typically what you expect or desire the LLM output to be.",
+            "key": "target",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:FinishReasonEnum": {
+      "description": "* `LENGTH` - LENGTH\n* `STOP` - STOP\n* `UNKNOWN` - UNKNOWN",
+      "name": "FinishReasonEnum",
+      "shape": {
+        "values": [
+          {
+            "value": "LENGTH"
+          },
+          {
+            "value": "STOP"
+          },
+          {
+            "value": "UNKNOWN"
+          }
+        ],
+        "type": "enum"
+      }
+    },
+    "type_:GenerateErrorResponse": {
+      "name": "GenerateErrorResponse",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "Details about why the request failed.",
+            "key": "detail",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:GenerateOptionsRequest": {
+      "name": "GenerateOptionsRequest",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "Which logprobs to include, if any. Defaults to NONE.\n\n* `ALL` - ALL\n* `NONE` - NONE",
+            "key": "logprobs",
+            "valueType": {
+              "itemType": {
+                "value": "type_:LogprobsEnum",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:GenerateRequest": {
+      "name": "GenerateRequest",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "Key/value pairs for each template variable defined in the deployment's prompt.",
+            "key": "input_values",
+            "valueType": {
+              "keyType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "valueType": {
+                "type": "unknown"
+              },
+              "type": "map"
+            }
+          },
+          {
+            "description": "Optionally provide a list of chat messages that'll be used in place of the special {$chat_history} variable, if included in the prompt.",
+            "key": "chat_history",
+            "valueType": {
+              "itemType": {
+                "itemType": {
+                  "value": "type_:ChatMessageRequest",
+                  "type": "id"
+                },
+                "type": "list"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "Optionally include a unique identifier for each generation, as represented outside of Vellum. Note that this should generally be a list of length one.",
+            "key": "external_ids",
+            "valueType": {
+              "itemType": {
+                "itemType": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "type": "list"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:GenerateResponse": {
+      "name": "GenerateResponse",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The results of each generation request.",
+            "key": "results",
+            "valueType": {
+              "itemType": {
+                "value": "type_:GenerateResult",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:GenerateResult": {
+      "name": "GenerateResult",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "An object containing the resulting generation. This key will be absent if the LLM provider experienced an error.",
+            "key": "data",
+            "valueType": {
+              "itemType": {
+                "value": "type_:GenerateResultData",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "An object containing details about the error that occurred. This key will be absent if the LLM provider did not experience an error.",
+            "key": "error",
+            "valueType": {
+              "itemType": {
+                "value": "type_:GenerateResultError",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:GenerateResultData": {
+      "name": "GenerateResultData",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The generated completions. This will generally be a list of length one.",
+            "key": "completions",
+            "valueType": {
+              "itemType": {
+                "value": "type_:EnrichedNormalizedCompletion",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:GenerateResultError": {
+      "name": "GenerateResultError",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The error message returned by the LLM provider.",
+            "key": "message",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:GenerateStreamResponse": {
+      "name": "GenerateStreamResponse",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "delta",
+            "valueType": {
+              "value": "type_:GenerateStreamResult",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:GenerateStreamResult": {
+      "name": "GenerateStreamResult",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "request_index",
+            "valueType": {
+              "value": {
+                "type": "integer"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "itemType": {
+                "value": "type_:GenerateStreamResultData",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "itemType": {
+                "value": "type_:GenerateResultError",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:GenerateStreamResultData": {
+      "name": "GenerateStreamResultData",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "completion_index",
+            "valueType": {
+              "value": {
+                "type": "integer"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "completion",
+            "valueType": {
+              "value": "type_:EnrichedNormalizedCompletion",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:IndexingStateEnum": {
+      "description": "* `AWAITING_PROCESSING` - Awaiting Processing\n* `QUEUED` - Queued\n* `INDEXING` - Indexing\n* `INDEXED` - Indexed\n* `FAILED` - Failed",
+      "name": "IndexingStateEnum",
+      "shape": {
+        "values": [
+          {
+            "value": "AWAITING_PROCESSING"
+          },
+          {
+            "value": "QUEUED"
+          },
+          {
+            "value": "INDEXING"
+          },
+          {
+            "value": "INDEXED"
+          },
+          {
+            "value": "FAILED"
+          }
+        ],
+        "type": "enum"
+      }
+    },
+    "type_:LogprobsEnum": {
+      "description": "* `ALL` - ALL\n* `NONE` - NONE",
+      "name": "LogprobsEnum",
+      "shape": {
+        "values": [
+          {
+            "value": "ALL"
+          },
+          {
+            "value": "NONE"
+          }
+        ],
+        "type": "enum"
+      }
+    },
+    "type_:ModelTypeEnum": {
+      "description": "* `GENERATE` - Generate\n* `CLASSIFY` - Classify",
+      "name": "ModelTypeEnum",
+      "shape": {
+        "values": [
+          {
+            "value": "GENERATE"
+          },
+          {
+            "value": "CLASSIFY"
+          }
+        ],
+        "type": "enum"
+      }
+    },
+    "type_:ModelVersionBuildConfig": {
+      "name": "ModelVersionBuildConfig",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The name of the base model used to create this model version, as identified by the LLM provider.",
+            "key": "base_model",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "Information about the sandbox snapshot that was used to create this model version, if applicable.",
+            "key": "sandbox_snapshot",
+            "valueType": {
+              "itemType": {
+                "value": "type_:ModelVersionSandboxSnapshot",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:ModelVersionCompilePromptResponse": {
+      "name": "ModelVersionCompilePromptResponse",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "Information about the compiled prompt.",
+            "key": "prompt",
+            "valueType": {
+              "value": "type_:ModelVersionCompiledPrompt",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:ModelVersionCompiledPrompt": {
+      "name": "ModelVersionCompiledPrompt",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The fully compiled prompt in normalized ChatML syntax after all variable substitutions and templating functions are applied.",
+            "key": "text",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "The approximate number of tokens used by the compiled prompt.",
+            "key": "num_tokens",
+            "valueType": {
+              "value": {
+                "type": "integer"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:ModelVersionExecConfig": {
+      "name": "ModelVersionExecConfig",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The generation parameters that are passed to the LLM provider at runtime.",
+            "key": "parameters",
+            "valueType": {
+              "value": "type_:ModelVersionExecConfigParameters",
+              "type": "id"
+            }
+          },
+          {
+            "description": "Names of the input variables specified in the prompt template.",
+            "key": "input_variables",
+            "valueType": {
+              "itemType": {
+                "value": "type_:PromptTemplateInputVariable",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "description": "The template used to generate prompts for this model version.",
+            "key": "prompt_template",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "prompt_block_data",
+            "valueType": {
+              "itemType": {
+                "value": "type_:PromptTemplateBlockData",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "prompt_syntax_version",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "integer"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:ModelVersionExecConfigParameters": {
+      "name": "ModelVersionExecConfigParameters",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "temperature",
+            "valueType": {
+              "value": {
+                "type": "double"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "max_tokens",
+            "valueType": {
+              "value": {
+                "type": "integer"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "top_p",
+            "valueType": {
+              "value": {
+                "type": "double"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "frequency_penalty",
+            "valueType": {
+              "value": {
+                "type": "double"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "presence_penalty",
+            "valueType": {
+              "value": {
+                "type": "double"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "logit_bias",
+            "valueType": {
+              "itemType": {
+                "keyType": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "valueType": {
+                  "itemType": {
+                    "value": {
+                      "type": "double"
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                },
+                "type": "map"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "stop",
+            "valueType": {
+              "itemType": {
+                "itemType": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "type": "list"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "top_k",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "double"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:ModelVersionRead": {
+      "name": "ModelVersionRead",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "Vellum-generated ID that uniquely identifies this model version.",
+            "key": "id",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "Timestamp of when this model version was created.",
+            "key": "created",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "Human-friendly name for this model version. <span style=\"white-space: nowrap\">`<= 150 characters`</span> ",
+            "key": "label",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "The type of task this model is used for.\n\n* `GENERATE` - Generate\n* `CLASSIFY` - Classify",
+            "key": "model_type",
+            "valueType": {
+              "value": "type_:ModelTypeEnum",
+              "type": "id"
+            }
+          },
+          {
+            "description": "Which LLM provider this model version is associated with.\n\n* `ANTHROPIC` - Anthropic\n* `COHERE` - Cohere\n* `GOOGLE` - Google\n* `HOSTED` - Hosted\n* `MOSAICML` - MosaicML\n* `OPENAI` - OpenAI\n* `PYQ` - Pyq",
+            "key": "provider",
+            "valueType": {
+              "value": "type_:ProviderEnum",
+              "type": "id"
+            }
+          },
+          {
+            "description": "The unique id of this model version as it exists in the above provider's system. <span style=\"white-space: nowrap\">`<= 250 characters`</span> ",
+            "key": "external_id",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "Configuration used to build this model version.",
+            "key": "build_config",
+            "valueType": {
+              "value": "type_:ModelVersionBuildConfig",
+              "type": "id"
+            }
+          },
+          {
+            "description": "Configuration used to execute this model version.",
+            "key": "exec_config",
+            "valueType": {
+              "value": "type_:ModelVersionExecConfig",
+              "type": "id"
+            }
+          },
+          {
+            "key": "status",
+            "valueType": {
+              "itemType": {
+                "value": "type_:ModelVersionReadStatusEnum",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:ModelVersionReadStatusEnum": {
+      "description": "* `CREATING` - Creating\n* `READY` - Ready\n* `CREATION_FAILED` - Creation Failed\n* `DISABLED` - Disabled",
+      "name": "ModelVersionReadStatusEnum",
+      "shape": {
+        "values": [
+          {
+            "value": "CREATING"
+          },
+          {
+            "value": "READY"
+          },
+          {
+            "value": "CREATION_FAILED"
+          },
+          {
+            "value": "DISABLED"
+          }
+        ],
+        "type": "enum"
+      }
+    },
+    "type_:ModelVersionSandboxSnapshot": {
+      "name": "ModelVersionSandboxSnapshot",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The ID of the sandbox snapshot.",
+            "key": "id",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "The index of the prompt in the sandbox snapshot.",
+            "key": "prompt_index",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "integer"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "The id of the prompt in the sandbox snapshot.",
+            "key": "prompt_id",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "sandbox_id",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:NormalizedLogProbs": {
+      "name": "NormalizedLogProbs",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "tokens",
+            "valueType": {
+              "itemType": {
+                "value": "type_:NormalizedTokenLogProbs",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "likelihood",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "double"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:NormalizedTokenLogProbs": {
+      "name": "NormalizedTokenLogProbs",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "token",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "logprob",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "double"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "top_logprobs",
+            "valueType": {
+              "itemType": {
+                "keyType": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "valueType": {
+                  "itemType": {
+                    "value": {
+                      "type": "double"
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                },
+                "type": "map"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "text_offset",
+            "valueType": {
+              "value": {
+                "type": "integer"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:PaginatedSlimDocumentList": {
+      "name": "PaginatedSlimDocumentList",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "count",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "integer"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "next",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "previous",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "results",
+            "valueType": {
+              "itemType": {
+                "itemType": {
+                  "value": "type_:SlimDocument",
+                  "type": "id"
+                },
+                "type": "list"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:ProcessingFailureReasonEnum": {
+      "name": "ProcessingFailureReasonEnum",
+      "shape": {
+        "value": {
+          "value": {
+            "value": "EXCEEDED_CHARACTER_LIMIT",
+            "type": "stringLiteral"
+          },
+          "type": "literal"
+        },
+        "type": "alias"
+      }
+    },
+    "type_:ProcessingStateEnum": {
+      "description": "* `QUEUED` - Queued\n* `PROCESSING` - Processing\n* `PROCESSED` - Processed\n* `FAILED` - Failed",
+      "name": "ProcessingStateEnum",
+      "shape": {
+        "values": [
+          {
+            "value": "QUEUED"
+          },
+          {
+            "value": "PROCESSING"
+          },
+          {
+            "value": "PROCESSED"
+          },
+          {
+            "value": "FAILED"
+          }
+        ],
+        "type": "enum"
+      }
+    },
+    "type_:PromptTemplateBlock": {
+      "name": "PromptTemplateBlock",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "block_type",
+            "valueType": {
+              "value": "type_:BlockTypeEnum",
+              "type": "id"
+            }
+          },
+          {
+            "key": "properties",
+            "valueType": {
+              "value": "type_:PromptTemplateBlockProperties",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:PromptTemplateBlockData": {
+      "name": "PromptTemplateBlockData",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "version",
+            "valueType": {
+              "value": {
+                "type": "integer"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "blocks",
+            "valueType": {
+              "itemType": {
+                "value": "type_:PromptTemplateBlock",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:PromptTemplateBlockDataRequest": {
+      "name": "PromptTemplateBlockDataRequest",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "version",
+            "valueType": {
+              "value": {
+                "type": "integer"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "blocks",
+            "valueType": {
+              "itemType": {
+                "value": "type_:PromptTemplateBlockRequest",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:PromptTemplateBlockProperties": {
+      "name": "PromptTemplateBlockProperties",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "chat_role",
+            "valueType": {
+              "itemType": {
+                "value": "type_:ChatMessageRole",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "chat_message_unterminated",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "template",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "template_type",
+            "valueType": {
+              "itemType": {
+                "value": "type_:ContentType",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "function_name",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "function_description",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "function_parameters",
+            "valueType": {
+              "itemType": {
+                "keyType": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "valueType": {
+                  "type": "unknown"
+                },
+                "type": "map"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "blocks",
+            "valueType": {
+              "itemType": {
+                "itemType": {
+                  "value": "type_:PromptTemplateBlock",
+                  "type": "id"
+                },
+                "type": "list"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:PromptTemplateBlockPropertiesRequest": {
+      "name": "PromptTemplateBlockPropertiesRequest",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "chat_role",
+            "valueType": {
+              "itemType": {
+                "value": "type_:ChatMessageRole",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "chat_message_unterminated",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "template",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "template_type",
+            "valueType": {
+              "itemType": {
+                "value": "type_:ContentType",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "<span style=\"white-space: nowrap\">`non-empty`</span>",
+            "key": "function_name",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "<span style=\"white-space: nowrap\">`non-empty`</span>",
+            "key": "function_description",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "function_parameters",
+            "valueType": {
+              "itemType": {
+                "keyType": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "valueType": {
+                  "type": "unknown"
+                },
+                "type": "map"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "blocks",
+            "valueType": {
+              "itemType": {
+                "itemType": {
+                  "value": "type_:PromptTemplateBlockRequest",
+                  "type": "id"
+                },
+                "type": "list"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:PromptTemplateBlockRequest": {
+      "name": "PromptTemplateBlockRequest",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "<span style=\"white-space: nowrap\">`non-empty`</span>",
+            "key": "id",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "block_type",
+            "valueType": {
+              "value": "type_:BlockTypeEnum",
+              "type": "id"
+            }
+          },
+          {
+            "key": "properties",
+            "valueType": {
+              "value": "type_:PromptTemplateBlockPropertiesRequest",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:PromptTemplateInputVariable": {
+      "name": "PromptTemplateInputVariable",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The name of the input variable.",
+            "key": "key",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:PromptTemplateInputVariableRequest": {
+      "name": "PromptTemplateInputVariableRequest",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The name of the input variable. <span style=\"white-space: nowrap\">`non-empty`</span> ",
+            "key": "key",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:ProviderEnum": {
+      "description": "* `ANTHROPIC` - Anthropic\n* `COHERE` - Cohere\n* `GOOGLE` - Google\n* `HOSTED` - Hosted\n* `MOSAICML` - MosaicML\n* `OPENAI` - OpenAI\n* `PYQ` - Pyq",
+      "name": "ProviderEnum",
+      "shape": {
+        "values": [
+          {
+            "value": "ANTHROPIC"
+          },
+          {
+            "value": "COHERE"
+          },
+          {
+            "value": "GOOGLE"
+          },
+          {
+            "value": "HOSTED"
+          },
+          {
+            "value": "MOSAICML"
+          },
+          {
+            "value": "OPENAI"
+          },
+          {
+            "value": "PYQ"
+          }
+        ],
+        "type": "enum"
+      }
+    },
+    "type_:RegisterPromptErrorResponse": {
+      "name": "RegisterPromptErrorResponse",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "Details about why the request failed.",
+            "key": "detail",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:RegisterPromptModelParametersRequest": {
+      "name": "RegisterPromptModelParametersRequest",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "temperature",
+            "valueType": {
+              "value": {
+                "type": "double"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "max_tokens",
+            "valueType": {
+              "value": {
+                "type": "integer"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "stop",
+            "valueType": {
+              "itemType": {
+                "itemType": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "type": "list"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "top_p",
+            "valueType": {
+              "value": {
+                "type": "double"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "top_k",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "double"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "frequency_penalty",
+            "valueType": {
+              "value": {
+                "type": "double"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "presence_penalty",
+            "valueType": {
+              "value": {
+                "type": "double"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "logit_bias",
+            "valueType": {
+              "itemType": {
+                "keyType": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "valueType": {
+                  "itemType": {
+                    "value": {
+                      "type": "double"
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                },
+                "type": "map"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:RegisterPromptPrompt": {
+      "name": "RegisterPromptPrompt",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The ID of the generated prompt.",
+            "key": "id",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "A human-friendly label for the generated prompt.",
+            "key": "label",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:RegisterPromptPromptInfoRequest": {
+      "name": "RegisterPromptPromptInfoRequest",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "prompt_syntax_version",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "integer"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "prompt_block_data",
+            "valueType": {
+              "value": "type_:PromptTemplateBlockDataRequest",
+              "type": "id"
+            }
+          },
+          {
+            "description": "Names of the input variables specified in the prompt template.",
+            "key": "input_variables",
+            "valueType": {
+              "itemType": {
+                "value": "type_:PromptTemplateInputVariableRequest",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:RegisterPromptResponse": {
+      "name": "RegisterPromptResponse",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "Information about the generated prompt",
+            "key": "prompt",
+            "valueType": {
+              "value": "type_:RegisterPromptPrompt",
+              "type": "id"
+            }
+          },
+          {
+            "description": "Information about the generated sandbox snapshot",
+            "key": "sandbox_snapshot",
+            "valueType": {
+              "value": "type_:RegisteredPromptSandboxSnapshot",
+              "type": "id"
+            }
+          },
+          {
+            "description": "Information about the generated sandbox",
+            "key": "sandbox",
+            "valueType": {
+              "value": "type_:RegisteredPromptSandbox",
+              "type": "id"
+            }
+          },
+          {
+            "description": "Information about the generated model version",
+            "key": "model_version",
+            "valueType": {
+              "value": "type_:RegisteredPromptModelVersion",
+              "type": "id"
+            }
+          },
+          {
+            "description": "Information about the generated deployment",
+            "key": "deployment",
+            "valueType": {
+              "value": "type_:RegisteredPromptDeployment",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:RegisteredPromptDeployment": {
+      "name": "RegisteredPromptDeployment",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The ID of the generated deployment.",
+            "key": "id",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "A uniquely-identifying name for generated deployment.",
+            "key": "name",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "A human-friendly label for the generated deployment.",
+            "key": "label",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:RegisteredPromptModelVersion": {
+      "name": "RegisteredPromptModelVersion",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The ID of the generated model version.",
+            "key": "id",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "A human-friendly label for the generated model version.",
+            "key": "label",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:RegisteredPromptSandbox": {
+      "name": "RegisteredPromptSandbox",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The ID of the generated sandbox.",
+            "key": "id",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "A human-friendly label for the generated sandbox.",
+            "key": "label",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:RegisteredPromptSandboxSnapshot": {
+      "name": "RegisteredPromptSandboxSnapshot",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The ID of the generated sandbox snapshot.",
+            "key": "id",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:SandboxMetricInputParams": {
+      "name": "SandboxMetricInputParams",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "params",
+            "valueType": {
+              "itemType": {
+                "value": "type_:EvaluationParams",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:SandboxMetricInputParamsRequest": {
+      "name": "SandboxMetricInputParamsRequest",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "params",
+            "valueType": {
+              "itemType": {
+                "value": "type_:EvaluationParamsRequest",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:SandboxScenario": {
+      "name": "SandboxScenario",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "label",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "The inputs for the scenario",
+            "key": "inputs",
+            "valueType": {
+              "itemType": {
+                "value": "type_:ScenarioInput",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "description": "The id of the scenario",
+            "key": "id",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "metric_input_params",
+            "valueType": {
+              "value": "type_:SandboxMetricInputParams",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:ScenarioInput": {
+      "name": "ScenarioInput",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "key",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "itemType": {
+                "value": "type_:ScenarioInputTypeEnum",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "chat_history",
+            "valueType": {
+              "itemType": {
+                "itemType": {
+                  "value": "type_:ChatMessage",
+                  "type": "id"
+                },
+                "type": "list"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:ScenarioInputRequest": {
+      "name": "ScenarioInputRequest",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "<span style=\"white-space: nowrap\">`non-empty`</span>",
+            "key": "key",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "itemType": {
+                "value": "type_:ScenarioInputTypeEnum",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "chat_history",
+            "valueType": {
+              "itemType": {
+                "itemType": {
+                  "value": "type_:ChatMessageRequest",
+                  "type": "id"
+                },
+                "type": "list"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:ScenarioInputTypeEnum": {
+      "description": "* `TEXT` - Text\n* `CHAT_HISTORY` - Chat History",
+      "name": "ScenarioInputTypeEnum",
+      "shape": {
+        "values": [
+          {
+            "value": "TEXT"
+          },
+          {
+            "value": "CHAT_HISTORY"
+          }
+        ],
+        "type": "enum"
+      }
+    },
+    "type_:SearchErrorResponse": {
+      "name": "SearchErrorResponse",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "Details about why the request failed.",
+            "key": "detail",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:SearchFiltersRequest": {
+      "name": "SearchFiltersRequest",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The document external IDs to filter by",
+            "key": "external_ids",
+            "valueType": {
+              "itemType": {
+                "itemType": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "type": "list"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:SearchRequestOptionsRequest": {
+      "name": "SearchRequestOptionsRequest",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The maximum number of results to return.",
+            "key": "limit",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "integer"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "The weights to use for the search. Must add up to 1.0.",
+            "key": "weights",
+            "valueType": {
+              "itemType": {
+                "value": "type_:SearchWeightsRequest",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "The configuration for merging results.",
+            "key": "result_merging",
+            "valueType": {
+              "itemType": {
+                "value": "type_:SearchResultMergingRequest",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "The filters to apply to the search.",
+            "key": "filters",
+            "valueType": {
+              "itemType": {
+                "value": "type_:SearchFiltersRequest",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:SearchResponse": {
+      "name": "SearchResponse",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The results of the search. Each result represents a chunk that matches the search query.",
+            "key": "results",
+            "valueType": {
+              "itemType": {
+                "value": "type_:SearchResult",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:SearchResult": {
+      "name": "SearchResult",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The document that contains the chunk that matched the search query.",
+            "key": "document",
+            "valueType": {
+              "value": "type_:Document",
+              "type": "id"
+            }
+          },
+          {
+            "description": "The text of the chunk that matched the search query.",
+            "key": "text",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "keywords",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "description": "A score representing how well the chunk matches the search query.",
+            "key": "score",
+            "valueType": {
+              "value": {
+                "type": "double"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:SearchResultMergingRequest": {
+      "name": "SearchResultMergingRequest",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "Whether to enable merging results",
+            "key": "enabled",
+            "valueType": {
+              "value": {
+                "type": "boolean"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:SearchWeightsRequest": {
+      "name": "SearchWeightsRequest",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The relative weight to give to semantic similarity",
+            "key": "semantic_similarity",
+            "valueType": {
+              "value": {
+                "type": "double"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "The relative weight to give to keyword matches",
+            "key": "keywords",
+            "valueType": {
+              "value": {
+                "type": "double"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:SlimDocument": {
+      "name": "SlimDocument",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "Vellum-generated ID that uniquely identifies this document.",
+            "key": "id",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "The external ID that was originally provided when uploading the document.",
+            "key": "external_id",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "A timestamp representing when this document was most recently uploaded.",
+            "key": "last_uploaded_at",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "Human-friendly name for this document. <span style=\"white-space: nowrap\">`<= 1000 characters`</span> ",
+            "key": "label",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "An enum value representing where this document is along its processing lifecycle. Note that this is different than its indexing lifecycle.\n\n* `QUEUED` - Queued\n* `PROCESSING` - Processing\n* `PROCESSED` - Processed\n* `FAILED` - Failed",
+            "key": "processing_state",
+            "valueType": {
+              "itemType": {
+                "value": "type_:ProcessingStateEnum",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "An enum value representing why the document could not be processed. Is null unless processing_state is FAILED.\n\n* `EXCEEDED_CHARACTER_LIMIT` - Exceeded Character Limit",
+            "key": "processing_failure_reason",
+            "valueType": {
+              "itemType": {
+                "value": "type_:ProcessingFailureReasonEnum",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "The document's current status.\n\n* `ACTIVE` - Active",
+            "key": "status",
+            "valueType": {
+              "itemType": {
+                "value": "type_:SlimDocumentStatusEnum",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "A list of keywords associated with this document. Originally provided when uploading the document.",
+            "key": "keywords",
+            "valueType": {
+              "itemType": {
+                "itemType": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "type": "list"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "document_to_document_indexes",
+            "valueType": {
+              "itemType": {
+                "value": "type_:DocumentDocumentToDocumentIndex",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:SlimDocumentStatusEnum": {
+      "name": "SlimDocumentStatusEnum",
+      "shape": {
+        "value": {
+          "value": {
+            "value": "ACTIVE",
+            "type": "stringLiteral"
+          },
+          "type": "literal"
+        },
+        "type": "alias"
+      }
+    },
+    "type_:SubmitCompletionActualRequest": {
+      "name": "SubmitCompletionActualRequest",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The Vellum-generated ID of a previously generated completion. Must provide either this or external_id.",
+            "key": "id",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "The external ID that was originally provided when generating the completion that you'd now like to submit actuals for. Must provide either this or id.",
+            "key": "external_id",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "Text representing what the completion _should_ have been.",
+            "key": "text",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "A number between 0 and 1 representing the quality of the completion. 0 is the worst, 1 is the best.",
+            "key": "quality",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "double"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "Optionally provide the timestamp representing when this feedback was collected. Used for reporting purposes.",
+            "key": "timestamp",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:SubmitCompletionActualsErrorResponse": {
+      "name": "SubmitCompletionActualsErrorResponse",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "detail",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:TestSuiteTestCase": {
+      "name": "TestSuiteTestCase",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended.",
+            "key": "test_case_id",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "A human-friendly label for the test case.",
+            "key": "label",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "Key/value pairs for each input variable that the Test Suite expects.",
+            "key": "input_values",
+            "valueType": {
+              "keyType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "valueType": {
+                "type": "unknown"
+              },
+              "type": "map"
+            }
+          },
+          {
+            "description": "Parameters to use when evaluating the test case, specific to the test suite's evaluation metric.",
+            "key": "evaluation_params",
+            "valueType": {
+              "value": "type_:EvaluationParams",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:UploadDocumentErrorResponse": {
+      "name": "UploadDocumentErrorResponse",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "detail",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_:UploadDocumentResponse": {
+      "name": "UploadDocumentResponse",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The ID of the newly created document.",
+            "key": "document_id",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    }
+  },
+  "subpackages": {
+    "subpackage_deployments": {
+      "subpackageId": "subpackage_deployments",
+      "name": "deployments",
+      "endpoints": [
+        {
+          "auth": true,
+          "description": "\n<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nUsed to retrieve a deployment given its ID or name.\n",
+          "method": "GET",
+          "defaultEnvironment": "Production",
+          "environments": [
+            {
+              "id": "Production",
+              "baseUrl": "https://api.vellum.ai"
+            }
+          ],
+          "id": "retrieve",
+          "name": "Retrieve",
+          "path": {
+            "pathParameters": [
+              {
+                "description": "Either the Deployment's ID or its unique name",
+                "key": "id",
+                "type": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              }
+            ],
+            "parts": [
+              {
+                "value": "",
+                "type": "literal"
+              },
+              {
+                "value": "/v1/deployments/",
+                "type": "literal"
+              },
+              {
+                "value": "id",
+                "type": "pathParameter"
+              },
+              {
+                "value": "",
+                "type": "literal"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "value": {
+                "value": "type_:DeploymentRead",
+                "type": "id"
+              },
+              "type": "reference"
+            }
+          },
+          "errors": [],
+          "examples": []
+        }
+      ],
+      "types": [],
+      "subpackages": []
+    },
+    "subpackage_documentIndexes": {
+      "subpackageId": "subpackage_documentIndexes",
+      "name": "documentIndexes",
+      "endpoints": [
+        {
+          "auth": true,
+          "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nCreates a new document index.",
+          "method": "POST",
+          "defaultEnvironment": "Production",
+          "environments": [
+            {
+              "id": "Production",
+              "baseUrl": "https://api.vellum.ai"
+            }
+          ],
+          "id": "create",
+          "name": "Create",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "value": "",
+                "type": "literal"
+              },
+              {
+                "value": "/v1/document-indexes",
+                "type": "literal"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "extends": [],
+              "properties": [
+                {
+                  "description": "A human-readable label for the document index <span style=\"white-space: nowrap\">`non-empty`</span> <span style=\"white-space: nowrap\">`<= 150 characters`</span> ",
+                  "key": "label",
+                  "valueType": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                {
+                  "description": "A name that uniquely identifies this index within its workspace <span style=\"white-space: nowrap\">`non-empty`</span> <span style=\"white-space: nowrap\">`<= 150 characters`</span> ",
+                  "key": "name",
+                  "valueType": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                {
+                  "description": "The current status of the document index\n\n* `ACTIVE` - Active\n* `ARCHIVED` - Archived",
+                  "key": "status",
+                  "valueType": {
+                    "itemType": {
+                      "value": "type_:DocumentIndexStatus",
+                      "type": "id"
+                    },
+                    "type": "optional"
+                  }
+                },
+                {
+                  "description": "The environment this document index is used in\n\n* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production",
+                  "key": "environment",
+                  "valueType": {
+                    "itemType": {
+                      "value": "type_:EnvironmentEnum",
+                      "type": "id"
+                    },
+                    "type": "optional"
+                  }
+                },
+                {
+                  "description": "Configuration representing how documents should be indexed",
+                  "key": "indexing_config",
+                  "valueType": {
+                    "keyType": {
+                      "value": {
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "valueType": {
+                      "type": "unknown"
+                    },
+                    "type": "map"
+                  }
+                },
+                {
+                  "description": "Optionally specify the id of a document index from which you'd like to copy and re-index its documents into this newly created index",
+                  "key": "copy_documents_from_index_id",
+                  "valueType": {
+                    "itemType": {
+                      "value": {
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "optional"
+                  }
+                }
+              ],
+              "type": "object"
+            }
+          },
+          "response": {
+            "type": {
+              "value": {
+                "value": "type_:DocumentIndexRead",
+                "type": "id"
+              },
+              "type": "reference"
+            }
+          },
+          "errors": [],
+          "examples": []
+        }
+      ],
+      "types": [],
+      "subpackages": []
+    },
+    "subpackage_documents": {
+      "subpackageId": "subpackage_documents",
+      "name": "documents",
+      "endpoints": [
+        {
+          "auth": true,
+          "description": "\n<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nUsed to list documents. Optionally filter on supported fields.\n",
+          "method": "GET",
+          "defaultEnvironment": "Production",
+          "environments": [
+            {
+              "id": "Production",
+              "baseUrl": "https://api.vellum.ai"
+            }
+          ],
+          "id": "list",
+          "name": "List",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "value": "",
+                "type": "literal"
+              },
+              {
+                "value": "/v1/documents",
+                "type": "literal"
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "Filter down to only those documents that are included in the specified index. You may provide either the Vellum-generated ID or the unique name of the index specified upon initial creation.",
+              "key": "document_index_id",
+              "type": {
+                "itemType": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
+              }
+            },
+            {
+              "description": "Number of results to return per page.",
+              "key": "limit",
+              "type": {
+                "itemType": {
+                  "value": {
+                    "type": "integer"
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
+              }
+            },
+            {
+              "description": "The initial index from which to return the results.",
+              "key": "offset",
+              "type": {
+                "itemType": {
+                  "value": {
+                    "type": "integer"
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
+              }
+            },
+            {
+              "description": "Which field to use when ordering the results.",
+              "key": "ordering",
+              "type": {
+                "itemType": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "type": {
+              "value": {
+                "value": "type_:PaginatedSlimDocumentList",
+                "type": "id"
+              },
+              "type": "reference"
+            }
+          },
+          "errors": [],
+          "examples": []
+        },
+        {
+          "auth": true,
+          "description": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nUpload a document to be indexed and used for search.\n\n**Note:** Uses a base url of `https://documents.vellum.ai`.",
+          "method": "POST",
+          "defaultEnvironment": "Production",
+          "environments": [
+            {
+              "id": "Production",
+              "baseUrl": "https://documents.vellum.ai"
+            }
+          ],
+          "id": "upload",
+          "name": "Upload",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "value": "",
+                "type": "literal"
+              },
+              {
+                "value": "/v1/upload-document",
+                "type": "literal"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "fileUpload"
+            }
+          },
+          "response": {
+            "type": {
+              "value": {
+                "value": "type_:UploadDocumentResponse",
+                "type": "id"
+              },
+              "type": "reference"
+            }
+          },
+          "errors": [
+            {
+              "type": {
+                "type": "unknown"
+              },
+              "statusCode": 400
+            },
+            {
+              "type": {
+                "type": "unknown"
+              },
+              "statusCode": 404
+            },
+            {
+              "type": {
+                "type": "unknown"
+              },
+              "statusCode": 500
+            }
+          ],
+          "examples": []
+        }
+      ],
+      "types": [],
+      "subpackages": []
+    },
+    "subpackage_modelVersions": {
+      "subpackageId": "subpackage_modelVersions",
+      "name": "modelVersions",
+      "endpoints": [
+        {
+          "auth": true,
+          "description": "\n<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nUsed to retrieve a model version given its ID.\n",
+          "method": "GET",
+          "defaultEnvironment": "Production",
+          "environments": [
+            {
+              "id": "Production",
+              "baseUrl": "https://api.vellum.ai"
+            }
+          ],
+          "id": "retrieve",
+          "name": "Retrieve",
+          "path": {
+            "pathParameters": [
+              {
+                "description": "A UUID string identifying this model version.",
+                "key": "id",
+                "type": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              }
+            ],
+            "parts": [
+              {
+                "value": "",
+                "type": "literal"
+              },
+              {
+                "value": "/v1/model-versions/",
+                "type": "literal"
+              },
+              {
+                "value": "id",
+                "type": "pathParameter"
+              },
+              {
+                "value": "",
+                "type": "literal"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "value": {
+                "value": "type_:ModelVersionRead",
+                "type": "id"
+              },
+              "type": "reference"
+            }
+          },
+          "errors": [],
+          "examples": []
+        },
+        {
+          "auth": true,
+          "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nCompiles the prompt backing the model version using the provided input values.",
+          "method": "POST",
+          "defaultEnvironment": "Production",
+          "environments": [
+            {
+              "id": "Production",
+              "baseUrl": "https://api.vellum.ai"
+            }
+          ],
+          "id": "model_version_compile_prompt",
+          "name": "Model Version Compile Prompt",
+          "path": {
+            "pathParameters": [
+              {
+                "description": "A UUID string identifying this model version.",
+                "key": "id",
+                "type": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              }
+            ],
+            "parts": [
+              {
+                "value": "",
+                "type": "literal"
+              },
+              {
+                "value": "/v1/model-versions/",
+                "type": "literal"
+              },
+              {
+                "value": "id",
+                "type": "pathParameter"
+              },
+              {
+                "value": "/compile-prompt",
+                "type": "literal"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "extends": [],
+              "properties": [
+                {
+                  "description": "Key/value pairs for each variable found within the model version's prompt template.",
+                  "key": "input_values",
+                  "valueType": {
+                    "keyType": {
+                      "value": {
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "valueType": {
+                      "type": "unknown"
+                    },
+                    "type": "map"
+                  }
+                }
+              ],
+              "type": "object"
+            }
+          },
+          "response": {
+            "type": {
+              "value": {
+                "value": "type_:ModelVersionCompilePromptResponse",
+                "type": "id"
+              },
+              "type": "reference"
+            }
+          },
+          "errors": [],
+          "examples": []
+        }
+      ],
+      "types": [],
+      "subpackages": []
+    },
+    "subpackage_registeredPrompts": {
+      "subpackageId": "subpackage_registeredPrompts",
+      "name": "registeredPrompts",
+      "endpoints": [
+        {
+          "auth": true,
+          "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nRegisters a prompt within Vellum and creates associated Vellum entities. Intended to be used by integration\npartners, not directly by Vellum users.\n\nUnder the hood, this endpoint creates a new sandbox, a new model version, and a new deployment.",
+          "method": "POST",
+          "defaultEnvironment": "Production",
+          "environments": [
+            {
+              "id": "Production",
+              "baseUrl": "https://api.vellum.ai"
+            }
+          ],
+          "id": "register_prompt",
+          "name": "Register Prompt",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "value": "",
+                "type": "literal"
+              },
+              {
+                "value": "/v1/registered-prompts/register",
+                "type": "literal"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "extends": [],
+              "properties": [
+                {
+                  "description": "A human-friendly label for corresponding entities created in Vellum. <span style=\"white-space: nowrap\">`non-empty`</span> ",
+                  "key": "label",
+                  "valueType": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                {
+                  "description": "A uniquely-identifying name for corresponding entities created in Vellum. <span style=\"white-space: nowrap\">`non-empty`</span> ",
+                  "key": "name",
+                  "valueType": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                {
+                  "description": "Information about how to execute the prompt template.",
+                  "key": "prompt",
+                  "valueType": {
+                    "value": "type_:RegisterPromptPromptInfoRequest",
+                    "type": "id"
+                  }
+                },
+                {
+                  "description": "The initial LLM provider to use for this prompt\n\n* `ANTHROPIC` - Anthropic\n* `COHERE` - Cohere\n* `GOOGLE` - Google\n* `HOSTED` - Hosted\n* `MOSAICML` - MosaicML\n* `OPENAI` - OpenAI\n* `PYQ` - Pyq",
+                  "key": "provider",
+                  "valueType": {
+                    "value": "type_:ProviderEnum",
+                    "type": "id"
+                  }
+                },
+                {
+                  "description": "The initial model to use for this prompt <span style=\"white-space: nowrap\">`non-empty`</span> ",
+                  "key": "model",
+                  "valueType": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                {
+                  "description": "The initial model parameters to use for  this prompt",
+                  "key": "parameters",
+                  "valueType": {
+                    "value": "type_:RegisterPromptModelParametersRequest",
+                    "type": "id"
+                  }
+                },
+                {
+                  "description": "Optionally include additional metadata to store along with the prompt.",
+                  "key": "meta",
+                  "valueType": {
+                    "itemType": {
+                      "keyType": {
+                        "value": {
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "valueType": {
+                        "type": "unknown"
+                      },
+                      "type": "map"
+                    },
+                    "type": "optional"
+                  }
+                }
+              ],
+              "type": "object"
+            }
+          },
+          "response": {
+            "type": {
+              "value": {
+                "value": "type_:RegisterPromptResponse",
+                "type": "id"
+              },
+              "type": "reference"
+            }
+          },
+          "errors": [
+            {
+              "type": {
+                "value": "type_:RegisterPromptErrorResponse",
+                "type": "id"
+              },
+              "statusCode": 409
+            }
+          ],
+          "examples": []
+        }
+      ],
+      "types": [],
+      "subpackages": []
+    },
+    "subpackage_sandboxes": {
+      "subpackageId": "subpackage_sandboxes",
+      "name": "sandboxes",
+      "endpoints": [
+        {
+          "auth": true,
+          "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nUpserts a new scenario for a sandbox, keying off of the optionally provided scenario id.\n\nIf an id is provided and has a match, the scenario will be updated. If no id is provided or no match\nis found, a new scenario will be appended to the end.\n\nNote that a full replacement of the scenario is performed, so any fields not provided will be removed\nor overwritten with default values.",
+          "method": "POST",
+          "defaultEnvironment": "Production",
+          "environments": [
+            {
+              "id": "Production",
+              "baseUrl": "https://api.vellum.ai"
+            }
+          ],
+          "id": "upsert_sandbox_scenario",
+          "name": "Upsert Sandbox Scenario",
+          "path": {
+            "pathParameters": [
+              {
+                "description": "A UUID string identifying this sandbox.",
+                "key": "id",
+                "type": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              }
+            ],
+            "parts": [
+              {
+                "value": "",
+                "type": "literal"
+              },
+              {
+                "value": "/v1/sandboxes/",
+                "type": "literal"
+              },
+              {
+                "value": "id",
+                "type": "pathParameter"
+              },
+              {
+                "value": "/scenarios",
+                "type": "literal"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "label",
+                  "valueType": {
+                    "itemType": {
+                      "value": {
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "optional"
+                  }
+                },
+                {
+                  "description": "The inputs for the scenario",
+                  "key": "inputs",
+                  "valueType": {
+                    "itemType": {
+                      "value": "type_:ScenarioInputRequest",
+                      "type": "id"
+                    },
+                    "type": "list"
+                  }
+                },
+                {
+                  "description": "The id of the scenario to update. If none is provided, an id will be generated and a new scenario will be appended. <span style=\"white-space: nowrap\">`non-empty`</span> ",
+                  "key": "scenario_id",
+                  "valueType": {
+                    "itemType": {
+                      "value": {
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "optional"
+                  }
+                },
+                {
+                  "key": "metric_input_params",
+                  "valueType": {
+                    "itemType": {
+                      "value": "type_:SandboxMetricInputParamsRequest",
+                      "type": "id"
+                    },
+                    "type": "optional"
+                  }
+                }
+              ],
+              "type": "object"
+            }
+          },
+          "response": {
+            "type": {
+              "value": {
+                "value": "type_:SandboxScenario",
+                "type": "id"
+              },
+              "type": "reference"
+            }
+          },
+          "errors": [],
+          "examples": []
+        },
+        {
+          "auth": true,
+          "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nDeletes an existing scenario from a sandbox, keying off of the provided scenario id.",
+          "method": "DELETE",
+          "defaultEnvironment": "Production",
+          "environments": [
+            {
+              "id": "Production",
+              "baseUrl": "https://api.vellum.ai"
+            }
+          ],
+          "id": "delete_sandbox_scenario",
+          "name": "Delete Sandbox Scenario",
+          "path": {
+            "pathParameters": [
+              {
+                "description": "A UUID string identifying this sandbox.",
+                "key": "id",
+                "type": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              {
+                "description": "An id identifying the scenario that you'd like to delete",
+                "key": "scenario_id",
+                "type": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              }
+            ],
+            "parts": [
+              {
+                "value": "",
+                "type": "literal"
+              },
+              {
+                "value": "/v1/sandboxes/",
+                "type": "literal"
+              },
+              {
+                "value": "id",
+                "type": "pathParameter"
+              },
+              {
+                "value": "/scenarios/",
+                "type": "literal"
+              },
+              {
+                "value": "scenario_id",
+                "type": "pathParameter"
+              },
+              {
+                "value": "",
+                "type": "literal"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errors": [],
+          "examples": []
+        }
+      ],
+      "types": [],
+      "subpackages": []
+    },
+    "subpackage_testSuites": {
+      "subpackageId": "subpackage_testSuites",
+      "name": "testSuites",
+      "endpoints": [
+        {
+          "auth": true,
+          "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nUpserts a new test case for a test suite, keying off of the optionally provided test case id.\n\nIf an id is provided and has a match, the test case will be updated. If no id is provided or no match\nis found, a new test case will be appended to the end.\n\nNote that a full replacement of the test case is performed, so any fields not provided will be removed\nor overwritten with default values.",
+          "method": "POST",
+          "defaultEnvironment": "Production",
+          "environments": [
+            {
+              "id": "Production",
+              "baseUrl": "https://api.vellum.ai"
+            }
+          ],
+          "id": "upsert_test_suite_test_case",
+          "name": "Upsert Test Suite Test Case",
+          "path": {
+            "pathParameters": [
+              {
+                "description": "A UUID string identifying this test suite.",
+                "key": "id",
+                "type": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              }
+            ],
+            "parts": [
+              {
+                "value": "",
+                "type": "literal"
+              },
+              {
+                "value": "/v1/test-suites/",
+                "type": "literal"
+              },
+              {
+                "value": "id",
+                "type": "pathParameter"
+              },
+              {
+                "value": "/test-cases",
+                "type": "literal"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "extends": [],
+              "properties": [
+                {
+                  "description": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended. <span style=\"white-space: nowrap\">`non-empty`</span> ",
+                  "key": "test_case_id",
+                  "valueType": {
+                    "itemType": {
+                      "value": {
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "optional"
+                  }
+                },
+                {
+                  "description": "A human-friendly label for the test case.",
+                  "key": "label",
+                  "valueType": {
+                    "itemType": {
+                      "value": {
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "optional"
+                  }
+                },
+                {
+                  "description": "Key/value pairs for each input variable that the Test Suite expects.",
+                  "key": "input_values",
+                  "valueType": {
+                    "keyType": {
+                      "value": {
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "valueType": {
+                      "type": "unknown"
+                    },
+                    "type": "map"
+                  }
+                },
+                {
+                  "description": "Parameters to use when evaluating the test case, specific to the test suite's evaluation metric.",
+                  "key": "evaluation_params",
+                  "valueType": {
+                    "value": "type_:EvaluationParamsRequest",
+                    "type": "id"
+                  }
+                }
+              ],
+              "type": "object"
+            }
+          },
+          "response": {
+            "type": {
+              "value": {
+                "value": "type_:TestSuiteTestCase",
+                "type": "id"
+              },
+              "type": "reference"
+            }
+          },
+          "errors": [],
+          "examples": []
+        },
+        {
+          "auth": true,
+          "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nDeletes an existing test case for a test suite, keying off of the test case id.",
+          "method": "DELETE",
+          "defaultEnvironment": "Production",
+          "environments": [
+            {
+              "id": "Production",
+              "baseUrl": "https://api.vellum.ai"
+            }
+          ],
+          "id": "delete_test_suite_test_case",
+          "name": "Delete Test Suite Test Case",
+          "path": {
+            "pathParameters": [
+              {
+                "description": "A UUID string identifying this test suite.",
+                "key": "id",
+                "type": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              {
+                "description": "An id identifying the test case that you'd like to delete",
+                "key": "test_case_id",
+                "type": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              }
+            ],
+            "parts": [
+              {
+                "value": "",
+                "type": "literal"
+              },
+              {
+                "value": "/v1/test-suites/",
+                "type": "literal"
+              },
+              {
+                "value": "id",
+                "type": "pathParameter"
+              },
+              {
+                "value": "/test-cases/",
+                "type": "literal"
+              },
+              {
+                "value": "test_case_id",
+                "type": "pathParameter"
+              },
+              {
+                "value": "",
+                "type": "literal"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errors": [],
+          "examples": []
+        }
+      ],
+      "types": [],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": true,
+        "description": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nGenerate a completion using a previously defined deployment.\n\n**Note:** Uses a base url of `https://predict.vellum.ai`.",
+        "method": "POST",
+        "defaultEnvironment": "Production",
+        "environments": [
+          {
+            "id": "Production",
+            "baseUrl": "https://predict.vellum.ai"
+          }
+        ],
+        "id": "generate",
+        "name": "Generate",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "value": "",
+              "type": "literal"
+            },
+            {
+              "value": "/v1/generate",
+              "type": "literal"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "extends": [],
+            "properties": [
+              {
+                "description": "The ID of the deployment. Must provide either this or deployment_name.",
+                "key": "deployment_id",
+                "valueType": {
+                  "itemType": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                }
+              },
+              {
+                "description": "The name of the deployment. Must provide either this or deployment_id.",
+                "key": "deployment_name",
+                "valueType": {
+                  "itemType": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                }
+              },
+              {
+                "description": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
+                "key": "requests",
+                "valueType": {
+                  "itemType": {
+                    "value": "type_:GenerateRequest",
+                    "type": "id"
+                  },
+                  "type": "list"
+                }
+              },
+              {
+                "description": "Additional configuration that can be used to control what's included in the response.",
+                "key": "options",
+                "valueType": {
+                  "itemType": {
+                    "value": "type_:GenerateOptionsRequest",
+                    "type": "id"
+                  },
+                  "type": "optional"
+                }
+              }
+            ],
+            "type": "object"
+          }
+        },
+        "response": {
+          "type": {
+            "value": {
+              "value": "type_:GenerateResponse",
+              "type": "id"
+            },
+            "type": "reference"
+          }
+        },
+        "errors": [
+          {
+            "type": {
+              "type": "unknown"
+            },
+            "statusCode": 400
+          },
+          {
+            "type": {
+              "type": "unknown"
+            },
+            "statusCode": 404
+          },
+          {
+            "type": {
+              "type": "unknown"
+            },
+            "statusCode": 500
+          }
+        ],
+        "examples": []
+      },
+      {
+        "auth": true,
+        "description": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nGenerate a stream of completions using a previously defined deployment.\n\n**Note:** Uses a base url of `https://predict.vellum.ai`.",
+        "method": "POST",
+        "defaultEnvironment": "Production",
+        "environments": [
+          {
+            "id": "Production",
+            "baseUrl": "https://predict.vellum.ai"
+          }
+        ],
+        "id": "generate-stream",
+        "name": "Generate Stream",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "value": "",
+              "type": "literal"
+            },
+            {
+              "value": "/v1/generate-stream",
+              "type": "literal"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "extends": [],
+            "properties": [
+              {
+                "description": "The ID of the deployment. Must provide either this or deployment_name.",
+                "key": "deployment_id",
+                "valueType": {
+                  "itemType": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                }
+              },
+              {
+                "description": "The name of the deployment. Must provide either this or deployment_id.",
+                "key": "deployment_name",
+                "valueType": {
+                  "itemType": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                }
+              },
+              {
+                "description": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
+                "key": "requests",
+                "valueType": {
+                  "itemType": {
+                    "value": "type_:GenerateRequest",
+                    "type": "id"
+                  },
+                  "type": "list"
+                }
+              },
+              {
+                "description": "Additional configuration that can be used to control what's included in the response.",
+                "key": "options",
+                "valueType": {
+                  "itemType": {
+                    "value": "type_:GenerateOptionsRequest",
+                    "type": "id"
+                  },
+                  "type": "optional"
+                }
+              }
+            ],
+            "type": "object"
+          }
+        },
+        "errors": [
+          {
+            "type": {
+              "type": "unknown"
+            },
+            "statusCode": 400
+          },
+          {
+            "type": {
+              "type": "unknown"
+            },
+            "statusCode": 404
+          },
+          {
+            "type": {
+              "type": "unknown"
+            },
+            "statusCode": 500
+          }
+        ],
+        "examples": []
+      },
+      {
+        "auth": true,
+        "description": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nPerform a search against a document index.\n\n**Note:** Uses a base url of `https://predict.vellum.ai`.",
+        "method": "POST",
+        "defaultEnvironment": "Production",
+        "environments": [
+          {
+            "id": "Production",
+            "baseUrl": "https://predict.vellum.ai"
+          }
+        ],
+        "id": "search",
+        "name": "Search",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "value": "",
+              "type": "literal"
+            },
+            {
+              "value": "/v1/search",
+              "type": "literal"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "extends": [],
+            "properties": [
+              {
+                "description": "The ID of the index to search against. Must provide either this or index_name.",
+                "key": "index_id",
+                "valueType": {
+                  "itemType": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                }
+              },
+              {
+                "description": "The name of the index to search against. Must provide either this or index_id.",
+                "key": "index_name",
+                "valueType": {
+                  "itemType": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                }
+              },
+              {
+                "description": "The query to search for. <span style=\"white-space: nowrap\">`non-empty`</span> ",
+                "key": "query",
+                "valueType": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              {
+                "description": "Configuration options for the search.",
+                "key": "options",
+                "valueType": {
+                  "itemType": {
+                    "value": "type_:SearchRequestOptionsRequest",
+                    "type": "id"
+                  },
+                  "type": "optional"
+                }
+              }
+            ],
+            "type": "object"
+          }
+        },
+        "response": {
+          "type": {
+            "value": {
+              "value": "type_:SearchResponse",
+              "type": "id"
+            },
+            "type": "reference"
+          }
+        },
+        "errors": [
+          {
+            "type": {
+              "type": "unknown"
+            },
+            "statusCode": 400
+          },
+          {
+            "type": {
+              "type": "unknown"
+            },
+            "statusCode": 404
+          },
+          {
+            "type": {
+              "type": "unknown"
+            },
+            "statusCode": 500
+          }
+        ],
+        "examples": []
+      },
+      {
+        "auth": true,
+        "description": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nUsed to submit feedback regarding the quality of previously generated completions.\n\n**Note:** Uses a base url of `https://predict.vellum.ai`.",
+        "method": "POST",
+        "defaultEnvironment": "Production",
+        "environments": [
+          {
+            "id": "Production",
+            "baseUrl": "https://predict.vellum.ai"
+          }
+        ],
+        "id": "submit-completion-actuals",
+        "name": "Submit Completion Actuals",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "value": "",
+              "type": "literal"
+            },
+            {
+              "value": "/v1/submit-completion-actuals",
+              "type": "literal"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "extends": [],
+            "properties": [
+              {
+                "description": "The ID of the deployment. Must provide either this or deployment_name.",
+                "key": "deployment_id",
+                "valueType": {
+                  "itemType": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                }
+              },
+              {
+                "description": "The name of the deployment. Must provide either this or deployment_id.",
+                "key": "deployment_name",
+                "valueType": {
+                  "itemType": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "optional"
+                }
+              },
+              {
+                "description": "Feedback regarding the quality of previously generated completions",
+                "key": "actuals",
+                "valueType": {
+                  "itemType": {
+                    "value": "type_:SubmitCompletionActualRequest",
+                    "type": "id"
+                  },
+                  "type": "list"
+                }
+              }
+            ],
+            "type": "object"
+          }
+        },
+        "errors": [
+          {
+            "type": {
+              "type": "unknown"
+            },
+            "statusCode": 400
+          },
+          {
+            "type": {
+              "type": "unknown"
+            },
+            "statusCode": 404
+          },
+          {
+            "type": {
+              "type": "unknown"
+            },
+            "statusCode": 500
+          }
+        ],
+        "examples": []
+      }
+    ],
+    "types": [
+      "type_:BlockTypeEnum",
+      "type_:ChatMessage",
+      "type_:ChatMessageRequest",
+      "type_:ChatMessageRole",
+      "type_:ContentType",
+      "type_:DeploymentRead",
+      "type_:DeploymentReadStatusEnum",
+      "type_:Document",
+      "type_:DocumentDocumentToDocumentIndex",
+      "type_:DocumentIndexRead",
+      "type_:DocumentIndexStatus",
+      "type_:EnrichedNormalizedCompletion",
+      "type_:EnvironmentEnum",
+      "type_:EvaluationParams",
+      "type_:EvaluationParamsRequest",
+      "type_:FinishReasonEnum",
+      "type_:GenerateErrorResponse",
+      "type_:GenerateOptionsRequest",
+      "type_:GenerateRequest",
+      "type_:GenerateResponse",
+      "type_:GenerateResult",
+      "type_:GenerateResultData",
+      "type_:GenerateResultError",
+      "type_:GenerateStreamResponse",
+      "type_:GenerateStreamResult",
+      "type_:GenerateStreamResultData",
+      "type_:IndexingStateEnum",
+      "type_:LogprobsEnum",
+      "type_:ModelTypeEnum",
+      "type_:ModelVersionBuildConfig",
+      "type_:ModelVersionCompilePromptResponse",
+      "type_:ModelVersionCompiledPrompt",
+      "type_:ModelVersionExecConfig",
+      "type_:ModelVersionExecConfigParameters",
+      "type_:ModelVersionRead",
+      "type_:ModelVersionReadStatusEnum",
+      "type_:ModelVersionSandboxSnapshot",
+      "type_:NormalizedLogProbs",
+      "type_:NormalizedTokenLogProbs",
+      "type_:PaginatedSlimDocumentList",
+      "type_:ProcessingFailureReasonEnum",
+      "type_:ProcessingStateEnum",
+      "type_:PromptTemplateBlock",
+      "type_:PromptTemplateBlockData",
+      "type_:PromptTemplateBlockDataRequest",
+      "type_:PromptTemplateBlockProperties",
+      "type_:PromptTemplateBlockPropertiesRequest",
+      "type_:PromptTemplateBlockRequest",
+      "type_:PromptTemplateInputVariable",
+      "type_:PromptTemplateInputVariableRequest",
+      "type_:ProviderEnum",
+      "type_:RegisterPromptErrorResponse",
+      "type_:RegisterPromptModelParametersRequest",
+      "type_:RegisterPromptPrompt",
+      "type_:RegisterPromptPromptInfoRequest",
+      "type_:RegisterPromptResponse",
+      "type_:RegisteredPromptDeployment",
+      "type_:RegisteredPromptModelVersion",
+      "type_:RegisteredPromptSandbox",
+      "type_:RegisteredPromptSandboxSnapshot",
+      "type_:SandboxMetricInputParams",
+      "type_:SandboxMetricInputParamsRequest",
+      "type_:SandboxScenario",
+      "type_:ScenarioInput",
+      "type_:ScenarioInputRequest",
+      "type_:ScenarioInputTypeEnum",
+      "type_:SearchErrorResponse",
+      "type_:SearchFiltersRequest",
+      "type_:SearchRequestOptionsRequest",
+      "type_:SearchResponse",
+      "type_:SearchResult",
+      "type_:SearchResultMergingRequest",
+      "type_:SearchWeightsRequest",
+      "type_:SlimDocument",
+      "type_:SlimDocumentStatusEnum",
+      "type_:SubmitCompletionActualRequest",
+      "type_:SubmitCompletionActualsErrorResponse",
+      "type_:TestSuiteTestCase",
+      "type_:UploadDocumentErrorResponse",
+      "type_:UploadDocumentResponse"
+    ],
+    "subpackages": [
+      "subpackage_deployments",
+      "subpackage_documentIndexes",
+      "subpackage_documents",
+      "subpackage_modelVersions",
+      "subpackage_registeredPrompts",
+      "subpackage_sandboxes",
+      "subpackage_testSuites"
+    ]
+  },
+  "auth": {
+    "headerWireValue": "X_API_KEY",
+    "nameOverride": "apiKey",
+    "type": "header"
+  }
+}
