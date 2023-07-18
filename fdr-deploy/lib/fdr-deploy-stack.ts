@@ -7,7 +7,7 @@ import { ApplicationLoadBalancedFargateService } from "aws-cdk-lib/aws-ecs-patte
 import { ApplicationProtocol } from "aws-cdk-lib/aws-elasticloadbalancingv2";
 import { LogGroup } from "aws-cdk-lib/aws-logs";
 import { HostedZone } from "aws-cdk-lib/aws-route53";
-import { Bucket } from "aws-cdk-lib/aws-s3";
+import { Bucket, HttpMethods } from "aws-cdk-lib/aws-s3";
 import { Construct } from "constructs";
 
 const CONTAINER_NAME = "fern-definition-registry";
@@ -54,6 +54,13 @@ export class FdrDeployStack extends Stack {
         const fdrBucket = new Bucket(this, "fdr-docs-files", {
             bucketName: `fdr-${environmentType.toLowerCase()}-docs-files`,
             removalPolicy: RemovalPolicy.RETAIN,
+            cors: [
+                {
+                    allowedMethods: [HttpMethods.GET, HttpMethods.POST, HttpMethods.PUT],
+                    allowedOrigins: ["*"],
+                    allowedHeaders: ["*"],
+                },
+            ],
         });
 
         const cloudmapNamespace = environmentInfo.cloudMapNamespaceInfo.namespaceName;
