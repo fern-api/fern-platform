@@ -30,7 +30,7 @@ describe("transformApiDefinitionToDb", () => {
             `${JSON.stringify(fixture)}`,
             async () => {
                 const apiDef = loadFdrApiDefinition(fixture);
-                const dbApiDefinition = transformApiDefinitionForDb(apiDef, "id", "transformApiDefinitionToDb");
+                const dbApiDefinition = transformApiDefinitionForDb(apiDef, "id");
                 expect(dbApiDefinition).toMatchSnapshot();
             },
             90_000

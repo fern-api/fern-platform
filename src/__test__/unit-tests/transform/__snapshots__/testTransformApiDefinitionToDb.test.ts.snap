@@ -289,6 +289,78 @@ Generate a completion using a previously defined deployment.
             "responseBodyV2": undefined,
             "responseStatusCode": 200,
           },
+          Object {
+            "codeExamples": Object {
+              "nodeAxios": "",
+            },
+            "description": undefined,
+            "headers": Object {},
+            "htmlDescription": undefined,
+            "path": "/v1/generate",
+            "pathParameters": Object {},
+            "queryParameters": Object {},
+            "requestBody": Object {
+              "requests": Array [
+                Object {
+                  "input_values": Object {
+                    "string": Object {},
+                  },
+                },
+              ],
+            },
+            "requestBodyV2": undefined,
+            "responseBody": Object {},
+            "responseBodyV2": undefined,
+            "responseStatusCode": 400,
+          },
+          Object {
+            "codeExamples": Object {
+              "nodeAxios": "",
+            },
+            "description": undefined,
+            "headers": Object {},
+            "htmlDescription": undefined,
+            "path": "/v1/generate",
+            "pathParameters": Object {},
+            "queryParameters": Object {},
+            "requestBody": Object {
+              "requests": Array [
+                Object {
+                  "input_values": Object {
+                    "string": Object {},
+                  },
+                },
+              ],
+            },
+            "requestBodyV2": undefined,
+            "responseBody": Object {},
+            "responseBodyV2": undefined,
+            "responseStatusCode": 404,
+          },
+          Object {
+            "codeExamples": Object {
+              "nodeAxios": "",
+            },
+            "description": undefined,
+            "headers": Object {},
+            "htmlDescription": undefined,
+            "path": "/v1/generate",
+            "pathParameters": Object {},
+            "queryParameters": Object {},
+            "requestBody": Object {
+              "requests": Array [
+                Object {
+                  "input_values": Object {
+                    "string": Object {},
+                  },
+                },
+              ],
+            },
+            "requestBodyV2": undefined,
+            "responseBody": Object {},
+            "responseBodyV2": undefined,
+            "responseStatusCode": 500,
+          },
         ],
         "headers": Array [],
         "htmlDescription": "<p><strong style=\\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\\">Stable</strong></p>
@@ -437,6 +509,78 @@ Generate a stream of completions using a previously defined deployment.
             "responseBody": undefined,
             "responseBodyV2": undefined,
             "responseStatusCode": 200,
+          },
+          Object {
+            "codeExamples": Object {
+              "nodeAxios": "",
+            },
+            "description": undefined,
+            "headers": Object {},
+            "htmlDescription": undefined,
+            "path": "/v1/generate-stream",
+            "pathParameters": Object {},
+            "queryParameters": Object {},
+            "requestBody": Object {
+              "requests": Array [
+                Object {
+                  "input_values": Object {
+                    "string": Object {},
+                  },
+                },
+              ],
+            },
+            "requestBodyV2": undefined,
+            "responseBody": Object {},
+            "responseBodyV2": undefined,
+            "responseStatusCode": 400,
+          },
+          Object {
+            "codeExamples": Object {
+              "nodeAxios": "",
+            },
+            "description": undefined,
+            "headers": Object {},
+            "htmlDescription": undefined,
+            "path": "/v1/generate-stream",
+            "pathParameters": Object {},
+            "queryParameters": Object {},
+            "requestBody": Object {
+              "requests": Array [
+                Object {
+                  "input_values": Object {
+                    "string": Object {},
+                  },
+                },
+              ],
+            },
+            "requestBodyV2": undefined,
+            "responseBody": Object {},
+            "responseBodyV2": undefined,
+            "responseStatusCode": 404,
+          },
+          Object {
+            "codeExamples": Object {
+              "nodeAxios": "",
+            },
+            "description": undefined,
+            "headers": Object {},
+            "htmlDescription": undefined,
+            "path": "/v1/generate-stream",
+            "pathParameters": Object {},
+            "queryParameters": Object {},
+            "requestBody": Object {
+              "requests": Array [
+                Object {
+                  "input_values": Object {
+                    "string": Object {},
+                  },
+                },
+              ],
+            },
+            "requestBodyV2": undefined,
+            "responseBody": Object {},
+            "responseBodyV2": undefined,
+            "responseStatusCode": 500,
           },
         ],
         "headers": Array [],
@@ -588,6 +732,60 @@ Perform a search against a document index.
             "responseBodyV2": undefined,
             "responseStatusCode": 200,
           },
+          Object {
+            "codeExamples": Object {
+              "nodeAxios": "",
+            },
+            "description": undefined,
+            "headers": Object {},
+            "htmlDescription": undefined,
+            "path": "/v1/search",
+            "pathParameters": Object {},
+            "queryParameters": Object {},
+            "requestBody": Object {
+              "query": "string",
+            },
+            "requestBodyV2": undefined,
+            "responseBody": Object {},
+            "responseBodyV2": undefined,
+            "responseStatusCode": 400,
+          },
+          Object {
+            "codeExamples": Object {
+              "nodeAxios": "",
+            },
+            "description": undefined,
+            "headers": Object {},
+            "htmlDescription": undefined,
+            "path": "/v1/search",
+            "pathParameters": Object {},
+            "queryParameters": Object {},
+            "requestBody": Object {
+              "query": "string",
+            },
+            "requestBodyV2": undefined,
+            "responseBody": Object {},
+            "responseBodyV2": undefined,
+            "responseStatusCode": 404,
+          },
+          Object {
+            "codeExamples": Object {
+              "nodeAxios": "",
+            },
+            "description": undefined,
+            "headers": Object {},
+            "htmlDescription": undefined,
+            "path": "/v1/search",
+            "pathParameters": Object {},
+            "queryParameters": Object {},
+            "requestBody": Object {
+              "query": "string",
+            },
+            "requestBodyV2": undefined,
+            "responseBody": Object {},
+            "responseBodyV2": undefined,
+            "responseStatusCode": 500,
+          },
         ],
         "headers": Array [],
         "htmlDescription": "<p><strong style=\\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\\">Stable</strong></p>
@@ -731,6 +929,66 @@ Used to submit feedback regarding the quality of previously generated completion
             "responseBody": undefined,
             "responseBodyV2": undefined,
             "responseStatusCode": 200,
+          },
+          Object {
+            "codeExamples": Object {
+              "nodeAxios": "",
+            },
+            "description": undefined,
+            "headers": Object {},
+            "htmlDescription": undefined,
+            "path": "/v1/submit-completion-actuals",
+            "pathParameters": Object {},
+            "queryParameters": Object {},
+            "requestBody": Object {
+              "actuals": Array [
+                Object {},
+              ],
+            },
+            "requestBodyV2": undefined,
+            "responseBody": Object {},
+            "responseBodyV2": undefined,
+            "responseStatusCode": 400,
+          },
+          Object {
+            "codeExamples": Object {
+              "nodeAxios": "",
+            },
+            "description": undefined,
+            "headers": Object {},
+            "htmlDescription": undefined,
+            "path": "/v1/submit-completion-actuals",
+            "pathParameters": Object {},
+            "queryParameters": Object {},
+            "requestBody": Object {
+              "actuals": Array [
+                Object {},
+              ],
+            },
+            "requestBodyV2": undefined,
+            "responseBody": Object {},
+            "responseBodyV2": undefined,
+            "responseStatusCode": 404,
+          },
+          Object {
+            "codeExamples": Object {
+              "nodeAxios": "",
+            },
+            "description": undefined,
+            "headers": Object {},
+            "htmlDescription": undefined,
+            "path": "/v1/submit-completion-actuals",
+            "pathParameters": Object {},
+            "queryParameters": Object {},
+            "requestBody": Object {
+              "actuals": Array [
+                Object {},
+              ],
+            },
+            "requestBodyV2": undefined,
+            "responseBody": Object {},
+            "responseBodyV2": undefined,
+            "responseStatusCode": 500,
           },
         ],
         "headers": Array [],
@@ -1392,6 +1650,54 @@ Upload a document to be indexed and used for search.
               "responseBodyV2": undefined,
               "responseStatusCode": 200,
             },
+            Object {
+              "codeExamples": Object {
+                "nodeAxios": "",
+              },
+              "description": undefined,
+              "headers": Object {},
+              "htmlDescription": undefined,
+              "path": "/v1/upload-document",
+              "pathParameters": Object {},
+              "queryParameters": Object {},
+              "requestBody": "<filename>",
+              "requestBodyV2": undefined,
+              "responseBody": Object {},
+              "responseBodyV2": undefined,
+              "responseStatusCode": 400,
+            },
+            Object {
+              "codeExamples": Object {
+                "nodeAxios": "",
+              },
+              "description": undefined,
+              "headers": Object {},
+              "htmlDescription": undefined,
+              "path": "/v1/upload-document",
+              "pathParameters": Object {},
+              "queryParameters": Object {},
+              "requestBody": "<filename>",
+              "requestBodyV2": undefined,
+              "responseBody": Object {},
+              "responseBodyV2": undefined,
+              "responseStatusCode": 404,
+            },
+            Object {
+              "codeExamples": Object {
+                "nodeAxios": "",
+              },
+              "description": undefined,
+              "headers": Object {},
+              "htmlDescription": undefined,
+              "path": "/v1/upload-document",
+              "pathParameters": Object {},
+              "queryParameters": Object {},
+              "requestBody": "<filename>",
+              "requestBodyV2": undefined,
+              "responseBody": Object {},
+              "responseBodyV2": undefined,
+              "responseStatusCode": 500,
+            },
           ],
           "headers": Array [],
           "htmlDescription": "<p><strong style=\\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\\">Stable</strong></p>
@@ -1812,6 +2118,53 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
               },
               "responseBodyV2": undefined,
               "responseStatusCode": 200,
+            },
+            Object {
+              "codeExamples": Object {
+                "nodeAxios": "",
+              },
+              "description": undefined,
+              "headers": Object {},
+              "htmlDescription": undefined,
+              "path": "/v1/registered-prompts/register",
+              "pathParameters": Object {},
+              "queryParameters": Object {},
+              "requestBody": Object {
+                "label": "string",
+                "model": "string",
+                "name": "string",
+                "parameters": Object {
+                  "frequency_penalty": 1,
+                  "max_tokens": 0,
+                  "presence_penalty": 1,
+                  "temperature": 1,
+                  "top_p": 1,
+                },
+                "prompt": Object {
+                  "input_variables": Array [
+                    Object {
+                      "key": "string",
+                    },
+                  ],
+                  "prompt_block_data": Object {
+                    "blocks": Array [
+                      Object {
+                        "block_type": "CHAT_MESSAGE",
+                        "id": "string",
+                        "properties": Object {},
+                      },
+                    ],
+                    "version": 0,
+                  },
+                },
+                "provider": "ANTHROPIC",
+              },
+              "requestBodyV2": undefined,
+              "responseBody": Object {
+                "detail": "string",
+              },
+              "responseBodyV2": undefined,
+              "responseStatusCode": 409,
             },
           ],
           "headers": Array [],

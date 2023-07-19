@@ -12,11 +12,7 @@ export function getRegisterApiService(app: FdrApplication): RegisterService {
                 orgId: req.body.orgId,
             });
             const apiDefinitionId = uuidv4();
-            const transformedApiDefinition = transformApiDefinitionForDb(
-                req.body.definition,
-                apiDefinitionId,
-                "registerApiDefinition"
-            );
+            const transformedApiDefinition = transformApiDefinitionForDb(req.body.definition, apiDefinitionId);
             await app.services.db.prisma.apiDefinitionsV2.create({
                 data: {
                     apiDefinitionId,
