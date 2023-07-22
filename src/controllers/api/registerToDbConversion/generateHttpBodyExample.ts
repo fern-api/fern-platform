@@ -10,8 +10,24 @@ export function generateHttpRequestBodyExample(
             return generateExampleObject(type, resolveTypeById, true, new Set(), 0);
         case "reference":
             return generateExampleFromTypeReference(type.value, resolveTypeById, true, new Set(), 0);
+        case "json":
+            return generateHttpJsonRequestBodyExample(type.shape, resolveTypeById);
         case "fileUpload":
             return "<filename>";
+    }
+}
+
+function generateHttpJsonRequestBodyExample(
+    shape: ApiV1Write.JsonRequestBodyShape,
+    resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition
+): unknown {
+    switch (shape.type) {
+        case "object":
+            return generateExampleObject(shape, resolveTypeById, true, new Set(), 0);
+        case "reference":
+            return generateExampleFromTypeReference(shape.value, resolveTypeById, true, new Set(), 0);
+        default:
+            assertNever(shape);
     }
 }
 

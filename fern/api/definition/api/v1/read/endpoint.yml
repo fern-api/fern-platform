@@ -75,6 +75,7 @@ types:
   HttpRequest:
     extends: commons.WithDescription
     properties:
+      contentType: string
       type: HttpRequestBodyShape
 
   HttpRequestBodyShape:

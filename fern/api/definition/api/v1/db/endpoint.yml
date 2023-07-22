@@ -18,7 +18,13 @@ types:
       path: readEndpoint.EndpointPath
       queryParameters: list<readEndpoint.QueryParameter>
       headers: list<readEndpoint.Header>
-      request: optional<readEndpoint.HttpRequest>
+      request: optional<DbHttpRequest>
       response: optional<readEndpoint.HttpResponse>
       errors: optional<list<readEndpoint.ErrorDeclaration>>
       examples: list<readEndpoint.ExampleEndpointCall>
+  
+  DbHttpRequest:
+    extends: readCommons.WithDescription
+    properties:
+      contentType: optional<string>
+      type: readEndpoint.HttpRequestBodyShape

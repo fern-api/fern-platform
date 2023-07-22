@@ -94,7 +94,7 @@ function transformEndpoint({
         path: writeShape.path,
         queryParameters: writeShape.queryParameters,
         headers: writeShape.headers,
-        request: writeShape.request,
+        request: writeShape.request != null ? transformHttpRequestToDb({ writeShape: writeShape.request }) : undefined,
         response: writeShape.response,
         errors: writeShape.errors ?? [],
         examples: getExampleEndpointCalls({ writeShape, apiDefinition }),
@@ -152,6 +152,45 @@ function groupExamplesByStatusCode(examples: ApiV1Write.ExampleEndpointCall[]) {
         }
     });
     return { successExamples, errorExamples };
+}
+
+function transformHttpRequestToDb({
+    writeShape,
+}: {
+    writeShape: FernRegistry.api.v1.register.HttpRequest;
+}): WithoutQuestionMarks<FernRegistry.api.v1.db.DbHttpRequest> {
+    switch (writeShape.type.type) {
+        case "object":
+            return {
+                contentType: "application/json",
+                description: writeShape.description,
+                htmlDescription: getHtmlDescription(writeShape.description),
+                type: writeShape.type,
+            };
+        case "reference":
+            return {
+                contentType: "application/json",
+                description: writeShape.description,
+                htmlDescription: getHtmlDescription(writeShape.description),
+                type: writeShape.type,
+            };
+        case "fileUpload":
+            return {
+                contentType: "multipart/form-data",
+                description: writeShape.description,
+                htmlDescription: getHtmlDescription(writeShape.description),
+                type: writeShape.type,
+            };
+        case "json":
+            return {
+                contentType: writeShape.type.contentType,
+                description: writeShape.description,
+                htmlDescription: getHtmlDescription(writeShape.description),
+                type: writeShape.type.shape,
+            };
+        default:
+            assertNever(writeShape.type);
+    }
 }
 
 // exported for testing

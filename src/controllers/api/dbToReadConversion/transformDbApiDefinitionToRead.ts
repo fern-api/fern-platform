@@ -1,5 +1,5 @@
 import { FernRegistry } from "../../../generated";
-import { type WithoutQuestionMarks } from "../../../util";
+import { assertNever, type WithoutQuestionMarks } from "../../../util";
 
 export function transformApiDefinitionForReading(
     dbShape: FernRegistry.api.v1.db.DbApiDefinition
@@ -55,7 +55,7 @@ function transformEndpoint({
         path: dbShape.path,
         queryParameters: dbShape.queryParameters,
         headers: dbShape.headers,
-        request: dbShape.request,
+        request: dbShape.request != null ? transformHttpRequest({ dbShape: dbShape.request }) : undefined,
         response: dbShape.response,
         errors: dbShape.errors ?? [],
         examples: dbShape.examples,
@@ -63,4 +63,36 @@ function transformEndpoint({
         htmlDescription: dbShape.htmlDescription,
         authed: dbShape.authed ?? false,
     };
+}
+
+function transformHttpRequest({
+    dbShape,
+}: {
+    dbShape: FernRegistry.api.v1.db.DbHttpRequest;
+}): WithoutQuestionMarks<FernRegistry.api.v1.read.HttpRequest> {
+    switch (dbShape.type.type) {
+        case "object":
+            return {
+                contentType: dbShape.contentType ?? "multipart/form-data",
+                description: dbShape.description,
+                htmlDescription: dbShape.htmlDescription,
+                type: dbShape.type,
+            };
+        case "reference":
+            return {
+                contentType: dbShape.contentType ?? "multipart/form-data",
+                description: dbShape.description,
+                htmlDescription: dbShape.htmlDescription,
+                type: dbShape.type,
+            };
+        case "fileUpload":
+            return {
+                contentType: dbShape.contentType ?? "multipart/form-data",
+                description: dbShape.description,
+                htmlDescription: dbShape.htmlDescription,
+                type: dbShape.type,
+            };
+        default:
+            assertNever(dbShape.type);
+    }
 }

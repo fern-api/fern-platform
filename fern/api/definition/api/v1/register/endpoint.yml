@@ -76,9 +76,24 @@ types:
 
   HttpRequestBodyShape:
     union:
+      object: 
+        # deprecated, the CLI will use json instead
+        type: type.ObjectType
+      reference:
+        # deprecated, the CLI will use json instead
+        type: type.TypeReference
+      json: JsonRequestBody
+      fileUpload: {}
+  
+  JsonRequestBody: 
+    properties: 
+      contentType: string
+      shape: JsonRequestBodyShape
+  
+  JsonRequestBodyShape: 
+    union: 
       object: type.ObjectType
       reference: type.TypeReference
-      fileUpload: {}
 
   HttpResponse:
     extends: commons.WithDescription
