@@ -133,13 +133,18 @@ export function getDocsWriteV2Service(app: FdrApplication): WriteService {
             const urls = [
                 docsRegistrationInfo.fernDomain,
                 ...docsRegistrationInfo.customDomains.map((domain) => `${domain.hostname}${domain.path}`),
-            ];
+            ].map((url) => `https://${url}`);
             await Promise.all(
                 urls.map(async (url) => {
                     try {
+                        app.logger.info(`[${docsRegistrationInfo.fernDomain}] Revalidating url: ${url}`);
                         await revalidateUrl(url);
+                        app.logger.info(`[${docsRegistrationInfo.fernDomain}] Revalidated url: ${url}`);
                     } catch (e) {
-                        app.logger.error(`Failed to revalidate url: ${url}. ` + (e as Error).message);
+                        app.logger.error(
+                            `[${docsRegistrationInfo.fernDomain}] Failed to revalidate url: ${url}. ` +
+                                (e as Error).message
+                        );
                     }
                 })
             );

@@ -3,7 +3,7 @@ import type { FdrApplication } from "../../app";
 import { FernRegistry } from "../../generated";
 import { DomainNotRegisteredError } from "../../generated/api/resources/docs/resources/v1/resources/read";
 import { ReadService } from "../../generated/api/resources/docs/resources/v1/resources/read/service/ReadService";
-import { WithoutQuestionMarks, readBuffer } from "../../util";
+import { readBuffer, WithoutQuestionMarks } from "../../util";
 import { convertDbApiDefinitionToRead } from "../api/getApiReadService";
 
 export function getDocsReadService(app: FdrApplication): ReadService {
@@ -87,9 +87,9 @@ export async function getDocsDefinition({
         files: Object.fromEntries(
             await Promise.all(
                 Object.entries(docsDbDefinition.files).map(async ([fileId, fileDbInfo]) => {
-                    console.debug(__filename, "Gettings S3 download URL", fileId);
+                    console.debug(__filename, "Getting S3 download URL", fileId);
                     const s3DownloadUrl = await app.services.s3.getPresignedDownloadUrl({ key: fileDbInfo.s3Key });
-                    console.debug(__filename, "Gettings S3 download URL", fileId);
+                    console.debug(__filename, "Got S3 download URL", fileId);
                     return [fileId, s3DownloadUrl];
                 })
             )

@@ -1,15 +1,22 @@
 import axios from "axios";
+import * as AxiosLogger from "axios-logger";
 
 interface RevalidateResponse {
     revalidated: string[];
     failures: string[];
 }
 
+const AXIOS_INSTANCE = axios.create();
+AXIOS_INSTANCE.interceptors.request.use(AxiosLogger.requestLogger);
+
 export async function revalidateUrl(url: string): Promise<void> {
-    const response: RevalidateResponse = await axios.post(`${new URL(url).hostname}/api/revalidate`, {
+    const response = await AXIOS_INSTANCE.post(`${new URL(url).origin}/api/revalidate`, {
         url,
     });
-    if (response.failures.length > 0) {
-        throw new Error(["Failed to revalidate paths:", ...response.failures.map((path) => `- ${path}`)].join("\n"));
+    const responseBody = response.data as RevalidateResponse;
+    if (responseBody.failures.length > 0) {
+        throw new Error(
+            ["Failed to revalidate paths:", ...responseBody.failures.map((path) => `- ${path}`)].join("\n")
+        );
     }
 }
