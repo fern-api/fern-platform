@@ -10,6 +10,7 @@ import { WriteService } from "../../generated/api/resources/docs/resources/v2/re
 import { generateAlgoliaRecords } from "../../services/algolia/generateAlgoliaRecords";
 import { type S3FileInfo } from "../../services/s3";
 import { getParsedUrl } from "../../util";
+import { revalidateUrl } from "./revalidateUrl";
 import { transformWriteDocsDefinitionToDb } from "./transformDocsDefinitionToDb";
 
 const DOCS_REGISTRATIONS: Record<DocsRegistrationId, DocsRegistrationInfo> = {};
@@ -127,6 +128,22 @@ export function getDocsWriteV2Service(app: FdrApplication): WriteService {
 
             // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
             delete DOCS_REGISTRATIONS[req.params.docsRegistrationId];
+
+            // revalidate nextjs
+            const urls = [
+                docsRegistrationInfo.fernDomain,
+                ...docsRegistrationInfo.customDomains.map((domain) => `${domain.hostname}${domain.path}`),
+            ];
+            await Promise.all(
+                urls.map(async (url) => {
+                    try {
+                        await revalidateUrl(url);
+                    } catch (e) {
+                        app.logger.error(`Failed to revalidate url: ${url}. ` + (e as Error).message);
+                    }
+                })
+            );
+
             return res.send();
         },
     });
