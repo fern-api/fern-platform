@@ -74,14 +74,14 @@ function transformHttpRequest({
     switch (dbShape.type.type) {
         case "object":
             return {
-                contentType: dbShape.contentType ?? "multipart/form-data",
+                contentType: dbShape.contentType ?? "application/json",
                 description: dbShape.description,
                 htmlDescription: dbShape.htmlDescription,
                 type: dbShape.type,
             };
         case "reference":
             return {
-                contentType: dbShape.contentType ?? "multipart/form-data",
+                contentType: dbShape.contentType ?? "application/json",
                 description: dbShape.description,
                 htmlDescription: dbShape.htmlDescription,
                 type: dbShape.type,
