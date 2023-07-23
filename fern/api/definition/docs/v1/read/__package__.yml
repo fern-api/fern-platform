@@ -67,6 +67,7 @@ types:
       logo: optional<FileId>
       logoHref: optional<Url>
       favicon: optional<FileId>
+      backgroundImage: optional<FileId>
       colors: optional<ColorsConfig>
       navbarLinks: list<NavbarLink>
       typography: optional<DocsTypographyConfig>

@@ -109,6 +109,7 @@ function getDocsDefinitionConfig(
         navbarLinks: docsDbDefinition.config.navbarLinks ?? [],
         title: docsDbDefinition.config.title,
         favicon: docsDbDefinition.config.favicon,
+        backgroundImage: docsDbDefinition.config.backgroundImage,
         typography: docsDbDefinition.config.typography,
     };
 }

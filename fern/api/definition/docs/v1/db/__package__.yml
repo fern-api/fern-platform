@@ -36,6 +36,7 @@ types:
       logo: optional<docsReadV1.FileId>
       logoHref: optional<docsReadV1.Url>
       favicon: optional<docsReadV1.FileId>
+      backgroundImage: optional<docsReadV1.FileId>
       colors: optional<docsReadV1.ColorsConfig>
       navbarLinks: optional<list<docsReadV1.NavbarLink>>
       typography: optional<DocsTypographyConfig>
