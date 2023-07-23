@@ -16,4 +16,6 @@ jobs:
       - name: Publish FDR SDKs
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-        run: fern generate --group internal-read --log-level debug
+        run: | 
+          git_version="$(scripts/git-version.sh)"
+          fern generate --group internal-read --version "${git_version}" --log-level debug
