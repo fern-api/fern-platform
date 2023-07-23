@@ -110,7 +110,29 @@ jobs:
           command: |
             npm install -g fern-api
             fern register-v2 --environment Production
-
+    
+  publish-sdks:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          name: fern generate
+          command: |
+            npm install -g fern-api
+      - run: 
+          name: Publish FDR Read SDKs
+          command: | 
+            git_version="$(scripts/git-version.sh)"
+            fern generate --group internal-read --version "${git_version}" --log-level debug
+      - run: 
+          name: Publish FDR Write SDKs
+          command: | 
+            git_version="$(scripts/git-version.sh)"
+            fern generate --group internal-write --version "${git_version}" --log-level debug
+      
   register-latest:
     machine:
       image: ubuntu-2004:current
@@ -163,6 +185,16 @@ workflows:
             - check
 
       - register-latest:
+          filters:
+            branches:
+              only:
+                - main
+          context:
+            - fern-tokens
+          requires:
+            - check
+
+      - publish-sdks:
           filters:
             branches:
               only:
