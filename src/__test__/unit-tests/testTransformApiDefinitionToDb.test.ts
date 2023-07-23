@@ -51,5 +51,6 @@ it("api register", async () => {
                 },
             },
         },
+        hasMultipleBaseUrls: false,
     });
 });

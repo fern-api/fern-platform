@@ -29,6 +29,12 @@ types:
       types: map<type.TypeId, type.TypeDefinition>
       subpackages: map<SubpackageId, ApiDefinitionSubpackage>
       auth: optional<ApiAuth>
+      hasMultipleBaseUrls: 
+        type: optional<boolean>
+        docs: | 
+          If empty, assume false. 
+          Whether or not endpoints are being served at different 
+          base urls (i.e. https://a.com and https://b.com)
 
   ApiDefinitionPackage:
     properties:

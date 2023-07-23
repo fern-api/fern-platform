@@ -7,6 +7,7 @@ Object {
     "nameOverride": "secretKey",
     "type": "header",
   },
+  "hasMultipleBaseUrls": false,
   "id": "id",
   "rootPackage": Object {
     "endpoints": Array [],
@@ -194,6 +195,7 @@ Object {
     "nameOverride": "apiKey",
     "type": "header",
   },
+  "hasMultipleBaseUrls": true,
   "id": "id",
   "rootPackage": Object {
     "endpoints": Array [

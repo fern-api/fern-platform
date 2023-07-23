@@ -19,11 +19,13 @@ export function transformApiDefinitionForDb(
         }
     }
 
+    const context = new ApiDefinitionTransformationContext();
+
     return {
         id,
         rootPackage: {
             endpoints: writeShape.rootPackage.endpoints.map((endpoint) =>
-                transformEndpoint({ writeShape: endpoint, apiDefinition: writeShape })
+                transformEndpoint({ writeShape: endpoint, apiDefinition: writeShape, context })
             ),
             subpackages: writeShape.rootPackage.subpackages,
             types: writeShape.rootPackage.types,
@@ -41,10 +43,12 @@ export function transformApiDefinitionForDb(
                 id: subpackageId,
                 subpackageToParent,
                 apiDefinition: writeShape,
+                context,
             });
             return subpackages;
         }, {}),
         auth: writeShape.auth,
+        hasMultipleBaseUrls: context.hasMultipleBaseUrls(),
     };
 }
 
@@ -53,15 +57,17 @@ function transformSubpackage({
     id,
     subpackageToParent,
     apiDefinition,
+    context,
 }: {
     writeShape: FernRegistry.api.v1.register.ApiDefinitionSubpackage;
     id: FernRegistry.api.v1.register.SubpackageId;
     subpackageToParent: Record<FernRegistry.api.v1.register.SubpackageId, FernRegistry.api.v1.register.SubpackageId>;
     apiDefinition: FernRegistry.api.v1.register.ApiDefinition;
+    context: ApiDefinitionTransformationContext;
 }): WithoutQuestionMarks<FernRegistry.api.v1.db.DbApiDefinitionSubpackage> {
     const parent = subpackageToParent[id];
     const endpoints = writeShape.endpoints.map((endpoint) =>
-        transformEndpoint({ writeShape: endpoint, apiDefinition })
+        transformEndpoint({ writeShape: endpoint, apiDefinition, context })
     );
     return {
         subpackageId: id,
@@ -80,10 +86,13 @@ function transformSubpackage({
 function transformEndpoint({
     writeShape,
     apiDefinition,
+    context,
 }: {
     writeShape: FernRegistry.api.v1.register.EndpointDefinition;
     apiDefinition: FernRegistry.api.v1.register.ApiDefinition;
+    context: ApiDefinitionTransformationContext;
 }): WithoutQuestionMarks<FernRegistry.api.v1.db.DbEndpointDefinition> {
+    context.registerEnvironments(writeShape.environments ?? []);
     return {
         environments: writeShape.environments,
         defaultEnvironment: writeShape.defaultEnvironment,
@@ -332,4 +341,33 @@ function getHtmlDescription(description: string | undefined): string | undefined
 
 function entries<T extends object>(obj: T): [keyof T, T[keyof T]][] {
     return Object.entries(obj) as [keyof T, T[keyof T]][];
+}
+
+class ApiDefinitionTransformationContext {
+    private uniqueBaseUrls: Record<FernRegistry.api.v1.register.EnvironmentId, Set<string>> = {};
+
+    public registerEnvironments(environments: FernRegistry.api.v1.register.Environment[]): void {
+        for (const environment of environments) {
+            const entry = this.uniqueBaseUrls[environment.id];
+            if (entry != null) {
+                entry.add(this.getHost(environment.baseUrl));
+            } else {
+                this.uniqueBaseUrls[environment.id] = new Set([this.getHost(environment.baseUrl)]);
+            }
+        }
+    }
+
+    public hasMultipleBaseUrls(): boolean {
+        for (const [, hosts] of Object.entries(this.uniqueBaseUrls)) {
+            if (hosts.size > 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private getHost(url: string) {
+        const parsedBaseUrl = new URL(url);
+        return parsedBaseUrl.host;
+    }
 }

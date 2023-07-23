@@ -15,6 +15,11 @@ types:
       types: map<readType.TypeId, readType.TypeDefinition>
       subpackages: map<readRoot.SubpackageId, DbApiDefinitionSubpackage>
       auth: optional<readRoot.ApiAuth>
+      hasMultipleBaseUrls: 
+        type: boolean
+        docs: | 
+          Whether or not endpoints are being served at different 
+          base urls (i.e. https://a.com and https://b.com)
   
   DbApiDefinitionPackage:
     properties:

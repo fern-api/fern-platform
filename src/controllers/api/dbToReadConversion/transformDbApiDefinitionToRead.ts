@@ -18,6 +18,7 @@ export function transformApiDefinitionForReading(
             })
         ),
         auth: dbShape.auth,
+        hasMultipleBaseUrls: dbShape.hasMultipleBaseUrls,
     };
 }
 
