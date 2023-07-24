@@ -99,14 +99,19 @@ types:
       fontFile: FileId
 
   NavbarLink:
-    properties:
-      text: string
-      url: string
-      style: optional<NavbarLinkStyle>
+    union:
+      primary: NavbarPrimaryLink
+      secondary: NavbarSecondaryLink
 
-  NavbarLinkStyle:
-    enum:
-      - PRIMARY
+  NavbarPrimaryLink:
+    properties:
+      url: string
+      text: string
+
+  NavbarSecondaryLink:
+    properties:
+      url: string
+      text: string
 
   NavigationConfig:
     properties:

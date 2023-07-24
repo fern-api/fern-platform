@@ -29,9 +29,9 @@ types:
       types: map<type.TypeId, type.TypeDefinition>
       subpackages: map<SubpackageId, ApiDefinitionSubpackage>
       auth: optional<ApiAuth>
-      hasMultipleBaseUrls: 
+      hasMultipleBaseUrls:
         type: optional<boolean>
-        docs: | 
+        docs: |
           If empty, assume false. 
           Whether or not endpoints are being served at different 
           base urls (i.e. https://a.com and https://b.com)
@@ -48,7 +48,7 @@ types:
         type: optional<SubpackageId>
 
   ApiDefinitionSubpackage:
-    extends: 
+    extends:
       - commons.WithDescription
       - ApiDefinitionPackage
     properties:
@@ -59,23 +59,23 @@ types:
 
   SubpackageId: string
 
-  ApiAuth: 
-    union: 
+  ApiAuth:
+    union:
       bearerAuth: BearerAuth
       basicAuth: BasicAuth
       header: HeaderAuth
-  
-  BasicAuth: 
-    properties: 
+
+  BasicAuth:
+    properties:
       usernameName: optional<string>
       passwordName: optional<string>
-  
-  BearerAuth: 
-    properties: 
+
+  BearerAuth:
+    properties:
       tokenName: optional<string>
-  
-  HeaderAuth: 
-    properties: 
+
+  HeaderAuth:
+    properties:
       nameOverride: optional<string>
       headerWireValue: string
 

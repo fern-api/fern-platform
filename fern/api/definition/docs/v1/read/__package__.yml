@@ -100,23 +100,19 @@ types:
       urlSlug: string
 
   NavbarLink:
-    properties:
-      text: string
-      url: string
-      style: NavbarLinkStyle
-      linkType: LinkType
-
-  LinkType:
     union:
-      github: {}
-      discord: {}
-      twitter: {}
-      generic: {}
+      primary: NavbarPrimaryLink
+      secondary: NavbarSecondaryLink
 
-  NavbarLinkStyle:
-    enum:
-      - PRIMARY
-      - DEFAULT
+  NavbarPrimaryLink:
+    properties:
+      url: string
+      text: string
+
+  NavbarSecondaryLink:
+    properties:
+      url: string
+      text: string
 
   ApiSection:
     properties:

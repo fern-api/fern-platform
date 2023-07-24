@@ -31,7 +31,7 @@ export function transformWriteDocsDefinitionToDb({
             logo: writeShape.config.logo,
             logoHref: writeShape.config.logoHref,
             colors: writeShape.config.colors,
-            navbarLinks: (writeShape.config.navbarLinks ?? []).map((link) => transformNavbarLinkForReading(link)),
+            navbarLinks: writeShape.config.navbarLinks ?? [],
             title: writeShape.config.title,
             favicon: writeShape.config.favicon,
             backgroundImage: writeShape.config.backgroundImage,
@@ -151,24 +151,5 @@ function transformPublishedPostmanCollectionForReading(
                       url: `https://github.com/${writeShape.githubRepoName}`,
                   }
                 : undefined,
-    };
-}
-
-function transformNavbarLinkForReading(
-    writeShape: FernRegistry.docs.v1.write.NavbarLink
-): WithoutQuestionMarks<FernRegistry.docs.v1.read.NavbarLink> {
-    let linkType: FernRegistry.docs.v1.read.LinkType = { type: "generic" };
-    if (writeShape.url.includes("github")) {
-        linkType = { type: "github" };
-    } else if (writeShape.url.includes("discord")) {
-        linkType = { type: "discord" };
-    } else if (writeShape.url.includes("twitter")) {
-        linkType = { type: "twitter" };
-    }
-    return {
-        style: writeShape.style ?? "DEFAULT",
-        text: writeShape.text,
-        url: writeShape.url,
-        linkType,
     };
 }
