@@ -4,13 +4,14 @@ import { DEFAULT_LOGO_HEIGHT } from "../config";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { HeaderPrimaryLink } from "./HeaderPrimaryLink";
 import { HeaderSecondaryLink } from "./HeaderSecondaryLink";
-import { VersionDropdown } from "./VersionDropdown";
+import { HeaderVersionMenu } from "./HeaderVersionMenu";
 
 export const Header: React.FC = () => {
     const { resolveFile, docsDefinition, docsInfo, setActiveVersion, navigateToPath } = useDocsContext();
     const { logo, logoHeight, logoHref, navbarLinks } = docsDefinition.config;
 
-    const hasMultipleVersions = docsInfo.type === "versioned";
+    const versions = ["v1.2", "v1.1"]; // TODO: Make dynamic
+
     const hasLogo = logo != null;
     const hasLogoHref = logoHref != null;
 
@@ -32,16 +33,9 @@ export const Header: React.FC = () => {
             ) : (
                 <div className="flex items-center">{logoContent}</div>
             )}
-            {hasMultipleVersions && (
+            {versions.length > 0 && (
                 <div>
-                    <VersionDropdown
-                        versions={docsInfo.versions}
-                        selectedId={docsInfo.activeVersion}
-                        onClickVersion={(v) => {
-                            setActiveVersion(v);
-                            navigateToPath(`/${v}`, { omitVersionPrefix: true });
-                        }}
-                    />
+                    <HeaderVersionMenu versions={versions} selectedIndex={0} />
                 </div>
             )}
         </div>
