@@ -117,8 +117,23 @@ types:
       text: string
 
   NavigationConfig:
+    discriminated: false
+    union: 
+      - UnversionedNavigationConfig
+      - VersionedNavigationConfig
+
+  UnversionedNavigationConfig:
     properties:
       items: list<NavigationItem>
+  
+  VersionedNavigationConfig:
+    properties: 
+      versions: list<VersionedNavigationConfigData>
+  
+  VersionedNavigationConfigData: 
+    properties:
+      version: string
+      config: UnversionedNavigationConfig
 
   NavigationItem:
     union:

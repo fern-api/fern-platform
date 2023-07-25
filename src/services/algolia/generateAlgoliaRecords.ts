@@ -1,5 +1,6 @@
 import { v4 as uuid } from "uuid";
 import type { FernRegistry } from "../../generated";
+import * as FernRegistryDocsRead from "../../generated/api/resources/docs/resources/v1/resources/read";
 import { convertMarkdownToText } from "../../util";
 import { type AlgoliaSearchRecord } from "./AlgoliaService";
 
@@ -9,12 +10,24 @@ export async function generateAlgoliaRecords(
     docsDefinition: FernRegistry.docs.v1.db.DocsDefinitionDb.V2,
     loadApiDefinition: ApiDefinitionLoader
 ) {
-    const records = await Promise.all(
-        docsDefinition.config.navigation.items.map((item) =>
-            generateAlgoliaRecordsForNavigationItem(docsDefinition, loadApiDefinition, [], [], item)
-        )
-    );
-    return records.flat(1);
+    const navigationConfig = docsDefinition.config.navigation;
+    let algoliaSearchRecords: AlgoliaSearchRecord[][] = [];
+
+    if (isVersionedConfig(navigationConfig) && navigationConfig.versions[0] != null) {
+        // HACKHACK: Just indexing the first version
+        algoliaSearchRecords = await Promise.all(
+            navigationConfig.versions[0].config.items.map((item) =>
+                generateAlgoliaRecordsForNavigationItem(docsDefinition, loadApiDefinition, [], [], item)
+            )
+        );
+    } else if (isUnversionedConfig(navigationConfig)) {
+        algoliaSearchRecords = await Promise.all(
+            navigationConfig.items.map((item) =>
+                generateAlgoliaRecordsForNavigationItem(docsDefinition, loadApiDefinition, [], [], item)
+            )
+        );
+    }
+    return algoliaSearchRecords.flat(1);
 }
 
 async function generateAlgoliaRecordsForNavigationItem(
@@ -106,4 +119,18 @@ function generateAlgoliaRecordsForEndpointDefinition(
     }
     // Add records for query parameters, request/response body etc.
     return records;
+}
+
+function isVersionedConfig(
+    navigationConfig: FernRegistryDocsRead.NavigationConfig
+): navigationConfig is FernRegistryDocsRead.VersionedNavigationConfig {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (navigationConfig as FernRegistryDocsRead.VersionedNavigationConfig).versions !== undefined;
+}
+
+function isUnversionedConfig(
+    navigationConfig: FernRegistryDocsRead.NavigationConfig
+): navigationConfig is FernRegistryDocsRead.UnversionedNavigationConfig {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (navigationConfig as FernRegistryDocsRead.UnversionedNavigationConfig).items !== undefined;
 }

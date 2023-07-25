@@ -2,6 +2,7 @@ import { kebabCase } from "lodash";
 import { FernRegistry } from "../../generated";
 import * as FernRegistryDocsDb from "../../generated/api/resources/docs/resources/v1/resources/db";
 import * as FernRegistryDocsRead from "../../generated/api/resources/docs/resources/v1/resources/read";
+import * as FernRegistryDocsWrite from "../../generated/api/resources/docs/resources/v1/resources/write";
 import { FileId, FilePath } from "../../generated/api/resources/docs/resources/v1/resources/write";
 import { type S3FileInfo } from "../../services/s3";
 import { type WithoutQuestionMarks } from "../../util";
@@ -13,9 +14,9 @@ export function transformWriteDocsDefinitionToDb({
     writeShape: FernRegistry.docs.v1.write.DocsDefinition;
     files: Record<FilePath, S3FileInfo>;
 }): WithoutQuestionMarks<FernRegistry.docs.v1.db.DocsDefinitionDb.V2> {
-    const navigationConfig: FernRegistryDocsRead.NavigationConfig = {
-        items: writeShape.config.navigation.items.map((item) => transformNavigationItemForReading(item)),
-    };
+    const navigationConfig: FernRegistryDocsRead.NavigationConfig = transformNavigationConfigForReading(
+        writeShape.config.navigation
+    );
     const transformedFiles: Record<FileId, FernRegistryDocsDb.DbFileInfo> = {};
     Object.entries(files).forEach(([, s3FileInfo]) => {
         transformedFiles[s3FileInfo.presignedUrl.fileId] = {
@@ -44,6 +45,28 @@ export function transformWriteDocsDefinitionToDb({
         },
         typography: writeShape.config.typography,
     };
+}
+
+export function transformNavigationConfigForReading(
+    writeShape: FernRegistryDocsWrite.NavigationConfig
+): FernRegistryDocsRead.NavigationConfig {
+    if (isUnversionedWriteConfig(writeShape)) {
+        return {
+            items: writeShape.items.map((item) => transformNavigationItemForReading(item)),
+        };
+    } else if (isVersionedWriteConfig(writeShape)) {
+        return {
+            versions: writeShape.versions.map((version) => {
+                return {
+                    config: {
+                        items: version.config.items.map((item) => transformNavigationItemForReading(item)),
+                    },
+                    version: version.version,
+                };
+            }),
+        };
+    }
+    throw new Error("navigationConfig is neither unversioned or versioned");
 }
 
 export function transformNavigationItemForReading(
@@ -77,7 +100,14 @@ export function transformNavigationItemForReading(
 export function getReferencedApiDefinitionIds(
     navigationConfig: FernRegistryDocsRead.NavigationConfig
 ): FernRegistry.ApiDefinitionId[] {
-    return navigationConfig.items.flatMap((item) => getReferencedApiDefinitionIdFromItem(item));
+    if (isUnversionedReadConfig(navigationConfig)) {
+        return navigationConfig.items.flatMap((item) => getReferencedApiDefinitionIdFromItem(item));
+    } else if (isVersionedReadConfig(navigationConfig)) {
+        return navigationConfig.versions.flatMap((version) =>
+            version.config.items.flatMap((item) => getReferencedApiDefinitionIdFromItem(item))
+        );
+    }
+    throw new Error("navigationConfig is neither unversioned or versioned");
 }
 
 function getReferencedApiDefinitionIdFromItem(
@@ -153,4 +183,32 @@ function transformPublishedPostmanCollectionForReading(
                   }
                 : undefined,
     };
+}
+
+function isVersionedWriteConfig(
+    navigationConfig: FernRegistryDocsWrite.NavigationConfig
+): navigationConfig is FernRegistryDocsWrite.VersionedNavigationConfig {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (navigationConfig as FernRegistryDocsWrite.VersionedNavigationConfig).versions !== undefined;
+}
+
+function isUnversionedWriteConfig(
+    navigationConfig: FernRegistryDocsWrite.NavigationConfig
+): navigationConfig is FernRegistryDocsWrite.UnversionedNavigationConfig {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (navigationConfig as FernRegistryDocsWrite.UnversionedNavigationConfig).items !== undefined;
+}
+
+function isVersionedReadConfig(
+    navigationConfig: FernRegistryDocsRead.NavigationConfig
+): navigationConfig is FernRegistryDocsRead.VersionedNavigationConfig {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (navigationConfig as FernRegistryDocsRead.VersionedNavigationConfig).versions !== undefined;
+}
+
+function isUnversionedReadConfig(
+    navigationConfig: FernRegistryDocsRead.NavigationConfig
+): navigationConfig is FernRegistryDocsRead.UnversionedNavigationConfig {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (navigationConfig as FernRegistryDocsRead.UnversionedNavigationConfig).items !== undefined;
 }
