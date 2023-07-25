@@ -8,8 +8,7 @@ import Head from "next/head";
 import { REGISTRY_SERVICE } from "../../service";
 import { getSlugFromUrl } from "../../url-path-resolver/getSlugFromUrl";
 import { UrlPathResolver } from "../../url-path-resolver/UrlPathResolver";
-import { isVersionedNavigationConfig } from "../../utils/docs";
-import { loadDocsBackgroundImage } from "../../utils/theme/loadDocsBackgroundImage";
+import { isUnversionedNavigationConfig } from "../../utils/docs";
 import { generateFontFaces, loadDocTypography } from "../../utils/theme/loadDocsTypography";
 
 function classNames(...classes: (string | undefined)[]): string {
@@ -99,63 +98,14 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
 
     let slug = getSlugFromUrl({ pathname, basePath: docs.body.baseUrl.basePath });
 
-    const { navigation: navigationConfig } = docs.body.definition.config;
-
-    if (isVersionedNavigationConfig(navigationConfig)) {
-        if (slug === "") {
-            // TODO: The first element of the array is not necessarily the latest api version
-            const [latestVersion] = navigationConfig.versions;
-            if (latestVersion == null) {
-                throw new Error("No versions found. This indicates a registration issue.");
-            }
-
-            const [firstNavigationItem] = latestVersion.config.items;
-            if (firstNavigationItem != null) {
-                slug = firstNavigationItem.urlSlug;
-
-                const urlPathResolver = new UrlPathResolver({
-                    navigation: latestVersion.config,
-                    loadApiDefinition: (id) => docs.body.definition.apis[id],
-                    loadApiPage: (id) => docs.body.definition.pages[id],
-                });
-
-                let resolvedUrlPath = await urlPathResolver.resolveSlug(slug);
-                if (resolvedUrlPath?.type === "section") {
-                    const firstNavigatableItem = getFirstNavigatableItem(resolvedUrlPath.section);
-                    if (firstNavigatableItem == null) {
-                        resolvedUrlPath = undefined;
-                    } else {
-                        resolvedUrlPath = await urlPathResolver.resolveSlug(firstNavigatableItem);
-                    }
-                }
-
-                if (resolvedUrlPath == null) {
-                    return { notFound: true, revalidate: true };
-                }
-
-                const typographyConfig = loadDocTypography(docs.body.definition);
-                const typographyStyleSheet = generateFontFaces(typographyConfig);
-                const backgroundImageStyleSheet = loadDocsBackgroundImage(docs.body.definition);
-                const [nextPath, previousPath] = await Promise.all([
-                    urlPathResolver.getNextNavigatableItem(resolvedUrlPath),
-                    urlPathResolver.getPreviousNavigatableItem(resolvedUrlPath),
-                ]);
-
-                return {
-                    props: {
-                        docs: docs.body,
-                        inferredVersion: latestVersion.version,
-                        typographyStyleSheet,
-                        backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
-                        resolvedUrlPath,
-                        nextPath: nextPath ?? null,
-                        previousPath: previousPath ?? null,
-                    },
-                    revalidate: true,
-                };
-            } else {
-                return { notFound: true, revalidate: true };
-            }
+    if (slug === "") {
+        if (!isUnversionedNavigationConfig(docs.body.definition.config.navigation)) {
+            // TODO: Implement
+            throw new Error("Not supporting versioned navigation yet.");
+        }
+        const firstNavigationItem = docs.body.definition.config.navigation.items[0];
+        if (firstNavigationItem != null) {
+            slug = firstNavigationItem.urlSlug;
         } else {
             // The slug must contain the version. If not, return not found
 
