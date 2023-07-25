@@ -29,6 +29,7 @@ export function transformWriteDocsDefinitionToDb({
         config: {
             navigation: navigationConfig,
             logo: writeShape.config.logo,
+            logoHeight: writeShape.config.logoHeight,
             logoHref: writeShape.config.logoHref,
             colors: writeShape.config.colors,
             navbarLinks: writeShape.config.navbarLinks ?? [],

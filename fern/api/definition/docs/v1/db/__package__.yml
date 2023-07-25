@@ -34,6 +34,7 @@ types:
       title: optional<string>
       navigation: docsReadV1.NavigationConfig
       logo: optional<docsReadV1.FileId>
+      logoHeight: optional<docsReadV1.Height>
       logoHref: optional<docsReadV1.Url>
       favicon: optional<docsReadV1.FileId>
       backgroundImage: optional<docsReadV1.FileId>

@@ -62,6 +62,8 @@ types:
 
   FileId: string
 
+  Height: double
+
   PageId: string
 
   Url: string
@@ -80,6 +82,7 @@ types:
       title: optional<string>
       navigation: NavigationConfig
       logo: optional<FileId>
+      logoHeight: optional<Height>
       logoHref: optional<Url>
       favicon: optional<FileId>
       backgroundImage: optional<FileId>
