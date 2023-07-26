@@ -145,6 +145,7 @@ types:
     properties:
       title: string
       id: PageId
+      urlSlugOverride: optional<string>
 
   ApiSection:
     properties:
@@ -156,6 +157,7 @@ types:
     properties:
       title: string
       items: list<NavigationItem>
+      urlSlugOverride: optional<string>
 
   ColorsConfig:
     properties:

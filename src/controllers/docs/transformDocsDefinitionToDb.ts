@@ -85,13 +85,13 @@ export function transformNavigationItemForReading(
                 type: "page",
                 id: writeShape.id,
                 title: writeShape.title,
-                urlSlug: kebabCase(writeShape.title),
+                urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
             };
         case "section":
             return {
                 type: "section",
                 title: writeShape.title,
-                urlSlug: kebabCase(writeShape.title),
+                urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
                 items: writeShape.items.map((item) => transformNavigationItemForReading(item)),
             };
     }
