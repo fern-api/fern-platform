@@ -3,6 +3,7 @@ import "@blueprintjs/core/lib/css/blueprint.css";
 import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import "@blueprintjs/popover2/lib/css/blueprint-popover2.css";
 import "@blueprintjs/select/lib/css/blueprint-select.css";
+import * as FernRegistryDocsReadV1 from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
 import "@fontsource/ibm-plex-mono";
 import classNames from "classnames";
@@ -16,6 +17,20 @@ import { Docs } from "./docs/Docs";
 import { ResolvedUrlPath } from "./ResolvedUrlPath";
 
 FocusStyleManager.onlyShowFocusOnTabs();
+
+interface DocsInfoVersioned {
+    type: "versioned";
+    versions: string[];
+    activeVersion: string;
+    activeNavigationConfig: FernRegistryDocsReadV1.UnversionedNavigationConfig;
+}
+
+interface DocsInfoUnversioned {
+    type: "unversioned";
+    activeNavigationConfig: FernRegistryDocsReadV1.UnversionedNavigationConfig;
+}
+
+type DocsInfo = DocsInfoVersioned | DocsInfoUnversioned;
 
 export declare namespace App {
     export interface Props {
