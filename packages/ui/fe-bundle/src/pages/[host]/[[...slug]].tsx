@@ -17,24 +17,13 @@ function classNames(...classes: (string | undefined)[]): string {
 
 const inter = Inter({ subsets: ["latin"] });
 
-interface DocsInfoVersioned {
-    type: "versioned";
-    versions: string[];
-    activeVersion: string;
-    activeNavigationConfig: FernRegistryDocsReadV1.UnversionedNavigationConfig;
-    rootSlug: string;
-}
-
-interface DocsInfoUnversioned {
-    type: "unversioned";
-    activeNavigationConfig: FernRegistryDocsReadV1.UnversionedNavigationConfig;
-    rootSlug: string;
-}
-
 export declare namespace Docs {
     export interface Props {
         docs: FernRegistryDocsReadV2.LoadDocsForUrlResponse;
-        docsInfo: DocsInfoVersioned | DocsInfoUnversioned;
+        /**
+         * If `null`, then docs are not versioned.
+         */
+        inferredVersion: string | null;
         resolvedUrlPath: ResolvedUrlPath;
         typographyStyleSheet?: string;
         backgroundImageStyleSheet: string | null;
@@ -45,7 +34,7 @@ export declare namespace Docs {
 
 export default function Docs({
     docs,
-    docsInfo,
+    inferredVersion,
     typographyStyleSheet,
     resolvedUrlPath,
     nextPath,
@@ -74,7 +63,7 @@ export default function Docs({
                 </Head>
                 <App
                     docs={docs}
-                    docsInfo={docsInfo}
+                    inferredVersion={inferredVersion}
                     resolvedUrlPath={resolvedUrlPath}
                     nextPath={nextPath ?? undefined}
                     previousPath={previousPath ?? undefined}
@@ -152,13 +141,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                 return {
                     props: {
                         docs: docs.body,
-                        docsInfo: {
-                            type: "versioned",
-                            activeVersion: latestVersion.version,
-                            activeNavigationConfig: latestVersion.config,
-                            rootSlug: latestVersion.version,
-                            versions: navigationConfig.versions.map(({ version: v }) => v),
-                        },
+                        inferredVersion: latestVersion.version,
                         typographyStyleSheet,
                         resolvedUrlPath,
                         nextPath: nextPath ?? null,
@@ -223,15 +206,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
             return {
                 props: {
                     docs: docs.body,
-                    docsInfo: {
-                        type: "versioned",
-                        versions: navigationConfig.versions.map(({ version: v }) => v),
-                        activeNavigationConfig: configData.config,
-                        rootSlug: version,
-                        activeVersion: version,
-                    },
-
-                    activeVersion: version,
+                    inferredVersion: version,
                     typographyStyleSheet,
                     resolvedUrlPath,
                     nextPath: nextPath ?? null,
@@ -279,11 +254,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         return {
             props: {
                 docs: docs.body,
-                docsInfo: {
-                    type: "unversioned",
-                    activeNavigationConfig: navigationConfig,
-                    rootSlug: "",
-                },
+                inferredVersion: null,
                 typographyStyleSheet,
                 resolvedUrlPath,
                 nextPath: nextPath ?? null,

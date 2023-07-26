@@ -5,13 +5,14 @@ import { assertNever } from "@fern-ui/core-utils";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
 import { ResolvedUrlPath } from "../ResolvedUrlPath";
+import { assertIsUnversionedNavigationConfig, assertIsVersionedNavigationConfig } from "../util/docs";
 import { DocsContext, DocsContextValue, type DocsInfo } from "./DocsContext";
 import { useSlugListeners } from "./useSlugListeners";
 
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
-        docsInfo: DocsInfo;
+        inferredVersion: string | null;
         resolvedUrlPath: ResolvedUrlPath;
         nextPath: ResolvedUrlPath | undefined;
         previousPath: ResolvedUrlPath | undefined;
@@ -20,7 +21,7 @@ export declare namespace DocsContextProvider {
 
 export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     docsDefinition,
-    docsInfo,
+    inferredVersion,
     resolvedUrlPath,
     nextPath,
     previousPath,
@@ -32,8 +33,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
 
     const rootSlug = activeVersion ?? "";
 
-    const getFullSlug = useCallback((slug: string) => `${rootSlug ? `${rootSlug}/` : ""}${slug}`, [rootSlug]);
-
     const selectedSlugFromUrl = useMemo(() => {
         switch (resolvedUrlPath.type) {
             case "clientLibraries":
@@ -41,14 +40,15 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             case "mdx-page":
             case "topLevelEndpoint":
             case "apiSubpackage":
-                return docsInfo.rootSlug + "/" + resolvedUrlPath.slug;
+                return `${rootSlug}/${resolvedUrlPath.slug}`;
             case "api":
             case "section":
                 return undefined;
             default:
                 assertNever(resolvedUrlPath);
         }
-    }, [docsInfo.rootSlug, resolvedUrlPath]);
+    }, [rootSlug, resolvedUrlPath]);
+
     const [selectedSlug, setSelectedSlug] = useState(selectedSlugFromUrl);
 
     const docsInfo = useMemo<DocsInfo>(() => {
@@ -151,12 +151,12 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             if (justNavigated || slug === selectedSlug) {
                 return;
             }
-            const slugWithPrefix = `${docsInfo.rootSlug}/${slug}`;
+            const slugWithPrefix = `${rootSlug}/${slug}`;
             setSelectedSlug(slugWithPrefix);
             void router.push(`/${slugWithPrefix}`, undefined, { shallow: true });
             scrollToPathListeners.invokeListeners(slug);
         },
-        [justNavigated, docsInfo.rootSlug, router, scrollToPathListeners, selectedSlug]
+        [justNavigated, rootSlug, router, scrollToPathListeners, selectedSlug]
     );
 
     const contextValue = useCallback(
@@ -166,6 +166,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             resolveFile,
             docsDefinition,
             docsInfo,
+            setActiveVersion,
             registerNavigateToPathListener: navigateToPathListeners.registerListener,
             navigateToPath,
             onScrollToPath,
@@ -178,6 +179,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
         [
             docsDefinition,
             docsInfo,
+            setActiveVersion,
             navigateToPath,
             navigateToPathListeners.registerListener,
             nextPath,
