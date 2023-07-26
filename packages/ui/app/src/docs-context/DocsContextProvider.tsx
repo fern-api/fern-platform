@@ -41,15 +41,14 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             case "mdx-page":
             case "topLevelEndpoint":
             case "apiSubpackage":
-                return getFullSlug(resolvedUrlPath.slug);
+                return docsInfo.rootSlug + "/" + resolvedUrlPath.slug;
             case "api":
             case "section":
                 return undefined;
             default:
                 assertNever(resolvedUrlPath);
         }
-    }, [resolvedUrlPath, getFullSlug]);
-
+    }, [docsInfo.rootSlug, resolvedUrlPath]);
     const [selectedSlug, setSelectedSlug] = useState(selectedSlugFromUrl);
 
     const docsInfo = useMemo<DocsInfo>(() => {
@@ -152,11 +151,12 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             if (justNavigated || slug === selectedSlug) {
                 return;
             }
-            setSelectedSlug(slug);
-            void router.push(`/${slug}`, undefined, { shallow: true });
+            const slugWithPrefix = `${docsInfo.rootSlug}/${slug}`;
+            setSelectedSlug(slugWithPrefix);
+            void router.push(`/${slugWithPrefix}`, undefined, { shallow: true });
             scrollToPathListeners.invokeListeners(slug);
         },
-        [justNavigated, router, scrollToPathListeners, selectedSlug, getFullSlug]
+        [justNavigated, docsInfo.rootSlug, router, scrollToPathListeners, selectedSlug]
     );
 
     const contextValue = useCallback(
