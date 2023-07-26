@@ -13,20 +13,14 @@ interface DocsInfoVersioned {
     versions: string[];
     activeVersion: string;
     activeNavigationConfig: FernRegistryDocsRead.UnversionedNavigationConfig;
-    rootSlug: string;
 }
 
 interface DocsInfoUnversioned {
     type: "unversioned";
     activeNavigationConfig: FernRegistryDocsRead.UnversionedNavigationConfig;
-    rootSlug: string;
 }
 
 export type DocsInfo = DocsInfoVersioned | DocsInfoUnversioned;
-
-export interface NavigateToPathOpts {
-    omitVersionPrefix: boolean;
-}
 
 export interface DocsContextValue {
     resolveApi: (apiId: FernRegistry.ApiDefinitionId) => FernRegistryApiRead.ApiDefinition;
@@ -41,11 +35,6 @@ export interface DocsContextValue {
 
     docsDefinition: FernRegistryDocsRead.DocsDefinition;
     docsInfo: DocsInfo;
-    setActiveVersion: (version: string) => void;
-    /** Returns the version-prefixed slug. */
-    getFullSlug: (slug: string) => string;
-
-    activeVersion: string | null;
 
     // controlled
     selectedSlug: string | undefined;
