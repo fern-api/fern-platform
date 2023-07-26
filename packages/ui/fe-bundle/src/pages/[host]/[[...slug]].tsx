@@ -20,10 +20,7 @@ const inter = Inter({ subsets: ["latin"] });
 export declare namespace Docs {
     export interface Props {
         docs: FernRegistryDocsReadV2.LoadDocsForUrlResponse;
-        /**
-         * If `null`, then docs are not versioned.
-         */
-        inferredVersion: string | null;
+        activeVersion: string | null;
         resolvedUrlPath: ResolvedUrlPath;
         typographyStyleSheet?: string;
         backgroundImageStyleSheet: string | null;
@@ -34,9 +31,8 @@ export declare namespace Docs {
 
 export default function Docs({
     docs,
-    inferredVersion,
-    typographyStyleSheet = "",
-    backgroundImageStyleSheet = "",
+    activeVersion,
+    typographyStyleSheet,
     resolvedUrlPath,
     nextPath,
     previousPath,
@@ -64,7 +60,7 @@ export default function Docs({
                 </Head>
                 <App
                     docs={docs}
-                    inferredVersion={inferredVersion}
+                    activeVersion={activeVersion}
                     resolvedUrlPath={resolvedUrlPath}
                     nextPath={nextPath ?? undefined}
                     previousPath={previousPath ?? undefined}
@@ -142,6 +138,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                 return {
                     props: {
                         docs: docs.body,
+                        activeVersion: latestVersion.version,
                         typographyStyleSheet,
                         resolvedUrlPath,
                         nextPath: nextPath ?? null,
@@ -195,6 +192,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
             return {
                 props: {
                     docs: docs.body,
+                    activeVersion: version,
                     typographyStyleSheet,
                     resolvedUrlPath,
                     nextPath: nextPath ?? null,
@@ -242,6 +240,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         return {
             props: {
                 docs: docs.body,
+                activeVersion: null,
                 typographyStyleSheet,
                 resolvedUrlPath,
                 nextPath: nextPath ?? null,
