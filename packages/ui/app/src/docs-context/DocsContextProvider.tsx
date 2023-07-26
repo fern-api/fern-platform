@@ -153,8 +153,9 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             if (justNavigated || slug === selectedSlug) {
                 return;
             }
-            setSelectedSlug(slug);
-            void router.push(`/${slug}`, undefined, { shallow: true });
+            const slugWithPrefix = `${docsInfo.rootSlug}/${slug}`;
+            setSelectedSlug(slugWithPrefix);
+            void router.push(`/${slugWithPrefix}`, undefined, { shallow: true });
             scrollToPathListeners.invokeListeners(slug);
         },
         [justNavigated, router, scrollToPathListeners, selectedSlug, getFullSlug]
