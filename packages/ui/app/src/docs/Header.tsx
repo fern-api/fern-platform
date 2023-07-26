@@ -22,8 +22,6 @@ export const Header: React.FC = () => {
     const hasLogo = logoForTheme != null;
     const hasLogoHref = logoHref != null;
 
-    const selectedIndex = 0; // TODO: Implement
-
     const logoContent = hasLogo && (
         <img
             src={resolveFile(logoForTheme)}
