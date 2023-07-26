@@ -18,20 +18,6 @@ function classNames(...classes: (string | undefined)[]): string {
 
 const inter = Inter({ subsets: ["latin"] });
 
-interface DocsInfoVersioned {
-    type: "versioned";
-    versions: string[];
-    activeVersion: string;
-    activeNavigationConfig: FernRegistryDocsReadV1.UnversionedNavigationConfig;
-    rootSlug: string;
-}
-
-interface DocsInfoUnversioned {
-    type: "unversioned";
-    activeNavigationConfig: FernRegistryDocsReadV1.UnversionedNavigationConfig;
-    rootSlug: string;
-}
-
 export declare namespace Docs {
     export interface Props {
         docs: FernRegistryDocsReadV2.LoadDocsForUrlResponse;
