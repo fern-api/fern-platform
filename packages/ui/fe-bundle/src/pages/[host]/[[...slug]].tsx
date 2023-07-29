@@ -94,7 +94,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         console.error("Failed to fetch docs", docs.error);
         return {
             notFound: true,
-            revalidate: true,
+            revalidate: false,
         };
     }
 
@@ -131,7 +131,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                 }
 
                 if (resolvedUrlPath == null) {
-                    return { notFound: true, revalidate: true };
+                    return { notFound: true, revalidate: false };
                 }
 
                 const typographyConfig = loadDocTypography(docs.body.definition);
@@ -152,24 +152,24 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                         nextPath: nextPath ?? null,
                         previousPath: previousPath ?? null,
                     },
-                    revalidate: true,
+                    revalidate: false,
                 };
             } else {
-                return { notFound: true, revalidate: true };
+                return { notFound: true, revalidate: false };
             }
         } else {
             // The slug must contain the version. If not, return not found
 
             const { version, rest } = extractVersionFromSlug(slug);
             if (version == null || version.length === 0) {
-                return { notFound: true, revalidate: true };
+                return { notFound: true, revalidate: false };
             }
             slug = rest;
 
             // Find the version in docs definition
             const configData = navigationConfig.versions.find((c) => c.version === version);
             if (configData == null) {
-                return { notFound: true, revalidate: true };
+                return { notFound: true, revalidate: false };
             }
 
             if (slug === "") {
@@ -177,7 +177,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                 if (firstNavigationItem != null) {
                     slug = firstNavigationItem.urlSlug;
                 } else {
-                    return { notFound: true, revalidate: true };
+                    return { notFound: true, revalidate: false };
                 }
             }
 
@@ -198,7 +198,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
             }
 
             if (resolvedUrlPath == null) {
-                return { notFound: true, revalidate: true };
+                return { notFound: true, revalidate: false };
             }
 
             const typographyConfig = loadDocTypography(docs.body.definition);
@@ -219,7 +219,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                     nextPath: nextPath ?? null,
                     previousPath: previousPath ?? null,
                 },
-                revalidate: true,
+                revalidate: false,
             };
         }
     } else {
@@ -228,7 +228,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
             if (firstNavigationItem != null) {
                 slug = firstNavigationItem.urlSlug;
             } else {
-                return { notFound: true, revalidate: true };
+                return { notFound: true, revalidate: false };
             }
         }
 
@@ -248,7 +248,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         }
 
         if (resolvedUrlPath == null) {
-            return { notFound: true, revalidate: true };
+            return { notFound: true, revalidate: false };
         }
 
         const typographyConfig = loadDocTypography(docs.body.definition);
@@ -269,7 +269,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                 nextPath: nextPath ?? null,
                 previousPath: previousPath ?? null,
             },
-            revalidate: true,
+            revalidate: false,
         };
     }
 };
@@ -282,7 +282,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
     });
 
     if (!docs.ok) {
-        // eslint-disable-next-line no-console
         const error = new Error("Failed to fetch docs", {
             // cause: docs.error
         });
@@ -293,7 +292,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
         docsDefinition: docs.body.definition,
     });
 
-    return { paths, fallback: "blocking" };
+    return { paths, fallback: false };
 };
 
 function getFirstNavigatableItem(section: FernRegistryDocsReadV1.DocsSection, slugPrefix?: string): string | undefined {
