@@ -5,13 +5,13 @@ import * as FernRegistryDocsReadV2 from "@fern-fern/registry-browser/api/resourc
 import { GetStaticPaths, GetStaticProps } from "next";
 import { Inter } from "next/font/google";
 import Head from "next/head";
-import { REGISTRY_SERVICE } from "../../service";
-import { getSlugFromUrl } from "../../url-path-resolver/getSlugFromUrl";
-import { UrlPathResolver } from "../../url-path-resolver/UrlPathResolver";
-import { UrlSlugTree } from "../../url-path-resolver/UrlSlugTree";
-import { isVersionedNavigationConfig } from "../../utils/docs";
-import { loadDocsBackgroundImage } from "../../utils/theme/loadDocsBackgroundImage";
-import { generateFontFaces, loadDocTypography } from "../../utils/theme/loadDocsTypography";
+import { REGISTRY_SERVICE } from "../service";
+import { getSlugFromUrl } from "../url-path-resolver/getSlugFromUrl";
+import { UrlPathResolver } from "../url-path-resolver/UrlPathResolver";
+import { UrlSlugTree } from "../url-path-resolver/UrlSlugTree";
+import { isVersionedNavigationConfig } from "../utils/docs";
+import { loadDocsBackgroundImage } from "../utils/theme/loadDocsBackgroundImage";
+import { generateFontFaces, loadDocTypography } from "../utils/theme/loadDocsTypography";
 
 function classNames(...classes: (string | undefined)[]): string {
     return classes.filter((c) => c != null).join(" ");
@@ -77,16 +77,11 @@ export default function Docs({
 }
 
 export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }) => {
-    const host = params.host as string | undefined;
     const slugArray = params.slug as string[] | undefined;
-
-    if (host == null) {
-        throw new Error("host is not defined");
-    }
 
     const pathname = slugArray != null ? slugArray.join("/") : "";
     const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
-        url: process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? buildUrl({ host, pathname }),
+        url: process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? "",
     });
 
     if (!docs.ok) {
@@ -288,7 +283,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
         throw error;
     }
 
-    const paths = crawlNavigationConfig({
+    const paths = getAllPathsFromDocsDefinition({
         docsDefinition: docs.body.definition,
     });
 
@@ -316,13 +311,13 @@ function getFirstNavigatableItem(section: FernRegistryDocsReadV1.DocsSection, sl
     return undefined;
 }
 
-function buildUrl({ host, pathname }: { host: string; pathname: string }): string {
-    const hostWithoutTrailingSlash = host.endsWith("/") ? host.slice(0, -1) : host;
-    if (pathname.length === 0) {
-        return hostWithoutTrailingSlash;
-    }
-    return `${hostWithoutTrailingSlash}/${pathname}`;
-}
+// function buildUrl({ host, pathname }: { host: string; pathname: string }): string {
+//     const hostWithoutTrailingSlash = host.endsWith("/") ? host.slice(0, -1) : host;
+//     if (pathname.length === 0) {
+//         return hostWithoutTrailingSlash;
+//     }
+//     return `${hostWithoutTrailingSlash}/${pathname}`;
+// }
 
 function extractVersionFromSlug(slug: string) {
     // TODO: Test this
@@ -330,7 +325,7 @@ function extractVersionFromSlug(slug: string) {
     return { version, rest: rest.join("/") };
 }
 
-function crawlNavigationConfig({
+function getAllPathsFromDocsDefinition({
     docsDefinition,
 }: {
     docsDefinition: FernRegistryDocsReadV1.DocsDefinition;
