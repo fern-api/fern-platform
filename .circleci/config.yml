@@ -214,7 +214,7 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^docs@([0-9]+)\.([0-9]+)\.([0-9]+)$/
+              only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
           requires:
             - check-docs-release-is-allowed
             - check
@@ -231,4 +231,4 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^docs@([0-9]+)\.([0-9]+)\.([0-9]+)$/
+              only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
