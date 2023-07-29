@@ -311,14 +311,6 @@ function getFirstNavigatableItem(section: FernRegistryDocsReadV1.DocsSection, sl
     return undefined;
 }
 
-// function buildUrl({ host, pathname }: { host: string; pathname: string }): string {
-//     const hostWithoutTrailingSlash = host.endsWith("/") ? host.slice(0, -1) : host;
-//     if (pathname.length === 0) {
-//         return hostWithoutTrailingSlash;
-//     }
-//     return `${hostWithoutTrailingSlash}/${pathname}`;
-// }
-
 function extractVersionFromSlug(slug: string) {
     // TODO: Test this
     const [version, ...rest] = slug.split("/");
