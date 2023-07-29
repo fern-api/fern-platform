@@ -6,6 +6,7 @@
     "url": "https://github.com/fern-api/fern-ui.git",
     "directory": "packages/commons/core-utils"
   },
+  "private": true,
   "files": [
     "lib"
   ],
