@@ -75,14 +75,12 @@ export async function getDocsDefinition({
         algoliaSearchIndex: docsV2?.algoliaIndex ?? undefined,
         config: getDocsDefinitionConfig(docsDbDefinition),
         apis: Object.fromEntries(
-            await Promise.all(
-                apiDefinitions.map(async (apiDefinition) => {
-                    console.debug(__filename, "Converting API Definition to 'read'", apiDefinition.apiDefinitionId);
-                    const parsedApiDefinition = await convertDbApiDefinitionToRead(apiDefinition.definition);
-                    console.debug(__filename, "Converted API Definition to 'read'", apiDefinition.apiDefinitionId);
-                    return [apiDefinition.apiDefinitionId, parsedApiDefinition];
-                })
-            )
+            apiDefinitions.map((apiDefinition) => {
+                console.debug(__filename, "Converting API Definition to 'read'", apiDefinition.apiDefinitionId);
+                const parsedApiDefinition = convertDbApiDefinitionToRead(apiDefinition.definition);
+                console.debug(__filename, "Converted API Definition to 'read'", apiDefinition.apiDefinitionId);
+                return [apiDefinition.apiDefinitionId, parsedApiDefinition];
+            })
         ),
         files: Object.fromEntries(
             await Promise.all(
