@@ -51,8 +51,8 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
 
     const computeAnchor = useCallback(
         (
-            attributeType: "request" | "response" | "path" | "query",
-            attribute:
+            attributeType: "path" | "query" | "request" | "response" | "errors",
+            attribute?:
                 | FernRegistryApiRead.ObjectProperty
                 | FernRegistryApiRead.PathParameter
                 | FernRegistryApiRead.QueryParameter
@@ -62,8 +62,10 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                 anchor += snakeCase(package_.urlSlug) + "_";
             }
             anchor += snakeCase(endpoint.id);
-            anchor += "-" + attributeType + "-";
-            anchor += snakeCase(attribute.key);
+            anchor += "-" + attributeType;
+            if (attribute?.key != null) {
+                anchor += +"-" + snakeCase(attribute.key);
+            }
             return anchor;
         },
         [package_, endpoint]
@@ -128,16 +130,18 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                 <PathParametersSection
                                     pathParameters={endpoint.path.pathParameters}
                                     getParameterAnchor={(param) => computeAnchor("path", param)}
+                                    anchor={computeAnchor("path")}
                                 />
                             )}
                             {endpoint.queryParameters.length > 0 && (
                                 <QueryParametersSection
                                     queryParameters={endpoint.queryParameters}
                                     getParameterAnchor={(param) => computeAnchor("query", param)}
+                                    anchor={computeAnchor("query")}
                                 />
                             )}
                             {endpoint.request != null && (
-                                <EndpointSection title="Request">
+                                <EndpointSection title="Request" anchor={computeAnchor("request")}>
                                     <EndpointRequestSection
                                         httpRequest={endpoint.request}
                                         onHoverProperty={onHoverRequestProperty}
@@ -146,7 +150,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                 </EndpointSection>
                             )}
                             {endpoint.response != null && (
-                                <EndpointSection title="Response">
+                                <EndpointSection title="Response" anchor={computeAnchor("response")}>
                                     <EndpointResponseSection
                                         httpResponse={endpoint.response}
                                         onHoverProperty={onHoverResponseProperty}
@@ -155,7 +159,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                 </EndpointSection>
                             )}
                             {process.env.NEXT_PUBLIC_DISPLAY_ERRORS === "true" && endpoint.errors.length > 0 && (
-                                <EndpointSection title="Errors">
+                                <EndpointSection title="Errors" anchor={computeAnchor("errors")}>
                                     <EndpointErrorsSection
                                         errors={endpoint.errors}
                                         onClickError={(_, idx, event) => {

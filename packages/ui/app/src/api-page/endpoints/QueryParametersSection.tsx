@@ -7,12 +7,14 @@ export declare namespace QueryParametersSection {
     export interface Props {
         queryParameters: FernRegistryApiRead.QueryParameter[];
         getParameterAnchor?: (param: FernRegistryApiRead.QueryParameter) => string;
+        anchor: string;
     }
 }
 
 export const QueryParametersSection: React.FC<QueryParametersSection.Props> = ({
     queryParameters,
     getParameterAnchor,
+    anchor,
 }) => {
     const convertedParameters = useMemo((): EndpointParameter.Props[] => {
         return queryParameters.map(
@@ -25,5 +27,5 @@ export const QueryParametersSection: React.FC<QueryParametersSection.Props> = ({
         );
     }, [queryParameters, getParameterAnchor]);
 
-    return <EndpointParametersSection title="Query parameters" parameters={convertedParameters} />;
+    return <EndpointParametersSection title="Query parameters" parameters={convertedParameters} anchor={anchor} />;
 };
