@@ -2,6 +2,8 @@
 const nextConfig = {
     transpilePackages: ["@fern-api/ui"],
     productionBrowserSourceMaps: true,
+    // output: "export",
+    // distDir: 'dist'
     rewrites: async () => [
         {
             has: [
