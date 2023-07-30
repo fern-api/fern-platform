@@ -44,12 +44,6 @@ export class UrlPathResolver {
             case "page":
                 switch (path.extname(node.page.id)) {
                     case ".md":
-                        return {
-                            type: "markdown-page",
-                            page: node.page,
-                            slug: node.slug,
-                            markdownContent: this.getPage(node.page.id).markdown,
-                        };
                     case ".mdx":
                         return {
                             type: "mdx-page",
@@ -59,7 +53,7 @@ export class UrlPathResolver {
                                 scope: {},
                                 mdxOptions: {
                                     remarkPlugins: REMARK_PLUGINS,
-                                    format: "mdx",
+                                    format: "detect",
                                 },
                                 parseFrontmatter: false,
                             }),

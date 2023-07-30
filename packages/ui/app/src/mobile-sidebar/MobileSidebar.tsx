@@ -22,7 +22,6 @@ export const MobileSidebar: React.FC = () => {
             case "endpoint":
             case "topLevelEndpoint":
                 return <EndpointTitle endpoint={resolvedPathFromUrl.endpoint} />;
-            case "markdown-page":
             case "mdx-page":
                 return resolvedPathFromUrl.page.title;
             case "clientLibraries":

@@ -9,7 +9,6 @@ export const DocsMainContent: React.FC = () => {
     const { resolvedPathFromUrl } = useDocsContext();
 
     switch (resolvedPathFromUrl.type) {
-        case "markdown-page":
         case "mdx-page":
             return <CustomDocsPage path={resolvedPathFromUrl} />;
         case "api":
