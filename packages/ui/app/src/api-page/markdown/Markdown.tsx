@@ -119,13 +119,40 @@ export const Markdown = React.memo<Markdown.Props>(function Markdown({ type, chi
                     />
                 ),
                 ul: ({ node, ...props }) => (
-                    <ul {...props} className={classNames("list-image-dash", props.className)} />
+                    <ul {...props} className={classNames("list-image-dash gap-4 group fern-ul", props.className)} />
                 ),
-                li: ({ node, ...props }) => (
+                ol: ({ node, ...props }) => (
+                    <ol {...props} className={classNames("list-image-dash gap-4 group fern-ol", props.className)} />
+                ),
+                li: ({ node, children, ...props }) => (
                     <li
                         {...props}
-                        className={classNames("text-base font-light text-text-default leading-7", props.className)}
-                    />
+                        className={classNames(
+                            "text-base font-light text-text-default leading-base flex items-start gap-2",
+                            props.className
+                        )}
+                    >
+                        <span className="mt-0 group-[.fern-ol]:hidden">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1.5}
+                                stroke="currentColor"
+                                className="h-5 w-5"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
+                                />
+                            </svg>
+                        </span>
+                        <span className="pointer-events-none mt-0 group-[.fern-ul]:hidden">
+                            {Number(props.index) + 1}.
+                        </span>
+                        <span>{children}</span>
+                    </li>
                 ),
                 a: ({ node, ...props }) => (
                     <a
