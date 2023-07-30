@@ -4,7 +4,10 @@ import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resou
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { serialize } from "next-mdx-remote/serialize";
 import path from "path";
+import remarkGfm from "remark-gfm";
 import { UrlSlugTree, UrlSlugTreeNode } from "./UrlSlugTree";
+
+const REMARK_PLUGINS = [remarkGfm];
 
 export interface UrlPathResolverConfig {
     navigation: FernRegistryDocsRead.UnversionedNavigationConfig;
@@ -52,7 +55,14 @@ export class UrlPathResolver {
                             type: "mdx-page",
                             page: node.page,
                             slug: node.slug,
-                            serializedMdxContent: await serialize(this.getPage(node.page.id).markdown),
+                            serializedMdxContent: await serialize(this.getPage(node.page.id).markdown, {
+                                scope: {},
+                                mdxOptions: {
+                                    remarkPlugins: REMARK_PLUGINS,
+                                    format: "mdx",
+                                },
+                                parseFrontmatter: false,
+                            }),
                         };
                     default:
                         throw new Error("Unexpected page extension: " + node.page.id);
