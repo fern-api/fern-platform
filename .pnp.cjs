@@ -5453,7 +5453,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.7.1"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:5859ca6455b1300e5c14a40a0e9dfd22c3c72703e63a89ae86f290b9c13d7e92836c0c40bb85ba0f8a308601ec19634c366ca3f4bec5fed1a79eee5fbf98d0ae#npm:18.2.0"],\
-            ["rehype-raw", "npm:6.1.1"],\
             ["remark-gfm", "npm:3.0.1"],\
             ["sass", "npm:1.54.0"],\
             ["stylelint", "npm:14.14.0"],\
