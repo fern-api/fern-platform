@@ -42,7 +42,17 @@ const COMPONENTS: MDXRemoteProps["components"] = {
                 );
             }
         }
-        return null;
+        return (
+            <code
+                {...props}
+                className={classNames(
+                    className,
+                    "border border-border/60 rounded font-mono text-sm !bg-neutral-900/50 !text-white !py-0.5 !px-1"
+                )}
+            >
+                {children}
+            </code>
+        );
     },
     table: (props) => <table {...props} className={classNames(props.className, "block overflow-x-auto")} />,
     th: (props) => (
