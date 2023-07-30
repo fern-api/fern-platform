@@ -7,12 +7,14 @@ export declare namespace PathParametersSection {
     export interface Props {
         pathParameters: FernRegistryApiRead.PathParameter[];
         getParameterAnchor?: (param: FernRegistryApiRead.PathParameter) => string;
+        anchor: string;
     }
 }
 
 export const PathParametersSection: React.FC<PathParametersSection.Props> = ({
     pathParameters,
     getParameterAnchor,
+    anchor,
 }) => {
     const convertedParameters = useMemo((): EndpointParameter.Props[] => {
         return pathParameters.map(
@@ -25,5 +27,5 @@ export const PathParametersSection: React.FC<PathParametersSection.Props> = ({
         );
     }, [pathParameters, getParameterAnchor]);
 
-    return <EndpointParametersSection title="Path parameters" parameters={convertedParameters} />;
+    return <EndpointParametersSection title="Path parameters" parameters={convertedParameters} anchor={anchor} />;
 };

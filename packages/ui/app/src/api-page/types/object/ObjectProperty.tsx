@@ -80,7 +80,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchor, propert
                 "px-3": !contextValue.isRootTypeDefinition,
             })}
         >
-            {anchor != null && <AbsolutelyPositionedAnchor anchor={anchor} />}
+            {anchor != null && <AbsolutelyPositionedAnchor verticalPosition="default" anchor={anchor} />}
             <div className="flex items-baseline gap-2">
                 <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName}>
                     <MonospaceText>{property.key}</MonospaceText>
