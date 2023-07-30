@@ -24,10 +24,7 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackageId, slu
     return (
         <>
             <ApiPageMargins>
-                <div
-                    ref={setTargetRef}
-                    className="text-accentPrimary translate-y-12 pt-20 text-sm font-semibold uppercase tracking-wider"
-                >
+                <div ref={setTargetRef} className="pt-20 text-4xl font-bold">
                     <SubpackageTitle subpackage={subpackage} />
                 </div>
                 {subpackage.description != null && (
