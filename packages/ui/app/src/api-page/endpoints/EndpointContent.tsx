@@ -7,6 +7,7 @@ import { isSubpackage } from "../../util/package";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { Markdown } from "../markdown/Markdown";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
+import { SubpackageTitle } from "../subpackages/SubpackageTitle";
 import { useEndpointContext } from "./endpoint-context/useEndpointContext";
 import { EndpointExample } from "./endpoint-examples/EndpointExample";
 import { EndpointErrorsSection } from "./EndpointErrorsSection";
@@ -51,8 +52,8 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
 
     const computeAnchor = useCallback(
         (
-            attributeType: "request" | "response" | "path" | "query",
-            attribute:
+            attributeType: "path" | "query" | "request" | "response" | "errors",
+            attribute?:
                 | FernRegistryApiRead.ObjectProperty
                 | FernRegistryApiRead.PathParameter
                 | FernRegistryApiRead.QueryParameter
@@ -62,29 +63,24 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                 anchor += snakeCase(package_.urlSlug) + "_";
             }
             anchor += snakeCase(endpoint.id);
-            anchor += "-" + attributeType + "-";
-            anchor += snakeCase(attribute.key);
+            anchor += "-" + attributeType;
+            if (attribute?.key != null) {
+                anchor += "-" + snakeCase(attribute.key);
+            }
             return anchor;
         },
         [package_, endpoint]
     );
 
-    const [titleHeight, setTitleHeight] = useState<number>();
+    const titleSectionRef = useRef<null | HTMLDivElement>(null);
     const endpointUrlOuterContainerRef = useRef<null | HTMLDivElement>(null);
     const endpointUrlInnerContainerRef = useRef<null | HTMLDivElement>(null);
+    const [, titleSectionHeight] = useSize(titleSectionRef);
     const [endpointUrlOuterContainerWidth] = useSize(endpointUrlOuterContainerRef);
     const [endpointUrlInnerContainerWidth] = useSize(endpointUrlInnerContainerRef);
     const isUrlAboutToOverflow =
         endpointUrlInnerContainerWidth / endpointUrlOuterContainerWidth > URL_OVERFLOW_THRESHOLD;
 
-    const setTitleRef = useCallback(
-        (ref: HTMLElement | null) => {
-            if (titleHeight == null && ref != null) {
-                setTitleHeight(ref.getBoundingClientRect().height);
-            }
-        },
-        [titleHeight]
-    );
     const [selectedErrorIndex, setSelectedErrorIndex] = useState<number | null>(null);
     const selectedError = selectedErrorIndex == null ? null : endpoint.errors[selectedErrorIndex] ?? null;
     const example = useMemo(() => {
@@ -106,8 +102,15 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
         >
             <div className="flex min-w-0 flex-1 flex-col lg:flex-row lg:space-x-[4vw]" ref={setContainerRef}>
                 <div className="flex min-w-0 max-w-2xl flex-1 flex-col">
-                    <div className="typography-font-heading pb-8 pt-20 text-3xl font-medium" ref={setTitleRef}>
-                        <EndpointTitle endpoint={endpoint} />
+                    <div className="pb-8 pt-20" ref={titleSectionRef}>
+                        {isSubpackage(package_) && (
+                            <div className="text-accentPrimary mb-4 text-xs font-semibold uppercase tracking-wider">
+                                <SubpackageTitle subpackage={package_} />
+                            </div>
+                        )}
+                        <div className="typography-font-heading text-3xl font-medium">
+                            <EndpointTitle endpoint={endpoint} />
+                        </div>
                     </div>
                     <div ref={endpointUrlOuterContainerRef} className="flex max-w-full flex-col items-start">
                         <EndpointUrl
@@ -128,16 +131,18 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                 <PathParametersSection
                                     pathParameters={endpoint.path.pathParameters}
                                     getParameterAnchor={(param) => computeAnchor("path", param)}
+                                    anchor={computeAnchor("path")}
                                 />
                             )}
                             {endpoint.queryParameters.length > 0 && (
                                 <QueryParametersSection
                                     queryParameters={endpoint.queryParameters}
                                     getParameterAnchor={(param) => computeAnchor("query", param)}
+                                    anchor={computeAnchor("query")}
                                 />
                             )}
                             {endpoint.request != null && (
-                                <EndpointSection title="Request">
+                                <EndpointSection title="Request" anchor={computeAnchor("request")}>
                                     <EndpointRequestSection
                                         httpRequest={endpoint.request}
                                         onHoverProperty={onHoverRequestProperty}
@@ -146,7 +151,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                 </EndpointSection>
                             )}
                             {endpoint.response != null && (
-                                <EndpointSection title="Response">
+                                <EndpointSection title="Response" anchor={computeAnchor("response")}>
                                     <EndpointResponseSection
                                         httpResponse={endpoint.response}
                                         onHoverProperty={onHoverResponseProperty}
@@ -155,7 +160,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                 </EndpointSection>
                             )}
                             {process.env.NEXT_PUBLIC_DISPLAY_ERRORS === "true" && endpoint.errors.length > 0 && (
-                                <EndpointSection title="Errors">
+                                <EndpointSection title="Errors" anchor={computeAnchor("errors")}>
                                     <EndpointErrorsSection
                                         errors={endpoint.errors}
                                         onClickError={(_, idx, event) => {
@@ -170,7 +175,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                         </div>
                     </div>
                 </div>
-                {titleHeight != null && (
+                {titleSectionHeight > 0 && (
                     <div
                         className={classNames(
                             "flex-1 sticky self-start top-0 min-w-sm max-w-lg",
@@ -183,7 +188,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                         )}
                         style={{
                             // the 40px is the same as the py-10 above
-                            marginTop: titleHeight - 40,
+                            marginTop: titleSectionHeight - 40,
                         }}
                     >
                         {endpointExample}
