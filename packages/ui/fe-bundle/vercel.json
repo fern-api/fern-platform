@@ -3,6 +3,8 @@
     "silent": true
   },
   "git": {
-    "deploymentEnabled": false
+    "deploymentEnabled": {
+      "main": false
+    }
   }
 }
