@@ -5,7 +5,7 @@ import React, { PropsWithChildren, useCallback, useMemo } from "react";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { divideEndpointPathToParts, type EndpointPathPart } from "../../util/endpoint";
 import styles from "./EndpointUrl.module.scss";
-import { getEndpointEnvironmentUrl } from "./getEndpointEnvironmentUrl";
+// import { getEndpointEnvironmentUrl } from "./getEndpointEnvironmentUrl";
 
 export declare namespace EndpointUrl {
     export type Props = React.PropsWithChildren<{
@@ -25,16 +25,17 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
     const renderPathParts = useCallback(
         (parts: EndpointPathPart[]) => {
             const elements: (JSX.Element | null)[] = [];
-            if (apiDefinition.hasMultipleBaseUrls === true) {
-                const url = getEndpointEnvironmentUrl(endpoint);
-                if (url != null) {
-                    elements.push(
-                        <div key="base-url" className="text-text-default whitespace-nowrap font-light">
-                            {url}
-                        </div>
-                    );
-                }
-            }
+            // Temporarily hiding base url
+            // if (apiDefinition.hasMultipleBaseUrls === true) {
+            //     const url = getEndpointEnvironmentUrl(endpoint);
+            //     if (url != null) {
+            //         elements.push(
+            //             <div key="base-url" className="text-text-default whitespace-nowrap font-light">
+            //                 {url}
+            //             </div>
+            //         );
+            //     }
+            // }
             parts.forEach((p, i) => {
                 elements.push(
                     <div key={`separator-${i}`} className="text-text-default">
