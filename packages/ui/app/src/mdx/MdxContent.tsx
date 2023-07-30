@@ -6,8 +6,6 @@ import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { Card } from "./components/Card";
 import { Cards } from "./components/Cards";
 
-// const PRISM_CLASSNAME_REGEX = /language-(\w+)/;
-
 export declare namespace MdxContent {
     export interface Props {
         mdx: MDXRemoteSerializeResult;
