@@ -10,7 +10,7 @@ export declare namespace Cards {
 export const Cards: React.FC<Cards.Props> = ({ center, children }) => {
     return (
         <div
-            className={classNames("flex flex-wrap gap-6", {
+            className={classNames("flex items-center gap-6", {
                 "justify-center": center,
             })}
         >

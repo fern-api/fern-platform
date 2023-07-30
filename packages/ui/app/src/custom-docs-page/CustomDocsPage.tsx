@@ -32,7 +32,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
 
     return (
         <div className="flex justify-center gap-20 overflow-y-auto px-[10vw] pt-[10vh]">
-            <div className="w-[750px]">
+            <div className="max-w-auto min-w-auto md:min-w-[500px] md:max-w-[600px]">
                 <div className="mb-8 text-3xl font-bold">{path.page.title}</div>
                 {content}
                 <BottomNavigationButtons />

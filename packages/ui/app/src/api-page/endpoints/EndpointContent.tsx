@@ -105,7 +105,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
             onClick={() => setSelectedErrorIndex(null)}
         >
             <div className="flex min-w-0 flex-1 flex-col lg:flex-row lg:space-x-[4vw]" ref={setContainerRef}>
-                <div className="flex min-w-0 max-w-2xl flex-1 flex-col">
+                <div className="max-w-auto flex min-w-0 flex-1 flex-col md:max-w-[600px]">
                     <div className="typography-font-heading pb-8 pt-20 text-3xl font-medium" ref={setTitleRef}>
                         <EndpointTitle endpoint={endpoint} />
                     </div>
