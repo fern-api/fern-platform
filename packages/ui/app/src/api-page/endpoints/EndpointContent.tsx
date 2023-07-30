@@ -65,7 +65,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
             anchor += snakeCase(endpoint.id);
             anchor += "-" + attributeType;
             if (attribute?.key != null) {
-                anchor += +"-" + snakeCase(attribute.key);
+                anchor += "-" + snakeCase(attribute.key);
             }
             return anchor;
         },
