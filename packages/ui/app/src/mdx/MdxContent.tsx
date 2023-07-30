@@ -96,10 +96,13 @@ const COMPONENTS: MDXRemoteProps["components"] = {
         />
     ),
     P: (props) => <p {...props} className={classNames("mb-3 text-base", props.className)} />,
-    ul: (props) => <ul {...props} className={classNames("list-image-dash", props.className)} />,
+    ol: (props) => <ol {...props} className={classNames("list-inside list-decimal space-y-2 mb-3", props.className)} />,
+    ul: (props) => (
+        <ul {...props} className={classNames("list-image-dash list-inside space-y-2 mb-3", props.className)} />
+    ),
     li: ({ children, ...rest }) => (
         <li {...rest} className={classNames(rest.className, "text-base font-light text-text-default leading-7")}>
-            <div>{children}</div>
+            {children}
         </li>
     ),
     a: (props) => (
