@@ -54,12 +54,34 @@ const COMPONENTS: MDXRemoteProps["components"] = {
             </code>
         );
     },
-    table: (props) => <table {...props} className={classNames(props.className, "block overflow-x-auto")} />,
+    table: (props) => (
+        <table
+            {...props}
+            className={classNames(
+                props.className,
+                "block border-separate border-spacing-y-2 overflow-x-auto table-auto mb-3"
+            )}
+        />
+    ),
+    thead: (props) => <thead {...props} className={classNames(props.className)} />,
+    tr: (props) => <tr {...props} className={classNames(props.className)} />,
     th: (props) => (
-        <th {...props} className={classNames(props.className, "text-sm font-normal text-text-stark  leading-7")} />
+        <th
+            {...props}
+            className={classNames(
+                props.className,
+                "text-sm text-left truncate px-2 py-1 font-normal text-text-stark leading-7 border-b border-border"
+            )}
+        />
     ),
     td: (props) => (
-        <td {...props} className={classNames(props.className, "text-base font-light text-text-default leading-7")} />
+        <td
+            {...props}
+            className={classNames(
+                props.className,
+                "text-base border-b border-border-concealed font-light px-2 py-2 text-text-default leading-7"
+            )}
+        />
     ),
     h1: (props) => <h1 {...props} className={classNames(props.className, "text-2xl font-semibold mt-10 mb-3")} />,
     h2: (props) => <h2 {...props} className={classNames(props.className, "text-xl font-semibold mt-10 mb-3")} />,
