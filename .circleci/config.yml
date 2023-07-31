@@ -197,15 +197,15 @@ workflows:
             - vercel-dev
 
       - deploy-docs-dev:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - check
-            - organize-imports
-            - compile
-            - eslint
-            - test
+          # filters:
+          #   tags:
+          #     only: /.*/
+          # requires:
+          #   - check
+          #   - organize-imports
+          #   - compile
+          #   - eslint
+          #   - test
           context:
             - vercel-dev
 

@@ -76,6 +76,8 @@ export default function Docs({
 }
 
 export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }) => {
+    // eslint-disable-next-line no-console
+    console.log("In getStaticProps", process.env.NEXT_PUBLIC_DOCS_DOMAIN, params);
     const host = params.host as string | undefined;
     const slugArray = params.slug as string[] | undefined;
 
