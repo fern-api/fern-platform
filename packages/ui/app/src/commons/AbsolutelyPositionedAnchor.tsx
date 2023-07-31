@@ -18,10 +18,10 @@ export const AbsolutelyPositionedAnchor: React.FC<AbsolutelyPositionedAnchor.Pro
     return (
         <div
             className={classNames(
-                "absolute -left-[calc(0.875rem+0.375rem*2)] flex items-center justify-center px-1.5 py-1 opacity-0 hover:opacity-100 group-hover:opacity-100",
+                "absolute -left-[calc(0.875rem+0.375rem*2)] flex items-center justify-center px-1.5 py-1 opacity-0 hover:opacity-100 group-hover/anchor-container:opacity-100",
                 {
                     "top-2.5": verticalPosition === "default",
-                    "top-auto bottom-auto": verticalPosition === "center",
+                    "top-0 bottom-0": verticalPosition === "center",
                 }
             )}
         >

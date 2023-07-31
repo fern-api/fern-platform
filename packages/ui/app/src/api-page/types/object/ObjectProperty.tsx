@@ -76,7 +76,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchor, propert
     return (
         <div
             id={anchor}
-            className={classNames("flex relative flex-col py-3 group", {
+            className={classNames("flex relative flex-col py-3 group/anchor-container", {
                 "px-3": !contextValue.isRootTypeDefinition,
             })}
         >

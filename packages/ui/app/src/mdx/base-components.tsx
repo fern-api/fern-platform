@@ -1,7 +1,8 @@
 import classNames from "classnames";
-import { HTMLAttributes } from "react";
+import React, { HTMLAttributes } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
 
 export const CodeBlock: React.FC<HTMLAttributes<HTMLElement>> = ({ children }) => {
     if (children == null || typeof children !== "object") {
@@ -86,28 +87,113 @@ export const Td: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
     );
 };
 
+/**
+ * @see https://github.com/remarkjs/react-markdown/issues/404#issuecomment-604019030
+ */
+const flatten = (
+    text: string,
+    child: string | number | React.ReactElement | React.ReactFragment | React.ReactPortal
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): any => {
+    return typeof child === "string"
+        ? text + child
+        : React.Children.toArray((child as React.ReactElement).props.children).reduce(flatten, text);
+};
+
 export const H1: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ...rest }) => {
-    return <h1 {...rest} className={classNames(className, "text-2xl font-semibold mt-10 mb-3")} />;
+    const children = React.Children.toArray(rest.children);
+    const text = children.reduce(flatten, "");
+    const slug = text.toLowerCase().replace(/\W/g, "-");
+    return (
+        <h1
+            id={slug}
+            className={classNames(className, "relative group/anchor-container text-2xl font-semibold mt-10 mb-3")}
+            {...rest}
+        >
+            <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
+            <span>{children}</span>
+        </h1>
+    );
 };
 
 export const H2: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ...rest }) => {
-    return <h2 {...rest} className={classNames(className, "text-xl font-semibold mt-10 mb-3")} />;
+    const children = React.Children.toArray(rest.children);
+    const text = children.reduce(flatten, "");
+    const slug = text.toLowerCase().replace(/\W/g, "-");
+    return (
+        <h2
+            id={slug}
+            className={classNames(className, "relative group/anchor-container text-xl font-semibold mt-10 mb-3")}
+            {...rest}
+        >
+            <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
+            {children}
+        </h2>
+    );
 };
 
 export const H3: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ...rest }) => {
-    return <h3 {...rest} className={classNames(className, "text-lg font-semibold mt-10 mb-3")} />;
+    const children = React.Children.toArray(rest.children);
+    const text = children.reduce(flatten, "");
+    const slug = text.toLowerCase().replace(/\W/g, "-");
+    return (
+        <h3
+            id={slug}
+            className={classNames(className, "relative group/anchor-container text-lg font-semibold mt-10 mb-3")}
+            {...rest}
+        >
+            <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
+            {children}
+        </h3>
+    );
 };
 
 export const H4: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ...rest }) => {
-    return <h4 {...rest} className={classNames(className, "text-lg font-semibold mt-10 mb-3")} />;
+    const children = React.Children.toArray(rest.children);
+    const text = children.reduce(flatten, "");
+    const slug = text.toLowerCase().replace(/\W/g, "-");
+    return (
+        <h4
+            id={slug}
+            className={classNames(className, "relative group/anchor-container text-lg font-semibold mt-10 mb-3")}
+            {...rest}
+        >
+            <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
+            {children}
+        </h4>
+    );
 };
 
 export const H5: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ...rest }) => {
-    return <h5 {...rest} className={classNames(className, "text-lg font-semibold mt-10 mb-3")} />;
+    const children = React.Children.toArray(rest.children);
+    const text = children.reduce(flatten, "");
+    const slug = text.toLowerCase().replace(/\W/g, "-");
+    return (
+        <h5
+            id={slug}
+            className={classNames(className, "relative group/anchor-container text-lg font-semibold mt-10 mb-3")}
+            {...rest}
+        >
+            <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
+            {children}
+        </h5>
+    );
 };
 
 export const H6: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ...rest }) => {
-    return <h6 {...rest} className={classNames(className, "text-lg font-semibold mt-10 mb-3")} />;
+    const children = React.Children.toArray(rest.children);
+    const text = children.reduce(flatten, "");
+    const slug = text.toLowerCase().replace(/\W/g, "-");
+    return (
+        <h6
+            id={slug}
+            className={classNames(className, "relative group/anchor-container text-lg font-semibold mt-10 mb-3")}
+            {...rest}
+        >
+            <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
+            {children}
+        </h6>
+    );
 };
 
 export const P: React.FC<{ variant: "sm" | "md" } & HTMLAttributes<HTMLParagraphElement>> = ({
