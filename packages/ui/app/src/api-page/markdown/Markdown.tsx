@@ -3,7 +3,25 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
-import { A, H1, H2, H3, H4, H5, H6, InlineCode, Li, Ol, Table, Td, Th, Thead, Tr, Ul } from "../../mdx/base-components";
+import {
+    A,
+    H1,
+    H2,
+    H3,
+    H4,
+    H5,
+    H6,
+    InlineCode,
+    Li,
+    Ol,
+    P,
+    Table,
+    Td,
+    Th,
+    Thead,
+    Tr,
+    Ul,
+} from "../../mdx/base-components";
 import styles from "./Markdown.module.scss";
 
 export declare namespace Markdown {
@@ -16,7 +34,9 @@ export declare namespace Markdown {
 const REMARK_PLUGINS = [remarkGfm];
 const REHYPE_PLUGINS = [rehypeRaw];
 
-export const Markdown = React.memo<Markdown.Props>(function Markdown({ type, children, className }) {
+// TODO: Rename this component to ApiMarkdown
+
+export const Markdown = React.memo<Markdown.Props>(function Markdown({ children, className }) {
     return (
         <ReactMarkdown
             className={classNames(className, styles.container, "prose prose-sm dark:prose-invert max-w-none")}
@@ -40,19 +60,7 @@ export const Markdown = React.memo<Markdown.Props>(function Markdown({ type, chi
                 h4: (props) => <H4 {...props} />,
                 h5: (props) => <H5 {...props} />,
                 h6: (props) => <H6 {...props} />,
-                p: ({ node, ...props }) => (
-                    <p
-                        {...props}
-                        className={classNames(
-                            "mb-3",
-                            {
-                                "text-base font-light text-text-default leading-7": type === "markdown",
-                                "text-sm text-text-default leading-6": type === "api",
-                            },
-                            props.className
-                        )}
-                    />
-                ),
+                p: ({ node, ...props }) => <P variant="sm" {...props} />,
                 ol: (props) => <Ol {...props} />,
                 ul: (props) => <Ul {...props} />,
                 li: (props) => <Li {...props} />,
