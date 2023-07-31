@@ -110,8 +110,20 @@ export const H6: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return <h6 {...rest} className={classNames(className, "text-lg font-semibold mt-10 mb-3")} />;
 };
 
-export const P: React.FC<HTMLAttributes<HTMLParagraphElement>> = ({ className, ...rest }) => {
-    return <p {...rest} className={classNames(className, "mb-3 text-base font-light text-text-default leading-7")} />;
+export const P: React.FC<{ variant: "sm" | "md" } & HTMLAttributes<HTMLParagraphElement>> = ({
+    variant,
+    className,
+    ...rest
+}) => {
+    return (
+        <p
+            {...rest}
+            className={classNames(className, "mb-3", {
+                "text-sm font-normal text-text-default leading-6": variant === "sm",
+                "text-base font-light text-text-default leading-7": variant === "md",
+            })}
+        />
+    );
 };
 
 export const Ol: React.FC<HTMLAttributes<HTMLOListElement>> = ({ className, ...rest }) => {
