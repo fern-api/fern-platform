@@ -1,5 +1,46 @@
 import classNames from "classnames";
 import { HTMLAttributes } from "react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
+
+export const CodeBlock: React.FC<HTMLAttributes<HTMLElement>> = ({ children }) => {
+    if (children == null || typeof children !== "object") {
+        return null;
+    }
+    const { className, children: nestedChildren } = (children as JSX.Element).props as {
+        className: string | undefined;
+        children: string;
+    };
+    const language = className != null ? className.replace(/language-/, "") : "";
+    return (
+        <pre className={classNames("px-4 pt-1 mb-5 border rounded-lg bg-gray-950/90 border-border/60")}>
+            <SyntaxHighlighter
+                style={vscDarkPlus}
+                customStyle={{
+                    backgroundColor: "transparent",
+                    padding: 0,
+                    fontSize: "0.9rem",
+                }}
+                language={language}
+                PreTag="div"
+            >
+                {String(nestedChildren)}
+            </SyntaxHighlighter>
+        </pre>
+    );
+};
+
+export const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({ className, ...rest }) => {
+    return (
+        <code
+            {...rest}
+            className={classNames(
+                className,
+                "border border-border/60 rounded font-mono text-sm !bg-neutral-900/50 !text-white !py-0.5 !px-1"
+            )}
+        />
+    );
+};
 
 export const Table: React.FC<HTMLAttributes<HTMLTableElement>> = ({ className, ...rest }) => {
     return (
