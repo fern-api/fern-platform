@@ -17,7 +17,7 @@ export declare namespace EndpointParameter {
 
 export const EndpointParameter: React.FC<EndpointParameter.Props> = ({ name, description, anchor, type }) => {
     return (
-        <div id={anchor} className="group relative flex flex-col gap-2 py-3">
+        <div id={anchor} className="group/anchor-container relative flex flex-col gap-2 py-3">
             {anchor != null && <AbsolutelyPositionedAnchor verticalPosition="default" anchor={anchor} />}
             <div className="flex items-baseline gap-1">
                 <MonospaceText>{name}</MonospaceText>
