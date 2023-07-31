@@ -3,7 +3,7 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
-import { A, H1, H2, H3, H4, H5, H6, Li, Ol, Table, Td, Th, Thead, Tr, Ul } from "../../mdx/base-components";
+import { A, H1, H2, H3, H4, H5, H6, InlineCode, Li, Ol, Table, Td, Th, Thead, Tr, Ul } from "../../mdx/base-components";
 import styles from "./Markdown.module.scss";
 
 export declare namespace Markdown {
@@ -16,9 +16,7 @@ export declare namespace Markdown {
 const REMARK_PLUGINS = [remarkGfm];
 const REHYPE_PLUGINS = [rehypeRaw];
 
-// TODO: Rename this component to ApiMarkdown
-
-export const Markdown = React.memo<Markdown.Props>(function Markdown({ children, className }) {
+export const Markdown = React.memo<Markdown.Props>(function Markdown({ type, children, className }) {
     return (
         <ReactMarkdown
             className={classNames(className, styles.container, "prose prose-sm dark:prose-invert max-w-none")}
