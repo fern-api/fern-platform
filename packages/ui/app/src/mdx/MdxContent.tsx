@@ -43,7 +43,7 @@ const COMPONENTS: MDXRemoteProps["components"] = {
     h4: H4,
     h5: H5,
     h6: H6,
-    p: P,
+    p: (props) => <P variant="md" {...props} />,
     P,
     ol: Ol,
     ul: Ul,
