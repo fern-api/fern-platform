@@ -1,7 +1,7 @@
-import { assertNever } from "@fern-api/core-utils";
 import { FernRegistry } from "@fern-fern/registry-browser";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { assertNever } from "@fern-ui/core-utils";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
 import { ResolvedUrlPath } from "../ResolvedUrlPath";

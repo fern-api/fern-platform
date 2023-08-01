@@ -1,7 +1,7 @@
 import { Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
-import { assertNever } from "@fern-api/core-utils";
-import { useBooleanState } from "@fern-api/react-commons";
+import { assertNever } from "@fern-ui/core-utils";
+import { useBooleanState } from "@fern-ui/react-commons";
 import { useMemo } from "react";
 import { ApiArtifactsTitle } from "../api-page/artifacts/ApiArtifactsTitle";
 import { EndpointTitle } from "../api-page/endpoints/EndpointTitle";

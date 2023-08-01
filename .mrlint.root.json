@@ -1,4 +1,4 @@
 {
-  "defaultScope": "@fern-api",
+  "defaultScope": "@fern-ui",
   "packages": "packages/**"
 }

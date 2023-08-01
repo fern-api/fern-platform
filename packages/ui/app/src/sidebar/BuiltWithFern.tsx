@@ -1,4 +1,4 @@
-import { useIsHovering } from "@fern-api/react-commons";
+import { useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { useCallback } from "react";
 import { FernLogo } from "./FernLogo";

@@ -1,4 +1,4 @@
-import { useIsDarkTheme } from "@fern-api/theme";
+import { useIsDarkTheme } from "@fern-ui/theme";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { routeros, sunburst } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 

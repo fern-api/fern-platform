@@ -11,8 +11,8 @@
     "!packages/**/generated"
   ],
   "scripts": {
-    "clean": "yarn workspace @fern-api/compile-root run clean",
-    "compile": "yarn workspace @fern-api/compile-root run compile",
+    "clean": "yarn workspace @fern-ui/compile-root run clean",
+    "compile": "yarn workspace @fern-ui/compile-root run compile",
     "test": "yarn compile && jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --report-unused-disable-directives",
     "lint:eslint:fix": "yarn lint:eslint --fix",
@@ -27,7 +27,7 @@
     "depcheck": "yarn workspaces foreach --verbose --parallel run depcheck",
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public",
     "add-workspace": "yarn mrlint add-workspace",
-    "fern-script": "yarn workspace @fern-api/scripts dist:cli && node $(yarn workspace @fern-api/scripts bin fern-scripts)",
+    "fern-script": "yarn workspace @fern-ui/scripts dist:cli && node $(yarn workspace @fern-ui/scripts bin fern-scripts)",
     "check-docs-release-blockers": "yarn fern-script check-docs-release-blockers",
     "root-package:check": "yarn fern-script check-root-package",
     "root-package:fix": "yarn root-package:check --fix"

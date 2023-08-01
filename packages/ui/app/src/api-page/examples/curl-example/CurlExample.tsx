@@ -1,5 +1,5 @@
-import { assertNever, assertNeverNoThrow, noop, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { assertNever, assertNeverNoThrow, noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import React, { useCallback, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { getEndpointEnvironmentUrl } from "../../endpoints/getEndpointEnvironmentUrl";

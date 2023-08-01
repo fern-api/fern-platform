@@ -1,4 +1,4 @@
-import { type Digit, type UppercaseLetter } from "@fern-api/core-utils";
+import { type Digit, type UppercaseLetter } from "@fern-ui/core-utils";
 import { useEffect } from "react";
 
 export declare namespace useKeyboardCommand {

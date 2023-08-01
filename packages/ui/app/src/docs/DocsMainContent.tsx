@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever } from "@fern-ui/core-utils";
 import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContextProvider";
 import { ApiPage } from "../api-page/ApiPage";
 import { CustomDocsPage } from "../custom-docs-page/CustomDocsPage";

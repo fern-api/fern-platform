@@ -1,5 +1,5 @@
 {
-  "name": "@fern-api/split-view",
+  "name": "@fern-ui/split-view",
   "version": "0.0.0",
   "repository": {
     "type": "git",
@@ -30,8 +30,8 @@
   },
   "dependencies": {
     "@blueprintjs/core": "^4.11.5",
-    "@fern-api/core-utils": "workspace:*",
-    "@fern-api/react-commons": "workspace:*",
+    "@fern-ui/core-utils": "workspace:*",
+    "@fern-ui/react-commons": "workspace:*",
     "classnames": "^2.3.1",
     "lodash-es": "^4.17.21",
     "react": "^18.2.0",

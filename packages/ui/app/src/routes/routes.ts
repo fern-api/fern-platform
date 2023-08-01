@@ -1,3 +1,3 @@
-import { ROOT_PATH } from "@fern-api/routing-utils";
+import { ROOT_PATH } from "@fern-ui/routing-utils";
 
 export const HOME = ROOT_PATH;

@@ -1,4 +1,4 @@
-import { PLATFORM, type Platform } from "@fern-api/core-utils";
+import { PLATFORM, type Platform } from "@fern-ui/core-utils";
 import dynamic from "next/dynamic";
 
 type ComponentChildren = (platform: Platform) => React.ReactNode;

@@ -1,5 +1,5 @@
 {
-  "name": "@fern-api/compile-root",
+  "name": "@fern-ui/compile-root",
   "version": "0.0.0",
   "repository": {
     "type": "git",
@@ -27,20 +27,20 @@
     "depcheck": ":"
   },
   "dependencies": {
-    "@fern-api/common-components": "workspace:*",
-    "@fern-api/contexted-dialog": "workspace:*",
-    "@fern-api/core-utils": "workspace:*",
-    "@fern-api/docs-deploy": "workspace:*",
-    "@fern-api/fonts": "workspace:*",
-    "@fern-api/loadable": "workspace:*",
-    "@fern-api/react-commons": "workspace:*",
-    "@fern-api/react-query-utils": "workspace:*",
-    "@fern-api/routing-utils": "workspace:*",
-    "@fern-api/scripts": "workspace:*",
-    "@fern-api/split-view": "workspace:*",
-    "@fern-api/theme": "workspace:*",
-    "@fern-api/toaster": "workspace:*",
-    "@fern-api/ui": "workspace:*"
+    "@fern-ui/common-components": "workspace:*",
+    "@fern-ui/contexted-dialog": "workspace:*",
+    "@fern-ui/core-utils": "workspace:*",
+    "@fern-ui/docs-deploy": "workspace:*",
+    "@fern-ui/fonts": "workspace:*",
+    "@fern-ui/loadable": "workspace:*",
+    "@fern-ui/react-commons": "workspace:*",
+    "@fern-ui/react-query-utils": "workspace:*",
+    "@fern-ui/routing-utils": "workspace:*",
+    "@fern-ui/scripts": "workspace:*",
+    "@fern-ui/split-view": "workspace:*",
+    "@fern-ui/theme": "workspace:*",
+    "@fern-ui/toaster": "workspace:*",
+    "@fern-ui/ui": "workspace:*"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",

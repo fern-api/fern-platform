@@ -1,4 +1,4 @@
-import { useBooleanState } from "@fern-api/react-commons";
+import { useBooleanState } from "@fern-ui/react-commons";
 import { PropsWithChildren, useCallback } from "react";
 import { SearchContext, SearchContextValue } from "./SearchContext";
 
