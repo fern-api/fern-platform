@@ -33,6 +33,8 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
 
     const rootSlug = activeVersion ?? "";
 
+    const getFullSlug = useCallback((slug: string) => `${rootSlug ? `${rootSlug}/` : ""}${slug}`, [rootSlug]);
+
     const selectedSlugFromUrl = useMemo(() => {
         switch (resolvedUrlPath.type) {
             case "clientLibraries":
@@ -40,14 +42,14 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             case "mdx-page":
             case "topLevelEndpoint":
             case "apiSubpackage":
-                return `${rootSlug}/${resolvedUrlPath.slug}`;
+                return getFullSlug(resolvedUrlPath.slug);
             case "api":
             case "section":
                 return undefined;
             default:
                 assertNever(resolvedUrlPath);
         }
-    }, [rootSlug, resolvedUrlPath]);
+    }, [resolvedUrlPath, getFullSlug]);
 
     const [selectedSlug, setSelectedSlug] = useState(selectedSlugFromUrl);
 
@@ -82,8 +84,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     const setActiveVersion = useCallback((version: string) => {
         _setActiveVersion(version);
     }, []);
-
-    const getFullSlug = useCallback((slug: string) => `${rootSlug ? `${rootSlug}/` : ""}${slug}`, [rootSlug]);
 
     useEffect(() => {
         if (selectedSlug == null) {
