@@ -7,7 +7,7 @@ import path from "path";
 import process from "process";
 import { getAllPackages, YarnPackage } from "./getAllPackages";
 
-const COMPILE_ROOT_PACKAGE = "@fern-api/compile-root";
+const COMPILE_ROOT_PACKAGE = "@fern-ui/compile-root";
 
 export async function checkRootPackage({ shouldFix }: { shouldFix: boolean }): Promise<void> {
     const packages = await getAllPackages();

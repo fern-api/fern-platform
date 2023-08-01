@@ -1,5 +1,5 @@
 {
-  "name": "@fern-api/loadable",
+  "name": "@fern-ui/loadable",
   "version": "0.0.0",
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/core-utils": "workspace:*"
+    "@fern-ui/core-utils": "workspace:*"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",

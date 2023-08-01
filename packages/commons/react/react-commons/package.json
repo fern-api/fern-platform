@@ -1,5 +1,5 @@
 {
-  "name": "@fern-api/react-commons",
+  "name": "@fern-ui/react-commons",
   "version": "0.0.0",
   "repository": {
     "type": "git",
@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@blueprintjs/core": "^4.11.5",
-    "@fern-api/core-utils": "workspace:*",
+    "@fern-ui/core-utils": "workspace:*",
     "immer": "^9.0.15",
     "react": "^18.2.0"
   },

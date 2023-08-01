@@ -1,5 +1,5 @@
-import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import React, { PropsWithChildren, useCallback, useMemo } from "react";
 // import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";

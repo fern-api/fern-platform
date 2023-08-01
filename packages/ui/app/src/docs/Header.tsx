@@ -1,4 +1,4 @@
-import { visitDiscriminatedUnion } from "@fern-api/core-utils";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { DEFAULT_LOGO_HEIGHT } from "../config";
 import { useDocsContext } from "../docs-context/useDocsContext";

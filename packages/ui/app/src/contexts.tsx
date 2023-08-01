@@ -1,4 +1,4 @@
-import { ThemeProvider } from "@fern-api/theme";
+import { ThemeProvider } from "@fern-ui/theme";
 import { PropsWithChildren } from "react";
 import { SearchContextProvider } from "./search-context/SearchContextProvider";
 

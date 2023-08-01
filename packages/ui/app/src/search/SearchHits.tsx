@@ -1,5 +1,5 @@
 import { Spinner, SpinnerSize } from "@blueprintjs/core";
-import { visitDiscriminatedUnion } from "@fern-api/core-utils";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import React, { PropsWithChildren, useMemo } from "react";
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch-hooks-web";

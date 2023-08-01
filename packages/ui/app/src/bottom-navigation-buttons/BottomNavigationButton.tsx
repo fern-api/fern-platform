@@ -1,6 +1,6 @@
 import { Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever } from "@fern-ui/core-utils";
 import Link from "next/link";
 import { useCallback, useMemo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";

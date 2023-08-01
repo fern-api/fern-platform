@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever } from "@fern-ui/core-utils";
 import { useContext, useEffect, useMemo, useRef } from "react";
 import { JsonExampleBreadcrumb } from "./contexts/JsonExampleBreadcrumb";
 import {

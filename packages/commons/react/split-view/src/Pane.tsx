@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { isFunction } from "lodash-es";
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";

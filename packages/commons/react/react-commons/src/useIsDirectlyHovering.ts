@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever } from "@fern-ui/core-utils";
 import React, { useCallback, useReducer } from "react";
 
 export declare namespace useIsDirectlyHovering {

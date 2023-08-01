@@ -96,7 +96,7 @@ module.exports = {
         "import/no-internal-modules": [
             "error",
             {
-                forbid: ["@fern-api/*/**"],
+                forbid: ["@fern-ui/*/**"],
             },
         ],
         "@typescript-eslint/no-base-to-string": "error",

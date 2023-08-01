@@ -1,5 +1,5 @@
-import { PLATFORM } from "@fern-api/core-utils";
-import { useKeyboardCommand } from "@fern-api/react-commons";
+import { PLATFORM } from "@fern-ui/core-utils";
+import { useKeyboardCommand } from "@fern-ui/react-commons";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { MobileSidebar } from "../mobile-sidebar/MobileSidebar";
 import { useSearchContext } from "../search-context/useSearchContext";

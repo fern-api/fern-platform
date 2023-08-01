@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    transpilePackages: ["@fern-api/ui"],
+    transpilePackages: ["@fern-ui/ui"],
     productionBrowserSourceMaps: true,
     rewrites: async () => [
         {

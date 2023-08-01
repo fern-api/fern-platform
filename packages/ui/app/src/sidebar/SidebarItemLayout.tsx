@@ -1,5 +1,5 @@
 import { Text } from "@blueprintjs/core";
-import { useIsHovering } from "@fern-api/react-commons";
+import { useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { useContext } from "react";
 import { SidebarDepthContext } from "./context/SidebarDepthContext";

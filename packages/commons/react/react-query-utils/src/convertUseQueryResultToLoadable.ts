@@ -1,4 +1,4 @@
-import { Loadable } from "@fern-api/loadable";
+import { Loadable } from "@fern-ui/loadable";
 import { UseQueryResult } from "@tanstack/react-query";
 import { visitUseQueryResult } from "./visitor";
 

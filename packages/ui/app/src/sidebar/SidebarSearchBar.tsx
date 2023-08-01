@@ -1,5 +1,5 @@
 import { Icon } from "@blueprintjs/core";
-import { visitDiscriminatedUnion } from "@fern-api/core-utils";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { type MouseEventHandler } from "react";
 import { PlatformSpecificContent } from "../commons/PlatformSpecificContent";
 

@@ -1,5 +1,5 @@
-import { keys } from "@fern-api/core-utils";
-import { useBooleanState } from "@fern-api/react-commons";
+import { keys } from "@fern-ui/core-utils";
+import { useBooleanState } from "@fern-ui/react-commons";
 import { PropsWithChildren, useCallback, useMemo } from "react";
 import { createContextedDialogsProvider } from "../createContextedDialogsProvider";
 import { SingleContextedDialogProviderProps, SingleContextedDialogProviderRenderer } from "../types";

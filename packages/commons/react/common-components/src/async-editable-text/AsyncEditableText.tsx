@@ -1,5 +1,5 @@
 import { Classes, EditableText, EditableTextProps } from "@blueprintjs/core";
-import { getLoadableValue, isLoaded, Loadable } from "@fern-api/loadable";
+import { getLoadableValue, isLoaded, Loadable } from "@fern-ui/loadable";
 import classNames from "classnames";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./AsyncEditableText.module.scss";

@@ -1,8 +1,8 @@
 import { Collapse, Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
-import { visitDiscriminatedUnion } from "@fern-api/core-utils";
-import { useBooleanState, useIsHovering } from "@fern-api/react-commons";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";

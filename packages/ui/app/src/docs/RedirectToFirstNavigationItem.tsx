@@ -1,6 +1,6 @@
 import { NonIdealState } from "@blueprintjs/core";
-import { assertNeverNoThrow } from "@fern-api/core-utils";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { assertNeverNoThrow } from "@fern-ui/core-utils";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { Redirect } from "./Redirect";

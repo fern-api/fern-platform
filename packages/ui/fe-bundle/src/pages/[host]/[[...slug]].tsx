@@ -1,7 +1,7 @@
-import { assertNeverNoThrow } from "@fern-api/core-utils";
-import { App, ResolvedUrlPath } from "@fern-api/ui";
 import * as FernRegistryDocsReadV1 from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import * as FernRegistryDocsReadV2 from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
+import { assertNeverNoThrow } from "@fern-ui/core-utils";
+import { App, ResolvedUrlPath } from "@fern-ui/ui";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { Inter } from "next/font/google";
 import Head from "next/head";

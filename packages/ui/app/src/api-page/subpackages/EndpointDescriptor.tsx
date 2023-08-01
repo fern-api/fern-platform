@@ -1,5 +1,5 @@
-import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { MouseEventHandler } from "react";
 import { HttpMethodIcon } from "../../commons/HttpMethodIcon";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";

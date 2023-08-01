@@ -1,4 +1,4 @@
-import { useTimeout } from "@fern-api/react-commons";
+import { useTimeout } from "@fern-ui/react-commons";
 import { useMemo, useState } from "react";
 
 export declare namespace useCopyToClipboard {

@@ -1,5 +1,5 @@
 import { Icon } from "@blueprintjs/core";
-import { visitDiscriminatedUnion } from "@fern-api/core-utils";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import Link from "next/link";
 import { Snippet } from "react-instantsearch-hooks-web";
 import { useDocsContext } from "../docs-context/useDocsContext";
