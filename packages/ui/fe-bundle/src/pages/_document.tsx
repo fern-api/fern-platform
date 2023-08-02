@@ -4,13 +4,13 @@ export default function Document(): JSX.Element {
     return (
         <Html lang="en">
             <Head />
-            <body className="overscroll-y-none">
-                <span
-                    style={{
-                        backgroundImage: "var(--docs-background-image, url('/backgrounds/default.png'))",
-                    }}
-                    className="fixed inset-0 bg-fixed bg-right-top bg-no-repeat"
-                />
+            <body
+                className="bg-background overscroll-y-none"
+                style={{
+                    backgroundImage: "var(--docs-background-image, url('/backgrounds/default.png'))",
+                    backgroundSize: "cover",
+                }}
+            >
                 <Main />
                 <NextScript />
             </body>

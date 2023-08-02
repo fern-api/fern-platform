@@ -35,7 +35,7 @@ export const App: React.FC<App.Props> = ({ docs, inferredVersion, resolvedUrlPat
     }, []);
 
     return (
-        <div className={classNames(styles.app, "flex flex-1 h-screen bg-background")}>
+        <div className={classNames(styles.app, "flex flex-1 h-screen")}>
             {CONTEXTS.reduceRight(
                 (children, Context) => (
                     <Context>{children}</Context>
