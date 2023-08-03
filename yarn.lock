@@ -1472,6 +1472,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.12.5":
+  version: 7.22.6
+  resolution: "@babel/runtime@npm:7.22.6"
+  dependencies:
+    regenerator-runtime: ^0.13.11
+  checksum: e585338287c4514a713babf4fdb8fc2a67adcebab3e7723a739fc62c79cfda875b314c90fd25f827afb150d781af97bc16c85bfdbfa2889f06053879a1ddb597
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.18.10, @babel/template@npm:^7.3.3":
   version: 7.18.10
   resolution: "@babel/template@npm:7.18.10"
@@ -2202,6 +2211,7 @@ __metadata:
     prettier: ^2.7.1
     react: ^18.2.0
     react-dom: ^18.2.0
+    react-error-boundary: ^4.0.10
     react-icons: ^4.9.0
     react-instantsearch-hooks-web: ^6.45.0
     react-intersection-observer: ^9.4.3
@@ -11122,6 +11132,17 @@ env-cmd@toddbluhm/env-cmd:
     react: ">= 16.3.0"
     react-dom: ">= 16.3.0"
   checksum: 21c3775db086e13020967627c20acd41d1ddbc7c7d7fca51491a5bbb54a0aa7e1730a4bc9af17141eb50a4954e547a5e25b2368f5f54b70db6f2686a897bacf2
+  languageName: node
+  linkType: hard
+
+"react-error-boundary@npm:^4.0.10":
+  version: 4.0.10
+  resolution: "react-error-boundary@npm:4.0.10"
+  dependencies:
+    "@babel/runtime": ^7.12.5
+  peerDependencies:
+    react: ">=16.13.1"
+  checksum: 4ad4864d2a5fc2264a24d03e83176e6a70d7adbe3c1edbdc5b0bd452a695104bc59456e23b5aea1b9729220672fe46614221daa8b3bd59327968d4aa7eb8bc71
   languageName: node
   linkType: hard
 

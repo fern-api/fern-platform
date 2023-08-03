@@ -3,7 +3,6 @@ import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources
 import { assertNever } from "@fern-ui/core-utils";
 import { ResolvedUrlPath } from "@fern-ui/ui";
 import { serialize } from "next-mdx-remote/serialize";
-import path from "path";
 import remarkGfm from "remark-gfm";
 import { UrlSlugTree, UrlSlugTreeNode } from "./UrlSlugTree";
 
@@ -42,25 +41,19 @@ export class UrlPathResolver {
                     slug: node.slug,
                 };
             case "page":
-                switch (path.extname(node.page.id)) {
-                    case ".md":
-                    case ".mdx":
-                        return {
-                            type: "mdx-page",
-                            page: node.page,
-                            slug: node.slug,
-                            serializedMdxContent: await serialize(this.getPage(node.page.id).markdown, {
-                                scope: {},
-                                mdxOptions: {
-                                    remarkPlugins: REMARK_PLUGINS,
-                                    format: "detect",
-                                },
-                                parseFrontmatter: false,
-                            }),
-                        };
-                    default:
-                        throw new Error("Unexpected page extension: " + node.page.id);
-                }
+                return {
+                    type: "mdx-page",
+                    page: node.page,
+                    slug: node.slug,
+                    serializedMdxContent: await serialize(this.getPage(node.page.id).markdown, {
+                        scope: {},
+                        mdxOptions: {
+                            remarkPlugins: REMARK_PLUGINS,
+                            format: "detect",
+                        },
+                        parseFrontmatter: false,
+                    }),
+                };
             case "api":
                 return {
                     type: "api",
