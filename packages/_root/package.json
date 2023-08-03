@@ -30,7 +30,6 @@
     "@fern-ui/common-components": "workspace:*",
     "@fern-ui/contexted-dialog": "workspace:*",
     "@fern-ui/core-utils": "workspace:*",
-    "@fern-ui/docs-deploy": "workspace:*",
     "@fern-ui/fonts": "workspace:*",
     "@fern-ui/loadable": "workspace:*",
     "@fern-ui/react-commons": "workspace:*",

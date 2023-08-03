@@ -15,7 +15,6 @@
     { "path": "../commons/react/theme" },
     { "path": "../commons/react/toaster" },
     { "path": "../scripts" },
-    { "path": "../ui/app" },
-    { "path": "../ui/deploy" }
+    { "path": "../ui/app" }
   ]
 }
