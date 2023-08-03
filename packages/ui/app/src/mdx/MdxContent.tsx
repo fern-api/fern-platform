@@ -1,5 +1,6 @@
 import { MDXRemote, MDXRemoteProps, MDXRemoteSerializeResult } from "next-mdx-remote";
-import React from "react";
+import React, { useCallback } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import {
     A,
     CodeBlock,
@@ -22,6 +23,7 @@ import {
 } from "./base-components";
 import { Card } from "./components/Card";
 import { Cards } from "./components/Cards";
+import { MdxErrorBoundaryContent } from "./MdxErrorBoundaryContent";
 
 export declare namespace MdxContent {
     export interface Props {
@@ -54,5 +56,13 @@ const COMPONENTS: MDXRemoteProps["components"] = {
 };
 
 export const MdxContent = React.memo<MdxContent.Props>(function MdxContent({ mdx }) {
-    return <MDXRemote {...mdx} components={COMPONENTS}></MDXRemote>;
+    const fallbackRender = useCallback(({ error }: { error: unknown }) => {
+        return <MdxErrorBoundaryContent error={error} />;
+    }, []);
+
+    return (
+        <ErrorBoundary fallbackRender={fallbackRender}>
+            <MDXRemote {...mdx} components={COMPONENTS}></MDXRemote>
+        </ErrorBoundary>
+    );
 });
