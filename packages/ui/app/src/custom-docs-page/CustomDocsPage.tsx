@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import { useMemo } from "react";
 import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
 import { useDocsContext } from "../docs-context/useDocsContext";
@@ -29,9 +28,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
                 <BottomNavigationButtons />
                 <div className="h-20" />
             </div>
-            <div className={classNames("sticky top-0 w-64 shrink-0", "hidden md:flex")}>
-                <TableOfContents markdown={page.markdown} />
-            </div>
+            <TableOfContents className="sticky top-0 hidden shrink-0 md:flex" markdown={page.markdown} />
         </div>
     );
 };

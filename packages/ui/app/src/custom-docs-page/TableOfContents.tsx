@@ -1,31 +1,39 @@
 import { Text } from "@blueprintjs/core";
+import classNames from "classnames";
 import { marked } from "marked";
 import { useMemo } from "react";
 
 export declare namespace TableOfContents {
     export interface Props {
+        className?: string;
         markdown: string;
     }
 }
 
-export const TableOfContents: React.FC<TableOfContents.Props> = ({ markdown }) => {
+export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, markdown }) => {
     const headings = useMemo(() => marked.lexer(markdown).filter(isHeading), [markdown]);
     const minDepth = useMemo(() => Math.min(...headings.map((heading) => heading.depth)), [headings]);
 
+    if (headings.length === 0) {
+        return null;
+    }
+
     return (
-        <div className="flex flex-col">
-            <div className="medium mb-3 uppercase">On this page</div>
-            <div className="flex flex-col gap-3">
-                {headings.map((heading, index) => (
-                    <Text
-                        key={index}
-                        className="text-text-default cursor-pointer transition hover:text-neutral-300"
-                        style={{ marginLeft: 8 * (heading.depth - minDepth) }}
-                        ellipsize
-                    >
-                        {heading.text}
-                    </Text>
-                ))}
+        <div className={classNames("w-64", className)}>
+            <div className="flex flex-col">
+                <div className="medium mb-3 uppercase">On this page</div>
+                <div className="flex flex-col gap-3">
+                    {headings.map((heading, index) => (
+                        <Text
+                            key={index}
+                            className="text-text-default cursor-pointer transition hover:text-neutral-300"
+                            style={{ marginLeft: 8 * (heading.depth - minDepth) }}
+                            ellipsize
+                        >
+                            {heading.text}
+                        </Text>
+                    ))}
+                </div>
             </div>
         </div>
     );
