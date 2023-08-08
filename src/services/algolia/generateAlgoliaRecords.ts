@@ -2,6 +2,7 @@ import { v4 as uuid } from "uuid";
 import type { FernRegistry } from "../../generated";
 import * as FernRegistryDocsRead from "../../generated/api/resources/docs/resources/v1/resources/read";
 import { convertMarkdownToText } from "../../util";
+import { getSubpackageParentSlugs } from "../../util/subpackage";
 import { type AlgoliaSearchRecord } from "./AlgoliaService";
 
 type ApiDefinitionLoader = (apiDefinitionId: string) => Promise<FernRegistry.api.v1.db.DbApiDefinition | null>;
@@ -90,13 +91,7 @@ function generateAlgoliaRecordsForApiDefinition(
 
     Object.values(subpackages).forEach((subpackage) => {
         const { parent } = subpackage;
-        let parentSlugs: string[] = [];
-
-        if (parent != null) {
-            const parentSlugsStr = parent.slice("subpackage_".length, parent.length);
-            parentSlugs = parentSlugsStr.split("/");
-        }
-
+        const parentSlugs = parent != null ? getSubpackageParentSlugs(subpackage, apiDef) : [];
         subpackage.endpoints.forEach((e) => {
             const endpointRecords = generateAlgoliaRecordsForEndpointDefinition(
                 [...cumulativeSlugs, ...parentSlugs, subpackage.urlSlug],

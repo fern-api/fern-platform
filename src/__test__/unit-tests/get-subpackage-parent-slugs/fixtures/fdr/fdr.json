@@ -1,0 +1,6941 @@
+{
+  "types": {
+    "type_api/v1/db:DbApiDefinition": {
+      "name": "DbApiDefinition",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "value": "type_commons:ApiDefinitionId",
+              "type": "id"
+            }
+          },
+          {
+            "key": "rootPackage",
+            "valueType": {
+              "value": "type_api/v1/db:DbApiDefinitionPackage",
+              "type": "id"
+            }
+          },
+          {
+            "key": "types",
+            "valueType": {
+              "keyType": {
+                "value": "type_api/v1/read/type:TypeId",
+                "type": "id"
+              },
+              "valueType": {
+                "value": "type_api/v1/read/type:TypeDefinition",
+                "type": "id"
+              },
+              "type": "map"
+            }
+          },
+          {
+            "key": "subpackages",
+            "valueType": {
+              "keyType": {
+                "value": "type_api/v1/read:SubpackageId",
+                "type": "id"
+              },
+              "valueType": {
+                "value": "type_api/v1/db:DbApiDefinitionSubpackage",
+                "type": "id"
+              },
+              "type": "map"
+            }
+          },
+          {
+            "key": "auth",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read:ApiAuth",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "Whether or not endpoints are being served at different \nbase urls (i.e. https://a.com and https://b.com)\n",
+            "key": "hasMultipleBaseUrls",
+            "valueType": {
+              "value": {
+                "type": "boolean"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/db:DbApiDefinitionPackage": {
+      "name": "DbApiDefinitionPackage",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "endpoints",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/db/endpoint:DbEndpointDefinition",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "types",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/type:TypeId",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "subpackages",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read:SubpackageId",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "description": "if present, this package should be replaced with the provided subpackage\nin the docs navigation.\n",
+            "key": "pointsTo",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read:SubpackageId",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/db:DbApiDefinitionSubpackage": {
+      "name": "DbApiDefinitionSubpackage",
+      "shape": {
+        "extends": ["type_api/v1/read/commons:WithDescription", "type_api/v1/db:DbApiDefinitionPackage"],
+        "properties": [
+          {
+            "key": "parent",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read:SubpackageId",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "subpackageId",
+            "valueType": {
+              "value": "type_api/v1/read:SubpackageId",
+              "type": "id"
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "urlSlug",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read:ApiDefinition": {
+      "name": "ApiDefinition",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "value": "type_commons:ApiDefinitionId",
+              "type": "id"
+            }
+          },
+          {
+            "key": "rootPackage",
+            "valueType": {
+              "value": "type_api/v1/read:ApiDefinitionPackage",
+              "type": "id"
+            }
+          },
+          {
+            "key": "types",
+            "valueType": {
+              "keyType": {
+                "value": "type_api/v1/read/type:TypeId",
+                "type": "id"
+              },
+              "valueType": {
+                "value": "type_api/v1/read/type:TypeDefinition",
+                "type": "id"
+              },
+              "type": "map"
+            }
+          },
+          {
+            "key": "subpackages",
+            "valueType": {
+              "keyType": {
+                "value": "type_api/v1/read:SubpackageId",
+                "type": "id"
+              },
+              "valueType": {
+                "value": "type_api/v1/read:ApiDefinitionSubpackage",
+                "type": "id"
+              },
+              "type": "map"
+            }
+          },
+          {
+            "key": "auth",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read:ApiAuth",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "If empty, assume false. \nWhether or not endpoints are being served at different \nbase urls (i.e. https://a.com and https://b.com)\n",
+            "key": "hasMultipleBaseUrls",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read:ApiDefinitionPackage": {
+      "name": "ApiDefinitionPackage",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "endpoints",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/endpoint:EndpointDefinition",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "types",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/type:TypeId",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "subpackages",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read:SubpackageId",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "description": "if present, this package should be replaced with the provided subpackage\nin the docs navigation.\n",
+            "key": "pointsTo",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read:SubpackageId",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read:ApiDefinitionSubpackage": {
+      "name": "ApiDefinitionSubpackage",
+      "shape": {
+        "extends": ["type_api/v1/read/commons:WithDescription", "type_api/v1/read:ApiDefinitionPackage"],
+        "properties": [
+          {
+            "key": "parent",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read:SubpackageId",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "subpackageId",
+            "valueType": {
+              "value": "type_api/v1/read:SubpackageId",
+              "type": "id"
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "urlSlug",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read:SubpackageId": {
+      "name": "SubpackageId",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "string"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_api/v1/read:ApiAuth": {
+      "name": "ApiAuth",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "bearerAuth",
+            "additionalProperties": {
+              "extends": ["type_api/v1/read:BearerAuth"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "basicAuth",
+            "additionalProperties": {
+              "extends": ["type_api/v1/read:BasicAuth"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "header",
+            "additionalProperties": {
+              "extends": ["type_api/v1/read:HeaderAuth"],
+              "properties": []
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_api/v1/read:BasicAuth": {
+      "name": "BasicAuth",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "usernameName",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "passwordName",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read:BearerAuth": {
+      "name": "BearerAuth",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "tokenName",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read:HeaderAuth": {
+      "name": "HeaderAuth",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "nameOverride",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "headerWireValue",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register:RegisterApiDefinitionResponse": {
+      "name": "RegisterApiDefinitionResponse",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "apiDefinitionId",
+            "valueType": {
+              "value": "type_commons:ApiDefinitionId",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register:ApiDefinition": {
+      "name": "ApiDefinition",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "rootPackage",
+            "valueType": {
+              "value": "type_api/v1/register:ApiDefinitionPackage",
+              "type": "id"
+            }
+          },
+          {
+            "key": "types",
+            "valueType": {
+              "keyType": {
+                "value": "type_api/v1/register/type:TypeId",
+                "type": "id"
+              },
+              "valueType": {
+                "value": "type_api/v1/register/type:TypeDefinition",
+                "type": "id"
+              },
+              "type": "map"
+            }
+          },
+          {
+            "key": "subpackages",
+            "valueType": {
+              "keyType": {
+                "value": "type_api/v1/register:SubpackageId",
+                "type": "id"
+              },
+              "valueType": {
+                "value": "type_api/v1/register:ApiDefinitionSubpackage",
+                "type": "id"
+              },
+              "type": "map"
+            }
+          },
+          {
+            "key": "auth",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/register:ApiAuth",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register:ApiDefinitionPackage": {
+      "name": "ApiDefinitionPackage",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "endpoints",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/register/endpoint:EndpointDefinition",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "types",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/register/type:TypeId",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "subpackages",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/register:SubpackageId",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "description": "if present, this package should be replaced with the provided subpackage\nin the docs navigation.\n",
+            "key": "pointsTo",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/register:SubpackageId",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register:ApiDefinitionSubpackage": {
+      "name": "ApiDefinitionSubpackage",
+      "shape": {
+        "extends": ["type_api/v1/register:ApiDefinitionPackage", "type_api/v1/register/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "subpackageId",
+            "valueType": {
+              "value": "type_api/v1/register:SubpackageId",
+              "type": "id"
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register:SubpackageId": {
+      "name": "SubpackageId",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "string"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_api/v1/register:ApiAuth": {
+      "name": "ApiAuth",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "bearerAuth",
+            "additionalProperties": {
+              "extends": ["type_api/v1/register:BearerAuth"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "basicAuth",
+            "additionalProperties": {
+              "extends": ["type_api/v1/register:BasicAuth"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "header",
+            "additionalProperties": {
+              "extends": ["type_api/v1/register:HeaderAuth"],
+              "properties": []
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_api/v1/register:BasicAuth": {
+      "name": "BasicAuth",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "usernameName",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "passwordName",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register:BearerAuth": {
+      "name": "BearerAuth",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "tokenName",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register:HeaderAuth": {
+      "name": "HeaderAuth",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "nameOverride",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "headerWireValue",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register:EndpointExampleGenerationErrorBody": {
+      "name": "EndpointExampleGenerationErrorBody",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "endpointId",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/db:DocsDefinitionDb": {
+      "name": "DocsDefinitionDb",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "v1",
+            "additionalProperties": {
+              "extends": ["type_docs/v1/db:DocsDefinitionDbV1"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "v2",
+            "additionalProperties": {
+              "extends": ["type_docs/v1/db:DocsDefinitionDbV2"],
+              "properties": []
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_docs/v1/db:DocsDefinitionDbV1": {
+      "name": "DocsDefinitionDbV1",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "pages",
+            "valueType": {
+              "keyType": {
+                "value": "type_docs/v1/read:PageId",
+                "type": "id"
+              },
+              "valueType": {
+                "value": "type_docs/v1/read:PageContent",
+                "type": "id"
+              },
+              "type": "map"
+            }
+          },
+          {
+            "key": "referencedApis",
+            "valueType": {
+              "itemType": {
+                "value": "type_commons:ApiDefinitionId",
+                "type": "id"
+              },
+              "type": "set"
+            }
+          },
+          {
+            "key": "files",
+            "valueType": {
+              "keyType": {
+                "value": "type_docs/v1/read:FileId",
+                "type": "id"
+              },
+              "valueType": {
+                "value": "type_docs/v1/db:DbFileInfo",
+                "type": "id"
+              },
+              "type": "map"
+            }
+          },
+          {
+            "key": "config",
+            "valueType": {
+              "value": "type_docs/v1/db:DocsDbConfig",
+              "type": "id"
+            }
+          },
+          {
+            "key": "colors",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:ColorsConfig",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/db:DocsDefinitionDbV2": {
+      "name": "DocsDefinitionDbV2",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "pages",
+            "valueType": {
+              "keyType": {
+                "value": "type_docs/v1/read:PageId",
+                "type": "id"
+              },
+              "valueType": {
+                "value": "type_docs/v1/read:PageContent",
+                "type": "id"
+              },
+              "type": "map"
+            }
+          },
+          {
+            "key": "referencedApis",
+            "valueType": {
+              "itemType": {
+                "value": "type_commons:ApiDefinitionId",
+                "type": "id"
+              },
+              "type": "set"
+            }
+          },
+          {
+            "key": "files",
+            "valueType": {
+              "keyType": {
+                "value": "type_docs/v1/read:FileId",
+                "type": "id"
+              },
+              "valueType": {
+                "value": "type_docs/v1/db:DbFileInfo",
+                "type": "id"
+              },
+              "type": "map"
+            }
+          },
+          {
+            "key": "config",
+            "valueType": {
+              "value": "type_docs/v1/db:DocsDbConfig",
+              "type": "id"
+            }
+          },
+          {
+            "key": "colors",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:ColorsConfig",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "typography",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/db:DocsTypographyConfig",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/db:DocsDbConfig": {
+      "name": "DocsDbConfig",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "title",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "navigation",
+            "valueType": {
+              "value": "type_docs/v1/read:NavigationConfig",
+              "type": "id"
+            }
+          },
+          {
+            "key": "logo",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:FileId",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "logoHeight",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:Height",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "logoHref",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:Url",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "favicon",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:FileId",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "backgroundImage",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:FileId",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "colors",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:ColorsConfig",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "navbarLinks",
+            "valueType": {
+              "itemType": {
+                "itemType": {
+                  "value": "type_docs/v1/read:NavbarLink",
+                  "type": "id"
+                },
+                "type": "list"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "typography",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/db:DocsTypographyConfig",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/db:DocsTypographyConfig": {
+      "name": "DocsTypographyConfig",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "headingsFont",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/db:FontConfig",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "bodyFont",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/db:FontConfig",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "codeFont",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/db:FontConfig",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/db:FontConfig": {
+      "name": "FontConfig",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "name",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "fontFile",
+            "valueType": {
+              "value": "type_docs/v1/read:FileId",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/db:DbFileInfo": {
+      "name": "DbFileInfo",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "s3Key",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/read:PageId": {
+      "name": "PageId",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "string"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_docs/v1/read:Url": {
+      "name": "Url",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "string"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_docs/v1/read:FileId": {
+      "name": "FileId",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "string"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_docs/v1/read:Height": {
+      "name": "Height",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "double"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_docs/v1/read:AlgoliaSearchIndex": {
+      "name": "AlgoliaSearchIndex",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "string"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_docs/v1/read:LoadDocsForUrlResponse": {
+      "name": "LoadDocsForUrlResponse",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "baseUrl",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "definition",
+            "valueType": {
+              "value": "type_docs/v1/read:DocsDefinition",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/read:DocsDefinition": {
+      "name": "DocsDefinition",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "algoliaSearchIndex",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:AlgoliaSearchIndex",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "pages",
+            "valueType": {
+              "keyType": {
+                "value": "type_docs/v1/read:PageId",
+                "type": "id"
+              },
+              "valueType": {
+                "value": "type_docs/v1/read:PageContent",
+                "type": "id"
+              },
+              "type": "map"
+            }
+          },
+          {
+            "key": "apis",
+            "valueType": {
+              "keyType": {
+                "value": "type_commons:ApiDefinitionId",
+                "type": "id"
+              },
+              "valueType": {
+                "value": "type_api/v1/read:ApiDefinition",
+                "type": "id"
+              },
+              "type": "map"
+            }
+          },
+          {
+            "key": "files",
+            "valueType": {
+              "keyType": {
+                "value": "type_docs/v1/read:FileId",
+                "type": "id"
+              },
+              "valueType": {
+                "value": "type_docs/v1/read:Url",
+                "type": "id"
+              },
+              "type": "map"
+            }
+          },
+          {
+            "key": "config",
+            "valueType": {
+              "value": "type_docs/v1/read:DocsConfig",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/read:PageContent": {
+      "name": "PageContent",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "markdown",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/read:DocsConfig": {
+      "name": "DocsConfig",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "title",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "navigation",
+            "valueType": {
+              "value": "type_docs/v1/read:NavigationConfig",
+              "type": "id"
+            }
+          },
+          {
+            "key": "logo",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:FileId",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "logoHeight",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:Height",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "logoHref",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:Url",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "favicon",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:FileId",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "backgroundImage",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:FileId",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "colors",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:ColorsConfig",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "navbarLinks",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:NavbarLink",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "typography",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:DocsTypographyConfig",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/read:DocsTypographyConfig": {
+      "name": "DocsTypographyConfig",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "headingsFont",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:FontConfig",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "bodyFont",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:FontConfig",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "codeFont",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:FontConfig",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/read:FontConfig": {
+      "name": "FontConfig",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "name",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "fontFile",
+            "valueType": {
+              "value": "type_docs/v1/read:FileId",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/read:NavigationConfig": {
+      "name": "NavigationConfig",
+      "shape": {
+        "variants": [
+          {
+            "type": {
+              "value": "type_docs/v1/read:UnversionedNavigationConfig",
+              "type": "id"
+            }
+          },
+          {
+            "type": {
+              "value": "type_docs/v1/read:VersionedNavigationConfig",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "undiscriminatedUnion"
+      }
+    },
+    "type_docs/v1/read:UnversionedNavigationConfig": {
+      "name": "UnversionedNavigationConfig",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "items",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:NavigationItem",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/read:VersionedNavigationConfig": {
+      "name": "VersionedNavigationConfig",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "versions",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:VersionedNavigationConfigData",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/read:VersionedNavigationConfigData": {
+      "name": "VersionedNavigationConfigData",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "version",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "config",
+            "valueType": {
+              "value": "type_docs/v1/read:UnversionedNavigationConfig",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/read:NavigationItem": {
+      "name": "NavigationItem",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "page",
+            "additionalProperties": {
+              "extends": ["type_docs/v1/read:PageMetadata"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "api",
+            "additionalProperties": {
+              "extends": ["type_docs/v1/read:ApiSection"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "section",
+            "additionalProperties": {
+              "extends": ["type_docs/v1/read:DocsSection"],
+              "properties": []
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_docs/v1/read:PageMetadata": {
+      "name": "PageMetadata",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "value": "type_docs/v1/read:PageId",
+              "type": "id"
+            }
+          },
+          {
+            "key": "title",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "urlSlug",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/read:NavbarLink": {
+      "name": "NavbarLink",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "primary",
+            "additionalProperties": {
+              "extends": ["type_docs/v1/read:NavbarPrimaryLink"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "secondary",
+            "additionalProperties": {
+              "extends": ["type_docs/v1/read:NavbarSecondaryLink"],
+              "properties": []
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_docs/v1/read:NavbarPrimaryLink": {
+      "name": "NavbarPrimaryLink",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "url",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "text",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/read:NavbarSecondaryLink": {
+      "name": "NavbarSecondaryLink",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "url",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "text",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/read:ApiSection": {
+      "name": "ApiSection",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "title",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "api",
+            "valueType": {
+              "value": "type_commons:ApiDefinitionId",
+              "type": "id"
+            }
+          },
+          {
+            "key": "urlSlug",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "artifacts",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:ApiArtifacts",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/read:DocsSection": {
+      "name": "DocsSection",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "title",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "items",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:NavigationItem",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "urlSlug",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/read:ColorsConfig": {
+      "name": "ColorsConfig",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "accentPrimary",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:RgbColor",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/read:RgbColor": {
+      "name": "RgbColor",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "r",
+            "valueType": {
+              "value": {
+                "type": "integer"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "g",
+            "valueType": {
+              "value": {
+                "type": "integer"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "b",
+            "valueType": {
+              "value": {
+                "type": "integer"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/read:ApiArtifacts": {
+      "name": "ApiArtifacts",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "sdks",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:PublishedSdk",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "postman",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:PublishedPostmanCollection",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/read:PublishedPostmanCollection": {
+      "name": "PublishedPostmanCollection",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "url",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "githubRepo",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/read:GitHubRepo",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/read:PublishedSdk": {
+      "name": "PublishedSdk",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "npm",
+            "additionalProperties": {
+              "extends": ["type_docs/v1/read:NpmPackage"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "maven",
+            "additionalProperties": {
+              "extends": ["type_docs/v1/read:MavenPackage"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "pypi",
+            "additionalProperties": {
+              "extends": ["type_docs/v1/read:PypiPackage"],
+              "properties": []
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_docs/v1/read:NpmPackage": {
+      "name": "NpmPackage",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "packageName",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "githubRepo",
+            "valueType": {
+              "value": "type_docs/v1/read:GitHubRepo",
+              "type": "id"
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/read:MavenPackage": {
+      "name": "MavenPackage",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "coordinate",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "githubRepo",
+            "valueType": {
+              "value": "type_docs/v1/read:GitHubRepo",
+              "type": "id"
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/read:PypiPackage": {
+      "name": "PypiPackage",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "packageName",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "githubRepo",
+            "valueType": {
+              "value": "type_docs/v1/read:GitHubRepo",
+              "type": "id"
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/read:GitHubRepo": {
+      "name": "GitHubRepo",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "name",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "url",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/read:AlgoliaRecordType": {
+      "name": "AlgoliaRecordType",
+      "shape": {
+        "values": [
+          {
+            "value": "endpoint"
+          },
+          {
+            "value": "page"
+          }
+        ],
+        "type": "enum"
+      }
+    },
+    "type_docs/v1/read:AlgoliaRecord": {
+      "name": "AlgoliaRecord",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "value": "type_docs/v1/read:AlgoliaRecordType",
+              "type": "id"
+            }
+          },
+          {
+            "key": "title",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "subtitle",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "path",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:FilePath": {
+      "description": "Each string is a unique key for the file. You can use the filepath as a key.",
+      "name": "FilePath",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "string"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_docs/v1/write:DocsRegistrationId": {
+      "name": "DocsRegistrationId",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "string"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_docs/v1/write:StartDocsRegisterResponse": {
+      "name": "StartDocsRegisterResponse",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "docsRegistrationId",
+            "valueType": {
+              "value": "type_docs/v1/write:DocsRegistrationId",
+              "type": "id"
+            }
+          },
+          {
+            "key": "uploadUrls",
+            "valueType": {
+              "keyType": {
+                "value": "type_docs/v1/write:FilePath",
+                "type": "id"
+              },
+              "valueType": {
+                "value": "type_docs/v1/write:FileS3UploadUrl",
+                "type": "id"
+              },
+              "type": "map"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:FileS3UploadUrl": {
+      "name": "FileS3UploadUrl",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "uploadUrl",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "When reading docs we will return a map<FileId, URL> that you can use to look up the docs.\n",
+            "key": "fileId",
+            "valueType": {
+              "value": "type_docs/v1/write:FileId",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:FileId": {
+      "name": "FileId",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "string"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_docs/v1/write:Height": {
+      "name": "Height",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "double"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_docs/v1/write:PageId": {
+      "name": "PageId",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "string"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_docs/v1/write:Url": {
+      "name": "Url",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "string"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_docs/v1/write:DocsDefinition": {
+      "name": "DocsDefinition",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "pages",
+            "valueType": {
+              "keyType": {
+                "value": "type_docs/v1/write:PageId",
+                "type": "id"
+              },
+              "valueType": {
+                "value": "type_docs/v1/write:PageContent",
+                "type": "id"
+              },
+              "type": "map"
+            }
+          },
+          {
+            "key": "config",
+            "valueType": {
+              "value": "type_docs/v1/write:DocsConfig",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:PageContent": {
+      "name": "PageContent",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "markdown",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:DocsConfig": {
+      "name": "DocsConfig",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "title",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "navigation",
+            "valueType": {
+              "value": "type_docs/v1/write:NavigationConfig",
+              "type": "id"
+            }
+          },
+          {
+            "key": "logo",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/write:FileId",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "logoHeight",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/write:Height",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "logoHref",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/write:Url",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "favicon",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/write:FileId",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "backgroundImage",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/write:FileId",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "colors",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/write:ColorsConfig",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "navbarLinks",
+            "valueType": {
+              "itemType": {
+                "itemType": {
+                  "value": "type_docs/v1/write:NavbarLink",
+                  "type": "id"
+                },
+                "type": "list"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "typography",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/write:DocsTypographyConfig",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:DocsTypographyConfig": {
+      "name": "DocsTypographyConfig",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "headingsFont",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/write:FontConfig",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "bodyFont",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/write:FontConfig",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "codeFont",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/write:FontConfig",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:FontConfig": {
+      "name": "FontConfig",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "name",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "fontFile",
+            "valueType": {
+              "value": "type_docs/v1/write:FileId",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:NavbarLink": {
+      "name": "NavbarLink",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "primary",
+            "additionalProperties": {
+              "extends": ["type_docs/v1/write:NavbarPrimaryLink"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "secondary",
+            "additionalProperties": {
+              "extends": ["type_docs/v1/write:NavbarSecondaryLink"],
+              "properties": []
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_docs/v1/write:NavbarPrimaryLink": {
+      "name": "NavbarPrimaryLink",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "url",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "text",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:NavbarSecondaryLink": {
+      "name": "NavbarSecondaryLink",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "url",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "text",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:NavigationConfig": {
+      "name": "NavigationConfig",
+      "shape": {
+        "variants": [
+          {
+            "type": {
+              "value": "type_docs/v1/write:UnversionedNavigationConfig",
+              "type": "id"
+            }
+          },
+          {
+            "type": {
+              "value": "type_docs/v1/write:VersionedNavigationConfig",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "undiscriminatedUnion"
+      }
+    },
+    "type_docs/v1/write:UnversionedNavigationConfig": {
+      "name": "UnversionedNavigationConfig",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "items",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/write:NavigationItem",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:VersionedNavigationConfig": {
+      "name": "VersionedNavigationConfig",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "versions",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/write:VersionedNavigationConfigData",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:VersionedNavigationConfigData": {
+      "name": "VersionedNavigationConfigData",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "version",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "config",
+            "valueType": {
+              "value": "type_docs/v1/write:UnversionedNavigationConfig",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:NavigationItem": {
+      "name": "NavigationItem",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "page",
+            "additionalProperties": {
+              "extends": ["type_docs/v1/write:PageMetadata"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "api",
+            "additionalProperties": {
+              "extends": ["type_docs/v1/write:ApiSection"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "section",
+            "additionalProperties": {
+              "extends": ["type_docs/v1/write:DocsSection"],
+              "properties": []
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_docs/v1/write:PageMetadata": {
+      "name": "PageMetadata",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "title",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "id",
+            "valueType": {
+              "value": "type_docs/v1/write:PageId",
+              "type": "id"
+            }
+          },
+          {
+            "key": "urlSlugOverride",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:ApiSection": {
+      "name": "ApiSection",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "title",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "api",
+            "valueType": {
+              "value": "type_commons:ApiDefinitionId",
+              "type": "id"
+            }
+          },
+          {
+            "key": "artifacts",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/write:ApiArtifacts",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:DocsSection": {
+      "name": "DocsSection",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "title",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "items",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/write:NavigationItem",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "urlSlugOverride",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:ColorsConfig": {
+      "name": "ColorsConfig",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "accentPrimary",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/write:RgbColor",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:RgbColor": {
+      "name": "RgbColor",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "r",
+            "valueType": {
+              "value": {
+                "type": "integer"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "g",
+            "valueType": {
+              "value": {
+                "type": "integer"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "b",
+            "valueType": {
+              "value": {
+                "type": "integer"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:ApiArtifacts": {
+      "name": "ApiArtifacts",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "sdks",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/write:PublishedSdk",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "postman",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/write:PublishedPostmanCollection",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:PublishedPostmanCollection": {
+      "name": "PublishedPostmanCollection",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "url",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "githubRepoName",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:PublishedSdk": {
+      "name": "PublishedSdk",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "npm",
+            "additionalProperties": {
+              "extends": ["type_docs/v1/write:NpmPackage"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "maven",
+            "additionalProperties": {
+              "extends": ["type_docs/v1/write:MavenPackage"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "pypi",
+            "additionalProperties": {
+              "extends": ["type_docs/v1/write:PypiPackage"],
+              "properties": []
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_docs/v1/write:NpmPackage": {
+      "name": "NpmPackage",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "packageName",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "githubRepoName",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:MavenPackage": {
+      "name": "MavenPackage",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "coordinate",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "githubRepoName",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:PypiPackage": {
+      "name": "PypiPackage",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "packageName",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "githubRepoName",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:InvalidDomainErrorBody": {
+      "name": "InvalidDomainErrorBody",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "Value the domain should end with (i.e. docs.buildwithfern.com or dev.docs.buildwithfern.com)",
+            "key": "requiredDomainSuffix",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:InvliadCustomDomainErrorBody": {
+      "name": "InvliadCustomDomainErrorBody",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "overlappingDomains",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v1/write:OverlappingCustomDomains",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v1/write:OverlappingCustomDomains": {
+      "name": "OverlappingCustomDomains",
+      "shape": {
+        "value": {
+          "itemType": {
+            "value": {
+              "type": "string"
+            },
+            "type": "primitive"
+          },
+          "type": "list"
+        },
+        "type": "alias"
+      }
+    },
+    "type_docs/v2/read:LoadDocsForUrlResponse": {
+      "name": "LoadDocsForUrlResponse",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "baseUrl",
+            "valueType": {
+              "value": "type_docs/v2/read:BaseUrl",
+              "type": "id"
+            }
+          },
+          {
+            "key": "definition",
+            "valueType": {
+              "value": "type_docs/v1/read:DocsDefinition",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v2/read:BaseUrl": {
+      "name": "BaseUrl",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "domain",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "basePath",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v2/write:InvalidDomainErrorBody": {
+      "name": "InvalidDomainErrorBody",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "Value the domain should end with (i.e. docs.buildwithfern.com or dev.docs.buildwithfern.com)",
+            "key": "requiredDomainSuffix",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v2/write:InvliadCustomDomainErrorBody": {
+      "name": "InvliadCustomDomainErrorBody",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "overlappingDomains",
+            "valueType": {
+              "itemType": {
+                "value": "type_docs/v2/write:OverlappingCustomDomains",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_docs/v2/write:OverlappingCustomDomains": {
+      "name": "OverlappingCustomDomains",
+      "shape": {
+        "value": {
+          "itemType": {
+            "value": {
+              "type": "string"
+            },
+            "type": "primitive"
+          },
+          "type": "list"
+        },
+        "type": "alias"
+      }
+    },
+    "type_api/v1/db/endpoint:DbEndpointDefinition": {
+      "name": "DbEndpointDefinition",
+      "shape": {
+        "extends": ["type_api/v1/read/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "authed",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "defaultEnvironment",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/endpoint:EnvironmentId",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "environments",
+            "valueType": {
+              "itemType": {
+                "itemType": {
+                  "value": "type_api/v1/read/endpoint:Environment",
+                  "type": "id"
+                },
+                "type": "list"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "method",
+            "valueType": {
+              "value": "type_api/v1/read/endpoint:HttpMethod",
+              "type": "id"
+            }
+          },
+          {
+            "key": "id",
+            "valueType": {
+              "value": "type_api/v1/read/endpoint:EndpointId",
+              "type": "id"
+            }
+          },
+          {
+            "key": "urlSlug",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "path",
+            "valueType": {
+              "value": "type_api/v1/read/endpoint:EndpointPath",
+              "type": "id"
+            }
+          },
+          {
+            "key": "queryParameters",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/endpoint:QueryParameter",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "headers",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/endpoint:Header",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "request",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/db/endpoint:DbHttpRequest",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "response",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/endpoint:HttpResponse",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "errors",
+            "valueType": {
+              "itemType": {
+                "itemType": {
+                  "value": "type_api/v1/read/endpoint:ErrorDeclaration",
+                  "type": "id"
+                },
+                "type": "list"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "examples",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/endpoint:ExampleEndpointCall",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/db/endpoint:DbHttpRequest": {
+      "name": "DbHttpRequest",
+      "shape": {
+        "extends": ["type_api/v1/read/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "contentType",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "value": "type_api/v1/read/endpoint:HttpRequestBodyShape",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/commons:WithDescription": {
+      "name": "WithDescription",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "description",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "htmlDescription",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/endpoint:EnvironmentId": {
+      "name": "EnvironmentId",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "string"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_api/v1/read/endpoint:EndpointId": {
+      "name": "EndpointId",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "string"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_api/v1/read/endpoint:EndpointDefinition": {
+      "name": "EndpointDefinition",
+      "shape": {
+        "extends": ["type_api/v1/read/commons:WithDescription"],
+        "properties": [
+          {
+            "description": "When this is true, the api definition will have a union for auth",
+            "key": "authed",
+            "valueType": {
+              "value": {
+                "type": "boolean"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "defaultEnvironment",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/endpoint:EnvironmentId",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "environments",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/endpoint:Environment",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "method",
+            "valueType": {
+              "value": "type_api/v1/read/endpoint:HttpMethod",
+              "type": "id"
+            }
+          },
+          {
+            "key": "id",
+            "valueType": {
+              "value": "type_api/v1/read/endpoint:EndpointId",
+              "type": "id"
+            }
+          },
+          {
+            "key": "urlSlug",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "path",
+            "valueType": {
+              "value": "type_api/v1/read/endpoint:EndpointPath",
+              "type": "id"
+            }
+          },
+          {
+            "key": "queryParameters",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/endpoint:QueryParameter",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "headers",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/endpoint:Header",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "request",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/endpoint:HttpRequest",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "response",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/endpoint:HttpResponse",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "errors",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/endpoint:ErrorDeclaration",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "examples",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/endpoint:ExampleEndpointCall",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/endpoint:Environment": {
+      "name": "Environment",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "value": "type_api/v1/read/endpoint:EnvironmentId",
+              "type": "id"
+            }
+          },
+          {
+            "key": "baseUrl",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/endpoint:HttpMethod": {
+      "name": "HttpMethod",
+      "shape": {
+        "values": [
+          {
+            "value": "GET"
+          },
+          {
+            "value": "POST"
+          },
+          {
+            "value": "PUT"
+          },
+          {
+            "value": "PATCH"
+          },
+          {
+            "value": "DELETE"
+          }
+        ],
+        "type": "enum"
+      }
+    },
+    "type_api/v1/read/endpoint:EndpointPath": {
+      "name": "EndpointPath",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "parts",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/endpoint:EndpointPathPart",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "pathParameters",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/endpoint:PathParameter",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/endpoint:EndpointPathPart": {
+      "name": "EndpointPathPart",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "literal",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "pathParameter",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "value": "type_api/v1/read/endpoint:PathParameterKey",
+                    "type": "id"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_api/v1/read/endpoint:PathParameter": {
+      "name": "PathParameter",
+      "shape": {
+        "extends": ["type_api/v1/read/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "key",
+            "valueType": {
+              "value": "type_api/v1/read/endpoint:PathParameterKey",
+              "type": "id"
+            }
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "value": "type_api/v1/read/type:TypeReference",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/endpoint:PathParameterKey": {
+      "name": "PathParameterKey",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "string"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_api/v1/read/endpoint:QueryParameter": {
+      "name": "QueryParameter",
+      "shape": {
+        "extends": ["type_api/v1/read/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "key",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "value": "type_api/v1/read/type:TypeReference",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/endpoint:Header": {
+      "name": "Header",
+      "shape": {
+        "extends": ["type_api/v1/read/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "key",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "value": "type_api/v1/read/type:TypeReference",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/endpoint:HttpRequest": {
+      "name": "HttpRequest",
+      "shape": {
+        "extends": ["type_api/v1/read/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "contentType",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "value": "type_api/v1/read/endpoint:HttpRequestBodyShape",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/endpoint:HttpRequestBodyShape": {
+      "name": "HttpRequestBodyShape",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "object",
+            "additionalProperties": {
+              "extends": ["type_api/v1/read/type:ObjectType"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "reference",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "value": "type_api/v1/read/type:TypeReference",
+                    "type": "id"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "fileUpload",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_api/v1/read/endpoint:HttpResponse": {
+      "name": "HttpResponse",
+      "shape": {
+        "extends": ["type_api/v1/read/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "value": "type_api/v1/read/endpoint:HttpResponseBodyShape",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/endpoint:HttpResponseBodyShape": {
+      "name": "HttpResponseBodyShape",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "object",
+            "additionalProperties": {
+              "extends": ["type_api/v1/read/type:ObjectType"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "reference",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "value": "type_api/v1/read/type:TypeReference",
+                    "type": "id"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "fileDownload",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "streamingText",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_api/v1/read/endpoint:ErrorDeclaration": {
+      "name": "ErrorDeclaration",
+      "shape": {
+        "extends": ["type_api/v1/read/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/type:TypeReference",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "statusCode",
+            "valueType": {
+              "value": {
+                "type": "integer"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/endpoint:ExampleEndpointCall": {
+      "name": "ExampleEndpointCall",
+      "shape": {
+        "extends": ["type_api/v1/read/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "path",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "pathParameters",
+            "valueType": {
+              "keyType": {
+                "value": "type_api/v1/read/endpoint:PathParameterKey",
+                "type": "id"
+              },
+              "valueType": {
+                "type": "unknown"
+              },
+              "type": "map"
+            }
+          },
+          {
+            "key": "queryParameters",
+            "valueType": {
+              "keyType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "valueType": {
+                "type": "unknown"
+              },
+              "type": "map"
+            }
+          },
+          {
+            "key": "headers",
+            "valueType": {
+              "keyType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "valueType": {
+                "type": "unknown"
+              },
+              "type": "map"
+            }
+          },
+          {
+            "key": "requestBody",
+            "valueType": {
+              "type": "unknown"
+            }
+          },
+          {
+            "key": "requestBodyV2",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/endpoint:ExampleEndpointRequest",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "responseStatusCode",
+            "valueType": {
+              "value": {
+                "type": "integer"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "responseBody",
+            "valueType": {
+              "type": "unknown"
+            }
+          },
+          {
+            "key": "responseBodyV2",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/endpoint:ExampleEndpointResponse",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "codeExamples",
+            "valueType": {
+              "value": "type_api/v1/read/endpoint:CodeExamples",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/endpoint:CodeExamples": {
+      "name": "CodeExamples",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "nodeAxios",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/endpoint:ExampleEndpointRequest": {
+      "name": "ExampleEndpointRequest",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "json",
+            "valueType": {
+              "type": "unknown"
+            }
+          },
+          {
+            "key": "form",
+            "valueType": {
+              "keyType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "valueType": {
+                "value": "type_api/v1/read/endpoint:FormValue",
+                "type": "id"
+              },
+              "type": "map"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/endpoint:FormValue": {
+      "name": "FormValue",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "json",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "unknown"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "filename",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_api/v1/read/endpoint:ExampleEndpointResponse": {
+      "name": "ExampleEndpointResponse",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "json",
+            "valueType": {
+              "type": "unknown"
+            }
+          },
+          {
+            "key": "filename",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/type:TypeId": {
+      "name": "TypeId",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "string"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_api/v1/read/type:TypeDefinition": {
+      "name": "TypeDefinition",
+      "shape": {
+        "extends": ["type_api/v1/read/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "name",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "shape",
+            "valueType": {
+              "value": "type_api/v1/read/type:TypeShape",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/type:TypeShape": {
+      "name": "TypeShape",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "alias",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "value": "type_api/v1/read/type:TypeReference",
+                    "type": "id"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "enum",
+            "additionalProperties": {
+              "extends": ["type_api/v1/read/type:EnumType"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "undiscriminatedUnion",
+            "additionalProperties": {
+              "extends": ["type_api/v1/read/type:UndiscriminatedUnionType"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "discriminatedUnion",
+            "additionalProperties": {
+              "extends": ["type_api/v1/read/type:DiscriminatedUnionType"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "object",
+            "additionalProperties": {
+              "extends": ["type_api/v1/read/type:ObjectType"],
+              "properties": []
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_api/v1/read/type:TypeReference": {
+      "name": "TypeReference",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "id",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "value": "type_api/v1/read/type:TypeId",
+                    "type": "id"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "primitive",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "value": "type_api/v1/read/type:PrimitiveType",
+                    "type": "id"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "optional",
+            "additionalProperties": {
+              "extends": ["type_api/v1/read/type:OptionalType"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "list",
+            "additionalProperties": {
+              "extends": ["type_api/v1/read/type:ListType"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "set",
+            "additionalProperties": {
+              "extends": ["type_api/v1/read/type:SetType"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "map",
+            "additionalProperties": {
+              "extends": ["type_api/v1/read/type:MapType"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "literal",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "value": "type_api/v1/read/type:LiteralType",
+                    "type": "id"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "unknown",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_api/v1/read/type:ObjectType": {
+      "name": "ObjectType",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "extends",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/type:TypeId",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "properties",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/type:ObjectProperty",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/type:ObjectProperty": {
+      "name": "ObjectProperty",
+      "shape": {
+        "extends": ["type_api/v1/read/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "key",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "valueType",
+            "valueType": {
+              "value": "type_api/v1/read/type:TypeReference",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/type:PrimitiveType": {
+      "name": "PrimitiveType",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "integer",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "double",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "long",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "string",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "boolean",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "datetime",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "uuid",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "base64",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "date",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_api/v1/read/type:OptionalType": {
+      "name": "OptionalType",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "itemType",
+            "valueType": {
+              "value": "type_api/v1/read/type:TypeReference",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/type:ListType": {
+      "name": "ListType",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "itemType",
+            "valueType": {
+              "value": "type_api/v1/read/type:TypeReference",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/type:SetType": {
+      "name": "SetType",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "itemType",
+            "valueType": {
+              "value": "type_api/v1/read/type:TypeReference",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/type:MapType": {
+      "name": "MapType",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "keyType",
+            "valueType": {
+              "value": "type_api/v1/read/type:TypeReference",
+              "type": "id"
+            }
+          },
+          {
+            "key": "valueType",
+            "valueType": {
+              "value": "type_api/v1/read/type:TypeReference",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/type:EnumType": {
+      "name": "EnumType",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "values",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/type:EnumValue",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/type:EnumValue": {
+      "name": "EnumValue",
+      "shape": {
+        "extends": ["type_api/v1/read/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "value",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/type:UndiscriminatedUnionType": {
+      "name": "UndiscriminatedUnionType",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "variants",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/type:UndiscriminatedUnionVariant",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/type:UndiscriminatedUnionVariant": {
+      "name": "UndiscriminatedUnionVariant",
+      "shape": {
+        "extends": ["type_api/v1/read/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "value": "type_api/v1/read/type:TypeReference",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/type:DiscriminatedUnionType": {
+      "name": "DiscriminatedUnionType",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "discriminant",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "variants",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/read/type:DiscriminatedUnionVariant",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/type:DiscriminatedUnionVariant": {
+      "name": "DiscriminatedUnionVariant",
+      "shape": {
+        "extends": ["type_api/v1/read/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "discriminantValue",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "additionalProperties",
+            "valueType": {
+              "value": "type_api/v1/read/type:ObjectType",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/read/type:LiteralType": {
+      "name": "LiteralType",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "stringLiteral",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_api/v1/register/commons:WithDescription": {
+      "name": "WithDescription",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "description",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/endpoint:EnvironmentId": {
+      "name": "EnvironmentId",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "string"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_api/v1/register/endpoint:EndpointId": {
+      "name": "EndpointId",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "string"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_api/v1/register/endpoint:EndpointDefinition": {
+      "name": "EndpointDefinition",
+      "shape": {
+        "extends": ["type_api/v1/register/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "auth",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "defaultEnvironment",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/register/endpoint:EnvironmentId",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "environments",
+            "valueType": {
+              "itemType": {
+                "itemType": {
+                  "value": "type_api/v1/register/endpoint:Environment",
+                  "type": "id"
+                },
+                "type": "list"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "method",
+            "valueType": {
+              "value": "type_api/v1/register/endpoint:HttpMethod",
+              "type": "id"
+            }
+          },
+          {
+            "key": "id",
+            "valueType": {
+              "value": "type_api/v1/register/endpoint:EndpointId",
+              "type": "id"
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "path",
+            "valueType": {
+              "value": "type_api/v1/register/endpoint:EndpointPath",
+              "type": "id"
+            }
+          },
+          {
+            "key": "queryParameters",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/register/endpoint:QueryParameter",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "headers",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/register/endpoint:Header",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "request",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/register/endpoint:HttpRequest",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "response",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/register/endpoint:HttpResponse",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "errors",
+            "valueType": {
+              "itemType": {
+                "itemType": {
+                  "value": "type_api/v1/register/endpoint:ErrorDeclaration",
+                  "type": "id"
+                },
+                "type": "list"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "examples",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/register/endpoint:ExampleEndpointCall",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/endpoint:Environment": {
+      "name": "Environment",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "value": "type_api/v1/register/endpoint:EnvironmentId",
+              "type": "id"
+            }
+          },
+          {
+            "key": "baseUrl",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/endpoint:HttpMethod": {
+      "name": "HttpMethod",
+      "shape": {
+        "values": [
+          {
+            "value": "GET"
+          },
+          {
+            "value": "POST"
+          },
+          {
+            "value": "PUT"
+          },
+          {
+            "value": "PATCH"
+          },
+          {
+            "value": "DELETE"
+          }
+        ],
+        "type": "enum"
+      }
+    },
+    "type_api/v1/register/endpoint:EndpointPath": {
+      "name": "EndpointPath",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "parts",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/register/endpoint:EndpointPathPart",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "pathParameters",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/register/endpoint:PathParameter",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/endpoint:EndpointPathPart": {
+      "name": "EndpointPathPart",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "literal",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "pathParameter",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "value": "type_api/v1/register/endpoint:PathParameterKey",
+                    "type": "id"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_api/v1/register/endpoint:PathParameter": {
+      "name": "PathParameter",
+      "shape": {
+        "extends": ["type_api/v1/register/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "key",
+            "valueType": {
+              "value": "type_api/v1/register/endpoint:PathParameterKey",
+              "type": "id"
+            }
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "value": "type_api/v1/register/type:TypeReference",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/endpoint:PathParameterKey": {
+      "name": "PathParameterKey",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "string"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_api/v1/register/endpoint:QueryParameter": {
+      "name": "QueryParameter",
+      "shape": {
+        "extends": ["type_api/v1/register/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "key",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "value": "type_api/v1/register/type:TypeReference",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/endpoint:Header": {
+      "name": "Header",
+      "shape": {
+        "extends": ["type_api/v1/register/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "key",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "value": "type_api/v1/register/type:TypeReference",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/endpoint:HttpRequest": {
+      "name": "HttpRequest",
+      "shape": {
+        "extends": ["type_api/v1/register/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "value": "type_api/v1/register/endpoint:HttpRequestBodyShape",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/endpoint:HttpRequestBodyShape": {
+      "name": "HttpRequestBodyShape",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "object",
+            "additionalProperties": {
+              "extends": ["type_api/v1/register/type:ObjectType"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "reference",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "value": "type_api/v1/register/type:TypeReference",
+                    "type": "id"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "json",
+            "additionalProperties": {
+              "extends": ["type_api/v1/register/endpoint:JsonRequestBody"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "fileUpload",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_api/v1/register/endpoint:JsonRequestBody": {
+      "name": "JsonRequestBody",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "contentType",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "shape",
+            "valueType": {
+              "value": "type_api/v1/register/endpoint:JsonRequestBodyShape",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/endpoint:JsonRequestBodyShape": {
+      "name": "JsonRequestBodyShape",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "object",
+            "additionalProperties": {
+              "extends": ["type_api/v1/register/type:ObjectType"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "reference",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "value": "type_api/v1/register/type:TypeReference",
+                    "type": "id"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_api/v1/register/endpoint:HttpResponse": {
+      "name": "HttpResponse",
+      "shape": {
+        "extends": ["type_api/v1/register/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "value": "type_api/v1/register/endpoint:HttpResponseBodyShape",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/endpoint:ErrorDeclaration": {
+      "name": "ErrorDeclaration",
+      "shape": {
+        "extends": ["type_api/v1/register/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/register/type:TypeReference",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "statusCode",
+            "valueType": {
+              "value": {
+                "type": "integer"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/endpoint:HttpResponseBodyShape": {
+      "name": "HttpResponseBodyShape",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "object",
+            "additionalProperties": {
+              "extends": ["type_api/v1/register/type:ObjectType"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "reference",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "value": "type_api/v1/register/type:TypeReference",
+                    "type": "id"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "fileDownload",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "streamingText",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_api/v1/register/endpoint:ExampleEndpointCall": {
+      "name": "ExampleEndpointCall",
+      "shape": {
+        "extends": ["type_api/v1/register/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "path",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "pathParameters",
+            "valueType": {
+              "keyType": {
+                "value": "type_api/v1/register/endpoint:PathParameterKey",
+                "type": "id"
+              },
+              "valueType": {
+                "type": "unknown"
+              },
+              "type": "map"
+            }
+          },
+          {
+            "key": "queryParameters",
+            "valueType": {
+              "keyType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "valueType": {
+                "type": "unknown"
+              },
+              "type": "map"
+            }
+          },
+          {
+            "key": "headers",
+            "valueType": {
+              "keyType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "valueType": {
+                "type": "unknown"
+              },
+              "type": "map"
+            }
+          },
+          {
+            "key": "requestBody",
+            "valueType": {
+              "type": "unknown"
+            }
+          },
+          {
+            "key": "requestBodyV2",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/register/endpoint:ExampleEndpointRequest",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "responseStatusCode",
+            "valueType": {
+              "value": {
+                "type": "integer"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "responseBody",
+            "valueType": {
+              "type": "unknown"
+            }
+          },
+          {
+            "key": "responseBodyV2",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/register/endpoint:ExampleEndpointResponse",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/endpoint:ExampleEndpointRequest": {
+      "name": "ExampleEndpointRequest",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "json",
+            "valueType": {
+              "type": "unknown"
+            }
+          },
+          {
+            "key": "form",
+            "valueType": {
+              "keyType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "valueType": {
+                "value": "type_api/v1/register/endpoint:FormValue",
+                "type": "id"
+              },
+              "type": "map"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/endpoint:FormValue": {
+      "name": "FormValue",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "json",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "unknown"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "filename",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_api/v1/register/endpoint:ExampleEndpointResponse": {
+      "name": "ExampleEndpointResponse",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "json",
+            "valueType": {
+              "type": "unknown"
+            }
+          },
+          {
+            "key": "filename",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/type:TypeId": {
+      "name": "TypeId",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "string"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_api/v1/register/type:TypeDefinition": {
+      "name": "TypeDefinition",
+      "shape": {
+        "extends": ["type_api/v1/register/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "name",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "shape",
+            "valueType": {
+              "value": "type_api/v1/register/type:TypeShape",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/type:TypeShape": {
+      "name": "TypeShape",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "alias",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "value": "type_api/v1/register/type:TypeReference",
+                    "type": "id"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "enum",
+            "additionalProperties": {
+              "extends": ["type_api/v1/register/type:EnumType"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "undiscriminatedUnion",
+            "additionalProperties": {
+              "extends": ["type_api/v1/register/type:UndiscriminatedUnionType"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "discriminatedUnion",
+            "additionalProperties": {
+              "extends": ["type_api/v1/register/type:DiscriminatedUnionType"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "object",
+            "additionalProperties": {
+              "extends": ["type_api/v1/register/type:ObjectType"],
+              "properties": []
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_api/v1/register/type:TypeReference": {
+      "name": "TypeReference",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "id",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "value": "type_api/v1/register/type:TypeId",
+                    "type": "id"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "primitive",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "value": "type_api/v1/register/type:PrimitiveType",
+                    "type": "id"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "optional",
+            "additionalProperties": {
+              "extends": ["type_api/v1/register/type:OptionalType"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "list",
+            "additionalProperties": {
+              "extends": ["type_api/v1/register/type:ListType"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "set",
+            "additionalProperties": {
+              "extends": ["type_api/v1/register/type:SetType"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "map",
+            "additionalProperties": {
+              "extends": ["type_api/v1/register/type:MapType"],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "literal",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "value": "type_api/v1/register/type:LiteralType",
+                    "type": "id"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "unknown",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_api/v1/register/type:ObjectType": {
+      "name": "ObjectType",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "extends",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/register/type:TypeId",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          },
+          {
+            "key": "properties",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/register/type:ObjectProperty",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/type:ObjectProperty": {
+      "name": "ObjectProperty",
+      "shape": {
+        "extends": ["type_api/v1/register/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "key",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "valueType",
+            "valueType": {
+              "value": "type_api/v1/register/type:TypeReference",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/type:PrimitiveType": {
+      "name": "PrimitiveType",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "integer",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "double",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "long",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "string",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "boolean",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "datetime",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "uuid",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "base64",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "date",
+            "additionalProperties": {
+              "extends": [],
+              "properties": []
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_api/v1/register/type:OptionalType": {
+      "name": "OptionalType",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "itemType",
+            "valueType": {
+              "value": "type_api/v1/register/type:TypeReference",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/type:ListType": {
+      "name": "ListType",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "itemType",
+            "valueType": {
+              "value": "type_api/v1/register/type:TypeReference",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/type:SetType": {
+      "name": "SetType",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "itemType",
+            "valueType": {
+              "value": "type_api/v1/register/type:TypeReference",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/type:MapType": {
+      "name": "MapType",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "keyType",
+            "valueType": {
+              "value": "type_api/v1/register/type:TypeReference",
+              "type": "id"
+            }
+          },
+          {
+            "key": "valueType",
+            "valueType": {
+              "value": "type_api/v1/register/type:TypeReference",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/type:EnumType": {
+      "name": "EnumType",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "values",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/register/type:EnumValue",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/type:EnumValue": {
+      "name": "EnumValue",
+      "shape": {
+        "extends": ["type_api/v1/register/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "value",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/type:UndiscriminatedUnionType": {
+      "name": "UndiscriminatedUnionType",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "variants",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/register/type:UndiscriminatedUnionVariant",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/type:UndiscriminatedUnionVariant": {
+      "name": "UndiscriminatedUnionVariant",
+      "shape": {
+        "extends": ["type_api/v1/register/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "value": "type_api/v1/register/type:TypeReference",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/type:DiscriminatedUnionType": {
+      "name": "DiscriminatedUnionType",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "discriminant",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "variants",
+            "valueType": {
+              "itemType": {
+                "value": "type_api/v1/register/type:DiscriminatedUnionVariant",
+                "type": "id"
+              },
+              "type": "list"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/type:DiscriminatedUnionVariant": {
+      "name": "DiscriminatedUnionVariant",
+      "shape": {
+        "extends": ["type_api/v1/register/commons:WithDescription"],
+        "properties": [
+          {
+            "key": "discriminantValue",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "additionalProperties",
+            "valueType": {
+              "value": "type_api/v1/register/type:ObjectType",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_api/v1/register/type:LiteralType": {
+      "name": "LiteralType",
+      "shape": {
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "stringLiteral",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "type": "discriminatedUnion"
+      }
+    },
+    "type_commons:ApiDefinitionId": {
+      "name": "ApiDefinitionId",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "uuid"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_commons:OrgId": {
+      "description": "Human readable org id (e.g. fern)",
+      "name": "OrgId",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "string"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_commons:ApiId": {
+      "description": "Human readable api identifier (e.g. venus)",
+      "name": "ApiId",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "string"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    }
+  },
+  "subpackages": {
+    "subpackage_api": {
+      "subpackageId": "subpackage_api",
+      "name": "api",
+      "endpoints": [],
+      "types": [],
+      "subpackages": ["subpackage_api/v1"]
+    },
+    "subpackage_api/v1": {
+      "subpackageId": "subpackage_api/v1",
+      "name": "v1",
+      "endpoints": [],
+      "types": [],
+      "subpackages": ["subpackage_api/v1/db", "subpackage_api/v1/read", "subpackage_api/v1/register"]
+    },
+    "subpackage_api/v1/db": {
+      "subpackageId": "subpackage_api/v1/db",
+      "name": "db",
+      "endpoints": [],
+      "types": [
+        "type_api/v1/db:DbApiDefinition",
+        "type_api/v1/db:DbApiDefinitionPackage",
+        "type_api/v1/db:DbApiDefinitionSubpackage"
+      ],
+      "subpackages": ["subpackage_api/v1/db/endpoint"]
+    },
+    "subpackage_api/v1/read": {
+      "subpackageId": "subpackage_api/v1/read",
+      "name": "read",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "GET",
+          "id": "getApi",
+          "name": "Get Api",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "apiDefinitionId",
+                "type": {
+                  "value": "type_commons:ApiDefinitionId",
+                  "type": "id"
+                }
+              }
+            ],
+            "parts": [
+              {
+                "value": "/registry/api",
+                "type": "literal"
+              },
+              {
+                "value": "/load/",
+                "type": "literal"
+              },
+              {
+                "value": "apiDefinitionId",
+                "type": "pathParameter"
+              },
+              {
+                "value": "",
+                "type": "literal"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "value": {
+                "value": "type_api/v1/read:ApiDefinition",
+                "type": "id"
+              },
+              "type": "reference"
+            }
+          },
+          "errors": [
+            {
+              "statusCode": 404
+            }
+          ],
+          "examples": []
+        }
+      ],
+      "types": [
+        "type_api/v1/read:ApiDefinition",
+        "type_api/v1/read:ApiDefinitionPackage",
+        "type_api/v1/read:ApiDefinitionSubpackage",
+        "type_api/v1/read:SubpackageId",
+        "type_api/v1/read:ApiAuth",
+        "type_api/v1/read:BasicAuth",
+        "type_api/v1/read:BearerAuth",
+        "type_api/v1/read:HeaderAuth"
+      ],
+      "subpackages": [
+        "subpackage_api/v1/read/commons",
+        "subpackage_api/v1/read/endpoint",
+        "subpackage_api/v1/read/type"
+      ]
+    },
+    "subpackage_api/v1/register": {
+      "subpackageId": "subpackage_api/v1/register",
+      "name": "register",
+      "endpoints": [
+        {
+          "auth": true,
+          "method": "POST",
+          "id": "registerApiDefinition",
+          "name": "Register Api Definition",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "value": "/registry/api",
+                "type": "literal"
+              },
+              {
+                "value": "/register",
+                "type": "literal"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "contentType": "application/json",
+              "shape": {
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "orgId",
+                    "valueType": {
+                      "value": "type_commons:OrgId",
+                      "type": "id"
+                    }
+                  },
+                  {
+                    "key": "apiId",
+                    "valueType": {
+                      "value": "type_commons:ApiId",
+                      "type": "id"
+                    }
+                  },
+                  {
+                    "key": "definition",
+                    "valueType": {
+                      "value": "type_api/v1/register:ApiDefinition",
+                      "type": "id"
+                    }
+                  }
+                ],
+                "type": "object"
+              },
+              "type": "json"
+            }
+          },
+          "response": {
+            "type": {
+              "value": {
+                "value": "type_api/v1/register:RegisterApiDefinitionResponse",
+                "type": "id"
+              },
+              "type": "reference"
+            }
+          },
+          "errors": [
+            {
+              "statusCode": 401
+            },
+            {
+              "statusCode": 403
+            }
+          ],
+          "examples": []
+        }
+      ],
+      "types": [
+        "type_api/v1/register:RegisterApiDefinitionResponse",
+        "type_api/v1/register:ApiDefinition",
+        "type_api/v1/register:ApiDefinitionPackage",
+        "type_api/v1/register:ApiDefinitionSubpackage",
+        "type_api/v1/register:SubpackageId",
+        "type_api/v1/register:ApiAuth",
+        "type_api/v1/register:BasicAuth",
+        "type_api/v1/register:BearerAuth",
+        "type_api/v1/register:HeaderAuth",
+        "type_api/v1/register:EndpointExampleGenerationErrorBody"
+      ],
+      "subpackages": [
+        "subpackage_api/v1/register/commons",
+        "subpackage_api/v1/register/endpoint",
+        "subpackage_api/v1/register/type"
+      ]
+    },
+    "subpackage_docs": {
+      "subpackageId": "subpackage_docs",
+      "name": "docs",
+      "endpoints": [],
+      "types": [],
+      "subpackages": ["subpackage_docs/v1", "subpackage_docs/v2"]
+    },
+    "subpackage_docs/v1": {
+      "subpackageId": "subpackage_docs/v1",
+      "name": "v1",
+      "endpoints": [],
+      "types": [],
+      "subpackages": ["subpackage_docs/v1/db", "subpackage_docs/v1/read", "subpackage_docs/v1/write"]
+    },
+    "subpackage_docs/v1/db": {
+      "subpackageId": "subpackage_docs/v1/db",
+      "name": "db",
+      "endpoints": [],
+      "types": [
+        "type_docs/v1/db:DocsDefinitionDb",
+        "type_docs/v1/db:DocsDefinitionDbV1",
+        "type_docs/v1/db:DocsDefinitionDbV2",
+        "type_docs/v1/db:DocsDbConfig",
+        "type_docs/v1/db:DocsTypographyConfig",
+        "type_docs/v1/db:FontConfig",
+        "type_docs/v1/db:DbFileInfo"
+      ],
+      "subpackages": []
+    },
+    "subpackage_docs/v1/read": {
+      "subpackageId": "subpackage_docs/v1/read",
+      "name": "read",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "GET",
+          "id": "getDocsForDomainLegacy",
+          "name": "Get Docs For Domain Legacy",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "domain",
+                "type": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              }
+            ],
+            "parts": [
+              {
+                "value": "/registry/docs",
+                "type": "literal"
+              },
+              {
+                "value": "/load/",
+                "type": "literal"
+              },
+              {
+                "value": "domain",
+                "type": "pathParameter"
+              },
+              {
+                "value": "",
+                "type": "literal"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "value": {
+                "value": "type_docs/v1/read:DocsDefinition",
+                "type": "id"
+              },
+              "type": "reference"
+            }
+          },
+          "errors": [
+            {
+              "statusCode": 404
+            }
+          ],
+          "examples": []
+        },
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "getDocsForDomain",
+          "name": "Get Docs For Domain",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "value": "/registry/docs",
+                "type": "literal"
+              },
+              {
+                "value": "/load",
+                "type": "literal"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "contentType": "application/json",
+              "shape": {
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "domain",
+                    "valueType": {
+                      "value": {
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  }
+                ],
+                "type": "object"
+              },
+              "type": "json"
+            }
+          },
+          "response": {
+            "type": {
+              "value": {
+                "value": "type_docs/v1/read:DocsDefinition",
+                "type": "id"
+              },
+              "type": "reference"
+            }
+          },
+          "errors": [
+            {
+              "statusCode": 404
+            }
+          ],
+          "examples": []
+        }
+      ],
+      "types": [
+        "type_docs/v1/read:PageId",
+        "type_docs/v1/read:Url",
+        "type_docs/v1/read:FileId",
+        "type_docs/v1/read:Height",
+        "type_docs/v1/read:AlgoliaSearchIndex",
+        "type_docs/v1/read:LoadDocsForUrlResponse",
+        "type_docs/v1/read:DocsDefinition",
+        "type_docs/v1/read:PageContent",
+        "type_docs/v1/read:DocsConfig",
+        "type_docs/v1/read:DocsTypographyConfig",
+        "type_docs/v1/read:FontConfig",
+        "type_docs/v1/read:NavigationConfig",
+        "type_docs/v1/read:UnversionedNavigationConfig",
+        "type_docs/v1/read:VersionedNavigationConfig",
+        "type_docs/v1/read:VersionedNavigationConfigData",
+        "type_docs/v1/read:NavigationItem",
+        "type_docs/v1/read:PageMetadata",
+        "type_docs/v1/read:NavbarLink",
+        "type_docs/v1/read:NavbarPrimaryLink",
+        "type_docs/v1/read:NavbarSecondaryLink",
+        "type_docs/v1/read:ApiSection",
+        "type_docs/v1/read:DocsSection",
+        "type_docs/v1/read:ColorsConfig",
+        "type_docs/v1/read:RgbColor",
+        "type_docs/v1/read:ApiArtifacts",
+        "type_docs/v1/read:PublishedPostmanCollection",
+        "type_docs/v1/read:PublishedSdk",
+        "type_docs/v1/read:NpmPackage",
+        "type_docs/v1/read:MavenPackage",
+        "type_docs/v1/read:PypiPackage",
+        "type_docs/v1/read:GitHubRepo",
+        "type_docs/v1/read:AlgoliaRecordType",
+        "type_docs/v1/read:AlgoliaRecord"
+      ],
+      "subpackages": []
+    },
+    "subpackage_docs/v1/write": {
+      "subpackageId": "subpackage_docs/v1/write",
+      "name": "write",
+      "endpoints": [
+        {
+          "auth": true,
+          "method": "POST",
+          "id": "startDocsRegister",
+          "name": "Start Docs Register",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "value": "/registry/docs",
+                "type": "literal"
+              },
+              {
+                "value": "/init",
+                "type": "literal"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "contentType": "application/json",
+              "shape": {
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "domain",
+                    "valueType": {
+                      "value": {
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  {
+                    "key": "orgId",
+                    "valueType": {
+                      "value": "type_commons:OrgId",
+                      "type": "id"
+                    }
+                  },
+                  {
+                    "description": "Relative filepath from docs folder.",
+                    "key": "filepaths",
+                    "valueType": {
+                      "itemType": {
+                        "value": "type_docs/v1/write:FilePath",
+                        "type": "id"
+                      },
+                      "type": "list"
+                    }
+                  }
+                ],
+                "type": "object"
+              },
+              "type": "json"
+            }
+          },
+          "response": {
+            "type": {
+              "value": {
+                "value": "type_docs/v1/write:StartDocsRegisterResponse",
+                "type": "id"
+              },
+              "type": "reference"
+            }
+          },
+          "errors": [],
+          "examples": []
+        },
+        {
+          "auth": true,
+          "method": "POST",
+          "id": "finishDocsRegister",
+          "name": "Finish Docs Register",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "docsRegistrationId",
+                "type": {
+                  "value": "type_docs/v1/write:DocsRegistrationId",
+                  "type": "id"
+                }
+              }
+            ],
+            "parts": [
+              {
+                "value": "/registry/docs",
+                "type": "literal"
+              },
+              {
+                "value": "/register/",
+                "type": "literal"
+              },
+              {
+                "value": "docsRegistrationId",
+                "type": "pathParameter"
+              },
+              {
+                "value": "",
+                "type": "literal"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "contentType": "application/json",
+              "shape": {
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "docsDefinition",
+                    "valueType": {
+                      "value": "type_docs/v1/write:DocsDefinition",
+                      "type": "id"
+                    }
+                  }
+                ],
+                "type": "object"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [
+            {
+              "statusCode": 401
+            },
+            {
+              "statusCode": 403
+            },
+            {
+              "statusCode": 404
+            }
+          ],
+          "examples": []
+        }
+      ],
+      "types": [
+        "type_docs/v1/write:FilePath",
+        "type_docs/v1/write:DocsRegistrationId",
+        "type_docs/v1/write:StartDocsRegisterResponse",
+        "type_docs/v1/write:FileS3UploadUrl",
+        "type_docs/v1/write:FileId",
+        "type_docs/v1/write:Height",
+        "type_docs/v1/write:PageId",
+        "type_docs/v1/write:Url",
+        "type_docs/v1/write:DocsDefinition",
+        "type_docs/v1/write:PageContent",
+        "type_docs/v1/write:DocsConfig",
+        "type_docs/v1/write:DocsTypographyConfig",
+        "type_docs/v1/write:FontConfig",
+        "type_docs/v1/write:NavbarLink",
+        "type_docs/v1/write:NavbarPrimaryLink",
+        "type_docs/v1/write:NavbarSecondaryLink",
+        "type_docs/v1/write:NavigationConfig",
+        "type_docs/v1/write:UnversionedNavigationConfig",
+        "type_docs/v1/write:VersionedNavigationConfig",
+        "type_docs/v1/write:VersionedNavigationConfigData",
+        "type_docs/v1/write:NavigationItem",
+        "type_docs/v1/write:PageMetadata",
+        "type_docs/v1/write:ApiSection",
+        "type_docs/v1/write:DocsSection",
+        "type_docs/v1/write:ColorsConfig",
+        "type_docs/v1/write:RgbColor",
+        "type_docs/v1/write:ApiArtifacts",
+        "type_docs/v1/write:PublishedPostmanCollection",
+        "type_docs/v1/write:PublishedSdk",
+        "type_docs/v1/write:NpmPackage",
+        "type_docs/v1/write:MavenPackage",
+        "type_docs/v1/write:PypiPackage",
+        "type_docs/v1/write:InvalidDomainErrorBody",
+        "type_docs/v1/write:InvliadCustomDomainErrorBody",
+        "type_docs/v1/write:OverlappingCustomDomains"
+      ],
+      "subpackages": []
+    },
+    "subpackage_docs/v2": {
+      "subpackageId": "subpackage_docs/v2",
+      "name": "v2",
+      "endpoints": [],
+      "types": [],
+      "subpackages": ["subpackage_docs/v2/read", "subpackage_docs/v2/write"]
+    },
+    "subpackage_docs/v2/read": {
+      "subpackageId": "subpackage_docs/v2/read",
+      "name": "read",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "getDocsForUrl",
+          "name": "Get Docs For Url",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "value": "/v2/registry/docs",
+                "type": "literal"
+              },
+              {
+                "value": "/load-with-url",
+                "type": "literal"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "contentType": "application/json",
+              "shape": {
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "url",
+                    "valueType": {
+                      "value": {
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  }
+                ],
+                "type": "object"
+              },
+              "type": "json"
+            }
+          },
+          "response": {
+            "type": {
+              "value": {
+                "value": "type_docs/v2/read:LoadDocsForUrlResponse",
+                "type": "id"
+              },
+              "type": "reference"
+            }
+          },
+          "errors": [
+            {
+              "statusCode": 404
+            }
+          ],
+          "examples": []
+        }
+      ],
+      "types": ["type_docs/v2/read:LoadDocsForUrlResponse", "type_docs/v2/read:BaseUrl"],
+      "subpackages": []
+    },
+    "subpackage_docs/v2/write": {
+      "subpackageId": "subpackage_docs/v2/write",
+      "name": "write",
+      "endpoints": [
+        {
+          "auth": true,
+          "method": "POST",
+          "id": "startDocsRegister",
+          "name": "Start Docs Register",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "value": "/v2/registry/docs",
+                "type": "literal"
+              },
+              {
+                "value": "/v2/init",
+                "type": "literal"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "contentType": "application/json",
+              "shape": {
+                "extends": [],
+                "properties": [
+                  {
+                    "description": "A `buildwithfern.com` url",
+                    "key": "domain",
+                    "valueType": {
+                      "value": {
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  {
+                    "key": "customDomains",
+                    "valueType": {
+                      "itemType": {
+                        "value": {
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "type": "list"
+                    }
+                  },
+                  {
+                    "key": "orgId",
+                    "valueType": {
+                      "value": "type_commons:OrgId",
+                      "type": "id"
+                    }
+                  },
+                  {
+                    "key": "apiId",
+                    "valueType": {
+                      "value": "type_commons:ApiId",
+                      "type": "id"
+                    }
+                  },
+                  {
+                    "description": "Relative filepath from docs folder.",
+                    "key": "filepaths",
+                    "valueType": {
+                      "itemType": {
+                        "value": "type_docs/v1/write:FilePath",
+                        "type": "id"
+                      },
+                      "type": "list"
+                    }
+                  }
+                ],
+                "type": "object"
+              },
+              "type": "json"
+            }
+          },
+          "response": {
+            "type": {
+              "value": {
+                "value": "type_docs/v1/write:StartDocsRegisterResponse",
+                "type": "id"
+              },
+              "type": "reference"
+            }
+          },
+          "errors": [
+            {
+              "statusCode": 400
+            },
+            {
+              "statusCode": 400
+            }
+          ],
+          "examples": []
+        },
+        {
+          "auth": true,
+          "method": "POST",
+          "id": "finishDocsRegister",
+          "name": "Finish Docs Register",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "docsRegistrationId",
+                "type": {
+                  "value": "type_docs/v1/write:DocsRegistrationId",
+                  "type": "id"
+                }
+              }
+            ],
+            "parts": [
+              {
+                "value": "/v2/registry/docs",
+                "type": "literal"
+              },
+              {
+                "value": "/register/",
+                "type": "literal"
+              },
+              {
+                "value": "docsRegistrationId",
+                "type": "pathParameter"
+              },
+              {
+                "value": "",
+                "type": "literal"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "contentType": "application/json",
+              "shape": {
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "docsDefinition",
+                    "valueType": {
+                      "value": "type_docs/v1/write:DocsDefinition",
+                      "type": "id"
+                    }
+                  }
+                ],
+                "type": "object"
+              },
+              "type": "json"
+            }
+          },
+          "errors": [
+            {
+              "statusCode": 401
+            },
+            {
+              "statusCode": 403
+            },
+            {
+              "statusCode": 404
+            }
+          ],
+          "examples": []
+        }
+      ],
+      "types": [
+        "type_docs/v2/write:InvalidDomainErrorBody",
+        "type_docs/v2/write:InvliadCustomDomainErrorBody",
+        "type_docs/v2/write:OverlappingCustomDomains"
+      ],
+      "subpackages": []
+    },
+    "subpackage_api/v1/db/endpoint": {
+      "subpackageId": "subpackage_api/v1/db/endpoint",
+      "name": "endpoint",
+      "endpoints": [],
+      "types": ["type_api/v1/db/endpoint:DbEndpointDefinition", "type_api/v1/db/endpoint:DbHttpRequest"],
+      "subpackages": []
+    },
+    "subpackage_api/v1/read/commons": {
+      "subpackageId": "subpackage_api/v1/read/commons",
+      "name": "commons",
+      "endpoints": [],
+      "types": ["type_api/v1/read/commons:WithDescription"],
+      "subpackages": []
+    },
+    "subpackage_api/v1/read/endpoint": {
+      "subpackageId": "subpackage_api/v1/read/endpoint",
+      "name": "endpoint",
+      "endpoints": [],
+      "types": [
+        "type_api/v1/read/endpoint:EnvironmentId",
+        "type_api/v1/read/endpoint:EndpointId",
+        "type_api/v1/read/endpoint:EndpointDefinition",
+        "type_api/v1/read/endpoint:Environment",
+        "type_api/v1/read/endpoint:HttpMethod",
+        "type_api/v1/read/endpoint:EndpointPath",
+        "type_api/v1/read/endpoint:EndpointPathPart",
+        "type_api/v1/read/endpoint:PathParameter",
+        "type_api/v1/read/endpoint:PathParameterKey",
+        "type_api/v1/read/endpoint:QueryParameter",
+        "type_api/v1/read/endpoint:Header",
+        "type_api/v1/read/endpoint:HttpRequest",
+        "type_api/v1/read/endpoint:HttpRequestBodyShape",
+        "type_api/v1/read/endpoint:HttpResponse",
+        "type_api/v1/read/endpoint:HttpResponseBodyShape",
+        "type_api/v1/read/endpoint:ErrorDeclaration",
+        "type_api/v1/read/endpoint:ExampleEndpointCall",
+        "type_api/v1/read/endpoint:CodeExamples",
+        "type_api/v1/read/endpoint:ExampleEndpointRequest",
+        "type_api/v1/read/endpoint:FormValue",
+        "type_api/v1/read/endpoint:ExampleEndpointResponse"
+      ],
+      "subpackages": []
+    },
+    "subpackage_api/v1/read/type": {
+      "subpackageId": "subpackage_api/v1/read/type",
+      "name": "type",
+      "endpoints": [],
+      "types": [
+        "type_api/v1/read/type:TypeId",
+        "type_api/v1/read/type:TypeDefinition",
+        "type_api/v1/read/type:TypeShape",
+        "type_api/v1/read/type:TypeReference",
+        "type_api/v1/read/type:ObjectType",
+        "type_api/v1/read/type:ObjectProperty",
+        "type_api/v1/read/type:PrimitiveType",
+        "type_api/v1/read/type:OptionalType",
+        "type_api/v1/read/type:ListType",
+        "type_api/v1/read/type:SetType",
+        "type_api/v1/read/type:MapType",
+        "type_api/v1/read/type:EnumType",
+        "type_api/v1/read/type:EnumValue",
+        "type_api/v1/read/type:UndiscriminatedUnionType",
+        "type_api/v1/read/type:UndiscriminatedUnionVariant",
+        "type_api/v1/read/type:DiscriminatedUnionType",
+        "type_api/v1/read/type:DiscriminatedUnionVariant",
+        "type_api/v1/read/type:LiteralType"
+      ],
+      "subpackages": []
+    },
+    "subpackage_api/v1/register/commons": {
+      "subpackageId": "subpackage_api/v1/register/commons",
+      "name": "commons",
+      "endpoints": [],
+      "types": ["type_api/v1/register/commons:WithDescription"],
+      "subpackages": []
+    },
+    "subpackage_api/v1/register/endpoint": {
+      "subpackageId": "subpackage_api/v1/register/endpoint",
+      "name": "endpoint",
+      "endpoints": [],
+      "types": [
+        "type_api/v1/register/endpoint:EnvironmentId",
+        "type_api/v1/register/endpoint:EndpointId",
+        "type_api/v1/register/endpoint:EndpointDefinition",
+        "type_api/v1/register/endpoint:Environment",
+        "type_api/v1/register/endpoint:HttpMethod",
+        "type_api/v1/register/endpoint:EndpointPath",
+        "type_api/v1/register/endpoint:EndpointPathPart",
+        "type_api/v1/register/endpoint:PathParameter",
+        "type_api/v1/register/endpoint:PathParameterKey",
+        "type_api/v1/register/endpoint:QueryParameter",
+        "type_api/v1/register/endpoint:Header",
+        "type_api/v1/register/endpoint:HttpRequest",
+        "type_api/v1/register/endpoint:HttpRequestBodyShape",
+        "type_api/v1/register/endpoint:JsonRequestBody",
+        "type_api/v1/register/endpoint:JsonRequestBodyShape",
+        "type_api/v1/register/endpoint:HttpResponse",
+        "type_api/v1/register/endpoint:ErrorDeclaration",
+        "type_api/v1/register/endpoint:HttpResponseBodyShape",
+        "type_api/v1/register/endpoint:ExampleEndpointCall",
+        "type_api/v1/register/endpoint:ExampleEndpointRequest",
+        "type_api/v1/register/endpoint:FormValue",
+        "type_api/v1/register/endpoint:ExampleEndpointResponse"
+      ],
+      "subpackages": []
+    },
+    "subpackage_api/v1/register/type": {
+      "subpackageId": "subpackage_api/v1/register/type",
+      "name": "type",
+      "endpoints": [],
+      "types": [
+        "type_api/v1/register/type:TypeId",
+        "type_api/v1/register/type:TypeDefinition",
+        "type_api/v1/register/type:TypeShape",
+        "type_api/v1/register/type:TypeReference",
+        "type_api/v1/register/type:ObjectType",
+        "type_api/v1/register/type:ObjectProperty",
+        "type_api/v1/register/type:PrimitiveType",
+        "type_api/v1/register/type:OptionalType",
+        "type_api/v1/register/type:ListType",
+        "type_api/v1/register/type:SetType",
+        "type_api/v1/register/type:MapType",
+        "type_api/v1/register/type:EnumType",
+        "type_api/v1/register/type:EnumValue",
+        "type_api/v1/register/type:UndiscriminatedUnionType",
+        "type_api/v1/register/type:UndiscriminatedUnionVariant",
+        "type_api/v1/register/type:DiscriminatedUnionType",
+        "type_api/v1/register/type:DiscriminatedUnionVariant",
+        "type_api/v1/register/type:LiteralType"
+      ],
+      "subpackages": []
+    },
+    "subpackage_commons": {
+      "subpackageId": "subpackage_commons",
+      "name": "commons",
+      "endpoints": [],
+      "types": ["type_commons:ApiDefinitionId", "type_commons:OrgId", "type_commons:ApiId"],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
+    "types": [],
+    "subpackages": ["subpackage_api", "subpackage_docs", "subpackage_commons"]
+  },
+  "auth": {
+    "tokenName": "token",
+    "type": "bearerAuth"
+  }
+}

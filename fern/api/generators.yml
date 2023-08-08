@@ -46,5 +46,5 @@ groups:
           noSerdeLayer: true
   staging-docs:
     docs:
-      domain: fdr-staging.docs.buildwithfern.com
+      domain: fdr-staging.docs.dev.buildwithfern.com
     generators: []
