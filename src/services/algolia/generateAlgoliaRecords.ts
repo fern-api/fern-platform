@@ -55,7 +55,7 @@ async function generateAlgoliaRecordsForNavigationItem(
         const apiId = api.api;
         const apiDef = await loadApiDefinition(apiId);
         if (apiDef) {
-            const apiRecords = generateAlgoliaRecordsForApiDefinition([...cumulativeSlugs, item.urlSlug], apiDef);
+            const apiRecords = generateAlgoliaRecordsForApiDefinition([...cumulativeSlugs, api.urlSlug], apiDef);
             cumulativeRecords.push(...apiRecords);
         }
     } else {
@@ -89,9 +89,17 @@ function generateAlgoliaRecordsForApiDefinition(
     });
 
     Object.values(subpackages).forEach((subpackage) => {
+        const { parent } = subpackage;
+        let parentSlugs: string[] = [];
+
+        if (parent != null) {
+            const parentSlugsStr = parent.slice("subpackage_".length, parent.length);
+            parentSlugs = parentSlugsStr.split("/");
+        }
+
         subpackage.endpoints.forEach((e) => {
             const endpointRecords = generateAlgoliaRecordsForEndpointDefinition(
-                [...cumulativeSlugs, subpackage.urlSlug],
+                [...cumulativeSlugs, ...parentSlugs, subpackage.urlSlug],
                 e
             );
             records.push(...endpointRecords);
