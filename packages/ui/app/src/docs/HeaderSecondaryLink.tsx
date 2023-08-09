@@ -1,5 +1,8 @@
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import classNames from "classnames";
+import { DiscordIcon } from "../commons/icons/DiscordIcon";
+
+const PRIMER_DISCORD_URL = "https://bit.ly/3f5vvJ2";
 
 export declare namespace HeaderSecondaryLink {
     export interface Props {
@@ -17,7 +20,8 @@ export const HeaderSecondaryLink: React.FC<HeaderSecondaryLink.Props> = ({ navba
             target="_blank"
             rel="noreferrer noopener"
         >
-            {navbarLink.text}
+            {navbarLink.url === PRIMER_DISCORD_URL ? <DiscordIcon className="h-4 w-4 fill-current" /> : null}
+            <span>{navbarLink.text}</span>
         </a>
     );
 };
