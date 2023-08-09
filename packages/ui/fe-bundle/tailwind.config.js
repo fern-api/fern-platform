@@ -37,6 +37,12 @@ module.exports = {
                 "text-stark": colors.neutral[200],
                 "text-default": colors.neutral[400],
                 "text-muted": colors.neutral[600],
+
+                // New design system
+
+                borderPrimary: "rgba(var(--accent-primary), 30%)",
+
+                tagPrimary: "rgba(var(--accent-primary), 15%)",
             };
         },
     },

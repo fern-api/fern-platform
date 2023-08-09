@@ -4,7 +4,7 @@ import { DEFAULT_LOGO_HEIGHT } from "../config";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { HeaderPrimaryLink } from "./HeaderPrimaryLink";
 import { HeaderSecondaryLink } from "./HeaderSecondaryLink";
-import { HeaderVersionMenu } from "./HeaderVersionMenu";
+import { VersionDropdown } from "./VersionDropdown";
 
 export const Header: React.FC = () => {
     const { resolveFile, docsDefinition, docsInfo, setActiveVersion, navigateToPath } = useDocsContext();
@@ -34,7 +34,7 @@ export const Header: React.FC = () => {
             )}
             {hasMultipleVersions && (
                 <div>
-                    <HeaderVersionMenu
+                    <VersionDropdown
                         versions={docsInfo.versions}
                         selectedId={docsInfo.activeVersion}
                         onClickVersion={(v) => {
