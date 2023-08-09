@@ -12,7 +12,7 @@ export declare namespace SidebarDocsSection {
 }
 
 export const SidebarDocsSection: React.FC<SidebarDocsSection.Props> = ({ slug, section }) => {
-    const [collapsed, setCollapsed] = useState(section.collapsed);
+    const [collapsed, setCollapsed] = useState(section.title === "Changelog");
 
     return (
         <SidebarGroup
