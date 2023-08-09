@@ -26,10 +26,9 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, sel
                             "text-accentPrimary tracking-tight",
                             "py-1 pl-2.5 pr-1",
                             // Make sure padding remains the same on hover
-                            "hover:py-[calc(theme(spacing[1])-theme(borderWidth.1))] hover:pr-[calc(theme(spacing[1])-theme(borderWidth.1))]",
-                            // This seems to be a Tailwind bug where we can't use theme(borderWidth.1) with theme(spacing[2.5]) since the latter uses a decimal
-                            // Workaround: hardcode 1px
-                            "hover:pl-[calc(theme(spacing[2.5])-1px)]"
+                            // This seems to be a Tailwind bug where we can't use theme(borderWidth.1) in some cases
+                            // Current workaround is to hardcode 1px
+                            "hover:py-[calc(theme(spacing.1)-1px)] hover:pr-[calc(theme(spacing[1])-1px)] hover:pl-[calc(theme(spacing[2.5])-1px)]"
                         )}
                     >
                         {({ open }) => {
