@@ -14,6 +14,7 @@ import { paymentRefundRequest } from "./webhook-request-examples/payment-refund"
 import { paymentStatusUpdateRequest } from "./webhook-request-examples/payment-status-update";
 import { WebhookRequestExample } from "./WebhookRequestExample";
 import { WebhookRequestSection } from "./WebhookRequestSection";
+import { WebhookResponseSection } from "./WebhookResponseSection";
 
 export declare namespace CustomDocsPage {
     export interface Props {
@@ -96,6 +97,12 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
                             </div>
 
                             <WebhookRequestExample requestExampleJson={webhookRequestExample} />
+                        </div>
+
+                        <div className="border-border min-w-lg mt-10 flex border-t pt-5">
+                            <EndpointSection title="Response" anchor="response">
+                                <WebhookResponseSection />
+                            </EndpointSection>
                         </div>
                     </ApiDefinitionContextProvider>
                 )}
