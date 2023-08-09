@@ -118,19 +118,19 @@ types:
 
   NavigationConfig:
     discriminated: false
-    union: 
+    union:
       - UnversionedNavigationConfig
       - VersionedNavigationConfig
 
   UnversionedNavigationConfig:
     properties:
       items: list<NavigationItem>
-  
+
   VersionedNavigationConfig:
-    properties: 
+    properties:
       versions: list<VersionedNavigationConfigData>
-  
-  VersionedNavigationConfigData: 
+
+  VersionedNavigationConfigData:
     properties:
       version: string
       config: UnversionedNavigationConfig
@@ -158,6 +158,7 @@ types:
       title: string
       items: list<NavigationItem>
       urlSlugOverride: optional<string>
+      collapsed: optional<boolean>
 
   ColorsConfig:
     properties:

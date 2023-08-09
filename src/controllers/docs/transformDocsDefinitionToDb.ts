@@ -92,6 +92,7 @@ export function transformNavigationItemForReading(
                 type: "section",
                 title: writeShape.title,
                 urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
+                collapsed: writeShape.collapsed ?? false,
                 items: writeShape.items.map((item) => transformNavigationItemForReading(item)),
             };
     }
