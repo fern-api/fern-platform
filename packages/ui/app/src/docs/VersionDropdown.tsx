@@ -18,7 +18,20 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, sel
         <div className="flex w-32">
             <Menu as="div" className="relative inline-block text-left">
                 <div className="my-auto">
-                    <Menu.Button className="border-accentPrimary/30 hover:bg-accentPrimary/[0.15] text-accentPrimary group inline-flex w-full justify-center space-x-1 rounded-lg border py-1 pl-2.5 pr-1 text-xs tracking-tight hover:border-2 hover:py-[calc(0.25rem-1px)] hover:pl-[calc(0.625rem-1px)] hover:pr-[calc(0.25rem-1px)]">
+                    <Menu.Button
+                        className={classNames(
+                            "group inline-flex w-full justify-center space-x-1 rounded-lg",
+                            "hover:bg-accentPrimary/[0.15]",
+                            "border border-accentPrimary/30 hover:border-2",
+                            "text-accentPrimary tracking-tight",
+                            "py-1 pl-2.5 pr-1",
+                            // Make sure padding remains the same on hover
+                            "hover:py-[calc(theme(spacing[1])-theme(borderWidth.1))] hover:pr-[calc(theme(spacing[1])-theme(borderWidth.1))]",
+                            // This seems to be a Tailwind bug where we can't use theme(borderWidth.1) with theme(spacing[2.5]) since the latter uses a decimal
+                            // Workaround: hardcode 1px
+                            "hover:pl-[calc(theme(spacing[2.5])-1px)]"
+                        )}
+                    >
                         {({ open }) => {
                             return (
                                 <>
