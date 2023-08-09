@@ -15,6 +15,7 @@ export const HeaderPrimaryLink: React.FC<HeaderPrimaryLink.Props> = ({ navbarLin
                 "group pl-4 pr-2.5 py-1.5 flex space-x-1.5 items-center !no-underline !text-accentPrimary transition rounded-full border border-accentPrimary/40 hover:border-accentPrimary bg-accentHighlight hover:bg-accentHighlight/20"
             )}
             href={navbarLink.url}
+            target="_blank"
             rel="noreferrer noopener"
         >
             <span className="whitespace-nowrap">{navbarLink.text}</span>
