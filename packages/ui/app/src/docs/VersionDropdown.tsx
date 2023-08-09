@@ -21,8 +21,8 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, sel
                     <Menu.Button
                         className={classNames(
                             "group inline-flex w-full justify-center space-x-1 rounded-lg",
-                            "hover:bg-accentPrimary/[0.15]",
-                            "border border-accentPrimary/30 hover:border-2",
+                            "hover:bg-tagPrimary",
+                            "border border-borderPrimary hover:border-2",
                             "text-accentPrimary tracking-tight",
                             "py-1 pl-2.5 pr-1",
                             // Make sure padding remains the same on hover
@@ -56,16 +56,16 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, sel
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                 >
-                    <Menu.Items className="border-accentPrimary/30 absolute left-0 mt-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md border bg-neutral-950 shadow-lg">
+                    <Menu.Items className="border-borderPrimary bg-background absolute left-0 mt-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md border shadow-lg">
                         <div>
                             {versions.map((version, idx) => (
                                 <Menu.Item key={idx}>
                                     {({ active }) => (
                                         <Link
                                             className={classNames(
-                                                "flex w-full justify-between !no-underline items-center text-xs p-2",
+                                                "flex w-full justify-between !no-underline items-center p-2",
                                                 {
-                                                    "bg-accentPrimary/[0.15]": active,
+                                                    "bg-tagPrimary": active,
                                                     "!text-accentPrimary":
                                                         version === selectedId || (active && version !== selectedId),
                                                     "!text-text-muted": !active && version !== selectedId,
@@ -76,7 +76,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, sel
                                             href={`/${version}`}
                                             onClick={() => onClickVersion(version)}
                                         >
-                                            <span className="font-mono">{version}</span>
+                                            <span className="font-mono text-sm font-normal">{version}</span>
                                             <CheckIcon
                                                 className={classNames("h-3 w-3", {
                                                     visible: version === selectedId,
