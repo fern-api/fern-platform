@@ -1,4 +1,8 @@
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import classNames from "classnames";
 import { useMemo } from "react";
+import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContextProvider";
+import { EndpointSection } from "../api-page/endpoints/EndpointSection";
 import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { MdxContent } from "../mdx/MdxContent";
@@ -78,7 +82,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
                     >
                         <div className="border-border mt-10 flex space-x-12 border-t pt-5">
                             <div className="min-w-lg">
-                                <EndpointSection title="Payload">
+                                <EndpointSection title="Payload" anchor="payload">
                                     <WebhookRequestSection
                                         httpRequestBody={{
                                             type: "reference",

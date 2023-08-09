@@ -45,8 +45,6 @@ export interface DocsContextValue {
     /** Returns the version-prefixed slug. */
     getFullSlug: (slug: string) => string;
 
-    activeVersion: string | null;
-
     // controlled
     selectedSlug: string | undefined;
 
