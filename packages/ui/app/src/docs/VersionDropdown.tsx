@@ -5,7 +5,7 @@ import { Fragment } from "react";
 import { CheckIcon } from "../commons/icons/CheckIcon";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 
-export declare namespace HeaderVersionMenu {
+export declare namespace VersionDropdown {
     export interface Props {
         versions: string[];
         selectedId: string | undefined;
@@ -13,7 +13,7 @@ export declare namespace HeaderVersionMenu {
     }
 }
 
-export const HeaderVersionMenu: React.FC<HeaderVersionMenu.Props> = ({ versions, selectedId, onClickVersion }) => {
+export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, selectedId, onClickVersion }) => {
     return (
         <div className="flex w-32">
             <Menu as="div" className="relative inline-block text-left">
