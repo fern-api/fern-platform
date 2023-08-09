@@ -1,5 +1,6 @@
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { NonClickableSidebarGroupTitle } from "./NonClickableSidebarGroupTitle";
+import { useState } from "react";
+import { ClickableSidebarGroupTitle } from "./ClickableSidebarGroupTitle";
 import { SidebarGroup } from "./SidebarGroup";
 import { SidebarItems } from "./SidebarItems";
 
@@ -11,9 +12,20 @@ export declare namespace SidebarDocsSection {
 }
 
 export const SidebarDocsSection: React.FC<SidebarDocsSection.Props> = ({ slug, section }) => {
+    const [collapsed, setCollapsed] = useState(section.collapsed);
+
     return (
-        <SidebarGroup title={<NonClickableSidebarGroupTitle title={section.title} />} includeTopMargin>
-            <SidebarItems slug={slug} navigationItems={section.items} />
+        <SidebarGroup
+            title={
+                <ClickableSidebarGroupTitle
+                    onClick={() => setCollapsed((v) => !v)}
+                    collapsed={collapsed}
+                    title={section.title}
+                />
+            }
+            includeTopMargin
+        >
+            {!collapsed && <SidebarItems slug={slug} navigationItems={section.items} />}
         </SidebarGroup>
     );
 };
