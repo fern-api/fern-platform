@@ -10,6 +10,9 @@ const FIXTURES: Fixture[] = [
     {
         name: "vellum",
     },
+    {
+        name: "string",
+    },
 ];
 
 function loadFdrApiDefinition(fixture: Fixture) {

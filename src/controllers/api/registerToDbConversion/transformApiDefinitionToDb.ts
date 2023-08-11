@@ -123,7 +123,7 @@ function getExampleEndpointCalls({
     const examples: ApiV1Write.ExampleEndpointCall[] = [];
 
     const { successExamples: registeredSuccessExamples, errorExamples: registeredErrorExamples } =
-        groupExamplesByStatusCode(examples);
+        groupExamplesByStatusCode(writeShape.examples);
 
     if (registeredSuccessExamples.length > 0) {
         examples.push(...registeredSuccessExamples);

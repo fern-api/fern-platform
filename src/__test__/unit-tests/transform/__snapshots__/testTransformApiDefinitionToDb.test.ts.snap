@@ -188,6 +188,793 @@ Object {
 }
 `;
 
+exports[`transformApiDefinitionToDb {"name":"string"} 1`] = `
+Object {
+  "auth": Object {
+    "headerWireValue": "Authorization",
+    "nameOverride": "MyAuthScheme",
+    "type": "header",
+  },
+  "hasMultipleBaseUrls": false,
+  "id": "id",
+  "rootPackage": Object {
+    "endpoints": Array [],
+    "subpackages": Array [
+      "subpackage_lcf",
+    ],
+    "types": Array [],
+  },
+  "subpackages": Object {
+    "subpackage_lcf": Object {
+      "description": undefined,
+      "endpoints": Array [
+        Object {
+          "authed": true,
+          "defaultEnvironment": "Production",
+          "description": "For a shipment, find the lowest cost shipping option based on provided parameters.",
+          "environments": Array [
+            Object {
+              "baseUrl": "https://api.meetstring.com",
+              "id": "Production",
+            },
+          ],
+          "errors": Array [
+            Object {
+              "statusCode": 401,
+            },
+          ],
+          "examples": Array [
+            Object {
+              "codeExamples": Object {
+                "nodeAxios": "",
+              },
+              "description": undefined,
+              "headers": Object {},
+              "htmlDescription": undefined,
+              "path": "/lcf",
+              "pathParameters": Object {},
+              "queryParameters": Object {},
+              "requestBody": Object {
+                "order": Object {
+                  "deliveryCommitment": 3,
+                  "orderId": "shopify_12345",
+                  "package": Object {
+                    "dimensions": Array [
+                      14,
+                      10,
+                      3,
+                    ],
+                    "weight": 1.5,
+                  },
+                  "shipTo": Object {
+                    "city": "Washington DC",
+                    "country": "US",
+                    "isResidential": false,
+                    "postalCode": "20500",
+                    "state": "Washington DC",
+                    "street1": "1600 Pennsylvania Avenue NW",
+                  },
+                },
+              },
+              "requestBodyV2": undefined,
+              "responseBody": Object {
+                "comments": Array [],
+                "orderId": "shopify_12345",
+                "parcel": Object {
+                  "dimensions": Object {
+                    "height": 3,
+                    "length": 14,
+                    "units": "inches",
+                    "width": 10,
+                  },
+                  "name": "CUSTOM_PACKAGE",
+                  "weight": Object {
+                    "unit": "pounds",
+                    "value": 1.5,
+                  },
+                },
+                "service": Object {
+                  "accountNumber": "acc_1234",
+                  "carrier": "carrier",
+                  "cost": 2,
+                  "deliveryDate": "2017-07-21",
+                  "saturdayDelivery": false,
+                  "service": "service",
+                },
+                "shipTo": Object {
+                  "city": "Washington DC",
+                  "country": "US",
+                  "isResidential": false,
+                  "postalCode": "20500",
+                  "state": "Washington DC",
+                  "street1": "1600 Pennsylvania Avenue NW",
+                },
+                "tags": Array [],
+              },
+              "responseBodyV2": undefined,
+              "responseStatusCode": 200,
+            },
+            Object {
+              "codeExamples": Object {
+                "nodeAxios": "",
+              },
+              "description": undefined,
+              "headers": Object {},
+              "htmlDescription": undefined,
+              "path": "/lcf",
+              "pathParameters": Object {},
+              "queryParameters": Object {},
+              "requestBody": Object {
+                "order": Object {
+                  "deliveryCommitment": 0,
+                  "orderId": "string",
+                  "package": Object {
+                    "dimensions": Array [
+                      1,
+                    ],
+                    "weight": 1,
+                  },
+                  "shipTo": Object {
+                    "city": "string",
+                    "country": "US",
+                    "isResidential": true,
+                    "postalCode": "string",
+                    "state": "string",
+                    "street1": "string",
+                  },
+                },
+              },
+              "requestBodyV2": undefined,
+              "responseBody": undefined,
+              "responseBodyV2": undefined,
+              "responseStatusCode": 401,
+            },
+          ],
+          "headers": Array [],
+          "htmlDescription": "<p>For a shipment, find the lowest cost shipping option based on provided parameters.</p>
+",
+          "id": "CreateLeastCostFulfillment",
+          "method": "POST",
+          "name": "Create Least Cost Fulfillment",
+          "path": Object {
+            "parts": Array [
+              Object {
+                "type": "literal",
+                "value": "",
+              },
+              Object {
+                "type": "literal",
+                "value": "/lcf",
+              },
+            ],
+            "pathParameters": Array [],
+          },
+          "queryParameters": Array [],
+          "request": Object {
+            "contentType": "application/json",
+            "description": undefined,
+            "htmlDescription": undefined,
+            "type": Object {
+              "type": "reference",
+              "value": Object {
+                "type": "id",
+                "value": "type_lcf:CreateLcfRequest",
+              },
+            },
+          },
+          "response": Object {
+            "type": Object {
+              "type": "reference",
+              "value": Object {
+                "type": "id",
+                "value": "type_lcf:LeastCostFulfillment",
+              },
+            },
+          },
+          "urlSlug": "create-least-cost-fulfillment",
+        },
+      ],
+      "htmlDescription": undefined,
+      "name": "lcf",
+      "parent": undefined,
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_lcf",
+      "subpackages": Array [],
+      "types": Array [
+        "type_lcf:CreateLcfRequest",
+        "type_lcf:Order",
+        "type_lcf:OrderId",
+        "type_lcf:ShipTo",
+        "type_lcf:Country",
+        "type_lcf:Package",
+        "type_lcf:Dimensions",
+        "type_lcf:Weight",
+        "type_lcf:LeastCostFulfillment",
+        "type_lcf:Service",
+        "type_lcf:Parcel",
+        "type_lcf:ParcelDimensions",
+        "type_lcf:ParcelWeight",
+      ],
+      "urlSlug": "lcf",
+    },
+  },
+  "types": Object {
+    "type_lcf:Country": Object {
+      "description": "The country you're shipping an order to.  Only 'US' is supported at this time.",
+      "htmlDescription": "<p>The country you&#39;re shipping an order to.  Only &#39;US&#39; is supported at this time.</p>
+",
+      "name": "Country",
+      "shape": Object {
+        "type": "enum",
+        "values": Array [
+          Object {
+            "description": undefined,
+            "htmlDescription": undefined,
+            "value": "US",
+          },
+        ],
+      },
+    },
+    "type_lcf:CreateLcfRequest": Object {
+      "description": undefined,
+      "htmlDescription": undefined,
+      "name": "CreateLcfRequest",
+      "shape": Object {
+        "extends": Array [],
+        "properties": Array [
+          Object {
+            "description": undefined,
+            "htmlDescription": undefined,
+            "key": "order",
+            "valueType": Object {
+              "type": "id",
+              "value": "type_lcf:Order",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_lcf:Dimensions": Object {
+      "description": "The length, width, and height of the package in inches.  Order does not matter.",
+      "htmlDescription": "<p>The length, width, and height of the package in inches.  Order does not matter.</p>
+",
+      "name": "Dimensions",
+      "shape": Object {
+        "type": "alias",
+        "value": Object {
+          "itemType": Object {
+            "type": "primitive",
+            "value": Object {
+              "type": "double",
+            },
+          },
+          "type": "set",
+        },
+      },
+    },
+    "type_lcf:LeastCostFulfillment": Object {
+      "description": undefined,
+      "htmlDescription": undefined,
+      "name": "LeastCostFulfillment",
+      "shape": Object {
+        "extends": Array [],
+        "properties": Array [
+          Object {
+            "description": undefined,
+            "htmlDescription": undefined,
+            "key": "orderId",
+            "valueType": Object {
+              "type": "primitive",
+              "value": Object {
+                "type": "string",
+              },
+            },
+          },
+          Object {
+            "description": undefined,
+            "htmlDescription": undefined,
+            "key": "shipTo",
+            "valueType": Object {
+              "type": "id",
+              "value": "type_lcf:ShipTo",
+            },
+          },
+          Object {
+            "description": "An array of tags with high level information about the prediction String just made.",
+            "htmlDescription": "<p>An array of tags with high level information about the prediction String just made.</p>
+",
+            "key": "tags",
+            "valueType": Object {
+              "itemType": Object {
+                "type": "primitive",
+                "value": Object {
+                  "type": "string",
+                },
+              },
+              "type": "set",
+            },
+          },
+          Object {
+            "description": "An array of comments with detailed information about the prediction String just made.
+First comment includes the carrier, service code, account, cost, and package
+",
+            "htmlDescription": "<p>An array of comments with detailed information about the prediction String just made.
+First comment includes the carrier, service code, account, cost, and package</p>
+",
+            "key": "comments",
+            "valueType": Object {
+              "itemType": Object {
+                "type": "primitive",
+                "value": Object {
+                  "type": "string",
+                },
+              },
+              "type": "set",
+            },
+          },
+          Object {
+            "description": undefined,
+            "htmlDescription": undefined,
+            "key": "service",
+            "valueType": Object {
+              "type": "id",
+              "value": "type_lcf:Service",
+            },
+          },
+          Object {
+            "description": undefined,
+            "htmlDescription": undefined,
+            "key": "parcel",
+            "valueType": Object {
+              "type": "id",
+              "value": "type_lcf:Parcel",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_lcf:Order": Object {
+      "description": undefined,
+      "htmlDescription": undefined,
+      "name": "Order",
+      "shape": Object {
+        "extends": Array [],
+        "properties": Array [
+          Object {
+            "description": "A unique identifier for the order.",
+            "htmlDescription": "<p>A unique identifier for the order.</p>
+",
+            "key": "orderId",
+            "valueType": Object {
+              "type": "id",
+              "value": "type_lcf:OrderId",
+            },
+          },
+          Object {
+            "description": "The address the order is being shipped to.",
+            "htmlDescription": "<p>The address the order is being shipped to.</p>
+",
+            "key": "shipTo",
+            "valueType": Object {
+              "type": "id",
+              "value": "type_lcf:ShipTo",
+            },
+          },
+          Object {
+            "description": "The number of days from the order date that the order must be 
+delivered to the customer by.  If no limit, set as null.
+",
+            "htmlDescription": "<p>The number of days from the order date that the order must be 
+delivered to the customer by.  If no limit, set as null.</p>
+",
+            "key": "deliveryCommitment",
+            "valueType": Object {
+              "type": "primitive",
+              "value": Object {
+                "type": "integer",
+              },
+            },
+          },
+          Object {
+            "description": "The dimensions and weight of the package being shipped.",
+            "htmlDescription": "<p>The dimensions and weight of the package being shipped.</p>
+",
+            "key": "package",
+            "valueType": Object {
+              "type": "id",
+              "value": "type_lcf:Package",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_lcf:OrderId": Object {
+      "description": "The unique identifier for the order, this can be an order number from your Shopify store for example.",
+      "htmlDescription": "<p>The unique identifier for the order, this can be an order number from your Shopify store for example.</p>
+",
+      "name": "OrderId",
+      "shape": Object {
+        "type": "alias",
+        "value": Object {
+          "type": "primitive",
+          "value": Object {
+            "type": "string",
+          },
+        },
+      },
+    },
+    "type_lcf:Package": Object {
+      "description": undefined,
+      "htmlDescription": undefined,
+      "name": "Package",
+      "shape": Object {
+        "extends": Array [],
+        "properties": Array [
+          Object {
+            "description": undefined,
+            "htmlDescription": undefined,
+            "key": "dimensions",
+            "valueType": Object {
+              "type": "id",
+              "value": "type_lcf:Dimensions",
+            },
+          },
+          Object {
+            "description": undefined,
+            "htmlDescription": undefined,
+            "key": "weight",
+            "valueType": Object {
+              "type": "id",
+              "value": "type_lcf:Weight",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_lcf:Parcel": Object {
+      "description": undefined,
+      "htmlDescription": undefined,
+      "name": "Parcel",
+      "shape": Object {
+        "extends": Array [],
+        "properties": Array [
+          Object {
+            "description": "The name of the package String reccomends.
+Defaults to 'CUSTOM_PACKAGE' if the user provides a package.
+",
+            "htmlDescription": "<p>The name of the package String reccomends.
+Defaults to &#39;CUSTOM_PACKAGE&#39; if the user provides a package.</p>
+",
+            "key": "name",
+            "valueType": Object {
+              "type": "primitive",
+              "value": Object {
+                "type": "string",
+              },
+            },
+          },
+          Object {
+            "description": undefined,
+            "htmlDescription": undefined,
+            "key": "dimensions",
+            "valueType": Object {
+              "type": "id",
+              "value": "type_lcf:ParcelDimensions",
+            },
+          },
+          Object {
+            "description": undefined,
+            "htmlDescription": undefined,
+            "key": "weight",
+            "valueType": Object {
+              "type": "id",
+              "value": "type_lcf:ParcelWeight",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_lcf:ParcelDimensions": Object {
+      "description": undefined,
+      "htmlDescription": undefined,
+      "name": "ParcelDimensions",
+      "shape": Object {
+        "extends": Array [],
+        "properties": Array [
+          Object {
+            "description": "The units of measurement for the package dimensions.  Only 'inches' is supported at this time.",
+            "htmlDescription": "<p>The units of measurement for the package dimensions.  Only &#39;inches&#39; is supported at this time.</p>
+",
+            "key": "units",
+            "valueType": Object {
+              "type": "primitive",
+              "value": Object {
+                "type": "string",
+              },
+            },
+          },
+          Object {
+            "description": "The length of the package in inches.",
+            "htmlDescription": "<p>The length of the package in inches.</p>
+",
+            "key": "length",
+            "valueType": Object {
+              "type": "primitive",
+              "value": Object {
+                "type": "double",
+              },
+            },
+          },
+          Object {
+            "description": "The width of the package in inches.",
+            "htmlDescription": "<p>The width of the package in inches.</p>
+",
+            "key": "width",
+            "valueType": Object {
+              "type": "primitive",
+              "value": Object {
+                "type": "double",
+              },
+            },
+          },
+          Object {
+            "description": "The height of the package in inches.",
+            "htmlDescription": "<p>The height of the package in inches.</p>
+",
+            "key": "height",
+            "valueType": Object {
+              "type": "primitive",
+              "value": Object {
+                "type": "double",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_lcf:ParcelWeight": Object {
+      "description": undefined,
+      "htmlDescription": undefined,
+      "name": "ParcelWeight",
+      "shape": Object {
+        "extends": Array [],
+        "properties": Array [
+          Object {
+            "description": "The weight of the package in pounds.",
+            "htmlDescription": "<p>The weight of the package in pounds.</p>
+",
+            "key": "value",
+            "valueType": Object {
+              "type": "primitive",
+              "value": Object {
+                "type": "double",
+              },
+            },
+          },
+          Object {
+            "description": "The units of measurement for the package weight.  Only 'pounds' is supported at this time.",
+            "htmlDescription": "<p>The units of measurement for the package weight.  Only &#39;pounds&#39; is supported at this time.</p>
+",
+            "key": "unit",
+            "valueType": Object {
+              "type": "primitive",
+              "value": Object {
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_lcf:Service": Object {
+      "description": undefined,
+      "htmlDescription": undefined,
+      "name": "Service",
+      "shape": Object {
+        "extends": Array [],
+        "properties": Array [
+          Object {
+            "description": "The carrier that will be used to ship the package.",
+            "htmlDescription": "<p>The carrier that will be used to ship the package.</p>
+",
+            "key": "carrier",
+            "valueType": Object {
+              "type": "primitive",
+              "value": Object {
+                "type": "string",
+              },
+            },
+          },
+          Object {
+            "description": "The service code that will be used to ship the package.",
+            "htmlDescription": "<p>The service code that will be used to ship the package.</p>
+",
+            "key": "service",
+            "valueType": Object {
+              "type": "primitive",
+              "value": Object {
+                "type": "string",
+              },
+            },
+          },
+          Object {
+            "description": "An RFC 3339, section 5.6 date (YYYY-MM-DD). For example, 2017-07-21.",
+            "htmlDescription": "<p>An RFC 3339, section 5.6 date (YYYY-MM-DD). For example, 2017-07-21.</p>
+",
+            "key": "deliveryDate",
+            "valueType": Object {
+              "type": "primitive",
+              "value": Object {
+                "type": "date",
+              },
+            },
+          },
+          Object {
+            "description": "If the package can be delivered by the carrier on Saturday. 'True' only possible for UPS and FedEx.",
+            "htmlDescription": "<p>If the package can be delivered by the carrier on Saturday. &#39;True&#39; only possible for UPS and FedEx.</p>
+",
+            "key": "saturdayDelivery",
+            "valueType": Object {
+              "type": "primitive",
+              "value": Object {
+                "type": "boolean",
+              },
+            },
+          },
+          Object {
+            "description": "You carrier account that will be used to ship the package.",
+            "htmlDescription": "<p>You carrier account that will be used to ship the package.</p>
+",
+            "key": "accountNumber",
+            "valueType": Object {
+              "type": "primitive",
+              "value": Object {
+                "type": "string",
+              },
+            },
+          },
+          Object {
+            "description": "The cost of the shipping label String recommends.",
+            "htmlDescription": "<p>The cost of the shipping label String recommends.</p>
+",
+            "key": "cost",
+            "valueType": Object {
+              "type": "primitive",
+              "value": Object {
+                "type": "double",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_lcf:ShipTo": Object {
+      "description": undefined,
+      "htmlDescription": undefined,
+      "name": "ShipTo",
+      "shape": Object {
+        "extends": Array [],
+        "properties": Array [
+          Object {
+            "description": "The street address you're shipping an order to.  If your customer has a second address line, like an apartment number add street2.",
+            "htmlDescription": "<p>The street address you&#39;re shipping an order to.  If your customer has a second address line, like an apartment number add street2.</p>
+",
+            "key": "street1",
+            "valueType": Object {
+              "type": "primitive",
+              "value": Object {
+                "type": "string",
+              },
+            },
+          },
+          Object {
+            "description": undefined,
+            "htmlDescription": undefined,
+            "key": "street2",
+            "valueType": Object {
+              "itemType": Object {
+                "type": "primitive",
+                "value": Object {
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          Object {
+            "description": "The city you're shipping an order to'.",
+            "htmlDescription": "<p>The city you&#39;re shipping an order to&#39;.</p>
+",
+            "key": "city",
+            "valueType": Object {
+              "type": "primitive",
+              "value": Object {
+                "type": "string",
+              },
+            },
+          },
+          Object {
+            "description": "The state you're shipping an order to. 
+Two digit code.  For example, 'CA' for California.
+",
+            "htmlDescription": "<p>The state you&#39;re shipping an order to. 
+Two digit code.  For example, &#39;CA&#39; for California.</p>
+",
+            "key": "state",
+            "valueType": Object {
+              "type": "primitive",
+              "value": Object {
+                "type": "string",
+              },
+            },
+          },
+          Object {
+            "description": "The postal code you're shipping an order to. 
+This must be a 5 or 9 digit numerical code.  If 9 digits, you must include a hyphen between the first 5 and last 4 digits.
+",
+            "htmlDescription": "<p>The postal code you&#39;re shipping an order to. 
+This must be a 5 or 9 digit numerical code.  If 9 digits, you must include a hyphen between the first 5 and last 4 digits.</p>
+",
+            "key": "postalCode",
+            "valueType": Object {
+              "type": "primitive",
+              "value": Object {
+                "type": "string",
+              },
+            },
+          },
+          Object {
+            "description": undefined,
+            "htmlDescription": undefined,
+            "key": "country",
+            "valueType": Object {
+              "type": "id",
+              "value": "type_lcf:Country",
+            },
+          },
+          Object {
+            "description": "If residential, set as true.  If commercial, set as false.",
+            "htmlDescription": "<p>If residential, set as true.  If commercial, set as false.</p>
+",
+            "key": "isResidential",
+            "valueType": Object {
+              "type": "primitive",
+              "value": Object {
+                "type": "boolean",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_lcf:Weight": Object {
+      "description": "The weight of the package in pounds. Include up to 2 decimal places.",
+      "htmlDescription": "<p>The weight of the package in pounds. Include up to 2 decimal places.</p>
+",
+      "name": "Weight",
+      "shape": Object {
+        "type": "alias",
+        "value": Object {
+          "type": "primitive",
+          "value": Object {
+            "type": "double",
+          },
+        },
+      },
+    },
+  },
+}
+`;
+
 exports[`transformApiDefinitionToDb {"name":"vellum"} 1`] = `
 Object {
   "auth": Object {
