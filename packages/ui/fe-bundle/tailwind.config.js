@@ -40,7 +40,14 @@ module.exports = {
 
                 // New design system
 
+                intent: {
+                    default: "rgb(156, 163, 175)",
+                },
+
+                borderDefault: "rgba(156, 163, 175, 30%)",
                 borderPrimary: "rgba(var(--accent-primary), 30%)",
+
+                textPrimary: "rgb(255, 255, 255)",
 
                 tagPrimary: "rgba(var(--accent-primary), 15%)",
             };
