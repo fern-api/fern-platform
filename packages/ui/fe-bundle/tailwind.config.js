@@ -49,7 +49,8 @@ module.exports = {
                 borderDefault: "rgba(156, 163, 175, 30%)",
                 borderPrimary: "rgba(var(--accent-primary), 30%)",
 
-                textPrimary: "rgb(255, 255, 255)",
+                "text-primary-dark": "rgb(255, 255, 255)",
+                "text-primary-light": "rgb(3,7,18)",
 
                 tagPrimary: "rgba(var(--accent-primary), 15%)",
             };

@@ -26,10 +26,10 @@ export const Core: React.FC = () => {
         >
             {visitDiscriminatedUnion({ theme }, "theme")._visit({
                 dark: () => (
-                    <MoonIcon className="text-intent-default group-hover:text-textPrimary h-4 w-4 transition" />
+                    <MoonIcon className="text-intent-default group-hover:text-text-primary-dark h-4 w-4 transition" />
                 ),
                 light: () => (
-                    <SunIcon className="text-intent-default group-hover:text-textPrimary h-4 w-4 transition" />
+                    <SunIcon className="text-intent-default group-hover:text-text-primary-light h-4 w-4 transition" />
                 ),
                 _other: () => null,
             })}

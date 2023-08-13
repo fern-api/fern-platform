@@ -108,7 +108,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                 <SubpackageTitle subpackage={package_} />
                             </div>
                         )}
-                        <div className="typography-font-heading text-3xl font-medium">
+                        <div className="typography-font-heading text-text-primary-light dark:text-text-primary-dark text-3xl font-medium">
                             <EndpointTitle endpoint={endpoint} />
                         </div>
                     </div>
