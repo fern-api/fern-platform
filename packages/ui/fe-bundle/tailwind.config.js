@@ -51,6 +51,8 @@ module.exports = {
 
                 "text-primary-dark": "rgb(255, 255, 255)",
                 "text-primary-light": "rgb(3,7,18)",
+                "text-muted-light": "rgb(107, 114, 128)",
+                "text-muted-dark": "rgb(156, 163, 175)",
 
                 tagPrimary: "rgba(var(--accent-primary), 15%)",
             };

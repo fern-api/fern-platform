@@ -107,7 +107,10 @@ export const H1: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h1
             id={slug}
-            className={classNames(className, "relative group/anchor-container text-2xl font-semibold mt-10 mb-3")}
+            className={classNames(
+                className,
+                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-2xl font-semibold mt-10 mb-3"
+            )}
             {...rest}
         >
             <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
@@ -123,7 +126,10 @@ export const H2: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h2
             id={slug}
-            className={classNames(className, "relative group/anchor-container text-xl font-semibold mt-10 mb-3")}
+            className={classNames(
+                className,
+                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-xl font-semibold mt-10 mb-3"
+            )}
             {...rest}
         >
             <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
@@ -139,7 +145,10 @@ export const H3: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h3
             id={slug}
-            className={classNames(className, "relative group/anchor-container text-lg font-semibold mt-10 mb-3")}
+            className={classNames(
+                className,
+                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
+            )}
             {...rest}
         >
             <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
@@ -155,7 +164,10 @@ export const H4: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h4
             id={slug}
-            className={classNames(className, "relative group/anchor-container text-lg font-semibold mt-10 mb-3")}
+            className={classNames(
+                className,
+                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
+            )}
             {...rest}
         >
             <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
@@ -171,7 +183,10 @@ export const H5: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h5
             id={slug}
-            className={classNames(className, "relative group/anchor-container text-lg font-semibold mt-10 mb-3")}
+            className={classNames(
+                className,
+                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
+            )}
             {...rest}
         >
             <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
@@ -187,7 +202,10 @@ export const H6: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h6
             id={slug}
-            className={classNames(className, "relative group/anchor-container text-lg font-semibold mt-10 mb-3")}
+            className={classNames(
+                className,
+                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
+            )}
             {...rest}
         >
             <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
@@ -205,8 +223,8 @@ export const P: React.FC<{ variant: "sm" | "md" } & HTMLAttributes<HTMLParagraph
         <p
             {...rest}
             className={classNames(className, "mb-3", {
-                "text-sm font-normal text-text-default leading-6": variant === "sm",
-                "text-base font-light text-text-default leading-7": variant === "md",
+                "text-sm font-normal !text-text-muted-light dark:!text-text-muted-dark leading-6": variant === "sm",
+                "text-base font-light !text-text-muted-light dark:!text-text-muted-dark leading-7": variant === "md",
             })}
         />
     );
@@ -221,7 +239,15 @@ export const Ul: React.FC<HTMLAttributes<HTMLUListElement>> = ({ className, ...r
 };
 
 export const Li: React.FC<HTMLAttributes<HTMLLIElement>> = ({ className, ...rest }) => {
-    return <li {...rest} className={classNames(className, "text-base font-light text-text-default leading-7")} />;
+    return (
+        <li
+            {...rest}
+            className={classNames(
+                className,
+                "text-base font-light !text-text-muted-light dark:!text-text-muted-dark leading-7"
+            )}
+        />
+    );
 };
 
 export const A: React.FC<HTMLAttributes<HTMLAnchorElement>> = ({ className, ...rest }) => {
