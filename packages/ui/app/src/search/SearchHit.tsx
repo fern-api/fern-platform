@@ -18,16 +18,16 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
 
     return (
         <Link
-            className="group flex w-full items-center space-x-4 space-y-1 rounded-md px-3 py-2 hover:bg-neutral-800/50 hover:no-underline"
+            className="hover:bg-background-secondary-light hover:dark:bg-background-secondary-dark group flex w-full items-center space-x-4 space-y-1 rounded-md px-3 py-2 hover:no-underline"
             onClick={() => {
                 closeSearchDialog();
                 navigateToPath(hit.path);
             }}
             href={`/${hit.path}`}
         >
-            <div className="border-border-concealed flex flex-col items-center justify-center rounded-md border p-1">
+            <div className="border-border-default-light dark:border-border-default-dark flex flex-col items-center justify-center rounded-md border p-1">
                 <Icon
-                    className="!text-text-default group-hover:!text-text-stark"
+                    className="!text-text-muted-light dark:!text-text-muted-dark group-hover:!text-text-primary-light group-hover:dark:!text-text-primary-dark"
                     size={14}
                     icon={visitDiscriminatedUnion(hit, "type")._visit({
                         endpoint: () => "code",
@@ -40,12 +40,12 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
             <div className="flex w-full flex-col space-y-1.5">
                 <div className="flex justify-between">
                     <Snippet
-                        className="text-text-stark group-hover:text-text-stark line-clamp-1 text-start"
+                        className="text-text-primary-light dark:text-text-primary-dark group-hover:text-text-primary-light group-hover:dark:text-text-primary-dark line-clamp-1 text-start"
                         attribute="title"
                         highlightedTagName="span"
                         hit={hit}
                     />
-                    <div className="group-hover:text-text-stark text-xs uppercase tracking-widest text-[#666]">
+                    <div className="group-hover:text-text-primary-light group-hover:dark:text-text-primary-dark text-text-disabled-light dark:text-text-disabled-dark text-xs uppercase tracking-widest">
                         {visitDiscriminatedUnion(hit, "type")._visit({
                             page: () => "Page",
                             endpoint: () => "Endpoint",
@@ -55,7 +55,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
                 </div>
                 <div className="flex flex-col items-start">
                     <Snippet
-                        className="text-text-default group-hover:text-text-stark line-clamp-1 text-start"
+                        className="text-text-muted-light dark:text-text-muted-dark group-hover:text-text-primary-light group-hover:dark:text-text-primary-dark line-clamp-1 text-start"
                         attribute="subtitle"
                         highlightedTagName="span"
                         hit={hit}
