@@ -23,10 +23,10 @@ export const BuiltWithFern: React.FC = () => {
                     </div>
                 </div>
                 <div
-                    className={classNames(
-                        "whitespace-nowrap text-xs transition",
-                        isHovering ? "text-text-default" : "text-text-muted"
-                    )}
+                    className={classNames("whitespace-nowrap text-xs transition", {
+                        "text-text-muted-light dark:text-text-muted-dark": isHovering,
+                        "text-text-disabled-light dark:text-text-disabled-dark": !isHovering,
+                    })}
                 >
                     Built with Fern
                 </div>

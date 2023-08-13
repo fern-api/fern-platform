@@ -31,16 +31,19 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
     return (
         <div
             className={classNames(
-                "flex flex-col rounded-xl border border-border overflow-hidden basis-full",
+                "flex flex-col rounded-xl border border-border-default-light dark:border-border-default-dark overflow-hidden basis-full",
                 className
             )}
             onClick={onClick}
         >
             <div
-                className={classNames("border-border flex h-10 items-center justify-between border-b py-1 pl-3 pr-2", {
-                    "bg-white/10": type === "primary",
-                    "bg-red-500/20": type === "warning",
-                })}
+                className={classNames(
+                    "border-border-default-light dark:border-border-default-dark flex h-10 items-center justify-between border-b py-1 pl-3 pr-2",
+                    {
+                        "bg-white/10": type === "primary",
+                        "bg-red-500/20": type === "warning",
+                    }
+                )}
             >
                 <div className="flex items-center">
                     <div

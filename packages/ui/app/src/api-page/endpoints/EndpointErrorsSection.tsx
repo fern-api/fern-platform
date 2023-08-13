@@ -24,14 +24,15 @@ export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
     onClickError,
 }) => {
     return (
-        <div className="border-border flex flex-col overflow-hidden rounded-md border">
+        <div className="border-border-default-light dark:border-border-default-dark flex flex-col overflow-hidden rounded-md border">
             {errors.map((e, idx) => {
                 return (
                     <button
                         key={idx}
                         className={classNames("space flex hover:bg-neutral-800/40 flex-col items-start p-3", {
                             "bg-neutral-800/60": idx === selectedErrorIndex,
-                            "border-border border-b": idx !== errors.length - 1,
+                            "border-border-default-light dark:border-border-default-dark border-b":
+                                idx !== errors.length - 1,
                         })}
                         onClick={(event) => {
                             onClickError(e, idx, event);
@@ -39,11 +40,11 @@ export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
                     >
                         <div className="flex items-baseline space-x-2">
                             <div className="rounded bg-red-500/20 p-1 text-xs text-red-400">{e.statusCode}</div>
-                            <div className="text-text-default text-xs">
+                            <div className="text-text-muted-light dark:text-text-muted-dark text-xs">
                                 {e.type != null && <TypeShorthand type={e.type} plural={false} />}
                             </div>
                         </div>
-                        <div className="text-text-default mt-3 text-start text-base font-light leading-7">
+                        <div className="text-text-muted-light dark:text-text-muted-dark mt-3 text-start text-base font-light leading-7">
                             {e.description}
                         </div>
                         {idx === selectedErrorIndex && (

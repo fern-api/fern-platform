@@ -1,5 +1,4 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import classNames from "classnames";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { Markdown } from "../markdown/Markdown";
@@ -21,7 +20,7 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({ name, des
             {anchor != null && <AbsolutelyPositionedAnchor verticalPosition="default" anchor={anchor} />}
             <div className="flex items-baseline gap-1">
                 <MonospaceText>{name}</MonospaceText>
-                <div className={classNames("text-xs", "text-text-default", "dark:text-text-default")}>
+                <div className="text-text-muted-light dark:text-text-muted-dark text-xs">
                     <TypeShorthand type={type} plural={false} />
                 </div>
             </div>

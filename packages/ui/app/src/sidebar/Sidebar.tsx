@@ -24,7 +24,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ expandAllSections = false }) 
 
     return (
         <SidebarContext.Provider value={contextValue}>
-            <div className="border-border bg-background-light dark:bg-background-dark flex min-w-0 flex-1 flex-col justify-between overflow-hidden border-r">
+            <div className="border-border-default-light dark:border-border-default-dark bg-background-light dark:bg-background-dark flex min-w-0 flex-1 flex-col justify-between overflow-hidden border-r">
                 <div className="z-10 flex flex-col px-2.5 pt-2.5">
                     {searchService.isAvailable && <SidebarSearchBar onClick={openSearchDialog} />}
                 </div>

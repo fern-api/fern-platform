@@ -29,7 +29,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
         //     const url = getEndpointEnvironmentUrl(endpoint);
         //     if (url != null) {
         //         elements.push(
-        //             <div key="base-url" className="text-text-default whitespace-nowrap font-light">
+        //             <div key="base-url" className="text-text-muted-light dark:text-text-muted-dark whitespace-nowrap font-light">
         //                 {url}
         //             </div>
         //         );
@@ -37,13 +37,16 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
         // }
         parts.forEach((p, i) => {
             elements.push(
-                <div key={`separator-${i}`} className="text-text-default">
+                <div key={`separator-${i}`} className="text-text-muted-light dark:text-text-muted-dark">
                     /
                 </div>,
                 visitDiscriminatedUnion(p, "type")._visit({
                     literal: (literal) => {
                         return (
-                            <div key={`part-${i}`} className="text-text-default whitespace-nowrap font-light">
+                            <div
+                                key={`part-${i}`}
+                                className="text-text-muted-light dark:text-text-muted-dark whitespace-nowrap font-light"
+                            >
                                 {literal.value}
                             </div>
                         );
@@ -71,7 +74,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                 className
             )}
         >
-            <div className="text-text-default flex shrink-0 items-center justify-center font-medium uppercase">
+            <div className="text-text-muted-light dark:text-text-muted-dark flex shrink-0 items-center justify-center font-medium uppercase">
                 {endpoint.method}
             </div>
             <div

@@ -35,7 +35,10 @@ export const MobileSidebar: React.FC = () => {
 
     return (
         <>
-            <div className="text-text-default flex flex-1 items-center gap-3 pb-1 pl-4 pr-2" onClick={open}>
+            <div
+                className="text-text-muted-light dark:text-text-muted-dark flex flex-1 items-center gap-3 pb-1 pl-4 pr-2"
+                onClick={open}
+            >
                 <div>{title}</div>
                 <Icon icon={IconNames.CHEVRON_DOWN} />
             </div>

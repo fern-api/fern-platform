@@ -96,7 +96,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
     return (
         <ApiPageMargins
             className={classNames("pb-20", {
-                "border-border border-b": !hideBottomSeparator,
+                "border-border-default-light dark:border-border-default-dark border-b": !hideBottomSeparator,
             })}
             onClick={() => setSelectedErrorIndex(null)}
         >
