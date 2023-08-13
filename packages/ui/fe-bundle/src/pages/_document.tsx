@@ -5,7 +5,7 @@ export default function Document(): JSX.Element {
         <Html lang="en">
             <Head />
             <body
-                className="dark:bg-background bg-backgroundSecondary overscroll-y-none"
+                className="bg-background-light dark:bg-background-dark overscroll-y-none"
                 style={{
                     backgroundImage: "var(--docs-background-image, url('/backgrounds/default.png'))",
                     backgroundSize: "cover",

@@ -13,16 +13,18 @@ export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = ({ onClick }) 
     return (
         <button
             onClick={onClick}
-            className="border-border bg-gray-dark/50 hover:bg-gray-dark group flex items-center rounded-md border px-2 py-1.5 transition"
+            className="dark:border-border-default-dark border-border-default-light bg-background-light dark:bg-background-dark hover:bg-background-hover-light hover:dark:bg-background-hover-dark group flex items-center rounded-md border px-2 py-1.5 transition"
         >
             <div className="flex items-center space-x-2">
-                <Icon className="text-text-muted group-hover:text-text-default transition" icon="search" size={14} />
-                <div className="text-text-muted group-hover:text-text-default transition">Search</div>
+                <Icon className="text-intent-default" icon="search" size={14} />
+                <div className="text-text-disabled-light group-hover:text-intent-default dark:text-text-disabled-dark transition">
+                    Search...
+                </div>
             </div>
 
             <PlatformSpecificContent>
                 {(platform) => (
-                    <div className="text-text-muted group-hover:text-text-default ml-auto text-start text-xs tracking-wide transition">
+                    <div className="text-text-disabled-light group-hover:text-intent-default dark:text-text-disabled-dark ml-auto text-start text-xs tracking-wide transition">
                         {visitDiscriminatedUnion({ platform }, "platform")._visit({
                             mac: () => "CMD+K",
                             windows: () => "CTRL+K",

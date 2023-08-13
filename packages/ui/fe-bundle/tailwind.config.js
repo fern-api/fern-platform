@@ -28,7 +28,6 @@ module.exports = {
                 ...colors,
                 accentPrimary: withOpacity("--accent-primary"),
                 accentHighlight: "rgba(var(--accent-primary), 10%)",
-                background: "#111418",
                 "gray-light": colors.neutral[600],
                 "gray-medium": colors.neutral[700],
                 "gray-dark": colors.neutral[800],
@@ -40,19 +39,24 @@ module.exports = {
 
                 // New design system
 
-                intent: {
-                    default: "rgb(156, 163, 175)",
-                },
+                "intent-default": "rgb(156, 163, 175)",
 
-                backgroundSecondary: "rgb(249,250,251)",
+                "background-dark": "rgb(17, 20, 24)",
+                "background-light": "rgb(249,250,251)",
 
-                borderDefault: "rgba(156, 163, 175, 30%)",
-                borderPrimary: "rgba(var(--accent-primary), 30%)",
+                "background-hover-dark": "rgba(151, 90, 90, 0.05)",
+                "background-hover-light": "rgba(3, 7, 18, 0.05)",
+
+                "border-default-dark": "rgba(156, 163, 175, 30%)",
+                "border-default-light": "rgba(72, 72, 72, 0.15)",
+                "border-primary": "rgba(var(--accent-primary), 30%)",
 
                 "text-primary-dark": "rgb(255, 255, 255)",
                 "text-primary-light": "rgb(3,7,18)",
                 "text-muted-light": "rgb(107, 114, 128)",
                 "text-muted-dark": "rgb(156, 163, 175)",
+                "text-disabled-light": "rgb(209, 213, 219)",
+                "text-disabled-dark": "rgb(107, 114, 128)",
 
                 tagPrimary: "rgba(var(--accent-primary), 15%)",
             };

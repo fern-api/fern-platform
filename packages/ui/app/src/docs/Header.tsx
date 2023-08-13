@@ -72,7 +72,7 @@ export const Header: React.FC = () => {
             <div className="flex items-center space-x-4">
                 {navbarLinksSection}
 
-                <div className="bg-borderDefault w-px self-stretch" />
+                <div className="dark:bg-border-default-dark bg-border-default-light w-px self-stretch" />
 
                 <ThemeButton />
             </div>
