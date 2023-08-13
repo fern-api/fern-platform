@@ -1,6 +1,5 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
-import { useState } from "react";
 import { DEFAULT_LOGO_HEIGHT } from "../config";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { HeaderPrimaryLink } from "./HeaderPrimaryLink";
@@ -8,15 +7,9 @@ import { HeaderSecondaryLink } from "./HeaderSecondaryLink";
 import { ThemeButton } from "./ThemeButton";
 import { VersionDropdown } from "./VersionDropdown";
 
-// TODO: Place elsewhere
-type Theme = "dark" | "light";
-
 export const Header: React.FC = () => {
     const { resolveFile, docsDefinition, docsInfo, setActiveVersion, navigateToPath } = useDocsContext();
     const { logo, logoHeight, logoHref, navbarLinks } = docsDefinition.config;
-
-    // TODO: Place in a context
-    const [theme, setTheme] = useState<Theme>("dark");
 
     const hasMultipleVersions = docsInfo.type === "versioned";
     const hasLogo = logo != null;
@@ -81,7 +74,7 @@ export const Header: React.FC = () => {
 
                 <div className="bg-borderDefault w-px self-stretch" />
 
-                <ThemeButton theme={theme} onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))} />
+                <ThemeButton />
             </div>
         </div>
     );

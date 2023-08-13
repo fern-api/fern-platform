@@ -44,6 +44,8 @@ module.exports = {
                     default: "rgb(156, 163, 175)",
                 },
 
+                backgroundSecondary: "rgb(249,250,251)",
+
                 borderDefault: "rgba(156, 163, 175, 30%)",
                 borderPrimary: "rgba(var(--accent-primary), 30%)",
 
