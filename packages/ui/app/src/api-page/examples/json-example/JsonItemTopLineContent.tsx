@@ -19,12 +19,32 @@ export const JsonItemTopLineContent: React.FC<JsonItemTopLineContent.Props> = ({
             visitJsonItem(value, {
                 object: (object) =>
                     size(object) > 0
-                        ? { content: <span>{"{"}</span>, isEndOfElement: false }
-                        : { content: <span>{"{}"}</span>, isEndOfElement: true },
+                        ? {
+                              content: (
+                                  <span className="text-text-primary-light dark:text-text-primary-dark">{"{"}</span>
+                              ),
+                              isEndOfElement: false,
+                          }
+                        : {
+                              content: (
+                                  <span className="text-text-primary-light dark:text-text-primary-dark">{"{}"}</span>
+                              ),
+                              isEndOfElement: true,
+                          },
                 list: (list) =>
                     list.length > 0
-                        ? { content: <span>{"["}</span>, isEndOfElement: false }
-                        : { content: <span>{"[]"}</span>, isEndOfElement: true },
+                        ? {
+                              content: (
+                                  <span className="text-text-primary-light dark:text-text-primary-dark">{"["}</span>
+                              ),
+                              isEndOfElement: false,
+                          }
+                        : {
+                              content: (
+                                  <span className="text-text-primary-light dark:text-text-primary-dark">{"[]"}</span>
+                              ),
+                              isEndOfElement: true,
+                          },
                 string: (value) => ({
                     content: <JsonExampleString value={value} />,
                     isEndOfElement: true,
@@ -42,7 +62,9 @@ export const JsonItemTopLineContent: React.FC<JsonItemTopLineContent.Props> = ({
     return (
         <span className="whitespace-nowrap">
             {content}
-            {isNonLastItemInCollection && isEndOfElement && <span>,</span>}
+            {isNonLastItemInCollection && isEndOfElement && (
+                <span className="text-text-primary-light dark:text-text-primary-dark">,</span>
+            )}
         </span>
     );
 };

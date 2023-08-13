@@ -42,8 +42,14 @@ module.exports = {
 
                 "intent-default": "rgb(156, 163, 175)",
 
+                "background-primary-dark": "rgb(3, 7, 18)",
+                "background-primary-light": "rgb(255, 255, 255)",
+
                 "background-dark": "rgb(17, 20, 24)",
                 "background-light": "rgb(249,250,251)",
+
+                "background-tertiary-dark": "rgb(31, 41, 55)",
+                "background-tertiary-light": "rgb(243, 244, 246)",
 
                 "background-hover-dark": "rgba(151, 90, 90, 0.05)",
                 "background-hover-light": "rgba(3, 7, 18, 0.05)",
