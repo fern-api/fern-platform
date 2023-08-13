@@ -19,7 +19,7 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({ name, des
         <div id={anchor} className="group/anchor-container relative flex flex-col gap-2 py-3">
             {anchor != null && <AbsolutelyPositionedAnchor verticalPosition="default" anchor={anchor} />}
             <div className="flex items-baseline gap-1">
-                <MonospaceText>{name}</MonospaceText>
+                <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">{name}</MonospaceText>
                 <div className="text-text-muted-light dark:text-text-muted-dark text-xs">
                     <TypeShorthand type={type} plural={false} />
                 </div>
