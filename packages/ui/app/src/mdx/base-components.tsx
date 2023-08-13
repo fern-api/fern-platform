@@ -69,7 +69,7 @@ export const Th: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
             {...rest}
             className={classNames(
                 className,
-                "text-sm text-left truncate px-2 py-1 font-normal text-text-stark leading-7 border-b border-border-default-light dark:border-border-default-dark"
+                "text-sm text-left truncate px-2 py-1 font-normal text-text-primary-light dark:text-text-primary-dark leading-7 border-b border-border-default-light dark:border-border-default-dark"
             )}
         />
     );
@@ -81,7 +81,7 @@ export const Td: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
             {...rest}
             className={classNames(
                 className,
-                "text-base border-b border-border-concealed font-light px-2 py-2 !text-text-muted-light dark:!text-text-muted-dark leading-7"
+                "text-base border-b border-border-default-light dark:border-border-default-dark font-light px-2 py-2 !text-text-muted-light dark:!text-text-muted-dark leading-7"
             )}
         />
     );
