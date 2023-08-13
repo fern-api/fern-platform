@@ -256,7 +256,7 @@ export const A: React.FC<HTMLAttributes<HTMLAnchorElement>> = ({ className, ...r
             {...rest}
             className={classNames(
                 className,
-                "transition !text-white hover:!text-accentPrimary !no-underline !border-b hover:!border-b-2 !border-b-accentPrimary hover:border-b-accentPrimary hover:no-underline font-medium"
+                "!text-text-primary-light dark:!text-text-primary-dark hover:!text-accentPrimary hover:dark:!text-accentPrimary !no-underline !border-b hover:!border-b-2 !border-b-accentPrimary hover:border-b-accentPrimary hover:no-underline font-medium"
             )}
         />
     );
