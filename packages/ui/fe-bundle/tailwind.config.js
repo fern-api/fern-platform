@@ -66,6 +66,8 @@ module.exports = {
                 "text-disabled-light": "rgb(209, 213, 219)",
                 "text-disabled-dark": "rgb(107, 114, 128)",
 
+                "tag-default-dark": "rgba(255, 255, 255, 15%)",
+                "tag-default-light": "rgba(3, 7, 18, 5%)",
                 tagPrimary: "rgba(var(--accent-primary), 15%)",
             };
         },
