@@ -29,11 +29,15 @@ export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
                 return (
                     <button
                         key={idx}
-                        className={classNames("space flex hover:bg-neutral-800/40 flex-col items-start p-3", {
-                            "bg-neutral-800/60": idx === selectedErrorIndex,
-                            "border-border-default-light dark:border-border-default-dark border-b":
-                                idx !== errors.length - 1,
-                        })}
+                        className={classNames(
+                            "space flex hover:bg-background-secondary-light dark:hover:bg-background-secondary-dark flex-col items-start p-3",
+                            {
+                                "bg-background-secondary-light dark:bg-background-secondary-dark":
+                                    idx === selectedErrorIndex,
+                                "border-border-default-light dark:border-border-default-dark border-b":
+                                    idx !== errors.length - 1,
+                            }
+                        )}
                         onClick={(event) => {
                             onClickError(e, idx, event);
                         }}
