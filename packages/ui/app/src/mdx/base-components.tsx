@@ -235,7 +235,15 @@ export const Ol: React.FC<HTMLAttributes<HTMLOListElement>> = ({ className, ...r
 };
 
 export const Ul: React.FC<HTMLAttributes<HTMLUListElement>> = ({ className, ...rest }) => {
-    return <ul {...rest} className={classNames(className, "list-image-dash list-inside space-y-2 mb-3")} />;
+    return (
+        <ul
+            {...rest}
+            className={classNames(
+                className,
+                "list-image-dash-light dark:list-image-dash-dark list-inside space-y-2 mb-3"
+            )}
+        />
+    );
 };
 
 export const Li: React.FC<HTMLAttributes<HTMLLIElement>> = ({ className, ...rest }) => {
