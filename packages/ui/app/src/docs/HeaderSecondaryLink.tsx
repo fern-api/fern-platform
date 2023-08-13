@@ -10,7 +10,9 @@ export declare namespace HeaderSecondaryLink {
 export const HeaderSecondaryLink: React.FC<HeaderSecondaryLink.Props> = ({ navbarLink }) => {
     return (
         <a
-            className={classNames("!no-underline hover:!text-accentPrimary !text-text-stark transition")}
+            className={classNames(
+                "!no-underline hover:text-accentPrimary hover:dark:text-accentPrimary text-text-muted-light dark:text-text-muted-dark transition"
+            )}
             href={navbarLink.url}
             target="_blank"
             rel="noreferrer noopener"

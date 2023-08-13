@@ -23,6 +23,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, sel
                             "group inline-flex w-full justify-center space-x-1 rounded-lg",
                             "hover:bg-tagPrimary",
                             "border border-border-primary hover:border-2",
+                            "transition",
                             "text-accentPrimary tracking-tight",
                             "py-1 pl-2.5 pr-1",
                             // Make sure padding remains the same on hover
