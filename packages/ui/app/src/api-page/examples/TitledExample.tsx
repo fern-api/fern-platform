@@ -60,7 +60,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                     <button onClick={copyToClipboard} disabled={copyToClipboard == null}>
                         {wasJustCopied ? (
                             <div className="bg-tagPrimary flex h-4 w-4 items-center justify-center rounded-sm">
-                                <CheckIcon className="text-accentPrimary h-4 w-4" />
+                                <CheckIcon className="text-accent-primary h-4 w-4" />
                             </div>
                         ) : (
                             <CopyIcon className="text-intent-default hover:text-text-primary-light hover:dark:text-text-primary-dark h-4 w-4" />

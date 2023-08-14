@@ -57,7 +57,7 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
 
     return (
         <Link
-            className="!text-accentPrimary/80 hover:!text-accentPrimary flex cursor-pointer items-center gap-2 rounded !no-underline transition"
+            className="!text-accent-primary/80 hover:!text-accent-primary flex cursor-pointer items-center gap-2 rounded !no-underline transition"
             onClick={onClick}
             href={`/${getFullSlug(path.slug)}`}
         >

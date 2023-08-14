@@ -104,7 +104,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                 <div className="flex min-w-0 max-w-2xl flex-1 flex-col">
                     <div className="pb-8 pt-20" ref={titleSectionRef}>
                         {isSubpackage(package_) && (
-                            <div className="text-accentPrimary mb-4 text-xs font-semibold uppercase tracking-wider">
+                            <div className="text-accent-primary mb-4 text-xs font-semibold uppercase tracking-wider">
                                 <SubpackageTitle subpackage={package_} />
                             </div>
                         )}

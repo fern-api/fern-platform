@@ -10,7 +10,7 @@ export const Card: React.FC<Card.Props> = ({ title, text, href }) => {
     const Component = href != null ? "a" : "div";
     return (
         <Component
-            className="border-border-default-light dark:border-border-default-dark hover:border-accentPrimary hover:dark:border-accentPrimary bg-background-tertiary-light dark:bg-background-tertiary-dark flex w-[300px] rounded border p-5 !no-underline transition"
+            className="border-border-default-light dark:border-border-default-dark hover:border-accent-primary hover:dark:border-accent-primary bg-background-tertiary-light dark:bg-background-tertiary-dark flex w-[300px] rounded border p-5 !no-underline transition"
             href={href}
         >
             <div className="text-text-primary-light dark:text-text-primary-dark font-normal">{title}</div>

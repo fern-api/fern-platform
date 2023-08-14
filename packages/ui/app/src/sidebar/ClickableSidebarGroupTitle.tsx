@@ -21,7 +21,7 @@ export const ClickableSidebarGroupTitle: React.FC<ClickableSidebarGroupTitle.Pro
                 title={
                     <div
                         className={classNames(
-                            "uppercase text-text-primary-light dark:text-text-primary-dark group-hover/sb-group-container:text-accentPrimary transition-colors font-normal w-full flex justify-between items-center"
+                            "uppercase text-text-primary-light dark:text-text-primary-dark group-hover/sb-group-container:text-accent-primary transition-colors font-normal w-full flex justify-between items-center"
                         )}
                     >
                         <span className="text-xs tracking-wide">{title}</span>

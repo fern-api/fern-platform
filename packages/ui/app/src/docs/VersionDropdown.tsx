@@ -24,7 +24,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, sel
                             "hover:bg-tagPrimary",
                             "border border-border-primary hover:border-2",
                             "transition",
-                            "text-accentPrimary tracking-tight",
+                            "text-accent-primary tracking-tight",
                             "py-1 pl-2.5 pr-1",
                             // Make sure padding remains the same on hover
                             // This seems to be a Tailwind bug where we can't use theme(borderWidth.1) in some cases
@@ -67,7 +67,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, sel
                                                 "flex w-full justify-between !no-underline items-center p-2",
                                                 {
                                                     "bg-tagPrimary": active,
-                                                    "!text-accentPrimary":
+                                                    "!text-accent-primary":
                                                         version === selectedId || (active && version !== selectedId),
                                                     "!text-text-muted-light dark:text-text-muted-dark":
                                                         !active && version !== selectedId,

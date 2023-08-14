@@ -27,10 +27,8 @@ module.exports = {
         colors: ({ colors }) => {
             return {
                 ...colors,
-                accentPrimary: withOpacity("--accent-primary"),
-                accentHighlight: "rgba(var(--accent-primary), 10%)",
-
-                // New design system
+                "accent-primary": withOpacity("--accent-primary"),
+                "accent-highlight": "rgba(var(--accent-primary), 10%)",
 
                 "intent-default": "rgb(156, 163, 175)",
 

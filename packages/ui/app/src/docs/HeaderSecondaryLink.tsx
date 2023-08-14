@@ -11,7 +11,7 @@ export const HeaderSecondaryLink: React.FC<HeaderSecondaryLink.Props> = ({ navba
     return (
         <a
             className={classNames(
-                "!no-underline hover:text-accentPrimary hover:dark:text-accentPrimary text-text-muted-light dark:text-text-muted-dark transition"
+                "!no-underline hover:text-accent-primary hover:dark:text-accent-primary text-text-muted-light dark:text-text-muted-dark transition"
             )}
             href={navbarLink.url}
             target="_blank"
