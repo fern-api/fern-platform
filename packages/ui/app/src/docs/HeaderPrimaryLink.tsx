@@ -12,7 +12,7 @@ export const HeaderPrimaryLink: React.FC<HeaderPrimaryLink.Props> = ({ navbarLin
     return (
         <a
             className={classNames(
-                "group pl-4 pr-2.5 py-1.5 border border-border-primary hover:border-2 flex space-x-1.5 items-center !no-underline !text-accent-primary transition rounded-full hover:bg-tagPrimary",
+                "group pl-4 pr-2.5 py-1.5 border border-border-primary hover:border-2 flex space-x-1.5 items-center !no-underline !text-accent-primary transition rounded-full hover:bg-tag-primary",
                 "hover:py-[calc(theme(spacing.1.5)-1px)] hover:pr-[calc(theme(spacing[2.5])-1px)] hover:pl-[calc(theme(spacing.4)-1px)]"
             )}
             href={navbarLink.url}

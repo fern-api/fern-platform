@@ -21,7 +21,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, sel
                     <Menu.Button
                         className={classNames(
                             "group inline-flex w-full justify-center space-x-1 rounded-lg",
-                            "hover:bg-tagPrimary",
+                            "hover:bg-tag-primary",
                             "border border-border-primary hover:border-2",
                             "transition",
                             "text-accent-primary tracking-tight",
@@ -66,7 +66,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, sel
                                             className={classNames(
                                                 "flex w-full justify-between !no-underline items-center p-2",
                                                 {
-                                                    "bg-tagPrimary": active,
+                                                    "bg-tag-primary": active,
                                                     "!text-accent-primary":
                                                         version === selectedId || (active && version !== selectedId),
                                                     "!text-text-muted-light dark:text-text-muted-dark":

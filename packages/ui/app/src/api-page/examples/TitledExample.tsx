@@ -59,7 +59,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                     {actions}
                     <button onClick={copyToClipboard} disabled={copyToClipboard == null}>
                         {wasJustCopied ? (
-                            <div className="bg-tagPrimary flex h-4 w-4 items-center justify-center rounded-sm">
+                            <div className="bg-tag-primary flex h-4 w-4 items-center justify-center rounded-sm">
                                 <CheckIcon className="text-accent-primary h-4 w-4" />
                             </div>
                         ) : (

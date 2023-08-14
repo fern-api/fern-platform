@@ -58,7 +58,7 @@ module.exports = {
 
                 "tag-default-dark": "rgba(255, 255, 255, 15%)",
                 "tag-default-light": "rgba(3, 7, 18, 5%)",
-                tagPrimary: "rgba(var(--accent-primary), 15%)",
+                "tag-primary": "rgba(var(--accent-primary), 15%)",
             };
         },
     },
