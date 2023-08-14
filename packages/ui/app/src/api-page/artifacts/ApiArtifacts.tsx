@@ -39,7 +39,7 @@ export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiArtifacts }) => 
                         <SdkCard key={index} sdk={sdk} />
                     ))}
                     <SdkCardLayout
-                        icon={<PythonLogo className="fill-text-muted" />}
+                        icon={<PythonLogo className="fill-text-muted-light dark:fill-text-muted-dark" />}
                         title={<div className="t-muted">Python</div>}
                         rightElement={
                             <div className="t-muted rounded-full bg-neutral-500/20 px-3 py-1 font-medium uppercase">
@@ -48,7 +48,7 @@ export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiArtifacts }) => 
                         }
                     />
                     <SdkCardLayout
-                        icon={<JavaLogo className="fill-text-muted" />}
+                        icon={<JavaLogo className="fill-text-muted-light dark:fill-text-muted-dark" />}
                         title={<div className="t-muted">Java</div>}
                         rightElement={
                             <div className="t-muted rounded-full bg-neutral-500/20 px-3 py-1 font-medium uppercase">
@@ -57,7 +57,7 @@ export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiArtifacts }) => 
                         }
                     />
                     <SdkCardLayout
-                        icon={<GoLogo className="fill-text-muted" />}
+                        icon={<GoLogo className="fill-text-muted-light dark:fill-text-muted-dark" />}
                         title={<div className="t-muted">Go</div>}
                         rightElement={
                             <div className="t-muted rounded-full bg-neutral-500/20 px-3 py-1 font-medium uppercase">
@@ -66,7 +66,7 @@ export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiArtifacts }) => 
                         }
                     />
                     <SdkCardLayout
-                        icon={<RubyLogo className="fill-text-muted" />}
+                        icon={<RubyLogo className="fill-text-muted-light dark:fill-text-muted-dark" />}
                         title={<div className="t-muted">Ruby</div>}
                         rightElement={
                             <div className="t-muted rounded-full bg-neutral-500/20 px-3 py-1 font-medium uppercase">
@@ -75,7 +75,7 @@ export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiArtifacts }) => 
                         }
                     />
                     <SdkCardLayout
-                        icon={<DotNetLogo className="fill-text-muted" />}
+                        icon={<DotNetLogo className="fill-text-muted-light dark:fill-text-muted-dark" />}
                         title={<div className="t-muted">.NET</div>}
                         rightElement={
                             <div className="t-muted rounded-full bg-neutral-500/20 px-3 py-1 font-medium uppercase">
