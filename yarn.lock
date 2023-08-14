@@ -1875,7 +1875,6 @@ __metadata:
   resolution: "@fern-ui/compile-root@workspace:packages/_root"
   dependencies:
     "@fern-ui/common-components": "workspace:*"
-    "@fern-ui/contexted-dialog": "workspace:*"
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/fonts": "workspace:*"
     "@fern-ui/loadable": "workspace:*"
@@ -1895,32 +1894,6 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
-  languageName: unknown
-  linkType: soft
-
-"@fern-ui/contexted-dialog@workspace:*, @fern-ui/contexted-dialog@workspace:packages/commons/react/contexted-dialog":
-  version: 0.0.0-use.local
-  resolution: "@fern-ui/contexted-dialog@workspace:packages/commons/react/contexted-dialog"
-  dependencies:
-    "@blueprintjs/core": ^4.11.5
-    "@fern-ui/core-utils": "workspace:*"
-    "@fern-ui/react-commons": "workspace:*"
-    "@fern-ui/theme": "workspace:*"
-    "@fern-ui/toaster": "workspace:*"
-    "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
-    classnames: ^2.3.1
-    depcheck: ^1.4.3
-    eslint: ^8.26.0
-    jest: ^29.4.0
-    organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    stylelint: ^14.14.0
-    typescript: 4.6.4
-    vite: ^4.3.8
   languageName: unknown
   linkType: soft
 

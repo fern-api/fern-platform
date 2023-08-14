@@ -28,7 +28,6 @@
   },
   "dependencies": {
     "@fern-ui/common-components": "workspace:*",
-    "@fern-ui/contexted-dialog": "workspace:*",
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/fonts": "workspace:*",
     "@fern-ui/loadable": "workspace:*",

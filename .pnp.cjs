@@ -32,10 +32,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/commons/react/common-components"\
       },\
       {\
-        "name": "@fern-ui/contexted-dialog",\
-        "reference": "workspace:packages/commons/react/contexted-dialog"\
-      },\
-      {\
         "name": "@fern-ui/fonts",\
         "reference": "workspace:packages/commons/react/fonts"\
       },\
@@ -81,7 +77,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     "fallbackExclusionList": [\
       ["@fern-ui/common-components", ["workspace:packages/commons/react/common-components"]],\
       ["@fern-ui/compile-root", ["workspace:packages/_root"]],\
-      ["@fern-ui/contexted-dialog", ["workspace:packages/commons/react/contexted-dialog"]],\
       ["@fern-ui/core-utils", ["workspace:packages/commons/core-utils"]],\
       ["@fern-ui/fe-bundle", ["workspace:packages/ui/fe-bundle"]],\
       ["@fern-ui/fonts", ["workspace:packages/commons/react/fonts"]],\
@@ -3335,7 +3330,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-ui/compile-root", "workspace:packages/_root"],\
             ["@fern-ui/common-components", "workspace:packages/commons/react/common-components"],\
-            ["@fern-ui/contexted-dialog", "workspace:packages/commons/react/contexted-dialog"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/fonts", "workspace:packages/commons/react/fonts"],\
             ["@fern-ui/loadable", "workspace:packages/commons/loadable"],\
@@ -3355,34 +3349,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
-      ["@fern-ui/contexted-dialog", [\
-        ["workspace:packages/commons/react/contexted-dialog", {\
-          "packageLocation": "./packages/commons/react/contexted-dialog/",\
-          "packageDependencies": [\
-            ["@fern-ui/contexted-dialog", "workspace:packages/commons/react/contexted-dialog"],\
-            ["@blueprintjs/core", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:4.11.5"],\
-            ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-ui/react-commons", "workspace:packages/commons/react/react-commons"],\
-            ["@fern-ui/theme", "workspace:packages/commons/react/theme"],\
-            ["@fern-ui/toaster", "workspace:packages/commons/react/toaster"],\
-            ["@types/jest", "npm:29.0.3"],\
-            ["@types/node", "npm:18.7.18"],\
-            ["@types/react", "npm:18.0.20"],\
-            ["classnames", "npm:2.3.1"],\
-            ["depcheck", "npm:1.4.3"],\
-            ["eslint", "npm:8.26.0"],\
-            ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.5.0"],\
-            ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
-            ["react", "npm:18.2.0"],\
-            ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
-            ["stylelint", "npm:14.14.0"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
-            ["vite", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:4.3.8"]\
           ],\
           "linkType": "SOFT"\
         }]\
