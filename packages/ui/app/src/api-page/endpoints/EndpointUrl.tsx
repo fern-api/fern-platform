@@ -29,7 +29,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
         //     const url = getEndpointEnvironmentUrl(endpoint);
         //     if (url != null) {
         //         elements.push(
-        //             <div key="base-url" className="text-text-default whitespace-nowrap font-light">
+        //             <div key="base-url" className="t-muted whitespace-nowrap font-light">
         //                 {url}
         //             </div>
         //         );
@@ -37,13 +37,13 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
         // }
         parts.forEach((p, i) => {
             elements.push(
-                <div key={`separator-${i}`} className="text-text-default">
+                <div key={`separator-${i}`} className="text-text-disabled-light dark:text-text-disabled-dark">
                     /
                 </div>,
                 visitDiscriminatedUnion(p, "type")._visit({
                     literal: (literal) => {
                         return (
-                            <div key={`part-${i}`} className="text-text-default whitespace-nowrap font-light">
+                            <div key={`part-${i}`} className="t-muted whitespace-nowrap font-mono text-xs font-normal">
                                 {literal.value}
                             </div>
                         );
@@ -51,7 +51,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                     pathParameter: (pathParameter) => (
                         <div
                             key={`part-${i}`}
-                            className="bg-accentHighlight text-accentPrimary flex items-center justify-center whitespace-nowrap rounded px-1 py-0.5 font-mono text-xs"
+                            className="bg-accent-highlight text-accent-primary flex items-center justify-center whitespace-nowrap rounded px-1 py-0.5 font-mono text-xs font-normal"
                         >
                             :{pathParameter.name}
                         </div>
@@ -64,14 +64,8 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
     }, []);
 
     return (
-        <div
-            ref={ref}
-            className={classNames(
-                "border-border-concealed flex h-9 overflow-x-hidden items-center rounded-lg border bg-neutral-700/20 px-3 py-0.5",
-                className
-            )}
-        >
-            <div className="text-text-default flex shrink-0 items-center justify-center font-medium uppercase">
+        <div ref={ref} className={classNames("flex h-9 overflow-x-hidden items-center py-0.5", className)}>
+            <div className="t-muted bg-tag-default-light dark:bg-tag-default-dark flex shrink-0 items-center justify-center rounded-lg px-2 py-1 text-xs font-normal uppercase">
                 {endpoint.method}
             </div>
             <div

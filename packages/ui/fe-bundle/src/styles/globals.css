@@ -7,8 +7,8 @@
     .prose a:hover {
         @apply transition;
         @apply pb-[2px];
-        @apply text-white hover:text-accentPrimary;
-        @apply no-underline border-b border-b-border hover:border-b-accentPrimary;
+        @apply text-white hover:text-accent-primary;
+        @apply no-underline border-b border-b-border-default-light dark:border-b-border-default-dark hover:border-b-accent-primary;
     }
 
     .prose a {
@@ -16,6 +16,6 @@
     }
 
     ::selection {
-        @apply bg-accentPrimary/20;
+        @apply bg-accent-primary/20;
     }
 }

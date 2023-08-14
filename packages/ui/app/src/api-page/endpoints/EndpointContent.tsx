@@ -96,7 +96,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
     return (
         <ApiPageMargins
             className={classNames("pb-20", {
-                "border-border border-b": !hideBottomSeparator,
+                "border-border-default-light dark:border-border-default-dark border-b": !hideBottomSeparator,
             })}
             onClick={() => setSelectedErrorIndex(null)}
         >
@@ -104,11 +104,11 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                 <div className="flex min-w-0 max-w-2xl flex-1 flex-col">
                     <div className="pb-8 pt-20" ref={titleSectionRef}>
                         {isSubpackage(package_) && (
-                            <div className="text-accentPrimary mb-4 text-xs font-semibold uppercase tracking-wider">
+                            <div className="text-accent-primary mb-4 text-xs font-semibold uppercase tracking-wider">
                                 <SubpackageTitle subpackage={package_} />
                             </div>
                         )}
-                        <div className="typography-font-heading text-3xl font-medium">
+                        <div className="typography-font-heading text-text-primary-light dark:text-text-primary-dark text-3xl font-bold">
                             <EndpointTitle endpoint={endpoint} />
                         </div>
                     </div>

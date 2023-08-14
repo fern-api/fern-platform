@@ -83,9 +83,11 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchor, propert
             {anchor != null && <AbsolutelyPositionedAnchor verticalPosition="default" anchor={anchor} />}
             <div className="flex items-baseline gap-2">
                 <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName}>
-                    <MonospaceText>{property.key}</MonospaceText>
+                    <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">
+                        {property.key}
+                    </MonospaceText>
                 </div>
-                <div className={classNames("text-xs", "text-text-default", "dark:text-text-default")}>
+                <div className="t-muted text-xs">
                     <TypeShorthand type={property.valueType} plural={false} />
                 </div>
             </div>

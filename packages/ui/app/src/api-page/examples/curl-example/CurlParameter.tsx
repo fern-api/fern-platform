@@ -11,12 +11,12 @@ export declare namespace CurlParameter {
 export const CurlParameter: React.FC<CurlParameter.Props> = ({ paramKey, value, doNotStringifyValue = false }) => {
     return (
         <>
-            <span className="text-text-default">{paramKey}</span>
+            <span className="text-text-primary-light dark:text-text-primary-dark">{paramKey}</span>
             {value != null && (
                 <>
                     {" "}
                     {doNotStringifyValue ? (
-                        <span className="text-text-default">{value}</span>
+                        <span className="text-text-primary-light dark:text-text-primary-dark">{value}</span>
                     ) : (
                         <JsonExampleString value={value} />
                     )}

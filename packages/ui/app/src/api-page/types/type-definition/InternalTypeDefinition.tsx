@@ -134,11 +134,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
         <div className="flex flex-col">
             <div className="flex flex-col items-start">
                 <div
-                    className={classNames(
-                        "flex flex-col border rounded overflow-hidden mt-2",
-                        "border-border",
-                        "dark:border-border"
-                    )}
+                    className="border-border-default-light dark:border-border-default-dark mt-2 flex flex-col overflow-hidden rounded border"
                     style={{
                         width: isCollapsed ? originalButtonWidth : "100%",
                     }}
@@ -146,25 +142,18 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                 >
                     <div
                         {...containerCallbacks}
-                        className={classNames(
-                            "flex gap-1 items-center cursor-pointer px-2 py-1 transition text-text-default border-b border-border",
-                            {
-                                "border-opacity-0": isCollapsed,
-                            }
-                        )}
+                        className={classNames("flex gap-1 items-center cursor-pointer px-2 py-1 transition t-muted", {
+                            "border-opacity-0": isCollapsed,
+                        })}
                         onClick={(e) => {
                             toggleIsCollapsed();
                             e.stopPropagation();
                         }}
                     >
                         <Icon
-                            className={classNames(
-                                "transition",
-                                isHovering ? "text-text-default" : "text-text-default",
-                                {
-                                    "rotate-45": isCollapsed,
-                                }
-                            )}
+                            className={classNames("transition", {
+                                "rotate-45": isCollapsed,
+                            })}
                             icon={IconNames.CROSS}
                         />
                         <div

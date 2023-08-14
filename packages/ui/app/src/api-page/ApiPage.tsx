@@ -11,7 +11,9 @@ export const ApiPage: React.FC = () => {
     return (
         <div className="min-h-0 overflow-y-auto overflow-x-hidden pb-36">
             <ApiPageMargins>
-                <div className="mt-20 pb-2 text-4xl font-medium">{apiSection.title}</div>
+                <div className="text-text-primary-light dark:text-text-primary-dark mt-20 pb-2 text-4xl font-medium">
+                    {apiSection.title}
+                </div>
             </ApiPageMargins>
             {apiSection.artifacts != null && areApiArtifactsNonEmpty(apiSection.artifacts) && (
                 <ApiArtifacts apiArtifacts={apiSection.artifacts} />

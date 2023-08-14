@@ -1875,7 +1875,6 @@ __metadata:
   resolution: "@fern-ui/compile-root@workspace:packages/_root"
   dependencies:
     "@fern-ui/common-components": "workspace:*"
-    "@fern-ui/contexted-dialog": "workspace:*"
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/fonts": "workspace:*"
     "@fern-ui/loadable": "workspace:*"
@@ -1895,32 +1894,6 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
-  languageName: unknown
-  linkType: soft
-
-"@fern-ui/contexted-dialog@workspace:*, @fern-ui/contexted-dialog@workspace:packages/commons/react/contexted-dialog":
-  version: 0.0.0-use.local
-  resolution: "@fern-ui/contexted-dialog@workspace:packages/commons/react/contexted-dialog"
-  dependencies:
-    "@blueprintjs/core": ^4.11.5
-    "@fern-ui/core-utils": "workspace:*"
-    "@fern-ui/react-commons": "workspace:*"
-    "@fern-ui/theme": "workspace:*"
-    "@fern-ui/toaster": "workspace:*"
-    "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
-    classnames: ^2.3.1
-    depcheck: ^1.4.3
-    eslint: ^8.26.0
-    jest: ^29.4.0
-    organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    stylelint: ^14.14.0
-    typescript: 4.6.4
-    vite: ^4.3.8
   languageName: unknown
   linkType: soft
 
@@ -1948,6 +1921,7 @@ __metadata:
   dependencies:
     "@fern-fern/registry-browser": 0.12.1-1-g4f47174
     "@fern-ui/core-utils": "workspace:*"
+    "@fern-ui/theme": "workspace:*"
     "@fern-ui/ui": "workspace:*"
     "@tailwindcss/typography": ^0.5.9
     "@types/jest": ^29.0.3
@@ -2134,14 +2108,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/theme@workspace:packages/commons/react/theme"
   dependencies:
-    "@blueprintjs/core": ^4.11.5
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
-    classnames: ^2.3.1
     depcheck: ^1.4.3
     eslint: ^8.26.0
     jest: ^29.4.0
+    next-themes: ^0.2.1
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     react: ^18.2.0
@@ -10003,6 +9976,17 @@ env-cmd@toddbluhm/env-cmd:
     react: ">=16.x <=18.x"
     react-dom: ">=16.x <=18.x"
   checksum: 95cd77d03ae8ad7ae691cde0e895597b35a2ddac99cbeb31f1307599b2c7e7628f9e2a0fa5ced8d55036f58d8a2006ae312e308d574b8c3b0948df7279fa393d
+  languageName: node
+  linkType: hard
+
+"next-themes@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "next-themes@npm:0.2.1"
+  peerDependencies:
+    next: "*"
+    react: "*"
+    react-dom: "*"
+  checksum: ebc248b956138e73436c4ed0a0f0a877a0a48a33156db577029b8b8469e48b5c777d61abf2baeb75953378febea74e067a4869ff90b4a3e94fce123289b862ba
   languageName: node
   linkType: hard
 

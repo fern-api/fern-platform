@@ -12,9 +12,7 @@ export const BuiltWithFern: React.FC = () => {
 
     return (
         <div
-            className={classNames(
-                "flex cursor-pointer items-center justify-center gap-2 p-3 shadow-[0_-5px_10px_10px_rgba(18,20,24,1)]"
-            )}
+            className={classNames("flex cursor-pointer items-center justify-center gap-2 p-3")}
             onClick={onClick}
             {...containerCallbacks}
         >
@@ -25,10 +23,10 @@ export const BuiltWithFern: React.FC = () => {
                     </div>
                 </div>
                 <div
-                    className={classNames(
-                        "whitespace-nowrap text-xs transition",
-                        isHovering ? "text-text-default" : "text-text-muted"
-                    )}
+                    className={classNames("whitespace-nowrap text-xs transition", {
+                        "t-muted": isHovering,
+                        "text-text-disabled-light dark:text-text-disabled-dark": !isHovering,
+                    })}
                 >
                     Built with Fern
                 </div>

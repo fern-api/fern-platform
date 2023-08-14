@@ -26,7 +26,7 @@ export const AbsolutelyPositionedAnchor: React.FC<AbsolutelyPositionedAnchor.Pro
             )}
         >
             <a href={`#${anchor}`}>
-                <LinkIcon className="text-text-muted hover:text-text-stark h-3.5 w-3.5 transition" />
+                <LinkIcon className="t-muted hover:text-text-primary-light hover:dark:text-text-primary-dark h-3.5 w-3.5 transition" />
             </a>
         </div>
     );

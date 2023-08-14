@@ -21,9 +21,10 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, sel
                     <Menu.Button
                         className={classNames(
                             "group inline-flex w-full justify-center space-x-1 rounded-lg",
-                            "hover:bg-tagPrimary",
-                            "border border-borderPrimary hover:border-2",
-                            "text-accentPrimary tracking-tight",
+                            "hover:bg-tag-primary",
+                            "border border-border-primary hover:border-2",
+                            "transition",
+                            "text-accent-primary tracking-tight",
                             "py-1 pl-2.5 pr-1",
                             // Make sure padding remains the same on hover
                             // This seems to be a Tailwind bug where we can't use theme(borderWidth.1) in some cases
@@ -56,7 +57,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, sel
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                 >
-                    <Menu.Items className="border-borderPrimary bg-background absolute left-0 mt-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md border shadow-lg">
+                    <Menu.Items className="border-border-primary bg-background-light dark:bg-background-dark absolute left-0 mt-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md border shadow-lg">
                         <div>
                             {versions.map((version, idx) => (
                                 <Menu.Item key={idx}>
@@ -65,10 +66,11 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, sel
                                             className={classNames(
                                                 "flex w-full justify-between !no-underline items-center p-2",
                                                 {
-                                                    "bg-tagPrimary": active,
-                                                    "!text-accentPrimary":
+                                                    "bg-tag-primary": active,
+                                                    "!text-accent-primary":
                                                         version === selectedId || (active && version !== selectedId),
-                                                    "!text-text-muted": !active && version !== selectedId,
+                                                    "!text-text-muted-light dark:!text-text-muted-dark":
+                                                        !active && version !== selectedId,
                                                     "rounded-t-md": idx === 0,
                                                     "rounded-b-md": idx === versions.length - 1,
                                                 }

@@ -31,7 +31,7 @@ export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiArtifacts }) => 
                 <H2 className="pt-20">
                     <ApiArtifactsTitle />
                 </H2>
-                <div className="text-text-default mt-5 text-lg">
+                <div className="t-muted mt-5 text-lg">
                     Official open-source client libraries for your favorite platforms.
                 </div>
                 <div className="mt-16 grid grid-cols-3 gap-10">
@@ -39,46 +39,46 @@ export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiArtifacts }) => 
                         <SdkCard key={index} sdk={sdk} />
                     ))}
                     <SdkCardLayout
-                        icon={<PythonLogo className="fill-text-muted" />}
-                        title={<div className="text-text-default">Python</div>}
+                        icon={<PythonLogo className="fill-text-muted-light dark:fill-text-muted-dark" />}
+                        title={<div className="t-muted">Python</div>}
                         rightElement={
-                            <div className="text-text-default rounded-full bg-neutral-500/20 px-3 py-1 font-medium uppercase">
+                            <div className="t-muted rounded-full bg-neutral-500/20 px-3 py-1 font-medium uppercase">
                                 Coming Soon
                             </div>
                         }
                     />
                     <SdkCardLayout
-                        icon={<JavaLogo className="fill-text-muted" />}
-                        title={<div className="text-text-default">Java</div>}
+                        icon={<JavaLogo className="fill-text-muted-light dark:fill-text-muted-dark" />}
+                        title={<div className="t-muted">Java</div>}
                         rightElement={
-                            <div className="text-text-default rounded-full bg-neutral-500/20 px-3 py-1 font-medium uppercase">
+                            <div className="t-muted rounded-full bg-neutral-500/20 px-3 py-1 font-medium uppercase">
                                 Coming Soon
                             </div>
                         }
                     />
                     <SdkCardLayout
-                        icon={<GoLogo className="fill-text-muted" />}
-                        title={<div className="text-text-default">Go</div>}
+                        icon={<GoLogo className="fill-text-muted-light dark:fill-text-muted-dark" />}
+                        title={<div className="t-muted">Go</div>}
                         rightElement={
-                            <div className="text-text-default rounded-full bg-neutral-500/20 px-3 py-1 font-medium uppercase">
+                            <div className="t-muted rounded-full bg-neutral-500/20 px-3 py-1 font-medium uppercase">
                                 Coming Soon
                             </div>
                         }
                     />
                     <SdkCardLayout
-                        icon={<RubyLogo className="fill-text-muted" />}
-                        title={<div className="text-text-default">Ruby</div>}
+                        icon={<RubyLogo className="fill-text-muted-light dark:fill-text-muted-dark" />}
+                        title={<div className="t-muted">Ruby</div>}
                         rightElement={
-                            <div className="text-text-default rounded-full bg-neutral-500/20 px-3 py-1 font-medium uppercase">
+                            <div className="t-muted rounded-full bg-neutral-500/20 px-3 py-1 font-medium uppercase">
                                 Coming Soon
                             </div>
                         }
                     />
                     <SdkCardLayout
-                        icon={<DotNetLogo className="fill-text-muted" />}
-                        title={<div className="text-text-default">.NET</div>}
+                        icon={<DotNetLogo className="fill-text-muted-light dark:fill-text-muted-dark" />}
+                        title={<div className="t-muted">.NET</div>}
                         rightElement={
-                            <div className="text-text-default rounded-full bg-neutral-500/20 px-3 py-1 font-medium uppercase">
+                            <div className="t-muted rounded-full bg-neutral-500/20 px-3 py-1 font-medium uppercase">
                                 Coming Soon
                             </div>
                         }

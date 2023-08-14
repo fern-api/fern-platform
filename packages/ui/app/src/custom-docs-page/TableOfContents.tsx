@@ -21,12 +21,14 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ma
     return (
         <div className={classNames("w-64", className)}>
             <div className="flex flex-col">
-                <div className="medium mb-3 uppercase">On this page</div>
+                <div className="medium text-text-primary-light dark:text-text-primary-dark mb-3 uppercase">
+                    On this page
+                </div>
                 <div className="flex flex-col gap-3">
                     {headings.map((heading, index) => (
                         <Text
                             key={index}
-                            className="text-text-default cursor-pointer transition hover:text-neutral-300"
+                            className="t-muted hover:dark:text-text-primary-dark hover:text-text-primary-light cursor-pointer transition"
                             style={{ marginLeft: 8 * (heading.depth - minDepth) }}
                             ellipsize
                         >

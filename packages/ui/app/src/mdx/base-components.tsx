@@ -14,7 +14,11 @@ export const CodeBlock: React.FC<HTMLAttributes<HTMLElement>> = ({ children }) =
     };
     const language = className != null ? className.replace(/language-/, "") : "";
     return (
-        <pre className={classNames("px-4 pt-1 mb-5 border rounded-lg bg-gray-950/90 border-border/60")}>
+        <pre
+            className={classNames(
+                "px-4 pt-1 mb-5 border rounded-lg bg-gray-950/90 border-border-default-light dark:border-border-default-dark"
+            )}
+        >
             <SyntaxHighlighter
                 style={vscDarkPlus}
                 customStyle={{
@@ -37,7 +41,7 @@ export const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({ className, .
             {...rest}
             className={classNames(
                 className,
-                "border border-border/60 rounded font-mono text-sm !bg-neutral-900/50 !text-white !py-0.5 !px-1"
+                "border border-border-default-light dark:border-border-default-dark rounded font-mono text-sm bg-background-light dark:!bg-background-dark !text-text-primary-light dark:!text-text-primary-dark !py-0.5 !px-1"
             )}
         />
     );
@@ -69,7 +73,7 @@ export const Th: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
             {...rest}
             className={classNames(
                 className,
-                "text-sm text-left truncate px-2 py-1 font-normal text-text-stark leading-7 border-b border-border"
+                "text-sm text-left truncate px-2 py-1 font-normal text-text-primary-light dark:text-text-primary-dark leading-7 border-b border-border-default-light dark:border-border-default-dark"
             )}
         />
     );
@@ -81,7 +85,7 @@ export const Td: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
             {...rest}
             className={classNames(
                 className,
-                "text-base border-b border-border-concealed font-light px-2 py-2 text-text-default leading-7"
+                "text-base border-b border-border-default-light dark:border-border-default-dark font-light px-2 py-2 !text-text-muted-light dark:!text-text-muted-dark leading-7"
             )}
         />
     );
@@ -107,7 +111,10 @@ export const H1: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h1
             id={slug}
-            className={classNames(className, "relative group/anchor-container text-2xl font-semibold mt-10 mb-3")}
+            className={classNames(
+                className,
+                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-2xl font-semibold mt-10 mb-3"
+            )}
             {...rest}
         >
             <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
@@ -123,7 +130,10 @@ export const H2: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h2
             id={slug}
-            className={classNames(className, "relative group/anchor-container text-xl font-semibold mt-10 mb-3")}
+            className={classNames(
+                className,
+                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-xl font-semibold mt-10 mb-3"
+            )}
             {...rest}
         >
             <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
@@ -139,7 +149,10 @@ export const H3: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h3
             id={slug}
-            className={classNames(className, "relative group/anchor-container text-lg font-semibold mt-10 mb-3")}
+            className={classNames(
+                className,
+                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
+            )}
             {...rest}
         >
             <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
@@ -155,7 +168,10 @@ export const H4: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h4
             id={slug}
-            className={classNames(className, "relative group/anchor-container text-lg font-semibold mt-10 mb-3")}
+            className={classNames(
+                className,
+                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
+            )}
             {...rest}
         >
             <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
@@ -171,7 +187,10 @@ export const H5: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h5
             id={slug}
-            className={classNames(className, "relative group/anchor-container text-lg font-semibold mt-10 mb-3")}
+            className={classNames(
+                className,
+                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
+            )}
             {...rest}
         >
             <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
@@ -187,7 +206,10 @@ export const H6: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h6
             id={slug}
-            className={classNames(className, "relative group/anchor-container text-lg font-semibold mt-10 mb-3")}
+            className={classNames(
+                className,
+                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
+            )}
             {...rest}
         >
             <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
@@ -205,8 +227,8 @@ export const P: React.FC<{ variant: "sm" | "md" } & HTMLAttributes<HTMLParagraph
         <p
             {...rest}
             className={classNames(className, "mb-3", {
-                "text-sm font-normal text-text-default leading-6": variant === "sm",
-                "text-base font-light text-text-default leading-7": variant === "md",
+                "text-sm font-normal !text-text-muted-light dark:!text-text-muted-dark leading-6": variant === "sm",
+                "text-base font-light !text-text-muted-light dark:!text-text-muted-dark leading-7": variant === "md",
             })}
         />
     );
@@ -217,11 +239,27 @@ export const Ol: React.FC<HTMLAttributes<HTMLOListElement>> = ({ className, ...r
 };
 
 export const Ul: React.FC<HTMLAttributes<HTMLUListElement>> = ({ className, ...rest }) => {
-    return <ul {...rest} className={classNames(className, "list-image-dash list-inside space-y-2 mb-3")} />;
+    return (
+        <ul
+            {...rest}
+            className={classNames(
+                className,
+                "list-image-dash-light dark:list-image-dash-dark list-inside space-y-2 mb-3"
+            )}
+        />
+    );
 };
 
 export const Li: React.FC<HTMLAttributes<HTMLLIElement>> = ({ className, ...rest }) => {
-    return <li {...rest} className={classNames(className, "text-base font-light text-text-default leading-7")} />;
+    return (
+        <li
+            {...rest}
+            className={classNames(
+                className,
+                "text-base font-light !text-text-muted-light dark:!text-text-muted-dark leading-7"
+            )}
+        />
+    );
 };
 
 export const A: React.FC<HTMLAttributes<HTMLAnchorElement>> = ({ className, ...rest }) => {
@@ -230,7 +268,7 @@ export const A: React.FC<HTMLAttributes<HTMLAnchorElement>> = ({ className, ...r
             {...rest}
             className={classNames(
                 className,
-                "transition !text-white hover:!text-accentPrimary !no-underline !border-b hover:!border-b-2 !border-b-accentPrimary hover:border-b-accentPrimary hover:no-underline font-medium"
+                "!text-text-primary-light dark:!text-text-primary-dark hover:!text-accent-primary hover:dark:!text-accent-primary !no-underline !border-b hover:!border-b-2 !border-b-accent-primary hover:border-b-accent-primary hover:no-underline font-medium"
             )}
         />
     );

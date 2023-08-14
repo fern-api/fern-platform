@@ -22,7 +22,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
     return (
         <div className="flex flex-col">
             <Description description={httpRequest.description ?? undefined} />
-            <div className="text-text-default border-border border-b pb-5 text-sm leading-6">
+            <div className="t-muted border-border-default-light dark:border-border-default-dark border-b pb-5 text-sm leading-6">
                 {"This endpoint expects "}
                 {visitDiscriminatedUnion(httpRequest.type, "type")._visit<JSX.Element | string>({
                     object: () => "an object",

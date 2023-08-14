@@ -1,14 +1,21 @@
+import { ThemeProvider } from "@fern-ui/theme";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import "../styles/globals.css";
 
-export default function App({ Component, pageProps }: AppProps): JSX.Element {
+interface PageComponent {
+    theme?: string;
+}
+
+export default function App({ Component, pageProps }: AppProps & { Component: PageComponent }): JSX.Element {
     return (
-        <>
-            <Head>
-                <title>Documentation</title>
-            </Head>
-            <Component {...pageProps} />
-        </>
+        <ThemeProvider forcedTheme={Component.theme ?? undefined}>
+            <>
+                <Head>
+                    <title>Documentation</title>
+                </Head>
+                <Component {...pageProps} />
+            </>
+        </ThemeProvider>
     );
 }

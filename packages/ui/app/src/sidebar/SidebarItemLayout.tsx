@@ -20,8 +20,8 @@ export const SidebarItemLayout: React.FC<SidebarItemLayout.Props> = ({ className
     return (
         <Text
             ellipsize
-            className={classNames(className, "flex shrink-0 z-0 items-center h-[30px] min-w-0 text-text-default", {
-                "bg-accentHighlight relative": isSelected,
+            className={classNames(className, "flex shrink-0 z-0 items-center h-[30px] min-w-0 t-muted", {
+                "bg-accent-highlight relative": isSelected,
             })}
             style={{
                 paddingLeft: 16 + (sidebarContext != null ? 16 * sidebarContext.depth : 0),
@@ -30,7 +30,7 @@ export const SidebarItemLayout: React.FC<SidebarItemLayout.Props> = ({ className
             {...hoveringCallbacks}
         >
             {typeof title === "function" ? title({ isHovering }) : title}
-            {isSelected && <div className="bg-accentPrimary absolute inset-y-0 right-0 w-1" />}
+            {isSelected && <div className="bg-accent-primary absolute inset-y-0 right-0 w-1" />}
         </Text>
     );
 };

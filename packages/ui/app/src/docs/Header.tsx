@@ -4,6 +4,7 @@ import { DEFAULT_LOGO_HEIGHT } from "../config";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { HeaderPrimaryLink } from "./HeaderPrimaryLink";
 import { HeaderSecondaryLink } from "./HeaderSecondaryLink";
+import { ThemeButton } from "./ThemeButton";
 import { VersionDropdown } from "./VersionDropdown";
 
 export const Header: React.FC = () => {
@@ -68,7 +69,13 @@ export const Header: React.FC = () => {
             )}
         >
             {logoSection}
-            {navbarLinksSection}
+            <div className="flex items-center space-x-4">
+                {navbarLinksSection}
+
+                <div className="dark:bg-border-default-dark bg-border-default-light w-px self-stretch" />
+
+                <ThemeButton />
+            </div>
         </div>
     );
 };
