@@ -14,7 +14,11 @@ export const CodeBlock: React.FC<HTMLAttributes<HTMLElement>> = ({ children }) =
     };
     const language = className != null ? className.replace(/language-/, "") : "";
     return (
-        <pre className={classNames("px-4 pt-1 mb-5 border rounded-lg bg-gray-950/90 border-border/60")}>
+        <pre
+            className={classNames(
+                "px-4 pt-1 mb-5 border rounded-lg bg-gray-950/90 border-border-default-light dark:border-border-default-dark"
+            )}
+        >
             <SyntaxHighlighter
                 style={vscDarkPlus}
                 customStyle={{

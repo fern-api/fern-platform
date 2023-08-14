@@ -69,7 +69,8 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, sel
                                                     "bg-tagPrimary": active,
                                                     "!text-accentPrimary":
                                                         version === selectedId || (active && version !== selectedId),
-                                                    "!text-text-muted": !active && version !== selectedId,
+                                                    "!text-text-muted-light dark:text-text-muted-dark":
+                                                        !active && version !== selectedId,
                                                     "rounded-t-md": idx === 0,
                                                     "rounded-b-md": idx === versions.length - 1,
                                                 }
