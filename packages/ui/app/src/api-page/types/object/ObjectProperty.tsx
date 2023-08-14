@@ -87,7 +87,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchor, propert
                         {property.key}
                     </MonospaceText>
                 </div>
-                <div className="text-text-muted-light dark:text-text-muted-dark text-xs">
+                <div className="t-muted text-xs">
                     <TypeShorthand type={property.valueType} plural={false} />
                 </div>
             </div>

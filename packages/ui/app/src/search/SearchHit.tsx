@@ -55,7 +55,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
                 </div>
                 <div className="flex flex-col items-start">
                     <Snippet
-                        className="text-text-muted-light dark:text-text-muted-dark group-hover:text-text-primary-light group-hover:dark:text-text-primary-dark line-clamp-1 text-start"
+                        className="t-muted group-hover:text-text-primary-light group-hover:dark:text-text-primary-dark line-clamp-1 text-start"
                         attribute="subtitle"
                         highlightedTagName="span"
                         hit={hit}

@@ -20,13 +20,9 @@ export const SidebarItemLayout: React.FC<SidebarItemLayout.Props> = ({ className
     return (
         <Text
             ellipsize
-            className={classNames(
-                className,
-                "flex shrink-0 z-0 items-center h-[30px] min-w-0 text-text-muted-light dark:text-text-muted-dark",
-                {
-                    "bg-accent-highlight relative": isSelected,
-                }
-            )}
+            className={classNames(className, "flex shrink-0 z-0 items-center h-[30px] min-w-0 t-muted", {
+                "bg-accent-highlight relative": isSelected,
+            })}
             style={{
                 paddingLeft: 16 + (sidebarContext != null ? 16 * sidebarContext.depth : 0),
                 paddingRight: 16,

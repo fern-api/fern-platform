@@ -44,13 +44,11 @@ export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
                     >
                         <div className="flex items-baseline space-x-2">
                             <div className="rounded bg-red-500/20 p-1 text-xs text-red-400">{e.statusCode}</div>
-                            <div className="text-text-muted-light dark:text-text-muted-dark text-xs">
+                            <div className="t-muted text-xs">
                                 {e.type != null && <TypeShorthand type={e.type} plural={false} />}
                             </div>
                         </div>
-                        <div className="text-text-muted-light dark:text-text-muted-dark mt-3 text-start text-base font-light leading-7">
-                            {e.description}
-                        </div>
+                        <div className="t-muted mt-3 text-start text-base font-light leading-7">{e.description}</div>
                         {idx === selectedErrorIndex && (
                             <div className="text-start">
                                 {e.type != null && (

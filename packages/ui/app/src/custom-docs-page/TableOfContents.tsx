@@ -28,7 +28,7 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ma
                     {headings.map((heading, index) => (
                         <Text
                             key={index}
-                            className="text-text-muted-light dark:text-text-muted-dark hover:dark:text-text-primary-dark hover:text-text-primary-light cursor-pointer transition"
+                            className="t-muted hover:dark:text-text-primary-dark hover:text-text-primary-light cursor-pointer transition"
                             style={{ marginLeft: 8 * (heading.depth - minDepth) }}
                             ellipsize
                         >

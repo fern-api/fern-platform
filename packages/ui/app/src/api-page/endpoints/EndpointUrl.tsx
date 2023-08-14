@@ -29,7 +29,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
         //     const url = getEndpointEnvironmentUrl(endpoint);
         //     if (url != null) {
         //         elements.push(
-        //             <div key="base-url" className="text-text-muted-light dark:text-text-muted-dark whitespace-nowrap font-light">
+        //             <div key="base-url" className="t-muted whitespace-nowrap font-light">
         //                 {url}
         //             </div>
         //         );
@@ -43,10 +43,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                 visitDiscriminatedUnion(p, "type")._visit({
                     literal: (literal) => {
                         return (
-                            <div
-                                key={`part-${i}`}
-                                className="text-text-muted-light dark:text-text-muted-dark whitespace-nowrap font-mono text-xs font-normal"
-                            >
+                            <div key={`part-${i}`} className="t-muted whitespace-nowrap font-mono text-xs font-normal">
                                 {literal.value}
                             </div>
                         );
@@ -68,7 +65,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
 
     return (
         <div ref={ref} className={classNames("flex h-9 overflow-x-hidden items-center py-0.5", className)}>
-            <div className="text-text-muted-light bg-tag-default-light dark:bg-tag-default-dark dark:text-text-muted-dark flex shrink-0 items-center justify-center rounded-lg px-2 py-1 text-xs font-normal uppercase">
+            <div className="t-muted bg-tag-default-light dark:bg-tag-default-dark flex shrink-0 items-center justify-center rounded-lg px-2 py-1 text-xs font-normal uppercase">
                 {endpoint.method}
             </div>
             <div

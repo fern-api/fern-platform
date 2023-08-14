@@ -50,7 +50,7 @@ export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({
                     className={classNames("flex flex-1 items-center justify-between select-none min-w-0", {
                         "text-accent-primary": isSelected,
                         "text-text-primary-light dark:text-text-primary-dark": !isSelected && isHovering,
-                        "text-text-muted-light dark:text-text-muted-dark": !isSelected && !isHovering,
+                        "t-muted": !isSelected && !isHovering,
                         transition: !isSelected && !wasRecentlySelected,
                     })}
                 >

@@ -142,12 +142,9 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                 >
                     <div
                         {...containerCallbacks}
-                        className={classNames(
-                            "flex gap-1 items-center cursor-pointer px-2 py-1 transition text-text-muted-light dark:text-text-muted-dark",
-                            {
-                                "border-opacity-0": isCollapsed,
-                            }
-                        )}
+                        className={classNames("flex gap-1 items-center cursor-pointer px-2 py-1 transition t-muted", {
+                            "border-opacity-0": isCollapsed,
+                        })}
                         onClick={(e) => {
                             toggleIsCollapsed();
                             e.stopPropagation();

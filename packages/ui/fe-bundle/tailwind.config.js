@@ -1,3 +1,5 @@
+const plugin = require("tailwindcss/plugin");
+
 /** @type {import('tailwindcss').Config} */
 
 module.exports = {
@@ -62,7 +64,18 @@ module.exports = {
             };
         },
     },
-    plugins: [require("@tailwindcss/typography")],
+    plugins: [
+        require("@tailwindcss/typography"),
+        // Defining the classes here to get proper intellisense
+        // https://github.com/tailwindlabs/tailwindcss-intellisense/issues/227#issuecomment-1269592872
+        plugin(({ addComponents }) => {
+            addComponents({
+                ".t-muted": {
+                    "@apply text-text-muted-light dark:text-text-muted-dark": {},
+                },
+            });
+        }),
+    ],
 };
 
 // https://stackoverflow.com/a/72831219/4238485

@@ -9,11 +9,7 @@ import type { SearchRecord } from "./types";
 type Progress = "error" | "pending" | "success";
 
 export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {
-    return (
-        <div className="text-text-muted-light dark:text-text-muted-dark justify flex h-24 w-full flex-col items-center py-3">
-            {children}
-        </div>
-    );
+    return <div className="t-muted justify flex h-24 w-full flex-col items-center py-3">{children}</div>;
 };
 
 export const SearchHits: React.FC = () => {
@@ -45,7 +41,7 @@ export const SearchHits: React.FC = () => {
         >
             <div
                 className={classNames(
-                    "text-text-muted-light dark:text-text-muted-dark flex w-full flex-col items-center",
+                    "t-muted flex w-full flex-col items-center",
                     progress === "success" && hits.length > 0 ? "min-h-[6rem]" : "min-h-[3rem]"
                 )}
             >
