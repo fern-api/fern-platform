@@ -23,13 +23,22 @@ export function transformWriteDocsDefinitionToDb({
             s3Key: s3FileInfo.key,
         };
     });
+
+    const logo = writeShape.config.logo;
+    let logoV2 = writeShape.config.logoV2;
+
+    if (logoV2 == null && logo != null) {
+        logoV2 = { dark: logo };
+    }
+
     return {
         type: "v2",
         referencedApis: getReferencedApiDefinitionIds(navigationConfig),
         files: transformedFiles,
         config: {
             navigation: navigationConfig,
-            logo: writeShape.config.logo,
+            logo,
+            logoV2,
             logoHeight: writeShape.config.logoHeight,
             logoHref: writeShape.config.logoHref,
             colors: writeShape.config.colors,

@@ -102,6 +102,7 @@ function getDocsDefinitionConfig(
     return {
         navigation: docsDbDefinition.config.navigation,
         logo: docsDbDefinition.config.logo,
+        logoV2: docsDbDefinition.config.logoV2,
         logoHeight: docsDbDefinition.config.logoHeight,
         logoHref: docsDbDefinition.config.logoHref,
         colors: docsDbDefinition.config.colors,

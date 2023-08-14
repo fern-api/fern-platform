@@ -67,6 +67,7 @@ types:
       title: optional<string>
       navigation: NavigationConfig
       logo: optional<FileId>
+      logoV2: optional<LogoV2>
       logoHeight: optional<Height>
       logoHref: optional<Url>
       favicon: optional<FileId>
@@ -74,6 +75,11 @@ types:
       colors: optional<ColorsConfig>
       navbarLinks: list<NavbarLink>
       typography: optional<DocsTypographyConfig>
+
+  LogoV2:
+    properties:
+      dark: optional<FileId>
+      light: optional<FileId>
 
   DocsTypographyConfig:
     properties:
