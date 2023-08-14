@@ -1,17 +1,13 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { useTheme } from "next-themes";
+import { useTheme } from "@fern-ui/theme";
 import dynamic from "next/dynamic";
 import { MoonIcon } from "../commons/icons/MoonIcon";
 import { SunIcon } from "../commons/icons/SunIcon";
 
-// TODO: Place elsewhere
-type Theme = "dark" | "light";
-
 export declare namespace ThemeButton {}
 
 export const Core: React.FC = () => {
-    const { theme: untypedTheme, setTheme } = useTheme();
-    const theme = untypedTheme as Theme | undefined;
+    const { theme, setTheme } = useTheme();
 
     if (theme == null) {
         return null;
