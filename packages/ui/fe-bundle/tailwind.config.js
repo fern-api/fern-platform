@@ -29,7 +29,6 @@ module.exports = {
                 ...colors,
                 accentPrimary: withOpacity("--accent-primary"),
                 accentHighlight: "rgba(var(--accent-primary), 10%)",
-                "text-default": colors.neutral[400],
 
                 // New design system
 

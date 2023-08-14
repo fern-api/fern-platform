@@ -22,7 +22,7 @@ export const MdxErrorBoundaryContent: React.FC<MdxErrorBoundaryContent.Props> = 
     return (
         <div className="flex flex-col items-center">
             <NonIdealState icon={IconNames.WarningSign} title="Failed to render" />
-            <pre className="pre text-text-default mt-6 max-w-[500px] whitespace-normal rounded bg-black/30 p-5">
+            <pre className="pre text-text-muted-light dark:text-text-muted-dark mt-6 max-w-[500px] whitespace-normal rounded bg-black/30 p-5">
                 {stringifiedError}
             </pre>
         </div>

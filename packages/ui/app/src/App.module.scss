@@ -8,7 +8,7 @@
 .app {
     :global {
         p {
-            @apply text-text-default;
+            @apply text-text-muted-light dark:text-text-muted-dark;
         }
 
         code,
