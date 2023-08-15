@@ -1,4 +1,5 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { useTheme } from "@fern-ui/theme";
 import classNames from "classnames";
 import { DEFAULT_LOGO_HEIGHT } from "../config";
 import { useDocsContext } from "../docs-context/useDocsContext";
@@ -8,16 +9,22 @@ import { ThemeButton } from "./ThemeButton";
 import { VersionDropdown } from "./VersionDropdown";
 
 export const Header: React.FC = () => {
+    const { theme } = useTheme();
     const { resolveFile, docsDefinition, docsInfo, setActiveVersion, navigateToPath } = useDocsContext();
-    const { logo, logoHeight, logoHref, navbarLinks } = docsDefinition.config;
+    const { logo, logoV2, logoHeight, logoHref, navbarLinks } = docsDefinition.config;
 
+    if (theme == null) {
+        return null;
+    }
+
+    const logoForTheme = logoV2 != null ? logoV2[theme] : logo;
     const hasMultipleVersions = docsInfo.type === "versioned";
-    const hasLogo = logo != null;
+    const hasLogo = logoForTheme != null;
     const hasLogoHref = logoHref != null;
 
     const logoContent = hasLogo && (
         <img
-            src={resolveFile(logo)}
+            src={resolveFile(logoForTheme)}
             className="max-h-full object-contain"
             style={{
                 height: logoHeight ?? DEFAULT_LOGO_HEIGHT,
