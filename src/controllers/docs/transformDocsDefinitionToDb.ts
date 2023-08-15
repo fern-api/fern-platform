@@ -31,6 +31,18 @@ export function transformWriteDocsDefinitionToDb({
         logoV2 = { dark: logo };
     }
 
+    const colors = writeShape.config.colors;
+    let colorsV2 = writeShape.config.colorsV2;
+
+    if (colorsV2 == null && colors != null) {
+        colorsV2 = {
+            accentPrimary: {
+                type: "themed",
+                dark: colors.accentPrimary,
+            },
+        };
+    }
+
     return {
         type: "v2",
         referencedApis: getReferencedApiDefinitionIds(navigationConfig),
@@ -41,8 +53,8 @@ export function transformWriteDocsDefinitionToDb({
             logoV2,
             logoHeight: writeShape.config.logoHeight,
             logoHref: writeShape.config.logoHref,
-            colors: writeShape.config.colors,
-            colorsV2: writeShape.config.colorsV2,
+            colors,
+            colorsV2,
             navbarLinks: writeShape.config.navbarLinks ?? [],
             title: writeShape.config.title,
             favicon: writeShape.config.favicon,
