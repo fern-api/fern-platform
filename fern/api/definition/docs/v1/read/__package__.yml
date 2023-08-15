@@ -73,6 +73,7 @@ types:
       favicon: optional<FileId>
       backgroundImage: optional<FileId>
       colors: optional<ColorsConfig>
+      colorsV2: optional<ColorsConfigV2>
       navbarLinks: list<NavbarLink>
       typography: optional<DocsTypographyConfig>
 
@@ -155,6 +156,20 @@ types:
   ColorsConfig:
     properties:
       accentPrimary: optional<RgbColor>
+
+  ColorsConfigV2:
+    properties:
+      accentPrimary: optional<AccentPrimaryConfig>
+
+  AccentPrimaryConfig:
+    union:
+      unthemed: RgbColor
+      themed: AccentPrimaryThemedConfig
+
+  AccentPrimaryThemedConfig:
+    properties:
+      dark: optional<RgbColor>
+      light: optional<RgbColor>
 
   RgbColor:
     properties:

@@ -106,6 +106,7 @@ function getDocsDefinitionConfig(
         logoHeight: docsDbDefinition.config.logoHeight,
         logoHref: docsDbDefinition.config.logoHref,
         colors: docsDbDefinition.config.colors,
+        colorsV2: docsDbDefinition.config.colorsV2,
         navbarLinks: docsDbDefinition.config.navbarLinks ?? [],
         title: docsDbDefinition.config.title,
         favicon: docsDbDefinition.config.favicon,

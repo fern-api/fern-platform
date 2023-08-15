@@ -40,6 +40,7 @@ types:
       favicon: optional<docsReadV1.FileId>
       backgroundImage: optional<docsReadV1.FileId>
       colors: optional<docsReadV1.ColorsConfig>
+      colorsV2: optional<docsReadV1.ColorsConfigV2>
       navbarLinks: optional<list<docsReadV1.NavbarLink>>
       typography: optional<DocsTypographyConfig>
 
