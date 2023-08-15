@@ -177,8 +177,12 @@ types:
 
   AccentPrimaryConfig:
     union:
-      unthemed: RgbColor
+      unthemed: AccentPrimaryUnthemedConfig
       themed: AccentPrimaryThemedConfig
+
+  AccentPrimaryUnthemedConfig:
+    properties:
+      color: optional<RgbColor>
 
   AccentPrimaryThemedConfig:
     properties:
