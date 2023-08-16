@@ -31,7 +31,8 @@ export const Header: React.FC = () => {
             )}
         >
             <HeaderLogoSection />
-            <div className="flex items-center space-x-4">
+
+            <div className="ml-auto flex items-center space-x-4">
                 {navbarLinksSection}
 
                 <div className="dark:bg-border-default-dark bg-border-default-light w-px self-stretch" />
