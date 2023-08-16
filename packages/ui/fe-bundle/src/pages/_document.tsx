@@ -7,7 +7,7 @@ export default function Document(): JSX.Element {
             <body
                 className="bg-background overscroll-y-none"
                 style={{
-                    backgroundImage: "var(--docs-background-image, url('/backgrounds/default.png'))",
+                    backgroundImage: "var(--docs-background-image)",
                     backgroundSize: "cover",
                 }}
             >
