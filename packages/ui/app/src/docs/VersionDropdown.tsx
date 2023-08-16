@@ -57,7 +57,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, sel
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                 >
-                    <Menu.Items className="border-border-primary bg-background-light dark:bg-background-dark absolute left-0 mt-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md border shadow-lg">
+                    <Menu.Items className="border-border-primary bg-background absolute left-0 mt-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md border shadow-lg">
                         <div>
                             {versions.map((version, idx) => (
                                 <Menu.Item key={idx}>
