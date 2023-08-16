@@ -1833,16 +1833,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/registry-browser@npm:0.13.0-4-ge1278e2":
-  version: 0.13.0-4-ge1278e2
-  resolution: "@fern-fern/registry-browser@npm:0.13.0-4-ge1278e2"
+"@fern-fern/registry-browser@npm:0.13.0-5-g92d91db":
+  version: 0.13.0-5-g92d91db
+  resolution: "@fern-fern/registry-browser@npm:0.13.0-5-g92d91db"
   dependencies:
     "@types/url-join": 4.0.1
     "@ungap/url-search-params": 0.2.2
     axios: 1.4.0
     js-base64: 3.7.2
     url-join: 4.0.1
-  checksum: 1dc44b6a47f544353d981e4c0a9a8d55680fb14c6f710edc75d760b652a89cdf1a833a07fdb5733a8cddc079becf2cfccd31f34e18012b39a58bf9c761601fc9
+  checksum: 550131a7cf2e9c0a52d45e410d944f05b57068077b56b546fbec796935278c91fc93a0a1d15308c48a6028e90af430b732301bb918b0d21e57605818020de644
   languageName: node
   linkType: hard
 
@@ -1919,7 +1919,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/fe-bundle@workspace:packages/ui/fe-bundle"
   dependencies:
-    "@fern-fern/registry-browser": 0.13.0-4-ge1278e2
+    "@fern-fern/registry-browser": 0.13.0-5-g92d91db
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/theme": "workspace:*"
     "@fern-ui/ui": "workspace:*"
@@ -2154,7 +2154,7 @@ __metadata:
     "@blueprintjs/icons": ^4.4.0
     "@blueprintjs/popover2": ^1.8.0
     "@blueprintjs/select": ^4.4.2
-    "@fern-fern/registry-browser": 0.13.0-4-ge1278e2
+    "@fern-fern/registry-browser": 0.13.0-5-g92d91db
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/react-commons": "workspace:*"
     "@fern-ui/routing-utils": "workspace:*"

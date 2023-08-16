@@ -31,6 +31,7 @@ module.exports = {
                 ...colors,
                 "accent-primary": withOpacity("--accent-primary"),
                 "accent-highlight": "rgba(var(--accent-primary), 10%)",
+                background: withOpacity("--background"),
 
                 "intent-default": "rgb(156, 163, 175)",
 

@@ -41,7 +41,7 @@ export const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({ className, .
             {...rest}
             className={classNames(
                 className,
-                "border border-border-default-light dark:border-border-default-dark rounded font-mono text-sm bg-background-light dark:!bg-background-dark !text-text-primary-light dark:!text-text-primary-dark !py-0.5 !px-1"
+                "border border-border-default-light dark:border-border-default-dark rounded font-mono text-sm !bg-background !text-text-primary-light dark:!text-text-primary-dark !py-0.5 !px-1"
             )}
         />
     );
