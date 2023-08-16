@@ -173,18 +173,19 @@ types:
 
   ColorsConfigV2:
     properties:
-      accentPrimary: optional<AccentPrimaryConfig>
+      accentPrimary: optional<ColorConfig>
+      background: optional<ColorConfig>
 
-  AccentPrimaryConfig:
+  ColorConfig:
     union:
-      unthemed: AccentPrimaryUnthemedConfig
-      themed: AccentPrimaryThemedConfig
+      unthemed: ColorUnthemedConfig
+      themed: ColorThemedConfig
 
-  AccentPrimaryUnthemedConfig:
+  ColorUnthemedConfig:
     properties:
       color: optional<RgbColor>
 
-  AccentPrimaryThemedConfig:
+  ColorThemedConfig:
     properties:
       dark: optional<RgbColor>
       light: optional<RgbColor>
