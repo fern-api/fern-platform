@@ -30,9 +30,9 @@ export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
                     <button
                         key={idx}
                         className={classNames(
-                            "space flex hover:bg-background-secondary-light dark:hover:bg-background-secondary-dark flex-col items-start p-3",
+                            "space flex hover:bg-background-primary-light dark:hover:bg-background-primary-dark flex-col items-start p-3",
                             {
-                                "bg-background-secondary-light dark:bg-background-secondary-dark":
+                                "bg-background-primary-light dark:bg-background-primary-dark":
                                     idx === selectedErrorIndex,
                                 "border-border-default-light dark:border-border-default-dark border-b":
                                     idx !== errors.length - 1,
