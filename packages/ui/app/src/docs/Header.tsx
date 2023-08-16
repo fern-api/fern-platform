@@ -1,59 +1,14 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { useTheme } from "@fern-ui/theme";
 import classNames from "classnames";
-import { DEFAULT_LOGO_HEIGHT } from "../config";
 import { useDocsContext } from "../docs-context/useDocsContext";
+import { HeaderLogoSection } from "./HeaderLogoSection";
 import { HeaderPrimaryLink } from "./HeaderPrimaryLink";
 import { HeaderSecondaryLink } from "./HeaderSecondaryLink";
 import { ThemeButton } from "./ThemeButton";
-import { VersionDropdown } from "./VersionDropdown";
 
 export const Header: React.FC = () => {
-    const { theme } = useTheme();
-    const { resolveFile, docsDefinition, docsInfo, setActiveVersion, navigateToPath } = useDocsContext();
-    const { logo, logoV2, logoHeight, logoHref, navbarLinks } = docsDefinition.config;
-
-    if (theme == null) {
-        return null;
-    }
-
-    const logoForTheme = logoV2 != null ? logoV2[theme] : logo;
-    const hasMultipleVersions = docsInfo.type === "versioned";
-    const hasLogo = logoForTheme != null;
-    const hasLogoHref = logoHref != null;
-
-    const logoContent = hasLogo && (
-        <img
-            src={resolveFile(logoForTheme)}
-            className="max-h-full object-contain"
-            style={{
-                height: logoHeight ?? DEFAULT_LOGO_HEIGHT,
-            }}
-        />
-    );
-    const logoSection = hasLogo && (
-        <div className="relative flex h-full items-center space-x-3 py-1">
-            {hasLogoHref ? (
-                <a href={logoHref} className="flex items-center">
-                    {logoContent}
-                </a>
-            ) : (
-                <div className="flex items-center">{logoContent}</div>
-            )}
-            {hasMultipleVersions && (
-                <div>
-                    <VersionDropdown
-                        versions={docsInfo.versions}
-                        selectedId={docsInfo.activeVersion}
-                        onClickVersion={(v) => {
-                            setActiveVersion(v);
-                            navigateToPath(`/${v}`, { omitVersionPrefix: true });
-                        }}
-                    />
-                </div>
-            )}
-        </div>
-    );
+    const { docsDefinition } = useDocsContext();
+    const { navbarLinks } = docsDefinition.config;
 
     const navbarLinksSection = (
         <div className="flex items-center space-x-5 md:space-x-8">
@@ -75,7 +30,7 @@ export const Header: React.FC = () => {
                 "h-16"
             )}
         >
-            {logoSection}
+            <HeaderLogoSection />
             <div className="flex items-center space-x-4">
                 {navbarLinksSection}
 
