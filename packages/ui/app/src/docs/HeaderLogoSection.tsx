@@ -19,7 +19,7 @@ export const HeaderLogoSection: React.FC = () => {
     const hasLogo = logoForTheme != null;
     const hasLogoHref = logoHref != null;
 
-    const logoContent = hasLogo && (
+    const logoContent = hasLogo ? (
         <img
             src={resolveFile(logoForTheme)}
             className="max-h-full object-contain"
@@ -27,7 +27,7 @@ export const HeaderLogoSection: React.FC = () => {
                 height: logoHeight ?? DEFAULT_LOGO_HEIGHT,
             }}
         />
-    );
+    ) : null;
 
     if (!hasLogo) {
         return null;
