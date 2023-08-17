@@ -11,5 +11,5 @@ export const Description: React.FC<Description.Props> = ({ description }) => {
         return null;
     }
 
-    return <Markdown className="prose-p:text-[#A7A7B0] mt-3">{description}</Markdown>;
+    return <Markdown className="mt-3">{description}</Markdown>;
 };
