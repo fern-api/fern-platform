@@ -218,7 +218,7 @@ export const H6: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     );
 };
 
-export const P: React.FC<{ variant: "sm" | "md" } & HTMLAttributes<HTMLParagraphElement>> = ({
+export const P: React.FC<{ variant: "api" | "markdown" } & HTMLAttributes<HTMLParagraphElement>> = ({
     variant,
     className,
     ...rest
@@ -226,9 +226,11 @@ export const P: React.FC<{ variant: "sm" | "md" } & HTMLAttributes<HTMLParagraph
     return (
         <p
             {...rest}
-            className={classNames(className, "mb-3", {
-                "text-sm font-normal !text-text-muted-light dark:!text-text-muted-dark leading-6": variant === "sm",
-                "text-base font-light !text-text-muted-light dark:!text-text-muted-dark leading-7": variant === "md",
+            className={classNames(className, {
+                "text-sm font-normal !text-text-muted-light dark:!text-text-muted-dark leading-6": variant === "api",
+                "text-base font-light !text-text-muted-light dark:!text-text-muted-dark leading-7":
+                    variant === "markdown",
+                "mb-3": variant === "markdown",
             })}
         />
     );
