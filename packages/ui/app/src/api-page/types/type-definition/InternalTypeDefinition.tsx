@@ -131,10 +131,10 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
             : `Hide ${collapsableContent.elements.length} ${collapsableContent.elementNamePlural}`;
 
     return (
-        <div className="flex flex-col">
+        <div className="mt-2 flex flex-col">
             <div className="flex flex-col items-start">
                 <div
-                    className="border-border-default-light dark:border-border-default-dark mt-2 flex flex-col overflow-hidden rounded border"
+                    className="border-border-default-light dark:border-border-default-dark flex flex-col overflow-hidden rounded border"
                     style={{
                         width: isCollapsed ? originalButtonWidth : "100%",
                     }}

@@ -26,7 +26,7 @@ import styles from "./Markdown.module.scss";
 
 export declare namespace Markdown {
     export interface Props {
-        children: string;
+        children?: string;
         className?: string;
     }
 }
@@ -37,6 +37,9 @@ const REHYPE_PLUGINS = [rehypeRaw];
 // TODO: Rename this component to ApiMarkdown
 
 export const Markdown = React.memo<Markdown.Props>(function Markdown({ children, className }) {
+    if (children == null) {
+        return null;
+    }
     return (
         <ReactMarkdown
             className={classNames(className, styles.container, "prose prose-sm dark:prose-invert max-w-none")}
@@ -60,7 +63,7 @@ export const Markdown = React.memo<Markdown.Props>(function Markdown({ children,
                 h4: (props) => <H4 {...props} />,
                 h5: (props) => <H5 {...props} />,
                 h6: (props) => <H6 {...props} />,
-                p: ({ node, ...props }) => <P variant="sm" {...props} />,
+                p: ({ node, ...props }) => <P variant="api" {...props} />,
                 ol: (props) => <Ol {...props} />,
                 ul: (props) => <Ul {...props} />,
                 li: (props) => <Li {...props} />,

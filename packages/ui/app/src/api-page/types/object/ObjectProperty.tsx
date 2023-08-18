@@ -5,12 +5,12 @@ import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionCo
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
+import { Markdown } from "../../markdown/Markdown";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
     useTypeDefinitionContext,
 } from "../context/TypeDefinitionContext";
-import { Description } from "../Description";
 import { InternalTypeReferenceDefinitions } from "../type-reference/InternalTypeReferenceDefinitions";
 import { TypeShorthand } from "../type-shorthand/TypeShorthand";
 
@@ -92,7 +92,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchor, propert
                 </div>
             </div>
             <div className="flex flex-col">
-                <Description description={description ?? undefined} />
+                <Markdown className="mt-3">{description}</Markdown>
                 <TypeDefinitionContext.Provider value={newContextValue}>
                     <InternalTypeReferenceDefinitions type={property.valueType} isCollapsible />
                 </TypeDefinitionContext.Provider>
