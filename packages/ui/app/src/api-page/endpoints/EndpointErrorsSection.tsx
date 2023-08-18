@@ -48,7 +48,12 @@ export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
                                 {e.type != null && <TypeShorthand type={e.type} plural={false} />}
                             </div>
                         </div>
-                        <div className="t-muted mt-3 text-start text-base font-light leading-7">{e.description}</div>
+                        {e.description != null && e.description.length > 0 && (
+                            <div className="t-muted mt-3 text-start text-base font-light leading-7">
+                                {e.description}
+                            </div>
+                        )}
+
                         {idx === selectedErrorIndex && (
                             <div className="text-start">
                                 {e.type != null && (
