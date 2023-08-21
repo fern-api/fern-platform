@@ -1,4 +1,2 @@
 # if there are any release blockers in this list, releasing will fail on Circle
-release-blockers:
-  - Test collapsable markdown sections
-  - Test light and dark mode styles
+release-blockers: []
