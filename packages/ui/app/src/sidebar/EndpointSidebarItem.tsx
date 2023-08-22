@@ -15,7 +15,7 @@ export const EndpointSidebarItem: React.FC<EndpointSidebarItem.Props> = ({ slug,
         <NavigatingSidebarItem
             slug={slug}
             title={<EndpointTitle endpoint={endpoint} />}
-            leftElement={<HttpMethodIcon method={endpoint.method} />}
+            leftElement={<HttpMethodIcon />}
         />
     );
 };
