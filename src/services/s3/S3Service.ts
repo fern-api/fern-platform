@@ -1,4 +1,4 @@
-import { GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { GetObjectCommand, PutObjectCommand, PutObjectCommandInput, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { v4 as uuidv4 } from "uuid";
 import type { FdrApplication } from "../../app";
@@ -76,10 +76,14 @@ export class S3ServiceImpl implements S3Service {
         filepath: FilePath;
     }): Promise<{ url: string; key: string }> {
         const key = this.constructS3Key({ domain, time, filepath });
-        const command = new PutObjectCommand({
+        const input: PutObjectCommandInput = {
             Bucket: this.app.config.s3BucketName,
             Key: key,
-        });
+        };
+        if (filepath.endsWith(".svg")) {
+            input.ContentType = "image/svg+xml";
+        }
+        const command = new PutObjectCommand(input);
         return {
             url: await getSignedUrl(this.client, command, { expiresIn: 3600 }),
             key,
