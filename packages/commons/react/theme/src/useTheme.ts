@@ -23,5 +23,5 @@ export function useTheme(lightModeEnabled: boolean): UseThemeReturnType {
         return { theme: undefined, setTheme };
     }
 
-    return { theme: theme ?? DEFAULT_THEME, setTheme } as UseThemeReturnType;
+    return { theme, setTheme } as UseThemeReturnType;
 }
