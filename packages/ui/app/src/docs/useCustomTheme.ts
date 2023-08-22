@@ -2,6 +2,7 @@ import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources
 import { useTheme } from "@fern-ui/theme";
 import { useEffect } from "react";
 import { DEFAULT_COLORS } from "../config";
+import { useDocsContext } from "../docs-context/useDocsContext";
 
 const CSS_VARIABLES = {
     ACCENT_PRIMARY: "--accent-primary",
@@ -9,7 +10,8 @@ const CSS_VARIABLES = {
 } as const;
 
 export function useCustomTheme(docsDefinition: FernRegistryDocsRead.DocsDefinition): void {
-    const { theme } = useTheme();
+    const { lightModeEnabled } = useDocsContext();
+    const { theme } = useTheme(lightModeEnabled);
 
     useEffect(() => {
         if (theme == null) {

@@ -42,6 +42,7 @@ export const App: React.FC<App.Props> = ({ docs, inferredVersion, resolvedUrlPat
                 ),
                 <DocsContextProvider
                     docsDefinition={docs.definition}
+                    lightModeEnabled={docs.lightModeEnabled}
                     inferredVersion={inferredVersion}
                     resolvedUrlPath={resolvedUrlPath}
                     nextPath={nextPath}
