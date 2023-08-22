@@ -36,7 +36,7 @@ export const EndpointDescriptor: React.FC<EndpointDescriptor.Props> = ({ endpoin
     return (
         <button className="group flex items-start justify-start space-x-2" onClick={onClick}>
             <div className="flex items-baseline space-x-2">
-                <HttpMethodIcon method={endpointDefinition.method} />
+                <HttpMethodIcon />
                 <MonospaceText className="t-muted w-16 break-all text-end leading-5 transition-colors group-hover:text-white">
                     {endpointDefinition.method}
                 </MonospaceText>
