@@ -36,6 +36,9 @@ export function getDocsReadV2Service(app: FdrApplication): ReadV2Service {
                         basePath: docsDomain.path === "" ? undefined : docsDomain.path,
                     },
                     definition,
+                    lightModeEnabled:
+                        definition.config.colorsV2?.accentPrimary?.type === "themed" &&
+                        definition.config.logoV2?.light != null,
                 });
             } else {
                 // delegate to V1
@@ -50,6 +53,9 @@ export function getDocsReadV2Service(app: FdrApplication): ReadV2Service {
                         basePath: undefined,
                     },
                     definition,
+                    lightModeEnabled:
+                        definition.config.colorsV2?.accentPrimary?.type === "themed" &&
+                        definition.config.logoV2?.light != null,
                 });
             }
         },

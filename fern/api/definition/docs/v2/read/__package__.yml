@@ -28,6 +28,7 @@ types:
     properties: 
       baseUrl: BaseUrl
       definition: v1DocsRead.DocsDefinition
+      lightModeEnabled: boolean
   
   BaseUrl: 
     properties: 
