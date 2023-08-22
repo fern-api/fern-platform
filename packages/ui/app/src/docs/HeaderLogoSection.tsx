@@ -6,8 +6,9 @@ import { VersionDropdown } from "./VersionDropdown";
 export declare namespace HeaderLogoSection {}
 
 export const HeaderLogoSection: React.FC = () => {
-    const { theme } = useTheme();
-    const { resolveFile, docsDefinition, docsInfo, setActiveVersion, navigateToPath } = useDocsContext();
+    const { resolveFile, docsDefinition, lightModeEnabled, docsInfo, setActiveVersion, navigateToPath } =
+        useDocsContext();
+    const { theme } = useTheme(lightModeEnabled);
     const { logo, logoV2, logoHeight, logoHref } = docsDefinition.config;
 
     if (theme == null) {

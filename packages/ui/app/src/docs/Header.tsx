@@ -7,7 +7,7 @@ import { HeaderSecondaryLink } from "./HeaderSecondaryLink";
 import { ThemeButton } from "./ThemeButton";
 
 export const Header: React.FC = () => {
-    const { docsDefinition } = useDocsContext();
+    const { docsDefinition, lightModeEnabled } = useDocsContext();
     const { navbarLinks } = docsDefinition.config;
 
     const navbarLinksSection = (
@@ -35,9 +35,12 @@ export const Header: React.FC = () => {
             <div className="ml-auto flex items-center space-x-4">
                 {navbarLinksSection}
 
-                <div className="dark:bg-border-default-dark bg-border-default-light w-px self-stretch" />
-
-                <ThemeButton />
+                {lightModeEnabled && (
+                    <>
+                        <div className="dark:bg-border-default-dark bg-border-default-light w-px self-stretch" />
+                        <ThemeButton />
+                    </>
+                )}
             </div>
         </div>
     );

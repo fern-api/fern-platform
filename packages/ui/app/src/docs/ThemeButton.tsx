@@ -3,11 +3,13 @@ import { useTheme } from "@fern-ui/theme";
 import dynamic from "next/dynamic";
 import { MoonIcon } from "../commons/icons/MoonIcon";
 import { SunIcon } from "../commons/icons/SunIcon";
+import { useDocsContext } from "../docs-context/useDocsContext";
 
 export declare namespace ThemeButton {}
 
 export const Core: React.FC = () => {
-    const { theme, setTheme } = useTheme();
+    const { lightModeEnabled } = useDocsContext();
+    const { theme, setTheme } = useTheme(lightModeEnabled);
 
     if (theme == null) {
         return null;
