@@ -1,6 +1,20 @@
 import * as ApiV1Write from "../../../generated/api/resources/api/resources/v1/resources/register";
 import { assertNever } from "../../../util";
 
+export function generateWebhookPayloadExample(
+    shape: ApiV1Write.WebhookPayloadShape,
+    resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition
+): unknown {
+    switch (shape.type) {
+        case "object":
+            return generateExampleObject(shape, resolveTypeById, true, new Set(), 0);
+        case "reference":
+            return generateExampleFromTypeReference(shape.value, resolveTypeById, true, new Set(), 0);
+        default:
+            assertNever(shape);
+    }
+}
+
 export function generateHttpRequestBodyExample(
     type: ApiV1Write.HttpRequestBodyShape,
     resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition

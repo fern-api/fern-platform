@@ -6,6 +6,7 @@ imports:
   readRoot: ../read/__package__.yml
   readType: ../read/type.yml
   readCommons: ../read/commons.yml
+  readWebhook: ../read/webhook.yml
 
 types:
   DbApiDefinition:
@@ -24,6 +25,7 @@ types:
   DbApiDefinitionPackage:
     properties:
       endpoints: list<endpoint.DbEndpointDefinition>
+      webhooks: optional<list<readWebhook.WebhookDefinition>>
       types: list<readType.TypeId>
       subpackages: list<readRoot.SubpackageId>
       pointsTo:

@@ -33,6 +33,7 @@ it("api register", async () => {
             endpoints: [],
             subpackages: [],
             types: ["type_User"],
+            webhooks: [],
         },
         subpackages: {},
         types: {

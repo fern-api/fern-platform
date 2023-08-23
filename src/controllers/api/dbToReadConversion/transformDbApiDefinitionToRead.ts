@@ -10,7 +10,7 @@ export function transformApiDefinitionForReading(
             endpoints: dbShape.rootPackage.endpoints.map((endpoint) => transformEndpoint({ dbShape: endpoint })),
             subpackages: dbShape.rootPackage.subpackages,
             types: dbShape.rootPackage.types,
-            webhooks: [],
+            webhooks: dbShape.rootPackage.webhooks ?? [],
         },
         types: dbShape.types,
         subpackages: Object.fromEntries(
@@ -39,7 +39,7 @@ function transformSubpackage({
         urlSlug: dbShape.urlSlug,
         description: dbShape.description,
         htmlDescription: dbShape.htmlDescription,
-        webhooks: [],
+        webhooks: dbShape.webhooks ?? [],
     };
 }
 

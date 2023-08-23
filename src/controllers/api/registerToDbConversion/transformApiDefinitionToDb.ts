@@ -4,6 +4,7 @@ import { FernRegistry } from "../../../generated";
 import * as ApiV1Write from "../../../generated/api/resources/api/resources/v1/resources/register";
 import { assertNever, type WithoutQuestionMarks } from "../../../util";
 import { generateEndpointExampleCall } from "./generateEndpointExampleCall";
+import { generateWebhookExample } from "./generateWebhookExample";
 
 export function transformApiDefinitionForDb(
     writeShape: FernRegistry.api.v1.register.ApiDefinition,
@@ -27,6 +28,10 @@ export function transformApiDefinitionForDb(
             endpoints: writeShape.rootPackage.endpoints.map((endpoint) =>
                 transformEndpoint({ writeShape: endpoint, apiDefinition: writeShape, context })
             ),
+            webhooks:
+                writeShape.rootPackage.webhooks?.map((webhook) =>
+                    transformWebhook({ writeShape: webhook, apiDefinition: writeShape })
+                ) ?? [],
             subpackages: writeShape.rootPackage.subpackages,
             types: writeShape.rootPackage.types,
         },
@@ -69,6 +74,7 @@ function transformSubpackage({
     const endpoints = writeShape.endpoints.map((endpoint) =>
         transformEndpoint({ writeShape: endpoint, apiDefinition, context })
     );
+    const webhooks = writeShape.webhooks?.map((webhook) => transformWebhook({ writeShape: webhook, apiDefinition }));
     return {
         subpackageId: id,
         parent: parent,
@@ -80,6 +86,31 @@ function transformSubpackage({
         urlSlug: kebabCase(writeShape.name),
         description: writeShape.description,
         htmlDescription: getHtmlDescription(writeShape.description),
+        webhooks: webhooks ?? [],
+    };
+}
+
+function transformWebhook({
+    apiDefinition,
+    writeShape,
+}: {
+    writeShape: FernRegistry.api.v1.register.WebhookDefinition;
+    apiDefinition: FernRegistry.api.v1.register.ApiDefinition;
+}): WithoutQuestionMarks<FernRegistry.api.v1.read.WebhookDefinition> {
+    return {
+        urlSlug: kebabCase(writeShape.name ?? writeShape.id),
+        description: writeShape.description,
+        htmlDescription: getHtmlDescription(writeShape.description),
+        method: writeShape.method,
+        id: writeShape.id,
+        name: writeShape.name,
+        path: writeShape.path,
+        headers: writeShape.headers,
+        payload: writeShape.payload,
+        examples:
+            writeShape.examples.length > 0
+                ? writeShape.examples
+                : [generateWebhookExample({ webhookDefinition: writeShape, apiDefinition })],
     };
 }
 

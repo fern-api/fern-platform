@@ -15,6 +15,7 @@ Object {
       "subpackage_transactions",
     ],
     "types": Array [],
+    "webhooks": Array [],
   },
   "subpackages": Object {
     "subpackage_transactions": Object {
@@ -124,6 +125,7 @@ Object {
         "type_transactions:User",
       ],
       "urlSlug": "transactions",
+      "webhooks": Array [],
     },
   },
   "types": Object {
@@ -203,6 +205,7 @@ Object {
       "subpackage_lcf",
     ],
     "types": Array [],
+    "webhooks": Array [],
   },
   "subpackages": Object {
     "subpackage_lcf": Object {
@@ -396,6 +399,7 @@ Object {
         "type_lcf:ParcelWeight",
       ],
       "urlSlug": "lcf",
+      "webhooks": Array [],
     },
   },
   "types": Object {
@@ -1954,6 +1958,7 @@ Used to submit feedback regarding the quality of previously generated completion
       "type_:UploadDocumentErrorResponse",
       "type_:UploadDocumentResponse",
     ],
+    "webhooks": Array [],
   },
   "subpackages": Object {
     "subpackage_deployments": Object {
@@ -2067,6 +2072,7 @@ Used to retrieve a deployment given its ID or name.
       "subpackages": Array [],
       "types": Array [],
       "urlSlug": "deployments",
+      "webhooks": Array [],
     },
     "subpackage_documentIndexes": Object {
       "description": undefined,
@@ -2248,6 +2254,7 @@ Creates a new document index.",
       "subpackages": Array [],
       "types": Array [],
       "urlSlug": "document-indexes",
+      "webhooks": Array [],
     },
     "subpackage_documents": Object {
       "description": undefined,
@@ -2553,6 +2560,7 @@ Upload a document to be indexed and used for search.
       "subpackages": Array [],
       "types": Array [],
       "urlSlug": "documents",
+      "webhooks": Array [],
     },
     "subpackage_modelVersions": Object {
       "description": undefined,
@@ -2834,6 +2842,7 @@ Compiles the prompt backing the model version using the provided input values.",
       "subpackages": Array [],
       "types": Array [],
       "urlSlug": "model-versions",
+      "webhooks": Array [],
     },
     "subpackage_registeredPrompts": Object {
       "description": undefined,
@@ -3112,6 +3121,7 @@ partners, not directly by Vellum users.</p>
       "subpackages": Array [],
       "types": Array [],
       "urlSlug": "registered-prompts",
+      "webhooks": Array [],
     },
     "subpackage_sandboxes": Object {
       "description": undefined,
@@ -3399,6 +3409,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
       "subpackages": Array [],
       "types": Array [],
       "urlSlug": "sandboxes",
+      "webhooks": Array [],
     },
     "subpackage_testSuites": Object {
       "description": undefined,
@@ -3677,6 +3688,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
       "subpackages": Array [],
       "types": Array [],
       "urlSlug": "test-suites",
+      "webhooks": Array [],
     },
   },
   "types": Object {
