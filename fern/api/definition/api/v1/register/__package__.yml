@@ -5,6 +5,7 @@ imports:
   type: type.yml
   rootCommons: ../../../commons.yml
   commons: commons.yml
+  webhook: webhook.yml
 
 service:
   auth: true
@@ -42,6 +43,7 @@ types:
   ApiDefinitionPackage:
     properties:
       endpoints: list<endpoint.EndpointDefinition>
+      webhooks: optional<list<webhook.WebhookDefinition>>
       types: list<type.TypeId>
       subpackages: list<SubpackageId>
       pointsTo:

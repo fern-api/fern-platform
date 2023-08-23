@@ -108,6 +108,7 @@ afterAll(async () => {
 const EMPTY_REGISTER_API_DEFINITION: FernRegistry.api.v1.register.ApiDefinition = {
     rootPackage: {
         endpoints: [],
+        webhooks: [],
         types: [],
         subpackages: [],
     },
