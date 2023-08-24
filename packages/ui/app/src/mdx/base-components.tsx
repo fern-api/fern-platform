@@ -277,5 +277,5 @@ export const A: React.FC<HTMLAttributes<HTMLAnchorElement>> = ({ className, ...r
 };
 
 export function getSlugFromText(text: string): string {
-    return getSlugFromText(text);
+    return text.toLowerCase().replace(/\W/g, "-");
 }
