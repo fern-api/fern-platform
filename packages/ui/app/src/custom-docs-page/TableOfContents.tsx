@@ -2,6 +2,7 @@ import { Text } from "@blueprintjs/core";
 import classNames from "classnames";
 import { marked } from "marked";
 import { useMemo } from "react";
+import { getSlugFromText } from "../mdx/base-components";
 
 export declare namespace TableOfContents {
     export interface Props {
@@ -32,7 +33,12 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ma
                             style={{ marginLeft: 8 * (heading.depth - minDepth) }}
                             ellipsize
                         >
-                            {heading.text}
+                            <a
+                                href={`#${getSlugFromText(heading.text)}`}
+                                style={{ textDecoration: "none", color: "inherit" }}
+                            >
+                                {heading.text}
+                            </a>
                         </Text>
                     ))}
                 </div>
