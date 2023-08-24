@@ -33,7 +33,12 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ma
                             style={{ marginLeft: 8 * (heading.depth - minDepth) }}
                             ellipsize
                         >
-                            <a href={`#${getSlugFromText(heading.text)}`}>{heading.text}</a>
+                            <a
+                                href={`#${getSlugFromText(heading.text)}`}
+                                style={{ textDecoration: "none", color: "inherit" }}
+                            >
+                                {heading.text}
+                            </a>
                         </Text>
                     ))}
                 </div>
