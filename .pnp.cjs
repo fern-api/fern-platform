@@ -3285,10 +3285,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/registry-browser", [\
-        ["npm:0.14.1-1-gf6c42e8", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-registry-browser-npm-0.14.1-1-gf6c42e8-2f28f31dd1-ee946a2b12.zip/node_modules/@fern-fern/registry-browser/",\
+        ["npm:0.14.1-3-g6c09dff", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-registry-browser-npm-0.14.1-3-g6c09dff-78450409fb-506a2449eb.zip/node_modules/@fern-fern/registry-browser/",\
           "packageDependencies": [\
-            ["@fern-fern/registry-browser", "npm:0.14.1-1-gf6c42e8"],\
+            ["@fern-fern/registry-browser", "npm:0.14.1-3-g6c09dff"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["@ungap/url-search-params", "npm:0.2.2"],\
             ["axios", "npm:1.4.0"],\
@@ -3378,7 +3378,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/ui/fe-bundle/",\
           "packageDependencies": [\
             ["@fern-ui/fe-bundle", "workspace:packages/ui/fe-bundle"],\
-            ["@fern-fern/registry-browser", "npm:0.14.1-1-gf6c42e8"],\
+            ["@fern-fern/registry-browser", "npm:0.14.1-3-g6c09dff"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/theme", "workspace:packages/commons/react/theme"],\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
@@ -3631,7 +3631,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@blueprintjs/icons", "npm:4.9.0"],\
             ["@blueprintjs/popover2", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.8.0"],\
             ["@blueprintjs/select", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.5.1"],\
-            ["@fern-fern/registry-browser", "npm:0.14.1-1-gf6c42e8"],\
+            ["@fern-fern/registry-browser", "npm:0.14.1-3-g6c09dff"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/react-commons", "workspace:packages/commons/react/react-commons"],\
             ["@fern-ui/routing-utils", "workspace:packages/commons/react/routing-utils"],\
