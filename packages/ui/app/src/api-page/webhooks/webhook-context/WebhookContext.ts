@@ -6,9 +6,6 @@ export const WebhookContext = createContext<() => WebhookContextValue>(() => {
 });
 
 export interface WebhookContextValue {
-    hoveredRequestPropertyPath: JsonPropertyPath | undefined;
-    setHoveredRequestPropertyPath: (path: JsonPropertyPath | undefined) => void;
-
-    hoveredResponsePropertyPath: JsonPropertyPath | undefined;
-    setHoveredResponsePropertyPath: (path: JsonPropertyPath | undefined) => void;
+    hoveredPayloadPropertyPath: JsonPropertyPath | undefined;
+    setHoveredPayloadPropertyPath: (path: JsonPropertyPath | undefined) => void;
 }
