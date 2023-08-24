@@ -107,7 +107,7 @@ const flatten = (
 export const H1: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ...rest }) => {
     const children = React.Children.toArray(rest.children);
     const text = children.reduce(flatten, "");
-    const slug = text.toLowerCase().replace(/\W/g, "-");
+    const slug = getSlugFromText(text);
     return (
         <h1
             id={slug}
@@ -126,7 +126,7 @@ export const H1: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
 export const H2: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ...rest }) => {
     const children = React.Children.toArray(rest.children);
     const text = children.reduce(flatten, "");
-    const slug = text.toLowerCase().replace(/\W/g, "-");
+    const slug = getSlugFromText(text);
     return (
         <h2
             id={slug}
@@ -145,7 +145,7 @@ export const H2: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
 export const H3: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ...rest }) => {
     const children = React.Children.toArray(rest.children);
     const text = children.reduce(flatten, "");
-    const slug = text.toLowerCase().replace(/\W/g, "-");
+    const slug = getSlugFromText(text);
     return (
         <h3
             id={slug}
@@ -164,7 +164,7 @@ export const H3: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
 export const H4: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ...rest }) => {
     const children = React.Children.toArray(rest.children);
     const text = children.reduce(flatten, "");
-    const slug = text.toLowerCase().replace(/\W/g, "-");
+    const slug = getSlugFromText(text);
     return (
         <h4
             id={slug}
@@ -183,7 +183,7 @@ export const H4: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
 export const H5: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ...rest }) => {
     const children = React.Children.toArray(rest.children);
     const text = children.reduce(flatten, "");
-    const slug = text.toLowerCase().replace(/\W/g, "-");
+    const slug = getSlugFromText(text);
     return (
         <h5
             id={slug}
@@ -202,7 +202,7 @@ export const H5: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
 export const H6: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ...rest }) => {
     const children = React.Children.toArray(rest.children);
     const text = children.reduce(flatten, "");
-    const slug = text.toLowerCase().replace(/\W/g, "-");
+    const slug = getSlugFromText(text);
     return (
         <h6
             id={slug}
@@ -275,3 +275,7 @@ export const A: React.FC<HTMLAttributes<HTMLAnchorElement>> = ({ className, ...r
         />
     );
 };
+
+export function getSlugFromText(text: string): string {
+    return getSlugFromText(text);
+}
