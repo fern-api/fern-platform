@@ -23,7 +23,9 @@ export const DocsMainContent: React.FC = () => {
         case "clientLibraries":
         case "apiSubpackage":
         case "endpoint":
+        case "webhook":
         case "topLevelEndpoint":
+        case "topLevelWebhook":
             return (
                 <ApiDefinitionContextProvider
                     apiSection={resolvedPathFromUrl.apiSection}

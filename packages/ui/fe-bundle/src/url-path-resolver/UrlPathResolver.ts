@@ -77,6 +77,14 @@ export class UrlPathResolver {
                     slug: node.slug,
                     endpoint: node.endpoint,
                 };
+            case "topLevelWebhook":
+                return {
+                    type: "topLevelWebhook",
+                    apiSection: node.apiSection,
+                    apiSlug: node.apiSlug,
+                    slug: node.slug,
+                    webhook: node.webhook,
+                };
             case "apiSubpackage":
                 return {
                     type: "apiSubpackage",
@@ -93,6 +101,15 @@ export class UrlPathResolver {
                     slug: node.slug,
                     parent: node.parent,
                     endpoint: node.endpoint,
+                };
+            case "webhook":
+                return {
+                    type: "webhook",
+                    apiSection: node.apiSection,
+                    apiSlug: node.apiSlug,
+                    slug: node.slug,
+                    parent: node.parent,
+                    webhook: node.webhook,
                 };
             default:
                 assertNever(node);

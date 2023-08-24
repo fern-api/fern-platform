@@ -41,8 +41,10 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
         switch (resolvedUrlPath.type) {
             case "clientLibraries":
             case "endpoint":
+            case "webhook":
             case "mdx-page":
             case "topLevelEndpoint":
+            case "topLevelWebhook":
             case "apiSubpackage":
                 return getFullSlug(resolvedUrlPath.slug);
             case "api":

@@ -85,8 +85,10 @@ export class UrlSlugTree {
                     break;
                 case "clientLibraries":
                 case "endpoint":
+                case "webhook":
                 case "page":
                 case "topLevelEndpoint":
+                case "topLevelWebhook":
                     break;
                 default:
                     assertNever(node);
@@ -120,7 +122,9 @@ export class UrlSlugTree {
             case "clientLibraries":
             case "page":
             case "topLevelEndpoint":
+            case "topLevelWebhook":
             case "endpoint":
+            case "webhook":
                 return undefined;
             default:
                 assertNever(child);
@@ -248,13 +252,26 @@ export class UrlSlugTree {
                 },
                 {}
             ),
+            ...apiDefinition.rootPackage.webhooks.reduce<Record<UrlSlug, UrlSlugTreeNode.TopLevelWebhook>>(
+                (acc, topLevelWebhook, index) => {
+                    acc[topLevelWebhook.urlSlug] = this.constructTopLevelWebhookNode({
+                        apiSection,
+                        topLevelWebhook,
+                        apiSlug: slug,
+                        isFirstItemInApi: index === 0,
+                    });
+                    return acc;
+                },
+                {}
+            ),
             ...this.constructSlugToApiSubpackageRecord({
                 apiDefinition,
                 apiSection,
                 package_: apiDefinition.rootPackage,
                 apiSlug: slug,
                 slugInsideApi: "",
-                isFirstItemInApi: apiDefinition.rootPackage.endpoints.length === 0,
+                isFirstItemInApi:
+                    apiDefinition.rootPackage.endpoints.length === 0 || apiDefinition.rootPackage.webhooks.length === 0,
             }),
         });
 
@@ -281,7 +298,11 @@ export class UrlSlugTree {
             if (subpackage == null) {
                 throw new Error("Subpackage does not exist: " + subpackageId);
             }
-            if (doesSubpackageHaveEndpointsRecursive(subpackageId, (id) => resolveSubpackage(apiDefinition, id))) {
+            if (
+                doesSubpackageHaveEndpointsOrWebhooksRecursive(subpackageId, (id) =>
+                    resolveSubpackage(apiDefinition, id)
+                )
+            ) {
                 const resolvedSubpackage = resolveSubpackage(apiDefinition, subpackageId);
                 acc[subpackage.urlSlug] = this.constructApiSubpackageNode({
                     apiDefinition,
@@ -313,6 +334,27 @@ export class UrlSlugTree {
             apiSlug,
             slug: joinUrlSlugs(apiSlug, topLevelEndpoint.urlSlug),
             endpoint: topLevelEndpoint,
+            isFirstItemInApi,
+        };
+    }
+
+    private constructTopLevelWebhookNode({
+        apiSection,
+        topLevelWebhook,
+        isFirstItemInApi,
+        apiSlug,
+    }: {
+        apiSection: FernRegistryDocsRead.ApiSection;
+        topLevelWebhook: FernRegistryApiRead.WebhookDefinition;
+        isFirstItemInApi: boolean;
+        apiSlug: string;
+    }): UrlSlugTreeNode.TopLevelWebhook {
+        return {
+            type: "topLevelWebhook",
+            apiSection,
+            apiSlug,
+            slug: joinUrlSlugs(apiSlug, topLevelWebhook.urlSlug),
+            webhook: topLevelWebhook,
             isFirstItemInApi,
         };
     }
@@ -354,6 +396,12 @@ export class UrlSlugTree {
                     apiSlug,
                     slugInsideApi,
                 }),
+                ...this.constructSlugToWebhookRecord({
+                    apiSection,
+                    subpackage,
+                    apiSlug,
+                    slugInsideApi,
+                }),
             },
         };
     }
@@ -376,6 +424,29 @@ export class UrlSlugTree {
                 slugInsideApi: joinUrlSlugs(slugInsideApi, endpoint.urlSlug),
                 parent: subpackage,
                 endpoint,
+            });
+            return acc;
+        }, {});
+    }
+
+    private constructSlugToWebhookRecord({
+        apiSection,
+        subpackage,
+        apiSlug,
+        slugInsideApi,
+    }: {
+        apiSection: FernRegistryDocsRead.ApiSection;
+        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
+        apiSlug: string;
+        slugInsideApi: string;
+    }): Record<UrlSlug, UrlSlugTreeNode.Webhook> {
+        return subpackage.webhooks.reduce<Record<UrlSlug, UrlSlugTreeNode.Webhook>>((acc, webhook) => {
+            acc[webhook.urlSlug] = this.constructWebhookNode({
+                apiSection,
+                apiSlug,
+                slugInsideApi: joinUrlSlugs(slugInsideApi, webhook.urlSlug),
+                parent: subpackage,
+                webhook,
             });
             return acc;
         }, {});
@@ -404,6 +475,29 @@ export class UrlSlugTree {
         };
     }
 
+    private constructWebhookNode({
+        apiSection,
+        apiSlug,
+        slugInsideApi,
+        parent,
+        webhook,
+    }: {
+        apiSection: FernRegistryDocsRead.ApiSection;
+        apiSlug: string;
+        slugInsideApi: string;
+        parent: FernRegistryApiRead.ApiDefinitionSubpackage;
+        webhook: FernRegistryApiRead.WebhookDefinition;
+    }): UrlSlugTreeNode.Webhook {
+        return {
+            type: "webhook",
+            apiSection,
+            apiSlug,
+            slug: joinUrlSlugs(apiSlug, slugInsideApi),
+            parent,
+            webhook,
+        };
+    }
+
     private inOrderTraverse(nodes: UrlSlugTreeNode[]): UrlSlugTreeNode[] {
         const inOrder: UrlSlugTreeNode[] = [];
 
@@ -418,7 +512,9 @@ export class UrlSlugTree {
                 case "clientLibraries":
                 case "page":
                 case "topLevelEndpoint":
+                case "topLevelWebhook":
                 case "endpoint":
+                case "webhook":
                     break;
                 default:
                     assertNever(node);
@@ -437,8 +533,10 @@ export type UrlSlugTreeNode =
     | UrlSlugTreeNode.Api
     | UrlSlugTreeNode.ClientLibraries
     | UrlSlugTreeNode.TopLevelEndpoint
+    | UrlSlugTreeNode.TopLevelWebhook
     | UrlSlugTreeNode.ApiSubpackage
-    | UrlSlugTreeNode.Endpoint;
+    | UrlSlugTreeNode.Endpoint
+    | UrlSlugTreeNode.Webhook;
 
 export declare namespace UrlSlugTreeNode {
     export interface Section extends BaseNode {
@@ -454,7 +552,7 @@ export declare namespace UrlSlugTreeNode {
 
     export interface Api extends BaseNode, BaseApiNode {
         type: "api";
-        children: Record<UrlSlug, ClientLibraries | TopLevelEndpoint | ApiSubpackage>;
+        children: Record<UrlSlug, ClientLibraries | TopLevelEndpoint | TopLevelWebhook | ApiSubpackage>;
     }
 
     export interface ClientLibraries extends BaseNode, BaseApiNode {
@@ -468,16 +566,28 @@ export declare namespace UrlSlugTreeNode {
         isFirstItemInApi: boolean;
     }
 
+    export interface TopLevelWebhook extends BaseNode, BaseApiNode {
+        type: "topLevelWebhook";
+        webhook: FernRegistryApiRead.WebhookDefinition;
+        isFirstItemInApi: boolean;
+    }
+
     export interface ApiSubpackage extends BaseNode, BaseApiNode {
         type: "apiSubpackage";
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
         isFirstItemInApi: boolean;
-        children: Record<UrlSlug, ApiSubpackage | Endpoint>;
+        children: Record<UrlSlug, ApiSubpackage | Endpoint | Webhook>;
     }
 
     export interface Endpoint extends BaseNode, BaseApiNode {
         type: "endpoint";
         endpoint: FernRegistryApiRead.EndpointDefinition;
+        parent: FernRegistryApiRead.ApiDefinitionSubpackage;
+    }
+
+    export interface Webhook extends BaseNode, BaseApiNode {
+        type: "webhook";
+        webhook: FernRegistryApiRead.WebhookDefinition;
         parent: FernRegistryApiRead.ApiDefinitionSubpackage;
     }
 
@@ -504,6 +614,7 @@ function getIndexOfFirstNavigatableItem(nodes: UrlSlugTreeNode[], { startingAt }
             case "clientLibraries":
                 return startingAt + i;
             case "topLevelEndpoint":
+            case "topLevelWebhook":
             case "apiSubpackage":
                 if (node.isFirstItemInApi) {
                     return startingAt + i;
@@ -511,6 +622,7 @@ function getIndexOfFirstNavigatableItem(nodes: UrlSlugTreeNode[], { startingAt }
                 break;
             case "api":
             case "endpoint":
+            case "webhook":
             case "section":
                 break;
             default:
@@ -525,8 +637,10 @@ function getApiSlug(node: UrlSlugTreeNode): string | undefined {
         case "api":
         case "clientLibraries":
         case "endpoint":
+        case "webhook":
         case "apiSubpackage":
         case "topLevelEndpoint":
+        case "topLevelWebhook":
             return node.apiSlug;
         case "section":
         case "page":
@@ -569,13 +683,13 @@ function resolveSubpackage(
     }
 }
 
-function doesSubpackageHaveEndpointsRecursive(
+function doesSubpackageHaveEndpointsOrWebhooksRecursive(
     subpackageId: FernRegistryApiRead.SubpackageId,
     resolveSubpackage: (subpackageId: FernRegistryApiRead.SubpackageId) => FernRegistryApiRead.ApiDefinitionSubpackage
 ): boolean {
     const subpackage = resolveSubpackage(subpackageId);
-    if (subpackage.endpoints.length > 0) {
+    if (subpackage.endpoints.length > 0 || subpackage.webhooks.length > 0) {
         return true;
     }
-    return subpackage.subpackages.some((s) => doesSubpackageHaveEndpointsRecursive(s, resolveSubpackage));
+    return subpackage.subpackages.some((s) => doesSubpackageHaveEndpointsOrWebhooksRecursive(s, resolveSubpackage));
 }

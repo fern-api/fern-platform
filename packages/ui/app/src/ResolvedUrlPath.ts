@@ -8,8 +8,10 @@ export type ResolvedUrlPath =
     | ResolvedUrlPath.Api
     | ResolvedUrlPath.ClientLibraries
     | ResolvedUrlPath.TopLevelEndpoint
+    | ResolvedUrlPath.TopLevelWebhook
     | ResolvedUrlPath.ApiSubpackage
-    | ResolvedUrlPath.Endpoint;
+    | ResolvedUrlPath.Endpoint
+    | ResolvedUrlPath.Webhook;
 
 export declare namespace ResolvedUrlPath {
     export interface Section {
@@ -48,6 +50,14 @@ export declare namespace ResolvedUrlPath {
         endpoint: FernRegistryApiRead.EndpointDefinition;
     }
 
+    export interface TopLevelWebhook {
+        type: "topLevelWebhook";
+        apiSection: FernRegistryDocsRead.ApiSection;
+        apiSlug: string;
+        slug: string;
+        webhook: FernRegistryApiRead.WebhookDefinition;
+    }
+
     export interface ApiSubpackage {
         type: "apiSubpackage";
         apiSection: FernRegistryDocsRead.ApiSection;
@@ -62,6 +72,15 @@ export declare namespace ResolvedUrlPath {
         apiSlug: string;
         slug: string;
         endpoint: FernRegistryApiRead.EndpointDefinition;
+        parent: FernRegistryApiRead.ApiDefinitionSubpackage;
+    }
+
+    export interface Webhook {
+        type: "webhook";
+        apiSection: FernRegistryDocsRead.ApiSection;
+        apiSlug: string;
+        slug: string;
+        webhook: FernRegistryApiRead.WebhookDefinition;
         parent: FernRegistryApiRead.ApiDefinitionSubpackage;
     }
 }

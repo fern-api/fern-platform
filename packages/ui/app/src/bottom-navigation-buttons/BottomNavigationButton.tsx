@@ -50,6 +50,9 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
             case "endpoint":
             case "topLevelEndpoint":
                 return path.apiSection.title;
+            case "webhook":
+            case "topLevelWebhook":
+                return path.apiSection.title;
             default:
                 assertNever(path);
         }
