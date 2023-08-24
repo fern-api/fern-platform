@@ -2,7 +2,7 @@ import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/
 import { useContext, useMemo } from "react";
 import { HiOutlineChevronDown } from "react-icons/hi2";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
-import { doesSubpackageHaveEndpointsRecursive } from "../api-page/subpackages/doesSubpackageHaveEndpointsRecursive";
+import { doesSubpackageHaveEndpointsOrWebhooksRecursive } from "../api-page/subpackages/doesSubpackageHaveEndpointsOrWebhooksRecursive";
 import { SubpackageTitle } from "../api-page/subpackages/SubpackageTitle";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { ApiPackageSidebarSectionContents } from "./ApiPackageSidebarSectionContents";
@@ -22,8 +22,8 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
     const { selectedSlug, getFullSlug } = useDocsContext();
     const { resolveSubpackageById } = useApiDefinitionContext();
 
-    const hasEndpoints = useMemo(
-        () => doesSubpackageHaveEndpointsRecursive(subpackage.subpackageId, resolveSubpackageById),
+    const hasEndpointsOrWebhooks = useMemo(
+        () => doesSubpackageHaveEndpointsOrWebhooksRecursive(subpackage.subpackageId, resolveSubpackageById),
         [resolveSubpackageById, subpackage.subpackageId]
     );
 
@@ -32,7 +32,7 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
     const { expandAllSections } = useContext(SidebarContext)();
     const isOpen = isSelected || isChildSelected || expandAllSections;
 
-    if (!hasEndpoints) {
+    if (!hasEndpointsOrWebhooks) {
         return null;
     }
 

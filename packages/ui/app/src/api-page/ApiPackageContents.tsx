@@ -3,7 +3,7 @@ import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext"
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { Endpoint } from "./endpoints/Endpoint";
 import { ApiSubpackage } from "./subpackages/ApiSubpackage";
-import { doesSubpackageHaveEndpointsRecursive } from "./subpackages/doesSubpackageHaveEndpointsRecursive";
+import { doesSubpackageHaveEndpointsOrWebhooksRecursive } from "./subpackages/doesSubpackageHaveEndpointsOrWebhooksRecursive";
 import { Webhook } from "./webhooks/Webhook";
 
 export declare namespace ApiPackageContents {
@@ -42,7 +42,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                 />
             ))}
             {package_.subpackages.map((subpackageId, idx) => {
-                if (!doesSubpackageHaveEndpointsRecursive(subpackageId, resolveSubpackageById)) {
+                if (!doesSubpackageHaveEndpointsOrWebhooksRecursive(subpackageId, resolveSubpackageById)) {
                     return null;
                 }
                 const subpackage = resolveSubpackageById(subpackageId);
