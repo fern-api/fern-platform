@@ -15,8 +15,6 @@ export const ApiPackageSidebarSectionContents: React.FC<ApiPackageSidebarSection
     package: package_,
     slug,
 }) => {
-    console.log("ApiPackageSidebarSectionContents");
-    console.log(package_);
     return (
         <div className="flex flex-col">
             {package_.endpoints.map((endpoint, endpointIndex) => (
