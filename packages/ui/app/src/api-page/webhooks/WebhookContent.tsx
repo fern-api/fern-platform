@@ -84,11 +84,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                             {webhook.name}
                         </div>
                     </div>
-                    {webhook.description != null && (
-                        <div className="mt-6">
-                            <Markdown>{webhook.description}</Markdown>
-                        </div>
-                    )}
+                    {webhook.description != null && <Markdown>{webhook.description}</Markdown>}
                     <div className="mt-8 flex">
                         <div className="flex flex-1 flex-col gap-12">
                             <WebhookSection title="Payload" anchor={computeAnchor("payload")}>
