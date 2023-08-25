@@ -7,9 +7,9 @@ export function generateWebhookPayloadExample(
 ): unknown {
     switch (shape.type) {
         case "object":
-            return generateExampleObject(shape, resolveTypeById, true, new Set(), 0);
+            return generateExampleObject(shape, resolveTypeById, false, new Set(), 0);
         case "reference":
-            return generateExampleFromTypeReference(shape.value, resolveTypeById, true, new Set(), 0);
+            return generateExampleFromTypeReference(shape.value, resolveTypeById, false, new Set(), 0);
         default:
             assertNever(shape);
     }
