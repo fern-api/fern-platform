@@ -3,7 +3,8 @@ import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext"
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { Endpoint } from "./endpoints/Endpoint";
 import { ApiSubpackage } from "./subpackages/ApiSubpackage";
-import { doesSubpackageHaveEndpointsRecursive } from "./subpackages/doesSubpackageHaveEndpointsRecursive";
+import { doesSubpackageHaveEndpointsOrWebhooksRecursive } from "./subpackages/doesSubpackageHaveEndpointsOrWebhooksRecursive";
+import { Webhook } from "./webhooks/Webhook";
 
 export declare namespace ApiPackageContents {
     export interface Props {
@@ -31,8 +32,17 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                     package={package_}
                 />
             ))}
+            {package_.webhooks.map((webhook, idx) => (
+                <Webhook
+                    key={webhook.id}
+                    webhook={webhook}
+                    isLastInApi={isLastInParentPackage && idx === package_.webhooks.length - 1}
+                    slug={joinUrlSlugs(slug, webhook.urlSlug)}
+                    package={package_}
+                />
+            ))}
             {package_.subpackages.map((subpackageId, idx) => {
-                if (!doesSubpackageHaveEndpointsRecursive(subpackageId, resolveSubpackageById)) {
+                if (!doesSubpackageHaveEndpointsOrWebhooksRecursive(subpackageId, resolveSubpackageById)) {
                     return null;
                 }
                 const subpackage = resolveSubpackageById(subpackageId);

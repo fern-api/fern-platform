@@ -22,6 +22,9 @@ export const MobileSidebar: React.FC = () => {
             case "endpoint":
             case "topLevelEndpoint":
                 return <EndpointTitle endpoint={resolvedPathFromUrl.endpoint} />;
+            case "webhook":
+            case "topLevelWebhook":
+                return resolvedPathFromUrl.webhook.name ?? "";
             case "mdx-page":
                 return resolvedPathFromUrl.page.title;
             case "clientLibraries":
