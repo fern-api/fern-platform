@@ -38,7 +38,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
 
     const computeAnchor = useCallback(
         (
-            attributeType: "path" | "query" | "request" | "response" | "errors",
+            attributeType: "payload" | "response",
             attribute?:
                 | FernRegistryApiRead.ObjectProperty
                 | FernRegistryApiRead.PathParameter
@@ -90,11 +90,11 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                     )}
                     <div className="mt-8 flex">
                         <div className="flex flex-1 flex-col gap-12">
-                            <WebhookSection title="Payload" anchor={computeAnchor("request")}>
+                            <WebhookSection title="Payload" anchor={computeAnchor("payload")}>
                                 <WebhookPayloadSection
                                     payload={webhook.payload}
                                     onHoverProperty={onHoverPayloadProperty}
-                                    getPropertyAnchor={(property) => computeAnchor("request", property)}
+                                    getPropertyAnchor={(property) => computeAnchor("payload", property)}
                                 />
                             </WebhookSection>
                         </div>
