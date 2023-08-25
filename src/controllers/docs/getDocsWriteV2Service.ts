@@ -96,60 +96,64 @@ export function getDocsWriteV2Service(app: FdrApplication): WriteService {
             if (docsRegistrationInfo == null) {
                 throw new DocsRegistrationIdNotFound();
             }
+            try {
+                app.logger.info(`[${docsRegistrationInfo.fernDomain}] Called finishDocsRegister`);
+                await app.services.auth.checkUserBelongsToOrg({
+                    authHeader: req.headers.authorization,
+                    orgId: docsRegistrationInfo.orgId,
+                });
 
-            app.logger.info(`[${docsRegistrationInfo.fernDomain}] Called finishDocsRegister`);
-            await app.services.auth.checkUserBelongsToOrg({
-                authHeader: req.headers.authorization,
-                orgId: docsRegistrationInfo.orgId,
-            });
+                app.logger.info(`[${docsRegistrationInfo.fernDomain}] Transforming Docs Definition to DB`);
+                const dbDocsDefinition = transformWriteDocsDefinitionToDb({
+                    writeShape: req.body.docsDefinition,
+                    files: docsRegistrationInfo.s3FileInfos,
+                });
 
-            app.logger.info(`[${docsRegistrationInfo.fernDomain}] Transforming Docs Definition to DB`);
-            const dbDocsDefinition = transformWriteDocsDefinitionToDb({
-                writeShape: req.body.docsDefinition,
-                files: docsRegistrationInfo.s3FileInfos,
-            });
+                const newAlgoliaIndex = `${docsRegistrationInfo.fernDomain}_${uuidv4()}`;
 
-            const newAlgoliaIndex = `${docsRegistrationInfo.fernDomain}_${uuidv4()}`;
+                app.logger.info(`[${docsRegistrationInfo.fernDomain}] Creating new algolia index`);
+                await createNewAlgoliaIndex({
+                    docsRegistrationInfo,
+                    indexName: newAlgoliaIndex,
+                    dbDocsDefinition,
+                    app,
+                });
 
-            app.logger.info(`[${docsRegistrationInfo.fernDomain}] Creating new algolia index`);
-            await createNewAlgoliaIndex({
-                docsRegistrationInfo,
-                indexName: newAlgoliaIndex,
-                dbDocsDefinition,
-                app,
-            });
+                app.logger.info(`[${docsRegistrationInfo.fernDomain}] Updating db docs definitions`);
+                await app.services.db.updateDocsDefinition({
+                    algoliaIndex: newAlgoliaIndex,
+                    dbDocsDefinition,
+                    docsRegistrationInfo,
+                });
 
-            app.logger.info(`[${docsRegistrationInfo.fernDomain}] Updating db docs definitions`);
-            await app.services.db.updateDocsDefinition({
-                algoliaIndex: newAlgoliaIndex,
-                dbDocsDefinition,
-                docsRegistrationInfo,
-            });
+                // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+                delete DOCS_REGISTRATIONS[req.params.docsRegistrationId];
 
-            // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-            delete DOCS_REGISTRATIONS[req.params.docsRegistrationId];
+                // revalidate nextjs
+                const urls = [
+                    docsRegistrationInfo.fernDomain,
+                    ...docsRegistrationInfo.customDomains.map((domain) => `${domain.hostname}${domain.path}`),
+                ].map((url) => `https://${url}`);
+                await Promise.all(
+                    urls.map(async (url) => {
+                        try {
+                            app.logger.info(`[${docsRegistrationInfo.fernDomain}] Revalidating url: ${url}`);
+                            await revalidateUrl(url);
+                            app.logger.info(`[${docsRegistrationInfo.fernDomain}] Revalidated url: ${url}`);
+                        } catch (e) {
+                            app.logger.error(
+                                `[${docsRegistrationInfo.fernDomain}] Failed to revalidate url: ${url}. ` +
+                                    (e as Error).message
+                            );
+                        }
+                    })
+                );
 
-            // revalidate nextjs
-            const urls = [
-                docsRegistrationInfo.fernDomain,
-                ...docsRegistrationInfo.customDomains.map((domain) => `${domain.hostname}${domain.path}`),
-            ].map((url) => `https://${url}`);
-            await Promise.all(
-                urls.map(async (url) => {
-                    try {
-                        app.logger.info(`[${docsRegistrationInfo.fernDomain}] Revalidating url: ${url}`);
-                        await revalidateUrl(url);
-                        app.logger.info(`[${docsRegistrationInfo.fernDomain}] Revalidated url: ${url}`);
-                    } catch (e) {
-                        app.logger.error(
-                            `[${docsRegistrationInfo.fernDomain}] Failed to revalidate url: ${url}. ` +
-                                (e as Error).message
-                        );
-                    }
-                })
-            );
-
-            return res.send();
+                return res.send();
+            } catch (e) {
+                app.logger.error(`Error while trying to register docs for ${docsRegistrationInfo.fernDomain}`, e);
+                throw e;
+            }
         },
     });
 }

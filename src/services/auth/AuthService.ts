@@ -1,5 +1,6 @@
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import type { FdrApplication, FdrConfig } from "../../app";
+import { LOGGER } from "../../app/FdrApplication";
 import { UnauthorizedError, UserNotInOrgError } from "../../generated/api";
 
 export interface AuthService {
@@ -26,7 +27,7 @@ export class AuthServiceImpl implements AuthService {
         });
         const response = await venus.organization.isMember(FernVenusApi.OrganizationId(orgId));
         if (!response.ok) {
-            console.error("Failed to make request to venus", response.error);
+            LOGGER.error("Failed to make request to venus", response.error);
             throw new Error("Failed to make request to venus.");
         }
         const belongsToOrg = response.body;

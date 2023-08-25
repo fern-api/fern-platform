@@ -14,9 +14,9 @@ export function registerAlgoliaIndexDeletionBackgroundTask(app: FdrApplication) 
                 olderThanMinutes: 10,
             });
 
-            console.log(`Successfully deleted ${deletedIndexCount} old indices.`);
+            app.logger.debug(`Successfully deleted ${deletedIndexCount} old indices.`);
         } catch (e) {
-            console.log(`Error while deleting old indices.`, e);
+            app.logger.error(`Error while deleting old indices.`, e);
         }
     });
 }

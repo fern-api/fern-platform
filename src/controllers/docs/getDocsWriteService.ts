@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import type { FdrApplication } from "../../app";
+import { LOGGER } from "../../app/FdrApplication";
 import { OrgId } from "../../generated/api";
 import { DocsRegistrationId, FilePath } from "../../generated/api/resources/docs/resources/v1/resources/write";
 import { DocsRegistrationIdNotFound } from "../../generated/api/resources/docs/resources/v1/resources/write/errors/DocsRegistrationIdNotFound";
@@ -55,7 +56,7 @@ export function getDocsWriteService(app: FdrApplication): WriteService {
                 writeShape: req.body.docsDefinition,
                 files: docsRegistrationInfo.s3FileInfos,
             });
-            console.log(
+            LOGGER.info(
                 `Docs for ${docsRegistrationInfo.orgId} has references to apis ${Array.from(
                     dbDocsDefinition.referencedApis
                 ).join(", ")}`

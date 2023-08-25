@@ -14,18 +14,20 @@ export interface FdrServices {
     readonly algoliaIndexDeleter: AlgoliaIndexDeleterService;
 }
 
+export const LOGGER = winston.createLogger({
+    level: "info",
+    format: winston.format.json(),
+    defaultMeta: { service: "user-service" },
+    transports: [
+        new winston.transports.Console({
+            format: winston.format.simple(),
+        }),
+    ],
+});
+
 export class FdrApplication {
     public readonly services: FdrServices;
-    public readonly logger = winston.createLogger({
-        level: "info",
-        format: winston.format.json(),
-        defaultMeta: { service: "user-service" },
-        transports: [
-            new winston.transports.Console({
-                format: winston.format.simple(),
-            }),
-        ],
-    });
+    public readonly logger = LOGGER;
 
     public constructor(public readonly config: FdrConfig, services?: Partial<FdrServices>) {
         this.services = {

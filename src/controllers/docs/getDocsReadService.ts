@@ -26,8 +26,6 @@ export async function getDocsForDomain({
     app: FdrApplication;
     domain: string;
 }): Promise<FernRegistry.docs.v1.read.DocsDefinition> {
-    console.debug(__filename, "Finding first docs for domain", domain);
-
     const [docs, docsV2] = await Promise.all([
         app.services.db.prisma.docs.findFirst({
             where: {
@@ -41,16 +39,11 @@ export async function getDocsForDomain({
         }),
     ]);
 
-    console.debug(__filename, "Found first docs for domain", domain);
     if (!docs) {
         throw new DomainNotRegisteredError();
     }
-    console.debug(__filename, "Reading buffer for domain", domain);
     const docsDefinitionJson = readBuffer(docs.docsDefinition);
-    console.debug(__filename, "Read buffer for domain", domain);
-    console.debug(__filename, "Parsing docs definition for domain", domain);
     const docsDbDefinition = migrateDocsDbDefinition(docsDefinitionJson);
-    console.debug(__filename, "Parse docs definition for domain", domain);
 
     return getDocsDefinition({ app, docsDbDefinition, docsV2 });
 }
@@ -76,18 +69,14 @@ export async function getDocsDefinition({
         config: getDocsDefinitionConfig(docsDbDefinition),
         apis: Object.fromEntries(
             apiDefinitions.map((apiDefinition) => {
-                console.debug(__filename, "Converting API Definition to 'read'", apiDefinition.apiDefinitionId);
                 const parsedApiDefinition = convertDbApiDefinitionToRead(apiDefinition.definition);
-                console.debug(__filename, "Converted API Definition to 'read'", apiDefinition.apiDefinitionId);
                 return [apiDefinition.apiDefinitionId, parsedApiDefinition];
             })
         ),
         files: Object.fromEntries(
             await Promise.all(
                 Object.entries(docsDbDefinition.files).map(async ([fileId, fileDbInfo]) => {
-                    console.debug(__filename, "Getting S3 download URL", fileId);
                     const s3DownloadUrl = await app.services.s3.getPresignedDownloadUrl({ key: fileDbInfo.s3Key });
-                    console.debug(__filename, "Got S3 download URL", fileId);
                     return [fileId, s3DownloadUrl];
                 })
             )

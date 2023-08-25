@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-base-to-string */
+import { LOGGER } from "../../../app/FdrApplication";
 import * as ApiV1Write from "../../../generated/api/resources/api/resources/v1/resources/register";
 import { EndpointExampleGenerationError } from "../../../generated/api/resources/api/resources/v1/resources/register/errors";
 import { assertNever } from "../../../util";
@@ -84,7 +85,7 @@ export function generateEndpointExampleCall(
             ...exampleEndpointCall,
         };
     } catch (e) {
-        console.error(`Failed to generate example for endpoint ${endpointDefinition.id}`, e);
+        LOGGER.error(`Failed to generate example for endpoint ${endpointDefinition.id}`, e);
         throw new EndpointExampleGenerationError({ endpointId: endpointDefinition.id });
     }
 }

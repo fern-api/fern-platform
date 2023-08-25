@@ -24,8 +24,6 @@ export function getReadApiService(app: FdrApplication): ReadService {
 }
 
 export function convertDbApiDefinitionToRead(buffer: Buffer): FernRegistryApiRead.ApiDefinition {
-    console.debug(__filename, "Reading buffer to convert db api definition to read");
     const apiDefinitionJson = readBuffer(buffer) as FernRegistry.api.v1.db.DbApiDefinition;
-    console.debug(__filename, "Read buffer to convert db api definition to read");
     return transformApiDefinitionForReading(apiDefinitionJson);
 }

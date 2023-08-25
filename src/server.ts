@@ -62,7 +62,7 @@ async function main() {
 
         registerBackgroundTasks(app);
 
-        console.log(`Listening for requests on port ${PORT}`);
+        app.logger.info(`Listening for requests on port ${PORT}`);
         expressApp.listen(PORT);
     } catch (e) {
         console.error("Server failed to start...", e);
