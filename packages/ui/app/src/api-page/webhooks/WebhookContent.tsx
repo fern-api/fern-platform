@@ -10,6 +10,7 @@ import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { SubpackageTitle } from "../subpackages/SubpackageTitle";
 import { useWebhookContext } from "./webhook-context/useWebhookContext";
 import { WebhookExample } from "./webhook-examples/WebhookExample";
+import { WebhookHeadersSection } from "./WebhookHeadersSection";
 import { WebhookPayloadSection } from "./WebhookPayloadSection";
 import { WebhookResponseSection } from "./WebhookResponseSection";
 import { WebhookSection } from "./WebhookSection";
@@ -85,6 +86,17 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                         </div>
                     </div>
                     {webhook.description != null && <Markdown>{webhook.description}</Markdown>}
+
+                    {webhook.headers.length > 0 && (
+                        <div className="mt-8 flex">
+                            <div className="flex flex-1 flex-col gap-12">
+                                <WebhookSection title="Headers" anchor={computeAnchor("payload")}>
+                                    <WebhookHeadersSection webhook={webhook} />
+                                </WebhookSection>
+                            </div>
+                        </div>
+                    )}
+
                     <div className="mt-8 flex">
                         <div className="flex flex-1 flex-col gap-12">
                             <WebhookSection title="Payload" anchor={computeAnchor("payload")}>
