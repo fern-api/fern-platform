@@ -11,6 +11,7 @@ import { SubpackageTitle } from "../subpackages/SubpackageTitle";
 import { useWebhookContext } from "./webhook-context/useWebhookContext";
 import { WebhookExample } from "./webhook-examples/WebhookExample";
 import { WebhookPayloadSection } from "./WebhookPayloadSection";
+import { WebhookResponseSection } from "./WebhookResponseSection";
 import { WebhookSection } from "./WebhookSection";
 
 export declare namespace WebhookContent {
@@ -96,6 +97,14 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                                     onHoverProperty={onHoverPayloadProperty}
                                     getPropertyAnchor={(property) => computeAnchor("payload", property)}
                                 />
+                            </WebhookSection>
+                        </div>
+                    </div>
+
+                    <div className="mt-8 flex">
+                        <div className="flex flex-1 flex-col gap-12">
+                            <WebhookSection title="Response" anchor={computeAnchor("response")}>
+                                <WebhookResponseSection />
                             </WebhookSection>
                         </div>
                     </div>
