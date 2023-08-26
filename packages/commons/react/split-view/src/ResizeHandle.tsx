@@ -142,7 +142,6 @@ function getClientY(event: DraggableEvent): number {
 }
 
 function isMouseEvent(event: DraggableEvent): event is React.MouseEvent<HTMLElement | SVGElement> | MouseEvent {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (event as React.MouseEvent).clientX != null;
 }
 

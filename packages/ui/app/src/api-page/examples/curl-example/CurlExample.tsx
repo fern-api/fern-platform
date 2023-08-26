@@ -57,6 +57,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
             if (value != null) {
                 parts.push({
                     type: "line",
+                    // eslint-disable-next-line @typescript-eslint/no-base-to-string
                     value: <CurlParameter paramKey="--url-query" value={`${queryParam.key}=${value}`} />,
                 });
             }
@@ -99,6 +100,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
             if (value != null) {
                 parts.push({
                     type: "line",
+                    // eslint-disable-next-line @typescript-eslint/no-base-to-string
                     value: <CurlParameter paramKey="--header" value={`${header.key}: ${value}`} />,
                 });
             }
