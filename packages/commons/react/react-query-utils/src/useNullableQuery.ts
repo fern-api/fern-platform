@@ -121,7 +121,6 @@ function createNullableQueryKey(): NullableQueryKey {
 }
 
 function isNullableQueryKey(queryKey: QueryKey): queryKey is NullableQueryKey {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return queryKey.length === 1 && (queryKey[0] as NullableQueryKeyItem)?.__nullableQueryKey != null;
 }
 
