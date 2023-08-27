@@ -40,6 +40,7 @@ it("api register", async () => {
             type_User: {
                 description: "This is some ```markdown```",
                 htmlDescription: "<p>This is some <code>markdown</code></p>\n",
+                descriptionContainsMarkdown: true,
                 name: "User",
                 shape: {
                     type: "alias",

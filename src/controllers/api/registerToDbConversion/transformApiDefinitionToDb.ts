@@ -75,6 +75,7 @@ function transformSubpackage({
         transformEndpoint({ writeShape: endpoint, apiDefinition, context })
     );
     const webhooks = writeShape.webhooks?.map((webhook) => transformWebhook({ writeShape: webhook, apiDefinition }));
+    const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         subpackageId: id,
         parent: parent,
@@ -85,7 +86,8 @@ function transformSubpackage({
         pointsTo: writeShape.pointsTo,
         urlSlug: kebabCase(writeShape.name),
         description: writeShape.description,
-        htmlDescription: getHtmlDescription(writeShape.description),
+        htmlDescription,
+        descriptionContainsMarkdown: htmlDescription != null ? hasFormattedMarkdown(htmlDescription) : false,
         webhooks: webhooks ?? [],
     };
 }
@@ -97,10 +99,12 @@ function transformWebhook({
     writeShape: FernRegistry.api.v1.register.WebhookDefinition;
     apiDefinition: FernRegistry.api.v1.register.ApiDefinition;
 }): WithoutQuestionMarks<FernRegistry.api.v1.read.WebhookDefinition> {
+    const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         urlSlug: kebabCase(writeShape.name ?? writeShape.id),
         description: writeShape.description,
-        htmlDescription: getHtmlDescription(writeShape.description),
+        htmlDescription,
+        descriptionContainsMarkdown: htmlDescription != null ? hasFormattedMarkdown(htmlDescription) : false,
         method: writeShape.method,
         id: writeShape.id,
         name: writeShape.name,
@@ -124,6 +128,7 @@ function transformEndpoint({
     context: ApiDefinitionTransformationContext;
 }): WithoutQuestionMarks<FernRegistry.api.v1.db.DbEndpointDefinition> {
     context.registerEnvironments(writeShape.environments ?? []);
+    const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         environments: writeShape.environments,
         defaultEnvironment: writeShape.defaultEnvironment,
@@ -139,8 +144,9 @@ function transformEndpoint({
         errors: writeShape.errors ?? [],
         examples: getExampleEndpointCalls({ writeShape, apiDefinition }),
         description: writeShape.description,
-        htmlDescription: getHtmlDescription(writeShape.description),
+        htmlDescription,
         authed: writeShape.auth,
+        descriptionContainsMarkdown: htmlDescription != null ? hasFormattedMarkdown(htmlDescription) : false,
     };
 }
 
@@ -199,34 +205,39 @@ function transformHttpRequestToDb({
 }: {
     writeShape: FernRegistry.api.v1.register.HttpRequest;
 }): WithoutQuestionMarks<FernRegistry.api.v1.db.DbHttpRequest> {
+    const htmlDescription = getHtmlDescription(writeShape.description);
     switch (writeShape.type.type) {
         case "object":
             return {
                 contentType: "application/json",
                 description: writeShape.description,
-                htmlDescription: getHtmlDescription(writeShape.description),
+                htmlDescription,
                 type: writeShape.type,
+                descriptionContainsMarkdown: htmlDescription != null ? hasFormattedMarkdown(htmlDescription) : false,
             };
         case "reference":
             return {
                 contentType: "application/json",
                 description: writeShape.description,
-                htmlDescription: getHtmlDescription(writeShape.description),
+                htmlDescription,
                 type: writeShape.type,
+                descriptionContainsMarkdown: htmlDescription != null ? hasFormattedMarkdown(htmlDescription) : false,
             };
         case "fileUpload":
             return {
                 contentType: "multipart/form-data",
                 description: writeShape.description,
-                htmlDescription: getHtmlDescription(writeShape.description),
+                htmlDescription,
                 type: writeShape.type,
+                descriptionContainsMarkdown: htmlDescription != null ? hasFormattedMarkdown(htmlDescription) : false,
             };
         case "json":
             return {
                 contentType: writeShape.type.contentType,
                 description: writeShape.description,
-                htmlDescription: getHtmlDescription(writeShape.description),
+                htmlDescription,
                 type: writeShape.type.shape,
+                descriptionContainsMarkdown: htmlDescription != null ? hasFormattedMarkdown(htmlDescription) : false,
             };
         default:
             assertNever(writeShape.type);
@@ -240,9 +251,11 @@ export function transformExampleEndpointCall({
     writeShape: FernRegistry.api.v1.register.ExampleEndpointCall;
     endpointDefinition: FernRegistry.api.v1.register.EndpointDefinition;
 }): WithoutQuestionMarks<FernRegistry.api.v1.read.ExampleEndpointCall> {
+    const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
-        htmlDescription: getHtmlDescription(writeShape.description),
+        htmlDescription,
+        descriptionContainsMarkdown: htmlDescription != null ? hasFormattedMarkdown(htmlDescription) : false,
         path: writeShape.path,
         pathParameters: writeShape.pathParameters,
         queryParameters: writeShape.queryParameters,
@@ -263,11 +276,13 @@ function transformTypeDefinition({
 }: {
     writeShape: FernRegistry.api.v1.register.TypeDefinition;
 }): WithoutQuestionMarks<FernRegistry.api.v1.read.TypeDefinition> {
+    const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
-        htmlDescription: getHtmlDescription(writeShape.description),
+        htmlDescription,
         name: writeShape.name,
         shape: transformShape({ writeShape: writeShape.shape }),
+        descriptionContainsMarkdown: htmlDescription != null ? hasFormattedMarkdown(htmlDescription) : false,
     };
 }
 
@@ -316,11 +331,13 @@ function transformProperty({
 }: {
     writeShape: FernRegistry.api.v1.register.ObjectProperty;
 }): WithoutQuestionMarks<FernRegistry.api.v1.read.ObjectProperty> {
+    const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
-        htmlDescription: getHtmlDescription(writeShape.description),
+        htmlDescription,
         key: writeShape.key,
         valueType: writeShape.valueType,
+        descriptionContainsMarkdown: htmlDescription != null ? hasFormattedMarkdown(htmlDescription) : false,
     };
 }
 
@@ -329,10 +346,12 @@ function transformEnumValue({
 }: {
     writeShape: FernRegistry.api.v1.register.EnumValue;
 }): WithoutQuestionMarks<FernRegistry.api.v1.read.EnumValue> {
+    const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
-        htmlDescription: getHtmlDescription(writeShape.description),
+        htmlDescription,
         value: writeShape.value,
+        descriptionContainsMarkdown: htmlDescription != null ? hasFormattedMarkdown(htmlDescription) : false,
     };
 }
 
@@ -341,9 +360,11 @@ function transformDiscriminatedVariant({
 }: {
     writeShape: FernRegistry.api.v1.register.DiscriminatedUnionVariant;
 }): WithoutQuestionMarks<FernRegistry.api.v1.read.DiscriminatedUnionVariant> {
+    const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
-        htmlDescription: getHtmlDescription(writeShape.description),
+        htmlDescription,
+        descriptionContainsMarkdown: htmlDescription != null ? hasFormattedMarkdown(htmlDescription) : false,
         discriminantValue: writeShape.discriminantValue,
         additionalProperties: {
             extends: writeShape.additionalProperties.extends,
@@ -359,15 +380,22 @@ function transformUnDiscriminatedVariant({
 }: {
     writeShape: FernRegistry.api.v1.register.UndiscriminatedUnionVariant;
 }): WithoutQuestionMarks<FernRegistry.api.v1.read.UndiscriminatedUnionVariant> {
+    const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
-        htmlDescription: getHtmlDescription(writeShape.description),
+        htmlDescription,
         type: writeShape.type,
+        descriptionContainsMarkdown: htmlDescription != null ? hasFormattedMarkdown(htmlDescription) : false,
     };
 }
 
 function getHtmlDescription(description: string | undefined): string | undefined {
     return description != null ? marked(description, { mangle: false, headerIds: false }) : undefined;
+}
+
+const IS_SIMPLE_P_TAG_REGEX = /^<p>[^<>]*<\/p>$/;
+function hasFormattedMarkdown(value: string) {
+    return !IS_SIMPLE_P_TAG_REGEX.test(value);
 }
 
 function entries<T extends object>(obj: T): [keyof T, T[keyof T]][] {

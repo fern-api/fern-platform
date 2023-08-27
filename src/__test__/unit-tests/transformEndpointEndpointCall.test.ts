@@ -66,6 +66,8 @@ describe("transformEndpointEndpointCall", () => {
                 nodeAxios: "",
             },
             description: undefined,
+            descriptionContainsMarkdown: false,
+            htmlDescription: undefined,
             headers: {
                 header: true,
             },
@@ -77,7 +79,9 @@ describe("transformEndpointEndpointCall", () => {
                 queryParam: 123,
             },
             requestBody: undefined,
+            requestBodyV2: undefined,
             responseBody: undefined,
+            responseBodyV2: undefined,
             responseStatusCode: 200,
         });
     });

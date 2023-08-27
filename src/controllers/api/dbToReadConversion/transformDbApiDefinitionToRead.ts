@@ -40,6 +40,7 @@ function transformSubpackage({
         description: dbShape.description,
         htmlDescription: dbShape.htmlDescription,
         webhooks: dbShape.webhooks ?? [],
+        descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
     };
 }
 
@@ -65,6 +66,7 @@ function transformEndpoint({
         description: dbShape.description,
         htmlDescription: dbShape.htmlDescription,
         authed: dbShape.authed ?? false,
+        descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
     };
 }
 
@@ -80,6 +82,7 @@ function transformHttpRequest({
                 description: dbShape.description,
                 htmlDescription: dbShape.htmlDescription,
                 type: dbShape.type,
+                descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
             };
         case "reference":
             return {
@@ -87,6 +90,7 @@ function transformHttpRequest({
                 description: dbShape.description,
                 htmlDescription: dbShape.htmlDescription,
                 type: dbShape.type,
+                descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
             };
         case "fileUpload":
             return {
@@ -94,6 +98,7 @@ function transformHttpRequest({
                 description: dbShape.description,
                 htmlDescription: dbShape.htmlDescription,
                 type: dbShape.type,
+                descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
             };
         default:
             assertNever(dbShape.type);
