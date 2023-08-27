@@ -1,7 +1,6 @@
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand } from "@fern-ui/react-commons";
 import { useDocsContext } from "../docs-context/useDocsContext";
-import { MobileSidebar } from "../mobile-sidebar/MobileSidebar";
 import { useSearchContext } from "../search-context/useSearchContext";
 import { SearchDialog } from "../search/SearchDialog";
 import { useSearchService } from "../services/useSearchService";
@@ -22,9 +21,6 @@ export const Docs: React.FC = () => {
             {searchService.isAvailable && <SearchDialog isOpen={isSearchDialogOpen} onClose={closeSearchDialog} />}
             <div className="border-border-default-light dark:border-border-default-dark bg-background sticky inset-x-0 top-0 z-20 border-b">
                 <Header />
-                <div className="flex md:hidden">
-                    <MobileSidebar />
-                </div>
             </div>
             <div className="flex min-h-0 flex-1">
                 <div className="hidden w-64 md:flex">
