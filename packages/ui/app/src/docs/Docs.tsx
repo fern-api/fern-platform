@@ -23,7 +23,7 @@ export const Docs: React.FC = () => {
                 <Header />
             </div>
             <div className="flex min-h-0 flex-1">
-                <div className="hidden w-64 md:flex">
+                <div className="flex w-64">
                     <Sidebar />
                 </div>
                 <div className="flex min-w-0 flex-1 flex-col">
