@@ -21,10 +21,10 @@ export const ClickableSidebarGroupTitle: React.FC<ClickableSidebarGroupTitle.Pro
                 title={
                     <div
                         className={classNames(
-                            "uppercase text-text-primary-light dark:text-text-primary-dark group-hover/sb-group-container:text-accent-primary transition-colors font-normal w-full flex justify-between items-center"
+                            "text-text-primary-light py-2 pl-4 dark:text-text-primary-dark group-hover/sb-group-container:text-accent-primary transition-colors font-normal w-full flex justify-between items-center"
                         )}
                     >
-                        <span className="text-xs tracking-wide">{title}</span>
+                        <span className="text-xs font-extrabold leading-4 tracking-wide">{title}</span>
                         <HiOutlineChevronDown
                             className={classNames("text-sm transition-all", {
                                 "-rotate-90": collapsed,

@@ -1,4 +1,3 @@
-import { Text } from "@blueprintjs/core";
 import { useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { useContext } from "react";
@@ -18,19 +17,16 @@ export const SidebarItemLayout: React.FC<SidebarItemLayout.Props> = ({ className
     const sidebarContext = useContext(SidebarDepthContext);
 
     return (
-        <Text
-            ellipsize
-            className={classNames(className, "flex shrink-0 z-0 items-center h-[30px] min-w-0 t-muted", {
-                "bg-accent-highlight relative": isSelected,
+        <div
+            className={classNames(className, "text-ellipsis flex shrink-0 z-0 items-center min-w-0 t-muted", {
+                relative: isSelected,
             })}
             style={{
-                paddingLeft: 16 + (sidebarContext != null ? 16 * sidebarContext.depth : 0),
-                paddingRight: 16,
+                paddingLeft: sidebarContext != null ? 16 * sidebarContext.depth : 0,
             }}
             {...hoveringCallbacks}
         >
             {typeof title === "function" ? title({ isHovering }) : title}
-            {isSelected && <div className="bg-accent-primary absolute inset-y-0 right-0 w-1" />}
-        </Text>
+        </div>
     );
 };

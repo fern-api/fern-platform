@@ -13,9 +13,9 @@ export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = ({ onClick }) 
     return (
         <button
             onClick={onClick}
-            className="dark:border-border-default-dark border-border-default-light hover:bg-background-hover-light hover:dark:bg-background-hover-dark group flex items-center rounded-md border px-2 py-1.5 transition"
+            className="dark:border-border-default-dark border-border-default-light hover:bg-background-hover-light hover:dark:bg-background-hover-dark group flex items-center rounded-lg border px-4 py-2 transition"
         >
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-3">
                 <Icon className="text-intent-default" icon="search" size={14} />
                 <div className="text-text-disabled-light group-hover:text-intent-default dark:text-text-disabled-dark transition">
                     Search...

@@ -42,7 +42,7 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
                 <NavigatingSidebarItem
                     className="mt-1"
                     title={<SubpackageTitle subpackage={subpackage} />}
-                    rightElement={<HiOutlineChevronDown />}
+                    leftElement={<HiOutlineChevronDown />}
                     slug={slug}
                 />
             }
