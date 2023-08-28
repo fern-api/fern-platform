@@ -94,7 +94,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
 
     return (
         <div
-            className={classNames("pb-20 px-12", {
+            className={classNames("pb-20 pl-12 pr-4", {
                 "border-border-default-light dark:border-border-default-dark border-b": !hideBottomSeparator,
             })}
             onClick={() => setSelectedErrorIndex(null)}
