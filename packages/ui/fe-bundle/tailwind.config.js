@@ -25,6 +25,9 @@ module.exports = {
                 lg: "32rem",
                 xl: "36rem",
             },
+            maxWidth: {
+                "8xl": "88rem",
+            },
         },
         colors: ({ colors }) => {
             return {
