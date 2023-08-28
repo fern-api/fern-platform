@@ -51,7 +51,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                     pathParameter: (pathParameter) => (
                         <div
                             key={`part-${i}`}
-                            className="bg-accent-highlight text-accent-primary flex items-center justify-center whitespace-nowrap rounded px-1 py-0.5 font-mono text-xs font-normal"
+                            className="bg-accent-highlight text-accent-primary flex items-center justify-center whitespace-nowrap rounded px-1 font-mono text-xs font-normal"
                         >
                             :{pathParameter.name}
                         </div>
@@ -64,7 +64,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
     }, []);
 
     return (
-        <div ref={ref} className={classNames("flex h-9 overflow-x-hidden items-center py-0.5", className)}>
+        <div ref={ref} className={classNames("flex h-8 overflow-x-hidden items-center", className)}>
             <div className="t-muted bg-tag-default-light dark:bg-tag-default-dark flex shrink-0 items-center justify-center rounded-lg px-2 py-1 text-xs font-normal uppercase">
                 {endpoint.method}
             </div>
