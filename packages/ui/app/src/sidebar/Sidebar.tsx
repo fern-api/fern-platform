@@ -25,7 +25,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ expandAllSections = false }) 
     return (
         <SidebarContext.Provider value={contextValue}>
             <div className="flex min-w-0 flex-1 flex-col justify-between overflow-hidden">
-                <div className="z-10 flex flex-col px-2.5 pt-2.5">
+                <div className="z-10 flex flex-col px-2.5 pt-16">
                     {searchService.isAvailable && <SidebarSearchBar onClick={openSearchDialog} />}
                 </div>
                 <div className={classNames("flex flex-1 flex-col overflow-y-auto pb-6", styles.scrollingContainer)}>
