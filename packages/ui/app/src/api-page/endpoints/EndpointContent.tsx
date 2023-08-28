@@ -6,7 +6,6 @@ import React, { useCallback, useMemo, useRef, useState } from "react";
 import { isSubpackage } from "../../util/package";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { Markdown } from "../markdown/Markdown";
-import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { SubpackageTitle } from "../subpackages/SubpackageTitle";
 import { useEndpointContext } from "./endpoint-context/useEndpointContext";
 import { EndpointExample } from "./endpoint-examples/EndpointExample";
@@ -94,8 +93,8 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
     const endpointExample = example ? <EndpointExample endpoint={endpoint} example={example} /> : null;
 
     return (
-        <ApiPageMargins
-            className={classNames("pb-20", {
+        <div
+            className={classNames("pb-20 px-12", {
                 "border-border-default-light dark:border-border-default-dark border-b": !hideBottomSeparator,
             })}
             onClick={() => setSelectedErrorIndex(null)}
@@ -197,6 +196,6 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
 
                 <div className="mt-10 flex max-h-[150vh] lg:mt-0 lg:hidden">{endpointExample}</div>
             </div>
-        </ApiPageMargins>
+        </div>
     );
 });
