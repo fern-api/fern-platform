@@ -6,7 +6,13 @@ import { HeaderPrimaryLink } from "./HeaderPrimaryLink";
 import { HeaderSecondaryLink } from "./HeaderSecondaryLink";
 import { ThemeButton } from "./ThemeButton";
 
-export const Header: React.FC = () => {
+export declare namespace Header {
+    export interface Props {
+        className?: string;
+    }
+}
+
+export const Header: React.FC<Header.Props> = ({ className }) => {
     const { docsDefinition, lightModeEnabled } = useDocsContext();
     const { navbarLinks } = docsDefinition.config;
 
@@ -27,7 +33,8 @@ export const Header: React.FC = () => {
             className={classNames(
                 "flex justify-between items-center shrink-0 pl-4 pr-4",
                 // this matches with the calc() in the EndpointContent examples section
-                "h-16"
+                "h-16",
+                className
             )}
         >
             <HeaderLogoSection />
