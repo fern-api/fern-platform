@@ -13,10 +13,18 @@ export declare namespace SidebarItem {
         slug: string;
         leftElement?: JSX.Element;
         rightElement?: JSX.Element;
+        paddingLeftAdditional?: number;
     }
 }
 
-export const SidebarItem: React.FC<SidebarItem.Props> = ({ title, className, slug, leftElement, rightElement }) => {
+export const SidebarItem: React.FC<SidebarItem.Props> = ({
+    title,
+    className,
+    slug,
+    leftElement,
+    rightElement,
+    paddingLeftAdditional,
+}) => {
     const { navigateToPath, registerScrolledToPathListener, getFullSlug } = useDocsContext();
     const handleClick = useCallback(() => {
         navigateToPath(slug);
@@ -79,7 +87,11 @@ export const SidebarItem: React.FC<SidebarItem.Props> = ({ title, className, slu
     return (
         <div className={className} ref={setRef}>
             <Link href={`/${fullSlug}`} onClick={handleClick} className="!no-underline">
-                <SidebarItemLayout title={renderTitle} isSelected={isSelected} />
+                <SidebarItemLayout
+                    title={renderTitle}
+                    isSelected={isSelected}
+                    paddingLeftAdditional={paddingLeftAdditional}
+                />
             </Link>
         </div>
     );

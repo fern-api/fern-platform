@@ -50,7 +50,7 @@ export const SidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = ({ t
                         }
                     )}
                 >
-                    <div className="flex min-w-0 items-center gap-2">
+                    <div className="flex min-w-0 items-center space-x-2">
                         <HiOutlineChevronDown
                             className={classNames("text-sm transition-all", {
                                 "-rotate-90": !isSelected,
