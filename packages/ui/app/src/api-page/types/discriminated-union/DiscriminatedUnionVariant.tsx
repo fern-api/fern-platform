@@ -7,7 +7,7 @@ import { Markdown } from "../../markdown/Markdown";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
-    useTypeDefinitionContext,
+    useTypeDefinitionContext
 } from "../context/TypeDefinitionContext";
 import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
 
@@ -66,7 +66,9 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                 "px-3": !isRootTypeDefinition,
             })}
         >
-            <MonospaceText>{startCase(unionVariant.discriminantValue)}</MonospaceText>
+            <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">
+                {startCase(unionVariant.discriminantValue)}
+            </MonospaceText>
             <div className="flex flex-col">
                 <Markdown className="mt-3">{unionVariant.description}</Markdown>
                 <TypeDefinitionContext.Provider value={newContextValue}>
