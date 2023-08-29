@@ -1,7 +1,7 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { ApiSubpackages } from "./ApiSubpackages";
-import { EndpointSidebarItem } from "./EndpointSidebarItem";
+import { SidebarEndpointItem } from "./SidebarEndpointItem";
 import { WebhookSidebarItem } from "./WebhookSidebarItem";
 
 export declare namespace ApiPackageSidebarSectionContents {
@@ -18,7 +18,7 @@ export const ApiPackageSidebarSectionContents: React.FC<ApiPackageSidebarSection
     return (
         <div className="flex flex-col">
             {package_.endpoints.map((endpoint, endpointIndex) => (
-                <EndpointSidebarItem
+                <SidebarEndpointItem
                     key={endpointIndex}
                     endpoint={endpoint}
                     slug={joinUrlSlugs(slug, endpoint.urlSlug)}
