@@ -1,14 +1,13 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useContext, useMemo } from "react";
-import { HiOutlineChevronDown } from "react-icons/hi2";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { doesSubpackageHaveEndpointsOrWebhooksRecursive } from "../api-page/subpackages/doesSubpackageHaveEndpointsOrWebhooksRecursive";
 import { SubpackageTitle } from "../api-page/subpackages/SubpackageTitle";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { ApiPackageSidebarSectionContents } from "./ApiPackageSidebarSectionContents";
 import { SidebarContext } from "./context/SidebarContext";
-import { NavigatingSidebarItem } from "./NavigatingSidebarItem";
 import { SidebarGroup } from "./SidebarGroup";
+import { SidebarSubpackageItem } from "./SidebarSubpackageItem";
 
 export declare namespace ApiSubpackageSidebarSection {
     export interface Props {
@@ -37,16 +36,7 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
     }
 
     return (
-        <SidebarGroup
-            title={
-                <NavigatingSidebarItem
-                    className="mt-1"
-                    title={<SubpackageTitle subpackage={subpackage} />}
-                    leftElement={<HiOutlineChevronDown />}
-                    slug={slug}
-                />
-            }
-        >
+        <SidebarGroup title={<SidebarSubpackageItem title={<SubpackageTitle subpackage={subpackage} />} slug={slug} />}>
             {isOpen && <ApiPackageSidebarSectionContents package={subpackage} slug={slug} />}
         </SidebarGroup>
     );
