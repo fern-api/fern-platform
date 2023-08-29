@@ -103,45 +103,7 @@ jobs:
           name: Check release blockers
           command: yarn check-docs-release-blockers
 
-  deploy-docs-preview:
-    docker:
-      - image: cimg/node:lts
-    resource_class: large
-    steps:
-      - checkout
-      - run:
-          name: Install vercel
-          command: sudo npm install --global vercel@latest
-      - run:
-          name: Pull Vercel environment information
-          command: vercel pull --yes --environment=preview --token=${VERCEL_TOKEN}
-      - run:
-          name: Build project artifacts
-          command: vercel build --token=${VERCEL_TOKEN}
-      - run:
-          name: Deploy
-          command: vercel deploy --prebuilt --token=${VERCEL_TOKEN}
-
-  deploy-docs-dev:
-    docker:
-      - image: cimg/node:lts
-    resource_class: large
-    steps:
-      - checkout
-      - run:
-          name: Install vercel
-          command: sudo npm install --global vercel@latest
-      - run:
-          name: Pull Vercel environment information
-          command: vercel pull --yes --environment=production --token=${VERCEL_TOKEN}
-      - run:
-          name: Build project artifacts
-          command: vercel build --prod --token=${VERCEL_TOKEN}
-      - run:
-          name: Deploy
-          command: vercel deploy --prebuilt --prod --token=${VERCEL_TOKEN}
-
-  deploy-docs:
+  deploy-docs-prod:
     docker:
       - image: cimg/node:lts
     resource_class: large
@@ -189,27 +151,7 @@ workflows:
             tags:
               only: /.*/
 
-      - deploy-docs-preview:
-          filters:
-            branches:
-              ignore: main
-          context:
-            - vercel-dev
-
-      - deploy-docs-dev:
-          filters:
-            branches:
-              only: main
-          requires:
-            - check
-            - organize-imports
-            - compile
-            - eslint
-            - test
-          context:
-            - vercel-dev
-
-      - deploy-docs:
+      - deploy-docs-prod:
           filters:
             branches:
               ignore: /.*/
