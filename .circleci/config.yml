@@ -198,8 +198,8 @@ workflows:
 
       - deploy-docs-dev:
           filters:
-            tags:
-              only: /.*/
+            branches:
+              only: main
           requires:
             - check
             - organize-imports
