@@ -7,7 +7,7 @@ import { Markdown } from "../../markdown/Markdown";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
-    useTypeDefinitionContext
+    useTypeDefinitionContext,
 } from "../context/TypeDefinitionContext";
 import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
 
