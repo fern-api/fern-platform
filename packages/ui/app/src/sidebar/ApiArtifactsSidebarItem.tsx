@@ -1,5 +1,5 @@
 import { ApiArtifactsTitle } from "../api-page/artifacts/ApiArtifactsTitle";
-import { NavigatingSidebarItem } from "./NavigatingSidebarItem";
+import { SidebarItem } from "./SidebarItem";
 
 export declare namespace ApiArtifactsSidebarItem {
     export interface Props {
@@ -8,5 +8,5 @@ export declare namespace ApiArtifactsSidebarItem {
 }
 
 export const ApiArtifactsSidebarItem: React.FC<ApiArtifactsSidebarItem.Props> = ({ slug }) => {
-    return <NavigatingSidebarItem slug={slug} title={<ApiArtifactsTitle />} />;
+    return <SidebarItem slug={slug} title={<ApiArtifactsTitle />} />;
 };

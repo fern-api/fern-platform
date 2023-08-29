@@ -6,7 +6,7 @@ import { useDocsContext } from "../docs-context/useDocsContext";
 import { useIsSlugSelected } from "../docs-context/useIsSlugSelected";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
-export declare namespace NavigatingSidebarItem {
+export declare namespace SidebarItem {
     export interface Props {
         title: JSX.Element | string;
         className?: string;
@@ -16,13 +16,7 @@ export declare namespace NavigatingSidebarItem {
     }
 }
 
-export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({
-    title,
-    className,
-    slug,
-    leftElement,
-    rightElement,
-}) => {
+export const SidebarItem: React.FC<SidebarItem.Props> = ({ title, className, slug, leftElement, rightElement }) => {
     const { navigateToPath, registerScrolledToPathListener, getFullSlug } = useDocsContext();
     const handleClick = useCallback(() => {
         navigateToPath(slug);
