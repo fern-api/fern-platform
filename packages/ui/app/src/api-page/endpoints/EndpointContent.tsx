@@ -3,6 +3,7 @@ import useSize from "@react-hook/size";
 import classNames from "classnames";
 import { snakeCase } from "lodash-es";
 import React, { useCallback, useMemo, useRef, useState } from "react";
+import { getEndpointTitleAsString } from "../../util/endpoint";
 import { isSubpackage } from "../../util/package";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { Markdown } from "../markdown/Markdown";
@@ -13,7 +14,6 @@ import { EndpointErrorsSection } from "./EndpointErrorsSection";
 import { EndpointRequestSection } from "./EndpointRequestSection";
 import { EndpointResponseSection } from "./EndpointResponseSection";
 import { EndpointSection } from "./EndpointSection";
-import { EndpointTitle } from "./EndpointTitle";
 import { EndpointUrl } from "./EndpointUrl";
 import { PathParametersSection } from "./PathParametersSection";
 import { QueryParametersSection } from "./QueryParametersSection";
@@ -108,7 +108,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                             </div>
                         )}
                         <div className="typography-font-heading text-text-primary-light dark:text-text-primary-dark text-3xl font-bold">
-                            <EndpointTitle endpoint={endpoint} />
+                            {getEndpointTitleAsString(endpoint)}
                         </div>
                     </div>
                     <div ref={endpointUrlOuterContainerRef} className="flex max-w-full flex-col items-start">
