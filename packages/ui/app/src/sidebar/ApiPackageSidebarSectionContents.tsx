@@ -3,7 +3,6 @@ import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { getEndpointTitleAsString } from "../util/endpoint";
 import { ApiSubpackages } from "./ApiSubpackages";
 import { SidebarItem } from "./SidebarItem";
-import { SidebarWebhookItem } from "./SidebarWebhookItem";
 
 export declare namespace ApiPackageSidebarSectionContents {
     export interface Props {
@@ -26,7 +25,7 @@ export const ApiPackageSidebarSectionContents: React.FC<ApiPackageSidebarSection
                 />
             ))}
             {package_.webhooks.map((webhook, webhookIndex) => (
-                <SidebarWebhookItem key={webhookIndex} webhook={webhook} slug={joinUrlSlugs(slug, webhook.urlSlug)} />
+                <SidebarItem key={webhookIndex} slug={joinUrlSlugs(slug, webhook.urlSlug)} title={webhook.name ?? ""} />
             ))}
             <ApiSubpackages package={package_} slug={slug} />
         </div>
