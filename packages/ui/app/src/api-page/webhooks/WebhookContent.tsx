@@ -4,10 +4,10 @@ import classNames from "classnames";
 import { snakeCase } from "lodash-es";
 import React, { useCallback, useRef } from "react";
 import { isSubpackage } from "../../util/package";
+import { getSubpackageTitle } from "../../util/subpackage";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { Markdown } from "../markdown/Markdown";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
-import { SubpackageTitle } from "../subpackages/SubpackageTitle";
 import { useWebhookContext } from "./webhook-context/useWebhookContext";
 import { WebhookExample } from "./webhook-examples/WebhookExample";
 import { WebhookHeadersSection } from "./WebhookHeadersSection";
@@ -78,7 +78,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                     <div className="pb-8 pt-16" ref={titleSectionRef}>
                         {isSubpackage(package_) && (
                             <div className="text-accent-primary mb-4 text-xs font-semibold uppercase tracking-wider">
-                                <SubpackageTitle subpackage={package_} />
+                                {getSubpackageTitle(package_)}
                             </div>
                         )}
                         <div className="typography-font-heading text-text-primary-light dark:text-text-primary-dark text-3xl font-bold">

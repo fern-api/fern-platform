@@ -5,9 +5,9 @@ import { snakeCase } from "lodash-es";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { getEndpointTitleAsString } from "../../util/endpoint";
 import { isSubpackage } from "../../util/package";
+import { getSubpackageTitle } from "../../util/subpackage";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { Markdown } from "../markdown/Markdown";
-import { SubpackageTitle } from "../subpackages/SubpackageTitle";
 import { useEndpointContext } from "./endpoint-context/useEndpointContext";
 import { EndpointExample } from "./endpoint-examples/EndpointExample";
 import { EndpointErrorsSection } from "./EndpointErrorsSection";
@@ -104,7 +104,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                     <div className="pb-2 pt-16" ref={titleSectionRef}>
                         {isSubpackage(package_) && (
                             <div className="text-accent-primary mb-4 text-xs font-semibold uppercase tracking-wider">
-                                <SubpackageTitle subpackage={package_} />
+                                {getSubpackageTitle(package_)}
                             </div>
                         )}
                         <div className="typography-font-heading text-text-primary-light dark:text-text-primary-dark text-3xl font-bold">
