@@ -2,7 +2,9 @@ import { Icon } from "@blueprintjs/core";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { MenuIcon } from "../commons/icons/MenuIcon";
+import { XIcon } from "../commons/icons/XIcon";
 import { useDocsContext } from "../docs-context/useDocsContext";
+import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useSearchContext } from "../search-context/useSearchContext";
 import { useSearchService } from "../services/useSearchService";
 import { HeaderLogoSection } from "./HeaderLogoSection";
@@ -19,6 +21,7 @@ export declare namespace Header {
 export const Header: React.FC<Header.Props> = ({ className }) => {
     const { docsDefinition, lightModeEnabled } = useDocsContext();
     const { openSearchDialog } = useSearchContext();
+    const { isMobileSidebarOpen, closeMobileSidebar, openMobileSidebar } = useMobileSidebarContext();
     const searchService = useSearchService();
     const { navbarLinks } = docsDefinition.config;
 
@@ -65,12 +68,10 @@ export const Header: React.FC<Header.Props> = ({ className }) => {
                 )}
 
                 <button
-                    onClick={() => {
-                        // TODO: Implement
-                    }}
+                    onClick={isMobileSidebarOpen ? closeMobileSidebar : openMobileSidebar}
                     className="text-intent-default dark:hover:text-text-primary-dark hover:text-text-primary-light flex transition md:hidden"
                 >
-                    <MenuIcon className="h-5 w-5" />
+                    {isMobileSidebarOpen ? <XIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
                 </button>
             </div>
         </div>
