@@ -4,7 +4,7 @@ import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContex
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { ApiSidebarSection } from "./ApiSidebarSection";
 import { SidebarDocsSection } from "./SidebarDocsSection";
-import { SidebarPageItem } from "./SidebarPageItem";
+import { SidebarItem } from "./SidebarItem";
 
 export declare namespace SidebarItems {
     export interface Props {
@@ -19,10 +19,10 @@ export const SidebarItems: React.FC<SidebarItems.Props> = ({ slug, navigationIte
             {navigationItems.map((navigationItem) =>
                 visitDiscriminatedUnion(navigationItem, "type")._visit({
                     page: (pageMetadata) => (
-                        <SidebarPageItem
+                        <SidebarItem
                             key={pageMetadata.urlSlug}
                             slug={joinUrlSlugs(slug, pageMetadata.urlSlug)}
-                            pageMetadata={pageMetadata}
+                            title={pageMetadata.title}
                         />
                     ),
                     section: (section) => (
