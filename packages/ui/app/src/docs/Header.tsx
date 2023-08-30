@@ -1,7 +1,7 @@
-import { Icon } from "@blueprintjs/core";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { MenuIcon } from "../commons/icons/MenuIcon";
+import { SearchIcon } from "../commons/icons/SearchIcon";
 import { XIcon } from "../commons/icons/XIcon";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
@@ -63,7 +63,7 @@ export const Header: React.FC<Header.Props> = ({ className }) => {
                         onClick={openSearchDialog}
                         className="text-intent-default dark:hover:text-text-primary-dark hover:text-text-primary-light flex transition md:hidden"
                     >
-                        <Icon icon="search" size={14} />
+                        <SearchIcon className="h-4 w-4" />
                     </button>
                 )}
 
