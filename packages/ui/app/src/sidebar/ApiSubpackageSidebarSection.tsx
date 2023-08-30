@@ -1,9 +1,9 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useContext, useMemo } from "react";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
-import { doesSubpackageHaveEndpointsOrWebhooksRecursive } from "../api-page/subpackages/doesSubpackageHaveEndpointsOrWebhooksRecursive";
 import { SubpackageTitle } from "../api-page/subpackages/SubpackageTitle";
 import { useDocsContext } from "../docs-context/useDocsContext";
+import { doesSubpackageHaveEndpointsOrWebhooksRecursive } from "../util/subpackage";
 import { ApiPackageSidebarSectionContents } from "./ApiPackageSidebarSectionContents";
 import { SidebarContext } from "./context/SidebarContext";
 import { SidebarGroup } from "./SidebarGroup";
