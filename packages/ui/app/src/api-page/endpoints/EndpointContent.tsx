@@ -173,18 +173,13 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                 {titleSectionHeight > 0 && (
                     <div
                         className={classNames(
-                            "flex-1 sticky self-start top-0 min-w-sm max-w-lg",
-                            // the py-10 is the same as the 40px below
-                            "py-10",
+                            "flex-1 sticky self-start mt-12 top-0 min-w-sm max-w-lg",
+                            "pb-10 pt-4",
                             // the 4rem is the same as the h-10 as the Header
                             "max-h-[calc(100vh-4rem)]",
                             // hide on mobile,
                             "hidden lg:flex"
                         )}
-                        style={{
-                            // the 40px is the same as the py-10 above
-                            marginTop: titleSectionHeight - 40,
-                        }}
                     >
                         {endpointExample}
                     </div>
