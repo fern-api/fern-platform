@@ -20,6 +20,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/_root"\
       },\
       {\
+        "name": "@fern-ui/app-utils",\
+        "reference": "workspace:packages/commons/app-utils"\
+      },\
+      {\
         "name": "@fern-ui/core-utils",\
         "reference": "workspace:packages/commons/core-utils"\
       },\
@@ -75,6 +79,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     "enableTopLevelFallback": true,\
     "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
     "fallbackExclusionList": [\
+      ["@fern-ui/app-utils", ["workspace:packages/commons/app-utils"]],\
       ["@fern-ui/common-components", ["workspace:packages/commons/react/common-components"]],\
       ["@fern-ui/compile-root", ["workspace:packages/_root"]],\
       ["@fern-ui/core-utils", ["workspace:packages/commons/core-utils"]],\
@@ -3328,6 +3333,23 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["url-join", "npm:4.0.1"]\
           ],\
           "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@fern-ui/app-utils", [\
+        ["workspace:packages/commons/app-utils", {\
+          "packageLocation": "./packages/commons/app-utils/",\
+          "packageDependencies": [\
+            ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
+            ["@types/jest", "npm:29.0.3"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["depcheck", "npm:1.4.3"],\
+            ["eslint", "npm:8.26.0"],\
+            ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.5.0"],\
+            ["organize-imports-cli", "npm:0.10.0"],\
+            ["prettier", "npm:2.7.1"],\
+            ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"]\
+          ],\
+          "linkType": "SOFT"\
         }]\
       ]],\
       ["@fern-ui/common-components", [\
