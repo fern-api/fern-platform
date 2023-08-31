@@ -1,6 +1,7 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { getEndpointTitleAsString } from "../util/endpoint";
+import { isSubpackage } from "../util/package";
 import { ApiSubpackages } from "./ApiSubpackages";
 import { SidebarItem } from "./SidebarItem";
 
@@ -22,7 +23,7 @@ export const ApiPackageSidebarSectionContents: React.FC<ApiPackageSidebarSection
                     key={endpointIndex}
                     slug={joinUrlSlugs(slug, endpoint.urlSlug)}
                     title={getEndpointTitleAsString(endpoint)}
-                    paddingLeftAdditional={20 + 8} // Chevron Icon + Spacing: w-5 + space-x-2
+                    indent={isSubpackage(package_)}
                 />
             ))}
             {package_.webhooks.map((webhook, webhookIndex) => (
@@ -30,7 +31,7 @@ export const ApiPackageSidebarSectionContents: React.FC<ApiPackageSidebarSection
                     key={webhookIndex}
                     slug={joinUrlSlugs(slug, webhook.urlSlug)}
                     title={webhook.name ?? ""}
-                    paddingLeftAdditional={20 + 8} // Chevron Icon + Spacing: w-5 + space-x-2
+                    indent={isSubpackage(package_)}
                 />
             ))}
             <ApiSubpackages package={package_} slug={slug} />

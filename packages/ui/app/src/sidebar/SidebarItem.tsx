@@ -13,7 +13,7 @@ export declare namespace SidebarItem {
         slug: string;
         leftElement?: JSX.Element;
         rightElement?: JSX.Element;
-        paddingLeftAdditional?: number;
+        indent?: boolean;
     }
 }
 
@@ -23,7 +23,7 @@ export const SidebarItem: React.FC<SidebarItem.Props> = ({
     slug,
     leftElement,
     rightElement,
-    paddingLeftAdditional,
+    indent = false,
 }) => {
     const { navigateToPath, registerScrolledToPathListener, getFullSlug } = useDocsContext();
     const handleClick = useCallback(() => {
@@ -85,13 +85,17 @@ export const SidebarItem: React.FC<SidebarItem.Props> = ({
     }, [ref, registerScrolledToPathListener, fullSlug]);
 
     return (
-        <div className={classNames(className)} ref={setRef}>
+        <div
+            className={classNames(className, "relative", {
+                "ml-[26px] border-l border-border-default-light dark:border-border-default-dark": indent,
+            })}
+            ref={setRef}
+        >
+            {isSelected && (
+                <div className="bg-border-default-light dark:bg-border-default-dark absolute left-0 top-[50%] h-px w-[10px]" />
+            )}
             <Link href={`/${fullSlug}`} onClick={handleClick} className="!no-underline">
-                <SidebarItemLayout
-                    title={renderTitle}
-                    isSelected={isSelected}
-                    paddingLeftAdditional={paddingLeftAdditional}
-                />
+                <SidebarItemLayout title={renderTitle} isSelected={isSelected} />
             </Link>
         </div>
     );

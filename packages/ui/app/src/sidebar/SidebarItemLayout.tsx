@@ -8,16 +8,10 @@ export declare namespace SidebarItemLayout {
         title: JSX.Element | string | ((args: { isHovering: boolean }) => JSX.Element | string);
         className?: string;
         isSelected?: boolean;
-        paddingLeftAdditional?: number;
     }
 }
 
-export const SidebarItemLayout: React.FC<SidebarItemLayout.Props> = ({
-    className,
-    title,
-    paddingLeftAdditional,
-    isSelected = false,
-}) => {
+export const SidebarItemLayout: React.FC<SidebarItemLayout.Props> = ({ className, title, isSelected = false }) => {
     const { isHovering, ...hoveringCallbacks } = useIsHovering();
 
     const sidebarContext = useContext(SidebarDepthContext);
@@ -28,7 +22,7 @@ export const SidebarItemLayout: React.FC<SidebarItemLayout.Props> = ({
                 relative: isSelected,
             })}
             style={{
-                paddingLeft: (sidebarContext != null ? 16 * sidebarContext.depth : 0) + (paddingLeftAdditional ?? 0),
+                paddingLeft: sidebarContext != null ? 16 * sidebarContext.depth : 0,
             }}
             {...hoveringCallbacks}
         >
