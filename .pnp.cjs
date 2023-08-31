@@ -3387,6 +3387,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/_root/",\
           "packageDependencies": [\
             ["@fern-ui/compile-root", "workspace:packages/_root"],\
+            ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
             ["@fern-ui/common-components", "workspace:packages/commons/react/common-components"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/fonts", "workspace:packages/commons/react/fonts"],\

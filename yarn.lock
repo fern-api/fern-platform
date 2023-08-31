@@ -1911,6 +1911,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/compile-root@workspace:packages/_root"
   dependencies:
+    "@fern-ui/app-utils": "workspace:*"
     "@fern-ui/common-components": "workspace:*"
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/fonts": "workspace:*"
