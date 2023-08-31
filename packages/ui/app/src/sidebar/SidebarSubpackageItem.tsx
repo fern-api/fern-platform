@@ -1,3 +1,4 @@
+import { Text } from "@blueprintjs/core";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -36,9 +37,9 @@ export const SidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = ({
     const handleClick = useCallback(async () => {
         const resolvedUrlPath = await urlPathResolver.resolveSlug(slug);
         if (resolvedUrlPath?.type === "apiSubpackage") {
-            const [firstNavigatableEndpoint] = resolvedUrlPath.subpackage.endpoints;
-            if (firstNavigatableEndpoint != null) {
-                const slugToNavigate = joinUrlSlugs(resolvedUrlPath.slug, firstNavigatableEndpoint.urlSlug);
+            const firstNavigatable = resolvedUrlPath.subpackage.endpoints[0] ?? resolvedUrlPath.subpackage.webhooks[0];
+            if (firstNavigatable != null) {
+                const slugToNavigate = joinUrlSlugs(resolvedUrlPath.slug, firstNavigatable.urlSlug);
                 void router.push("/" + getFullSlug(slugToNavigate));
                 navigateToPath(slugToNavigate);
             }
@@ -61,12 +62,12 @@ export const SidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = ({
                 >
                     <div className="flex min-w-0 items-center space-x-2">
                         <ChevronDownIcon
-                            className={classNames("text-sm h-5 w-5 transition-all", {
+                            className={classNames("text-sm h-5 w-5 min-w-fit transition-all", {
                                 "-rotate-90": !isChildSelected,
                                 "rotate-0": isChildSelected,
                             })}
                         />
-                        <span className="text-ellipsis">{title}</span>
+                        <Text ellipsize>{title}</Text>
                     </div>
                 </div>
             );

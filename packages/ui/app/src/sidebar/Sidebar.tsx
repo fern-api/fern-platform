@@ -34,7 +34,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
 
                 <div
                     className={classNames(
-                        "flex flex-1 flex-col overflow-y-auto pb-6 pr-2.5",
+                        "flex flex-1 flex-col overflow-y-auto overflow-x-hidden pb-6 pr-2.5",
                         styles.scrollingContainer
                     )}
                 >
