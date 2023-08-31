@@ -1,11 +1,13 @@
 import { Text } from "@blueprintjs/core";
 import classNames from "classnames";
-import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { HiOutlineChevronDown } from "react-icons/hi2";
+import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useIsSlugSelected } from "../docs-context/useIsSlugSelected";
 import { SidebarItemLayout } from "./SidebarItemLayout";
+import { UrlPathResolver } from "./UrlPathResolver";
 
 export declare namespace SidebarSubpackageItem {
     export interface Props {
@@ -16,10 +18,28 @@ export declare namespace SidebarSubpackageItem {
 }
 
 export const SidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = ({ title, className, slug }) => {
-    const { navigateToPath, registerScrolledToPathListener, getFullSlug } = useDocsContext();
-    const handleClick = useCallback(() => {
-        navigateToPath(slug);
-    }, [navigateToPath, slug]);
+    const { navigateToPath, registerScrolledToPathListener, getFullSlug, docsDefinition, docsInfo } = useDocsContext();
+    const router = useRouter();
+
+    const urlPathResolver = useMemo(() => {
+        return new UrlPathResolver({
+            navigation: docsInfo.activeNavigationConfig,
+            loadApiDefinition: (id) => docsDefinition.apis[id],
+            loadApiPage: (id) => docsDefinition.pages[id],
+        });
+    }, [docsDefinition, docsInfo]);
+
+    const handleClick = useCallback(async () => {
+        const resolvedUrlPath = await urlPathResolver.resolveSlug(slug);
+        if (resolvedUrlPath?.type === "apiSubpackage") {
+            const [firstNavigatableEndpoint] = resolvedUrlPath.subpackage.endpoints;
+            if (firstNavigatableEndpoint != null) {
+                const slugToNavigate = joinUrlSlugs(resolvedUrlPath.slug, firstNavigatableEndpoint.urlSlug);
+                void router.push("/" + getFullSlug(slugToNavigate));
+                navigateToPath(slugToNavigate);
+            }
+        }
+    }, [router, navigateToPath, slug, getFullSlug, urlPathResolver]);
 
     const fullSlug = getFullSlug(slug);
     const isSelected = useIsSlugSelected(fullSlug);
@@ -79,10 +99,8 @@ export const SidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = ({ t
     }, [ref, registerScrolledToPathListener, fullSlug]);
 
     return (
-        <div className={className} ref={setRef}>
-            <Link href={`/${fullSlug}`} onClick={handleClick} className="!no-underline">
-                <SidebarItemLayout title={renderTitle} isSelected={isSelected} />
-            </Link>
-        </div>
+        <button className={className} ref={setRef} onClick={handleClick}>
+            <SidebarItemLayout title={renderTitle} isSelected={isSelected} />
+        </button>
     );
 };
