@@ -22,10 +22,16 @@ export const ApiPackageSidebarSectionContents: React.FC<ApiPackageSidebarSection
                     key={endpointIndex}
                     slug={joinUrlSlugs(slug, endpoint.urlSlug)}
                     title={getEndpointTitleAsString(endpoint)}
+                    paddingLeftAdditional={20 + 8} // Chevron Icon + Spacing: w-5 + space-x-2
                 />
             ))}
             {package_.webhooks.map((webhook, webhookIndex) => (
-                <SidebarItem key={webhookIndex} slug={joinUrlSlugs(slug, webhook.urlSlug)} title={webhook.name ?? ""} />
+                <SidebarItem
+                    key={webhookIndex}
+                    slug={joinUrlSlugs(slug, webhook.urlSlug)}
+                    title={webhook.name ?? ""}
+                    paddingLeftAdditional={20 + 8} // Chevron Icon + Spacing: w-5 + space-x-2
+                />
             ))}
             <ApiSubpackages package={package_} slug={slug} />
         </div>

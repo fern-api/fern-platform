@@ -50,7 +50,7 @@ export const SidebarItem: React.FC<SidebarItem.Props> = ({
             return (
                 <div
                     className={classNames(
-                        "flex flex-1 py-2 px-4 border rounded-lg items-center justify-between select-none min-w-0",
+                        "flex flex-1 py-2 px-3 border rounded-lg items-center justify-between select-none min-w-0",
                         {
                             "text-accent-primary border-border-primary bg-tag-primary": isSelected,
                             "border-transparent": !isSelected,
@@ -85,7 +85,7 @@ export const SidebarItem: React.FC<SidebarItem.Props> = ({
     }, [ref, registerScrolledToPathListener, fullSlug]);
 
     return (
-        <div className={className} ref={setRef}>
+        <div className={classNames(className)} ref={setRef}>
             <Link href={`/${fullSlug}`} onClick={handleClick} className="!no-underline">
                 <SidebarItemLayout
                     title={renderTitle}

@@ -90,7 +90,7 @@ export const SidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = ({
     }, [ref, registerScrolledToPathListener, fullSlug]);
 
     return (
-        <button className={className} ref={setRef} onClick={handleClick}>
+        <button className={classNames(className)} ref={setRef} onClick={handleClick}>
             <SidebarItemLayout title={renderTitle} />
         </button>
     );
