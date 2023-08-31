@@ -1,23 +1,27 @@
-import { Text } from "@blueprintjs/core";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { HiOutlineChevronDown } from "react-icons/hi2";
+import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { useDocsContext } from "../docs-context/useDocsContext";
-import { useIsSlugSelected } from "../docs-context/useIsSlugSelected";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 import { UrlPathResolver } from "./UrlPathResolver";
 
 export declare namespace SidebarSubpackageItem {
     export interface Props {
         title: JSX.Element | string;
+        isChildSelected: boolean;
         className?: string;
         slug: string;
     }
 }
 
-export const SidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = ({ title, className, slug }) => {
+export const SidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = ({
+    title,
+    isChildSelected,
+    className,
+    slug,
+}) => {
     const { navigateToPath, registerScrolledToPathListener, getFullSlug, docsDefinition, docsInfo } = useDocsContext();
     const router = useRouter();
 
@@ -42,50 +46,36 @@ export const SidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = ({ t
     }, [router, navigateToPath, slug, getFullSlug, urlPathResolver]);
 
     const fullSlug = getFullSlug(slug);
-    const isSelected = useIsSlugSelected(fullSlug);
-
-    const [wasRecentlySelected, setWasRecentlySelected] = useState(isSelected);
-    useEffect(() => {
-        if (isSelected) {
-            setWasRecentlySelected(true);
-            return;
-        }
-
-        setTimeout(() => {
-            setWasRecentlySelected(false);
-        }, 0);
-    }, [isSelected]);
 
     const renderTitle = useCallback(
         ({ isHovering }: { isHovering: boolean }) => {
             return (
                 <div
                     className={classNames(
-                        "flex flex-1 py-2 px-4 rounded-lg items-center justify-between select-none min-w-0",
+                        "flex flex-1 py-2 px-4 rounded-lg items-center justify-between select-none min-w-0 transition",
                         {
-                            "text-accent-primary": isSelected || (!isSelected && isHovering),
-                            "border-transparent": !isSelected,
-                            "t-muted": !isSelected && !isHovering,
-                            transition: !isSelected && !wasRecentlySelected,
+                            "text-accent-primary": isHovering,
+                            "t-muted": !isHovering,
                         }
                     )}
                 >
                     <div className="flex min-w-0 items-center space-x-2">
-                        <HiOutlineChevronDown
-                            className={classNames("text-sm transition-all", {
-                                "-rotate-90": !isSelected,
-                                "rotate-0": isSelected,
+                        <ChevronDownIcon
+                            className={classNames("text-sm h-5 w-5 transition-all", {
+                                "-rotate-90": !isChildSelected,
+                                "rotate-0": isChildSelected,
                             })}
                         />
-                        <Text ellipsize>{title}</Text>
+                        <span className="text-ellipsis">{title}</span>
                     </div>
                 </div>
             );
         },
-        [isSelected, title, wasRecentlySelected]
+        [isChildSelected, title]
     );
 
     const [ref, setRef] = useState<HTMLElement | null>(null);
+
     useEffect(() => {
         if (ref == null) {
             return;
@@ -100,7 +90,7 @@ export const SidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = ({ t
 
     return (
         <button className={className} ref={setRef} onClick={handleClick}>
-            <SidebarItemLayout title={renderTitle} isSelected={isSelected} />
+            <SidebarItemLayout title={renderTitle} />
         </button>
     );
 };

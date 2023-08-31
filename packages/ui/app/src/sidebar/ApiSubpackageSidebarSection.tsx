@@ -35,7 +35,15 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
     }
 
     return (
-        <SidebarGroup title={<SidebarSubpackageItem title={getSubpackageTitle(subpackage)} slug={slug} />}>
+        <SidebarGroup
+            title={
+                <SidebarSubpackageItem
+                    title={getSubpackageTitle(subpackage)}
+                    isChildSelected={isChildSelected}
+                    slug={slug}
+                />
+            }
+        >
             {isOpen && <ApiPackageSidebarSectionContents package={subpackage} slug={slug} />}
         </SidebarGroup>
     );
