@@ -26,7 +26,7 @@ export const Docs: React.FC = () => {
                 <Header className="max-w-8xl mx-auto" />
             </div>
             <div className="mx-auto flex min-h-0 flex-1">
-                <div className="hidden w-64 md:flex">
+                <div className="hidden w-72 pl-4 md:flex">
                     <Sidebar />
                 </div>
                 {isMobileSidebarOpen && (
@@ -34,7 +34,7 @@ export const Docs: React.FC = () => {
                         <Sidebar hideSearchBar />
                     </div>
                 )}
-                <div className="flex min-w-0 max-w-[calc(theme(maxWidth.8xl)-theme(spacing.64))] flex-1 flex-col">
+                <div className="flex min-w-0 max-w-[calc(theme(maxWidth.8xl)-theme(spacing.72))] flex-1 flex-col">
                     <DocsMainContent />
                 </div>
             </div>
