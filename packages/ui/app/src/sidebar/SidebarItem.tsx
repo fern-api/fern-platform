@@ -91,7 +91,7 @@ export const SidebarItem: React.FC<SidebarItem.Props> = ({
             })}
             ref={setRef}
         >
-            {isSelected && (
+            {indent && isSelected && (
                 <div className="bg-border-default-light dark:bg-border-default-dark absolute left-0 top-[50%] h-px w-[10px]" />
             )}
             <Link href={`/${fullSlug}`} onClick={handleClick} className="!no-underline">
