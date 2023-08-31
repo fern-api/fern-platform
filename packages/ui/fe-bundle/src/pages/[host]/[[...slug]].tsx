@@ -1,14 +1,12 @@
 import * as FernRegistryDocsReadV1 from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import * as FernRegistryDocsReadV2 from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
+import { getSlugFromUrl, isVersionedNavigationConfig, UrlPathResolver } from "@fern-ui/app-utils";
 import { assertNeverNoThrow } from "@fern-ui/core-utils";
 import { App, ResolvedUrlPath } from "@fern-ui/ui";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 import { REGISTRY_SERVICE } from "../../service";
-import { getSlugFromUrl } from "../../url-path-resolver/getSlugFromUrl";
-import { UrlPathResolver } from "../../url-path-resolver/UrlPathResolver";
-import { isVersionedNavigationConfig } from "../../utils/docs";
 import { loadDocsBackgroundImage } from "../../utils/theme/loadDocsBackgroundImage";
 import { generateFontFaces, loadDocTypography } from "../../utils/theme/loadDocsTypography";
 

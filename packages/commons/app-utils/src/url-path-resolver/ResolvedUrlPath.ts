@@ -1,6 +1,6 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { MDXRemoteSerializeResult } from "next-mdx-remote";
+import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 
 export type ResolvedUrlPath =
     | ResolvedUrlPath.Section

@@ -3,7 +3,7 @@ import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources
 import { assertNever } from "@fern-ui/core-utils";
 import { serialize } from "next-mdx-remote/serialize";
 import remarkGfm from "remark-gfm";
-import { type ResolvedUrlPath } from "../ResolvedUrlPath";
+import { ResolvedUrlPath } from "./ResolvedUrlPath";
 import { UrlSlugTree, UrlSlugTreeNode } from "./UrlSlugTree";
 
 const REMARK_PLUGINS = [remarkGfm];

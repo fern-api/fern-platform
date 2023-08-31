@@ -1,8 +1,8 @@
 import { FernRegistry } from "@fern-fern/registry-browser";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { type ResolvedUrlPath } from "@fern-ui/app-utils";
 import React from "react";
-import { ResolvedUrlPath } from "../ResolvedUrlPath";
 
 export const DocsContext = React.createContext<() => DocsContextValue>(() => {
     throw new Error("DocsContextValueProvider is not present in this tree.");

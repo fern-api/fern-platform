@@ -1,8 +1,8 @@
+import { type ResolvedUrlPath } from "@fern-ui/app-utils";
 import { useMemo } from "react";
 import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { MdxContent } from "../mdx/MdxContent";
-import { ResolvedUrlPath } from "../ResolvedUrlPath";
 import { TableOfContents } from "./TableOfContents";
 
 export declare namespace CustomDocsPage {

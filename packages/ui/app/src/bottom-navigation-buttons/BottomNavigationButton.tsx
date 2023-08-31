@@ -1,10 +1,10 @@
 import { Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
+import { type ResolvedUrlPath } from "@fern-ui/app-utils";
 import { assertNever } from "@fern-ui/core-utils";
 import Link from "next/link";
 import { useCallback, useMemo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
-import { ResolvedUrlPath } from "../ResolvedUrlPath";
 
 export declare namespace BottomNavigationButton {
     export interface Props {

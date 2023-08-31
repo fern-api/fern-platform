@@ -1,4 +1,5 @@
 import { Text } from "@blueprintjs/core";
+import { UrlPathResolver } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -6,7 +7,6 @@ import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { SidebarItemLayout } from "./SidebarItemLayout";
-import { UrlPathResolver } from "./UrlPathResolver";
 
 export declare namespace SidebarSubpackageItem {
     export interface Props {

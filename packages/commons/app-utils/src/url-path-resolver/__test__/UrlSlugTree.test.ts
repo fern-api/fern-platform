@@ -1,4 +1,4 @@
-import { isVersionedNavigationConfig } from "../../utils/docs";
+import { isVersionedNavigationConfig } from "../../docs";
 import { UrlSlugTree } from "../UrlSlugTree";
 import { MOCKS_DOCS_DEFINITION } from "./mocks";
 

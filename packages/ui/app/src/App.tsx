@@ -4,6 +4,7 @@ import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import "@blueprintjs/popover2/lib/css/blueprint-popover2.css";
 import "@blueprintjs/select/lib/css/blueprint-select.css";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
+import { type ResolvedUrlPath } from "@fern-ui/app-utils";
 import "@fontsource/ibm-plex-mono";
 import classNames from "classnames";
 import "normalize.css";
@@ -13,7 +14,6 @@ import styles from "./App.module.scss";
 import { CONTEXTS } from "./contexts";
 import { DocsContextProvider } from "./docs-context/DocsContextProvider";
 import { Docs } from "./docs/Docs";
-import { ResolvedUrlPath } from "./ResolvedUrlPath";
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
