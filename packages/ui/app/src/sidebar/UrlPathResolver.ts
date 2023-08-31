@@ -1,9 +1,9 @@
 import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { assertNever } from "@fern-ui/core-utils";
-import { ResolvedUrlPath } from "@fern-ui/ui";
 import { serialize } from "next-mdx-remote/serialize";
 import remarkGfm from "remark-gfm";
+import { type ResolvedUrlPath } from "../ResolvedUrlPath";
 import { UrlSlugTree, UrlSlugTreeNode } from "./UrlSlugTree";
 
 const REMARK_PLUGINS = [remarkGfm];
