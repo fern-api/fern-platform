@@ -1,7 +1,6 @@
+import { isVersionedNavigationConfig, UrlSlugTree } from "@fern-ui/app-utils";
 import { NextApiHandler, NextApiResponse } from "next";
 import { REGISTRY_SERVICE } from "../../service";
-import { UrlSlugTree } from "../../url-path-resolver/UrlSlugTree";
-import { isVersionedNavigationConfig } from "../../utils/docs";
 
 export interface Request {
     url: string;
