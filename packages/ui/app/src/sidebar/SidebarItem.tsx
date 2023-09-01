@@ -50,7 +50,7 @@ export const SidebarItem: React.FC<SidebarItem.Props> = ({
             return (
                 <div
                     className={classNames("relative w-full", {
-                        "ml-[10px] pl-5 border-l border-border-default-light dark:border-border-default-dark": indent,
+                        "ml-[2px] pl-5 border-l border-border-default-light dark:border-border-default-dark": indent,
                     })}
                 >
                     {indent && isSelected && (
