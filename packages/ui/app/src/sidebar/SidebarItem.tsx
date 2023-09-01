@@ -33,18 +33,6 @@ export const SidebarItem: React.FC<SidebarItem.Props> = ({
     const fullSlug = getFullSlug(slug);
     const isSelected = useIsSlugSelected(fullSlug);
 
-    const [wasRecentlySelected, setWasRecentlySelected] = useState(isSelected);
-    useEffect(() => {
-        if (isSelected) {
-            setWasRecentlySelected(true);
-            return;
-        }
-
-        setTimeout(() => {
-            setWasRecentlySelected(false);
-        }, 0);
-    }, [isSelected]);
-
     const renderTitle = useCallback(
         ({ isHovering }: { isHovering: boolean }) => {
             return (
