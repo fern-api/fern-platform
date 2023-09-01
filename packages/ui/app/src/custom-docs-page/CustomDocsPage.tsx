@@ -12,9 +12,22 @@ export declare namespace CustomDocsPage {
 }
 
 export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
-    const { resolvePage } = useDocsContext();
+    const { resolvePage, docsInfo } = useDocsContext();
 
     const page = useMemo(() => resolvePage(path.page.id), [path.page.id, resolvePage]);
+
+    const sectionTitle = useMemo(() => {
+        for (const navigationItem of docsInfo.activeNavigationConfig.items) {
+            if (navigationItem.type !== "section") {
+                continue;
+            }
+            const [sectionSlugInferredFromPath] = path.slug.split("/");
+            if (sectionSlugInferredFromPath != null && navigationItem.urlSlug === sectionSlugInferredFromPath) {
+                return navigationItem.title;
+            }
+        }
+        return undefined;
+    }, [docsInfo.activeNavigationConfig.items, path.slug]);
 
     const content = useMemo(() => {
         return <MdxContent mdx={path.serializedMdxContent} />;
@@ -23,6 +36,12 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
     return (
         <div className="flex space-x-16 overflow-y-auto px-6 pt-16 md:px-12">
             <div className="max-w-3xl">
+                {sectionTitle != null && (
+                    <div className="text-accent-primary mb-4 text-xs font-semibold uppercase tracking-wider">
+                        {sectionTitle}
+                    </div>
+                )}
+
                 <div className="text-text-primary-light dark:text-text-primary-dark mb-8 text-3xl font-bold">
                     {path.page.title}
                 </div>
