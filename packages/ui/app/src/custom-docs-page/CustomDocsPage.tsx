@@ -21,8 +21,8 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
     }, [path]);
 
     return (
-        <div className="flex justify-center gap-20 overflow-y-auto px-[10vw] pt-[10vh]">
-            <div className="w-[750px]">
+        <div className="flex space-x-16 overflow-y-auto px-6 pt-16 md:px-12">
+            <div className="max-w-3xl">
                 <div className="text-text-primary-light dark:text-text-primary-dark mb-8 text-3xl font-bold">
                     {path.page.title}
                 </div>
@@ -30,7 +30,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
                 <BottomNavigationButtons />
                 <div className="h-20" />
             </div>
-            <TableOfContents className="sticky top-0 hidden shrink-0 md:flex" markdown={page.markdown} />
+            <TableOfContents className="sticky top-0 hidden lg:flex" markdown={page.markdown} />
         </div>
     );
 };
