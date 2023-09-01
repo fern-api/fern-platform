@@ -170,20 +170,19 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                         </div>
                     </div>
                 </div>
-                {titleSectionHeight > 0 && (
-                    <div
-                        className={classNames(
-                            "flex-1 sticky self-start mt-12 top-0 min-w-sm max-w-lg",
-                            "pb-10 pt-4",
-                            // the 4rem is the same as the h-10 as the Header
-                            "max-h-[calc(100vh-4rem)]",
-                            // hide on mobile,
-                            "hidden lg:flex"
-                        )}
-                    >
-                        {endpointExample}
-                    </div>
-                )}
+
+                <div
+                    className={classNames(
+                        "flex-1 sticky self-start top-0 min-w-sm max-w-lg",
+                        "pb-10 pt-16",
+                        // the 4rem is the same as the h-10 as the Header
+                        "max-h-[calc(100vh-4rem)]",
+                        // hide on mobile,
+                        "hidden lg:flex"
+                    )}
+                >
+                    {endpointExample}
+                </div>
 
                 <div className="mt-10 flex max-h-[150vh] lg:mt-0 lg:hidden">{endpointExample}</div>
             </div>
