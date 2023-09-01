@@ -39,8 +39,8 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                     )}
                 >
                     <SidebarItems navigationItems={docsInfo.activeNavigationConfig.items} slug="" />
+                    <BuiltWithFern />
                 </div>
-                <BuiltWithFern />
             </div>
         </SidebarContext.Provider>
     );

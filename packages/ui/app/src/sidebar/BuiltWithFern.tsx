@@ -12,24 +12,20 @@ export const BuiltWithFern: React.FC = () => {
 
     return (
         <div
-            className={classNames("flex cursor-pointer items-center justify-center gap-2 p-3")}
+            className={classNames("flex cursor-pointer items-center space-x-2 pl-5 py-3")}
             onClick={onClick}
             {...containerCallbacks}
         >
-            <div className="relative">
-                <div className="absolute inset-y-0 -left-6 flex items-center justify-center">
-                    <div className="h-4 w-4">
-                        <FernLogo fill={isHovering ? undefined : "rgb(82, 82, 82)"} />
-                    </div>
-                </div>
-                <div
-                    className={classNames("whitespace-nowrap text-xs transition", {
-                        "t-muted": isHovering,
-                        "text-text-disabled-light dark:text-text-disabled-dark": !isHovering,
-                    })}
-                >
-                    Built with Fern
-                </div>
+            <div className="h-4 w-4">
+                <FernLogo fill={isHovering ? undefined : "rgb(82, 82, 82)"} />
+            </div>
+            <div
+                className={classNames("whitespace-nowrap text-xs transition font-light", {
+                    "t-muted": isHovering,
+                    "text-text-disabled-light dark:text-text-disabled-dark": !isHovering,
+                })}
+            >
+                Built with Fern
             </div>
         </div>
     );
