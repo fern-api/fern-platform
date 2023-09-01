@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useIsSlugSelected } from "../docs-context/useIsSlugSelected";
+import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace SidebarItem {
@@ -26,9 +27,12 @@ export const SidebarItem: React.FC<SidebarItem.Props> = ({
     indent = false,
 }) => {
     const { navigateToPath, registerScrolledToPathListener, getFullSlug } = useDocsContext();
+    const { closeMobileSidebar } = useMobileSidebarContext();
+
     const handleClick = useCallback(() => {
         navigateToPath(slug);
-    }, [navigateToPath, slug]);
+        closeMobileSidebar();
+    }, [navigateToPath, closeMobileSidebar, slug]);
 
     const fullSlug = getFullSlug(slug);
     const isSelected = useIsSlugSelected(fullSlug);

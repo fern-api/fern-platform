@@ -6,6 +6,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { useDocsContext } from "../docs-context/useDocsContext";
+import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace SidebarSubpackageItem {
@@ -24,6 +25,7 @@ export const SidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = ({
     slug,
 }) => {
     const { navigateToPath, registerScrolledToPathListener, getFullSlug, docsDefinition, docsInfo } = useDocsContext();
+    const { closeMobileSidebar } = useMobileSidebarContext();
     const router = useRouter();
 
     const urlPathResolver = useMemo(() => {
@@ -42,9 +44,10 @@ export const SidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = ({
                 const slugToNavigate = joinUrlSlugs(resolvedUrlPath.slug, firstNavigatable.urlSlug);
                 void router.push("/" + getFullSlug(slugToNavigate));
                 navigateToPath(slugToNavigate);
+                closeMobileSidebar();
             }
         }
-    }, [router, navigateToPath, slug, getFullSlug, urlPathResolver]);
+    }, [router, navigateToPath, slug, getFullSlug, urlPathResolver, closeMobileSidebar]);
 
     const fullSlug = getFullSlug(slug);
 
