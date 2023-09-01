@@ -1,5 +1,6 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
+import { forwardRef, PropsWithChildren } from "react";
 import { MenuIcon } from "../commons/icons/MenuIcon";
 import { SearchIcon } from "../commons/icons/SearchIcon";
 import { XIcon } from "../commons/icons/XIcon";
@@ -18,7 +19,7 @@ export declare namespace Header {
     }
 }
 
-export const Header: React.FC<Header.Props> = ({ className }) => {
+export const Header = forwardRef<HTMLDivElement, PropsWithChildren<Header.Props>>(function Header({ className }, ref) {
     const { docsDefinition, lightModeEnabled } = useDocsContext();
     const { openSearchDialog } = useSearchContext();
     const { isMobileSidebarOpen, closeMobileSidebar, openMobileSidebar } = useMobileSidebarContext();
@@ -45,6 +46,7 @@ export const Header: React.FC<Header.Props> = ({ className }) => {
                 "h-16",
                 className
             )}
+            ref={ref}
         >
             <HeaderLogoSection />
 
@@ -76,4 +78,4 @@ export const Header: React.FC<Header.Props> = ({ className }) => {
             </div>
         </div>
     );
-};
+});
