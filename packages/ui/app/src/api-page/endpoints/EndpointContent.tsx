@@ -97,7 +97,10 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
             })}
             onClick={() => setSelectedErrorIndex(null)}
         >
-            <div className="flex min-w-0 flex-1 flex-col lg:flex-row lg:space-x-[4vw]" ref={setContainerRef}>
+            <div
+                className="flex min-w-0 flex-1 flex-col justify-between lg:mr-[3vw] lg:flex-row lg:space-x-[4vw]"
+                ref={setContainerRef}
+            >
                 <div className="flex min-w-0 max-w-2xl flex-1 flex-col">
                     <div className="pb-2 pt-16">
                         {isSubpackage(package_) && (
@@ -171,7 +174,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
 
                 <div
                     className={classNames(
-                        "flex-1 sticky self-start top-0 min-w-sm max-w-lg",
+                        "flex-1 sticky self-start top-0 min-w-sm max-w-lg ml-auto",
                         "pb-10 pt-16",
                         // the 4rem is the same as the h-10 as the Header
                         "max-h-[calc(100vh-4rem)]",
