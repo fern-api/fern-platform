@@ -71,10 +71,8 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
         [package_, endpoint]
     );
 
-    const titleSectionRef = useRef<null | HTMLDivElement>(null);
     const endpointUrlOuterContainerRef = useRef<null | HTMLDivElement>(null);
     const endpointUrlInnerContainerRef = useRef<null | HTMLDivElement>(null);
-    const [, titleSectionHeight] = useSize(titleSectionRef);
     const [endpointUrlOuterContainerWidth] = useSize(endpointUrlOuterContainerRef);
     const [endpointUrlInnerContainerWidth] = useSize(endpointUrlInnerContainerRef);
     const isUrlAboutToOverflow =
@@ -101,7 +99,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
         >
             <div className="flex min-w-0 flex-1 flex-col lg:flex-row lg:space-x-[4vw]" ref={setContainerRef}>
                 <div className="flex min-w-0 max-w-2xl flex-1 flex-col">
-                    <div className="pb-2 pt-16" ref={titleSectionRef}>
+                    <div className="pb-2 pt-16">
                         {isSubpackage(package_) && (
                             <div className="text-accent-primary mb-4 text-xs font-semibold uppercase tracking-wider">
                                 {getSubpackageTitle(package_)}
