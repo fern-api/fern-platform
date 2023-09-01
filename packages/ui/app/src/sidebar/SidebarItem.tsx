@@ -77,7 +77,7 @@ export const SidebarItem: React.FC<SidebarItem.Props> = ({
                 </div>
             );
         },
-        [isSelected, leftElement, rightElement, title, indent, wasRecentlySelected]
+        [isSelected, leftElement, rightElement, title, indent]
     );
 
     const [ref, setRef] = useState<HTMLElement | null>(null);
