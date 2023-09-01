@@ -12,7 +12,7 @@ export const BuiltWithFern: React.FC = () => {
 
     return (
         <div
-            className={classNames("flex cursor-pointer items-center space-x-2 pl-5 py-3")}
+            className={classNames("flex cursor-pointer items-center space-x-2 pl-3 py-3")}
             onClick={onClick}
             {...containerCallbacks}
         >
