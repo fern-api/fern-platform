@@ -13,7 +13,7 @@ export const NonClickableSidebarGroupTitle: React.FC<NonClickableSidebarGroupTit
             title={
                 <div
                     className={classNames(
-                        "uppercase font-normal tracking-wide text-xs",
+                        "font-extrabold tracking-wide leading-4 py-2 px-3 text-xs",
                         "text-text-primary-light dark:text-text-primary-dark"
                     )}
                 >

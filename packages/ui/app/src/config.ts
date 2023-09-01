@@ -36,3 +36,5 @@ export const DEFAULT_COLORS: {
         },
     },
 };
+
+export const API_ARTIFACTS_TITLE = "Client libraries";

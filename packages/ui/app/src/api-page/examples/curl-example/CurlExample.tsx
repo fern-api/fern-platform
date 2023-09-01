@@ -2,7 +2,7 @@ import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/
 import { assertNever, assertNeverNoThrow, noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import React, { useCallback, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
-import { getEndpointEnvironmentUrl } from "../../endpoints/getEndpointEnvironmentUrl";
+import { getEndpointEnvironmentUrl } from "../../../util/endpoint";
 import { JsonExampleContext, JsonExampleContextValue } from "../json-example/contexts/JsonExampleContext";
 import { JsonPropertyPath } from "../json-example/contexts/JsonPropertyPath";
 import { JsonExampleString } from "../json-example/JsonExampleString";

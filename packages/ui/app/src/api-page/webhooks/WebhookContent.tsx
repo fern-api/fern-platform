@@ -1,13 +1,12 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import useSize from "@react-hook/size";
 import classNames from "classnames";
 import { snakeCase } from "lodash-es";
-import React, { useCallback, useRef } from "react";
+import React, { useCallback } from "react";
 import { isSubpackage } from "../../util/package";
+import { getSubpackageTitle } from "../../util/subpackage";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { Markdown } from "../markdown/Markdown";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
-import { SubpackageTitle } from "../subpackages/SubpackageTitle";
 import { useWebhookContext } from "./webhook-context/useWebhookContext";
 import { WebhookExample } from "./webhook-examples/WebhookExample";
 import { WebhookHeadersSection } from "./WebhookHeadersSection";
@@ -60,25 +59,22 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
         [package_, webhook]
     );
 
-    const titleSectionRef = useRef<null | HTMLDivElement>(null);
-    const [, titleSectionHeight] = useSize(titleSectionRef);
-
     const example = webhook.examples[0]; // TODO: Need a way to show all the examples
 
     const webhookExample = example ? <WebhookExample example={example} /> : null;
 
     return (
         <ApiPageMargins
-            className={classNames("pb-20", {
+            className={classNames("pb-20 pl-6 md:pl-12 pr-4", {
                 "border-border-default-light dark:border-border-default-dark border-b": !hideBottomSeparator,
             })}
         >
             <div className="flex min-w-0 flex-1 flex-col lg:flex-row lg:space-x-[4vw]" ref={setContainerRef}>
                 <div className="flex min-w-0 max-w-2xl flex-1 flex-col">
-                    <div className="pb-8 pt-20" ref={titleSectionRef}>
+                    <div className="pb-8 pt-16">
                         {isSubpackage(package_) && (
                             <div className="text-accent-primary mb-4 text-xs font-semibold uppercase tracking-wider">
-                                <SubpackageTitle subpackage={package_} />
+                                {getSubpackageTitle(package_)}
                             </div>
                         )}
                         <div className="typography-font-heading text-text-primary-light dark:text-text-primary-dark text-3xl font-bold">
@@ -117,25 +113,19 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                         </div>
                     </div>
                 </div>
-                {titleSectionHeight > 0 && (
-                    <div
-                        className={classNames(
-                            "flex-1 sticky self-start top-0 min-w-sm max-w-lg",
-                            // the py-10 is the same as the 40px below
-                            "py-10",
-                            // the 4rem is the same as the h-10 as the Header
-                            "max-h-[calc(100vh-4rem)]",
-                            // hide on mobile,
-                            "hidden lg:flex"
-                        )}
-                        style={{
-                            // the 40px is the same as the py-10 above
-                            marginTop: titleSectionHeight - 40,
-                        }}
-                    >
-                        {webhookExample}
-                    </div>
-                )}
+                <div
+                    className={classNames(
+                        "flex-1 sticky self-start top-0 min-w-sm max-w-lg ml-auto",
+                        // the py-10 is the same as the 40px below
+                        "pb-10 pt-16",
+                        // the 4rem is the same as the h-10 as the Header
+                        "max-h-[calc(100vh-4rem)]",
+                        // hide on mobile,
+                        "hidden lg:flex"
+                    )}
+                >
+                    {webhookExample}
+                </div>
 
                 <div className="mt-10 flex max-h-[150vh] lg:mt-0 lg:hidden">{webhookExample}</div>
             </div>

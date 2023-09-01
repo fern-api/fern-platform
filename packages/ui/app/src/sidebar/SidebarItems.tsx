@@ -3,8 +3,8 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContextProvider";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { ApiSidebarSection } from "./ApiSidebarSection";
-import { PageSidebarItem } from "./PageSidebarItem";
 import { SidebarDocsSection } from "./SidebarDocsSection";
+import { SidebarItem } from "./SidebarItem";
 
 export declare namespace SidebarItems {
     export interface Props {
@@ -19,10 +19,10 @@ export const SidebarItems: React.FC<SidebarItems.Props> = ({ slug, navigationIte
             {navigationItems.map((navigationItem) =>
                 visitDiscriminatedUnion(navigationItem, "type")._visit({
                     page: (pageMetadata) => (
-                        <PageSidebarItem
+                        <SidebarItem
                             key={pageMetadata.urlSlug}
                             slug={joinUrlSlugs(slug, pageMetadata.urlSlug)}
-                            pageMetadata={pageMetadata}
+                            title={pageMetadata.title}
                         />
                     ),
                     section: (section) => (

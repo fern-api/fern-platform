@@ -1,10 +1,11 @@
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
+import { API_ARTIFACTS_TITLE } from "../config";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
-import { ApiArtifactsSidebarItem } from "./ApiArtifactsSidebarItem";
 import { ApiPackageSidebarSectionContents } from "./ApiPackageSidebarSectionContents";
 import { NonClickableSidebarGroupTitle } from "./NonClickableSidebarGroupTitle";
 import { SidebarGroup } from "./SidebarGroup";
+import { SidebarItem } from "./SidebarItem";
 
 export declare namespace ApiSidebarSection {
     export interface Props {
@@ -18,7 +19,7 @@ export const ApiSidebarSection: React.FC<ApiSidebarSection.Props> = ({ slug }) =
     return (
         <SidebarGroup title={<NonClickableSidebarGroupTitle title={apiSection.title} />} includeTopMargin>
             {apiSection.artifacts != null && areApiArtifactsNonEmpty(apiSection.artifacts) && (
-                <ApiArtifactsSidebarItem slug={joinUrlSlugs(slug, "client-libraries")} />
+                <SidebarItem slug={joinUrlSlugs(slug, "client-libraries")} title={API_ARTIFACTS_TITLE} />
             )}
             <ApiPackageSidebarSectionContents package={apiDefinition.rootPackage} slug={slug} />
         </SidebarGroup>

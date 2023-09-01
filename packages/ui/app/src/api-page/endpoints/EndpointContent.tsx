@@ -3,18 +3,17 @@ import useSize from "@react-hook/size";
 import classNames from "classnames";
 import { snakeCase } from "lodash-es";
 import React, { useCallback, useMemo, useRef, useState } from "react";
+import { getEndpointTitleAsString } from "../../util/endpoint";
 import { isSubpackage } from "../../util/package";
+import { getSubpackageTitle } from "../../util/subpackage";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { Markdown } from "../markdown/Markdown";
-import { ApiPageMargins } from "../page-margins/ApiPageMargins";
-import { SubpackageTitle } from "../subpackages/SubpackageTitle";
 import { useEndpointContext } from "./endpoint-context/useEndpointContext";
 import { EndpointExample } from "./endpoint-examples/EndpointExample";
 import { EndpointErrorsSection } from "./EndpointErrorsSection";
 import { EndpointRequestSection } from "./EndpointRequestSection";
 import { EndpointResponseSection } from "./EndpointResponseSection";
 import { EndpointSection } from "./EndpointSection";
-import { EndpointTitle } from "./EndpointTitle";
 import { EndpointUrl } from "./EndpointUrl";
 import { PathParametersSection } from "./PathParametersSection";
 import { QueryParametersSection } from "./QueryParametersSection";
@@ -72,10 +71,8 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
         [package_, endpoint]
     );
 
-    const titleSectionRef = useRef<null | HTMLDivElement>(null);
     const endpointUrlOuterContainerRef = useRef<null | HTMLDivElement>(null);
     const endpointUrlInnerContainerRef = useRef<null | HTMLDivElement>(null);
-    const [, titleSectionHeight] = useSize(titleSectionRef);
     const [endpointUrlOuterContainerWidth] = useSize(endpointUrlOuterContainerRef);
     const [endpointUrlInnerContainerWidth] = useSize(endpointUrlInnerContainerRef);
     const isUrlAboutToOverflow =
@@ -94,22 +91,25 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
     const endpointExample = example ? <EndpointExample endpoint={endpoint} example={example} /> : null;
 
     return (
-        <ApiPageMargins
-            className={classNames("pb-20", {
+        <div
+            className={classNames("pb-20 pl-6 md:pl-12 pr-4", {
                 "border-border-default-light dark:border-border-default-dark border-b": !hideBottomSeparator,
             })}
             onClick={() => setSelectedErrorIndex(null)}
         >
-            <div className="flex min-w-0 flex-1 flex-col lg:flex-row lg:space-x-[4vw]" ref={setContainerRef}>
+            <div
+                className="flex min-w-0 flex-1 flex-col justify-between lg:flex-row lg:space-x-[4vw]"
+                ref={setContainerRef}
+            >
                 <div className="flex min-w-0 max-w-2xl flex-1 flex-col">
-                    <div className="pb-8 pt-20" ref={titleSectionRef}>
+                    <div className="pb-2 pt-16">
                         {isSubpackage(package_) && (
                             <div className="text-accent-primary mb-4 text-xs font-semibold uppercase tracking-wider">
-                                <SubpackageTitle subpackage={package_} />
+                                {getSubpackageTitle(package_)}
                             </div>
                         )}
                         <div className="typography-font-heading text-text-primary-light dark:text-text-primary-dark text-3xl font-bold">
-                            <EndpointTitle endpoint={endpoint} />
+                            {getEndpointTitleAsString(endpoint)}
                         </div>
                     </div>
                     <div ref={endpointUrlOuterContainerRef} className="flex max-w-full flex-col items-start">
@@ -120,11 +120,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                             endpoint={endpoint}
                         />
                     </div>
-                    {endpoint.description != null && (
-                        <div className="mt-6">
-                            <Markdown>{endpoint.description}</Markdown>
-                        </div>
-                    )}
+                    {endpoint.description != null && <Markdown className="mt-3">{endpoint.description}</Markdown>}
                     <div className="mt-8 flex">
                         <div className="flex flex-1 flex-col gap-12">
                             {endpoint.path.pathParameters.length > 0 && (
@@ -175,28 +171,22 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                         </div>
                     </div>
                 </div>
-                {titleSectionHeight > 0 && (
-                    <div
-                        className={classNames(
-                            "flex-1 sticky self-start top-0 min-w-sm max-w-lg",
-                            // the py-10 is the same as the 40px below
-                            "py-10",
-                            // the 4rem is the same as the h-10 as the Header
-                            "max-h-[calc(100vh-4rem)]",
-                            // hide on mobile,
-                            "hidden lg:flex"
-                        )}
-                        style={{
-                            // the 40px is the same as the py-10 above
-                            marginTop: titleSectionHeight - 40,
-                        }}
-                    >
-                        {endpointExample}
-                    </div>
-                )}
+
+                <div
+                    className={classNames(
+                        "flex-1 sticky self-start top-0 min-w-sm max-w-lg ml-auto",
+                        "pb-10 pt-16",
+                        // the 4rem is the same as the h-10 as the Header
+                        "max-h-[calc(100vh-4rem)]",
+                        // hide on mobile,
+                        "hidden lg:flex"
+                    )}
+                >
+                    {endpointExample}
+                </div>
 
                 <div className="mt-10 flex max-h-[150vh] lg:mt-0 lg:hidden">{endpointExample}</div>
             </div>
-        </ApiPageMargins>
+        </div>
     );
 });

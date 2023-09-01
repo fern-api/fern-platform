@@ -15,16 +15,9 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ma
     const headings = useMemo(() => marked.lexer(markdown).filter(isHeading), [markdown]);
     const minDepth = useMemo(() => Math.min(...headings.map((heading) => heading.depth)), [headings]);
 
-    if (headings.length === 0) {
-        return null;
-    }
-
     return (
         <div className={classNames("w-64", className)}>
-            <div className="flex flex-col">
-                <div className="medium text-text-primary-light dark:text-text-primary-dark mb-3 uppercase">
-                    On this page
-                </div>
+            {headings.length > 0 && (
                 <div className="flex flex-col gap-3">
                     {headings.map((heading, index) => (
                         <Text
@@ -42,7 +35,7 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ma
                         </Text>
                     ))}
                 </div>
-            </div>
+            )}
         </div>
     );
 };

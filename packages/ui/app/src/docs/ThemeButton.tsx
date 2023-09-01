@@ -1,13 +1,18 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useTheme } from "@fern-ui/theme";
+import classNames from "classnames";
 import dynamic from "next/dynamic";
 import { MoonIcon } from "../commons/icons/MoonIcon";
 import { SunIcon } from "../commons/icons/SunIcon";
 import { useDocsContext } from "../docs-context/useDocsContext";
 
-export declare namespace ThemeButton {}
+export declare namespace ThemeButton {
+    export interface Props {
+        className?: string;
+    }
+}
 
-export const Core: React.FC = () => {
+export const Core: React.FC<ThemeButton.Props> = ({ className }) => {
     const { lightModeEnabled } = useDocsContext();
     const { theme, setTheme } = useTheme(lightModeEnabled);
 
@@ -17,7 +22,7 @@ export const Core: React.FC = () => {
 
     return (
         <button
-            className="group flex w-9 items-center justify-center self-stretch"
+            className={classNames("group flex w-9 items-center justify-center self-stretch", className)}
             onClick={() => {
                 setTheme(theme === "dark" ? "light" : "dark");
             }}

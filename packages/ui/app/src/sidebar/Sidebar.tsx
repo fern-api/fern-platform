@@ -11,11 +11,12 @@ import { SidebarSearchBar } from "./SidebarSearchBar";
 
 export declare namespace Sidebar {
     export interface Props {
+        hideSearchBar?: boolean;
         expandAllSections?: boolean;
     }
 }
 
-export const Sidebar: React.FC<Sidebar.Props> = ({ expandAllSections = false }) => {
+export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expandAllSections = false }) => {
     const { docsInfo } = useDocsContext();
     const { openSearchDialog } = useSearchContext();
     const searchService = useSearchService();
@@ -24,14 +25,22 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ expandAllSections = false }) 
 
     return (
         <SidebarContext.Provider value={contextValue}>
-            <div className="border-border-default-light dark:border-border-default-dark bg-background flex min-w-0 flex-1 flex-col justify-between overflow-hidden border-r">
-                <div className="z-10 flex flex-col px-2.5 pt-2.5">
-                    {searchService.isAvailable && <SidebarSearchBar onClick={openSearchDialog} />}
-                </div>
-                <div className={classNames("flex flex-1 flex-col overflow-y-auto pb-6", styles.scrollingContainer)}>
+            <div className="flex min-w-0 flex-1 flex-col justify-between overflow-hidden">
+                {!hideSearchBar && (
+                    <div className="z-10 flex flex-col pr-2.5 pt-16">
+                        {searchService.isAvailable && <SidebarSearchBar onClick={openSearchDialog} />}
+                    </div>
+                )}
+
+                <div
+                    className={classNames(
+                        "flex flex-1 flex-col overflow-y-auto overflow-x-hidden pb-6 pr-2.5",
+                        styles.scrollingContainer
+                    )}
+                >
                     <SidebarItems navigationItems={docsInfo.activeNavigationConfig.items} slug="" />
+                    <BuiltWithFern />
                 </div>
-                <BuiltWithFern />
             </div>
         </SidebarContext.Provider>
     );

@@ -1,9 +1,9 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
+import { doesSubpackageHaveEndpointsOrWebhooksRecursive } from "../util/subpackage";
 import { Endpoint } from "./endpoints/Endpoint";
 import { ApiSubpackage } from "./subpackages/ApiSubpackage";
-import { doesSubpackageHaveEndpointsOrWebhooksRecursive } from "./subpackages/doesSubpackageHaveEndpointsOrWebhooksRecursive";
 import { Webhook } from "./webhooks/Webhook";
 
 export declare namespace ApiPackageContents {

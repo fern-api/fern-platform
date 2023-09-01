@@ -1,8 +1,9 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
+import { getEndpointTitleAsString } from "../util/endpoint";
+import { isSubpackage } from "../util/package";
 import { ApiSubpackages } from "./ApiSubpackages";
-import { EndpointSidebarItem } from "./EndpointSidebarItem";
-import { WebhookSidebarItem } from "./WebhookSidebarItem";
+import { SidebarItem } from "./SidebarItem";
 
 export declare namespace ApiPackageSidebarSectionContents {
     export interface Props {
@@ -18,14 +19,20 @@ export const ApiPackageSidebarSectionContents: React.FC<ApiPackageSidebarSection
     return (
         <div className="flex flex-col">
             {package_.endpoints.map((endpoint, endpointIndex) => (
-                <EndpointSidebarItem
+                <SidebarItem
                     key={endpointIndex}
-                    endpoint={endpoint}
                     slug={joinUrlSlugs(slug, endpoint.urlSlug)}
+                    title={getEndpointTitleAsString(endpoint)}
+                    indent={isSubpackage(package_)}
                 />
             ))}
             {package_.webhooks.map((webhook, webhookIndex) => (
-                <WebhookSidebarItem key={webhookIndex} webhook={webhook} slug={joinUrlSlugs(slug, webhook.urlSlug)} />
+                <SidebarItem
+                    key={webhookIndex}
+                    slug={joinUrlSlugs(slug, webhook.urlSlug)}
+                    title={webhook.name ?? ""}
+                    indent={isSubpackage(package_)}
+                />
             ))}
             <ApiSubpackages package={package_} slug={slug} />
         </div>

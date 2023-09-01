@@ -39,14 +39,13 @@
   },
   "dependencies": {
     "@fern-fern/registry-browser": "0.14.1-3-g6c09dff",
+    "@fern-ui/app-utils": "workspace:*",
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/theme": "workspace:*",
     "@fern-ui/ui": "workspace:*",
     "next": "^13.4.4",
-    "next-mdx-remote": "^4.4.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "remark-gfm": "^3.0.1"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",

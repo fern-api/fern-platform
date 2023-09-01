@@ -3,7 +3,7 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { MouseEventHandler } from "react";
 import { HttpMethodIcon } from "../../commons/HttpMethodIcon";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
-import { getPathParameterAsString } from "../endpoints/getEndpointTitleAsString";
+import { getPathParameterAsString } from "../../util/endpoint";
 
 export declare namespace EndpointDescriptor {
     export interface Props {

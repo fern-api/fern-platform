@@ -1,6 +1,6 @@
-import { Icon } from "@blueprintjs/core";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { type MouseEventHandler } from "react";
+import { SearchIcon } from "../commons/icons/SearchIcon";
 import { PlatformSpecificContent } from "../commons/PlatformSpecificContent";
 
 export declare namespace SidebarSearchBar {
@@ -13,10 +13,10 @@ export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = ({ onClick }) 
     return (
         <button
             onClick={onClick}
-            className="dark:border-border-default-dark border-border-default-light hover:bg-background-hover-light hover:dark:bg-background-hover-dark group flex items-center rounded-md border px-2 py-1.5 transition"
+            className="dark:border-border-default-dark border-border-default-light hover:bg-background-hover-light hover:dark:bg-background-hover-dark group flex items-center rounded-lg border px-2.5 py-2 transition"
         >
-            <div className="flex items-center space-x-2">
-                <Icon className="text-intent-default" icon="search" size={14} />
+            <div className="flex items-center space-x-3">
+                <SearchIcon className="text-intent-default h-5 w-5" />
                 <div className="text-text-disabled-light group-hover:text-intent-default dark:text-text-disabled-dark transition">
                     Search...
                 </div>
