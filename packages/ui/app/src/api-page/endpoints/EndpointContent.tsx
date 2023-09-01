@@ -98,7 +98,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
             onClick={() => setSelectedErrorIndex(null)}
         >
             <div
-                className="flex min-w-0 flex-1 flex-col justify-between lg:mr-[3vw] lg:flex-row lg:space-x-[4vw]"
+                className="flex min-w-0 flex-1 flex-col justify-between lg:flex-row lg:space-x-[4vw]"
                 ref={setContainerRef}
             >
                 <div className="flex min-w-0 max-w-2xl flex-1 flex-col">
