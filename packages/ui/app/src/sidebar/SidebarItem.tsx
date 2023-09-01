@@ -49,26 +49,35 @@ export const SidebarItem: React.FC<SidebarItem.Props> = ({
         ({ isHovering }: { isHovering: boolean }) => {
             return (
                 <div
-                    className={classNames(
-                        "flex flex-1 py-2 px-3 border rounded-lg items-center justify-between select-none min-w-0",
-                        {
-                            "text-accent-primary border-border-primary bg-tag-primary": isSelected,
-                            "border-transparent": !isSelected,
-                            "text-accent-primary": !isSelected && isHovering,
-                            "t-muted": !isSelected && !isHovering,
-                            transition: !isSelected && !wasRecentlySelected,
-                        }
-                    )}
+                    className={classNames("relative w-full", {
+                        "ml-[10px] pl-5 border-l border-border-default-light dark:border-border-default-dark": indent,
+                    })}
                 >
-                    <div className="flex min-w-0 items-center gap-2">
-                        {leftElement}
-                        <Text ellipsize>{title}</Text>
+                    {indent && isSelected && (
+                        <div className="bg-border-default-light dark:bg-border-default-dark absolute left-0 top-[50%] h-px w-[10px]" />
+                    )}
+                    <div
+                        className={classNames(
+                            "flex flex-1 py-2 px-3 border rounded-lg items-center justify-between select-none min-w-0",
+                            {
+                                "text-accent-primary border-border-primary bg-tag-primary": isSelected,
+                                "border-transparent": !isSelected,
+                                "text-accent-primary": !isSelected && isHovering,
+                                "t-muted": !isSelected && !isHovering,
+                                transition: !isSelected && !wasRecentlySelected,
+                            }
+                        )}
+                    >
+                        <div className="flex min-w-0 items-center gap-2">
+                            {leftElement}
+                            <Text ellipsize>{title}</Text>
+                        </div>
+                        {rightElement}
                     </div>
-                    {rightElement}
                 </div>
             );
         },
-        [isSelected, leftElement, rightElement, title, wasRecentlySelected]
+        [isSelected, leftElement, rightElement, title, indent, wasRecentlySelected]
     );
 
     const [ref, setRef] = useState<HTMLElement | null>(null);
@@ -85,15 +94,7 @@ export const SidebarItem: React.FC<SidebarItem.Props> = ({
     }, [ref, registerScrolledToPathListener, fullSlug]);
 
     return (
-        <div
-            className={classNames(className, "relative", {
-                "ml-[26px] border-l border-border-default-light dark:border-border-default-dark": indent,
-            })}
-            ref={setRef}
-        >
-            {indent && isSelected && (
-                <div className="bg-border-default-light dark:bg-border-default-dark absolute left-0 top-[50%] h-px w-[10px]" />
-            )}
+        <div className={classNames(className)} ref={setRef}>
             <Link href={`/${fullSlug}`} onClick={handleClick} className="!no-underline">
                 <SidebarItemLayout title={renderTitle} isSelected={isSelected} />
             </Link>
