@@ -30,7 +30,7 @@ export const Docs: React.FC = () => {
                     <Sidebar />
                 </div>
                 {isMobileSidebarOpen && (
-                    <div className="bg-background absolute inset-x-0 bottom-0 top-16 z-10 flex md:hidden">
+                    <div className="bg-background absolute inset-x-0 bottom-0 top-16 z-10 flex pl-2.5 md:hidden">
                         <Sidebar hideSearchBar />
                     </div>
                 )}

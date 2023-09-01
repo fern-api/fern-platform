@@ -40,7 +40,7 @@ export const Header: React.FC<Header.Props> = ({ className }) => {
     return (
         <div
             className={classNames(
-                "flex justify-between items-center shrink-0 pl-4 pr-4",
+                "flex justify-between items-center shrink-0 pl-[calc(theme(spacing.4)+theme(spacing[1.5]))] pr-4",
                 // this matches with the calc() in the EndpointContent examples section
                 "h-16",
                 className
