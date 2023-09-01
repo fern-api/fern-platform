@@ -36,19 +36,22 @@ export const Docs: React.FC = () => {
             >
                 <Header className="max-w-8xl mx-auto" ref={headerContentRef} />
             </div>
-            <div className="flex min-h-0 w-full flex-1" style={{ marginLeft: marginHorizontal }}>
-                <div className="hidden w-72 pl-4 md:flex">
-                    <Sidebar />
-                </div>
-                {isMobileSidebarOpen && (
-                    <div className="bg-background absolute inset-x-0 bottom-0 top-16 z-10 flex pl-2.5 md:hidden">
-                        <Sidebar hideSearchBar />
+
+            {headerContainerWidth > 0 && headerContentWidth > 0 && (
+                <div className="flex min-h-0 w-full flex-1" style={{ marginLeft: marginHorizontal }}>
+                    <div className="hidden w-72 pl-4 md:flex">
+                        <Sidebar />
                     </div>
-                )}
-                <div className="flex w-full min-w-0 flex-1 flex-col">
-                    <DocsMainContent marginHorizontal={marginHorizontal} />
+                    {isMobileSidebarOpen && (
+                        <div className="bg-background absolute inset-x-0 bottom-0 top-16 z-10 flex pl-2.5 md:hidden">
+                            <Sidebar hideSearchBar />
+                        </div>
+                    )}
+                    <div className="flex w-full min-w-0 flex-1 flex-col">
+                        <DocsMainContent marginHorizontal={marginHorizontal} />
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };
