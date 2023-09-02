@@ -31,7 +31,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
     return (
         <div
             className={classNames(
-                "flex flex-col bg-background-primary-light dark:bg-background-primary-dark rounded-xl border border-border-default-light dark:border-border-default-dark overflow-hidden basis-full",
+                "flex flex-col rounded-xl border border-border-default-light dark:border-border-default-dark overflow-hidden basis-full",
                 className
             )}
             onClick={onClick}
@@ -77,7 +77,10 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                         "typography-font-code"
                     )}
                 >
-                    <div className="flex-1 overflow-auto whitespace-pre py-4" ref={setContentRef}>
+                    <div
+                        className="bg-background-primary-dark flex-1 overflow-auto whitespace-pre py-4"
+                        ref={setContentRef}
+                    >
                         {typeof children === "function" ? children(contentRef ?? undefined) : children}
                     </div>
                 </div>
