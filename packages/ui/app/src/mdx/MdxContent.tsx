@@ -14,6 +14,7 @@ import {
     Li,
     Ol,
     P,
+    Strong,
     Table,
     Td,
     Th,
@@ -51,6 +52,7 @@ const COMPONENTS: MDXRemoteProps["components"] = {
     ul: Ul,
     li: Li,
     a: A,
+    strong: Strong,
     Cards,
     Card,
 };
