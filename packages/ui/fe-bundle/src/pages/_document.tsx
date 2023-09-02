@@ -4,13 +4,7 @@ export default function Document(): JSX.Element {
     return (
         <Html lang="en">
             <Head />
-            <body
-                className="bg-background overscroll-y-none"
-                style={{
-                    backgroundImage: "var(--docs-background-image)",
-                    backgroundSize: "cover",
-                }}
-            >
+            <body className="overscroll-y-none">
                 <Main />
                 <NextScript />
             </body>
