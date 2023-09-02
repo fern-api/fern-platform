@@ -42,11 +42,11 @@ export const SidebarItem: React.FC<SidebarItem.Props> = ({
             return (
                 <div
                     className={classNames("relative w-full", {
-                        "ml-px pl-5 border-l border-border-default-light dark:border-border-default-dark": indent,
+                        "pl-[18px] border-l border-border-default-light dark:border-border-default-dark": indent,
                     })}
                 >
                     {indent && isSelected && (
-                        <div className="bg-border-default-light dark:bg-border-default-dark absolute left-0 top-[50%] h-px w-[10px]" />
+                        <div className="bg-border-default-light dark:bg-border-default-dark absolute left-0 top-[50%] h-px w-[12px]" />
                     )}
                     <div
                         className={classNames(
