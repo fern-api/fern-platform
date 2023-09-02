@@ -3,7 +3,6 @@ import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavi
 import { ApiPackageContents } from "./ApiPackageContents";
 import { ApiArtifacts } from "./artifacts/ApiArtifacts";
 import { areApiArtifactsNonEmpty } from "./artifacts/areApiArtifactsNonEmpty";
-import { ApiPageMargins } from "./page-margins/ApiPageMargins";
 
 export declare namespace ApiPage {
     export interface Props {
@@ -26,9 +25,10 @@ export const ApiPage: React.FC<ApiPage.Props> = ({ marginHorizontal }) => {
                 <ApiArtifacts apiArtifacts={apiSection.artifacts} />
             )}
             <ApiPackageContents package={apiDefinition.rootPackage} slug={apiSlug} isLastInParentPackage={false} />
-            <ApiPageMargins>
+
+            <div className="pl-6 pr-4 md:pl-12">
                 <BottomNavigationButtons />
-            </ApiPageMargins>
+            </div>
         </div>
     );
 };
