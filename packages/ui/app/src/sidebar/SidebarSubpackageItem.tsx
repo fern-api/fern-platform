@@ -56,11 +56,11 @@ export const SidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = ({
             return (
                 <div
                     className={classNames(
-                        "flex flex-1 py-2 px-3 rounded-lg items-center justify-between select-none min-w-0 border",
+                        "flex flex-1 py-2 px-3 rounded-lg items-center justify-between select-none min-w-0",
                         {
-                            "bg-tag-default-light dark:bg-tag-default-dark border-border-default-light dark:border-border-default-dark text-text-primary-light dark:text-text-primary-dark":
+                            "bg-tag-default-light dark:bg-tag-default-dark text-text-primary-light dark:text-text-primary-dark":
                                 isHovering,
-                            "t-muted border-transparent": !isHovering,
+                            "t-muted": !isHovering,
                         }
                     )}
                 >

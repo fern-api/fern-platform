@@ -42,19 +42,19 @@ export const SidebarItem: React.FC<SidebarItem.Props> = ({
             return (
                 <div
                     className={classNames("relative w-full", {
-                        "ml-px pl-5 border-l border-border-default-light dark:border-border-default-dark": indent,
+                        "pl-[18px] border-l border-border-default-light dark:border-border-default-dark": indent,
                     })}
                 >
                     {indent && isSelected && (
-                        <div className="bg-border-default-light dark:bg-border-default-dark absolute left-0 top-[50%] h-px w-[10px]" />
+                        <div className="bg-border-default-light dark:bg-border-default-dark absolute left-0 top-[50%] h-px w-[12px]" />
                     )}
                     <div
                         className={classNames(
                             "flex flex-1 py-2 px-3 border rounded-lg items-center justify-between select-none min-w-0",
                             {
                                 "text-accent-primary border-border-primary bg-tag-primary": isSelected,
-                                "border-transparent": !isSelected && !isHovering,
-                                "bg-tag-default-light dark:bg-tag-default-dark border-border-default-light dark:border-border-default-dark text-text-primary-light dark:text-text-primary-dark":
+                                "border-transparent": !isSelected,
+                                "bg-tag-default-light dark:bg-tag-default-dark text-text-primary-light dark:text-text-primary-dark":
                                     !isSelected && isHovering,
                                 "t-muted": !isSelected && !isHovering,
                             }
