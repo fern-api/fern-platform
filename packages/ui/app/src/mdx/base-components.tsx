@@ -240,6 +240,15 @@ export const Ol: React.FC<HTMLAttributes<HTMLOListElement>> = ({ className, ...r
     return <ol {...rest} className={classNames(className, "list-inside list-decimal space-y-2 mb-3")} />;
 };
 
+export const Strong: React.FC<HTMLAttributes<unknown>> = ({ className, ...rest }) => {
+    return (
+        <strong
+            {...rest}
+            className={classNames(className, " !text-text-primary-light dark:!text-text-primary-dark font-semibold")}
+        />
+    );
+};
+
 export const Ul: React.FC<HTMLAttributes<HTMLUListElement>> = ({ className, ...rest }) => {
     return (
         <ul
