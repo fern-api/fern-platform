@@ -20,29 +20,21 @@ export const JsonItemTopLineContent: React.FC<JsonItemTopLineContent.Props> = ({
                 object: (object) =>
                     size(object) > 0
                         ? {
-                              content: (
-                                  <span className="text-text-primary-light dark:text-text-primary-dark">{"{"}</span>
-                              ),
+                              content: <span className="text-text-primary-dark">{"{"}</span>,
                               isEndOfElement: false,
                           }
                         : {
-                              content: (
-                                  <span className="text-text-primary-light dark:text-text-primary-dark">{"{}"}</span>
-                              ),
+                              content: <span className="text-text-primary-dark">{"{}"}</span>,
                               isEndOfElement: true,
                           },
                 list: (list) =>
                     list.length > 0
                         ? {
-                              content: (
-                                  <span className="text-text-primary-light dark:text-text-primary-dark">{"["}</span>
-                              ),
+                              content: <span className="text-text-primary-dark">{"["}</span>,
                               isEndOfElement: false,
                           }
                         : {
-                              content: (
-                                  <span className="text-text-primary-light dark:text-text-primary-dark">{"[]"}</span>
-                              ),
+                              content: <span className="text-text-primary-dark">{"[]"}</span>,
                               isEndOfElement: true,
                           },
                 string: (value) => ({
@@ -62,9 +54,7 @@ export const JsonItemTopLineContent: React.FC<JsonItemTopLineContent.Props> = ({
     return (
         <span className="whitespace-nowrap">
             {content}
-            {isNonLastItemInCollection && isEndOfElement && (
-                <span className="text-text-primary-light dark:text-text-primary-dark">,</span>
-            )}
+            {isNonLastItemInCollection && isEndOfElement && <span className="text-text-primary-dark">,</span>}
         </span>
     );
 };
