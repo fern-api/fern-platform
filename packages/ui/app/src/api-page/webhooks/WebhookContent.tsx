@@ -71,7 +71,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
         >
             <div className="flex min-w-0 flex-1 flex-col lg:flex-row lg:space-x-[4vw]" ref={setContainerRef}>
                 <div className="flex min-w-0 max-w-2xl flex-1 flex-col">
-                    <div className="pb-8 pt-16">
+                    <div className="py-8">
                         {isSubpackage(package_) && (
                             <div className="text-accent-primary mb-4 text-xs font-semibold uppercase tracking-wider">
                                 {getSubpackageTitle(package_)}
@@ -117,7 +117,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                     className={classNames(
                         "flex-1 sticky self-start top-0 min-w-sm max-w-lg ml-auto",
                         // the py-10 is the same as the 40px below
-                        "pb-10 pt-16",
+                        "pb-10 pt-8",
                         // the 4rem is the same as the h-10 as the Header
                         "max-h-[calc(100vh-4rem)]",
                         // hide on mobile,
