@@ -34,7 +34,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
     }, [path]);
 
     return (
-        <div className="flex space-x-16 overflow-y-auto px-6 pt-16 md:px-12">
+        <div className="flex space-x-16 overflow-y-auto px-6 pt-8 md:px-12">
             <div className="max-w-3xl">
                 {sectionTitle != null && (
                     <div className="text-accent-primary mb-4 text-xs font-semibold uppercase tracking-wider">
