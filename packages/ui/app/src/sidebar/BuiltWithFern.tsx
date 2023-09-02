@@ -3,7 +3,13 @@ import classNames from "classnames";
 import { useCallback } from "react";
 import { FernLogo } from "./FernLogo";
 
-export const BuiltWithFern: React.FC = () => {
+export declare namespace BuiltWithFern {
+    export interface Props {
+        className?: string;
+    }
+}
+
+export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className }) => {
     const onClick = useCallback(() => {
         window.open("https://buildwithfern.com", "_blank", "noopener noreferrer");
     }, []);
@@ -12,7 +18,7 @@ export const BuiltWithFern: React.FC = () => {
 
     return (
         <div
-            className={classNames("flex cursor-pointer items-center space-x-2 pl-3 py-3")}
+            className={classNames("flex cursor-pointer items-center space-x-2 pl-3 py-3", className)}
             onClick={onClick}
             {...containerCallbacks}
         >
