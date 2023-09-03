@@ -22,6 +22,7 @@ import {
     Tr,
     Ul,
 } from "./base-components";
+import { Info } from "./components/Callout";
 import { Card } from "./components/Card";
 import { Cards } from "./components/Cards";
 import { CodeBlock } from "./components/CodeBlock";
@@ -59,6 +60,7 @@ const COMPONENTS: MDXRemoteProps["components"] = {
     Card,
     CodeBlock,
     CodeBlocks,
+    Info,
 };
 
 export const MdxContent = React.memo<MdxContent.Props>(function MdxContent({ mdx }) {
