@@ -6,23 +6,25 @@ import { InfoIcon } from "../../commons/icons/InfoIcon";
 import { WarningIcon } from "../../commons/icons/WarningIcon";
 import styles from "./Callout.module.scss";
 
-interface CoreProps {
-    type: "info" | "warning" | "success";
+export declare namespace Callout {
+    export interface Props {
+        intent: "info" | "warning" | "success";
+    }
 }
 
-const Core: React.FC<React.PropsWithChildren<CoreProps>> = ({ type, children }) => {
+export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ intent, children }) => {
     return (
         <div
             className={classNames("flex space-x-3 px-4 pt-4 pb-1 border rounded-lg", {
                 "bg-tag-default-light dark:bg-tag-default-dark border-border-default-light dark:border-border-default-dark":
-                    type === "info",
+                    intent === "info",
                 "bg-tag-warning-light dark:bg-tag-warning-dark border-border-warning-light dark:border-border-warning-dark":
-                    type === "warning",
+                    intent === "warning",
                 "bg-tag-success-light dark:bg-tag-success-dark border-border-success-light dark:border-border-success-dark":
-                    type === "success",
+                    intent === "success",
             })}
         >
-            {visitDiscriminatedUnion({ type }, "type")._visit({
+            {visitDiscriminatedUnion({ intent }, "intent")._visit({
                 info: () => <InfoIcon className="text-intent-default h-5 w-5 min-w-fit" />,
                 warning: () => (
                     <WarningIcon className="text-intent-warning-light dark:text-intent-warning-dark h-5 w-5 min-w-fit" />
@@ -37,22 +39,4 @@ const Core: React.FC<React.PropsWithChildren<CoreProps>> = ({ type, children }) 
             </div>
         </div>
     );
-};
-
-const Info: React.FC<React.PropsWithChildren> = ({ children }) => {
-    return <Core type="info">{children}</Core>;
-};
-
-const Warning: React.FC<React.PropsWithChildren> = ({ children }) => {
-    return <Core type="warning">{children}</Core>;
-};
-
-const Success: React.FC<React.PropsWithChildren> = ({ children }) => {
-    return <Core type="success">{children}</Core>;
-};
-
-export const Callout = {
-    Info,
-    Warning,
-    Success,
 };
