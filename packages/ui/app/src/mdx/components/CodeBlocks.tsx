@@ -4,29 +4,23 @@ import { CodeBlockCore } from "../base-components";
 
 interface CodeBlockItem {
     children: React.ReactNode;
-    language: string;
-    content: string;
     title: string;
 }
 
 export declare namespace CodeBlocks {
-    export interface Props {
-        titles: string[];
-    }
+    export interface Props {}
 }
 
-export const CodeBlocks: React.FC<React.PropsWithChildren<CodeBlocks.Props>> = ({ titles, children }) => {
+export const CodeBlocks: React.FC<React.PropsWithChildren<CodeBlocks.Props>> = ({ children }) => {
     const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 
     if (!Array.isArray(children)) {
         return null;
     }
 
-    const codeBlockItems: CodeBlockItem[] = children.map((c, idx) => ({
-        children: c.props.children,
-        language: c.props.children.props.className,
-        content: c.props.children.props.children,
-        title: titles[idx] ?? " ",
+    const codeBlockItems: CodeBlockItem[] = children.map((c) => ({
+        children: c.props.children.props.children,
+        title: c.props.title ?? " ",
     }));
 
     const codeBlockItem = codeBlockItems[selectedTabIndex];
