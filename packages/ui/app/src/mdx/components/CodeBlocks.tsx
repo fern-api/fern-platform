@@ -38,7 +38,7 @@ export const CodeBlocks: React.FC<React.PropsWithChildren<CodeBlocks.Props>> = (
                 <div className="flex overflow-x-scroll">
                     {codeBlockItems.map((item, idx) => (
                         <button
-                            className={classNames("border-b py-2 px-4 transition text-xs", {
+                            className={classNames("border-b py-2.5 px-4 transition text-xs", {
                                 "text-accent-primary border-accent-primary": selectedTabIndex === idx,
                                 "t-muted border-transparent hover:text-text-primary-light hover:dark:text-text-primary-dark":
                                     selectedTabIndex !== idx,
