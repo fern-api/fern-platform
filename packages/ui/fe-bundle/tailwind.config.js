@@ -39,6 +39,8 @@ module.exports = {
                 "intent-default": "rgb(156, 163, 175)",
                 "intent-warning-dark": "rgb(251, 190, 36)",
                 "intent-warning-light": "rgb(217, 119, 6)",
+                "intent-success-dark": "rgb(74, 222, 128)",
+                "intent-success-light": "rgb(22, 163, 74)",
 
                 "background-primary-dark": "rgb(3, 7, 18)",
                 "background-primary-light": "rgb(255, 255, 255)",
@@ -58,6 +60,8 @@ module.exports = {
                 "border-primary": "rgba(var(--accent-primary), 0.30)",
                 "border-warning-dark": "rgba(251, 191, 36, 0.30)",
                 "border-warning-light": "rgba(217, 119, 6, 0.30)",
+                "border-success-dark": "rgba(74, 222, 128, 0.30)",
+                "border-success-light": "rgba(22, 163, 74, 0.30)",
 
                 "text-primary-dark": "rgb(255, 255, 255)",
                 "text-primary-light": "rgb(3,7,18)",
@@ -71,6 +75,8 @@ module.exports = {
                 "tag-primary": "rgba(var(--accent-primary), 15%)",
                 "tag-warning-dark": "rgba(251, 190, 36, 0.15)",
                 "tag-warning-light": "rgba(217, 119, 6, 0.10)",
+                "tag-success-dark": "rgba(74, 222, 128, 0.15)",
+                "tag-success-light": "rgba(22, 163, 74, 0.15)",
             };
         },
     },
