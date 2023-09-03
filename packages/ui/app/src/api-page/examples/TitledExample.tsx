@@ -1,9 +1,9 @@
+import { useCopyToClipboard } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { MouseEventHandler, useState } from "react";
 import { CheckIcon } from "../../commons/icons/CheckIcon";
 import { CopyIcon } from "../../commons/icons/CopyIcon";
 import styles from "./TitledExample.module.scss";
-import { useCopyToClipboard } from "./useCopyToClipboard";
 
 export declare namespace TitledExample {
     export interface Props {
