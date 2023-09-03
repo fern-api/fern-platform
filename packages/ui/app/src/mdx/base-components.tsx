@@ -3,8 +3,9 @@ import React, { HTMLAttributes } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
+import { CopyToClipboardButton } from "../commons/CopyToClipboardButton";
 
-export const CodeBlockCore: React.FC<HTMLAttributes<HTMLElement>> = ({ children }) => {
+export const CodeBlockInternalCore: React.FC<HTMLAttributes<HTMLElement>> = ({ children }) => {
     if (children == null || typeof children !== "object") {
         return null;
     }
@@ -35,34 +36,13 @@ export const CodeBlockCore: React.FC<HTMLAttributes<HTMLElement>> = ({ children 
     );
 };
 
-export const CodeBlock: React.FC<HTMLAttributes<HTMLElement>> = ({ children }) => {
-    if (children == null || typeof children !== "object") {
-        return null;
-    }
-    const { className, children: nestedChildren } = (children as JSX.Element).props as {
-        className: string | undefined;
-        children: string;
-    };
-    const language = className != null ? className.replace(/language-/, "") : "";
+export const CodeBlockInternal: React.FC<HTMLAttributes<HTMLElement>> = ({ children, ...rest }) => {
     return (
-        <pre
-            className={classNames(
-                "px-4 pt-1 mb-5 border rounded-lg bg-gray-950/90 border-border-default-light dark:border-border-default-dark"
-            )}
-        >
-            <SyntaxHighlighter
-                style={vscDarkPlus}
-                customStyle={{
-                    backgroundColor: "transparent",
-                    padding: 0,
-                    fontSize: "0.9rem",
-                }}
-                language={language}
-                PreTag="div"
-            >
-                {String(nestedChildren)}
-            </SyntaxHighlighter>
-        </pre>
+        <div className="relative">
+            <div className="border-border-default-light dark:border-border-default-dark flex h-2.5 overflow-x-scroll rounded-t-lg border-x border-t bg-gray-950/90 px-3" />
+            <CopyToClipboardButton className="absolute right-4 top-4 ml-auto" content={children.props.children} />
+            <CodeBlockInternalCore {...rest}>{children}</CodeBlockInternalCore>
+        </div>
     );
 };
 

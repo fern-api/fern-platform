@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { useState } from "react";
-import { CodeBlockCore } from "../base-components";
+import { CodeBlockInternalCore } from "../base-components";
 
 interface CodeBlockItem {
     children: React.ReactNode;
@@ -46,7 +46,7 @@ export const CodeBlocks: React.FC<React.PropsWithChildren<CodeBlocks.Props>> = (
                     </button>
                 ))}
             </div>
-            <CodeBlockCore>{codeBlockItem.children}</CodeBlockCore>
+            <CodeBlockInternalCore>{codeBlockItem.children}</CodeBlockInternalCore>
         </div>
     );
 };

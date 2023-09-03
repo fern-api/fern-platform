@@ -3,7 +3,7 @@ import React, { useCallback } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import {
     A,
-    CodeBlock as CodeBlockInternal,
+    CodeBlockInternal,
     H1,
     H2,
     H3,
