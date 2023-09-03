@@ -4,6 +4,37 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
 
+export const CodeBlockCore: React.FC<HTMLAttributes<HTMLElement>> = ({ children }) => {
+    if (children == null || typeof children !== "object") {
+        return null;
+    }
+    const { className, children: nestedChildren } = (children as JSX.Element).props as {
+        className: string | undefined;
+        children: string;
+    };
+    const language = className != null ? className.replace(/language-/, "") : "";
+    return (
+        <pre
+            className={classNames(
+                "px-4 pt-1 mb-5 border-l border-r border-b rounded-bl-lg rounded-br-lg bg-gray-950/90 border-border-default-light dark:border-border-default-dark"
+            )}
+        >
+            <SyntaxHighlighter
+                style={vscDarkPlus}
+                customStyle={{
+                    backgroundColor: "transparent",
+                    padding: 0,
+                    fontSize: "0.9rem",
+                }}
+                language={language}
+                PreTag="div"
+            >
+                {String(nestedChildren)}
+            </SyntaxHighlighter>
+        </pre>
+    );
+};
+
 export const CodeBlock: React.FC<HTMLAttributes<HTMLElement>> = ({ children }) => {
     if (children == null || typeof children !== "object") {
         return null;
