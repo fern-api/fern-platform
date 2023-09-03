@@ -1,9 +1,7 @@
 import classNames from "classnames";
 import { MouseEventHandler, useState } from "react";
-import { CheckIcon } from "../../commons/icons/CheckIcon";
-import { CopyIcon } from "../../commons/icons/CopyIcon";
+import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
 import styles from "./TitledExample.module.scss";
-import { useCopyToClipboard } from "./useCopyToClipboard";
 
 export declare namespace TitledExample {
     export interface Props {
@@ -25,8 +23,6 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
     onClick,
 }) => {
     const [contentRef, setContentRef] = useState<HTMLElement | null>(null);
-
-    const { copyToClipboard, wasJustCopied } = useCopyToClipboard(contentRef?.innerText);
 
     return (
         <div
@@ -57,15 +53,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                 </div>
                 <div className="flex gap-2">
                     {actions}
-                    <button onClick={copyToClipboard} disabled={copyToClipboard == null}>
-                        {wasJustCopied ? (
-                            <div className="bg-tag-primary flex h-4 w-4 items-center justify-center rounded-sm">
-                                <CheckIcon className="text-accent-primary h-4 w-4" />
-                            </div>
-                        ) : (
-                            <CopyIcon className="text-intent-default hover:text-text-primary-light hover:dark:text-text-primary-dark h-4 w-4" />
-                        )}
-                    </button>
+                    <CopyToClipboardButton content={contentRef?.innerText} />
                 </div>
             </div>
             <div className="flex min-h-0 flex-1">

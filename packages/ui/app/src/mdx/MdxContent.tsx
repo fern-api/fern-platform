@@ -3,7 +3,7 @@ import React, { useCallback } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import {
     A,
-    CodeBlock,
+    CodeBlockInternal,
     H1,
     H2,
     H3,
@@ -24,6 +24,8 @@ import {
 } from "./base-components";
 import { Card } from "./components/Card";
 import { Cards } from "./components/Cards";
+import { CodeBlock } from "./components/CodeBlock";
+import { CodeBlocks } from "./components/CodeBlocks";
 import { MdxErrorBoundaryContent } from "./MdxErrorBoundaryContent";
 
 export declare namespace MdxContent {
@@ -33,7 +35,7 @@ export declare namespace MdxContent {
 }
 
 const COMPONENTS: MDXRemoteProps["components"] = {
-    pre: CodeBlock,
+    pre: CodeBlockInternal,
     code: InlineCode,
     table: Table,
     thead: Thead,
@@ -55,6 +57,8 @@ const COMPONENTS: MDXRemoteProps["components"] = {
     strong: Strong,
     Cards,
     Card,
+    CodeBlock,
+    CodeBlocks,
 };
 
 export const MdxContent = React.memo<MdxContent.Props>(function MdxContent({ mdx }) {
