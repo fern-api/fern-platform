@@ -37,6 +37,8 @@ module.exports = {
                 background: withOpacity("--background"),
 
                 "intent-default": "rgb(156, 163, 175)",
+                "intent-warning-dark": "rgb(251, 190, 36)",
+                "intent-warning-light": "rgb(217, 119, 6)",
 
                 "background-primary-dark": "rgb(3, 7, 18)",
                 "background-primary-light": "rgb(255, 255, 255)",
@@ -51,9 +53,11 @@ module.exports = {
                 "background-hover-dark": "rgba(151, 90, 90, 0.05)",
                 "background-hover-light": "rgba(3, 7, 18, 0.05)",
 
-                "border-default-dark": "rgba(156, 163, 175, 30%)",
+                "border-default-dark": "rgba(156, 163, 175, 0.30)",
                 "border-default-light": "rgba(72, 72, 72, 0.15)",
-                "border-primary": "rgba(var(--accent-primary), 30%)",
+                "border-primary": "rgba(var(--accent-primary), 0.30)",
+                "border-warning-dark": "rgba(251, 191, 36, 0.30)",
+                "border-warning-light": "rgba(217, 119, 6, 0.30)",
 
                 "text-primary-dark": "rgb(255, 255, 255)",
                 "text-primary-light": "rgb(3,7,18)",
@@ -65,6 +69,8 @@ module.exports = {
                 "tag-default-dark": "rgba(255, 255, 255, 15%)",
                 "tag-default-light": "rgba(3, 7, 18, 5%)",
                 "tag-primary": "rgba(var(--accent-primary), 15%)",
+                "tag-warning-dark": "rgba(251, 190, 36, 0.15)",
+                "tag-warning-light": "rgba(217, 119, 6, 0.10)",
             };
         },
     },
