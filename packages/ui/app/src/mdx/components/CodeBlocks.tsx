@@ -31,7 +31,7 @@ export const CodeBlocks: React.FC<React.PropsWithChildren<CodeBlocks.Props>> = (
 
     return (
         <div>
-            <div className="border-border-default-light dark:border-border-default-dark bg-background-tertiary-light dark:bg-background-tertiary-dark flex rounded-t-lg border">
+            <div className="border-border-default-light dark:border-border-default-dark bg-background-tertiary-light dark:bg-background-tertiary-dark flex overflow-x-scroll rounded-t-lg border">
                 {codeBlockItems.map((item, idx) => (
                     <button
                         className={classNames("border-b py-2 px-4 transition text-xs", {
