@@ -36,7 +36,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                 className={classNames(
                     "border-border-default-light dark:border-border-default-dark flex h-10 items-center justify-between border-b py-1 pl-3 pr-2",
                     {
-                        "bg-background-tertiary-light dark:bg-background-tertiary-dark": type === "primary",
+                        "bg-background-tertiary-light dark:bg-[#19181C]": type === "primary",
                         "bg-red-500/20": type === "warning",
                     }
                 )}
