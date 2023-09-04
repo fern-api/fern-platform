@@ -17,12 +17,14 @@ export const CodeBlockInternalCore: React.FC<HTMLAttributes<HTMLElement>> = ({ c
     return (
         <pre
             className={classNames(
-                "px-4 pt-1 mb-5 border-l border-r border-b rounded-bl-lg rounded-br-lg bg-gray-950/90 border-border-default-light dark:border-border-default-dark"
+                "px-4 pt-1 w-full mb-5 border-l border-r border-b rounded-bl-lg rounded-br-lg bg-gray-950/90 border-border-default-light dark:border-border-default-dark"
             )}
         >
             <SyntaxHighlighter
                 style={vscDarkPlus}
                 customStyle={{
+                    width: "100%",
+                    overflowX: "scroll",
                     backgroundColor: "transparent",
                     padding: 0,
                     fontSize: "0.9rem",
@@ -44,7 +46,7 @@ export const CodeBlockInternal: React.FC<HTMLAttributes<HTMLElement>> = ({ child
     }
 
     return (
-        <div className="relative">
+        <div className="relative w-full">
             <div className="border-border-default-light dark:border-border-default-dark flex h-2.5 overflow-x-scroll rounded-t-lg border-x border-t bg-gray-950/90 px-3" />
             <CopyToClipboardButton className="absolute right-4 top-4 ml-auto" content={content} />
             <CodeBlockInternalCore {...rest}>{children}</CodeBlockInternalCore>
