@@ -1966,7 +1966,6 @@ __metadata:
     "@fern-ui/ui": "workspace:*"
     "@fortawesome/fontawesome-svg-core": ^6.4.2
     "@fortawesome/free-brands-svg-icons": ^6.4.2
-    "@fortawesome/free-regular-svg-icons": ^6.4.2
     "@fortawesome/free-solid-svg-icons": ^6.4.2
     "@tailwindcss/typography": ^0.5.9
     "@types/jest": ^29.0.3
@@ -2271,15 +2270,6 @@ __metadata:
   dependencies:
     "@fortawesome/fontawesome-common-types": 6.4.2
   checksum: 79efd840297f7b8dc057b553e46df1d5bfbc58e936bb2c7a3e488721fbbd430a70c4f4c613ac4d52bdc752e115b104fcd92774f35080ae04b8075add5423b6f0
-  languageName: node
-  linkType: hard
-
-"@fortawesome/free-regular-svg-icons@npm:^6.4.2":
-  version: 6.4.2
-  resolution: "@fortawesome/free-regular-svg-icons@npm:6.4.2"
-  dependencies:
-    "@fortawesome/fontawesome-common-types": 6.4.2
-  checksum: fdb78fced6087f83b45fc1d73de874c69956aa07e7376b8f79b3b0b76e9f800d06c4586b5431acea4e8b5ebc40866f2c4e87fc02986cae7b066c1ea9d150d7e1
   languageName: node
   linkType: hard
 

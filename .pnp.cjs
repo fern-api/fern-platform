@@ -3446,7 +3446,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
             ["@fortawesome/fontawesome-svg-core", "npm:6.4.2"],\
             ["@fortawesome/free-brands-svg-icons", "npm:6.4.2"],\
-            ["@fortawesome/free-regular-svg-icons", "npm:6.4.2"],\
             ["@fortawesome/free-solid-svg-icons", "npm:6.4.2"],\
             ["@tailwindcss/typography", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:0.5.9"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -3774,16 +3773,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/unplugged/@fortawesome-free-brands-svg-icons-npm-6.4.2-e571a9405c/node_modules/@fortawesome/free-brands-svg-icons/",\
           "packageDependencies": [\
             ["@fortawesome/free-brands-svg-icons", "npm:6.4.2"],\
-            ["@fortawesome/fontawesome-common-types", "npm:6.4.2"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@fortawesome/free-regular-svg-icons", [\
-        ["npm:6.4.2", {\
-          "packageLocation": "./.yarn/unplugged/@fortawesome-free-regular-svg-icons-npm-6.4.2-e2bd1a520d/node_modules/@fortawesome/free-regular-svg-icons/",\
-          "packageDependencies": [\
-            ["@fortawesome/free-regular-svg-icons", "npm:6.4.2"],\
             ["@fortawesome/fontawesome-common-types", "npm:6.4.2"]\
           ],\
           "linkType": "HARD"\
