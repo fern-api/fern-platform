@@ -3703,9 +3703,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/theme", "workspace:packages/commons/react/theme"],\
             ["@fontsource/ibm-plex-mono", "npm:4.5.13"],\
             ["@fortawesome/fontawesome-svg-core", "npm:6.4.2"],\
-            ["@fortawesome/free-brands-svg-icons", "npm:6.4.2"],\
-            ["@fortawesome/free-regular-svg-icons", "npm:6.4.2"],\
-            ["@fortawesome/free-solid-svg-icons", "npm:6.4.2"],\
             ["@fortawesome/react-fontawesome", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:0.2.0"],\
             ["@headlessui/react", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.7.15"],\
             ["@react-hook/size", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.1.2"],\
