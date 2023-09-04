@@ -3444,6 +3444,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/theme", "workspace:packages/commons/react/theme"],\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
+            ["@fortawesome/fontawesome-svg-core", "npm:6.4.2"],\
+            ["@fortawesome/free-brands-svg-icons", "npm:6.4.2"],\
+            ["@fortawesome/free-regular-svg-icons", "npm:6.4.2"],\
+            ["@fortawesome/free-solid-svg-icons", "npm:6.4.2"],\
             ["@tailwindcss/typography", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:0.5.9"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
@@ -3699,6 +3703,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/theme", "workspace:packages/commons/react/theme"],\
             ["@fontsource/ibm-plex-mono", "npm:4.5.13"],\
             ["@fortawesome/fontawesome-svg-core", "npm:6.4.2"],\
+            ["@fortawesome/free-brands-svg-icons", "npm:6.4.2"],\
             ["@fortawesome/free-regular-svg-icons", "npm:6.4.2"],\
             ["@fortawesome/free-solid-svg-icons", "npm:6.4.2"],\
             ["@fortawesome/react-fontawesome", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:0.2.0"],\
@@ -3762,6 +3767,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/unplugged/@fortawesome-fontawesome-svg-core-npm-6.4.2-530d31922b/node_modules/@fortawesome/fontawesome-svg-core/",\
           "packageDependencies": [\
             ["@fortawesome/fontawesome-svg-core", "npm:6.4.2"],\
+            ["@fortawesome/fontawesome-common-types", "npm:6.4.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@fortawesome/free-brands-svg-icons", [\
+        ["npm:6.4.2", {\
+          "packageLocation": "./.yarn/unplugged/@fortawesome-free-brands-svg-icons-npm-6.4.2-e571a9405c/node_modules/@fortawesome/free-brands-svg-icons/",\
+          "packageDependencies": [\
+            ["@fortawesome/free-brands-svg-icons", "npm:6.4.2"],\
             ["@fortawesome/fontawesome-common-types", "npm:6.4.2"]\
           ],\
           "linkType": "HARD"\

@@ -1,7 +1,11 @@
 import { ThemeProvider } from "@fern-ui/theme";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import { setupFontAwesomeIcons } from "../setup-icons";
 import "../styles/globals.css";
+
+setupFontAwesomeIcons();
 
 interface PageComponent {
     theme?: string;
