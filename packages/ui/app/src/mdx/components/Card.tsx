@@ -8,17 +8,21 @@ export declare namespace Card {
         icon?: string;
         children?: string;
         href?: string;
+        iconPosition?: "top" | "left";
     }
 }
 
-export const Card: React.FC<Card.Props> = ({ title, icon, children, href }) => {
+export const Card: React.FC<Card.Props> = ({ title, icon, iconPosition = "top", children, href }) => {
     const Component = href != null ? "a" : "div";
     return (
         <Component
             className={classNames(
                 "border-border-default-light dark:border-border-default-dark bg-background-tertiary-light dark:bg-background-tertiary-dark flex items-start rounded-lg border p-4 !no-underline transition",
                 "grow basis-1/4",
-                "space-x-3",
+                {
+                    "space-y-3 flex-col": iconPosition === "top",
+                    "space-x-3 flex-row": iconPosition === "left",
+                },
                 {
                     "hover:border-accent-primary hover:dark:border-accent-primary": href != null,
                 }
