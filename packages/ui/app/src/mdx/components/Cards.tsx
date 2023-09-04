@@ -1,20 +1,9 @@
-import classNames from "classnames";
-import { PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 
 export declare namespace Cards {
-    export type Props = PropsWithChildren<{
-        center?: boolean;
-    }>;
+    export type Props = PropsWithChildren;
 }
 
-export const Cards: React.FC<Cards.Props> = ({ center, children }) => {
-    return (
-        <div
-            className={classNames("flex flex-wrap gap-6", {
-                "justify-center": center,
-            })}
-        >
-            {children}
-        </div>
-    );
+export const Cards: React.FC<Cards.Props> = ({ children }) => {
+    return <div className="flex flex-wrap gap-6">{children}</div>;
 };
