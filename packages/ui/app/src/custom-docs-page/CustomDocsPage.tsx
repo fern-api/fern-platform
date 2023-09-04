@@ -35,7 +35,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
 
     return (
         <div className="flex space-x-16 overflow-y-auto px-6 pt-8 md:px-12">
-            <div className="max-w-3xl">
+            <div className="min-w-0 max-w-3xl">
                 {sectionTitle != null && (
                     <div className="text-accent-primary mb-4 text-xs font-semibold uppercase tracking-wider">
                         {sectionTitle}
@@ -49,7 +49,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
                 <BottomNavigationButtons />
                 <div className="h-20" />
             </div>
-            <TableOfContents className="sticky top-0 hidden lg:flex" markdown={page.markdown} />
+            <TableOfContents className="sticky top-0 hidden xl:flex" markdown={page.markdown} />
         </div>
     );
 };

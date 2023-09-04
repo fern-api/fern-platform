@@ -18,13 +18,12 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ma
     return (
         <div className={classNames("w-64", className)}>
             {headings.length > 0 && (
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col space-y-3">
                     {headings.map((heading, index) => (
                         <Text
                             key={index}
                             className="t-muted hover:dark:text-text-primary-dark hover:text-text-primary-light cursor-pointer transition"
                             style={{ marginLeft: 8 * (heading.depth - minDepth) }}
-                            ellipsize
                         >
                             <a
                                 href={`#${getSlugFromText(heading.text)}`}
