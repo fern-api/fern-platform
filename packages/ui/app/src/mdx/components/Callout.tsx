@@ -24,16 +24,19 @@ export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ inte
                     intent === "success",
             })}
         >
-            {visitDiscriminatedUnion({ intent }, "intent")._visit({
-                info: () => <InfoIcon className="text-intent-default h-5 w-5 min-w-fit" />,
-                warning: () => (
-                    <WarningIcon className="text-intent-warning-light dark:text-intent-warning-dark h-5 w-5 min-w-fit" />
-                ),
-                success: () => (
-                    <CheckIcon className="text-intent-success-light dark:text-intent-success-dark h-5 w-5 min-w-fit" />
-                ),
-                _other: () => null,
-            })}
+            <div className="min-w-fit">
+                {visitDiscriminatedUnion({ intent }, "intent")._visit({
+                    info: () => <InfoIcon className="text-intent-default h-5 w-5" />,
+                    warning: () => (
+                        <WarningIcon className="text-intent-warning-light dark:text-intent-warning-dark h-5 w-5 min-w-fit" />
+                    ),
+                    success: () => (
+                        <CheckIcon className="text-intent-success-light dark:text-intent-success-dark h-5 w-5 min-w-fit" />
+                    ),
+                    _other: () => null,
+                })}
+            </div>
+
             <div className="text-sm leading-5">
                 <div className={styles.content}>{children}</div>
             </div>
