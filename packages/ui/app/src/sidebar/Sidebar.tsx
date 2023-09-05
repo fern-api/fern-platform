@@ -1,5 +1,6 @@
+import { useTheme } from "@fern-ui/theme";
 import classNames from "classnames";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useSearchContext } from "../search-context/useSearchContext";
 import { useSearchService } from "../services/useSearchService";
@@ -17,9 +18,10 @@ export declare namespace Sidebar {
 }
 
 export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expandAllSections = false }) => {
-    const { docsInfo } = useDocsContext();
+    const { docsInfo, lightModeEnabled } = useDocsContext();
     const { openSearchDialog } = useSearchContext();
     const searchService = useSearchService();
+    const { theme } = useTheme(lightModeEnabled);
 
     const scrollableContainerRef = useRef<HTMLDivElement | null>(null);
     const [curScrollPosition, setCurScrollPosition] = useState<"nil" | "sm" | "md" | "lg" | "xl">("nil");
@@ -51,19 +53,35 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
         };
     }, []);
 
+    const searchBarBoxShadow = useMemo(() => {
+        if (theme == null) {
+            return undefined;
+        }
+        const shadowColor = theme === "dark" ? "rgb(0, 0, 0)" : "rgb(230, 230, 230)";
+        switch (curScrollPosition) {
+            case "nil":
+                return undefined;
+            case "sm":
+                return `0px 6px 4px ${shadowColor}`;
+            case "md":
+                return `0px 12px 8px ${shadowColor}`;
+            case "lg":
+                return `0px 16px 12px ${shadowColor}`;
+            case "xl":
+                return `0px 24px 16px ${shadowColor}`;
+        }
+    }, [curScrollPosition, theme]);
+
     return (
         <SidebarContext.Provider value={contextValue}>
             <div className="flex min-w-0 flex-1 flex-col justify-between overflow-hidden">
                 {!hideSearchBar && (
-                    <div className="z-10 flex flex-col pr-2.5 pt-8">
+                    <div className="z-10 flex flex-col px-2.5 pt-8 md:pl-4">
                         {searchService.isAvailable && (
                             <SidebarSearchBar
-                                className={classNames("dark:shadow-black", {
-                                    shadow: curScrollPosition === "sm",
-                                    "shadow-md": curScrollPosition === "md",
-                                    "shadow-lg": curScrollPosition === "lg",
-                                    "shadow-xl": curScrollPosition === "xl",
-                                })}
+                                style={{
+                                    boxShadow: searchBarBoxShadow,
+                                }}
                                 onClick={openSearchDialog}
                             />
                         )}
@@ -72,7 +90,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                 <div
                     ref={scrollableContainerRef}
                     className={classNames(
-                        "flex flex-1 flex-col overflow-y-auto overflow-x-hidden pb-6 pr-2.5",
+                        "pl-2.5 md:pl-4 flex flex-1 flex-col overflow-y-auto overflow-x-hidden pb-6 pr-2.5",
                         styles.scrollingContainer
                     )}
                 >
