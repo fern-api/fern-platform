@@ -56,7 +56,7 @@ export const SidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = ({
             return (
                 <div
                     className={classNames(
-                        "flex flex-1 py-2 px-3 rounded-lg items-center justify-between select-none min-w-0",
+                        "flex flex-1 py-2 px-3 rounded-lg justify-start items-center select-none min-w-0",
                         {
                             "bg-tag-default-light dark:bg-tag-default-dark text-text-primary-light dark:text-text-primary-dark":
                                 isHovering,
@@ -64,13 +64,16 @@ export const SidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = ({
                         }
                     )}
                 >
-                    <div className="flex min-w-0 items-center space-x-2">
-                        <ChevronDownIcon
-                            className={classNames("text-sm h-5 w-5 -ml-[6px] min-w-fit transition-transform", {
-                                "-rotate-90": !isChildSelected,
-                                "rotate-0": isChildSelected,
-                            })}
-                        />
+                    <div className="flex min-w-0 items-center justify-start space-x-2">
+                        <div className="min-w-fit">
+                            <ChevronDownIcon
+                                className={classNames("text-sm h-5 w-5 -ml-[6px] transition-transform", {
+                                    "-rotate-90": !isChildSelected,
+                                    "rotate-0": isChildSelected,
+                                })}
+                            />
+                        </div>
+
                         <Text ellipsize>{title}</Text>
                     </div>
                 </div>
