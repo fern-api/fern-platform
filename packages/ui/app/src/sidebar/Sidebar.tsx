@@ -1,4 +1,3 @@
-import { useTheme } from "@fern-ui/theme";
 import classNames from "classnames";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
@@ -18,10 +17,9 @@ export declare namespace Sidebar {
 }
 
 export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expandAllSections = false }) => {
-    const { docsInfo, lightModeEnabled } = useDocsContext();
+    const { docsInfo } = useDocsContext();
     const { openSearchDialog } = useSearchContext();
     const searchService = useSearchService();
-    const { theme } = useTheme(lightModeEnabled);
 
     const scrollableContainerRef = useRef<HTMLDivElement | null>(null);
     const [curScrollPosition, setCurScrollPosition] = useState<"nil" | "sm" | "md" | "lg" | "xl">("nil");
@@ -54,10 +52,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
     }, []);
 
     const searchBarBoxShadow = useMemo(() => {
-        if (theme == null) {
-            return undefined;
-        }
-        const shadowColor = theme === "dark" ? "rgb(0, 0, 0)" : "rgb(230, 230, 230)";
+        const shadowColor = "rgb(var(--background))";
         switch (curScrollPosition) {
             case "nil":
                 return undefined;
@@ -70,7 +65,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
             case "xl":
                 return `0px 24px 16px ${shadowColor}`;
         }
-    }, [curScrollPosition, theme]);
+    }, [curScrollPosition]);
 
     return (
         <SidebarContext.Provider value={contextValue}>
