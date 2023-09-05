@@ -22,7 +22,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
     const searchService = useSearchService();
 
     const scrollableContainerRef = useRef<HTMLDivElement | null>(null);
-    const [curScrollPosition, setCurScrollPosition] = useState(0);
+    const [curScrollPosition, setCurScrollPosition] = useState<"nil" | "sm" | "md" | "lg" | "xl">("nil");
 
     const contextValue = useCallback((): SidebarContextValue => ({ expandAllSections }), [expandAllSections]);
 
@@ -32,7 +32,18 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
             return;
         }
         const handleScroll = () => {
-            setCurScrollPosition(elem.scrollTop);
+            const scrollTop = elem.scrollTop;
+            if (scrollTop === 0) {
+                setCurScrollPosition("nil");
+            } else if (scrollTop > 0 && scrollTop <= 3) {
+                setCurScrollPosition("sm");
+            } else if (scrollTop > 3 && scrollTop <= 6) {
+                setCurScrollPosition("md");
+            } else if (scrollTop > 6 && scrollTop <= 10) {
+                setCurScrollPosition("lg");
+            } else if (scrollTop > 10) {
+                setCurScrollPosition("xl");
+            }
         };
         elem.addEventListener("scroll", handleScroll);
         return () => {
@@ -48,10 +59,10 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                         {searchService.isAvailable && (
                             <SidebarSearchBar
                                 className={classNames("dark:shadow-black", {
-                                    shadow: curScrollPosition > 0 && curScrollPosition <= 3,
-                                    "shadow-md": curScrollPosition > 3 && curScrollPosition <= 6,
-                                    "shadow-lg": curScrollPosition > 6 && curScrollPosition <= 10,
-                                    "shadow-xl": curScrollPosition > 10,
+                                    shadow: curScrollPosition === "sm",
+                                    "shadow-md": curScrollPosition === "md",
+                                    "shadow-lg": curScrollPosition === "lg",
+                                    "shadow-xl": curScrollPosition === "xl",
                                 })}
                                 onClick={openSearchDialog}
                             />
