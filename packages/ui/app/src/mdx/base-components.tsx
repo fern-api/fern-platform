@@ -299,32 +299,22 @@ export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className
 
     const isInternalUrl = typeof href === "string" && href.startsWith("/");
 
+    const classNamesCombined = classNames(
+        className,
+        "!text-text-primary-light dark:!text-text-primary-dark hover:!text-accent-primary hover:dark:!text-accent-primary !no-underline !border-b hover:!border-b-2 !border-b-accent-primary hover:border-b-accent-primary hover:no-underline font-medium"
+    );
+
     if (isInternalUrl) {
         const slug = href.slice(1, href.length);
         return (
-            <Link
-                className={classNames(
-                    className,
-                    "!text-text-primary-light dark:!text-text-primary-dark hover:!text-accent-primary hover:dark:!text-accent-primary !no-underline !border-b hover:!border-b-2 !border-b-accent-primary hover:border-b-accent-primary hover:no-underline font-medium"
-                )}
-                href={href}
-                onClick={() => navigateToPath(slug)}
-                {...rest}
-            >
+            <Link className={classNamesCombined} href={href} onClick={() => navigateToPath(slug)} {...rest}>
                 {children}
             </Link>
         );
     }
 
     return (
-        <a
-            {...rest}
-            href={href}
-            className={classNames(
-                className,
-                "!text-text-primary-light dark:!text-text-primary-dark hover:!text-accent-primary hover:dark:!text-accent-primary !no-underline !border-b hover:!border-b-2 !border-b-accent-primary hover:border-b-accent-primary hover:no-underline font-medium"
-            )}
-        >
+        <a {...rest} href={href} className={classNamesCombined}>
             {children}
         </a>
     );
