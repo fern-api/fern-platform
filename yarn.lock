@@ -2231,7 +2231,7 @@ __metadata:
     react-error-boundary: ^4.0.10
     react-instantsearch-hooks-web: ^6.45.0
     react-intersection-observer: ^9.4.3
-    react-markdown: ^8.0.5
+    react-markdown: ^8.0.7
     react-syntax-highlighter: ^15.5.0
     rehype-raw: ^6.1.1
     remark-gfm: ^3.0.1
@@ -11305,9 +11305,9 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"react-markdown@npm:^8.0.5":
-  version: 8.0.5
-  resolution: "react-markdown@npm:8.0.5"
+"react-markdown@npm:^8.0.7":
+  version: 8.0.7
+  resolution: "react-markdown@npm:8.0.7"
   dependencies:
     "@types/hast": ^2.0.0
     "@types/prop-types": ^15.0.0
@@ -11327,7 +11327,7 @@ env-cmd@toddbluhm/env-cmd:
   peerDependencies:
     "@types/react": ">=16"
     react: ">=16"
-  checksum: 9d11b7aba16216d590e56b4744e05d2925141bfb0f5885b3d9400ccf006cd24b79ce3b3d20af8a083a01324215b58fa4c5979e44f69d54123ff1dd5dacb0dc89
+  checksum: 0f3e570975134a3382c3fe5189e04e742ae154941463bdfaab2293319da1f1585cb9b75b6f07d99f514c4d728d69cc1af3c96ab37df90003b3bcc210dd0001ba
   languageName: node
   linkType: hard
 
