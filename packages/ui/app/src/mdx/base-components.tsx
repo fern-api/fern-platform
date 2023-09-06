@@ -294,10 +294,12 @@ export const Li: React.FC<HTMLAttributes<HTMLLIElement>> = ({ className, ...rest
     );
 };
 
-export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, href, ...rest }) => {
+export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, children, href, ...rest }) => {
     const { navigateToPath } = useDocsContext();
 
-    if (typeof href === "string" && href.startsWith("/")) {
+    const isInternalUrl = typeof href === "string" && href.startsWith("/");
+
+    if (isInternalUrl) {
         const slug = href.slice(1, href.length);
         return (
             <Link
@@ -307,8 +309,9 @@ export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className
                 )}
                 href={href}
                 onClick={() => navigateToPath(slug)}
+                {...rest}
             >
-                <span {...(rest as HTMLAttributes<HTMLSpanElement>)} className={className} />
+                {children}
             </Link>
         );
     }
@@ -321,7 +324,9 @@ export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className
                 className,
                 "!text-text-primary-light dark:!text-text-primary-dark hover:!text-accent-primary hover:dark:!text-accent-primary !no-underline !border-b hover:!border-b-2 !border-b-accent-primary hover:border-b-accent-primary hover:no-underline font-medium"
             )}
-        />
+        >
+            {children}
+        </a>
     );
 };
 
