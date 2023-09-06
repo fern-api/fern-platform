@@ -1,9 +1,11 @@
 import classNames from "classnames";
-import React, { HTMLAttributes } from "react";
+import Link from "next/link";
+import React, { AnchorHTMLAttributes, HTMLAttributes } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
 import { CopyToClipboardButton } from "../commons/CopyToClipboardButton";
+import { useDocsContext } from "../docs-context/useDocsContext";
 
 export const CodeBlockInternalCore: React.FC<HTMLAttributes<HTMLElement>> = ({ children }) => {
     if (children == null || typeof children !== "object") {
@@ -292,10 +294,29 @@ export const Li: React.FC<HTMLAttributes<HTMLLIElement>> = ({ className, ...rest
     );
 };
 
-export const A: React.FC<HTMLAttributes<HTMLAnchorElement>> = ({ className, ...rest }) => {
+export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, href, ...rest }) => {
+    const { navigateToPath } = useDocsContext();
+
+    if (typeof href === "string" && href.startsWith("/")) {
+        const slug = href.slice(1, href.length);
+        return (
+            <Link
+                className={classNames(
+                    className,
+                    "!text-text-primary-light dark:!text-text-primary-dark hover:!text-accent-primary hover:dark:!text-accent-primary !no-underline !border-b hover:!border-b-2 !border-b-accent-primary hover:border-b-accent-primary hover:no-underline font-medium"
+                )}
+                href={href}
+                onClick={() => navigateToPath(slug)}
+            >
+                <span {...(rest as HTMLAttributes<HTMLSpanElement>)} className={className} />
+            </Link>
+        );
+    }
+
     return (
         <a
             {...rest}
+            href={href}
             className={classNames(
                 className,
                 "!text-text-primary-light dark:!text-text-primary-dark hover:!text-accent-primary hover:dark:!text-accent-primary !no-underline !border-b hover:!border-b-2 !border-b-accent-primary hover:border-b-accent-primary hover:no-underline font-medium"
