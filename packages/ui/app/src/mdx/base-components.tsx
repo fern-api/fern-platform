@@ -1,9 +1,11 @@
 import classNames from "classnames";
-import React, { HTMLAttributes } from "react";
+import Link from "next/link";
+import React, { AnchorHTMLAttributes, HTMLAttributes } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
 import { CopyToClipboardButton } from "../commons/CopyToClipboardButton";
+import { useDocsContext } from "../docs-context/useDocsContext";
 
 export const CodeBlockInternalCore: React.FC<HTMLAttributes<HTMLElement>> = ({ children }) => {
     if (children == null || typeof children !== "object") {
@@ -292,15 +294,29 @@ export const Li: React.FC<HTMLAttributes<HTMLLIElement>> = ({ className, ...rest
     );
 };
 
-export const A: React.FC<HTMLAttributes<HTMLAnchorElement>> = ({ className, ...rest }) => {
+export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, children, href, ...rest }) => {
+    const { navigateToPath } = useDocsContext();
+
+    const isInternalUrl = typeof href === "string" && href.startsWith("/");
+
+    const classNamesCombined = classNames(
+        className,
+        "!text-text-primary-light dark:!text-text-primary-dark hover:!text-accent-primary hover:dark:!text-accent-primary !no-underline !border-b hover:!border-b-2 !border-b-accent-primary hover:border-b-accent-primary hover:no-underline font-medium"
+    );
+
+    if (isInternalUrl) {
+        const slug = href.slice(1, href.length);
+        return (
+            <Link className={classNamesCombined} href={href} onClick={() => navigateToPath(slug)} {...rest}>
+                {children}
+            </Link>
+        );
+    }
+
     return (
-        <a
-            {...rest}
-            className={classNames(
-                className,
-                "!text-text-primary-light dark:!text-text-primary-dark hover:!text-accent-primary hover:dark:!text-accent-primary !no-underline !border-b hover:!border-b-2 !border-b-accent-primary hover:border-b-accent-primary hover:no-underline font-medium"
-            )}
-        />
+        <a {...rest} href={href} className={classNamesCombined}>
+            {children}
+        </a>
     );
 };
 
