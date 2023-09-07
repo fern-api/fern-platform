@@ -2,7 +2,6 @@ import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
-import { Markdown } from "../markdown/Markdown";
 import { TypeDefinition } from "../types/type-definition/TypeDefinition";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
@@ -22,8 +21,8 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
 }) => {
     return (
         <div className="flex flex-col">
-            <Markdown className="mt-3">{httpRequest.description}</Markdown>
             <ApiPageDescription
+                className="mt-3"
                 description={httpRequest.description}
                 isMarkdown={httpRequest.descriptionContainsMarkdown ?? false}
             />
