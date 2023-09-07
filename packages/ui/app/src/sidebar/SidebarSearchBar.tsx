@@ -1,26 +1,19 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import classNames from "classnames";
-import { CSSProperties, type MouseEventHandler } from "react";
+import { type MouseEventHandler } from "react";
 import { SearchIcon } from "../commons/icons/SearchIcon";
 import { PlatformSpecificContent } from "../commons/PlatformSpecificContent";
 
 export declare namespace SidebarSearchBar {
     export interface Props {
-        className?: string;
-        style?: CSSProperties;
         onClick: MouseEventHandler<HTMLButtonElement>;
     }
 }
 
-export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = ({ className, style, onClick }) => {
+export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = ({ onClick }) => {
     return (
         <button
             onClick={onClick}
-            className={classNames(
-                "dark:border-border-default-dark border-border-default-light bg-background-primary-light dark:bg-background-primary-dark hover:bg-background-hover-light hover:dark:bg-background-hover-dark group flex items-center rounded-lg border px-2.5 py-2 transition",
-                className
-            )}
-            style={style}
+            className="dark:border-border-default-dark border-border-default-light bg-background-primary-light dark:bg-background-primary-dark hover:bg-background-hover-light hover:dark:bg-background-hover-dark group flex items-center rounded-lg border px-2.5 py-2 transition"
         >
             <div className="flex items-center space-x-3">
                 <SearchIcon className="text-intent-default h-5 w-5" />
