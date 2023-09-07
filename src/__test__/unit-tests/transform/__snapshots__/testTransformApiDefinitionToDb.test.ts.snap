@@ -26,7 +26,7 @@ Object {
           "authed": false,
           "defaultEnvironment": "Production",
           "description": "Retrieves the user with the given ID.",
-          "descriptionContainsMarkdown": true,
+          "descriptionContainsMarkdown": false,
           "environments": Array [
             Object {
               "baseUrl": "https://api.buildwithfern.com",
@@ -224,7 +224,7 @@ Object {
           "authed": true,
           "defaultEnvironment": "Production",
           "description": "For a shipment, find the lowest cost shipping option based on provided parameters.",
-          "descriptionContainsMarkdown": true,
+          "descriptionContainsMarkdown": false,
           "environments": Array [
             Object {
               "baseUrl": "https://api.meetstring.com",
@@ -418,7 +418,7 @@ Object {
   "types": Object {
     "type_lcf:Country": Object {
       "description": "The country you're shipping an order to.  Only 'US' is supported at this time.",
-      "descriptionContainsMarkdown": true,
+      "descriptionContainsMarkdown": false,
       "htmlDescription": "<p>The country you&#39;re shipping an order to.  Only &#39;US&#39; is supported at this time.</p>
 ",
       "name": "Country",
@@ -458,7 +458,7 @@ Object {
     },
     "type_lcf:Dimensions": Object {
       "description": "The length, width, and height of the package in inches.  Order does not matter.",
-      "descriptionContainsMarkdown": true,
+      "descriptionContainsMarkdown": false,
       "htmlDescription": "<p>The length, width, and height of the package in inches.  Order does not matter.</p>
 ",
       "name": "Dimensions",
@@ -507,7 +507,7 @@ Object {
           },
           Object {
             "description": "An array of tags with high level information about the prediction String just made.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>An array of tags with high level information about the prediction String just made.</p>
 ",
             "key": "tags",
@@ -525,7 +525,7 @@ Object {
             "description": "An array of comments with detailed information about the prediction String just made.
 First comment includes the carrier, service code, account, cost, and package
 ",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>An array of comments with detailed information about the prediction String just made.
 First comment includes the carrier, service code, account, cost, and package</p>
 ",
@@ -574,7 +574,7 @@ First comment includes the carrier, service code, account, cost, and package</p>
         "properties": Array [
           Object {
             "description": "A unique identifier for the order.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>A unique identifier for the order.</p>
 ",
             "key": "orderId",
@@ -585,7 +585,7 @@ First comment includes the carrier, service code, account, cost, and package</p>
           },
           Object {
             "description": "The address the order is being shipped to.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The address the order is being shipped to.</p>
 ",
             "key": "shipTo",
@@ -598,7 +598,7 @@ First comment includes the carrier, service code, account, cost, and package</p>
             "description": "The number of days from the order date that the order must be 
 delivered to the customer by.  If no limit, set as null.
 ",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The number of days from the order date that the order must be 
 delivered to the customer by.  If no limit, set as null.</p>
 ",
@@ -612,7 +612,7 @@ delivered to the customer by.  If no limit, set as null.</p>
           },
           Object {
             "description": "The dimensions and weight of the package being shipped.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The dimensions and weight of the package being shipped.</p>
 ",
             "key": "package",
@@ -627,7 +627,7 @@ delivered to the customer by.  If no limit, set as null.</p>
     },
     "type_lcf:OrderId": Object {
       "description": "The unique identifier for the order, this can be an order number from your Shopify store for example.",
-      "descriptionContainsMarkdown": true,
+      "descriptionContainsMarkdown": false,
       "htmlDescription": "<p>The unique identifier for the order, this can be an order number from your Shopify store for example.</p>
 ",
       "name": "OrderId",
@@ -685,7 +685,7 @@ delivered to the customer by.  If no limit, set as null.</p>
             "description": "The name of the package String reccomends.
 Defaults to 'CUSTOM_PACKAGE' if the user provides a package.
 ",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The name of the package String reccomends.
 Defaults to &#39;CUSTOM_PACKAGE&#39; if the user provides a package.</p>
 ",
@@ -731,7 +731,7 @@ Defaults to &#39;CUSTOM_PACKAGE&#39; if the user provides a package.</p>
         "properties": Array [
           Object {
             "description": "The units of measurement for the package dimensions.  Only 'inches' is supported at this time.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The units of measurement for the package dimensions.  Only &#39;inches&#39; is supported at this time.</p>
 ",
             "key": "units",
@@ -744,7 +744,7 @@ Defaults to &#39;CUSTOM_PACKAGE&#39; if the user provides a package.</p>
           },
           Object {
             "description": "The length of the package in inches.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The length of the package in inches.</p>
 ",
             "key": "length",
@@ -757,7 +757,7 @@ Defaults to &#39;CUSTOM_PACKAGE&#39; if the user provides a package.</p>
           },
           Object {
             "description": "The width of the package in inches.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The width of the package in inches.</p>
 ",
             "key": "width",
@@ -770,7 +770,7 @@ Defaults to &#39;CUSTOM_PACKAGE&#39; if the user provides a package.</p>
           },
           Object {
             "description": "The height of the package in inches.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The height of the package in inches.</p>
 ",
             "key": "height",
@@ -795,7 +795,7 @@ Defaults to &#39;CUSTOM_PACKAGE&#39; if the user provides a package.</p>
         "properties": Array [
           Object {
             "description": "The weight of the package in pounds.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The weight of the package in pounds.</p>
 ",
             "key": "value",
@@ -808,7 +808,7 @@ Defaults to &#39;CUSTOM_PACKAGE&#39; if the user provides a package.</p>
           },
           Object {
             "description": "The units of measurement for the package weight.  Only 'pounds' is supported at this time.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The units of measurement for the package weight.  Only &#39;pounds&#39; is supported at this time.</p>
 ",
             "key": "unit",
@@ -833,7 +833,7 @@ Defaults to &#39;CUSTOM_PACKAGE&#39; if the user provides a package.</p>
         "properties": Array [
           Object {
             "description": "The carrier that will be used to ship the package.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The carrier that will be used to ship the package.</p>
 ",
             "key": "carrier",
@@ -846,7 +846,7 @@ Defaults to &#39;CUSTOM_PACKAGE&#39; if the user provides a package.</p>
           },
           Object {
             "description": "The service code that will be used to ship the package.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The service code that will be used to ship the package.</p>
 ",
             "key": "service",
@@ -859,7 +859,7 @@ Defaults to &#39;CUSTOM_PACKAGE&#39; if the user provides a package.</p>
           },
           Object {
             "description": "An RFC 3339, section 5.6 date (YYYY-MM-DD). For example, 2017-07-21.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>An RFC 3339, section 5.6 date (YYYY-MM-DD). For example, 2017-07-21.</p>
 ",
             "key": "deliveryDate",
@@ -872,7 +872,7 @@ Defaults to &#39;CUSTOM_PACKAGE&#39; if the user provides a package.</p>
           },
           Object {
             "description": "If the package can be delivered by the carrier on Saturday. 'True' only possible for UPS and FedEx.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>If the package can be delivered by the carrier on Saturday. &#39;True&#39; only possible for UPS and FedEx.</p>
 ",
             "key": "saturdayDelivery",
@@ -885,7 +885,7 @@ Defaults to &#39;CUSTOM_PACKAGE&#39; if the user provides a package.</p>
           },
           Object {
             "description": "You carrier account that will be used to ship the package.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>You carrier account that will be used to ship the package.</p>
 ",
             "key": "accountNumber",
@@ -898,7 +898,7 @@ Defaults to &#39;CUSTOM_PACKAGE&#39; if the user provides a package.</p>
           },
           Object {
             "description": "The cost of the shipping label String recommends.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The cost of the shipping label String recommends.</p>
 ",
             "key": "cost",
@@ -923,7 +923,7 @@ Defaults to &#39;CUSTOM_PACKAGE&#39; if the user provides a package.</p>
         "properties": Array [
           Object {
             "description": "The street address you're shipping an order to.  If your customer has a second address line, like an apartment number add street2.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The street address you&#39;re shipping an order to.  If your customer has a second address line, like an apartment number add street2.</p>
 ",
             "key": "street1",
@@ -951,7 +951,7 @@ Defaults to &#39;CUSTOM_PACKAGE&#39; if the user provides a package.</p>
           },
           Object {
             "description": "The city you're shipping an order to'.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The city you&#39;re shipping an order to&#39;.</p>
 ",
             "key": "city",
@@ -966,7 +966,7 @@ Defaults to &#39;CUSTOM_PACKAGE&#39; if the user provides a package.</p>
             "description": "The state you're shipping an order to. 
 Two digit code.  For example, 'CA' for California.
 ",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The state you&#39;re shipping an order to. 
 Two digit code.  For example, &#39;CA&#39; for California.</p>
 ",
@@ -982,7 +982,7 @@ Two digit code.  For example, &#39;CA&#39; for California.</p>
             "description": "The postal code you're shipping an order to. 
 This must be a 5 or 9 digit numerical code.  If 9 digits, you must include a hyphen between the first 5 and last 4 digits.
 ",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The postal code you&#39;re shipping an order to. 
 This must be a 5 or 9 digit numerical code.  If 9 digits, you must include a hyphen between the first 5 and last 4 digits.</p>
 ",
@@ -1006,7 +1006,7 @@ This must be a 5 or 9 digit numerical code.  If 9 digits, you must include a hyp
           },
           Object {
             "description": "If residential, set as true.  If commercial, set as false.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>If residential, set as true.  If commercial, set as false.</p>
 ",
             "key": "isResidential",
@@ -1023,7 +1023,7 @@ This must be a 5 or 9 digit numerical code.  If 9 digits, you must include a hyp
     },
     "type_lcf:Weight": Object {
       "description": "The weight of the package in pounds. Include up to 2 decimal places.",
-      "descriptionContainsMarkdown": true,
+      "descriptionContainsMarkdown": false,
       "htmlDescription": "<p>The weight of the package in pounds. Include up to 2 decimal places.</p>
 ",
       "name": "Weight",
@@ -4200,7 +4200,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The ID of the document.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The ID of the document.</p>
 ",
             "key": "id",
@@ -4226,7 +4226,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "The unique ID of the document as represented in an external system and specified when it was originally uploaded.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The unique ID of the document as represented in an external system and specified when it was originally uploaded.</p>
 ",
             "key": "external_id",
@@ -4254,7 +4254,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "Vellum-generated ID that uniquely identifies this link.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Vellum-generated ID that uniquely identifies this link.</p>
 ",
             "key": "id",
@@ -4267,7 +4267,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "Vellum-generated ID that uniquely identifies the index this document is included in.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Vellum-generated ID that uniquely identifies the index this document is included in.</p>
 ",
             "key": "document_index_id",
@@ -4413,7 +4413,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "Configuration representing how documents should be indexed",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Configuration representing how documents should be indexed</p>
 ",
             "key": "indexing_config",
@@ -4472,7 +4472,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The Vellum-generated ID of the completion.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The Vellum-generated ID of the completion.</p>
 ",
             "key": "id",
@@ -4485,7 +4485,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "The external ID that was originally provided along with the generation request, which uniquely identifies this generation in an external system.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The external ID that was originally provided along with the generation request, which uniquely identifies this generation in an external system.</p>
 ",
             "key": "external_id",
@@ -4501,7 +4501,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "The text generated by the LLM.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The text generated by the LLM.</p>
 ",
             "key": "text",
@@ -4537,7 +4537,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "The logprobs of the completion. Only present if specified in the original request options.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The logprobs of the completion. Only present if specified in the original request options.</p>
 ",
             "key": "logprobs",
@@ -4551,7 +4551,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "The ID of the model version used to generate this completion.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The ID of the model version used to generate this completion.</p>
 ",
             "key": "model_version_id",
@@ -4625,7 +4625,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The target value to compare the LLM output against. Typically what you expect or desire the LLM output to be.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The target value to compare the LLM output against. Typically what you expect or desire the LLM output to be.</p>
 ",
             "key": "target",
@@ -4653,7 +4653,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The target value to compare the LLM output against. Typically what you expect or desire the LLM output to be.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The target value to compare the LLM output against. Typically what you expect or desire the LLM output to be.</p>
 ",
             "key": "target",
@@ -4717,7 +4717,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "Details about why the request failed.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Details about why the request failed.</p>
 ",
             "key": "detail",
@@ -4775,7 +4775,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "Key/value pairs for each template variable defined in the deployment's prompt.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Key/value pairs for each template variable defined in the deployment&#39;s prompt.</p>
 ",
             "key": "input_values",
@@ -4794,7 +4794,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "Optionally provide a list of chat messages that'll be used in place of the special {$chat_history} variable, if included in the prompt.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Optionally provide a list of chat messages that&#39;ll be used in place of the special {$chat_history} variable, if included in the prompt.</p>
 ",
             "key": "chat_history",
@@ -4811,7 +4811,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "Optionally include a unique identifier for each generation, as represented outside of Vellum. Note that this should generally be a list of length one.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Optionally include a unique identifier for each generation, as represented outside of Vellum. Note that this should generally be a list of length one.</p>
 ",
             "key": "external_ids",
@@ -4842,7 +4842,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The results of each generation request.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The results of each generation request.</p>
 ",
             "key": "results",
@@ -4868,7 +4868,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "An object containing the resulting generation. This key will be absent if the LLM provider experienced an error.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>An object containing the resulting generation. This key will be absent if the LLM provider experienced an error.</p>
 ",
             "key": "data",
@@ -4882,7 +4882,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "An object containing details about the error that occurred. This key will be absent if the LLM provider did not experience an error.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>An object containing details about the error that occurred. This key will be absent if the LLM provider did not experience an error.</p>
 ",
             "key": "error",
@@ -4908,7 +4908,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The generated completions. This will generally be a list of length one.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The generated completions. This will generally be a list of length one.</p>
 ",
             "key": "completions",
@@ -4934,7 +4934,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The error message returned by the LLM provider.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The error message returned by the LLM provider.</p>
 ",
             "key": "message",
@@ -5173,7 +5173,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The name of the base model used to create this model version, as identified by the LLM provider.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The name of the base model used to create this model version, as identified by the LLM provider.</p>
 ",
             "key": "base_model",
@@ -5186,7 +5186,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "Information about the sandbox snapshot that was used to create this model version, if applicable.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Information about the sandbox snapshot that was used to create this model version, if applicable.</p>
 ",
             "key": "sandbox_snapshot",
@@ -5212,7 +5212,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "Information about the compiled prompt.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Information about the compiled prompt.</p>
 ",
             "key": "prompt",
@@ -5235,7 +5235,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The fully compiled prompt in normalized ChatML syntax after all variable substitutions and templating functions are applied.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The fully compiled prompt in normalized ChatML syntax after all variable substitutions and templating functions are applied.</p>
 ",
             "key": "text",
@@ -5248,7 +5248,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "The approximate number of tokens used by the compiled prompt.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The approximate number of tokens used by the compiled prompt.</p>
 ",
             "key": "num_tokens",
@@ -5273,7 +5273,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The generation parameters that are passed to the LLM provider at runtime.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The generation parameters that are passed to the LLM provider at runtime.</p>
 ",
             "key": "parameters",
@@ -5284,7 +5284,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "Names of the input variables specified in the prompt template.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Names of the input variables specified in the prompt template.</p>
 ",
             "key": "input_variables",
@@ -5298,7 +5298,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "The template used to generate prompts for this model version.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The template used to generate prompts for this model version.</p>
 ",
             "key": "prompt_template",
@@ -5486,7 +5486,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "Vellum-generated ID that uniquely identifies this model version.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Vellum-generated ID that uniquely identifies this model version.</p>
 ",
             "key": "id",
@@ -5499,7 +5499,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "Timestamp of when this model version was created.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Timestamp of when this model version was created.</p>
 ",
             "key": "created",
@@ -5584,7 +5584,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "Configuration used to build this model version.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Configuration used to build this model version.</p>
 ",
             "key": "build_config",
@@ -5595,7 +5595,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "Configuration used to execute this model version.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Configuration used to execute this model version.</p>
 ",
             "key": "exec_config",
@@ -5675,7 +5675,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The ID of the sandbox snapshot.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The ID of the sandbox snapshot.</p>
 ",
             "key": "id",
@@ -5688,7 +5688,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "The index of the prompt in the sandbox snapshot.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The index of the prompt in the sandbox snapshot.</p>
 ",
             "key": "prompt_index",
@@ -5704,7 +5704,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "The id of the prompt in the sandbox snapshot.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The id of the prompt in the sandbox snapshot.</p>
 ",
             "key": "prompt_id",
@@ -6433,7 +6433,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The name of the input variable.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The name of the input variable.</p>
 ",
             "key": "key",
@@ -6551,7 +6551,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "Details about why the request failed.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Details about why the request failed.</p>
 ",
             "key": "detail",
@@ -6708,7 +6708,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The ID of the generated prompt.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The ID of the generated prompt.</p>
 ",
             "key": "id",
@@ -6721,7 +6721,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "A human-friendly label for the generated prompt.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>A human-friendly label for the generated prompt.</p>
 ",
             "key": "label",
@@ -6771,7 +6771,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "Names of the input variables specified in the prompt template.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Names of the input variables specified in the prompt template.</p>
 ",
             "key": "input_variables",
@@ -6797,7 +6797,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "Information about the generated prompt",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Information about the generated prompt</p>
 ",
             "key": "prompt",
@@ -6808,7 +6808,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "Information about the generated sandbox snapshot",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Information about the generated sandbox snapshot</p>
 ",
             "key": "sandbox_snapshot",
@@ -6819,7 +6819,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "Information about the generated sandbox",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Information about the generated sandbox</p>
 ",
             "key": "sandbox",
@@ -6830,7 +6830,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "Information about the generated model version",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Information about the generated model version</p>
 ",
             "key": "model_version",
@@ -6841,7 +6841,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "Information about the generated deployment",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Information about the generated deployment</p>
 ",
             "key": "deployment",
@@ -6864,7 +6864,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The ID of the generated deployment.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The ID of the generated deployment.</p>
 ",
             "key": "id",
@@ -6877,7 +6877,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "A uniquely-identifying name for generated deployment.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>A uniquely-identifying name for generated deployment.</p>
 ",
             "key": "name",
@@ -6890,7 +6890,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "A human-friendly label for the generated deployment.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>A human-friendly label for the generated deployment.</p>
 ",
             "key": "label",
@@ -6915,7 +6915,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The ID of the generated model version.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The ID of the generated model version.</p>
 ",
             "key": "id",
@@ -6928,7 +6928,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "A human-friendly label for the generated model version.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>A human-friendly label for the generated model version.</p>
 ",
             "key": "label",
@@ -6953,7 +6953,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The ID of the generated sandbox.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The ID of the generated sandbox.</p>
 ",
             "key": "id",
@@ -6966,7 +6966,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "A human-friendly label for the generated sandbox.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>A human-friendly label for the generated sandbox.</p>
 ",
             "key": "label",
@@ -6991,7 +6991,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The ID of the generated sandbox snapshot.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The ID of the generated sandbox snapshot.</p>
 ",
             "key": "id",
@@ -7081,7 +7081,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "The inputs for the scenario",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The inputs for the scenario</p>
 ",
             "key": "inputs",
@@ -7095,7 +7095,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "The id of the scenario",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The id of the scenario</p>
 ",
             "key": "id",
@@ -7295,7 +7295,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "Details about why the request failed.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Details about why the request failed.</p>
 ",
             "key": "detail",
@@ -7320,7 +7320,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The document external IDs to filter by",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The document external IDs to filter by</p>
 ",
             "key": "external_ids",
@@ -7351,7 +7351,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The maximum number of results to return.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The maximum number of results to return.</p>
 ",
             "key": "limit",
@@ -7367,7 +7367,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "The weights to use for the search. Must add up to 1.0.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The weights to use for the search. Must add up to 1.0.</p>
 ",
             "key": "weights",
@@ -7381,7 +7381,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "The configuration for merging results.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The configuration for merging results.</p>
 ",
             "key": "result_merging",
@@ -7395,7 +7395,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "The filters to apply to the search.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The filters to apply to the search.</p>
 ",
             "key": "filters",
@@ -7421,7 +7421,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The results of the search. Each result represents a chunk that matches the search query.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The results of the search. Each result represents a chunk that matches the search query.</p>
 ",
             "key": "results",
@@ -7447,7 +7447,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The document that contains the chunk that matched the search query.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The document that contains the chunk that matched the search query.</p>
 ",
             "key": "document",
@@ -7458,7 +7458,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "The text of the chunk that matched the search query.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The text of the chunk that matched the search query.</p>
 ",
             "key": "text",
@@ -7486,7 +7486,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "A score representing how well the chunk matches the search query.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>A score representing how well the chunk matches the search query.</p>
 ",
             "key": "score",
@@ -7511,7 +7511,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "Whether to enable merging results",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Whether to enable merging results</p>
 ",
             "key": "enabled",
@@ -7536,7 +7536,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The relative weight to give to semantic similarity",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The relative weight to give to semantic similarity</p>
 ",
             "key": "semantic_similarity",
@@ -7549,7 +7549,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "The relative weight to give to keyword matches",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The relative weight to give to keyword matches</p>
 ",
             "key": "keywords",
@@ -7574,7 +7574,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "Vellum-generated ID that uniquely identifies this document.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Vellum-generated ID that uniquely identifies this document.</p>
 ",
             "key": "id",
@@ -7587,7 +7587,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "The external ID that was originally provided when uploading the document.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The external ID that was originally provided when uploading the document.</p>
 ",
             "key": "external_id",
@@ -7603,7 +7603,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "A timestamp representing when this document was most recently uploaded.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>A timestamp representing when this document was most recently uploaded.</p>
 ",
             "key": "last_uploaded_at",
@@ -7692,7 +7692,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "A list of keywords associated with this document. Originally provided when uploading the document.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>A list of keywords associated with this document. Originally provided when uploading the document.</p>
 ",
             "key": "keywords",
@@ -7752,7 +7752,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The Vellum-generated ID of a previously generated completion. Must provide either this or external_id.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The Vellum-generated ID of a previously generated completion. Must provide either this or external_id.</p>
 ",
             "key": "id",
@@ -7768,7 +7768,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "The external ID that was originally provided when generating the completion that you'd now like to submit actuals for. Must provide either this or id.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The external ID that was originally provided when generating the completion that you&#39;d now like to submit actuals for. Must provide either this or id.</p>
 ",
             "key": "external_id",
@@ -7800,7 +7800,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "A number between 0 and 1 representing the quality of the completion. 0 is the worst, 1 is the best.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>A number between 0 and 1 representing the quality of the completion. 0 is the worst, 1 is the best.</p>
 ",
             "key": "quality",
@@ -7816,7 +7816,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "Optionally provide the timestamp representing when this feedback was collected. Used for reporting purposes.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Optionally provide the timestamp representing when this feedback was collected. Used for reporting purposes.</p>
 ",
             "key": "timestamp",
@@ -7868,7 +7868,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended.</p>
 ",
             "key": "test_case_id",
@@ -7884,7 +7884,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "A human-friendly label for the test case.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>A human-friendly label for the test case.</p>
 ",
             "key": "label",
@@ -7900,7 +7900,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "Key/value pairs for each input variable that the Test Suite expects.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Key/value pairs for each input variable that the Test Suite expects.</p>
 ",
             "key": "input_values",
@@ -7919,7 +7919,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           },
           Object {
             "description": "Parameters to use when evaluating the test case, specific to the test suite's evaluation metric.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>Parameters to use when evaluating the test case, specific to the test suite&#39;s evaluation metric.</p>
 ",
             "key": "evaluation_params",
@@ -7966,7 +7966,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
         "properties": Array [
           Object {
             "description": "The ID of the newly created document.",
-            "descriptionContainsMarkdown": true,
+            "descriptionContainsMarkdown": false,
             "htmlDescription": "<p>The ID of the newly created document.</p>
 ",
             "key": "document_id",
