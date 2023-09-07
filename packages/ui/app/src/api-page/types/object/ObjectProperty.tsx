@@ -73,7 +73,6 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchor, propert
             return {
                 description: property.description,
                 isMarkdown: Boolean(property.descriptionContainsMarkdown),
-                field: property.key,
             };
         }
         if (property.valueType.type === "id") {
@@ -84,11 +83,10 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchor, propert
             return {
                 description: typeDef.description,
                 isMarkdown: Boolean(typeDef.descriptionContainsMarkdown),
-                field: typeDef.name,
             };
         }
         return undefined;
-    }, [property.description, property.descriptionContainsMarkdown, property.valueType, resolveTypeById, property.key]);
+    }, [property.description, property.descriptionContainsMarkdown, property.valueType, resolveTypeById]);
 
     return (
         <div
