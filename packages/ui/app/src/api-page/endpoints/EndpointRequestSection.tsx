@@ -1,7 +1,7 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
-import { Markdown } from "../markdown/Markdown";
 import { TypeDefinition } from "../types/type-definition/TypeDefinition";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
@@ -21,7 +21,11 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
 }) => {
     return (
         <div className="flex flex-col">
-            <Markdown className="mt-3">{httpRequest.description}</Markdown>
+            <ApiPageDescription
+                className="mt-3"
+                description={httpRequest.description}
+                isMarkdown={httpRequest.descriptionContainsMarkdown ?? false}
+            />
             <div className="t-muted border-border-default-light dark:border-border-default-dark border-b pb-5 text-sm leading-6">
                 {"This endpoint expects "}
                 {visitDiscriminatedUnion(httpRequest.type, "type")._visit<JSX.Element | string>({

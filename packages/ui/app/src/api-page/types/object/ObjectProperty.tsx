@@ -4,8 +4,8 @@ import { useCallback, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
+import { ApiPageDescription } from "../../ApiPageDescription";
 import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
-import { Markdown } from "../../markdown/Markdown";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
@@ -13,6 +13,11 @@ import {
 } from "../context/TypeDefinitionContext";
 import { InternalTypeReferenceDefinitions } from "../type-reference/InternalTypeReferenceDefinitions";
 import { TypeShorthand } from "../type-shorthand/TypeShorthand";
+
+interface DescriptionInfo {
+    description: string;
+    isMarkdown: boolean;
+}
 
 export declare namespace ObjectProperty {
     export interface Props {
@@ -63,15 +68,25 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchor, propert
         };
     }, [contextValue, jsonPropertyPath]);
 
-    const description = useMemo(() => {
+    const descriptionInfo = useMemo<DescriptionInfo | undefined>(() => {
         if (property.description != null) {
-            return property.description;
+            return {
+                description: property.description,
+                isMarkdown: Boolean(property.descriptionContainsMarkdown),
+            };
         }
         if (property.valueType.type === "id") {
-            return resolveTypeById(property.valueType.value).description;
+            const typeDef = resolveTypeById(property.valueType.value);
+            if (typeDef.description == null) {
+                return undefined;
+            }
+            return {
+                description: typeDef.description,
+                isMarkdown: Boolean(typeDef.descriptionContainsMarkdown),
+            };
         }
         return undefined;
-    }, [property.description, property.valueType, resolveTypeById]);
+    }, [property.description, property.descriptionContainsMarkdown, property.valueType, resolveTypeById]);
 
     return (
         <div
@@ -92,7 +107,11 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchor, propert
                 </div>
             </div>
             <div className="flex flex-col">
-                <Markdown className="mt-3">{description}</Markdown>
+                <ApiPageDescription
+                    className="mt-3"
+                    isMarkdown={descriptionInfo?.isMarkdown ?? false}
+                    description={descriptionInfo?.description}
+                />
                 <TypeDefinitionContext.Provider value={newContextValue}>
                     <InternalTypeReferenceDefinitions type={property.valueType} isCollapsible />
                 </TypeDefinitionContext.Provider>

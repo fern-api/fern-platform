@@ -4,8 +4,8 @@ import { snakeCase } from "lodash-es";
 import React, { useCallback } from "react";
 import { isSubpackage } from "../../util/package";
 import { getSubpackageTitle } from "../../util/subpackage";
+import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
-import { Markdown } from "../markdown/Markdown";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { useWebhookContext } from "./webhook-context/useWebhookContext";
 import { WebhookExample } from "./webhook-examples/WebhookExample";
@@ -81,8 +81,10 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                             {webhook.name}
                         </div>
                     </div>
-                    {webhook.description != null && <Markdown>{webhook.description}</Markdown>}
-
+                    <ApiPageDescription
+                        description={webhook.description}
+                        isMarkdown={webhook.descriptionContainsMarkdown ?? false}
+                    />
                     {webhook.headers.length > 0 && (
                         <div className="mt-8 flex">
                             <div className="flex flex-1 flex-col gap-12">
