@@ -22,6 +22,7 @@ export const PathParametersSection: React.FC<PathParametersSection.Props> = ({
                 name: pathParameter.key,
                 type: pathParameter.type,
                 description: pathParameter.description ?? undefined,
+                descriptionContainsMarkdown: pathParameter.descriptionContainsMarkdown ?? false,
                 anchor: getParameterAnchor?.(pathParameter),
             })
         );
