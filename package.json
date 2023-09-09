@@ -40,7 +40,7 @@
     "@blueprintjs/stylelint-plugin": "^2.0.8",
     "@types/is-ci": "^3.0.0",
     "@types/jest": "^29.0.3",
-    "@types/lodash-es": "^4.17.6",
+    "@types/lodash-es": "4.17.9",
     "@types/node": "^18.7.18",
     "@typescript-eslint/eslint-plugin": "6.4.1",
     "@typescript-eslint/parser": "6.4.1",
