@@ -13,6 +13,7 @@ export class UrlSlugTree {
 
     constructor(private readonly config: UrlSlugTreeConfig) {
         this.root = this.constructSlugToNodeRecord({
+            // @ts-expect-error
             items: config.navigation.items,
             parentSlug: "",
         });

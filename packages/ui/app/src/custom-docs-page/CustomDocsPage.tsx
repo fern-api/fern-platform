@@ -1,10 +1,9 @@
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { type ResolvedUrlPath } from "@fern-ui/app-utils";
+import { isUnversionedUntabbedNavigationConfig, type ResolvedUrlPath } from "@fern-ui/app-utils";
 import { useCallback, useMemo } from "react";
 import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { MdxContent } from "../mdx/MdxContent";
-import { isUnversionedUntabbedNavigationConfig } from "../util/docs";
 import { TableOfContents } from "./TableOfContents";
 
 export declare namespace CustomDocsPage {
