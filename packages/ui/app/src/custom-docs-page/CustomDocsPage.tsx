@@ -1,8 +1,10 @@
+import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { type ResolvedUrlPath } from "@fern-ui/app-utils";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { MdxContent } from "../mdx/MdxContent";
+import { isUnversionedUntabbedNavigationConfig } from "../util/docs";
 import { TableOfContents } from "./TableOfContents";
 
 export declare namespace CustomDocsPage {
@@ -16,18 +18,37 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
 
     const page = useMemo(() => resolvePage(path.page.id), [path.page.id, resolvePage]);
 
+    const { activeNavigationConfig } = docsInfo;
+
+    const findTitle = useCallback(
+        (navigationItems: FernRegistryDocsRead.NavigationItem[]) => {
+            for (const navigationItem of navigationItems) {
+                if (navigationItem.type !== "section") {
+                    continue;
+                }
+                const [sectionSlugInferredFromPath] = path.slug.split("/");
+                if (sectionSlugInferredFromPath != null && navigationItem.urlSlug === sectionSlugInferredFromPath) {
+                    return navigationItem.title;
+                }
+            }
+            return undefined;
+        },
+        [path.slug]
+    );
+
     const sectionTitle = useMemo(() => {
-        for (const navigationItem of docsInfo.activeNavigationConfig.items) {
-            if (navigationItem.type !== "section") {
-                continue;
+        if (isUnversionedUntabbedNavigationConfig(activeNavigationConfig)) {
+            return findTitle(activeNavigationConfig.items);
+        } else {
+            for (const tab of activeNavigationConfig.tabs) {
+                const title = findTitle(tab.items);
+                if (title != null) {
+                    return title;
+                }
             }
-            const [sectionSlugInferredFromPath] = path.slug.split("/");
-            if (sectionSlugInferredFromPath != null && navigationItem.urlSlug === sectionSlugInferredFromPath) {
-                return navigationItem.title;
-            }
+            return undefined;
         }
-        return undefined;
-    }, [docsInfo.activeNavigationConfig.items, path.slug]);
+    }, [activeNavigationConfig, findTitle]);
 
     const content = useMemo(() => {
         return <MdxContent mdx={path.serializedMdxContent} />;

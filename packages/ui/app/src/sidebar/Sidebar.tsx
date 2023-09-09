@@ -1,8 +1,9 @@
 import classNames from "classnames";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useSearchContext } from "../search-context/useSearchContext";
 import { useSearchService } from "../services/useSearchService";
+import { isUnversionedUntabbedNavigationConfig } from "../util/docs";
 import { BuiltWithFern } from "./BuiltWithFern";
 import { SidebarContext, SidebarContextValue } from "./context/SidebarContext";
 import styles from "./Sidebar.module.scss";
@@ -20,8 +21,11 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
     const { docsInfo } = useDocsContext();
     const { openSearchDialog } = useSearchContext();
     const searchService = useSearchService();
+    const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 
     const contextValue = useCallback((): SidebarContextValue => ({ expandAllSections }), [expandAllSections]);
+
+    const { activeNavigationConfig } = docsInfo;
 
     return (
         <SidebarContext.Provider value={contextValue}>
@@ -38,7 +42,27 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                         styles.scrollingContainer
                     )}
                 >
-                    <SidebarItems navigationItems={docsInfo.activeNavigationConfig.items} slug="" />
+                    {(() => {
+                        if (isUnversionedUntabbedNavigationConfig(activeNavigationConfig)) {
+                            return <SidebarItems navigationItems={activeNavigationConfig.items} slug="" />;
+                        }
+                        const selectedTab = activeNavigationConfig.tabs[selectedTabIndex];
+                        if (selectedTab == null) {
+                            return null;
+                        }
+                        return (
+                            <>
+                                <div className="border-border-default-light dark:border-border-default-dark border-b">
+                                    {activeNavigationConfig.tabs.map((tab, idx) => (
+                                        <button key={idx} onClick={() => setSelectedTabIndex(idx)}>
+                                            {tab.title}
+                                        </button>
+                                    ))}
+                                </div>
+                                <SidebarItems navigationItems={selectedTab.items} slug="" />;
+                            </>
+                        );
+                    })()}
                     <BuiltWithFern />
                 </div>
             </div>
