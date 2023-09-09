@@ -25,5 +25,13 @@ module.exports = {
                 allowDeclarations: true,
             },
         ],
+        "@typescript-eslint/no-unused-vars": [
+            1,
+            {
+                argsIgnorePattern: "^_",
+                varsIgnorePattern: "^_",
+                caughtErrorsIgnorePattern: "^_",
+            },
+        ],
     },
 };

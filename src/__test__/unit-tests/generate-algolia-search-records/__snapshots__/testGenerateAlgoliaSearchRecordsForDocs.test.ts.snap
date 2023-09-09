@@ -1,0 +1,244 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generateAlgoliaSearchRecordsForDocs {"name":"primer"} 1`] = `
+Array [
+  Object {
+    "path": "v2.2/primer-api/client-session-api/retrieve-a-client-session",
+    "subtitle": "This API call retrieves all the details associated with the client session corresponding to the client token that is provided in
+the request. The fields with empty values are excluded from the response.",
+    "title": "Retrieve a client session",
+    "type": "endpoint",
+  },
+  Object {
+    "path": "v2.2/primer-api/client-session-api/create-a-client-session",
+    "subtitle": "Creating a client session generates a client token: a temporary key used to initialize Universal Checkout
+[https://primer.io/docs/accept-payments/setup-universal-checkout/installation/web] and authenticate it against your account.
+
+Universal Checkout automatically retrieves all the settings from the client session and the Dashboard to configure the payment
+methods and the checkout experience.
+
+Note: When creating a Client Session, please make sure to provide currencyCode, orderId, and at least one of amount or lineItems.
+If any of these are not yet available, you can provide them w hen making the payment request.
+
+POST /client-session does not have required fields as all fields are not always known when a client session is created. Use PATCH
+/client-session to update the parameters throughout the checkout session.
+
+Client tokens expire after 24 hours.",
+    "title": "Create a client session",
+    "type": "endpoint",
+  },
+  Object {
+    "path": "v2.2/primer-api/client-session-api/update-client-session",
+    "subtitle": "You can update a clients session created earlier with the PATCH /client-session API call.
+
+The only required field for the request is clientToken. Other supported request fields are same as for the POST /client-session
+API call.
+
+You need to specify only the fields you wish to update. However, if the items that are to be updated are of type array, then you
+need to provide the complete array along with modified items.
+
+If you wish to update nested fields on the client session, such as the customer emailAddress field, you can pass the customer
+object with only one field, emailAddress, to update.
+
+If you simply wish to clear the value of the field, pass null as your input.
+
+You can update paymentMethod.vaultOnSuccess field but updating of the paymentMethod.options field through PATCH /client-session is
+not supported.
+
+The response will contain all the fields of the client session including the ones that were changed.",
+    "title": "Update client session",
+    "type": "endpoint",
+  },
+  Object {
+    "path": "v2.2/primer-api/payments-api/search-list-payments",
+    "subtitle": "Retrieve a list of your payments.
+
+Results are paginated, they will only return up to 100 payments maximum. To access the next page of result, set the cursor query
+parameter to the value of nextCursor in your current result payload. Use prevCursor to go back to the previous page.
+
+Note: this endpoint returns a list of summarized payments. Not all payments attributes are present. You can use the query
+parameters to filter payments. You can separate multiple query parameters with the & symbol. Query parameters with types of the
+form \\"Array of strings\\" (such as the status parameter) can be specified as a comma-separated list.
+
+For example, if you wanted to get both FAILED and CANCELLED payments, for customer john-123, you would use:
+
+curl --location --request GET 'https://api.primer.io/payments?status=FAILED,CANCELLED&customer_id=john-123' \\\\
+--header 'X-Api-Key: <YOUR_API_KEY>'
+
+
+You can alternatively specify a list by repeating the parameter multiple times.
+
+Note: payments will be available within a minute from being created.",
+    "title": "Search & list payments",
+    "type": "endpoint",
+  },
+  Object {
+    "path": "v2.2/primer-api/payments-api/create-a-payment",
+    "subtitle": "Create and authorize a payment for a given customer order. You should provide a payment method token here to avoid PCI
+implications.
+
+If only a payment method token is passed, the values passed with the Client Session is used to determine the amount, currency etc.
+Note: amount, currencyCode and orderId are required during payment creation. Make sure to pass these fields when creating a client
+session, or if not yet available, when creating a payment.
+
+All fields provided on this request will take preference over any field on the order associated with the client session. E.g. if
+you pass amount on this request, it will override the amount on the order associated with the Client Session. Parameters that are
+not on this request will be fetched from previously created Client Session and merged. E.g. if you specify customer.billingAddress
+in Client Session and then pass customer.emailAddress data with this request, it will automatically merge the customer fields and
+use both billingAddress and emailAddress for later calculations.",
+    "title": "Create a payment",
+    "type": "endpoint",
+  },
+  Object {
+    "path": "v2.2/primer-api/payments-api/authorize-a-payment",
+    "subtitle": "Manually authorize a payment using a provided processor. This is useful if you want to authorize a payment without a workflow
+action. The processor merchant ID must be provided which can be found on the Integrations page
+[https://dashboard.primer.io/integrations]. The processor name is optional but it must be provided if your account has multiple
+processors configured which share the same merchant IDs.",
+    "title": "Authorize a payment",
+    "type": "endpoint",
+  },
+  Object {
+    "path": "v2.2/primer-api/payments-api/capture-a-payment",
+    "subtitle": "If you have successfully authorized a payment, you can now fully capture, or partially capture funds from the authorized payment,
+depending on whether your selected payment processor supports it. The payment will be updated to SETTLED or SETTLING, depending on
+the payment method type.
+
+The payload sent in this capture request is completely optional. If you don't send a payload with the capture request, the full
+amount that was authorized will be sent for capture. Below are the available payload attributes, which give you more granular
+control when capturing funds, if you require it.",
+    "title": "Capture a payment",
+    "type": "endpoint",
+  },
+  Object {
+    "path": "v2.2/primer-api/payments-api/cancel-a-payment",
+    "subtitle": "Provided the payment has not reached SETTLED status, Primer will send a \\"void\\" request to the payment processor, thereby
+cancelling the payment and releasing the hold on customer funds. Upon success, the payment will transition to CANCELLED. The
+payload is optional.",
+    "title": "Cancel a payment",
+    "type": "endpoint",
+  },
+  Object {
+    "path": "v2.2/primer-api/payments-api/refund-a-payment",
+    "subtitle": "By default, this request will refund the full amount.
+
+Optionally, pass in a lesser amount for a partial refund.",
+    "title": "Refund a payment",
+    "type": "endpoint",
+  },
+  Object {
+    "path": "v2.2/primer-api/payments-api/resume-a-payment",
+    "subtitle": "Resume a payment's workflow execution from a paused state. This is usually required when a Workflow was paused in order to get
+further information from the customer, or when waiting for an asynchronous response from a third party connection.",
+    "title": "Resume a payment",
+    "type": "endpoint",
+  },
+  Object {
+    "path": "v2.2/primer-api/payments-api/adjust-authorized-amount",
+    "subtitle": "Adjust authorized amount. This is only possible if authorizationType was set to ESTIMATED when the payment was created, and the
+mechanism is supported by the payment method.",
+    "title": "Adjust authorized amount",
+    "type": "endpoint",
+  },
+  Object {
+    "path": "v2.2/primer-api/payments-api/get-a-payment",
+    "subtitle": "Retrieve a payment by its ID.",
+    "title": "Get a payment",
+    "type": "endpoint",
+  },
+  Object {
+    "path": "v2.2/primer-api/payment-methods-api/save-a-payment-method-token",
+    "subtitle": "Save a SINGLE_USE payment method token so it can be used again later. You can optionally choose to verify the payment method
+before vaulting. If verification fails, no payment method data will be vaulted. Verification can minimise fraud and boost
+subscription rates for recurring payments.
+
+If you try to vault an already vaulted token, you will get the existing vaulted token back.",
+    "title": "Save a payment method token",
+    "type": "endpoint",
+  },
+  Object {
+    "path": "v2.2/primer-api/payment-methods-api/list-saved-payment-methods",
+    "subtitle": "Retrieve a list of stored payment methods for a customer.",
+    "title": "List saved payment methods",
+    "type": "endpoint",
+  },
+  Object {
+    "path": "v2.2/primer-api/payment-methods-api/delete-a-saved-payment-method",
+    "subtitle": "Delete a saved payment method.",
+    "title": "Delete a saved payment method",
+    "type": "endpoint",
+  },
+  Object {
+    "path": "v2.2/primer-api/payment-methods-api/update-the-default-saved-payment-method",
+    "subtitle": "Update a saved payment method to be the default stored payment method for a customer.",
+    "title": "Update the default saved payment method",
+    "type": "endpoint",
+  },
+  Object {
+    "path": "v2.2/primer-api/observability-api/create-an-external-payment",
+    "subtitle": "The Observability API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
+
+Creating a payment with the Observability API sends external payments data to Primer to populate Observability Payment Insights
+dashboards [https://primer.io/observability]. Payments created through the Payments API [/reference/create_payment_payments_post]
+will be automatically populated and do not need to be sent in the Observability API.
+
+Create an API key with the observability-payments:write scope.
+
+Each record must be created with a unique paymentId. To update a payment record with new data use the PATCH endpoint.",
+    "title": "Create an external payment",
+    "type": "endpoint",
+  },
+  Object {
+    "path": "v2.2/primer-api/observability-api/update-an-external-payment",
+    "subtitle": "The Observability API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
+
+You can update payments created earlier through the Observability API with this endpoint. The only required field for the request
+is paymentId. Other supported request fields are the same as for the create an external payment [/reference/external_payment] API
+call.
+
+If you wish to update nested fields on the payment, you only need to pass the fields that you wish to update. For example to
+update the processor name, you would pass in processor.name only.
+
+The response will contain all the fields of the payment including the ones that were changed.",
+    "title": "Update an external payment",
+    "type": "endpoint",
+  },
+  Object {
+    "path": "v2.2/primer-api/loyalty-api/get-a-loyalty-customers-points-balance",
+    "subtitle": "The Loyalty API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
+
+Create an API key with the loyalty-transactions:read scopes.
+
+Get a loyalty customer by ID and connection ID. This includes the customer's points balance.
+
+The connectionId is the unique Primer identifier for your loyalty provider connection. Primer will provide this once the loyalty
+provider connection is created.
+
+The customerId refers to the customer identifier on the loyalty provider's side.",
+    "title": "Get a loyalty customer's points balance",
+    "type": "endpoint",
+  },
+  Object {
+    "path": "v2.2/primer-api/loyalty-api/list-the-transactions-for-a-customer",
+    "subtitle": "The Loyalty API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
+
+Create an API key with the loyalty-transactions:read scopes.
+
+Get all your loyalty transactions. You can filter by connectionId (recommended) and by customerId and orderId.
+
+Additionally provide a limit to restrict the number of transactions in the response, and an offset to determine where to start.",
+    "title": "List the transactions for a customer",
+    "type": "endpoint",
+  },
+  Object {
+    "path": "v2.2/primer-api/loyalty-api/create-a-loyalty-transaction",
+    "subtitle": "The Loyalty API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
+
+Create an API key with the loyalty-transactions:write scopes.
+
+Create a loyalty transaction. This is either a points redemption or a points refund.",
+    "title": "Create a loyalty transaction",
+    "type": "endpoint",
+  },
+]
+`;

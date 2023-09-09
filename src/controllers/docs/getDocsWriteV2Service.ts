@@ -7,7 +7,7 @@ import { DocsRegistrationIdNotFound } from "../../generated/api/resources/docs/r
 import { InvalidCustomDomainError } from "../../generated/api/resources/docs/resources/v2/resources/write/errors/InvalidCustomDomainError";
 import { InvalidDomainError } from "../../generated/api/resources/docs/resources/v2/resources/write/errors/InvalidDomainError";
 import { WriteService } from "../../generated/api/resources/docs/resources/v2/resources/write/service/WriteService";
-import { generateAlgoliaRecords } from "../../services/algolia/generateAlgoliaRecords";
+import { AlgoliaSearchRecordGenerator } from "../../services/algolia/AlgoliaSearchRecordGenerator";
 import { type S3FileInfo } from "../../services/s3";
 import { getParsedUrl } from "../../util";
 import { revalidateUrl } from "./revalidateUrl";
@@ -170,7 +170,11 @@ async function createNewAlgoliaIndex({
     app: FdrApplication;
 }) {
     app.logger.info(`[${docsRegistrationInfo.fernDomain}] Generating algolia search records for index ${indexName}`);
-    const records = await generateAlgoliaRecords(dbDocsDefinition, (id) => app.services.db.getApiDefinition(id));
+    const recordGenerator = new AlgoliaSearchRecordGenerator({
+        docsDefinition: dbDocsDefinition,
+        loadApiDefinition: (id) => app.services.db.getApiDefinition(id),
+    });
+    const records = await recordGenerator.generateAlgoliaSearchRecordsForDocs();
     app.logger.info(`[${docsRegistrationInfo.fernDomain}] Saving algolia search records for index ${indexName}`);
     await app.services.algolia.saveIndexRecords(indexName, records);
     app.logger.info(`[${docsRegistrationInfo.fernDomain}] Saving algolia search index settings ${indexName}`);

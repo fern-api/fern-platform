@@ -1,4 +1,4 @@
-import type { FernRegistry } from "../generated";
+import type { FernRegistry } from "../../../generated";
 
 export function getSubpackageParentSlugs(
     subpackage: FernRegistry.api.v1.db.DbApiDefinitionSubpackage,

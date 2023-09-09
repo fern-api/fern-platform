@@ -130,6 +130,22 @@ types:
       - VersionedNavigationConfig
 
   UnversionedNavigationConfig:
+    discriminated: false
+    union:
+      - UnversionedTabbedNavigationConfig
+      - UnversionedUntabbedNavigationConfig
+
+  UnversionedTabbedNavigationConfig:
+    properties:
+      tabs: list<NavigationTab>
+
+  NavigationTab:
+    properties:
+      title: string
+      icon: string
+      items: list<NavigationItem>
+
+  UnversionedUntabbedNavigationConfig:
     properties:
       items: list<NavigationItem>
 

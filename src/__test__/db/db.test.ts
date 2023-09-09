@@ -2,7 +2,6 @@ import { PrismaClient } from "@prisma/client";
 import express from "express";
 import http from "http";
 import { uniqueId } from "lodash";
-import { FdrApplication, type FdrConfig } from "../../app";
 import { getReadApiService } from "../../controllers/api/getApiReadService";
 import { getRegisterApiService } from "../../controllers/api/getRegisterApiService";
 import { getDocsReadService } from "../../controllers/docs/getDocsReadService";
@@ -10,44 +9,10 @@ import { getDocsReadV2Service } from "../../controllers/docs/getDocsReadV2Servic
 import { getDocsWriteService } from "../../controllers/docs/getDocsWriteService";
 import { getDocsWriteV2Service } from "../../controllers/docs/getDocsWriteV2Service";
 import { register } from "../../generated";
-import { type AlgoliaSearchRecord, type AlgoliaService } from "../../services/algolia";
-import { type AuthService } from "../../services/auth";
 import { FernRegistry, FernRegistryClient } from "../generated";
+import { createMockFdrApplication } from "../mock";
 
 const PORT = 9999;
-
-class MockAuthService implements AuthService {
-    async checkUserBelongsToOrg(): Promise<void> {
-        return;
-    }
-}
-
-class MockAlgoliaService implements AlgoliaService {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async deleteIndex(_indexName: string): Promise<void> {
-        return;
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async scheduleIndexDeletion(_indexName: string): Promise<void> {
-        return;
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async clearIndexRecords(_indexName: string): Promise<void> {
-        return;
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async saveIndexRecords(_indexName: string, _records: AlgoliaSearchRecord[]): Promise<void> {
-        return;
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async saveIndexSettings(_indexName: string): Promise<void> {
-        return;
-    }
-}
 
 const CLIENT = new FernRegistryClient({
     environment: `http://localhost:${PORT}/`,
@@ -61,21 +26,7 @@ const prisma = new PrismaClient({
 let server: http.Server | undefined;
 
 beforeAll(async () => {
-    const config: FdrConfig = {
-        awsAccessKey: "",
-        awsSecretKey: "",
-        s3BucketName: "fdr",
-        s3BucketRegion: "us-east-1",
-        venusUrl: "",
-        s3UrlOverride: "http://s3-mock:9090",
-        domainSuffix: ".docs.buildwithfern.com",
-        algoliaAppId: "",
-        algoliaAdminApiKey: "",
-    };
-    const serverApp = new FdrApplication(config, {
-        auth: new MockAuthService(),
-        algolia: new MockAlgoliaService(),
-    });
+    const serverApp = createMockFdrApplication();
     register(app, {
         docs: {
             v1: {

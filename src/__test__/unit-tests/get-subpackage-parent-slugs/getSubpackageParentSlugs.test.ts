@@ -1,6 +1,6 @@
 import { resolve } from "path";
 import { transformApiDefinitionForDb } from "../../../controllers/api/registerToDbConversion/transformApiDefinitionToDb";
-import { getSubpackageParentSlugs } from "../../../util/subpackage";
+import { getSubpackageParentSlugs } from "../../../util/fern/db/subpackage";
 import type * as FernRegistryApiWrite from "../../generated/api/resources/api/resources/v1/resources/register";
 
 const FIXTURES_DIR = resolve(__dirname, "fixtures");
