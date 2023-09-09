@@ -1,6 +1,7 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { assertNever, noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { isUnversionedUntabbedNavigationConfig } from "../fern";
 
 export interface UrlSlugTreeConfig {
     navigation: FernRegistryDocsRead.UnversionedNavigationConfig;
@@ -12,9 +13,11 @@ export class UrlSlugTree {
     private nodeToNeighbors: Record<UrlSlug, UrlSlugNeighbors> = {};
 
     constructor(private readonly config: UrlSlugTreeConfig) {
+        const items = isUnversionedUntabbedNavigationConfig(config.navigation)
+            ? config.navigation.items
+            : config.navigation.tabs.flatMap((tab) => tab.items); // TODO: Confirm that this is indeed what we want
         this.root = this.constructSlugToNodeRecord({
-            // @ts-expect-error
-            items: config.navigation.items,
+            items,
             parentSlug: "",
         });
 
