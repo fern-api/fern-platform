@@ -9,11 +9,6 @@ type ApiDefinitionLoader = (apiDefinitionId: string) => Promise<FernRegistry.api
 
 class NavigationContext {
     #slugs: string[];
-    #records: AlgoliaSearchRecord[];
-
-    public get records() {
-        return [...this.#records];
-    }
 
     /**
      * The path represented by context slugs.
@@ -22,25 +17,8 @@ class NavigationContext {
         return this.#slugs.join("/");
     }
 
-    public constructor(slugs: string[] = [], records: AlgoliaSearchRecord[] = []) {
+    public constructor(slugs: string[] = []) {
         this.#slugs = slugs;
-        this.#records = records;
-    }
-
-    public clone() {
-        return new NavigationContext([...this.#slugs], [...this.#records]);
-    }
-
-    public addSlug(slug: string) {
-        this.#slugs.push(slug);
-    }
-
-    public addRecord(record: AlgoliaSearchRecord) {
-        this.addRecords([record]);
-    }
-
-    public addRecords(records: AlgoliaSearchRecord[]) {
-        this.#records.push(...records);
     }
 
     /**
@@ -54,7 +32,7 @@ class NavigationContext {
      * @returns A new `NavigationContext` instance.
      */
     public withSlugs(slugs: string[]) {
-        return new NavigationContext([...this.#slugs, ...slugs], [...this.#records]);
+        return new NavigationContext([...this.#slugs, ...slugs]);
     }
 }
 
@@ -79,8 +57,10 @@ export class AlgoliaSearchRecordGenerator {
             if (firstVersion == null) {
                 return [];
             }
-            context.addSlug(firstVersion.version);
-            return this.generateAlgoliaSearchRecordsForUnversionedNavigationConfig(firstVersion.config, context);
+            return this.generateAlgoliaSearchRecordsForUnversionedNavigationConfig(
+                firstVersion.config,
+                context.withSlug(firstVersion.version)
+            );
         }
         return this.generateAlgoliaSearchRecordsForUnversionedNavigationConfig(navigationConfig, context);
     }
@@ -99,7 +79,7 @@ export class AlgoliaSearchRecordGenerator {
         context: NavigationContext
     ) {
         const records = await Promise.all(
-            config.items.map((item) => this.generateAlgoliaSearchRecordsForNavigationItem(item, context.clone()))
+            config.items.map((item) => this.generateAlgoliaSearchRecordsForNavigationItem(item, context))
         );
         return records.flat(1);
     }
@@ -114,7 +94,7 @@ export class AlgoliaSearchRecordGenerator {
                     tab.items.map((item) =>
                         this.generateAlgoliaSearchRecordsForNavigationItem(
                             item,
-                            context.clone() // TODO: Initialize with tab slug if needed
+                            context // TODO: Initialize with tab slug if needed
                         )
                     )
                 );
@@ -127,44 +107,41 @@ export class AlgoliaSearchRecordGenerator {
     private async generateAlgoliaSearchRecordsForNavigationItem(
         item: FernRegistry.docs.v1.read.NavigationItem,
         context: NavigationContext
-    ) {
+    ): Promise<AlgoliaSearchRecord[]> {
         if (item.type === "section") {
             const section = item;
-            await Promise.all(
-                section.items.map(async (item) => {
-                    return await this.generateAlgoliaSearchRecordsForNavigationItem(
-                        item,
-                        context.withSlug(section.urlSlug)
-                    );
-                })
+            const records = await Promise.all(
+                section.items.map((item) =>
+                    this.generateAlgoliaSearchRecordsForNavigationItem(item, context.withSlug(section.urlSlug))
+                )
             );
+            return records.flat(1);
         } else if (item.type === "api") {
             const api = item;
             const apiId = api.api;
             const apiDef = await this.config.loadApiDefinition(apiId);
-            if (apiDef) {
-                const apiRecords = this.generateAlgoliaSearchRecordsForApiDefinition(
-                    apiDef,
-                    context.withSlug(api.urlSlug)
-                );
-                context.addRecords(apiRecords);
+            if (apiDef == null) {
+                return [];
             }
+            return this.generateAlgoliaSearchRecordsForApiDefinition(apiDef, context.withSlug(api.urlSlug));
         } else {
             const page = item;
             const pageContent = this.docsDefinition.pages[page.id];
-            if (pageContent) {
-                const { path } = context.withSlug(page.urlSlug);
-                const processedContent = convertMarkdownToText(pageContent.markdown);
-                context.addRecord({
+            if (pageContent == null) {
+                return [];
+            }
+            const { path } = context.withSlug(page.urlSlug);
+            const processedContent = convertMarkdownToText(pageContent.markdown);
+            return [
+                {
                     objectID: uuid(),
                     type: "page",
                     path,
                     title: page.title,
                     subtitle: processedContent,
-                });
-            }
+                },
+            ];
         }
-        return context.records;
     }
 
     private generateAlgoliaSearchRecordsForApiDefinition(

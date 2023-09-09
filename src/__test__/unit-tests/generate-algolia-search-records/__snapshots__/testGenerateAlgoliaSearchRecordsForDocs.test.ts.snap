@@ -3,6 +3,526 @@
 exports[`generateAlgoliaSearchRecordsForDocs {"name":"primer"} 1`] = `
 Array [
   Object {
+    "path": "v2.2/introduction/getting-started",
+    "subtitle": "The Primer API is used to manage Client Sessions, Payments and saved payment methods. All other actions are either managed in the
+Universal Checkout implementation or in the Dashboard.
+
+Check out:
+
+ * Client Sessions [https://primer.io/docs/payments/universal-checkout/manage-client-sessions]
+ * Universal Checkout [https://primer.io/docs/accept-payments/setup-universal-checkout/installation/web]
+ * Managing Payments [https://primer.io/docs/accept-payments/manage-payments]
+
+Test the APIs yourself in our API Reference. Don't hesitate to reach out with any questions or feedback. You can email Primer
+directly at support@primer.io [support@primer.io], or contact your Primer account manager.
+
+
+API ENDPOINT DEPLOYMENTS
+
+ * Sandbox: https://api.sandbox.primer.io [https://api.sandbox.primer.io]
+ * Production: https://api.primer.io [https://api.primer.io]
+
+
+API VERSIONS
+
+Primer makes updates to the APIs on a regular basis, as we release new features. To allow you to update your integration as you
+are ready, we allow for a X-Api-Version header to be passed on all API requests.
+
+If you omit the version header, your request will default to the earliest supported version of the API.
+
+curl -X POST 'https://api.primer.io/<ENDPOINT>' \\\\
+  --header 'X-Api-Version: 2.2'
+
+
+
+AVAILABLE VERSIONS
+
+Read about the available versions of the APIs below on our Changelog [https://apiref.primer.io/changelog].",
+    "title": "Getting Started",
+    "type": "page",
+  },
+  Object {
+    "path": "v2.2/introduction/authentication",
+    "subtitle": "Primer uses API keys to authenticate requests. You can manage API keys in the Developers
+[https://sandbox-dashboard.primer.io/developers] area of the dashboard.
+
+As API keys carry many privileges such as authorizing payments, it is important to keep them private and secure. Do not hardcode
+or share API keys (particularly in your source version control system), and they should only be used in your backend.
+
+Authentication is handled via HTTP headers, specifically the X-Api-Key header.
+
+curl -X POST 'https://api.primer.io/<ENDPOINT>' \\\\
+  --header 'X-Api-Key: <YOUR_API_KEY>'
+
+
+
+MANAGING API KEYS
+
+Head up to the Developers area [https://sandbox-dashboard.primer.io/developers] on the dashboard to manage your API keys.
+
+You will be able to generate or revoke API keys and edit their respective scopes. Be aware that any changes to existing API keys
+will be reflected immediately and could cause unwanted side effects.
+
+
+AVAILABLE SCOPES
+
+Scope Description client_tokens:write Create client tokens for use with the client SDK. third_party:webhook_trigger Allows you to
+post to our webhooks endpoint. API keys with this scope can be used to enable communication between your processor and Primer
+about important payment lifecycle events. transactions:authorize Authorize a payment transactions:cancel Cancel a payment.
+transactions:capture Submit a payment for settlement. transactions:retrieve Retrieve one or more payments. transactions:refund
+Refund a payment. payment_instrument:read Read stored payment methods. payment_instrument:write Write stored payment methods.",
+    "title": "Authentication",
+    "type": "page",
+  },
+  Object {
+    "path": "v2.2/introduction/api-responses",
+    "subtitle": "STATUS CODES
+
+The following table summarizes the HTTP response codes you may receive from the Primer REST API.
+
+Status Code Description 200 Success 400 Bad Request 401 Unauthorized 403 Forbidden 404 Entity Not Found 409 Entity Already Exists
+422 Input Validation Failed
+
+
+ERROR RESPONSES
+
+Primer uses conventional HTTP response codes to indicate the success or failure of an API request. HTTP codes in the 2XX range
+indicate a successful request, whereas codes in the 4XX range indicate a failed request usually due to invalid inputs or
+operations.
+
+The format of the payload for all errors is common. When an unsuccessful request occurs, you will receive a payload in the
+following format:
+
+{
+  \\"error\\": {
+    \\"errorId\\": \\"AnErrorId\\",
+    \\"description\\": \\"A human description of the error.\\",
+    \\"diagnosticsId\\": \\"1234567890\\",
+    \\"validationErrors\\": []
+  }
+}
+
+
+All error payloads will be comprised of a unique errorId which you can use to identify the error, a human description description,
+and a diagnosticsId that you can quote when contacting the support team (support@primer.io [support@primer.io]). In case of a
+badly formed request, Primer will also return additional validationErrors.
+
+
+PAYMENT STATUS
+
+As the payments are created, processed, and finalised, they go through a number of states that you will get as an API response,
+through webhook notifications, and in the Dashboard. These states are used across all processors, as processor specific states are
+mapped to these. An additional message, in the field processorMessage, from the processor may also be included that details the
+reason for the state, primarily on failure states.
+
+Status Description PENDING The payment has been created by Primer but not yet authorized. FAILED The processor failed to process
+this payment. AUTHORIZED The payment is authorized and awaiting capture. SETTLING The payment has been submitted for settlement
+and funds will be settled later. PARTIALLY_SETTLED The payment has been partially settled. SETTLED Funds have been settled into
+your account. DECLINED This payment was declined by the processor, either at a gateway or acquirer level. See the reason object in
+your response payload for more details. CANCELLED The payment was cancelled prior to it being settled.
+
+Don't hesitate to reach out with any questions or feedback. You can email Primer directly at support@primer.io
+[support@primer.io], or contact your Primer account manager.",
+    "title": "API Responses",
+    "type": "page",
+  },
+  Object {
+    "path": "v2.2/introduction/idempotency-key",
+    "subtitle": "Primer supports a request idempotency mechanism for our Payments API. This optional feature enables you to safely retry a request
+without risking the user being charged or refunded multiple times.
+
+This is particularly useful when an API call fails due to the request being invalid, due to a network issue, or if Primer is
+momentarily unavailable.
+
+If this is the case, make another request with the same idempotency key:
+
+ * If a request with the same idempotency key has already been successfully processed by Primer, the new request will be ignored.
+   A 400 error will be returned with an errorId set to TransactionRequestIdempotencyKeyAlreadyExists.
+ * Otherwise, Primer will attempt to process the new request.
+
+To make an idempotent request, generate an idempotency key and pass it to the header X-Idempotency-Key.
+
+curl -X POST 'https://api.primer.io/<ENDPOINT>' \\\\
+  --header 'X-Idempotency-Key: <idempotency-key>'
+
+
+The way you generate the key is totally up to you, as long as it is unique per request attempt.
+
+Keep in mind that a payment request resulting in a declined or failed payment is still considered Successfully processed for the
+API. Therefore, if you want to allow the user to retry an unsuccessful payment, make sure to not use the same idempotency key.
+
+As a such, don't use anything too restrictive like an orderId for the idempotency key as multiple payment attempts and refunds can
+be made for a single order.",
+    "title": "Idempotency Key",
+    "type": "page",
+  },
+  Object {
+    "path": "v2.2/introduction/loyalty-transactions",
+    "subtitle": "Primer's Loyalty API provides an interface to interact with 3rd party loyalty point and service providers.
+
+All of the endpoints below reference a connectionId. This is the unique Primer identifier for your loyalty provider connection.
+Primer will provide this once the loyalty provider connection is created.
+
+To identify the customer in the context of the loyalty provider, a customerId is also necessary.
+
+
+GET THE CUSTOMER BALANCE
+
+Call the Loyalty Customers [https://apiref.primer.io/reference/get_loyalty_customer] endpoint, which includes the customer's
+balance. In future this object could contain further details.
+
+
+REDEEM POINTS
+
+Call the Loyalty Transactions [https://apiref.primer.io/reference/post_loyalty_transaction] endpoint to create a REDEMPTION
+transaction.
+
+Provide an orderId to link multiple transactions together.
+
+
+REFUND POINTS
+
+Call the Loyalty Transactions [https://apiref.primer.io/reference/post_loyalty_transaction] endpoint to create a REFUND
+transaction. This transaction is completely independent from a redeem transaction.
+
+Provide an orderId to link multiple transactions together.
+
+
+GET A LIST OF TRANSACTIONS
+
+Call the Loyalty Transactions [https://apiref.primer.io/reference/get_loyalty_transaction] endpoint to retrieve a list of all your
+transactions. In most cases it makes sense to filter by connectionId. You can also filter by customerId or orderId.",
+    "title": "Loyalty Transactions",
+    "type": "page",
+  },
+  Object {
+    "path": "v2.2/changelog/api-migration-guide",
+    "subtitle": "We are continually introducing new functionality to the Primer Ecosystem, some of which requires additional inputs on our APIs. To
+make sure these changes don’t break any existing integrations, we roll them out safely using API Versions.
+
+
+MIGRATING TO V2.1
+
+The latest version of our APIs focus on capturing more details to enable a richer checkout experience. Some of these details are
+required to allow configuration of the checkout via the Primer Dashboard. Also some of these details are needed to work with
+advanced Payment Processors or Payment Methods.
+
+The examples below only illustrate how to transition between the two versions of the endpoints, however you should read the latest
+API Reference linked above for details on the usage of the endpoints. Also read how to introduce API Versioning into your requests
+in the latest API Reference linked above.
+
+
+CLIENT SESSION
+
+This is an example of a request in v1: POST /auth/client-token.
+
+{
+  \\"customerCountryCode\\": \\"GB\\",
+  \\"customerId\\": \\"customer-123\\",
+  \\"checkout\\": {
+    \\"paymentFlow\\": \\"DEFAULT\\"
+  }
+}
+
+
+This is an example of a equivalent request in v2: POST /client-session with X-Api-Version=\\"2021-09-27\\".
+
+{
+  \\"customerId\\": \\"customer-123\\",
+  \\"customer\\": {
+    \\"emailAddress\\": \\"customer@primer.io\\",
+    \\"mobileNumber\\": \\"+44841234567\\",
+    \\"firstName\\": \\"John\\",
+    \\"lastName\\": \\"Doe\\",
+    \\"billingAddress\\": {
+      \\"addressLine1\\": \\"42A\\",
+      \\"postalCode\\": \\"abcde\\",
+      \\"city\\": \\"Cambridge\\",
+      \\"state\\": \\"Cambridgeshire\\",
+      \\"countryCode\\": \\"GB\\"
+    },
+    \\"shippingAddress\\": {
+      \\"addressLine1\\": \\"42A\\",
+      \\"postalCode\\": \\"abcde\\",
+      \\"city\\": \\"Cambridge\\",
+      \\"state\\": \\"Cambridgeshire\\",
+      \\"countryCode\\": \\"GB\\"
+    }
+  },
+  \\"order\\": {
+    \\"lineItems\\": [
+      {
+        \\"itemId\\": \\"item-1\\",
+        \\"description\\": \\"My item\\",
+        \\"amount\\": 1337,
+        \\"quantity\\": 1
+      }
+    ],
+    \\"countryCode\\": \\"GB\\"
+  },
+  \\"currencyCode\\": \\"GBP\\",
+  \\"orderId\\": \\"order-123\\",
+  \\"metadata\\": {
+    \\"productType\\": \\"Merchandise\\"
+  },
+  \\"paymentMethod\\": {
+    \\"vaultOnSuccess\\": true
+  }
+}
+
+
+
+V2.1
+
+This is an example of a equivalent request in v2.1: POST /client-session with X-Api-Version=\\"2.1\\".
+
+{
+  \\"customerId\\": \\"customer-123\\",
+  \\"customer\\": {
+    \\"emailAddress\\": \\"customer@primer.io\\",
+    \\"mobileNumber\\": \\"+44841234567\\",
+    \\"firstName\\": \\"John\\",
+    \\"lastName\\": \\"Doe\\",
+    \\"billingAddress\\": {
+      \\"addressLine1\\": \\"42A\\",
+      \\"postalCode\\": \\"abcde\\",
+      \\"city\\": \\"Cambridge\\",
+      \\"state\\": \\"Cambridgeshire\\",
+      \\"countryCode\\": \\"GB\\"
+    },
+    \\"shippingAddress\\": {
+      \\"addressLine1\\": \\"42A\\",
+      \\"postalCode\\": \\"abcde\\",
+      \\"city\\": \\"Cambridge\\",
+      \\"state\\": \\"Cambridgeshire\\",
+      \\"countryCode\\": \\"GB\\"
+    }
+  },
+  \\"lineItems\\": [
+    {
+      \\"itemId\\": \\"item-1\\",
+      \\"description\\": \\"My item\\",
+      \\"amount\\": 1337,
+      \\"quantity\\": 1
+    }
+  ],
+  \\"orderDetails\\": {
+    \\"countryCode\\": \\"GB\\"
+  },
+  \\"currencyCode\\": \\"GBP\\",
+  \\"orderId\\": \\"order-123\\",
+  \\"metadata\\": {
+    \\"productType\\": \\"Merchandise\\"
+  },
+  \\"paymentMethod\\": {
+    \\"vaultOnSuccess\\": true
+  }
+}
+
+
+
+SUMMARY OF THE V2.1 CHANGES
+
+ * order is now called orderDetails
+ * lineItems is now a top-level element
+ * amount has been removed. You should always specify lineItems and we would dynamically calculate the amount. See our API
+   Reference [https://apiref.primer.io/reference] for how we calculate the amount.
+
+
+CREATE A PAYMENT
+
+This is an example of an equivalent request: POST /payments with X-Api-Version=\\"2021-09-27\\".
+
+POST /payments
+
+{
+  \\"orderId\\": \\"order-123\\",
+  \\"currencyCode\\": \\"GBP\\",
+  \\"amount\\": 1337,
+  \\"paymentInstrument\\": {
+    \\"token\\": \\"{{payment_method_token}}\\" // As received from the SDK
+  },
+  \\"statementDescriptor\\": \\"Test payment\\",
+  \\"customer\\": {
+    \\"email\\": \\"customer@primer.io\\",
+    \\"billingAddress\\": {
+      \\"addressLine1\\": \\"42A\\",
+      \\"postalCode\\": \\"abcde\\",
+      \\"city\\": \\"Cambridge\\",
+      \\"state\\": \\"Cambridgeshire\\",
+      \\"countryCode\\": \\"GB\\"
+    }
+  }
+}
+
+
+This is an example of an equivalent request in v2: POST /payments with X-Api-Version=\\"2021-09-27\\".
+
+{
+  \\"orderId\\": \\"order-123\\",
+  \\"amount\\": 1000,
+  \\"currencyCode\\": \\"GBP\\",
+  \\"customer\\": {
+    \\"email\\": \\"customer@primer.io\\",
+    \\"billingAddress\\": {
+      \\"addressLine1\\": \\"42A\\",
+      \\"postalCode\\": \\"abcde\\",
+      \\"city\\": \\"Cambridge\\",
+      \\"state\\": \\"Cambridgeshire\\",
+      \\"countryCode\\": \\"GB\\"
+    }
+  },
+  \\"metadata\\": {
+    \\"productType\\": \\"Merchandise\\"
+  },
+  \\"paymentMethodToken\\": \\"{{payment_method_token}}\\", // As received from the SDK
+  \\"paymentMethod\\": {
+    \\"descriptor\\": \\"Test payment\\",
+    \\"paymentType\\": \\"FIRST_PAYMENT\\"
+  }
+}
+
+
+This is an example of an equivalent request in v2.1: POST /payments with X-Api-Version=\\"2.1\\"
+
+{
+  \\"paymentMethodToken\\": \\"{{payment_method_token}}\\" // As received from the SDK
+}
+
+
+OR
+
+{
+  \\"orderId\\": \\"order-123\\",
+  \\"amount\\": 1337,
+  \\"currencyCode\\": \\"GBP\\",
+  \\"customer\\": {
+    \\"email\\": \\"customer@primer.io\\",
+    \\"billingAddress\\": {
+      \\"addressLine1\\": \\"42A\\",
+      \\"postalCode\\": \\"abcde\\",
+      \\"city\\": \\"Cambridge\\",
+      \\"state\\": \\"Cambridgeshire\\",
+      \\"countryCode\\": \\"GB\\"
+    }
+  },
+  \\"lineItems\\": [
+    {
+      \\"itemId\\": \\"item-1\\",
+      \\"description\\": \\"My item\\",
+      \\"amount\\": 1337,
+      \\"quantity\\": 1
+    }
+  ],
+  \\"orderDetails\\": {
+    \\"countryCode\\": \\"GB\\"
+  },
+  \\"metadata\\": {
+    \\"productType\\": \\"Merchandise\\"
+  },
+  \\"paymentMethodToken\\": \\"{{payment_method_token}}\\", // As received from the SDK
+  \\"paymentMethod\\": {
+    \\"descriptor\\": \\"Test payment\\",
+    \\"paymentType\\": \\"FIRST_PAYMENT\\"
+  }
+}
+
+
+
+SUMMARY OF THE V2.1 CHANGES
+
+ * order is now called orderDetails
+ * lineItems is now a top-level element",
+    "title": "API Migration Guide",
+    "type": "page",
+  },
+  Object {
+    "path": "v2.2/changelog/api-v-2-2",
+    "subtitle": "This version includes improvements to the Client Session API, Payments API and the Payment Methods API. You must set the
+X-Api-Version header to 2.2 to use v2.2 of the API.
+
+
+CLIENT SESSION API
+
+ * Added order.lineItems.productData on the request and response
+
+
+PAYMENTS API
+
+ * Added order.lineItems.productData on the request and response",
+    "title": "API v2.2",
+    "type": "page",
+  },
+  Object {
+    "path": "v2.2/changelog/api-v-2-1",
+    "subtitle": "Version 2.1 includes improvements to the Client Session API, Payments API and the Payment Methods API.
+
+Starting API v2.1, the API Version X-Api-Version is a semantic version without a patch (e.g. 2.1) rather than a date 🎉 Set the
+X-Api-Version header to 2.1 to use v2.1 of the API.
+
+
+CLIENT SESSION API
+
+ * Added paymentMethod.paymentType and paymentMethod.descriptor on the request and response of the client session
+ * Added order.lineItems[].productType on the request and response of the client session
+ * Added GET /client-session to get the content of a client session
+ * Added PATCH /client-session to update the content of a client session
+ * Additional validation has been put in place to ensure that a currencyCode is always passed if any amount value is passed
+
+
+PAYMENTS API
+
+ * Added paymentMethod.isVaulted boolean field to indicate whether the paymentMethod.paymentMethodToken in the response is a
+   vaulted token (and can therefore be used for future payments) or not. This replaces vaultedPaymentMethodToken.
+ * Added order.lineItems[].productType on the request and response
+ * amount, currencyCode, customerId and orderId are now required fields when making a payment with a vaulted token (i.e. a
+   recurring payment).
+ * When paying with a vaulted token, additional validation has been put in place to ensure the customerId matches the customerId
+   associated with the vaulted token.
+
+
+PAYMENT METHODS API
+
+ * Added verify in POST /payment-instruments/{paymentMethodToken}/vault to set whether or not the payment method token should be
+   verified before vaulting
+ * Added isVerified to the payment method response",
+    "title": "API v2.1",
+    "type": "page",
+  },
+  Object {
+    "path": "v2.2/changelog/api-v-2",
+    "subtitle": "Version 2 includes improvements to the Client Session API and the Payments API.
+
+
+CLIENT SESSION API
+
+ * X-API-Version -> 2021-09-27
+ * Creating a payment using only a payment method token is now possible. The order, customer and metadata passed on the Client
+   Session request is then used for the payment.
+ * The create Client Session endpoint request was extended to include order, customer, etc.
+ * All references to paymentInstrument from the previous Payments API version have been refactored to paymentMethod to be more
+   consistent throughout
+ * The customer billingAddress and shippingAddress fields are now all optional
+
+
+PAYMENTS API
+
+ * X-API-Version -> 2021-09-27
+ * Creating a payment using only a payment method token is now possible. The order, customer and metadata passed on the Client
+   Session request is then used for the payment.
+ * The create payment endpoint request was extended to include order, customer, etc. It now more closely resembles the
+   /client-session endpoint
+ * The response of all the Payments API endpoints was refactored to match the create payment request structure
+ * All references to paymentInstrument from the previous Payments API version have been refactored to paymentMethod to be more
+   consistent throughout
+ * All the payments API endpoints (create, capture, cancel, refund, etc.) are now versioned
+ * paymentMethodData in PaymentMethod responses (for card payment method types) all now contain a first6digits field in addition
+   to the last4digits returned. This is an opt-in field, so it is null by default.
+ * The customer billingAddress and shippingAddress fields are now all optional",
+    "title": "API v2",
+    "type": "page",
+  },
+  Object {
     "path": "v2.2/primer-api/client-session-api/retrieve-a-client-session",
     "subtitle": "This API call retrieves all the details associated with the client session corresponding to the client token that is provided in
 the request. The fields with empty values are excluded from the response.",
