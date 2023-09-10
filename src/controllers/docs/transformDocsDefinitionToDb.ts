@@ -119,6 +119,7 @@ export function transformNavigationTabForReading(
     return {
         ...writeShape,
         items: writeShape.items.map(transformNavigationItemForReading),
+        urlSlug: kebabCase(writeShape.title),
     };
 }
 
@@ -132,6 +133,7 @@ export function transformNavigationItemForReading(
                 urlSlug: kebabCase(writeShape.title),
                 artifacts:
                     writeShape.artifacts != null ? transformArtifactsForReading(writeShape.artifacts) : undefined,
+                skipUrlSlug: writeShape.skipUrlSlug ?? false,
             };
         case "page":
             return {
@@ -147,6 +149,7 @@ export function transformNavigationItemForReading(
                 urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
                 collapsed: writeShape.collapsed ?? false,
                 items: writeShape.items.map((item) => transformNavigationItemForReading(item)),
+                skipUrlSlug: writeShape.skipUrlSlug ?? false,
             };
     }
 }

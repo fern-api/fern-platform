@@ -9,6 +9,7 @@ it("definition register", async () => {
                 title: "API Reference",
                 api: "123405930",
                 urlSlug: "myUrl",
+                skipUrlSlug: false,
             },
         ],
     };

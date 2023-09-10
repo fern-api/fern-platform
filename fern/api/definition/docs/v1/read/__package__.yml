@@ -114,6 +114,7 @@ types:
       title: string
       icon: string
       items: list<NavigationItem>
+      urlSlug: string
 
   UnversionedUntabbedNavigationConfig:
     properties:
@@ -160,6 +161,7 @@ types:
       title: string
       api: rootCommons.ApiDefinitionId
       urlSlug: string
+      skipUrlSlug: boolean
       artifacts: optional<ApiArtifacts>
 
   DocsSection:
@@ -167,6 +169,7 @@ types:
       title: string
       items: list<NavigationItem>
       urlSlug: string
+      skipUrlSlug: boolean
       collapsed: boolean
 
   ColorsConfig:

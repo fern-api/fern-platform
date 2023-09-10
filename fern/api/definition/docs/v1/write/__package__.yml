@@ -175,6 +175,7 @@ types:
       title: string
       api: rootCommons.ApiDefinitionId
       artifacts: optional<ApiArtifacts>
+      skipUrlSlug: optional<boolean>
 
   DocsSection:
     properties:
@@ -182,6 +183,7 @@ types:
       items: list<NavigationItem>
       urlSlugOverride: optional<string>
       collapsed: optional<boolean>
+      skipUrlSlug: optional<boolean>
 
   ColorsConfig:
     properties:

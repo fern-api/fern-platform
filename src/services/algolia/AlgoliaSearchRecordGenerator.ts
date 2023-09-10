@@ -92,10 +92,7 @@ export class AlgoliaSearchRecordGenerator {
             config.tabs.map(async (tab) => {
                 const tabRecords = await Promise.all(
                     tab.items.map((item) =>
-                        this.generateAlgoliaSearchRecordsForNavigationItem(
-                            item,
-                            context // TODO: Initialize with tab slug if needed
-                        )
+                        this.generateAlgoliaSearchRecordsForNavigationItem(item, context.withSlug(tab.urlSlug))
                     )
                 );
                 return tabRecords.flat(1);
@@ -112,7 +109,10 @@ export class AlgoliaSearchRecordGenerator {
             const section = item;
             const records = await Promise.all(
                 section.items.map((item) =>
-                    this.generateAlgoliaSearchRecordsForNavigationItem(item, context.withSlug(section.urlSlug))
+                    this.generateAlgoliaSearchRecordsForNavigationItem(
+                        item,
+                        section.skipUrlSlug ? context : context.withSlug(section.urlSlug)
+                    )
                 )
             );
             return records.flat(1);
@@ -123,7 +123,10 @@ export class AlgoliaSearchRecordGenerator {
             if (apiDef == null) {
                 return [];
             }
-            return this.generateAlgoliaSearchRecordsForApiDefinition(apiDef, context.withSlug(api.urlSlug));
+            return this.generateAlgoliaSearchRecordsForApiDefinition(
+                apiDef,
+                api.skipUrlSlug ? context : context.withSlug(api.urlSlug)
+            );
         } else {
             const page = item;
             const pageContent = this.docsDefinition.pages[page.id];
