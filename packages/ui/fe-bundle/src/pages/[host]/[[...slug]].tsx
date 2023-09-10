@@ -103,14 +103,14 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
 
     const computeResponseForNavigationItems = async (
         items: FernRegistryDocsReadV1.NavigationItem[],
-        slug: string
+        slugAfterTabSlug: string
     ): Promise<ComputeResponseForNavigationItemsReturnType> => {
         const urlPathResolver = new UrlPathResolver({
             items,
             loadApiDefinition: (id) => docs.body.definition.apis[id],
             loadApiPage: (id) => docs.body.definition.pages[id],
         });
-        let resolvedUrlPath = await urlPathResolver.resolveSlug(slug);
+        let resolvedUrlPath = await urlPathResolver.resolveSlug(slugAfterTabSlug);
         if (resolvedUrlPath?.type === "section") {
             const firstNavigatableItem = getFirstNavigatableItem(resolvedUrlPath.section);
             if (firstNavigatableItem == null) {
@@ -302,7 +302,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                 }
                 const [firstNavigationItem] = firstTab.items;
                 if (firstNavigationItem != null) {
-                    slug = firstNavigationItem.urlSlug;
+                    slug = [firstTab.urlSlug, firstNavigationItem.urlSlug].join("/");
                 } else {
                     return { notFound: true, revalidate: false };
                 }
