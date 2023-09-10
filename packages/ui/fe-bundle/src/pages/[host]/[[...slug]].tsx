@@ -1,6 +1,12 @@
 import * as FernRegistryDocsReadV1 from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import * as FernRegistryDocsReadV2 from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
-import { getSlugFromUrl, isVersionedNavigationConfig, UrlPathResolver, type ResolvedUrlPath } from "@fern-ui/app-utils";
+import {
+    getSlugFromUrl,
+    isUnversionedTabbedNavigationConfig,
+    isVersionedNavigationConfig,
+    UrlPathResolver,
+    type ResolvedUrlPath,
+} from "@fern-ui/app-utils";
 import { assertNeverNoThrow } from "@fern-ui/core-utils";
 import { App } from "@fern-ui/ui";
 import { GetStaticPaths, GetStaticProps } from "next";
@@ -107,6 +113,11 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                 throw new Error("No versions found. This indicates a registration issue.");
             }
 
+            if (isUnversionedTabbedNavigationConfig(latestVersion.config)) {
+                // TODO: Implement
+                throw new Error("Not handling tabs yet.");
+            }
+
             const [firstNavigationItem] = latestVersion.config.items;
             if (firstNavigationItem != null) {
                 slug = firstNavigationItem.urlSlug;
@@ -170,6 +181,10 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
             }
 
             if (slug === "") {
+                if (isUnversionedTabbedNavigationConfig(configData.config)) {
+                    // TODO: Implement
+                    throw new Error("Not handling tabs yet.");
+                }
                 const [firstNavigationItem] = configData.config.items;
                 if (firstNavigationItem != null) {
                     slug = firstNavigationItem.urlSlug;
@@ -221,6 +236,10 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         }
     } else {
         if (slug === "") {
+            if (isUnversionedTabbedNavigationConfig(navigationConfig)) {
+                // TODO: Implement
+                throw new Error("Not handling tabs yet.");
+            }
             const [firstNavigationItem] = navigationConfig.items;
             if (firstNavigationItem != null) {
                 slug = firstNavigationItem.urlSlug;
