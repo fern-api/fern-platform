@@ -7,6 +7,7 @@ import { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 import { DocsInfo, NavigateToPathOpts } from "../docs-context/DocsContext";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
+import { useDocsContext } from "../docs-context/useDocsContext";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace SidebarSubpackageItem {
@@ -36,17 +37,17 @@ const UnmemoizedSidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = (
     getFullSlug,
     docsDefinition,
     docsInfo,
-    activeTabIndex,
     closeMobileSidebar,
     pushRoute,
 }) => {
+    const { activeTab } = useDocsContext();
+
     const urlPathResolver = useMemo(() => {
         let items;
         if (isUnversionedTabbedNavigationConfig(docsInfo.activeNavigationConfig)) {
-            const activeTab = docsInfo.activeNavigationConfig.tabs[activeTabIndex];
             if (activeTab == null) {
                 throw new Error(
-                    `Cannot find the tab with index ${activeTabIndex}. This indicates a bug with implementation.`
+                    "Active tab is null. This indicates an implementation bug as tabbed docs must have an active tab at all times."
                 );
             }
             items = activeTab.items;
@@ -58,7 +59,7 @@ const UnmemoizedSidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = (
             loadApiDefinition: (id) => docsDefinition.apis[id],
             loadApiPage: (id) => docsDefinition.pages[id],
         });
-    }, [docsDefinition, docsInfo, activeTabIndex]);
+    }, [docsDefinition, docsInfo.activeNavigationConfig, activeTab]);
 
     const handleClick = useCallback(async () => {
         const resolvedUrlPath = await urlPathResolver.resolveSlug(slug);

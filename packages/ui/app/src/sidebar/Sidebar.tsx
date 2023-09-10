@@ -2,7 +2,7 @@ import { Text } from "@blueprintjs/core";
 import { getFirstNavigatableItem, isUnversionedUntabbedNavigationConfig } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { FontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
@@ -24,6 +24,8 @@ export declare namespace Sidebar {
 export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expandAllSections = false }) => {
     const {
         docsInfo,
+        setActiveTabIndex,
+        activeTabIndex,
         selectedSlug,
         navigateToPath,
         registerScrolledToPathListener,
@@ -34,15 +36,9 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
     const { openSearchDialog } = useSearchContext();
     const { closeMobileSidebar } = useMobileSidebarContext();
     const searchService = useSearchService();
-    const [activeTabIndex, _setActiveTabIndex] = useState(0);
     const router = useRouter();
 
-    const setActiveTabIndex = useCallback((index: number) => _setActiveTabIndex(index), []);
-
-    const contextValue = useCallback(
-        (): SidebarContextValue => ({ expandAllSections, activeTabIndex, setActiveTabIndex }),
-        [expandAllSections, activeTabIndex, setActiveTabIndex]
-    );
+    const contextValue = useCallback((): SidebarContextValue => ({ expandAllSections }), [expandAllSections]);
 
     const { activeNavigationConfig } = docsInfo;
 
@@ -82,7 +78,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                                 }
                             )}
                             onClick={() => {
-                                _setActiveTabIndex(idx);
+                                setActiveTabIndex(idx);
                                 const [firstTabItem] = tab.items;
                                 if (firstTabItem == null) {
                                     return;

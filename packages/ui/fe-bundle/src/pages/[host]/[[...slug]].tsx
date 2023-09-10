@@ -29,6 +29,7 @@ export declare namespace Docs {
          * If `null`, then docs are not versioned.
          */
         inferredVersion: string | null;
+        inferredTabIndex: number | null;
         resolvedUrlPath: ResolvedUrlPath;
         typographyStyleSheet?: string;
         backgroundImageStyleSheet: string | null;
@@ -40,6 +41,7 @@ export declare namespace Docs {
 export default function Docs({
     docs,
     inferredVersion,
+    inferredTabIndex,
     typographyStyleSheet = "",
     backgroundImageStyleSheet = "",
     resolvedUrlPath,
@@ -70,6 +72,7 @@ export default function Docs({
                 <App
                     docs={docs}
                     inferredVersion={inferredVersion}
+                    inferredTabIndex={inferredTabIndex}
                     resolvedUrlPath={resolvedUrlPath}
                     nextPath={nextPath ?? undefined}
                     previousPath={previousPath ?? undefined}
@@ -121,13 +124,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         }
 
         if (resolvedUrlPath == null) {
-            return {
-                success: false,
-                response: {
-                    notFound: true,
-                    revalidate: false,
-                },
-            };
+            return { success: false };
         }
 
         const typographyConfig = loadDocTypography(docs.body.definition);
@@ -140,17 +137,14 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
 
         return {
             success: true,
-            response: {
-                props: {
-                    docs: docs.body,
-                    inferredVersion: null,
-                    typographyStyleSheet,
-                    backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
-                    resolvedUrlPath,
-                    nextPath: nextPath ?? null,
-                    previousPath: previousPath ?? null,
-                },
-                revalidate: false,
+            props: {
+                docs: docs.body,
+                inferredVersion: null,
+                typographyStyleSheet,
+                backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
+                resolvedUrlPath,
+                nextPath: nextPath ?? null,
+                previousPath: previousPath ?? null,
             },
         };
     };
@@ -207,6 +201,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                         props: {
                             docs: docs.body,
                             inferredVersion: latestVersion.version,
+                            inferredTabIndex: null, // TODO: Implement
                             typographyStyleSheet,
                             backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
                             resolvedUrlPath,
@@ -283,6 +278,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                     props: {
                         docs: docs.body,
                         inferredVersion: version,
+                        inferredTabIndex: null, // TODO: Implement
                         typographyStyleSheet,
                         backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
                         resolvedUrlPath,
@@ -319,15 +315,24 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         if (isUnversionedTabbedNavigationConfig(navigationConfig)) {
             const [tabUrlSlug, ...rest] = slug.split("/");
             slug = rest.join("/");
-            const tab = navigationConfig.tabs.find((tab) => tab.urlSlug === tabUrlSlug);
-            if (tab == null) {
+            const tabInfo = navigationConfig.tabs
+                .map((tab, index) => ({ tab, index }))
+                .find(({ tab }) => tab.urlSlug === tabUrlSlug);
+            if (tabInfo == null) {
                 return { notFound: true, revalidate: false };
             }
+            const { tab, index: tabIndex } = tabInfo;
             const resp = await computeResponseForNavigationItems(tab.items, slug);
-            return resp.success ? resp.response : resp.response; // TS limitation
+            return {
+                revalidate: false,
+                ...(resp.success ? { props: { ...resp.props, inferredTabIndex: tabIndex } } : { notFound: true }),
+            };
         } else {
             const resp = await computeResponseForNavigationItems(navigationConfig.items, slug);
-            return resp.success ? resp.response : resp.response; // TS limitation
+            return {
+                revalidate: false,
+                ...(resp.success ? { props: { ...resp.props, inferredTabIndex: null } } : { notFound: true }),
+            };
         }
     }
 };
@@ -335,17 +340,10 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
 type ComputeResponseForNavigationItemsReturnType =
     | {
           success: true;
-          response: {
-              props: Docs.Props;
-              revalidate: false | undefined;
-          };
+          props: Omit<Docs.Props, "inferredTabIndex">;
       }
     | {
           success: false;
-          response: {
-              notFound: true;
-              revalidate: false | undefined;
-          };
       };
 
 export const getStaticPaths: GetStaticPaths = () => {
