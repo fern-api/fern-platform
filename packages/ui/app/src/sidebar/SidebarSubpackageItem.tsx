@@ -1,5 +1,5 @@
 import { Text } from "@blueprintjs/core";
-import { UrlPathResolver } from "@fern-ui/app-utils";
+import { isUnversionedTabbedNavigationConfig, UrlPathResolver } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -29,8 +29,12 @@ export const SidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = ({
     const router = useRouter();
 
     const urlPathResolver = useMemo(() => {
+        if (isUnversionedTabbedNavigationConfig(docsInfo.activeNavigationConfig)) {
+            // TODO: Implement after adding `selectedTabIndex` to context.
+            throw new Error("Not supporting tabs yet.");
+        }
         return new UrlPathResolver({
-            navigation: docsInfo.activeNavigationConfig,
+            items: docsInfo.activeNavigationConfig.items,
             loadApiDefinition: (id) => docsDefinition.apis[id],
             loadApiPage: (id) => docsDefinition.pages[id],
         });

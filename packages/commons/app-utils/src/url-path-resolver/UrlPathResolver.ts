@@ -9,7 +9,7 @@ import { UrlSlugTree, UrlSlugTreeNode } from "./UrlSlugTree";
 const REMARK_PLUGINS = [remarkGfm];
 
 export interface UrlPathResolverConfig {
-    navigation: FernRegistryDocsRead.UnversionedNavigationConfig;
+    items: FernRegistryDocsRead.NavigationItem[];
     loadApiPage: (id: FernRegistryDocsRead.PageId) => FernRegistryDocsRead.PageContent | undefined;
     loadApiDefinition: (id: FernRegistryApiRead.ApiDefinition["id"]) => FernRegistryApiRead.ApiDefinition | undefined;
 }
@@ -19,7 +19,7 @@ export class UrlPathResolver {
 
     constructor(private readonly config: UrlPathResolverConfig) {
         this.urlSlugTree = new UrlSlugTree({
-            navigation: config.navigation,
+            items: config.items,
             loadApiDefinition: config.loadApiDefinition,
         });
     }
