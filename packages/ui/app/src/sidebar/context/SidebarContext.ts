@@ -6,7 +6,4 @@ export const SidebarContext = React.createContext<() => SidebarContextValue>(() 
 
 export interface SidebarContextValue {
     expandAllSections: boolean;
-    /** Will be 0 if the config is not tabbed. */
-    activeTabIndex: number;
-    setActiveTabIndex: (index: number) => void;
 }

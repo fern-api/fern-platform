@@ -43,6 +43,10 @@ export interface DocsContextValue {
     lightModeEnabled: boolean;
     docsInfo: DocsInfo;
     setActiveVersion: (version: string) => void;
+    activeTab: FernRegistryDocsRead.NavigationTab | undefined;
+    activeTabIndex: number | null;
+    setActiveTabIndex: (index: number) => void;
+
     /** Returns the version-prefixed slug. */
     getFullSlug: (slug: string) => string;
 

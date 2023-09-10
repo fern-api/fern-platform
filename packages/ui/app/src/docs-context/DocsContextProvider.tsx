@@ -4,6 +4,7 @@ import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources
 import {
     assertIsUnversionedNavigationConfig,
     assertIsVersionedNavigationConfig,
+    isUnversionedUntabbedNavigationConfig,
     type ResolvedUrlPath,
 } from "@fern-ui/app-utils";
 import { assertNever } from "@fern-ui/core-utils";
@@ -17,6 +18,7 @@ export declare namespace DocsContextProvider {
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
         lightModeEnabled: boolean;
         inferredVersion: string | null;
+        inferredTabIndex: number | null;
         resolvedUrlPath: ResolvedUrlPath;
         nextPath: ResolvedUrlPath | undefined;
         previousPath: ResolvedUrlPath | undefined;
@@ -27,6 +29,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     docsDefinition,
     lightModeEnabled,
     inferredVersion,
+    inferredTabIndex,
     resolvedUrlPath,
     nextPath,
     previousPath,
@@ -35,6 +38,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     const router = useRouter();
 
     const [activeVersion, _setActiveVersion] = useState(inferredVersion);
+    const [activeTabIndex, _setActiveTabIndex] = useState(inferredTabIndex);
 
     const rootSlug = activeVersion ?? "";
 
@@ -90,6 +94,10 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
 
     const setActiveVersion = useCallback((version: string) => {
         _setActiveVersion(version);
+    }, []);
+
+    const setActiveTabIndex = useCallback((tabIndex: number) => {
+        _setActiveTabIndex(tabIndex);
     }, []);
 
     useEffect(() => {
@@ -167,6 +175,13 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
         [justNavigated, router, scrollToPathListeners, selectedSlug, getFullSlug]
     );
 
+    const activeTab = useMemo(() => {
+        if (activeTabIndex == null || isUnversionedUntabbedNavigationConfig(docsInfo.activeNavigationConfig)) {
+            return undefined;
+        }
+        return docsInfo.activeNavigationConfig.tabs[activeTabIndex];
+    }, [docsInfo.activeNavigationConfig, activeTabIndex]);
+
     const contextValue = useCallback(
         (): DocsContextValue => ({
             resolveApi,
@@ -176,6 +191,9 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             lightModeEnabled,
             docsInfo,
             setActiveVersion,
+            activeTab,
+            activeTabIndex,
+            setActiveTabIndex,
             getFullSlug,
             registerNavigateToPathListener: navigateToPathListeners.registerListener,
             navigateToPath,
@@ -191,6 +209,9 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             lightModeEnabled,
             docsInfo,
             setActiveVersion,
+            activeTab,
+            activeTabIndex,
+            setActiveTabIndex,
             getFullSlug,
             navigateToPath,
             navigateToPathListeners.registerListener,

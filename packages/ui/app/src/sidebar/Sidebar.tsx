@@ -4,7 +4,7 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useSearchContext } from "../search-context/useSearchContext";
 import { useSearchService } from "../services/useSearchService";
@@ -22,18 +22,12 @@ export declare namespace Sidebar {
 }
 
 export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expandAllSections = false }) => {
-    const { docsInfo, getFullSlug, navigateToPath } = useDocsContext();
+    const { docsInfo, getFullSlug, navigateToPath, activeTab, activeTabIndex, setActiveTabIndex } = useDocsContext();
     const { openSearchDialog } = useSearchContext();
     const searchService = useSearchService();
-    const [activeTabIndex, _setActiveTabIndex] = useState(0);
     const router = useRouter();
 
-    const setActiveTabIndex = useCallback((index: number) => _setActiveTabIndex(index), []);
-
-    const contextValue = useCallback(
-        (): SidebarContextValue => ({ expandAllSections, activeTabIndex, setActiveTabIndex }),
-        [expandAllSections, activeTabIndex, setActiveTabIndex]
-    );
+    const contextValue = useCallback((): SidebarContextValue => ({ expandAllSections }), [expandAllSections]);
 
     const { activeNavigationConfig } = docsInfo;
 
@@ -56,8 +50,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                         if (isUnversionedUntabbedNavigationConfig(activeNavigationConfig)) {
                             return <SidebarItems navigationItems={activeNavigationConfig.items} slug="" />;
                         }
-                        const selectedTab = activeNavigationConfig.tabs[activeTabIndex];
-                        if (selectedTab == null) {
+                        if (activeTab == null) {
                             return null;
                         }
                         return (
@@ -74,7 +67,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                                                 }
                                             )}
                                             onClick={() => {
-                                                _setActiveTabIndex(idx);
+                                                setActiveTabIndex(idx);
                                                 const [firstTabItem] = tab.items;
                                                 if (firstTabItem == null) {
                                                     return;
@@ -103,7 +96,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                                         </button>
                                     ))}
                                 </div>
-                                <SidebarItems navigationItems={selectedTab.items} slug="" />;
+                                <SidebarItems navigationItems={activeTab.items} slug="" />;
                             </>
                         );
                     })()}
