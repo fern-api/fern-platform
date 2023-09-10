@@ -242,7 +242,16 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
     } else {
         if (slug === "") {
             if (isUnversionedTabbedNavigationConfig(navigationConfig)) {
-                // TODO: Implement
+                const [firstTab] = navigationConfig.tabs;
+                if (firstTab == null) {
+                    return { notFound: true, revalidate: true };
+                }
+                const [firstNavigationItem] = firstTab.items;
+                if (firstNavigationItem != null) {
+                    slug = firstNavigationItem.urlSlug;
+                } else {
+                    return { notFound: true, revalidate: true };
+                }
             } else {
                 const [firstNavigationItem] = navigationConfig.items;
                 if (firstNavigationItem != null) {
@@ -254,51 +263,89 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         }
 
         if (isUnversionedTabbedNavigationConfig(navigationConfig)) {
-            // TODO: Implement
-            throw new Error("Not supporting tabs yet.");
-        } else {
-            const urlPathResolver = new UrlPathResolver({
-                items: navigationConfig.items,
-                loadApiDefinition: (id) => docs.body.definition.apis[id],
-                loadApiPage: (id) => docs.body.definition.pages[id],
-            });
-            let resolvedUrlPath = await urlPathResolver.resolveSlug(slug);
-            if (resolvedUrlPath?.type === "section") {
-                const firstNavigatableItem = getFirstNavigatableItem(resolvedUrlPath.section);
-                if (firstNavigatableItem == null) {
-                    resolvedUrlPath = undefined;
-                } else {
-                    resolvedUrlPath = await urlPathResolver.resolveSlug(firstNavigatableItem);
-                }
-            }
-
-            if (resolvedUrlPath == null) {
+            const [firstTab] = navigationConfig.tabs;
+            if (firstTab == null) {
                 return { notFound: true, revalidate: true };
             }
-
-            const typographyConfig = loadDocTypography(docs.body.definition);
-            const typographyStyleSheet = generateFontFaces(typographyConfig);
-            const backgroundImageStyleSheet = loadDocsBackgroundImage(docs.body.definition);
-            const [nextPath, previousPath] = await Promise.all([
-                urlPathResolver.getNextNavigatableItem(resolvedUrlPath),
-                urlPathResolver.getPreviousNavigatableItem(resolvedUrlPath),
-            ]);
-
-            return {
-                props: {
-                    docs: docs.body,
-                    inferredVersion: null,
-                    typographyStyleSheet,
-                    backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
-                    resolvedUrlPath,
-                    nextPath: nextPath ?? null,
-                    previousPath: previousPath ?? null,
-                },
-                revalidate: true,
-            };
+            const resp = await computeResponseForNavigationItems(docs.body, firstTab.items, slug);
+            return resp.success ? resp.response : resp.response; // TS limitation
+        } else {
+            const resp = await computeResponseForNavigationItems(docs.body, navigationConfig.items, slug);
+            return resp.success ? resp.response : resp.response; // TS limitation
         }
     }
 };
+
+type ComputeResponseForNavigationItemsReturnType =
+    | {
+          success: true;
+          response: {
+              props: Docs.Props;
+              revalidate: true | undefined;
+          };
+      }
+    | {
+          success: false;
+          response: {
+              notFound: true;
+              revalidate: true | undefined;
+          };
+      };
+
+async function computeResponseForNavigationItems(
+    body: FernRegistryDocsReadV2.LoadDocsForUrlResponse,
+    items: FernRegistryDocsReadV1.NavigationItem[],
+    slug: string
+): Promise<ComputeResponseForNavigationItemsReturnType> {
+    const urlPathResolver = new UrlPathResolver({
+        items,
+        loadApiDefinition: (id) => body.definition.apis[id],
+        loadApiPage: (id) => body.definition.pages[id],
+    });
+    let resolvedUrlPath = await urlPathResolver.resolveSlug(slug);
+    if (resolvedUrlPath?.type === "section") {
+        const firstNavigatableItem = getFirstNavigatableItem(resolvedUrlPath.section);
+        if (firstNavigatableItem == null) {
+            resolvedUrlPath = undefined;
+        } else {
+            resolvedUrlPath = await urlPathResolver.resolveSlug(firstNavigatableItem);
+        }
+    }
+
+    if (resolvedUrlPath == null) {
+        return {
+            success: false,
+            response: {
+                notFound: true,
+                revalidate: true,
+            },
+        };
+    }
+
+    const typographyConfig = loadDocTypography(body.definition);
+    const typographyStyleSheet = generateFontFaces(typographyConfig);
+    const backgroundImageStyleSheet = loadDocsBackgroundImage(body.definition);
+    const [nextPath, previousPath] = await Promise.all([
+        urlPathResolver.getNextNavigatableItem(resolvedUrlPath),
+        urlPathResolver.getPreviousNavigatableItem(resolvedUrlPath),
+    ]);
+
+    return {
+        success: true,
+        response: {
+            props: {
+                docs: body,
+                inferredVersion: null,
+                typographyStyleSheet,
+                backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
+                resolvedUrlPath,
+                nextPath: nextPath ?? null,
+                previousPath: previousPath ?? null,
+            },
+            revalidate: true,
+        },
+    };
+}
 
 export const getStaticPaths: GetStaticPaths = () => {
     return { paths: [], fallback: "blocking" };
