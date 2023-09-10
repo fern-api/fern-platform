@@ -7,6 +7,7 @@ import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
+import { useSidebarContext } from "./context/useSidebarContext";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace SidebarSubpackageItem {
@@ -25,20 +26,29 @@ export const SidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = ({
     slug,
 }) => {
     const { navigateToPath, registerScrolledToPathListener, getFullSlug, docsDefinition, docsInfo } = useDocsContext();
+    const { activeTabIndex } = useSidebarContext();
     const { closeMobileSidebar } = useMobileSidebarContext();
     const router = useRouter();
 
     const urlPathResolver = useMemo(() => {
+        let items;
         if (isUnversionedTabbedNavigationConfig(docsInfo.activeNavigationConfig)) {
-            // TODO: Implement after adding `selectedTabIndex` to context.
-            throw new Error("Not supporting tabs yet.");
+            const activeTab = docsInfo.activeNavigationConfig.tabs[activeTabIndex];
+            if (activeTab == null) {
+                throw new Error(
+                    `Cannot find the tab with index ${activeTabIndex}. This indicates a bug with implementation.`
+                );
+            }
+            items = activeTab.items;
+        } else {
+            items = docsInfo.activeNavigationConfig.items;
         }
         return new UrlPathResolver({
-            items: docsInfo.activeNavigationConfig.items,
+            items,
             loadApiDefinition: (id) => docsDefinition.apis[id],
             loadApiPage: (id) => docsDefinition.pages[id],
         });
-    }, [docsDefinition, docsInfo]);
+    }, [docsDefinition, docsInfo, activeTabIndex]);
 
     const handleClick = useCallback(async () => {
         const resolvedUrlPath = await urlPathResolver.resolveSlug(slug);
