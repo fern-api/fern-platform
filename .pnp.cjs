@@ -110,7 +110,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@blueprintjs/stylelint-plugin", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:2.0.8"],\
             ["@types/is-ci", "npm:3.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
-            ["@types/lodash-es", "npm:4.17.7"],\
+            ["@types/lodash-es", "npm:4.17.9"],\
             ["@types/node", "npm:18.7.18"],\
             ["@typescript-eslint/eslint-plugin", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:6.4.1"],\
             ["@typescript-eslint/parser", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:6.4.1"],\
@@ -3322,10 +3322,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/registry-browser", [\
-        ["npm:0.15.1-2-gfc1944d", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-registry-browser-npm-0.15.1-2-gfc1944d-e6d9703f6d-918af89e81.zip/node_modules/@fern-fern/registry-browser/",\
+        ["npm:0.16.1-2-g13b65b4", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-registry-browser-npm-0.16.1-2-g13b65b4-e583325585-0e31cd1baa.zip/node_modules/@fern-fern/registry-browser/",\
           "packageDependencies": [\
-            ["@fern-fern/registry-browser", "npm:0.15.1-2-gfc1944d"],\
+            ["@fern-fern/registry-browser", "npm:0.16.1-2-g13b65b4"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["@ungap/url-search-params", "npm:0.2.2"],\
             ["axios", "npm:1.4.0"],\
@@ -3340,14 +3340,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/commons/app-utils/",\
           "packageDependencies": [\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
-            ["@fern-fern/registry-browser", "npm:0.15.1-2-gfc1944d"],\
+            ["@fern-fern/registry-browser", "npm:0.16.1-2-g13b65b4"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@types/jest", "npm:29.0.3"],\
+            ["@types/lodash-es", "npm:4.17.9"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/react", "npm:18.0.20"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
             ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.5.0"],\
+            ["lodash-es", "npm:4.17.21"],\
             ["next-mdx-remote", "virtual:b977a69fb19c4d0f85f8b91df4d5bbb0d247e9cfda57636e95b33f40dfc5a05b68c27a163035a0eb7204d129d5e24e42811c10b0902ee38cf8cf4debee72619b#npm:4.4.1"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
@@ -3439,7 +3441,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/ui/fe-bundle/",\
           "packageDependencies": [\
             ["@fern-ui/fe-bundle", "workspace:packages/ui/fe-bundle"],\
-            ["@fern-fern/registry-browser", "npm:0.15.1-2-gfc1944d"],\
+            ["@fern-fern/registry-browser", "npm:0.16.1-2-g13b65b4"],\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/theme", "workspace:packages/commons/react/theme"],\
@@ -3589,7 +3591,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/scripts", "workspace:packages/scripts"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
-            ["@types/lodash-es", "npm:4.17.7"],\
+            ["@types/lodash-es", "npm:4.17.9"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/yargs", "npm:17.0.12"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:2db085a410602eca0a152058979ec27a6ff405389e9bfff65a5c274ee8e258565c3aa901da9b432be4e8578c42e23397178058afee24c24be1773f7dd3ff138f#npm:3.0.0-rc.14"],\
@@ -3619,7 +3621,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/react-commons", "workspace:packages/commons/react/react-commons"],\
             ["@types/jest", "npm:29.0.3"],\
-            ["@types/lodash-es", "npm:4.17.7"],\
+            ["@types/lodash-es", "npm:4.17.9"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/react", "npm:18.0.20"],\
             ["classnames", "npm:2.3.1"],\
@@ -3694,7 +3696,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@blueprintjs/icons", "npm:4.9.0"],\
             ["@blueprintjs/popover2", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.8.0"],\
             ["@blueprintjs/select", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.5.1"],\
-            ["@fern-fern/registry-browser", "npm:0.15.1-2-gfc1944d"],\
+            ["@fern-fern/registry-browser", "npm:0.16.1-2-g13b65b4"],\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/react-commons", "workspace:packages/commons/react/react-commons"],\
@@ -3706,7 +3708,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@headlessui/react", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.7.15"],\
             ["@react-hook/size", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.1.2"],\
             ["@types/jest", "npm:29.0.3"],\
-            ["@types/lodash-es", "npm:4.17.7"],\
+            ["@types/lodash-es", "npm:4.17.9"],\
             ["@types/marked", "npm:5.0.0"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/react", "npm:18.0.20"],\
@@ -5054,10 +5056,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/lodash-es", [\
-        ["npm:4.17.7", {\
-          "packageLocation": "./.yarn/cache/@types-lodash-es-npm-4.17.7-7322f70ff2-4b1f39fd1d.zip/node_modules/@types/lodash-es/",\
+        ["npm:4.17.9", {\
+          "packageLocation": "./.yarn/cache/@types-lodash-es-npm-4.17.9-256f3fab3d-a2c7ab8da1.zip/node_modules/@types/lodash-es/",\
           "packageDependencies": [\
-            ["@types/lodash-es", "npm:4.17.7"],\
+            ["@types/lodash-es", "npm:4.17.9"],\
             ["@types/lodash", "npm:4.14.182"]\
           ],\
           "linkType": "HARD"\
@@ -8984,7 +8986,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@blueprintjs/stylelint-plugin", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:2.0.8"],\
             ["@types/is-ci", "npm:3.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
-            ["@types/lodash-es", "npm:4.17.7"],\
+            ["@types/lodash-es", "npm:4.17.9"],\
             ["@types/node", "npm:18.7.18"],\
             ["@typescript-eslint/eslint-plugin", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:6.4.1"],\
             ["@typescript-eslint/parser", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:6.4.1"],\

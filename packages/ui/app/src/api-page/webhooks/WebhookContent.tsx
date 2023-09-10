@@ -1,9 +1,8 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { getSubpackageTitle, isSubpackage } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { snakeCase } from "lodash-es";
 import React, { useCallback } from "react";
-import { isSubpackage } from "../../util/package";
-import { getSubpackageTitle } from "../../util/subpackage";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";

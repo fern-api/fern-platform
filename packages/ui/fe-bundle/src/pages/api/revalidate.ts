@@ -1,4 +1,4 @@
-import { isVersionedNavigationConfig, UrlSlugTree } from "@fern-ui/app-utils";
+import { isUnversionedUntabbedNavigationConfig, isVersionedNavigationConfig, UrlSlugTree } from "@fern-ui/app-utils";
 import { NextApiHandler, NextApiResponse } from "next";
 import { REGISTRY_SERVICE } from "../../service";
 
@@ -37,19 +37,54 @@ const handler: NextApiHandler = async (req, res) => {
 
     if (isVersionedNavigationConfig(navigationConfig)) {
         navigationConfig.versions.forEach(({ version, config }) => {
-            const urlSlugTree = new UrlSlugTree({
-                navigation: config,
-                loadApiDefinition: (id) => docs.body.definition.apis[id],
-            });
-            const pathsForVersion = [`/${version}`, ...urlSlugTree.getAllSlugs().map((slug) => `/${version}/${slug}`)];
-            pathsToRevalidate.push(...pathsForVersion);
+            if (isUnversionedUntabbedNavigationConfig(config)) {
+                const urlSlugTree = new UrlSlugTree({
+                    items: config.items,
+                    loadApiDefinition: (id) => docs.body.definition.apis[id],
+                });
+                const pathsForVersion = [
+                    `/${version}`,
+                    ...urlSlugTree.getAllSlugs().map((slug) => `/${version}/${slug}`),
+                ];
+                pathsToRevalidate.push(...pathsForVersion);
+            } else {
+                config.tabs.forEach((tab) => {
+                    const urlSlugTree = new UrlSlugTree({
+                        items: tab.items,
+                        loadApiDefinition: (id) => docs.body.definition.apis[id],
+                    });
+                    const pathsForVersionTab = [
+                        `/${version}`,
+                        // TODO: We may need to add tab slug as prefix here
+                        // `${tab.slug}`,
+                        ...urlSlugTree.getAllSlugs().map(
+                            (slug) =>
+                                // TODO: We may need to add tab slug as prefix here
+                                // `/${version}/${tab.slug}/${slug}`
+                                `/${version}/${slug}`
+                        ),
+                    ];
+                    pathsToRevalidate.push(...pathsForVersionTab);
+                });
+            }
         });
-    } else {
+    } else if (isUnversionedUntabbedNavigationConfig(navigationConfig)) {
         const urlSlugTree = new UrlSlugTree({
-            navigation: navigationConfig,
+            items: navigationConfig.items,
             loadApiDefinition: (id) => docs.body.definition.apis[id],
         });
         pathsToRevalidate = ["/", ...urlSlugTree.getAllSlugs().map((slug) => `/${slug}`)];
+    } else {
+        pathsToRevalidate = ["/"];
+        navigationConfig.tabs.forEach((tab) => {
+            const urlSlugTree = new UrlSlugTree({
+                items: tab.items,
+                loadApiDefinition: (id) => docs.body.definition.apis[id],
+            });
+            // TODO: We may need to add tab slug as prefix here
+            // pathsToRevalidate.push(...urlSlugTree.getAllSlugs().map((slug) => `/${tab.slug}/${slug}`));
+            pathsToRevalidate.push(...urlSlugTree.getAllSlugs().map((slug) => `/${slug}`));
+        });
     }
 
     const revalidated: string[] = [];

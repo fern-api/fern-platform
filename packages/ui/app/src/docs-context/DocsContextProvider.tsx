@@ -1,11 +1,14 @@
 import { FernRegistry } from "@fern-fern/registry-browser";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { type ResolvedUrlPath } from "@fern-ui/app-utils";
+import {
+    assertIsUnversionedNavigationConfig,
+    assertIsVersionedNavigationConfig,
+    type ResolvedUrlPath,
+} from "@fern-ui/app-utils";
 import { assertNever } from "@fern-ui/core-utils";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
-import { assertIsUnversionedNavigationConfig, assertIsVersionedNavigationConfig } from "../util/docs";
 import { DocsContext, DocsContextValue, type DocsInfo, type NavigateToPathOpts } from "./DocsContext";
 import { useSlugListeners } from "./useSlugListeners";
 

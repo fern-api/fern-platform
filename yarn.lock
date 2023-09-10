@@ -1851,16 +1851,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/registry-browser@npm:0.15.1-2-gfc1944d":
-  version: 0.15.1-2-gfc1944d
-  resolution: "@fern-fern/registry-browser@npm:0.15.1-2-gfc1944d"
+"@fern-fern/registry-browser@npm:0.16.1-2-g13b65b4":
+  version: 0.16.1-2-g13b65b4
+  resolution: "@fern-fern/registry-browser@npm:0.16.1-2-g13b65b4"
   dependencies:
     "@types/url-join": 4.0.1
     "@ungap/url-search-params": 0.2.2
     axios: 1.4.0
     js-base64: 3.7.2
     url-join: 4.0.1
-  checksum: 918af89e81d06a5156fef8e5cc976731b2e9944ef4bd6f4806d30bbc242053ec18711d01226cd11fea9585ed051c062314648f0f2246def0949e6e643a00d3f2
+  checksum: 0e31cd1baa1e017df597e6285b5047b9ed816c0b7d1f0e9e3ad51b57ba85e288111bb83f3c338064596d72b6a079343029e8169d7fe9045330ae86dc3aeb0dd0
   languageName: node
   linkType: hard
 
@@ -1868,14 +1868,16 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/app-utils@workspace:packages/commons/app-utils"
   dependencies:
-    "@fern-fern/registry-browser": 0.15.1-2-gfc1944d
+    "@fern-fern/registry-browser": 0.16.1-2-g13b65b4
     "@fern-ui/core-utils": "workspace:*"
     "@types/jest": ^29.0.3
+    "@types/lodash-es": 4.17.9
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
     depcheck: ^1.4.3
     eslint: ^8.26.0
     jest: ^29.4.0
+    lodash-es: ^4.17.21
     next-mdx-remote: ^4.4.1
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -1959,7 +1961,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/fe-bundle@workspace:packages/ui/fe-bundle"
   dependencies:
-    "@fern-fern/registry-browser": 0.15.1-2-gfc1944d
+    "@fern-fern/registry-browser": 0.16.1-2-g13b65b4
     "@fern-ui/app-utils": "workspace:*"
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/theme": "workspace:*"
@@ -2097,7 +2099,7 @@ __metadata:
   dependencies:
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.5
-    "@types/lodash-es": ^4.17.7
+    "@types/lodash-es": 4.17.9
     "@types/node": ^18.7.18
     "@types/yargs": ^17.0.12
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
@@ -2127,7 +2129,7 @@ __metadata:
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/react-commons": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/lodash-es": ^4.17.7
+    "@types/lodash-es": 4.17.9
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
     classnames: ^2.3.1
@@ -2196,7 +2198,7 @@ __metadata:
     "@blueprintjs/icons": ^4.4.0
     "@blueprintjs/popover2": ^1.8.0
     "@blueprintjs/select": ^4.4.2
-    "@fern-fern/registry-browser": 0.15.1-2-gfc1944d
+    "@fern-fern/registry-browser": 0.16.1-2-g13b65b4
     "@fern-ui/app-utils": "workspace:*"
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/react-commons": "workspace:*"
@@ -2208,7 +2210,7 @@ __metadata:
     "@headlessui/react": ^1.7.15
     "@react-hook/size": ^2.1.2
     "@types/jest": ^29.0.3
-    "@types/lodash-es": ^4.17.7
+    "@types/lodash-es": 4.17.9
     "@types/marked": ^5.0.0
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
@@ -3259,12 +3261,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash-es@npm:^4.17.6, @types/lodash-es@npm:^4.17.7":
-  version: 4.17.7
-  resolution: "@types/lodash-es@npm:4.17.7"
+"@types/lodash-es@npm:4.17.9":
+  version: 4.17.9
+  resolution: "@types/lodash-es@npm:4.17.9"
   dependencies:
     "@types/lodash": "*"
-  checksum: 4b1f39fd1d921311c37a846c0e0df9d1fa23e27448a6ad1efd7574e703abd2b2fa5e8f3b5037146000f167ba231d0d01e52747d902654151b4ceeff9f2a9b380
+  checksum: a2c7ab8da13892f89ab86b61dd9a0125c767b9db7b9bdaac7fd8508c9fa884bbb19a9760dbdc1e7e698e3322b7a8ba03daa80832371da32a8bd42da0920be838
   languageName: node
   linkType: hard
 
@@ -6509,7 +6511,7 @@ env-cmd@toddbluhm/env-cmd:
     "@blueprintjs/stylelint-plugin": ^2.0.8
     "@types/is-ci": ^3.0.0
     "@types/jest": ^29.0.3
-    "@types/lodash-es": ^4.17.6
+    "@types/lodash-es": 4.17.9
     "@types/node": ^18.7.18
     "@typescript-eslint/eslint-plugin": 6.4.1
     "@typescript-eslint/parser": 6.4.1

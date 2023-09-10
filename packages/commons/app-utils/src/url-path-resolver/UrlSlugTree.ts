@@ -3,7 +3,7 @@ import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources
 import { assertNever, noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 
 export interface UrlSlugTreeConfig {
-    navigation: FernRegistryDocsRead.UnversionedNavigationConfig;
+    items: FernRegistryDocsRead.NavigationItem[];
     loadApiDefinition: (id: FernRegistryApiRead.ApiDefinition["id"]) => FernRegistryApiRead.ApiDefinition | undefined;
 }
 
@@ -13,7 +13,7 @@ export class UrlSlugTree {
 
     constructor(private readonly config: UrlSlugTreeConfig) {
         this.root = this.constructSlugToNodeRecord({
-            items: config.navigation.items,
+            items: config.items,
             parentSlug: "",
         });
 

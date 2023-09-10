@@ -3,7 +3,7 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import React, { PropsWithChildren, useCallback, useMemo } from "react";
 // import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
-import { divideEndpointPathToParts, type EndpointPathPart } from "../../util/endpoint";
+import { divideEndpointPathToParts, type EndpointPathPart } from "@fern-ui/app-utils";
 import styles from "./EndpointUrl.module.scss";
 // import { getEndpointEnvironmentUrl } from "./getEndpointEnvironmentUrl";
 

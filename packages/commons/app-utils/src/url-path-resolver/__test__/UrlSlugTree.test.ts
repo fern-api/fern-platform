@@ -1,16 +1,16 @@
-import { isVersionedNavigationConfig } from "../../docs";
+import { isUnversionedUntabbedNavigationConfig } from "../../fern";
 import { UrlSlugTree } from "../UrlSlugTree";
 import { MOCKS_DOCS_DEFINITION } from "./mocks";
 
 describe("UrlSlugTree", () => {
     describe("getAllSlugs", () => {
         it("correctly determines all slugs", () => {
-            if (isVersionedNavigationConfig(MOCKS_DOCS_DEFINITION.config.navigation)) {
-                throw new Error("Text expects an unversioned navigation config");
+            if (!isUnversionedUntabbedNavigationConfig(MOCKS_DOCS_DEFINITION.config.navigation)) {
+                throw new Error("Text relies on an unversioned untabbed navigation config");
             }
             const tree = new UrlSlugTree({
                 loadApiDefinition: (id) => MOCKS_DOCS_DEFINITION.apis[id],
-                navigation: MOCKS_DOCS_DEFINITION.config.navigation,
+                items: MOCKS_DOCS_DEFINITION.config.navigation.items,
             });
 
             const expectedSlugs = [
