@@ -1,5 +1,5 @@
 import { Text } from "@blueprintjs/core";
-import { UrlPathResolver } from "@fern-ui/app-utils";
+import { isUnversionedTabbedNavigationConfig, UrlPathResolver } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -7,6 +7,7 @@ import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
+import { useSidebarContext } from "./context/useSidebarContext";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace SidebarSubpackageItem {
@@ -25,16 +26,29 @@ export const SidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = ({
     slug,
 }) => {
     const { navigateToPath, registerScrolledToPathListener, getFullSlug, docsDefinition, docsInfo } = useDocsContext();
+    const { activeTabIndex } = useSidebarContext();
     const { closeMobileSidebar } = useMobileSidebarContext();
     const router = useRouter();
 
     const urlPathResolver = useMemo(() => {
+        let items;
+        if (isUnversionedTabbedNavigationConfig(docsInfo.activeNavigationConfig)) {
+            const activeTab = docsInfo.activeNavigationConfig.tabs[activeTabIndex];
+            if (activeTab == null) {
+                throw new Error(
+                    `Cannot find the tab with index ${activeTabIndex}. This indicates a bug with implementation.`
+                );
+            }
+            items = activeTab.items;
+        } else {
+            items = docsInfo.activeNavigationConfig.items;
+        }
         return new UrlPathResolver({
-            navigation: docsInfo.activeNavigationConfig,
+            items,
             loadApiDefinition: (id) => docsDefinition.apis[id],
             loadApiPage: (id) => docsDefinition.pages[id],
         });
-    }, [docsDefinition, docsInfo]);
+    }, [docsDefinition, docsInfo, activeTabIndex]);
 
     const handleClick = useCallback(async () => {
         const resolvedUrlPath = await urlPathResolver.resolveSlug(slug);

@@ -25,9 +25,14 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
     const { docsInfo } = useDocsContext();
     const { openSearchDialog } = useSearchContext();
     const searchService = useSearchService();
-    const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+    const [activeTabIndex, _setActiveTabIndex] = useState(0);
 
-    const contextValue = useCallback((): SidebarContextValue => ({ expandAllSections }), [expandAllSections]);
+    const setActiveTabIndex = useCallback((index: number) => _setActiveTabIndex(index), []);
+
+    const contextValue = useCallback(
+        (): SidebarContextValue => ({ expandAllSections, activeTabIndex, setActiveTabIndex }),
+        [expandAllSections, activeTabIndex, setActiveTabIndex]
+    );
 
     const { activeNavigationConfig } = docsInfo;
 
@@ -50,7 +55,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                         if (isUnversionedUntabbedNavigationConfig(activeNavigationConfig)) {
                             return <SidebarItems navigationItems={activeNavigationConfig.items} slug="" />;
                         }
-                        const selectedTab = activeNavigationConfig.tabs[selectedTabIndex];
+                        const selectedTab = activeNavigationConfig.tabs[activeTabIndex];
                         if (selectedTab == null) {
                             return null;
                         }
@@ -63,19 +68,19 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                                             className={classNames(
                                                 "flex flex-1 py-2 px-3 group/tab-button transition rounded-lg justify-start items-center select-none min-w-0",
                                                 {
-                                                    "text-accent-primary": idx === selectedTabIndex,
-                                                    "t-muted hover:text-accent-primary": idx !== selectedTabIndex,
+                                                    "text-accent-primary": idx === activeTabIndex,
+                                                    "t-muted hover:text-accent-primary": idx !== activeTabIndex,
                                                 }
                                             )}
-                                            onClick={() => setSelectedTabIndex(idx)}
+                                            onClick={() => _setActiveTabIndex(idx)}
                                         >
                                             <div className="flex min-w-0 items-center justify-start space-x-3">
                                                 <div className="min-w-fit">
                                                     <FontAwesomeIcon
                                                         className={classNames("h-5 w-5", {
-                                                            "text-accent-primary": idx === selectedTabIndex,
+                                                            "text-accent-primary": idx === activeTabIndex,
                                                             "t-muted group-hover/tab-button:text-accent-primary":
-                                                                idx !== selectedTabIndex,
+                                                                idx !== activeTabIndex,
                                                         })}
                                                         icon={tab.icon as IconProp}
                                                     />
