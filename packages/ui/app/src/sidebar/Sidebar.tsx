@@ -1,6 +1,10 @@
+import { Text } from "@blueprintjs/core";
 import { isUnversionedUntabbedNavigationConfig } from "@fern-ui/app-utils";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import classNames from "classnames";
 import { useCallback, useState } from "react";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useSearchContext } from "../search-context/useSearchContext";
 import { useSearchService } from "../services/useSearchService";
@@ -52,10 +56,33 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                         }
                         return (
                             <>
-                                <div className="border-border-default-light dark:border-border-default-dark border-b">
+                                <div className="mt-3 flex flex-col">
                                     {activeNavigationConfig.tabs.map((tab, idx) => (
-                                        <button key={idx} onClick={() => setSelectedTabIndex(idx)}>
-                                            {tab.title}
+                                        <button
+                                            key={idx}
+                                            className={classNames(
+                                                "flex flex-1 py-2 px-3 group/tab-button transition rounded-lg justify-start items-center select-none min-w-0",
+                                                {
+                                                    "text-accent-primary": idx === selectedTabIndex,
+                                                    "t-muted hover:text-accent-primary": idx !== selectedTabIndex,
+                                                }
+                                            )}
+                                            onClick={() => setSelectedTabIndex(idx)}
+                                        >
+                                            <div className="flex min-w-0 items-center justify-start space-x-3">
+                                                <div className="min-w-fit">
+                                                    <FontAwesomeIcon
+                                                        className={classNames("h-5 w-5", {
+                                                            "text-accent-primary": idx === selectedTabIndex,
+                                                            "t-muted group-hover/tab-button:text-accent-primary":
+                                                                idx !== selectedTabIndex,
+                                                        })}
+                                                        icon={tab.icon as IconProp}
+                                                    />
+                                                </div>
+
+                                                <Text ellipsize>{tab.title}</Text>
+                                            </div>
                                         </button>
                                     ))}
                                 </div>
