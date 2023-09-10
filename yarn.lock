@@ -1528,10 +1528,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@blueprintjs/colors@npm:^4.1.4, @blueprintjs/colors@npm:^4.1.8":
+"@blueprintjs/colors@npm:^4.1.8":
   version: 4.1.8
   resolution: "@blueprintjs/colors@npm:4.1.8"
   checksum: a9fb3363d19c95a752f66476aeb233f1e4f75e8d8daad992cff5dfa8f42f8fe215442e3e642b98feca9d5784a0ff3c5cb55779cee84958343b74004dac4985d4
+  languageName: node
+  linkType: hard
+
+"@blueprintjs/colors@npm:^5.0.2":
+  version: 5.0.2
+  resolution: "@blueprintjs/colors@npm:5.0.2"
+  dependencies:
+    tslib: ~2.5.0
+  checksum: e9db67af8f81a5ee69c5cc21b01a6872daa92079655c643dadffedcd68966df62b3111bb168a8c85e187d2735bef137a0ef59ca9c9d2adf2f84642fe02999feb
   languageName: node
   linkType: hard
 
@@ -1622,17 +1631,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@blueprintjs/stylelint-plugin@npm:^2.0.8":
-  version: 2.0.8
-  resolution: "@blueprintjs/stylelint-plugin@npm:2.0.8"
+"@blueprintjs/stylelint-plugin@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "@blueprintjs/stylelint-plugin@npm:4.0.2"
   dependencies:
-    "@blueprintjs/colors": "npm:^4.1.4"
-    postcss: "npm:^8.4.12"
-    postcss-selector-parser: "npm:^6.0.10"
-    postcss-value-parser: "npm:^4.2.0"
+    "@blueprintjs/colors": ^5.0.2
+    postcss: ^8.4.21
+    postcss-selector-parser: ^6.0.10
+    postcss-value-parser: ^4.2.0
   peerDependencies:
-    stylelint: ^14.6.1
-  checksum: 884f1dda616fd5117f5641e75ace79b0b9a5880d2beff6e573188b4acfaa9008e336885fab31e8ff36a23d4dd1b758e3403b0692013c206f93ecca6872bd1623
+    stylelint: ^14.12.1
+  checksum: 9ef2fe4c2431473910aaf74a6d16a30065a396c86038d6dd8b1dabfbb799ca6760c19c173eae85728ef0b2e0a0594828b828150b6c8caf675beefdc9cd09e276
   languageName: node
   linkType: hard
 
@@ -6508,7 +6517,7 @@ env-cmd@toddbluhm/env-cmd:
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/eslint-plugin": ^2.1.2
-    "@blueprintjs/stylelint-plugin": ^2.0.8
+    "@blueprintjs/stylelint-plugin": ^4.0.2
     "@types/is-ci": ^3.0.0
     "@types/jest": ^29.0.3
     "@types/lodash-es": 4.17.9
@@ -10950,7 +10959,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"postcss@npm:*, postcss@npm:^8.1.10, postcss@npm:^8.4.12, postcss@npm:^8.4.17, postcss@npm:^8.4.21, postcss@npm:^8.4.23":
+"postcss@npm:*, postcss@npm:^8.1.10, postcss@npm:^8.4.17, postcss@npm:^8.4.21, postcss@npm:^8.4.23":
   version: 8.4.23
   resolution: "postcss@npm:8.4.23"
   dependencies:
@@ -13029,7 +13038,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.4.0":
+"tslib@npm:^2.4.0, tslib@npm:~2.5.0":
   version: 2.5.3
   resolution: "tslib@npm:2.5.3"
   checksum: 88902b309afaf83259131c1e13da1dceb0ad1682a213143a1346a649143924d78cf3760c448b84d796938fd76127183894f8d85cbb3bf9c4fddbfcc140c0003c
