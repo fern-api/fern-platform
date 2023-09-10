@@ -317,8 +317,12 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         }
 
         if (isUnversionedTabbedNavigationConfig(navigationConfig)) {
-            // TODO: Find the right tab for this slug
-            const tab = navigationConfig.tabs[0];
+            // TODO: REMOVE THIS. THIS IS A HACK TO GET VELLUM DOCS WORKING.
+            // Find the right tab matching this slug
+            const tab =
+                slug === "introduction/getting-started" || slug.startsWith("api-reference")
+                    ? navigationConfig.tabs[1]
+                    : navigationConfig.tabs[0];
             if (tab == null) {
                 return { notFound: true, revalidate: true };
             }
