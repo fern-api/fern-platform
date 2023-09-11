@@ -43,7 +43,7 @@ export const Header = forwardRef<HTMLDivElement, PropsWithChildren<Header.Props>
             className={classNames(
                 "flex justify-between items-center shrink-0 pl-[calc(theme(spacing.4)+theme(spacing[1.5]))] pr-4",
                 // this matches with the calc() in the EndpointContent examples section
-                "h-16",
+                "h-full",
                 className
             )}
             ref={ref}

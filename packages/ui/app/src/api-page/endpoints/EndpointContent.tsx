@@ -22,7 +22,6 @@ export declare namespace EndpointContent {
     export interface Props {
         endpoint: FernRegistryApiRead.EndpointDefinition;
         package: FernRegistryApiRead.ApiDefinitionPackage;
-        headerHeight: number;
         hideBottomSeparator?: boolean;
         setContainerRef: (ref: HTMLElement | null) => void;
     }
@@ -31,7 +30,6 @@ export declare namespace EndpointContent {
 export const EndpointContent = React.memo<EndpointContent.Props>(function EndpointContent({
     endpoint,
     package: package_,
-    headerHeight,
     hideBottomSeparator = false,
     setContainerRef,
 }) {
@@ -183,9 +181,10 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                         // the 4rem is the same as the h-10 as the Header
                         "max-h-[calc(100vh-4rem)]",
                         // hide on mobile,
-                        "hidden lg:flex"
+                        "hidden lg:flex",
+                        // header offset
+                        "top-16"
                     )}
-                    style={{ top: headerHeight }}
                 >
                     {endpointExample}
                 </div>

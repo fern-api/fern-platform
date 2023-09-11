@@ -9,18 +9,11 @@ export declare namespace Endpoint {
         isLastInApi: boolean;
         package: FernRegistryApiRead.ApiDefinitionPackage;
         slug: string;
-        headerHeight: number;
     }
 }
 
-export const Endpoint: React.FC<Endpoint.Props> = ({
-    endpoint,
-    slug,
-    package: package_,
-    isLastInApi,
-    headerHeight,
-}) => {
-    const { setTargetRef } = useApiPageCenterElement({ slug, headerHeight });
+export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint, slug, package: package_, isLastInApi }) => {
+    const { setTargetRef } = useApiPageCenterElement({ slug });
 
     return (
         <EndpointContextProvider>
@@ -28,7 +21,6 @@ export const Endpoint: React.FC<Endpoint.Props> = ({
                 endpoint={endpoint}
                 setContainerRef={setTargetRef}
                 package={package_}
-                headerHeight={headerHeight}
                 hideBottomSeparator={isLastInApi}
             />
         </EndpointContextProvider>
