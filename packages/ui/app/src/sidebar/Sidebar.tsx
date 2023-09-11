@@ -56,45 +56,52 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                         return (
                             <>
                                 <div className="mt-3 flex flex-col">
-                                    {activeNavigationConfig.tabs.map((tab, idx) => (
-                                        <button
-                                            key={idx}
-                                            className={classNames(
-                                                "flex flex-1 py-2 px-3 group/tab-button transition rounded-lg justify-start items-center select-none min-w-0",
-                                                {
-                                                    "text-accent-primary": idx === activeTabIndex,
-                                                    "t-muted hover:text-accent-primary": idx !== activeTabIndex,
-                                                }
-                                            )}
-                                            onClick={() => {
-                                                setActiveTabIndex(idx);
-                                                const [firstTabItem] = tab.items;
-                                                if (firstTabItem == null) {
-                                                    return;
-                                                }
-                                                const slugToNavigate = getFirstNavigatableItem(firstTabItem);
-                                                if (slugToNavigate != null) {
-                                                    void router.push("/" + getFullSlug(slugToNavigate));
-                                                    navigateToPath(slugToNavigate);
-                                                }
-                                            }}
-                                        >
-                                            <div className="flex min-w-0 items-center justify-start space-x-3">
-                                                <div className="min-w-fit">
-                                                    <FontAwesomeIcon
-                                                        className={classNames("h-5 w-5", {
-                                                            "text-accent-primary": idx === activeTabIndex,
-                                                            "t-muted group-hover/tab-button:text-accent-primary":
-                                                                idx !== activeTabIndex,
-                                                        })}
-                                                        icon={tab.icon as IconProp}
-                                                    />
-                                                </div>
+                                    {activeNavigationConfig.tabs.map((tab, idx) => {
+                                        const [firstTabItem] = tab.items;
+                                        if (firstTabItem == null) {
+                                            return null;
+                                        }
+                                        const slugToNavigate = getFirstNavigatableItem(firstTabItem);
+                                        if (slugToNavigate == null) {
+                                            return null;
+                                        }
+                                        return (
+                                            <button
+                                                key={idx}
+                                                className={classNames(
+                                                    "flex flex-1 py-2 px-3 group/tab-button transition rounded-lg justify-start items-center !no-underline select-none min-w-0",
+                                                    {
+                                                        "!text-accent-primary": idx === activeTabIndex,
+                                                        "!t-muted hover:!text-accent-primary": idx !== activeTabIndex,
+                                                    }
+                                                )}
+                                                onClick={() => {
+                                                    setActiveTabIndex(idx);
+                                                    if (slugToNavigate != null) {
+                                                        void router.push(
+                                                            "/" + getFullSlug(slugToNavigate, { tabSlug: tab.urlSlug })
+                                                        );
+                                                        navigateToPath(slugToNavigate);
+                                                    }
+                                                }}
+                                            >
+                                                <div className="flex min-w-0 items-center justify-start space-x-3">
+                                                    <div className="min-w-fit">
+                                                        <FontAwesomeIcon
+                                                            className={classNames("h-5 w-5", {
+                                                                "text-accent-primary": idx === activeTabIndex,
+                                                                "t-muted group-hover/tab-button:text-accent-primary":
+                                                                    idx !== activeTabIndex,
+                                                            })}
+                                                            icon={tab.icon as IconProp}
+                                                        />
+                                                    </div>
 
-                                                <Text ellipsize>{tab.title}</Text>
-                                            </div>
-                                        </button>
-                                    ))}
+                                                    <Text ellipsize>{tab.title}</Text>
+                                                </div>
+                                            </button>
+                                        );
+                                    })}
                                 </div>
                                 <SidebarItems navigationItems={activeTab.items} slug="" />;
                             </>

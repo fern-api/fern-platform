@@ -48,7 +48,7 @@ export interface DocsContextValue {
     setActiveTabIndex: (index: number) => void;
 
     /** Returns the version-prefixed slug. */
-    getFullSlug: (slug: string) => string;
+    getFullSlug: (slug: string, opts?: { tabSlug?: string }) => string;
 
     // controlled
     selectedSlug: string | undefined;
