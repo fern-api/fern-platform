@@ -7,6 +7,7 @@ import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSide
 import { useSearchContext } from "../search-context/useSearchContext";
 import { SearchDialog } from "../search/SearchDialog";
 import { useSearchService } from "../services/useSearchService";
+import { Sidebar } from "../sidebar/Sidebar";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
 import { useCustomTheme } from "./useCustomTheme";
@@ -27,7 +28,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
 
     return (
         <div
-            className={classNames("relative flex min-h-0 flex-1 bg-background flex-col bg-fixed", {
+            className={classNames("relative flex min-h-0 flex-1 bg-background flex-col", {
                 "from-accent-primary/10 dark:from-accent-primary/[0.15] overscroll-y-none bg-gradient-to-b to-transparent":
                     !hasSpecifiedBackgroundColor && !hasSpecifiedBackgroundImage,
             })}
@@ -40,7 +41,6 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                     : {}
             }
         >
-            {/* <div className=""></div> */}
             {searchService.isAvailable && <SearchDialog isOpen={isSearchDialogOpen} onClose={closeSearchDialog} />}
             <div className="border-border-default-light dark:border-border-default-dark sticky inset-x-0 top-0 z-20 h-16 border-b backdrop-blur-xl">
                 <Header
@@ -62,7 +62,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                         style={{ maxHeight: "calc(100vh - 4rem)" }}
                         id="sidebar-container"
                     >
-                        {/* <Sidebar /> */}
+                        <Sidebar />
                     </div>
                 </div>
                 {isMobileSidebarOpen && (
@@ -70,7 +70,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                         className="bg-background fixed inset-x-0 bottom-0 top-16 z-10 flex overflow-auto overflow-x-hidden md:hidden"
                         style={{ maxHeight: "calc(100vh - 4rem)" }}
                     >
-                        {/* <Sidebar hideSearchBar /> */}
+                        <Sidebar hideSearchBar />
                     </div>
                 )}
                 <div className="flex w-full min-w-0 flex-1 flex-col">
