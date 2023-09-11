@@ -2216,7 +2216,6 @@ __metadata:
     "@types/marked": ^5.0.0
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
-    "@types/react-dom": ^18.2.7
     "@types/react-syntax-highlighter": ^15.5.6
     algoliasearch: ^4.18.0
     classnames: ^2.3.1
@@ -3379,15 +3378,6 @@ __metadata:
   dependencies:
     "@types/react": "*"
   checksum: db571047af1a567631758700b9f7d143e566df939cfe5fbf7535347cc0c726a1cdbb5e3f8566d076e54cf708b6c1166689de194a9ba09ee35efc9e1d45911685
-  languageName: node
-  linkType: hard
-
-"@types/react-dom@npm:^18.2.7":
-  version: 18.2.7
-  resolution: "@types/react-dom@npm:18.2.7"
-  dependencies:
-    "@types/react": "*"
-  checksum: e02ea908289a7ad26053308248d2b87f6aeafd73d0e2de2a3d435947bcea0422599016ffd1c3e38ff36c42f5e1c87c7417f05b0a157e48649e4a02f21727d54f
   languageName: node
   linkType: hard
 
