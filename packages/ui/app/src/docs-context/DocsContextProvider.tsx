@@ -43,28 +43,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
 
     const rootSlug = activeVersion ?? "";
 
-    const getFullSlug = useCallback((slug: string) => `${rootSlug ? `${rootSlug}/` : ""}${slug}`, [rootSlug]);
-
-    const selectedSlugFromUrl = useMemo(() => {
-        switch (resolvedUrlPath.type) {
-            case "clientLibraries":
-            case "endpoint":
-            case "webhook":
-            case "mdx-page":
-            case "topLevelEndpoint":
-            case "topLevelWebhook":
-            case "apiSubpackage":
-                return getFullSlug(resolvedUrlPath.slug);
-            case "api":
-            case "section":
-                return undefined;
-            default:
-                assertNever(resolvedUrlPath);
-        }
-    }, [resolvedUrlPath, getFullSlug]);
-
-    const [selectedSlug, setSelectedSlug] = useState(selectedSlugFromUrl);
-
     const docsInfo = useMemo<DocsInfo>(() => {
         if (inferredVersion != null && activeVersion != null) {
             assertIsVersionedNavigationConfig(docsDefinition.config.navigation);
@@ -92,6 +70,48 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             };
         }
     }, [inferredVersion, activeVersion, docsDefinition.config.navigation, rootSlug]);
+
+    const activeTab = useMemo(() => {
+        if (activeTabIndex == null || isUnversionedUntabbedNavigationConfig(docsInfo.activeNavigationConfig)) {
+            return undefined;
+        }
+        return docsInfo.activeNavigationConfig.tabs[activeTabIndex];
+    }, [docsInfo.activeNavigationConfig, activeTabIndex]);
+
+    const getFullSlug = useCallback(
+        (slug: string, opts?: { tabSlug?: string }) => {
+            const parts: string[] = [];
+            if (rootSlug) {
+                parts.push(`${rootSlug}/`);
+            }
+            if (activeTab != null) {
+                parts.push(`${opts?.tabSlug ?? activeTab.urlSlug}/`);
+            }
+            parts.push(slug);
+            return parts.join("");
+        },
+        [rootSlug, activeTab]
+    );
+
+    const selectedSlugFromUrl = useMemo(() => {
+        switch (resolvedUrlPath.type) {
+            case "clientLibraries":
+            case "endpoint":
+            case "webhook":
+            case "mdx-page":
+            case "topLevelEndpoint":
+            case "topLevelWebhook":
+            case "apiSubpackage":
+                return getFullSlug(resolvedUrlPath.slug);
+            case "api":
+            case "section":
+                return undefined;
+            default:
+                assertNever(resolvedUrlPath);
+        }
+    }, [resolvedUrlPath, getFullSlug]);
+
+    const [selectedSlug, setSelectedSlug] = useState(selectedSlugFromUrl);
 
     const setActiveVersion = useCallback((version: string) => {
         _setActiveVersion(version);
@@ -171,13 +191,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
         void router.replace(`/${slug}`, undefined, { shallow: true, scroll: false });
         scrollToPathListeners.invokeListeners(slug);
     });
-
-    const activeTab = useMemo(() => {
-        if (activeTabIndex == null || isUnversionedUntabbedNavigationConfig(docsInfo.activeNavigationConfig)) {
-            return undefined;
-        }
-        return docsInfo.activeNavigationConfig.tabs[activeTabIndex];
-    }, [docsInfo.activeNavigationConfig, activeTabIndex]);
 
     const contextValue = useCallback(
         (): DocsContextValue => ({
