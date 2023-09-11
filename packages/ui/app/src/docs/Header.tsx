@@ -1,13 +1,11 @@
+import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
-import { forwardRef, PropsWithChildren } from "react";
+import { forwardRef, memo, PropsWithChildren } from "react";
 import { MenuIcon } from "../commons/icons/MenuIcon";
 import { SearchIcon } from "../commons/icons/SearchIcon";
 import { XIcon } from "../commons/icons/XIcon";
-import { useDocsContext } from "../docs-context/useDocsContext";
-import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
-import { useSearchContext } from "../search-context/useSearchContext";
-import { useSearchService } from "../services/useSearchService";
+import { SearchService } from "../services/useSearchService";
 import { HeaderLogoSection } from "./HeaderLogoSection";
 import { HeaderPrimaryLink } from "./HeaderPrimaryLink";
 import { HeaderSecondaryLink } from "./HeaderSecondaryLink";
@@ -16,14 +14,29 @@ import { ThemeButton } from "./ThemeButton";
 export declare namespace Header {
     export interface Props {
         className?: string;
+        docsDefinition: FernRegistryDocsRead.DocsDefinition;
+        lightModeEnabled: boolean;
+        openSearchDialog: () => void;
+        isMobileSidebarOpen: boolean;
+        openMobileSidebar: () => void;
+        closeMobileSidebar: () => void;
+        searchService: SearchService;
     }
 }
 
-export const Header = forwardRef<HTMLDivElement, PropsWithChildren<Header.Props>>(function Header({ className }, ref) {
-    const { docsDefinition, lightModeEnabled } = useDocsContext();
-    const { openSearchDialog } = useSearchContext();
-    const { isMobileSidebarOpen, closeMobileSidebar, openMobileSidebar } = useMobileSidebarContext();
-    const searchService = useSearchService();
+const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Props>>(function Header(
+    {
+        className,
+        docsDefinition,
+        lightModeEnabled,
+        openSearchDialog,
+        isMobileSidebarOpen,
+        openMobileSidebar,
+        closeMobileSidebar,
+        searchService,
+    },
+    ref
+) {
     const { navbarLinks } = docsDefinition.config;
 
     const navbarLinksSection = (
@@ -79,3 +92,5 @@ export const Header = forwardRef<HTMLDivElement, PropsWithChildren<Header.Props>
         </div>
     );
 });
+
+export const Header = memo(UnmemoizedHeader);
