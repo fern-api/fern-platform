@@ -28,7 +28,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
 
     return (
         <div
-            className={classNames("relative flex min-h-0 flex-1 bg-background flex-col bg-fixed", {
+            className={classNames("relative flex min-h-0 flex-1 bg-background flex-col", {
                 "from-accent-primary/10 dark:from-accent-primary/[0.15] overscroll-y-none bg-gradient-to-b to-transparent":
                     !hasSpecifiedBackgroundColor && !hasSpecifiedBackgroundImage,
             })}
@@ -41,6 +41,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                     : {}
             }
         >
+            {/* <div className=""></div> */}
             {searchService.isAvailable && <SearchDialog isOpen={isSearchDialogOpen} onClose={closeSearchDialog} />}
             <div className="border-border-default-light dark:border-border-default-dark sticky inset-x-0 top-0 z-20 h-16 border-b backdrop-blur-xl">
                 <Header
