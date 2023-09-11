@@ -76,7 +76,8 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
         return registerScrolledToPathListener(fullSlug, () => {
             ref.current?.scrollIntoView({ block: "nearest" });
         });
-    });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [fullSlug]);
 
     return (
         <div className={classNames(className)} ref={ref}>
