@@ -102,12 +102,7 @@ export const SidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = ({
 
     useEffect(() => {
         return registerScrolledToPathListener(fullSlug, () => {
-            const top = ref.current?.offsetTop;
-            const sidebarContainer = document.getElementById("sidebar-container");
-            const height = sidebarContainer?.clientHeight;
-            if (top != null && height != null) {
-                sidebarContainer?.scrollTo({ top: top - height / 2 });
-            }
+            ref.current?.scrollIntoView({ block: "nearest" });
         });
     });
 
