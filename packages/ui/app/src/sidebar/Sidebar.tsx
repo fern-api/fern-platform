@@ -78,16 +78,20 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                                 }
                             )}
                             onClick={() => {
-                                setActiveTabIndex(idx);
                                 const [firstTabItem] = tab.items;
                                 if (firstTabItem == null) {
                                     return;
                                 }
                                 const slugToNavigate = getFirstNavigatableItem(firstTabItem);
-                                if (slugToNavigate != null) {
-                                    void router.push("/" + getFullSlug(slugToNavigate, { tabSlug: tab.urlSlug }));
-                                    navigateToPath(slugToNavigate);
+                                if (slugToNavigate == null) {
+                                    return;
                                 }
+                                setActiveTabIndex(idx);
+                                navigateToPath(slugToNavigate, {
+                                    omitVersionPrefix: false,
+                                    tabSlug: tab.urlSlug,
+                                });
+                                void router.push("/" + getFullSlug(slugToNavigate, { tabSlug: tab.urlSlug }));
                             }}
                         >
                             <div className="flex min-w-0 items-center justify-start space-x-3">
