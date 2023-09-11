@@ -16,7 +16,6 @@ export function useTheme(lightModeEnabled: boolean): UseThemeReturnType {
     }, []);
 
     return useMemo(() => {
-
         if (!lightModeEnabled) {
             return { theme: DEFAULT_THEME, setTheme };
         }

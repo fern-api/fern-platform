@@ -29,10 +29,13 @@ export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args):
 
     const handleIsSelected = useCallback(() => {
         const headerHeight = 64; // 4rem
-        window.scrollTo({ top: (targetRef.current?.offsetTop ?? 0) - (headerHeight) });
+        window.scrollTo({ top: (targetRef.current?.offsetTop ?? 0) - headerHeight });
     }, []);
 
-    useEffect(() => registerNavigateToPathListener(getFullSlug(slug), handleIsSelected), [handleIsSelected, slug, registerNavigateToPathListener, getFullSlug]);
+    useEffect(
+        () => registerNavigateToPathListener(getFullSlug(slug), handleIsSelected),
+        [handleIsSelected, slug, registerNavigateToPathListener, getFullSlug]
+    );
 
     const isSelected = useIsSlugSelected(getFullSlug(slug));
     useEffect(() => {

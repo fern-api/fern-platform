@@ -8,7 +8,6 @@ import {
     type ResolvedUrlPath,
 } from "@fern-ui/app-utils";
 import { assertNeverNoThrow } from "@fern-ui/core-utils";
-// eslint-disable-next-line import/no-internal-modules
 import { App } from "@fern-ui/ui";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { Inter } from "next/font/google";
