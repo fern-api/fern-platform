@@ -1,10 +1,10 @@
 import { Text } from "@blueprintjs/core";
-import { isUnversionedUntabbedNavigationConfig } from "@fern-ui/app-utils";
+import { getFirstNavigatableItem, isUnversionedUntabbedNavigationConfig } from "@fern-ui/app-utils";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import classNames from "classnames";
-import { useCallback, useState } from "react";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from "classnames";
+import { useRouter } from "next/router";
+import { useCallback, useState } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useSearchContext } from "../search-context/useSearchContext";
@@ -36,6 +36,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
     const { closeMobileSidebar } = useMobileSidebarContext();
     const searchService = useSearchService();
     const [activeTabIndex, _setActiveTabIndex] = useState(0);
+    const router = useRouter();
 
     const setActiveTabIndex = useCallback((index: number) => _setActiveTabIndex(index), []);
 
@@ -81,7 +82,18 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                                     "t-muted hover:text-accent-primary": idx !== activeTabIndex,
                                 }
                             )}
-                            onClick={() => _setActiveTabIndex(idx)}
+                            onClick={() => {
+                                _setActiveTabIndex(idx);
+                                const [firstTabItem] = tab.items;
+                                if (firstTabItem == null) {
+                                    return;
+                                }
+                                const slugToNavigate = getFirstNavigatableItem(firstTabItem);
+                                if (slugToNavigate != null) {
+                                    void router.push("/" + getFullSlug(slugToNavigate));
+                                    navigateToPath(slugToNavigate);
+                                }
+                            }}
                         >
                             <div className="flex min-w-0 items-center justify-start space-x-3">
                                 <div className="min-w-fit">
