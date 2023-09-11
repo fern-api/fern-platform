@@ -5,25 +5,18 @@ import { ApiArtifacts } from "./artifacts/ApiArtifacts";
 import { areApiArtifactsNonEmpty } from "./artifacts/areApiArtifactsNonEmpty";
 
 export declare namespace ApiPage {
-    export interface Props {
-        headerHeight: number;
-    }
+    export interface Props {}
 }
 
-export const ApiPage: React.FC<ApiPage.Props> = ({ headerHeight }) => {
+export const ApiPage: React.FC<ApiPage.Props> = () => {
     const { apiDefinition, apiSlug, apiSection } = useApiDefinitionContext();
 
     return (
         <div className="min-h-0 pb-36">
             {apiSection.artifacts != null && areApiArtifactsNonEmpty(apiSection.artifacts) && (
-                <ApiArtifacts apiArtifacts={apiSection.artifacts} headerHeight={headerHeight} />
+                <ApiArtifacts apiArtifacts={apiSection.artifacts} />
             )}
-            <ApiPackageContents
-                package={apiDefinition.rootPackage}
-                slug={apiSlug}
-                isLastInParentPackage={false}
-                headerHeight={headerHeight}
-            />
+            <ApiPackageContents package={apiDefinition.rootPackage} slug={apiSlug} isLastInParentPackage={false} />
 
             <div className="pl-6 pr-4 md:pl-12">
                 <BottomNavigationButtons />

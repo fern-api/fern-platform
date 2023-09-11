@@ -1,7 +1,7 @@
 import { Text } from "@blueprintjs/core";
 import classNames from "classnames";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useIsSlugSelected } from "../docs-context/useIsSlugSelected";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
@@ -74,21 +74,21 @@ export const SidebarItem: React.FC<SidebarItem.Props> = ({
         [isSelected, leftElement, rightElement, title, indent]
     );
 
-    const [ref, setRef] = useState<HTMLElement | null>(null);
+    const ref = useRef<HTMLDivElement>(null);
+
     useEffect(() => {
-        if (ref == null) {
-            return;
-        }
-        const unsubscribe = registerScrolledToPathListener(fullSlug, () => {
-            ref.scrollIntoView({
-                block: "center",
-            });
+        return registerScrolledToPathListener(fullSlug, () => {
+            const top = ref.current?.offsetTop;
+            const sidebarContainer = document.getElementById("sidebar-container");
+            const height = sidebarContainer?.clientHeight;
+            if (top != null && height != null) {
+                sidebarContainer?.scrollTo({ top: top - height / 2 });
+            }
         });
-        return unsubscribe;
-    }, [ref, registerScrolledToPathListener, fullSlug]);
+    });
 
     return (
-        <div className={classNames(className)} ref={setRef}>
+        <div className={classNames(className)} ref={ref}>
             <Link
                 href={`/${fullSlug}`}
                 onClick={handleClick}
