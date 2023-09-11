@@ -7,6 +7,7 @@ import {
     type ResolvedUrlPath,
 } from "@fern-ui/app-utils";
 import { assertNever } from "@fern-ui/core-utils";
+import { useEventCallback } from "@fern-ui/react-commons";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
 import { DocsContext, DocsContextValue, type DocsInfo, type NavigateToPathOpts } from "./DocsContext";
@@ -135,7 +136,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
 
     const [justNavigated, setJustNavigated] = useState(false);
 
-    const navigateToPath = useCallback(
+    const navigateToPath = useEventCallback(
         (slugWithoutVersion: string, opts: NavigateToPathOpts = { omitVersionPrefix: false }) => {
             setJustNavigated(true);
             const slug = opts.omitVersionPrefix ? slugWithoutVersion : getFullSlug(slugWithoutVersion);
@@ -148,24 +149,20 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             return () => {
                 clearTimeout(timeout);
             };
-        },
-        [navigateToPathListeners, getFullSlug]
+        }
     );
 
     const scrollToPathListeners = useSlugListeners("scrollToPath", { selectedSlug });
 
-    const onScrollToPath = useCallback(
-        (slugWithoutVersion: string) => {
-            const slug = getFullSlug(slugWithoutVersion);
-            if (justNavigated || slug === selectedSlug) {
-                return;
-            }
-            setSelectedSlug(slug);
-            void router.push(`/${slug}`, undefined, { shallow: true });
-            scrollToPathListeners.invokeListeners(slug);
-        },
-        [justNavigated, router, scrollToPathListeners, selectedSlug, getFullSlug]
-    );
+    const onScrollToPath = useEventCallback((slugWithoutVersion: string) => {
+        const slug = getFullSlug(slugWithoutVersion);
+        if (justNavigated || slug === selectedSlug) {
+            return;
+        }
+        setSelectedSlug(slug);
+        void router.replace(`/${slug}`, undefined, { shallow: true, scroll: false });
+        scrollToPathListeners.invokeListeners(slug);
+    });
 
     const contextValue = useCallback(
         (): DocsContextValue => ({

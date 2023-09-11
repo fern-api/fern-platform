@@ -3520,12 +3520,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@blueprintjs/core", "virtual:4b2d4b4eede64b67e40078e91559762849253e2bd223e81893ee96dda16b1f565a0f170ff96889d4acdcdd1e27747aa2afdbeccf8ed96e28e096b25c224359e9#npm:4.11.5"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@types/jest", "npm:29.0.3"],\
+            ["@types/lodash-es", "npm:4.17.9"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/react", "npm:18.0.20"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
             ["immer", "npm:9.0.15"],\
             ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.5.0"],\
+            ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["react", "npm:18.2.0"],\

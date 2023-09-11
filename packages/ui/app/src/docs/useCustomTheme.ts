@@ -1,4 +1,5 @@
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { useTheme } from "@fern-ui/theme";
 import { useEffect } from "react";
 import { DEFAULT_COLORS } from "../config";
@@ -46,5 +47,6 @@ export function useCustomTheme(docsDefinition: FernRegistryDocsRead.DocsDefiniti
             background = DEFAULT_COLORS.background[theme];
         }
         root.style.setProperty(CSS_VARIABLES.BACKGROUND, `${background.r}, ${background.g}, ${background.b}`);
-    }, [docsDefinition.config.colorsV2, docsDefinition.config.colors, theme]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, useDeepCompareMemoize([docsDefinition.config.colorsV2, docsDefinition.config.colors, theme]));
 }

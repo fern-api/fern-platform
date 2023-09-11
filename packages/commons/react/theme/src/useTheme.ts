@@ -1,5 +1,5 @@
 import { useTheme as _useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { DEFAULT_THEME, type Theme } from "./theme";
 
 interface UseThemeReturnType {
@@ -15,13 +15,15 @@ export function useTheme(lightModeEnabled: boolean): UseThemeReturnType {
         setMounted(true);
     }, []);
 
-    if (!lightModeEnabled) {
-        return { theme: DEFAULT_THEME, setTheme };
-    }
+    return useMemo(() => {
+        if (!lightModeEnabled) {
+            return { theme: DEFAULT_THEME, setTheme };
+        }
 
-    if (!mounted) {
-        return { theme: undefined, setTheme };
-    }
+        if (!mounted) {
+            return { theme: undefined, setTheme };
+        }
 
-    return { theme, setTheme } as UseThemeReturnType;
+        return { theme, setTheme } as UseThemeReturnType;
+    }, [lightModeEnabled, mounted, setTheme, theme]);
 }
