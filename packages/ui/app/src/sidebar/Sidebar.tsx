@@ -57,14 +57,6 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                             <>
                                 <div className="mt-3 flex flex-col">
                                     {activeNavigationConfig.tabs.map((tab, idx) => {
-                                        const [firstTabItem] = tab.items;
-                                        if (firstTabItem == null) {
-                                            return null;
-                                        }
-                                        const slugToNavigate = getFirstNavigatableItem(firstTabItem);
-                                        if (slugToNavigate == null) {
-                                            return null;
-                                        }
                                         return (
                                             <button
                                                 key={idx}
@@ -75,14 +67,23 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                                                         "!t-muted hover:!text-accent-primary": idx !== activeTabIndex,
                                                     }
                                                 )}
-                                                onClick={() => {
-                                                    setActiveTabIndex(idx);
-                                                    if (slugToNavigate != null) {
-                                                        void router.push(
-                                                            "/" + getFullSlug(slugToNavigate, { tabSlug: tab.urlSlug })
-                                                        );
-                                                        navigateToPath(slugToNavigate);
+                                                onClick={async () => {
+                                                    const [firstTabItem] = tab.items;
+                                                    if (firstTabItem == null) {
+                                                        return;
                                                     }
+                                                    const slugToNavigate = getFirstNavigatableItem(firstTabItem);
+                                                    if (slugToNavigate == null) {
+                                                        return;
+                                                    }
+                                                    setActiveTabIndex(idx);
+                                                    navigateToPath(slugToNavigate, {
+                                                        omitVersionPrefix: false,
+                                                        tabSlug: tab.urlSlug,
+                                                    });
+                                                    void router.push(
+                                                        "/" + getFullSlug(slugToNavigate, { tabSlug: tab.urlSlug })
+                                                    );
                                                 }}
                                             >
                                                 <div className="flex min-w-0 items-center justify-start space-x-3">
