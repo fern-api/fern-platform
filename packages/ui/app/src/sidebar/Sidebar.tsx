@@ -85,7 +85,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                                 }
                                 const slugToNavigate = getFirstNavigatableItem(firstTabItem);
                                 if (slugToNavigate != null) {
-                                    void router.push("/" + getFullSlug(slugToNavigate));
+                                    void router.push("/" + getFullSlug(slugToNavigate, { tabSlug: tab.urlSlug }));
                                     navigateToPath(slugToNavigate);
                                 }
                             }}
