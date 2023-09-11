@@ -7,10 +7,11 @@ export declare namespace ApiSubpackages {
     export interface Props {
         package: FernRegistryApiRead.ApiDefinitionPackage;
         slug: string;
+        shallow: boolean;
     }
 }
 
-export const ApiSubpackages: React.FC<ApiSubpackages.Props> = ({ slug, package: package_ }) => {
+export const ApiSubpackages: React.FC<ApiSubpackages.Props> = ({ slug, package: package_, shallow }) => {
     const { resolveSubpackageById } = useApiDefinitionContext();
 
     return (
@@ -22,6 +23,7 @@ export const ApiSubpackages: React.FC<ApiSubpackages.Props> = ({ slug, package: 
                         key={subpackageId}
                         subpackage={subpackage}
                         slug={joinUrlSlugs(slug, subpackage.urlSlug)}
+                        shallow={shallow}
                     />
                 );
             })}

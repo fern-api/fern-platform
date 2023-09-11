@@ -3,7 +3,7 @@ export function getSlugFromUrl({ pathname, basePath }: { pathname: string; baseP
     return removeLeadingAndTrailingSlashes(slug);
 }
 
-function removeLeadingAndTrailingSlashes(s: string): string {
+export function removeLeadingAndTrailingSlashes(s: string): string {
     if (s.startsWith("/")) {
         s = s.substring(1);
     }

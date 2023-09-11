@@ -13,10 +13,15 @@ export declare namespace ApiSubpackageSidebarSection {
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
         slug: string;
         isFirstItemInApi?: boolean;
+        shallow: boolean;
     }
 }
 
-export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.Props> = ({ subpackage, slug }) => {
+export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.Props> = ({
+    subpackage,
+    slug,
+    shallow,
+}) => {
     const { selectedSlug, getFullSlug } = useDocsContext();
     const { resolveSubpackageById } = useApiDefinitionContext();
 
@@ -41,10 +46,11 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
                     title={getSubpackageTitle(subpackage)}
                     isChildSelected={isChildSelected}
                     slug={slug}
+                    shallow={shallow}
                 />
             }
         >
-            {isOpen && <ApiPackageSidebarSectionContents package={subpackage} slug={slug} />}
+            {isOpen && <ApiPackageSidebarSectionContents package={subpackage} slug={slug} shallow={shallow} />}
         </SidebarGroup>
     );
 };

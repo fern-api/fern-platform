@@ -14,10 +14,8 @@ import { Header } from "./Header";
 import { useCustomTheme } from "./useCustomTheme";
 
 export const Docs: React.FC = () => {
-    const headerContainerRef = useRef<null | HTMLDivElement>(null);
-    const headerContentRef = useRef<null | HTMLDivElement>(null);
-    const [headerContainerWidth] = useSize(headerContainerRef);
-    const [headerContentWidth] = useSize(headerContentRef);
+    const headerContainerRef = useRef<HTMLDivElement>(null);
+    const [, headerHeight] = useSize(headerContainerRef);
     const { docsDefinition } = useDocsContext();
     const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = useSearchContext();
     const searchService = useSearchService();
@@ -29,11 +27,9 @@ export const Docs: React.FC = () => {
     const hasSpecifiedBackgroundColor = !!docsDefinition.config.colorsV2?.background;
     const hasSpecifiedBackgroundImage = !!docsDefinition.config.backgroundImage;
 
-    const marginHorizontal = (headerContainerWidth - headerContentWidth) / 2;
-
     return (
         <div
-            className={classNames("relative flex min-h-0 flex-1 bg-background flex-col overflow-x-hidden", {
+            className={classNames("relative flex min-h-0 flex-1 bg-background flex-col", {
                 "from-accent-primary/10 dark:from-accent-primary/[0.15] overscroll-y-none bg-gradient-to-b to-transparent":
                     !hasSpecifiedBackgroundColor && !hasSpecifiedBackgroundImage,
             })}
@@ -48,27 +44,30 @@ export const Docs: React.FC = () => {
         >
             {searchService.isAvailable && <SearchDialog isOpen={isSearchDialogOpen} onClose={closeSearchDialog} />}
             <div
-                className="border-border-default-light dark:border-border-default-dark sticky inset-x-0 top-0 z-20 border-b"
+                className="border-border-default-light dark:border-border-default-dark sticky inset-x-0 top-0 z-20 border-b backdrop-blur-xl"
                 ref={headerContainerRef}
             >
-                <Header className="max-w-8xl mx-auto" ref={headerContentRef} />
+                <Header className="max-w-8xl mx-auto" />
             </div>
 
-            {headerContainerWidth > 0 && headerContentWidth > 0 && (
-                <div className="flex min-h-0 w-full flex-1" style={{ marginLeft: marginHorizontal }}>
-                    <div className="hidden w-72 pl-4 md:flex">
+            <div className="max-w-8xl mx-auto flex min-h-0 w-full flex-1">
+                <div className="hidden w-72 md:flex">
+                    <div
+                        className="sticky w-full overflow-auto overflow-x-hidden"
+                        style={{ top: headerHeight, maxHeight: `calc(100vh - ${headerHeight}px)` }}
+                    >
                         <Sidebar />
                     </div>
-                    {isMobileSidebarOpen && (
-                        <div className="bg-background absolute inset-x-0 bottom-0 top-16 z-10 flex pl-2.5 md:hidden">
-                            <Sidebar hideSearchBar />
-                        </div>
-                    )}
-                    <div className="flex w-full min-w-0 flex-1 flex-col">
-                        <DocsMainContent marginHorizontal={marginHorizontal} />
-                    </div>
                 </div>
-            )}
+                {isMobileSidebarOpen && (
+                    <div className="bg-background absolute inset-x-0 bottom-0 top-16 z-10 flex md:hidden">
+                        <Sidebar hideSearchBar />
+                    </div>
+                )}
+                <div className="flex w-full min-w-0 flex-1 flex-col">
+                    <DocsMainContent headerHeight={headerHeight} />
+                </div>
+            </div>
         </div>
     );
 };
