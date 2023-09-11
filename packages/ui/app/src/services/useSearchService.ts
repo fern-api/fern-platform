@@ -4,13 +4,13 @@ import { useDocsContext } from "../docs-context/useDocsContext";
 
 export type SearchService =
     | {
-          isAvailable: true;
-          client: SearchClient;
-          index: string;
-      }
+        isAvailable: true;
+        client: SearchClient;
+        index: string;
+    }
     | {
-          isAvailable: false;
-      };
+        isAvailable: false;
+    };
 
 if (process.env.NEXT_PUBLIC_ALGOLIA_APP_ID == null || process.env.NEXT_PUBLIC_ALGOLIA_API_KEY == null) {
     // TODO: Move this validation elsewhere

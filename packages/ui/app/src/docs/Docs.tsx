@@ -1,6 +1,7 @@
 import { PLATFORM } from "@fern-ui/core-utils";
-import { useKeyboardCommand } from "@fern-ui/react-commons";
+import { useKeyboardCommand, useWhyDidYouUpdate } from "@fern-ui/react-commons";
 import classNames from "classnames";
+import { memo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useSearchContext } from "../search-context/useSearchContext";
@@ -12,9 +13,11 @@ import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
 import { useCustomTheme } from "./useCustomTheme";
 
-export const Docs: React.FC = () => {
-    const { docsDefinition } = useDocsContext();
-    const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = useSearchContext();
+export const Docs: React.FC = memo(function UnmemoizedDocs() {
+    const docsContext = useDocsContext();
+    const { docsDefinition, lightModeEnabled } = docsContext;
+    const searchContext = useSearchContext();
+    const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = searchContext;
     const searchService = useSearchService();
     useCustomTheme(docsDefinition);
     useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
@@ -23,6 +26,16 @@ export const Docs: React.FC = () => {
 
     const hasSpecifiedBackgroundColor = !!docsDefinition.config.colorsV2?.background;
     const hasSpecifiedBackgroundImage = !!docsDefinition.config.backgroundImage;
+
+    console.log("docs is being rerendered");
+    useWhyDidYouUpdate("Docs", {
+        ...docsContext,
+        ...searchContext,
+        ...searchService,
+        isMobileSidebarOpen,
+        openMobileSidebar,
+        closeMobileSidebar,
+    });
 
     return (
         <div
@@ -42,7 +55,16 @@ export const Docs: React.FC = () => {
             {/* <div className=""></div> */}
             {searchService.isAvailable && <SearchDialog isOpen={isSearchDialogOpen} onClose={closeSearchDialog} />}
             <div className="border-border-default-light dark:border-border-default-dark sticky inset-x-0 top-0 z-20 h-16 border-b backdrop-blur-xl">
-                <Header className="max-w-8xl mx-auto" />
+                <Header
+                    className="max-w-8xl mx-auto"
+                    docsDefinition={docsDefinition}
+                    lightModeEnabled={lightModeEnabled}
+                    openSearchDialog={openSearchDialog}
+                    isMobileSidebarOpen={isMobileSidebarOpen}
+                    openMobileSidebar={openMobileSidebar}
+                    closeMobileSidebar={closeMobileSidebar}
+                    searchService={searchService}
+                />
             </div>
 
             <div className="max-w-8xl mx-auto flex min-h-0 w-full flex-1">
