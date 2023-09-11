@@ -19,7 +19,7 @@ export declare namespace Docs {
     }
 }
 
-export const Docs: React.FC<Docs.Props> = ({
+const UnmemoizedDocs: React.FC<Docs.Props> = ({
     hasSpecifiedBackgroundColor = false,
     hasSpecifiedBackgroundImage = false,
 }) => {
@@ -42,6 +42,7 @@ export const Docs: React.FC<Docs.Props> = ({
         </div>
     );
 };
+export const Docs = memo(UnmemoizedDocs, () => true);
 
 const InnerDocs: React.FC = memo(function UnMemoInnerDocs() {
     const docsContext = useDocsContext();
