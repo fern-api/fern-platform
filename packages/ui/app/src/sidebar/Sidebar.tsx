@@ -6,6 +6,7 @@ import { useCallback, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDocsContext } from "../docs-context/useDocsContext";
+import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useSearchContext } from "../search-context/useSearchContext";
 import { useSearchService } from "../services/useSearchService";
 import { BuiltWithFern } from "./BuiltWithFern";
@@ -22,8 +23,17 @@ export declare namespace Sidebar {
 }
 
 export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expandAllSections = false }) => {
-    const { docsInfo } = useDocsContext();
+    const {
+        docsInfo,
+        selectedSlug,
+        navigateToPath,
+        registerScrolledToPathListener,
+        getFullSlug,
+        docsDefinition,
+        resolveApi,
+    } = useDocsContext();
     const { openSearchDialog } = useSearchContext();
+    const { closeMobileSidebar } = useMobileSidebarContext();
     const searchService = useSearchService();
     const [activeTabIndex, _setActiveTabIndex] = useState(0);
 
@@ -35,6 +45,78 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
     );
 
     const { activeNavigationConfig } = docsInfo;
+
+    const renderContents = () => {
+        if (isUnversionedUntabbedNavigationConfig(activeNavigationConfig)) {
+            return (
+                <SidebarItems
+                    navigationItems={activeNavigationConfig.items}
+                    slug=""
+                    selectedSlug={selectedSlug}
+                    navigateToPath={navigateToPath}
+                    registerScrolledToPathListener={registerScrolledToPathListener}
+                    getFullSlug={getFullSlug}
+                    closeMobileSidebar={closeMobileSidebar}
+                    docsDefinition={docsDefinition}
+                    docsInfo={docsInfo}
+                    activeTabIndex={activeTabIndex}
+                    resolveApi={resolveApi}
+                />
+            );
+        }
+        const selectedTab = activeNavigationConfig.tabs[activeTabIndex];
+        if (selectedTab == null) {
+            return null;
+        }
+        return (
+            <>
+                <div className="mt-3 flex flex-col">
+                    {activeNavigationConfig.tabs.map((tab, idx) => (
+                        <button
+                            key={idx}
+                            className={classNames(
+                                "flex flex-1 py-2 px-3 group/tab-button transition rounded-lg justify-start items-center select-none min-w-0",
+                                {
+                                    "text-accent-primary": idx === activeTabIndex,
+                                    "t-muted hover:text-accent-primary": idx !== activeTabIndex,
+                                }
+                            )}
+                            onClick={() => _setActiveTabIndex(idx)}
+                        >
+                            <div className="flex min-w-0 items-center justify-start space-x-3">
+                                <div className="min-w-fit">
+                                    <FontAwesomeIcon
+                                        className={classNames("h-5 w-5", {
+                                            "text-accent-primary": idx === activeTabIndex,
+                                            "t-muted group-hover/tab-button:text-accent-primary":
+                                                idx !== activeTabIndex,
+                                        })}
+                                        icon={tab.icon as IconProp}
+                                    />
+                                </div>
+
+                                <Text ellipsize>{tab.title}</Text>
+                            </div>
+                        </button>
+                    ))}
+                </div>
+                <SidebarItems
+                    navigationItems={selectedTab.items}
+                    slug=""
+                    selectedSlug={selectedSlug}
+                    navigateToPath={navigateToPath}
+                    registerScrolledToPathListener={registerScrolledToPathListener}
+                    getFullSlug={getFullSlug}
+                    closeMobileSidebar={closeMobileSidebar}
+                    docsDefinition={docsDefinition}
+                    docsInfo={docsInfo}
+                    activeTabIndex={activeTabIndex}
+                    resolveApi={resolveApi}
+                />
+                ;
+            </>
+        );
+    };
 
     return (
         <SidebarContext.Provider value={contextValue}>
@@ -52,50 +134,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                         styles.scrollingContainer
                     )}
                 >
-                    {(() => {
-                        if (isUnversionedUntabbedNavigationConfig(activeNavigationConfig)) {
-                            return <SidebarItems navigationItems={activeNavigationConfig.items} slug="" />;
-                        }
-                        const selectedTab = activeNavigationConfig.tabs[activeTabIndex];
-                        if (selectedTab == null) {
-                            return null;
-                        }
-                        return (
-                            <>
-                                <div className="mt-3 flex flex-col">
-                                    {activeNavigationConfig.tabs.map((tab, idx) => (
-                                        <button
-                                            key={idx}
-                                            className={classNames(
-                                                "flex flex-1 py-2 px-3 group/tab-button transition rounded-lg justify-start items-center select-none min-w-0",
-                                                {
-                                                    "text-accent-primary": idx === activeTabIndex,
-                                                    "t-muted hover:text-accent-primary": idx !== activeTabIndex,
-                                                }
-                                            )}
-                                            onClick={() => _setActiveTabIndex(idx)}
-                                        >
-                                            <div className="flex min-w-0 items-center justify-start space-x-3">
-                                                <div className="min-w-fit">
-                                                    <FontAwesomeIcon
-                                                        className={classNames("h-5 w-5", {
-                                                            "text-accent-primary": idx === activeTabIndex,
-                                                            "t-muted group-hover/tab-button:text-accent-primary":
-                                                                idx !== activeTabIndex,
-                                                        })}
-                                                        icon={tab.icon as IconProp}
-                                                    />
-                                                </div>
-
-                                                <Text ellipsize>{tab.title}</Text>
-                                            </div>
-                                        </button>
-                                    ))}
-                                </div>
-                                <SidebarItems navigationItems={selectedTab.items} slug="" />;
-                            </>
-                        );
-                    })()}
+                    {renderContents()}
                     <BuiltWithFern />
                 </div>
             </div>

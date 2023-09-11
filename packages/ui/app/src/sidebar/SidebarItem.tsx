@@ -1,10 +1,8 @@
 import { Text } from "@blueprintjs/core";
 import classNames from "classnames";
 import Link from "next/link";
-import { useCallback, useEffect, useRef } from "react";
-import { useDocsContext } from "../docs-context/useDocsContext";
-import { useIsSlugSelected } from "../docs-context/useIsSlugSelected";
-import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
+import { memo, useCallback, useEffect, useRef } from "react";
+import { NavigateToPathOpts } from "../docs-context/DocsContext";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace SidebarItem {
@@ -12,32 +10,36 @@ export declare namespace SidebarItem {
         title: JSX.Element | string;
         className?: string;
         slug: string;
+        fullSlug: string;
         leftElement?: JSX.Element;
         rightElement?: JSX.Element;
         indent?: boolean;
         shallow?: boolean;
+        navigateToPath: (slugWithoutVersion: string, opts?: NavigateToPathOpts | undefined) => void;
+        registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
+        closeMobileSidebar: () => void;
+        isSelected: boolean;
     }
 }
 
-export const SidebarItem: React.FC<SidebarItem.Props> = ({
+const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
     title,
     className,
     slug,
+    fullSlug,
     leftElement,
     rightElement,
     indent = false,
     shallow = false,
+    navigateToPath,
+    registerScrolledToPathListener,
+    closeMobileSidebar,
+    isSelected,
 }) => {
-    const { navigateToPath, registerScrolledToPathListener, getFullSlug } = useDocsContext();
-    const { closeMobileSidebar } = useMobileSidebarContext();
-
     const handleClick = useCallback(() => {
         navigateToPath(slug);
         closeMobileSidebar();
     }, [navigateToPath, closeMobileSidebar, slug]);
-
-    const fullSlug = getFullSlug(slug);
-    const isSelected = useIsSlugSelected(fullSlug);
 
     const renderTitle = useCallback(
         ({ isHovering }: { isHovering: boolean }) => {
@@ -96,3 +98,5 @@ export const SidebarItem: React.FC<SidebarItem.Props> = ({
         </div>
     );
 };
+
+export const SidebarItem = memo(UnmemoizedSidebarItem, (prev, next) => prev.isSelected === next.isSelected);

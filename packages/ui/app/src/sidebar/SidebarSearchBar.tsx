@@ -1,5 +1,5 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { type MouseEventHandler } from "react";
+import { memo, type MouseEventHandler } from "react";
 import { SearchIcon } from "../commons/icons/SearchIcon";
 import { PlatformSpecificContent } from "../commons/PlatformSpecificContent";
 
@@ -9,7 +9,9 @@ export declare namespace SidebarSearchBar {
     }
 }
 
-export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = ({ onClick }) => {
+export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = memo(function UnmemoizedSidebarSearchBar({
+    onClick,
+}) {
     return (
         <button
             onClick={onClick}
@@ -36,4 +38,4 @@ export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = ({ onClick }) 
             </PlatformSpecificContent>
         </button>
     );
-};
+});

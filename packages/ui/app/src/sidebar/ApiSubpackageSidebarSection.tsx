@@ -1,8 +1,9 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { doesSubpackageHaveEndpointsOrWebhooksRecursive, getSubpackageTitle } from "@fern-ui/app-utils";
+import { useRouter } from "next/router";
 import { useContext, useMemo } from "react";
-import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
-import { useDocsContext } from "../docs-context/useDocsContext";
+import { DocsInfo, NavigateToPathOpts } from "../docs-context/DocsContext";
 import { ApiPackageSidebarSectionContents } from "./ApiPackageSidebarSectionContents";
 import { SidebarContext } from "./context/SidebarContext";
 import { SidebarGroup } from "./SidebarGroup";
@@ -12,19 +13,34 @@ export declare namespace ApiSubpackageSidebarSection {
     export interface Props {
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
         slug: string;
-        isFirstItemInApi?: boolean;
-        shallow: boolean;
+        selectedSlug: string | undefined;
+        getFullSlug: (slug: string) => string;
+        resolveSubpackageById: (
+            subpackageId: FernRegistryApiRead.SubpackageId
+        ) => FernRegistryApiRead.ApiDefinitionSubpackage;
+        navigateToPath: (slugWithoutVersion: string, opts?: NavigateToPathOpts | undefined) => void;
+        registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
+        docsDefinition: FernRegistryDocsRead.DocsDefinition;
+        docsInfo: DocsInfo;
+        activeTabIndex: number;
+        closeMobileSidebar: () => void;
     }
 }
 
 export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.Props> = ({
     subpackage,
     slug,
-    shallow,
+    selectedSlug,
+    getFullSlug,
+    resolveSubpackageById,
+    navigateToPath,
+    registerScrolledToPathListener,
+    docsDefinition,
+    docsInfo,
+    activeTabIndex,
+    closeMobileSidebar,
 }) => {
-    const { selectedSlug, getFullSlug } = useDocsContext();
-    const { resolveSubpackageById } = useApiDefinitionContext();
-
+    const router = useRouter();
     const hasEndpointsOrWebhooks = useMemo(
         () => doesSubpackageHaveEndpointsOrWebhooksRecursive(subpackage.subpackageId, resolveSubpackageById),
         [resolveSubpackageById, subpackage.subpackageId]
@@ -46,11 +62,33 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
                     title={getSubpackageTitle(subpackage)}
                     isChildSelected={isChildSelected}
                     slug={slug}
-                    shallow={shallow}
+                    getFullSlug={getFullSlug}
+                    navigateToPath={navigateToPath}
+                    registerScrolledToPathListener={registerScrolledToPathListener}
+                    docsDefinition={docsDefinition}
+                    docsInfo={docsInfo}
+                    activeTabIndex={activeTabIndex}
+                    closeMobileSidebar={closeMobileSidebar}
+                    pushRoute={router.push}
                 />
             }
         >
-            {isOpen && <ApiPackageSidebarSectionContents package={subpackage} slug={slug} shallow={shallow} />}
+            {isOpen && (
+                <ApiPackageSidebarSectionContents
+                    package={subpackage}
+                    slug={slug}
+                    shallow={true}
+                    selectedSlug={selectedSlug}
+                    navigateToPath={navigateToPath}
+                    registerScrolledToPathListener={registerScrolledToPathListener}
+                    getFullSlug={getFullSlug}
+                    closeMobileSidebar={closeMobileSidebar}
+                    resolveSubpackageById={resolveSubpackageById}
+                    docsDefinition={docsDefinition}
+                    docsInfo={docsInfo}
+                    activeTabIndex={activeTabIndex}
+                />
+            )}
         </SidebarGroup>
     );
 };
