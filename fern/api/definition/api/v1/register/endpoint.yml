@@ -9,10 +9,17 @@ types:
 
   EndpointId: string
 
+  Availability: 
+    enum: 
+      - GenerallyAvailable
+      - Deprecated
+      - Beta
+
   EndpointDefinition:
     extends: commons.WithDescription
     properties:
       auth: optional<boolean>
+      availability: optional<Availability>
       defaultEnvironment: optional<EnvironmentId>
       environments: optional<list<Environment>>
       method: HttpMethod

@@ -9,12 +9,19 @@ types:
 
   EndpointId: string
 
+  Availability: 
+    enum: 
+      - GenerallyAvailable
+      - Deprecated
+      - Beta
+
   EndpointDefinition:
     extends: commons.WithDescription
     properties:
       authed:
         type: boolean
         docs: When this is true, the api definition will have a union for auth
+      availability: optional<Availability>
       defaultEnvironment: optional<EnvironmentId>
       environments: list<Environment>
       method: HttpMethod

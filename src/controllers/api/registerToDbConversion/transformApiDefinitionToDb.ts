@@ -133,6 +133,7 @@ function transformEndpoint({
     context.registerEnvironments(writeShape.environments ?? []);
     const htmlDescription = getHtmlDescription(writeShape.description);
     return {
+        availability: writeShape.availability,
         environments: writeShape.environments,
         defaultEnvironment: writeShape.defaultEnvironment,
         urlSlug: kebabCase(writeShape.name),

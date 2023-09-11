@@ -51,6 +51,7 @@ function transformEndpoint({
 }): WithoutQuestionMarks<FernRegistry.api.v1.read.EndpointDefinition> {
     return {
         environments: dbShape.environments ?? [],
+        availability: dbShape.availability,
         defaultEnvironment: dbShape.defaultEnvironment,
         urlSlug: dbShape.urlSlug,
         method: dbShape.method,

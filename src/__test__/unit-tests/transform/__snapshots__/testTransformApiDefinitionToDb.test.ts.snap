@@ -24,6 +24,7 @@ Object {
       "endpoints": Array [
         Object {
           "authed": false,
+          "availability": undefined,
           "defaultEnvironment": "Production",
           "description": "Retrieves the user with the given ID.",
           "descriptionContainsMarkdown": false,
@@ -222,6 +223,7 @@ Object {
       "endpoints": Array [
         Object {
           "authed": true,
+          "availability": undefined,
           "defaultEnvironment": "Production",
           "description": "For a shipment, find the lowest cost shipping option based on provided parameters.",
           "descriptionContainsMarkdown": false,
@@ -1054,6 +1056,7 @@ Object {
     "endpoints": Array [
       Object {
         "authed": true,
+        "availability": undefined,
         "defaultEnvironment": "Production",
         "description": "<strong style=\\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\\">Stable</strong>
 
@@ -1317,6 +1320,7 @@ Generate a completion using a previously defined deployment.
       },
       Object {
         "authed": true,
+        "availability": undefined,
         "defaultEnvironment": "Production",
         "description": "<strong style=\\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\\">Stable</strong>
 
@@ -1539,6 +1543,7 @@ Generate a stream of completions using a previously defined deployment.
       },
       Object {
         "authed": true,
+        "availability": undefined,
         "defaultEnvironment": "Production",
         "description": "<strong style=\\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\\">Stable</strong>
 
@@ -1759,6 +1764,7 @@ Perform a search against a document index.
       },
       Object {
         "authed": true,
+        "availability": undefined,
         "defaultEnvironment": "Production",
         "description": "<strong style=\\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\\">Stable</strong>
 
@@ -2053,6 +2059,7 @@ Used to submit feedback regarding the quality of previously generated completion
       "endpoints": Array [
         Object {
           "authed": true,
+          "availability": undefined,
           "defaultEnvironment": "Production",
           "description": "
 <strong style=\\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\\">Unstable</strong>
@@ -2169,6 +2176,7 @@ Used to retrieve a deployment given its ID or name.
       "endpoints": Array [
         Object {
           "authed": true,
+          "availability": undefined,
           "defaultEnvironment": "Production",
           "description": "<strong style=\\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\\">Unstable</strong>
 
@@ -2355,6 +2363,7 @@ Creates a new document index.",
       "endpoints": Array [
         Object {
           "authed": true,
+          "availability": undefined,
           "defaultEnvironment": "Production",
           "description": "
 <strong style=\\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\\">Stable</strong>
@@ -2506,6 +2515,7 @@ Used to list documents. Optionally filter on supported fields.
         },
         Object {
           "authed": true,
+          "availability": undefined,
           "defaultEnvironment": "Production",
           "description": "<strong style=\\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\\">Stable</strong>
 
@@ -2670,6 +2680,7 @@ Upload a document to be indexed and used for search.
       "endpoints": Array [
         Object {
           "authed": true,
+          "availability": undefined,
           "defaultEnvironment": "Production",
           "description": "
 <strong style=\\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\\">Unstable</strong>
@@ -2820,6 +2831,7 @@ Used to retrieve a model version given its ID.
         },
         Object {
           "authed": true,
+          "availability": undefined,
           "defaultEnvironment": "Production",
           "description": "<strong style=\\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\\">Unstable</strong>
 
@@ -2958,6 +2970,7 @@ Compiles the prompt backing the model version using the provided input values.",
       "endpoints": Array [
         Object {
           "authed": true,
+          "availability": undefined,
           "defaultEnvironment": "Production",
           "description": "<strong style=\\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\\">Unstable</strong>
 
@@ -3242,6 +3255,7 @@ partners, not directly by Vellum users.</p>
       "endpoints": Array [
         Object {
           "authed": true,
+          "availability": undefined,
           "defaultEnvironment": "Production",
           "description": "<strong style=\\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\\">Unstable</strong>
 
@@ -3423,6 +3437,7 @@ or overwritten with default values.</p>
         },
         Object {
           "authed": true,
+          "availability": undefined,
           "defaultEnvironment": "Production",
           "description": "<strong style=\\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\\">Unstable</strong>
 
@@ -3536,6 +3551,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
       "endpoints": Array [
         Object {
           "authed": true,
+          "availability": undefined,
           "defaultEnvironment": "Production",
           "description": "<strong style=\\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\\">Unstable</strong>
 
@@ -3708,6 +3724,7 @@ or overwritten with default values.</p>
         },
         Object {
           "authed": true,
+          "availability": undefined,
           "defaultEnvironment": "Production",
           "description": "<strong style=\\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\\">Unstable</strong>
 

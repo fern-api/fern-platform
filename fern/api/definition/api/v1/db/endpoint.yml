@@ -9,6 +9,7 @@ types:
     extends: readCommons.WithDescription
     properties:
       authed: optional<boolean>
+      availability: optional<readEndpoint.Availability>
       defaultEnvironment: optional<readEndpoint.EnvironmentId>
       environments: optional<list<readEndpoint.Environment>>
       method: readEndpoint.HttpMethod
