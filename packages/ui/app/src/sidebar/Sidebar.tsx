@@ -85,13 +85,13 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                         >
                             <div className="flex min-w-0 items-center justify-start space-x-3">
                                 <div className="min-w-fit">
-                                    <FontAwesomeIcon
+                                    <FontAwesomeIconClient
                                         className={classNames("h-5 w-5", {
                                             "text-accent-primary": idx === activeTabIndex,
                                             "t-muted group-hover/tab-button:text-accent-primary":
                                                 idx !== activeTabIndex,
                                         })}
-                                        icon={tab.icon as IconProp}
+                                        icon={tab.icon}
                                     />
                                 </div>
 
