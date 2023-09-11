@@ -1,6 +1,5 @@
 import classNames from "classnames";
-import dynamic from "next/dynamic";
-import { createPortal } from "react-dom";
+import { memo } from "react";
 
 export declare namespace BgImageGradient {
     export interface Props {
@@ -9,31 +8,24 @@ export declare namespace BgImageGradient {
     }
 }
 
-export const Core: React.FC<BgImageGradient.Props> = ({ hasSpecifiedBackgroundColor, hasSpecifiedBackgroundImage }) => {
+export const BgImageGradient = memo<BgImageGradient.Props>(function Core({
+    hasSpecifiedBackgroundColor,
+    hasSpecifiedBackgroundImage,
+}) {
     return (
-        <>
-            {createPortal(
-                <div
-                    className={classNames("fixed inset-0 -z-10 bg-background", {
-                        "from-accent-primary/10 dark:from-accent-primary/[0.15] overscroll-y-none bg-gradient-to-b to-transparent":
-                            !hasSpecifiedBackgroundColor && !hasSpecifiedBackgroundImage,
-                    })}
-                    style={
-                        hasSpecifiedBackgroundImage
-                            ? {
-                                  backgroundImage: "var(--docs-background-image)",
-                                  backgroundSize: "cover",
-                              }
-                            : {}
-                    }
-                />,
-                document.body,
-                "bg-image-gradient"
-            )}
-        </>
+        <div
+            className={classNames("fixed inset-0 -z-10 bg-background", {
+                "from-accent-primary/10 dark:from-accent-primary/[0.15] overscroll-y-none bg-gradient-to-b to-transparent":
+                    !hasSpecifiedBackgroundColor && !hasSpecifiedBackgroundImage,
+            })}
+            style={
+                hasSpecifiedBackgroundImage
+                    ? {
+                          backgroundImage: "var(--docs-background-image)",
+                          backgroundSize: "cover",
+                      }
+                    : {}
+            }
+        />
     );
-};
-
-export const BgImageGradient = dynamic(() => Promise.resolve(Core), {
-    ssr: false,
 });
