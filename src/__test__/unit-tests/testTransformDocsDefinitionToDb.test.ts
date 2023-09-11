@@ -1,8 +1,8 @@
 import { getReferencedApiDefinitionIds } from "../../controllers/docs/transformDocsDefinitionToDb";
-import * as FernRegistryDocsRead from "../../generated/api/resources/docs/resources/v1/resources/read";
+import * as FernRegistryDocsDb from "../../generated/api/resources/docs/resources/v1/resources/db";
 
 it("definition register", async () => {
-    const navigationConfig: FernRegistryDocsRead.NavigationConfig = {
+    const navigationConfig: FernRegistryDocsDb.NavigationConfig = {
         items: [
             {
                 type: "api",
@@ -10,6 +10,7 @@ it("definition register", async () => {
                 api: "123405930",
                 urlSlug: "myUrl",
                 skipUrlSlug: false,
+                showErrors: true,
             },
         ],
     };

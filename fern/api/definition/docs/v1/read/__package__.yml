@@ -163,6 +163,7 @@ types:
       urlSlug: string
       skipUrlSlug: boolean
       artifacts: optional<ApiArtifacts>
+      showErrors: boolean
 
   DocsSection:
     properties:

@@ -1,8 +1,9 @@
 import { v4 as uuid } from "uuid";
 import type { FernRegistry } from "../../generated";
+import * as FernRegistryDocsDb from "../../generated/api/resources/docs/resources/v1/resources/db";
 import { convertMarkdownToText } from "../../util";
+import { isUnversionedTabbedNavigationConfig, isVersionedNavigationConfig } from "../../util/fern/db";
 import { getSubpackageParentSlugs } from "../../util/fern/db/subpackage";
-import { isUnversionedTabbedNavigationConfig, isVersionedNavigationConfig } from "../../util/fern/read";
 import { type AlgoliaSearchRecord } from "./AlgoliaService";
 
 type ApiDefinitionLoader = (apiDefinitionId: string) => Promise<FernRegistry.api.v1.db.DbApiDefinition | null>;
@@ -66,7 +67,7 @@ export class AlgoliaSearchRecordGenerator {
     }
 
     private async generateAlgoliaSearchRecordsForUnversionedNavigationConfig(
-        config: FernRegistry.docs.v1.read.UnversionedNavigationConfig,
+        config: FernRegistryDocsDb.UnversionedNavigationConfig,
         context: NavigationContext
     ) {
         return isUnversionedTabbedNavigationConfig(config)
@@ -75,7 +76,7 @@ export class AlgoliaSearchRecordGenerator {
     }
 
     private async generateAlgoliaSearchRecordsForUnversionedUntabbedNavigationConfig(
-        config: FernRegistry.docs.v1.read.UnversionedUntabbedNavigationConfig,
+        config: FernRegistryDocsDb.UnversionedUntabbedNavigationConfig,
         context: NavigationContext
     ) {
         const records = await Promise.all(
@@ -85,7 +86,7 @@ export class AlgoliaSearchRecordGenerator {
     }
 
     private async generateAlgoliaSearchRecordsForUnversionedTabbedNavigationConfig(
-        config: FernRegistry.docs.v1.read.UnversionedTabbedNavigationConfig,
+        config: FernRegistryDocsDb.UnversionedTabbedNavigationConfig,
         context: NavigationContext
     ) {
         const records = await Promise.all(
@@ -102,7 +103,7 @@ export class AlgoliaSearchRecordGenerator {
     }
 
     private async generateAlgoliaSearchRecordsForNavigationItem(
-        item: FernRegistry.docs.v1.read.NavigationItem,
+        item: FernRegistryDocsDb.NavigationItem,
         context: NavigationContext
     ): Promise<AlgoliaSearchRecord[]> {
         if (item.type === "section") {

@@ -176,6 +176,7 @@ types:
       api: rootCommons.ApiDefinitionId
       artifacts: optional<ApiArtifacts>
       skipUrlSlug: optional<boolean>
+      showErrors: optional<boolean>
 
   DocsSection:
     properties:

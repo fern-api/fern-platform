@@ -3,8 +3,9 @@ import type { FdrApplication } from "../../app";
 import { FernRegistry } from "../../generated";
 import { DomainNotRegisteredError } from "../../generated/api/resources/docs/resources/v1/resources/read";
 import { ReadService } from "../../generated/api/resources/docs/resources/v1/resources/read/service/ReadService";
-import { readBuffer, WithoutQuestionMarks } from "../../util";
+import { readBuffer } from "../../util";
 import { convertDbApiDefinitionToRead } from "../api/getApiReadService";
+import { transformDbDocsDefinitionToRead } from "./transformDbDocsDefinitionToRead";
 
 export function getDocsReadService(app: FdrApplication): ReadService {
     return new ReadService({
@@ -66,7 +67,7 @@ export async function getDocsDefinition({
     });
     return {
         algoliaSearchIndex: docsV2?.algoliaIndex ?? undefined,
-        config: getDocsDefinitionConfig(docsDbDefinition),
+        config: transformDbDocsDefinitionToRead({ dbShape: docsDbDefinition }),
         apis: Object.fromEntries(
             apiDefinitions.map((apiDefinition) => {
                 const parsedApiDefinition = convertDbApiDefinitionToRead(apiDefinition.definition);
@@ -82,25 +83,6 @@ export async function getDocsDefinition({
             )
         ),
         pages: docsDbDefinition.pages,
-    };
-}
-
-function getDocsDefinitionConfig(
-    docsDbDefinition: FernRegistry.docs.v1.db.DocsDefinitionDb
-): WithoutQuestionMarks<FernRegistry.docs.v1.read.DocsConfig> {
-    return {
-        navigation: docsDbDefinition.config.navigation,
-        logo: docsDbDefinition.config.logo,
-        logoV2: docsDbDefinition.config.logoV2,
-        logoHeight: docsDbDefinition.config.logoHeight,
-        logoHref: docsDbDefinition.config.logoHref,
-        colors: docsDbDefinition.config.colors,
-        colorsV2: docsDbDefinition.config.colorsV2,
-        navbarLinks: docsDbDefinition.config.navbarLinks ?? [],
-        title: docsDbDefinition.config.title,
-        favicon: docsDbDefinition.config.favicon,
-        backgroundImage: docsDbDefinition.config.backgroundImage,
-        typography: docsDbDefinition.config.typography,
     };
 }
 

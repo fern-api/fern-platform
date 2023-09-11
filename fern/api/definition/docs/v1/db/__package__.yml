@@ -32,7 +32,7 @@ types:
   DocsDbConfig:
     properties:
       title: optional<string>
-      navigation: docsReadV1.NavigationConfig
+      navigation: NavigationConfig
       logo: optional<docsReadV1.FileId>
       logoV2: optional<docsReadV1.LogoV2>
       logoHeight: optional<docsReadV1.Height>
@@ -63,3 +63,63 @@ types:
   DbFileInfo:
     properties:
       s3Key: string
+  
+  NavigationConfig:
+    discriminated: false
+    union:
+      - UnversionedNavigationConfig
+      - VersionedNavigationConfig
+
+  UnversionedNavigationConfig:
+    discriminated: false
+    union:
+      - UnversionedTabbedNavigationConfig
+      - UnversionedUntabbedNavigationConfig
+
+  UnversionedTabbedNavigationConfig:
+    properties:
+      tabs: list<NavigationTab>
+
+  NavigationTab:
+    properties:
+      title: string
+      icon: string
+      items: list<NavigationItem>
+      urlSlug: string
+
+  UnversionedUntabbedNavigationConfig:
+    properties:
+      items: list<NavigationItem>
+
+  VersionedNavigationConfig:
+    properties:
+      versions: list<VersionedNavigationConfigData>
+
+  VersionedNavigationConfigData:
+    properties:
+      version: string
+      config: UnversionedNavigationConfig
+
+  NavigationItem:
+    union:
+      page: docsReadV1.PageMetadata
+      api: ApiSection
+      section: DocsSection
+  
+  ApiSection: 
+    properties:
+      title: string
+      api: rootCommons.ApiDefinitionId
+      urlSlug: string
+      skipUrlSlug: boolean
+      artifacts: optional<docsReadV1.ApiArtifacts>
+      showErrors: optional<boolean>
+  
+  DocsSection:
+    properties:
+      title: string
+      items: list<NavigationItem>
+      urlSlug: string
+      skipUrlSlug: boolean
+      collapsed: boolean
+

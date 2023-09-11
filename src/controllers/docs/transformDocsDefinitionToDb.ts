@@ -1,16 +1,15 @@
 import { kebabCase } from "lodash";
 import { FernRegistry } from "../../generated";
 import type * as FernRegistryDocsDb from "../../generated/api/resources/docs/resources/v1/resources/db";
-import type * as FernRegistryDocsRead from "../../generated/api/resources/docs/resources/v1/resources/read";
 import type * as FernRegistryDocsWrite from "../../generated/api/resources/docs/resources/v1/resources/write";
 import type { FileId, FilePath } from "../../generated/api/resources/docs/resources/v1/resources/write";
 import { type S3FileInfo } from "../../services/s3";
 import { type WithoutQuestionMarks } from "../../util";
 import {
-    isUnversionedNavigationConfig as isUnversionedReadConfig,
-    isUnversionedUntabbedNavigationConfig as isUnversionedUntabbedReadConfig,
-    isVersionedNavigationConfig as isVersionedReadConfig,
-} from "../../util/fern/read";
+    isUnversionedNavigationConfig as isUnversionedDbConfig,
+    isUnversionedUntabbedNavigationConfig as isUnversionedUntabbedDbConfig,
+    isVersionedNavigationConfig as isVersionedDbConfig,
+} from "../../util/fern/db";
 import {
     isUnversionedUntabbedNavigationConfig as isUnversionedUntabbedWriteConfig,
     isUnversionedNavigationConfig as isUnversionedWriteConfig,
@@ -24,7 +23,7 @@ export function transformWriteDocsDefinitionToDb({
     writeShape: FernRegistry.docs.v1.write.DocsDefinition;
     files: Record<FilePath, S3FileInfo>;
 }): WithoutQuestionMarks<FernRegistry.docs.v1.db.DocsDefinitionDb.V2> {
-    const navigationConfig: FernRegistryDocsRead.NavigationConfig = transformNavigationConfigForReading(
+    const navigationConfig: FernRegistryDocsDb.NavigationConfig = transformNavigationConfigForDb(
         writeShape.config.navigation
     );
     const transformedFiles: Record<FileId, FernRegistryDocsDb.DbFileInfo> = {};
@@ -79,53 +78,53 @@ export function transformWriteDocsDefinitionToDb({
     };
 }
 
-export function transformNavigationConfigForReading(
+export function transformNavigationConfigForDb(
     writeShape: FernRegistryDocsWrite.NavigationConfig
-): FernRegistryDocsRead.NavigationConfig {
+): FernRegistryDocsDb.NavigationConfig {
     if (isUnversionedWriteConfig(writeShape)) {
-        return transformUnversionedNavigationConfigForReading(writeShape);
+        return transformUnversionedNavigationConfigForDb(writeShape);
     } else if (isVersionedWriteConfig(writeShape)) {
-        return transformVersionedNavigationConfigForReading(writeShape);
+        return transformVersionedNavigationConfigForDb(writeShape);
     }
     throw new Error("navigationConfig is neither unversioned nor versioned");
 }
 
-function transformVersionedNavigationConfigForReading(
+function transformVersionedNavigationConfigForDb(
     config: FernRegistryDocsWrite.VersionedNavigationConfig
-): FernRegistryDocsRead.VersionedNavigationConfig {
+): FernRegistryDocsDb.VersionedNavigationConfig {
     return {
         versions: config.versions.map((version) => ({
             version: version.version,
-            config: transformUnversionedNavigationConfigForReading(version.config),
+            config: transformUnversionedNavigationConfigForDb(version.config),
         })),
     };
 }
 
-function transformUnversionedNavigationConfigForReading(
+function transformUnversionedNavigationConfigForDb(
     config: FernRegistryDocsWrite.UnversionedNavigationConfig
-): FernRegistryDocsRead.UnversionedNavigationConfig {
+): FernRegistryDocsDb.UnversionedNavigationConfig {
     return isUnversionedUntabbedWriteConfig(config)
         ? {
-              items: config.items.map(transformNavigationItemForReading),
+              items: config.items.map(transformNavigationItemForDb),
           }
         : {
-              tabs: config.tabs.map(transformNavigationTabForReading),
+              tabs: config.tabs.map(transformNavigationTabForDb),
           };
 }
 
-export function transformNavigationTabForReading(
+export function transformNavigationTabForDb(
     writeShape: FernRegistry.docs.v1.write.NavigationTab
-): FernRegistry.docs.v1.read.NavigationTab {
+): FernRegistry.docs.v1.db.NavigationTab {
     return {
         ...writeShape,
-        items: writeShape.items.map(transformNavigationItemForReading),
+        items: writeShape.items.map(transformNavigationItemForDb),
         urlSlug: kebabCase(writeShape.title),
     };
 }
 
-export function transformNavigationItemForReading(
+export function transformNavigationItemForDb(
     writeShape: FernRegistry.docs.v1.write.NavigationItem
-): FernRegistry.docs.v1.read.NavigationItem {
+): FernRegistry.docs.v1.db.NavigationItem {
     switch (writeShape.type) {
         case "api":
             return {
@@ -134,6 +133,7 @@ export function transformNavigationItemForReading(
                 artifacts:
                     writeShape.artifacts != null ? transformArtifactsForReading(writeShape.artifacts) : undefined,
                 skipUrlSlug: writeShape.skipUrlSlug ?? false,
+                showErrors: writeShape.showErrors ?? false,
             };
         case "page":
             return {
@@ -148,18 +148,18 @@ export function transformNavigationItemForReading(
                 title: writeShape.title,
                 urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
                 collapsed: writeShape.collapsed ?? false,
-                items: writeShape.items.map((item) => transformNavigationItemForReading(item)),
+                items: writeShape.items.map((item) => transformNavigationItemForDb(item)),
                 skipUrlSlug: writeShape.skipUrlSlug ?? false,
             };
     }
 }
 
 export function getReferencedApiDefinitionIds(
-    navigationConfig: FernRegistryDocsRead.NavigationConfig
+    navigationConfig: FernRegistryDocsDb.NavigationConfig
 ): FernRegistry.ApiDefinitionId[] {
-    if (isUnversionedReadConfig(navigationConfig)) {
+    if (isUnversionedDbConfig(navigationConfig)) {
         return getReferencedApiDefinitionIdsForUnversionedReadConfig(navigationConfig);
-    } else if (isVersionedReadConfig(navigationConfig)) {
+    } else if (isVersionedDbConfig(navigationConfig)) {
         return navigationConfig.versions.flatMap((version) =>
             getReferencedApiDefinitionIdsForUnversionedReadConfig(version.config)
         );
@@ -168,16 +168,14 @@ export function getReferencedApiDefinitionIds(
 }
 
 function getReferencedApiDefinitionIdsForUnversionedReadConfig(
-    config: FernRegistryDocsRead.UnversionedNavigationConfig
+    config: FernRegistryDocsDb.UnversionedNavigationConfig
 ): FernRegistry.ApiDefinitionId[] {
-    return isUnversionedUntabbedReadConfig(config)
+    return isUnversionedUntabbedDbConfig(config)
         ? config.items.flatMap(getReferencedApiDefinitionIdFromItem)
         : config.tabs.flatMap((tab) => tab.items.flatMap(getReferencedApiDefinitionIdFromItem));
 }
 
-function getReferencedApiDefinitionIdFromItem(
-    item: FernRegistryDocsRead.NavigationItem
-): FernRegistry.ApiDefinitionId[] {
+function getReferencedApiDefinitionIdFromItem(item: FernRegistryDocsDb.NavigationItem): FernRegistry.ApiDefinitionId[] {
     switch (item.type) {
         case "api":
             return [item.api];
