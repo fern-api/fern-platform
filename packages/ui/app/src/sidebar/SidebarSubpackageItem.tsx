@@ -15,14 +15,7 @@ export declare namespace SidebarSubpackageItem {
         isChildSelected: boolean;
         className?: string;
         slug: string;
-        navigateToPath: (slugWithoutVersion: string, opts?: NavigateToPathOpts | undefined) => void;
-        registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
-        getFullSlug: (slug: string) => string;
-        docsDefinition: FernRegistryDocsRead.DocsDefinition;
-        docsInfo: DocsInfo;
-        activeTabIndex: number;
-        closeMobileSidebar: () => void;
-        pushRoute: NextRouter["push"];
+        shallow: boolean;
     }
 }
 
@@ -31,14 +24,7 @@ const UnmemoizedSidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = (
     isChildSelected,
     className,
     slug,
-    navigateToPath,
-    registerScrolledToPathListener,
-    getFullSlug,
-    docsDefinition,
-    docsInfo,
-    activeTabIndex,
-    closeMobileSidebar,
-    pushRoute,
+    shallow,
 }) => {
     const urlPathResolver = useMemo(() => {
         let items;
@@ -66,15 +52,12 @@ const UnmemoizedSidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = (
             const firstNavigatable = resolvedUrlPath.subpackage.endpoints[0] ?? resolvedUrlPath.subpackage.webhooks[0];
             if (firstNavigatable != null) {
                 const slugToNavigate = joinUrlSlugs(resolvedUrlPath.slug, firstNavigatable.urlSlug);
-                void pushRoute("/" + getFullSlug(slugToNavigate), undefined, {
-                    shallow: isChildSelected,
-                    scroll: !isChildSelected,
-                });
+                void router.push("/" + getFullSlug(slugToNavigate), undefined, { shallow, scroll: !shallow });
                 navigateToPath(slugToNavigate);
                 closeMobileSidebar();
             }
         }
-    }, [urlPathResolver, slug, pushRoute, getFullSlug, isChildSelected, navigateToPath, closeMobileSidebar]);
+    }, [urlPathResolver, slug, router, getFullSlug, shallow, navigateToPath, closeMobileSidebar]);
 
     const fullSlug = getFullSlug(slug);
 

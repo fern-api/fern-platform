@@ -8,34 +8,13 @@ export declare namespace ApiSubpackages {
     export interface Props {
         package: FernRegistryApiRead.ApiDefinitionPackage;
         slug: string;
-
-        selectedSlug: string | undefined;
-        getFullSlug: (slug: string) => string;
-        resolveSubpackageById: (
-            subpackageId: FernRegistryApiRead.SubpackageId
-        ) => FernRegistryApiRead.ApiDefinitionSubpackage;
-        navigateToPath: (slugWithoutVersion: string, opts?: NavigateToPathOpts | undefined) => void;
-        registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
-        docsDefinition: FernRegistryDocsRead.DocsDefinition;
-        docsInfo: DocsInfo;
-        activeTabIndex: number;
-        closeMobileSidebar: () => void;
+        shallow: boolean;
     }
 }
 
-export const ApiSubpackages: React.FC<ApiSubpackages.Props> = ({
-    slug,
-    package: package_,
-    selectedSlug,
-    getFullSlug,
-    resolveSubpackageById,
-    navigateToPath,
-    registerScrolledToPathListener,
-    docsDefinition,
-    docsInfo,
-    activeTabIndex,
-    closeMobileSidebar,
-}) => {
+export const ApiSubpackages: React.FC<ApiSubpackages.Props> = ({ slug, package: package_, shallow }) => {
+    const { resolveSubpackageById } = useApiDefinitionContext();
+
     return (
         <>
             {package_.subpackages.map((subpackageId) => {
@@ -45,15 +24,7 @@ export const ApiSubpackages: React.FC<ApiSubpackages.Props> = ({
                         key={subpackageId}
                         subpackage={subpackage}
                         slug={joinUrlSlugs(slug, subpackage.urlSlug)}
-                        getFullSlug={getFullSlug}
-                        navigateToPath={navigateToPath}
-                        registerScrolledToPathListener={registerScrolledToPathListener}
-                        docsDefinition={docsDefinition}
-                        docsInfo={docsInfo}
-                        activeTabIndex={activeTabIndex}
-                        closeMobileSidebar={closeMobileSidebar}
-                        selectedSlug={selectedSlug}
-                        resolveSubpackageById={resolveSubpackageById}
+                        shallow={shallow}
                     />
                 );
             })}

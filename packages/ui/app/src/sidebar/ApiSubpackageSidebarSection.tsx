@@ -13,34 +13,19 @@ export declare namespace ApiSubpackageSidebarSection {
     export interface Props {
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
         slug: string;
-        selectedSlug: string | undefined;
-        getFullSlug: (slug: string) => string;
-        resolveSubpackageById: (
-            subpackageId: FernRegistryApiRead.SubpackageId
-        ) => FernRegistryApiRead.ApiDefinitionSubpackage;
-        navigateToPath: (slugWithoutVersion: string, opts?: NavigateToPathOpts | undefined) => void;
-        registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
-        docsDefinition: FernRegistryDocsRead.DocsDefinition;
-        docsInfo: DocsInfo;
-        activeTabIndex: number;
-        closeMobileSidebar: () => void;
+        isFirstItemInApi?: boolean;
+        shallow: boolean;
     }
 }
 
 export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.Props> = ({
     subpackage,
     slug,
-    selectedSlug,
-    getFullSlug,
-    resolveSubpackageById,
-    navigateToPath,
-    registerScrolledToPathListener,
-    docsDefinition,
-    docsInfo,
-    activeTabIndex,
-    closeMobileSidebar,
+    shallow,
 }) => {
-    const router = useRouter();
+    const { selectedSlug, getFullSlug } = useDocsContext();
+    const { resolveSubpackageById } = useApiDefinitionContext();
+
     const hasEndpointsOrWebhooks = useMemo(
         () => doesSubpackageHaveEndpointsOrWebhooksRecursive(subpackage.subpackageId, resolveSubpackageById),
         [resolveSubpackageById, subpackage.subpackageId]
@@ -62,33 +47,11 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
                     title={getSubpackageTitle(subpackage)}
                     isChildSelected={isChildSelected}
                     slug={slug}
-                    getFullSlug={getFullSlug}
-                    navigateToPath={navigateToPath}
-                    registerScrolledToPathListener={registerScrolledToPathListener}
-                    docsDefinition={docsDefinition}
-                    docsInfo={docsInfo}
-                    activeTabIndex={activeTabIndex}
-                    closeMobileSidebar={closeMobileSidebar}
-                    pushRoute={router.push}
+                    shallow={shallow}
                 />
             }
         >
-            {isOpen && (
-                <ApiPackageSidebarSectionContents
-                    package={subpackage}
-                    slug={slug}
-                    shallow={true}
-                    selectedSlug={selectedSlug}
-                    navigateToPath={navigateToPath}
-                    registerScrolledToPathListener={registerScrolledToPathListener}
-                    getFullSlug={getFullSlug}
-                    closeMobileSidebar={closeMobileSidebar}
-                    resolveSubpackageById={resolveSubpackageById}
-                    docsDefinition={docsDefinition}
-                    docsInfo={docsInfo}
-                    activeTabIndex={activeTabIndex}
-                />
-            )}
+            {isOpen && <ApiPackageSidebarSectionContents package={subpackage} slug={slug} shallow={shallow} />}
         </SidebarGroup>
     );
 };

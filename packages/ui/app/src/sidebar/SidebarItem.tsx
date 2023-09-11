@@ -15,10 +15,6 @@ export declare namespace SidebarItem {
         rightElement?: JSX.Element;
         indent?: boolean;
         shallow?: boolean;
-        navigateToPath: (slugWithoutVersion: string, opts?: NavigateToPathOpts | undefined) => void;
-        registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
-        closeMobileSidebar: () => void;
-        isSelected: boolean;
     }
 }
 
@@ -31,10 +27,6 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
     rightElement,
     indent = false,
     shallow = false,
-    navigateToPath,
-    registerScrolledToPathListener,
-    closeMobileSidebar,
-    isSelected,
 }) => {
     const handleClick = useCallback(() => {
         navigateToPath(slug);
@@ -85,7 +77,7 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
     }, [fullSlug, registerScrolledToPathListener]);
 
     return (
-        <div className={classNames(className)} ref={ref}>
+        <div className={classNames(className)} ref={setRef}>
             <Link
                 href={`/${fullSlug}`}
                 onClick={handleClick}

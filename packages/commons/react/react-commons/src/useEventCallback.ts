@@ -7,12 +7,8 @@ export function useEventCallback<A extends unknown[], R>(fn: Fn<A, R>): Fn<A, R>
     useEffect(() => {
         ref.current = fn;
     });
-    return useMemo(
-        () =>
-            (...args: A): R => {
-                const { current } = ref;
-                return current(...args);
-            },
-        []
-    );
+    return useMemo(() => (...args: A): R => {
+        const { current } = ref;
+        return current(...args);
+    }, []);
 }

@@ -9,10 +9,11 @@ import { TableOfContents } from "./TableOfContents";
 export declare namespace CustomDocsPage {
     export interface Props {
         path: ResolvedUrlPath.MdxPage;
+        headerHeight: number;
     }
 }
 
-export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
+export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path, headerHeight }) => {
     const { resolvePage, docsInfo } = useDocsContext();
 
     const page = useMemo(() => resolvePage(path.page.id), [path.page.id, resolvePage]);
@@ -71,10 +72,11 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
             </div>
             <div className="hidden w-64 xl:flex">
                 <TableOfContents
-                    className="sticky top-16 w-full overflow-auto overflow-x-hidden py-8"
+                    className="sticky w-full overflow-auto overflow-x-hidden py-8"
                     markdown={page.markdown}
                     style={{
-                        maxHeight: "calc(100vh - 4rem)",
+                        top: headerHeight,
+                        maxHeight: `calc(100vh - ${headerHeight}px)`,
                     }}
                 />
             </div>

@@ -16,14 +16,15 @@ import { SdkCardLayout } from "./SdkCardLayout";
 export declare namespace ApiArtifacts {
     export interface Props {
         apiArtifacts: FernRegistryDocsRead.ApiArtifacts;
+        headerHeight: number;
     }
 }
 
-export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiArtifacts }) => {
+export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiArtifacts, headerHeight }) => {
     const { apiSlug } = useApiDefinitionContext();
     const slug = joinUrlSlugs(apiSlug, "client-libraries");
 
-    const { setTargetRef } = useApiPageCenterElement({ slug });
+    const { setTargetRef } = useApiPageCenterElement({ slug, headerHeight });
 
     return (
         <ApiPageMargins>

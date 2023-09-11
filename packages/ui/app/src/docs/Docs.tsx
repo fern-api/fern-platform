@@ -12,11 +12,11 @@ import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
 import { useCustomTheme } from "./useCustomTheme";
 
-export const Docs: React.FC = memo(function UnmemoizedDocs() {
-    const docsContext = useDocsContext();
-    const { docsDefinition, lightModeEnabled } = docsContext;
-    const searchContext = useSearchContext();
-    const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = searchContext;
+export const Docs: React.FC = () => {
+    const headerContainerRef = useRef<HTMLDivElement>(null);
+    const [, headerHeight] = useSize(headerContainerRef);
+    const { docsDefinition } = useDocsContext();
+    const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = useSearchContext();
     const searchService = useSearchService();
     useCustomTheme(docsDefinition);
     useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
@@ -27,49 +27,46 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
     const hasSpecifiedBackgroundImage = !!docsDefinition.config.backgroundImage;
 
     return (
-        <>
-            <BgImageGradient
-                hasSpecifiedBackgroundColor={hasSpecifiedBackgroundColor}
-                hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage}
-            />
-            <div className="relative flex min-h-0 flex-1 flex-col">
-                {searchService.isAvailable && <SearchDialog isOpen={isSearchDialogOpen} onClose={closeSearchDialog} />}
-                <div className="border-border-default-light dark:border-border-default-dark sticky inset-x-0 top-0 z-20 h-16 border-b backdrop-blur-xl">
-                    <Header
-                        className="max-w-8xl mx-auto"
-                        docsDefinition={docsDefinition}
-                        lightModeEnabled={lightModeEnabled}
-                        openSearchDialog={openSearchDialog}
-                        isMobileSidebarOpen={isMobileSidebarOpen}
-                        openMobileSidebar={openMobileSidebar}
-                        closeMobileSidebar={closeMobileSidebar}
-                        searchService={searchService}
-                    />
-                </div>
+        <div
+            className={classNames("relative flex min-h-0 flex-1 bg-background flex-col", {
+                "from-accent-primary/10 dark:from-accent-primary/[0.15] overscroll-y-none bg-gradient-to-b to-transparent":
+                    !hasSpecifiedBackgroundColor && !hasSpecifiedBackgroundImage,
+            })}
+            style={
+                hasSpecifiedBackgroundImage
+                    ? {
+                          backgroundImage: "var(--docs-background-image)",
+                          backgroundSize: "cover",
+                      }
+                    : {}
+            }
+        >
+            {searchService.isAvailable && <SearchDialog isOpen={isSearchDialogOpen} onClose={closeSearchDialog} />}
+            <div
+                className="border-border-default-light dark:border-border-default-dark sticky inset-x-0 top-0 z-20 border-b backdrop-blur-xl"
+                ref={headerContainerRef}
+            >
+                <Header className="max-w-8xl mx-auto" />
+            </div>
 
-                <div className="max-w-8xl mx-auto flex min-h-0 w-full flex-1">
-                    <div className="hidden w-72 md:flex">
-                        <div
-                            className="sticky top-16 w-full overflow-auto overflow-x-hidden"
-                            style={{ maxHeight: "calc(100vh - 4rem)" }}
-                            id="sidebar-container"
-                        >
-                            <Sidebar />
-                        </div>
+            <div className="max-w-8xl mx-auto flex min-h-0 w-full flex-1">
+                <div className="hidden w-72 md:flex">
+                    <div
+                        className="sticky w-full overflow-auto overflow-x-hidden"
+                        style={{ top: headerHeight, maxHeight: `calc(100vh - ${headerHeight}px)` }}
+                    >
+                        <Sidebar />
                     </div>
-                    {isMobileSidebarOpen && (
-                        <div
-                            className="bg-background fixed inset-x-0 bottom-0 top-16 z-10 flex overflow-auto overflow-x-hidden md:hidden"
-                            style={{ maxHeight: "calc(100vh - 4rem)" }}
-                        >
-                            <Sidebar hideSearchBar />
-                        </div>
-                    )}
-                    <div className="flex w-full min-w-0 flex-1 flex-col">
-                        <DocsMainContent />
+                </div>
+                {isMobileSidebarOpen && (
+                    <div className="bg-background absolute inset-x-0 bottom-0 top-16 z-10 flex md:hidden">
+                        <Sidebar hideSearchBar />
                     </div>
+                )}
+                <div className="flex w-full min-w-0 flex-1 flex-col">
+                    <DocsMainContent headerHeight={headerHeight} />
                 </div>
             </div>
-        </>
+        </div>
     );
 });

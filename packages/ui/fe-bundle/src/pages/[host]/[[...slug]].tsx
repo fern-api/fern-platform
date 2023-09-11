@@ -7,6 +7,7 @@ import {
     UrlPathResolver,
     type ResolvedUrlPath,
 } from "@fern-ui/app-utils";
+// eslint-disable-next-line import/no-internal-modules
 import { assertNeverNoThrow } from "@fern-ui/core-utils";
 import { App } from "@fern-ui/ui";
 import { GetStaticPaths, GetStaticProps } from "next";
