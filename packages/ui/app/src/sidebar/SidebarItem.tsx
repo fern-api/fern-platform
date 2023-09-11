@@ -81,7 +81,7 @@ export const SidebarItem: React.FC<SidebarItem.Props> = ({
             ref.current?.scrollIntoView({ block: "nearest" });
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fullSlug]);
+    }, [fullSlug, registerScrolledToPathListener]);
 
     return (
         <div className={classNames(className)} ref={ref}>
