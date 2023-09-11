@@ -25,6 +25,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
     const {
         docsInfo,
         setActiveTabIndex,
+        activeTab,
         activeTabIndex,
         selectedSlug,
         navigateToPath,
@@ -60,8 +61,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                 />
             );
         }
-        const selectedTab = activeTabIndex != null ? activeNavigationConfig.tabs[activeTabIndex] : undefined;
-        if (selectedTab == null) {
+        if (activeTab == null) {
             return null;
         }
         return (
@@ -108,7 +108,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                     ))}
                 </div>
                 <SidebarItems
-                    navigationItems={selectedTab.items}
+                    navigationItems={activeTab.items}
                     slug=""
                     selectedSlug={selectedSlug}
                     navigateToPath={navigateToPath}
