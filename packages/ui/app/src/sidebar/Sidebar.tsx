@@ -60,7 +60,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                 />
             );
         }
-        const selectedTab = activeNavigationConfig.tabs[activeTabIndex];
+        const selectedTab = activeTabIndex != null ? activeNavigationConfig.tabs[activeTabIndex] : undefined;
         if (selectedTab == null) {
             return null;
         }

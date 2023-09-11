@@ -21,7 +21,7 @@ export declare namespace SidebarSubpackageItem {
         getFullSlug: (slug: string) => string;
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
         docsInfo: DocsInfo;
-        activeTabIndex: number;
+        activeTabIndex: number | null;
         closeMobileSidebar: () => void;
         pushRoute: NextRouter["push"];
     }
