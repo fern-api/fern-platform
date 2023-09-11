@@ -167,7 +167,9 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     const navigateToPath = useEventCallback(
         (slugWithoutVersion: string, opts: NavigateToPathOpts = { omitVersionPrefix: false }) => {
             setJustNavigated(true);
-            const slug = opts.omitVersionPrefix ? slugWithoutVersion : getFullSlug(slugWithoutVersion);
+            const slug = opts.omitVersionPrefix
+                ? slugWithoutVersion
+                : getFullSlug(slugWithoutVersion, { tabSlug: opts.tabSlug });
             setSelectedSlug(slug);
             navigateToPathListeners.invokeListeners(slug);
 

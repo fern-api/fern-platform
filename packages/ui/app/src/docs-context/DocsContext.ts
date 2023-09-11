@@ -26,6 +26,7 @@ export type DocsInfo = DocsInfoVersioned | DocsInfoUnversioned;
 
 export interface NavigateToPathOpts {
     omitVersionPrefix: boolean;
+    tabSlug?: string;
 }
 
 export interface DocsContextValue {
