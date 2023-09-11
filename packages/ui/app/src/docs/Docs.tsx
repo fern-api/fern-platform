@@ -12,23 +12,20 @@ import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
 import { useCustomTheme } from "./useCustomTheme";
 
-export const Docs: React.FC = memo(function UnmemoizedDocs() {
-    const docsContext = useDocsContext();
-    const { docsDefinition, lightModeEnabled } = docsContext;
-    const searchContext = useSearchContext();
-    const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = searchContext;
-    const searchService = useSearchService();
-    useCustomTheme(docsDefinition);
-    useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
+export declare namespace Docs {
+    export interface Props {
+        hasSpecifiedBackgroundColor: boolean;
+        hasSpecifiedBackgroundImage: boolean;
+    }
+}
 
-    const { isMobileSidebarOpen, openMobileSidebar, closeMobileSidebar } = useMobileSidebarContext();
-
-    const hasSpecifiedBackgroundColor = !!docsDefinition.config.colorsV2?.background;
-    const hasSpecifiedBackgroundImage = !!docsDefinition.config.backgroundImage;
-
+export const Docs: React.FC<Docs.Props> = ({
+    hasSpecifiedBackgroundColor = false,
+    hasSpecifiedBackgroundImage = false,
+}) => {
     return (
         <div
-            className={classNames("relative flex min-h-0 flex-1 bg-background flex-col", {
+            className={classNames("relative flex min-h-0 flex-1 bg-background flex-col bg-fixed", {
                 "from-accent-primary/10 dark:from-accent-primary/[0.15] overscroll-y-none bg-gradient-to-b to-transparent":
                     !hasSpecifiedBackgroundColor && !hasSpecifiedBackgroundImage,
             })}
@@ -41,6 +38,23 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                     : {}
             }
         >
+            <InnerDocs />
+        </div>
+    );
+};
+
+const InnerDocs: React.FC = memo(function UnMemoInnerDocs() {
+    const docsContext = useDocsContext();
+    const { docsDefinition, lightModeEnabled } = docsContext;
+    const searchContext = useSearchContext();
+    const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = searchContext;
+    const searchService = useSearchService();
+    useCustomTheme(docsDefinition);
+    useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
+
+    const { isMobileSidebarOpen, openMobileSidebar, closeMobileSidebar } = useMobileSidebarContext();
+    return (
+        <div>
             {searchService.isAvailable && <SearchDialog isOpen={isSearchDialogOpen} onClose={closeSearchDialog} />}
             <div className="border-border-default-light dark:border-border-default-dark sticky inset-x-0 top-0 z-20 h-16 border-b backdrop-blur-xl">
                 <Header

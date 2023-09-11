@@ -48,7 +48,10 @@ export const App: React.FC<App.Props> = ({ docs, inferredVersion, resolvedUrlPat
                     nextPath={nextPath}
                     previousPath={previousPath}
                 >
-                    <Docs />
+                    <Docs
+                        hasSpecifiedBackgroundColor={!!docs.definition.config.colorsV2?.background}
+                        hasSpecifiedBackgroundImage={!!docs.definition.config.backgroundImage}
+                    />
                 </DocsContextProvider>
             )}
         </div>
