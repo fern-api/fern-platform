@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import Link from "next/link";
-import { FontAwesomeIconClient } from "../../commons/FontAwesomeIconClient";
 import { useDocsContext } from "../../docs-context/useDocsContext";
 
 export declare namespace Card {
@@ -32,7 +31,7 @@ export const Card: React.FC<Card.Props> = ({ title, icon, iconPosition = "top", 
 
     const content = (
         <>
-            <FontAwesomeIconClient className="text-intent-default dark:text-intent-default h-5 w-5" icon={icon} />
+            <FontAwesomeIcon className="text-intent-default dark:text-intent-default h-5 w-5" icon={icon} />
             <div>
                 <div className="text-text-primary-light dark:text-text-primary-dark font-normal">{title}</div>
                 {children != null && <div className="t-muted mt-1">{children}</div>}

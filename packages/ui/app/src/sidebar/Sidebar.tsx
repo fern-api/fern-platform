@@ -3,7 +3,7 @@ import { getFirstNavigatableItem, isUnversionedUntabbedNavigationConfig } from "
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
-import { FontAwesomeIconClient } from "../commons/FontAwesomeIconClient";
+import { FontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useSearchContext } from "../search-context/useSearchContext";
@@ -85,7 +85,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                         >
                             <div className="flex min-w-0 items-center justify-start space-x-3">
                                 <div className="min-w-fit">
-                                    <FontAwesomeIconClient
+                                    <FontAwesomeIcon
                                         className={classNames("h-5 w-5", {
                                             "text-accent-primary": idx === activeTabIndex,
                                             "t-muted group-hover/tab-button:text-accent-primary":
