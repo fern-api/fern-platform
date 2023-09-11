@@ -28,7 +28,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
 
     return (
         <div
-            className={classNames("relative flex min-h-0 flex-1 bg-background flex-col", {
+            className={classNames("relative flex min-h-0 flex-1 bg-background flex-col bg-fixed", {
                 "from-accent-primary/10 dark:from-accent-primary/[0.15] overscroll-y-none bg-gradient-to-b to-transparent":
                     !hasSpecifiedBackgroundColor && !hasSpecifiedBackgroundImage,
             })}
