@@ -15,6 +15,7 @@ export declare namespace SidebarItem {
         leftElement?: JSX.Element;
         rightElement?: JSX.Element;
         indent?: boolean;
+        shallow?: boolean;
     }
 }
 
@@ -25,6 +26,7 @@ export const SidebarItem: React.FC<SidebarItem.Props> = ({
     leftElement,
     rightElement,
     indent = false,
+    shallow = false,
 }) => {
     const { navigateToPath, registerScrolledToPathListener, getFullSlug } = useDocsContext();
     const { closeMobileSidebar } = useMobileSidebarContext();
@@ -87,7 +89,13 @@ export const SidebarItem: React.FC<SidebarItem.Props> = ({
 
     return (
         <div className={classNames(className)} ref={setRef}>
-            <Link href={`/${fullSlug}`} onClick={handleClick} className="!no-underline">
+            <Link
+                href={`/${fullSlug}`}
+                onClick={handleClick}
+                className="!no-underline"
+                shallow={shallow}
+                scroll={!shallow}
+            >
                 <SidebarItemLayout title={renderTitle} isSelected={isSelected} />
             </Link>
         </div>

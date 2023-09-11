@@ -16,6 +16,7 @@ export declare namespace SidebarSubpackageItem {
         isChildSelected: boolean;
         className?: string;
         slug: string;
+        shallow: boolean;
     }
 }
 
@@ -24,6 +25,7 @@ export const SidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = ({
     isChildSelected,
     className,
     slug,
+    shallow,
 }) => {
     const { navigateToPath, registerScrolledToPathListener, getFullSlug, docsDefinition, docsInfo } = useDocsContext();
     const { activeTabIndex } = useSidebarContext();
@@ -56,12 +58,12 @@ export const SidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = ({
             const firstNavigatable = resolvedUrlPath.subpackage.endpoints[0] ?? resolvedUrlPath.subpackage.webhooks[0];
             if (firstNavigatable != null) {
                 const slugToNavigate = joinUrlSlugs(resolvedUrlPath.slug, firstNavigatable.urlSlug);
-                void router.push("/" + getFullSlug(slugToNavigate));
+                void router.push("/" + getFullSlug(slugToNavigate), undefined, { shallow, scroll: !shallow });
                 navigateToPath(slugToNavigate);
                 closeMobileSidebar();
             }
         }
-    }, [router, navigateToPath, slug, getFullSlug, urlPathResolver, closeMobileSidebar]);
+    }, [urlPathResolver, slug, router, getFullSlug, shallow, navigateToPath, closeMobileSidebar]);
 
     const fullSlug = getFullSlug(slug);
 

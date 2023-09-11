@@ -8,12 +8,14 @@ export declare namespace ApiPackageSidebarSectionContents {
     export interface Props {
         package: FernRegistryApiRead.ApiDefinitionPackage;
         slug: string;
+        shallow: boolean;
     }
 }
 
 export const ApiPackageSidebarSectionContents: React.FC<ApiPackageSidebarSectionContents.Props> = ({
     package: package_,
     slug,
+    shallow,
 }) => {
     return (
         <div className="flex flex-col">
@@ -23,6 +25,7 @@ export const ApiPackageSidebarSectionContents: React.FC<ApiPackageSidebarSection
                     slug={joinUrlSlugs(slug, endpoint.urlSlug)}
                     title={getEndpointTitleAsString(endpoint)}
                     indent={isSubpackage(package_)}
+                    shallow={shallow}
                 />
             ))}
             {package_.webhooks.map((webhook, webhookIndex) => (
@@ -31,9 +34,10 @@ export const ApiPackageSidebarSectionContents: React.FC<ApiPackageSidebarSection
                     slug={joinUrlSlugs(slug, webhook.urlSlug)}
                     title={webhook.name ?? ""}
                     indent={isSubpackage(package_)}
+                    shallow={shallow}
                 />
             ))}
-            <ApiSubpackages package={package_} slug={slug} />
+            <ApiSubpackages package={package_} slug={slug} shallow={shallow} />
         </div>
     );
 };

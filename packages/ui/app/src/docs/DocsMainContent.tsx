@@ -7,23 +7,23 @@ import { RedirectToFirstNavigationItem } from "./RedirectToFirstNavigationItem";
 
 export declare namespace DocsMainContent {
     export interface Props {
-        marginHorizontal?: number;
+        headerHeight: number;
     }
 }
 
-export const DocsMainContent: React.FC<DocsMainContent.Props> = ({ marginHorizontal }) => {
+export const DocsMainContent: React.FC<DocsMainContent.Props> = ({ headerHeight }) => {
     const { resolvedPathFromUrl } = useDocsContext();
 
     switch (resolvedPathFromUrl.type) {
         case "mdx-page":
-            return <CustomDocsPage path={resolvedPathFromUrl} />;
+            return <CustomDocsPage path={resolvedPathFromUrl} headerHeight={headerHeight} />;
         case "api":
             return (
                 <ApiDefinitionContextProvider
                     apiSection={resolvedPathFromUrl.apiSection}
                     apiSlug={resolvedPathFromUrl.slug}
                 >
-                    <ApiPage marginHorizontal={marginHorizontal} />
+                    <ApiPage headerHeight={headerHeight} />
                 </ApiDefinitionContextProvider>
             );
         case "clientLibraries":
@@ -37,7 +37,7 @@ export const DocsMainContent: React.FC<DocsMainContent.Props> = ({ marginHorizon
                     apiSection={resolvedPathFromUrl.apiSection}
                     apiSlug={resolvedPathFromUrl.apiSlug}
                 >
-                    <ApiPage marginHorizontal={marginHorizontal} />
+                    <ApiPage headerHeight={headerHeight} />
                 </ApiDefinitionContextProvider>
             );
         case "section":

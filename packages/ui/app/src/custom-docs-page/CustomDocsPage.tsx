@@ -9,10 +9,11 @@ import { TableOfContents } from "./TableOfContents";
 export declare namespace CustomDocsPage {
     export interface Props {
         path: ResolvedUrlPath.MdxPage;
+        headerHeight: number;
     }
 }
 
-export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
+export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path, headerHeight }) => {
     const { resolvePage, docsInfo } = useDocsContext();
 
     const page = useMemo(() => resolvePage(path.page.id), [path.page.id, resolvePage]);
@@ -54,8 +55,8 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
     }, [path]);
 
     return (
-        <div className="flex space-x-16 overflow-y-auto px-6 pt-8 md:px-12">
-            <div className="min-w-0 max-w-3xl">
+        <div className="flex space-x-16 px-6 md:px-12">
+            <div className="min-w-0 max-w-3xl pt-8">
                 {sectionTitle != null && (
                     <div className="text-accent-primary mb-4 text-xs font-semibold uppercase tracking-wider">
                         {sectionTitle}
@@ -69,7 +70,16 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
                 <BottomNavigationButtons />
                 <div className="h-20" />
             </div>
-            <TableOfContents className="sticky top-0 hidden xl:flex" markdown={page.markdown} />
+            <div className="hidden w-64 xl:flex">
+                <TableOfContents
+                    className="sticky w-full overflow-auto overflow-x-hidden py-8"
+                    markdown={page.markdown}
+                    style={{
+                        top: headerHeight,
+                        maxHeight: `calc(100vh - ${headerHeight}px)`,
+                    }}
+                />
+            </div>
         </div>
     );
 };
