@@ -2,8 +2,8 @@ import { Text } from "@blueprintjs/core";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { isUnversionedTabbedNavigationConfig, UrlPathResolver } from "@fern-ui/app-utils";
 import classNames from "classnames";
-import { useRouter } from "next/router";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { NextRouter } from "next/router";
+import { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 import { DocsInfo, NavigateToPathOpts } from "../docs-context/DocsContext";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
@@ -15,7 +15,14 @@ export declare namespace SidebarSubpackageItem {
         isChildSelected: boolean;
         className?: string;
         slug: string;
-        shallow: boolean;
+        navigateToPath: (slugWithoutVersion: string, opts?: NavigateToPathOpts | undefined) => void;
+        registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
+        getFullSlug: (slug: string) => string;
+        docsDefinition: FernRegistryDocsRead.DocsDefinition;
+        docsInfo: DocsInfo;
+        activeTabIndex: number;
+        closeMobileSidebar: () => void;
+        pushRoute: NextRouter["push"];
     }
 }
 
@@ -24,7 +31,14 @@ const UnmemoizedSidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = (
     isChildSelected,
     className,
     slug,
-    shallow,
+    navigateToPath,
+    registerScrolledToPathListener,
+    getFullSlug,
+    docsDefinition,
+    docsInfo,
+    activeTabIndex,
+    closeMobileSidebar,
+    pushRoute,
 }) => {
     const urlPathResolver = useMemo(() => {
         let items;
@@ -52,12 +66,15 @@ const UnmemoizedSidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = (
             const firstNavigatable = resolvedUrlPath.subpackage.endpoints[0] ?? resolvedUrlPath.subpackage.webhooks[0];
             if (firstNavigatable != null) {
                 const slugToNavigate = joinUrlSlugs(resolvedUrlPath.slug, firstNavigatable.urlSlug);
-                void router.push("/" + getFullSlug(slugToNavigate), undefined, { shallow, scroll: !shallow });
+                void pushRoute("/" + getFullSlug(slugToNavigate), undefined, {
+                    shallow: isChildSelected,
+                    scroll: !isChildSelected,
+                });
                 navigateToPath(slugToNavigate);
                 closeMobileSidebar();
             }
         }
-    }, [urlPathResolver, slug, router, getFullSlug, shallow, navigateToPath, closeMobileSidebar]);
+    }, [urlPathResolver, slug, pushRoute, getFullSlug, isChildSelected, navigateToPath, closeMobileSidebar]);
 
     const fullSlug = getFullSlug(slug);
 

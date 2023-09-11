@@ -1,3 +1,4 @@
+import { FernRegistry } from "@fern-fern/registry-browser";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import React, { useCallback } from "react";
@@ -8,6 +9,8 @@ export declare namespace ApiDefinitionContextProvider {
     export type Props = React.PropsWithChildren<{
         apiSection: FernRegistryDocsRead.ApiSection;
         apiSlug: string;
+
+        resolveApi: (apiId: FernRegistry.ApiDefinitionId) => FernRegistryApiRead.ApiDefinition;
     }>;
 }
 

@@ -7,7 +7,6 @@ import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNo
 import { API_ARTIFACTS_TITLE } from "../config";
 import { DocsInfo, NavigateToPathOpts } from "../docs-context/DocsContext";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
-import { useDocsContext } from "../docs-context/useDocsContext";
 import { ApiPackageSidebarSectionContents } from "./ApiPackageSidebarSectionContents";
 import { NonClickableSidebarGroupTitle } from "./NonClickableSidebarGroupTitle";
 import { SidebarGroup } from "./SidebarGroup";
@@ -29,9 +28,20 @@ export declare namespace ApiSidebarSection {
     }
 }
 
-export const ApiSidebarSection: React.FC<ApiSidebarSection.Props> = ({ slug }) => {
-    const { apiSection, apiDefinition } = useApiDefinitionContext();
-    const { selectedSlug } = useDocsContext();
+export const ApiSidebarSection: React.FC<ApiSidebarSection.Props> = ({
+    slug,
+    selectedSlug,
+    navigateToPath,
+    registerScrolledToPathListener,
+    getFullSlug,
+    closeMobileSidebar,
+    apiSection,
+    docsDefinition,
+    docsInfo,
+    activeTabIndex,
+    resolveApi,
+}) => {
+    const apiDefinition = useMemo(() => resolveApi(apiSection.api), [apiSection.api, resolveApi]);
 
     const resolveSubpackageById = useCallback(
         (subpackageId: FernRegistryApiRead.SubpackageId): FernRegistryApiRead.ApiDefinitionSubpackage => {
@@ -58,6 +68,15 @@ export const ApiSidebarSection: React.FC<ApiSidebarSection.Props> = ({ slug }) =
                 package={apiDefinition.rootPackage}
                 slug={slug}
                 shallow={selectedSlug?.includes(slug) ?? false}
+                selectedSlug={selectedSlug}
+                navigateToPath={navigateToPath}
+                registerScrolledToPathListener={registerScrolledToPathListener}
+                getFullSlug={getFullSlug}
+                closeMobileSidebar={closeMobileSidebar}
+                resolveSubpackageById={resolveSubpackageById}
+                docsDefinition={docsDefinition}
+                docsInfo={docsInfo}
+                activeTabIndex={activeTabIndex}
             />
         </SidebarGroup>
     );

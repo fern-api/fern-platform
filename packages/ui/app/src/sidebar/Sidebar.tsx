@@ -81,28 +81,17 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                                     "t-muted hover:text-accent-primary": idx !== activeTabIndex,
                                 }
                             )}
-                            onClick={() => {
-                                _setActiveTabIndex(idx);
-                                const [firstTabItem] = tab.items;
-                                if (firstTabItem == null) {
-                                    return;
-                                }
-                                const slugToNavigate = getFirstNavigatableItem(firstTabItem);
-                                if (slugToNavigate != null) {
-                                    void router.push("/" + getFullSlug(slugToNavigate));
-                                    navigateToPath(slugToNavigate);
-                                }
-                            }}
+                            onClick={() => _setActiveTabIndex(idx)}
                         >
                             <div className="flex min-w-0 items-center justify-start space-x-3">
                                 <div className="min-w-fit">
-                                    <FontAwesomeIconClient
+                                    <FontAwesomeIcon
                                         className={classNames("h-5 w-5", {
                                             "text-accent-primary": idx === activeTabIndex,
                                             "t-muted group-hover/tab-button:text-accent-primary":
                                                 idx !== activeTabIndex,
                                         })}
-                                        icon={tab.icon}
+                                        icon={tab.icon as IconProp}
                                     />
                                 </div>
 
