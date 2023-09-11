@@ -1,6 +1,5 @@
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand } from "@fern-ui/react-commons";
-import classNames from "classnames";
 import { memo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
@@ -8,6 +7,7 @@ import { useSearchContext } from "../search-context/useSearchContext";
 import { SearchDialog } from "../search/SearchDialog";
 import { useSearchService } from "../services/useSearchService";
 import { Sidebar } from "../sidebar/Sidebar";
+import { BgImageGradient } from "./BgImageGradient";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
 import { useCustomTheme } from "./useCustomTheme";
@@ -28,19 +28,9 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
 
     return (
         <>
-            <div
-                className={classNames("fixed inset-0 -z-10 bg-background", {
-                    "from-accent-primary/10 dark:from-accent-primary/[0.15] overscroll-y-none bg-gradient-to-b to-transparent":
-                        !hasSpecifiedBackgroundColor && !hasSpecifiedBackgroundImage,
-                })}
-                style={
-                    hasSpecifiedBackgroundImage
-                        ? {
-                              backgroundImage: "var(--docs-background-image)",
-                              backgroundSize: "cover",
-                          }
-                        : {}
-                }
+            <BgImageGradient
+                hasSpecifiedBackgroundColor={hasSpecifiedBackgroundColor}
+                hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage}
             />
             <div className="relative flex min-h-0 flex-1 flex-col">
                 {searchService.isAvailable && <SearchDialog isOpen={isSearchDialogOpen} onClose={closeSearchDialog} />}
