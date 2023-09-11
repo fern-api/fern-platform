@@ -21,13 +21,21 @@ export declare namespace App {
     export interface Props {
         docs: FernRegistryDocsRead.LoadDocsForUrlResponse;
         inferredVersion: string | null;
+        inferredTabIndex: number | null;
         resolvedUrlPath: ResolvedUrlPath;
         nextPath: ResolvedUrlPath | undefined;
         previousPath: ResolvedUrlPath | undefined;
     }
 }
 
-export const App: React.FC<App.Props> = ({ docs, inferredVersion, resolvedUrlPath, nextPath, previousPath }) => {
+export const App: React.FC<App.Props> = ({
+    docs,
+    inferredVersion,
+    inferredTabIndex,
+    resolvedUrlPath,
+    nextPath,
+    previousPath,
+}) => {
     useEffect(() => {
         if (process.env.NEXT_PUBLIC_POSTHOG_API_KEY != null && process.env.NEXT_PUBLIC_POSTHOG_API_KEY.length > 0) {
             initializePosthog(process.env.NEXT_PUBLIC_POSTHOG_API_KEY);
@@ -44,6 +52,7 @@ export const App: React.FC<App.Props> = ({ docs, inferredVersion, resolvedUrlPat
                     docsDefinition={docs.definition}
                     lightModeEnabled={docs.lightModeEnabled}
                     inferredVersion={inferredVersion}
+                    inferredTabIndex={inferredTabIndex}
                     resolvedUrlPath={resolvedUrlPath}
                     nextPath={nextPath}
                     previousPath={previousPath}

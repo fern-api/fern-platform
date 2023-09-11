@@ -22,7 +22,7 @@ export declare namespace ApiSubpackageSidebarSection {
         registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
         docsInfo: DocsInfo;
-        activeTabIndex: number;
+        activeTabIndex: number | null;
         closeMobileSidebar: () => void;
     }
 }

@@ -12,6 +12,7 @@ export const MOCKS_DOCS_DEFINITION: FernRegistryDocsRead.DocsDefinition = {
                     type: "section",
                     title: "Introduction",
                     urlSlug: "introduction",
+                    skipUrlSlug: false,
                     collapsed: false,
                     items: [
                         {

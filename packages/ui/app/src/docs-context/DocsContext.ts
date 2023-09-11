@@ -26,6 +26,7 @@ export type DocsInfo = DocsInfoVersioned | DocsInfoUnversioned;
 
 export interface NavigateToPathOpts {
     omitVersionPrefix: boolean;
+    tabSlug?: string;
 }
 
 export interface DocsContextValue {
@@ -43,8 +44,12 @@ export interface DocsContextValue {
     lightModeEnabled: boolean;
     docsInfo: DocsInfo;
     setActiveVersion: (version: string) => void;
+    activeTab: FernRegistryDocsRead.NavigationTab | undefined;
+    activeTabIndex: number | null;
+    setActiveTabIndex: (index: number) => void;
+
     /** Returns the version-prefixed slug. */
-    getFullSlug: (slug: string) => string;
+    getFullSlug: (slug: string, opts?: { tabSlug?: string }) => string;
 
     // controlled
     selectedSlug: string | undefined;

@@ -55,14 +55,8 @@ const handler: NextApiHandler = async (req, res) => {
                     });
                     const pathsForVersionTab = [
                         `/${version}`,
-                        // TODO: We may need to add tab slug as prefix here
-                        // `${tab.slug}`,
-                        ...urlSlugTree.getAllSlugs().map(
-                            (slug) =>
-                                // TODO: We may need to add tab slug as prefix here
-                                // `/${version}/${tab.slug}/${slug}`
-                                `/${version}/${slug}`
-                        ),
+                        `/${version}/${tab.urlSlug}`,
+                        ...urlSlugTree.getAllSlugs().map((slug) => `/${version}/${tab.urlSlug}/${slug}`),
                     ];
                     pathsToRevalidate.push(...pathsForVersionTab);
                 });
@@ -81,9 +75,7 @@ const handler: NextApiHandler = async (req, res) => {
                 items: tab.items,
                 loadApiDefinition: (id) => docs.body.definition.apis[id],
             });
-            // TODO: We may need to add tab slug as prefix here
-            // pathsToRevalidate.push(...urlSlugTree.getAllSlugs().map((slug) => `/${tab.slug}/${slug}`));
-            pathsToRevalidate.push(...urlSlugTree.getAllSlugs().map((slug) => `/${slug}`));
+            pathsToRevalidate.push(...urlSlugTree.getAllSlugs().map((slug) => `/${tab.urlSlug}/${slug}`));
         });
     }
 

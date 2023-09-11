@@ -23,7 +23,7 @@ export declare namespace ApiSidebarSection {
 
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
         docsInfo: DocsInfo;
-        activeTabIndex: number;
+        activeTabIndex: number | null;
         resolveApi: (apiId: FernRegistry.ApiDefinitionId) => FernRegistryApiRead.ApiDefinition;
     }
 }
