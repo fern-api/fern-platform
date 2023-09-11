@@ -2,7 +2,7 @@ import { Text } from "@blueprintjs/core";
 import { isUnversionedTabbedNavigationConfig, UrlPathResolver } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { useDocsContext } from "../docs-context/useDocsContext";
@@ -98,21 +98,22 @@ export const SidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = ({
         [isChildSelected, title]
     );
 
-    const ref = useRef<HTMLButtonElement>(null);
+    const [ref, setRef] = useState<HTMLElement | null>(null);
 
     useEffect(() => {
-        return registerScrolledToPathListener(fullSlug, () => {
-            const top = ref.current?.offsetTop;
-            const sidebarContainer = document.getElementById("sidebar-container");
-            const height = sidebarContainer?.clientHeight;
-            if (top != null && height != null) {
-                sidebarContainer?.scrollTo({ top: top - height / 2 });
-            }
+        if (ref == null) {
+            return;
+        }
+        const unsubscribe = registerScrolledToPathListener(fullSlug, () => {
+            ref.scrollIntoView({
+                block: "center",
+            });
         });
-    });
+        return unsubscribe;
+    }, [ref, registerScrolledToPathListener, fullSlug]);
 
     return (
-        <button className={classNames(className)} ref={ref} onClick={handleClick}>
+        <button className={classNames(className)} ref={setRef} onClick={handleClick}>
             <SidebarItemLayout title={renderTitle} />
         </button>
     );
