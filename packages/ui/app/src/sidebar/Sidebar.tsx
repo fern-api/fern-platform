@@ -1,9 +1,10 @@
 import { Text } from "@blueprintjs/core";
 import { getFirstNavigatableItem, isUnversionedUntabbedNavigationConfig } from "@fern-ui/app-utils";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
-import { FontAwesomeIconClient } from "../commons/FontAwesomeIconClient";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useSearchContext } from "../search-context/useSearchContext";
@@ -96,13 +97,13 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                         >
                             <div className="flex min-w-0 items-center justify-start space-x-3">
                                 <div className="min-w-fit">
-                                    <FontAwesomeIconClient
+                                    <FontAwesomeIcon
                                         className={classNames("h-5 w-5", {
                                             "text-accent-primary": idx === activeTabIndex,
                                             "t-muted group-hover/tab-button:text-accent-primary":
                                                 idx !== activeTabIndex,
                                         })}
-                                        icon={tab.icon}
+                                        icon={tab.icon as IconProp}
                                     />
                                 </div>
 
