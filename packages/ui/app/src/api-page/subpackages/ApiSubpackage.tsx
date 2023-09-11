@@ -9,21 +9,15 @@ export declare namespace ApiSubpackage {
         subpackageId: FernRegistryApiRead.SubpackageId;
         slug: string;
         isLastInParentPackage: boolean;
-        headerHeight: number;
     }
 }
 
-export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({
-    subpackageId,
-    slug,
-    isLastInParentPackage,
-    headerHeight,
-}) => {
+export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackageId, slug, isLastInParentPackage }) => {
     const { resolveSubpackageById } = useApiDefinitionContext();
 
     const subpackage = resolveSubpackageById(subpackageId);
 
-    const { setTargetRef } = useApiPageCenterElement({ slug, headerHeight });
+    const { setTargetRef } = useApiPageCenterElement({ slug });
 
     return (
         <>
@@ -35,7 +29,6 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({
                 package={subpackage}
                 slug={slug}
                 isLastInParentPackage={isLastInParentPackage}
-                headerHeight={headerHeight}
             />
         </>
     );

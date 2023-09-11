@@ -1,8 +1,10 @@
 import { Text } from "@blueprintjs/core";
 import classNames from "classnames";
 import Link from "next/link";
-import { memo, useCallback, useEffect, useRef } from "react";
-import { NavigateToPathOpts } from "../docs-context/DocsContext";
+import { useCallback, useEffect, useRef } from "react";
+import { useDocsContext } from "../docs-context/useDocsContext";
+import { useIsSlugSelected } from "../docs-context/useIsSlugSelected";
+import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace SidebarItem {
@@ -72,12 +74,17 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
 
     useEffect(() => {
         return registerScrolledToPathListener(fullSlug, () => {
-            ref.current?.scrollIntoView({ block: "nearest" });
+            const top = ref.current?.offsetTop;
+            const sidebarContainer = document.getElementById("sidebar-container");
+            const height = sidebarContainer?.clientHeight;
+            if (top != null && height != null) {
+                sidebarContainer?.scrollTo({ top: top - height / 2 });
+            }
         });
-    }, [fullSlug, registerScrolledToPathListener]);
+    });
 
     return (
-        <div className={classNames(className)} ref={setRef}>
+        <div className={classNames(className)} ref={ref}>
             <Link
                 href={`/${fullSlug}`}
                 onClick={handleClick}

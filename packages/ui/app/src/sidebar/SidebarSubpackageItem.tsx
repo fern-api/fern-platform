@@ -2,8 +2,8 @@ import { Text } from "@blueprintjs/core";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { isUnversionedTabbedNavigationConfig, UrlPathResolver } from "@fern-ui/app-utils";
 import classNames from "classnames";
-import { NextRouter } from "next/router";
-import { memo, useCallback, useEffect, useMemo, useRef } from "react";
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 import { DocsInfo, NavigateToPathOpts } from "../docs-context/DocsContext";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
@@ -96,9 +96,14 @@ const UnmemoizedSidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = (
 
     useEffect(() => {
         return registerScrolledToPathListener(fullSlug, () => {
-            ref.current?.scrollIntoView({ block: "nearest" });
+            const top = ref.current?.offsetTop;
+            const sidebarContainer = document.getElementById("sidebar-container");
+            const height = sidebarContainer?.clientHeight;
+            if (top != null && height != null) {
+                sidebarContainer?.scrollTo({ top: top - height / 2 });
+            }
         });
-    }, [fullSlug, registerScrolledToPathListener]);
+    });
 
     return (
         <button className={classNames(className)} ref={ref} onClick={handleClick}>

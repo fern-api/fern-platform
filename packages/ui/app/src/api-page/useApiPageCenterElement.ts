@@ -6,7 +6,6 @@ import { useIsSlugSelected } from "../docs-context/useIsSlugSelected";
 export declare namespace useApiPageCenterElement {
     export interface Args {
         slug: string;
-        headerHeight?: number;
     }
 
     export interface Return {
@@ -14,7 +13,7 @@ export declare namespace useApiPageCenterElement {
     }
 }
 
-export function useApiPageCenterElement({ slug, headerHeight }: useApiPageCenterElement.Args): useApiPageCenterElement.Return {
+export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args): useApiPageCenterElement.Return {
     const { registerNavigateToPathListener, onScrollToPath, getFullSlug } = useDocsContext();
 
     const targetRef = useRef<HTMLElement | null>(null);
@@ -29,8 +28,9 @@ export function useApiPageCenterElement({ slug, headerHeight }: useApiPageCenter
     );
 
     const handleIsSelected = useCallback(() => {
-        window.scrollTo({ top: (targetRef.current?.offsetTop ?? 0) - (headerHeight ?? 0) });
-    }, [headerHeight]);
+        const headerHeight = 64; // 4rem
+        window.scrollTo({ top: (targetRef.current?.offsetTop ?? 0) - (headerHeight) });
+    }, []);
 
     useEffect(() => registerNavigateToPathListener(getFullSlug(slug), handleIsSelected), [handleIsSelected, slug, registerNavigateToPathListener, getFullSlug]);
 
