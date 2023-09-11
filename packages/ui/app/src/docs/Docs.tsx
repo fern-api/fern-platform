@@ -7,7 +7,6 @@ import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSide
 import { useSearchContext } from "../search-context/useSearchContext";
 import { SearchDialog } from "../search/SearchDialog";
 import { useSearchService } from "../services/useSearchService";
-import { Sidebar } from "../sidebar/Sidebar";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
 import { useCustomTheme } from "./useCustomTheme";
@@ -63,7 +62,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                         style={{ maxHeight: "calc(100vh - 4rem)" }}
                         id="sidebar-container"
                     >
-                        <Sidebar />
+                        {/* <Sidebar /> */}
                     </div>
                 </div>
                 {isMobileSidebarOpen && (
@@ -71,7 +70,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                         className="bg-background fixed inset-x-0 bottom-0 top-16 z-10 flex overflow-auto overflow-x-hidden md:hidden"
                         style={{ maxHeight: "calc(100vh - 4rem)" }}
                     >
-                        <Sidebar hideSearchBar />
+                        {/* <Sidebar hideSearchBar /> */}
                     </div>
                 )}
                 <div className="flex w-full min-w-0 flex-1 flex-col">
