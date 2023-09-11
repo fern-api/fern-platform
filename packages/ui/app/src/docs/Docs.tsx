@@ -55,7 +55,10 @@ export const Docs: React.FC = () => {
                     </div>
                 </div>
                 {isMobileSidebarOpen && (
-                    <div className="bg-background absolute inset-x-0 bottom-0 top-16 z-10 flex md:hidden">
+                    <div
+                        className="bg-background fixed inset-x-0 bottom-0 top-16 z-10 flex overflow-auto overflow-x-hidden md:hidden"
+                        style={{ maxHeight: "calc(100vh - 4rem)" }}
+                    >
                         <Sidebar hideSearchBar />
                     </div>
                 )}
