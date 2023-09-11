@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 export declare namespace FontAwesomeIconClient {
     export interface Props {
         className?: string;
-        icon: string;
+        icon?: string;
     }
 }
 
