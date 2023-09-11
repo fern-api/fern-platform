@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import Link from "next/link";
+import { FontAwesomeIcon } from "../../commons/FontAwesomeIcon";
 import { useDocsContext } from "../../docs-context/useDocsContext";
 
 export declare namespace Card {
