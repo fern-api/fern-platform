@@ -19,6 +19,7 @@
         @apply bg-accent-primary/20;
     }
 
+    /* provides comfortable padding above anchor links, to avoid intersecting with header */
     h1,
     h2,
     h3,
