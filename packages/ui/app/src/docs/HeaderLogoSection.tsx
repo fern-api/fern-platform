@@ -47,6 +47,11 @@ export const HeaderLogoSection: React.FC = () => {
                 <div>
                     <VersionDropdown
                         versions={docsInfo.versions}
+                        isDefaultVersion={(version) => {
+                            const [firstVersion] = docsInfo.versions;
+                            // TODO: The first version is not necessarily the default version
+                            return version === firstVersion;
+                        }}
                         selectedId={docsInfo.activeVersion}
                         onClickVersion={(v) => {
                             setActiveVersion(v);

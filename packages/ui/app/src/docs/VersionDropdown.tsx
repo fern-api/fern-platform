@@ -4,16 +4,23 @@ import Link from "next/link";
 import { Fragment } from "react";
 import { CheckIcon } from "../commons/icons/CheckIcon";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
+import { DEFAULT_VERSION_LABEL } from "../config";
 
 export declare namespace VersionDropdown {
     export interface Props {
         versions: string[];
+        isDefaultVersion: (version: string) => boolean;
         selectedId: string | undefined;
         onClickVersion: (version: string) => void;
     }
 }
 
-export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, selectedId, onClickVersion }) => {
+export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
+    versions,
+    isDefaultVersion,
+    selectedId,
+    onClickVersion,
+}) => {
     return (
         <div className="flex w-32">
             <Menu as="div" className="relative inline-block text-left">
@@ -78,7 +85,24 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, sel
                                             href={`/${version}`}
                                             onClick={() => onClickVersion(version)}
                                         >
-                                            <span className="font-mono text-sm font-normal">{version}</span>
+                                            <div className="flex items-center space-x-2">
+                                                <span className="font-mono text-sm font-normal">{version}</span>
+                                                {isDefaultVersion(version) ? (
+                                                    <span
+                                                        className={classNames(
+                                                            "rounded px-1 py-0.5 text-[11px] font-normal",
+                                                            {
+                                                                "bg-accent-highlight":
+                                                                    version === selectedId && !active,
+                                                                "bg-tag-default-light dark:bg-tag-default-dark":
+                                                                    version !== selectedId && !active,
+                                                            }
+                                                        )}
+                                                    >
+                                                        {DEFAULT_VERSION_LABEL}
+                                                    </span>
+                                                ) : null}
+                                            </div>
                                             <CheckIcon
                                                 className={classNames("h-3 w-3", {
                                                     visible: version === selectedId,
