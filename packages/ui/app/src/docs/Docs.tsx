@@ -14,7 +14,7 @@ import { useCustomTheme } from "./useCustomTheme";
 
 export const Docs: React.FC = memo(function UnmemoizedDocs() {
     const docsContext = useDocsContext();
-    const { docsDefinition, lightModeEnabled } = docsContext;
+    const { docsDefinition } = docsContext;
     const searchContext = useSearchContext();
     const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = searchContext;
     const searchService = useSearchService();
@@ -38,7 +38,6 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                     <Header
                         className="max-w-8xl mx-auto"
                         docsDefinition={docsDefinition}
-                        lightModeEnabled={lightModeEnabled}
                         openSearchDialog={openSearchDialog}
                         isMobileSidebarOpen={isMobileSidebarOpen}
                         openMobileSidebar={openMobileSidebar}

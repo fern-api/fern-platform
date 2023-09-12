@@ -47,7 +47,6 @@ export interface DocsContextValue {
     registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
 
     docsDefinition: FernRegistryDocsRead.DocsDefinition;
-    lightModeEnabled: boolean;
     docsInfo: DocsInfo;
     setActiveVersion: (version: string) => void;
     activeTab: FernRegistryDocsRead.NavigationTab | undefined;
