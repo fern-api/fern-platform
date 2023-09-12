@@ -21,23 +21,15 @@ export function useCustomTheme(docsDefinition: FernRegistryDocsRead.DocsDefiniti
         const root = document.querySelector<HTMLElement>(":root")!;
         const colorsV3 = docsDefinition.config.colorsV3;
 
-        let accentPrimary = undefined;
-        if (colorsV3.type !== "darkAndLight") {
-            accentPrimary = colorsV3.accentPrimary;
-        } else {
-            accentPrimary = colorsV3[theme].accentPrimary;
-        }
+        const accentPrimary = colorsV3.type !== "darkAndLight" ? colorsV3.accentPrimary : colorsV3[theme].accentPrimary;
+
         root.style.setProperty(
             CSS_VARIABLES.ACCENT_PRIMARY,
             `${accentPrimary.r}, ${accentPrimary.g}, ${accentPrimary.b}`
         );
 
-        let background = undefined;
-        if (colorsV3.type !== "darkAndLight") {
-            background = colorsV3.background;
-        } else {
-            background = colorsV3[theme].background;
-        }
+        const background = colorsV3.type !== "darkAndLight" ? colorsV3.background : colorsV3[theme].background;
+
         if (background.type === "solid") {
             root.style.setProperty(CSS_VARIABLES.BACKGROUND, `${background.r}, ${background.g}, ${background.b}`);
         } else {
