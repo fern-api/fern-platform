@@ -103,6 +103,28 @@ export function getColorsV3(docsDbConfig: FernRegistryDocsDb.DocsDbConfig): Fern
             docsDbConfig.colorsV2.accentPrimary?.type === "themed" &&
             docsDbConfig.colorsV2.background?.type === "themed"
         ) {
+            if (docsDbConfig.colorsV2.accentPrimary.dark != null) {
+                return {
+                    type: "light",
+                    accentPrimary: DEFAULT_LIGHT_MODE_ACCENT_PRIMARY,
+                    background:
+                        docsDbConfig.colorsV2.background.light != null
+                            ? { type: "solid", ...docsDbConfig.colorsV2.background.light }
+                            : { type: "gradient" },
+                    logo: docsDbConfig.logoV2?.light ?? docsDbConfig.logo,
+                };
+            }
+            if (docsDbConfig.colorsV2.accentPrimary.light != null) {
+                return {
+                    type: "dark",
+                    accentPrimary: DEFAULT_DARK_MODE_ACCENT_PRIMARY,
+                    background:
+                        docsDbConfig.colorsV2.background.dark != null
+                            ? { type: "solid", ...docsDbConfig.colorsV2.background.dark }
+                            : { type: "gradient" },
+                    logo: docsDbConfig.logoV2?.light ?? docsDbConfig.logo,
+                };
+            }
             return {
                 type: "darkAndLight",
                 dark: {
