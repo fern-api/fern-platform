@@ -4,8 +4,11 @@ import useSize from "@react-hook/size";
 import classNames from "classnames";
 import { snakeCase } from "lodash-es";
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import { ApiPageDescription } from "../ApiPageDescription";
+import { getEndpointTitleAsString } from "../../util/endpoint";
+import { isSubpackage } from "../../util/package";
+import { getSubpackageTitle } from "../../util/subpackage";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
+import { Markdown } from "../markdown/Markdown";
 import { useEndpointContext } from "./endpoint-context/useEndpointContext";
 import { EndpointExample } from "./endpoint-examples/EndpointExample";
 import { EndpointErrorsSection } from "./EndpointErrorsSection";
@@ -118,11 +121,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                             endpoint={endpoint}
                         />
                     </div>
-                    <ApiPageDescription
-                        className="mt-3"
-                        description={endpoint.description}
-                        isMarkdown={endpoint.descriptionContainsMarkdown ?? false}
-                    />
+                    {endpoint.description != null && <Markdown className="mt-3">{endpoint.description}</Markdown>}
                     <div className="mt-8 flex">
                         <div className="flex flex-1 flex-col gap-12">
                             {endpoint.path.pathParameters.length > 0 && (

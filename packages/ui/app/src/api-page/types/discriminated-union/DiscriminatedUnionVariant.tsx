@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { startCase } from "lodash-es";
 import { useCallback, useMemo } from "react";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
-import { ApiPageDescription } from "../../ApiPageDescription";
+import { Markdown } from "../../markdown/Markdown";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
@@ -70,10 +70,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                 {startCase(unionVariant.discriminantValue)}
             </MonospaceText>
             <div className="flex flex-col">
-                <ApiPageDescription
-                    description={unionVariant.description}
-                    isMarkdown={unionVariant.descriptionContainsMarkdown ?? false}
-                />
+                <Markdown className="mt-3">{unionVariant.description}</Markdown>
                 <TypeDefinitionContext.Provider value={newContextValue}>
                     <InternalTypeDefinition typeShape={shape} isCollapsible={true} />
                 </TypeDefinitionContext.Provider>

@@ -1,4 +1,4 @@
-import { ApiPageDescription } from "../ApiPageDescription";
+import { Markdown } from "../markdown/Markdown";
 
 const STATUS_200_TEXT = "Return a 200 status to indicate that the data was received successfully.";
 
@@ -11,7 +11,7 @@ export const WebhookResponseSection: React.FC = () => {
                     <div className="t-muted text-xs">any</div>
                 </div>
                 <div className="mt-3 text-start">
-                    <ApiPageDescription description={STATUS_200_TEXT} isMarkdown={false} />
+                    <Markdown>{STATUS_200_TEXT}</Markdown>
                 </div>
             </div>
         </div>

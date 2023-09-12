@@ -1,7 +1,7 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
-import { ApiPageDescription } from "../../ApiPageDescription";
+import { Markdown } from "../../markdown/Markdown";
 import { useTypeDefinitionContext } from "../context/TypeDefinitionContext";
 
 export declare namespace EnumValue {
@@ -20,11 +20,7 @@ export const EnumValue: React.FC<EnumValue.Props> = ({ enumValue }) => {
             })}
         >
             <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">{`"${enumValue.value}"`}</MonospaceText>
-            <ApiPageDescription
-                className="mt-3"
-                description={enumValue.description}
-                isMarkdown={enumValue.descriptionContainsMarkdown ?? false}
-            />
+            <Markdown className="mt-3">{enumValue.description}</Markdown>
         </div>
     );
 };

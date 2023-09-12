@@ -1,6 +1,6 @@
 import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
-import { ApiPageDescription } from "../ApiPageDescription";
+import { Markdown } from "../markdown/Markdown";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
@@ -26,10 +26,7 @@ export const WebhookHeadersSection: React.FC<WebhookHeadersSection.Props> = ({ w
                                 <TypeShorthand type={header.type} plural={false} />
                             </div>
                         </div>
-                        <ApiPageDescription
-                            description={header.description}
-                            isMarkdown={header.descriptionContainsMarkdown ?? false}
-                        />
+                        {header.description != null && <Markdown>{header.description}</Markdown>}
                         <TypeReferenceDefinitions type={header.type} isCollapsible />
                     </div>
                 </div>
