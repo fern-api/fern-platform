@@ -50,7 +50,6 @@ export const App: React.FC<App.Props> = ({
                 ),
                 <DocsContextProvider
                     docsDefinition={docs.definition}
-                    lightModeEnabled={docs.lightModeEnabled}
                     inferredVersion={inferredVersion}
                     inferredTabIndex={inferredTabIndex}
                     resolvedUrlPath={resolvedUrlPath}

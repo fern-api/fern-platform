@@ -17,7 +17,6 @@ import { useSlugListeners } from "./useSlugListeners";
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
-        lightModeEnabled: boolean;
         inferredVersion: string | null;
         inferredTabIndex: number | null;
         resolvedUrlPath: ResolvedUrlPath;
@@ -28,7 +27,6 @@ export declare namespace DocsContextProvider {
 
 export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     docsDefinition,
-    lightModeEnabled,
     inferredVersion,
     inferredTabIndex,
     resolvedUrlPath,
@@ -205,7 +203,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             resolvePage,
             resolveFile,
             docsDefinition,
-            lightModeEnabled,
             docsInfo,
             setActiveVersion,
             activeTab,
@@ -223,7 +220,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
         }),
         [
             docsDefinition,
-            lightModeEnabled,
             docsInfo,
             setActiveVersion,
             activeTab,

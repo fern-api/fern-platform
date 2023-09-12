@@ -15,7 +15,6 @@ export declare namespace Header {
     export interface Props {
         className?: string;
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
-        lightModeEnabled: boolean;
         openSearchDialog: () => void;
         isMobileSidebarOpen: boolean;
         openMobileSidebar: () => void;
@@ -28,7 +27,6 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     {
         className,
         docsDefinition,
-        lightModeEnabled,
         openSearchDialog,
         isMobileSidebarOpen,
         openMobileSidebar,
@@ -37,7 +35,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     },
     ref
 ) {
-    const { navbarLinks } = docsDefinition.config;
+    const { navbarLinks, colorsV3 } = docsDefinition.config;
 
     const navbarLinksSection = (
         <div className="hidden items-center space-x-5 md:flex md:space-x-8">
@@ -66,7 +64,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
             <div className="ml-auto flex items-center space-x-4">
                 {navbarLinksSection}
 
-                {lightModeEnabled && (
+                {colorsV3.type === "darkAndLight" && (
                     <>
                         <div className="dark:bg-border-default-dark bg-border-default-light hidden w-px self-stretch md:flex" />
                         <ThemeButton className="hidden md:flex" />

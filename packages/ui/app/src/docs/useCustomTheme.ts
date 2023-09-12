@@ -3,7 +3,6 @@ import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { useTheme } from "@fern-ui/theme";
 import { useEffect } from "react";
 import { DEFAULT_COLORS } from "../config";
-import { useDocsContext } from "../docs-context/useDocsContext";
 
 const CSS_VARIABLES = {
     ACCENT_PRIMARY: "--accent-primary",
@@ -11,8 +10,7 @@ const CSS_VARIABLES = {
 } as const;
 
 export function useCustomTheme(docsDefinition: FernRegistryDocsRead.DocsDefinition): void {
-    const { lightModeEnabled } = useDocsContext();
-    const { theme } = useTheme(lightModeEnabled);
+    const { theme } = useTheme(docsDefinition.config.colorsV3.type);
 
     useEffect(() => {
         if (theme == null) {
@@ -21,32 +19,25 @@ export function useCustomTheme(docsDefinition: FernRegistryDocsRead.DocsDefiniti
 
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const root = document.querySelector<HTMLElement>(":root")!;
-        const colorsV2 = docsDefinition.config.colorsV2;
+        const colorsV3 = docsDefinition.config.colorsV3;
 
-        let accentPrimary = undefined;
-        if (colorsV2?.accentPrimary?.type === "themed") {
-            accentPrimary = colorsV2.accentPrimary[theme] ?? DEFAULT_COLORS.accentPrimary[theme];
-        } else if (colorsV2?.accentPrimary?.type === "unthemed") {
-            accentPrimary = colorsV2.accentPrimary.color ?? DEFAULT_COLORS.accentPrimary[theme];
-        } else if (docsDefinition.config.colors?.accentPrimary != null) {
-            accentPrimary = docsDefinition.config.colors.accentPrimary;
-        } else {
-            accentPrimary = DEFAULT_COLORS.accentPrimary.dark;
-        }
+        const accentPrimary = colorsV3.type !== "darkAndLight" ? colorsV3.accentPrimary : colorsV3[theme].accentPrimary;
+
         root.style.setProperty(
             CSS_VARIABLES.ACCENT_PRIMARY,
             `${accentPrimary.r}, ${accentPrimary.g}, ${accentPrimary.b}`
         );
 
-        let background = undefined;
-        if (colorsV2?.background?.type === "themed") {
-            background = colorsV2.background[theme] ?? DEFAULT_COLORS.background[theme];
-        } else if (colorsV2?.background?.type === "unthemed") {
-            background = colorsV2.background.color ?? DEFAULT_COLORS.background[theme];
+        const background = colorsV3.type !== "darkAndLight" ? colorsV3.background : colorsV3[theme].background;
+
+        if (background.type === "solid") {
+            root.style.setProperty(CSS_VARIABLES.BACKGROUND, `${background.r}, ${background.g}, ${background.b}`);
         } else {
-            background = DEFAULT_COLORS.background[theme];
+            root.style.setProperty(
+                CSS_VARIABLES.BACKGROUND,
+                `${DEFAULT_COLORS.background[theme].r}, ${DEFAULT_COLORS.background[theme].g}, ${DEFAULT_COLORS.background[theme].b}`
+            );
         }
-        root.style.setProperty(CSS_VARIABLES.BACKGROUND, `${background.r}, ${background.g}, ${background.b}`);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, useDeepCompareMemoize([docsDefinition.config.colorsV2, docsDefinition.config.colors, theme]));
+    }, useDeepCompareMemoize([docsDefinition.config.colorsV3, docsDefinition.config.colors, theme]));
 }

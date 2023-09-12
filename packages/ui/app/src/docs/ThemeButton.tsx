@@ -13,8 +13,8 @@ export declare namespace ThemeButton {
 }
 
 export const Core: React.FC<ThemeButton.Props> = ({ className }) => {
-    const { lightModeEnabled } = useDocsContext();
-    const { theme, setTheme } = useTheme(lightModeEnabled);
+    const { docsDefinition } = useDocsContext();
+    const { theme, setTheme } = useTheme(docsDefinition.config.colorsV3.type);
 
     if (theme == null) {
         return null;

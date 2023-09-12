@@ -1,6 +1,7 @@
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand } from "@fern-ui/react-commons";
-import { memo } from "react";
+import { useTheme } from "@fern-ui/theme";
+import { memo, useMemo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useSearchContext } from "../search-context/useSearchContext";
@@ -14,7 +15,7 @@ import { useCustomTheme } from "./useCustomTheme";
 
 export const Docs: React.FC = memo(function UnmemoizedDocs() {
     const docsContext = useDocsContext();
-    const { docsDefinition, lightModeEnabled } = docsContext;
+    const { docsDefinition } = docsContext;
     const searchContext = useSearchContext();
     const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = searchContext;
     const searchService = useSearchService();
@@ -23,13 +24,27 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
 
     const { isMobileSidebarOpen, openMobileSidebar, closeMobileSidebar } = useMobileSidebarContext();
 
-    const hasSpecifiedBackgroundColor = !!docsDefinition.config.colorsV2?.background;
     const hasSpecifiedBackgroundImage = !!docsDefinition.config.backgroundImage;
+
+    const { colorsV3 } = docsDefinition.config;
+
+    const { theme } = useTheme(colorsV3.type);
+
+    const backgroundType = useMemo(() => {
+        if (theme == null) {
+            return null;
+        }
+        if (colorsV3.type === "darkAndLight") {
+            return colorsV3[theme].background.type;
+        } else {
+            return colorsV3.background.type;
+        }
+    }, [colorsV3, theme]);
 
     return (
         <>
             <BgImageGradient
-                hasSpecifiedBackgroundColor={hasSpecifiedBackgroundColor}
+                backgroundType={backgroundType}
                 hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage}
             />
             <div className="relative flex min-h-0 flex-1 flex-col">
@@ -38,7 +53,6 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                     <Header
                         className="max-w-8xl mx-auto"
                         docsDefinition={docsDefinition}
-                        lightModeEnabled={lightModeEnabled}
                         openSearchDialog={openSearchDialog}
                         isMobileSidebarOpen={isMobileSidebarOpen}
                         openMobileSidebar={openMobileSidebar}
