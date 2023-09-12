@@ -22,7 +22,7 @@ export declare namespace SidebarItems {
 
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
         docsInfo: DocsInfo;
-        activeTabIndex: number | null;
+        activeTabIndex: number;
         resolveApi: (apiId: FernRegistry.ApiDefinitionId) => FernRegistryApiRead.ApiDefinition;
     }
 }

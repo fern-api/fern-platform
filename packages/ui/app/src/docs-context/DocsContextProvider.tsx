@@ -4,7 +4,6 @@ import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources
 import {
     assertIsUnversionedNavigationConfig,
     assertIsVersionedNavigationConfig,
-    isUnversionedUntabbedNavigationConfig,
     type ResolvedUrlPath,
 } from "@fern-ui/app-utils";
 import { assertNever } from "@fern-ui/core-utils";
@@ -19,7 +18,6 @@ export declare namespace DocsContextProvider {
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
         lightModeEnabled: boolean;
         inferredVersion: string | null;
-        inferredTabIndex: number | null;
         resolvedUrlPath: ResolvedUrlPath;
         nextPath: ResolvedUrlPath | undefined;
         previousPath: ResolvedUrlPath | undefined;
@@ -30,7 +28,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     docsDefinition,
     lightModeEnabled,
     inferredVersion,
-    inferredTabIndex,
     resolvedUrlPath,
     nextPath,
     previousPath,
@@ -39,9 +36,30 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     const router = useRouter();
 
     const [activeVersion, _setActiveVersion] = useState(inferredVersion);
-    const [activeTabIndex, _setActiveTabIndex] = useState(inferredTabIndex);
 
     const rootSlug = activeVersion ?? "";
+
+    const getFullSlug = useCallback((slug: string) => `${rootSlug ? `${rootSlug}/` : ""}${slug}`, [rootSlug]);
+
+    const selectedSlugFromUrl = useMemo(() => {
+        switch (resolvedUrlPath.type) {
+            case "clientLibraries":
+            case "endpoint":
+            case "webhook":
+            case "mdx-page":
+            case "topLevelEndpoint":
+            case "topLevelWebhook":
+            case "apiSubpackage":
+                return getFullSlug(resolvedUrlPath.slug);
+            case "api":
+            case "section":
+                return undefined;
+            default:
+                assertNever(resolvedUrlPath);
+        }
+    }, [resolvedUrlPath, getFullSlug]);
+
+    const [selectedSlug, setSelectedSlug] = useState(selectedSlugFromUrl);
 
     const docsInfo = useMemo<DocsInfo>(() => {
         if (inferredVersion != null && activeVersion != null) {
@@ -71,54 +89,8 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
         }
     }, [inferredVersion, activeVersion, docsDefinition.config.navigation, rootSlug]);
 
-    const activeTab = useMemo(() => {
-        if (activeTabIndex == null || isUnversionedUntabbedNavigationConfig(docsInfo.activeNavigationConfig)) {
-            return undefined;
-        }
-        return docsInfo.activeNavigationConfig.tabs[activeTabIndex];
-    }, [docsInfo.activeNavigationConfig, activeTabIndex]);
-
-    const getFullSlug = useCallback(
-        (slug: string, opts?: { tabSlug?: string }) => {
-            const parts: string[] = [];
-            if (rootSlug) {
-                parts.push(`${rootSlug}/`);
-            }
-            if (activeTab != null) {
-                parts.push(`${opts?.tabSlug ?? activeTab.urlSlug}/`);
-            }
-            parts.push(slug);
-            return parts.join("");
-        },
-        [rootSlug, activeTab]
-    );
-
-    const selectedSlugFromUrl = useMemo(() => {
-        switch (resolvedUrlPath.type) {
-            case "clientLibraries":
-            case "endpoint":
-            case "webhook":
-            case "mdx-page":
-            case "topLevelEndpoint":
-            case "topLevelWebhook":
-            case "apiSubpackage":
-                return getFullSlug(resolvedUrlPath.slug);
-            case "api":
-            case "section":
-                return undefined;
-            default:
-                assertNever(resolvedUrlPath);
-        }
-    }, [resolvedUrlPath, getFullSlug]);
-
-    const [selectedSlug, setSelectedSlug] = useState(selectedSlugFromUrl);
-
     const setActiveVersion = useCallback((version: string) => {
         _setActiveVersion(version);
-    }, []);
-
-    const setActiveTabIndex = useCallback((tabIndex: number) => {
-        _setActiveTabIndex(tabIndex);
     }, []);
 
     useEffect(() => {
@@ -167,9 +139,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     const navigateToPath = useEventCallback(
         (slugWithoutVersion: string, opts: NavigateToPathOpts = { omitVersionPrefix: false }) => {
             setJustNavigated(true);
-            const slug = opts.omitVersionPrefix
-                ? slugWithoutVersion
-                : getFullSlug(slugWithoutVersion, { tabSlug: opts.tabSlug });
+            const slug = opts.omitVersionPrefix ? slugWithoutVersion : getFullSlug(slugWithoutVersion);
             setSelectedSlug(slug);
             navigateToPathListeners.invokeListeners(slug);
 
@@ -203,9 +173,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             lightModeEnabled,
             docsInfo,
             setActiveVersion,
-            activeTab,
-            activeTabIndex,
-            setActiveTabIndex,
             getFullSlug,
             registerNavigateToPathListener: navigateToPathListeners.registerListener,
             navigateToPath,
@@ -221,9 +188,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             lightModeEnabled,
             docsInfo,
             setActiveVersion,
-            activeTab,
-            activeTabIndex,
-            setActiveTabIndex,
             getFullSlug,
             navigateToPath,
             navigateToPathListeners.registerListener,

@@ -2,7 +2,7 @@ import { Text } from "@blueprintjs/core";
 import { getFirstNavigatableItem, isUnversionedUntabbedNavigationConfig } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { FontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
@@ -24,9 +24,6 @@ export declare namespace Sidebar {
 export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expandAllSections = false }) => {
     const {
         docsInfo,
-        setActiveTabIndex,
-        activeTab,
-        activeTabIndex,
         selectedSlug,
         navigateToPath,
         registerScrolledToPathListener,
@@ -37,9 +34,15 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
     const { openSearchDialog } = useSearchContext();
     const { closeMobileSidebar } = useMobileSidebarContext();
     const searchService = useSearchService();
+    const [activeTabIndex, _setActiveTabIndex] = useState(0);
     const router = useRouter();
 
-    const contextValue = useCallback((): SidebarContextValue => ({ expandAllSections }), [expandAllSections]);
+    const setActiveTabIndex = useCallback((index: number) => _setActiveTabIndex(index), []);
+
+    const contextValue = useCallback(
+        (): SidebarContextValue => ({ expandAllSections, activeTabIndex, setActiveTabIndex }),
+        [expandAllSections, activeTabIndex, setActiveTabIndex]
+    );
 
     const { activeNavigationConfig } = docsInfo;
 
@@ -61,7 +64,8 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                 />
             );
         }
-        if (activeTab == null) {
+        const selectedTab = activeNavigationConfig.tabs[activeTabIndex];
+        if (selectedTab == null) {
             return null;
         }
         return (
@@ -78,20 +82,16 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                                 }
                             )}
                             onClick={() => {
+                                _setActiveTabIndex(idx);
                                 const [firstTabItem] = tab.items;
                                 if (firstTabItem == null) {
                                     return;
                                 }
                                 const slugToNavigate = getFirstNavigatableItem(firstTabItem);
-                                if (slugToNavigate == null) {
-                                    return;
+                                if (slugToNavigate != null) {
+                                    void router.push("/" + getFullSlug(slugToNavigate));
+                                    navigateToPath(slugToNavigate);
                                 }
-                                setActiveTabIndex(idx);
-                                navigateToPath(slugToNavigate, {
-                                    omitVersionPrefix: false,
-                                    tabSlug: tab.urlSlug,
-                                });
-                                void router.push("/" + getFullSlug(slugToNavigate, { tabSlug: tab.urlSlug }));
                             }}
                         >
                             <div className="flex min-w-0 items-center justify-start space-x-3">
@@ -112,7 +112,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                     ))}
                 </div>
                 <SidebarItems
-                    navigationItems={activeTab.items}
+                    navigationItems={selectedTab.items}
                     slug=""
                     selectedSlug={selectedSlug}
                     navigateToPath={navigateToPath}

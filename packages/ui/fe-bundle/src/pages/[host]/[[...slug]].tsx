@@ -29,7 +29,6 @@ export declare namespace Docs {
          * If `null`, then docs are not versioned.
          */
         inferredVersion: string | null;
-        inferredTabIndex: number | null;
         resolvedUrlPath: ResolvedUrlPath;
         typographyStyleSheet?: string;
         backgroundImageStyleSheet: string | null;
@@ -41,7 +40,6 @@ export declare namespace Docs {
 export default function Docs({
     docs,
     inferredVersion,
-    inferredTabIndex,
     typographyStyleSheet = "",
     backgroundImageStyleSheet = "",
     resolvedUrlPath,
@@ -72,7 +70,6 @@ export default function Docs({
                 <App
                     docs={docs}
                     inferredVersion={inferredVersion}
-                    inferredTabIndex={inferredTabIndex}
                     resolvedUrlPath={resolvedUrlPath}
                     nextPath={nextPath ?? undefined}
                     previousPath={previousPath ?? undefined}
@@ -106,14 +103,14 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
 
     const computeResponseForNavigationItems = async (
         items: FernRegistryDocsReadV1.NavigationItem[],
-        slugAfterTabSlug: string
+        slug: string
     ): Promise<ComputeResponseForNavigationItemsReturnType> => {
         const urlPathResolver = new UrlPathResolver({
             items,
             loadApiDefinition: (id) => docs.body.definition.apis[id],
             loadApiPage: (id) => docs.body.definition.pages[id],
         });
-        let resolvedUrlPath = await urlPathResolver.resolveSlug(slugAfterTabSlug);
+        let resolvedUrlPath = await urlPathResolver.resolveSlug(slug);
         if (resolvedUrlPath?.type === "section") {
             const firstNavigatableItem = getFirstNavigatableItem(resolvedUrlPath.section);
             if (firstNavigatableItem == null) {
@@ -124,7 +121,13 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         }
 
         if (resolvedUrlPath == null) {
-            return { success: false };
+            return {
+                success: false,
+                response: {
+                    notFound: true,
+                    revalidate: false,
+                },
+            };
         }
 
         const typographyConfig = loadDocTypography(docs.body.definition);
@@ -137,14 +140,17 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
 
         return {
             success: true,
-            props: {
-                docs: docs.body,
-                inferredVersion: null,
-                typographyStyleSheet,
-                backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
-                resolvedUrlPath,
-                nextPath: nextPath ?? null,
-                previousPath: previousPath ?? null,
+            response: {
+                props: {
+                    docs: docs.body,
+                    inferredVersion: null,
+                    typographyStyleSheet,
+                    backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
+                    resolvedUrlPath,
+                    nextPath: nextPath ?? null,
+                    previousPath: previousPath ?? null,
+                },
+                revalidate: false,
             },
         };
     };
@@ -201,7 +207,6 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                         props: {
                             docs: docs.body,
                             inferredVersion: latestVersion.version,
-                            inferredTabIndex: null, // TODO: Implement
                             typographyStyleSheet,
                             backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
                             resolvedUrlPath,
@@ -278,7 +283,6 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                     props: {
                         docs: docs.body,
                         inferredVersion: version,
-                        inferredTabIndex: null, // TODO: Implement
                         typographyStyleSheet,
                         backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
                         resolvedUrlPath,
@@ -298,7 +302,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                 }
                 const [firstNavigationItem] = firstTab.items;
                 if (firstNavigationItem != null) {
-                    slug = [firstTab.urlSlug, firstNavigationItem.urlSlug].join("/");
+                    slug = firstNavigationItem.urlSlug;
                 } else {
                     return { notFound: true, revalidate: false };
                 }
@@ -313,26 +317,20 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         }
 
         if (isUnversionedTabbedNavigationConfig(navigationConfig)) {
-            const [tabUrlSlug, ...rest] = slug.split("/");
-            slug = rest.join("/");
-            const tabInfo = navigationConfig.tabs
-                .map((tab, index) => ({ tab, index }))
-                .find(({ tab }) => tab.urlSlug === tabUrlSlug);
-            if (tabInfo == null) {
+            // TODO: REMOVE THIS. THIS IS A HACK TO GET VELLUM DOCS WORKING.
+            // Find the right tab matching this slug
+            const tab =
+                slug === "introduction/getting-started" || slug.startsWith("api-reference")
+                    ? navigationConfig.tabs[1]
+                    : navigationConfig.tabs[0];
+            if (tab == null) {
                 return { notFound: true, revalidate: false };
             }
-            const { tab, index: tabIndex } = tabInfo;
             const resp = await computeResponseForNavigationItems(tab.items, slug);
-            return {
-                revalidate: false,
-                ...(resp.success ? { props: { ...resp.props, inferredTabIndex: tabIndex } } : { notFound: true }),
-            };
+            return resp.success ? resp.response : resp.response; // TS limitation
         } else {
             const resp = await computeResponseForNavigationItems(navigationConfig.items, slug);
-            return {
-                revalidate: false,
-                ...(resp.success ? { props: { ...resp.props, inferredTabIndex: null } } : { notFound: true }),
-            };
+            return resp.success ? resp.response : resp.response; // TS limitation
         }
     }
 };
@@ -340,10 +338,17 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
 type ComputeResponseForNavigationItemsReturnType =
     | {
           success: true;
-          props: Omit<Docs.Props, "inferredTabIndex">;
+          response: {
+              props: Docs.Props;
+              revalidate: false | undefined;
+          };
       }
     | {
           success: false;
+          response: {
+              notFound: true;
+              revalidate: false | undefined;
+          };
       };
 
 export const getStaticPaths: GetStaticPaths = () => {
@@ -380,6 +385,7 @@ function buildUrl({ host, pathname }: { host: string; pathname: string }): strin
 }
 
 function extractVersionFromSlug(slug: string) {
+    // TODO: Test this
     const [version, ...rest] = slug.split("/");
     return { version, rest: rest.join("/") };
 }
