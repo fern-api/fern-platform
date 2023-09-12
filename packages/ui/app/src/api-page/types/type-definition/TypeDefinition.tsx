@@ -21,11 +21,7 @@ export const TypeDefinition: React.FC<TypeDefinition.Props> = ({
 }) => {
     return (
         <TypeDefinitionContextProvider onHoverProperty={onHoverProperty}>
-            <InternalTypeDefinition
-                typeShape={typeShape}
-                isCollapsible={isCollapsible}
-                anchorIdParts={anchorIdParts}
-            />
+            <InternalTypeDefinition typeShape={typeShape} isCollapsible={isCollapsible} anchorIdParts={anchorIdParts} />
         </TypeDefinitionContextProvider>
     );
 };

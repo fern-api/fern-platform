@@ -97,7 +97,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchorIdParts, 
                 "px-3": !contextValue.isRootTypeDefinition,
             })}
         >
-            {anchorId != null && <AbsolutelyPositionedAnchor verticalPosition="default" anchor={anchorId} />}
+            <AbsolutelyPositionedAnchor verticalPosition="default" anchor={anchorId} />
             <div className="flex items-baseline gap-2">
                 <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName}>
                     <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">

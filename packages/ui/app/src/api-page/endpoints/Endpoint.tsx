@@ -29,7 +29,7 @@ export const Endpoint: React.FC<Endpoint.Props> = ({
                 setContainerRef={setTargetRef}
                 package={package_}
                 hideBottomSeparator={isLastInApi}
-                anchorIdParts={anchorIdParts}
+                anchorIdParts={[...anchorIdParts, endpoint.id]}
             />
         </EndpointContextProvider>
     );
