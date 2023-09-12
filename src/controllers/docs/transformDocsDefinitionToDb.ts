@@ -4,7 +4,8 @@ import type * as FernRegistryDocsDb from "../../generated/api/resources/docs/res
 import type * as FernRegistryDocsWrite from "../../generated/api/resources/docs/resources/v1/resources/write";
 import type { FileId, FilePath } from "../../generated/api/resources/docs/resources/v1/resources/write";
 import { type S3FileInfo } from "../../services/s3";
-import { type WithoutQuestionMarks } from "../../util";
+import { assertNever, type WithoutQuestionMarks } from "../../util";
+import { DEFAULT_DARK_MODE_CONFIG, DEFAULT_LIGHT_MODE_CONFIG } from "../../util/colors";
 import {
     isUnversionedNavigationConfig as isUnversionedDbConfig,
     isUnversionedUntabbedNavigationConfig as isUnversionedUntabbedDbConfig,
@@ -64,6 +65,10 @@ export function transformWriteDocsDefinitionToDb({
             logoHref: writeShape.config.logoHref,
             colors,
             colorsV2,
+            colorsV3:
+                writeShape.config.colorsV3 != null
+                    ? transformColorsV3ForDb({ writeShape: writeShape.config.colorsV3, docsConfig: writeShape.config })
+                    : undefined,
             navbarLinks: writeShape.config.navbarLinks ?? [],
             title: writeShape.config.title,
             favicon: writeShape.config.favicon,
@@ -246,4 +251,45 @@ function transformPublishedPostmanCollectionForReading(
                   }
                 : undefined,
     };
+}
+
+function transformColorsV3ForDb({
+    writeShape,
+    docsConfig,
+}: {
+    writeShape: FernRegistry.docs.v1.write.ColorsConfigV3;
+    docsConfig: FernRegistry.docs.v1.write.DocsConfig;
+}): WithoutQuestionMarks<FernRegistry.docs.v1.read.ColorsConfigV3> {
+    switch (writeShape.type) {
+        case "dark":
+            return {
+                type: "dark",
+                accentPrimary: writeShape.accentPrimary ?? DEFAULT_DARK_MODE_CONFIG.accentPrimary,
+                background: writeShape.background ?? DEFAULT_DARK_MODE_CONFIG.background,
+                logo: docsConfig.logoV2?.dark ?? docsConfig.logo,
+            };
+        case "light":
+            return {
+                type: "light",
+                accentPrimary: writeShape.accentPrimary ?? DEFAULT_LIGHT_MODE_CONFIG.accentPrimary,
+                background: writeShape.background ?? DEFAULT_LIGHT_MODE_CONFIG.background,
+                logo: docsConfig.logoV2?.light,
+            };
+        case "darkAndLight":
+            return {
+                type: "darkAndLight",
+                light: {
+                    accentPrimary: writeShape.light.accentPrimary ?? DEFAULT_LIGHT_MODE_CONFIG.accentPrimary,
+                    background: writeShape.light.background ?? DEFAULT_LIGHT_MODE_CONFIG.background,
+                    logo: docsConfig.logoV2?.light,
+                },
+                dark: {
+                    accentPrimary: writeShape.dark.accentPrimary ?? DEFAULT_DARK_MODE_CONFIG.accentPrimary,
+                    background: writeShape.dark.background ?? DEFAULT_DARK_MODE_CONFIG.background,
+                    logo: docsConfig.logoV2?.dark ?? docsConfig.logo,
+                },
+            };
+        default:
+            assertNever(writeShape);
+    }
 }

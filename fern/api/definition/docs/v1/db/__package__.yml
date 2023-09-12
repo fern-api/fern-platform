@@ -41,6 +41,7 @@ types:
       backgroundImage: optional<docsReadV1.FileId>
       colors: optional<docsReadV1.ColorsConfig>
       colorsV2: optional<docsReadV1.ColorsConfigV2>
+      colorsV3: optional<docsReadV1.ColorsConfigV3>
       navbarLinks: optional<list<docsReadV1.NavbarLink>>
       typography: optional<DocsTypographyConfig>
 

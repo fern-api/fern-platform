@@ -74,8 +74,32 @@ types:
       backgroundImage: optional<FileId>
       colors: optional<ColorsConfig>
       colorsV2: optional<ColorsConfigV2>
+      colorsV3: ColorsConfigV3
       navbarLinks: list<NavbarLink>
       typography: optional<DocsTypographyConfig>
+  
+  ColorsConfigV3: 
+    union: 
+      dark: DarkModeConfig
+      light: LightModeConfig
+      darkAndLight: DarkAndLightModeConfig
+  
+  DarkModeConfig: 
+    properties: 
+      logo: optional<FileId>
+      accentPrimary: RgbColor
+      background: RgbColor
+  
+  LightModeConfig: 
+    properties: 
+      logo: optional<FileId>
+      accentPrimary: RgbColor
+      background: RgbColor
+  
+  DarkAndLightModeConfig: 
+    properties: 
+      dark: DarkModeConfig
+      light: LightModeConfig
 
   LogoV2:
     properties:

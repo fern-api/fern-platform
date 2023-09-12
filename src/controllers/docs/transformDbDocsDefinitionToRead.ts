@@ -1,6 +1,7 @@
 import type * as FernRegistryDocsDb from "../../generated/api/resources/docs/resources/v1/resources/db";
 import type * as FernRegistryDocsRead from "../../generated/api/resources/docs/resources/v1/resources/read";
 import { type WithoutQuestionMarks } from "../../util";
+import { DEFAULT_DARK_MODE_CONFIG, DEFAULT_LIGHT_MODE_CONFIG } from "../../util/colors";
 import {
     isUnversionedNavigationConfig as isUnversionedDbConfig,
     isUnversionedUntabbedNavigationConfig as isUnversionedUntabbedDbConfig,
@@ -20,6 +21,7 @@ export function transformDbDocsDefinitionToRead({
         logoHref: dbShape.config.logoHref,
         colors: dbShape.config.colors,
         colorsV2: dbShape.config.colorsV2,
+        colorsV3: dbShape.config.colorsV3 ?? getColorsV3(dbShape.config),
         navbarLinks: dbShape.config.navbarLinks ?? [],
         title: dbShape.config.title,
         favicon: dbShape.config.favicon,
@@ -88,4 +90,53 @@ export function transformNavigationItemForDb(
                 items: dbShape.items.map((item) => transformNavigationItemForDb(item)),
             };
     }
+}
+
+export function getColorsV3(docsDbConfig: FernRegistryDocsDb.DocsDbConfig): FernRegistryDocsRead.ColorsConfigV3 {
+    if (docsDbConfig.colorsV2 != null) {
+        if (
+            docsDbConfig.colorsV2.accentPrimary?.type === "themed" &&
+            docsDbConfig.colorsV2.background?.type === "themed"
+        ) {
+            return {
+                type: "darkAndLight",
+                dark: {
+                    accentPrimary:
+                        docsDbConfig.colorsV2.accentPrimary.dark ??
+                        docsDbConfig.colors?.accentPrimary ??
+                        DEFAULT_DARK_MODE_CONFIG.accentPrimary,
+                    background: docsDbConfig.colorsV2.background.dark ?? DEFAULT_DARK_MODE_CONFIG.background,
+                    logo: docsDbConfig.logoV2?.dark ?? docsDbConfig.logo,
+                },
+                light: {
+                    accentPrimary: docsDbConfig.colorsV2.accentPrimary.light ?? DEFAULT_LIGHT_MODE_CONFIG.accentPrimary,
+                    background: docsDbConfig.colorsV2.background.light ?? DEFAULT_LIGHT_MODE_CONFIG.background,
+                    logo: docsDbConfig.logoV2?.light ?? docsDbConfig.logo,
+                },
+            };
+        } else if (
+            docsDbConfig.colorsV2.accentPrimary?.type === "unthemed" &&
+            docsDbConfig.colorsV2.background?.type === "unthemed"
+        ) {
+            return {
+                type: "dark",
+                accentPrimary: docsDbConfig.colorsV2.accentPrimary.color ?? DEFAULT_DARK_MODE_CONFIG.accentPrimary,
+                background: docsDbConfig.colorsV2.background.color ?? DEFAULT_DARK_MODE_CONFIG.background,
+                logo: docsDbConfig.logoV2?.dark ?? docsDbConfig.logo,
+            };
+        }
+    } else if (docsDbConfig.colors != null) {
+        return {
+            type: "dark",
+            accentPrimary: docsDbConfig.colors.accentPrimary ?? DEFAULT_DARK_MODE_CONFIG.accentPrimary,
+            background: DEFAULT_DARK_MODE_CONFIG.background,
+            logo: docsDbConfig.logoV2?.dark ?? docsDbConfig.logo,
+        };
+    }
+    return {
+        type: "dark",
+        accentPrimary: DEFAULT_DARK_MODE_CONFIG.accentPrimary,
+        background: DEFAULT_DARK_MODE_CONFIG.background,
+        logo: docsDbConfig.logoV2?.dark ?? docsDbConfig.logo,
+    };
 }
