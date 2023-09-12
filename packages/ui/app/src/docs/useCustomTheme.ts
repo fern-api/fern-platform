@@ -19,17 +19,13 @@ export function useCustomTheme(docsDefinition: FernRegistryDocsRead.DocsDefiniti
 
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const root = document.querySelector<HTMLElement>(":root")!;
-        const colorsV2 = docsDefinition.config.colorsV2;
+        const colorsV3 = docsDefinition.config.colorsV3;
 
         let accentPrimary = undefined;
-        if (colorsV2?.accentPrimary?.type === "themed") {
-            accentPrimary = colorsV2.accentPrimary[theme] ?? DEFAULT_COLORS.accentPrimary[theme];
-        } else if (colorsV2?.accentPrimary?.type === "unthemed") {
-            accentPrimary = colorsV2.accentPrimary.color ?? DEFAULT_COLORS.accentPrimary[theme];
-        } else if (docsDefinition.config.colors?.accentPrimary != null) {
-            accentPrimary = docsDefinition.config.colors.accentPrimary;
+        if (colorsV3.type !== "darkAndLight") {
+            accentPrimary = colorsV3.accentPrimary;
         } else {
-            accentPrimary = DEFAULT_COLORS.accentPrimary.dark;
+            accentPrimary = colorsV3[theme].accentPrimary;
         }
         root.style.setProperty(
             CSS_VARIABLES.ACCENT_PRIMARY,
@@ -37,14 +33,19 @@ export function useCustomTheme(docsDefinition: FernRegistryDocsRead.DocsDefiniti
         );
 
         let background = undefined;
-        if (colorsV2?.background?.type === "themed") {
-            background = colorsV2.background[theme] ?? DEFAULT_COLORS.background[theme];
-        } else if (colorsV2?.background?.type === "unthemed") {
-            background = colorsV2.background.color ?? DEFAULT_COLORS.background[theme];
+        if (colorsV3.type !== "darkAndLight") {
+            background = colorsV3.background;
         } else {
-            background = DEFAULT_COLORS.background[theme];
+            background = colorsV3[theme].background;
         }
-        root.style.setProperty(CSS_VARIABLES.BACKGROUND, `${background.r}, ${background.g}, ${background.b}`);
+        if (background.type === "solid") {
+            root.style.setProperty(CSS_VARIABLES.BACKGROUND, `${background.r}, ${background.g}, ${background.b}`);
+        } else {
+            root.style.setProperty(
+                CSS_VARIABLES.BACKGROUND,
+                `${DEFAULT_COLORS.background[theme].r}, ${DEFAULT_COLORS.background[theme].g}, ${DEFAULT_COLORS.background[theme].b}`
+            );
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, useDeepCompareMemoize([docsDefinition.config.colorsV2, docsDefinition.config.colors, theme]));
 }
