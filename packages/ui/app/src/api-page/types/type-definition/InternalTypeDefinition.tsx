@@ -139,7 +139,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
         <div className="mt-2 flex flex-col">
             <div className="flex flex-col items-start">
                 <div
-                    className="border-border-default-light dark:border-border-default-dark flex flex-col overflow-hidden rounded border"
+                    className="border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded border"
                     style={{
                         width: isCollapsed ? originalButtonWidth : "100%",
                     }}

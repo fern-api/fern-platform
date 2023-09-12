@@ -93,16 +93,18 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchorIdParts, 
     return (
         <div
             id={anchorId}
-            className={classNames("flex relative flex-col py-3 group/anchor-container", {
+            className={classNames("flex relative flex-col py-3", {
                 "px-3": !contextValue.isRootTypeDefinition,
             })}
         >
-            <AbsolutelyPositionedAnchor verticalPosition="default" anchor={anchorId} />
             <div className="flex items-baseline gap-2">
                 <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName}>
-                    <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">
-                        {property.key}
-                    </MonospaceText>
+                    <div className="group/anchor-container relative">
+                        <AbsolutelyPositionedAnchor verticalPosition="center" anchor={anchorId} />
+                        <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">
+                            {property.key}
+                        </MonospaceText>
+                    </div>
                 </div>
                 <div className="t-muted text-xs">
                     <TypeShorthand type={property.valueType} plural={false} />
