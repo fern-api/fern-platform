@@ -15,12 +15,14 @@ export declare namespace DiscriminatedUnionVariant {
     export interface Props {
         discriminant: string;
         unionVariant: FernRegistryApiRead.DiscriminatedUnionVariant;
+        anchorIdParts: string[];
     }
 }
 
 export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props> = ({
     discriminant,
     unionVariant,
+    anchorIdParts,
 }) => {
     const { isRootTypeDefinition } = useTypeDefinitionContext();
 
@@ -75,7 +77,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                     isMarkdown={unionVariant.descriptionContainsMarkdown ?? false}
                 />
                 <TypeDefinitionContext.Provider value={newContextValue}>
-                    <InternalTypeDefinition typeShape={shape} isCollapsible={true} />
+                    <InternalTypeDefinition typeShape={shape} isCollapsible={true} anchorIdParts={anchorIdParts} />
                 </TypeDefinitionContext.Provider>
             </div>
         </div>

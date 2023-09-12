@@ -22,7 +22,7 @@ export declare namespace InternalTypeDefinition {
     export interface Props {
         typeShape: FernRegistryApiRead.TypeShape;
         isCollapsible: boolean;
-        getPropertyAnchor?: (path: FernRegistryApiRead.ObjectProperty) => string;
+        anchorIdParts: string[];
     }
 }
 
@@ -36,7 +36,7 @@ interface CollapsibleContent {
 export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     typeShape,
     isCollapsible,
-    getPropertyAnchor,
+    anchorIdParts,
 }) => {
     const { resolveTypeById } = useApiDefinitionContext();
 
@@ -46,7 +46,11 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                 alias: () => undefined,
                 object: (object) => ({
                     elements: getAllObjectProperties(object, resolveTypeById).map((property) => (
-                        <ObjectProperty key={property.key} property={property} anchor={getPropertyAnchor?.(property)} />
+                        <ObjectProperty
+                            key={property.key}
+                            property={property}
+                            anchorIdParts={[...anchorIdParts, property.key]}
+                        />
                     )),
                     elementNameSingular: "property",
                     elementNamePlural: "properties",
@@ -59,6 +63,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                             key={variant.discriminantValue}
                             discriminant={union.discriminant}
                             unionVariant={variant}
+                            anchorIdParts={anchorIdParts}
                         />
                     )),
                     elementNameSingular: "variant",
@@ -74,7 +79,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                 }),
                 _other: () => undefined,
             }),
-        [resolveTypeById, typeShape, getPropertyAnchor]
+        [resolveTypeById, typeShape, anchorIdParts]
     );
 
     const { value: isCollapsed, toggleValue: toggleIsCollapsed } = useBooleanState(true);
@@ -134,7 +139,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
         <div className="mt-2 flex flex-col">
             <div className="flex flex-col items-start">
                 <div
-                    className="border-border-default-light dark:border-border-default-dark flex flex-col overflow-hidden rounded border"
+                    className="border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded border"
                     style={{
                         width: isCollapsed ? originalButtonWidth : "100%",
                     }}

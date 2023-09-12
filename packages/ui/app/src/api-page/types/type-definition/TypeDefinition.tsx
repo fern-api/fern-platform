@@ -9,7 +9,7 @@ export declare namespace TypeDefinition {
         typeShape: FernRegistryApiRead.TypeShape;
         isCollapsible: boolean;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
-        getPropertyAnchor?: (property: FernRegistryApiRead.ObjectProperty) => string;
+        anchorIdParts: string[];
     }
 }
 
@@ -17,15 +17,11 @@ export const TypeDefinition: React.FC<TypeDefinition.Props> = ({
     typeShape,
     isCollapsible,
     onHoverProperty,
-    getPropertyAnchor,
+    anchorIdParts,
 }) => {
     return (
         <TypeDefinitionContextProvider onHoverProperty={onHoverProperty}>
-            <InternalTypeDefinition
-                typeShape={typeShape}
-                isCollapsible={isCollapsible}
-                getPropertyAnchor={getPropertyAnchor}
-            />
+            <InternalTypeDefinition typeShape={typeShape} isCollapsible={isCollapsible} anchorIdParts={anchorIdParts} />
         </TypeDefinitionContextProvider>
     );
 };

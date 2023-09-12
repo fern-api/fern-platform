@@ -1,15 +1,17 @@
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { Markdown } from "../markdown/Markdown";
+import { getAnchorId } from "../utils/getAnchorId";
 
 export declare namespace EndpointSection {
     export type Props = React.PropsWithChildren<{
         title: string;
         description?: string;
-        anchor: string;
+        anchorIdParts: string[];
     }>;
 }
 
-export const EndpointSection: React.FC<EndpointSection.Props> = ({ title, description, anchor, children }) => {
+export const EndpointSection: React.FC<EndpointSection.Props> = ({ title, description, anchorIdParts, children }) => {
+    const anchor = getAnchorId(anchorIdParts);
     return (
         <div id={anchor} className="flex flex-col">
             <div className="group/anchor-container relative mb-3 flex items-center">

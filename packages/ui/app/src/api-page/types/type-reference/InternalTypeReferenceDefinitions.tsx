@@ -11,7 +11,7 @@ export declare namespace InternalTypeReferenceDefinitions {
         type: FernRegistryApiRead.TypeReference;
         isCollapsible: boolean;
         className?: string;
-        getPropertyAnchor?: (property: FernRegistryApiRead.ObjectProperty) => string;
+        anchorIdParts: string[];
     }
 }
 
@@ -19,7 +19,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
     type,
     isCollapsible,
     className,
-    getPropertyAnchor,
+    anchorIdParts,
 }) => {
     const { resolveTypeById } = useApiDefinitionContext();
 
@@ -32,7 +32,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                         type={typeShape.value}
                         isCollapsible={isCollapsible}
                         className={className}
-                        getPropertyAnchor={getPropertyAnchor}
+                        anchorIdParts={anchorIdParts}
                     />
                 );
             }
@@ -41,7 +41,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     key={typeId}
                     typeShape={typeShape}
                     isCollapsible={isCollapsible}
-                    getPropertyAnchor={getPropertyAnchor}
+                    anchorIdParts={anchorIdParts}
                 />
             );
         },
@@ -52,7 +52,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     type={itemType}
                     isCollapsible={isCollapsible}
                     className={className}
-                    getPropertyAnchor={getPropertyAnchor}
+                    anchorIdParts={anchorIdParts}
                 />
             </ListTypeContextProvider>
         ),
@@ -62,7 +62,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     type={itemType}
                     isCollapsible={isCollapsible}
                     className={className}
-                    getPropertyAnchor={getPropertyAnchor}
+                    anchorIdParts={anchorIdParts}
                 />
             </ListTypeContextProvider>
         ),
@@ -71,7 +71,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 type={itemType}
                 isCollapsible={isCollapsible}
                 className={className}
-                getPropertyAnchor={getPropertyAnchor}
+                anchorIdParts={anchorIdParts}
             />
         ),
         map: ({ keyType, valueType }) => (
@@ -80,13 +80,13 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     type={keyType}
                     isCollapsible={isCollapsible}
                     className={className}
-                    getPropertyAnchor={getPropertyAnchor}
+                    anchorIdParts={anchorIdParts}
                 />
                 <InternalTypeReferenceDefinitions
                     type={valueType}
                     isCollapsible={isCollapsible}
                     className={className}
-                    getPropertyAnchor={getPropertyAnchor}
+                    anchorIdParts={anchorIdParts}
                 />
             </MapTypeContextProvider>
         ),

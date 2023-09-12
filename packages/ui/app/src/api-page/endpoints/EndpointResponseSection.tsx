@@ -10,14 +10,14 @@ export declare namespace EndpointResponseSection {
     export interface Props {
         httpResponse: FernRegistryApiRead.HttpResponse;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
-        getPropertyAnchor?: (property: FernRegistryApiRead.ObjectProperty) => string;
+        anchorIdParts: string[];
     }
 }
 
 export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = ({
     httpResponse,
     onHoverProperty,
-    getPropertyAnchor,
+    anchorIdParts,
 }) => {
     return (
         <div className="flex flex-col">
@@ -46,7 +46,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                         typeShape={object}
                         isCollapsible={false}
                         onHoverProperty={onHoverProperty}
-                        getPropertyAnchor={getPropertyAnchor}
+                        anchorIdParts={anchorIdParts}
                     />
                 ),
                 reference: (type) => (
@@ -54,7 +54,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                         type={type.value}
                         isCollapsible={false}
                         onHoverProperty={onHoverProperty}
-                        getPropertyAnchor={getPropertyAnchor}
+                        anchorIdParts={anchorIdParts}
                     />
                 ),
                 fileDownload: () => null,

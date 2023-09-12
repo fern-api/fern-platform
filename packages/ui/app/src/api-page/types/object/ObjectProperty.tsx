@@ -6,6 +6,7 @@ import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositione
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
+import { getAnchorId } from "../../utils/getAnchorId";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
@@ -22,11 +23,12 @@ interface DescriptionInfo {
 export declare namespace ObjectProperty {
     export interface Props {
         property: FernRegistryApiRead.ObjectProperty;
-        anchor?: string;
+        anchorIdParts: string[];
     }
 }
 
-export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchor, property }) => {
+export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchorIdParts, property }) => {
+    const anchorId = getAnchorId(anchorIdParts);
     const { resolveTypeById } = useApiDefinitionContext();
 
     const contextValue = useTypeDefinitionContext();
@@ -90,17 +92,19 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchor, propert
 
     return (
         <div
-            id={anchor}
-            className={classNames("flex relative flex-col py-3 group/anchor-container", {
+            id={anchorId}
+            className={classNames("flex relative flex-col py-3", {
                 "px-3": !contextValue.isRootTypeDefinition,
             })}
         >
-            {anchor != null && <AbsolutelyPositionedAnchor verticalPosition="default" anchor={anchor} />}
             <div className="flex items-baseline gap-2">
                 <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName}>
-                    <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">
-                        {property.key}
-                    </MonospaceText>
+                    <div className="group/anchor-container relative">
+                        <AbsolutelyPositionedAnchor verticalPosition="center" anchor={anchorId} />
+                        <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">
+                            {property.key}
+                        </MonospaceText>
+                    </div>
                 </div>
                 <div className="t-muted text-xs">
                     <TypeShorthand type={property.valueType} plural={false} />
@@ -113,7 +117,11 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchor, propert
                     description={descriptionInfo?.description}
                 />
                 <TypeDefinitionContext.Provider value={newContextValue}>
-                    <InternalTypeReferenceDefinitions type={property.valueType} isCollapsible />
+                    <InternalTypeReferenceDefinitions
+                        type={property.valueType}
+                        isCollapsible
+                        anchorIdParts={anchorIdParts}
+                    />
                 </TypeDefinitionContext.Provider>
             </div>
         </div>

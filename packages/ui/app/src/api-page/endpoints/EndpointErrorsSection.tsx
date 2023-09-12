@@ -14,6 +14,7 @@ export declare namespace EndpointErrorsSection {
             event: React.MouseEvent<HTMLButtonElement>
         ) => void;
         selectedErrorIndex: number | null;
+        anchorIdParts: string[];
     }
 }
 
@@ -22,6 +23,7 @@ export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
     selectedErrorIndex,
     onHoverProperty,
     onClickError,
+    anchorIdParts,
 }) => {
     return (
         <div className="border-border-default-light dark:border-border-default-dark flex flex-col overflow-hidden rounded-md border">
@@ -61,6 +63,7 @@ export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
                                         isCollapsible={false}
                                         type={e.type}
                                         onHoverProperty={onHoverProperty}
+                                        anchorIdParts={[...anchorIdParts, `${idx}`]}
                                     />
                                 )}
                             </div>

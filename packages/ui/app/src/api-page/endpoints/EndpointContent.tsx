@@ -2,7 +2,6 @@ import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/
 import { getEndpointTitleAsString, getSubpackageTitle, isSubpackage } from "@fern-ui/app-utils";
 import useSize from "@react-hook/size";
 import classNames from "classnames";
-import { snakeCase } from "lodash-es";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { ApiPageDescription } from "../ApiPageDescription";
@@ -23,6 +22,7 @@ export declare namespace EndpointContent {
     export interface Props {
         endpoint: FernRegistryApiRead.EndpointDefinition;
         package: FernRegistryApiRead.ApiDefinitionPackage;
+        anchorIdParts: string[];
         hideBottomSeparator?: boolean;
         setContainerRef: (ref: HTMLElement | null) => void;
     }
@@ -33,6 +33,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
     package: package_,
     hideBottomSeparator = false,
     setContainerRef,
+    anchorIdParts,
 }) {
     const { apiSection } = useApiDefinitionContext();
     const { setHoveredRequestPropertyPath, setHoveredResponsePropertyPath } = useEndpointContext();
@@ -47,28 +48,6 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
             setHoveredResponsePropertyPath(isHovering ? jsonPropertyPath : undefined);
         },
         [setHoveredResponsePropertyPath]
-    );
-
-    const computeAnchor = useCallback(
-        (
-            attributeType: "path" | "query" | "request" | "response" | "errors",
-            attribute?:
-                | FernRegistryApiRead.ObjectProperty
-                | FernRegistryApiRead.PathParameter
-                | FernRegistryApiRead.QueryParameter
-        ) => {
-            let anchor = "";
-            if (isSubpackage(package_)) {
-                anchor += snakeCase(package_.urlSlug) + "_";
-            }
-            anchor += snakeCase(endpoint.id);
-            anchor += "-" + attributeType;
-            if (attribute?.key != null) {
-                anchor += "-" + snakeCase(attribute.key);
-            }
-            return anchor;
-        },
-        [package_, endpoint]
     );
 
     const endpointUrlOuterContainerRef = useRef<null | HTMLDivElement>(null);
@@ -130,37 +109,35 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                             {endpoint.path.pathParameters.length > 0 && (
                                 <PathParametersSection
                                     pathParameters={endpoint.path.pathParameters}
-                                    getParameterAnchor={(param) => computeAnchor("path", param)}
-                                    anchor={computeAnchor("path")}
+                                    anchorIdParts={[...anchorIdParts, "path"]}
                                 />
                             )}
                             {endpoint.queryParameters.length > 0 && (
                                 <QueryParametersSection
                                     queryParameters={endpoint.queryParameters}
-                                    getParameterAnchor={(param) => computeAnchor("query", param)}
-                                    anchor={computeAnchor("query")}
+                                    anchorIdParts={[...anchorIdParts, "query"]}
                                 />
                             )}
                             {endpoint.request != null && (
-                                <EndpointSection title="Request" anchor={computeAnchor("request")}>
+                                <EndpointSection title="Request" anchorIdParts={[...anchorIdParts, "request"]}>
                                     <EndpointRequestSection
                                         httpRequest={endpoint.request}
                                         onHoverProperty={onHoverRequestProperty}
-                                        getPropertyAnchor={(property) => computeAnchor("request", property)}
+                                        anchorIdParts={[...anchorIdParts, "request"]}
                                     />
                                 </EndpointSection>
                             )}
                             {endpoint.response != null && (
-                                <EndpointSection title="Response" anchor={computeAnchor("response")}>
+                                <EndpointSection title="Response" anchorIdParts={[...anchorIdParts, "response"]}>
                                     <EndpointResponseSection
                                         httpResponse={endpoint.response}
                                         onHoverProperty={onHoverResponseProperty}
-                                        getPropertyAnchor={(property) => computeAnchor("response", property)}
+                                        anchorIdParts={[...anchorIdParts, "response"]}
                                     />
                                 </EndpointSection>
                             )}
                             {apiSection.showErrors && endpoint.errors.length > 0 && (
-                                <EndpointSection title="Errors" anchor={computeAnchor("errors")}>
+                                <EndpointSection title="Errors" anchorIdParts={[...anchorIdParts, "response"]}>
                                     <EndpointErrorsSection
                                         errors={endpoint.errors}
                                         onClickError={(_, idx, event) => {
@@ -169,6 +146,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                         }}
                                         onHoverProperty={onHoverResponseProperty}
                                         selectedErrorIndex={selectedErrorIndex}
+                                        anchorIdParts={[...anchorIdParts, "errors"]}
                                     />
                                 </EndpointSection>
                             )}

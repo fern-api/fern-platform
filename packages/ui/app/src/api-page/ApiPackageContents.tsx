@@ -11,6 +11,7 @@ export declare namespace ApiPackageContents {
         package: FernRegistryApiRead.ApiDefinitionPackage;
         slug: string;
         isLastInParentPackage: boolean;
+        anchorIdParts: string[];
     }
 }
 
@@ -18,6 +19,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
     package: package_,
     slug,
     isLastInParentPackage,
+    anchorIdParts,
 }) => {
     const { resolveSubpackageById } = useApiDefinitionContext();
 
@@ -30,6 +32,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                     isLastInApi={isLastInParentPackage && idx === package_.endpoints.length - 1}
                     slug={joinUrlSlugs(slug, endpoint.urlSlug)}
                     package={package_}
+                    anchorIdParts={anchorIdParts}
                 />
             ))}
             {package_.webhooks.map((webhook, idx) => (
@@ -39,6 +42,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                     isLastInApi={isLastInParentPackage && idx === package_.webhooks.length - 1}
                     slug={joinUrlSlugs(slug, webhook.urlSlug)}
                     package={package_}
+                    anchorIdParts={anchorIdParts}
                 />
             ))}
             {package_.subpackages.map((subpackageId, idx) => {
@@ -52,6 +56,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                         subpackageId={subpackageId}
                         isLastInParentPackage={idx === package_.subpackages.length - 1}
                         slug={joinUrlSlugs(slug, subpackage.urlSlug)}
+                        anchorIdParts={anchorIdParts}
                     />
                 );
             })}
