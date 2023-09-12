@@ -2,7 +2,7 @@ import { kebabCase } from "lodash";
 import type * as FernRegistryDocsDb from "../../generated/api/resources/docs/resources/v1/resources/db";
 import type * as FernRegistryDocsRead from "../../generated/api/resources/docs/resources/v1/resources/read";
 import { type WithoutQuestionMarks } from "../../util";
-import { DEFAULT_DARK_MODE_CONFIG, DEFAULT_LIGHT_MODE_CONFIG } from "../../util/colors";
+import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../../util/colors";
 import {
     isUnversionedNavigationConfig as isUnversionedDbConfig,
     isUnversionedUntabbedNavigationConfig as isUnversionedUntabbedDbConfig,
@@ -109,13 +109,19 @@ export function getColorsV3(docsDbConfig: FernRegistryDocsDb.DocsDbConfig): Fern
                     accentPrimary:
                         docsDbConfig.colorsV2.accentPrimary.dark ??
                         docsDbConfig.colors?.accentPrimary ??
-                        DEFAULT_DARK_MODE_CONFIG.accentPrimary,
-                    background: docsDbConfig.colorsV2.background.dark ?? DEFAULT_DARK_MODE_CONFIG.background,
+                        DEFAULT_DARK_MODE_ACCENT_PRIMARY,
+                    background:
+                        docsDbConfig.colorsV2.background.dark != null
+                            ? { type: "solid", ...docsDbConfig.colorsV2.background.dark }
+                            : { type: "gradient" },
                     logo: docsDbConfig.logoV2?.dark ?? docsDbConfig.logo,
                 },
                 light: {
-                    accentPrimary: docsDbConfig.colorsV2.accentPrimary.light ?? DEFAULT_LIGHT_MODE_CONFIG.accentPrimary,
-                    background: docsDbConfig.colorsV2.background.light ?? DEFAULT_LIGHT_MODE_CONFIG.background,
+                    accentPrimary: docsDbConfig.colorsV2.accentPrimary.light ?? DEFAULT_LIGHT_MODE_ACCENT_PRIMARY,
+                    background:
+                        docsDbConfig.colorsV2.background.light != null
+                            ? { type: "solid", ...docsDbConfig.colorsV2.background.light }
+                            : { type: "gradient" },
                     logo: docsDbConfig.logoV2?.light ?? docsDbConfig.logo,
                 },
             };
@@ -125,23 +131,26 @@ export function getColorsV3(docsDbConfig: FernRegistryDocsDb.DocsDbConfig): Fern
         ) {
             return {
                 type: "dark",
-                accentPrimary: docsDbConfig.colorsV2.accentPrimary.color ?? DEFAULT_DARK_MODE_CONFIG.accentPrimary,
-                background: docsDbConfig.colorsV2.background.color ?? DEFAULT_DARK_MODE_CONFIG.background,
+                accentPrimary: docsDbConfig.colorsV2.accentPrimary.color ?? DEFAULT_DARK_MODE_ACCENT_PRIMARY,
+                background:
+                    docsDbConfig.colorsV2.background.color != null
+                        ? { type: "solid", ...docsDbConfig.colorsV2.background.color }
+                        : { type: "gradient" },
                 logo: docsDbConfig.logoV2?.dark ?? docsDbConfig.logo,
             };
         }
     } else if (docsDbConfig.colors != null) {
         return {
             type: "dark",
-            accentPrimary: docsDbConfig.colors.accentPrimary ?? DEFAULT_DARK_MODE_CONFIG.accentPrimary,
-            background: DEFAULT_DARK_MODE_CONFIG.background,
+            accentPrimary: docsDbConfig.colors.accentPrimary ?? DEFAULT_DARK_MODE_ACCENT_PRIMARY,
+            background: { type: "gradient" },
             logo: docsDbConfig.logoV2?.dark ?? docsDbConfig.logo,
         };
     }
     return {
         type: "dark",
-        accentPrimary: DEFAULT_DARK_MODE_CONFIG.accentPrimary,
-        background: DEFAULT_DARK_MODE_CONFIG.background,
+        accentPrimary: DEFAULT_DARK_MODE_ACCENT_PRIMARY,
+        background: { type: "gradient" },
         logo: docsDbConfig.logoV2?.dark ?? docsDbConfig.logo,
     };
 }

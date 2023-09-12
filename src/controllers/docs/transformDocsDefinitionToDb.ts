@@ -5,7 +5,7 @@ import type * as FernRegistryDocsWrite from "../../generated/api/resources/docs/
 import type { FileId, FilePath } from "../../generated/api/resources/docs/resources/v1/resources/write";
 import { type S3FileInfo } from "../../services/s3";
 import { assertNever, type WithoutQuestionMarks } from "../../util";
-import { DEFAULT_DARK_MODE_CONFIG, DEFAULT_LIGHT_MODE_CONFIG } from "../../util/colors";
+import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../../util/colors";
 import {
     isUnversionedNavigationConfig as isUnversionedDbConfig,
     isUnversionedUntabbedNavigationConfig as isUnversionedUntabbedDbConfig,
@@ -268,28 +268,36 @@ function transformColorsV3ForDb({
         case "dark":
             return {
                 type: "dark",
-                accentPrimary: writeShape.accentPrimary ?? DEFAULT_DARK_MODE_CONFIG.accentPrimary,
-                background: writeShape.background ?? DEFAULT_DARK_MODE_CONFIG.background,
+                accentPrimary: writeShape.accentPrimary ?? DEFAULT_DARK_MODE_ACCENT_PRIMARY,
+                background:
+                    writeShape.background != null ? { type: "solid", ...writeShape.background } : { type: "gradient" },
                 logo: docsConfig.logoV2?.dark ?? docsConfig.logo,
             };
         case "light":
             return {
                 type: "light",
-                accentPrimary: writeShape.accentPrimary ?? DEFAULT_LIGHT_MODE_CONFIG.accentPrimary,
-                background: writeShape.background ?? DEFAULT_LIGHT_MODE_CONFIG.background,
+                accentPrimary: writeShape.accentPrimary ?? DEFAULT_LIGHT_MODE_ACCENT_PRIMARY,
+                background:
+                    writeShape.background != null ? { type: "solid", ...writeShape.background } : { type: "gradient" },
                 logo: docsConfig.logoV2?.light,
             };
         case "darkAndLight":
             return {
                 type: "darkAndLight",
                 light: {
-                    accentPrimary: writeShape.light.accentPrimary ?? DEFAULT_LIGHT_MODE_CONFIG.accentPrimary,
-                    background: writeShape.light.background ?? DEFAULT_LIGHT_MODE_CONFIG.background,
+                    accentPrimary: writeShape.light.accentPrimary ?? DEFAULT_LIGHT_MODE_ACCENT_PRIMARY,
+                    background:
+                        writeShape.light.background != null
+                            ? { type: "solid", ...writeShape.light.background }
+                            : { type: "gradient" },
                     logo: docsConfig.logoV2?.light,
                 },
                 dark: {
-                    accentPrimary: writeShape.dark.accentPrimary ?? DEFAULT_DARK_MODE_CONFIG.accentPrimary,
-                    background: writeShape.dark.background ?? DEFAULT_DARK_MODE_CONFIG.background,
+                    accentPrimary: writeShape.dark.accentPrimary ?? DEFAULT_DARK_MODE_ACCENT_PRIMARY,
+                    background:
+                        writeShape.dark.background != null
+                            ? { type: "solid", ...writeShape.dark.background }
+                            : { type: "gradient" },
                     logo: docsConfig.logoV2?.dark ?? docsConfig.logo,
                 },
             };

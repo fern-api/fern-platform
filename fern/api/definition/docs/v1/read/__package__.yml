@@ -88,18 +88,23 @@ types:
     properties: 
       logo: optional<FileId>
       accentPrimary: RgbColor
-      background: RgbColor
+      background: Background
   
   LightModeConfig: 
     properties: 
       logo: optional<FileId>
       accentPrimary: RgbColor
-      background: RgbColor
+      background: Background
   
   DarkAndLightModeConfig: 
     properties: 
       dark: DarkModeConfig
       light: LightModeConfig
+
+  Background: 
+    union: 
+      solid: RgbColor
+      gradient: {}
 
   LogoV2:
     properties:
