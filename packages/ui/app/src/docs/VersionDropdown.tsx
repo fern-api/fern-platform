@@ -1,3 +1,4 @@
+import { FernRegistry } from "@fern-fern/registry-browser";
 import { Menu, Transition } from "@headlessui/react";
 import classNames from "classnames";
 import Link from "next/link";
@@ -6,15 +7,30 @@ import { CheckIcon } from "../commons/icons/CheckIcon";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 import { DocsInfoVersion } from "../docs-context/DocsContext";
 
+function getAvailabilityLabel(availability: FernRegistry.docs.v1.read.VersionAvailability) {
+    switch (availability) {
+        case "Beta":
+            return "beta";
+        case "Deprecated":
+            return "deprecated";
+        case "GenerallyAvailable":
+            return "generally available";
+        case "Stable":
+            return "stable";
+        default:
+            return "unknown";
+    }
+}
+
 export declare namespace VersionDropdown {
     export interface Props {
         versions: DocsInfoVersion[];
-        selectedId: string | undefined;
+        selectedVersionSlug: string | undefined;
         onClickVersion: (version: string) => void;
     }
 }
 
-export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, selectedId, onClickVersion }) => {
+export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, selectedVersionSlug, onClickVersion }) => {
     return (
         <div className="flex w-32">
             <Menu as="div" className="relative inline-block text-left">
@@ -37,7 +53,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, sel
                             return (
                                 <>
                                     <span className="font-mono text-sm font-normal transition-colors">
-                                        {selectedId}
+                                        {selectedVersionSlug}
                                     </span>
                                     <ChevronDownIcon
                                         className={classNames("h-5 w-5 transition", {
@@ -61,7 +77,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, sel
                     <Menu.Items className="border-border-primary bg-background absolute left-0 mt-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md border shadow-lg">
                         <div>
                             {versions.map((v, idx) => {
-                                const { version, label } = v;
+                                const { versionSlug, availability } = v;
                                 return (
                                     <Menu.Item key={idx}>
                                         {({ active }) => (
@@ -71,39 +87,39 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, sel
                                                     {
                                                         "bg-tag-primary": active,
                                                         "!text-accent-primary":
-                                                            version === selectedId ||
-                                                            (active && version !== selectedId),
+                                                            versionSlug === selectedVersionSlug ||
+                                                            (active && versionSlug !== selectedVersionSlug),
                                                         "!text-text-muted-light dark:!text-text-muted-dark":
-                                                            !active && version !== selectedId,
+                                                            !active && versionSlug !== selectedVersionSlug,
                                                         "rounded-t-md": idx === 0,
                                                         "rounded-b-md": idx === versions.length - 1,
                                                     }
                                                 )}
-                                                href={`/${version}`}
-                                                onClick={() => onClickVersion(version)}
+                                                href={`/${versionSlug}`}
+                                                onClick={() => onClickVersion(versionSlug)}
                                             >
                                                 <div className="flex items-center space-x-2">
-                                                    <span className="font-mono text-sm font-normal">{version}</span>
-                                                    {label != null && (
+                                                    <span className="font-mono text-sm font-normal">{versionSlug}</span>
+                                                    {availability != null && (
                                                         <span
                                                             className={classNames(
                                                                 "rounded px-1 py-0.5 text-[11px] font-normal",
                                                                 {
                                                                     "bg-accent-highlight":
-                                                                        version === selectedId && !active,
+                                                                        versionSlug === selectedVersionSlug && !active,
                                                                     "bg-tag-default-light dark:bg-tag-default-dark":
-                                                                        version !== selectedId && !active,
+                                                                        versionSlug !== selectedVersionSlug && !active,
                                                                 }
                                                             )}
                                                         >
-                                                            {label}
+                                                            {getAvailabilityLabel(availability)}
                                                         </span>
                                                     )}
                                                 </div>
                                                 <CheckIcon
                                                     className={classNames("h-3 w-3", {
-                                                        visible: version === selectedId,
-                                                        invisible: version !== selectedId,
+                                                        visible: versionSlug === selectedVersionSlug,
+                                                        invisible: versionSlug !== selectedVersionSlug,
                                                     })}
                                                 />
                                             </Link>

@@ -200,7 +200,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                     return {
                         props: {
                             docs: docs.body,
-                            inferredVersionSlug: defaultVersionConfigData.version,
+                            inferredVersionSlug: defaultVersionConfigData.urlSlug,
                             inferredTabIndex: null, // TODO: Implement
                             typographyStyleSheet,
                             backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
@@ -215,22 +215,24 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                 }
             }
         } else {
-            const { version: versionCandidate, rest } = extractVersionFromSlug(slug);
-            const versionMatchingSlug = navigationConfig.versions.find((v) => v.version === versionCandidate);
+            const { version: versionSlugCandidate, rest } = extractVersionFromSlug(slug);
+            const versionConfigDataMatchingSlug = navigationConfig.versions.find(
+                (c) => c.urlSlug === versionSlugCandidate
+            );
 
-            let version: string | undefined;
+            let versionSlug: string | undefined;
 
-            if (versionMatchingSlug != null) {
+            if (versionConfigDataMatchingSlug != null) {
                 // Assume that the first part of the slug refers to a version
-                version = versionMatchingSlug.version;
+                versionSlug = versionConfigDataMatchingSlug.urlSlug;
                 slug = rest;
             } else {
                 // Assume that the request is for the default version
-                version = defaultVersionConfigData.version;
+                versionSlug = defaultVersionConfigData.urlSlug;
             }
 
             // Find the version in docs definition
-            const configData = navigationConfig.versions.find((c) => c.version === version);
+            const configData = navigationConfig.versions.find((c) => c.urlSlug === versionSlug);
             if (configData == null) {
                 return { notFound: true, revalidate: false };
             }
@@ -283,7 +285,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                 return {
                     props: {
                         docs: docs.body,
-                        inferredVersionSlug: version,
+                        inferredVersionSlug: versionSlug,
                         inferredTabIndex: null, // TODO: Implement
                         typographyStyleSheet,
                         backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
