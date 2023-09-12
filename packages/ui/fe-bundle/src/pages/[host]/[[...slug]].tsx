@@ -154,23 +154,23 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
     const { navigation: navigationConfig } = docs.body.definition.config;
 
     if (isVersionedNavigationConfig(navigationConfig)) {
-        if (slug === "") {
-            // TODO: The first element of the array is not necessarily the latest api version
-            const [latestVersion] = navigationConfig.versions;
-            if (latestVersion == null) {
-                throw new Error("No versions found. This indicates a registration issue.");
-            }
+        // TODO: The first element of the array is not necessarily the default/latest api version
+        const [defaultVersionConfigData] = navigationConfig.versions;
+        if (defaultVersionConfigData == null) {
+            throw new Error("No versions found. This indicates a registration issue.");
+        }
 
-            if (isUnversionedTabbedNavigationConfig(latestVersion.config)) {
+        if (slug === "") {
+            if (isUnversionedTabbedNavigationConfig(defaultVersionConfigData.config)) {
                 // TODO: Implement
                 throw new Error("Not supporting tabs yet.");
             } else {
-                const [firstNavigationItem] = latestVersion.config.items;
+                const [firstNavigationItem] = defaultVersionConfigData.config.items;
                 if (firstNavigationItem != null) {
                     slug = firstNavigationItem.urlSlug;
 
                     const urlPathResolver = new UrlPathResolver({
-                        items: latestVersion.config.items,
+                        items: defaultVersionConfigData.config.items,
                         loadApiDefinition: (id) => docs.body.definition.apis[id],
                         loadApiPage: (id) => docs.body.definition.pages[id],
                     });
@@ -200,7 +200,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                     return {
                         props: {
                             docs: docs.body,
-                            inferredVersion: latestVersion.version,
+                            inferredVersion: defaultVersionConfigData.version,
                             inferredTabIndex: null, // TODO: Implement
                             typographyStyleSheet,
                             backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
@@ -215,13 +215,19 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                 }
             }
         } else {
-            // The slug must contain the version. If not, return not found
+            const { version: versionCandidate, rest } = extractVersionFromSlug(slug);
+            const versionMatchingSlug = navigationConfig.versions.find((v) => v.version === versionCandidate);
 
-            const { version, rest } = extractVersionFromSlug(slug);
-            if (version == null || version.length === 0) {
-                return { notFound: true, revalidate: false };
+            let version: string | undefined;
+
+            if (versionMatchingSlug != null) {
+                // Assume that the first part of the slug refers to a version
+                version = versionMatchingSlug.version;
+                slug = rest;
+            } else {
+                // Assume that the request is for the default version
+                version = defaultVersionConfigData.version;
             }
-            slug = rest;
 
             // Find the version in docs definition
             const configData = navigationConfig.versions.find((c) => c.version === version);
