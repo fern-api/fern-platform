@@ -3,7 +3,7 @@ import { useState } from "react";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
 import { CodeBlockInternalCore } from "../base-components";
 
-interface CodeBlockItem {
+export interface CodeBlockItem {
     children: React.ReactNode;
     title: string;
     content: string;
