@@ -6,16 +6,11 @@ import { EndpointParametersSection } from "./EndpointParametersSection";
 export declare namespace QueryParametersSection {
     export interface Props {
         queryParameters: FernRegistryApiRead.QueryParameter[];
-        getParameterAnchor?: (param: FernRegistryApiRead.QueryParameter) => string;
-        anchor: string;
+        anchorIdParts: string[];
     }
 }
 
-export const QueryParametersSection: React.FC<QueryParametersSection.Props> = ({
-    queryParameters,
-    getParameterAnchor,
-    anchor,
-}) => {
+export const QueryParametersSection: React.FC<QueryParametersSection.Props> = ({ queryParameters, anchorIdParts }) => {
     const convertedParameters = useMemo((): EndpointParameter.Props[] => {
         return queryParameters.map(
             (queryParameter): EndpointParameter.Props => ({
@@ -23,10 +18,16 @@ export const QueryParametersSection: React.FC<QueryParametersSection.Props> = ({
                 type: queryParameter.type,
                 description: queryParameter.description ?? undefined,
                 descriptionContainsMarkdown: queryParameter.descriptionContainsMarkdown ?? false,
-                anchor: getParameterAnchor?.(queryParameter),
+                anchorIdParts: [...anchorIdParts, queryParameter.key],
             })
         );
-    }, [queryParameters, getParameterAnchor]);
+    }, [queryParameters, anchorIdParts]);
 
-    return <EndpointParametersSection title="Query parameters" parameters={convertedParameters} anchor={anchor} />;
+    return (
+        <EndpointParametersSection
+            title="Query parameters"
+            parameters={convertedParameters}
+            anchorIdParts={anchorIdParts}
+        />
+    );
 };

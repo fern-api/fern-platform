@@ -8,7 +8,7 @@ export declare namespace TypeReferenceDefinitions {
         type: FernRegistryApiRead.TypeReference;
         isCollapsible: boolean;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
-        getPropertyAnchor?: (property: FernRegistryApiRead.ObjectProperty) => string;
+        anchorIdParts: string[];
         className?: string;
     }
 }
@@ -17,7 +17,7 @@ export const TypeReferenceDefinitions: React.FC<TypeReferenceDefinitions.Props> 
     type,
     isCollapsible,
     onHoverProperty,
-    getPropertyAnchor,
+    anchorIdParts,
     className,
 }) => {
     return (
@@ -26,7 +26,7 @@ export const TypeReferenceDefinitions: React.FC<TypeReferenceDefinitions.Props> 
                 type={type}
                 isCollapsible={isCollapsible}
                 className={className}
-                getPropertyAnchor={getPropertyAnchor}
+                anchorIdParts={anchorIdParts}
             />
         </TypeDefinitionContextProvider>
     );

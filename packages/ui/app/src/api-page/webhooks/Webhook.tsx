@@ -9,10 +9,11 @@ export declare namespace Webhook {
         isLastInApi: boolean;
         package: FernRegistryApiRead.ApiDefinitionPackage;
         slug: string;
+        anchorIdParts: string[];
     }
 }
 
-export const Webhook: React.FC<Webhook.Props> = ({ webhook, slug, package: package_, isLastInApi }) => {
+export const Webhook: React.FC<Webhook.Props> = ({ webhook, slug, package: package_, isLastInApi, anchorIdParts }) => {
     const { setTargetRef } = useApiPageCenterElement({ slug });
 
     return (
@@ -22,6 +23,7 @@ export const Webhook: React.FC<Webhook.Props> = ({ webhook, slug, package: packa
                 setContainerRef={setTargetRef}
                 package={package_}
                 hideBottomSeparator={isLastInApi}
+                anchorIdParts={anchorIdParts}
             />
         </WebhookContextProvider>
     );

@@ -19,6 +19,7 @@ export declare namespace WebhookContent {
         package: FernRegistryApiRead.ApiDefinitionPackage;
         hideBottomSeparator?: boolean;
         setContainerRef: (ref: HTMLElement | null) => void;
+        anchorIdParts: string[];
     }
 }
 
@@ -27,6 +28,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
     package: package_,
     hideBottomSeparator = false,
     setContainerRef,
+    anchorIdParts,
 }) {
     const { setHoveredPayloadPropertyPath } = useWebhookContext();
     const onHoverPayloadProperty = useCallback(
@@ -88,7 +90,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                         <div className="mt-8 flex">
                             <div className="flex flex-1 flex-col gap-12">
                                 <WebhookSection title="Headers" anchor={computeAnchor("payload")}>
-                                    <WebhookHeadersSection webhook={webhook} />
+                                    <WebhookHeadersSection webhook={webhook} anchorIdParts={anchorIdParts} />
                                 </WebhookSection>
                             </div>
                         </div>
@@ -100,7 +102,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                                 <WebhookPayloadSection
                                     payload={webhook.payload}
                                     onHoverProperty={onHoverPayloadProperty}
-                                    getPropertyAnchor={(property) => computeAnchor("payload", property)}
+                                    anchorIdParts={anchorIdParts}
                                 />
                             </WebhookSection>
                         </div>

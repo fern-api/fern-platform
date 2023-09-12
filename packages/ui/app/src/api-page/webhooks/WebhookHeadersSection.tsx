@@ -8,10 +8,11 @@ import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 export declare namespace WebhookHeadersSection {
     export interface Props {
         webhook: FernRegistryApiRead.WebhookDefinition;
+        anchorIdParts: string[];
     }
 }
 
-export const WebhookHeadersSection: React.FC<WebhookHeadersSection.Props> = ({ webhook }) => {
+export const WebhookHeadersSection: React.FC<WebhookHeadersSection.Props> = ({ webhook, anchorIdParts }) => {
     return (
         <div className="flex flex-col">
             {webhook.headers.map((header, index) => (
@@ -30,7 +31,7 @@ export const WebhookHeadersSection: React.FC<WebhookHeadersSection.Props> = ({ w
                             description={header.description}
                             isMarkdown={header.descriptionContainsMarkdown ?? false}
                         />
-                        <TypeReferenceDefinitions type={header.type} isCollapsible />
+                        <TypeReferenceDefinitions type={header.type} isCollapsible anchorIdParts={anchorIdParts} />
                     </div>
                 </div>
             ))}

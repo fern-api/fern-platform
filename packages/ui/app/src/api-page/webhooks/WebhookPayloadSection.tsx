@@ -9,14 +9,14 @@ export declare namespace WebhookPayloadSection {
     export interface Props {
         payload: FernRegistryApiRead.WebhookPayload;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
-        getPropertyAnchor?: (property: FernRegistryApiRead.ObjectProperty) => string;
+        anchorIdParts: string[];
     }
 }
 
 export const WebhookPayloadSection: React.FC<WebhookPayloadSection.Props> = ({
     payload,
     onHoverProperty,
-    getPropertyAnchor,
+    anchorIdParts,
 }) => {
     return (
         <div className="flex flex-col">
@@ -35,7 +35,7 @@ export const WebhookPayloadSection: React.FC<WebhookPayloadSection.Props> = ({
                         typeShape={object}
                         isCollapsible={false}
                         onHoverProperty={onHoverProperty}
-                        getPropertyAnchor={getPropertyAnchor}
+                        anchorIdParts={anchorIdParts}
                     />
                 ),
                 reference: (type) => (
@@ -43,7 +43,7 @@ export const WebhookPayloadSection: React.FC<WebhookPayloadSection.Props> = ({
                         type={type.value}
                         isCollapsible={false}
                         onHoverProperty={onHoverProperty}
-                        getPropertyAnchor={getPropertyAnchor}
+                        anchorIdParts={anchorIdParts}
                     />
                 ),
                 _other: () => null,

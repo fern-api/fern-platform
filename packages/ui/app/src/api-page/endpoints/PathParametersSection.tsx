@@ -6,16 +6,11 @@ import { EndpointParametersSection } from "./EndpointParametersSection";
 export declare namespace PathParametersSection {
     export interface Props {
         pathParameters: FernRegistryApiRead.PathParameter[];
-        getParameterAnchor?: (param: FernRegistryApiRead.PathParameter) => string;
-        anchor: string;
+        anchorIdParts: string[];
     }
 }
 
-export const PathParametersSection: React.FC<PathParametersSection.Props> = ({
-    pathParameters,
-    getParameterAnchor,
-    anchor,
-}) => {
+export const PathParametersSection: React.FC<PathParametersSection.Props> = ({ pathParameters, anchorIdParts }) => {
     const convertedParameters = useMemo((): EndpointParameter.Props[] => {
         return pathParameters.map(
             (pathParameter): EndpointParameter.Props => ({
@@ -23,10 +18,16 @@ export const PathParametersSection: React.FC<PathParametersSection.Props> = ({
                 type: pathParameter.type,
                 description: pathParameter.description ?? undefined,
                 descriptionContainsMarkdown: pathParameter.descriptionContainsMarkdown ?? false,
-                anchor: getParameterAnchor?.(pathParameter),
+                anchorIdParts: [...anchorIdParts, pathParameter.key],
             })
         );
-    }, [pathParameters, getParameterAnchor]);
+    }, [pathParameters, anchorIdParts]);
 
-    return <EndpointParametersSection title="Path parameters" parameters={convertedParameters} anchor={anchor} />;
+    return (
+        <EndpointParametersSection
+            title="Path parameters"
+            parameters={convertedParameters}
+            anchorIdParts={anchorIdParts}
+        />
+    );
 };
