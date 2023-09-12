@@ -56,10 +56,12 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
                 type: "versioned",
                 rootSlug: versionSlug,
                 activeNavigationConfig: configData.version.config,
+                activeVersionName: configData.version.version,
                 activeVersionSlug,
                 // TODO: The first version is not necessarily the default version
                 isDefaultVersion: configData.index === 0,
-                versions: docsDefinition.config.navigation.versions.map(({ urlSlug, availability }) => ({
+                versions: docsDefinition.config.navigation.versions.map(({ version, urlSlug, availability }) => ({
+                    versionName: version,
                     versionSlug: urlSlug,
                     availability,
                 })),

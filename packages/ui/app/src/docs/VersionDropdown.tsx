@@ -25,12 +25,18 @@ function getAvailabilityLabel(availability: FernRegistry.docs.v1.read.VersionAva
 export declare namespace VersionDropdown {
     export interface Props {
         versions: DocsInfoVersion[];
+        selectedVersionName: string | undefined;
         selectedVersionSlug: string | undefined;
-        onClickVersion: (version: string) => void;
+        onClickVersion: (versionSlug: string) => void;
     }
 }
 
-export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, selectedVersionSlug, onClickVersion }) => {
+export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
+    versions,
+    selectedVersionName,
+    selectedVersionSlug,
+    onClickVersion,
+}) => {
     return (
         <div className="flex w-32">
             <Menu as="div" className="relative inline-block text-left">
@@ -53,7 +59,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, sel
                             return (
                                 <>
                                     <span className="font-mono text-sm font-normal transition-colors">
-                                        {selectedVersionSlug}
+                                        {selectedVersionName}
                                     </span>
                                     <ChevronDownIcon
                                         className={classNames("h-5 w-5 transition", {
@@ -77,7 +83,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, sel
                     <Menu.Items className="border-border-primary bg-background absolute left-0 mt-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md border shadow-lg">
                         <div>
                             {versions.map((v, idx) => {
-                                const { versionSlug, availability } = v;
+                                const { versionName, versionSlug, availability } = v;
                                 return (
                                     <Menu.Item key={idx}>
                                         {({ active }) => (
@@ -99,7 +105,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, sel
                                                 onClick={() => onClickVersion(versionSlug)}
                                             >
                                                 <div className="flex items-center space-x-2">
-                                                    <span className="font-mono text-sm font-normal">{versionSlug}</span>
+                                                    <span className="font-mono text-sm font-normal">{versionName}</span>
                                                     {availability != null && (
                                                         <span
                                                             className={classNames(

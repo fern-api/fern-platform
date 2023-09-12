@@ -46,6 +46,7 @@ export const HeaderLogoSection: React.FC = () => {
                 <div>
                     <VersionDropdown
                         versions={docsInfo.versions}
+                        selectedVersionName={docsInfo.activeVersionName}
                         selectedVersionSlug={docsInfo.activeVersionSlug}
                         onClickVersion={(versionSlug) => {
                             setActiveVersionSlug(versionSlug);
