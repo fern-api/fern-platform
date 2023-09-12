@@ -39,5 +39,5 @@ export function useCustomTheme(docsDefinition: FernRegistryDocsRead.DocsDefiniti
             );
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, useDeepCompareMemoize([docsDefinition.config.colorsV2, docsDefinition.config.colors, theme]));
+    }, useDeepCompareMemoize([docsDefinition.config.colorsV3, docsDefinition.config.colors, theme]));
 }
