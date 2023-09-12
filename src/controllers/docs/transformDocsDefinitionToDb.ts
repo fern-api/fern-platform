@@ -96,12 +96,16 @@ export function transformNavigationConfigForDb(
 
 function transformVersionedNavigationConfigForDb(
     config: FernRegistryDocsWrite.VersionedNavigationConfig
-): FernRegistryDocsDb.VersionedNavigationConfig {
+): WithoutQuestionMarks<FernRegistryDocsDb.VersionedNavigationConfig> {
     return {
-        versions: config.versions.map((version) => ({
-            version: version.version,
-            config: transformUnversionedNavigationConfigForDb(version.config),
-        })),
+        versions: config.versions.map(
+            (version): WithoutQuestionMarks<FernRegistryDocsDb.VersionedNavigationConfigData> => ({
+                urlSlug: version.urlSlugOverride ?? kebabCase(version.version),
+                availability: version.availability,
+                version: version.version,
+                config: transformUnversionedNavigationConfigForDb(version.config),
+            })
+        ),
     };
 }
 

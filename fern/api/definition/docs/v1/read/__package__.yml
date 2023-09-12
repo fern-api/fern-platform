@@ -151,7 +151,16 @@ types:
   VersionedNavigationConfigData:
     properties:
       version: string
+      urlSlug: string
+      availability: optional<VersionAvailability>
       config: UnversionedNavigationConfig
+  
+  VersionAvailability: 
+    enum: 
+      - Stable
+      - GenerallyAvailable
+      - Deprecated
+      - Beta
 
   NavigationItem:
     union:

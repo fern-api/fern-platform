@@ -1,3 +1,4 @@
+import { kebabCase } from "lodash";
 import { v4 as uuid } from "uuid";
 import type { FernRegistry } from "../../generated";
 import * as FernRegistryDocsDb from "../../generated/api/resources/docs/resources/v1/resources/db";
@@ -60,7 +61,7 @@ export class AlgoliaSearchRecordGenerator {
             }
             return this.generateAlgoliaSearchRecordsForUnversionedNavigationConfig(
                 firstVersion.config,
-                context.withSlug(firstVersion.version)
+                context.withSlug(firstVersion.urlSlug ?? kebabCase(firstVersion.version))
             );
         }
         return this.generateAlgoliaSearchRecordsForUnversionedNavigationConfig(navigationConfig, context);

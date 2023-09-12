@@ -99,6 +99,8 @@ types:
   VersionedNavigationConfigData:
     properties:
       version: string
+      urlSlug: optional<string>
+      availability: optional<docsReadV1.VersionAvailability>
       config: UnversionedNavigationConfig
 
   NavigationItem:

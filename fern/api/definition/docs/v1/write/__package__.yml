@@ -180,7 +180,16 @@ types:
   VersionedNavigationConfigData:
     properties:
       version: string
+      urlSlugOverride: optional<string>
+      availability: optional<VersionAvailability>
       config: UnversionedNavigationConfig
+  
+  VersionAvailability: 
+    enum: 
+      - Stable
+      - GenerallyAvailable
+      - Deprecated
+      - Beta
 
   NavigationItem:
     union:

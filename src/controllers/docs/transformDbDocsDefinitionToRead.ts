@@ -1,3 +1,4 @@
+import { kebabCase } from "lodash";
 import type * as FernRegistryDocsDb from "../../generated/api/resources/docs/resources/v1/resources/db";
 import type * as FernRegistryDocsRead from "../../generated/api/resources/docs/resources/v1/resources/read";
 import { type WithoutQuestionMarks } from "../../util";
@@ -36,19 +37,23 @@ export function transformNavigationConfigToRead(
     if (isUnversionedDbConfig(dbShape)) {
         return transformUnversionedNavigationConfigForDb(dbShape);
     } else if (isVersionedDbConfig(dbShape)) {
-        return transformVersionedNavigationConfigForDb(dbShape);
+        return transformVersionedNavigationConfigToRead(dbShape);
     }
     throw new Error("navigationConfig is neither unversioned nor versioned");
 }
 
-function transformVersionedNavigationConfigForDb(
+function transformVersionedNavigationConfigToRead(
     config: FernRegistryDocsDb.VersionedNavigationConfig
-): FernRegistryDocsRead.VersionedNavigationConfig {
+): WithoutQuestionMarks<FernRegistryDocsRead.VersionedNavigationConfig> {
     return {
-        versions: config.versions.map((version) => ({
-            version: version.version,
-            config: transformUnversionedNavigationConfigForDb(version.config),
-        })),
+        versions: config.versions.map(
+            (version): WithoutQuestionMarks<FernRegistryDocsRead.VersionedNavigationConfigData> => ({
+                urlSlug: version.urlSlug ?? kebabCase(version.version),
+                availability: version.availability,
+                version: version.version,
+                config: transformUnversionedNavigationConfigForDb(version.config),
+            })
+        ),
     };
 }
 
