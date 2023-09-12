@@ -4,10 +4,11 @@ import Link from "next/link";
 import { Fragment } from "react";
 import { CheckIcon } from "../commons/icons/CheckIcon";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
+import { DocsInfoVersion } from "../docs-context/DocsContext";
 
 export declare namespace VersionDropdown {
     export interface Props {
-        versions: string[];
+        versions: DocsInfoVersion[];
         selectedId: string | undefined;
         onClickVersion: (version: string) => void;
     }
@@ -59,36 +60,57 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ versions, sel
                 >
                     <Menu.Items className="border-border-primary bg-background absolute left-0 mt-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md border shadow-lg">
                         <div>
-                            {versions.map((version, idx) => (
-                                <Menu.Item key={idx}>
-                                    {({ active }) => (
-                                        <Link
-                                            className={classNames(
-                                                "flex w-full justify-between !no-underline items-center p-2",
-                                                {
-                                                    "bg-tag-primary": active,
-                                                    "!text-accent-primary":
-                                                        version === selectedId || (active && version !== selectedId),
-                                                    "!text-text-muted-light dark:!text-text-muted-dark":
-                                                        !active && version !== selectedId,
-                                                    "rounded-t-md": idx === 0,
-                                                    "rounded-b-md": idx === versions.length - 1,
-                                                }
-                                            )}
-                                            href={`/${version}`}
-                                            onClick={() => onClickVersion(version)}
-                                        >
-                                            <span className="font-mono text-sm font-normal">{version}</span>
-                                            <CheckIcon
-                                                className={classNames("h-3 w-3", {
-                                                    visible: version === selectedId,
-                                                    invisible: version !== selectedId,
-                                                })}
-                                            />
-                                        </Link>
-                                    )}
-                                </Menu.Item>
-                            ))}
+                            {versions.map((v, idx) => {
+                                const { version, label } = v;
+                                return (
+                                    <Menu.Item key={idx}>
+                                        {({ active }) => (
+                                            <Link
+                                                className={classNames(
+                                                    "flex w-full justify-between !no-underline items-center p-2",
+                                                    {
+                                                        "bg-tag-primary": active,
+                                                        "!text-accent-primary":
+                                                            version === selectedId ||
+                                                            (active && version !== selectedId),
+                                                        "!text-text-muted-light dark:!text-text-muted-dark":
+                                                            !active && version !== selectedId,
+                                                        "rounded-t-md": idx === 0,
+                                                        "rounded-b-md": idx === versions.length - 1,
+                                                    }
+                                                )}
+                                                href={`/${version}`}
+                                                onClick={() => onClickVersion(version)}
+                                            >
+                                                <div className="flex items-center space-x-2">
+                                                    <span className="font-mono text-sm font-normal">{version}</span>
+                                                    {label != null && (
+                                                        <span
+                                                            className={classNames(
+                                                                "rounded px-1 py-0.5 text-[11px] font-normal",
+                                                                {
+                                                                    "bg-accent-highlight":
+                                                                        version === selectedId && !active,
+                                                                    "bg-tag-default-light dark:bg-tag-default-dark":
+                                                                        version !== selectedId && !active,
+                                                                }
+                                                            )}
+                                                        >
+                                                            {label}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                                <CheckIcon
+                                                    className={classNames("h-3 w-3", {
+                                                        visible: version === selectedId,
+                                                        invisible: version !== selectedId,
+                                                    })}
+                                                />
+                                            </Link>
+                                        )}
+                                    </Menu.Item>
+                                );
+                            })}
                         </div>
                     </Menu.Items>
                 </Transition>

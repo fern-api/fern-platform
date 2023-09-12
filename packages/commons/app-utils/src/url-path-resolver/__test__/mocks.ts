@@ -5,6 +5,11 @@ export const MOCKS_DOCS_DEFINITION: FernRegistryDocsRead.DocsDefinition = {
     apis: {},
     files: {},
     config: {
+        colorsV3: {
+            type: "dark",
+            accentPrimary: { r: 0, g: 0, b: 0 },
+            background: { r: 0, g: 0, b: 0 },
+        },
         navbarLinks: [],
         navigation: {
             items: [

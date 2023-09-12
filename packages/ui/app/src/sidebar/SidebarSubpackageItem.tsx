@@ -124,7 +124,11 @@ const UnmemoizedSidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = (
         </button>
     );
 };
+
 export const SidebarSubpackageItem = memo(
     UnmemoizedSidebarSubpackageItem,
-    (prev, next) => prev.isChildSelected === next.isChildSelected
+    (prev, next) =>
+        prev.isChildSelected === next.isChildSelected &&
+        prev.getFullSlug === next.getFullSlug &&
+        prev.slug === next.slug
 );

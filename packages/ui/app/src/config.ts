@@ -2,6 +2,9 @@ import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/reso
 
 export const DEFAULT_LOGO_HEIGHT = 20;
 
+/** The tag that we show in version dropdown */
+export const DEFAULT_VERSION_LABEL = "latest";
+
 interface ColorConfig {
     dark: FernRegistryDocsRead.RgbColor;
     light: FernRegistryDocsRead.RgbColor;
