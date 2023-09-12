@@ -8,9 +8,14 @@ export const DocsContext = React.createContext<() => DocsContextValue>(() => {
     throw new Error("DocsContextValueProvider is not present in this tree.");
 });
 
+export interface DocsInfoVersion {
+    version: string;
+    label?: string;
+}
+
 interface DocsInfoVersioned {
     type: "versioned";
-    versions: string[];
+    versions: DocsInfoVersion[];
     activeVersion: string;
     isDefaultVersion: boolean;
     activeNavigationConfig: FernRegistryDocsRead.UnversionedNavigationConfig;

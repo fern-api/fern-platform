@@ -61,7 +61,10 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
                 activeVersion,
                 // TODO: The first version is not necessarily the default version
                 isDefaultVersion: configData.index === 0,
-                versions: docsDefinition.config.navigation.versions.map(({ version }) => version),
+                versions: docsDefinition.config.navigation.versions.map(({ version, availability }) => ({
+                    version,
+                    label: availability,
+                })),
             };
         } else {
             assertIsUnversionedNavigationConfig(docsDefinition.config.navigation);
