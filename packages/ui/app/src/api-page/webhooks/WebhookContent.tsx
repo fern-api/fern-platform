@@ -3,8 +3,6 @@ import { getSubpackageTitle, isSubpackage } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { snakeCase } from "lodash-es";
 import React, { useCallback } from "react";
-import { isSubpackage } from "../../util/package";
-import { getSubpackageTitle } from "../../util/subpackage";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { Markdown } from "../markdown/Markdown";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
