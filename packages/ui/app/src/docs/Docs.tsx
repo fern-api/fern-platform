@@ -41,8 +41,6 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
         }
     }, [colorsV3, theme]);
 
-    console.log("DOCS=", docsDefinition);
-
     return (
         <>
             <BgImageGradient
