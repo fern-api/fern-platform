@@ -35,7 +35,7 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({
                 package={subpackage}
                 slug={slug}
                 isLastInParentPackage={isLastInParentPackage}
-                anchorIdParts={[...anchorIdParts, subpackageId]}
+                anchorIdParts={[...anchorIdParts, subpackage.name]}
             />
         </>
     );
