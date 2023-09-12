@@ -15,6 +15,12 @@ export function useTheme(colorConfigType: "dark" | "light" | "darkAndLight"): Us
         setMounted(true);
     }, []);
 
+    useEffect(() => {
+        if (colorConfigType !== "darkAndLight") {
+            setTheme(colorConfigType);
+        }
+    }, [colorConfigType, setTheme]);
+
     return useMemo(() => {
         if (colorConfigType !== "darkAndLight") {
             return { theme: colorConfigType, setTheme };
