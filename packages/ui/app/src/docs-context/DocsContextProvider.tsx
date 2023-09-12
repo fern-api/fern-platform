@@ -17,7 +17,7 @@ import { useSlugListeners } from "./useSlugListeners";
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
-        inferredVersion: string | null;
+        inferredVersionSlug: string | null;
         inferredTabIndex: number | null;
         resolvedUrlPath: ResolvedUrlPath;
         nextPath: ResolvedUrlPath | undefined;
@@ -27,7 +27,7 @@ export declare namespace DocsContextProvider {
 
 export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     docsDefinition,
-    inferredVersion,
+    inferredVersionSlug,
     inferredTabIndex,
     resolvedUrlPath,
     nextPath,
@@ -36,13 +36,13 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
 }) => {
     const router = useRouter();
 
-    const [activeVersion, _setActiveVersion] = useState(inferredVersion);
+    const [activeVersion, _setActiveVersion] = useState(inferredVersionSlug);
     const [activeTabIndex, _setActiveTabIndex] = useState(inferredTabIndex);
 
     const versionSlug = activeVersion ?? "";
 
     const docsInfo = useMemo<DocsInfo>(() => {
-        if (inferredVersion != null && activeVersion != null) {
+        if (inferredVersionSlug != null && activeVersion != null) {
             assertIsVersionedNavigationConfig(docsDefinition.config.navigation);
             const configData = docsDefinition.config.navigation.versions
                 .map((version, index) => ({ version, index }))
@@ -72,7 +72,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
                 activeNavigationConfig: docsDefinition.config.navigation,
             };
         }
-    }, [inferredVersion, activeVersion, docsDefinition.config.navigation, versionSlug]);
+    }, [inferredVersionSlug, activeVersion, docsDefinition.config.navigation, versionSlug]);
 
     const activeTab = useMemo(() => {
         if (activeTabIndex == null || isUnversionedUntabbedNavigationConfig(docsInfo.activeNavigationConfig)) {

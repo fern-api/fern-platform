@@ -28,7 +28,7 @@ export declare namespace Docs {
         /**
          * If `null`, then docs are not versioned.
          */
-        inferredVersion: string | null;
+        inferredVersionSlug: string | null;
         inferredTabIndex: number | null;
         resolvedUrlPath: ResolvedUrlPath;
         typographyStyleSheet?: string;
@@ -40,7 +40,7 @@ export declare namespace Docs {
 
 export default function Docs({
     docs,
-    inferredVersion,
+    inferredVersionSlug,
     inferredTabIndex,
     typographyStyleSheet = "",
     backgroundImageStyleSheet = "",
@@ -71,7 +71,7 @@ export default function Docs({
                 </Head>
                 <App
                     docs={docs}
-                    inferredVersion={inferredVersion}
+                    inferredVersionSlug={inferredVersionSlug}
                     inferredTabIndex={inferredTabIndex}
                     resolvedUrlPath={resolvedUrlPath}
                     nextPath={nextPath ?? undefined}
@@ -139,7 +139,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
             success: true,
             props: {
                 docs: docs.body,
-                inferredVersion: null,
+                inferredVersionSlug: null,
                 typographyStyleSheet,
                 backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
                 resolvedUrlPath,
@@ -200,7 +200,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                     return {
                         props: {
                             docs: docs.body,
-                            inferredVersion: defaultVersionConfigData.version,
+                            inferredVersionSlug: defaultVersionConfigData.version,
                             inferredTabIndex: null, // TODO: Implement
                             typographyStyleSheet,
                             backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
@@ -283,7 +283,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                 return {
                     props: {
                         docs: docs.body,
-                        inferredVersion: version,
+                        inferredVersionSlug: version,
                         inferredTabIndex: null, // TODO: Implement
                         typographyStyleSheet,
                         backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
