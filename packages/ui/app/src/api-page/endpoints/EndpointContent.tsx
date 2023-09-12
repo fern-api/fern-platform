@@ -3,6 +3,7 @@ import { getEndpointTitleAsString, getSubpackageTitle, isSubpackage } from "@fer
 import useSize from "@react-hook/size";
 import classNames from "classnames";
 import React, { useCallback, useMemo, useRef, useState } from "react";
+import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { useEndpointContext } from "./endpoint-context/useEndpointContext";
@@ -34,6 +35,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
     setContainerRef,
     anchorIdParts,
 }) {
+    const { apiSection } = useApiDefinitionContext();
     const { setHoveredRequestPropertyPath, setHoveredResponsePropertyPath } = useEndpointContext();
     const onHoverRequestProperty = useCallback(
         (jsonPropertyPath: JsonPropertyPath, { isHovering }: { isHovering: boolean }) => {
@@ -134,8 +136,8 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                     />
                                 </EndpointSection>
                             )}
-                            {process.env.NEXT_PUBLIC_DISPLAY_ERRORS === "true" && endpoint.errors.length > 0 && (
-                                <EndpointSection title="Errors" anchorIdParts={[...anchorIdParts, "errors"]}>
+                            {apiSection.showErrors && endpoint.errors.length > 0 && (
+                                <EndpointSection title="Errors" anchorIdParts={[...anchorIdParts, "response"]}>
                                     <EndpointErrorsSection
                                         errors={endpoint.errors}
                                         onClickError={(_, idx, event) => {
