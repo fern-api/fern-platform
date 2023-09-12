@@ -20,7 +20,7 @@ FocusStyleManager.onlyShowFocusOnTabs();
 export declare namespace App {
     export interface Props {
         docs: FernRegistryDocsRead.LoadDocsForUrlResponse;
-        inferredVersion: string | null;
+        inferredVersionSlug: string | null;
         inferredTabIndex: number | null;
         resolvedUrlPath: ResolvedUrlPath;
         nextPath: ResolvedUrlPath | undefined;
@@ -30,7 +30,7 @@ export declare namespace App {
 
 export const App: React.FC<App.Props> = ({
     docs,
-    inferredVersion,
+    inferredVersionSlug,
     inferredTabIndex,
     resolvedUrlPath,
     nextPath,
@@ -50,7 +50,7 @@ export const App: React.FC<App.Props> = ({
                 ),
                 <DocsContextProvider
                     docsDefinition={docs.definition}
-                    inferredVersion={inferredVersion}
+                    inferredVersionSlug={inferredVersionSlug}
                     inferredTabIndex={inferredTabIndex}
                     resolvedUrlPath={resolvedUrlPath}
                     nextPath={nextPath}

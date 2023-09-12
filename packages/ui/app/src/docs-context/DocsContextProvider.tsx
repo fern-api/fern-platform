@@ -17,7 +17,7 @@ import { useSlugListeners } from "./useSlugListeners";
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
-        inferredVersion: string | null;
+        inferredVersionSlug: string | null;
         inferredTabIndex: number | null;
         resolvedUrlPath: ResolvedUrlPath;
         nextPath: ResolvedUrlPath | undefined;
@@ -27,7 +27,7 @@ export declare namespace DocsContextProvider {
 
 export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     docsDefinition,
-    inferredVersion,
+    inferredVersionSlug,
     inferredTabIndex,
     resolvedUrlPath,
     nextPath,
@@ -36,17 +36,17 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
 }) => {
     const router = useRouter();
 
-    const [activeVersion, _setActiveVersion] = useState(inferredVersion);
+    const [activeVersionSlug, _setActiveVersionSlug] = useState(inferredVersionSlug);
     const [activeTabIndex, _setActiveTabIndex] = useState(inferredTabIndex);
 
-    const versionSlug = activeVersion ?? "";
+    const versionSlug = activeVersionSlug ?? "";
 
     const docsInfo = useMemo<DocsInfo>(() => {
-        if (inferredVersion != null && activeVersion != null) {
+        if (inferredVersionSlug != null && activeVersionSlug != null) {
             assertIsVersionedNavigationConfig(docsDefinition.config.navigation);
             const configData = docsDefinition.config.navigation.versions
                 .map((version, index) => ({ version, index }))
-                .find(({ version }) => activeVersion === version.version);
+                .find(({ version }) => activeVersionSlug === version.urlSlug);
             if (configData == null) {
                 throw new Error(
                     "Could not find the active navigation config. This is likely due to a bug in the application flow."
@@ -56,12 +56,14 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
                 type: "versioned",
                 rootSlug: versionSlug,
                 activeNavigationConfig: configData.version.config,
-                activeVersion,
+                activeVersionName: configData.version.version,
+                activeVersionSlug,
                 // TODO: The first version is not necessarily the default version
                 isDefaultVersion: configData.index === 0,
-                versions: docsDefinition.config.navigation.versions.map(({ version, availability }) => ({
-                    version,
-                    label: availability,
+                versions: docsDefinition.config.navigation.versions.map(({ version, urlSlug, availability }) => ({
+                    versionName: version,
+                    versionSlug: urlSlug,
+                    availability,
                 })),
             };
         } else {
@@ -72,7 +74,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
                 activeNavigationConfig: docsDefinition.config.navigation,
             };
         }
-    }, [inferredVersion, activeVersion, docsDefinition.config.navigation, versionSlug]);
+    }, [inferredVersionSlug, activeVersionSlug, docsDefinition.config.navigation, versionSlug]);
 
     const activeTab = useMemo(() => {
         if (activeTabIndex == null || isUnversionedUntabbedNavigationConfig(docsInfo.activeNavigationConfig)) {
@@ -116,8 +118,8 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
 
     const [selectedSlug, setSelectedSlug] = useState(selectedSlugFromUrl);
 
-    const setActiveVersion = useCallback((version: string) => {
-        _setActiveVersion(version);
+    const setActiveVersionSlug = useCallback((version: string) => {
+        _setActiveVersionSlug(version);
     }, []);
 
     const setActiveTabIndex = useCallback((tabIndex: number) => {
@@ -204,7 +206,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             resolveFile,
             docsDefinition,
             docsInfo,
-            setActiveVersion,
+            setActiveVersionSlug,
             activeTab,
             activeTabIndex,
             setActiveTabIndex,
@@ -221,7 +223,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
         [
             docsDefinition,
             docsInfo,
-            setActiveVersion,
+            setActiveVersionSlug,
             activeTab,
             activeTabIndex,
             setActiveTabIndex,

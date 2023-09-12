@@ -6,7 +6,7 @@ import { VersionDropdown } from "./VersionDropdown";
 export declare namespace HeaderLogoSection {}
 
 export const HeaderLogoSection: React.FC = () => {
-    const { resolveFile, docsDefinition, docsInfo, setActiveVersion, navigateToPath } = useDocsContext();
+    const { resolveFile, docsDefinition, docsInfo, setActiveVersionSlug, navigateToPath } = useDocsContext();
     const { theme } = useTheme(docsDefinition.config.colorsV3.type);
     const { logo, logoV2, logoHeight, logoHref } = docsDefinition.config;
 
@@ -46,10 +46,11 @@ export const HeaderLogoSection: React.FC = () => {
                 <div>
                     <VersionDropdown
                         versions={docsInfo.versions}
-                        selectedId={docsInfo.activeVersion}
-                        onClickVersion={(v) => {
-                            setActiveVersion(v);
-                            navigateToPath(`/${v}`, { omitVersionPrefix: true });
+                        selectedVersionName={docsInfo.activeVersionName}
+                        selectedVersionSlug={docsInfo.activeVersionSlug}
+                        onClickVersion={(versionSlug) => {
+                            setActiveVersionSlug(versionSlug);
+                            navigateToPath(`/${versionSlug}`, { omitVersionPrefix: true });
                         }}
                     />
                 </div>

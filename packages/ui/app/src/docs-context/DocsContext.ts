@@ -9,14 +9,16 @@ export const DocsContext = React.createContext<() => DocsContextValue>(() => {
 });
 
 export interface DocsInfoVersion {
-    version: string;
-    label?: string;
+    versionName: string;
+    versionSlug: string;
+    availability?: FernRegistryDocsRead.VersionAvailability;
 }
 
 interface DocsInfoVersioned {
     type: "versioned";
     versions: DocsInfoVersion[];
-    activeVersion: string;
+    activeVersionName: string;
+    activeVersionSlug: string;
     isDefaultVersion: boolean;
     activeNavigationConfig: FernRegistryDocsRead.UnversionedNavigationConfig;
     rootSlug: string;
@@ -48,7 +50,7 @@ export interface DocsContextValue {
 
     docsDefinition: FernRegistryDocsRead.DocsDefinition;
     docsInfo: DocsInfo;
-    setActiveVersion: (version: string) => void;
+    setActiveVersionSlug: (versionSlug: string) => void;
     activeTab: FernRegistryDocsRead.NavigationTab | undefined;
     activeTabIndex: number | null;
     setActiveTabIndex: (index: number) => void;
