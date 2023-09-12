@@ -16,7 +16,11 @@ export const CodeBlocks: React.FC<React.PropsWithChildren<CodeBlocks.Props>> = (
     if (Array.isArray(children)) {
         return <_CodeBlocks items={children.map(transformCodeBlocksChildrenToItem)} />;
     } else if (children != null) {
-        return <_CodeBlocks items={[transformCodeBlocksChildrenToItem(children)]} />;
+        return (
+            <_CodeBlocks
+                items={[transformCodeBlocksChildrenToItem(children as React.ReactNode & { props: unknown })]}
+            />
+        );
     } else {
         return null;
     }
