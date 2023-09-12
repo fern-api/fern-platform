@@ -41,14 +41,14 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     const [activeVersion, _setActiveVersion] = useState(inferredVersion);
     const [activeTabIndex, _setActiveTabIndex] = useState(inferredTabIndex);
 
-    const rootSlug = activeVersion ?? "";
+    const versionSlug = activeVersion ?? "";
 
     const docsInfo = useMemo<DocsInfo>(() => {
         if (inferredVersion != null && activeVersion != null) {
             assertIsVersionedNavigationConfig(docsDefinition.config.navigation);
-            const configData = docsDefinition.config.navigation.versions.find(
-                ({ version }) => activeVersion === version
-            );
+            const configData = docsDefinition.config.navigation.versions
+                .map((version, index) => ({ version, index }))
+                .find(({ version }) => activeVersion === version.version);
             if (configData == null) {
                 throw new Error(
                     "Could not find the active navigation config. This is likely due to a bug in the application flow."
@@ -56,20 +56,22 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             }
             return {
                 type: "versioned",
-                rootSlug,
-                activeNavigationConfig: configData.config,
+                rootSlug: versionSlug,
+                activeNavigationConfig: configData.version.config,
                 activeVersion,
+                // TODO: The first version is not necessarily the default version
+                isDefaultVersion: configData.index === 0,
                 versions: docsDefinition.config.navigation.versions.map(({ version }) => version),
             };
         } else {
             assertIsUnversionedNavigationConfig(docsDefinition.config.navigation);
             return {
                 type: "unversioned",
-                rootSlug,
+                rootSlug: versionSlug,
                 activeNavigationConfig: docsDefinition.config.navigation,
             };
         }
-    }, [inferredVersion, activeVersion, docsDefinition.config.navigation, rootSlug]);
+    }, [inferredVersion, activeVersion, docsDefinition.config.navigation, versionSlug]);
 
     const activeTab = useMemo(() => {
         if (activeTabIndex == null || isUnversionedUntabbedNavigationConfig(docsInfo.activeNavigationConfig)) {
@@ -81,8 +83,8 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     const getFullSlug = useCallback(
         (slug: string, opts?: { tabSlug?: string }) => {
             const parts: string[] = [];
-            if (rootSlug) {
-                parts.push(`${rootSlug}/`);
+            if (docsInfo.type === "versioned" && !docsInfo.isDefaultVersion && versionSlug) {
+                parts.push(`${versionSlug}/`);
             }
             if (activeTab != null) {
                 parts.push(`${opts?.tabSlug ?? activeTab.urlSlug}/`);
@@ -90,7 +92,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             parts.push(slug);
             return parts.join("");
         },
-        [rootSlug, activeTab]
+        [versionSlug, activeTab, docsInfo]
     );
 
     const selectedSlugFromUrl = useMemo(() => {

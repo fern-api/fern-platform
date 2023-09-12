@@ -100,4 +100,7 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
     );
 };
 
-export const SidebarItem = memo(UnmemoizedSidebarItem, (prev, next) => prev.isSelected === next.isSelected);
+export const SidebarItem = memo(
+    UnmemoizedSidebarItem,
+    (prev, next) => prev.isSelected === next.isSelected && prev.slug === next.slug && prev.fullSlug === next.fullSlug
+);

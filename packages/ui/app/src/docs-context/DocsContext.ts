@@ -12,6 +12,7 @@ interface DocsInfoVersioned {
     type: "versioned";
     versions: string[];
     activeVersion: string;
+    isDefaultVersion: boolean;
     activeNavigationConfig: FernRegistryDocsRead.UnversionedNavigationConfig;
     rootSlug: string;
 }
