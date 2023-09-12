@@ -28,14 +28,13 @@ export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args):
     );
 
     const handleIsSelected = useCallback(() => {
-        const headerHeight = 64; // 4rem
-        window.scrollTo({ top: (targetRef.current?.offsetTop ?? 0) - headerHeight });
+        targetRef.current?.scrollIntoView();
     }, []);
 
-    useEffect(
-        () => registerNavigateToPathListener(getFullSlug(slug), handleIsSelected),
-        [handleIsSelected, slug, registerNavigateToPathListener, getFullSlug]
-    );
+    useEffect(() => {
+        const unsubscribe = registerNavigateToPathListener(getFullSlug(slug), handleIsSelected);
+        return unsubscribe;
+    }, [handleIsSelected, slug, registerNavigateToPathListener, getFullSlug]);
 
     const isSelected = useIsSlugSelected(getFullSlug(slug));
     useEffect(() => {
@@ -50,7 +49,6 @@ export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args):
         // https://stackoverflow.com/questions/54807535/intersection-observer-api-observe-the-center-of-the-viewport
         rootMargin: "-50% 0px",
         threshold: 0,
-        initialInView: isSelected,
         onChange: onChangeIsInVerticalCenter,
     });
 

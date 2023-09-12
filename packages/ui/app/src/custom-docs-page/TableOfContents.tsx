@@ -1,22 +1,22 @@
 import { Text } from "@blueprintjs/core";
+import classNames from "classnames";
 import { marked } from "marked";
-import { CSSProperties, useMemo } from "react";
+import { useMemo } from "react";
 import { getSlugFromText } from "../mdx/base-components";
 
 export declare namespace TableOfContents {
     export interface Props {
         className?: string;
-        style?: CSSProperties;
         markdown: string;
     }
 }
 
-export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, markdown, style }) => {
+export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, markdown }) => {
     const headings = useMemo(() => marked.lexer(markdown).filter(isHeading), [markdown]);
     const minDepth = useMemo(() => Math.min(...headings.map((heading) => heading.depth)), [headings]);
 
     return (
-        <div className={className} style={style}>
+        <div className={classNames("w-64", className)}>
             {headings.length > 0 && (
                 <div className="flex flex-col space-y-3">
                     {headings.map((heading, index) => (

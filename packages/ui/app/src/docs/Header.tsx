@@ -1,11 +1,13 @@
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
-import { forwardRef, memo, PropsWithChildren } from "react";
+import { forwardRef, PropsWithChildren } from "react";
 import { MenuIcon } from "../commons/icons/MenuIcon";
 import { SearchIcon } from "../commons/icons/SearchIcon";
 import { XIcon } from "../commons/icons/XIcon";
-import { SearchService } from "../services/useSearchService";
+import { useDocsContext } from "../docs-context/useDocsContext";
+import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
+import { useSearchContext } from "../search-context/useSearchContext";
+import { useSearchService } from "../services/useSearchService";
 import { HeaderLogoSection } from "./HeaderLogoSection";
 import { HeaderPrimaryLink } from "./HeaderPrimaryLink";
 import { HeaderSecondaryLink } from "./HeaderSecondaryLink";
@@ -14,29 +16,14 @@ import { ThemeButton } from "./ThemeButton";
 export declare namespace Header {
     export interface Props {
         className?: string;
-        docsDefinition: FernRegistryDocsRead.DocsDefinition;
-        lightModeEnabled: boolean;
-        openSearchDialog: () => void;
-        isMobileSidebarOpen: boolean;
-        openMobileSidebar: () => void;
-        closeMobileSidebar: () => void;
-        searchService: SearchService;
     }
 }
 
-const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Props>>(function Header(
-    {
-        className,
-        docsDefinition,
-        lightModeEnabled,
-        openSearchDialog,
-        isMobileSidebarOpen,
-        openMobileSidebar,
-        closeMobileSidebar,
-        searchService,
-    },
-    ref
-) {
+export const Header = forwardRef<HTMLDivElement, PropsWithChildren<Header.Props>>(function Header({ className }, ref) {
+    const { docsDefinition, lightModeEnabled } = useDocsContext();
+    const { openSearchDialog } = useSearchContext();
+    const { isMobileSidebarOpen, closeMobileSidebar, openMobileSidebar } = useMobileSidebarContext();
+    const searchService = useSearchService();
     const { navbarLinks } = docsDefinition.config;
 
     const navbarLinksSection = (
@@ -56,7 +43,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
             className={classNames(
                 "flex justify-between items-center shrink-0 pl-[calc(theme(spacing.4)+theme(spacing[1.5]))] pr-4",
                 // this matches with the calc() in the EndpointContent examples section
-                "h-full",
+                "h-16",
                 className
             )}
             ref={ref}
@@ -92,5 +79,3 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
         </div>
     );
 });
-
-export const Header = memo(UnmemoizedHeader);

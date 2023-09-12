@@ -6,10 +6,12 @@ import { useDocsContext } from "../docs-context/useDocsContext";
 import { RedirectToFirstNavigationItem } from "./RedirectToFirstNavigationItem";
 
 export declare namespace DocsMainContent {
-    export interface Props {}
+    export interface Props {
+        marginHorizontal?: number;
+    }
 }
 
-export const DocsMainContent: React.FC<DocsMainContent.Props> = () => {
+export const DocsMainContent: React.FC<DocsMainContent.Props> = ({ marginHorizontal }) => {
     const { resolvedPathFromUrl } = useDocsContext();
 
     switch (resolvedPathFromUrl.type) {
@@ -21,7 +23,7 @@ export const DocsMainContent: React.FC<DocsMainContent.Props> = () => {
                     apiSection={resolvedPathFromUrl.apiSection}
                     apiSlug={resolvedPathFromUrl.slug}
                 >
-                    <ApiPage />
+                    <ApiPage marginHorizontal={marginHorizontal} />
                 </ApiDefinitionContextProvider>
             );
         case "clientLibraries":
@@ -35,7 +37,7 @@ export const DocsMainContent: React.FC<DocsMainContent.Props> = () => {
                     apiSection={resolvedPathFromUrl.apiSection}
                     apiSlug={resolvedPathFromUrl.apiSlug}
                 >
-                    <ApiPage />
+                    <ApiPage marginHorizontal={marginHorizontal} />
                 </ApiDefinitionContextProvider>
             );
         case "section":

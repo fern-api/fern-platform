@@ -97,7 +97,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         console.error("Failed to fetch docs", docs.error);
         return {
             notFound: true,
-            revalidate: false,
+            revalidate: true,
         };
     }
 
@@ -125,7 +125,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                 success: false,
                 response: {
                     notFound: true,
-                    revalidate: false,
+                    revalidate: true,
                 },
             };
         }
@@ -150,7 +150,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                     nextPath: nextPath ?? null,
                     previousPath: previousPath ?? null,
                 },
-                revalidate: false,
+                revalidate: true,
             },
         };
     };
@@ -192,7 +192,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                     }
 
                     if (resolvedUrlPath == null) {
-                        return { notFound: true, revalidate: false };
+                        return { notFound: true, revalidate: true };
                     }
 
                     const typographyConfig = loadDocTypography(docs.body.definition);
@@ -213,10 +213,10 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                             nextPath: nextPath ?? null,
                             previousPath: previousPath ?? null,
                         },
-                        revalidate: false,
+                        revalidate: true,
                     };
                 } else {
-                    return { notFound: true, revalidate: false };
+                    return { notFound: true, revalidate: true };
                 }
             }
         } else {
@@ -224,14 +224,14 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
 
             const { version, rest } = extractVersionFromSlug(slug);
             if (version == null || version.length === 0) {
-                return { notFound: true, revalidate: false };
+                return { notFound: true, revalidate: true };
             }
             slug = rest;
 
             // Find the version in docs definition
             const configData = navigationConfig.versions.find((c) => c.version === version);
             if (configData == null) {
-                return { notFound: true, revalidate: false };
+                return { notFound: true, revalidate: true };
             }
 
             if (slug === "") {
@@ -243,7 +243,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                     if (firstNavigationItem != null) {
                         slug = firstNavigationItem.urlSlug;
                     } else {
-                        return { notFound: true, revalidate: false };
+                        return { notFound: true, revalidate: true };
                     }
                 }
             }
@@ -268,7 +268,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                 }
 
                 if (resolvedUrlPath == null) {
-                    return { notFound: true, revalidate: false };
+                    return { notFound: true, revalidate: true };
                 }
 
                 const typographyConfig = loadDocTypography(docs.body.definition);
@@ -289,7 +289,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                         nextPath: nextPath ?? null,
                         previousPath: previousPath ?? null,
                     },
-                    revalidate: false,
+                    revalidate: true,
                 };
             }
         }
@@ -298,20 +298,20 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
             if (isUnversionedTabbedNavigationConfig(navigationConfig)) {
                 const [firstTab] = navigationConfig.tabs;
                 if (firstTab == null) {
-                    return { notFound: true, revalidate: false };
+                    return { notFound: true, revalidate: true };
                 }
                 const [firstNavigationItem] = firstTab.items;
                 if (firstNavigationItem != null) {
                     slug = firstNavigationItem.urlSlug;
                 } else {
-                    return { notFound: true, revalidate: false };
+                    return { notFound: true, revalidate: true };
                 }
             } else {
                 const [firstNavigationItem] = navigationConfig.items;
                 if (firstNavigationItem != null) {
                     slug = firstNavigationItem.urlSlug;
                 } else {
-                    return { notFound: true, revalidate: false };
+                    return { notFound: true, revalidate: true };
                 }
             }
         }
@@ -324,7 +324,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                     ? navigationConfig.tabs[1]
                     : navigationConfig.tabs[0];
             if (tab == null) {
-                return { notFound: true, revalidate: false };
+                return { notFound: true, revalidate: true };
             }
             const resp = await computeResponseForNavigationItems(tab.items, slug);
             return resp.success ? resp.response : resp.response; // TS limitation
@@ -340,14 +340,14 @@ type ComputeResponseForNavigationItemsReturnType =
           success: true;
           response: {
               props: Docs.Props;
-              revalidate: false | undefined;
+              revalidate: true | undefined;
           };
       }
     | {
           success: false;
           response: {
               notFound: true;
-              revalidate: false | undefined;
+              revalidate: true | undefined;
           };
       };
 

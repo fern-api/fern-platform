@@ -1,5 +1,4 @@
 import algolia, { type SearchClient } from "algoliasearch/lite";
-import { useMemo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 
 export type SearchService =
@@ -22,14 +21,12 @@ const client = algolia(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID, process.env.NEXT_
 export function useSearchService(): SearchService {
     const { docsDefinition } = useDocsContext();
     const { algoliaSearchIndex } = docsDefinition;
-    return useMemo(() => {
-        if (algoliaSearchIndex) {
-            return {
-                isAvailable: true,
-                index: algoliaSearchIndex,
-                client,
-            };
-        }
-        return { isAvailable: false };
-    }, [algoliaSearchIndex]);
+    if (algoliaSearchIndex) {
+        return {
+            isAvailable: true,
+            index: algoliaSearchIndex,
+            client,
+        };
+    }
+    return { isAvailable: false };
 }
