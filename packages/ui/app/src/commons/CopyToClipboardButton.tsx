@@ -24,7 +24,7 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({ c
                     <CheckIcon className="text-accent-primary h-4 w-4" />
                 </div>
             ) : (
-                <CopyIcon className="text-intent-default hover:text-text-primary-light hover:dark:text-text-primary-dark h-4 w-4" />
+                <CopyIcon className="text-intent-default hover:text-accent-primary h-4 w-4 transition-colors" />
             )}
         </button>
     );
