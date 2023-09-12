@@ -4,7 +4,6 @@ import useSize from "@react-hook/size";
 import classNames from "classnames";
 import { snakeCase } from "lodash-es";
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { useEndpointContext } from "./endpoint-context/useEndpointContext";
@@ -34,7 +33,6 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
     hideBottomSeparator = false,
     setContainerRef,
 }) {
-    const { apiSection } = useApiDefinitionContext();
     const { setHoveredRequestPropertyPath, setHoveredResponsePropertyPath } = useEndpointContext();
     const onHoverRequestProperty = useCallback(
         (jsonPropertyPath: JsonPropertyPath, { isHovering }: { isHovering: boolean }) => {
@@ -159,7 +157,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                     />
                                 </EndpointSection>
                             )}
-                            {apiSection.showErrors && endpoint.errors.length > 0 && (
+                            {process.env.NEXT_PUBLIC_DISPLAY_ERRORS === "true" && endpoint.errors.length > 0 && (
                                 <EndpointSection title="Errors" anchor={computeAnchor("errors")}>
                                     <EndpointErrorsSection
                                         errors={endpoint.errors}
