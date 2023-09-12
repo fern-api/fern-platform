@@ -1,7 +1,5 @@
 import { useTheme } from "@fern-ui/theme";
-import { useCallback } from "react";
 import { DEFAULT_LOGO_HEIGHT } from "../config";
-import { DocsInfoVersion } from "../docs-context/DocsContext";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { VersionDropdown } from "./VersionDropdown";
 
@@ -12,18 +10,6 @@ export const HeaderLogoSection: React.FC = () => {
         useDocsContext();
     const { theme } = useTheme(lightModeEnabled);
     const { logo, logoV2, logoHeight, logoHref } = docsDefinition.config;
-
-    const isDefaultVersion = useCallback(
-        ({ version }: DocsInfoVersion) => {
-            if (docsInfo.type !== "versioned") {
-                return false;
-            }
-            const [firstVersion] = docsInfo.versions;
-            // TODO: The first version is not necessarily the default version
-            return version === firstVersion?.version;
-        },
-        [docsInfo]
-    );
 
     if (theme == null) {
         return null;
@@ -61,7 +47,6 @@ export const HeaderLogoSection: React.FC = () => {
                 <div>
                     <VersionDropdown
                         versions={docsInfo.versions}
-                        isDefaultVersion={isDefaultVersion}
                         selectedId={docsInfo.activeVersion}
                         onClickVersion={(v) => {
                             setActiveVersion(v);
