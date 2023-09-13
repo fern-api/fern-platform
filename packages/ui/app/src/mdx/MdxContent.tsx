@@ -22,6 +22,7 @@ import {
     Tr,
     Ul,
 } from "./base-components";
+import { Availability } from "./components/Availability";
 import { Callout } from "./components/Callout";
 import { Card } from "./components/Card";
 import { Cards } from "./components/Cards";
@@ -56,6 +57,7 @@ const COMPONENTS: MDXRemoteProps["components"] = {
     li: Li,
     a: A,
     strong: Strong,
+    Availability,
     Cards,
     Card,
     CodeBlock,
