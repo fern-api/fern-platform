@@ -1,4 +1,4 @@
-import { FernRegistry } from "@fern-fern/registry-browser";
+import { getVersionAvailabilityLabel } from "@fern-ui/app-utils";
 import { Menu, Transition } from "@headlessui/react";
 import classNames from "classnames";
 import Link from "next/link";
@@ -6,21 +6,6 @@ import { Fragment } from "react";
 import { CheckIcon } from "../commons/icons/CheckIcon";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 import { DocsInfoVersion } from "../docs-context/DocsContext";
-
-function getAvailabilityLabel(availability: FernRegistry.docs.v1.read.VersionAvailability) {
-    switch (availability) {
-        case "Beta":
-            return "beta";
-        case "Deprecated":
-            return "deprecated";
-        case "GenerallyAvailable":
-            return "generally available";
-        case "Stable":
-            return "stable";
-        default:
-            return "unknown";
-    }
-}
 
 export declare namespace VersionDropdown {
     export interface Props {
@@ -118,7 +103,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
                                                                 }
                                                             )}
                                                         >
-                                                            {getAvailabilityLabel(availability)}
+                                                            {getVersionAvailabilityLabel(availability)}
                                                         </span>
                                                     )}
                                                 </div>

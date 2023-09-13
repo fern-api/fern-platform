@@ -41,3 +41,18 @@ export function assertIsUnversionedNavigationConfig(
         throw new Error("Invalid navigation config. Expected unversioned.");
     }
 }
+
+export function getVersionAvailabilityLabel(availability: FernRegistryDocsRead.VersionAvailability): string {
+    switch (availability) {
+        case "Beta":
+            return "beta";
+        case "Deprecated":
+            return "deprecated";
+        case "GenerallyAvailable":
+            return "generally available";
+        case "Stable":
+            return "stable";
+        default:
+            return "unknown";
+    }
+}

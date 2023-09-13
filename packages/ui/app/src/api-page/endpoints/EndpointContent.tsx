@@ -8,6 +8,7 @@ import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { useEndpointContext } from "./endpoint-context/useEndpointContext";
 import { EndpointExample } from "./endpoint-examples/EndpointExample";
+import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 import { EndpointErrorsSection } from "./EndpointErrorsSection";
 import { EndpointRequestSection } from "./EndpointRequestSection";
 import { EndpointResponseSection } from "./EndpointResponseSection";
@@ -87,8 +88,18 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                 {getSubpackageTitle(package_)}
                             </div>
                         )}
-                        <div className="typography-font-heading text-text-primary-light dark:text-text-primary-dark text-3xl font-bold">
-                            {getEndpointTitleAsString(endpoint)}
+                        <div>
+                            <span className="typography-font-heading text-text-primary-light dark:text-text-primary-dark text-3xl font-bold">
+                                {getEndpointTitleAsString(endpoint)}
+                            </span>
+                            {endpoint.availability != null && (
+                                <span className="relative">
+                                    <EndpointAvailabilityTag
+                                        className="absolute -top-1.5 left-2.5 inline-block"
+                                        availability={endpoint.availability}
+                                    />
+                                </span>
+                            )}
                         </div>
                     </div>
                     <div ref={endpointUrlOuterContainerRef} className="flex max-w-full flex-col items-start">
