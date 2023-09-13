@@ -11,6 +11,19 @@ export type EndpointPathPart =
           name: string;
       };
 
+export function getEndpointAvailabilityLabel(availability: FernRegistryApiRead.Availability): string {
+    switch (availability) {
+        case "Beta":
+            return "beta";
+        case "Deprecated":
+            return "deprecated";
+        case "GenerallyAvailable":
+            return "GA";
+        default:
+            return "unknown";
+    }
+}
+
 export function divideEndpointPathToParts(endpoint: FernRegistryApiRead.EndpointDefinition): EndpointPathPart[] {
     const parts: EndpointPathPart[] = [];
     endpoint.path.parts.forEach((part) => {
