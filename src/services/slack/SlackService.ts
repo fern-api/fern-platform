@@ -21,6 +21,7 @@ export class SlackServiceImpl implements SlackService {
     async notifyFailedToRegisterDocs(request: FailedToRegisterDocsNotification): Promise<void> {
         await this.client.chat.postMessage({
             channel: "#notifs",
+            text: `:rotating_light: Docs failed to register \`${request.domain}\``,
             blocks: [
                 {
                     type: "section",

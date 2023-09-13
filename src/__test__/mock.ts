@@ -1,6 +1,7 @@
 import { FdrApplication, type FdrConfig } from "../app";
 import { type AlgoliaSearchRecord, type AlgoliaService } from "../services/algolia";
 import { type AuthService } from "../services/auth";
+import { FailedToRegisterDocsNotification, SlackService } from "../services/slack/SlackService";
 
 class MockAlgoliaService implements AlgoliaService {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -35,6 +36,12 @@ class MockAuthService implements AuthService {
     }
 }
 
+class MockSlackService implements SlackService {
+    async notifyFailedToRegisterDocs(_request: FailedToRegisterDocsNotification): Promise<void> {
+        return;
+    }
+}
+
 export function createMockFdrConfig(): FdrConfig {
     return {
         awsAccessKey: "",
@@ -54,5 +61,6 @@ export function createMockFdrApplication() {
     return new FdrApplication(createMockFdrConfig(), {
         auth: new MockAuthService(),
         algolia: new MockAlgoliaService(),
+        slack: new MockSlackService(),
     });
 }
