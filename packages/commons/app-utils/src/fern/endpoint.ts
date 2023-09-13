@@ -14,13 +14,13 @@ export type EndpointPathPart =
 export function getEndpointAvailabilityLabel(availability: FernRegistryApiRead.Availability): string {
     switch (availability) {
         case "Beta":
-            return "beta";
+            return "Beta";
         case "Deprecated":
-            return "deprecated";
+            return "Deprecated";
         case "GenerallyAvailable":
             return "GA";
         default:
-            return "unknown";
+            return "Unknown";
     }
 }
 
