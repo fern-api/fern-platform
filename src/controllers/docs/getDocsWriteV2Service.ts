@@ -145,6 +145,10 @@ export function getDocsWriteV2Service(app: FdrApplication): WriteService {
                                 `[${docsRegistrationInfo.fernDomain}] Failed to revalidate url: ${url}. ` +
                                     (e as Error).message
                             );
+                            await app.services.slack.notifyFailedToRegisterDocs({
+                                domain: docsRegistrationInfo.fernDomain,
+                                err: e,
+                            });
                         }
                     })
                 );
@@ -152,7 +156,7 @@ export function getDocsWriteV2Service(app: FdrApplication): WriteService {
                 return res.send();
             } catch (e) {
                 app.logger.error(`Error while trying to register docs for ${docsRegistrationInfo.fernDomain}`, e);
-                app.services.slack.notifyFailedToRegisterDocs({
+                await app.services.slack.notifyFailedToRegisterDocs({
                     domain: docsRegistrationInfo.fernDomain,
                     err: e,
                 });

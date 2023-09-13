@@ -7,7 +7,7 @@ export interface FailedToRegisterDocsNotification {
 }
 
 export interface SlackService {
-    notifyFailedToRegisterDocs(request: FailedToRegisterDocsNotification): void;
+    notifyFailedToRegisterDocs(request: FailedToRegisterDocsNotification): Promise<void>;
 }
 
 export class SlackServiceImpl implements SlackService {
