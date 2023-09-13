@@ -1,5 +1,6 @@
 import { WebClient } from "@slack/web-api";
 import type { FdrApplication } from "../../app";
+import { LOGGER } from "../../app/FdrApplication";
 
 export interface FailedToRegisterDocsNotification {
     domain: string;
@@ -19,27 +20,15 @@ export class SlackServiceImpl implements SlackService {
     }
 
     async notifyFailedToRegisterDocs(request: FailedToRegisterDocsNotification): Promise<void> {
-        await this.client.chat.postMessage({
-            channel: "#notifs",
-            text: `:rotating_light: Docs failed to register \`${request.domain}\``,
-            blocks: [
-                {
-                    type: "section",
-                    text: {
-                        type: "mrkdwn",
-                        text: `:rotating_light: Docs failed to register \`${request.domain}\``,
-                    },
-                },
-                {
-                    type: "divider",
-                },
-                {
-                    type: `Here is some relevant information about the error: \`\`\`${stringifyError(
-                        request.err
-                    )}\`\`\``,
-                },
-            ],
-        });
+        try {
+            await this.client.chat.postMessage({
+                channel: "#notifs",
+                text: `:rotating_light: Docs failed to register \`${request.domain}\`: ${stringifyError(request.err)}`,
+                blocks: [],
+            });
+        } catch (err) {
+            LOGGER.debug("Failed to send slack message: ", err);
+        }
     }
 }
 
