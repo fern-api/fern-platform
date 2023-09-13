@@ -99,54 +99,146 @@ export function transformNavigationItemForDb(
 
 export function getColorsV3(docsDbConfig: FernRegistryDocsDb.DocsDbConfig): FernRegistryDocsRead.ColorsConfigV3 {
     if (docsDbConfig.colorsV2 != null) {
-        if (
-            docsDbConfig.colorsV2.accentPrimary?.type === "themed" &&
-            docsDbConfig.colorsV2.background?.type === "themed"
-        ) {
-            if (docsDbConfig.colorsV2.accentPrimary.dark != null && docsDbConfig.colorsV2.accentPrimary.light == null) {
-                return {
-                    type: "dark",
-                    accentPrimary: docsDbConfig.colorsV2.accentPrimary.dark,
-                    background:
-                        docsDbConfig.colorsV2.background.dark != null
-                            ? { type: "solid", ...docsDbConfig.colorsV2.background.dark }
-                            : { type: "gradient" },
-                    logo: docsDbConfig.logoV2?.light ?? docsDbConfig.logo,
-                };
+        if (docsDbConfig.colorsV2.accentPrimary?.type === "themed") {
+            if (docsDbConfig.colorsV2.background == null) {
+                if (
+                    docsDbConfig.colorsV2.accentPrimary.dark != null &&
+                    docsDbConfig.colorsV2.accentPrimary.light == null
+                ) {
+                    return {
+                        type: "dark",
+                        accentPrimary: docsDbConfig.colorsV2.accentPrimary.dark,
+                        background: { type: "gradient" },
+                        logo: docsDbConfig.logoV2?.light ?? docsDbConfig.logo,
+                    };
+                } else if (
+                    docsDbConfig.colorsV2.accentPrimary.light != null &&
+                    docsDbConfig.colorsV2.accentPrimary.dark == null
+                ) {
+                    return {
+                        type: "light",
+                        accentPrimary: docsDbConfig.colorsV2.accentPrimary.light,
+                        background: { type: "gradient" },
+                        logo: docsDbConfig.logoV2?.light ?? docsDbConfig.logo,
+                    };
+                } else {
+                    return {
+                        type: "darkAndLight",
+                        dark: {
+                            accentPrimary:
+                                docsDbConfig.colorsV2.accentPrimary.dark ??
+                                docsDbConfig.colors?.accentPrimary ??
+                                DEFAULT_DARK_MODE_ACCENT_PRIMARY,
+                            background: { type: "gradient" },
+                            logo: docsDbConfig.logoV2?.dark ?? docsDbConfig.logo,
+                        },
+                        light: {
+                            accentPrimary:
+                                docsDbConfig.colorsV2.accentPrimary.light ?? DEFAULT_LIGHT_MODE_ACCENT_PRIMARY,
+                            background: { type: "gradient" },
+                            logo: docsDbConfig.logoV2?.light ?? docsDbConfig.logo,
+                        },
+                    };
+                }
+            } else if (docsDbConfig.colorsV2.background.type == "unthemed") {
+                if (
+                    docsDbConfig.colorsV2.accentPrimary.dark != null &&
+                    docsDbConfig.colorsV2.accentPrimary.light == null
+                ) {
+                    return {
+                        type: "dark",
+                        accentPrimary: docsDbConfig.colorsV2.accentPrimary.dark,
+                        background:
+                            docsDbConfig.colorsV2.background.color != null
+                                ? { type: "solid", ...docsDbConfig.colorsV2.background.color }
+                                : { type: "gradient" },
+                        logo: docsDbConfig.logoV2?.light ?? docsDbConfig.logo,
+                    };
+                } else if (
+                    docsDbConfig.colorsV2.accentPrimary.light != null &&
+                    docsDbConfig.colorsV2.accentPrimary.dark == null
+                ) {
+                    return {
+                        type: "light",
+                        accentPrimary: docsDbConfig.colorsV2.accentPrimary.light,
+                        background: { type: "gradient" },
+                        logo: docsDbConfig.logoV2?.light ?? docsDbConfig.logo,
+                    };
+                } else {
+                    return {
+                        type: "darkAndLight",
+                        dark: {
+                            accentPrimary:
+                                docsDbConfig.colorsV2.accentPrimary.dark ??
+                                docsDbConfig.colors?.accentPrimary ??
+                                DEFAULT_DARK_MODE_ACCENT_PRIMARY,
+                            background:
+                                docsDbConfig.colorsV2.background.color != null
+                                    ? { type: "solid", ...docsDbConfig.colorsV2.background.color }
+                                    : { type: "gradient" },
+                            logo: docsDbConfig.logoV2?.dark ?? docsDbConfig.logo,
+                        },
+                        light: {
+                            accentPrimary:
+                                docsDbConfig.colorsV2.accentPrimary.light ?? DEFAULT_LIGHT_MODE_ACCENT_PRIMARY,
+                            background: { type: "gradient" },
+                            logo: docsDbConfig.logoV2?.light ?? docsDbConfig.logo,
+                        },
+                    };
+                }
+            } else {
+                if (
+                    docsDbConfig.colorsV2.accentPrimary.dark != null &&
+                    docsDbConfig.colorsV2.accentPrimary.light == null
+                ) {
+                    return {
+                        type: "dark",
+                        accentPrimary: docsDbConfig.colorsV2.accentPrimary.dark,
+                        background:
+                            docsDbConfig.colorsV2.background.dark != null
+                                ? { type: "solid", ...docsDbConfig.colorsV2.background.dark }
+                                : { type: "gradient" },
+                        logo: docsDbConfig.logoV2?.light ?? docsDbConfig.logo,
+                    };
+                } else if (
+                    docsDbConfig.colorsV2.accentPrimary.light != null &&
+                    docsDbConfig.colorsV2.accentPrimary.dark == null
+                ) {
+                    return {
+                        type: "light",
+                        accentPrimary: docsDbConfig.colorsV2.accentPrimary.light,
+                        background:
+                            docsDbConfig.colorsV2.background.light != null
+                                ? { type: "solid", ...docsDbConfig.colorsV2.background.light }
+                                : { type: "gradient" },
+                        logo: docsDbConfig.logoV2?.light ?? docsDbConfig.logo,
+                    };
+                } else {
+                    return {
+                        type: "darkAndLight",
+                        dark: {
+                            accentPrimary:
+                                docsDbConfig.colorsV2.accentPrimary.dark ??
+                                docsDbConfig.colors?.accentPrimary ??
+                                DEFAULT_DARK_MODE_ACCENT_PRIMARY,
+                            background:
+                                docsDbConfig.colorsV2.background.dark != null
+                                    ? { type: "solid", ...docsDbConfig.colorsV2.background.dark }
+                                    : { type: "gradient" },
+                            logo: docsDbConfig.logoV2?.dark ?? docsDbConfig.logo,
+                        },
+                        light: {
+                            accentPrimary:
+                                docsDbConfig.colorsV2.accentPrimary.light ?? DEFAULT_LIGHT_MODE_ACCENT_PRIMARY,
+                            background:
+                                docsDbConfig.colorsV2.background.light != null
+                                    ? { type: "solid", ...docsDbConfig.colorsV2.background.light }
+                                    : { type: "gradient" },
+                            logo: docsDbConfig.logoV2?.light ?? docsDbConfig.logo,
+                        },
+                    };
+                }
             }
-            if (docsDbConfig.colorsV2.accentPrimary.light != null && docsDbConfig.colorsV2.accentPrimary.dark == null) {
-                return {
-                    type: "light",
-                    accentPrimary: docsDbConfig.colorsV2.accentPrimary.light,
-                    background:
-                        docsDbConfig.colorsV2.background.light != null
-                            ? { type: "solid", ...docsDbConfig.colorsV2.background.light }
-                            : { type: "gradient" },
-                    logo: docsDbConfig.logoV2?.light ?? docsDbConfig.logo,
-                };
-            }
-            return {
-                type: "darkAndLight",
-                dark: {
-                    accentPrimary:
-                        docsDbConfig.colorsV2.accentPrimary.dark ??
-                        docsDbConfig.colors?.accentPrimary ??
-                        DEFAULT_DARK_MODE_ACCENT_PRIMARY,
-                    background:
-                        docsDbConfig.colorsV2.background.dark != null
-                            ? { type: "solid", ...docsDbConfig.colorsV2.background.dark }
-                            : { type: "gradient" },
-                    logo: docsDbConfig.logoV2?.dark ?? docsDbConfig.logo,
-                },
-                light: {
-                    accentPrimary: docsDbConfig.colorsV2.accentPrimary.light ?? DEFAULT_LIGHT_MODE_ACCENT_PRIMARY,
-                    background:
-                        docsDbConfig.colorsV2.background.light != null
-                            ? { type: "solid", ...docsDbConfig.colorsV2.background.light }
-                            : { type: "gradient" },
-                    logo: docsDbConfig.logoV2?.light ?? docsDbConfig.logo,
-                },
-            };
         } else if (docsDbConfig.colorsV2.accentPrimary?.type === "unthemed") {
             if (docsDbConfig.colorsV2.background == null) {
                 return {
@@ -193,3 +285,5 @@ export function getColorsV3(docsDbConfig: FernRegistryDocsDb.DocsDbConfig): Fern
         logo: docsDbConfig.logoV2?.dark ?? docsDbConfig.logo,
     };
 }
+
+//
