@@ -96,17 +96,32 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                         >
                             <div className="flex min-w-0 items-center justify-start space-x-3">
                                 <div className="min-w-fit">
-                                    <FontAwesomeIcon
-                                        className={classNames("h-5 w-5", {
-                                            "text-accent-primary": idx === activeTabIndex,
-                                            "t-muted group-hover/tab-button:text-accent-primary":
-                                                idx !== activeTabIndex,
-                                        })}
-                                        icon={tab.icon}
-                                    />
+                                    <div
+                                        className={classNames(
+                                            "flex h-6 w-6 items-center border justify-center rounded-md group-hover/tab-button:bg-tag-primary group-hover/tab-button:border-border-primary",
+                                            {
+                                                "bg-tag-primary border-border-primary": idx === activeTabIndex,
+                                                "bg-tag-default-light/5 dark:bg-tag-default-dark/5 border-transparent":
+                                                    idx !== activeTabIndex,
+                                            }
+                                        )}
+                                    >
+                                        <FontAwesomeIcon
+                                            className={classNames(
+                                                "h-3.5 w-3.5 group-hover/tab-button:text-accent-primary",
+                                                {
+                                                    "text-accent-primary": idx === activeTabIndex,
+                                                    "t-muted": idx !== activeTabIndex,
+                                                }
+                                            )}
+                                            icon={tab.icon}
+                                        />
+                                    </div>
                                 </div>
 
-                                <Text ellipsize>{tab.title}</Text>
+                                <Text ellipsize className="font-medium">
+                                    {tab.title}
+                                </Text>
                             </div>
                         </button>
                     ))}
