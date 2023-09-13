@@ -41,6 +41,8 @@ module.exports = {
                 "intent-warning-light": "rgb(217, 119, 6)",
                 "intent-success-dark": "rgb(74, 222, 128)",
                 "intent-success-light": "rgb(22, 163, 74)",
+                "intent-danger-dark": "rgb(248, 113, 113)",
+                "intent-danger-light": "rgb(220, 38, 38)",
 
                 "background-primary-dark": "rgb(3, 7, 18)",
                 "background-primary-light": "rgb(255, 255, 255)",
@@ -64,6 +66,8 @@ module.exports = {
                 "border-warning-light": "rgba(217, 119, 6, 0.30)",
                 "border-success-dark": "rgba(74, 222, 128, 0.30)",
                 "border-success-light": "rgba(22, 163, 74, 0.30)",
+                "border-danger-dark": "rgba(248, 113, 113, 0.30)",
+                "border-danger-light": "rgba(220, 38, 38, 0.30)",
 
                 "text-primary-dark": "rgb(255, 255, 255)",
                 "text-primary-light": "rgb(3,7,18)",
@@ -79,6 +83,8 @@ module.exports = {
                 "tag-warning-light": "rgba(217, 119, 6, 0.10)",
                 "tag-success-dark": "rgba(74, 222, 128, 0.15)",
                 "tag-success-light": "rgba(22, 163, 74, 0.15)",
+                "tag-danger-light": "rgba(220, 38, 38, 0.10)",
+                "tag-danger-dark": "rgba(248, 113, 113, 0.15)",
             };
         },
     },
@@ -88,8 +94,38 @@ module.exports = {
         // https://github.com/tailwindlabs/tailwindcss-intellisense/issues/227#issuecomment-1269592872
         plugin(({ addComponents }) => {
             addComponents({
+                // Text
                 ".t-muted": {
                     "@apply text-text-muted-light dark:text-text-muted-dark": {},
+                },
+                ".t-success": {
+                    "@apply text-intent-success-light dark:text-intent-success-dark": {},
+                },
+                ".t-warning": {
+                    "@apply text-intent-warning-light dark:text-intent-warning-dark": {},
+                },
+                ".t-danger": {
+                    "@apply text-intent-danger-light dark:text-intent-danger-dark": {},
+                },
+                // Background
+                ".bg-tag-success": {
+                    "@apply bg-tag-success-light dark:bg-tag-success-dark": {},
+                },
+                ".bg-tag-warning": {
+                    "@apply bg-tag-warning-light dark:bg-tag-warning-dark": {},
+                },
+                ".bg-tag-danger": {
+                    "@apply bg-tag-danger-light dark:bg-tag-danger-dark": {},
+                },
+                // Border
+                ".border-success": {
+                    "@apply border-border-success-light dark:border-border-success-dark": {},
+                },
+                ".border-warning": {
+                    "@apply border-border-warning-light dark:border-border-warning-dark": {},
+                },
+                ".border-danger": {
+                    "@apply border-border-danger-light dark:border-border-danger-dark": {},
                 },
             });
         }),
