@@ -40,7 +40,7 @@ const handler: NextApiHandler = async (req, res) => {
         let pathsToRevalidate: string[] = [];
 
         if (isVersionedNavigationConfig(navigationConfig)) {
-            navigationConfig.versions.forEach(({ version, config }) => {
+            navigationConfig.versions.forEach(({ config, urlSlug: version }) => {
                 if (isUnversionedUntabbedNavigationConfig(config)) {
                     const urlSlugTree = new UrlSlugTree({
                         items: config.items,
