@@ -7,94 +7,100 @@ export interface Request {
 }
 
 const handler: NextApiHandler = async (req, res) => {
-    const url = req.body?.url;
+    try {
+        const url = req.body?.url;
 
-    if (url == null) {
-        return res.status(400).send("Property 'url' is missing from request.");
-    }
-    if (typeof url !== "string") {
-        return res.status(400).send("Property 'url' is not a string.");
-    }
+        if (url == null) {
+            return res.status(400).send("Property 'url' is missing from request.");
+        }
+        if (typeof url !== "string") {
+            return res.status(400).send("Property 'url' is not a string.");
+        }
 
-    // when we call res.revalidate() nextjs uses
-    // req.headers.host to make the network request
-    if (typeof req.headers["x-fern-host"] === "string") {
-        req.headers.host = req.headers["x-fern-host"];
-    }
+        // when we call res.revalidate() nextjs uses
+        // req.headers.host to make the network request
+        if (typeof req.headers["x-fern-host"] === "string") {
+            req.headers.host = req.headers["x-fern-host"];
+        }
 
-    const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
-        url,
-    });
+        const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
+            url,
+        });
 
-    if (!docs.ok) {
-        // eslint-disable-next-line no-console
-        console.error("Failed to fetch docs", docs.error);
-        return res.status(500).send("Failed to load docs for: " + url);
-    }
+        if (!docs.ok) {
+            // eslint-disable-next-line no-console
+            console.error("Failed to fetch docs", docs.error);
+            return res.status(500).send("Failed to load docs for: " + url);
+        }
 
-    const { navigation: navigationConfig } = docs.body.definition.config;
+        const { navigation: navigationConfig } = docs.body.definition.config;
 
-    let pathsToRevalidate: string[] = [];
+        let pathsToRevalidate: string[] = [];
 
-    if (isVersionedNavigationConfig(navigationConfig)) {
-        pathsToRevalidate.push("/");
-        navigationConfig.versions.forEach(({ version, config }) => {
-            if (isUnversionedUntabbedNavigationConfig(config)) {
-                const urlSlugTree = new UrlSlugTree({
-                    items: config.items,
-                    loadApiDefinition: (id) => docs.body.definition.apis[id],
-                });
-                const pathsForVersion = [
-                    `/${version}`,
-                    ...urlSlugTree.getAllSlugs().map((slug) => `/${version}/${slug}`),
-                ];
-                pathsToRevalidate.push(...pathsForVersion);
-            } else {
-                config.tabs.forEach((tab) => {
+        if (isVersionedNavigationConfig(navigationConfig)) {
+            pathsToRevalidate.push("/");
+            navigationConfig.versions.forEach(({ version, config }) => {
+                if (isUnversionedUntabbedNavigationConfig(config)) {
                     const urlSlugTree = new UrlSlugTree({
-                        items: tab.items,
+                        items: config.items,
                         loadApiDefinition: (id) => docs.body.definition.apis[id],
                     });
-                    const pathsForVersionTab = [
+                    const pathsForVersion = [
                         `/${version}`,
-                        `/${version}/${tab.urlSlug}`,
-                        ...urlSlugTree.getAllSlugs().map((slug) => `/${version}/${tab.urlSlug}/${slug}`),
+                        ...urlSlugTree.getAllSlugs().map((slug) => `/${version}/${slug}`),
                     ];
-                    pathsToRevalidate.push(...pathsForVersionTab);
-                });
-            }
-        });
-    } else if (isUnversionedUntabbedNavigationConfig(navigationConfig)) {
-        const urlSlugTree = new UrlSlugTree({
-            items: navigationConfig.items,
-            loadApiDefinition: (id) => docs.body.definition.apis[id],
-        });
-        pathsToRevalidate = ["/", ...urlSlugTree.getAllSlugs().map((slug) => `/${slug}`)];
-    } else {
-        pathsToRevalidate = ["/"];
-        navigationConfig.tabs.forEach((tab) => {
+                    pathsToRevalidate.push(...pathsForVersion);
+                } else {
+                    config.tabs.forEach((tab) => {
+                        const urlSlugTree = new UrlSlugTree({
+                            items: tab.items,
+                            loadApiDefinition: (id) => docs.body.definition.apis[id],
+                        });
+                        const pathsForVersionTab = [
+                            `/${version}`,
+                            `/${version}/${tab.urlSlug}`,
+                            ...urlSlugTree.getAllSlugs().map((slug) => `/${version}/${tab.urlSlug}/${slug}`),
+                        ];
+                        pathsToRevalidate.push(...pathsForVersionTab);
+                    });
+                }
+            });
+        } else if (isUnversionedUntabbedNavigationConfig(navigationConfig)) {
             const urlSlugTree = new UrlSlugTree({
-                items: tab.items,
+                items: navigationConfig.items,
                 loadApiDefinition: (id) => docs.body.definition.apis[id],
             });
-            pathsToRevalidate.push(...urlSlugTree.getAllSlugs().map((slug) => `/${tab.urlSlug}/${slug}`));
-        });
+            pathsToRevalidate = ["/", ...urlSlugTree.getAllSlugs().map((slug) => `/${slug}`)];
+        } else {
+            pathsToRevalidate = ["/"];
+            navigationConfig.tabs.forEach((tab) => {
+                const urlSlugTree = new UrlSlugTree({
+                    items: tab.items,
+                    loadApiDefinition: (id) => docs.body.definition.apis[id],
+                });
+                pathsToRevalidate.push(...urlSlugTree.getAllSlugs().map((slug) => `/${tab.urlSlug}/${slug}`));
+            });
+        }
+
+        const revalidated: string[] = [];
+        const failures: string[] = [];
+        await Promise.all(
+            pathsToRevalidate.map(async (path) => {
+                const didSucceed = await tryRevalidate(res, path);
+                if (didSucceed) {
+                    revalidated.push(path);
+                } else {
+                    failures.push(path);
+                }
+            })
+        );
+
+        return res.json({ revalidated, failures });
+    } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err);
+        return res.status(500).send("An unexpected error has occurred while revalidating url.");
     }
-
-    const revalidated: string[] = [];
-    const failures: string[] = [];
-    await Promise.all(
-        pathsToRevalidate.map(async (path) => {
-            const didSucceed = await tryRevalidate(res, path);
-            if (didSucceed) {
-                revalidated.push(path);
-            } else {
-                failures.push(path);
-            }
-        })
-    );
-
-    return res.json({ revalidated, failures });
 };
 
 async function tryRevalidate(res: NextApiResponse, path: string): Promise<boolean> {
