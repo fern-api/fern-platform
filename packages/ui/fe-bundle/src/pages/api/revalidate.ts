@@ -1,3 +1,4 @@
+import { LoadDocsForUrlResponse } from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
 import { isUnversionedUntabbedNavigationConfig, isVersionedNavigationConfig, UrlSlugTree } from "@fern-ui/app-utils";
 import { NextApiHandler, NextApiResponse } from "next";
 import { REGISTRY_SERVICE } from "../../service";
@@ -32,53 +33,7 @@ const handler: NextApiHandler = async (req, res) => {
             return res.status(500).send("Failed to load docs for: " + url);
         }
 
-        const { navigation: navigationConfig } = docs.body.definition.config;
-
-        let pathsToRevalidate: string[] = [];
-
-        if (isVersionedNavigationConfig(navigationConfig)) {
-            navigationConfig.versions.forEach(({ version, config }) => {
-                if (isUnversionedUntabbedNavigationConfig(config)) {
-                    const urlSlugTree = new UrlSlugTree({
-                        items: config.items,
-                        loadApiDefinition: (id) => docs.body.definition.apis[id],
-                    });
-                    const pathsForVersion = [
-                        `/${version}`,
-                        ...urlSlugTree.getAllSlugs().map((slug) => `/${version}/${slug}`),
-                    ];
-                    pathsToRevalidate.push(...pathsForVersion);
-                } else {
-                    config.tabs.forEach((tab) => {
-                        const urlSlugTree = new UrlSlugTree({
-                            items: tab.items,
-                            loadApiDefinition: (id) => docs.body.definition.apis[id],
-                        });
-                        const pathsForVersionTab = [
-                            `/${version}`,
-                            `/${version}/${tab.urlSlug}`,
-                            ...urlSlugTree.getAllSlugs().map((slug) => `/${version}/${tab.urlSlug}/${slug}`),
-                        ];
-                        pathsToRevalidate.push(...pathsForVersionTab);
-                    });
-                }
-            });
-        } else if (isUnversionedUntabbedNavigationConfig(navigationConfig)) {
-            const urlSlugTree = new UrlSlugTree({
-                items: navigationConfig.items,
-                loadApiDefinition: (id) => docs.body.definition.apis[id],
-            });
-            pathsToRevalidate = ["/", ...urlSlugTree.getAllSlugs().map((slug) => `/${slug}`)];
-        } else {
-            pathsToRevalidate = ["/"];
-            navigationConfig.tabs.forEach((tab) => {
-                const urlSlugTree = new UrlSlugTree({
-                    items: tab.items,
-                    loadApiDefinition: (id) => docs.body.definition.apis[id],
-                });
-                pathsToRevalidate.push(...urlSlugTree.getAllSlugs().map((slug) => `/${tab.urlSlug}/${slug}`));
-            });
-        }
+        const pathsToRevalidate = getUrlsToRevalidate(docs.body);
 
         const revalidated: string[] = [];
         const failures: string[] = [];
@@ -99,6 +54,58 @@ const handler: NextApiHandler = async (req, res) => {
         console.error("Failed to revalidate", err);
     }
 };
+
+export function getUrlsToRevalidate(docs: LoadDocsForUrlResponse): string[] {
+    const { navigation: navigationConfig } = docs.definition.config;
+
+    let pathsToRevalidate: string[] = [];
+
+    if (isVersionedNavigationConfig(navigationConfig)) {
+        navigationConfig.versions.forEach(({ version, config }) => {
+            if (isUnversionedUntabbedNavigationConfig(config)) {
+                const urlSlugTree = new UrlSlugTree({
+                    items: config.items,
+                    loadApiDefinition: (id) => docs.definition.apis[id],
+                });
+                const pathsForVersion = [
+                    `/${version}`,
+                    ...urlSlugTree.getAllSlugs().map((slug) => `/${version}/${slug}`),
+                ];
+                pathsToRevalidate.push(...pathsForVersion);
+            } else {
+                config.tabs.forEach((tab) => {
+                    const urlSlugTree = new UrlSlugTree({
+                        items: tab.items,
+                        loadApiDefinition: (id) => docs.definition.apis[id],
+                    });
+                    const pathsForVersionTab = [
+                        `/${version}`,
+                        `/${version}/${tab.urlSlug}`,
+                        ...urlSlugTree.getAllSlugs().map((slug) => `/${version}/${tab.urlSlug}/${slug}`),
+                    ];
+                    pathsToRevalidate.push(...pathsForVersionTab);
+                });
+            }
+        });
+    } else if (isUnversionedUntabbedNavigationConfig(navigationConfig)) {
+        const urlSlugTree = new UrlSlugTree({
+            items: navigationConfig.items,
+            loadApiDefinition: (id) => docs.definition.apis[id],
+        });
+        pathsToRevalidate = ["/", ...urlSlugTree.getAllSlugs().map((slug) => `/${slug}`)];
+    } else {
+        pathsToRevalidate = ["/"];
+        navigationConfig.tabs.forEach((tab) => {
+            const urlSlugTree = new UrlSlugTree({
+                items: tab.items,
+                loadApiDefinition: (id) => docs.definition.apis[id],
+            });
+            pathsToRevalidate.push(...urlSlugTree.getAllSlugs().map((slug) => `/${tab.urlSlug}/${slug}`));
+        });
+    }
+
+    return pathsToRevalidate;
+}
 
 async function tryRevalidate(res: NextApiResponse, path: string): Promise<boolean> {
     try {
