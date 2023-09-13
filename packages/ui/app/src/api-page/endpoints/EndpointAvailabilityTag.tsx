@@ -10,20 +10,21 @@ export declare namespace EndpointAvailabilityTag {
     }>;
 }
 
-export const EndpointAvailabilityTag = memo<EndpointAvailabilityTag.Props>(function Core({ availability }) {
+export const EndpointAvailabilityTag = memo<EndpointAvailabilityTag.Props>(function Core({ availability, className }) {
     return (
-        <div
+        <span
             className={classNames(
-                "flex shrink-0 items-center justify-center rounded border px-1.5 py-0.5 text-xs font-normal",
+                "rounded border px-1.5 py-0.5 text-xs font-normal",
                 {
                     "bg-tag-default-light dark:bg-tag-default-dark t-muted": false,
                     "bg-tag-success border-success t-success": availability === "GenerallyAvailable",
                     "bg-tag-warning border-warning t-warning": availability === "Beta",
                     "bg-tag-danger border-danger t-danger": availability === "Deprecated",
-                }
+                },
+                className
             )}
         >
             {getEndpointAvailabilityLabel(availability)}
-        </div>
+        </span>
     );
 });
