@@ -84,7 +84,7 @@ const handler: NextApiHandler = async (req, res) => {
         }
 
         // eslint-disable-next-line no-console
-        console.log("Found paths to revalidate", pathsToRevalidate);
+        console.log(`Found ${pathsToRevalidate.length} paths to revalidate`);
 
         const revalidated: string[] = [];
         const failures: string[] = [];
@@ -100,12 +100,13 @@ const handler: NextApiHandler = async (req, res) => {
         );
 
         // eslint-disable-next-line no-console
-        console.log("Revalidated all paths", failures, revalidated);
+        console.log(`Revalidated all paths with ${revalidated.length} revalidated and ${failures.length} failures`);
 
         return res.json({ revalidated, failures });
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error("Failed to revalidate", err);
+        return res.status(500).send("Failed to revalidate " + (err as Error)?.message);
     }
 };
 
