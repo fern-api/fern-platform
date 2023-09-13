@@ -40,27 +40,27 @@ const handler: NextApiHandler = async (req, res) => {
         let pathsToRevalidate: string[] = [];
 
         if (isVersionedNavigationConfig(navigationConfig)) {
-            navigationConfig.versions.forEach(({ config, urlSlug: version }) => {
-                if (isUnversionedUntabbedNavigationConfig(config)) {
+            navigationConfig.versions.forEach((version) => {
+                if (isUnversionedUntabbedNavigationConfig(version.config)) {
                     const urlSlugTree = new UrlSlugTree({
-                        items: config.items,
+                        items: version.config.items,
                         loadApiDefinition: (id) => docs.body.definition.apis[id],
                     });
                     const pathsForVersion = [
-                        `/${version}`,
-                        ...urlSlugTree.getAllSlugs().map((slug) => `/${version}/${slug}`),
+                        `/${version.urlSlug}`,
+                        ...urlSlugTree.getAllSlugs().map((slug) => `/${version.urlSlug}/${slug}`),
                     ];
                     pathsToRevalidate.push(...pathsForVersion);
                 } else {
-                    config.tabs.forEach((tab) => {
+                    version.config.tabs.forEach((tab) => {
                         const urlSlugTree = new UrlSlugTree({
                             items: tab.items,
                             loadApiDefinition: (id) => docs.body.definition.apis[id],
                         });
                         const pathsForVersionTab = [
-                            `/${version}`,
-                            `/${version}/${tab.urlSlug}`,
-                            ...urlSlugTree.getAllSlugs().map((slug) => `/${version}/${tab.urlSlug}/${slug}`),
+                            `/${version.urlSlug}`,
+                            `/${version.urlSlug}/${tab.urlSlug}`,
+                            ...urlSlugTree.getAllSlugs().map((slug) => `/${version.urlSlug}/${tab.urlSlug}/${slug}`),
                         ];
                         pathsToRevalidate.push(...pathsForVersionTab);
                     });
