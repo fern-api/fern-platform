@@ -25,6 +25,7 @@ const handler: NextApiHandler = async (req, res) => {
     const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
         url,
     });
+
     if (!docs.ok) {
         // eslint-disable-next-line no-console
         console.error("Failed to fetch docs", docs.error);
@@ -36,6 +37,7 @@ const handler: NextApiHandler = async (req, res) => {
     let pathsToRevalidate: string[] = [];
 
     if (isVersionedNavigationConfig(navigationConfig)) {
+        pathsToRevalidate.push("/");
         navigationConfig.versions.forEach(({ version, config }) => {
             if (isUnversionedUntabbedNavigationConfig(config)) {
                 const urlSlugTree = new UrlSlugTree({
