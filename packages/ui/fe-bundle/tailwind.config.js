@@ -66,9 +66,9 @@ module.exports = {
                 "border-success-light": "rgba(22, 163, 74, 0.30)",
 
                 "text-primary-dark": "rgb(255, 255, 255)",
-                "text-primary-light": "rgb(3,7,18)",
-                "text-muted-light": "rgb(107, 114, 128)",
+                "text-primary-light": "rgb(3, 7, 18)",
                 "text-muted-dark": "rgb(209, 213, 219)",
+                "text-muted-light": "rgb(107, 114, 128)",
                 "text-disabled-light": "rgb(209, 213, 219)",
                 "text-disabled-dark": "rgb(107, 114, 128)",
 
@@ -90,6 +90,9 @@ module.exports = {
             addComponents({
                 ".t-muted": {
                     "@apply text-text-muted-light dark:text-text-muted-dark": {},
+                },
+                ".t-primary": {
+                    "@apply text-text-primary-light dark:text-text-primary-dark": {},
                 },
             });
         }),
