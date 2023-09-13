@@ -50,5 +50,9 @@ export const Card: React.FC<Card.Props> = ({ title, icon, iconPosition = "top", 
     }
 
     const Component = href != null ? "a" : "div";
-    return <Component className={className}>{content}</Component>;
+    return (
+        <Component className={className} href={href}>
+            {content}
+        </Component>
+    );
 };
