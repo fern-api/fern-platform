@@ -102,7 +102,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                     <ApiPageDescription
                         className="mt-3"
                         description={endpoint.description}
-                        isMarkdown={endpoint.descriptionContainsMarkdown ?? false}
+                        isMarkdown={true}
                     />
                     <div className="mt-8 flex">
                         <div className="flex flex-1 flex-col gap-12">

@@ -111,11 +111,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchorIdParts, 
                 </div>
             </div>
             <div className="flex flex-col">
-                <ApiPageDescription
-                    className="mt-3"
-                    isMarkdown={descriptionInfo?.isMarkdown ?? false}
-                    description={descriptionInfo?.description}
-                />
+                <ApiPageDescription className="mt-3" isMarkdown={true} description={descriptionInfo?.description} />
                 <TypeDefinitionContext.Provider value={newContextValue}>
                     <InternalTypeReferenceDefinitions
                         type={property.valueType}

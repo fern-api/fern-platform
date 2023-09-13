@@ -24,7 +24,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
             <ApiPageDescription
                 className="mt-3"
                 description={httpRequest.description}
-                isMarkdown={httpRequest.descriptionContainsMarkdown ?? false}
+                isMarkdown={true}
             />
             <div className="t-muted border-border-default-light dark:border-border-default-dark border-b pb-5 text-sm leading-6">
                 {"This endpoint expects "}
