@@ -21,11 +21,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
 }) => {
     return (
         <div className="flex flex-col">
-            <ApiPageDescription
-                className="mt-3"
-                description={httpRequest.description}
-                isMarkdown={httpRequest.descriptionContainsMarkdown ?? false}
-            />
+            <ApiPageDescription className="mt-3" description={httpRequest.description} isMarkdown={true} />
             <div className="t-muted border-border-default-light dark:border-border-default-dark border-b pb-5 text-sm leading-6">
                 {"This endpoint expects "}
                 {visitDiscriminatedUnion(httpRequest.type, "type")._visit<JSX.Element | string>({

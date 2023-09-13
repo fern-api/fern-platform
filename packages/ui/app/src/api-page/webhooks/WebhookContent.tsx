@@ -82,10 +82,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                             {webhook.name}
                         </div>
                     </div>
-                    <ApiPageDescription
-                        description={webhook.description}
-                        isMarkdown={webhook.descriptionContainsMarkdown ?? false}
-                    />
+                    <ApiPageDescription description={webhook.description} isMarkdown={true} />
                     {webhook.headers.length > 0 && (
                         <div className="mt-8 flex">
                             <div className="flex flex-1 flex-col gap-12">

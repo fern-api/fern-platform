@@ -21,10 +21,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
 }) => {
     return (
         <div className="flex flex-col">
-            <ApiPageDescription
-                description={httpResponse.description}
-                isMarkdown={httpResponse.descriptionContainsMarkdown ?? false}
-            />
+            <ApiPageDescription description={httpResponse.description} isMarkdown={true} />
             <div className="t-muted border-border-default-light dark:border-border-default-dark border-b pb-5 leading-6">
                 {"This endpoint "}
                 {visitDiscriminatedUnion(httpResponse.type, "type")._visit<JSX.Element | string>({

@@ -99,11 +99,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                             endpoint={endpoint}
                         />
                     </div>
-                    <ApiPageDescription
-                        className="mt-3"
-                        description={endpoint.description}
-                        isMarkdown={endpoint.descriptionContainsMarkdown ?? false}
-                    />
+                    <ApiPageDescription className="mt-3" description={endpoint.description} isMarkdown={true} />
                     <div className="mt-8 flex">
                         <div className="flex flex-1 flex-col gap-12">
                             {endpoint.path.pathParameters.length > 0 && (

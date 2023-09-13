@@ -27,10 +27,7 @@ export const WebhookHeadersSection: React.FC<WebhookHeadersSection.Props> = ({ w
                                 <TypeShorthand type={header.type} plural={false} />
                             </div>
                         </div>
-                        <ApiPageDescription
-                            description={header.description}
-                            isMarkdown={header.descriptionContainsMarkdown ?? false}
-                        />
+                        <ApiPageDescription description={header.description} isMarkdown={true} />
                         <TypeReferenceDefinitions type={header.type} isCollapsible anchorIdParts={anchorIdParts} />
                     </div>
                 </div>

@@ -72,10 +72,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                 {startCase(unionVariant.discriminantValue)}
             </MonospaceText>
             <div className="flex flex-col">
-                <ApiPageDescription
-                    description={unionVariant.description}
-                    isMarkdown={unionVariant.descriptionContainsMarkdown ?? false}
-                />
+                <ApiPageDescription description={unionVariant.description} isMarkdown={true} />
                 <TypeDefinitionContext.Provider value={newContextValue}>
                     <InternalTypeDefinition typeShape={shape} isCollapsible={true} anchorIdParts={anchorIdParts} />
                 </TypeDefinitionContext.Provider>

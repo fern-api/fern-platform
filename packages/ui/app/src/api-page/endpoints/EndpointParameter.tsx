@@ -16,13 +16,7 @@ export declare namespace EndpointParameter {
     }
 }
 
-export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
-    name,
-    description,
-    descriptionContainsMarkdown,
-    anchorIdParts,
-    type,
-}) => {
+export const EndpointParameter: React.FC<EndpointParameter.Props> = ({ name, description, anchorIdParts, type }) => {
     const anchor = getAnchorId(anchorIdParts);
     return (
         <div id={anchor} className="group/anchor-container relative flex scroll-mt-16 flex-col gap-2 py-3">
@@ -33,7 +27,7 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
                     <TypeShorthand type={type} plural={false} />
                 </div>
             </div>
-            <ApiPageDescription isMarkdown={descriptionContainsMarkdown} description={description} />
+            <ApiPageDescription isMarkdown={true} description={description} />
             <TypeReferenceDefinitions type={type} isCollapsible anchorIdParts={anchorIdParts} />
         </div>
     );
