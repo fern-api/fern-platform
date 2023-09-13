@@ -34,6 +34,9 @@ const handler: NextApiHandler = async (req, res) => {
 
         const { navigation: navigationConfig } = docs.body.definition.config;
 
+        // eslint-disable-next-line no-console
+        console.log("Finding paths to revalidate");
+
         let pathsToRevalidate: string[] = [];
 
         if (isVersionedNavigationConfig(navigationConfig)) {
@@ -80,6 +83,9 @@ const handler: NextApiHandler = async (req, res) => {
             });
         }
 
+        // eslint-disable-next-line no-console
+        console.log("Found paths to revalidate", pathsToRevalidate);
+
         const revalidated: string[] = [];
         const failures: string[] = [];
         await Promise.all(
@@ -92,6 +98,9 @@ const handler: NextApiHandler = async (req, res) => {
                 }
             })
         );
+
+        // eslint-disable-next-line no-console
+        console.log("Revalidated all paths", failures, revalidated);
 
         return res.json({ revalidated, failures });
     } catch (err) {
