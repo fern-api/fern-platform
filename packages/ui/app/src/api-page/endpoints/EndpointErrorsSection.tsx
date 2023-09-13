@@ -26,7 +26,7 @@ export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
     anchorIdParts,
 }) => {
     return (
-        <div className="border-border-default-light dark:border-border-default-dark flex flex-col overflow-hidden rounded-md border">
+        <div className="border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded-md border">
             {errors.map((e, idx) => {
                 return (
                     <button
@@ -38,6 +38,10 @@ export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
                                     idx === selectedErrorIndex,
                                 "border-border-default-light dark:border-border-default-dark border-b":
                                     idx !== errors.length - 1,
+                            },
+                            {
+                                "rounded-t-md": idx === 0,
+                                "rounded-b-md": idx === errors.length - 1,
                             }
                         )}
                         onClick={(event) => {
