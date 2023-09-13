@@ -147,19 +147,36 @@ export function getColorsV3(docsDbConfig: FernRegistryDocsDb.DocsDbConfig): Fern
                     logo: docsDbConfig.logoV2?.light ?? docsDbConfig.logo,
                 },
             };
-        } else if (
-            docsDbConfig.colorsV2.accentPrimary?.type === "unthemed" &&
-            docsDbConfig.colorsV2.background?.type === "unthemed"
-        ) {
-            return {
-                type: "dark",
-                accentPrimary: docsDbConfig.colorsV2.accentPrimary.color ?? DEFAULT_DARK_MODE_ACCENT_PRIMARY,
-                background:
-                    docsDbConfig.colorsV2.background.color != null
-                        ? { type: "solid", ...docsDbConfig.colorsV2.background.color }
-                        : { type: "gradient" },
-                logo: docsDbConfig.logoV2?.dark ?? docsDbConfig.logo,
-            };
+        } else if (docsDbConfig.colorsV2.accentPrimary?.type === "unthemed") {
+            if (docsDbConfig.colorsV2.background == null) {
+                return {
+                    type: "dark",
+                    accentPrimary: docsDbConfig.colorsV2.accentPrimary.color ?? DEFAULT_DARK_MODE_ACCENT_PRIMARY,
+                    background: { type: "gradient" },
+                    logo: docsDbConfig.logoV2?.dark ?? docsDbConfig.logo,
+                };
+            } else if (docsDbConfig.colorsV2.background.type === "unthemed") {
+                return {
+                    type: "dark",
+                    accentPrimary: docsDbConfig.colorsV2.accentPrimary.color ?? DEFAULT_DARK_MODE_ACCENT_PRIMARY,
+                    background:
+                        docsDbConfig.colorsV2.background.color != null
+                            ? { type: "solid", ...docsDbConfig.colorsV2.background.color }
+                            : { type: "gradient" },
+                    logo: docsDbConfig.logoV2?.dark ?? docsDbConfig.logo,
+                };
+            } else {
+                return {
+                    // background is themed
+                    type: "dark",
+                    accentPrimary: docsDbConfig.colorsV2.accentPrimary.color ?? DEFAULT_DARK_MODE_ACCENT_PRIMARY,
+                    background:
+                        docsDbConfig.colorsV2.background.dark != null
+                            ? { type: "solid", ...docsDbConfig.colorsV2.background.dark }
+                            : { type: "gradient" },
+                    logo: docsDbConfig.logoV2?.dark ?? docsDbConfig.logo,
+                };
+            }
         }
     } else if (docsDbConfig.colors != null) {
         return {
