@@ -167,6 +167,7 @@ workflows:
             - fern-dev
             - fern-tokens
             - fdr-algolia-dev
+            - slack
 
       - deploy-prod:
           filters:
@@ -181,6 +182,7 @@ workflows:
             - fern-prod
             - fern-tokens
             - fdr-algolia-prod
+            - slack
           requires:
             - check
 

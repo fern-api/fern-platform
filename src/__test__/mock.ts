@@ -46,6 +46,7 @@ export function createMockFdrConfig(): FdrConfig {
         domainSuffix: ".docs.buildwithfern.com",
         algoliaAppId: "",
         algoliaAdminApiKey: "",
+        slackToken: "",
     };
 }
 

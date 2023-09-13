@@ -7,6 +7,7 @@ const S3_URL_OVERRIDE_ENV_VAR = "S3_URL_OVERRIDE";
 const DOMAIN_SUFFIX_ENV_VAR = "DOMAIN_SUFFIX";
 const ALGOLIA_APP_ID_ENV_VAR = "ALGOLIA_APP_ID";
 const ALGOLIA_ADMIN_API_KEY_ENV_VAR = "ALGOLIA_ADMIN_API_KEY";
+const SLACK_TOKEN_ENV_VAR = "SLACK_TOKEN";
 
 export interface FdrConfig {
     venusUrl: string;
@@ -18,6 +19,7 @@ export interface FdrConfig {
     domainSuffix: string;
     algoliaAppId: string;
     algoliaAdminApiKey: string;
+    slackToken: string;
 }
 
 export function getConfig(): FdrConfig {
@@ -31,6 +33,7 @@ export function getConfig(): FdrConfig {
         domainSuffix: getEnvironmentVariableOrThrow(DOMAIN_SUFFIX_ENV_VAR),
         algoliaAppId: getEnvironmentVariableOrThrow(ALGOLIA_APP_ID_ENV_VAR),
         algoliaAdminApiKey: getEnvironmentVariableOrThrow(ALGOLIA_ADMIN_API_KEY_ENV_VAR),
+        slackToken: getEnvironmentVariableOrThrow(SLACK_TOKEN_ENV_VAR),
     };
 }
 

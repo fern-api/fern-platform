@@ -4,6 +4,7 @@ import { AlgoliaIndexDeleterServiceImpl, type AlgoliaIndexDeleterService } from 
 import { AuthServiceImpl, type AuthService } from "../services/auth";
 import { DatabaseServiceImpl, type DatabaseService } from "../services/db";
 import { S3ServiceImpl, type S3Service } from "../services/s3";
+import { SlackService, SlackServiceImpl } from "../services/slack/SlackService";
 import type { FdrConfig } from "./FdrConfig";
 
 export interface FdrServices {
@@ -12,6 +13,7 @@ export interface FdrServices {
     readonly algolia: AlgoliaService;
     readonly s3: S3Service;
     readonly algoliaIndexDeleter: AlgoliaIndexDeleterService;
+    readonly slack: SlackService;
 }
 
 export const LOGGER = winston.createLogger({
@@ -36,6 +38,7 @@ export class FdrApplication {
             algolia: services?.algolia ?? new AlgoliaServiceImpl(this),
             s3: services?.s3 ?? new S3ServiceImpl(this),
             algoliaIndexDeleter: services?.algoliaIndexDeleter ?? new AlgoliaIndexDeleterServiceImpl(this),
+            slack: services?.slack ?? new SlackServiceImpl(this),
         };
     }
 }
