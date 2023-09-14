@@ -2,7 +2,7 @@ import { kebabCase } from "lodash";
 import { v4 as uuid } from "uuid";
 import type { FernRegistry } from "../../generated";
 import * as FernRegistryDocsDb from "../../generated/api/resources/docs/resources/v1/resources/db";
-import { convertMarkdownToText } from "../../util";
+import { convertMarkdownToText, truncateToBytes } from "../../util";
 import { isUnversionedTabbedNavigationConfig, isVersionedNavigationConfig } from "../../util/fern/db";
 import { getSubpackageParentSlugs } from "../../util/fern/db/subpackage";
 import { type AlgoliaSearchRecord } from "./AlgoliaService";
@@ -143,7 +143,7 @@ export class AlgoliaSearchRecordGenerator {
                     type: "page",
                     path,
                     title: page.title,
-                    subtitle: processedContent,
+                    subtitle: truncateToBytes(processedContent, 50_000),
                 },
             ];
         }
