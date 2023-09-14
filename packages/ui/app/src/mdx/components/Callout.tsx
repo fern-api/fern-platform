@@ -6,13 +6,30 @@ import { InfoIcon } from "../../commons/icons/InfoIcon";
 import { WarningIcon } from "../../commons/icons/WarningIcon";
 import styles from "./Callout.module.scss";
 
+type Intent = "info" | "warning" | "success";
+
 export declare namespace Callout {
     export interface Props {
-        intent: "info" | "warning" | "success";
+        intent: string;
     }
 }
 
-export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ intent, children }) => {
+function parseIntent(type: unknown): Intent {
+    if (typeof type !== "string") {
+        return "info";
+    } else if (type.toLowerCase() === "info") {
+        return "info";
+    } else if (type.toLowerCase() === "warning") {
+        return "warning";
+    } else if (type.toLowerCase() === "success") {
+        return "success";
+    } else {
+        return "info";
+    }
+}
+
+export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ intent: intentRaw, children }) => {
+    const intent = parseIntent(intentRaw);
     return (
         <div
             className={classNames("flex space-x-3 px-4 pt-4 pb-1 border rounded-lg", {
