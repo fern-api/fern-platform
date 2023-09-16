@@ -87,14 +87,14 @@ const handler: NextApiHandler = async (req, res) => {
         console.log(`Found ${pathsToRevalidate.length} paths to revalidate`);
 
         const revalidated: string[] = [];
-        const failures: string[] = [];
+        const failures: RevalidateFailure[] = [];
         await Promise.all(
             pathsToRevalidate.map(async (path) => {
-                const didSucceed = await tryRevalidate(res, path);
-                if (didSucceed) {
+                const response = await tryRevalidate(res, path);
+                if (response.type === "success") {
                     revalidated.push(path);
                 } else {
-                    failures.push(path);
+                    failures.push(response);
                 }
             })
         );
@@ -110,14 +110,30 @@ const handler: NextApiHandler = async (req, res) => {
     }
 };
 
-async function tryRevalidate(res: NextApiResponse, path: string): Promise<boolean> {
+type RevalidateResponse = RevalidateSuccess | RevalidateFailure;
+
+interface RevalidateSuccess {
+    type: "success";
+}
+
+interface RevalidateFailure {
+    type: "failure";
+    error: string;
+}
+
+async function tryRevalidate(res: NextApiResponse, path: string): Promise<RevalidateResponse> {
     try {
         await res.revalidate(path);
-        return true;
+        return {
+            type: "success",
+        };
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
-        return false;
+        return {
+            type: "failure",
+            error: (err as Error)?.message ?? "No error message",
+        };
     }
 }
 
