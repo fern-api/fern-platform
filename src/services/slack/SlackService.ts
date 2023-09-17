@@ -9,6 +9,7 @@ export interface FailedToRegisterDocsNotification {
 
 export interface SlackService {
     notifyFailedToRegisterDocs(request: FailedToRegisterDocsNotification): Promise<void>;
+    notify(message: string, err: unknown): Promise<void>;
 }
 
 export class SlackServiceImpl implements SlackService {
@@ -17,6 +18,17 @@ export class SlackServiceImpl implements SlackService {
     constructor(app: FdrApplication) {
         const { config } = app;
         this.client = new WebClient(config.slackToken);
+    }
+    async notify(message: string, err: unknown): Promise<void> {
+        try {
+            await this.client.chat.postMessage({
+                channel: "#notifs",
+                text: `:rotating_light: Encountered failure in FDR: ${message}.\n ${stringifyError(err)}`,
+                blocks: [],
+            });
+        } catch (err) {
+            LOGGER.debug("Failed to send slack message: ", err);
+        }
     }
 
     async notifyFailedToRegisterDocs(request: FailedToRegisterDocsNotification): Promise<void> {

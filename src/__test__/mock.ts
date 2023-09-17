@@ -37,6 +37,9 @@ class MockAuthService implements AuthService {
 }
 
 class MockSlackService implements SlackService {
+    async notify(_message: string, _err: unknown): Promise<void> {
+        return;
+    }
     async notifyFailedToRegisterDocs(_request: FailedToRegisterDocsNotification): Promise<void> {
         return;
     }
