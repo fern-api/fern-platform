@@ -2,7 +2,7 @@ import {
     DocsDefinition,
     UnversionedTabbedNavigationConfig,
 } from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { UrlSlugTree } from "@fern-ui/app-utils";
+import { getPathsForUnversionedUntabbedDocs } from "./getPathsForUnversionedUntabbedDocs";
 
 export function getPathsForUnversionedTabbedDocs({
     prefix,
@@ -22,21 +22,15 @@ export function getPathsForUnversionedTabbedDocs({
             pathsToRevalidate.add(`${prefix}/${tab.urlSlug}`);
         }
         // revalidate all the content within the tab
-        const urlSlugTree = new UrlSlugTree({
-            items: tab.items,
-            loadApiDefinition: (id) => docsDefinition.apis[id],
+        getPathsForUnversionedUntabbedDocs({
+            prefix: `/${tab.urlSlug}`,
+            navigationConfig: {
+                items: tab.items,
+            },
+            docsDefinition,
+        }).forEach((val) => {
+            pathsToRevalidate.add(val);
         });
-        urlSlugTree
-            .getAllSlugs()
-            .map((slug) => {
-                if (prefix != null) {
-                    return `${prefix}/${tab.urlSlug}/${slug}`;
-                }
-                return `/${tab.urlSlug}/${slug}`;
-            })
-            .forEach((val) => {
-                pathsToRevalidate.add(val);
-            });
     });
     return pathsToRevalidate;
 }
