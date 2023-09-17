@@ -10,17 +10,11 @@ import {
 import { assertNeverNoThrow } from "@fern-ui/core-utils";
 import { App } from "@fern-ui/ui";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { Inter } from "next/font/google";
 import Head from "next/head";
 import { REGISTRY_SERVICE } from "../../service";
 import { loadDocsBackgroundImage } from "../../utils/theme/loadDocsBackgroundImage";
 import { generateFontFaces, loadDocTypography } from "../../utils/theme/loadDocsTypography";
-
-function classNames(...classes: (string | undefined)[]): string {
-    return classes.filter((c) => c != null).join(" ");
-}
-
-const inter = Inter({ subsets: ["latin"] });
+import { useColorTheme } from "../../utils/theme/useColorTheme";
 
 export declare namespace Docs {
     export interface Props {
@@ -48,9 +42,10 @@ export default function Docs({
     nextPath,
     previousPath,
 }: Docs.Props): JSX.Element {
+    const colorThemeStyleSheet = useColorTheme(docs.definition);
     return (
         <>
-            <main className={classNames(inter.className, "typography-font-body")}>
+            <main>
                 {/* 
                     We concatenate all global styles into a single instance,
                     as styled JSX will only create one instance of global styles
@@ -59,6 +54,7 @@ export default function Docs({
                 {/* eslint-disable-next-line react/no-unknown-property */}
                 <style jsx global>
                     {`
+                        ${colorThemeStyleSheet}
                         ${typographyStyleSheet}
                         ${backgroundImageStyleSheet}
                     `}

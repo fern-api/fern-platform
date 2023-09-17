@@ -1,5 +1,5 @@
 import { useTheme as _useTheme } from "next-themes";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { type Theme } from "./theme";
 
 interface UseThemeReturnType {
@@ -8,12 +8,7 @@ interface UseThemeReturnType {
 }
 
 export function useTheme(colorConfigType: "dark" | "light" | "darkAndLight"): UseThemeReturnType {
-    const [mounted, setMounted] = useState(false);
     const { setTheme, theme } = _useTheme();
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
 
     useEffect(() => {
         if (colorConfigType !== "darkAndLight") {
@@ -26,10 +21,6 @@ export function useTheme(colorConfigType: "dark" | "light" | "darkAndLight"): Us
             return { theme: colorConfigType, setTheme };
         }
 
-        if (!mounted) {
-            return { theme: undefined, setTheme };
-        }
-
         return { theme, setTheme } as UseThemeReturnType;
-    }, [colorConfigType, mounted, setTheme, theme]);
+    }, [colorConfigType, setTheme, theme]);
 }

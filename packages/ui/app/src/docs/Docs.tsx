@@ -11,7 +11,6 @@ import { Sidebar } from "../sidebar/Sidebar";
 import { BgImageGradient } from "./BgImageGradient";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
-import { useCustomTheme } from "./useCustomTheme";
 
 export const Docs: React.FC = memo(function UnmemoizedDocs() {
     const docsContext = useDocsContext();
@@ -19,7 +18,6 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
     const searchContext = useSearchContext();
     const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = searchContext;
     const searchService = useSearchService();
-    useCustomTheme(docsDefinition);
     useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
 
     const { isMobileSidebarOpen, openMobileSidebar, closeMobileSidebar } = useMobileSidebarContext();
