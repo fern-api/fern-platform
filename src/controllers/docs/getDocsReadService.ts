@@ -83,6 +83,10 @@ export async function getDocsDefinition({
             )
         ),
         pages: docsDbDefinition.pages,
+        search: {
+            type: "legacyMultiAlgoliaIndex",
+            algoliaIndex: docsV2?.algoliaIndex ?? undefined,
+        },
     };
 }
 

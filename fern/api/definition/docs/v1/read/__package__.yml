@@ -50,6 +50,41 @@ types:
       baseUrl: string
       definition: DocsDefinition
 
+  VersionId: string
+
+  IndexSegmentId: string
+
+  IndexSegment:
+    properties:
+      id: IndexSegmentId
+      searchApiKey: string
+
+  LegacyMultiAlgoliaIndexInfo:
+    properties:
+      algoliaIndex: optional<string>
+
+  SingleAlgoliaIndexInfo:
+    union:
+      unversioned: UnversionedSingleAlgoliaIndexInfo
+      versioned: VersionedSingleAlgoliaIndexInfo
+
+  UnversionedSingleAlgoliaIndexInfo:
+    properties:
+      indexSegment: IndexSegment
+
+  VersionedSingleAlgoliaIndexInfo:
+    properties:
+      indexSegmentsByVersionId: map<VersionId, IndexSegment>
+
+  SearchInfo:
+    union:
+      legacyMultiAlgoliaIndex:
+        docs: The legacy search storage where each docs website got its own algolia index.
+        type: LegacyMultiAlgoliaIndexInfo
+      singleAlgoliaIndex:
+        docs: Every docs website is indexed in a global Algolia Index
+        type: SingleAlgoliaIndexInfo
+
   DocsDefinition:
     properties:
       algoliaSearchIndex: optional<AlgoliaSearchIndex>
@@ -57,6 +92,7 @@ types:
       apis: map<rootCommons.ApiDefinitionId, apiReadV1.ApiDefinition>
       files: map<FileId, Url>
       config: DocsConfig
+      search: SearchInfo
 
   PageContent:
     properties:
@@ -77,32 +113,32 @@ types:
       colorsV3: ColorsConfigV3
       navbarLinks: list<NavbarLink>
       typography: optional<DocsTypographyConfig>
-  
-  ColorsConfigV3: 
-    union: 
+
+  ColorsConfigV3:
+    union:
       dark: DarkModeConfig
       light: LightModeConfig
       darkAndLight: DarkAndLightModeConfig
-  
-  DarkModeConfig: 
-    properties: 
+
+  DarkModeConfig:
+    properties:
       logo: optional<FileId>
       accentPrimary: RgbColor
       background: Background
-  
-  LightModeConfig: 
-    properties: 
+
+  LightModeConfig:
+    properties:
       logo: optional<FileId>
       accentPrimary: RgbColor
       background: Background
-  
-  DarkAndLightModeConfig: 
-    properties: 
+
+  DarkAndLightModeConfig:
+    properties:
       dark: DarkModeConfig
       light: LightModeConfig
 
-  Background: 
-    union: 
+  Background:
+    union:
       solid: RgbColor
       gradient: {}
 
@@ -155,13 +191,13 @@ types:
 
   VersionedNavigationConfigData:
     properties:
-      version: string
+      version: VersionId
       urlSlug: string
       availability: optional<VersionAvailability>
       config: UnversionedNavigationConfig
-  
-  VersionAvailability: 
-    enum: 
+
+  VersionAvailability:
+    enum:
       - Stable
       - GenerallyAvailable
       - Deprecated
@@ -292,6 +328,8 @@ types:
       title: string
       subtitle: string
       path: string
+      version: optional<VersionId>
+      indexSegmentId: optional<string>
 
 errors:
   DomainNotRegisteredError:
