@@ -8,7 +8,6 @@ interface UseThemeReturnType {
 }
 
 export function useTheme(colorConfigType: "dark" | "light" | "darkAndLight"): UseThemeReturnType {
-    // const [mounted, setMounted] = useState(false);
     const { setTheme, theme } = _useTheme();
 
     useEffect(() => {
