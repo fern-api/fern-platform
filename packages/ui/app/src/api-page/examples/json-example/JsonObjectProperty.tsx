@@ -83,7 +83,7 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
     return (
         <JsonPropertySelectionContext.Provider value={propertySelectionContextValue}>
             <JsonExampleLine ref={topLineRef}>
-                <span className="text-text-primary-dark">
+                <span className="text-text-primary-light dark:text-text-primary-dark">
                     &quot;{propertyKey}&quot;{": "}
                 </span>
                 <JsonItemTopLineContent value={propertyValue} isNonLastItemInCollection={!isLastProperty} />

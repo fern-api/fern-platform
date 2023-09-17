@@ -66,7 +66,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                     )}
                 >
                     <div
-                        className="bg-background-primary-dark flex-1 overflow-auto whitespace-pre py-4"
+                        className="bg-background-primary-light dark:bg-background-primary-dark flex-1 overflow-auto whitespace-pre py-4"
                         ref={setContentRef}
                     >
                         {typeof children === "function" ? children(contentRef ?? undefined) : children}
