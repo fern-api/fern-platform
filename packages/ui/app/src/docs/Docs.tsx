@@ -19,8 +19,9 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
     const searchContext = useSearchContext();
     const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = searchContext;
     const searchService = useSearchService();
-    useCustomTheme(docsDefinition);
     useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
+
+    const themeStyledCss = useCustomTheme(docsDefinition);
 
     const { isMobileSidebarOpen, openMobileSidebar, closeMobileSidebar } = useMobileSidebarContext();
 
@@ -43,6 +44,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
 
     return (
         <>
+            {themeStyledCss}
             <BgImageGradient
                 backgroundType={backgroundType}
                 hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage}
