@@ -46,14 +46,14 @@ const handler: NextApiHandler = async (req, res) => {
         console.log(`Found ${pathsToRevalidate.length} paths to revalidate`);
 
         const revalidated: string[] = [];
-        const failures: RevalidateFailure[] = [];
+        const failures: string[] = [];
         await Promise.all(
             pathsToRevalidate.map(async (path) => {
                 const response = await tryRevalidate(res, path);
                 if (response.type === "success") {
                     revalidated.push(path);
                 } else {
-                    failures.push(response);
+                    failures.push(path);
                 }
             })
         );
