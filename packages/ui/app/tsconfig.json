@@ -7,7 +7,6 @@
   },
   "include": [
     "./src",
-    "../fe-bundle/src/utils/theme/useColorTheme.tsx"
   ],
   "references": [
     {

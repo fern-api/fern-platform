@@ -1,5 +1,4 @@
 import { PLATFORM } from "@fern-ui/core-utils";
-import { useColorTheme } from "@fern-ui/fe-bundle/src/utils/theme/useColorTheme";
 import { useKeyboardCommand } from "@fern-ui/react-commons";
 import { useTheme } from "@fern-ui/theme";
 import { memo, useMemo } from "react";
@@ -20,8 +19,6 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
     const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = searchContext;
     const searchService = useSearchService();
     useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
-
-    const themeStyledCss = useColorTheme(docsDefinition);
 
     const { isMobileSidebarOpen, openMobileSidebar, closeMobileSidebar } = useMobileSidebarContext();
 
@@ -44,7 +41,6 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
 
     return (
         <>
-            {themeStyledCss}
             <BgImageGradient
                 backgroundType={backgroundType}
                 hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage}
