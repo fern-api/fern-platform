@@ -8,6 +8,7 @@ import { CopyToClipboardButton } from "../commons/CopyToClipboardButton";
 import { useDocsContext } from "../docs-context/useDocsContext";
 
 export const CodeBlockInternalCore: React.FC<HTMLAttributes<HTMLElement>> = ({ children }) => {
+    const { theme } = useDocsContext();
     if (children == null || typeof children !== "object") {
         return null;
     }
@@ -23,7 +24,7 @@ export const CodeBlockInternalCore: React.FC<HTMLAttributes<HTMLElement>> = ({ c
             )}
         >
             <SyntaxHighlighter
-                style={prism.oneLight}
+                style={theme === "dark" ? prism.vscDarkPlus : prism.oneLight}
                 customStyle={{
                     width: "100%",
                     overflowX: "auto",

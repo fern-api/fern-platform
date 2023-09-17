@@ -1,4 +1,3 @@
-import { useTheme } from "@fern-ui/theme";
 import { DEFAULT_LOGO_HEIGHT } from "../config";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { VersionDropdown } from "./VersionDropdown";
@@ -6,8 +5,7 @@ import { VersionDropdown } from "./VersionDropdown";
 export declare namespace HeaderLogoSection {}
 
 export const HeaderLogoSection: React.FC = () => {
-    const { resolveFile, docsDefinition, docsInfo, setActiveVersionSlug, navigateToPath } = useDocsContext();
-    const { theme } = useTheme(docsDefinition.config.colorsV3.type);
+    const { resolveFile, docsDefinition, docsInfo, setActiveVersionSlug, navigateToPath, theme } = useDocsContext();
     const { logo, logoV2, logoHeight, logoHref } = docsDefinition.config;
 
     if (theme == null) {

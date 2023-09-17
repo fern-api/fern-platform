@@ -2,6 +2,7 @@ import { FernRegistry } from "@fern-fern/registry-browser";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { type ResolvedUrlPath } from "@fern-ui/app-utils";
+import { Theme } from "@fern-ui/theme";
 import React from "react";
 
 export const DocsContext = React.createContext<() => DocsContextValue>(() => {
@@ -66,6 +67,10 @@ export interface DocsContextValue {
 
     nextPath: ResolvedUrlPath | undefined;
     previousPath: ResolvedUrlPath | undefined;
+
+    // theme
+    theme: Theme | undefined;
+    setTheme: (theme: Theme) => void;
 }
 
 export interface Anchor {
