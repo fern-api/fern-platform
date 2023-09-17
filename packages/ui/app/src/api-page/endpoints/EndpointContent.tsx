@@ -2,12 +2,12 @@ import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/
 import { getEndpointTitleAsString, getSubpackageTitle, isSubpackage } from "@fern-ui/app-utils";
 import useSize from "@react-hook/size";
 import classNames from "classnames";
+import dynamic from "next/dynamic";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { useEndpointContext } from "./endpoint-context/useEndpointContext";
-import { EndpointExample } from "./endpoint-examples/EndpointExample";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 import { EndpointErrorsSection } from "./EndpointErrorsSection";
 import { EndpointRequestSection } from "./EndpointRequestSection";
@@ -18,6 +18,11 @@ import { PathParametersSection } from "./PathParametersSection";
 import { QueryParametersSection } from "./QueryParametersSection";
 
 const URL_OVERFLOW_THRESHOLD = 0.95;
+
+const EndpointExample = dynamic({
+    ssr: false,
+    loader: () => import("./endpoint-examples/EndpointExample").then((mod) => mod.EndpointExample),
+});
 
 export declare namespace EndpointContent {
     export interface Props {
