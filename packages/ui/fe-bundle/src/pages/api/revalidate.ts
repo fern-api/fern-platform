@@ -1,6 +1,6 @@
-import { isUnversionedUntabbedNavigationConfig, isVersionedNavigationConfig, UrlSlugTree } from "@fern-ui/app-utils";
 import { NextApiHandler, NextApiResponse } from "next";
 import { REGISTRY_SERVICE } from "../../service";
+import { getPathsToRevalidate } from "../../utils/revalidation/getPathsToRevalidate";
 
 export interface Request {
     url: string;
@@ -37,51 +37,10 @@ const handler: NextApiHandler = async (req, res) => {
         // eslint-disable-next-line no-console
         console.log("Finding paths to revalidate");
 
-        let pathsToRevalidate: string[] = [];
-
-        if (isVersionedNavigationConfig(navigationConfig)) {
-            navigationConfig.versions.forEach((version) => {
-                if (isUnversionedUntabbedNavigationConfig(version.config)) {
-                    const urlSlugTree = new UrlSlugTree({
-                        items: version.config.items,
-                        loadApiDefinition: (id) => docs.body.definition.apis[id],
-                    });
-                    const pathsForVersion = [
-                        `/${version.urlSlug}`,
-                        ...urlSlugTree.getAllSlugs().map((slug) => `/${version.urlSlug}/${slug}`),
-                    ];
-                    pathsToRevalidate.push(...pathsForVersion);
-                } else {
-                    version.config.tabs.forEach((tab) => {
-                        const urlSlugTree = new UrlSlugTree({
-                            items: tab.items,
-                            loadApiDefinition: (id) => docs.body.definition.apis[id],
-                        });
-                        const pathsForVersionTab = [
-                            `/${version.urlSlug}`,
-                            `/${version.urlSlug}/${tab.urlSlug}`,
-                            ...urlSlugTree.getAllSlugs().map((slug) => `/${version.urlSlug}/${tab.urlSlug}/${slug}`),
-                        ];
-                        pathsToRevalidate.push(...pathsForVersionTab);
-                    });
-                }
-            });
-        } else if (isUnversionedUntabbedNavigationConfig(navigationConfig)) {
-            const urlSlugTree = new UrlSlugTree({
-                items: navigationConfig.items,
-                loadApiDefinition: (id) => docs.body.definition.apis[id],
-            });
-            pathsToRevalidate = ["/", ...urlSlugTree.getAllSlugs().map((slug) => `/${slug}`)];
-        } else {
-            pathsToRevalidate = ["/"];
-            navigationConfig.tabs.forEach((tab) => {
-                const urlSlugTree = new UrlSlugTree({
-                    items: tab.items,
-                    loadApiDefinition: (id) => docs.body.definition.apis[id],
-                });
-                pathsToRevalidate.push(...urlSlugTree.getAllSlugs().map((slug) => `/${tab.urlSlug}/${slug}`));
-            });
-        }
+        const pathsToRevalidate: string[] = getPathsToRevalidate({
+            navigationConfig,
+            docsDefinition: docs.body.definition,
+        });
 
         // eslint-disable-next-line no-console
         console.log(`Found ${pathsToRevalidate.length} paths to revalidate`);
