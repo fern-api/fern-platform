@@ -2239,7 +2239,6 @@ __metadata:
     react-syntax-highlighter: ^15.5.0
     rehype-raw: ^6.1.1
     remark-gfm: ^3.0.1
-    styled-jsx: ^5.1.2
     stylelint: ^14.14.0
     typescript: 4.9.4
     vite: ^4.3.8
@@ -12534,22 +12533,6 @@ env-cmd@toddbluhm/env-cmd:
     babel-plugin-macros:
       optional: true
   checksum: 523a33b38603492547e861b98e29c873939b04e15fbe5ef16132c6f1e15958126647983c7d4675325038b428a5e91183d996e90141b18bdd1bbadf6e2c45b2fa
-  languageName: node
-  linkType: hard
-
-"styled-jsx@npm:^5.1.2":
-  version: 5.1.2
-  resolution: "styled-jsx@npm:5.1.2"
-  dependencies:
-    client-only: 0.0.1
-  peerDependencies:
-    react: ">= 16.8.0 || 17.x.x || ^18.0.0-0"
-  peerDependenciesMeta:
-    "@babel/core":
-      optional: true
-    babel-plugin-macros:
-      optional: true
-  checksum: f49d64219fd83be469b39d40c8f93cae50a9fb8a020d6bb46a7619836b22cdcd9cd98b8a89aa354b71c3d1de4b240d0b9fd091177565ee8aecebbe1b5a7a42d5
   languageName: node
   linkType: hard
 
