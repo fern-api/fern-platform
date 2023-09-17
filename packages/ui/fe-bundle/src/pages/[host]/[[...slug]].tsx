@@ -50,7 +50,7 @@ export default function Docs({
 }: Docs.Props): JSX.Element {
     return (
         <>
-            <main className={classNames(inter.className, "typography-font-body")}>
+            <main>
                 {/* 
                     We concatenate all global styles into a single instance,
                     as styled JSX will only create one instance of global styles

@@ -21,7 +21,7 @@ export function useCustomTheme(docsDefinition: FernRegistryDocsRead.DocsDefiniti
 
     return (
         // eslint-disable-next-line react/no-unknown-property
-        <style global={true} jsx={true}>
+        <style jsx global>
             {`
                 :root {
                     ${CSS_VARIABLES.ACCENT_PRIMARY}: ${accentPrimary.r}, ${accentPrimary.g}, ${accentPrimary.b};

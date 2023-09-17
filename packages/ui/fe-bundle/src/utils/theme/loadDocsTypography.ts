@@ -116,7 +116,7 @@ export function generateFontFaces(generationConfiguration: GenerationFontConfigs
                   --typography-body-font-family: '${fontConfig.fontName}', sans-serif;
                 }
     
-                .typography-font-body {
+                html {
                   font-family: var(--typography-body-font-family);
                 }
               `;
