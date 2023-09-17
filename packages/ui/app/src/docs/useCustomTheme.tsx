@@ -20,6 +20,7 @@ export function useCustomTheme(docsDefinition: FernRegistryDocsRead.DocsDefiniti
     const backgroundColor = background.type === "solid" ? background : DEFAULT_COLORS.background[theme];
 
     return (
+        // eslint-disable-next-line react/no-unknown-property
         <style global={true} jsx={true}>
             {`
                 :root {
