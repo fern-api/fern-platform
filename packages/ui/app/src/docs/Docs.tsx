@@ -1,4 +1,5 @@
 import { PLATFORM } from "@fern-ui/core-utils";
+import { useColorTheme } from "@fern-ui/fe-bundle/src/utils/theme/useColorTheme";
 import { useKeyboardCommand } from "@fern-ui/react-commons";
 import { useTheme } from "@fern-ui/theme";
 import { memo, useMemo } from "react";
@@ -11,7 +12,6 @@ import { Sidebar } from "../sidebar/Sidebar";
 import { BgImageGradient } from "./BgImageGradient";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
-import { useCustomTheme } from "./useCustomTheme";
 
 export const Docs: React.FC = memo(function UnmemoizedDocs() {
     const docsContext = useDocsContext();
@@ -21,7 +21,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
     const searchService = useSearchService();
     useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
 
-    const themeStyledCss = useCustomTheme(docsDefinition);
+    const themeStyledCss = useColorTheme(docsDefinition);
 
     const { isMobileSidebarOpen, openMobileSidebar, closeMobileSidebar } = useMobileSidebarContext();
 
