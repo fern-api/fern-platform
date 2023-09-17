@@ -1,6 +1,5 @@
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand } from "@fern-ui/react-commons";
-import { useTheme } from "@fern-ui/theme";
 import { memo, useMemo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
@@ -14,7 +13,7 @@ import { Header } from "./Header";
 
 export const Docs: React.FC = memo(function UnmemoizedDocs() {
     const docsContext = useDocsContext();
-    const { docsDefinition } = docsContext;
+    const { docsDefinition, theme } = docsContext;
     const searchContext = useSearchContext();
     const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = searchContext;
     const searchService = useSearchService();
@@ -25,8 +24,6 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
     const hasSpecifiedBackgroundImage = !!docsDefinition.config.backgroundImage;
 
     const { colorsV3 } = docsDefinition.config;
-
-    const { theme } = useTheme(colorsV3.type);
 
     const backgroundType = useMemo(() => {
         if (theme == null) {

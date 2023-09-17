@@ -9,6 +9,7 @@ import {
 } from "@fern-ui/app-utils";
 import { assertNever } from "@fern-ui/core-utils";
 import { useEventCallback } from "@fern-ui/react-commons";
+import { useTheme } from "@fern-ui/theme";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
 import { DocsContext, DocsContextValue, type DocsInfo, type NavigateToPathOpts } from "./DocsContext";
@@ -199,6 +200,8 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
         scrollToPathListeners.invokeListeners(slug);
     });
 
+    const { theme, setTheme } = useTheme(docsDefinition.config.colorsV3.type);
+
     const contextValue = useCallback(
         (): DocsContextValue => ({
             resolveApi,
@@ -219,6 +222,8 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             nextPath,
             previousPath,
             selectedSlug,
+            theme,
+            setTheme,
         }),
         [
             docsDefinition,
@@ -239,6 +244,8 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             resolvedUrlPath,
             scrollToPathListeners.registerListener,
             selectedSlug,
+            theme,
+            setTheme,
         ]
     );
 
