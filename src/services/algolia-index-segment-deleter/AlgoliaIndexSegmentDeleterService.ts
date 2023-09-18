@@ -3,22 +3,15 @@ import type { FdrApplication } from "../../app";
 const MILLISECONDS_IN_ONE_MINUTE = 60 * 1_000;
 const MILLISECONDS_IN_ONE_HOUR = 60 * MILLISECONDS_IN_ONE_MINUTE;
 
-interface DeleteOldIndicesParams {
-    olderThanMinutes?: number;
-    limit?: number;
-}
-
 interface DeleteOldIndexSegmentsParams {
     olderThanHours?: number;
 }
 
-export interface AlgoliaIndexDeleterService {
-    deleteOldIndices(params: DeleteOldIndicesParams): Promise<number>;
-
-    deleteOldIndexSegments(indexName: string, params: DeleteOldIndexSegmentsParams): Promise<void>;
+export interface AlgoliaIndexSegmentDeleterService {
+    deleteOldInactiveIndexSegments(params: DeleteOldIndexSegmentsParams): Promise<number>;
 }
 
-export class AlgoliaIndexDeleterServiceImpl implements AlgoliaIndexDeleterService {
+export class AlgoliaIndexSegmentDeleterServiceImpl implements AlgoliaIndexSegmentDeleterService {
     private static config = {
         maxIndexSegmentsToQuery: 1_000,
     };
@@ -27,34 +20,9 @@ export class AlgoliaIndexDeleterServiceImpl implements AlgoliaIndexDeleterServic
         return this.app.services.db;
     }
 
-    private get algolia() {
-        return this.app.services.algolia;
-    }
-
     constructor(private readonly app: FdrApplication) {}
 
-    public async deleteOldIndices(params: DeleteOldIndicesParams) {
-        const { limit, olderThanMinutes = 10 } = params;
-        const records = await this.db.prisma.overwrittenAlgoliaIndex.findMany({
-            take: limit,
-            where: {
-                overwrittenTime: {
-                    lte: new Date(Date.now() - olderThanMinutes * MILLISECONDS_IN_ONE_MINUTE),
-                },
-            },
-        });
-        await Promise.all(
-            records.map(async ({ indexId }) => {
-                await this.algolia.deleteIndex(indexId);
-                await this.db.prisma.overwrittenAlgoliaIndex.delete({
-                    where: { indexId },
-                });
-            })
-        );
-        return records.length;
-    }
-
-    public async deleteOldIndexSegments(indexName: string, params: DeleteOldIndexSegmentsParams) {
+    public async deleteOldInactiveIndexSegments(params: DeleteOldIndexSegmentsParams) {
         const { olderThanHours = 24 } = params;
 
         const inactiveOldIndexSegmentIds = await this.db.prisma.$transaction(async (tx) => {
@@ -82,7 +50,7 @@ export class AlgoliaIndexDeleterServiceImpl implements AlgoliaIndexDeleterServic
                         },
                     },
                     select: { id: true },
-                    take: AlgoliaIndexDeleterServiceImpl.config.maxIndexSegmentsToQuery,
+                    take: AlgoliaIndexSegmentDeleterServiceImpl.config.maxIndexSegmentsToQuery,
                 });
                 return indexSegmentRecords.map((r) => r.id).filter((id) => !activeIndexSegmentIds.has(id));
             })();
@@ -91,13 +59,15 @@ export class AlgoliaIndexDeleterServiceImpl implements AlgoliaIndexDeleterServic
         });
 
         for (const indexSegmentId of inactiveOldIndexSegmentIds) {
-            await this.deleteIndexSegmentAndNotifySlackIfFails(indexName, indexSegmentId);
+            await this.deleteIndexSegmentAndNotifySlackIfFails(indexSegmentId);
         }
+
+        return inactiveOldIndexSegmentIds.length;
     }
 
-    private async deleteIndexSegmentAndNotifySlackIfFails(indexName: string, indexSegmentId: string) {
+    private async deleteIndexSegmentAndNotifySlackIfFails(indexSegmentId: string) {
         try {
-            await this.app.services.algolia.deleteIndexSegmentRecords(indexName, [indexSegmentId]);
+            await this.app.services.algolia.deleteIndexSegmentRecords([indexSegmentId]);
             await this.db.prisma.indexSegment.delete({
                 where: { id: indexSegmentId },
             });

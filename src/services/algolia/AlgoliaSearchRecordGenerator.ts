@@ -1,16 +1,14 @@
-import { kebabCase } from "lodash";
 import { v4 as uuid } from "uuid";
 import type { FernRegistry } from "../../generated";
 import * as FernRegistryDocsDb from "../../generated/api/resources/docs/resources/v1/resources/db";
 import { convertMarkdownToText, truncateToBytes } from "../../util";
-import { isUnversionedTabbedNavigationConfig, isVersionedNavigationConfig } from "../../util/fern/db";
+import { isUnversionedTabbedNavigationConfig } from "../../util/fern/db";
 import { getSubpackageParentSlugs } from "../../util/fern/db/subpackage";
-import { type AlgoliaSearchRecord } from "./AlgoliaService";
-
-type ApiDefinitionLoader = (apiDefinitionId: string) => Promise<FernRegistry.api.v1.db.DbApiDefinition | null>;
+import type { AlgoliaSearchRecord, IndexSegment } from "./types";
 
 class NavigationContext {
     #slugs: string[];
+    #indexSegment: IndexSegment;
 
     /**
      * The path represented by context slugs.
@@ -19,7 +17,8 @@ class NavigationContext {
         return this.#slugs.join("/");
     }
 
-    public constructor(slugs: string[] = []) {
+    public constructor(public readonly indexSegment: IndexSegment, slugs: string[]) {
+        this.#indexSegment = indexSegment;
         this.#slugs = slugs;
     }
 
@@ -34,40 +33,30 @@ class NavigationContext {
      * @returns A new `NavigationContext` instance.
      */
     public withSlugs(slugs: string[]) {
-        return new NavigationContext([...this.#slugs, ...slugs]);
+        return new NavigationContext(this.#indexSegment, [...this.#slugs, ...slugs]);
     }
 }
 
 interface AlgoliaSearchRecordGeneratorConfig {
-    docsDefinition: FernRegistry.docs.v1.db.DocsDefinitionDb.V2;
-    loadApiDefinition: ApiDefinitionLoader;
+    docsDefinition: FernRegistry.docs.v1.db.DocsDefinitionDb;
+    apiDefinitionsById: Map<string, FernRegistry.api.v1.db.DbApiDefinition>;
 }
 
 export class AlgoliaSearchRecordGenerator {
-    private get docsDefinition() {
-        return this.config.docsDefinition;
-    }
-
     public constructor(private readonly config: AlgoliaSearchRecordGeneratorConfig) {}
 
-    public async generateAlgoliaSearchRecordsForDocs() {
-        const navigationConfig = this.docsDefinition.config.navigation;
-        const context = new NavigationContext();
-        if (isVersionedNavigationConfig(navigationConfig)) {
-            // TODO: Index all versions (FER-118)
-            const [firstVersion] = navigationConfig.versions;
-            if (firstVersion == null) {
-                return [];
-            }
-            return this.generateAlgoliaSearchRecordsForUnversionedNavigationConfig(
-                firstVersion.config,
-                context.withSlug(firstVersion.urlSlug ?? kebabCase(firstVersion.version))
-            );
-        }
+    public generateAlgoliaSearchRecordsForSpecificDocsVersion(
+        navigationConfig: FernRegistryDocsDb.UnversionedNavigationConfig,
+        indexSegment: IndexSegment
+    ): AlgoliaSearchRecord[] {
+        const context = new NavigationContext(
+            indexSegment,
+            indexSegment.type === "versioned" ? [indexSegment.version.urlSlug ?? indexSegment.version.id] : []
+        );
         return this.generateAlgoliaSearchRecordsForUnversionedNavigationConfig(navigationConfig, context);
     }
 
-    private async generateAlgoliaSearchRecordsForUnversionedNavigationConfig(
+    private generateAlgoliaSearchRecordsForUnversionedNavigationConfig(
         config: FernRegistryDocsDb.UnversionedNavigationConfig,
         context: NavigationContext
     ) {
@@ -76,52 +65,44 @@ export class AlgoliaSearchRecordGenerator {
             : this.generateAlgoliaSearchRecordsForUnversionedUntabbedNavigationConfig(config, context);
     }
 
-    private async generateAlgoliaSearchRecordsForUnversionedUntabbedNavigationConfig(
+    private generateAlgoliaSearchRecordsForUnversionedUntabbedNavigationConfig(
         config: FernRegistryDocsDb.UnversionedUntabbedNavigationConfig,
         context: NavigationContext
     ) {
-        const records = await Promise.all(
-            config.items.map((item) => this.generateAlgoliaSearchRecordsForNavigationItem(item, context))
-        );
+        const records = config.items.map((item) => this.generateAlgoliaSearchRecordsForNavigationItem(item, context));
         return records.flat(1);
     }
 
-    private async generateAlgoliaSearchRecordsForUnversionedTabbedNavigationConfig(
+    private generateAlgoliaSearchRecordsForUnversionedTabbedNavigationConfig(
         config: FernRegistryDocsDb.UnversionedTabbedNavigationConfig,
         context: NavigationContext
     ) {
-        const records = await Promise.all(
-            config.tabs.map(async (tab) => {
-                const tabRecords = await Promise.all(
-                    tab.items.map((item) =>
-                        this.generateAlgoliaSearchRecordsForNavigationItem(item, context.withSlug(tab.urlSlug))
-                    )
-                );
-                return tabRecords.flat(1);
-            })
-        );
+        const records = config.tabs.map((tab) => {
+            const tabRecords = tab.items.map((item) =>
+                this.generateAlgoliaSearchRecordsForNavigationItem(item, context.withSlug(tab.urlSlug))
+            );
+            return tabRecords.flat(1);
+        });
         return records.flat(1);
     }
 
-    private async generateAlgoliaSearchRecordsForNavigationItem(
+    private generateAlgoliaSearchRecordsForNavigationItem(
         item: FernRegistryDocsDb.NavigationItem,
         context: NavigationContext
-    ): Promise<AlgoliaSearchRecord[]> {
+    ): AlgoliaSearchRecord[] {
         if (item.type === "section") {
             const section = item;
-            const records = await Promise.all(
-                section.items.map((item) =>
-                    this.generateAlgoliaSearchRecordsForNavigationItem(
-                        item,
-                        section.skipUrlSlug ? context : context.withSlug(section.urlSlug)
-                    )
+            const records = section.items.map((item) =>
+                this.generateAlgoliaSearchRecordsForNavigationItem(
+                    item,
+                    section.skipUrlSlug ? context : context.withSlug(section.urlSlug)
                 )
             );
             return records.flat(1);
         } else if (item.type === "api") {
             const api = item;
             const apiId = api.api;
-            const apiDef = await this.config.loadApiDefinition(apiId);
+            const apiDef = this.config.apiDefinitionsById.get(apiId);
             if (apiDef == null) {
                 return [];
             }
@@ -131,7 +112,7 @@ export class AlgoliaSearchRecordGenerator {
             );
         } else {
             const page = item;
-            const pageContent = this.docsDefinition.pages[page.id];
+            const pageContent = this.config.docsDefinition.pages[page.id];
             if (pageContent == null) {
                 return [];
             }
@@ -143,7 +124,11 @@ export class AlgoliaSearchRecordGenerator {
                     type: "page",
                     path,
                     title: page.title,
-                    subtitle: truncateToBytes(processedContent, 50_000),
+                    // TODO: Set to something more than 10kb on prod
+                    // See: https://support.algolia.com/hc/en-us/articles/4406981897617-Is-there-a-size-limit-for-my-index-records-/
+                    subtitle: truncateToBytes(processedContent, 10_000 - 1),
+                    indexSegmentId: context.indexSegment.id,
+                    ...(context.indexSegment.type === "versioned" ? { version: context.indexSegment.version.id } : {}),
                 },
             ];
         }
@@ -190,6 +175,8 @@ export class AlgoliaSearchRecordGenerator {
                 title: endpointDef.name ?? "",
                 subtitle: processedDescription,
                 path,
+                indexSegmentId: context.indexSegment.id,
+                ...(context.indexSegment.type === "versioned" ? { version: context.indexSegment.version.id } : {}),
             });
         }
         // Add records for query parameters, request/response body etc.

@@ -2,7 +2,9 @@ import { resolve } from "path";
 import { transformApiDefinitionForDb } from "../../../controllers/api/registerToDbConversion/transformApiDefinitionToDb";
 import { transformWriteDocsDefinitionToDb } from "../../../controllers/docs/transformDocsDefinitionToDb";
 import type { FernRegistry } from "../../../generated";
+import type { AlgoliaSearchRecord } from "../../../services/algolia";
 import { AlgoliaSearchRecordGenerator } from "../../../services/algolia/AlgoliaSearchRecordGenerator";
+import { isVersionedNavigationConfig } from "../../../util/fern/db";
 import type * as FernRegistryApiWrite from "../../generated/api/resources/api/resources/v1/resources/register";
 
 const FIXTURES_DIR = resolve(__dirname, "fixtures");
@@ -27,6 +29,13 @@ function loadApiDefinition(fixture: Fixture, id: string) {
     return require(filePath) as FernRegistryApiWrite.ApiDefinition;
 }
 
+type FilteredSearchRecord = Omit<AlgoliaSearchRecord, "objectID">;
+
+function filterSearchRecord(record: AlgoliaSearchRecord): FilteredSearchRecord {
+    const { objectID: _, ...rest } = record;
+    return rest;
+}
+
 interface Fixture {
     name: string;
     only?: boolean;
@@ -38,19 +47,47 @@ describe("generateAlgoliaSearchRecordsForDocs", () => {
         (only ? it.only : it)(
             `${JSON.stringify(fixture)}`,
             async () => {
-                const docsDefinition = loadDocsDefinition(fixture);
-                const generator = new AlgoliaSearchRecordGenerator({
-                    docsDefinition: transformWriteDocsDefinitionToDb({ writeShape: docsDefinition, files: {} }),
-                    loadApiDefinition: async (id) => {
+                const docsDefinition = transformWriteDocsDefinitionToDb({
+                    writeShape: loadDocsDefinition(fixture),
+                    files: {},
+                });
+
+                const preloadApiDefinitions = () => {
+                    const apiIdDefinitionTuples = docsDefinition.referencedApis.map((id) => {
                         const apiDef = loadApiDefinition(fixture, id);
-                        return transformApiDefinitionForDb(apiDef, id);
-                    },
-                });
-                const records = await generator.generateAlgoliaSearchRecordsForDocs();
-                const recordsWithoutIds = records.map((record) => {
-                    const { objectID: _, ...rest } = record;
-                    return rest;
-                });
+                        return [id, transformApiDefinitionForDb(apiDef, id)] as const;
+                    });
+
+                    return new Map(apiIdDefinitionTuples);
+                };
+
+                const apiDefinitionsById = preloadApiDefinitions();
+                const recordsWithoutIds: Omit<AlgoliaSearchRecord, "objectID">[] = [];
+                const navigationConfig = docsDefinition.config.navigation;
+                const generator = new AlgoliaSearchRecordGenerator({ docsDefinition, apiDefinitionsById });
+
+                if (isVersionedNavigationConfig(navigationConfig)) {
+                    navigationConfig.versions.forEach((v) => {
+                        const indexSegmentRecords = generator.generateAlgoliaSearchRecordsForSpecificDocsVersion(
+                            v.config,
+                            {
+                                type: "versioned",
+                                id: `${v.version}-constant`,
+                                searchApiKey: "api_key",
+                                version: { id: v.version, urlSlug: v.urlSlug },
+                            }
+                        );
+                        recordsWithoutIds.push(...indexSegmentRecords.map(filterSearchRecord));
+                    });
+                } else {
+                    const records = generator.generateAlgoliaSearchRecordsForSpecificDocsVersion(navigationConfig, {
+                        type: "unversioned",
+                        id: "constant",
+                        searchApiKey: "api_key",
+                    });
+                    recordsWithoutIds.push(...records.map(filterSearchRecord));
+                }
+
                 expect(recordsWithoutIds).toMatchSnapshot();
             },
             90_000

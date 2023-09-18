@@ -1,6 +1,7 @@
 import { FdrApplication, type FdrConfig } from "../app";
-import type { FdrServices } from "../app/FdrApplication";
-import { type AlgoliaSearchRecord, type AlgoliaService } from "../services/algolia";
+import { type FdrServices } from "../app/FdrApplication";
+import { type DocsDefinitionDb } from "../generated/api/resources/docs/resources/v1/resources/db";
+import { ConfigSegmentTuple, type AlgoliaSearchRecord, type AlgoliaService } from "../services/algolia";
 import { type AuthService } from "../services/auth";
 import {
     FailedToDeleteIndexSegment,
@@ -9,31 +10,22 @@ import {
 } from "../services/slack/SlackService";
 
 class MockAlgoliaService implements AlgoliaService {
-    async deleteIndex(_indexName: string): Promise<void> {
-        return;
-    }
-
-    async scheduleIndexDeletion(_indexName: string): Promise<void> {
-        return;
-    }
-
-    async clearIndexRecords(_indexName: string): Promise<void> {
-        return;
-    }
-
-    async saveIndexRecords(_indexName: string, _records: AlgoliaSearchRecord[]): Promise<void> {
-        return;
-    }
-
-    async saveIndexSettings(_indexName: string): Promise<void> {
-        return;
-    }
-
     generateSearchApiKey(_filters: string): string {
         return "";
     }
 
-    async deleteIndexSegmentRecords(_indexName: string, _indexSegmentIdOrIds: string | string[]): Promise<void> {
+    async deleteIndexSegmentRecords(_indexSegmentIds: string[]): Promise<void> {
+        return;
+    }
+
+    async generateSearchRecords(
+        _docsDefinition: DocsDefinitionDb,
+        _configSegmentTuples: ConfigSegmentTuple[]
+    ): Promise<AlgoliaSearchRecord[]> {
+        return [];
+    }
+
+    async uploadSearchRecords(_records: AlgoliaSearchRecord[]): Promise<void> {
         return;
     }
 }
@@ -69,6 +61,7 @@ export function createMockFdrConfig(): FdrConfig {
         domainSuffix: ".docs.buildwithfern.com",
         algoliaAppId: "",
         algoliaAdminApiKey: "",
+        algoliaSearchIndex: "",
         slackToken: "",
     };
 }

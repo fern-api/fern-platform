@@ -1,1 +1,2 @@
-export { AlgoliaServiceImpl, type AlgoliaSearchRecord, type AlgoliaService } from "./AlgoliaService";
+export { AlgoliaServiceImpl, type AlgoliaService } from "./AlgoliaService";
+export type { AlgoliaSearchRecord, ConfigSegmentTuple, IndexSegment } from "./types";

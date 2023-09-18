@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { DocsRegistrationInfo } from "../../controllers/docs/getDocsWriteV2Service";
 import type { FernRegistry } from "../../generated";
+import type { IndexSegment } from "../../services/algolia";
 import { writeBuffer } from "../../util/serde";
 
 export interface DatabaseService {
@@ -10,14 +11,14 @@ export interface DatabaseService {
 
     markIndexForDeletion(indexId: string): Promise<void>;
 
-    updateDocsDefinition({
-        algoliaIndex,
+    updateDocsDefinitionAndIndexSegments({
         docsRegistrationInfo,
         dbDocsDefinition,
+        indexSegments,
     }: {
-        algoliaIndex: string;
         docsRegistrationInfo: DocsRegistrationInfo;
         dbDocsDefinition: FernRegistry.docs.v1.db.DocsDefinitionDb.V2;
+        indexSegments: IndexSegment[];
     }): Promise<void>;
 }
 
@@ -50,14 +51,14 @@ export class DatabaseServiceImpl implements DatabaseService {
         });
     }
 
-    public async updateDocsDefinition({
-        algoliaIndex,
+    public async updateDocsDefinitionAndIndexSegments({
         docsRegistrationInfo,
         dbDocsDefinition,
+        indexSegments,
     }: {
-        algoliaIndex: string;
         docsRegistrationInfo: DocsRegistrationInfo;
         dbDocsDefinition: FernRegistry.docs.v1.db.DocsDefinitionDb.V2;
+        indexSegments: IndexSegment[];
     }): Promise<void> {
         const prevAlgoliaIndex = await this.prisma.$transaction(async (tx) => {
             const bufferDocsDefinition = writeBuffer(dbDocsDefinition);
@@ -70,7 +71,17 @@ export class DatabaseServiceImpl implements DatabaseService {
                 },
             });
 
-            // Step 2: Upsert the fern docs domain url with the docs definition + algolia index
+            // Step 2: Create new index segments associated with docs
+            const indexSegmentIds = indexSegments.map((s) => s.id);
+
+            await tx.indexSegment.createMany({
+                data: indexSegments.map((seg) => ({
+                    id: seg.id,
+                    version: seg.type === "versioned" ? seg.version.id : null,
+                })),
+            });
+
+            // Step 3: Upsert the fern docs domain url with the docs definition + algolia index
             await tx.docsV2.upsert({
                 where: {
                     domain_path: {
@@ -82,7 +93,7 @@ export class DatabaseServiceImpl implements DatabaseService {
                     docsDefinition: bufferDocsDefinition,
                     apiName: docsRegistrationInfo.apiId,
                     orgID: docsRegistrationInfo.orgId,
-                    algoliaIndex,
+                    indexSegmentIds,
                 },
                 create: {
                     docsDefinition: bufferDocsDefinition,
@@ -90,7 +101,7 @@ export class DatabaseServiceImpl implements DatabaseService {
                     path: "",
                     apiName: docsRegistrationInfo.apiId,
                     orgID: docsRegistrationInfo.orgId,
-                    algoliaIndex,
+                    algoliaIndex: null,
                 },
             });
 
@@ -109,13 +120,13 @@ export class DatabaseServiceImpl implements DatabaseService {
                         path: customDomain.path,
                         apiName: docsRegistrationInfo.apiId,
                         orgID: docsRegistrationInfo.orgId,
-                        algoliaIndex,
+                        algoliaIndex: null,
                     },
                     update: {
                         docsDefinition: bufferDocsDefinition,
                         apiName: docsRegistrationInfo.apiId,
                         orgID: docsRegistrationInfo.orgId,
-                        algoliaIndex,
+                        indexSegmentIds,
                     },
                 });
             }

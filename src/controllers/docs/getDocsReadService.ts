@@ -1,9 +1,10 @@
-import type { DocsV2 } from "@prisma/client";
+import type { DocsV2, IndexSegment } from "@prisma/client";
 import type { FdrApplication } from "../../app";
 import { FernRegistry } from "../../generated";
 import { DomainNotRegisteredError } from "../../generated/api/resources/docs/resources/v1/resources/read";
 import { ReadService } from "../../generated/api/resources/docs/resources/v1/resources/read/service/ReadService";
 import { readBuffer } from "../../util";
+import { isVersionedNavigationConfig } from "../../util/fern/db";
 import { convertDbApiDefinitionToRead } from "../api/getApiReadService";
 import { transformDbDocsDefinitionToRead } from "./transformDbDocsDefinitionToRead";
 
@@ -58,13 +59,23 @@ export async function getDocsDefinition({
     docsDbDefinition: FernRegistry.docs.v1.db.DocsDefinitionDb;
     docsV2: DocsV2 | null;
 }): Promise<FernRegistry.docs.v1.read.DocsDefinition> {
-    const apiDefinitions = await app.services.db.prisma.apiDefinitionsV2.findMany({
-        where: {
-            apiDefinitionId: {
-                in: Array.from(docsDbDefinition.referencedApis),
+    const [apiDefinitions, activeIndexSegments] = await Promise.all([
+        app.services.db.prisma.apiDefinitionsV2.findMany({
+            where: {
+                apiDefinitionId: {
+                    in: Array.from(docsDbDefinition.referencedApis),
+                },
             },
-        },
-    });
+        }),
+        docsV2?.indexSegmentIds != null
+            ? app.services.db.prisma.indexSegment.findMany({
+                  where: { id: { in: docsV2.indexSegmentIds as string[] } },
+              })
+            : Promise.resolve<IndexSegment[]>([]),
+    ]);
+
+    const searchInfo = getSearchInfoFromDocs({ docsV2, docsDbDefinition, activeIndexSegments, app });
+
     return {
         algoliaSearchIndex: docsV2?.algoliaIndex ?? undefined,
         config: transformDbDocsDefinitionToRead({ dbShape: docsDbDefinition }),
@@ -83,11 +94,66 @@ export async function getDocsDefinition({
             )
         ),
         pages: docsDbDefinition.pages,
-        search: {
-            type: "legacyMultiAlgoliaIndex",
-            algoliaIndex: docsV2?.algoliaIndex ?? undefined,
-        },
+        search: searchInfo,
     };
+}
+
+function getSearchInfoFromDocs({
+    docsV2,
+    activeIndexSegments,
+    docsDbDefinition,
+    app,
+}: {
+    docsV2: DocsV2 | null;
+    activeIndexSegments: IndexSegment[];
+    docsDbDefinition: FernRegistry.docs.v1.db.DocsDefinitionDb;
+    app: FdrApplication;
+}): FernRegistry.docs.v1.read.SearchInfo {
+    if (docsV2 == null || !Array.isArray(docsV2.indexSegmentIds)) {
+        return { type: "legacyMultiAlgoliaIndex" };
+    }
+    const areDocsVersioned = isVersionedNavigationConfig(docsDbDefinition.config.navigation);
+    if (areDocsVersioned) {
+        const indexSegmentsByVersionId = activeIndexSegments.reduce<
+            Record<string, FernRegistry.docs.v1.read.IndexSegment>
+        >((acc, indexSegment) => {
+            const searchApiKey = app.services.algoliaIndexSegmentManager.getOrGenerateSearchApiKeyForIndexSegment(
+                indexSegment.id
+            );
+            // Since the docs are versioned, all referenced index segments will have a version
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            acc[indexSegment.version!] = {
+                id: indexSegment.id,
+                searchApiKey,
+            };
+            return acc;
+        }, {});
+        return {
+            type: "singleAlgoliaIndex",
+            value: {
+                type: "versioned",
+                indexSegmentsByVersionId,
+            },
+        };
+    } else {
+        // If indexSegmentIds is an array, it must have at least 1 element
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const indexSegment = activeIndexSegments[0]!;
+        const searchApiKey = app.services.algoliaIndexSegmentManager.getOrGenerateSearchApiKeyForIndexSegment(
+            indexSegment.id
+        );
+
+        return {
+            type: "singleAlgoliaIndex",
+            value: {
+                type: "unversioned",
+                indexSegment: {
+                    id: indexSegment.id,
+                    searchApiKey,
+                },
+            },
+        };
+    }
 }
 
 export function migrateDocsDbDefinition(dbValue: unknown): FernRegistry.docs.v1.db.DocsDefinitionDb {

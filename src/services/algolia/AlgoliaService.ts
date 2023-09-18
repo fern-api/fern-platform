@@ -1,83 +1,71 @@
 import algolia, { type SearchClient } from "algoliasearch";
 import type { FdrApplication } from "../../app";
-import type * as FernRegistryDocsRead from "../../generated/api/resources/docs/resources/v1/resources/read";
-
-type WithObjectId<T> = { objectID: string } & T;
-
-export type AlgoliaSearchRecord = WithObjectId<FernRegistryDocsRead.AlgoliaRecord>;
+import type { FernRegistry } from "../../generated";
+import type * as FernRegistryDocsDb from "../../generated/api/resources/docs/resources/v1/resources/db";
+import { AlgoliaSearchRecordGenerator } from "./AlgoliaSearchRecordGenerator";
+import type { AlgoliaSearchRecord, ConfigSegmentTuple } from "./types";
 
 export interface AlgoliaService {
-    /**
-     * Does not fail if the index does not exist.
-     */
-    deleteIndex(indexName: string): Promise<void>;
-    /**
-     * Does not fail if the index does not exist.
-     */
-    scheduleIndexDeletion(indexName: string): Promise<void>;
+    deleteIndexSegmentRecords(indexSegmentIds: string[]): Promise<void>;
 
-    /**
-     * Does not fail if the index does not exist.
-     */
-    clearIndexRecords(indexName: string): Promise<void>;
+    generateSearchRecords(
+        docsDefinition: FernRegistryDocsDb.DocsDefinitionDb,
+        configSegmentTuples: ConfigSegmentTuple[]
+    ): Promise<AlgoliaSearchRecord[]>;
 
-    /**
-     * Does not fail if the index does not exist.
-     */
-    saveIndexRecords(indexName: string, records: AlgoliaSearchRecord[]): Promise<void>;
+    uploadSearchRecords(records: AlgoliaSearchRecord[]): Promise<void>;
 
-    /**
-     * Does not fail if the index does not exist.
-     */
-    saveIndexSettings(indexName: string): Promise<void>;
-
-    generateSearchApiKey(filters: string): string;
-
-    deleteIndexSegmentRecords(indexName: string, indexSegmentIds: string[]): Promise<void>;
+    generateSearchApiKey(filters: string, validUntil: Date): string;
 }
-
-type AttributeToSnippet = `${keyof AlgoliaSearchRecord}:${number}`;
 
 export class AlgoliaServiceImpl implements AlgoliaService {
     private readonly client: SearchClient;
 
-    private static readonly attributesToSnippet: AttributeToSnippet[] = ["title:20", "subtitle:20"];
+    private get adminApiKey() {
+        return this.app.config.algoliaAdminApiKey;
+    }
+
+    private get index() {
+        return this.client.initIndex(this.app.config.algoliaSearchIndex);
+    }
 
     public constructor(private readonly app: FdrApplication) {
         const { config } = app;
         this.client = algolia(config.algoliaAppId, config.algoliaAdminApiKey);
     }
 
-    public async deleteIndex(indexName: string) {
-        await this.client.initIndex(indexName).delete().wait();
+    public async uploadSearchRecords(records: AlgoliaSearchRecord[]) {
+        await this.index.saveObjects(records).wait();
     }
 
-    public async scheduleIndexDeletion(indexName: string) {
-        await this.client.initIndex(indexName).delete();
-    }
-
-    public async clearIndexRecords(indexName: string) {
-        await this.client.initIndex(indexName).clearObjects().wait();
-    }
-
-    public async saveIndexRecords(indexName: string, records: AlgoliaSearchRecord[]) {
-        await this.client.initIndex(indexName).saveObjects(records).wait();
-    }
-
-    public async saveIndexSettings(indexName: string) {
-        await this.client.initIndex(indexName).setSettings({
-            attributesToSnippet: AlgoliaServiceImpl.attributesToSnippet,
+    public async generateSearchRecords(
+        docsDefinition: FernRegistryDocsDb.DocsDefinitionDb,
+        configSegmentTuples: ConfigSegmentTuple[]
+    ) {
+        const preloadApiDefinitions = async () => {
+            const apiIdDefinitionTuples = await Promise.all(
+                docsDefinition.referencedApis.map(
+                    async (id) => [id, await this.app.services.db.getApiDefinition(id)] as const
+                )
+            );
+            return new Map(apiIdDefinitionTuples) as Map<string, FernRegistry.api.v1.db.DbApiDefinition>;
+        };
+        const apiDefinitionsById = await preloadApiDefinitions();
+        return configSegmentTuples.flatMap(([config, indexSegment]) => {
+            const generator = new AlgoliaSearchRecordGenerator({ docsDefinition, apiDefinitionsById });
+            return generator.generateAlgoliaSearchRecordsForSpecificDocsVersion(config, indexSegment);
         });
     }
 
-    public generateSearchApiKey(filters: string) {
-        return this.client.generateSecuredApiKey(this.app.config.algoliaAdminApiKey, {
+    public generateSearchApiKey(filters: string, validUntil: Date) {
+        return this.client.generateSecuredApiKey(this.adminApiKey, {
             filters,
+            validUntil: validUntil.getTime() / 1_000,
         });
     }
 
-    public async deleteIndexSegmentRecords(indexName: string, indexSegmentIds: string[]) {
+    public async deleteIndexSegmentRecords(indexSegmentIds: string[]) {
         const filters = indexSegmentIds.map((indexSegmentId) => `indexSegmentId:${indexSegmentId}`).join(" OR ");
-        await this.client.initIndex(indexName).deleteBy({ filters }).wait();
+        await this.index.deleteBy({ filters }).wait();
     }
 }

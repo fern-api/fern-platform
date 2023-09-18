@@ -225,7 +225,6 @@ describe("algolia index segment deleter", () => {
     it("correctly deletes old inactive index segments for unversioned docs", async () => {
         const domain = "docs.fern.com";
         const path = "abc";
-        const indexName = "fake_index";
 
         // Index segments that were deleted before this date are considered "dated" or "old"
         // Fern only deletes old segments that are not referenced by any docs
@@ -249,7 +248,7 @@ describe("algolia index segment deleter", () => {
             await Promise.all(allIndexSegments.map((seg) => tx.indexSegment.create({ data: seg })));
         });
 
-        await serverApp.services.algoliaIndexDeleter.deleteOldIndexSegments(indexName, {
+        await serverApp.services.algoliaIndexSegmentDeleter.deleteOldInactiveIndexSegments({
             olderThanHours,
         });
 

@@ -1,13 +1,11 @@
 import { v4 as uuidv4 } from "uuid";
 import { type FdrApplication } from "../../app";
-import { FernRegistry } from "../../generated";
 import { ApiId, OrgId } from "../../generated/api";
 import { DocsRegistrationId, FilePath } from "../../generated/api/resources/docs/resources/v1/resources/write";
 import { DocsRegistrationIdNotFound } from "../../generated/api/resources/docs/resources/v1/resources/write/errors/DocsRegistrationIdNotFound";
 import { InvalidCustomDomainError } from "../../generated/api/resources/docs/resources/v2/resources/write/errors/InvalidCustomDomainError";
 import { InvalidDomainError } from "../../generated/api/resources/docs/resources/v2/resources/write/errors/InvalidDomainError";
 import { WriteService } from "../../generated/api/resources/docs/resources/v2/resources/write/service/WriteService";
-import { AlgoliaSearchRecordGenerator } from "../../services/algolia/AlgoliaSearchRecordGenerator";
 import { type S3FileInfo } from "../../services/s3";
 import { getParsedUrl } from "../../util";
 import { revalidateUrl } from "./revalidateUrl";
@@ -109,21 +107,32 @@ export function getDocsWriteV2Service(app: FdrApplication): WriteService {
                     files: docsRegistrationInfo.s3FileInfos,
                 });
 
-                const newAlgoliaIndex = `${docsRegistrationInfo.fernDomain}_${uuidv4()}`;
+                app.logger.info(`[${docsRegistrationInfo.fernDomain}] Generating new index segments`);
+                const generateNewIndexSegmentsResult =
+                    app.services.algoliaIndexSegmentManager.generateIndexSegmentsForDefinition({
+                        dbDocsDefinition,
+                        fernDomain: docsRegistrationInfo.fernDomain,
+                    });
+                const configSegmentTuples =
+                    generateNewIndexSegmentsResult.type === "versioned"
+                        ? generateNewIndexSegmentsResult.configSegmentTuples
+                        : [generateNewIndexSegmentsResult.configSegmentTuple];
+                const newIndexSegments = configSegmentTuples.map(([, seg]) => seg);
 
-                app.logger.info(`[${docsRegistrationInfo.fernDomain}] Creating new algolia index`);
-                await createNewAlgoliaIndex({
-                    docsRegistrationInfo,
-                    indexName: newAlgoliaIndex,
+                app.logger.info(`[${docsRegistrationInfo.fernDomain}] Generating search records for all versions`);
+                const searchRecords = await app.services.algolia.generateSearchRecords(
                     dbDocsDefinition,
-                    app,
-                });
+                    configSegmentTuples
+                );
+
+                app.logger.info(`[${docsRegistrationInfo.fernDomain}] Uploading search records to Algolia`);
+                await app.services.algolia.uploadSearchRecords(searchRecords);
 
                 app.logger.info(`[${docsRegistrationInfo.fernDomain}] Updating db docs definitions`);
-                await app.services.db.updateDocsDefinition({
-                    algoliaIndex: newAlgoliaIndex,
+                await app.services.db.updateDocsDefinitionAndIndexSegments({
                     dbDocsDefinition,
                     docsRegistrationInfo,
+                    indexSegments: newIndexSegments,
                 });
 
                 // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
@@ -164,27 +173,4 @@ export function getDocsWriteV2Service(app: FdrApplication): WriteService {
             }
         },
     });
-}
-
-async function createNewAlgoliaIndex({
-    docsRegistrationInfo,
-    indexName,
-    dbDocsDefinition,
-    app,
-}: {
-    docsRegistrationInfo: DocsRegistrationInfo;
-    indexName: string;
-    dbDocsDefinition: FernRegistry.docs.v1.db.DocsDefinitionDb.V2;
-    app: FdrApplication;
-}) {
-    app.logger.info(`[${docsRegistrationInfo.fernDomain}] Generating algolia search records for index ${indexName}`);
-    const recordGenerator = new AlgoliaSearchRecordGenerator({
-        docsDefinition: dbDocsDefinition,
-        loadApiDefinition: (id) => app.services.db.getApiDefinition(id),
-    });
-    const records = await recordGenerator.generateAlgoliaSearchRecordsForDocs();
-    app.logger.info(`[${docsRegistrationInfo.fernDomain}] Saving algolia search records for index ${indexName}`);
-    await app.services.algolia.saveIndexRecords(indexName, records);
-    app.logger.info(`[${docsRegistrationInfo.fernDomain}] Saving algolia search index settings ${indexName}`);
-    await app.services.algolia.saveIndexSettings(indexName);
 }

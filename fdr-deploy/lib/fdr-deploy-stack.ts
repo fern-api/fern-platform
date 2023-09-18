@@ -82,6 +82,7 @@ export class FdrDeployStack extends Stack {
                     DOMAIN_SUFFIX: environmentType === "DEV" ? "docs.dev.buildwithfern.com" : "docs.buildwithfern.com",
                     ALGOLIA_APP_ID: getEnvironmentVariableOrThrow("ALGOLIA_APP_ID"),
                     ALGOLIA_ADMIN_API_KEY: getEnvironmentVariableOrThrow("ALGOLIA_ADMIN_API_KEY"),
+                    ALGOLIA_SEARCH_INDEX: getEnvironmentVariableOrThrow("ALGOLIA_SEARCH_INDEX"),
                     SLACK_TOKEN: getEnvironmentVariableOrThrow("FERNIE_SLACK_APP_TOKEN"),
                 },
                 containerName: CONTAINER_NAME,

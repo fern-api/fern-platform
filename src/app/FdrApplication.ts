@@ -1,6 +1,13 @@
 import winston from "winston";
 import { AlgoliaServiceImpl, type AlgoliaService } from "../services/algolia";
-import { AlgoliaIndexDeleterServiceImpl, type AlgoliaIndexDeleterService } from "../services/algolia-index-deleter";
+import {
+    AlgoliaIndexSegmentDeleterServiceImpl,
+    type AlgoliaIndexSegmentDeleterService,
+} from "../services/algolia-index-segment-deleter";
+import {
+    AlgoliaIndexSegmentManagerServiceImpl,
+    type AlgoliaIndexSegmentManagerService,
+} from "../services/algolia-index-segment-manager";
 import { AuthServiceImpl, type AuthService } from "../services/auth";
 import { DatabaseServiceImpl, type DatabaseService } from "../services/db";
 import { S3ServiceImpl, type S3Service } from "../services/s3";
@@ -11,8 +18,9 @@ export interface FdrServices {
     readonly auth: AuthService;
     readonly db: DatabaseService;
     readonly algolia: AlgoliaService;
+    readonly algoliaIndexSegmentDeleter: AlgoliaIndexSegmentDeleterService;
+    readonly algoliaIndexSegmentManager: AlgoliaIndexSegmentManagerService;
     readonly s3: S3Service;
-    readonly algoliaIndexDeleter: AlgoliaIndexDeleterService;
     readonly slack: SlackService;
 }
 
@@ -36,8 +44,11 @@ export class FdrApplication {
             auth: services?.auth ?? new AuthServiceImpl(this),
             db: services?.db ?? new DatabaseServiceImpl(),
             algolia: services?.algolia ?? new AlgoliaServiceImpl(this),
+            algoliaIndexSegmentDeleter:
+                services?.algoliaIndexSegmentDeleter ?? new AlgoliaIndexSegmentDeleterServiceImpl(this),
+            algoliaIndexSegmentManager:
+                services?.algoliaIndexSegmentManager ?? new AlgoliaIndexSegmentManagerServiceImpl(this),
             s3: services?.s3 ?? new S3ServiceImpl(this),
-            algoliaIndexDeleter: services?.algoliaIndexDeleter ?? new AlgoliaIndexDeleterServiceImpl(this),
             slack: services?.slack ?? new SlackServiceImpl(this),
         };
     }
