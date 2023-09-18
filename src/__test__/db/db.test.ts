@@ -1,7 +1,9 @@
 import { PrismaClient } from "@prisma/client";
+import { addHours, subHours } from "date-fns";
 import express from "express";
 import http from "http";
 import { uniqueId } from "lodash";
+import { FdrApplication } from "../../app";
 import { getReadApiService } from "../../controllers/api/getApiReadService";
 import { getRegisterApiService } from "../../controllers/api/getRegisterApiService";
 import { getDocsReadService } from "../../controllers/docs/getDocsReadService";
@@ -11,6 +13,7 @@ import { getDocsWriteV2Service } from "../../controllers/docs/getDocsWriteV2Serv
 import { register } from "../../generated";
 import { FernRegistry, FernRegistryClient } from "../generated";
 import { createMockFdrApplication } from "../mock";
+import { createMockDocs, createMockIndexSegment } from "./util";
 
 const PORT = 9999;
 
@@ -108,7 +111,7 @@ it("definition register", async () => {
     );
     expect(registeredEmptyDefinition.rootPackage).toEqual(EMPTY_REGISTER_API_DEFINITION.rootPackage);
 
-    //register updated definition
+    // register updated definition
     const updatedDefinitionRegisterResponse = await CLIENT.api.v1.register.registerApiDefinition({
         orgId: "fern",
         apiId: "api",
@@ -156,7 +159,7 @@ it("docs register", async () => {
     // assert docs have 2 file urls
     expect(Object.entries(docs.files)).toHaveLength(2);
 
-    //re-register docs
+    // re-register docs
     const startDocsRegisterResponse2 = await CLIENT.docs.v1.write.startDocsRegister({
         orgId: "fern",
         domain: "docs.fern.com",
@@ -209,5 +212,60 @@ it("docs register V2", async () => {
     });
     await CLIENT.docs.v2.write.finishDocsRegister(startDocsRegisterResponse2.docsRegistrationId, {
         docsDefinition: WRITE_DOCS_REGISTER_DEFINITION,
+    });
+});
+
+describe("algolia index segment deleter", () => {
+    let serverApp: FdrApplication;
+
+    beforeAll(() => {
+        serverApp = createMockFdrApplication();
+    });
+
+    it("correctly deletes old inactive index segments for unversioned docs", async () => {
+        const domain = "docs.fern.com";
+        const path = "abc";
+        const indexName = "fake_index";
+
+        // Index segments that were deleted before this date are considered "dated" or "old"
+        // Fern only deletes old segments that are not referenced by any docs
+        const olderThanHours = 24;
+        const oldSegmentCutoffDate = subHours(new Date(), olderThanHours);
+
+        const inactiveOldIndexSegments = [
+            createMockIndexSegment({ id: "seg_10", createdAt: subHours(oldSegmentCutoffDate, 4) }),
+            createMockIndexSegment({ id: "seg_11", createdAt: subHours(oldSegmentCutoffDate, 3) }),
+            createMockIndexSegment({ id: "seg_12", createdAt: subHours(oldSegmentCutoffDate, 2) }),
+            createMockIndexSegment({ id: "seg_13", createdAt: subHours(oldSegmentCutoffDate, 1) }),
+        ];
+        const activeIndexSegments = [
+            createMockIndexSegment({ id: "seg_14", createdAt: addHours(oldSegmentCutoffDate, 1) }),
+        ];
+        const docsV2 = createMockDocs({ domain, path, indexSegmentIds: activeIndexSegments.map((s) => s.id) });
+
+        await serverApp.services.db.prisma.$transaction(async (tx) => {
+            await tx.docsV2.create({ data: { ...docsV2, indexSegmentIds: docsV2.indexSegmentIds as string[] } });
+            const allIndexSegments = [...inactiveOldIndexSegments, ...activeIndexSegments];
+            await Promise.all(allIndexSegments.map((seg) => tx.indexSegment.create({ data: seg })));
+        });
+
+        await serverApp.services.algoliaIndexDeleter.deleteOldIndexSegments(indexName, {
+            olderThanHours,
+        });
+
+        const newIndexSegmentRecords = await serverApp.services.db.prisma.indexSegment.findMany({
+            select: { id: true },
+        });
+        const newIndexSegmentRecordIds = new Set(newIndexSegmentRecords.map((r) => r.id));
+
+        // Expect inactive old segments to be deleted
+        inactiveOldIndexSegments.forEach((s) => {
+            expect(newIndexSegmentRecordIds.has(s.id)).toBe(false);
+        });
+
+        // Expect active segments to remain
+        activeIndexSegments.forEach((s) => {
+            expect(newIndexSegmentRecordIds.has(s.id)).toBe(true);
+        });
     });
 });

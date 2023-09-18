@@ -7,8 +7,14 @@ export interface FailedToRegisterDocsNotification {
     err: unknown;
 }
 
+export interface FailedToDeleteIndexSegment {
+    indexSegmentId: string;
+    err: unknown;
+}
+
 export interface SlackService {
     notifyFailedToRegisterDocs(request: FailedToRegisterDocsNotification): Promise<void>;
+    notifyFailedToDeleteIndexSegment(request: FailedToDeleteIndexSegment): Promise<void>;
     notify(message: string, err: unknown): Promise<void>;
 }
 
@@ -31,11 +37,25 @@ export class SlackServiceImpl implements SlackService {
         }
     }
 
-    async notifyFailedToRegisterDocs(request: FailedToRegisterDocsNotification): Promise<void> {
+    public async notifyFailedToRegisterDocs(request: FailedToRegisterDocsNotification): Promise<void> {
         try {
             await this.client.chat.postMessage({
                 channel: "#notifs",
                 text: `:rotating_light: Docs failed to register \`${request.domain}\`: ${stringifyError(request.err)}`,
+                blocks: [],
+            });
+        } catch (err) {
+            LOGGER.debug("Failed to send slack message: ", err);
+        }
+    }
+
+    public async notifyFailedToDeleteIndexSegment(request: FailedToDeleteIndexSegment): Promise<void> {
+        const { indexSegmentId, err } = request;
+
+        try {
+            await this.client.chat.postMessage({
+                channel: "#notifs",
+                text: `:rotating_light: Failed to delete index segment \`${indexSegmentId}\`: ${stringifyError(err)}`,
                 blocks: [],
             });
         } catch (err) {

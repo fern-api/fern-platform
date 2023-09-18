@@ -1,31 +1,39 @@
 import { FdrApplication, type FdrConfig } from "../app";
+import type { FdrServices } from "../app/FdrApplication";
 import { type AlgoliaSearchRecord, type AlgoliaService } from "../services/algolia";
 import { type AuthService } from "../services/auth";
-import { FailedToRegisterDocsNotification, SlackService } from "../services/slack/SlackService";
+import {
+    FailedToDeleteIndexSegment,
+    FailedToRegisterDocsNotification,
+    SlackService,
+} from "../services/slack/SlackService";
 
 class MockAlgoliaService implements AlgoliaService {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async deleteIndex(_indexName: string): Promise<void> {
         return;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async scheduleIndexDeletion(_indexName: string): Promise<void> {
         return;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async clearIndexRecords(_indexName: string): Promise<void> {
         return;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async saveIndexRecords(_indexName: string, _records: AlgoliaSearchRecord[]): Promise<void> {
         return;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async saveIndexSettings(_indexName: string): Promise<void> {
+        return;
+    }
+
+    generateSearchApiKey(_filters: string): string {
+        return "";
+    }
+
+    async deleteIndexSegmentRecords(_indexName: string, _indexSegmentIdOrIds: string | string[]): Promise<void> {
         return;
     }
 }
@@ -40,7 +48,12 @@ class MockSlackService implements SlackService {
     async notify(_message: string, _err: unknown): Promise<void> {
         return;
     }
+
     async notifyFailedToRegisterDocs(_request: FailedToRegisterDocsNotification): Promise<void> {
+        return;
+    }
+
+    async notifyFailedToDeleteIndexSegment(_request: FailedToDeleteIndexSegment): Promise<void> {
         return;
     }
 }
@@ -60,10 +73,11 @@ export function createMockFdrConfig(): FdrConfig {
     };
 }
 
-export function createMockFdrApplication() {
+export function createMockFdrApplication(services?: Partial<FdrServices>) {
     return new FdrApplication(createMockFdrConfig(), {
         auth: new MockAuthService(),
         algolia: new MockAlgoliaService(),
         slack: new MockSlackService(),
+        ...services,
     });
 }

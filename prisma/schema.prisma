@@ -28,15 +28,24 @@ model Docs {
 }
 
 model DocsV2 {
-  orgID          String
-  apiName        String
-  updatedTime    DateTime @updatedAt
-  domain         String
-  path           String
-  algoliaIndex   String?
-  docsDefinition Bytes
+  orgID           String
+  apiName         String
+  updatedTime     DateTime @updatedAt
+  domain          String
+  path            String
+  algoliaIndex    String?
+  docsDefinition  Bytes
+  indexSegmentIds Json?
 
   @@id([domain, path])
+}
+
+model IndexSegment {
+  id        String   @id
+  createdAt DateTime @default(now())
+  version   String?
+
+  @@map("index_segments")
 }
 
 model OverwrittenAlgoliaIndex {

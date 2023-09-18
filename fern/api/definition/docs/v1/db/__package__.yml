@@ -64,7 +64,7 @@ types:
   DbFileInfo:
     properties:
       s3Key: string
-  
+
   NavigationConfig:
     discriminated: false
     union:
@@ -108,8 +108,8 @@ types:
       page: docsReadV1.PageMetadata
       api: ApiSection
       section: DocsSection
-  
-  ApiSection: 
+
+  ApiSection:
     properties:
       title: string
       api: rootCommons.ApiDefinitionId
@@ -117,7 +117,7 @@ types:
       skipUrlSlug: boolean
       artifacts: optional<docsReadV1.ApiArtifacts>
       showErrors: optional<boolean>
-  
+
   DocsSection:
     properties:
       title: string
@@ -125,4 +125,3 @@ types:
       urlSlug: string
       skipUrlSlug: boolean
       collapsed: boolean
-

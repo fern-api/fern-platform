@@ -30,6 +30,10 @@ export interface AlgoliaService {
      * Does not fail if the index does not exist.
      */
     saveIndexSettings(indexName: string): Promise<void>;
+
+    generateSearchApiKey(filters: string): string;
+
+    deleteIndexSegmentRecords(indexName: string, indexSegmentIds: string[]): Promise<void>;
 }
 
 type AttributeToSnippet = `${keyof AlgoliaSearchRecord}:${number}`;
@@ -39,7 +43,7 @@ export class AlgoliaServiceImpl implements AlgoliaService {
 
     private static readonly attributesToSnippet: AttributeToSnippet[] = ["title:20", "subtitle:20"];
 
-    public constructor(app: FdrApplication) {
+    public constructor(private readonly app: FdrApplication) {
         const { config } = app;
         this.client = algolia(config.algoliaAppId, config.algoliaAdminApiKey);
     }
@@ -64,5 +68,16 @@ export class AlgoliaServiceImpl implements AlgoliaService {
         await this.client.initIndex(indexName).setSettings({
             attributesToSnippet: AlgoliaServiceImpl.attributesToSnippet,
         });
+    }
+
+    public generateSearchApiKey(filters: string) {
+        return this.client.generateSecuredApiKey(this.app.config.algoliaAdminApiKey, {
+            filters,
+        });
+    }
+
+    public async deleteIndexSegmentRecords(indexName: string, indexSegmentIds: string[]) {
+        const filters = indexSegmentIds.map((indexSegmentId) => `indexSegmentId:${indexSegmentId}`).join(" OR ");
+        await this.client.initIndex(indexName).deleteBy({ filters }).wait();
     }
 }
