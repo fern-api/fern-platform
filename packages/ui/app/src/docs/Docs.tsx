@@ -13,7 +13,7 @@ import { Header } from "./Header";
 
 export const Docs: React.FC = memo(function UnmemoizedDocs() {
     const docsContext = useDocsContext();
-    const { docsDefinition, theme } = docsContext;
+    const { docsDefinition, docsInfo, theme } = docsContext;
     const searchContext = useSearchContext();
     const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = searchContext;
     const searchService = useSearchService();
@@ -43,7 +43,13 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                 hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage}
             />
             <div className="relative flex min-h-0 flex-1 flex-col">
-                {searchService.isAvailable && <SearchDialog isOpen={isSearchDialogOpen} onClose={closeSearchDialog} />}
+                {searchService.isAvailable && (
+                    <SearchDialog
+                        isOpen={isSearchDialogOpen}
+                        onClose={closeSearchDialog}
+                        activeVersion={docsInfo.type === "versioned" ? docsInfo.activeVersionName : undefined}
+                    />
+                )}
                 <div className="border-border-default-light dark:border-border-default-dark bg-background/50 sticky inset-x-0 top-0 z-20 h-16 border-b backdrop-blur-xl">
                     <Header
                         className="max-w-8xl mx-auto"

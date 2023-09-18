@@ -10,11 +10,12 @@ export declare namespace SearchDialog {
     export interface Props {
         isOpen: boolean;
         onClose: () => void;
+        activeVersion?: string;
     }
 }
 
 export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
-    const { isOpen, onClose } = providedProps;
+    const { isOpen, onClose, activeVersion } = providedProps;
     const searchService = useSearchService();
 
     if (!searchService.isAvailable) {
@@ -32,7 +33,11 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
                             <SearchBox
                                 inputMode="text"
                                 autoFocus
-                                placeholder="Find something..."
+                                placeholder={
+                                    activeVersion != null
+                                        ? `Search across version ${activeVersion}`
+                                        : "Find something..."
+                                }
                                 classNames={{
                                     root: "w-full",
                                     loadingIcon: "hidden",
