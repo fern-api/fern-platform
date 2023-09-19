@@ -1,12 +1,12 @@
-import { transformExampleEndpointCall } from "../../controllers/api/registerToDbConversion/transformApiDefinitionToDb";
-import { FernRegistry } from "../generated";
+import { APIV1Write } from "../../api";
+import { transformExampleEndpointCall } from "../../converters/db/convertAPIDefinitionToDb";
 
 describe("transformEndpointEndpointCall", () => {
     it("correctly transforms", () => {
-        const endpointDefinition: FernRegistry.api.v1.register.EndpointDefinition = {
+        const endpointDefinition: APIV1Write.EndpointDefinition = {
             id: "endpoint-id",
             description: "This is some ```markdown```",
-            method: FernRegistry.api.v1.register.HttpMethod.Post,
+            method: APIV1Write.HttpMethod.Post,
             path: {
                 parts: [
                     { type: "literal", value: "/prefix" },

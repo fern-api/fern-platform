@@ -1,27 +1,27 @@
-import type * as FernRegistryDocsWrite from "../../../generated/api/resources/docs/resources/v1/resources/write";
+import { DocsV1Write } from "../../../api";
 
 export function isVersionedNavigationConfig(
-    navigationConfig: FernRegistryDocsWrite.NavigationConfig
-): navigationConfig is FernRegistryDocsWrite.VersionedNavigationConfig {
-    return Array.isArray((navigationConfig as FernRegistryDocsWrite.VersionedNavigationConfig).versions);
+    navigationConfig: DocsV1Write.NavigationConfig
+): navigationConfig is DocsV1Write.VersionedNavigationConfig {
+    return Array.isArray((navigationConfig as DocsV1Write.VersionedNavigationConfig).versions);
 }
 
 export function isUnversionedNavigationConfig(
-    navigationConfig: FernRegistryDocsWrite.NavigationConfig
-): navigationConfig is FernRegistryDocsWrite.UnversionedNavigationConfig {
+    navigationConfig: DocsV1Write.NavigationConfig
+): navigationConfig is DocsV1Write.UnversionedNavigationConfig {
     return (
         isUnversionedTabbedNavigationConfig(navigationConfig) || isUnversionedUntabbedNavigationConfig(navigationConfig)
     );
 }
 
 export function isUnversionedTabbedNavigationConfig(
-    navigationConfig: FernRegistryDocsWrite.NavigationConfig
-): navigationConfig is FernRegistryDocsWrite.UnversionedTabbedNavigationConfig {
-    return Array.isArray((navigationConfig as FernRegistryDocsWrite.UnversionedTabbedNavigationConfig).tabs);
+    navigationConfig: DocsV1Write.NavigationConfig
+): navigationConfig is DocsV1Write.UnversionedTabbedNavigationConfig {
+    return Array.isArray((navigationConfig as DocsV1Write.UnversionedTabbedNavigationConfig).tabs);
 }
 
 export function isUnversionedUntabbedNavigationConfig(
-    navigationConfig: FernRegistryDocsWrite.NavigationConfig
-): navigationConfig is FernRegistryDocsWrite.UnversionedUntabbedNavigationConfig {
-    return Array.isArray((navigationConfig as FernRegistryDocsWrite.UnversionedUntabbedNavigationConfig).items);
+    navigationConfig: DocsV1Write.NavigationConfig
+): navigationConfig is DocsV1Write.UnversionedUntabbedNavigationConfig {
+    return Array.isArray((navigationConfig as DocsV1Write.UnversionedUntabbedNavigationConfig).items);
 }

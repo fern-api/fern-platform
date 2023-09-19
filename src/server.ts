@@ -1,14 +1,14 @@
 import cors from "cors";
 import express from "express";
+import { register } from "./api";
 import { FdrApplication, getConfig } from "./app";
 import { registerBackgroundTasks } from "./background";
 import { getReadApiService } from "./controllers/api/getApiReadService";
 import { getRegisterApiService } from "./controllers/api/getRegisterApiService";
-import { getDocsReadService } from "./controllers/docs/getDocsReadService";
-import { getDocsReadV2Service } from "./controllers/docs/getDocsReadV2Service";
-import { getDocsWriteService } from "./controllers/docs/getDocsWriteService";
-import { getDocsWriteV2Service } from "./controllers/docs/getDocsWriteV2Service";
-import { register } from "./generated";
+import { getDocsReadService } from "./controllers/docs/v1/getDocsReadService";
+import { getDocsWriteService } from "./controllers/docs/v1/getDocsWriteService";
+import { getDocsReadV2Service } from "./controllers/docs/v2/getDocsReadV2Service";
+import { getDocsWriteV2Service } from "./controllers/docs/v2/getDocsWriteV2Service";
 
 const PORT = 8080;
 

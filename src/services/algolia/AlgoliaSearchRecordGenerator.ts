@@ -1,6 +1,5 @@
 import { v4 as uuid } from "uuid";
-import type { FernRegistry } from "../../generated";
-import * as FernRegistryDocsDb from "../../generated/api/resources/docs/resources/v1/resources/db";
+import { APIV1Db, DocsV1Db } from "../../api";
 import { convertMarkdownToText, truncateToBytes } from "../../util";
 import { isUnversionedTabbedNavigationConfig } from "../../util/fern/db";
 import { getSubpackageParentSlugs } from "../../util/fern/db/subpackage";
@@ -38,15 +37,15 @@ class NavigationContext {
 }
 
 interface AlgoliaSearchRecordGeneratorConfig {
-    docsDefinition: FernRegistry.docs.v1.db.DocsDefinitionDb;
-    apiDefinitionsById: Map<string, FernRegistry.api.v1.db.DbApiDefinition>;
+    docsDefinition: DocsV1Db.DocsDefinitionDb;
+    apiDefinitionsById: Map<string, APIV1Db.DbApiDefinition>;
 }
 
 export class AlgoliaSearchRecordGenerator {
     public constructor(private readonly config: AlgoliaSearchRecordGeneratorConfig) {}
 
     public generateAlgoliaSearchRecordsForSpecificDocsVersion(
-        navigationConfig: FernRegistryDocsDb.UnversionedNavigationConfig,
+        navigationConfig: DocsV1Db.UnversionedNavigationConfig,
         indexSegment: IndexSegment
     ): AlgoliaSearchRecord[] {
         const context = new NavigationContext(
@@ -57,7 +56,7 @@ export class AlgoliaSearchRecordGenerator {
     }
 
     private generateAlgoliaSearchRecordsForUnversionedNavigationConfig(
-        config: FernRegistryDocsDb.UnversionedNavigationConfig,
+        config: DocsV1Db.UnversionedNavigationConfig,
         context: NavigationContext
     ) {
         return isUnversionedTabbedNavigationConfig(config)
@@ -66,7 +65,7 @@ export class AlgoliaSearchRecordGenerator {
     }
 
     private generateAlgoliaSearchRecordsForUnversionedUntabbedNavigationConfig(
-        config: FernRegistryDocsDb.UnversionedUntabbedNavigationConfig,
+        config: DocsV1Db.UnversionedUntabbedNavigationConfig,
         context: NavigationContext
     ) {
         const records = config.items.map((item) => this.generateAlgoliaSearchRecordsForNavigationItem(item, context));
@@ -74,7 +73,7 @@ export class AlgoliaSearchRecordGenerator {
     }
 
     private generateAlgoliaSearchRecordsForUnversionedTabbedNavigationConfig(
-        config: FernRegistryDocsDb.UnversionedTabbedNavigationConfig,
+        config: DocsV1Db.UnversionedTabbedNavigationConfig,
         context: NavigationContext
     ) {
         const records = config.tabs.map((tab) => {
@@ -87,7 +86,7 @@ export class AlgoliaSearchRecordGenerator {
     }
 
     private generateAlgoliaSearchRecordsForNavigationItem(
-        item: FernRegistryDocsDb.NavigationItem,
+        item: DocsV1Db.NavigationItem,
         context: NavigationContext
     ): AlgoliaSearchRecord[] {
         if (item.type === "section") {
@@ -135,7 +134,7 @@ export class AlgoliaSearchRecordGenerator {
     }
 
     private generateAlgoliaSearchRecordsForApiDefinition(
-        apiDef: FernRegistry.api.v1.db.DbApiDefinition,
+        apiDef: APIV1Db.DbApiDefinition,
         context: NavigationContext
     ): AlgoliaSearchRecord[] {
         const { rootPackage, subpackages } = apiDef;
@@ -162,7 +161,7 @@ export class AlgoliaSearchRecordGenerator {
     }
 
     private generateAlgoliaSearchRecordsForEndpointDefinition(
-        endpointDef: FernRegistry.api.v1.db.DbEndpointDefinition,
+        endpointDef: APIV1Db.DbEndpointDefinition,
         context: NavigationContext
     ): AlgoliaSearchRecord[] {
         const records: AlgoliaSearchRecord[] = [];

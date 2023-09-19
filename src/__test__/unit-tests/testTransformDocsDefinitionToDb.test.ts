@@ -1,8 +1,8 @@
-import { getReferencedApiDefinitionIds } from "../../controllers/docs/transformDocsDefinitionToDb";
-import * as FernRegistryDocsDb from "../../generated/api/resources/docs/resources/v1/resources/db";
+import { DocsV1Db } from "../../api";
+import { getReferencedApiDefinitionIds } from "../../converters/db/convertDocsDefinitionToDb";
 
 it("definition register", async () => {
-    const navigationConfig: FernRegistryDocsDb.NavigationConfig = {
+    const navigationConfig: DocsV1Db.NavigationConfig = {
         items: [
             {
                 type: "api",

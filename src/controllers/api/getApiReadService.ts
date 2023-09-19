@@ -1,13 +1,10 @@
+import { APIV1Db, APIV1Read, APIV1ReadService } from "../../api";
 import type { FdrApplication } from "../../app";
-import { FernRegistry } from "../../generated";
-import * as FernRegistryApiRead from "../../generated/api/resources/api/resources/v1/resources/read";
-import { ApiDoesNotExistError } from "../../generated/api/resources/api/resources/v1/resources/read/errors/ApiDoesNotExistError";
-import { ReadService } from "../../generated/api/resources/api/resources/v1/resources/read/service/ReadService";
 import { readBuffer } from "../../util";
-import { transformApiDefinitionForReading } from "./dbToReadConversion/transformDbApiDefinitionToRead";
+import { transformApiDefinitionForReading } from "../../converters/read/convertAPIDefinitionToRead";
 
-export function getReadApiService(app: FdrApplication): ReadService {
-    return new ReadService({
+export function getReadApiService(app: FdrApplication): APIV1ReadService {
+    return new APIV1ReadService({
         getApi: async (req, res) => {
             const apiDefinition = await app.services.db.prisma.apiDefinitionsV2.findFirst({
                 where: {
@@ -15,7 +12,7 @@ export function getReadApiService(app: FdrApplication): ReadService {
                 },
             });
             if (apiDefinition == null) {
-                throw new ApiDoesNotExistError();
+                throw new APIV1Read.ApiDoesNotExistError();
             }
             const readApiDefinition = convertDbApiDefinitionToRead(apiDefinition.definition);
             return res.send(readApiDefinition);
@@ -23,7 +20,7 @@ export function getReadApiService(app: FdrApplication): ReadService {
     });
 }
 
-export function convertDbApiDefinitionToRead(buffer: Buffer): FernRegistryApiRead.ApiDefinition {
-    const apiDefinitionJson = readBuffer(buffer) as FernRegistry.api.v1.db.DbApiDefinition;
+export function convertDbApiDefinitionToRead(buffer: Buffer): APIV1Read.ApiDefinition {
+    const apiDefinitionJson = readBuffer(buffer) as APIV1Db.DbApiDefinition;
     return transformApiDefinitionForReading(apiDefinitionJson);
 }

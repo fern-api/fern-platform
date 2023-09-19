@@ -1,9 +1,9 @@
-import { FernRegistry } from "../../../generated";
-import { assertNever, type WithoutQuestionMarks } from "../../../util";
+import { APIV1Db, APIV1Read } from "../../api";
+import { assertNever, type WithoutQuestionMarks } from "../../util";
 
 export function transformApiDefinitionForReading(
-    dbShape: FernRegistry.api.v1.db.DbApiDefinition
-): WithoutQuestionMarks<FernRegistry.api.v1.read.ApiDefinition> {
+    dbShape: APIV1Db.DbApiDefinition
+): WithoutQuestionMarks<APIV1Read.ApiDefinition> {
     return {
         id: dbShape.id,
         rootPackage: {
@@ -26,8 +26,8 @@ export function transformApiDefinitionForReading(
 function transformSubpackage({
     dbShape,
 }: {
-    dbShape: FernRegistry.api.v1.db.DbApiDefinitionSubpackage;
-}): WithoutQuestionMarks<FernRegistry.api.v1.read.ApiDefinitionSubpackage> {
+    dbShape: APIV1Db.DbApiDefinitionSubpackage;
+}): WithoutQuestionMarks<APIV1Read.ApiDefinitionSubpackage> {
     return {
         subpackageId: dbShape.subpackageId,
         parent: dbShape.parent,
@@ -47,8 +47,8 @@ function transformSubpackage({
 function transformEndpoint({
     dbShape,
 }: {
-    dbShape: FernRegistry.api.v1.db.DbEndpointDefinition;
-}): WithoutQuestionMarks<FernRegistry.api.v1.read.EndpointDefinition> {
+    dbShape: APIV1Db.DbEndpointDefinition;
+}): WithoutQuestionMarks<APIV1Read.EndpointDefinition> {
     return {
         environments: dbShape.environments ?? [],
         availability: dbShape.availability,
@@ -74,8 +74,8 @@ function transformEndpoint({
 function transformHttpRequest({
     dbShape,
 }: {
-    dbShape: FernRegistry.api.v1.db.DbHttpRequest;
-}): WithoutQuestionMarks<FernRegistry.api.v1.read.HttpRequest> {
+    dbShape: APIV1Db.DbHttpRequest;
+}): WithoutQuestionMarks<APIV1Read.HttpRequest> {
     switch (dbShape.type.type) {
         case "object":
             return {

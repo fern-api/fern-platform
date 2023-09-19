@@ -1,24 +1,19 @@
 import { v4 as uuidv4 } from "uuid";
-import { type FdrApplication } from "../../app";
-import { ApiId, OrgId } from "../../generated/api";
-import { DocsRegistrationId, FilePath } from "../../generated/api/resources/docs/resources/v1/resources/write";
-import { DocsRegistrationIdNotFound } from "../../generated/api/resources/docs/resources/v1/resources/write/errors/DocsRegistrationIdNotFound";
-import { InvalidCustomDomainError } from "../../generated/api/resources/docs/resources/v2/resources/write/errors/InvalidCustomDomainError";
-import { InvalidDomainError } from "../../generated/api/resources/docs/resources/v2/resources/write/errors/InvalidDomainError";
-import { WriteService } from "../../generated/api/resources/docs/resources/v2/resources/write/service/WriteService";
-import { type S3FileInfo } from "../../services/s3";
-import { getParsedUrl } from "../../util";
-import { revalidateUrl } from "./revalidateUrl";
-import { transformWriteDocsDefinitionToDb } from "./transformDocsDefinitionToDb";
+import { DocsV1Write, DocsV2Write, DocsV2WriteService, FdrAPI } from "../../../api";
+import { type FdrApplication } from "../../../app";
+import { transformWriteDocsDefinitionToDb } from "../../../converters/db/convertDocsDefinitionToDb";
+import { type S3FileInfo } from "../../../services/s3";
+import { getParsedUrl } from "../../../util";
+import { revalidateUrl } from "../revalidateUrl";
 
-const DOCS_REGISTRATIONS: Record<DocsRegistrationId, DocsRegistrationInfo> = {};
+const DOCS_REGISTRATIONS: Record<DocsV1Write.DocsRegistrationId, DocsRegistrationInfo> = {};
 
 export interface DocsRegistrationInfo {
     fernDomain: string;
     customDomains: ParsedCustomDomain[];
-    apiId: ApiId;
-    orgId: OrgId;
-    s3FileInfos: Record<FilePath, S3FileInfo>;
+    apiId: FdrAPI.ApiId;
+    orgId: FdrAPI.OrgId;
+    s3FileInfos: Record<DocsV1Write.FilePath, S3FileInfo>;
 }
 
 function validateDocsDomain({ app, domain }: { app: FdrApplication; domain: string }): string {
@@ -26,7 +21,7 @@ function validateDocsDomain({ app, domain }: { app: FdrApplication; domain: stri
     if (parsedUrl.hostname.endsWith(app.config.domainSuffix)) {
         return parsedUrl.hostname;
     }
-    throw new InvalidDomainError();
+    throw new DocsV2Write.InvalidDomainError();
 }
 
 interface ParsedCustomDomain {
@@ -43,7 +38,7 @@ function validateCustomDomains({ customDomains }: { customDomains: string[] }): 
                 continue;
             }
             if (one.includes(two) || two.includes(one)) {
-                throw new InvalidCustomDomainError();
+                throw new DocsV2Write.InvalidCustomDomainError();
             }
         }
     }
@@ -59,8 +54,8 @@ function validateCustomDomains({ customDomains }: { customDomains: string[] }): 
     return parsedDomains;
 }
 
-export function getDocsWriteV2Service(app: FdrApplication): WriteService {
-    return new WriteService({
+export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
+    return new DocsV2WriteService({
         startDocsRegister: async (req, res) => {
             await app.services.auth.checkUserBelongsToOrg({
                 authHeader: req.headers.authorization,
@@ -92,7 +87,7 @@ export function getDocsWriteV2Service(app: FdrApplication): WriteService {
         finishDocsRegister: async (req, res) => {
             const docsRegistrationInfo = DOCS_REGISTRATIONS[req.params.docsRegistrationId];
             if (docsRegistrationInfo == null) {
-                throw new DocsRegistrationIdNotFound();
+                throw new DocsV1Write.DocsRegistrationIdNotFound();
             }
             try {
                 app.logger.info(`[${docsRegistrationInfo.fernDomain}] Called finishDocsRegister`);

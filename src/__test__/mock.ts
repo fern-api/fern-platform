@@ -1,6 +1,6 @@
+import { DocsV1Db } from "../api";
 import { FdrApplication, type FdrConfig } from "../app";
 import { type FdrServices } from "../app/FdrApplication";
-import { type DocsDefinitionDb } from "../generated/api/resources/docs/resources/v1/resources/db";
 import { ConfigSegmentTuple, type AlgoliaSearchRecord, type AlgoliaService } from "../services/algolia";
 import { type AuthService } from "../services/auth";
 import {
@@ -19,7 +19,7 @@ class MockAlgoliaService implements AlgoliaService {
     }
 
     async generateSearchRecords(
-        _docsDefinition: DocsDefinitionDb,
+        _docsDefinition: DocsV1Db.DocsDefinitionDb,
         _configSegmentTuples: ConfigSegmentTuple[]
     ): Promise<AlgoliaSearchRecord[]> {
         return [];

@@ -1,9 +1,9 @@
-import * as ApiV1Write from "../../../generated/api/resources/api/resources/v1/resources/register";
+import { APIV1Write } from "../../../api";
 import { assertNever } from "../../../util";
 
 export function generateWebhookPayloadExample(
-    shape: ApiV1Write.WebhookPayloadShape,
-    resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition
+    shape: APIV1Write.WebhookPayloadShape,
+    resolveTypeById: (typeId: APIV1Write.TypeId) => APIV1Write.TypeDefinition
 ): unknown {
     switch (shape.type) {
         case "object":
@@ -16,8 +16,8 @@ export function generateWebhookPayloadExample(
 }
 
 export function generateHttpRequestBodyExample(
-    type: ApiV1Write.HttpRequestBodyShape,
-    resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition
+    type: APIV1Write.HttpRequestBodyShape,
+    resolveTypeById: (typeId: APIV1Write.TypeId) => APIV1Write.TypeDefinition
 ): unknown {
     switch (type.type) {
         case "object":
@@ -32,8 +32,8 @@ export function generateHttpRequestBodyExample(
 }
 
 function generateHttpJsonRequestBodyExample(
-    shape: ApiV1Write.JsonRequestBodyShape,
-    resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition
+    shape: APIV1Write.JsonRequestBodyShape,
+    resolveTypeById: (typeId: APIV1Write.TypeId) => APIV1Write.TypeDefinition
 ): unknown {
     switch (shape.type) {
         case "object":
@@ -46,8 +46,8 @@ function generateHttpJsonRequestBodyExample(
 }
 
 export function generateHttpResponseBodyExample(
-    type: ApiV1Write.HttpResponseBodyShape,
-    resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition
+    type: APIV1Write.HttpResponseBodyShape,
+    resolveTypeById: (typeId: APIV1Write.TypeId) => APIV1Write.TypeDefinition
 ): unknown {
     switch (type.type) {
         case "object":
@@ -62,8 +62,8 @@ export function generateHttpResponseBodyExample(
 }
 
 function generateExampleObject(
-    object: ApiV1Write.ObjectType,
-    resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition,
+    object: APIV1Write.ObjectType,
+    resolveTypeById: (typeId: APIV1Write.TypeId) => APIV1Write.TypeDefinition,
     ignoreOptionals: boolean,
     visited: Set<string>,
     depth: number
@@ -85,8 +85,8 @@ function generateExampleObject(
 }
 
 export function generateExampleFromTypeReference(
-    reference: ApiV1Write.TypeReference,
-    resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition,
+    reference: APIV1Write.TypeReference,
+    resolveTypeById: (typeId: APIV1Write.TypeId) => APIV1Write.TypeDefinition,
     ignoreOptionals: boolean,
     visited: Set<string>,
     depth: number
@@ -172,8 +172,8 @@ export function generateExampleFromTypeReference(
 }
 
 function generateExampleFromId(
-    id: ApiV1Write.TypeId,
-    resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition,
+    id: APIV1Write.TypeId,
+    resolveTypeById: (typeId: APIV1Write.TypeId) => APIV1Write.TypeDefinition,
     ignoreOptionals: boolean,
     visited: Set<string>,
     depth: number
@@ -214,11 +214,11 @@ function generateExampleFromId(
     }
 }
 
-export function generateExampleFromLiteral(reference: ApiV1Write.LiteralType): string {
+export function generateExampleFromLiteral(reference: APIV1Write.LiteralType): string {
     return reference.value;
 }
 
-function generateExamplePrimitive(reference: ApiV1Write.PrimitiveType): string | number | boolean | null {
+function generateExamplePrimitive(reference: APIV1Write.PrimitiveType): string | number | boolean | null {
     switch (reference.type) {
         case "string":
             return "string";
@@ -242,9 +242,9 @@ function generateExamplePrimitive(reference: ApiV1Write.PrimitiveType): string |
 }
 
 function getAllObjectProperties(
-    object: ApiV1Write.ObjectType,
-    resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition
-): ApiV1Write.ObjectProperty[] {
+    object: APIV1Write.ObjectType,
+    resolveTypeById: (typeId: APIV1Write.TypeId) => APIV1Write.TypeDefinition
+): APIV1Write.ObjectProperty[] {
     return [
         ...object.properties,
         ...object.extends.flatMap((typeId) => {
@@ -261,8 +261,8 @@ function getAllObjectProperties(
 }
 
 function resolveAlias(
-    typeId: ApiV1Write.TypeId,
-    resolveTypeById: (typeId: ApiV1Write.TypeId) => ApiV1Write.TypeDefinition
+    typeId: APIV1Write.TypeId,
+    resolveTypeById: (typeId: APIV1Write.TypeId) => APIV1Write.TypeDefinition
 ) {
     const resolvedTypeDefinition = resolveTypeById(typeId);
     if (resolvedTypeDefinition.shape.type === "alias" && resolvedTypeDefinition.shape.value.type === "id") {

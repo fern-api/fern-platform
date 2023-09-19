@@ -1,13 +1,13 @@
 import { PrismaClient } from "@prisma/client";
-import { DocsRegistrationInfo } from "../../controllers/docs/getDocsWriteV2Service";
-import type { FernRegistry } from "../../generated";
+import { APIV1Db, DocsV1Db } from "../../api";
+import { DocsRegistrationInfo } from "../../controllers/docs/v2/getDocsWriteV2Service";
 import type { IndexSegment } from "../../services/algolia";
 import { writeBuffer } from "../../util/serde";
 
 export interface DatabaseService {
     readonly prisma: PrismaClient;
 
-    getApiDefinition(id: string): Promise<FernRegistry.api.v1.db.DbApiDefinition | null>;
+    getApiDefinition(id: string): Promise<APIV1Db.DbApiDefinition | null>;
 
     markIndexForDeletion(indexId: string): Promise<void>;
 
@@ -17,7 +17,7 @@ export interface DatabaseService {
         indexSegments,
     }: {
         docsRegistrationInfo: DocsRegistrationInfo;
-        dbDocsDefinition: FernRegistry.docs.v1.db.DocsDefinitionDb.V2;
+        dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V2;
         indexSegments: IndexSegment[];
     }): Promise<void>;
 }
@@ -39,7 +39,7 @@ export class DatabaseServiceImpl implements DatabaseService {
         });
         if (!record) return null;
         try {
-            return JSON.parse(record.definition.toString()) as FernRegistry.api.v1.db.DbApiDefinition;
+            return JSON.parse(record.definition.toString()) as APIV1Db.DbApiDefinition;
         } catch {
             return null;
         }
@@ -57,7 +57,7 @@ export class DatabaseServiceImpl implements DatabaseService {
         indexSegments,
     }: {
         docsRegistrationInfo: DocsRegistrationInfo;
-        dbDocsDefinition: FernRegistry.docs.v1.db.DocsDefinitionDb.V2;
+        dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V2;
         indexSegments: IndexSegment[];
     }): Promise<void> {
         await this.prisma.$transaction(async (tx) => {

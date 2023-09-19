@@ -1,8 +1,8 @@
-import { transformApiDefinitionForDb } from "../../controllers/api/registerToDbConversion/transformApiDefinitionToDb";
-import * as FernRegistryApiWrite from "../../generated/api/resources/api/resources/v1/resources/register";
+import { APIV1Write } from "../../api";
+import { transformApiDefinitionForDb } from "../../converters/db/convertAPIDefinitionToDb";
 
 it("api register", async () => {
-    const apiDefinition: FernRegistryApiWrite.ApiDefinition = {
+    const apiDefinition: APIV1Write.ApiDefinition = {
         rootPackage: {
             endpoints: [],
             subpackages: [],

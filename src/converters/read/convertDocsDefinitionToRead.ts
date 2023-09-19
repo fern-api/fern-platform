@@ -1,6 +1,5 @@
 import { kebabCase } from "lodash";
-import type * as FernRegistryDocsDb from "../../generated/api/resources/docs/resources/v1/resources/db";
-import type * as FernRegistryDocsRead from "../../generated/api/resources/docs/resources/v1/resources/read";
+import { DocsV1Db, DocsV1Read } from "../../api";
 import { type WithoutQuestionMarks } from "../../util";
 import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../../util/colors";
 import {
@@ -12,8 +11,8 @@ import {
 export function transformDbDocsDefinitionToRead({
     dbShape,
 }: {
-    dbShape: FernRegistryDocsDb.DocsDefinitionDb;
-}): WithoutQuestionMarks<FernRegistryDocsRead.DocsConfig> {
+    dbShape: DocsV1Db.DocsDefinitionDb;
+}): WithoutQuestionMarks<DocsV1Read.DocsConfig> {
     return {
         navigation: transformNavigationConfigToRead(dbShape.config.navigation),
         logo: dbShape.config.logo,
@@ -31,9 +30,7 @@ export function transformDbDocsDefinitionToRead({
     };
 }
 
-export function transformNavigationConfigToRead(
-    dbShape: FernRegistryDocsDb.NavigationConfig
-): FernRegistryDocsRead.NavigationConfig {
+export function transformNavigationConfigToRead(dbShape: DocsV1Db.NavigationConfig): DocsV1Read.NavigationConfig {
     if (isUnversionedDbConfig(dbShape)) {
         return transformUnversionedNavigationConfigForDb(dbShape);
     } else if (isVersionedDbConfig(dbShape)) {
@@ -43,11 +40,11 @@ export function transformNavigationConfigToRead(
 }
 
 function transformVersionedNavigationConfigToRead(
-    config: FernRegistryDocsDb.VersionedNavigationConfig
-): WithoutQuestionMarks<FernRegistryDocsRead.VersionedNavigationConfig> {
+    config: DocsV1Db.VersionedNavigationConfig
+): WithoutQuestionMarks<DocsV1Read.VersionedNavigationConfig> {
     return {
         versions: config.versions.map(
-            (version): WithoutQuestionMarks<FernRegistryDocsRead.VersionedNavigationConfigData> => ({
+            (version): WithoutQuestionMarks<DocsV1Read.VersionedNavigationConfigData> => ({
                 urlSlug: version.urlSlug ?? kebabCase(version.version),
                 availability: version.availability,
                 version: version.version,
@@ -58,8 +55,8 @@ function transformVersionedNavigationConfigToRead(
 }
 
 function transformUnversionedNavigationConfigForDb(
-    config: FernRegistryDocsDb.UnversionedNavigationConfig
-): FernRegistryDocsRead.UnversionedNavigationConfig {
+    config: DocsV1Db.UnversionedNavigationConfig
+): DocsV1Read.UnversionedNavigationConfig {
     return isUnversionedUntabbedDbConfig(config)
         ? {
               items: config.items.map(transformNavigationItemForDb),
@@ -69,18 +66,14 @@ function transformUnversionedNavigationConfigForDb(
           };
 }
 
-export function transformNavigationTabForDb(
-    dbShape: FernRegistryDocsDb.NavigationTab
-): FernRegistryDocsRead.NavigationTab {
+export function transformNavigationTabForDb(dbShape: DocsV1Db.NavigationTab): DocsV1Read.NavigationTab {
     return {
         ...dbShape,
         items: dbShape.items.map(transformNavigationItemForDb),
     };
 }
 
-export function transformNavigationItemForDb(
-    dbShape: FernRegistryDocsDb.NavigationItem
-): FernRegistryDocsRead.NavigationItem {
+export function transformNavigationItemForDb(dbShape: DocsV1Db.NavigationItem): DocsV1Read.NavigationItem {
     switch (dbShape.type) {
         case "api":
             return {
@@ -97,7 +90,7 @@ export function transformNavigationItemForDb(
     }
 }
 
-export function getColorsV3(docsDbConfig: FernRegistryDocsDb.DocsDbConfig): FernRegistryDocsRead.ColorsConfigV3 {
+export function getColorsV3(docsDbConfig: DocsV1Db.DocsDbConfig): DocsV1Read.ColorsConfigV3 {
     if (docsDbConfig.colorsV2 != null) {
         if (docsDbConfig.colorsV2.accentPrimary?.type === "themed") {
             if (docsDbConfig.colorsV2.background == null) {

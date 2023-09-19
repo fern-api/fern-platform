@@ -1,7 +1,7 @@
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import type { FdrApplication, FdrConfig } from "../../app";
 import { LOGGER } from "../../app/FdrApplication";
-import { UnauthorizedError, UserNotInOrgError } from "../../generated/api";
+import { FdrAPI } from "../../api";
 
 export interface AuthService {
     checkUserBelongsToOrg({ authHeader, orgId }: { authHeader: string | undefined; orgId: string }): Promise<void>;
@@ -18,7 +18,7 @@ export class AuthServiceImpl implements AuthService {
         orgId: string;
     }): Promise<void> {
         if (authHeader == null) {
-            throw new UnauthorizedError();
+            throw new FdrAPI.UnauthorizedError();
         }
         const token = getTokenFromAuthHeader(authHeader);
         const venus = getVenusClient({
@@ -32,7 +32,7 @@ export class AuthServiceImpl implements AuthService {
         }
         const belongsToOrg = response.body;
         if (!belongsToOrg) {
-            throw new UserNotInOrgError();
+            throw new FdrAPI.UserNotInOrgError();
         }
     }
 }

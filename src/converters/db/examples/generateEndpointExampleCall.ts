@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-base-to-string */
+import { APIV1Write } from "../../../api";
 import { LOGGER } from "../../../app/FdrApplication";
-import * as ApiV1Write from "../../../generated/api/resources/api/resources/v1/resources/register";
-import { EndpointExampleGenerationError } from "../../../generated/api/resources/api/resources/v1/resources/register/errors";
 import { assertNever } from "../../../util";
 import {
     generateExampleFromTypeReference,
@@ -16,12 +15,12 @@ const MAX_OPTIONAL_EXAMPLES_FOR_QUERY_PARAMS = 2;
  * Otherwise generates an example for a successful request.
  */
 export function generateEndpointExampleCall(
-    endpointDefinition: ApiV1Write.EndpointDefinition,
-    apiDefinition: ApiV1Write.ApiDefinition,
-    error?: ApiV1Write.ErrorDeclaration
-): ApiV1Write.ExampleEndpointCall {
+    endpointDefinition: APIV1Write.EndpointDefinition,
+    apiDefinition: APIV1Write.ApiDefinition,
+    error?: APIV1Write.ErrorDeclaration
+): APIV1Write.ExampleEndpointCall {
     try {
-        const resolveTypeById = (typeId: ApiV1Write.TypeId): ApiV1Write.TypeDefinition => {
+        const resolveTypeById = (typeId: APIV1Write.TypeId): APIV1Write.TypeDefinition => {
             const typeDefinition = apiDefinition.types[typeId];
             if (typeDefinition == null) {
                 throw new Error(`Failed to find ${typeId}`);
@@ -43,7 +42,7 @@ export function generateEndpointExampleCall(
             }
             exampleQueryParameters[queryParameter.key] = value;
         }
-        const exampleEndpointCall: Omit<ApiV1Write.ExampleEndpointCall, "path"> = {
+        const exampleEndpointCall: Omit<APIV1Write.ExampleEndpointCall, "path"> = {
             pathParameters: endpointDefinition.path.pathParameters.reduce(
                 (acc, pathParameter) => ({
                     ...acc,
@@ -86,11 +85,11 @@ export function generateEndpointExampleCall(
         };
     } catch (e) {
         LOGGER.error(`Failed to generate example for endpoint ${endpointDefinition.id}`, e);
-        throw new EndpointExampleGenerationError({ endpointId: endpointDefinition.id });
+        throw new APIV1Write.EndpointExampleGenerationError({ endpointId: endpointDefinition.id });
     }
 }
 
-function generatePath(path: ApiV1Write.EndpointPath, pathParameters: Record<string, unknown>): string {
+function generatePath(path: APIV1Write.EndpointPath, pathParameters: Record<string, unknown>): string {
     let pathString = "";
     for (const part of path.parts) {
         switch (part.type) {

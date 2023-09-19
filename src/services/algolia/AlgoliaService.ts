@@ -1,7 +1,6 @@
 import algolia, { type SearchClient } from "algoliasearch";
+import { APIV1Db, DocsV1Db } from "../../api";
 import type { FdrApplication } from "../../app";
-import type { FernRegistry } from "../../generated";
-import type * as FernRegistryDocsDb from "../../generated/api/resources/docs/resources/v1/resources/db";
 import { AlgoliaSearchRecordGenerator } from "./AlgoliaSearchRecordGenerator";
 import type { AlgoliaSearchRecord, ConfigSegmentTuple } from "./types";
 
@@ -9,7 +8,7 @@ export interface AlgoliaService {
     deleteIndexSegmentRecords(indexSegmentIds: string[]): Promise<void>;
 
     generateSearchRecords(
-        docsDefinition: FernRegistryDocsDb.DocsDefinitionDb,
+        docsDefinition: DocsV1Db.DocsDefinitionDb,
         configSegmentTuples: ConfigSegmentTuple[]
     ): Promise<AlgoliaSearchRecord[]>;
 
@@ -39,7 +38,7 @@ export class AlgoliaServiceImpl implements AlgoliaService {
     }
 
     public async generateSearchRecords(
-        docsDefinition: FernRegistryDocsDb.DocsDefinitionDb,
+        docsDefinition: DocsV1Db.DocsDefinitionDb,
         configSegmentTuples: ConfigSegmentTuple[]
     ) {
         const preloadApiDefinitions = async () => {
@@ -48,7 +47,7 @@ export class AlgoliaServiceImpl implements AlgoliaService {
                     async (id) => [id, await this.app.services.db.getApiDefinition(id)] as const
                 )
             );
-            return new Map(apiIdDefinitionTuples) as Map<string, FernRegistry.api.v1.db.DbApiDefinition>;
+            return new Map(apiIdDefinitionTuples) as Map<string, APIV1Db.DbApiDefinition>;
         };
         const apiDefinitionsById = await preloadApiDefinitions();
         return configSegmentTuples.flatMap(([config, indexSegment]) => {

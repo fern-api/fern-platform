@@ -1,11 +1,11 @@
 import { resolve } from "path";
-import { transformApiDefinitionForDb } from "../../../controllers/api/registerToDbConversion/transformApiDefinitionToDb";
-import { transformWriteDocsDefinitionToDb } from "../../../controllers/docs/transformDocsDefinitionToDb";
-import type { FernRegistry } from "../../../generated";
+
+import type { APIV1Write, DocsV1Write } from "../../../api";
+import { transformApiDefinitionForDb } from "../../../converters/db/convertAPIDefinitionToDb";
+import { transformWriteDocsDefinitionToDb } from "../../../converters/db/convertDocsDefinitionToDb";
 import type { AlgoliaSearchRecord } from "../../../services/algolia";
 import { AlgoliaSearchRecordGenerator } from "../../../services/algolia/AlgoliaSearchRecordGenerator";
 import { isVersionedNavigationConfig } from "../../../util/fern/db";
-import type * as FernRegistryApiWrite from "../../generated/api/resources/api/resources/v1/resources/register";
 
 const FIXTURES_DIR = resolve(__dirname, "fixtures");
 const FIXTURES: Fixture[] = [
@@ -20,13 +20,13 @@ const FIXTURES: Fixture[] = [
 function loadDocsDefinition(fixture: Fixture) {
     const filePath = resolve(FIXTURES_DIR, fixture.name, "docs.json");
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    return require(filePath) as FernRegistry.docs.v1.write.DocsDefinition;
+    return require(filePath) as DocsV1Write.DocsDefinition;
 }
 
 function loadApiDefinition(fixture: Fixture, id: string) {
     const filePath = resolve(FIXTURES_DIR, fixture.name, "apis", `${id}.json`);
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    return require(filePath) as FernRegistryApiWrite.ApiDefinition;
+    return require(filePath) as APIV1Write.ApiDefinition;
 }
 
 type FilteredSearchRecord = Omit<AlgoliaSearchRecord, "objectID">;

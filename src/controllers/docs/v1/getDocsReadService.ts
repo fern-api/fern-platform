@@ -1,15 +1,13 @@
 import type { DocsV2, IndexSegment } from "@prisma/client";
-import type { FdrApplication } from "../../app";
-import { FernRegistry } from "../../generated";
-import { DomainNotRegisteredError } from "../../generated/api/resources/docs/resources/v1/resources/read";
-import { ReadService } from "../../generated/api/resources/docs/resources/v1/resources/read/service/ReadService";
-import { readBuffer } from "../../util";
-import { isVersionedNavigationConfig } from "../../util/fern/db";
-import { convertDbApiDefinitionToRead } from "../api/getApiReadService";
-import { transformDbDocsDefinitionToRead } from "./transformDbDocsDefinitionToRead";
+import { DocsV1Db, DocsV1Read, DocsV1ReadService } from "../../../api";
+import type { FdrApplication } from "../../../app";
+import { transformDbDocsDefinitionToRead } from "../../../converters/read/convertDocsDefinitionToRead";
+import { readBuffer } from "../../../util";
+import { isVersionedNavigationConfig } from "../../../util/fern/db";
+import { convertDbApiDefinitionToRead } from "../../api/getApiReadService";
 
-export function getDocsReadService(app: FdrApplication): ReadService {
-    return new ReadService({
+export function getDocsReadService(app: FdrApplication): DocsV1ReadService {
+    return new DocsV1ReadService({
         getDocsForDomainLegacy: async (req, res) => {
             const definition = await getDocsForDomain({ app, domain: req.params.domain });
             return res.send(definition);
@@ -27,7 +25,7 @@ export async function getDocsForDomain({
 }: {
     app: FdrApplication;
     domain: string;
-}): Promise<FernRegistry.docs.v1.read.DocsDefinition> {
+}): Promise<DocsV1Read.DocsDefinition> {
     const [docs, docsV2] = await Promise.all([
         app.services.db.prisma.docs.findFirst({
             where: {
@@ -42,7 +40,7 @@ export async function getDocsForDomain({
     ]);
 
     if (!docs) {
-        throw new DomainNotRegisteredError();
+        throw new DocsV1Read.DomainNotRegisteredError();
     }
     const docsDefinitionJson = readBuffer(docs.docsDefinition);
     const docsDbDefinition = migrateDocsDbDefinition(docsDefinitionJson);
@@ -56,9 +54,9 @@ export async function getDocsDefinition({
     docsV2,
 }: {
     app: FdrApplication;
-    docsDbDefinition: FernRegistry.docs.v1.db.DocsDefinitionDb;
+    docsDbDefinition: DocsV1Db.DocsDefinitionDb;
     docsV2: DocsV2 | null;
-}): Promise<FernRegistry.docs.v1.read.DocsDefinition> {
+}): Promise<DocsV1Read.DocsDefinition> {
     const [apiDefinitions, activeIndexSegments] = await Promise.all([
         app.services.db.prisma.apiDefinitionsV2.findMany({
             where: {
@@ -106,28 +104,29 @@ function getSearchInfoFromDocs({
 }: {
     docsV2: DocsV2 | null;
     activeIndexSegments: IndexSegment[];
-    docsDbDefinition: FernRegistry.docs.v1.db.DocsDefinitionDb;
+    docsDbDefinition: DocsV1Db.DocsDefinitionDb;
     app: FdrApplication;
-}): FernRegistry.docs.v1.read.SearchInfo {
+}): DocsV1Read.SearchInfo {
     if (docsV2 == null || !Array.isArray(docsV2.indexSegmentIds)) {
         return { type: "legacyMultiAlgoliaIndex" };
     }
     const areDocsVersioned = isVersionedNavigationConfig(docsDbDefinition.config.navigation);
     if (areDocsVersioned) {
-        const indexSegmentsByVersionId = activeIndexSegments.reduce<
-            Record<string, FernRegistry.docs.v1.read.IndexSegment>
-        >((acc, indexSegment) => {
-            const searchApiKey = app.services.algoliaIndexSegmentManager.getOrGenerateSearchApiKeyForIndexSegment(
-                indexSegment.id
-            );
-            // Since the docs are versioned, all referenced index segments will have a version
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            acc[indexSegment.version!] = {
-                id: indexSegment.id,
-                searchApiKey,
-            };
-            return acc;
-        }, {});
+        const indexSegmentsByVersionId = activeIndexSegments.reduce<Record<string, DocsV1Read.IndexSegment>>(
+            (acc, indexSegment) => {
+                const searchApiKey = app.services.algoliaIndexSegmentManager.getOrGenerateSearchApiKeyForIndexSegment(
+                    indexSegment.id
+                );
+                // Since the docs are versioned, all referenced index segments will have a version
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                acc[indexSegment.version!] = {
+                    id: indexSegment.id,
+                    searchApiKey,
+                };
+                return acc;
+            },
+            {}
+        );
         return {
             type: "singleAlgoliaIndex",
             value: {
@@ -156,10 +155,10 @@ function getSearchInfoFromDocs({
     }
 }
 
-export function migrateDocsDbDefinition(dbValue: unknown): FernRegistry.docs.v1.db.DocsDefinitionDb {
+export function migrateDocsDbDefinition(dbValue: unknown): DocsV1Db.DocsDefinitionDb {
     return {
         // default to v1, but this will be overwritten if dbValue has "type" defined
         type: "v1",
         ...(dbValue as object),
-    } as FernRegistry.docs.v1.db.DocsDefinitionDb;
+    } as DocsV1Db.DocsDefinitionDb;
 }

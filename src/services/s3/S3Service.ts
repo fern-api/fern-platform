@@ -2,11 +2,11 @@ import { GetObjectCommand, PutObjectCommand, PutObjectCommandInput, S3Client } f
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import NodeCache from "node-cache";
 import { v4 as uuidv4 } from "uuid";
+import { DocsV1Write } from "../../api";
 import type { FdrApplication } from "../../app";
-import { type FilePath, type FileS3UploadUrl } from "../../generated/api/resources/docs/resources/v1/resources/write";
 
 export interface S3FileInfo {
-    presignedUrl: FileS3UploadUrl;
+    presignedUrl: DocsV1Write.FileS3UploadUrl;
     key: string;
 }
 
@@ -16,8 +16,8 @@ export interface S3Service {
         filepaths,
     }: {
         domain: string;
-        filepaths: FilePath[];
-    }): Promise<Record<FilePath, S3FileInfo>>;
+        filepaths: DocsV1Write.FilePath[];
+    }): Promise<Record<DocsV1Write.FilePath, S3FileInfo>>;
 
     getPresignedDownloadUrl({ key }: { key: string }): Promise<string>;
 }
@@ -60,9 +60,9 @@ export class S3ServiceImpl implements S3Service {
         filepaths,
     }: {
         domain: string;
-        filepaths: FilePath[];
-    }): Promise<Record<FilePath, S3FileInfo>> {
-        const result: Record<FilePath, S3FileInfo> = {};
+        filepaths: DocsV1Write.FilePath[];
+    }): Promise<Record<DocsV1Write.FilePath, S3FileInfo>> {
+        const result: Record<DocsV1Write.FilePath, S3FileInfo> = {};
         const time: string = new Date().toISOString();
         for (const filepath of filepaths) {
             const { url, key } = await this.createPresignedUploadUrlWithClient({ domain, time, filepath });
@@ -84,7 +84,7 @@ export class S3ServiceImpl implements S3Service {
     }: {
         domain: string;
         time: string;
-        filepath: FilePath;
+        filepath: DocsV1Write.FilePath;
     }): Promise<{ url: string; key: string }> {
         const key = this.constructS3Key({ domain, time, filepath });
         const input: PutObjectCommandInput = {
@@ -101,7 +101,15 @@ export class S3ServiceImpl implements S3Service {
         };
     }
 
-    constructS3Key({ domain, time, filepath }: { domain: string; time: string; filepath: FilePath }): string {
+    constructS3Key({
+        domain,
+        time,
+        filepath,
+    }: {
+        domain: string;
+        time: string;
+        filepath: DocsV1Write.FilePath;
+    }): string {
         return `${domain}/${time}/${filepath}`;
     }
 }

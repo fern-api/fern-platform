@@ -1,15 +1,15 @@
-import type { FernRegistry } from "../../../generated";
+import type { APIV1Db } from "../../../api";
 
 export function getSubpackageParentSlugs(
-    subpackage: FernRegistry.api.v1.db.DbApiDefinitionSubpackage,
-    definition: FernRegistry.api.v1.db.DbApiDefinition
+    subpackage: APIV1Db.DbApiDefinitionSubpackage,
+    definition: APIV1Db.DbApiDefinition
 ): string[] {
     return _getSubpackageParentSlugs(subpackage, definition, []);
 }
 
 function _getSubpackageParentSlugs(
-    subpackage: FernRegistry.api.v1.db.DbApiDefinitionSubpackage,
-    definition: FernRegistry.api.v1.db.DbApiDefinition,
+    subpackage: APIV1Db.DbApiDefinitionSubpackage,
+    definition: APIV1Db.DbApiDefinition,
     slugsSoFar: string[]
 ): string[] {
     const parent = subpackage.parent != null ? definition.subpackages[subpackage.parent] : undefined;

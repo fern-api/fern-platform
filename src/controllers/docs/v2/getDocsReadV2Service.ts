@@ -1,13 +1,12 @@
-import type { FdrApplication } from "../../app";
-import { DomainNotRegisteredError } from "../../generated/api/resources/docs/resources/v1/resources/read/errors/DomainNotRegisteredError";
-import { ReadService as ReadV2Service } from "../../generated/api/resources/docs/resources/v2/resources/read/service/ReadService";
-import { getParsedUrl, readBuffer } from "../../util";
-import { getDocsDefinition, getDocsForDomain, migrateDocsDbDefinition } from "./getDocsReadService";
+import { DocsV2Read, DocsV2ReadService } from "../../../api";
+import type { FdrApplication } from "../../../app";
+import { getParsedUrl, readBuffer } from "../../../util";
+import { getDocsDefinition, getDocsForDomain, migrateDocsDbDefinition } from "../v1/getDocsReadService";
 
 const DOCS_DOMAIN_REGX = /^([^.\s]+)/;
 
-export function getDocsReadV2Service(app: FdrApplication): ReadV2Service {
-    return new ReadV2Service({
+export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
+    return new DocsV2ReadService({
         getDocsForUrl: async (req, res) => {
             const parsedUrl = getParsedUrl(req.body.url);
             const possibleDocs = await app.services.db.prisma.docsV2.findMany({
@@ -37,7 +36,7 @@ export function getDocsReadV2Service(app: FdrApplication): ReadV2Service {
                 // delegate to V1
                 const v1Domain = parsedUrl.hostname.match(DOCS_DOMAIN_REGX)?.[1];
                 if (v1Domain == null) {
-                    throw new DomainNotRegisteredError();
+                    throw new DocsV2Read.DomainNotRegisteredError();
                 }
                 const definition = await getDocsForDomain({ app, domain: v1Domain });
                 return res.send({

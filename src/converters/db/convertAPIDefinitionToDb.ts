@@ -1,20 +1,16 @@
 import { kebabCase } from "lodash";
 import { marked } from "marked";
-import { FernRegistry } from "../../../generated";
-import * as ApiV1Write from "../../../generated/api/resources/api/resources/v1/resources/register";
-import { assertNever, type WithoutQuestionMarks } from "../../../util";
-import { mayContainMarkdown } from "../../../util/markdown";
-import { generateEndpointExampleCall } from "./generateEndpointExampleCall";
-import { generateWebhookExample } from "./generateWebhookExample";
+import { APIV1Db, APIV1Write, FdrAPI } from "../../api";
+import { assertNever, type WithoutQuestionMarks } from "../../util";
+import { mayContainMarkdown } from "../../util/markdown";
+import { generateEndpointExampleCall } from "./examples/generateEndpointExampleCall";
+import { generateWebhookExample } from "./examples/generateWebhookExample";
 
 export function transformApiDefinitionForDb(
-    writeShape: FernRegistry.api.v1.register.ApiDefinition,
-    id: FernRegistry.ApiDefinitionId
-): WithoutQuestionMarks<FernRegistry.api.v1.db.DbApiDefinition> {
-    const subpackageToParent: Record<
-        FernRegistry.api.v1.register.SubpackageId,
-        FernRegistry.api.v1.register.SubpackageId
-    > = {};
+    writeShape: APIV1Write.ApiDefinition,
+    id: FdrAPI.ApiDefinitionId
+): WithoutQuestionMarks<APIV1Db.DbApiDefinition> {
+    const subpackageToParent: Record<APIV1Write.SubpackageId, APIV1Write.SubpackageId> = {};
     for (const [parentId, parentContents] of entries(writeShape.subpackages)) {
         for (const subpackageId of parentContents.subpackages) {
             subpackageToParent[subpackageId] = parentId;
@@ -42,7 +38,7 @@ export function transformApiDefinitionForDb(
             })
         ),
         subpackages: entries(writeShape.subpackages).reduce<
-            Record<FernRegistry.api.v1.read.SubpackageId, FernRegistry.api.v1.db.DbApiDefinitionSubpackage>
+            Record<FdrAPI.api.v1.read.SubpackageId, APIV1Db.DbApiDefinitionSubpackage>
         >((subpackages, [subpackageId, subpackage]) => {
             subpackages[subpackageId] = transformSubpackage({
                 writeShape: subpackage,
@@ -65,12 +61,12 @@ function transformSubpackage({
     apiDefinition,
     context,
 }: {
-    writeShape: FernRegistry.api.v1.register.ApiDefinitionSubpackage;
-    id: FernRegistry.api.v1.register.SubpackageId;
-    subpackageToParent: Record<FernRegistry.api.v1.register.SubpackageId, FernRegistry.api.v1.register.SubpackageId>;
-    apiDefinition: FernRegistry.api.v1.register.ApiDefinition;
+    writeShape: APIV1Write.ApiDefinitionSubpackage;
+    id: APIV1Write.SubpackageId;
+    subpackageToParent: Record<APIV1Write.SubpackageId, APIV1Write.SubpackageId>;
+    apiDefinition: APIV1Write.ApiDefinition;
     context: ApiDefinitionTransformationContext;
-}): WithoutQuestionMarks<FernRegistry.api.v1.db.DbApiDefinitionSubpackage> {
+}): WithoutQuestionMarks<APIV1Db.DbApiDefinitionSubpackage> {
     const parent = subpackageToParent[id];
     const endpoints = writeShape.endpoints.map((endpoint) =>
         transformEndpoint({ writeShape: endpoint, apiDefinition, context })
@@ -98,9 +94,9 @@ function transformWebhook({
     apiDefinition,
     writeShape,
 }: {
-    writeShape: FernRegistry.api.v1.register.WebhookDefinition;
-    apiDefinition: FernRegistry.api.v1.register.ApiDefinition;
-}): WithoutQuestionMarks<FernRegistry.api.v1.read.WebhookDefinition> {
+    writeShape: APIV1Write.WebhookDefinition;
+    apiDefinition: APIV1Write.ApiDefinition;
+}): WithoutQuestionMarks<FdrAPI.api.v1.read.WebhookDefinition> {
     const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         urlSlug: kebabCase(writeShape.name ?? writeShape.id),
@@ -126,10 +122,10 @@ function transformEndpoint({
     apiDefinition,
     context,
 }: {
-    writeShape: FernRegistry.api.v1.register.EndpointDefinition;
-    apiDefinition: FernRegistry.api.v1.register.ApiDefinition;
+    writeShape: APIV1Write.EndpointDefinition;
+    apiDefinition: APIV1Write.ApiDefinition;
     context: ApiDefinitionTransformationContext;
-}): WithoutQuestionMarks<FernRegistry.api.v1.db.DbEndpointDefinition> {
+}): WithoutQuestionMarks<APIV1Db.DbEndpointDefinition> {
     context.registerEnvironments(writeShape.environments ?? []);
     const htmlDescription = getHtmlDescription(writeShape.description);
     return {
@@ -159,10 +155,10 @@ function getExampleEndpointCalls({
     writeShape,
     apiDefinition,
 }: {
-    writeShape: FernRegistry.api.v1.register.EndpointDefinition;
-    apiDefinition: FernRegistry.api.v1.register.ApiDefinition;
+    writeShape: APIV1Write.EndpointDefinition;
+    apiDefinition: APIV1Write.ApiDefinition;
 }) {
-    const examples: ApiV1Write.ExampleEndpointCall[] = [];
+    const examples: APIV1Write.ExampleEndpointCall[] = [];
 
     const { successExamples: registeredSuccessExamples, errorExamples: registeredErrorExamples } =
         groupExamplesByStatusCode(writeShape.examples);
@@ -192,9 +188,9 @@ function getExampleEndpointCalls({
     );
 }
 
-function groupExamplesByStatusCode(examples: ApiV1Write.ExampleEndpointCall[]) {
-    const successExamples: ApiV1Write.ExampleEndpointCall[] = [];
-    const errorExamples: ApiV1Write.ExampleEndpointCall[] = [];
+function groupExamplesByStatusCode(examples: APIV1Write.ExampleEndpointCall[]) {
+    const successExamples: APIV1Write.ExampleEndpointCall[] = [];
+    const errorExamples: APIV1Write.ExampleEndpointCall[] = [];
     examples.forEach((example) => {
         if (example.responseStatusCode >= 200 && example.responseStatusCode < 300) {
             successExamples.push(example);
@@ -208,8 +204,8 @@ function groupExamplesByStatusCode(examples: ApiV1Write.ExampleEndpointCall[]) {
 function transformHttpRequestToDb({
     writeShape,
 }: {
-    writeShape: FernRegistry.api.v1.register.HttpRequest;
-}): WithoutQuestionMarks<FernRegistry.api.v1.db.DbHttpRequest> {
+    writeShape: APIV1Write.HttpRequest;
+}): WithoutQuestionMarks<APIV1Db.DbHttpRequest> {
     const htmlDescription = getHtmlDescription(writeShape.description);
     switch (writeShape.type.type) {
         case "object":
@@ -257,9 +253,9 @@ function transformHttpRequestToDb({
 export function transformExampleEndpointCall({
     writeShape,
 }: {
-    writeShape: FernRegistry.api.v1.register.ExampleEndpointCall;
-    endpointDefinition: FernRegistry.api.v1.register.EndpointDefinition;
-}): WithoutQuestionMarks<FernRegistry.api.v1.read.ExampleEndpointCall> {
+    writeShape: APIV1Write.ExampleEndpointCall;
+    endpointDefinition: APIV1Write.EndpointDefinition;
+}): WithoutQuestionMarks<FdrAPI.api.v1.read.ExampleEndpointCall> {
     const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
@@ -284,8 +280,8 @@ export function transformExampleEndpointCall({
 function transformTypeDefinition({
     writeShape,
 }: {
-    writeShape: FernRegistry.api.v1.register.TypeDefinition;
-}): WithoutQuestionMarks<FernRegistry.api.v1.read.TypeDefinition> {
+    writeShape: APIV1Write.TypeDefinition;
+}): WithoutQuestionMarks<FdrAPI.api.v1.read.TypeDefinition> {
     const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
@@ -300,8 +296,8 @@ function transformTypeDefinition({
 function transformShape({
     writeShape,
 }: {
-    writeShape: FernRegistry.api.v1.register.TypeShape;
-}): WithoutQuestionMarks<FernRegistry.api.v1.read.TypeShape> {
+    writeShape: APIV1Write.TypeShape;
+}): WithoutQuestionMarks<FdrAPI.api.v1.read.TypeShape> {
     switch (writeShape.type) {
         case "object":
             return {
@@ -340,8 +336,8 @@ function transformShape({
 function transformProperty({
     writeShape,
 }: {
-    writeShape: FernRegistry.api.v1.register.ObjectProperty;
-}): WithoutQuestionMarks<FernRegistry.api.v1.read.ObjectProperty> {
+    writeShape: APIV1Write.ObjectProperty;
+}): WithoutQuestionMarks<FdrAPI.api.v1.read.ObjectProperty> {
     const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
@@ -356,8 +352,8 @@ function transformProperty({
 function transformEnumValue({
     writeShape,
 }: {
-    writeShape: FernRegistry.api.v1.register.EnumValue;
-}): WithoutQuestionMarks<FernRegistry.api.v1.read.EnumValue> {
+    writeShape: APIV1Write.EnumValue;
+}): WithoutQuestionMarks<FdrAPI.api.v1.read.EnumValue> {
     const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
@@ -371,8 +367,8 @@ function transformEnumValue({
 function transformDiscriminatedVariant({
     writeShape,
 }: {
-    writeShape: FernRegistry.api.v1.register.DiscriminatedUnionVariant;
-}): WithoutQuestionMarks<FernRegistry.api.v1.read.DiscriminatedUnionVariant> {
+    writeShape: APIV1Write.DiscriminatedUnionVariant;
+}): WithoutQuestionMarks<FdrAPI.api.v1.read.DiscriminatedUnionVariant> {
     const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
@@ -392,8 +388,8 @@ function transformDiscriminatedVariant({
 function transformUnDiscriminatedVariant({
     writeShape,
 }: {
-    writeShape: FernRegistry.api.v1.register.UndiscriminatedUnionVariant;
-}): WithoutQuestionMarks<FernRegistry.api.v1.read.UndiscriminatedUnionVariant> {
+    writeShape: APIV1Write.UndiscriminatedUnionVariant;
+}): WithoutQuestionMarks<FdrAPI.api.v1.read.UndiscriminatedUnionVariant> {
     const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
@@ -413,9 +409,9 @@ function entries<T extends object>(obj: T): [keyof T, T[keyof T]][] {
 }
 
 class ApiDefinitionTransformationContext {
-    private uniqueBaseUrls: Record<FernRegistry.api.v1.register.EnvironmentId, Set<string>> = {};
+    private uniqueBaseUrls: Record<APIV1Write.EnvironmentId, Set<string>> = {};
 
-    public registerEnvironments(environments: FernRegistry.api.v1.register.Environment[]): void {
+    public registerEnvironments(environments: APIV1Write.Environment[]): void {
         for (const environment of environments) {
             const entry = this.uniqueBaseUrls[environment.id];
             if (entry != null) {

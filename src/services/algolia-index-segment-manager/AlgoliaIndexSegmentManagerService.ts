@@ -1,8 +1,8 @@
 import { addHours, addMinutes } from "date-fns";
 import NodeCache from "node-cache";
 import { v4 as uuidv4 } from "uuid";
+import { DocsV1Db } from "../../api";
 import type { FdrApplication } from "../../app";
-import type { FernRegistry } from "../../generated";
 import type { DocsVersion } from "../../types";
 import { isVersionedNavigationConfig } from "../../util/fern/db";
 import type { ConfigSegmentTuple, IndexSegment } from "../algolia";
@@ -26,7 +26,7 @@ export interface AlgoliaIndexSegmentManagerService {
         dbDocsDefinition,
         fernDomain,
     }: {
-        dbDocsDefinition: FernRegistry.docs.v1.db.DocsDefinitionDb;
+        dbDocsDefinition: DocsV1Db.DocsDefinitionDb;
         fernDomain: string;
     }): GenerateNewIndexSegmentsResult;
 }
@@ -58,7 +58,7 @@ export class AlgoliaIndexSegmentManagerServiceImpl implements AlgoliaIndexSegmen
         dbDocsDefinition,
         fernDomain,
     }: {
-        dbDocsDefinition: FernRegistry.docs.v1.db.DocsDefinitionDb;
+        dbDocsDefinition: DocsV1Db.DocsDefinitionDb;
         fernDomain: string;
     }): GenerateNewIndexSegmentsResult {
         const navigationConfig = dbDocsDefinition.config.navigation;

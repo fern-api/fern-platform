@@ -1,24 +1,21 @@
 import { v4 as uuidv4 } from "uuid";
-import type { FdrApplication } from "../../app";
-import { LOGGER } from "../../app/FdrApplication";
-import { OrgId } from "../../generated/api";
-import { DocsRegistrationId, FilePath } from "../../generated/api/resources/docs/resources/v1/resources/write";
-import { DocsRegistrationIdNotFound } from "../../generated/api/resources/docs/resources/v1/resources/write/errors/DocsRegistrationIdNotFound";
-import { WriteService } from "../../generated/api/resources/docs/resources/v1/resources/write/service/WriteService";
-import { type S3FileInfo } from "../../services/s3";
-import { writeBuffer } from "../../util";
-import { transformWriteDocsDefinitionToDb } from "./transformDocsDefinitionToDb";
+import { DocsV1Write, DocsV1WriteService, FdrAPI } from "../../../api";
+import type { FdrApplication } from "../../../app";
+import { LOGGER } from "../../../app/FdrApplication";
+import { transformWriteDocsDefinitionToDb } from "../../../converters/db/convertDocsDefinitionToDb";
+import { type S3FileInfo } from "../../../services/s3";
+import { writeBuffer } from "../../../util";
 
-const DOCS_REGISTRATIONS: Record<DocsRegistrationId, DocsRegistrationInfo> = {};
+const DOCS_REGISTRATIONS: Record<DocsV1Write.DocsRegistrationId, DocsRegistrationInfo> = {};
 
 interface DocsRegistrationInfo {
     domain: string;
-    orgId: OrgId;
-    s3FileInfos: Record<FilePath, S3FileInfo>;
+    orgId: FdrAPI.OrgId;
+    s3FileInfos: Record<DocsV1Write.FilePath, S3FileInfo>;
 }
 
-export function getDocsWriteService(app: FdrApplication): WriteService {
-    return new WriteService({
+export function getDocsWriteService(app: FdrApplication): DocsV1WriteService {
+    return new DocsV1WriteService({
         startDocsRegister: async (req, res) => {
             await app.services.auth.checkUserBelongsToOrg({
                 authHeader: req.headers.authorization,
@@ -46,7 +43,7 @@ export function getDocsWriteService(app: FdrApplication): WriteService {
         finishDocsRegister: async (req, res) => {
             const docsRegistrationInfo = DOCS_REGISTRATIONS[req.params.docsRegistrationId];
             if (docsRegistrationInfo == null) {
-                throw new DocsRegistrationIdNotFound();
+                throw new DocsV1Write.DocsRegistrationIdNotFound();
             }
             await app.services.auth.checkUserBelongsToOrg({
                 authHeader: req.headers.authorization,

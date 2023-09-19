@@ -11,7 +11,7 @@ bundle.js
 .DS_Store
 
 # generated code
-src/generated
+src/api/generated
 src/__test__/generated
 
 

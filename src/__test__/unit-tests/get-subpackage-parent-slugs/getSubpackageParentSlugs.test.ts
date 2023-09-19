@@ -1,7 +1,7 @@
 import { resolve } from "path";
-import { transformApiDefinitionForDb } from "../../../controllers/api/registerToDbConversion/transformApiDefinitionToDb";
+import { APIV1Write } from "../../../api";
+import { transformApiDefinitionForDb } from "../../../converters/db/convertAPIDefinitionToDb";
 import { getSubpackageParentSlugs } from "../../../util/fern/db/subpackage";
-import type * as FernRegistryApiWrite from "../../generated/api/resources/api/resources/v1/resources/register";
 
 const FIXTURES_DIR = resolve(__dirname, "fixtures");
 const FIXTURES: Fixture[] = [
@@ -16,7 +16,7 @@ const FIXTURES: Fixture[] = [
 function loadFdrApiDefinition(fixture: Fixture) {
     const filePath = resolve(FIXTURES_DIR, fixture.name, "fdr.json");
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    return require(filePath) as FernRegistryApiWrite.ApiDefinition;
+    return require(filePath) as APIV1Write.ApiDefinition;
 }
 
 interface Fixture {

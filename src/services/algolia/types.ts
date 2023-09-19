@@ -1,5 +1,4 @@
-import type * as FernRegistryDocsDb from "../../generated/api/resources/docs/resources/v1/resources/db";
-import type * as FernRegistryDocsRead from "../../generated/api/resources/docs/resources/v1/resources/read";
+import { DocsV1Db, DocsV1Read } from "../../api";
 import type { DocsVersion } from "../../types";
 
 export type IndexSegment =
@@ -15,11 +14,8 @@ export type IndexSegment =
           searchApiKey: string;
       };
 
-export type ConfigSegmentTuple = readonly [
-    config: FernRegistryDocsDb.UnversionedNavigationConfig,
-    segment: IndexSegment
-];
+export type ConfigSegmentTuple = readonly [config: DocsV1Db.UnversionedNavigationConfig, segment: IndexSegment];
 
 type WithObjectId<T> = { objectID: string } & T;
 
-export type AlgoliaSearchRecord = WithObjectId<FernRegistryDocsRead.AlgoliaRecord>;
+export type AlgoliaSearchRecord = WithObjectId<DocsV1Read.AlgoliaRecord>;

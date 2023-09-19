@@ -1,11 +1,11 @@
 import { v4 as uuidv4 } from "uuid";
+import { APIV1WriteService } from "../../api";
 import type { FdrApplication } from "../../app";
-import { RegisterService } from "../../generated/api/resources/api/resources/v1/resources/register/service/RegisterService";
+import { transformApiDefinitionForDb } from "../../converters/db/convertAPIDefinitionToDb";
 import { writeBuffer } from "../../util";
-import { transformApiDefinitionForDb } from "./registerToDbConversion/transformApiDefinitionToDb";
 
-export function getRegisterApiService(app: FdrApplication): RegisterService {
-    return new RegisterService({
+export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
+    return new APIV1WriteService({
         registerApiDefinition: async (req, res) => {
             await app.services.auth.checkUserBelongsToOrg({
                 authHeader: req.headers.authorization,

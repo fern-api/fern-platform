@@ -1,8 +1,5 @@
 import { kebabCase } from "lodash";
-import { FernRegistry } from "../../generated";
-import type * as FernRegistryDocsDb from "../../generated/api/resources/docs/resources/v1/resources/db";
-import type * as FernRegistryDocsWrite from "../../generated/api/resources/docs/resources/v1/resources/write";
-import type { FileId, FilePath } from "../../generated/api/resources/docs/resources/v1/resources/write";
+import { DocsV1Db, DocsV1Read, DocsV1Write, FdrAPI } from "../../api";
 import { type S3FileInfo } from "../../services/s3";
 import { assertNever, type WithoutQuestionMarks } from "../../util";
 import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../../util/colors";
@@ -21,13 +18,11 @@ export function transformWriteDocsDefinitionToDb({
     writeShape,
     files,
 }: {
-    writeShape: FernRegistry.docs.v1.write.DocsDefinition;
-    files: Record<FilePath, S3FileInfo>;
-}): WithoutQuestionMarks<FernRegistry.docs.v1.db.DocsDefinitionDb.V2> {
-    const navigationConfig: FernRegistryDocsDb.NavigationConfig = transformNavigationConfigForDb(
-        writeShape.config.navigation
-    );
-    const transformedFiles: Record<FileId, FernRegistryDocsDb.DbFileInfo> = {};
+    writeShape: DocsV1Write.DocsDefinition;
+    files: Record<DocsV1Write.FilePath, S3FileInfo>;
+}): WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb.V2> {
+    const navigationConfig: DocsV1Db.NavigationConfig = transformNavigationConfigForDb(writeShape.config.navigation);
+    const transformedFiles: Record<DocsV1Write.FileId, DocsV1Db.DbFileInfo> = {};
     Object.entries(files).forEach(([, s3FileInfo]) => {
         transformedFiles[s3FileInfo.presignedUrl.fileId] = {
             s3Key: s3FileInfo.key,
@@ -83,9 +78,7 @@ export function transformWriteDocsDefinitionToDb({
     };
 }
 
-export function transformNavigationConfigForDb(
-    writeShape: FernRegistryDocsWrite.NavigationConfig
-): FernRegistryDocsDb.NavigationConfig {
+export function transformNavigationConfigForDb(writeShape: DocsV1Write.NavigationConfig): DocsV1Db.NavigationConfig {
     if (isUnversionedWriteConfig(writeShape)) {
         return transformUnversionedNavigationConfigForDb(writeShape);
     } else if (isVersionedWriteConfig(writeShape)) {
@@ -95,11 +88,11 @@ export function transformNavigationConfigForDb(
 }
 
 function transformVersionedNavigationConfigForDb(
-    config: FernRegistryDocsWrite.VersionedNavigationConfig
-): WithoutQuestionMarks<FernRegistryDocsDb.VersionedNavigationConfig> {
+    config: DocsV1Write.VersionedNavigationConfig
+): WithoutQuestionMarks<DocsV1Db.VersionedNavigationConfig> {
     return {
         versions: config.versions.map(
-            (version): WithoutQuestionMarks<FernRegistryDocsDb.VersionedNavigationConfigData> => ({
+            (version): WithoutQuestionMarks<DocsV1Db.VersionedNavigationConfigData> => ({
                 urlSlug: version.urlSlugOverride ?? kebabCase(version.version),
                 availability: version.availability,
                 version: version.version,
@@ -110,8 +103,8 @@ function transformVersionedNavigationConfigForDb(
 }
 
 function transformUnversionedNavigationConfigForDb(
-    config: FernRegistryDocsWrite.UnversionedNavigationConfig
-): FernRegistryDocsDb.UnversionedNavigationConfig {
+    config: DocsV1Write.UnversionedNavigationConfig
+): DocsV1Db.UnversionedNavigationConfig {
     return isUnversionedUntabbedWriteConfig(config)
         ? {
               items: config.items.map(transformNavigationItemForDb),
@@ -121,9 +114,7 @@ function transformUnversionedNavigationConfigForDb(
           };
 }
 
-export function transformNavigationTabForDb(
-    writeShape: FernRegistry.docs.v1.write.NavigationTab
-): FernRegistry.docs.v1.db.NavigationTab {
+export function transformNavigationTabForDb(writeShape: DocsV1Write.NavigationTab): DocsV1Db.NavigationTab {
     return {
         ...writeShape,
         items: writeShape.items.map(transformNavigationItemForDb),
@@ -131,9 +122,7 @@ export function transformNavigationTabForDb(
     };
 }
 
-export function transformNavigationItemForDb(
-    writeShape: FernRegistry.docs.v1.write.NavigationItem
-): FernRegistry.docs.v1.db.NavigationItem {
+export function transformNavigationItemForDb(writeShape: DocsV1Write.NavigationItem): DocsV1Db.NavigationItem {
     switch (writeShape.type) {
         case "api":
             return {
@@ -163,9 +152,7 @@ export function transformNavigationItemForDb(
     }
 }
 
-export function getReferencedApiDefinitionIds(
-    navigationConfig: FernRegistryDocsDb.NavigationConfig
-): FernRegistry.ApiDefinitionId[] {
+export function getReferencedApiDefinitionIds(navigationConfig: DocsV1Db.NavigationConfig): FdrAPI.ApiDefinitionId[] {
     if (isUnversionedDbConfig(navigationConfig)) {
         return getReferencedApiDefinitionIdsForUnversionedReadConfig(navigationConfig);
     } else if (isVersionedDbConfig(navigationConfig)) {
@@ -177,14 +164,14 @@ export function getReferencedApiDefinitionIds(
 }
 
 function getReferencedApiDefinitionIdsForUnversionedReadConfig(
-    config: FernRegistryDocsDb.UnversionedNavigationConfig
-): FernRegistry.ApiDefinitionId[] {
+    config: DocsV1Db.UnversionedNavigationConfig
+): FdrAPI.ApiDefinitionId[] {
     return isUnversionedUntabbedDbConfig(config)
         ? config.items.flatMap(getReferencedApiDefinitionIdFromItem)
         : config.tabs.flatMap((tab) => tab.items.flatMap(getReferencedApiDefinitionIdFromItem));
 }
 
-function getReferencedApiDefinitionIdFromItem(item: FernRegistryDocsDb.NavigationItem): FernRegistry.ApiDefinitionId[] {
+function getReferencedApiDefinitionIdFromItem(item: DocsV1Db.NavigationItem): FdrAPI.ApiDefinitionId[] {
     switch (item.type) {
         case "api":
             return [item.api];
@@ -192,12 +179,14 @@ function getReferencedApiDefinitionIdFromItem(item: FernRegistryDocsDb.Navigatio
             return [];
         case "section":
             return item.items.flatMap((sectionItem) => getReferencedApiDefinitionIdFromItem(sectionItem));
+        default:
+            assertNever(item);
     }
 }
 
 function transformArtifactsForReading(
-    writeShape: FernRegistry.docs.v1.write.ApiArtifacts
-): WithoutQuestionMarks<FernRegistry.docs.v1.read.ApiArtifacts> {
+    writeShape: DocsV1Write.ApiArtifacts
+): WithoutQuestionMarks<DocsV1Read.ApiArtifacts> {
     return {
         sdks: writeShape.sdks.map((sdk) => transformPublishedSdkForReading(sdk)),
         postman:
@@ -206,8 +195,8 @@ function transformArtifactsForReading(
 }
 
 function transformPublishedSdkForReading(
-    writeShape: FernRegistry.docs.v1.write.PublishedSdk
-): WithoutQuestionMarks<FernRegistry.docs.v1.read.PublishedSdk> {
+    writeShape: DocsV1Write.PublishedSdk
+): WithoutQuestionMarks<DocsV1Read.PublishedSdk> {
     switch (writeShape.type) {
         case "maven":
             return {
@@ -243,8 +232,8 @@ function transformPublishedSdkForReading(
 }
 
 function transformPublishedPostmanCollectionForReading(
-    writeShape: FernRegistry.docs.v1.write.PublishedPostmanCollection
-): WithoutQuestionMarks<FernRegistry.docs.v1.read.PublishedPostmanCollection> {
+    writeShape: DocsV1Write.PublishedPostmanCollection
+): WithoutQuestionMarks<DocsV1Read.PublishedPostmanCollection> {
     return {
         url: writeShape.url,
         githubRepo:
@@ -261,9 +250,9 @@ function transformColorsV3ForDb({
     writeShape,
     docsConfig,
 }: {
-    writeShape: FernRegistry.docs.v1.write.ColorsConfigV3;
-    docsConfig: FernRegistry.docs.v1.write.DocsConfig;
-}): WithoutQuestionMarks<FernRegistry.docs.v1.read.ColorsConfigV3> {
+    writeShape: DocsV1Write.ColorsConfigV3;
+    docsConfig: DocsV1Write.DocsConfig;
+}): WithoutQuestionMarks<DocsV1Read.ColorsConfigV3> {
     switch (writeShape.type) {
         case "dark":
             return {

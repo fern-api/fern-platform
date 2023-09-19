@@ -1,27 +1,27 @@
-import type * as FernRegistryDocDb from "../../../generated/api/resources/docs/resources/v1/resources/db";
+import { DocsV1Db } from "../../../api";
 
 export function isVersionedNavigationConfig(
-    navigationConfig: FernRegistryDocDb.NavigationConfig
-): navigationConfig is FernRegistryDocDb.VersionedNavigationConfig {
-    return Array.isArray((navigationConfig as FernRegistryDocDb.VersionedNavigationConfig).versions);
+    navigationConfig: DocsV1Db.NavigationConfig
+): navigationConfig is DocsV1Db.VersionedNavigationConfig {
+    return Array.isArray((navigationConfig as DocsV1Db.VersionedNavigationConfig).versions);
 }
 
 export function isUnversionedNavigationConfig(
-    navigationConfig: FernRegistryDocDb.NavigationConfig
-): navigationConfig is FernRegistryDocDb.UnversionedNavigationConfig {
+    navigationConfig: DocsV1Db.NavigationConfig
+): navigationConfig is DocsV1Db.UnversionedNavigationConfig {
     return (
         isUnversionedTabbedNavigationConfig(navigationConfig) || isUnversionedUntabbedNavigationConfig(navigationConfig)
     );
 }
 
 export function isUnversionedTabbedNavigationConfig(
-    navigationConfig: FernRegistryDocDb.NavigationConfig
-): navigationConfig is FernRegistryDocDb.UnversionedTabbedNavigationConfig {
-    return Array.isArray((navigationConfig as FernRegistryDocDb.UnversionedTabbedNavigationConfig).tabs);
+    navigationConfig: DocsV1Db.NavigationConfig
+): navigationConfig is DocsV1Db.UnversionedTabbedNavigationConfig {
+    return Array.isArray((navigationConfig as DocsV1Db.UnversionedTabbedNavigationConfig).tabs);
 }
 
 export function isUnversionedUntabbedNavigationConfig(
-    navigationConfig: FernRegistryDocDb.NavigationConfig
-): navigationConfig is FernRegistryDocDb.UnversionedUntabbedNavigationConfig {
-    return Array.isArray((navigationConfig as FernRegistryDocDb.UnversionedUntabbedNavigationConfig).items);
+    navigationConfig: DocsV1Db.NavigationConfig
+): navigationConfig is DocsV1Db.UnversionedUntabbedNavigationConfig {
+    return Array.isArray((navigationConfig as DocsV1Db.UnversionedUntabbedNavigationConfig).items);
 }
