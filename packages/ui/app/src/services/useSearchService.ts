@@ -57,5 +57,5 @@ export function useSearchService(): SearchService {
                 index: envConfig.algoliaSearchIndex,
             };
         }
-    }, [docsInfo, searchInfo]);
+    }, [docsDefinition.algoliaSearchIndex, docsInfo, searchInfo]);
 }
