@@ -34,12 +34,10 @@ export const getServerSideProps: GetServerSideProps = async ({ params = {}, res 
     if (host == null) {
         throw new Error("host is not defined");
     }
-
-    const hostToQuery = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? host;
-    const hostToQueryWithoutTrailingSlash = hostToQuery.endsWith("/") ? hostToQuery.slice(0, -1) : hostToQuery;
+    const hostWithoutTrailingSlash = host.endsWith("/") ? host.slice(0, -1) : host;
 
     const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
-        url: hostToQueryWithoutTrailingSlash,
+        url: process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? hostWithoutTrailingSlash,
     });
 
     if (!docs.ok) {
@@ -57,7 +55,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params = {}, res 
     });
 
     const urls = paths.map((path) => {
-        return `https://${hostToQueryWithoutTrailingSlash}/${path}`;
+        return `https://${hostWithoutTrailingSlash}/${path}`;
     });
     const sitemap = getSitemapXml(urls);
 
