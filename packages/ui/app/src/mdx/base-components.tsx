@@ -7,7 +7,7 @@ import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAncho
 import { CopyToClipboardButton } from "../commons/CopyToClipboardButton";
 import { useDocsContext } from "../docs-context/useDocsContext";
 
-export const CodeBlockInternalCore: React.FC<HTMLAttributes<HTMLElement>> = ({ children }) => {
+export const CodeBlockSkeleton: React.FC<HTMLAttributes<HTMLElement>> = ({ children }) => {
     const { theme } = useDocsContext();
     if (children == null || typeof children !== "object") {
         return null;
@@ -61,7 +61,7 @@ export const CodeBlockInternal: React.FC<HTMLAttributes<HTMLElement>> = ({ child
         <div className="relative w-full">
             <div className="border-border-default-light dark:border-border-default-dark flex h-2.5 rounded-t-lg border-x border-t bg-gray-100/90 px-3 dark:bg-gray-950/90" />
             <CopyToClipboardButton className="absolute right-4 top-4 ml-auto" content={content} />
-            <CodeBlockInternalCore {...rest}>{children}</CodeBlockInternalCore>
+            <CodeBlockSkeleton {...rest}>{children}</CodeBlockSkeleton>
         </div>
     );
 };

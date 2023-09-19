@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { useState } from "react";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
-import { CodeBlockInternalCore } from "../base-components";
+import { CodeBlockSkeleton } from "../base-components";
 
 export interface CodeBlockItem {
     children: React.ReactNode;
@@ -45,7 +45,7 @@ export const _CodeBlocks: React.FC<React.PropsWithChildren<_CodeBlocks.Props>> =
 
                 <CopyToClipboardButton className="ml-auto mr-4" content={codeBlockItem.content} />
             </div>
-            <CodeBlockInternalCore>{codeBlockItem.children}</CodeBlockInternalCore>
+            <CodeBlockSkeleton>{codeBlockItem.children}</CodeBlockSkeleton>
         </div>
     );
 };
