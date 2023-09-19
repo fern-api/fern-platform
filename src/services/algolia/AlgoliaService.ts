@@ -21,8 +21,8 @@ export interface AlgoliaService {
 export class AlgoliaServiceImpl implements AlgoliaService {
     private readonly client: SearchClient;
 
-    private get adminApiKey() {
-        return this.app.config.algoliaAdminApiKey;
+    private get baseSearchApiKey() {
+        return this.app.config.algoliaSearchApiKey;
     }
 
     private get index() {
@@ -58,7 +58,7 @@ export class AlgoliaServiceImpl implements AlgoliaService {
     }
 
     public generateSearchApiKey(filters: string, validUntil: Date) {
-        return this.client.generateSecuredApiKey(this.adminApiKey, {
+        return this.client.generateSecuredApiKey(this.baseSearchApiKey, {
             filters,
             validUntil: validUntil.getTime() / 1_000,
         });

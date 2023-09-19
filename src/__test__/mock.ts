@@ -62,6 +62,7 @@ export function createMockFdrConfig(): FdrConfig {
         algoliaAppId: "",
         algoliaAdminApiKey: "",
         algoliaSearchIndex: "",
+        algoliaSearchApiKey: "",
         slackToken: "",
     };
 }
