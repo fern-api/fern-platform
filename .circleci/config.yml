@@ -3,7 +3,7 @@ orbs:
   node: circleci/node@5.0.1
   aws-cli: circleci/aws-cli@3.1.1
 jobs:
-  check:
+  compile: 
     machine:
       image: ubuntu-2004:current
     steps:
@@ -22,9 +22,15 @@ jobs:
       - run:
           command: yarn compile
           name: Compile
-      - run:
-          command: yarn format:check
-          name: Check formatting
+      - persist_to_workspace:
+          root: /home/circleci
+          paths: [ project ]
+
+  check:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - attach_workspace: { at: /home/circleci }
       - run:
           command: yarn lint
           name: Lint
@@ -34,26 +40,24 @@ jobs:
       - run:
           command: yarn test:db
           name: Test DB
+  
+  ete-test:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - attach_workspace: { at: /home/circleci }
+      - run:
+          command: yarn local:docker
+          name: Dockerize Local
+      - run:
+          command: yarn test:ete
+          name: Test ETE
 
   deploy-dev:
     machine:
       image: ubuntu-2004:current
     steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn
-      - run:
-          name: fern generate
-          command: |
-            npm install -g fern-api
-            fern generate --log-level debug
-      - run:
-          name: prisma generate
-          command: |
-            yarn prisma generate
-      - run:
-          command: yarn run compile
-          name: Compile
+      - attach_workspace: { at: /home/circleci }
       - aws-cli/setup
       - run:
           command: yarn run dev:db:migrate
@@ -77,21 +81,7 @@ jobs:
     machine:
       image: ubuntu-2004:current
     steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn
-      - run:
-          name: fern generate
-          command: |
-            npm install -g fern-api
-            fern generate --log-level debug
-      - run:
-          name: prisma generate
-          command: |
-            yarn prisma generate
-      - run:
-          command: yarn run compile
-          name: Compile
+      - attach_workspace: { at: /home/circleci }
       - aws-cli/setup
       - run:
           command: yarn run prod:db:migrate
@@ -132,31 +122,32 @@ jobs:
           command: | 
             git_version="$(scripts/git-version.sh)"
             fern generate --group internal-write --version "${git_version}" --log-level debug
-      
-  register-latest:
-    machine:
-      image: ubuntu-2004:current
-    steps:
-      - checkout
-      - run:
-          name: fern register latest
-          command: |
-            npm install -g fern-api
-            fern register-v2
 
 workflows:
   version: 2
   build:
     jobs:
-      - check:
+      - compile:
           filters:
             tags:
               only: /.*/
           context:
             - fern-tokens
 
+      - check:
+          filters:
+            tags:
+              only: /.*/
+          requires: [compile]
+        
+      - ete-test:
+          filters:
+            tags:
+              only: /.*/
+          requires: [compile]
+
       - deploy-dev:
-          requires: [check]
+          requires: [check, ete-test]
           filters:
             branches:
               only:
@@ -183,18 +174,7 @@ workflows:
             - fern-tokens
             - fdr-algolia-prod
             - slack
-          requires:
-            - check
-
-      - register-latest:
-          filters:
-            branches:
-              only:
-                - main
-          context:
-            - fern-tokens
-          requires:
-            - check
+          requires: [check, ete-test]
 
       - publish-sdks:
           filters:
@@ -203,5 +183,4 @@ workflows:
                 - main
           context:
             - fern-tokens
-          requires:
-            - check
+          requires: [check, ete-test]

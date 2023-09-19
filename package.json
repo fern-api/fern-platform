@@ -63,6 +63,7 @@
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "prisma:generate": "prisma generate",
+    "test:ete": "dotenv -e .env.ete -- ./scripts/ete-tests.sh",
     "test:db": "dotenv -e .env.test -- ./scripts/db-tests.sh",
     "test": "jest src/__test__/unit-tests",
     "format": "prettier src/**/*.ts",
