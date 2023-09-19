@@ -14,27 +14,22 @@ export declare namespace SearchHit {
 }
 
 export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
-    const { navigateToPath, docsInfo } = useDocsContext();
+    const { navigateToPath } = useDocsContext();
     const { closeSearchDialog } = useSearchContext();
 
     const handleClick = useCallback(() => {
         closeSearchDialog();
-        if (docsInfo.type === "versioned") {
-            // The search hit path currently contains version slug
-            // We can remove it manually until the backend starts excluding it from the slug
-            const [_versionSlug, ...slugWithoutVersionParts] = hit.path.split("/");
-            const slugWithoutVersion = slugWithoutVersionParts.join("/");
-            navigateToPath(slugWithoutVersion);
-        } else {
-            navigateToPath(hit.path);
-        }
-    }, [closeSearchDialog, hit.path, docsInfo.type, navigateToPath]);
+        navigateToPath(hit.path);
+    }, [closeSearchDialog, navigateToPath, hit.path]);
+
+    const { versionSlug, path } = hit;
+    const href = `/${versionSlug != null ? `${versionSlug}/` : ""}${path}`;
 
     return (
         <Link
             className="hover:bg-background-secondary-light hover:dark:bg-background-secondary-dark group flex w-full items-center space-x-4 space-y-1 rounded-md px-3 py-2 hover:no-underline"
             onClick={handleClick}
-            href={`/${hit.path}`}
+            href={href}
         >
             <div className="border-border-default-light dark:border-border-default-dark flex flex-col items-center justify-center rounded-md border p-1">
                 <Icon
