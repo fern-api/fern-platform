@@ -20,7 +20,15 @@ export function useSearchService(): SearchService {
 
     return useMemo<SearchService>(() => {
         const envConfig = getEnvConfig();
-        if (searchInfo.type === "legacyMultiAlgoliaIndex") {
+        if (typeof searchInfo !== "object") {
+            return docsDefinition.algoliaSearchIndex != null
+                ? {
+                      isAvailable: true,
+                      client: algolia(envConfig.algoliaAppId, envConfig.algoliaApiKey),
+                      index: docsDefinition.algoliaSearchIndex,
+                  }
+                : { isAvailable: false };
+        } else if (searchInfo.type === "legacyMultiAlgoliaIndex") {
             const algoliaIndex = searchInfo.algoliaIndex ?? docsDefinition.algoliaSearchIndex;
             return algoliaIndex != null
                 ? {
