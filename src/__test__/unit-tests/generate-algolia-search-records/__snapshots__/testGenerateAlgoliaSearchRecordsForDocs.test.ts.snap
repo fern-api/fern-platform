@@ -4,7 +4,7 @@ exports[`generateAlgoliaSearchRecordsForDocs {"name":"primer"} 1`] = `
 Array [
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/introduction/getting-started",
+    "path": "introduction/getting-started",
     "subtitle": "The Primer API is used to manage Client Sessions, Payments and saved payment methods. All other actions are either managed in the
 Universal Checkout implementation or in the Dashboard.
 
@@ -42,10 +42,11 @@ Read about the available versions of the APIs below on our Changelog [https://ap
     "title": "Getting Started",
     "type": "page",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/introduction/authentication",
+    "path": "introduction/authentication",
     "subtitle": "Primer uses API keys to authenticate requests. You can manage API keys in the Developers
 [https://sandbox-dashboard.primer.io/developers] area of the dashboard.
 
@@ -77,10 +78,11 @@ Refund a payment. payment_instrument:read Read stored payment methods. payment_i
     "title": "Authentication",
     "type": "page",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/introduction/api-responses",
+    "path": "introduction/api-responses",
     "subtitle": "STATUS CODES
 
 The following table summarizes the HTTP response codes you may receive from the Primer REST API.
@@ -131,10 +133,11 @@ Don't hesitate to reach out with any questions or feedback. You can email Primer
     "title": "API Responses",
     "type": "page",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/introduction/idempotency-key",
+    "path": "introduction/idempotency-key",
     "subtitle": "Primer supports a request idempotency mechanism for our Payments API. This optional feature enables you to safely retry a request
 without risking the user being charged or refunded multiple times.
 
@@ -163,10 +166,11 @@ be made for a single order.",
     "title": "Idempotency Key",
     "type": "page",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/introduction/loyalty-transactions",
+    "path": "introduction/loyalty-transactions",
     "subtitle": "Primer's Loyalty API provides an interface to interact with 3rd party loyalty point and service providers.
 
 All of the endpoints below reference a connectionId. This is the unique Primer identifier for your loyalty provider connection.
@@ -204,10 +208,11 @@ transactions. In most cases it makes sense to filter by connectionId. You can al
     "title": "Loyalty Transactions",
     "type": "page",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/changelog/api-migration-guide",
+    "path": "changelog/api-migration-guide",
     "subtitle": "We are continually introducing new functionality to the Primer Ecosystem, some of which requires additional inputs on our APIs. To
 make sure these changes don’t break any existing integrations, we roll them out safely using API Versions.
 
@@ -447,10 +452,11 @@ SUMMARY OF THE V2.1 CHANGES
     "title": "API Migration Guide",
     "type": "page",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/changelog/api-v-2-2",
+    "path": "changelog/api-v-2-2",
     "subtitle": "This version includes improvements to the Client Session API, Payments API and the Payment Methods API. You must set the
 X-Api-Version header to 2.2 to use v2.2 of the API.
 
@@ -466,10 +472,11 @@ PAYMENTS API
     "title": "API v2.2",
     "type": "page",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/changelog/api-v-2-1",
+    "path": "changelog/api-v-2-1",
     "subtitle": "Version 2.1 includes improvements to the Client Session API, Payments API and the Payment Methods API.
 
 Starting API v2.1, the API Version X-Api-Version is a semantic version without a patch (e.g. 2.1) rather than a date 🎉 Set the
@@ -504,10 +511,11 @@ PAYMENT METHODS API
     "title": "API v2.1",
     "type": "page",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/changelog/api-v-2",
+    "path": "changelog/api-v-2",
     "subtitle": "Version 2 includes improvements to the Client Session API and the Payments API.
 
 
@@ -539,19 +547,21 @@ PAYMENTS API
     "title": "API v2",
     "type": "page",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/primer-api/client-session-api/retrieve-a-client-session",
+    "path": "primer-api/client-session-api/retrieve-a-client-session",
     "subtitle": "This API call retrieves all the details associated with the client session corresponding to the client token that is provided in
 the request. The fields with empty values are excluded from the response.",
     "title": "Retrieve a client session",
     "type": "endpoint",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/primer-api/client-session-api/create-a-client-session",
+    "path": "primer-api/client-session-api/create-a-client-session",
     "subtitle": "Creating a client session generates a client token: a temporary key used to initialize Universal Checkout
 [https://primer.io/docs/accept-payments/setup-universal-checkout/installation/web] and authenticate it against your account.
 
@@ -568,10 +578,11 @@ Client tokens expire after 24 hours.",
     "title": "Create a client session",
     "type": "endpoint",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/primer-api/client-session-api/update-client-session",
+    "path": "primer-api/client-session-api/update-client-session",
     "subtitle": "You can update a clients session created earlier with the PATCH /client-session API call.
 
 The only required field for the request is clientToken. Other supported request fields are same as for the POST /client-session
@@ -592,10 +603,11 @@ The response will contain all the fields of the client session including the one
     "title": "Update client session",
     "type": "endpoint",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/primer-api/payments-api/search-list-payments",
+    "path": "primer-api/payments-api/search-list-payments",
     "subtitle": "Retrieve a list of your payments.
 
 Results are paginated, they will only return up to 100 payments maximum. To access the next page of result, set the cursor query
@@ -617,10 +629,11 @@ Note: payments will be available within a minute from being created.",
     "title": "Search & list payments",
     "type": "endpoint",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/primer-api/payments-api/create-a-payment",
+    "path": "primer-api/payments-api/create-a-payment",
     "subtitle": "Create and authorize a payment for a given customer order. You should provide a payment method token here to avoid PCI
 implications.
 
@@ -636,10 +649,11 @@ use both billingAddress and emailAddress for later calculations.",
     "title": "Create a payment",
     "type": "endpoint",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/primer-api/payments-api/authorize-a-payment",
+    "path": "primer-api/payments-api/authorize-a-payment",
     "subtitle": "Manually authorize a payment using a provided processor. This is useful if you want to authorize a payment without a workflow
 action. The processor merchant ID must be provided which can be found on the Integrations page
 [https://dashboard.primer.io/integrations]. The processor name is optional but it must be provided if your account has multiple
@@ -647,10 +661,11 @@ processors configured which share the same merchant IDs.",
     "title": "Authorize a payment",
     "type": "endpoint",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/primer-api/payments-api/capture-a-payment",
+    "path": "primer-api/payments-api/capture-a-payment",
     "subtitle": "If you have successfully authorized a payment, you can now fully capture, or partially capture funds from the authorized payment,
 depending on whether your selected payment processor supports it. The payment will be updated to SETTLED or SETTLING, depending on
 the payment method type.
@@ -661,56 +676,62 @@ control when capturing funds, if you require it.",
     "title": "Capture a payment",
     "type": "endpoint",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/primer-api/payments-api/cancel-a-payment",
+    "path": "primer-api/payments-api/cancel-a-payment",
     "subtitle": "Provided the payment has not reached SETTLED status, Primer will send a \\"void\\" request to the payment processor, thereby
 cancelling the payment and releasing the hold on customer funds. Upon success, the payment will transition to CANCELLED. The
 payload is optional.",
     "title": "Cancel a payment",
     "type": "endpoint",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/primer-api/payments-api/refund-a-payment",
+    "path": "primer-api/payments-api/refund-a-payment",
     "subtitle": "By default, this request will refund the full amount.
 
 Optionally, pass in a lesser amount for a partial refund.",
     "title": "Refund a payment",
     "type": "endpoint",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/primer-api/payments-api/resume-a-payment",
+    "path": "primer-api/payments-api/resume-a-payment",
     "subtitle": "Resume a payment's workflow execution from a paused state. This is usually required when a Workflow was paused in order to get
 further information from the customer, or when waiting for an asynchronous response from a third party connection.",
     "title": "Resume a payment",
     "type": "endpoint",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/primer-api/payments-api/adjust-authorized-amount",
+    "path": "primer-api/payments-api/adjust-authorized-amount",
     "subtitle": "Adjust authorized amount. This is only possible if authorizationType was set to ESTIMATED when the payment was created, and the
 mechanism is supported by the payment method.",
     "title": "Adjust authorized amount",
     "type": "endpoint",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/primer-api/payments-api/get-a-payment",
+    "path": "primer-api/payments-api/get-a-payment",
     "subtitle": "Retrieve a payment by its ID.",
     "title": "Get a payment",
     "type": "endpoint",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/primer-api/payment-methods-api/save-a-payment-method-token",
+    "path": "primer-api/payment-methods-api/save-a-payment-method-token",
     "subtitle": "Save a SINGLE_USE payment method token so it can be used again later. You can optionally choose to verify the payment method
 before vaulting. If verification fails, no payment method data will be vaulted. Verification can minimise fraud and boost
 subscription rates for recurring payments.
@@ -719,34 +740,38 @@ If you try to vault an already vaulted token, you will get the existing vaulted 
     "title": "Save a payment method token",
     "type": "endpoint",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/primer-api/payment-methods-api/list-saved-payment-methods",
+    "path": "primer-api/payment-methods-api/list-saved-payment-methods",
     "subtitle": "Retrieve a list of stored payment methods for a customer.",
     "title": "List saved payment methods",
     "type": "endpoint",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/primer-api/payment-methods-api/delete-a-saved-payment-method",
+    "path": "primer-api/payment-methods-api/delete-a-saved-payment-method",
     "subtitle": "Delete a saved payment method.",
     "title": "Delete a saved payment method",
     "type": "endpoint",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/primer-api/payment-methods-api/update-the-default-saved-payment-method",
+    "path": "primer-api/payment-methods-api/update-the-default-saved-payment-method",
     "subtitle": "Update a saved payment method to be the default stored payment method for a customer.",
     "title": "Update the default saved payment method",
     "type": "endpoint",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/primer-api/observability-api/create-an-external-payment",
+    "path": "primer-api/observability-api/create-an-external-payment",
     "subtitle": "The Observability API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
 
 Creating a payment with the Observability API sends external payments data to Primer to populate Observability Payment Insights
@@ -759,10 +784,11 @@ Each record must be created with a unique paymentId. To update a payment record 
     "title": "Create an external payment",
     "type": "endpoint",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/primer-api/observability-api/update-an-external-payment",
+    "path": "primer-api/observability-api/update-an-external-payment",
     "subtitle": "The Observability API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
 
 You can update payments created earlier through the Observability API with this endpoint. The only required field for the request
@@ -776,10 +802,11 @@ The response will contain all the fields of the payment including the ones that 
     "title": "Update an external payment",
     "type": "endpoint",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/primer-api/loyalty-api/get-a-loyalty-customers-points-balance",
+    "path": "primer-api/loyalty-api/get-a-loyalty-customers-points-balance",
     "subtitle": "The Loyalty API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
 
 Create an API key with the loyalty-transactions:read scopes.
@@ -793,10 +820,11 @@ The customerId refers to the customer identifier on the loyalty provider's side.
     "title": "Get a loyalty customer's points balance",
     "type": "endpoint",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/primer-api/loyalty-api/list-the-transactions-for-a-customer",
+    "path": "primer-api/loyalty-api/list-the-transactions-for-a-customer",
     "subtitle": "The Loyalty API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
 
 Create an API key with the loyalty-transactions:read scopes.
@@ -807,10 +835,11 @@ Additionally provide a limit to restrict the number of transactions in the respo
     "title": "List the transactions for a customer",
     "type": "endpoint",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.2-constant",
-    "path": "v-2-2/primer-api/loyalty-api/create-a-loyalty-transaction",
+    "path": "primer-api/loyalty-api/create-a-loyalty-transaction",
     "subtitle": "The Loyalty API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
 
 Create an API key with the loyalty-transactions:write scopes.
@@ -819,10 +848,11 @@ Create a loyalty transaction. This is either a points redemption or a points ref
     "title": "Create a loyalty transaction",
     "type": "endpoint",
     "version": "v2.2",
+    "versionSlug": "v-2-2",
   },
   Object {
     "indexSegmentId": "v2.1-constant",
-    "path": "v-2-1/introduction/getting-started",
+    "path": "introduction/getting-started",
     "subtitle": "The Primer API is used to manage Client Sessions, Payments and saved payment methods. All other actions are either managed in the
 Universal Checkout implementation or in the Dashboard.
 
@@ -860,10 +890,11 @@ Read about the available versions of the APIs below on our Changelog [https://ap
     "title": "Getting Started",
     "type": "page",
     "version": "v2.1",
+    "versionSlug": "v-2-1",
   },
   Object {
     "indexSegmentId": "v2.1-constant",
-    "path": "v-2-1/introduction/authentication",
+    "path": "introduction/authentication",
     "subtitle": "Primer uses API keys to authenticate requests. You can manage API keys in the Developers
 [https://sandbox-dashboard.primer.io/developers] area of the dashboard.
 
@@ -895,10 +926,11 @@ Refund a payment. payment_instrument:read Read stored payment methods. payment_i
     "title": "Authentication",
     "type": "page",
     "version": "v2.1",
+    "versionSlug": "v-2-1",
   },
   Object {
     "indexSegmentId": "v2.1-constant",
-    "path": "v-2-1/introduction/api-responses",
+    "path": "introduction/api-responses",
     "subtitle": "STATUS CODES
 
 The following table summarizes the HTTP response codes you may receive from the Primer REST API.
@@ -949,10 +981,11 @@ Don't hesitate to reach out with any questions or feedback. You can email Primer
     "title": "API Responses",
     "type": "page",
     "version": "v2.1",
+    "versionSlug": "v-2-1",
   },
   Object {
     "indexSegmentId": "v2.1-constant",
-    "path": "v-2-1/introduction/idempotency-key",
+    "path": "introduction/idempotency-key",
     "subtitle": "Primer supports a request idempotency mechanism for our Payments API. This optional feature enables you to safely retry a request
 without risking the user being charged or refunded multiple times.
 
@@ -981,10 +1014,11 @@ be made for a single order.",
     "title": "Idempotency Key",
     "type": "page",
     "version": "v2.1",
+    "versionSlug": "v-2-1",
   },
   Object {
     "indexSegmentId": "v2.1-constant",
-    "path": "v-2-1/introduction/loyalty-transactions",
+    "path": "introduction/loyalty-transactions",
     "subtitle": "Primer's Loyalty API provides an interface to interact with 3rd party loyalty point and service providers.
 
 All of the endpoints below reference a connectionId. This is the unique Primer identifier for your loyalty provider connection.
@@ -1022,19 +1056,21 @@ transactions. In most cases it makes sense to filter by connectionId. You can al
     "title": "Loyalty Transactions",
     "type": "page",
     "version": "v2.1",
+    "versionSlug": "v-2-1",
   },
   Object {
     "indexSegmentId": "v2.1-constant",
-    "path": "v-2-1/primer-api/client-session-api/retrieve-a-client-session",
+    "path": "primer-api/client-session-api/retrieve-a-client-session",
     "subtitle": "This API call retrieves all the details associated with the client session corresponding to the client token that is provided in
 the request. The fields with empty values are excluded from the response.",
     "title": "Retrieve a client session",
     "type": "endpoint",
     "version": "v2.1",
+    "versionSlug": "v-2-1",
   },
   Object {
     "indexSegmentId": "v2.1-constant",
-    "path": "v-2-1/primer-api/client-session-api/create-a-client-session",
+    "path": "primer-api/client-session-api/create-a-client-session",
     "subtitle": "Creating a client session generates a client token: a temporary key used to initialize Universal Checkout
 [https://primer.io/docs/accept-payments/setup-universal-checkout/installation/web] and authenticate it against your account.
 
@@ -1051,10 +1087,11 @@ Client tokens expire after 24 hours.",
     "title": "Create a client session",
     "type": "endpoint",
     "version": "v2.1",
+    "versionSlug": "v-2-1",
   },
   Object {
     "indexSegmentId": "v2.1-constant",
-    "path": "v-2-1/primer-api/client-session-api/update-client-session",
+    "path": "primer-api/client-session-api/update-client-session",
     "subtitle": "You can update a clients session created earlier with the PATCH /client-session API call.
 
 The only required field for the request is clientToken. Other supported request fields are same as for the POST /client-session
@@ -1075,10 +1112,11 @@ The response will contain all the fields of the client session including the one
     "title": "Update client session",
     "type": "endpoint",
     "version": "v2.1",
+    "versionSlug": "v-2-1",
   },
   Object {
     "indexSegmentId": "v2.1-constant",
-    "path": "v-2-1/primer-api/payments-api/search-list-payments",
+    "path": "primer-api/payments-api/search-list-payments",
     "subtitle": "Retrieve a list of your payments.
 
 Results are paginated, they will only return up to 100 payments maximum. To access the next page of result, set the cursor query
@@ -1100,10 +1138,11 @@ Note: payments will be available within a minute from being created.",
     "title": "Search & list payments",
     "type": "endpoint",
     "version": "v2.1",
+    "versionSlug": "v-2-1",
   },
   Object {
     "indexSegmentId": "v2.1-constant",
-    "path": "v-2-1/primer-api/payments-api/create-a-payment",
+    "path": "primer-api/payments-api/create-a-payment",
     "subtitle": "Create and authorize a payment for a given customer order. You should provide a payment method token here to avoid PCI
 implications.
 
@@ -1117,10 +1156,11 @@ you pass amount on this request, it will override the amount on the order associ
     "title": "Create a payment",
     "type": "endpoint",
     "version": "v2.1",
+    "versionSlug": "v-2-1",
   },
   Object {
     "indexSegmentId": "v2.1-constant",
-    "path": "v-2-1/primer-api/payments-api/capture-a-payment",
+    "path": "primer-api/payments-api/capture-a-payment",
     "subtitle": "If you have successfully authorized a payment, you can now fully capture, or partially capture funds from the authorized payment,
 depending on whether your selected payment processor supports it. The payment will be updated to SETTLED or SETTLING, depending on
 the payment method type.
@@ -1131,47 +1171,52 @@ control when capturing funds, if you require it.",
     "title": "Capture a payment",
     "type": "endpoint",
     "version": "v2.1",
+    "versionSlug": "v-2-1",
   },
   Object {
     "indexSegmentId": "v2.1-constant",
-    "path": "v-2-1/primer-api/payments-api/cancel-a-payment",
+    "path": "primer-api/payments-api/cancel-a-payment",
     "subtitle": "Provided the payment has not reached SETTLED status, Primer will send a \\"void\\" request to the payment processor, thereby
 cancelling the payment and releasing the hold on customer funds. Upon success, the payment will transition to CANCELLED. The
 payload is optional.",
     "title": "Cancel a payment",
     "type": "endpoint",
     "version": "v2.1",
+    "versionSlug": "v-2-1",
   },
   Object {
     "indexSegmentId": "v2.1-constant",
-    "path": "v-2-1/primer-api/payments-api/refund-a-payment",
+    "path": "primer-api/payments-api/refund-a-payment",
     "subtitle": "By default, this request will refund the full amount.
 
 Optionally, pass in a lesser amount for a partial refund.",
     "title": "Refund a payment",
     "type": "endpoint",
     "version": "v2.1",
+    "versionSlug": "v-2-1",
   },
   Object {
     "indexSegmentId": "v2.1-constant",
-    "path": "v-2-1/primer-api/payments-api/resume-a-payment",
+    "path": "primer-api/payments-api/resume-a-payment",
     "subtitle": "Resume a payment's workflow execution from a paused state. This is usually required when a Workflow was paused in order to get
 further information from the customer, or when waiting for an asynchronous response from a third party connection.",
     "title": "Resume a payment",
     "type": "endpoint",
     "version": "v2.1",
+    "versionSlug": "v-2-1",
   },
   Object {
     "indexSegmentId": "v2.1-constant",
-    "path": "v-2-1/primer-api/payments-api/get-a-payment",
+    "path": "primer-api/payments-api/get-a-payment",
     "subtitle": "Retrieve a payment by its ID.",
     "title": "Get a payment",
     "type": "endpoint",
     "version": "v2.1",
+    "versionSlug": "v-2-1",
   },
   Object {
     "indexSegmentId": "v2.1-constant",
-    "path": "v-2-1/primer-api/payment-methods-api/save-a-payment-method-token",
+    "path": "primer-api/payment-methods-api/save-a-payment-method-token",
     "subtitle": "Save a SINGLE_USE payment method token so it can be used again later. You can optionally choose to verify the payment method
 before vaulting. If verification fails, no payment method data will be vaulted. Verification can minimise fraud and boost
 subscription rates for recurring payments.
@@ -1180,34 +1225,38 @@ If you try to vault an already vaulted token, you will get the existing vaulted 
     "title": "Save a payment method token",
     "type": "endpoint",
     "version": "v2.1",
+    "versionSlug": "v-2-1",
   },
   Object {
     "indexSegmentId": "v2.1-constant",
-    "path": "v-2-1/primer-api/payment-methods-api/list-saved-payment-methods",
+    "path": "primer-api/payment-methods-api/list-saved-payment-methods",
     "subtitle": "Retrieve a list of stored payment methods for a customer.",
     "title": "List saved payment methods",
     "type": "endpoint",
     "version": "v2.1",
+    "versionSlug": "v-2-1",
   },
   Object {
     "indexSegmentId": "v2.1-constant",
-    "path": "v-2-1/primer-api/payment-methods-api/delete-a-saved-payment-method",
+    "path": "primer-api/payment-methods-api/delete-a-saved-payment-method",
     "subtitle": "Delete a saved payment method.",
     "title": "Delete a saved payment method",
     "type": "endpoint",
     "version": "v2.1",
+    "versionSlug": "v-2-1",
   },
   Object {
     "indexSegmentId": "v2.1-constant",
-    "path": "v-2-1/primer-api/payment-methods-api/update-the-default-saved-payment-method",
+    "path": "primer-api/payment-methods-api/update-the-default-saved-payment-method",
     "subtitle": "Update a saved payment method to be the default stored payment method for a customer.",
     "title": "Update the default saved payment method",
     "type": "endpoint",
     "version": "v2.1",
+    "versionSlug": "v-2-1",
   },
   Object {
     "indexSegmentId": "v2-constant",
-    "path": "v-2/introduction/getting-started",
+    "path": "introduction/getting-started",
     "subtitle": "The Primer API is used to manage Client Sessions, Payments and saved payment methods. All other actions are either managed in the
 Universal Checkout implementation or in the Dashboard.
 
@@ -1245,10 +1294,11 @@ Read about the available versions of the APIs below on our Changelog [https://ap
     "title": "Getting Started",
     "type": "page",
     "version": "v2",
+    "versionSlug": "v-2",
   },
   Object {
     "indexSegmentId": "v2-constant",
-    "path": "v-2/introduction/authentication",
+    "path": "introduction/authentication",
     "subtitle": "Primer uses API keys to authenticate requests. You can manage API keys in the Developers
 [https://sandbox-dashboard.primer.io/developers] area of the dashboard.
 
@@ -1280,10 +1330,11 @@ Refund a payment. payment_instrument:read Read stored payment methods. payment_i
     "title": "Authentication",
     "type": "page",
     "version": "v2",
+    "versionSlug": "v-2",
   },
   Object {
     "indexSegmentId": "v2-constant",
-    "path": "v-2/introduction/api-responses",
+    "path": "introduction/api-responses",
     "subtitle": "STATUS CODES
 
 The following table summarizes the HTTP response codes you may receive from the Primer REST API.
@@ -1334,10 +1385,11 @@ Don't hesitate to reach out with any questions or feedback. You can email Primer
     "title": "API Responses",
     "type": "page",
     "version": "v2",
+    "versionSlug": "v-2",
   },
   Object {
     "indexSegmentId": "v2-constant",
-    "path": "v-2/introduction/idempotency-key",
+    "path": "introduction/idempotency-key",
     "subtitle": "Primer supports a request idempotency mechanism for our Payments API. This optional feature enables you to safely retry a request
 without risking the user being charged or refunded multiple times.
 
@@ -1366,10 +1418,11 @@ be made for a single order.",
     "title": "Idempotency Key",
     "type": "page",
     "version": "v2",
+    "versionSlug": "v-2",
   },
   Object {
     "indexSegmentId": "v2-constant",
-    "path": "v-2/introduction/loyalty-transactions",
+    "path": "introduction/loyalty-transactions",
     "subtitle": "Primer's Loyalty API provides an interface to interact with 3rd party loyalty point and service providers.
 
 All of the endpoints below reference a connectionId. This is the unique Primer identifier for your loyalty provider connection.
@@ -1407,10 +1460,11 @@ transactions. In most cases it makes sense to filter by connectionId. You can al
     "title": "Loyalty Transactions",
     "type": "page",
     "version": "v2",
+    "versionSlug": "v-2",
   },
   Object {
     "indexSegmentId": "v2-constant",
-    "path": "v-2/primer-api/client-session-api/create-a-client-session",
+    "path": "primer-api/client-session-api/create-a-client-session",
     "subtitle": "Creating a client session generates a client token: a temporary key used to initialize Universal Checkout
 [https://primer.io/docs/accept-payments/setup-universal-checkout/installation/web] and authenticate it against your account.
 
@@ -1424,10 +1478,11 @@ Client tokens expire after 24 hours.",
     "title": "Create a client session",
     "type": "endpoint",
     "version": "v2",
+    "versionSlug": "v-2",
   },
   Object {
     "indexSegmentId": "v2-constant",
-    "path": "v-2/primer-api/payments-api/search-list-payments",
+    "path": "primer-api/payments-api/search-list-payments",
     "subtitle": "Retrieve a list of your payments.
 
 Results are paginated, they will only return up to 100 payments maximum. To access the next page of result, set the cursor query
@@ -1449,10 +1504,11 @@ Note: payments will be available within a minute from being created.",
     "title": "Search & list payments",
     "type": "endpoint",
     "version": "v2",
+    "versionSlug": "v-2",
   },
   Object {
     "indexSegmentId": "v2-constant",
-    "path": "v-2/primer-api/payments-api/create-a-payment",
+    "path": "primer-api/payments-api/create-a-payment",
     "subtitle": "Create and authorize a payment for a given customer order. You should provide a payment method token here to avoid PCI
 implications.
 
@@ -1466,10 +1522,11 @@ you pass amount on this request, it will override the amount on the order associ
     "title": "Create a payment",
     "type": "endpoint",
     "version": "v2",
+    "versionSlug": "v-2",
   },
   Object {
     "indexSegmentId": "v2-constant",
-    "path": "v-2/primer-api/payments-api/capture-a-payment",
+    "path": "primer-api/payments-api/capture-a-payment",
     "subtitle": "If you have successfully authorized a payment, you can now fully capture, or partially capture funds from the authorized payment,
 depending on whether your selected payment processor supports it. The payment will be updated to SETTLED or SETTLING, depending on
 the payment method type.
@@ -1481,10 +1538,11 @@ Below are the available payload attributes, which give you more granular control
     "title": "Capture a payment",
     "type": "endpoint",
     "version": "v2",
+    "versionSlug": "v-2",
   },
   Object {
     "indexSegmentId": "v2-constant",
-    "path": "v-2/primer-api/payments-api/cancel-a-payment",
+    "path": "primer-api/payments-api/cancel-a-payment",
     "subtitle": "Provided the payment has not reached SETTLED status, Primer will send a \\"void\\" request to the payment processor, thereby
 cancelling the payment and releasing the hold on customer funds.
 
@@ -1494,67 +1552,75 @@ The payload is optional.",
     "title": "Cancel a payment",
     "type": "endpoint",
     "version": "v2",
+    "versionSlug": "v-2",
   },
   Object {
     "indexSegmentId": "v2-constant",
-    "path": "v-2/primer-api/payments-api/refund-a-payment",
+    "path": "primer-api/payments-api/refund-a-payment",
     "subtitle": "By default, this request will refund the full amount.
 
 Optionally, pass in a lesser amount for a partial refund.",
     "title": "Refund a payment",
     "type": "endpoint",
     "version": "v2",
+    "versionSlug": "v-2",
   },
   Object {
     "indexSegmentId": "v2-constant",
-    "path": "v-2/primer-api/payments-api/resume-a-payment",
+    "path": "primer-api/payments-api/resume-a-payment",
     "subtitle": "Resume a payment's workflow execution from a paused state. This is usually required when a Workflow was paused in order to get
 further information from the customer, or when waiting for an asynchronous response from a third party connection.",
     "title": "Resume a payment",
     "type": "endpoint",
     "version": "v2",
+    "versionSlug": "v-2",
   },
   Object {
     "indexSegmentId": "v2-constant",
-    "path": "v-2/primer-api/payments-api/get-a-payment",
+    "path": "primer-api/payments-api/get-a-payment",
     "subtitle": "Retrieve a payment by its ID.",
     "title": "Get a payment",
     "type": "endpoint",
     "version": "v2",
+    "versionSlug": "v-2",
   },
   Object {
     "indexSegmentId": "v2-constant",
-    "path": "v-2/primer-api/payment-methods-api/save-a-payment-method-token",
+    "path": "primer-api/payment-methods-api/save-a-payment-method-token",
     "subtitle": "Save a SINGLE_USE payment method token so it can be used again later.
 
 If you try to vault an already vaulted token, you will get the existing vaulted token back.",
     "title": "Save a payment method token",
     "type": "endpoint",
     "version": "v2",
+    "versionSlug": "v-2",
   },
   Object {
     "indexSegmentId": "v2-constant",
-    "path": "v-2/primer-api/payment-methods-api/list-saved-payment-methods",
+    "path": "primer-api/payment-methods-api/list-saved-payment-methods",
     "subtitle": "Retrieve a list of stored payment methods for a customer.",
     "title": "List saved payment methods",
     "type": "endpoint",
     "version": "v2",
+    "versionSlug": "v-2",
   },
   Object {
     "indexSegmentId": "v2-constant",
-    "path": "v-2/primer-api/payment-methods-api/delete-a-saved-payment-method",
+    "path": "primer-api/payment-methods-api/delete-a-saved-payment-method",
     "subtitle": "Delete a saved payment method.",
     "title": "Delete a saved payment method",
     "type": "endpoint",
     "version": "v2",
+    "versionSlug": "v-2",
   },
   Object {
     "indexSegmentId": "v2-constant",
-    "path": "v-2/primer-api/payment-methods-api/update-the-default-saved-payment-method",
+    "path": "primer-api/payment-methods-api/update-the-default-saved-payment-method",
     "subtitle": "Update a saved payment method to be the default stored payment method for a customer.",
     "title": "Update the default saved payment method",
     "type": "endpoint",
     "version": "v2",
+    "versionSlug": "v-2",
   },
 ]
 `;

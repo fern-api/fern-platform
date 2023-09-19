@@ -327,8 +327,9 @@ types:
       type: AlgoliaRecordType
       title: string
       subtitle: string
-      path: string
+      path: string # path does not include version slug
       version: optional<VersionId>
+      versionSlug: optional<string>
       indexSegmentId: optional<string>
 
 errors:

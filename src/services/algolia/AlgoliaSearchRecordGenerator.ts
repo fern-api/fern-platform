@@ -48,10 +48,7 @@ export class AlgoliaSearchRecordGenerator {
         navigationConfig: DocsV1Db.UnversionedNavigationConfig,
         indexSegment: IndexSegment
     ): AlgoliaSearchRecord[] {
-        const context = new NavigationContext(
-            indexSegment,
-            indexSegment.type === "versioned" ? [indexSegment.version.urlSlug ?? indexSegment.version.id] : []
-        );
+        const context = new NavigationContext(indexSegment, []);
         return this.generateAlgoliaSearchRecordsForUnversionedNavigationConfig(navigationConfig, context);
     }
 
@@ -117,6 +114,7 @@ export class AlgoliaSearchRecordGenerator {
             }
             const { path } = context.withSlug(page.urlSlug);
             const processedContent = convertMarkdownToText(pageContent.markdown);
+            const { indexSegment } = context;
             return [
                 {
                     objectID: uuid(),
@@ -126,8 +124,13 @@ export class AlgoliaSearchRecordGenerator {
                     // TODO: Set to something more than 10kb on prod
                     // See: https://support.algolia.com/hc/en-us/articles/4406981897617-Is-there-a-size-limit-for-my-index-records-/
                     subtitle: truncateToBytes(processedContent, 10_000 - 1),
-                    indexSegmentId: context.indexSegment.id,
-                    ...(context.indexSegment.type === "versioned" ? { version: context.indexSegment.version.id } : {}),
+                    indexSegmentId: indexSegment.id,
+                    ...(indexSegment.type === "versioned"
+                        ? {
+                              version: indexSegment.version.id,
+                              versionSlug: indexSegment.version.urlSlug ?? indexSegment.version.id,
+                          }
+                        : {}),
                 },
             ];
         }
@@ -168,14 +171,20 @@ export class AlgoliaSearchRecordGenerator {
         if (endpointDef.name || endpointDef.description) {
             const { path } = context.withSlug(endpointDef.urlSlug);
             const processedDescription = endpointDef.description ? convertMarkdownToText(endpointDef.description) : "";
+            const { indexSegment } = context;
             records.push({
                 objectID: uuid(),
                 type: "endpoint",
                 title: endpointDef.name ?? "",
                 subtitle: processedDescription,
                 path,
-                indexSegmentId: context.indexSegment.id,
-                ...(context.indexSegment.type === "versioned" ? { version: context.indexSegment.version.id } : {}),
+                indexSegmentId: indexSegment.id,
+                ...(indexSegment.type === "versioned"
+                    ? {
+                          version: indexSegment.version.id,
+                          versionSlug: indexSegment.version.urlSlug ?? indexSegment.version.id,
+                      }
+                    : {}),
             });
         }
         // Add records for query parameters, request/response body etc.
