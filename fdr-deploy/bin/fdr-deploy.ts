@@ -20,6 +20,7 @@ async function main() {
         }
         switch (environmentType) {
             case EnvironmentType.Dev:
+            case EnvironmentType.Dev2:
             case EnvironmentType.Prod:
                 new FdrDeployStack(
                     app,
