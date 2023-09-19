@@ -60,7 +60,7 @@ export class DatabaseServiceImpl implements DatabaseService {
         dbDocsDefinition: FernRegistry.docs.v1.db.DocsDefinitionDb.V2;
         indexSegments: IndexSegment[];
     }): Promise<void> {
-        const prevAlgoliaIndex = await this.prisma.$transaction(async (tx) => {
+        await this.prisma.$transaction(async (tx) => {
             const bufferDocsDefinition = writeBuffer(dbDocsDefinition);
 
             // Step 1: Load Previous Docs
@@ -133,9 +133,5 @@ export class DatabaseServiceImpl implements DatabaseService {
 
             return previousDocs?.algoliaIndex;
         });
-
-        if (prevAlgoliaIndex != null) {
-            await this.markIndexForDeletion(prevAlgoliaIndex);
-        }
     }
 }
