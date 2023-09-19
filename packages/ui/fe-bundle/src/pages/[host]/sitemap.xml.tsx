@@ -2,12 +2,6 @@ import { GetServerSideProps } from "next";
 import { REGISTRY_SERVICE } from "../../service";
 import { getPathsToRevalidate } from "../../utils/revalidation/getPathsToRevalidate";
 
-export declare namespace Sitemap {
-    export interface Props {
-        urls: string[];
-    }
-}
-
 function SiteMap(): void {
     // getServerSideProps will do the heavy lifting
 }
