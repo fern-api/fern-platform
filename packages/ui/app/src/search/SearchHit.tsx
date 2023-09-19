@@ -1,6 +1,7 @@
 import { Icon } from "@blueprintjs/core";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import Link from "next/link";
+import { useCallback } from "react";
 import { Snippet } from "react-instantsearch-hooks-web";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useSearchContext } from "../search-context/useSearchContext";
@@ -16,14 +17,19 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
     const { navigateToPath } = useDocsContext();
     const { closeSearchDialog } = useSearchContext();
 
+    const handleClick = useCallback(() => {
+        closeSearchDialog();
+        navigateToPath(hit.path);
+    }, [closeSearchDialog, navigateToPath, hit.path]);
+
+    const { versionSlug, path } = hit;
+    const href = `/${versionSlug != null ? `${versionSlug}/` : ""}${path}`;
+
     return (
         <Link
             className="hover:bg-background-secondary-light hover:dark:bg-background-secondary-dark group flex w-full items-center space-x-4 space-y-1 rounded-md px-3 py-2 hover:no-underline"
-            onClick={() => {
-                closeSearchDialog();
-                navigateToPath(hit.path);
-            }}
-            href={`/${hit.path}`}
+            onClick={handleClick}
+            href={href}
         >
             <div className="border-border-default-light dark:border-border-default-dark flex flex-col items-center justify-center rounded-md border p-1">
                 <Icon
