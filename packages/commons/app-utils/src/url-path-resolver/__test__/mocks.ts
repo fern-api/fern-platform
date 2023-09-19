@@ -55,4 +55,14 @@ export const MOCKS_DOCS_DEFINITION: FernRegistryDocsRead.DocsDefinition = {
             ],
         },
     },
+    search: {
+        type: "singleAlgoliaIndex",
+        value: {
+            type: "unversioned",
+            indexSegment: {
+                id: FernRegistryDocsRead.IndexSegmentId("seg_1"),
+                searchApiKey: "",
+            },
+        },
+    },
 };
