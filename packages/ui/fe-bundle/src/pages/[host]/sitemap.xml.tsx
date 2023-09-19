@@ -55,7 +55,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params = {}, res 
     });
 
     const urls = paths.map((path) => {
-        return `https://${hostWithoutTrailingSlash}/${path}`;
+        return `https://${hostWithoutTrailingSlash}${path}`;
     });
     const sitemap = getSitemapXml(urls);
 
