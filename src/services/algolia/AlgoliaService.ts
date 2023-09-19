@@ -59,7 +59,7 @@ export class AlgoliaServiceImpl implements AlgoliaService {
     public generateSearchApiKey(filters: string, validUntil: Date) {
         return this.client.generateSecuredApiKey(this.baseSearchApiKey, {
             filters,
-            validUntil: validUntil.getTime() / 1_000,
+            validUntil: Math.floor(validUntil.getTime() / 1_000),
         });
     }
 
