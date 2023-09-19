@@ -21,11 +21,12 @@ export function useSearchService(): SearchService {
     return useMemo<SearchService>(() => {
         const envConfig = getEnvConfig();
         if (searchInfo.type === "legacyMultiAlgoliaIndex") {
-            return searchInfo.algoliaIndex != null
+            const algoliaIndex = searchInfo.algoliaIndex ?? docsDefinition.algoliaSearchIndex;
+            return algoliaIndex != null
                 ? {
                       isAvailable: true,
                       client: algolia(envConfig.algoliaAppId, envConfig.algoliaApiKey),
-                      index: searchInfo.algoliaIndex,
+                      index: algoliaIndex,
                   }
                 : { isAvailable: false };
         } else if (searchInfo.value.type === "unversioned") {
