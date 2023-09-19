@@ -1,3 +1,4 @@
+import { type Theme } from "@fern-ui/theme";
 import classNames from "classnames";
 import Link from "next/link";
 import React, { AnchorHTMLAttributes, HTMLAttributes } from "react";
@@ -6,21 +7,19 @@ import * as prism from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
 import { CopyToClipboardButton } from "../commons/CopyToClipboardButton";
 import { useDocsContext } from "../docs-context/useDocsContext";
+import { parseCodeLanguageFromClassName } from "./util";
 
-export const CodeBlockSkeleton: React.FC<HTMLAttributes<HTMLElement>> = ({ children }) => {
-    const { theme } = useDocsContext();
-    if (children == null || typeof children !== "object") {
-        return null;
-    }
-    const { className, children: nestedChildren } = (children as JSX.Element).props as {
-        className: string | undefined;
-        children: string;
-    };
-    const language = className != null ? className.replace(/language-/, "") : "";
+type CodeBlockSkeletonProps = {
+    theme?: Theme;
+    language: string;
+    content: string;
+};
+
+export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({ theme, language, content }) => {
     return (
         <pre
             className={classNames(
-                "w-full mb-5 border-l border-r border-b rounded-bl-lg rounded-br-lg bg-gray-100/90 dark:bg-gray-950/90 border-border-default-light dark:border-border-default-dark"
+                "w-full border-l border-r border-b rounded-bl-lg rounded-br-lg bg-gray-100/90 dark:bg-gray-950/90 border-border-default-light dark:border-border-default-dark"
             )}
         >
             <SyntaxHighlighter
@@ -44,24 +43,30 @@ export const CodeBlockSkeleton: React.FC<HTMLAttributes<HTMLElement>> = ({ child
                 language={language}
                 PreTag="div"
             >
-                {String(nestedChildren)}
+                {content}
             </SyntaxHighlighter>
         </pre>
     );
 };
 
-export const CodeBlockInternal: React.FC<HTMLAttributes<HTMLElement>> = ({ children, ...rest }) => {
-    const content = (children as { props: { children: string | undefined } }).props.children;
-
+export const CodeBlockInternal: React.FC<HTMLAttributes<HTMLElement>> = ({ children: c }) => {
+    const { theme } = useDocsContext();
+    const children = c as {
+        props?: {
+            className?: string;
+            children?: string;
+        };
+    };
+    const { children: content, className } = children?.props ?? {};
     if (typeof content !== "string") {
         return null;
     }
-
+    const language = parseCodeLanguageFromClassName(className);
     return (
-        <div className="relative w-full">
+        <div className="relative mb-5 w-full">
             <div className="border-border-default-light dark:border-border-default-dark flex h-2.5 rounded-t-lg border-x border-t bg-gray-100/90 px-3 dark:bg-gray-950/90" />
             <CopyToClipboardButton className="absolute right-4 top-4 ml-auto" content={content} />
-            <CodeBlockSkeleton {...rest}>{children}</CodeBlockSkeleton>
+            <CodeBlockSkeleton theme={theme} language={language} content={content} />
         </div>
     );
 };
