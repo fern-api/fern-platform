@@ -41,6 +41,9 @@ export function useSearchService(): SearchService {
             if (docsInfo.type !== "unversioned") {
                 throw new Error("Inconsistent State: Received search info is unversioned but docs are versioned");
             }
+            if (envConfig.algoliaSearchIndex == null) {
+                throw new Error('Missing environment variable "NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX"');
+            }
             const { indexSegment } = searchInfo.value;
             return {
                 isAvailable: true,
@@ -58,6 +61,9 @@ export function useSearchService(): SearchService {
                 throw new Error(
                     `Inconsistent State: Did not receive index segment for version "${versionId}". This may indicate a backend bug.`
                 );
+            }
+            if (envConfig.algoliaSearchIndex == null) {
+                throw new Error('Missing environment variable "NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX"');
             }
             return {
                 isAvailable: true,

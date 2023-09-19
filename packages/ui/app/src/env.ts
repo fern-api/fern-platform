@@ -5,7 +5,7 @@ type EnvironmentConfig = {
      */
     algoliaApiKey: string;
 
-    algoliaSearchIndex: string;
+    algoliaSearchIndex?: string;
 };
 
 export function getEnvConfig(): EnvironmentConfig {
@@ -15,10 +15,6 @@ export function getEnvConfig(): EnvironmentConfig {
 
     if (process.env.NEXT_PUBLIC_ALGOLIA_API_KEY == null) {
         throw new Error('Missing environment variable "NEXT_PUBLIC_ALGOLIA_API_KEY"');
-    }
-
-    if (process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX == null) {
-        throw new Error('Missing environment variable "NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX"');
     }
 
     return {
