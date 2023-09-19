@@ -108,7 +108,7 @@ function getSearchInfoFromDocs({
     app: FdrApplication;
 }): DocsV1Read.SearchInfo {
     if (docsV2 == null || !Array.isArray(docsV2.indexSegmentIds)) {
-        return { type: "legacyMultiAlgoliaIndex" };
+        return { type: "legacyMultiAlgoliaIndex", algoliaIndex: docsV2?.algoliaIndex ?? undefined };
     }
     const areDocsVersioned = isVersionedNavigationConfig(docsDbDefinition.config.navigation);
     if (areDocsVersioned) {
