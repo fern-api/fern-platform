@@ -1,6 +1,7 @@
 import { Icon } from "@blueprintjs/core";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import Link from "next/link";
+import { useCallback } from "react";
 import { Snippet } from "react-instantsearch-hooks-web";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useSearchContext } from "../search-context/useSearchContext";
@@ -13,16 +14,26 @@ export declare namespace SearchHit {
 }
 
 export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
-    const { navigateToPath } = useDocsContext();
+    const { navigateToPath, docsInfo } = useDocsContext();
     const { closeSearchDialog } = useSearchContext();
+
+    const handleClick = useCallback(() => {
+        closeSearchDialog();
+        if (docsInfo.type === "versioned") {
+            // The search hit path currently contains version slug
+            // We can remove it manually until the backend starts excluding it from the slug
+            const [_versionSlug, ...slugWithoutVersionParts] = hit.path.split("/");
+            const slugWithoutVersion = slugWithoutVersionParts.join("/");
+            navigateToPath(slugWithoutVersion);
+        } else {
+            navigateToPath(hit.path);
+        }
+    }, [closeSearchDialog, hit.path, docsInfo.type, navigateToPath]);
 
     return (
         <Link
             className="hover:bg-background-secondary-light hover:dark:bg-background-secondary-dark group flex w-full items-center space-x-4 space-y-1 rounded-md px-3 py-2 hover:no-underline"
-            onClick={() => {
-                closeSearchDialog();
-                navigateToPath(hit.path);
-            }}
+            onClick={handleClick}
             href={`/${hit.path}`}
         >
             <div className="border-border-default-light dark:border-border-default-dark flex flex-col items-center justify-center rounded-md border p-1">
