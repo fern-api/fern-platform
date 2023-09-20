@@ -45,6 +45,14 @@ export const Markdown = React.memo<Markdown.Props>(function Markdown({ children,
             remarkPlugins={REMARK_PLUGINS}
             rehypePlugins={REHYPE_PLUGINS}
             components={{
+                pre({ children }) {
+                    // This element seems to come pre-styled and, by default, wraps all code blocks with a weird black
+                    // container. We need to ignore it and just render its children.
+                    // TODO: Confirm that this does not affect any components other than code blocks
+                    // If other elements are affected, we need to determine whether we're dealing with a code
+                    // block or some other component in this block and return the default value (whatever that is)
+                    return <>{children}</>;
+                },
                 code({ node, inline = false, className, children, ...props }) {
                     if (!inline && className != null) {
                         const content = Array.isArray(children) ? children[0] : undefined;
