@@ -4,9 +4,7 @@ import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources
 import {
     assertIsUnversionedNavigationConfig,
     assertIsVersionedNavigationConfig,
-    isUnversionedTabbedNavigationConfig,
     isUnversionedUntabbedNavigationConfig,
-    isVersionedNavigationConfig,
     type ResolvedUrlPath,
 } from "@fern-ui/app-utils";
 import { assertNever } from "@fern-ui/core-utils";
@@ -22,6 +20,20 @@ import {
     type NavigateToPathOpts,
 } from "./DocsContext";
 import { useSlugListeners } from "./useSlugListeners";
+
+function findTabIndexWithinTabbedNavigationConfig(
+    config: FernRegistry.docs.v1.read.UnversionedNavigationConfig | undefined,
+    tabSlug: string | undefined
+) {
+    if (config == null) {
+        throw new Error("Could not find version config data.");
+    }
+    if (isUnversionedUntabbedNavigationConfig(config)) {
+        return -1;
+    } else {
+        return config.tabs.findIndex((tab) => tab.urlSlug === tabSlug);
+    }
+}
 
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
@@ -177,14 +189,52 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
 
     const inferTabIndexFromSlug = useCallback(
         (fullSlug: string) => {
-            if (!isUnversionedTabbedNavigationConfig(docsInfo.activeNavigationConfig)) {
-                return -1;
-            }
             const [firstPart, secondPart] = fullSlug.split("/");
-            const tabSlug = isVersionedNavigationConfig(docsInfo.activeNavigationConfig) ? secondPart : firstPart;
-            return docsInfo.activeNavigationConfig.tabs.findIndex((tab) => tab.urlSlug === tabSlug);
+            if (docsInfo.type === "versioned") {
+                assertIsVersionedNavigationConfig(docsDefinition.config.navigation);
+                // The first part of the slug may refer to a version
+                const versionMatchingSlugFirstPart = docsInfo.versions
+                    .map((v, versionIndex) => ({
+                        ...v,
+                        versionIndex,
+                    }))
+                    .find((v) => v.versionSlug === firstPart);
+                if (versionMatchingSlugFirstPart != null) {
+                    // We found a version that matches the first part of the slug
+                    const { versionIndex } = versionMatchingSlugFirstPart;
+                    const versionConfigData = docsDefinition.config.navigation.versions[versionIndex];
+                    if (versionConfigData == null) {
+                        throw new Error("Could not find version config data.");
+                    }
+                    const isDefaultVersion = versionIndex === 0;
+                    if (!isDefaultVersion) {
+                        // The user wants to navigate to a page within this version
+                        const tabSlug = secondPart;
+                        return findTabIndexWithinTabbedNavigationConfig(versionConfigData.config, tabSlug);
+                    } else {
+                        if (isUnversionedUntabbedNavigationConfig(versionConfigData.config)) {
+                            return -1;
+                        } else {
+                            // TODO: See if there is a tab within this version that has the same slug as version
+                            const tabSlug = secondPart;
+                            return findTabIndexWithinTabbedNavigationConfig(versionConfigData.config, tabSlug);
+                        }
+                    }
+                } else {
+                    // We could not find a version that matches the first part of the slug. We assume that
+                    // the user wants to navigate to a page within the default version.
+                    const tabSlug = firstPart;
+                    const defaultVersionConfigData = docsDefinition.config.navigation.versions[0];
+                    return findTabIndexWithinTabbedNavigationConfig(defaultVersionConfigData?.config, tabSlug);
+                }
+            } else {
+                // The first part of the slug refers to a tab
+                assertIsUnversionedNavigationConfig(docsDefinition.config.navigation);
+                const tabSlug = firstPart;
+                return findTabIndexWithinTabbedNavigationConfig(docsDefinition.config.navigation, tabSlug);
+            }
         },
-        [docsInfo.activeNavigationConfig]
+        [docsInfo, docsDefinition.config.navigation]
     );
 
     const navigateToPath = useEventCallback((slugWithoutVersion: string, opts?: NavigateToPathOpts) => {
