@@ -45,7 +45,7 @@ const COMPONENTS: MDXRemoteProps["components"] = {
             };
         };
         const { children: content, className } = (children as PreElemChildren)?.props ?? {};
-        const language = className === "string" ? className.replace(/language-/, "") : "";
+        const language = typeof className === "string" ? className.replace(/language-/, "") : "";
         if (typeof content !== "string") {
             return null;
         }

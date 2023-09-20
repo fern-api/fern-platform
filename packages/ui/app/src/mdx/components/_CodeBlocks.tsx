@@ -29,7 +29,7 @@ export const _CodeBlocks: React.FC<React.PropsWithChildren<_CodeBlocks.Props>> =
         };
     };
     const className = children?.props?.className;
-    const language = className === "string" ? className.replace(/language-/, "") : "";
+    const language = typeof className === "string" ? className.replace(/language-/, "") : "";
     return (
         <div className="mb-5 w-full min-w-0 max-w-full">
             <div className="border-border-default-light dark:border-border-default-dark bg-background-tertiary-light flex justify-between rounded-t-lg border dark:bg-[#19181C]">
