@@ -3,6 +3,7 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
+import { CodeBlockWithClipboardButton } from "../../commons/CodeBlockWithClipboardButton";
 import {
     A,
     H1,
@@ -34,8 +35,6 @@ export declare namespace Markdown {
 const REMARK_PLUGINS = [remarkGfm];
 const REHYPE_PLUGINS = [rehypeRaw];
 
-// TODO: Rename this component to ApiMarkdown
-
 export const Markdown = React.memo<Markdown.Props>(function Markdown({ children, className }) {
     if (children == null) {
         return null;
@@ -48,7 +47,12 @@ export const Markdown = React.memo<Markdown.Props>(function Markdown({ children,
             components={{
                 code({ node, inline = false, className, children, ...props }) {
                     if (!inline && className != null) {
-                        return null;
+                        const content = Array.isArray(children) ? children[0] : undefined;
+                        if (typeof content !== "string") {
+                            return null;
+                        }
+                        const language = typeof className === "string" ? className.replace(/language-/, "") : "";
+                        return <CodeBlockWithClipboardButton language={language} content={content} />;
                     }
                     return <InlineCode {...props}>{children}</InlineCode>;
                 },
