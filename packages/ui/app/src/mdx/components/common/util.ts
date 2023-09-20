@@ -1,0 +1,90 @@
+import { parseCodeBlockLanguageFromClassName } from "../../../commons/util";
+import {
+    BADLY_FORMATTED_CODE_BLOCK_CONTENT,
+    BADLY_FORMATTED_CODE_BLOCK_LANGUAGE,
+    BADLY_FORMATTED_CODE_BLOCK_TITLE,
+    DEFAULT_CODE_BLOCK_TAB_TITLE,
+} from "../../../config";
+import type { CodeBlockItem } from "./types";
+
+/**
+ * The interface that the user-provided `CodeBlocks` children should adhere to.
+ */
+type ExpectedCodeBlockChildren = {
+    props: {
+        className?: string;
+        children: {
+            props: {
+                className?: string;
+                children: string;
+            };
+        };
+    };
+};
+
+/**
+ * The interface that the user-provided `CodeBlocks` children should adhere to.
+ */
+type ExpectedCodeBlocksChildren = {
+    props: {
+        className?: string;
+        children: {
+            props: {
+                children: {
+                    props: {
+                        className?: string;
+                        children: string;
+                    };
+                };
+            };
+        };
+        title?: string;
+    };
+};
+
+function isExpectedCodeBlockChildren(_children: unknown): _children is ExpectedCodeBlockChildren {
+    // TODO: Implement
+    return true;
+}
+
+function isExpectedCodeBlocksChildren(_children: unknown): _children is ExpectedCodeBlocksChildren {
+    // TODO: Implement
+    return true;
+}
+
+// When the code block children are not of expected shape we return some empty content with a little
+// bit of feedback so that the UI doesn't feel buggy
+const fallbackItemForBadlyFormattedCodeBlock: CodeBlockItem = {
+    language: BADLY_FORMATTED_CODE_BLOCK_LANGUAGE,
+    title: BADLY_FORMATTED_CODE_BLOCK_TITLE,
+    content: BADLY_FORMATTED_CODE_BLOCK_CONTENT,
+};
+
+/**
+ * Transforms the user-provided `CodeBlock` to a `CodeBlockItem` with a cleaner interface
+ */
+export function transformCodeBlockChildrenToCodeBlockItem(title: string | undefined, children: unknown): CodeBlockItem {
+    if (!isExpectedCodeBlockChildren(children)) {
+        return fallbackItemForBadlyFormattedCodeBlock;
+    }
+    return {
+        language: parseCodeBlockLanguageFromClassName(children.props.children.props.className),
+        title: title ?? DEFAULT_CODE_BLOCK_TAB_TITLE,
+        content: children.props.children.props.children,
+    };
+}
+
+/**
+ * Transforms the user-provided `CodeBlocks` to a `CodeBlockItem` with a cleaner interface
+ */
+export function transformCodeBlocksChildrenToCodeBlockItem(children: unknown): CodeBlockItem {
+    if (!isExpectedCodeBlocksChildren(children)) {
+        return fallbackItemForBadlyFormattedCodeBlock;
+    }
+    const innerPropsChildren = children.props.children;
+    return {
+        language: parseCodeBlockLanguageFromClassName(innerPropsChildren.props.children.props.className),
+        title: children.props.title ?? DEFAULT_CODE_BLOCK_TAB_TITLE,
+        content: innerPropsChildren.props.children.props.children,
+    };
+}

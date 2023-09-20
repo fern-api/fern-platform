@@ -2,14 +2,8 @@ import classNames from "classnames";
 import { useState } from "react";
 import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
-import { parseCodeBlockLanguageFromClassName } from "../../commons/util";
 import { useDocsContext } from "../../docs-context/useDocsContext";
-
-export interface CodeBlockItem {
-    children: React.ReactNode;
-    title: string;
-    content: string;
-}
+import type { CodeBlockItem } from "./common/types";
 
 export declare namespace _CodeBlocks {
     export interface Props {
@@ -24,13 +18,6 @@ export const _CodeBlocks: React.FC<React.PropsWithChildren<_CodeBlocks.Props>> =
     if (codeBlockItem == null) {
         return null;
     }
-    const children = codeBlockItem.children as {
-        props?: {
-            className?: string;
-        };
-    };
-    const className = children?.props?.className;
-    const language = parseCodeBlockLanguageFromClassName(className);
     return (
         <div className="mb-5 w-full min-w-0 max-w-full">
             <div className="border-border-default-light dark:border-border-default-dark bg-background-tertiary-light flex justify-between rounded-t-lg border dark:bg-[#19181C]">
@@ -52,7 +39,7 @@ export const _CodeBlocks: React.FC<React.PropsWithChildren<_CodeBlocks.Props>> =
 
                 <CopyToClipboardButton className="ml-auto mr-4" content={codeBlockItem.content} />
             </div>
-            <CodeBlockSkeleton theme={theme} language={language} content={codeBlockItem.content} />
+            <CodeBlockSkeleton theme={theme} language={codeBlockItem.language} content={codeBlockItem.content} />
         </div>
     );
 };
