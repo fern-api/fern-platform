@@ -2,6 +2,7 @@ import { MDXRemote, MDXRemoteProps, MDXRemoteSerializeResult } from "@fern-ui/ap
 import React, { useCallback } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { CodeBlockWithClipboardButton } from "../commons/CodeBlockWithClipboardButton";
+import { parseCodeBlockLanguageFromClassName } from "../commons/util";
 import {
     A,
     H1,
@@ -45,7 +46,7 @@ const COMPONENTS: MDXRemoteProps["components"] = {
             };
         };
         const { children: content, className } = (children as PreElemChildren)?.props ?? {};
-        const language = typeof className === "string" ? className.replace(/language-/, "") : "";
+        const language = parseCodeBlockLanguageFromClassName(className);
         if (typeof content !== "string") {
             return null;
         }

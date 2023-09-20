@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import { CodeBlockWithClipboardButton } from "../../commons/CodeBlockWithClipboardButton";
+import { parseCodeBlockLanguageFromClassName } from "../../commons/util";
 import {
     A,
     H1,
@@ -59,7 +60,7 @@ export const Markdown = React.memo<Markdown.Props>(function Markdown({ children,
                         if (typeof content !== "string") {
                             return null;
                         }
-                        const language = typeof className === "string" ? className.replace(/language-/, "") : "";
+                        const language = parseCodeBlockLanguageFromClassName(className);
                         return <CodeBlockWithClipboardButton language={language} content={content} />;
                     }
                     return <InlineCode {...props}>{children}</InlineCode>;
