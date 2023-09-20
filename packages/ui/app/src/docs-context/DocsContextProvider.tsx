@@ -12,7 +12,13 @@ import { useEventCallback } from "@fern-ui/react-commons";
 import { useTheme } from "@fern-ui/theme";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
-import { DocsContext, DocsContextValue, type DocsInfo, type NavigateToPathOpts } from "./DocsContext";
+import {
+    DocsContext,
+    DocsContextValue,
+    type DocsInfo,
+    type GetFullSlugOpts,
+    type NavigateToPathOpts,
+} from "./DocsContext";
 import { useSlugListeners } from "./useSlugListeners";
 
 export declare namespace DocsContextProvider {
@@ -85,12 +91,13 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     }, [docsInfo.activeNavigationConfig, activeTabIndex]);
 
     const getFullSlug = useCallback(
-        (slug: string, opts?: { tabSlug?: string }) => {
+        (slug: string, opts?: GetFullSlugOpts) => {
+            const { omitVersionSlug = false, omitTabSlug = false } = opts ?? {};
             const parts: string[] = [];
-            if (docsInfo.type === "versioned" && !docsInfo.isDefaultVersion && versionSlug) {
+            if (!omitVersionSlug && docsInfo.type === "versioned" && !docsInfo.isDefaultVersion && versionSlug) {
                 parts.push(`${versionSlug}/`);
             }
-            if (activeTab != null) {
+            if (!omitTabSlug && activeTab != null) {
                 parts.push(`${opts?.tabSlug ?? activeTab.urlSlug}/`);
             }
             parts.push(slug);
@@ -178,7 +185,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
                 : getFullSlug(slugWithoutVersion, { tabSlug: opts.tabSlug });
             setSelectedSlug(slug);
             navigateToPathListeners.invokeListeners(slug);
-
             const timeout = setTimeout(() => {
                 setJustNavigated(false);
             }, 500);
