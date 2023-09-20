@@ -267,17 +267,17 @@ export const P: React.FC<{ variant: "api" | "markdown" } & HTMLAttributes<HTMLPa
     );
 };
 
-export const Ol: React.FC<HTMLAttributes<HTMLOListElement>> = ({ className, ...rest }) => {
-    return <ol {...rest} className={classNames(className, "list-inside list-decimal space-y-2 mb-3")} />;
-};
-
 export const Strong: React.FC<HTMLAttributes<unknown>> = ({ className, ...rest }) => {
     return (
         <strong
             {...rest}
-            className={classNames(className, " !text-text-primary-light dark:!text-text-primary-dark font-semibold")}
+            className={classNames(className, "!text-text-primary-light dark:!text-text-primary-dark font-semibold")}
         />
     );
+};
+
+export const Ol: React.FC<HTMLAttributes<HTMLOListElement>> = ({ className, ...rest }) => {
+    return <ol {...rest} className={classNames(className, "list-outside list-decimal space-y-2 mb-3 ml-6")} />;
 };
 
 export const Ul: React.FC<HTMLAttributes<HTMLUListElement>> = ({ className, ...rest }) => {
@@ -286,7 +286,7 @@ export const Ul: React.FC<HTMLAttributes<HTMLUListElement>> = ({ className, ...r
             {...rest}
             className={classNames(
                 className,
-                "list-image-dash-light dark:list-image-dash-dark list-inside space-y-2 mb-3"
+                "list-image-dash-light list-outside dark:list-image-dash-dark space-y-2 mb-3 ml-[22px]" // 22px is the width of the dash svg
             )}
         />
     );
