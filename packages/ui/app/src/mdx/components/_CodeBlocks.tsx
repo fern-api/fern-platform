@@ -1,9 +1,8 @@
 import classNames from "classnames";
 import { useState } from "react";
+import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
 import { useDocsContext } from "../../docs-context/useDocsContext";
-import { CodeBlockSkeleton } from "../base-components";
-import { parseCodeLanguageFromClassName } from "../util";
 
 export interface CodeBlockItem {
     children: React.ReactNode;
@@ -29,7 +28,8 @@ export const _CodeBlocks: React.FC<React.PropsWithChildren<_CodeBlocks.Props>> =
             className?: string;
         };
     };
-    const language = parseCodeLanguageFromClassName(children?.props?.className);
+    const className = children?.props?.className;
+    const language = className === "string" ? className.replace(/language-/, "") : "";
     return (
         <div className="mb-5 w-full min-w-0 max-w-full">
             <div className="border-border-default-light dark:border-border-default-dark bg-background-tertiary-light flex justify-between rounded-t-lg border dark:bg-[#19181C]">

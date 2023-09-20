@@ -1,75 +1,8 @@
-import { type Theme } from "@fern-ui/theme";
 import classNames from "classnames";
 import Link from "next/link";
 import React, { AnchorHTMLAttributes, HTMLAttributes } from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import * as prism from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
-import { CopyToClipboardButton } from "../commons/CopyToClipboardButton";
 import { useDocsContext } from "../docs-context/useDocsContext";
-import { parseCodeLanguageFromClassName } from "./util";
-
-type CodeBlockSkeletonProps = {
-    theme?: Theme;
-    language: string;
-    content: string;
-};
-
-export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({ theme, language, content }) => {
-    return (
-        <pre
-            className={classNames(
-                "w-full border-l border-r border-b rounded-bl-lg rounded-br-lg bg-gray-100/90 dark:bg-gray-950/90 border-border-default-light dark:border-border-default-dark"
-            )}
-        >
-            <SyntaxHighlighter
-                style={theme === "dark" ? prism.vscDarkPlus : prism.oneLight}
-                customStyle={{
-                    width: "100%",
-                    overflowX: "auto",
-                    margin: 0,
-                    paddingRight: 16,
-                    paddingLeft: 16,
-                    paddingBottom: 20,
-                    fontSize: "0.9rem",
-                    background: "unset",
-                    backgroundColor: "unset",
-                }}
-                codeTagProps={{
-                    style: {
-                        background: "unset",
-                    },
-                }}
-                language={language}
-                PreTag="div"
-            >
-                {content}
-            </SyntaxHighlighter>
-        </pre>
-    );
-};
-
-export const CodeBlockInternal: React.FC<HTMLAttributes<HTMLElement>> = ({ children: c }) => {
-    const { theme } = useDocsContext();
-    const children = c as {
-        props?: {
-            className?: string;
-            children?: string;
-        };
-    };
-    const { children: content, className } = children?.props ?? {};
-    if (typeof content !== "string") {
-        return null;
-    }
-    const language = parseCodeLanguageFromClassName(className);
-    return (
-        <div className="relative mb-5 w-full">
-            <div className="border-border-default-light dark:border-border-default-dark flex h-2.5 rounded-t-lg border-x border-t bg-gray-100/90 px-3 dark:bg-gray-950/90" />
-            <CopyToClipboardButton className="absolute right-4 top-4 ml-auto" content={content} />
-            <CodeBlockSkeleton theme={theme} language={language} content={content} />
-        </div>
-    );
-};
 
 export const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({ className, ...rest }) => {
     return (

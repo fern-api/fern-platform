@@ -1,9 +1,9 @@
 import { MDXRemote, MDXRemoteProps, MDXRemoteSerializeResult } from "@fern-ui/app-utils";
 import React, { useCallback } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import { CodeBlockWithClipboardButton } from "../commons/CodeBlockWithClipboardButton";
 import {
     A,
-    CodeBlockInternal,
     H1,
     H2,
     H3,
@@ -37,7 +37,20 @@ export declare namespace MdxContent {
 }
 
 const COMPONENTS: MDXRemoteProps["components"] = {
-    pre: CodeBlockInternal,
+    pre: ({ children }) => {
+        type PreElemChildren = {
+            props?: {
+                className?: string;
+                children?: string;
+            };
+        };
+        const { children: content, className } = (children as PreElemChildren)?.props ?? {};
+        const language = className === "string" ? className.replace(/language-/, "") : "";
+        if (typeof content !== "string") {
+            return null;
+        }
+        return <CodeBlockWithClipboardButton language={language} content={content} />;
+    },
     code: InlineCode,
     table: Table,
     thead: Thead,
