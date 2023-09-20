@@ -33,21 +33,6 @@ interface DocsInfoUnversioned {
 
 export type DocsInfo = DocsInfoVersioned | DocsInfoUnversioned;
 
-export interface NavigateToPathOpts {
-    /**
-     * Version slug is included by default.
-     */
-    omitVersionSlug: boolean;
-    /**
-     * Defaults to the currently active tab slug.
-     */
-    tabSlug?: string;
-    /**
-     * Tab slug is included by default.
-     */
-    omitTabSlug?: string;
-}
-
 export interface GetFullSlugOpts {
     /**
      * Version slug is included by default.
@@ -62,6 +47,8 @@ export interface GetFullSlugOpts {
      */
     omitTabSlug?: boolean;
 }
+
+export interface NavigateToPathOpts extends GetFullSlugOpts {}
 
 export interface DocsContextValue {
     resolveApi: (apiId: FernRegistry.ApiDefinitionId) => FernRegistryApiRead.ApiDefinition;

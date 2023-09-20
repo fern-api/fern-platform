@@ -177,22 +177,18 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
 
     const [justNavigated, setJustNavigated] = useState(false);
 
-    const navigateToPath = useEventCallback(
-        (slugWithoutVersion: string, opts: NavigateToPathOpts = { omitVersionSlug: false }) => {
-            setJustNavigated(true);
-            const slug = opts.omitVersionSlug
-                ? slugWithoutVersion
-                : getFullSlug(slugWithoutVersion, { tabSlug: opts.tabSlug });
-            setSelectedSlug(slug);
-            navigateToPathListeners.invokeListeners(slug);
-            const timeout = setTimeout(() => {
-                setJustNavigated(false);
-            }, 500);
-            return () => {
-                clearTimeout(timeout);
-            };
-        }
-    );
+    const navigateToPath = useEventCallback((slugWithoutVersion: string, opts?: NavigateToPathOpts) => {
+        setJustNavigated(true);
+        const slug = getFullSlug(slugWithoutVersion, opts);
+        setSelectedSlug(slug);
+        navigateToPathListeners.invokeListeners(slug);
+        const timeout = setTimeout(() => {
+            setJustNavigated(false);
+        }, 500);
+        return () => {
+            clearTimeout(timeout);
+        };
+    });
 
     const scrollToPathListeners = useSlugListeners("scrollToPath", { selectedSlug });
 
