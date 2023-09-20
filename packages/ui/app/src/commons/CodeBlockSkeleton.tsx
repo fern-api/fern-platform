@@ -38,7 +38,7 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({ className,
                     },
                 }}
                 language={language}
-                PreTag="div"
+                PreTag="pre"
             >
                 {content}
             </SyntaxHighlighter>
