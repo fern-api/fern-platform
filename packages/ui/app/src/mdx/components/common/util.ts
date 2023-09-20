@@ -28,17 +28,8 @@ type ExpectedCodeBlockChildren = {
 type ExpectedCodeBlocksChildren = {
     props: {
         className?: string;
-        children: {
-            props: {
-                children: {
-                    props: {
-                        className?: string;
-                        children: string;
-                    };
-                };
-            };
-        };
         title?: string;
+        children: unknown;
     };
 };
 
@@ -81,10 +72,5 @@ export function transformCodeBlocksChildrenToCodeBlockItem(children: unknown): C
     if (!isExpectedCodeBlocksChildren(children)) {
         return fallbackItemForBadlyFormattedCodeBlock;
     }
-    const innerPropsChildren = children.props.children;
-    return {
-        language: parseCodeBlockLanguageFromClassName(innerPropsChildren.props.children.props.className),
-        title: children.props.title ?? DEFAULT_CODE_BLOCK_TAB_TITLE,
-        content: innerPropsChildren.props.children.props.children,
-    };
+    return transformCodeBlockChildrenToCodeBlockItem(children.props.title, children.props.children);
 }

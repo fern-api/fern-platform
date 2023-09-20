@@ -8,7 +8,6 @@ export declare namespace CodeBlocks {
 }
 
 export const CodeBlocks: React.FC<React.PropsWithChildren<CodeBlocks.Props>> = ({ children }) => {
-    console.log("CODE BLOCKschildren=", children);
     if (Array.isArray(children)) {
         return <_CodeBlocks items={children.map(transformCodeBlocksChildrenToCodeBlockItem)} />;
     } else if (children != null) {
