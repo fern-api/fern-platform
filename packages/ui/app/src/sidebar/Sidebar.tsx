@@ -24,7 +24,6 @@ export declare namespace Sidebar {
 export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expandAllSections = false }) => {
     const {
         docsInfo,
-        setActiveTabIndex,
         activeTab,
         activeTabIndex,
         selectedSlug,
@@ -86,7 +85,6 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                                 if (slugToNavigate == null) {
                                     return;
                                 }
-                                setActiveTabIndex(idx);
                                 navigateToPath(slugToNavigate, {
                                     tabSlug: tab.urlSlug,
                                 });

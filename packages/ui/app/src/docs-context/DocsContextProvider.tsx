@@ -4,7 +4,9 @@ import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources
 import {
     assertIsUnversionedNavigationConfig,
     assertIsVersionedNavigationConfig,
+    isUnversionedTabbedNavigationConfig,
     isUnversionedUntabbedNavigationConfig,
+    isVersionedNavigationConfig,
     type ResolvedUrlPath,
 } from "@fern-ui/app-utils";
 import { assertNever } from "@fern-ui/core-utils";
@@ -44,7 +46,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     const router = useRouter();
 
     const [activeVersionSlug, _setActiveVersionSlug] = useState(inferredVersionSlug);
-    const [activeTabIndex, _setActiveTabIndex] = useState(inferredTabIndex);
+    const [activeTabIndex, setActiveTabIndex] = useState(inferredTabIndex);
 
     const versionSlug = activeVersionSlug ?? "";
 
@@ -130,10 +132,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
         _setActiveVersionSlug(version);
     }, []);
 
-    const setActiveTabIndex = useCallback((tabIndex: number) => {
-        _setActiveTabIndex(tabIndex);
-    }, []);
-
     useEffect(() => {
         if (selectedSlug == null) {
             setSelectedSlug(selectedSlugFromUrl);
@@ -177,10 +175,33 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
 
     const [justNavigated, setJustNavigated] = useState(false);
 
+    const inferTabIndexFromSlug = useCallback(
+        (fullSlug: string) => {
+            if (!isUnversionedTabbedNavigationConfig(docsInfo.activeNavigationConfig)) {
+                return -1;
+            }
+            const [firstPart, secondPart] = fullSlug.split("/");
+            const tabSlug = isVersionedNavigationConfig(docsInfo.activeNavigationConfig) ? secondPart : firstPart;
+            return docsInfo.activeNavigationConfig.tabs.findIndex((tab) => tab.urlSlug === tabSlug);
+        },
+        [docsInfo.activeNavigationConfig]
+    );
+
     const navigateToPath = useEventCallback((slugWithoutVersion: string, opts?: NavigateToPathOpts) => {
         setJustNavigated(true);
         const slug = getFullSlug(slugWithoutVersion, opts);
         setSelectedSlug(slug);
+        // Figure out which tab we're navigating to and set the active index
+        const tabIndex = inferTabIndexFromSlug(slug);
+        if (tabIndex !== -1) {
+            setActiveTabIndex(tabIndex);
+        } else {
+            // eslint-disable-next-line no-console
+            console.warn(
+                `Could not find the tab index corresponding to the slug "${slug}". This may be due to bad user input or a bug in the application.`
+            );
+        }
+
         navigateToPathListeners.invokeListeners(slug);
         const timeout = setTimeout(() => {
             setJustNavigated(false);
@@ -214,7 +235,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             setActiveVersionSlug,
             activeTab,
             activeTabIndex,
-            setActiveTabIndex,
             getFullSlug,
             registerNavigateToPathListener: navigateToPathListeners.registerListener,
             navigateToPath,
@@ -233,7 +253,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             setActiveVersionSlug,
             activeTab,
             activeTabIndex,
-            setActiveTabIndex,
             getFullSlug,
             navigateToPath,
             navigateToPathListeners.registerListener,

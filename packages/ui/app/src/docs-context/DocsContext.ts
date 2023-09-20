@@ -66,7 +66,6 @@ export interface DocsContextValue {
     setActiveVersionSlug: (versionSlug: string) => void;
     activeTab: FernRegistryDocsRead.NavigationTab | undefined;
     activeTabIndex: number | null;
-    setActiveTabIndex: (index: number) => void;
 
     /** Returns the version-prefixed slug. */
     getFullSlug: (slug: string, opts?: { tabSlug?: string }) => string;
