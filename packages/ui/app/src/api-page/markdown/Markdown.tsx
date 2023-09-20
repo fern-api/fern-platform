@@ -61,7 +61,13 @@ export const Markdown = React.memo<Markdown.Props>(function Markdown({ children,
                             return null;
                         }
                         const language = parseCodeBlockLanguageFromClassName(className);
-                        return <CodeBlockWithClipboardButton language={language} content={content} />;
+                        return (
+                            <CodeBlockWithClipboardButton
+                                language={language}
+                                content={content}
+                                clipboardButtonDistanceFromEdges="sm"
+                            />
+                        );
                     }
                     return <InlineCode {...props}>{children}</InlineCode>;
                 },

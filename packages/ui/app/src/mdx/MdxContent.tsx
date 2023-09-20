@@ -50,7 +50,9 @@ const COMPONENTS: MDXRemoteProps["components"] = {
         if (typeof content !== "string") {
             return null;
         }
-        return <CodeBlockWithClipboardButton language={language} content={content} />;
+        return (
+            <CodeBlockWithClipboardButton language={language} content={content} clipboardButtonDistanceFromEdges="lg" />
+        );
     },
     code: InlineCode,
     table: Table,
