@@ -37,7 +37,7 @@ export interface NavigateToPathOpts {
     /**
      * Version slug is included by default.
      */
-    omitVersionPrefix: boolean;
+    omitVersionSlug: boolean;
     /**
      * Defaults to the currently active tab slug.
      */

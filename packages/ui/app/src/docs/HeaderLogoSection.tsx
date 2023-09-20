@@ -48,7 +48,7 @@ export const HeaderLogoSection: React.FC = () => {
                         selectedVersionSlug={docsInfo.activeVersionSlug}
                         onClickVersion={(versionSlug) => {
                             setActiveVersionSlug(versionSlug);
-                            navigateToPath(`/${versionSlug}`, { omitVersionPrefix: true });
+                            navigateToPath(`/${versionSlug}`, { omitVersionSlug: true });
                         }}
                     />
                 </div>
