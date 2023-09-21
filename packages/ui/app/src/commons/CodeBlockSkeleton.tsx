@@ -16,7 +16,7 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({ className,
         <div
             className={classNames(
                 "w-full border-l border-r border-b rounded-bl-lg rounded-br-lg bg-gray-100/90 dark:bg-gray-950/90 border-border-default-light dark:border-border-default-dark",
-                "typography-font-code",
+                "typography-font-code-block",
                 className
             )}
         >
