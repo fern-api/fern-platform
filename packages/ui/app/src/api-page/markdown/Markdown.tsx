@@ -3,6 +3,8 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
+import { CodeBlockWithClipboardButton } from "../../commons/CodeBlockWithClipboardButton";
+import { parseCodeBlockLanguageFromClassName } from "../../commons/util";
 import {
     A,
     H1,
@@ -34,8 +36,6 @@ export declare namespace Markdown {
 const REMARK_PLUGINS = [remarkGfm];
 const REHYPE_PLUGINS = [rehypeRaw];
 
-// TODO: Rename this component to ApiMarkdown
-
 export const Markdown = React.memo<Markdown.Props>(function Markdown({ children, className }) {
     if (children == null) {
         return null;
@@ -46,9 +46,28 @@ export const Markdown = React.memo<Markdown.Props>(function Markdown({ children,
             remarkPlugins={REMARK_PLUGINS}
             rehypePlugins={REHYPE_PLUGINS}
             components={{
+                pre({ children }) {
+                    // This element seems to come pre-styled and, by default, wraps all code blocks with a weird black
+                    // container. We need to ignore it and just render its children.
+                    // TODO: Confirm that this does not affect any components other than code blocks
+                    // If other elements are affected, we need to determine whether we're dealing with a code
+                    // block or some other component in this block and return the default value (whatever that is)
+                    return <>{children}</>;
+                },
                 code({ node, inline = false, className, children, ...props }) {
                     if (!inline && className != null) {
-                        return null;
+                        const content = Array.isArray(children) ? children[0] : undefined;
+                        if (typeof content !== "string") {
+                            return null;
+                        }
+                        const language = parseCodeBlockLanguageFromClassName(className);
+                        return (
+                            <CodeBlockWithClipboardButton
+                                language={language}
+                                content={content}
+                                clipboardButtonDistanceFromEdges="sm"
+                            />
+                        );
                     }
                     return <InlineCode {...props}>{children}</InlineCode>;
                 },

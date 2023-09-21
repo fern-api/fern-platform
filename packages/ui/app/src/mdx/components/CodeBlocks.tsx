@@ -1,26 +1,17 @@
-import { _CodeBlocks, type CodeBlockItem } from "./_CodeBlocks";
+import { transformCodeBlocksChildrenToCodeBlockItem } from "./common/util";
+import { _CodeBlocks } from "./_CodeBlocks";
 
 export declare namespace CodeBlocks {
-    export interface Props {}
-}
-
-function transformCodeBlocksChildrenToItem(children: React.ReactNode & { props: unknown }): CodeBlockItem {
-    return {
-        children: children.props.children.props.children,
-        title: children.props.title ?? " ",
-        content: children.props.children.props.children.props.children,
-    };
+    export interface Props {
+        children: unknown;
+    }
 }
 
 export const CodeBlocks: React.FC<React.PropsWithChildren<CodeBlocks.Props>> = ({ children }) => {
     if (Array.isArray(children)) {
-        return <_CodeBlocks items={children.map(transformCodeBlocksChildrenToItem)} />;
+        return <_CodeBlocks items={children.map(transformCodeBlocksChildrenToCodeBlockItem)} />;
     } else if (children != null) {
-        return (
-            <_CodeBlocks
-                items={[transformCodeBlocksChildrenToItem(children as React.ReactNode & { props: unknown })]}
-            />
-        );
+        return <_CodeBlocks items={[transformCodeBlocksChildrenToCodeBlockItem(children)]} />;
     } else {
         return null;
     }

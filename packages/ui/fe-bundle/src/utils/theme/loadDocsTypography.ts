@@ -149,5 +149,38 @@ export function generateFontFaces(generationConfiguration: GenerationFontConfigs
         }
     }
 
+    const codeBlockFontFace = (() => {
+        const parts: string[] = [];
+        const { codeFont } = generationConfiguration;
+        if (codeFont?.fontType === "codeFont") {
+            const { fontUrl, fontName, fontExtension } = codeFont;
+            parts.push(`
+                @font-face {
+                    font-family: '${fontName}';
+                    src: url('${fontUrl.toString()}') format('${fontExtension}');
+                    font-weight: 400;
+                    font-style: normal;
+                }
+            `);
+        }
+        let fontFamiliesAsString = 'Menlo, Monaco, Consolas, "Andale Mono", "Ubuntu Mono", "Courier New", monospace';
+        if (codeFont != null) {
+            fontFamiliesAsString = `'${codeFont.fontName}', ` + fontFamiliesAsString;
+        }
+        parts.push(`
+                :root {
+                  --typography-code-block-font-family: ${fontFamiliesAsString};
+                }
+        `);
+        parts.push(`
+                .typography-font-code-block {
+                    font-family: var(--typography-code-block-font-family);
+                }
+        `);
+        return parts.join("\n");
+    })();
+
+    fontFaces.push(codeBlockFontFace);
+
     return fontFaces.join("\n");
 }
