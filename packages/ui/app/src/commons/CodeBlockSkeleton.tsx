@@ -29,7 +29,7 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({ className,
                     paddingRight: 16,
                     paddingLeft: 16,
                     paddingBottom: 20,
-                    fontSize: "0.9rem",
+                    fontSize: 12,
                     background: "unset",
                     backgroundColor: "unset",
                     fontFamily: "inherit",
@@ -38,6 +38,7 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({ className,
                     style: {
                         background: "unset",
                         fontFamily: "unset",
+                        fontSize: "unset",
                     },
                 }}
                 language={language}
