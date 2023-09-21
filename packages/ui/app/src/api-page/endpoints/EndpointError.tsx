@@ -56,7 +56,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
             )}
 
             {isSelected && (
-                <div className="text-start">
+                <div className="border-border-concealed-light dark:border-border-concealed-dark mt-2 w-full border-t text-start">
                     {error.type != null && (
                         <TypeReferenceDefinitions
                             isCollapsible={false}
