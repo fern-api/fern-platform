@@ -1,8 +1,9 @@
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { zip } from "lodash-es";
-import React, { ReactNode, useMemo } from "react";
+import React, { ReactNode, useEffect, useMemo, useRef } from "react";
 import { JsonPropertyPath } from "./contexts/JsonPropertyPath";
+import { JsonExampleString } from "./JsonExampleString";
 import { visitJsonItem } from "./visitJsonItem";
 
 interface JsonLineNumber {
@@ -110,68 +111,104 @@ function renderJsonLine(line: JsonLine): ReactNode {
             return (
                 <>
                     {" ".repeat(TAB_WIDTH * line.depth)}
-                    {line.key != null ? `"${line.key}": ` : undefined}
-                    {line.value}
-                    {line.comma ? "," : undefined}
+                    {line.key != null ? (
+                        <span className="text-text-primary-light dark:text-text-primary-dark">
+                            &quot;{line.key}&quot;{": "}
+                        </span>
+                    ) : undefined}
+                    <span className="font-medium text-[#738ee8]">{line.value.toString()}</span>
+                    {line.comma ? (
+                        <span className="text-text-primary-light dark:text-text-primary-dark">{","}</span>
+                    ) : undefined}
                 </>
             );
         case "list":
             return (
                 <>
                     {" ".repeat(2 * line.depth)}
-                    {line.key != null ? `"${line.key}": ` : undefined}
-                    {"["}
+                    {line.key != null ? (
+                        <span className="text-text-primary-light dark:text-text-primary-dark">
+                            &quot;{line.key}&quot;{": "}
+                        </span>
+                    ) : undefined}
+                    <span className="text-text-primary-light dark:text-text-primary-dark">{"["}</span>
                 </>
             );
         case "listEnd":
             return (
                 <>
                     {" ".repeat(2 * line.depth)}
-                    {"]"}
-                    {line.comma ? "," : undefined}
+                    <span className="text-text-primary-light dark:text-text-primary-dark">{"]"}</span>
+                    {line.comma ? (
+                        <span className="text-text-primary-light dark:text-text-primary-dark">{","}</span>
+                    ) : undefined}
                 </>
             );
         case "null":
             return (
                 <>
                     {" ".repeat(2 * line.depth)}
-                    {line.key != null ? `"${line.key}": ` : undefined}
+                    {line.key != null ? (
+                        <span className="text-text-primary-light dark:text-text-primary-dark">
+                            &quot;{line.key}&quot;{": "}
+                        </span>
+                    ) : undefined}
                     <span className="italic">null</span>
-                    {line.comma ? "," : undefined}
+                    {line.comma ? (
+                        <span className="text-text-primary-light dark:text-text-primary-dark">{","}</span>
+                    ) : undefined}
                 </>
             );
         case "number":
             return (
                 <>
                     {" ".repeat(2 * line.depth)}
-                    {line.key != null ? `"${line.key}": ` : undefined}
-                    {line.value}
-                    {line.comma ? "," : undefined}
+                    {line.key != null ? (
+                        <span className="text-text-primary-light dark:text-text-primary-dark">
+                            &quot;{line.key}&quot;{": "}
+                        </span>
+                    ) : undefined}
+                    <span className="text-[#d67653]">{line.value}</span>
+                    {line.comma ? (
+                        <span className="text-text-primary-light dark:text-text-primary-dark">{","}</span>
+                    ) : undefined}
                 </>
             );
         case "object":
             return (
                 <>
                     {" ".repeat(2 * line.depth)}
-                    {line.key != null ? `"${line.key}": ` : undefined}
-                    {"{"}
+                    {line.key != null ? (
+                        <span className="text-text-primary-light dark:text-text-primary-dark">
+                            &quot;{line.key}&quot;{": "}
+                        </span>
+                    ) : undefined}
+                    <span className="text-text-primary-light dark:text-text-primary-dark">{"{"}</span>
                 </>
             );
         case "objectEnd":
             return (
                 <>
                     {" ".repeat(2 * line.depth)}
-                    {"}"}
-                    {line.comma ? "," : undefined}
+                    <span className="text-text-primary-light dark:text-text-primary-dark">{"}"}</span>
+                    {line.comma ? (
+                        <span className="text-text-primary-light dark:text-text-primary-dark">{","}</span>
+                    ) : undefined}
                 </>
             );
         case "string":
             return (
                 <>
                     {" ".repeat(2 * line.depth)}
-                    {line.key != null ? `"${line.key}": ` : undefined}
-                    {`"${line.value}"`}
-                    {line.comma ? "," : undefined}
+                    {line.key != null ? (
+                        <span className="text-text-primary-light dark:text-text-primary-dark">
+                            &quot;{line.key}&quot;{": "}
+                        </span>
+                    ) : undefined}
+                    <JsonExampleString value={line.value} />
+                    {line.comma ? (
+                        <span className="text-text-primary-light dark:text-text-primary-dark">{","}</span>
+                    ) : undefined}
                 </>
             );
     }
@@ -199,23 +236,56 @@ export declare namespace JsonExample {
     }
 }
 
-export const JsonExample = React.memo<JsonExample.Props>(function JsonExample({ json, selectedProperty }) {
+export const JsonExample = React.memo<JsonExample.Props>(function JsonExample({ json, parent, selectedProperty }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const jsonLines = useMemo(() => flattenJson(json), [useDeepCompareMemoize(json)]);
-    const selectedPropertyHash = selectedProperty?.map((path) => {
-        if (path.type === "listItem") {
-            return `${path.index ?? "*"}`;
-        } else if (path.type === "objectProperty") {
-            return path.propertyName ?? "*";
-        } else {
-            return path.propertyName;
+    const selectedPropertyHash = useDeepCompareMemoize(
+        selectedProperty?.map((path) => {
+            if (path.type === "listItem") {
+                return `${path.index ?? "*"}`;
+            } else if (path.type === "objectProperty") {
+                return path.propertyName ?? "*";
+            } else {
+                return path.propertyName;
+            }
+        })
+    );
+
+    const isSelectedArr = useMemo(
+        () => jsonLines.map((line) => checkIsSelected(selectedPropertyHash, line)),
+        [jsonLines, selectedPropertyHash]
+    );
+
+    const lineRefs = useRef<Array<HTMLDivElement | null>>(new Array(jsonLines.length).fill(null));
+
+    const setLineRef = (i: number, element: HTMLDivElement | null) => {
+        lineRefs.current[i] = element;
+    };
+
+    const topLineAnchorIdx = isSelectedArr.findIndex((isSelected) => isSelected);
+
+    useEffect(() => {
+        if (parent == null) {
+            return;
         }
-    });
+        if (topLineAnchorIdx > -1) {
+            const targetBBox = lineRefs.current[topLineAnchorIdx]?.getBoundingClientRect();
+            if (targetBBox == null) {
+                return;
+            }
+            const containerBBox = parent.getBoundingClientRect();
+            parent.scrollTo({
+                top: parent.scrollTop + targetBBox.y - containerBBox.y - 20,
+                left: 0,
+                behavior: "smooth",
+            });
+        }
+    }, [parent, topLineAnchorIdx]);
 
     return (
         <>
             {jsonLines.map((line, i) => {
-                const isSelected = checkIsSelected(selectedPropertyHash, line);
+                const isSelected = isSelectedArr[i] ?? false;
                 return (
                     <div
                         className={classNames(
@@ -223,6 +293,7 @@ export const JsonExample = React.memo<JsonExample.Props>(function JsonExample({ 
                             isSelected ? "bg-accent-primary/20" : "bg-transparent"
                         )}
                         key={i}
+                        ref={(element) => setLineRef(i, element)}
                     >
                         {isSelected && <div className="bg-accent-primary absolute inset-y-0 left-0 w-1" />}
                         {renderJsonLine(line)}
