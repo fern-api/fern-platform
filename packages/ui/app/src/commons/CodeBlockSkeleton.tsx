@@ -16,6 +16,7 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({ className,
         <div
             className={classNames(
                 "w-full border-l border-r border-b rounded-bl-lg rounded-br-lg bg-gray-100/90 dark:bg-gray-950/90 border-border-default-light dark:border-border-default-dark",
+                "typography-font-code",
                 className
             )}
         >
@@ -31,10 +32,12 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({ className,
                     fontSize: "0.9rem",
                     background: "unset",
                     backgroundColor: "unset",
+                    fontFamily: "inherit",
                 }}
                 codeTagProps={{
                     style: {
                         background: "unset",
+                        fontFamily: "unset",
                     },
                 }}
                 language={language}
