@@ -45,10 +45,10 @@ export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ inte
                 {visitDiscriminatedUnion({ intent }, "intent")._visit({
                     info: () => <InfoIcon className="text-intent-default h-5 w-5" />,
                     warning: () => (
-                        <WarningIcon className="text-intent-warning-light dark:text-intent-warning-dark h-5 w-5 min-w-fit" />
+                        <WarningIcon className="text-intent-warning-light dark:text-intent-warning-dark h-5 w-5" />
                     ),
                     success: () => (
-                        <CheckIcon className="text-intent-success-light dark:text-intent-success-dark h-5 w-5 min-w-fit" />
+                        <CheckIcon className="text-intent-success-light dark:text-intent-success-dark h-5 w-5" />
                     ),
                     _other: () => null,
                 })}
