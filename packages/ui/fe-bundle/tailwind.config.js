@@ -59,8 +59,8 @@ module.exports = {
 
                 "border-default-dark": "rgba(156, 163, 175, 0.30)",
                 "border-default-light": "rgba(72, 72, 72, 0.15)",
-                "border-light-dark": "rgba(156, 163, 175, 0.15)",
-                "border-light-light": "rgba(72, 72, 72, 0.10)",
+                "border-concealed-dark": "rgba(156, 163, 175, 0.15)",
+                "border-concealed-light": "rgba(72, 72, 72, 0.10)",
                 "border-primary": "rgba(var(--accent-primary), 0.30)",
                 "border-warning-dark": "rgba(251, 191, 36, 0.30)",
                 "border-warning-light": "rgba(217, 119, 6, 0.30)",
