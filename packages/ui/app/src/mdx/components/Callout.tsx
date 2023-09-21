@@ -32,14 +32,18 @@ export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ inte
     const intent = parseIntent(intentRaw);
     return (
         <div
-            className={classNames("flex space-x-3 px-4 pt-4 pb-1 border rounded-lg", {
-                "bg-tag-default-light dark:bg-tag-default-dark border-border-default-light dark:border-border-default-dark":
-                    intent === "info",
-                "bg-tag-warning-light dark:bg-tag-warning-dark border-border-warning-light dark:border-border-warning-dark":
-                    intent === "warning",
-                "bg-tag-success-light dark:bg-tag-success-dark border-border-success-light dark:border-border-success-dark":
-                    intent === "success",
-            })}
+            className={classNames(
+                "flex space-x-3 px-4 pt-4 pb-1 border rounded-lg",
+                visitDiscriminatedUnion({ intent }, "intent")._visit({
+                    info: () =>
+                        "bg-tag-default-light dark:bg-tag-default-dark border-border-default-light dark:border-border-default-dark",
+                    warning: () =>
+                        "bg-tag-warning-light dark:bg-tag-warning-dark border-border-warning-light dark:border-border-warning-dark",
+                    success: () =>
+                        "bg-tag-success-light dark:bg-tag-success-dark border-border-success-light dark:border-border-success-dark",
+                    _other: () => "",
+                })
+            )}
         >
             <div className="min-w-fit">
                 {visitDiscriminatedUnion({ intent }, "intent")._visit({
@@ -54,7 +58,17 @@ export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ inte
                 })}
             </div>
 
-            <div className="text-sm leading-5">
+            <div
+                className={classNames(
+                    "text-sm leading-5 font-light",
+                    visitDiscriminatedUnion({ intent }, "intent")._visit({
+                        info: () => "text-text-muted-light dark:text-text-muted-dark",
+                        warning: () => "text-intent-warning-light dark:text-intent-warning-dark",
+                        success: () => "text-intent-success-light dark:text-intent-success-dark",
+                        _other: () => "",
+                    })
+                )}
+            >
                 <div className={styles.content}>{children}</div>
             </div>
         </div>
