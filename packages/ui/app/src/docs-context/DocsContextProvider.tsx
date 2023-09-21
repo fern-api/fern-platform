@@ -12,8 +12,28 @@ import { useEventCallback } from "@fern-ui/react-commons";
 import { useTheme } from "@fern-ui/theme";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
-import { DocsContext, DocsContextValue, type DocsInfo, type NavigateToPathOpts } from "./DocsContext";
+import {
+    DocsContext,
+    DocsContextValue,
+    type DocsInfo,
+    type GetFullSlugOpts,
+    type NavigateToPathOpts,
+} from "./DocsContext";
 import { useSlugListeners } from "./useSlugListeners";
+
+function findTabIndexWithinTabbedNavigationConfig(
+    config: FernRegistry.docs.v1.read.UnversionedNavigationConfig | undefined,
+    tabSlug: string | undefined
+) {
+    if (config == null) {
+        throw new Error("Could not find version config data.");
+    }
+    if (isUnversionedUntabbedNavigationConfig(config)) {
+        return -1;
+    } else {
+        return config.tabs.findIndex((tab) => tab.urlSlug === tabSlug);
+    }
+}
 
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
@@ -38,7 +58,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     const router = useRouter();
 
     const [activeVersionSlug, _setActiveVersionSlug] = useState(inferredVersionSlug);
-    const [activeTabIndex, _setActiveTabIndex] = useState(inferredTabIndex);
+    const [activeTabIndex, setActiveTabIndex] = useState(inferredTabIndex);
 
     const versionSlug = activeVersionSlug ?? "";
 
@@ -85,12 +105,13 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     }, [docsInfo.activeNavigationConfig, activeTabIndex]);
 
     const getFullSlug = useCallback(
-        (slug: string, opts?: { tabSlug?: string }) => {
+        (slug: string, opts?: GetFullSlugOpts) => {
+            const { omitVersionSlug = false, omitTabSlug = false } = opts ?? {};
             const parts: string[] = [];
-            if (docsInfo.type === "versioned" && !docsInfo.isDefaultVersion && versionSlug) {
+            if (!omitVersionSlug && docsInfo.type === "versioned" && !docsInfo.isDefaultVersion && versionSlug) {
                 parts.push(`${versionSlug}/`);
             }
-            if (activeTab != null) {
+            if (!omitTabSlug && activeTab != null) {
                 parts.push(`${opts?.tabSlug ?? activeTab.urlSlug}/`);
             }
             parts.push(slug);
@@ -121,10 +142,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
 
     const setActiveVersionSlug = useCallback((version: string) => {
         _setActiveVersionSlug(version);
-    }, []);
-
-    const setActiveTabIndex = useCallback((tabIndex: number) => {
-        _setActiveTabIndex(tabIndex);
     }, []);
 
     useEffect(() => {
@@ -170,23 +187,79 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
 
     const [justNavigated, setJustNavigated] = useState(false);
 
-    const navigateToPath = useEventCallback(
-        (slugWithoutVersion: string, opts: NavigateToPathOpts = { omitVersionPrefix: false }) => {
-            setJustNavigated(true);
-            const slug = opts.omitVersionPrefix
-                ? slugWithoutVersion
-                : getFullSlug(slugWithoutVersion, { tabSlug: opts.tabSlug });
-            setSelectedSlug(slug);
-            navigateToPathListeners.invokeListeners(slug);
-
-            const timeout = setTimeout(() => {
-                setJustNavigated(false);
-            }, 500);
-            return () => {
-                clearTimeout(timeout);
-            };
-        }
+    const inferTabIndexFromSlug = useCallback(
+        (fullSlug: string) => {
+            const [firstPart, secondPart] = fullSlug.split("/");
+            if (docsInfo.type === "versioned") {
+                assertIsVersionedNavigationConfig(docsDefinition.config.navigation);
+                // The first part of the slug may refer to a version
+                const versionMatchingSlugFirstPart = docsInfo.versions
+                    .map((v, versionIndex) => ({
+                        ...v,
+                        versionIndex,
+                    }))
+                    .find((v) => v.versionSlug === firstPart);
+                if (versionMatchingSlugFirstPart != null) {
+                    // We found a version that matches the first part of the slug
+                    const { versionIndex } = versionMatchingSlugFirstPart;
+                    const versionConfigData = docsDefinition.config.navigation.versions[versionIndex];
+                    if (versionConfigData == null) {
+                        throw new Error("Could not find version config data.");
+                    }
+                    const isDefaultVersion = versionIndex === 0;
+                    if (!isDefaultVersion) {
+                        // The user wants to navigate to a page within this version
+                        const tabSlug = secondPart;
+                        return findTabIndexWithinTabbedNavigationConfig(versionConfigData.config, tabSlug);
+                    } else {
+                        if (isUnversionedUntabbedNavigationConfig(versionConfigData.config)) {
+                            return -1;
+                        } else {
+                            // TODO: See if there is a tab within this version that has the same slug as version
+                            const tabSlug = secondPart;
+                            return findTabIndexWithinTabbedNavigationConfig(versionConfigData.config, tabSlug);
+                        }
+                    }
+                } else {
+                    // We could not find a version that matches the first part of the slug. We assume that
+                    // the user wants to navigate to a page within the default version.
+                    const tabSlug = firstPart;
+                    const defaultVersionConfigData = docsDefinition.config.navigation.versions[0];
+                    return findTabIndexWithinTabbedNavigationConfig(defaultVersionConfigData?.config, tabSlug);
+                }
+            } else {
+                // The first part of the slug refers to a tab
+                assertIsUnversionedNavigationConfig(docsDefinition.config.navigation);
+                const tabSlug = firstPart;
+                return findTabIndexWithinTabbedNavigationConfig(docsDefinition.config.navigation, tabSlug);
+            }
+        },
+        [docsInfo, docsDefinition.config.navigation]
     );
+
+    const navigateToPath = useEventCallback((slugWithoutVersion: string, opts?: NavigateToPathOpts) => {
+        setJustNavigated(true);
+        const slug = getFullSlug(slugWithoutVersion, opts);
+        setSelectedSlug(slug);
+        // Figure out which tab we're navigating to and set the active index
+        const tabIndex = inferTabIndexFromSlug(slug);
+        if (tabIndex !== -1) {
+            setActiveTabIndex(tabIndex);
+        } else {
+            // eslint-disable-next-line no-console
+            console.warn(
+                `Could not find the tab index corresponding to the slug "${slug}". This may be due to bad user input or a bug in the application.`
+            );
+        }
+
+        navigateToPathListeners.invokeListeners(slug);
+        const timeout = setTimeout(() => {
+            setJustNavigated(false);
+        }, 500);
+        return () => {
+            clearTimeout(timeout);
+        };
+    });
 
     const scrollToPathListeners = useSlugListeners("scrollToPath", { selectedSlug });
 
@@ -212,7 +285,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             setActiveVersionSlug,
             activeTab,
             activeTabIndex,
-            setActiveTabIndex,
             getFullSlug,
             registerNavigateToPathListener: navigateToPathListeners.registerListener,
             navigateToPath,
@@ -231,7 +303,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             setActiveVersionSlug,
             activeTab,
             activeTabIndex,
-            setActiveTabIndex,
             getFullSlug,
             navigateToPath,
             navigateToPathListeners.registerListener,

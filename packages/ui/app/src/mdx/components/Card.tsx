@@ -43,7 +43,17 @@ export const Card: React.FC<Card.Props> = ({ title, icon, iconPosition = "top", 
     if (isInternalUrl) {
         const slug = href.slice(1, href.length);
         return (
-            <Link className={className} href={href} onClick={() => navigateToPath(slug)}>
+            <Link
+                className={className}
+                href={href}
+                onClick={() =>
+                    navigateToPath(slug, {
+                        // We need to omit these because we expect the user to provide them in the href
+                        omitVersionSlug: true,
+                        omitTabSlug: true,
+                    })
+                }
+            >
                 {content}
             </Link>
         );
