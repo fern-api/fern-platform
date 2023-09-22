@@ -9,6 +9,10 @@ import { LogGroup } from "aws-cdk-lib/aws-logs";
 import { HostedZone } from "aws-cdk-lib/aws-route53";
 import { Bucket, HttpMethods } from "aws-cdk-lib/aws-s3";
 import { Construct } from "constructs";
+import * as sns from "aws-cdk-lib/aws-sns";
+import * as actions from "aws-cdk-lib/aws-cloudwatch-actions";
+import { EmailSubscription } from "aws-cdk-lib/aws-sns-subscriptions";
+import { Alarm } from "aws-cdk-lib/aws-cloudwatch";
 
 const CONTAINER_NAME = "fern-definition-registry";
 const SERVICE_NAME = "fdr";
@@ -50,6 +54,11 @@ export class FdrDeployStack extends Stack {
             "ceritificate",
             environmentInfo.route53Info.certificateArn
         );
+
+        const snsTopic = new sns.Topic(this, "fdr-sns-topic", {
+            topicName: id,
+        });
+        snsTopic.addSubscription(new EmailSubscription("support@buildwithfern.com"));
 
         const fdrBucket = new Bucket(this, "fdr-docs-files", {
             bucketName: `fdr-${environmentType.toLowerCase()}-docs-files`,
@@ -131,6 +140,14 @@ export class FdrDeployStack extends Stack {
             path: "/health",
             port: "8080",
         });
+
+        const lbResponseTimeAlarm = new Alarm(this, "fdr-lb-target-respones-time-alarm", {
+            alarmName: `${id} Load Balancer Target Response Time Threshold`,
+            metric: fargateService.loadBalancer.metrics.targetResponseTime(),
+            threshold: 1,
+            evaluationPeriods: 5,
+        });
+        lbResponseTimeAlarm.addAlarmAction(new actions.SnsAction(snsTopic));
     }
 }
 
