@@ -50,7 +50,12 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                         activeVersion={docsInfo.type === "versioned" ? docsInfo.activeVersionName : undefined}
                     />
                 )}
-                <div className="border-border-default-light dark:border-border-default-dark bg-background/50 sticky inset-x-0 top-0 z-20 h-16 border-b backdrop-blur-xl">
+                <div
+                    className="border-border-concealed-light dark:border-border-concealed-dark bg-background/50 sticky inset-x-0 top-0 z-20 h-16 border-b backdrop-blur-xl"
+                    style={{
+                        boxShadow: "0px 4px 24px 0px rgba(var(--accent-primary), 10%)",
+                    }}
+                >
                     <Header
                         className="max-w-8xl mx-auto"
                         docsDefinition={docsDefinition}
