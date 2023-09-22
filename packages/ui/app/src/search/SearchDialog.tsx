@@ -4,7 +4,7 @@ import algolia from "algoliasearch/lite";
 import classNames from "classnames";
 import { useEffect, useMemo, useState } from "react";
 import { InstantSearch, SearchBox } from "react-instantsearch-hooks-web";
-import { useSearchService, type SearchCredentials } from "../services/useSearchService";
+import { type SearchCredentials, type SearchService } from "../services/useSearchService";
 import styles from "./SearchDialog.module.scss";
 import { SearchHits } from "./SearchHits";
 
@@ -13,12 +13,12 @@ export declare namespace SearchDialog {
         isOpen: boolean;
         onClose: () => void;
         activeVersion?: string;
+        searchService: SearchService;
     }
 }
 
 export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
-    const { isOpen, onClose, activeVersion } = providedProps;
-    const searchService = useSearchService();
+    const { isOpen, onClose, activeVersion, searchService } = providedProps;
     const [credentials, setSearchCredentials] = useState<SearchCredentials | undefined>(undefined);
 
     useEffect(() => {

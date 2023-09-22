@@ -42,14 +42,15 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                 backgroundType={backgroundType}
                 hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage}
             />
+            {searchService.isAvailable && (
+                <SearchDialog
+                    isOpen={isSearchDialogOpen}
+                    onClose={closeSearchDialog}
+                    activeVersion={docsInfo.type === "versioned" ? docsInfo.activeVersionName : undefined}
+                    searchService={searchService}
+                />
+            )}
             <div className="relative flex min-h-0 flex-1 flex-col">
-                {searchService.isAvailable && (
-                    <SearchDialog
-                        isOpen={isSearchDialogOpen}
-                        onClose={closeSearchDialog}
-                        activeVersion={docsInfo.type === "versioned" ? docsInfo.activeVersionName : undefined}
-                    />
-                )}
                 <div className="border-border-concealed-light dark:border-border-concealed-dark bg-background/50 dark:shadow-header sticky inset-x-0 top-0 z-20 h-16 border-b backdrop-blur-xl">
                     <Header
                         className="max-w-8xl mx-auto"
