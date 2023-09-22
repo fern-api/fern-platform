@@ -1,5 +1,6 @@
 import { Spinner, SpinnerSize } from "@blueprintjs/core";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { useKeyboardPress } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import React, { PropsWithChildren, useMemo, useState } from "react";
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch-hooks-web";
@@ -16,6 +17,30 @@ export const SearchHits: React.FC = () => {
     const { hits } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
     const [hoveredSearchHitId, setHoveredSearchHitId] = useState<string | null>(null);
+
+    const hoveredSearchHitIndex = useMemo(() => {
+        return hits.findIndex((hit) => hit.objectID === hoveredSearchHitId);
+    }, [hits, hoveredSearchHitId]);
+
+    useKeyboardPress({
+        key: "Up",
+        onPress: () => {
+            const previousHit = hits[hoveredSearchHitIndex - 1];
+            if (previousHit != null) {
+                setHoveredSearchHitId(previousHit.objectID);
+            }
+        },
+    });
+
+    useKeyboardPress({
+        key: "Down",
+        onPress: () => {
+            const nextHit = hits[hoveredSearchHitIndex + 1];
+            if (nextHit != null) {
+                setHoveredSearchHitId(nextHit.objectID);
+            }
+        },
+    });
 
     const progress = useMemo((): Progress => {
         switch (search.status) {
