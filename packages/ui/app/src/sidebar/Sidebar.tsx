@@ -4,13 +4,11 @@ import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
-import { useSearchContext } from "../search-context/useSearchContext";
-import { useSearchService } from "../services/useSearchService";
 import { BuiltWithFern } from "./BuiltWithFern";
 import { SidebarContext, SidebarContextValue } from "./context/SidebarContext";
 import styles from "./Sidebar.module.scss";
+import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
 import { SidebarItems } from "./SidebarItems";
-import { SidebarSearchBar } from "./SidebarSearchBar";
 import { SidebarTabButton } from "./SidebarTabButton";
 
 export declare namespace Sidebar {
@@ -32,9 +30,8 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
         docsDefinition,
         resolveApi,
     } = useDocsContext();
-    const { openSearchDialog } = useSearchContext();
     const { closeMobileSidebar } = useMobileSidebarContext();
-    const searchService = useSearchService();
+
     const router = useRouter();
 
     const contextValue = useCallback((): SidebarContextValue => ({ expandAllSections }), [expandAllSections]);
@@ -108,12 +105,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
     return (
         <SidebarContext.Provider value={contextValue}>
             <div className="w-full min-w-0">
-                {!hideSearchBar && (
-                    <div className="sticky top-0 z-10 flex flex-col px-4 pt-8 backdrop-blur-sm">
-                        {searchService.isAvailable && <SidebarSearchBar onClick={openSearchDialog} />}
-                    </div>
-                )}
-
+                <SidebarFixedItemsSection className="sticky top-0 z-10" hideSearchBar={hideSearchBar} />
                 <div
                     className={classNames(
                         "flex flex-1 flex-col overflow-y-auto overflow-x-hidden pb-6",
