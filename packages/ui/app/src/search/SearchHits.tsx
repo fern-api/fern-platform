@@ -3,7 +3,7 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import React, { PropsWithChildren, useMemo, useState } from "react";
+import React, { PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch-hooks-web";
 import { useSearchContext } from "../search-context/useSearchContext";
 import { SearchHit } from "./SearchHit";
@@ -19,6 +19,7 @@ export const SearchHits: React.FC = () => {
     const { closeSearchDialog } = useSearchContext();
     const { hits } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
+    const containerRef = useRef<HTMLDivElement | null>(null);
     const [hoveredSearchHitId, setHoveredSearchHitId] = useState<string | null>(null);
     const router = useRouter();
 
@@ -27,6 +28,13 @@ export const SearchHits: React.FC = () => {
             .map((hit, index) => ({ record: hit, index }))
             .find(({ record }) => record.objectID === hoveredSearchHitId);
     }, [hits, hoveredSearchHitId]);
+
+    useEffect(() => {
+        const [firstHit] = hits;
+        if (hoveredSearchHit == null && firstHit != null) {
+            setHoveredSearchHitId(firstHit.objectID);
+        }
+    }, [hits, hoveredSearchHit]);
 
     useKeyboardPress({
         key: "Up",
@@ -86,6 +94,7 @@ export const SearchHits: React.FC = () => {
 
     return (
         <div
+            ref={containerRef}
             className={classNames("max-h-80 overflow-y-auto p-2", {
                 "border-border-default-light/10 dark:border-border-default-dark/10 border-t":
                     (progress === "success" || progress === "pending") && hits.length > 0,
