@@ -28,6 +28,9 @@ module.exports = {
             maxWidth: {
                 "8xl": "88rem",
             },
+            boxShadow: {
+                header: "0px 4px 24px 0px rgba(var(--accent-primary), 10%)",
+            },
         },
         colors: ({ colors }) => {
             return {
