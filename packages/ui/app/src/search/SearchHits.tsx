@@ -2,8 +2,10 @@ import { Spinner, SpinnerSize } from "@blueprintjs/core";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import classNames from "classnames";
+import { useRouter } from "next/router";
 import React, { PropsWithChildren, useMemo, useState } from "react";
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch-hooks-web";
+import { useSearchContext } from "../search-context/useSearchContext";
 import { SearchHit } from "./SearchHit";
 import type { SearchRecord } from "./types";
 
@@ -14,18 +16,25 @@ export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {
 };
 
 export const SearchHits: React.FC = () => {
+    const { closeSearchDialog } = useSearchContext();
     const { hits } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
     const [hoveredSearchHitId, setHoveredSearchHitId] = useState<string | null>(null);
+    const router = useRouter();
 
-    const hoveredSearchHitIndex = useMemo(() => {
-        return hits.findIndex((hit) => hit.objectID === hoveredSearchHitId);
+    const hoveredSearchHit = useMemo(() => {
+        return hits
+            .map((hit, index) => ({ record: hit, index }))
+            .find(({ record }) => record.objectID === hoveredSearchHitId);
     }, [hits, hoveredSearchHitId]);
 
     useKeyboardPress({
         key: "Up",
         onPress: () => {
-            const previousHit = hits[hoveredSearchHitIndex - 1];
+            if (hoveredSearchHit == null) {
+                return;
+            }
+            const previousHit = hits[hoveredSearchHit.index - 1];
             if (previousHit != null) {
                 setHoveredSearchHitId(previousHit.objectID);
             }
@@ -35,11 +44,28 @@ export const SearchHits: React.FC = () => {
     useKeyboardPress({
         key: "Down",
         onPress: () => {
-            const nextHit = hits[hoveredSearchHitIndex + 1];
+            if (hoveredSearchHit == null) {
+                return;
+            }
+            const nextHit = hits[hoveredSearchHit.index + 1];
             if (nextHit != null) {
                 setHoveredSearchHitId(nextHit.objectID);
             }
         },
+    });
+
+    useKeyboardPress({
+        key: "Enter",
+        onPress: async () => {
+            if (hoveredSearchHit == null) {
+                return;
+            }
+            const { versionSlug, path } = hoveredSearchHit.record;
+            const href = `/${versionSlug != null ? `${versionSlug}/` : ""}${path}`;
+            void router.push(href);
+            closeSearchDialog();
+        },
+        preventDefault: true,
     });
 
     const progress = useMemo((): Progress => {
