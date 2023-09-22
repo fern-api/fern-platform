@@ -1,5 +1,6 @@
 import { Icon } from "@blueprintjs/core";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import classNames from "classnames";
 import Link from "next/link";
 import { useCallback } from "react";
 import { Snippet } from "react-instantsearch-hooks-web";
@@ -10,10 +11,13 @@ import type { SearchRecord } from "./types";
 export declare namespace SearchHit {
     export interface Props {
         hit: SearchRecord;
+        isHovered: boolean;
+        onMouseEnter: () => void;
+        onMouseLeave: () => void;
     }
 }
 
-export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
+export const SearchHit: React.FC<SearchHit.Props> = ({ hit, isHovered, onMouseEnter, onMouseLeave }) => {
     const { navigateToPath } = useDocsContext();
     const { closeSearchDialog } = useSearchContext();
 
@@ -27,13 +31,20 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
 
     return (
         <Link
-            className="hover:bg-background-secondary-light hover:dark:bg-background-secondary-dark group flex w-full items-center space-x-4 space-y-1 rounded-md px-3 py-2 hover:no-underline"
+            className={classNames("flex w-full items-center space-x-4 space-y-1 rounded-md px-3 py-2 !no-underline", {
+                "bg-background-secondary-light dark:bg-background-secondary-dark": isHovered,
+            })}
             onClick={handleClick}
             href={href}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
         >
             <div className="border-border-default-light dark:border-border-default-dark flex flex-col items-center justify-center rounded-md border p-1">
                 <Icon
-                    className="!text-text-muted-light dark:!text-text-muted-dark group-hover:!text-text-primary-light group-hover:dark:!text-text-primary-dark"
+                    className={classNames({
+                        "!text-text-muted-light dark:!text-text-muted-dark": !isHovered,
+                        "!text-text-primary-light dark:!text-text-primary-dark": isHovered,
+                    })}
                     size={14}
                     icon={visitDiscriminatedUnion(hit, "type")._visit({
                         endpoint: () => "code",
@@ -46,12 +57,17 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
             <div className="flex w-full flex-col space-y-1.5">
                 <div className="flex justify-between">
                     <Snippet
-                        className="text-text-primary-light dark:text-text-primary-dark group-hover:text-text-primary-light group-hover:dark:text-text-primary-dark line-clamp-1 text-start"
+                        className="text-text-primary-light dark:text-text-primary-dark line-clamp-1 text-start"
                         attribute="title"
                         highlightedTagName="span"
                         hit={hit}
                     />
-                    <div className="group-hover:text-text-primary-light group-hover:dark:text-text-primary-dark text-text-disabled-light dark:text-text-disabled-dark text-xs uppercase tracking-widest">
+                    <div
+                        className={classNames("text-xs uppercase tracking-widest", {
+                            "text-text-disabled-light dark:text-text-disabled-dark": !isHovered,
+                            "text-text-primary-light dark:text-text-primary-dark": isHovered,
+                        })}
+                    >
                         {visitDiscriminatedUnion(hit, "type")._visit({
                             page: () => "Page",
                             endpoint: () => "Endpoint",
@@ -61,7 +77,10 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
                 </div>
                 <div className="flex flex-col items-start">
                     <Snippet
-                        className="t-muted group-hover:text-text-primary-light group-hover:dark:text-text-primary-dark line-clamp-1 text-start"
+                        className={classNames("line-clamp-1 text-start", {
+                            "text-text-primary-light dark:text-text-primary-dark": isHovered,
+                            "t-muted": !isHovered,
+                        })}
                         attribute="subtitle"
                         highlightedTagName="span"
                         hit={hit}

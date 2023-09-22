@@ -1,7 +1,7 @@
 import { Spinner, SpinnerSize } from "@blueprintjs/core";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
-import React, { PropsWithChildren, useMemo } from "react";
+import React, { PropsWithChildren, useMemo, useState } from "react";
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch-hooks-web";
 import { SearchHit } from "./SearchHit";
 import type { SearchRecord } from "./types";
@@ -15,6 +15,7 @@ export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {
 export const SearchHits: React.FC = () => {
     const { hits } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
+    const [hoveredSearchHitId, setHoveredSearchHitId] = useState<string | null>(null);
 
     const progress = useMemo((): Progress => {
         switch (search.status) {
@@ -49,7 +50,17 @@ export const SearchHits: React.FC = () => {
                     pending: () => <Spinner size={SpinnerSize.SMALL} />,
                     error: () => "An unexpected error has occurred while loading the results.",
                     success: () =>
-                        hits.length > 0 ? hits.map((hit) => <SearchHit key={hit.objectID} hit={hit} />) : "No results",
+                        hits.length > 0
+                            ? hits.map((hit) => (
+                                  <SearchHit
+                                      key={hit.objectID}
+                                      hit={hit}
+                                      isHovered={hoveredSearchHitId === hit.objectID}
+                                      onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
+                                      onMouseLeave={() => setHoveredSearchHitId(null)}
+                                  />
+                              ))
+                            : "No results",
                     _other: () => null,
                 })}
             </div>
