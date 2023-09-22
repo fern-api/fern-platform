@@ -1,7 +1,16 @@
 import { APIV1Db, APIV1Read } from "../../api";
 import { assertNever, type WithoutQuestionMarks } from "../../util";
 
-export function transformApiDefinitionForReading(
+export function convertApiDefinitionsToRead(dbApiDefinitions: Record<string, APIV1Db.DbApiDefinition>) {
+    return Object.fromEntries(
+        Object.entries(dbApiDefinitions).map(([id, dbDefinition]) => {
+            const parsedApiDefinition = convertApiDefinitionToRead(dbDefinition);
+            return [id, parsedApiDefinition];
+        })
+    );
+}
+
+export function convertApiDefinitionToRead(
     dbShape: APIV1Db.DbApiDefinition
 ): WithoutQuestionMarks<APIV1Read.ApiDefinition> {
     return {

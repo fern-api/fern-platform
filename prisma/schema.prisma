@@ -28,16 +28,24 @@ model Docs {
 }
 
 model DocsV2 {
-  orgID           String
-  apiName         String
-  updatedTime     DateTime @updatedAt
-  domain          String
-  path            String
-  algoliaIndex    String?
-  docsDefinition  Bytes
-  indexSegmentIds Json?
+  orgID                String
+  apiName              String
+  updatedTime          DateTime @updatedAt
+  domain               String
+  path                 String
+  algoliaIndex         String?
+  docsDefinition       Bytes
+  indexSegmentIds      Json?
+  docsConfigInstanceId String?
 
   @@id([domain, path])
+}
+
+model DocsConfigInstances {
+  docsConfigInstanceId       String   @id
+  createdAt                  DateTime @default(now())
+  referencedApiDefinitionIds Json?
+  docsConfig                 Bytes
 }
 
 model IndexSegment {

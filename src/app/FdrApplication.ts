@@ -1,4 +1,6 @@
+import { PrismaClient } from "@prisma/client";
 import winston from "winston";
+import { FdrDao } from "../db";
 import { AlgoliaServiceImpl, type AlgoliaService } from "../services/algolia";
 import {
     AlgoliaIndexSegmentDeleterServiceImpl,
@@ -37,12 +39,16 @@ export const LOGGER = winston.createLogger({
 
 export class FdrApplication {
     public readonly services: FdrServices;
+    public readonly dao: FdrDao;
     public readonly logger = LOGGER;
 
     public constructor(public readonly config: FdrConfig, services?: Partial<FdrServices>) {
+        const prisma = new PrismaClient({
+            log: ["info", "warn", "error"],
+        });
         this.services = {
             auth: services?.auth ?? new AuthServiceImpl(this),
-            db: services?.db ?? new DatabaseServiceImpl(),
+            db: services?.db ?? new DatabaseServiceImpl(prisma),
             algolia: services?.algolia ?? new AlgoliaServiceImpl(this),
             algoliaIndexSegmentDeleter:
                 services?.algoliaIndexSegmentDeleter ?? new AlgoliaIndexSegmentDeleterServiceImpl(this),
@@ -51,5 +57,6 @@ export class FdrApplication {
             s3: services?.s3 ?? new S3ServiceImpl(this),
             slack: services?.slack ?? new SlackServiceImpl(this),
         };
+        this.dao = new FdrDao(prisma);
     }
 }

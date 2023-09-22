@@ -3,6 +3,7 @@
 imports:
   rootCommons: ../../../commons.yml
   v1DocsRead: ../../v1/read/__package__.yml
+  apiReadV1: ../../../api/v1/read/__package__.yml
 
 
 service:
@@ -23,7 +24,23 @@ service:
       errors:
         - DomainNotRegisteredError
 
+    getDocsConfigById: 
+      method: GET
+      path: /{docsConfigId}
+      docs: | 
+        Loads the Docs Config and any referenced APIs by ID. 
+      path-parameters:
+        docsConfigId: rootCommons.DocsConfigId
+      response: GetDocsConfigByIdResponse
+      errors: 
+        - DocsDefinitionNotFoundError
+
 types:
+  GetDocsConfigByIdResponse: 
+    properties: 
+      docsConfig: v1DocsRead.DocsConfig
+      apis: map<rootCommons.ApiDefinitionId, apiReadV1.ApiDefinition>
+
   LoadDocsForUrlResponse: 
     properties: 
       baseUrl: BaseUrl
@@ -36,5 +53,8 @@ types:
       basePath: optional<string>
 
 errors:
+  DocsDefinitionNotFoundError: 
+    status-code: 404
+
   DomainNotRegisteredError:
     status-code: 404

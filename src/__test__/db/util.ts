@@ -18,6 +18,7 @@ export function createMockDocs({
         docsDefinition: Buffer.from("nil"),
         orgID: "",
         updatedTime: new Date(),
+        docsConfigInstanceId: "123",
     };
 }
 

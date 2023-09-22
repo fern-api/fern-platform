@@ -1,10 +1,11 @@
-import type { DocsV2, IndexSegment } from "@prisma/client";
-import { DocsV1Db, DocsV1Read, DocsV1ReadService } from "../../../api";
+import type { IndexSegment } from "@prisma/client";
+import { LoadDocsDefinitionByUrlResponse } from "../.../../../../db";
+import { APIV1Db, APIV1Read, DocsV1Db, DocsV1Read, DocsV1ReadService } from "../../../api";
 import type { FdrApplication } from "../../../app";
-import { transformDbDocsDefinitionToRead } from "../../../converters/read/convertDocsDefinitionToRead";
+import { convertApiDefinitionToRead } from "../../../converters/read/convertAPIDefinitionToRead";
+import { convertDbDocsConfigToRead } from "../../../converters/read/convertDocsConfigToRead";
 import { readBuffer } from "../../../util";
 import { isVersionedNavigationConfig } from "../../../util/fern/db";
-import { convertDbApiDefinitionToRead } from "../../api/getApiReadService";
 
 export function getDocsReadService(app: FdrApplication): DocsV1ReadService {
     return new DocsV1ReadService({
@@ -45,7 +46,23 @@ export async function getDocsForDomain({
     const docsDefinitionJson = readBuffer(docs.docsDefinition);
     const docsDbDefinition = migrateDocsDbDefinition(docsDefinitionJson);
 
-    return getDocsDefinition({ app, docsDbDefinition, docsV2 });
+    return getDocsDefinition({
+        app,
+        docsDbDefinition,
+        docsV2:
+            docsV2 != null
+                ? {
+                      algoliaIndex: docsV2.algoliaIndex ?? undefined,
+                      apiId: docsV2.apiName,
+                      orgId: docsV2.orgID,
+                      docsDefinition: migrateDocsDbDefinition(readBuffer(docsV2.docsDefinition)),
+                      docsConfigInstanceId: docsV2.docsConfigInstanceId,
+                      indexSegmentIds: docsV2.indexSegmentIds as string[],
+                      path: docsV2.path,
+                      domain: docsV2.domain,
+                  }
+                : null,
+    });
 }
 
 export async function getDocsDefinition({
@@ -55,7 +72,7 @@ export async function getDocsDefinition({
 }: {
     app: FdrApplication;
     docsDbDefinition: DocsV1Db.DocsDefinitionDb;
-    docsV2: DocsV2 | null;
+    docsV2: LoadDocsDefinitionByUrlResponse | null;
 }): Promise<DocsV1Read.DocsDefinition> {
     const [apiDefinitions, activeIndexSegments] = await Promise.all([
         app.services.db.prisma.apiDefinitionsV2.findMany({
@@ -72,11 +89,17 @@ export async function getDocsDefinition({
             : Promise.resolve<IndexSegment[]>([]),
     ]);
 
-    const searchInfo = getSearchInfoFromDocs({ docsV2, docsDbDefinition, activeIndexSegments, app });
+    const searchInfo = getSearchInfoFromDocs({
+        algoliaIndex: docsV2?.algoliaIndex,
+        indexSegmentIds: docsV2?.indexSegmentIds,
+        docsDbDefinition,
+        activeIndexSegments,
+        app,
+    });
 
     return {
         algoliaSearchIndex: docsV2?.algoliaIndex ?? undefined,
-        config: transformDbDocsDefinitionToRead({ dbShape: docsDbDefinition }),
+        config: convertDbDocsConfigToRead({ dbShape: docsDbDefinition.config }),
         apis: Object.fromEntries(
             apiDefinitions.map((apiDefinition) => {
                 const parsedApiDefinition = convertDbApiDefinitionToRead(apiDefinition.definition);
@@ -93,22 +116,25 @@ export async function getDocsDefinition({
         ),
         pages: docsDbDefinition.pages,
         search: searchInfo,
+        id: docsV2?.docsConfigInstanceId ?? undefined,
     };
 }
 
 function getSearchInfoFromDocs({
-    docsV2,
+    algoliaIndex,
+    indexSegmentIds,
     activeIndexSegments,
     docsDbDefinition,
     app,
 }: {
-    docsV2: DocsV2 | null;
+    algoliaIndex: string | undefined;
+    indexSegmentIds: string[] | undefined;
     activeIndexSegments: IndexSegment[];
     docsDbDefinition: DocsV1Db.DocsDefinitionDb;
     app: FdrApplication;
 }): DocsV1Read.SearchInfo {
-    if (docsV2 == null || !Array.isArray(docsV2.indexSegmentIds)) {
-        return { type: "legacyMultiAlgoliaIndex", algoliaIndex: docsV2?.algoliaIndex ?? undefined };
+    if (indexSegmentIds == null) {
+        return { type: "legacyMultiAlgoliaIndex", algoliaIndex };
     }
     const areDocsVersioned = isVersionedNavigationConfig(docsDbDefinition.config.navigation);
     if (areDocsVersioned) {
@@ -161,4 +187,9 @@ export function migrateDocsDbDefinition(dbValue: unknown): DocsV1Db.DocsDefiniti
         type: "v1",
         ...(dbValue as object),
     } as DocsV1Db.DocsDefinitionDb;
+}
+
+export function convertDbApiDefinitionToRead(buffer: Buffer): APIV1Read.ApiDefinition {
+    const apiDefinitionJson = readBuffer(buffer) as APIV1Db.DbApiDefinition;
+    return convertApiDefinitionToRead(apiDefinitionJson);
 }

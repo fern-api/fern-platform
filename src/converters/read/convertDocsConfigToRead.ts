@@ -8,25 +8,25 @@ import {
     isVersionedNavigationConfig as isVersionedDbConfig,
 } from "../../util/fern/db";
 
-export function transformDbDocsDefinitionToRead({
+export function convertDbDocsConfigToRead({
     dbShape,
 }: {
-    dbShape: DocsV1Db.DocsDefinitionDb;
+    dbShape: DocsV1Db.DocsDbConfig;
 }): WithoutQuestionMarks<DocsV1Read.DocsConfig> {
     return {
-        navigation: transformNavigationConfigToRead(dbShape.config.navigation),
-        logo: dbShape.config.logo,
-        logoV2: dbShape.config.logoV2,
-        logoHeight: dbShape.config.logoHeight,
-        logoHref: dbShape.config.logoHref,
-        colors: dbShape.config.colors,
-        colorsV2: dbShape.config.colorsV2,
-        colorsV3: dbShape.config.colorsV3 ?? getColorsV3(dbShape.config),
-        navbarLinks: dbShape.config.navbarLinks ?? [],
-        title: dbShape.config.title,
-        favicon: dbShape.config.favicon,
-        backgroundImage: dbShape.config.backgroundImage,
-        typography: dbShape.config.typography,
+        navigation: transformNavigationConfigToRead(dbShape.navigation),
+        logo: dbShape.logo,
+        logoV2: dbShape.logoV2,
+        logoHeight: dbShape.logoHeight,
+        logoHref: dbShape.logoHref,
+        colors: dbShape.colors,
+        colorsV2: dbShape.colorsV2,
+        colorsV3: dbShape.colorsV3 ?? getColorsV3(dbShape),
+        navbarLinks: dbShape.navbarLinks ?? [],
+        title: dbShape.title,
+        favicon: dbShape.favicon,
+        backgroundImage: dbShape.backgroundImage,
+        typography: dbShape.typography,
     };
 }
 

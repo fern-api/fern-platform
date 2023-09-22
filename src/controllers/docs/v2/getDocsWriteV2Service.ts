@@ -124,9 +124,9 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 await app.services.algolia.uploadSearchRecords(searchRecords);
 
                 app.logger.info(`[${docsRegistrationInfo.fernDomain}] Updating db docs definitions`);
-                await app.services.db.updateDocsDefinitionAndIndexSegments({
-                    dbDocsDefinition,
+                await app.dao.docsV2().storeDocsDefinition({
                     docsRegistrationInfo,
+                    dbDocsDefinition,
                     indexSegments: newIndexSegments,
                 });
 

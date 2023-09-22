@@ -1,7 +1,9 @@
 import { DocsV2Read, DocsV2ReadService } from "../../../api";
 import type { FdrApplication } from "../../../app";
-import { getParsedUrl, readBuffer } from "../../../util";
-import { getDocsDefinition, getDocsForDomain, migrateDocsDbDefinition } from "../v1/getDocsReadService";
+import { convertApiDefinitionsToRead } from "../../../converters/read/convertAPIDefinitionToRead";
+import { convertDbDocsConfigToRead } from "../../../converters/read/convertDocsConfigToRead";
+import { getParsedUrl } from "../../../util";
+import { getDocsDefinition, getDocsForDomain } from "../v1/getDocsReadService";
 
 const DOCS_DOMAIN_REGX = /^([^.\s]+)/;
 
@@ -9,25 +11,17 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
     return new DocsV2ReadService({
         getDocsForUrl: async (req, res) => {
             const parsedUrl = getParsedUrl(req.body.url);
-            const possibleDocs = await app.services.db.prisma.docsV2.findMany({
-                where: {
-                    domain: parsedUrl.hostname,
-                },
-                orderBy: {
-                    updatedTime: "desc",
-                },
-            });
-            const docsDomain = possibleDocs.find((registeredDocs) => {
-                return parsedUrl.pathname.startsWith(registeredDocs.path);
-            });
-            if (docsDomain != null) {
-                const docsDefinitionJson = readBuffer(docsDomain.docsDefinition);
-                const docsDbDefinition = migrateDocsDbDefinition(docsDefinitionJson);
-                const definition = await getDocsDefinition({ app, docsDbDefinition, docsV2: docsDomain });
+            const dbDocs = await app.dao.docsV2().loadDocsForURL(parsedUrl);
+            if (dbDocs != null) {
+                const definition = await getDocsDefinition({
+                    app,
+                    docsDbDefinition: dbDocs.docsDefinition,
+                    docsV2: dbDocs,
+                });
                 return res.send({
                     baseUrl: {
-                        domain: docsDomain.domain,
-                        basePath: docsDomain.path === "" ? undefined : docsDomain.path,
+                        domain: dbDocs.domain,
+                        basePath: dbDocs.path === "" ? undefined : dbDocs.path,
                     },
                     definition,
                     lightModeEnabled: definition.config.colorsV3.type != "dark",
@@ -48,6 +42,17 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
                     lightModeEnabled: definition.config.colorsV3.type != "dark",
                 });
             }
+        },
+        getDocsConfigById: async (req, res) => {
+            const loadDocsConfigResponse = await app.dao.docsV2().loadDocsConfigByInstanceId(req.params.docsConfigId);
+            if (loadDocsConfigResponse == null) {
+                throw new DocsV2Read.DocsDefinitionNotFoundError();
+            }
+            const apiDefinitions = await app.dao.apis().loadAPIDefinitions(loadDocsConfigResponse.referencedApis);
+            return res.send({
+                docsConfig: convertDbDocsConfigToRead({ dbShape: loadDocsConfigResponse.docsConfig }),
+                apis: convertApiDefinitionsToRead(apiDefinitions),
+            });
         },
     });
 }

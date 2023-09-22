@@ -91,6 +91,7 @@ types:
       pages: map<PageId, PageContent>
       apis: map<rootCommons.ApiDefinitionId, apiReadV1.ApiDefinition>
       files: map<FileId, Url>
+      id: optional<rootCommons.DocsConfigId>
       config: DocsConfig
       search: SearchInfo
 
