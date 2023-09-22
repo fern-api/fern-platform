@@ -60,7 +60,7 @@ export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ inte
 
             <div
                 className={classNames(
-                    "text-sm leading-5 font-light",
+                    "text-sm leading-5 tracking-wide font-light",
                     visitDiscriminatedUnion({ intent }, "intent")._visit({
                         info: () => "text-text-muted-light dark:text-text-muted-dark",
                         warning: () => "text-intent-warning-light dark:text-intent-warning-dark",
