@@ -65,7 +65,22 @@ const UnmemoizedSidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Prop
     }
 
     return (
-        <div className={classNames("flex flex-col px-4 pt-8 backdrop-blur-sm", className)}>
+        <div
+            className={classNames(
+                "flex flex-col px-4 pt-8",
+                {
+                    "backdrop-blur-sm": tabs == null,
+                    "backdrop-blur-xl": tabs != null,
+                },
+                {
+                    "border-b border-border-concealed-light dark:border-border-concealed-dark": tabs != null,
+                },
+                {
+                    "pb-2": tabs != null,
+                },
+                className
+            )}
+        >
             {searchBar}
             {tabs}
         </div>
