@@ -1,14 +1,18 @@
 import { FernRegistry, FernRegistryClient } from "@fern-fern/registry-browser";
-import algolia, { type SearchClient } from "algoliasearch/lite";
 
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { getEnvConfig } from "../env";
+
+export type SearchCredentials = {
+    appId: string;
+    searchApiKey: string;
+};
 
 export type SearchService =
     | {
           isAvailable: true;
-          loadClient: () => Promise<SearchClient | undefined>;
+          loadCredentials: () => Promise<SearchCredentials | undefined>;
           index: string;
       }
     | {
@@ -23,13 +27,26 @@ export function useSearchService(): SearchService {
     const { docsDefinition, docsInfo } = useDocsContext();
     const { search: searchInfo } = docsDefinition;
 
+    const loadSearchApiKey = useCallback(async (indexSegmentId: string) => {
+        const resp = await registryClient.docs.v2.read.getSearchApiKeyForIndexSegment({
+            indexSegmentId,
+        });
+        if (!resp.ok) {
+            return undefined;
+        }
+        return resp.body.searchApiKey;
+    }, []);
+
     return useMemo<SearchService>(() => {
         const envConfig = getEnvConfig();
         if (typeof searchInfo !== "object") {
             return docsDefinition.algoliaSearchIndex != null
                 ? {
                       isAvailable: true,
-                      loadClient: async () => algolia(envConfig.algoliaAppId, envConfig.algoliaApiKey),
+                      loadCredentials: async () => ({
+                          appId: envConfig.algoliaAppId,
+                          searchApiKey: envConfig.algoliaApiKey,
+                      }),
                       index: docsDefinition.algoliaSearchIndex,
                   }
                 : { isAvailable: false };
@@ -38,7 +55,10 @@ export function useSearchService(): SearchService {
             return algoliaIndex != null
                 ? {
                       isAvailable: true,
-                      loadClient: async () => algolia(envConfig.algoliaAppId, envConfig.algoliaApiKey),
+                      loadCredentials: async () => ({
+                          appId: envConfig.algoliaAppId,
+                          searchApiKey: envConfig.algoliaApiKey,
+                      }),
                       index: algoliaIndex,
                   }
                 : { isAvailable: false };
@@ -53,14 +73,14 @@ export function useSearchService(): SearchService {
 
             return {
                 isAvailable: true,
-                loadClient: async () => {
-                    const resp = await registryClient.docs.v2.read.getSearchApiKeyForIndexSegment({
-                        indexSegmentId: indexSegment.id,
-                    });
-                    if (!resp.ok) {
-                        return undefined;
-                    }
-                    return algolia(envConfig.algoliaAppId, resp.body.searchApiKey);
+                loadCredentials: async () => {
+                    const searchApiKey = await loadSearchApiKey(indexSegment.id);
+                    return searchApiKey != null
+                        ? {
+                              appId: envConfig.algoliaAppId,
+                              searchApiKey,
+                          }
+                        : undefined;
                 },
                 index: envConfig.algoliaSearchIndex,
             };
@@ -81,17 +101,17 @@ export function useSearchService(): SearchService {
             }
             return {
                 isAvailable: true,
-                loadClient: async () => {
-                    const resp = await registryClient.docs.v2.read.getSearchApiKeyForIndexSegment({
-                        indexSegmentId: indexSegment.id,
-                    });
-                    if (!resp.ok) {
-                        return undefined;
-                    }
-                    return algolia(envConfig.algoliaAppId, resp.body.searchApiKey);
+                loadCredentials: async () => {
+                    const searchApiKey = await loadSearchApiKey(indexSegment.id);
+                    return searchApiKey != null
+                        ? {
+                              appId: envConfig.algoliaAppId,
+                              searchApiKey,
+                          }
+                        : undefined;
                 },
                 index: envConfig.algoliaSearchIndex,
             };
         }
-    }, [docsDefinition.algoliaSearchIndex, docsInfo, searchInfo]);
+    }, [docsDefinition.algoliaSearchIndex, loadSearchApiKey, docsInfo, searchInfo]);
 }

@@ -1,10 +1,10 @@
 import { Icon } from "@blueprintjs/core";
 import { Dialog } from "@headlessui/react";
-import { type SearchClient } from "algoliasearch/lite";
+import algolia from "algoliasearch/lite";
 import classNames from "classnames";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { InstantSearch, SearchBox } from "react-instantsearch-hooks-web";
-import { useSearchService } from "../services/useSearchService";
+import { useSearchService, type SearchCredentials } from "../services/useSearchService";
 import styles from "./SearchDialog.module.scss";
 import { SearchHits } from "./SearchHits";
 
@@ -19,16 +19,23 @@ export declare namespace SearchDialog {
 export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
     const { isOpen, onClose, activeVersion } = providedProps;
     const searchService = useSearchService();
-    const [searchClient, setSearchClient] = useState<SearchClient | undefined>(undefined);
+    const [credentials, setSearchCredentials] = useState<SearchCredentials | undefined>(undefined);
 
     useEffect(() => {
-        if (searchService.isAvailable) {
+        if (isOpen && searchService.isAvailable) {
             void (async () => {
-                const loadedClient = await searchService.loadClient();
-                setSearchClient(loadedClient);
+                const credentials = await searchService.loadCredentials();
+                setSearchCredentials(credentials);
             })();
         }
-    }, [searchService]);
+    }, [isOpen, searchService]);
+
+    const searchClient = useMemo(() => {
+        if (credentials?.appId == null) {
+            return undefined;
+        }
+        return algolia(credentials.appId, credentials.searchApiKey);
+    }, [credentials?.appId, credentials?.searchApiKey]);
 
     return (
         <Dialog as="div" className="fixed inset-0 z-30" open={isOpen} onClose={onClose}>
