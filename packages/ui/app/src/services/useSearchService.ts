@@ -1,8 +1,9 @@
-import { FernRegistry, FernRegistryClient } from "@fern-fern/registry-browser";
+import { FernRegistry } from "@fern-fern/registry-browser";
 
 import { useCallback, useMemo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { getEnvConfig } from "../env";
+import { REGISTRY_SERVICE } from "./registry";
 
 export type SearchCredentials = {
     appId: string;
@@ -19,19 +20,17 @@ export type SearchService =
           isAvailable: false;
       };
 
-const registryClient = new FernRegistryClient({
-    environment: process.env.NEXT_PUBLIC_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
-});
-
 export function useSearchService(): SearchService {
     const { docsDefinition, docsInfo } = useDocsContext();
     const { search: searchInfo } = docsDefinition;
 
     const loadSearchApiKey = useCallback(async (indexSegmentId: string) => {
-        const resp = await registryClient.docs.v2.read.getSearchApiKeyForIndexSegment({
+        const resp = await REGISTRY_SERVICE.docs.v2.read.getSearchApiKeyForIndexSegment({
             indexSegmentId,
         });
         if (!resp.ok) {
+            // eslint-disable-next-line no-console
+            console.error("Failed to fetch index segment api key", resp.error);
             return undefined;
         }
         return resp.body.searchApiKey;
