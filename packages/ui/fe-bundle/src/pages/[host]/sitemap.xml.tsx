@@ -45,7 +45,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params = {}, res 
 
     const paths = getPathsToRevalidate({
         navigationConfig: docs.body.definition.config.navigation,
-        docsDefinition: docs.body.definition,
+        apis: docs.body.definition.apis,
     });
 
     const urls = paths.map((path) => {
