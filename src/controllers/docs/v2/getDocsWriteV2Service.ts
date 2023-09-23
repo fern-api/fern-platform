@@ -96,6 +96,10 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                     orgId: docsRegistrationInfo.orgId,
                 });
 
+                const previousDocsDefinition = await app.dao
+                    .docsV2()
+                    .loadDocsForURL(getParsedUrl(docsRegistrationInfo.fernDomain));
+
                 app.logger.info(`[${docsRegistrationInfo.fernDomain}] Transforming Docs Definition to DB`);
                 const dbDocsDefinition = transformWriteDocsDefinitionToDb({
                     writeShape: req.body.docsDefinition,
@@ -142,7 +146,10 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                     urls.map(async (url) => {
                         try {
                             app.logger.info(`[${docsRegistrationInfo.fernDomain}] Revalidating url: ${url}`);
-                            await revalidateUrl(url);
+                            await revalidateUrl({
+                                url,
+                                docsConfigId: previousDocsDefinition?.docsConfigInstanceId ?? undefined,
+                            });
                             app.logger.info(`[${docsRegistrationInfo.fernDomain}] Revalidated url: ${url}`);
                         } catch (e) {
                             app.logger.error(

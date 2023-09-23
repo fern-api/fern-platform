@@ -9,10 +9,22 @@ interface RevalidateResponse {
 const AXIOS_INSTANCE = axios.create();
 AXIOS_INSTANCE.interceptors.request.use(AxiosLogger.requestLogger);
 
-export async function revalidateUrl(url: string): Promise<void> {
-    const response = await AXIOS_INSTANCE.post(`${new URL(url).origin}/api/revalidate`, {
-        url,
-    });
+export async function revalidateUrl({
+    url,
+    docsConfigId,
+}: {
+    url: string;
+    docsConfigId: string | undefined;
+}): Promise<void> {
+    const response = await AXIOS_INSTANCE.post(
+        `${new URL(url).origin}/api/revalidate`,
+        docsConfigId != null
+            ? {
+                  url,
+                  docsConfigId,
+              }
+            : { url }
+    );
     const responseBody = response.data as RevalidateResponse;
     if (responseBody.failures.length > 0) {
         throw new Error(
