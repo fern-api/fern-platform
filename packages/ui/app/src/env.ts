@@ -1,4 +1,4 @@
-type EnvironmentConfig = {
+export interface EnvironmentConfig {
     algoliaAppId: string;
     /**
      * This is used by the legacy search system.
@@ -6,7 +6,7 @@ type EnvironmentConfig = {
     algoliaApiKey: string;
 
     algoliaSearchIndex?: string;
-};
+}
 
 export function getEnvConfig(): EnvironmentConfig {
     if (process.env.NEXT_PUBLIC_ALGOLIA_APP_ID == null) {
