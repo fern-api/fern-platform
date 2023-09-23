@@ -1,3 +1,4 @@
+import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { DocsV1Write, DocsV2Write, DocsV2WriteService, FdrAPI } from "../../../api";
 import { type FdrApplication } from "../../../app";
@@ -152,14 +153,25 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                             });
                             app.logger.info(`[${docsRegistrationInfo.fernDomain}] Revalidated url: ${url}`);
                         } catch (e) {
-                            app.logger.error(
-                                `[${docsRegistrationInfo.fernDomain}] Failed to revalidate url: ${url}. ` +
-                                    (e as Error).message
-                            );
-                            await app.services.slack.notifyFailedToRegisterDocs({
-                                domain: docsRegistrationInfo.fernDomain,
-                                err: e,
-                            });
+                            if (axios.isAxiosError(e)) {
+                                app.logger.error(
+                                    `[${docsRegistrationInfo.fernDomain}] Failed to revalidate url: ${url}. ` +
+                                        JSON.stringify(e.toJSON())
+                                );
+                                await app.services.slack.notifyFailedToRegisterDocs({
+                                    domain: docsRegistrationInfo.fernDomain,
+                                    err: JSON.stringify(e.toJSON()),
+                                });
+                            } else {
+                                app.logger.error(
+                                    `[${docsRegistrationInfo.fernDomain}] Failed to revalidate url: ${url}. ` +
+                                        (e as Error).message
+                                );
+                                await app.services.slack.notifyFailedToRegisterDocs({
+                                    domain: docsRegistrationInfo.fernDomain,
+                                    err: e,
+                                });
+                            }
                         }
                     })
                 );
