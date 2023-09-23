@@ -9,6 +9,7 @@ export interface Request {
 const handler: NextApiHandler = async (req, res) => {
     try {
         const url = req.body?.url;
+        const docsConfigId = req.body?.docsConfigId;
 
         if (url == null) {
             return res.status(400).send("Property 'url' is missing from request.");
@@ -17,30 +18,50 @@ const handler: NextApiHandler = async (req, res) => {
             return res.status(400).send("Property 'url' is not a string.");
         }
 
+        if (docsConfigId != null && typeof docsConfigId !== "string") {
+            return res.status(400).send("Property 'docsConfigId' is not a string.");
+        }
+
         // when we call res.revalidate() nextjs uses
         // req.headers.host to make the network request
         if (typeof req.headers["x-fern-host"] === "string") {
             req.headers.host = req.headers["x-fern-host"];
         }
 
-        const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
-            url,
-        });
-        if (!docs.ok) {
+        let pathsToRevalidate: string[] = [];
+        if (docsConfigId != null) {
+            const docsConfigResponse = await REGISTRY_SERVICE.docs.v2.read.getDocsConfigById(docsConfigId);
+            if (!docsConfigResponse.ok) {
+                // eslint-disable-next-line no-console
+                console.error("Failed to fetch docs by config id", docsConfigResponse.error);
+                return res.status(500).send("Failed to load docs for: " + docsConfigId);
+            }
+
             // eslint-disable-next-line no-console
-            console.error("Failed to fetch docs", docs.error);
-            return res.status(500).send("Failed to load docs for: " + url);
+            console.log("Finding paths to revalidate");
+
+            pathsToRevalidate = getPathsToRevalidate({
+                navigationConfig: docsConfigResponse.body.docsConfig.navigation,
+                apis: docsConfigResponse.body.apis,
+            });
+        } else {
+            const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
+                url,
+            });
+            if (!docs.ok) {
+                // eslint-disable-next-line no-console
+                console.error("Failed to fetch docs", docs.error);
+                return res.status(500).send("Failed to load docs for: " + url);
+            }
+
+            // eslint-disable-next-line no-console
+            console.log("Finding paths to revalidate");
+
+            pathsToRevalidate = getPathsToRevalidate({
+                navigationConfig: docs.body.definition.config.navigation,
+                apis: docs.body.definition.apis,
+            });
         }
-
-        const { navigation: navigationConfig } = docs.body.definition.config;
-
-        // eslint-disable-next-line no-console
-        console.log("Finding paths to revalidate");
-
-        const pathsToRevalidate: string[] = getPathsToRevalidate({
-            navigationConfig,
-            docsDefinition: docs.body.definition,
-        });
 
         // eslint-disable-next-line no-console
         console.log(`Found ${pathsToRevalidate.length} paths to revalidate`);

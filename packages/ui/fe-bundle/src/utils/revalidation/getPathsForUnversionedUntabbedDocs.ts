@@ -1,21 +1,19 @@
-import {
-    DocsDefinition,
-    UnversionedUntabbedNavigationConfig,
-} from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { FernRegistry } from "@fern-fern/registry-browser";
+import { UnversionedUntabbedNavigationConfig } from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { UrlSlugTree } from "@fern-ui/app-utils";
 
 export function getPathsForUnversionedUntabbedDocs({
     prefix,
     navigationConfig,
-    docsDefinition,
+    apis,
 }: {
     prefix: string | undefined;
     navigationConfig: UnversionedUntabbedNavigationConfig;
-    docsDefinition: DocsDefinition;
+    apis: Record<FernRegistry.ApiDefinitionId, FernRegistry.api.v1.read.ApiDefinition>;
 }): Set<string> {
     const urlSlugTree = new UrlSlugTree({
         items: navigationConfig.items,
-        loadApiDefinition: (id) => docsDefinition.apis[id],
+        loadApiDefinition: (id) => apis[id],
     });
     return new Set<string>([
         "/",

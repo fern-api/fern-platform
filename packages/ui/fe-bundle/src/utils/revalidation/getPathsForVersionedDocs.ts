@@ -1,17 +1,15 @@
-import {
-    DocsDefinition,
-    VersionedNavigationConfig,
-} from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { FernRegistry } from "@fern-fern/registry-browser";
+import { VersionedNavigationConfig } from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { isUnversionedUntabbedNavigationConfig } from "@fern-ui/app-utils";
 import { getPathsForUnversionedTabbedDocs } from "./getPathsForTabbedDocs";
 import { getPathsForUnversionedUntabbedDocs } from "./getPathsForUnversionedUntabbedDocs";
 
 export function getPathsToRevalidateForVersionedDocs({
     navigationConfig,
-    docsDefinition,
+    apis,
 }: {
     navigationConfig: VersionedNavigationConfig;
-    docsDefinition: DocsDefinition;
+    apis: Record<FernRegistry.ApiDefinitionId, FernRegistry.api.v1.read.ApiDefinition>;
 }): Set<string> {
     const pathsToRevalidate: Set<string> = new Set<string>(["/"]);
     navigationConfig.versions.forEach((version, idx) => {
@@ -21,7 +19,7 @@ export function getPathsToRevalidateForVersionedDocs({
                 getPathsForUnversionedUntabbedDocs({
                     prefix: undefined,
                     navigationConfig: version.config,
-                    docsDefinition,
+                    apis,
                 }).forEach((val) => {
                     pathsToRevalidate.add(val);
                 });
@@ -29,7 +27,7 @@ export function getPathsToRevalidateForVersionedDocs({
             getPathsForUnversionedUntabbedDocs({
                 prefix: `/${version.urlSlug}`,
                 navigationConfig: version.config,
-                docsDefinition,
+                apis,
             }).forEach((val) => {
                 pathsToRevalidate.add(val);
             });
@@ -38,7 +36,7 @@ export function getPathsToRevalidateForVersionedDocs({
                 getPathsForUnversionedTabbedDocs({
                     prefix: undefined,
                     navigationConfig: version.config,
-                    docsDefinition,
+                    apis,
                 }).forEach((val) => {
                     pathsToRevalidate.add(val);
                 });
@@ -46,7 +44,7 @@ export function getPathsToRevalidateForVersionedDocs({
             getPathsForUnversionedTabbedDocs({
                 prefix: `/${version.urlSlug}`,
                 navigationConfig: version.config,
-                docsDefinition,
+                apis,
             }).forEach((val) => {
                 pathsToRevalidate.add(val);
             });
