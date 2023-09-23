@@ -1,5 +1,6 @@
-import { FernRegistry } from "@fern-fern/registry-browser";
+import { FernRegistry, FernRegistryClient } from "@fern-fern/registry-browser";
 import algolia, { type SearchClient } from "algoliasearch/lite";
+
 import { useMemo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { getEnvConfig } from "../env";
@@ -7,12 +8,16 @@ import { getEnvConfig } from "../env";
 export type SearchService =
     | {
           isAvailable: true;
-          client: SearchClient;
+          loadClient: () => Promise<SearchClient | undefined>;
           index: string;
       }
     | {
           isAvailable: false;
       };
+
+const registryClient = new FernRegistryClient({
+    environment: process.env.NEXT_PUBLIC_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
+});
 
 export function useSearchService(): SearchService {
     const { docsDefinition, docsInfo } = useDocsContext();
@@ -24,7 +29,7 @@ export function useSearchService(): SearchService {
             return docsDefinition.algoliaSearchIndex != null
                 ? {
                       isAvailable: true,
-                      client: algolia(envConfig.algoliaAppId, envConfig.algoliaApiKey),
+                      loadClient: async () => algolia(envConfig.algoliaAppId, envConfig.algoliaApiKey),
                       index: docsDefinition.algoliaSearchIndex,
                   }
                 : { isAvailable: false };
@@ -33,7 +38,7 @@ export function useSearchService(): SearchService {
             return algoliaIndex != null
                 ? {
                       isAvailable: true,
-                      client: algolia(envConfig.algoliaAppId, envConfig.algoliaApiKey),
+                      loadClient: async () => algolia(envConfig.algoliaAppId, envConfig.algoliaApiKey),
                       index: algoliaIndex,
                   }
                 : { isAvailable: false };
@@ -45,9 +50,18 @@ export function useSearchService(): SearchService {
                 throw new Error('Missing environment variable "NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX"');
             }
             const { indexSegment } = searchInfo.value;
+
             return {
                 isAvailable: true,
-                client: algolia(envConfig.algoliaAppId, indexSegment.searchApiKey),
+                loadClient: async () => {
+                    const resp = await registryClient.docs.v2.read.getSearchApiKeyForIndexSegment({
+                        indexSegmentId: indexSegment.id,
+                    });
+                    if (!resp.ok) {
+                        return undefined;
+                    }
+                    return algolia(envConfig.algoliaAppId, resp.body.searchApiKey);
+                },
                 index: envConfig.algoliaSearchIndex,
             };
         } else {
@@ -67,7 +81,15 @@ export function useSearchService(): SearchService {
             }
             return {
                 isAvailable: true,
-                client: algolia(envConfig.algoliaAppId, indexSegment.searchApiKey),
+                loadClient: async () => {
+                    const resp = await registryClient.docs.v2.read.getSearchApiKeyForIndexSegment({
+                        indexSegmentId: indexSegment.id,
+                    });
+                    if (!resp.ok) {
+                        return undefined;
+                    }
+                    return algolia(envConfig.algoliaAppId, resp.body.searchApiKey);
+                },
                 index: envConfig.algoliaSearchIndex,
             };
         }
