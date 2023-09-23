@@ -25,6 +25,19 @@ export const SearchHits: React.FC = () => {
 
     const refs = useRef(new Map<string, HTMLAnchorElement>());
 
+    useEffect(() => {
+        if (typeof document === "undefined") {
+            return;
+        }
+        const handleMouseMove = () => {
+            document.exitPointerLock();
+        };
+        document.addEventListener("mousemove", handleMouseMove);
+        return () => {
+            document.removeEventListener("mousemove", handleMouseMove);
+        };
+    }, []);
+
     const hoveredSearchHit = useMemo(() => {
         return hits
             .map((hit, index) => ({ record: hit, index }))
@@ -48,6 +61,7 @@ export const SearchHits: React.FC = () => {
             if (previousHit != null) {
                 setHoveredSearchHitId(previousHit.objectID);
                 const ref = refs.current.get(previousHit.objectID);
+                ref?.requestPointerLock();
                 ref?.focus();
             }
         },
@@ -63,6 +77,7 @@ export const SearchHits: React.FC = () => {
             if (nextHit != null) {
                 setHoveredSearchHitId(nextHit.objectID);
                 const ref = refs.current.get(nextHit.objectID);
+                ref?.requestPointerLock();
                 ref?.focus();
             }
         },
