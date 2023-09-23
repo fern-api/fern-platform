@@ -54,5 +54,18 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
                 apis: convertApiDefinitionsToRead(apiDefinitions),
             });
         },
+        getSearchApiKeyForIndexSegment: async (req, res) => {
+            const { indexSegmentId } = req.body;
+            const cachedKey = app.services.algoliaIndexSegmentManager.getSearchApiKeyForIndexSegment(indexSegmentId);
+            if (cachedKey != null) {
+                return res.send({ searchApiKey: cachedKey });
+            }
+            const indexSegment = await app.dao.indexSegment().loadIndexSegment(indexSegmentId);
+            if (indexSegment == null) {
+                throw new DocsV2Read.IndexSegmentNotFoundError();
+            }
+            const searchApiKey = app.services.algoliaIndexSegmentManager.generateAndCacheApiKey(indexSegmentId);
+            return res.send({ searchApiKey });
+        },
     });
 }

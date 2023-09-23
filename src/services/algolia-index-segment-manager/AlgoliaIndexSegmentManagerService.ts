@@ -22,6 +22,10 @@ type GenerateNewIndexSegmentsResult =
 export interface AlgoliaIndexSegmentManagerService {
     getOrGenerateSearchApiKeyForIndexSegment(indexSegmentId: string): string;
 
+    getSearchApiKeyForIndexSegment(indexSegmentId: string): string | undefined;
+
+    generateAndCacheApiKey(indexSegmentId: string): string;
+
     generateIndexSegmentsForDefinition({
         dbDocsDefinition,
         fernDomain,
@@ -127,7 +131,12 @@ export class AlgoliaIndexSegmentManagerServiceImpl implements AlgoliaIndexSegmen
         }
     }
 
-    private generateAndCacheApiKey(indexSegmentId: string) {
+    public getSearchApiKeyForIndexSegment(indexSegmentId: string) {
+        const cachedKey = this.apiKeysCache.get<string>(indexSegmentId);
+        return cachedKey;
+    }
+
+    public generateAndCacheApiKey(indexSegmentId: string) {
         const now = new Date();
         const cacheUntil = addHours(now, AlgoliaIndexSegmentManagerServiceImpl.config.apiKeyTTLHours);
         const validUntil = addMinutes(

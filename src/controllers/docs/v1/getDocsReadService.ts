@@ -74,7 +74,7 @@ export async function getDocsDefinition({
     docsDbDefinition: DocsV1Db.DocsDefinitionDb;
     docsV2: LoadDocsDefinitionByUrlResponse | null;
 }): Promise<DocsV1Read.DocsDefinition> {
-    const [apiDefinitions, activeIndexSegments] = await Promise.all([
+    const [apiDefinitions, searchInfo] = await Promise.all([
         app.services.db.prisma.apiDefinitionsV2.findMany({
             where: {
                 apiDefinitionId: {
@@ -82,20 +82,12 @@ export async function getDocsDefinition({
                 },
             },
         }),
-        docsV2?.indexSegmentIds != null
-            ? app.services.db.prisma.indexSegment.findMany({
-                  where: { id: { in: docsV2.indexSegmentIds as string[] } },
-              })
-            : Promise.resolve<IndexSegment[]>([]),
+        loadIndexSegmentsAndGetSearchInfo({
+            app,
+            docsDbDefinition,
+            docsV2,
+        }),
     ]);
-
-    const searchInfo = getSearchInfoFromDocs({
-        algoliaIndex: docsV2?.algoliaIndex,
-        indexSegmentIds: docsV2?.indexSegmentIds,
-        docsDbDefinition,
-        activeIndexSegments,
-        app,
-    });
 
     return {
         algoliaSearchIndex: docsV2?.algoliaIndex ?? undefined,
@@ -118,6 +110,30 @@ export async function getDocsDefinition({
         search: searchInfo,
         id: docsV2?.docsConfigInstanceId ?? undefined,
     };
+}
+
+export async function loadIndexSegmentsAndGetSearchInfo({
+    app,
+    docsDbDefinition,
+    docsV2,
+}: {
+    app: FdrApplication;
+    docsDbDefinition: DocsV1Db.DocsDefinitionDb;
+    docsV2: LoadDocsDefinitionByUrlResponse | null;
+}): Promise<DocsV1Read.SearchInfo> {
+    const activeIndexSegments =
+        docsV2?.indexSegmentIds != null
+            ? await app.services.db.prisma.indexSegment.findMany({
+                  where: { id: { in: docsV2.indexSegmentIds as string[] } },
+              })
+            : [];
+    return getSearchInfoFromDocs({
+        algoliaIndex: docsV2?.algoliaIndex,
+        indexSegmentIds: docsV2?.indexSegmentIds,
+        docsDbDefinition,
+        activeIndexSegments,
+        app,
+    });
 }
 
 function getSearchInfoFromDocs({

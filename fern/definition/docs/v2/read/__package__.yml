@@ -5,7 +5,6 @@ imports:
   v1DocsRead: ../../v1/read/__package__.yml
   apiReadV1: ../../../api/v1/read/__package__.yml
 
-
 service:
   base-path: /v2/registry/docs
   auth: false
@@ -24,37 +23,56 @@ service:
       errors:
         - DomainNotRegisteredError
 
-    getDocsConfigById: 
+    getDocsConfigById:
       method: GET
       path: /{docsConfigId}
-      docs: | 
-        Loads the Docs Config and any referenced APIs by ID. 
+      docs: |
+        Loads the Docs Config and any referenced APIs by ID.
       path-parameters:
         docsConfigId: rootCommons.DocsConfigId
       response: GetDocsConfigByIdResponse
-      errors: 
+      errors:
         - DocsDefinitionNotFoundError
 
+    getSearchApiKeyForIndexSegment:
+      method: POST
+      path: /search-api-key-with-index-segment
+      request:
+        name: GetSearchApiKeyForIndexSegmentRequest
+        body:
+          properties:
+            indexSegmentId: string
+      response: GetSearchApiKeyForIndexSegmentResponse
+      errors:
+        - IndexSegmentNotFoundError
+
 types:
-  GetDocsConfigByIdResponse: 
-    properties: 
+  GetDocsConfigByIdResponse:
+    properties:
       docsConfig: v1DocsRead.DocsConfig
       apis: map<rootCommons.ApiDefinitionId, apiReadV1.ApiDefinition>
 
-  LoadDocsForUrlResponse: 
-    properties: 
+  LoadDocsForUrlResponse:
+    properties:
       baseUrl: BaseUrl
       definition: v1DocsRead.DocsDefinition
       lightModeEnabled: boolean
-  
-  BaseUrl: 
-    properties: 
+
+  GetSearchApiKeyForIndexSegmentResponse:
+    properties:
+      searchApiKey: string
+
+  BaseUrl:
+    properties:
       domain: string
       basePath: optional<string>
 
 errors:
-  DocsDefinitionNotFoundError: 
+  DocsDefinitionNotFoundError:
     status-code: 404
 
   DomainNotRegisteredError:
+    status-code: 404
+
+  IndexSegmentNotFoundError:
     status-code: 404
