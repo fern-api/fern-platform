@@ -1,7 +1,5 @@
-import {
-    DocsDefinition,
-    NavigationConfig,
-} from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { FernRegistry } from "@fern-fern/registry-browser";
+import { NavigationConfig } from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { isUnversionedUntabbedNavigationConfig, isVersionedNavigationConfig } from "@fern-ui/app-utils";
 import { getPathsForUnversionedTabbedDocs } from "./getPathsForTabbedDocs";
 import { getPathsForUnversionedUntabbedDocs } from "./getPathsForUnversionedUntabbedDocs";
@@ -9,23 +7,23 @@ import { getPathsToRevalidateForVersionedDocs } from "./getPathsForVersionedDocs
 
 export function getPathsToRevalidate({
     navigationConfig,
-    docsDefinition,
+    apis,
 }: {
     navigationConfig: NavigationConfig;
-    docsDefinition: DocsDefinition;
+    apis: Record<FernRegistry.ApiDefinitionId, FernRegistry.api.v1.read.ApiDefinition>;
 }): string[] {
     if (isVersionedNavigationConfig(navigationConfig)) {
         return Array.from(
             getPathsToRevalidateForVersionedDocs({
                 navigationConfig,
-                docsDefinition,
+                apis,
             })
         );
     } else if (isUnversionedUntabbedNavigationConfig(navigationConfig)) {
         return Array.from(
             getPathsForUnversionedUntabbedDocs({
                 navigationConfig,
-                docsDefinition,
+                apis,
                 prefix: undefined,
             })
         );
@@ -34,7 +32,7 @@ export function getPathsToRevalidate({
         return Array.from(
             getPathsForUnversionedTabbedDocs({
                 navigationConfig,
-                docsDefinition,
+                apis,
                 prefix: undefined,
             })
         );

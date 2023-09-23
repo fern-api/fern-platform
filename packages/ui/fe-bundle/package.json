@@ -38,7 +38,7 @@
     "lint:fern-prod": "yarn compile && yarn env:fern-prod next lint"
   },
   "dependencies": {
-    "@fern-fern/registry-browser": "0.19.1-10-gf615da5",
+    "@fern-fern/registry-browser": "0.20.0-2-g764a1b3",
     "@fern-ui/app-utils": "workspace:*",
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/theme": "workspace:*",

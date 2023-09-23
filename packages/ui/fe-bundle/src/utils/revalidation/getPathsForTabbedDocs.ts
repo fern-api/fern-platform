@@ -1,17 +1,15 @@
-import {
-    DocsDefinition,
-    UnversionedTabbedNavigationConfig,
-} from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { FernRegistry } from "@fern-fern/registry-browser";
+import { UnversionedTabbedNavigationConfig } from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { getPathsForUnversionedUntabbedDocs } from "./getPathsForUnversionedUntabbedDocs";
 
 export function getPathsForUnversionedTabbedDocs({
     prefix,
     navigationConfig,
-    docsDefinition,
+    apis,
 }: {
     prefix: string | undefined;
     navigationConfig: UnversionedTabbedNavigationConfig;
-    docsDefinition: DocsDefinition;
+    apis: Record<FernRegistry.ApiDefinitionId, FernRegistry.api.v1.read.ApiDefinition>;
 }): Set<string> {
     const pathsToRevalidate = new Set<string>(["/"]);
     navigationConfig.tabs.forEach((tab) => {
@@ -27,7 +25,7 @@ export function getPathsForUnversionedTabbedDocs({
             navigationConfig: {
                 items: tab.items,
             },
-            docsDefinition,
+            apis,
         }).forEach((val) => {
             pathsToRevalidate.add(val);
         });
