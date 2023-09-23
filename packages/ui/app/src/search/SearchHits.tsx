@@ -23,6 +23,8 @@ export const SearchHits: React.FC = () => {
     const [hoveredSearchHitId, setHoveredSearchHitId] = useState<string | null>(null);
     const router = useRouter();
 
+    const refs = useRef(new Map<string, HTMLAnchorElement>());
+
     const hoveredSearchHit = useMemo(() => {
         return hits
             .map((hit, index) => ({ record: hit, index }))
@@ -45,6 +47,8 @@ export const SearchHits: React.FC = () => {
             const previousHit = hits[hoveredSearchHit.index - 1];
             if (previousHit != null) {
                 setHoveredSearchHitId(previousHit.objectID);
+                const ref = refs.current.get(previousHit.objectID);
+                ref?.focus();
             }
         },
     });
@@ -58,6 +62,8 @@ export const SearchHits: React.FC = () => {
             const nextHit = hits[hoveredSearchHit.index + 1];
             if (nextHit != null) {
                 setHoveredSearchHitId(nextHit.objectID);
+                const ref = refs.current.get(nextHit.objectID);
+                ref?.focus();
             }
         },
     });
@@ -113,6 +119,11 @@ export const SearchHits: React.FC = () => {
                         hits.length > 0
                             ? hits.map((hit) => (
                                   <SearchHit
+                                      setRef={(elem) => {
+                                          if (elem != null) {
+                                              refs.current.set(hit.objectID, elem);
+                                          }
+                                      }}
                                       key={hit.objectID}
                                       hit={hit}
                                       isHovered={hoveredSearchHitId === hit.objectID}

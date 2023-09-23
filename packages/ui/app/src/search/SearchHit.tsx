@@ -10,6 +10,7 @@ import type { SearchRecord } from "./types";
 
 export declare namespace SearchHit {
     export interface Props {
+        setRef?: (elem: HTMLAnchorElement | null) => void;
         hit: SearchRecord;
         isHovered: boolean;
         onMouseEnter: () => void;
@@ -17,7 +18,7 @@ export declare namespace SearchHit {
     }
 }
 
-export const SearchHit: React.FC<SearchHit.Props> = ({ hit, isHovered, onMouseEnter, onMouseLeave }) => {
+export const SearchHit: React.FC<SearchHit.Props> = ({ setRef, hit, isHovered, onMouseEnter, onMouseLeave }) => {
     const { navigateToPath } = useDocsContext();
     const { closeSearchDialog } = useSearchContext();
 
@@ -31,6 +32,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ hit, isHovered, onMouseEn
 
     return (
         <Link
+            ref={(elem) => setRef?.(elem)}
             className={classNames("flex w-full items-center space-x-4 space-y-1 rounded-md px-3 py-2 !no-underline", {
                 "bg-background-secondary-light dark:bg-background-secondary-dark": isHovered,
             })}
