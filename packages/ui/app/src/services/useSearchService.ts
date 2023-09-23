@@ -2,7 +2,7 @@ import { FernRegistry } from "@fern-fern/registry-browser";
 
 import { useCallback, useMemo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
-import { getEnvConfig } from "../env";
+import { getEnvConfig, type EnvironmentConfig } from "../env";
 import { REGISTRY_SERVICE } from "./registry";
 
 export type SearchCredentials = {
@@ -24,17 +24,24 @@ export function useSearchService(): SearchService {
     const { docsDefinition, docsInfo } = useDocsContext();
     const { search: searchInfo } = docsDefinition;
 
-    const loadSearchApiKey = useCallback(async (indexSegmentId: string) => {
-        const resp = await REGISTRY_SERVICE.docs.v2.read.getSearchApiKeyForIndexSegment({
-            indexSegmentId,
-        });
-        if (!resp.ok) {
-            // eslint-disable-next-line no-console
-            console.error("Failed to fetch index segment api key", resp.error);
-            return undefined;
-        }
-        return resp.body.searchApiKey;
-    }, []);
+    const createSearchApiKeyLoader = useCallback(
+        (envConfig: EnvironmentConfig, indexSegmentId: string) => async () => {
+            const resp = await REGISTRY_SERVICE.docs.v2.read.getSearchApiKeyForIndexSegment({
+                indexSegmentId,
+            });
+            if (!resp.ok) {
+                // eslint-disable-next-line no-console
+                console.error("Failed to fetch index segment api key", resp.error);
+                return undefined;
+            }
+            const { searchApiKey } = resp.body;
+            return {
+                appId: envConfig.algoliaAppId,
+                searchApiKey,
+            };
+        },
+        []
+    );
 
     return useMemo<SearchService>(() => {
         const envConfig = getEnvConfig();
@@ -72,15 +79,7 @@ export function useSearchService(): SearchService {
 
             return {
                 isAvailable: true,
-                loadCredentials: async () => {
-                    const searchApiKey = await loadSearchApiKey(indexSegment.id);
-                    return searchApiKey != null
-                        ? {
-                              appId: envConfig.algoliaAppId,
-                              searchApiKey,
-                          }
-                        : undefined;
-                },
+                loadCredentials: createSearchApiKeyLoader(envConfig, indexSegment.id),
                 index: envConfig.algoliaSearchIndex,
             };
         } else {
@@ -100,17 +99,9 @@ export function useSearchService(): SearchService {
             }
             return {
                 isAvailable: true,
-                loadCredentials: async () => {
-                    const searchApiKey = await loadSearchApiKey(indexSegment.id);
-                    return searchApiKey != null
-                        ? {
-                              appId: envConfig.algoliaAppId,
-                              searchApiKey,
-                          }
-                        : undefined;
-                },
+                loadCredentials: createSearchApiKeyLoader(envConfig, indexSegment.id),
                 index: envConfig.algoliaSearchIndex,
             };
         }
-    }, [docsDefinition.algoliaSearchIndex, loadSearchApiKey, docsInfo, searchInfo]);
+    }, [docsDefinition.algoliaSearchIndex, createSearchApiKeyLoader, docsInfo, searchInfo]);
 }
