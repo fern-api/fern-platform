@@ -1,6 +1,6 @@
 import { type Theme } from "@fern-ui/theme";
 import classNames from "classnames";
-import React from "react";
+import React, { useMemo } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import * as prism from "react-syntax-highlighter/dist/cjs/styles/prism";
 
@@ -11,7 +11,12 @@ type CodeBlockSkeletonProps = {
     content: string;
 };
 
+function processCodeBlockContent(content: string): string {
+    return content.replace(/(?:\\(.))/g, "$1");
+}
+
 export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({ className, theme, language, content }) => {
+    const processedContent = useMemo(() => processCodeBlockContent(content), [content]);
     return (
         <div
             className={classNames(
@@ -44,7 +49,7 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({ className,
                 language={language}
                 PreTag="pre"
             >
-                {content}
+                {processedContent}
             </SyntaxHighlighter>
         </div>
     );
