@@ -29,9 +29,11 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
     return (
         <button
             className={classNames(
-                "space flex hover:bg-background-primary-light dark:hover:bg-background-primary-dark flex-col items-start px-3",
+                "space flex hover:bg-gray-100/90 dark:hover:bg-background-primary-dark flex-col items-start px-3",
                 {
-                    "bg-background-primary-light dark:bg-background-primary-dark": isSelected,
+                    "bg-gray-100/90 dark:bg-background-primary-dark": isSelected,
+                },
+                {
                     "border-border-default-light dark:border-border-default-dark border-b": !isLast,
                 },
                 {
