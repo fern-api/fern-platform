@@ -66,7 +66,7 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
     }, [fullSlug, registerScrolledToPathListener]);
 
     return (
-        <div className={classNames(className, "")} ref={ref}>
+        <div className={classNames(className)} ref={ref}>
             <Link
                 href={`/${fullSlug}`}
                 onClick={handleClick}

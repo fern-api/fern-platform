@@ -18,7 +18,7 @@ export const SidebarItemLayout: React.FC<SidebarItemLayout.Props> = ({ className
 
     return (
         <div
-            className={classNames(className, "text-ellipsis flex shrink-0 z-0 items-center min-w-0 t-muted", {
+            className={classNames(className, "text-ellipsis flex shrink-0 items-center min-w-0 t-muted", {
                 relative: isSelected,
             })}
             style={{

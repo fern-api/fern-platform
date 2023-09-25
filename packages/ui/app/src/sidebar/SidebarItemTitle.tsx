@@ -50,18 +50,20 @@ const UnmemoizedSidebarItemTitle: React.FC<SidebarItemTitle.Props> = ({
                 "pl-[18px] border-l border-border-default-light dark:border-border-default-dark": indent,
             })}
         >
-            <div
-                className={classNames(
-                    "absolute -top-5 border border-border-concealed-light dark:border-border-concealed-dark -right-3 rounded shadow-lg px-2 py-1 text-xs bg-background t-muted",
-                    {
-                        hidden: !isTitleOverflowing || (!isHoveringTitle && !isHoveringTooltip),
-                    }
-                )}
-                onMouseEnter={markAsHoveringTooltip}
-                onMouseLeave={markAsNotHoveringTooltip}
-            >
-                {title}
-            </div>
+            {isTitleOverflowing && (isHoveringTitle || isHoveringTooltip) && (
+                <div
+                    className={classNames(
+                        "absolute top-10 right-0 z-10 border border-border-concealed-light dark:border-border-concealed-dark rounded shadow-lg px-2 py-1 text-xs bg-white t-muted",
+                        {
+                            hidden: !isTitleOverflowing || (!isHoveringTitle && !isHoveringTooltip),
+                        }
+                    )}
+                    onMouseEnter={markAsHoveringTooltip}
+                    onMouseLeave={markAsNotHoveringTooltip}
+                >
+                    {title}
+                </div>
+            )}
 
             {indent && isSelected && (
                 <div className="bg-border-default-light dark:bg-border-default-dark absolute left-0 top-[50%] h-px w-[12px]" />
