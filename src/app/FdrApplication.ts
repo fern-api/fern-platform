@@ -12,6 +12,7 @@ import {
 } from "../services/algolia-index-segment-manager";
 import { AuthServiceImpl, type AuthService } from "../services/auth";
 import { DatabaseServiceImpl, type DatabaseService } from "../services/db";
+import { RevalidatorService, RevalidatorServiceImpl } from "../services/revalidator/RevalidatorService";
 import { S3ServiceImpl, type S3Service } from "../services/s3";
 import { SlackService, SlackServiceImpl } from "../services/slack/SlackService";
 import type { FdrConfig } from "./FdrConfig";
@@ -24,6 +25,7 @@ export interface FdrServices {
     readonly algoliaIndexSegmentManager: AlgoliaIndexSegmentManagerService;
     readonly s3: S3Service;
     readonly slack: SlackService;
+    readonly revalidator: RevalidatorService;
 }
 
 export const LOGGER = winston.createLogger({
@@ -56,6 +58,7 @@ export class FdrApplication {
                 services?.algoliaIndexSegmentManager ?? new AlgoliaIndexSegmentManagerServiceImpl(this),
             s3: services?.s3 ?? new S3ServiceImpl(this),
             slack: services?.slack ?? new SlackServiceImpl(this),
+            revalidator: services?.revalidator ?? new RevalidatorServiceImpl(),
         };
         this.dao = new FdrDao(prisma);
     }

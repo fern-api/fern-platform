@@ -3,6 +3,7 @@ import { FdrApplication, type FdrConfig } from "../app";
 import { type FdrServices } from "../app/FdrApplication";
 import { ConfigSegmentTuple, type AlgoliaSearchRecord, type AlgoliaService } from "../services/algolia";
 import { type AuthService } from "../services/auth";
+import { RevalidatorService } from "../services/revalidator/RevalidatorService";
 import {
     FailedToDeleteIndexSegment,
     FailedToRegisterDocsNotification,
@@ -50,6 +51,13 @@ class MockSlackService implements SlackService {
     }
 }
 
+class MockRevalidatorService implements RevalidatorService {
+    // eslint-disable-next-line no-empty-pattern
+    async revalidateUrl({}: { url: string; docsConfigId: string | undefined }): Promise<void> {
+        return;
+    }
+}
+
 export function createMockFdrConfig(): FdrConfig {
     return {
         awsAccessKey: "",
@@ -72,6 +80,7 @@ export function createMockFdrApplication(services?: Partial<FdrServices>) {
         auth: new MockAuthService(),
         algolia: new MockAlgoliaService(),
         slack: new MockSlackService(),
+        revalidator: new MockRevalidatorService(),
         ...services,
     });
 }

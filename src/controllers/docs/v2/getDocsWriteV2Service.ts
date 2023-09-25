@@ -5,7 +5,6 @@ import { type FdrApplication } from "../../../app";
 import { transformWriteDocsDefinitionToDb } from "../../../converters/db/convertDocsDefinitionToDb";
 import { type S3FileInfo } from "../../../services/s3";
 import { getParsedUrl } from "../../../util";
-import { revalidateUrl } from "../revalidateUrl";
 
 const DOCS_REGISTRATIONS: Record<DocsV1Write.DocsRegistrationId, DocsRegistrationInfo> = {};
 
@@ -147,7 +146,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                     urls.map(async (url) => {
                         try {
                             app.logger.info(`[${docsRegistrationInfo.fernDomain}] Revalidating url: ${url}`);
-                            await revalidateUrl({
+                            await app.services.revalidator.revalidateUrl({
                                 url,
                                 docsConfigId: previousDocsDefinition?.docsConfigInstanceId ?? undefined,
                             });
