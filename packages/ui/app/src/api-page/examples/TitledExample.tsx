@@ -36,7 +36,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                 className={classNames(
                     "border-border-default-light dark:border-border-default-dark flex h-10 items-center justify-between border-b py-1 pl-3 pr-2",
                     {
-                        "bg-background-tertiary-light dark:bg-[#19181C]": type === "primary",
+                        "bg-background-primary-light dark:bg-[#19181C]": type === "primary",
                         "bg-red-500/20": type === "warning",
                     }
                 )}
@@ -66,7 +66,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                     )}
                 >
                     <div
-                        className="bg-background-primary-light dark:bg-background-primary-dark flex-1 overflow-auto whitespace-pre py-4"
+                        className="dark:bg-background-primary-dark flex-1 overflow-auto whitespace-pre bg-gray-100/90 py-4"
                         ref={setContentRef}
                     >
                         {typeof children === "function" ? children(contentRef ?? undefined) : children}
