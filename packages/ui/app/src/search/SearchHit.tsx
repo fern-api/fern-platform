@@ -13,8 +13,8 @@ export declare namespace SearchHit {
         setRef?: (elem: HTMLAnchorElement | null) => void;
         hit: SearchRecord;
         isHovered: boolean;
-        onMouseEnter: () => void;
-        onMouseLeave: () => void;
+        onMouseEnter?: () => void;
+        onMouseLeave?: () => void;
     }
 }
 

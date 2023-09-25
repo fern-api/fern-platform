@@ -143,7 +143,6 @@ export const SearchHits: React.FC = () => {
                                       hit={hit}
                                       isHovered={hoveredSearchHitId === hit.objectID}
                                       onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
-                                      onMouseLeave={() => setHoveredSearchHitId(null)}
                                   />
                               ))
                             : "No results",
