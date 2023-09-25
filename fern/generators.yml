@@ -29,6 +29,7 @@ groups:
           neverThrowErrors: true
           includeUtilsOnUnionMembers: true
           includeOtherInUnionTypes: true
+          timeoutInSeconds: infinity
   internal-read:
     audiences:
       - read
