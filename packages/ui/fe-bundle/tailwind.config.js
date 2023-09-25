@@ -98,6 +98,9 @@ module.exports = {
         plugin(({ addComponents }) => {
             addComponents({
                 // Text
+                ".t-primary": {
+                    "@apply text-text-primary-light dark:text-text-primary-dark": {},
+                },
                 ".t-muted": {
                     "@apply text-text-muted-light dark:text-text-muted-dark": {},
                 },
