@@ -12,6 +12,14 @@ import { getDocsWriteV2Service } from "./controllers/docs/v2/getDocsWriteV2Servi
 
 const PORT = 8080;
 
+if (typeof process !== "undefined") {
+    process.on("uncaughtException", (err) => {
+        console.error("===> process.on('uncaughtException') <===");
+        console.error(err);
+        console.error("^^^^ process.on('uncaughtException') ^^^^");
+    });
+}
+
 void main();
 
 async function main() {
