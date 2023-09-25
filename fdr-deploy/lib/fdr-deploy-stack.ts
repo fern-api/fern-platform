@@ -88,12 +88,13 @@ export class FdrDeployStack extends Stack {
                     AWS_SECRET_ACCESS_KEY: getEnvironmentVariableOrThrow("AWS_SECRET_ACCESS_KEY"),
                     S3_BUCKET_NAME: fdrBucket.bucketName,
                     S3_BUCKET_REGION: fdrBucket.stack.region,
-                    DOMAIN_SUFFIX: environmentType === "DEV" ? "docs.dev.buildwithfern.com" : "docs.buildwithfern.com",
+                    DOMAIN_SUFFIX: getDomainSuffix(environmentType),
                     ALGOLIA_APP_ID: getEnvironmentVariableOrThrow("ALGOLIA_APP_ID"),
                     ALGOLIA_ADMIN_API_KEY: getEnvironmentVariableOrThrow("ALGOLIA_ADMIN_API_KEY"),
                     ALGOLIA_SEARCH_INDEX: getEnvironmentVariableOrThrow("ALGOLIA_SEARCH_INDEX"),
                     ALGOLIA_SEARCH_API_KEY: getEnvironmentVariableOrThrow("ALGOLIA_SEARCH_API_KEY"),
                     SLACK_TOKEN: getEnvironmentVariableOrThrow("FERNIE_SLACK_APP_TOKEN"),
+                    LOG_LEVEL: getLogLevel(environmentType),
                 },
                 containerName: CONTAINER_NAME,
                 containerPort: 8080,
@@ -164,4 +165,32 @@ function getEnvironmentVariableOrThrow(environmentVariable: string): string {
         throw new Error(`Environment variable ${environmentVariable} not found`);
     }
     return value;
+}
+
+function getLogLevel(environmentType: EnvironmentType): string {
+    switch (environmentType) {
+        case "DEV":
+        case "DEV2":
+            return "debug";
+        case "PROD":
+            return "info";
+        default:
+            assertNever(environmentType);
+    }
+}
+
+function getDomainSuffix(environmentType: EnvironmentType): string {
+    switch (environmentType) {
+        case "DEV":
+        case "DEV2":
+            return "docs.dev.buildwithfern.com";
+        case "PROD":
+            return "docs.buildwithfern.com";
+        default:
+            assertNever(environmentType);
+    }
+}
+
+function assertNever(x: never): never {
+    throw new Error("Unexpected value: " + JSON.stringify(x));
 }

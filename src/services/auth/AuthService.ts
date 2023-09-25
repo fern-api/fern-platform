@@ -1,14 +1,18 @@
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
-import type { FdrApplication, FdrConfig } from "../../app";
-import { LOGGER } from "../../app/FdrApplication";
 import { FdrAPI } from "../../api";
+import type { FdrApplication, FdrConfig } from "../../app";
+import winston from "winston";
 
 export interface AuthService {
     checkUserBelongsToOrg({ authHeader, orgId }: { authHeader: string | undefined; orgId: string }): Promise<void>;
 }
 
 export class AuthServiceImpl implements AuthService {
-    constructor(private readonly app: FdrApplication) {}
+    private logger: winston.Logger;
+
+    constructor(private readonly app: FdrApplication) {
+        this.logger = app.logger;
+    }
 
     async checkUserBelongsToOrg({
         authHeader,
@@ -27,7 +31,7 @@ export class AuthServiceImpl implements AuthService {
         });
         const response = await venus.organization.isMember(FernVenusApi.OrganizationId(orgId));
         if (!response.ok) {
-            LOGGER.error("Failed to make request to venus", response.error);
+            this.logger.error("Failed to make request to venus", response.error);
             throw new Error("Failed to make request to venus.");
         }
         const belongsToOrg = response.body;

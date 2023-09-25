@@ -1,6 +1,6 @@
 import { WebClient } from "@slack/web-api";
+import winston from "winston";
 import type { FdrApplication } from "../../app";
-import { LOGGER } from "../../app/FdrApplication";
 
 export interface FailedToRegisterDocsNotification {
     domain: string;
@@ -20,10 +20,12 @@ export interface SlackService {
 
 export class SlackServiceImpl implements SlackService {
     private client: WebClient;
+    private logger: winston.Logger;
 
     constructor(app: FdrApplication) {
         const { config } = app;
         this.client = new WebClient(config.slackToken);
+        this.logger = app.logger;
     }
     async notify(message: string, err: unknown): Promise<void> {
         try {
@@ -33,7 +35,7 @@ export class SlackServiceImpl implements SlackService {
                 blocks: [],
             });
         } catch (err) {
-            LOGGER.debug("Failed to send slack message: ", err);
+            this.logger.debug("Failed to send slack message: ", err);
         }
     }
 
@@ -45,7 +47,7 @@ export class SlackServiceImpl implements SlackService {
                 blocks: [],
             });
         } catch (err) {
-            LOGGER.debug("Failed to send slack message: ", err);
+            this.logger.debug("Failed to send slack message: ", err);
         }
     }
 
@@ -59,7 +61,7 @@ export class SlackServiceImpl implements SlackService {
                 blocks: [],
             });
         } catch (err) {
-            LOGGER.debug("Failed to send slack message: ", err);
+            this.logger.debug("Failed to send slack message: ", err);
         }
     }
 }
