@@ -43,19 +43,18 @@ export function generateEndpointExampleCall(
             exampleQueryParameters[queryParameter.key] = value;
         }
         const exampleEndpointCall: Omit<APIV1Write.ExampleEndpointCall, "path"> = {
-            pathParameters: endpointDefinition.path.pathParameters.reduce(
-                (acc, pathParameter) => ({
+            pathParameters: endpointDefinition.path.pathParameters.reduce((acc, pathParameter) => {
+                const isString = isTypeReferenceString({
+                    typeReference: pathParameter.type,
+                    types: apiDefinition.types,
+                });
+                return {
                     ...acc,
-                    [pathParameter.key]: generateExampleFromTypeReference(
-                        pathParameter.type,
-                        resolveTypeById,
-                        false,
-                        new Set(),
-                        0
-                    ),
-                }),
-                {}
-            ),
+                    [pathParameter.key]: isString
+                        ? `:${pathParameter.key}`
+                        : generateExampleFromTypeReference(pathParameter.type, resolveTypeById, false, new Set(), 0),
+                };
+            }, {}),
             queryParameters: exampleQueryParameters,
             headers: endpointDefinition.headers.reduce((acc, header) => {
                 const value = generateExampleFromTypeReference(header.type, resolveTypeById, false, new Set(), 0);
@@ -110,4 +109,22 @@ function generatePath(path: APIV1Write.EndpointPath, pathParameters: Record<stri
         }
     }
     return pathString;
+}
+
+function isTypeReferenceString({
+    typeReference,
+    types,
+}: {
+    typeReference: APIV1Write.TypeReference;
+    types: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
+}): boolean {
+    if (typeReference.type === "primitive" && typeReference.value.type === "string") {
+        return true;
+    } else if (typeReference.type === "id") {
+        const typeDef = types[typeReference.value];
+        if (typeDef != null && typeDef.shape.type === "alias") {
+            return isTypeReferenceString({ typeReference: typeDef.shape.value, types });
+        }
+    }
+    return false;
 }
