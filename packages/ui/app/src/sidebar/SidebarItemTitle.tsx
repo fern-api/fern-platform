@@ -1,7 +1,7 @@
 import { useBooleanState } from "@fern-ui/react-commons";
 
 import classNames from "classnames";
-import { memo } from "react";
+import { memo, useEffect, useRef } from "react";
 
 export declare namespace SidebarItemTitle {
     export interface Props {
@@ -32,6 +32,18 @@ const UnmemoizedSidebarItemTitle: React.FC<SidebarItemTitle.Props> = ({
         setTrue: markAsHoveringTooltip,
         setFalse: markAsNotHoveringTooltip,
     } = useBooleanState(false);
+    const titleRef = useRef<HTMLSpanElement | null>(null);
+    const { value: isTitleOverflowing, setTrue: markTitleAsOverflowing } = useBooleanState(false);
+
+    useEffect(() => {
+        if (titleRef.current != null) {
+            const elem = titleRef.current;
+            if (elem.scrollWidth > elem.clientWidth) {
+                markTitleAsOverflowing();
+            }
+        }
+    }, [markTitleAsOverflowing]);
+
     return (
         <div
             className={classNames("relative w-full", {
@@ -42,8 +54,7 @@ const UnmemoizedSidebarItemTitle: React.FC<SidebarItemTitle.Props> = ({
                 className={classNames(
                     "absolute -top-5 border border-border-concealed-light dark:border-border-concealed-dark -right-3 rounded shadow-lg px-2 py-1 text-xs bg-background t-muted",
                     {
-                        visible: isHoveringTitle || isHoveringTooltip,
-                        invisible: !isHoveringTitle && !isHoveringTooltip,
+                        hidden: !isTitleOverflowing || (!isHoveringTitle && !isHoveringTooltip),
                     }
                 )}
                 onMouseEnter={markAsHoveringTooltip}
@@ -73,7 +84,9 @@ const UnmemoizedSidebarItemTitle: React.FC<SidebarItemTitle.Props> = ({
                     onMouseLeave={markAsNotHoveringTitle}
                 >
                     {leftElement}
-                    <span className="truncate">{title}</span>
+                    <span ref={titleRef} className="truncate">
+                        {title}
+                    </span>
                 </div>
                 {rightElement}
             </div>
