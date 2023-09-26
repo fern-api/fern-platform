@@ -1,11 +1,11 @@
-import { Icon } from "@blueprintjs/core";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import Link from "next/link";
-import { useCallback } from "react";
-import { Snippet } from "react-instantsearch-hooks-web";
+import { useCallback, useMemo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useSearchContext } from "../search-context/useSearchContext";
+import { EndpointRecord } from "./content/EndpointRecord";
+import { PageRecord } from "./content/PageRecord";
 import type { SearchRecord } from "./types";
 
 export declare namespace SearchHit {
@@ -22,13 +22,50 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ setRef, hit, isHovered, o
     const { navigateToPath } = useDocsContext();
     const { closeSearchDialog } = useSearchContext();
 
+    const path = useMemo(() => {
+        switch (hit.type) {
+            case "page":
+            case "endpoint":
+                return hit.path;
+            case "page-v2":
+            case "endpoint-v2":
+                return hit.path.parts
+                    .filter((p) => p.skipUrlSlug !== true)
+                    .map((p) => p.urlSlug)
+                    .join("/");
+        }
+    }, [hit.type, hit.path]);
+
+    const href = useMemo(() => {
+        if (hit.type === "endpoint" || hit.type === "page") {
+            if (hit.versionSlug == null) {
+                return `/${path}`;
+            } else {
+                return `/${hit.versionSlug}/${path}`;
+            }
+        } else {
+            if (hit.version == null) {
+                return `/${path}`;
+            } else {
+                return `/${hit.version.urlSlug}/${path}`;
+            }
+        }
+    }, [hit, path]);
+
     const handleClick = useCallback(() => {
         closeSearchDialog();
-        navigateToPath(hit.path);
-    }, [closeSearchDialog, navigateToPath, hit.path]);
+        navigateToPath(path);
+    }, [closeSearchDialog, navigateToPath, path]);
 
-    const { versionSlug, path } = hit;
-    const href = `/${versionSlug != null ? `${versionSlug}/` : ""}${path}`;
+    const content = useMemo(() => {
+        return visitDiscriminatedUnion(hit, "type")._visit({
+            endpoint: () => <EndpointRecord hit={hit} isHovered={isHovered} />,
+            page: () => <PageRecord hit={hit} isHovered={isHovered} />,
+            "endpoint-v2": () => null, // TODO: Implement
+            "page-v2": () => null, // TODO: Implement
+            _other: () => null,
+        });
+    }, [hit, isHovered]);
 
     return (
         <Link
@@ -41,54 +78,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ setRef, hit, isHovered, o
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
         >
-            <div className="border-border-default-light dark:border-border-default-dark flex flex-col items-center justify-center rounded-md border p-1">
-                <Icon
-                    className={classNames({
-                        "!text-text-muted-light dark:!text-text-muted-dark": !isHovered,
-                        "!text-text-primary-light dark:!text-text-primary-dark": isHovered,
-                    })}
-                    size={14}
-                    icon={visitDiscriminatedUnion(hit, "type")._visit({
-                        endpoint: () => "code",
-                        page: () => "document",
-                        _other: () => "document",
-                    })}
-                />
-            </div>
-
-            <div className="flex w-full flex-col space-y-1.5">
-                <div className="flex justify-between">
-                    <Snippet
-                        className="text-text-primary-light dark:text-text-primary-dark line-clamp-1 text-start"
-                        attribute="title"
-                        highlightedTagName="span"
-                        hit={hit}
-                    />
-                    <div
-                        className={classNames("text-xs uppercase tracking-widest", {
-                            "text-text-disabled-light dark:text-text-disabled-dark": !isHovered,
-                            "text-text-primary-light dark:text-text-primary-dark": isHovered,
-                        })}
-                    >
-                        {visitDiscriminatedUnion(hit, "type")._visit({
-                            page: () => "Page",
-                            endpoint: () => "Endpoint",
-                            _other: () => null,
-                        })}
-                    </div>
-                </div>
-                <div className="flex flex-col items-start">
-                    <Snippet
-                        className={classNames("line-clamp-1 text-start", {
-                            "text-text-primary-light dark:text-text-primary-dark": isHovered,
-                            "t-muted": !isHovered,
-                        })}
-                        attribute="subtitle"
-                        highlightedTagName="span"
-                        hit={hit}
-                    />
-                </div>
-            </div>
+            {content}
         </Link>
     );
 };
