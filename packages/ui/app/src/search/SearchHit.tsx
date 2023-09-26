@@ -5,7 +5,9 @@ import { useCallback, useMemo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useSearchContext } from "../search-context/useSearchContext";
 import { EndpointRecord } from "./content/EndpointRecord";
+import { EndpointRecordV2 } from "./content/EndpointRecordV2";
 import { PageRecord } from "./content/PageRecord";
+import { PageRecordV2 } from "./content/PageRecordV2";
 import type { SearchRecord } from "./types";
 import { getHrefForSearchRecord, getPathForSearchRecord } from "./util";
 
@@ -33,10 +35,10 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ setRef, hit, isHovered, o
 
     const content = useMemo(() => {
         return visitDiscriminatedUnion(hit, "type")._visit({
-            endpoint: () => <EndpointRecord hit={hit} isHovered={isHovered} />,
-            page: () => <PageRecord hit={hit} isHovered={isHovered} />,
-            "endpoint-v2": () => null, // TODO: Implement
-            "page-v2": () => null, // TODO: Implement
+            endpoint: (hit) => <EndpointRecord hit={hit} isHovered={isHovered} />,
+            page: (hit) => <PageRecord hit={hit} isHovered={isHovered} />,
+            "endpoint-v2": (hit) => <EndpointRecordV2 hit={hit} isHovered={isHovered} />,
+            "page-v2": (hit) => <PageRecordV2 hit={hit} isHovered={isHovered} />,
             _other: () => null,
         });
     }, [hit, isHovered]);
