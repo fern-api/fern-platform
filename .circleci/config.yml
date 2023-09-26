@@ -54,6 +54,7 @@ jobs:
           name: Test ETE
 
   deploy-dev:
+    circleci_ip_ranges: true
     machine:
       image: ubuntu-2004:current
     steps:
@@ -73,6 +74,7 @@ jobs:
           name: cdk deploy
 
   deploy-dev2:
+    circleci_ip_ranges: true
     machine:
       image: ubuntu-2004:current
     steps:
@@ -92,6 +94,7 @@ jobs:
           name: cdk deploy
 
   deploy-prod:
+    circleci_ip_ranges: true
     machine:
       image: ubuntu-2004:current
     steps:
