@@ -41,7 +41,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                     >
                         <div
                             className={classNames(
-                                "font-extrabold flex shrink-0 items-center justify-center rounded-lg px-2 py-0.5 text-xs uppercase",
+                                "flex font-mono shrink-0 items-center justify-center rounded-lg px-2 py-0.5 text-xs uppercase",
                                 {
                                     "bg-tag-default-light dark:bg-tag-default-dark": !isHovered,
                                     "bg-white": isHovered,
@@ -54,15 +54,16 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                         >
                             {hit.endpoint.method}
                         </div>
-                        <div className="space-x-0.5">
+                        <div className="space-x-0.5 font-mono">
                             {hit.endpoint.path.parts
+                                .filter((p) => p.type !== "literal" || p.value !== "")
                                 .map((p, idx) =>
                                     visitDiscriminatedUnion(p, "type")._visit({
                                         literal: (part) => <span key={idx}>{part.value}</span>,
                                         pathParameter: (part) => (
                                             <span
                                                 className={classNames(
-                                                    "font-extrabold items-center justify-center mx-0.5 rounded px-1 py-0.5 text-xs",
+                                                    "items-center justify-center mx-0.5 rounded px-1 py-0.5 text-xs",
                                                     {
                                                         "bg-tag-default-light dark:bg-tag-default-dark": !isHovered,
                                                         "bg-white": isHovered,
@@ -79,13 +80,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                                         ),
                                         _other: () => null,
                                     })
-                                )
-                                .map((elem) => (
-                                    <>
-                                        <span>/</span>
-                                        {elem}
-                                    </>
-                                ))}
+                                )}
                         </div>
                     </div>
                     <div
