@@ -152,7 +152,13 @@ export class AlgoliaSearchRecordGenerator {
                     path: {
                         parts: pageContext.pathParts,
                     },
-                    version: indexSegment.type === "versioned" ? indexSegment.version : undefined,
+                    version:
+                        indexSegment.type === "versioned"
+                            ? {
+                                  id: indexSegment.version.id,
+                                  urlSlug: indexSegment.version.urlSlug ?? indexSegment.version.id,
+                              }
+                            : undefined,
                     indexSegmentId: indexSegment.id,
                 }),
             ];
@@ -215,7 +221,13 @@ export class AlgoliaSearchRecordGenerator {
                     path: {
                         parts: endpointContext.pathParts,
                     },
-                    version: indexSegment.type === "versioned" ? indexSegment.version : undefined,
+                    version:
+                        indexSegment.type === "versioned"
+                            ? {
+                                  id: indexSegment.version.id,
+                                  urlSlug: indexSegment.version.urlSlug ?? indexSegment.version.id,
+                              }
+                            : undefined,
                     indexSegmentId: indexSegment.id,
                 })
             );

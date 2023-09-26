@@ -359,7 +359,7 @@ types:
   AlgoliaRecordVersion:
     properties:
       id: VersionId
-      urlSlug: optional<string>
+      urlSlug: string
 
   AlgoliaEndpointRecordV2:
     properties:
