@@ -2,37 +2,48 @@ import { v4 as uuid } from "uuid";
 import { APIV1Db, DocsV1Db } from "../../api";
 import { convertMarkdownToText, truncateToBytes } from "../../util";
 import { isUnversionedTabbedNavigationConfig } from "../../util/fern/db";
-import { getSubpackageParentSlugs } from "../../util/fern/db/subpackage";
+import { getSubpackageParentPathParts, type PathPart } from "../../util/fern/db/subpackage";
+import { compact } from "../../util/object";
 import type { AlgoliaSearchRecord, IndexSegment } from "./types";
 
 class NavigationContext {
-    #slugs: string[];
     #indexSegment: IndexSegment;
+    #pathParts: PathPart[];
 
     /**
      * The path represented by context slugs.
      */
     public get path() {
-        return this.#slugs.join("/");
+        return this.#pathParts
+            .filter((p) => !p.skipUrlSlug)
+            .map((p) => p.urlSlug)
+            .join("/");
     }
 
-    public constructor(public readonly indexSegment: IndexSegment, slugs: string[]) {
+    /**
+     * The path represented by context slugs.
+     */
+    public get pathParts() {
+        return [...this.#pathParts];
+    }
+
+    public constructor(public readonly indexSegment: IndexSegment, pathParts: PathPart[]) {
         this.#indexSegment = indexSegment;
-        this.#slugs = slugs;
+        this.#pathParts = pathParts;
     }
 
     /**
      * @returns A new `NavigationContext` instance.
      */
-    public withSlug(slug: string) {
-        return this.withSlugs([slug]);
+    public withPathPart(pathPart: PathPart) {
+        return this.withPathParts([pathPart]);
     }
 
     /**
      * @returns A new `NavigationContext` instance.
      */
-    public withSlugs(slugs: string[]) {
-        return new NavigationContext(this.#indexSegment, [...this.#slugs, ...slugs]);
+    public withPathParts(pathParts: PathPart[]) {
+        return new NavigationContext(this.#indexSegment, [...this.#pathParts, ...pathParts]);
     }
 }
 
@@ -75,7 +86,10 @@ export class AlgoliaSearchRecordGenerator {
     ) {
         const records = config.tabs.map((tab) => {
             const tabRecords = tab.items.map((item) =>
-                this.generateAlgoliaSearchRecordsForNavigationItem(item, context.withSlug(tab.urlSlug))
+                this.generateAlgoliaSearchRecordsForNavigationItem(
+                    item,
+                    context.withPathPart({ name: tab.title, urlSlug: tab.urlSlug })
+                )
             );
             return tabRecords.flat(1);
         });
@@ -91,7 +105,13 @@ export class AlgoliaSearchRecordGenerator {
             const records = section.items.map((item) =>
                 this.generateAlgoliaSearchRecordsForNavigationItem(
                     item,
-                    section.skipUrlSlug ? context : context.withSlug(section.urlSlug)
+                    context.withPathPart(
+                        compact({
+                            name: section.title,
+                            urlSlug: section.urlSlug,
+                            skipUrlSlug: section.skipUrlSlug || undefined,
+                        })
+                    )
                 )
             );
             return records.flat(1);
@@ -104,7 +124,13 @@ export class AlgoliaSearchRecordGenerator {
             }
             return this.generateAlgoliaSearchRecordsForApiDefinition(
                 apiDef,
-                api.skipUrlSlug ? context : context.withSlug(api.urlSlug)
+                context.withPathPart(
+                    compact({
+                        name: api.title,
+                        urlSlug: api.urlSlug,
+                        skipUrlSlug: api.skipUrlSlug || undefined,
+                    })
+                )
             );
         } else {
             const page = item;
@@ -112,26 +138,23 @@ export class AlgoliaSearchRecordGenerator {
             if (pageContent == null) {
                 return [];
             }
-            const { path } = context.withSlug(page.urlSlug);
+            const pageContext = context.withPathPart({ name: page.title, urlSlug: page.urlSlug });
             const processedContent = convertMarkdownToText(pageContent.markdown);
             const { indexSegment } = context;
             return [
-                {
+                compact({
+                    type: "page-v2",
                     objectID: uuid(),
-                    type: "page",
-                    path,
                     title: page.title,
                     // TODO: Set to something more than 10kb on prod
                     // See: https://support.algolia.com/hc/en-us/articles/4406981897617-Is-there-a-size-limit-for-my-index-records-/
-                    subtitle: truncateToBytes(processedContent, 10_000 - 1),
+                    content: truncateToBytes(processedContent, 10_000 - 1),
+                    path: {
+                        parts: pageContext.pathParts,
+                    },
+                    version: indexSegment.type === "versioned" ? indexSegment.version : undefined,
                     indexSegmentId: indexSegment.id,
-                    ...(indexSegment.type === "versioned"
-                        ? {
-                              version: indexSegment.version.id,
-                              versionSlug: indexSegment.version.urlSlug ?? indexSegment.version.id,
-                          }
-                        : {}),
-                },
+                }),
             ];
         }
     }
@@ -150,11 +173,11 @@ export class AlgoliaSearchRecordGenerator {
 
         Object.values(subpackages).forEach((subpackage) => {
             const { parent } = subpackage;
-            const parentSlugs = parent != null ? getSubpackageParentSlugs(subpackage, apiDef) : [];
+            const parentPathParts = parent != null ? getSubpackageParentPathParts(subpackage, apiDef) : [];
             subpackage.endpoints.forEach((e) => {
                 const endpointRecords = this.generateAlgoliaSearchRecordsForEndpointDefinition(
                     e,
-                    context.withSlugs([...parentSlugs, subpackage.urlSlug])
+                    context.withPathParts([...parentPathParts, { name: subpackage.name, urlSlug: subpackage.urlSlug }])
                 );
                 records.push(...endpointRecords);
             });
@@ -169,23 +192,33 @@ export class AlgoliaSearchRecordGenerator {
     ): AlgoliaSearchRecord[] {
         const records: AlgoliaSearchRecord[] = [];
         if (endpointDef.name || endpointDef.description) {
-            const { path } = context.withSlug(endpointDef.urlSlug);
-            const processedDescription = endpointDef.description ? convertMarkdownToText(endpointDef.description) : "";
-            const { indexSegment } = context;
-            records.push({
-                objectID: uuid(),
-                type: "endpoint",
-                title: endpointDef.name ?? "",
-                subtitle: processedDescription,
-                path,
-                indexSegmentId: indexSegment.id,
-                ...(indexSegment.type === "versioned"
-                    ? {
-                          version: indexSegment.version.id,
-                          versionSlug: indexSegment.version.urlSlug ?? indexSegment.version.id,
-                      }
-                    : {}),
+            const endpointContext = context.withPathPart({
+                name: endpointDef.name ?? "",
+                urlSlug: endpointDef.urlSlug,
             });
+            const { indexSegment } = context;
+            records.push(
+                compact({
+                    type: "endpoint-v2",
+                    objectID: uuid(),
+                    endpoint: {
+                        name: endpointDef.name,
+                        description:
+                            endpointDef.description != null
+                                ? convertMarkdownToText(endpointDef.description)
+                                : undefined,
+                        method: endpointDef.method,
+                        path: {
+                            parts: endpointDef.path.parts,
+                        },
+                    },
+                    path: {
+                        parts: endpointContext.pathParts,
+                    },
+                    version: indexSegment.type === "versioned" ? indexSegment.version : undefined,
+                    indexSegmentId: indexSegment.id,
+                })
+            );
         }
         // Add records for query parameters, request/response body etc.
         return records;

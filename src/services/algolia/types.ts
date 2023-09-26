@@ -16,6 +16,9 @@ export type IndexSegment =
 
 export type ConfigSegmentTuple = readonly [config: DocsV1Db.UnversionedNavigationConfig, segment: IndexSegment];
 
-type WithObjectId<T> = { objectID: string } & T;
+type WithObjectId<T> = {
+    [K: string]: unknown;
+    objectID: string;
+} & T;
 
 export type AlgoliaSearchRecord = WithObjectId<DocsV1Read.AlgoliaRecord>;

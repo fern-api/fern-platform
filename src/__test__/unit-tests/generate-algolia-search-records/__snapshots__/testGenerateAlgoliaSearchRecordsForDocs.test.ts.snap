@@ -3,9 +3,7 @@
 exports[`generateAlgoliaSearchRecordsForDocs {"name":"primer"} 1`] = `
 Array [
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "introduction/getting-started",
-    "subtitle": "The Primer API is used to manage Client Sessions, Payments and saved payment methods. All other actions are either managed in the
+    "content": "The Primer API is used to manage Client Sessions, Payments and saved payment methods. All other actions are either managed in the
 Universal Checkout implementation or in the Dashboard.
 
 Check out:
@@ -39,15 +37,28 @@ curl -X POST 'https://api.primer.io/<ENDPOINT>' \\\\
 AVAILABLE VERSIONS
 
 Read about the available versions of the APIs below on our Changelog [https://apiref.primer.io/changelog].",
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Introduction",
+          "urlSlug": "introduction",
+        },
+        Object {
+          "name": "Getting Started",
+          "urlSlug": "getting-started",
+        },
+      ],
+    },
     "title": "Getting Started",
-    "type": "page",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+    "type": "page-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "introduction/authentication",
-    "subtitle": "Primer uses API keys to authenticate requests. You can manage API keys in the Developers
+    "content": "Primer uses API keys to authenticate requests. You can manage API keys in the Developers
 [https://sandbox-dashboard.primer.io/developers] area of the dashboard.
 
 As API keys carry many privileges such as authorizing payments, it is important to keep them private and secure. Do not hardcode
@@ -75,15 +86,28 @@ post to our webhooks endpoint. API keys with this scope can be used to enable co
 about important payment lifecycle events. transactions:authorize Authorize a payment transactions:cancel Cancel a payment.
 transactions:capture Submit a payment for settlement. transactions:retrieve Retrieve one or more payments. transactions:refund
 Refund a payment. payment_instrument:read Read stored payment methods. payment_instrument:write Write stored payment methods.",
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Introduction",
+          "urlSlug": "introduction",
+        },
+        Object {
+          "name": "Authentication",
+          "urlSlug": "authentication",
+        },
+      ],
+    },
     "title": "Authentication",
-    "type": "page",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+    "type": "page-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "introduction/api-responses",
-    "subtitle": "STATUS CODES
+    "content": "STATUS CODES
 
 The following table summarizes the HTTP response codes you may receive from the Primer REST API.
 
@@ -130,15 +154,28 @@ your response payload for more details. CANCELLED The payment was cancelled prio
 
 Don't hesitate to reach out with any questions or feedback. You can email Primer directly at support@primer.io
 [support@primer.io], or contact your Primer account manager.",
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Introduction",
+          "urlSlug": "introduction",
+        },
+        Object {
+          "name": "API Responses",
+          "urlSlug": "api-responses",
+        },
+      ],
+    },
     "title": "API Responses",
-    "type": "page",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+    "type": "page-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "introduction/idempotency-key",
-    "subtitle": "Primer supports a request idempotency mechanism for our Payments API. This optional feature enables you to safely retry a request
+    "content": "Primer supports a request idempotency mechanism for our Payments API. This optional feature enables you to safely retry a request
 without risking the user being charged or refunded multiple times.
 
 This is particularly useful when an API call fails due to the request being invalid, due to a network issue, or if Primer is
@@ -163,15 +200,28 @@ API. Therefore, if you want to allow the user to retry an unsuccessful payment, 
 
 As a such, don't use anything too restrictive like an orderId for the idempotency key as multiple payment attempts and refunds can
 be made for a single order.",
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Introduction",
+          "urlSlug": "introduction",
+        },
+        Object {
+          "name": "Idempotency Key",
+          "urlSlug": "idempotency-key",
+        },
+      ],
+    },
     "title": "Idempotency Key",
-    "type": "page",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+    "type": "page-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "introduction/loyalty-transactions",
-    "subtitle": "Primer's Loyalty API provides an interface to interact with 3rd party loyalty point and service providers.
+    "content": "Primer's Loyalty API provides an interface to interact with 3rd party loyalty point and service providers.
 
 All of the endpoints below reference a connectionId. This is the unique Primer identifier for your loyalty provider connection.
 Primer will provide this once the loyalty provider connection is created.
@@ -205,15 +255,28 @@ GET A LIST OF TRANSACTIONS
 
 Call the Loyalty Transactions [https://apiref.primer.io/reference/get_loyalty_transaction] endpoint to retrieve a list of all your
 transactions. In most cases it makes sense to filter by connectionId. You can also filter by customerId or orderId.",
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Introduction",
+          "urlSlug": "introduction",
+        },
+        Object {
+          "name": "Loyalty Transactions",
+          "urlSlug": "loyalty-transactions",
+        },
+      ],
+    },
     "title": "Loyalty Transactions",
-    "type": "page",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+    "type": "page-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "changelog/api-migration-guide",
-    "subtitle": "We are continually introducing new functionality to the Primer Ecosystem, some of which requires additional inputs on our APIs. To
+    "content": "We are continually introducing new functionality to the Primer Ecosystem, some of which requires additional inputs on our APIs. To
 make sure these changes don’t break any existing integrations, we roll them out safely using API Versions.
 
 
@@ -449,15 +512,28 @@ SUMMARY OF THE V2.1 CHANGES
 
  * order is now called orderDetails
  * lineItems is now a top-level element",
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Changelog",
+          "urlSlug": "changelog",
+        },
+        Object {
+          "name": "API Migration Guide",
+          "urlSlug": "api-migration-guide",
+        },
+      ],
+    },
     "title": "API Migration Guide",
-    "type": "page",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+    "type": "page-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "changelog/api-v-2-2",
-    "subtitle": "This version includes improvements to the Client Session API, Payments API and the Payment Methods API. You must set the
+    "content": "This version includes improvements to the Client Session API, Payments API and the Payment Methods API. You must set the
 X-Api-Version header to 2.2 to use v2.2 of the API.
 
 
@@ -469,15 +545,28 @@ CLIENT SESSION API
 PAYMENTS API
 
  * Added order.lineItems.productData on the request and response",
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Changelog",
+          "urlSlug": "changelog",
+        },
+        Object {
+          "name": "API v2.2",
+          "urlSlug": "api-v-2-2",
+        },
+      ],
+    },
     "title": "API v2.2",
-    "type": "page",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+    "type": "page-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "changelog/api-v-2-1",
-    "subtitle": "Version 2.1 includes improvements to the Client Session API, Payments API and the Payment Methods API.
+    "content": "Version 2.1 includes improvements to the Client Session API, Payments API and the Payment Methods API.
 
 Starting API v2.1, the API Version X-Api-Version is a semantic version without a patch (e.g. 2.1) rather than a date 🎉 Set the
 X-Api-Version header to 2.1 to use v2.1 of the API.
@@ -508,15 +597,28 @@ PAYMENT METHODS API
  * Added verify in POST /payment-instruments/{paymentMethodToken}/vault to set whether or not the payment method token should be
    verified before vaulting
  * Added isVerified to the payment method response",
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Changelog",
+          "urlSlug": "changelog",
+        },
+        Object {
+          "name": "API v2.1",
+          "urlSlug": "api-v-2-1",
+        },
+      ],
+    },
     "title": "API v2.1",
-    "type": "page",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+    "type": "page-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "changelog/api-v-2",
-    "subtitle": "Version 2 includes improvements to the Client Session API and the Payments API.
+    "content": "Version 2 includes improvements to the Client Session API and the Payments API.
 
 
 CLIENT SESSION API
@@ -544,25 +646,71 @@ PAYMENTS API
  * paymentMethodData in PaymentMethod responses (for card payment method types) all now contain a first6digits field in addition
    to the last4digits returned. This is an opt-in field, so it is null by default.
  * The customer billingAddress and shippingAddress fields are now all optional",
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Changelog",
+          "urlSlug": "changelog",
+        },
+        Object {
+          "name": "API v2",
+          "urlSlug": "api-v-2",
+        },
+      ],
+    },
     "title": "API v2",
-    "type": "page",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+    "type": "page-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "primer-api/client-session-api/retrieve-a-client-session",
-    "subtitle": "This API call retrieves all the details associated with the client session corresponding to the client token that is provided in
+    "endpoint": Object {
+      "description": "This API call retrieves all the details associated with the client session corresponding to the client token that is provided in
 the request. The fields with empty values are excluded from the response.",
-    "title": "Retrieve a client session",
-    "type": "endpoint",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+      "method": "GET",
+      "name": "Retrieve a client session",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/client-session",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Client Session API",
+          "urlSlug": "client-session-api",
+        },
+        Object {
+          "name": "Retrieve a client session",
+          "urlSlug": "retrieve-a-client-session",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "primer-api/client-session-api/create-a-client-session",
-    "subtitle": "Creating a client session generates a client token: a temporary key used to initialize Universal Checkout
+    "endpoint": Object {
+      "description": "Creating a client session generates a client token: a temporary key used to initialize Universal Checkout
 [https://primer.io/docs/accept-payments/setup-universal-checkout/installation/web] and authenticate it against your account.
 
 Universal Checkout automatically retrieves all the settings from the client session and the Dashboard to configure the payment
@@ -575,15 +723,47 @@ POST /client-session does not have required fields as all fields are not always 
 /client-session to update the parameters throughout the checkout session.
 
 Client tokens expire after 24 hours.",
-    "title": "Create a client session",
-    "type": "endpoint",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+      "method": "POST",
+      "name": "Create a client session",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/client-session",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Client Session API",
+          "urlSlug": "client-session-api",
+        },
+        Object {
+          "name": "Create a client session",
+          "urlSlug": "create-a-client-session",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "primer-api/client-session-api/update-client-session",
-    "subtitle": "You can update a clients session created earlier with the PATCH /client-session API call.
+    "endpoint": Object {
+      "description": "You can update a clients session created earlier with the PATCH /client-session API call.
 
 The only required field for the request is clientToken. Other supported request fields are same as for the POST /client-session
 API call.
@@ -600,15 +780,47 @@ You can update paymentMethod.vaultOnSuccess field but updating of the paymentMet
 not supported.
 
 The response will contain all the fields of the client session including the ones that were changed.",
-    "title": "Update client session",
-    "type": "endpoint",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+      "method": "PATCH",
+      "name": "Update client session",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/client-session",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Client Session API",
+          "urlSlug": "client-session-api",
+        },
+        Object {
+          "name": "Update client session",
+          "urlSlug": "update-client-session",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "primer-api/payments-api/search-list-payments",
-    "subtitle": "Retrieve a list of your payments.
+    "endpoint": Object {
+      "description": "Retrieve a list of your payments.
 
 Results are paginated, they will only return up to 100 payments maximum. To access the next page of result, set the cursor query
 parameter to the value of nextCursor in your current result payload. Use prevCursor to go back to the previous page.
@@ -626,15 +838,47 @@ curl --location --request GET 'https://api.primer.io/payments?status=FAILED,CANC
 You can alternatively specify a list by repeating the parameter multiple times.
 
 Note: payments will be available within a minute from being created.",
-    "title": "Search & list payments",
-    "type": "endpoint",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+      "method": "GET",
+      "name": "Search & list payments",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payments",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payments API",
+          "urlSlug": "payments-api",
+        },
+        Object {
+          "name": "Search & list payments",
+          "urlSlug": "search-list-payments",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "primer-api/payments-api/create-a-payment",
-    "subtitle": "Create and authorize a payment for a given customer order. You should provide a payment method token here to avoid PCI
+    "endpoint": Object {
+      "description": "Create and authorize a payment for a given customer order. You should provide a payment method token here to avoid PCI
 implications.
 
 If only a payment method token is passed, the values passed with the Client Session is used to determine the amount, currency etc.
@@ -646,133 +890,597 @@ you pass amount on this request, it will override the amount on the order associ
 not on this request will be fetched from previously created Client Session and merged. E.g. if you specify customer.billingAddress
 in Client Session and then pass customer.emailAddress data with this request, it will automatically merge the customer fields and
 use both billingAddress and emailAddress for later calculations.",
-    "title": "Create a payment",
-    "type": "endpoint",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+      "method": "POST",
+      "name": "Create a payment",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payments",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payments API",
+          "urlSlug": "payments-api",
+        },
+        Object {
+          "name": "Create a payment",
+          "urlSlug": "create-a-payment",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "primer-api/payments-api/authorize-a-payment",
-    "subtitle": "Manually authorize a payment using a provided processor. This is useful if you want to authorize a payment without a workflow
+    "endpoint": Object {
+      "description": "Manually authorize a payment using a provided processor. This is useful if you want to authorize a payment without a workflow
 action. The processor merchant ID must be provided which can be found on the Integrations page
 [https://dashboard.primer.io/integrations]. The processor name is optional but it must be provided if your account has multiple
 processors configured which share the same merchant IDs.",
-    "title": "Authorize a payment",
-    "type": "endpoint",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+      "method": "POST",
+      "name": "Authorize a payment",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "/authorize",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payments API",
+          "urlSlug": "payments-api",
+        },
+        Object {
+          "name": "Authorize a payment",
+          "urlSlug": "authorize-a-payment",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "primer-api/payments-api/capture-a-payment",
-    "subtitle": "If you have successfully authorized a payment, you can now fully capture, or partially capture funds from the authorized payment,
+    "endpoint": Object {
+      "description": "If you have successfully authorized a payment, you can now fully capture, or partially capture funds from the authorized payment,
 depending on whether your selected payment processor supports it. The payment will be updated to SETTLED or SETTLING, depending on
 the payment method type.
 
 The payload sent in this capture request is completely optional. If you don't send a payload with the capture request, the full
 amount that was authorized will be sent for capture. Below are the available payload attributes, which give you more granular
 control when capturing funds, if you require it.",
-    "title": "Capture a payment",
-    "type": "endpoint",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+      "method": "POST",
+      "name": "Capture a payment",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "/capture",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payments API",
+          "urlSlug": "payments-api",
+        },
+        Object {
+          "name": "Capture a payment",
+          "urlSlug": "capture-a-payment",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "primer-api/payments-api/cancel-a-payment",
-    "subtitle": "Provided the payment has not reached SETTLED status, Primer will send a \\"void\\" request to the payment processor, thereby
+    "endpoint": Object {
+      "description": "Provided the payment has not reached SETTLED status, Primer will send a \\"void\\" request to the payment processor, thereby
 cancelling the payment and releasing the hold on customer funds. Upon success, the payment will transition to CANCELLED. The
 payload is optional.",
-    "title": "Cancel a payment",
-    "type": "endpoint",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+      "method": "POST",
+      "name": "Cancel a payment",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "/cancel",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payments API",
+          "urlSlug": "payments-api",
+        },
+        Object {
+          "name": "Cancel a payment",
+          "urlSlug": "cancel-a-payment",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "primer-api/payments-api/refund-a-payment",
-    "subtitle": "By default, this request will refund the full amount.
+    "endpoint": Object {
+      "description": "By default, this request will refund the full amount.
 
 Optionally, pass in a lesser amount for a partial refund.",
-    "title": "Refund a payment",
-    "type": "endpoint",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+      "method": "POST",
+      "name": "Refund a payment",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "/refund",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payments API",
+          "urlSlug": "payments-api",
+        },
+        Object {
+          "name": "Refund a payment",
+          "urlSlug": "refund-a-payment",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "primer-api/payments-api/resume-a-payment",
-    "subtitle": "Resume a payment's workflow execution from a paused state. This is usually required when a Workflow was paused in order to get
+    "endpoint": Object {
+      "description": "Resume a payment's workflow execution from a paused state. This is usually required when a Workflow was paused in order to get
 further information from the customer, or when waiting for an asynchronous response from a third party connection.",
-    "title": "Resume a payment",
-    "type": "endpoint",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+      "method": "POST",
+      "name": "Resume a payment",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "/resume",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payments API",
+          "urlSlug": "payments-api",
+        },
+        Object {
+          "name": "Resume a payment",
+          "urlSlug": "resume-a-payment",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "primer-api/payments-api/adjust-authorized-amount",
-    "subtitle": "Adjust authorized amount. This is only possible if authorizationType was set to ESTIMATED when the payment was created, and the
+    "endpoint": Object {
+      "description": "Adjust authorized amount. This is only possible if authorizationType was set to ESTIMATED when the payment was created, and the
 mechanism is supported by the payment method.",
-    "title": "Adjust authorized amount",
-    "type": "endpoint",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+      "method": "POST",
+      "name": "Adjust authorized amount",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "/adjust-authorization",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payments API",
+          "urlSlug": "payments-api",
+        },
+        Object {
+          "name": "Adjust authorized amount",
+          "urlSlug": "adjust-authorized-amount",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
+    "endpoint": Object {
+      "description": "Retrieve a payment by its ID.",
+      "method": "GET",
+      "name": "Get a payment",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
     "indexSegmentId": "v2.2-constant",
-    "path": "primer-api/payments-api/get-a-payment",
-    "subtitle": "Retrieve a payment by its ID.",
-    "title": "Get a payment",
-    "type": "endpoint",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payments API",
+          "urlSlug": "payments-api",
+        },
+        Object {
+          "name": "Get a payment",
+          "urlSlug": "get-a-payment",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "primer-api/payment-methods-api/save-a-payment-method-token",
-    "subtitle": "Save a SINGLE_USE payment method token so it can be used again later. You can optionally choose to verify the payment method
+    "endpoint": Object {
+      "description": "Save a SINGLE_USE payment method token so it can be used again later. You can optionally choose to verify the payment method
 before vaulting. If verification fails, no payment method data will be vaulted. Verification can minimise fraud and boost
 subscription rates for recurring payments.
 
 If you try to vault an already vaulted token, you will get the existing vaulted token back.",
-    "title": "Save a payment method token",
-    "type": "endpoint",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+      "method": "POST",
+      "name": "Save a payment method token",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payment-instruments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "paymentMethodToken",
+          },
+          Object {
+            "type": "literal",
+            "value": "/vault",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payment Methods API",
+          "urlSlug": "payment-methods-api",
+        },
+        Object {
+          "name": "Save a payment method token",
+          "urlSlug": "save-a-payment-method-token",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
+    "endpoint": Object {
+      "description": "Retrieve a list of stored payment methods for a customer.",
+      "method": "GET",
+      "name": "List saved payment methods",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payment-instruments",
+          },
+        ],
+      },
+    },
     "indexSegmentId": "v2.2-constant",
-    "path": "primer-api/payment-methods-api/list-saved-payment-methods",
-    "subtitle": "Retrieve a list of stored payment methods for a customer.",
-    "title": "List saved payment methods",
-    "type": "endpoint",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payment Methods API",
+          "urlSlug": "payment-methods-api",
+        },
+        Object {
+          "name": "List saved payment methods",
+          "urlSlug": "list-saved-payment-methods",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
+    "endpoint": Object {
+      "description": "Delete a saved payment method.",
+      "method": "DELETE",
+      "name": "Delete a saved payment method",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payment-instruments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "paymentMethodToken",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
     "indexSegmentId": "v2.2-constant",
-    "path": "primer-api/payment-methods-api/delete-a-saved-payment-method",
-    "subtitle": "Delete a saved payment method.",
-    "title": "Delete a saved payment method",
-    "type": "endpoint",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payment Methods API",
+          "urlSlug": "payment-methods-api",
+        },
+        Object {
+          "name": "Delete a saved payment method",
+          "urlSlug": "delete-a-saved-payment-method",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
+    "endpoint": Object {
+      "description": "Update a saved payment method to be the default stored payment method for a customer.",
+      "method": "POST",
+      "name": "Update the default saved payment method",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payment-instruments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "paymentMethodToken",
+          },
+          Object {
+            "type": "literal",
+            "value": "/default",
+          },
+        ],
+      },
+    },
     "indexSegmentId": "v2.2-constant",
-    "path": "primer-api/payment-methods-api/update-the-default-saved-payment-method",
-    "subtitle": "Update a saved payment method to be the default stored payment method for a customer.",
-    "title": "Update the default saved payment method",
-    "type": "endpoint",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payment Methods API",
+          "urlSlug": "payment-methods-api",
+        },
+        Object {
+          "name": "Update the default saved payment method",
+          "urlSlug": "update-the-default-saved-payment-method",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "primer-api/observability-api/create-an-external-payment",
-    "subtitle": "The Observability API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
+    "endpoint": Object {
+      "description": "The Observability API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
 
 Creating a payment with the Observability API sends external payments data to Primer to populate Observability Payment Insights
 dashboards [https://primer.io/observability]. Payments created through the Payments API [/reference/create_payment_payments_post]
@@ -781,15 +1489,47 @@ will be automatically populated and do not need to be sent in the Observability 
 Create an API key with the observability-payments:write scope.
 
 Each record must be created with a unique paymentId. To update a payment record with new data use the PATCH endpoint.",
-    "title": "Create an external payment",
-    "type": "endpoint",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+      "method": "POST",
+      "name": "Create an external payment",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/observability/payments",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Observability API",
+          "urlSlug": "observability-api",
+        },
+        Object {
+          "name": "Create an external payment",
+          "urlSlug": "create-an-external-payment",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "primer-api/observability-api/update-an-external-payment",
-    "subtitle": "The Observability API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
+    "endpoint": Object {
+      "description": "The Observability API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
 
 You can update payments created earlier through the Observability API with this endpoint. The only required field for the request
 is paymentId. Other supported request fields are the same as for the create an external payment [/reference/external_payment] API
@@ -799,15 +1539,55 @@ If you wish to update nested fields on the payment, you only need to pass the fi
 update the processor name, you would pass in processor.name only.
 
 The response will contain all the fields of the payment including the ones that were changed.",
-    "title": "Update an external payment",
-    "type": "endpoint",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+      "method": "PATCH",
+      "name": "Update an external payment",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/observability/payments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "paymentId",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Observability API",
+          "urlSlug": "observability-api",
+        },
+        Object {
+          "name": "Update an external payment",
+          "urlSlug": "update-an-external-payment",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "primer-api/loyalty-api/get-a-loyalty-customers-points-balance",
-    "subtitle": "The Loyalty API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
+    "endpoint": Object {
+      "description": "The Loyalty API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
 
 Create an API key with the loyalty-transactions:read scopes.
 
@@ -817,43 +1597,146 @@ The connectionId is the unique Primer identifier for your loyalty provider conne
 provider connection is created.
 
 The customerId refers to the customer identifier on the loyalty provider's side.",
-    "title": "Get a loyalty customer's points balance",
-    "type": "endpoint",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+      "method": "GET",
+      "name": "Get a loyalty customer's points balance",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/loyalty-customers/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Loyalty API",
+          "urlSlug": "loyalty-api",
+        },
+        Object {
+          "name": "Get a loyalty customer's points balance",
+          "urlSlug": "get-a-loyalty-customers-points-balance",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "primer-api/loyalty-api/list-the-transactions-for-a-customer",
-    "subtitle": "The Loyalty API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
+    "endpoint": Object {
+      "description": "The Loyalty API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
 
 Create an API key with the loyalty-transactions:read scopes.
 
 Get all your loyalty transactions. You can filter by connectionId (recommended) and by customerId and orderId.
 
 Additionally provide a limit to restrict the number of transactions in the response, and an offset to determine where to start.",
-    "title": "List the transactions for a customer",
-    "type": "endpoint",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+      "method": "GET",
+      "name": "List the transactions for a customer",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/loyalty-transactions",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Loyalty API",
+          "urlSlug": "loyalty-api",
+        },
+        Object {
+          "name": "List the transactions for a customer",
+          "urlSlug": "list-the-transactions-for-a-customer",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.2-constant",
-    "path": "primer-api/loyalty-api/create-a-loyalty-transaction",
-    "subtitle": "The Loyalty API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
+    "endpoint": Object {
+      "description": "The Loyalty API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
 
 Create an API key with the loyalty-transactions:write scopes.
 
 Create a loyalty transaction. This is either a points redemption or a points refund.",
-    "title": "Create a loyalty transaction",
-    "type": "endpoint",
-    "version": "v2.2",
-    "versionSlug": "v-2-2",
+      "method": "POST",
+      "name": "Create a loyalty transaction",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/loyalty-transactions",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Loyalty API",
+          "urlSlug": "loyalty-api",
+        },
+        Object {
+          "name": "Create a loyalty transaction",
+          "urlSlug": "create-a-loyalty-transaction",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.2",
+      "urlSlug": "v-2-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2.1-constant",
-    "path": "introduction/getting-started",
-    "subtitle": "The Primer API is used to manage Client Sessions, Payments and saved payment methods. All other actions are either managed in the
+    "content": "The Primer API is used to manage Client Sessions, Payments and saved payment methods. All other actions are either managed in the
 Universal Checkout implementation or in the Dashboard.
 
 Check out:
@@ -887,15 +1770,28 @@ curl -X POST 'https://api.primer.io/<ENDPOINT>' \\\\
 AVAILABLE VERSIONS
 
 Read about the available versions of the APIs below on our Changelog [https://apiref.primer.io/changelog].",
+    "indexSegmentId": "v2.1-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Introduction",
+          "urlSlug": "introduction",
+        },
+        Object {
+          "name": "Getting Started",
+          "urlSlug": "getting-started",
+        },
+      ],
+    },
     "title": "Getting Started",
-    "type": "page",
-    "version": "v2.1",
-    "versionSlug": "v-2-1",
+    "type": "page-v2",
+    "version": Object {
+      "id": "v2.1",
+      "urlSlug": "v-2-1",
+    },
   },
   Object {
-    "indexSegmentId": "v2.1-constant",
-    "path": "introduction/authentication",
-    "subtitle": "Primer uses API keys to authenticate requests. You can manage API keys in the Developers
+    "content": "Primer uses API keys to authenticate requests. You can manage API keys in the Developers
 [https://sandbox-dashboard.primer.io/developers] area of the dashboard.
 
 As API keys carry many privileges such as authorizing payments, it is important to keep them private and secure. Do not hardcode
@@ -923,15 +1819,28 @@ post to our webhooks endpoint. API keys with this scope can be used to enable co
 about important payment lifecycle events. transactions:authorize Authorize a payment transactions:cancel Cancel a payment.
 transactions:capture Submit a payment for settlement. transactions:retrieve Retrieve one or more payments. transactions:refund
 Refund a payment. payment_instrument:read Read stored payment methods. payment_instrument:write Write stored payment methods.",
+    "indexSegmentId": "v2.1-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Introduction",
+          "urlSlug": "introduction",
+        },
+        Object {
+          "name": "Authentication",
+          "urlSlug": "authentication",
+        },
+      ],
+    },
     "title": "Authentication",
-    "type": "page",
-    "version": "v2.1",
-    "versionSlug": "v-2-1",
+    "type": "page-v2",
+    "version": Object {
+      "id": "v2.1",
+      "urlSlug": "v-2-1",
+    },
   },
   Object {
-    "indexSegmentId": "v2.1-constant",
-    "path": "introduction/api-responses",
-    "subtitle": "STATUS CODES
+    "content": "STATUS CODES
 
 The following table summarizes the HTTP response codes you may receive from the Primer REST API.
 
@@ -978,15 +1887,28 @@ your response payload for more details. CANCELLED The payment was cancelled prio
 
 Don't hesitate to reach out with any questions or feedback. You can email Primer directly at support@primer.io
 [support@primer.io], or contact your Primer account manager.",
+    "indexSegmentId": "v2.1-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Introduction",
+          "urlSlug": "introduction",
+        },
+        Object {
+          "name": "API Responses",
+          "urlSlug": "api-responses",
+        },
+      ],
+    },
     "title": "API Responses",
-    "type": "page",
-    "version": "v2.1",
-    "versionSlug": "v-2-1",
+    "type": "page-v2",
+    "version": Object {
+      "id": "v2.1",
+      "urlSlug": "v-2-1",
+    },
   },
   Object {
-    "indexSegmentId": "v2.1-constant",
-    "path": "introduction/idempotency-key",
-    "subtitle": "Primer supports a request idempotency mechanism for our Payments API. This optional feature enables you to safely retry a request
+    "content": "Primer supports a request idempotency mechanism for our Payments API. This optional feature enables you to safely retry a request
 without risking the user being charged or refunded multiple times.
 
 This is particularly useful when an API call fails due to the request being invalid, due to a network issue, or if Primer is
@@ -1011,15 +1933,28 @@ API. Therefore, if you want to allow the user to retry an unsuccessful payment, 
 
 As a such, don't use anything too restrictive like an orderId for the idempotency key as multiple payment attempts and refunds can
 be made for a single order.",
+    "indexSegmentId": "v2.1-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Introduction",
+          "urlSlug": "introduction",
+        },
+        Object {
+          "name": "Idempotency Key",
+          "urlSlug": "idempotency-key",
+        },
+      ],
+    },
     "title": "Idempotency Key",
-    "type": "page",
-    "version": "v2.1",
-    "versionSlug": "v-2-1",
+    "type": "page-v2",
+    "version": Object {
+      "id": "v2.1",
+      "urlSlug": "v-2-1",
+    },
   },
   Object {
-    "indexSegmentId": "v2.1-constant",
-    "path": "introduction/loyalty-transactions",
-    "subtitle": "Primer's Loyalty API provides an interface to interact with 3rd party loyalty point and service providers.
+    "content": "Primer's Loyalty API provides an interface to interact with 3rd party loyalty point and service providers.
 
 All of the endpoints below reference a connectionId. This is the unique Primer identifier for your loyalty provider connection.
 Primer will provide this once the loyalty provider connection is created.
@@ -1053,25 +1988,71 @@ GET A LIST OF TRANSACTIONS
 
 Call the Loyalty Transactions [https://apiref.primer.io/reference/get_loyalty_transaction] endpoint to retrieve a list of all your
 transactions. In most cases it makes sense to filter by connectionId. You can also filter by customerId or orderId.",
+    "indexSegmentId": "v2.1-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Introduction",
+          "urlSlug": "introduction",
+        },
+        Object {
+          "name": "Loyalty Transactions",
+          "urlSlug": "loyalty-transactions",
+        },
+      ],
+    },
     "title": "Loyalty Transactions",
-    "type": "page",
-    "version": "v2.1",
-    "versionSlug": "v-2-1",
+    "type": "page-v2",
+    "version": Object {
+      "id": "v2.1",
+      "urlSlug": "v-2-1",
+    },
   },
   Object {
-    "indexSegmentId": "v2.1-constant",
-    "path": "primer-api/client-session-api/retrieve-a-client-session",
-    "subtitle": "This API call retrieves all the details associated with the client session corresponding to the client token that is provided in
+    "endpoint": Object {
+      "description": "This API call retrieves all the details associated with the client session corresponding to the client token that is provided in
 the request. The fields with empty values are excluded from the response.",
-    "title": "Retrieve a client session",
-    "type": "endpoint",
-    "version": "v2.1",
-    "versionSlug": "v-2-1",
+      "method": "GET",
+      "name": "Retrieve a client session",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/client-session",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.1-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Client Session API",
+          "urlSlug": "client-session-api",
+        },
+        Object {
+          "name": "Retrieve a client session",
+          "urlSlug": "retrieve-a-client-session",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.1",
+      "urlSlug": "v-2-1",
+    },
   },
   Object {
-    "indexSegmentId": "v2.1-constant",
-    "path": "primer-api/client-session-api/create-a-client-session",
-    "subtitle": "Creating a client session generates a client token: a temporary key used to initialize Universal Checkout
+    "endpoint": Object {
+      "description": "Creating a client session generates a client token: a temporary key used to initialize Universal Checkout
 [https://primer.io/docs/accept-payments/setup-universal-checkout/installation/web] and authenticate it against your account.
 
 Universal Checkout automatically retrieves all the settings from the client session and the Dashboard to configure the payment
@@ -1084,15 +2065,47 @@ POST /client-session does not have required fields as all fields are not always 
 /client-session to update the parameters throughout the checkout session.
 
 Client tokens expire after 24 hours.",
-    "title": "Create a client session",
-    "type": "endpoint",
-    "version": "v2.1",
-    "versionSlug": "v-2-1",
+      "method": "POST",
+      "name": "Create a client session",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/client-session",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.1-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Client Session API",
+          "urlSlug": "client-session-api",
+        },
+        Object {
+          "name": "Create a client session",
+          "urlSlug": "create-a-client-session",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.1",
+      "urlSlug": "v-2-1",
+    },
   },
   Object {
-    "indexSegmentId": "v2.1-constant",
-    "path": "primer-api/client-session-api/update-client-session",
-    "subtitle": "You can update a clients session created earlier with the PATCH /client-session API call.
+    "endpoint": Object {
+      "description": "You can update a clients session created earlier with the PATCH /client-session API call.
 
 The only required field for the request is clientToken. Other supported request fields are same as for the POST /client-session
 API call.
@@ -1109,15 +2122,47 @@ You can update paymentMethod.vaultOnSuccess field but updating of the paymentMet
 not supported.
 
 The response will contain all the fields of the client session including the ones that were changed.",
-    "title": "Update client session",
-    "type": "endpoint",
-    "version": "v2.1",
-    "versionSlug": "v-2-1",
+      "method": "PATCH",
+      "name": "Update client session",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/client-session",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.1-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Client Session API",
+          "urlSlug": "client-session-api",
+        },
+        Object {
+          "name": "Update client session",
+          "urlSlug": "update-client-session",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.1",
+      "urlSlug": "v-2-1",
+    },
   },
   Object {
-    "indexSegmentId": "v2.1-constant",
-    "path": "primer-api/payments-api/search-list-payments",
-    "subtitle": "Retrieve a list of your payments.
+    "endpoint": Object {
+      "description": "Retrieve a list of your payments.
 
 Results are paginated, they will only return up to 100 payments maximum. To access the next page of result, set the cursor query
 parameter to the value of nextCursor in your current result payload. Use prevCursor to go back to the previous page.
@@ -1135,15 +2180,47 @@ curl --location --request GET 'https://api.primer.io/payments?status=FAILED,CANC
 You can alternatively specify a list by repeating the parameter multiple times.
 
 Note: payments will be available within a minute from being created.",
-    "title": "Search & list payments",
-    "type": "endpoint",
-    "version": "v2.1",
-    "versionSlug": "v-2-1",
+      "method": "GET",
+      "name": "Search & list payments",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payments",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.1-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payments API",
+          "urlSlug": "payments-api",
+        },
+        Object {
+          "name": "Search & list payments",
+          "urlSlug": "search-list-payments",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.1",
+      "urlSlug": "v-2-1",
+    },
   },
   Object {
-    "indexSegmentId": "v2.1-constant",
-    "path": "primer-api/payments-api/create-a-payment",
-    "subtitle": "Create and authorize a payment for a given customer order. You should provide a payment method token here to avoid PCI
+    "endpoint": Object {
+      "description": "Create and authorize a payment for a given customer order. You should provide a payment method token here to avoid PCI
 implications.
 
 If only a payment method token is passed, the values passed with the Client Session determine the amount, currency etc.
@@ -1153,111 +2230,494 @@ session, or if not yet available, when creating a payment.
 
 All fields provided on this request will take preference over any field on the order associated with the client session. E.g. if
 you pass amount on this request, it will override the amount on the order associated with the Client Session.",
-    "title": "Create a payment",
-    "type": "endpoint",
-    "version": "v2.1",
-    "versionSlug": "v-2-1",
+      "method": "POST",
+      "name": "Create a payment",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payments",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.1-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payments API",
+          "urlSlug": "payments-api",
+        },
+        Object {
+          "name": "Create a payment",
+          "urlSlug": "create-a-payment",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.1",
+      "urlSlug": "v-2-1",
+    },
   },
   Object {
-    "indexSegmentId": "v2.1-constant",
-    "path": "primer-api/payments-api/capture-a-payment",
-    "subtitle": "If you have successfully authorized a payment, you can now fully capture, or partially capture funds from the authorized payment,
+    "endpoint": Object {
+      "description": "If you have successfully authorized a payment, you can now fully capture, or partially capture funds from the authorized payment,
 depending on whether your selected payment processor supports it. The payment will be updated to SETTLED or SETTLING, depending on
 the payment method type.
 
 The payload sent in this capture request is completely optional. If you don't send a payload with the capture request, the full
 amount that was authorized will be sent for capture. Below are the available payload attributes, which give you more granular
 control when capturing funds, if you require it.",
-    "title": "Capture a payment",
-    "type": "endpoint",
-    "version": "v2.1",
-    "versionSlug": "v-2-1",
+      "method": "POST",
+      "name": "Capture a payment",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "/capture",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.1-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payments API",
+          "urlSlug": "payments-api",
+        },
+        Object {
+          "name": "Capture a payment",
+          "urlSlug": "capture-a-payment",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.1",
+      "urlSlug": "v-2-1",
+    },
   },
   Object {
-    "indexSegmentId": "v2.1-constant",
-    "path": "primer-api/payments-api/cancel-a-payment",
-    "subtitle": "Provided the payment has not reached SETTLED status, Primer will send a \\"void\\" request to the payment processor, thereby
+    "endpoint": Object {
+      "description": "Provided the payment has not reached SETTLED status, Primer will send a \\"void\\" request to the payment processor, thereby
 cancelling the payment and releasing the hold on customer funds. Upon success, the payment will transition to CANCELLED. The
 payload is optional.",
-    "title": "Cancel a payment",
-    "type": "endpoint",
-    "version": "v2.1",
-    "versionSlug": "v-2-1",
+      "method": "POST",
+      "name": "Cancel a payment",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "/cancel",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.1-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payments API",
+          "urlSlug": "payments-api",
+        },
+        Object {
+          "name": "Cancel a payment",
+          "urlSlug": "cancel-a-payment",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.1",
+      "urlSlug": "v-2-1",
+    },
   },
   Object {
-    "indexSegmentId": "v2.1-constant",
-    "path": "primer-api/payments-api/refund-a-payment",
-    "subtitle": "By default, this request will refund the full amount.
+    "endpoint": Object {
+      "description": "By default, this request will refund the full amount.
 
 Optionally, pass in a lesser amount for a partial refund.",
-    "title": "Refund a payment",
-    "type": "endpoint",
-    "version": "v2.1",
-    "versionSlug": "v-2-1",
+      "method": "POST",
+      "name": "Refund a payment",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "/refund",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.1-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payments API",
+          "urlSlug": "payments-api",
+        },
+        Object {
+          "name": "Refund a payment",
+          "urlSlug": "refund-a-payment",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.1",
+      "urlSlug": "v-2-1",
+    },
   },
   Object {
-    "indexSegmentId": "v2.1-constant",
-    "path": "primer-api/payments-api/resume-a-payment",
-    "subtitle": "Resume a payment's workflow execution from a paused state. This is usually required when a Workflow was paused in order to get
+    "endpoint": Object {
+      "description": "Resume a payment's workflow execution from a paused state. This is usually required when a Workflow was paused in order to get
 further information from the customer, or when waiting for an asynchronous response from a third party connection.",
-    "title": "Resume a payment",
-    "type": "endpoint",
-    "version": "v2.1",
-    "versionSlug": "v-2-1",
+      "method": "POST",
+      "name": "Resume a payment",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "/resume",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.1-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payments API",
+          "urlSlug": "payments-api",
+        },
+        Object {
+          "name": "Resume a payment",
+          "urlSlug": "resume-a-payment",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.1",
+      "urlSlug": "v-2-1",
+    },
   },
   Object {
+    "endpoint": Object {
+      "description": "Retrieve a payment by its ID.",
+      "method": "GET",
+      "name": "Get a payment",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
     "indexSegmentId": "v2.1-constant",
-    "path": "primer-api/payments-api/get-a-payment",
-    "subtitle": "Retrieve a payment by its ID.",
-    "title": "Get a payment",
-    "type": "endpoint",
-    "version": "v2.1",
-    "versionSlug": "v-2-1",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payments API",
+          "urlSlug": "payments-api",
+        },
+        Object {
+          "name": "Get a payment",
+          "urlSlug": "get-a-payment",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.1",
+      "urlSlug": "v-2-1",
+    },
   },
   Object {
-    "indexSegmentId": "v2.1-constant",
-    "path": "primer-api/payment-methods-api/save-a-payment-method-token",
-    "subtitle": "Save a SINGLE_USE payment method token so it can be used again later. You can optionally choose to verify the payment method
+    "endpoint": Object {
+      "description": "Save a SINGLE_USE payment method token so it can be used again later. You can optionally choose to verify the payment method
 before vaulting. If verification fails, no payment method data will be vaulted. Verification can minimise fraud and boost
 subscription rates for recurring payments.
 
 If you try to vault an already vaulted token, you will get the existing vaulted token back.",
-    "title": "Save a payment method token",
-    "type": "endpoint",
-    "version": "v2.1",
-    "versionSlug": "v-2-1",
-  },
-  Object {
+      "method": "POST",
+      "name": "Save a payment method token",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payment-instruments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "paymentMethodToken",
+          },
+          Object {
+            "type": "literal",
+            "value": "/vault",
+          },
+        ],
+      },
+    },
     "indexSegmentId": "v2.1-constant",
-    "path": "primer-api/payment-methods-api/list-saved-payment-methods",
-    "subtitle": "Retrieve a list of stored payment methods for a customer.",
-    "title": "List saved payment methods",
-    "type": "endpoint",
-    "version": "v2.1",
-    "versionSlug": "v-2-1",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payment Methods API",
+          "urlSlug": "payment-methods-api",
+        },
+        Object {
+          "name": "Save a payment method token",
+          "urlSlug": "save-a-payment-method-token",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.1",
+      "urlSlug": "v-2-1",
+    },
   },
   Object {
+    "endpoint": Object {
+      "description": "Retrieve a list of stored payment methods for a customer.",
+      "method": "GET",
+      "name": "List saved payment methods",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payment-instruments",
+          },
+        ],
+      },
+    },
     "indexSegmentId": "v2.1-constant",
-    "path": "primer-api/payment-methods-api/delete-a-saved-payment-method",
-    "subtitle": "Delete a saved payment method.",
-    "title": "Delete a saved payment method",
-    "type": "endpoint",
-    "version": "v2.1",
-    "versionSlug": "v-2-1",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payment Methods API",
+          "urlSlug": "payment-methods-api",
+        },
+        Object {
+          "name": "List saved payment methods",
+          "urlSlug": "list-saved-payment-methods",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.1",
+      "urlSlug": "v-2-1",
+    },
   },
   Object {
+    "endpoint": Object {
+      "description": "Delete a saved payment method.",
+      "method": "DELETE",
+      "name": "Delete a saved payment method",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payment-instruments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "paymentMethodToken",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
     "indexSegmentId": "v2.1-constant",
-    "path": "primer-api/payment-methods-api/update-the-default-saved-payment-method",
-    "subtitle": "Update a saved payment method to be the default stored payment method for a customer.",
-    "title": "Update the default saved payment method",
-    "type": "endpoint",
-    "version": "v2.1",
-    "versionSlug": "v-2-1",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payment Methods API",
+          "urlSlug": "payment-methods-api",
+        },
+        Object {
+          "name": "Delete a saved payment method",
+          "urlSlug": "delete-a-saved-payment-method",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.1",
+      "urlSlug": "v-2-1",
+    },
   },
   Object {
-    "indexSegmentId": "v2-constant",
-    "path": "introduction/getting-started",
-    "subtitle": "The Primer API is used to manage Client Sessions, Payments and saved payment methods. All other actions are either managed in the
+    "endpoint": Object {
+      "description": "Update a saved payment method to be the default stored payment method for a customer.",
+      "method": "POST",
+      "name": "Update the default saved payment method",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payment-instruments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "paymentMethodToken",
+          },
+          Object {
+            "type": "literal",
+            "value": "/default",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2.1-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payment Methods API",
+          "urlSlug": "payment-methods-api",
+        },
+        Object {
+          "name": "Update the default saved payment method",
+          "urlSlug": "update-the-default-saved-payment-method",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2.1",
+      "urlSlug": "v-2-1",
+    },
+  },
+  Object {
+    "content": "The Primer API is used to manage Client Sessions, Payments and saved payment methods. All other actions are either managed in the
 Universal Checkout implementation or in the Dashboard.
 
 Check out:
@@ -1291,15 +2751,28 @@ curl -X POST 'https://api.primer.io/<ENDPOINT>' \\\\
 AVAILABLE VERSIONS
 
 Read about the available versions of the APIs below on our Changelog [https://apiref.primer.io/changelog].",
+    "indexSegmentId": "v2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Introduction",
+          "urlSlug": "introduction",
+        },
+        Object {
+          "name": "Getting Started",
+          "urlSlug": "getting-started",
+        },
+      ],
+    },
     "title": "Getting Started",
-    "type": "page",
-    "version": "v2",
-    "versionSlug": "v-2",
+    "type": "page-v2",
+    "version": Object {
+      "id": "v2",
+      "urlSlug": "v-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2-constant",
-    "path": "introduction/authentication",
-    "subtitle": "Primer uses API keys to authenticate requests. You can manage API keys in the Developers
+    "content": "Primer uses API keys to authenticate requests. You can manage API keys in the Developers
 [https://sandbox-dashboard.primer.io/developers] area of the dashboard.
 
 As API keys carry many privileges such as authorizing payments, it is important to keep them private and secure. Do not hardcode
@@ -1327,15 +2800,28 @@ post to our webhooks endpoint. API keys with this scope can be used to enable co
 about important payment lifecycle events. transactions:authorize Authorize a payment transactions:cancel Cancel a payment.
 transactions:capture Submit a payment for settlement. transactions:retrieve Retrieve one or more payments. transactions:refund
 Refund a payment. payment_instrument:read Read stored payment methods. payment_instrument:write Write stored payment methods.",
+    "indexSegmentId": "v2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Introduction",
+          "urlSlug": "introduction",
+        },
+        Object {
+          "name": "Authentication",
+          "urlSlug": "authentication",
+        },
+      ],
+    },
     "title": "Authentication",
-    "type": "page",
-    "version": "v2",
-    "versionSlug": "v-2",
+    "type": "page-v2",
+    "version": Object {
+      "id": "v2",
+      "urlSlug": "v-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2-constant",
-    "path": "introduction/api-responses",
-    "subtitle": "STATUS CODES
+    "content": "STATUS CODES
 
 The following table summarizes the HTTP response codes you may receive from the Primer REST API.
 
@@ -1382,15 +2868,28 @@ your response payload for more details. CANCELLED The payment was cancelled prio
 
 Don't hesitate to reach out with any questions or feedback. You can email Primer directly at support@primer.io
 [support@primer.io], or contact your Primer account manager.",
+    "indexSegmentId": "v2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Introduction",
+          "urlSlug": "introduction",
+        },
+        Object {
+          "name": "API Responses",
+          "urlSlug": "api-responses",
+        },
+      ],
+    },
     "title": "API Responses",
-    "type": "page",
-    "version": "v2",
-    "versionSlug": "v-2",
+    "type": "page-v2",
+    "version": Object {
+      "id": "v2",
+      "urlSlug": "v-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2-constant",
-    "path": "introduction/idempotency-key",
-    "subtitle": "Primer supports a request idempotency mechanism for our Payments API. This optional feature enables you to safely retry a request
+    "content": "Primer supports a request idempotency mechanism for our Payments API. This optional feature enables you to safely retry a request
 without risking the user being charged or refunded multiple times.
 
 This is particularly useful when an API call fails due to the request being invalid, due to a network issue, or if Primer is
@@ -1415,15 +2914,28 @@ API. Therefore, if you want to allow the user to retry an unsuccessful payment, 
 
 As a such, don't use anything too restrictive like an orderId for the idempotency key as multiple payment attempts and refunds can
 be made for a single order.",
+    "indexSegmentId": "v2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Introduction",
+          "urlSlug": "introduction",
+        },
+        Object {
+          "name": "Idempotency Key",
+          "urlSlug": "idempotency-key",
+        },
+      ],
+    },
     "title": "Idempotency Key",
-    "type": "page",
-    "version": "v2",
-    "versionSlug": "v-2",
+    "type": "page-v2",
+    "version": Object {
+      "id": "v2",
+      "urlSlug": "v-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2-constant",
-    "path": "introduction/loyalty-transactions",
-    "subtitle": "Primer's Loyalty API provides an interface to interact with 3rd party loyalty point and service providers.
+    "content": "Primer's Loyalty API provides an interface to interact with 3rd party loyalty point and service providers.
 
 All of the endpoints below reference a connectionId. This is the unique Primer identifier for your loyalty provider connection.
 Primer will provide this once the loyalty provider connection is created.
@@ -1457,15 +2969,29 @@ GET A LIST OF TRANSACTIONS
 
 Call the Loyalty Transactions [https://apiref.primer.io/reference/get_loyalty_transaction] endpoint to retrieve a list of all your
 transactions. In most cases it makes sense to filter by connectionId. You can also filter by customerId or orderId.",
+    "indexSegmentId": "v2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Introduction",
+          "urlSlug": "introduction",
+        },
+        Object {
+          "name": "Loyalty Transactions",
+          "urlSlug": "loyalty-transactions",
+        },
+      ],
+    },
     "title": "Loyalty Transactions",
-    "type": "page",
-    "version": "v2",
-    "versionSlug": "v-2",
+    "type": "page-v2",
+    "version": Object {
+      "id": "v2",
+      "urlSlug": "v-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2-constant",
-    "path": "primer-api/client-session-api/create-a-client-session",
-    "subtitle": "Creating a client session generates a client token: a temporary key used to initialize Universal Checkout
+    "endpoint": Object {
+      "description": "Creating a client session generates a client token: a temporary key used to initialize Universal Checkout
 [https://primer.io/docs/accept-payments/setup-universal-checkout/installation/web] and authenticate it against your account.
 
 Universal Checkout automatically retrieves all the settings from the client session and the Dashboard to configure the payment
@@ -1475,15 +3001,47 @@ Note: When creating a Client Session, please make sure to provide currencyCode, 
 available, you can provide them when making the payment request.
 
 Client tokens expire after 24 hours.",
-    "title": "Create a client session",
-    "type": "endpoint",
-    "version": "v2",
-    "versionSlug": "v-2",
+      "method": "POST",
+      "name": "Create a client session",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/client-session",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Client Session API",
+          "urlSlug": "client-session-api",
+        },
+        Object {
+          "name": "Create a client session",
+          "urlSlug": "create-a-client-session",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2",
+      "urlSlug": "v-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2-constant",
-    "path": "primer-api/payments-api/search-list-payments",
-    "subtitle": "Retrieve a list of your payments.
+    "endpoint": Object {
+      "description": "Retrieve a list of your payments.
 
 Results are paginated, they will only return up to 100 payments maximum. To access the next page of result, set the cursor query
 parameter to the value of nextCursor in your current result payload. Use prevCursor to go back to the previous page.
@@ -1501,15 +3059,47 @@ curl --location --request GET 'https://api.primer.io/payments?status=FAILED,CANC
 You can alternatively specify a list by repeating the parameter multiple times.
 
 Note: payments will be available within a minute from being created.",
-    "title": "Search & list payments",
-    "type": "endpoint",
-    "version": "v2",
-    "versionSlug": "v-2",
+      "method": "GET",
+      "name": "Search & list payments",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payments",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payments API",
+          "urlSlug": "payments-api",
+        },
+        Object {
+          "name": "Search & list payments",
+          "urlSlug": "search-list-payments",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2",
+      "urlSlug": "v-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2-constant",
-    "path": "primer-api/payments-api/create-a-payment",
-    "subtitle": "Create and authorize a payment for a given customer order. You should provide a payment method token here to avoid PCI
+    "endpoint": Object {
+      "description": "Create and authorize a payment for a given customer order. You should provide a payment method token here to avoid PCI
 implications.
 
 If only a payment method token is passed, the values passed with the Client Session determine the amount, currency etc.
@@ -1519,15 +3109,47 @@ session, or if not yet available, when creating a payment.
 
 All fields provided on this request will take preference over any field on the order associated with the client session. E.g. if
 you pass amount on this request, it will override the amount on the order associated with the Client Session.",
-    "title": "Create a payment",
-    "type": "endpoint",
-    "version": "v2",
-    "versionSlug": "v-2",
+      "method": "POST",
+      "name": "Create a payment",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payments",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payments API",
+          "urlSlug": "payments-api",
+        },
+        Object {
+          "name": "Create a payment",
+          "urlSlug": "create-a-payment",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2",
+      "urlSlug": "v-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2-constant",
-    "path": "primer-api/payments-api/capture-a-payment",
-    "subtitle": "If you have successfully authorized a payment, you can now fully capture, or partially capture funds from the authorized payment,
+    "endpoint": Object {
+      "description": "If you have successfully authorized a payment, you can now fully capture, or partially capture funds from the authorized payment,
 depending on whether your selected payment processor supports it. The payment will be updated to SETTLED or SETTLING, depending on
 the payment method type.
 
@@ -1535,92 +3157,445 @@ The payload sent in this capture request is completely optional. If you don't se
 amount that was authorized will be sent for capture.
 
 Below are the available payload attributes, which give you more granular control when capturing funds, if you require it.",
-    "title": "Capture a payment",
-    "type": "endpoint",
-    "version": "v2",
-    "versionSlug": "v-2",
+      "method": "POST",
+      "name": "Capture a payment",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "/capture",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payments API",
+          "urlSlug": "payments-api",
+        },
+        Object {
+          "name": "Capture a payment",
+          "urlSlug": "capture-a-payment",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2",
+      "urlSlug": "v-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2-constant",
-    "path": "primer-api/payments-api/cancel-a-payment",
-    "subtitle": "Provided the payment has not reached SETTLED status, Primer will send a \\"void\\" request to the payment processor, thereby
+    "endpoint": Object {
+      "description": "Provided the payment has not reached SETTLED status, Primer will send a \\"void\\" request to the payment processor, thereby
 cancelling the payment and releasing the hold on customer funds.
 
 Upon success, the payment will transition to CANCELLED.
 
 The payload is optional.",
-    "title": "Cancel a payment",
-    "type": "endpoint",
-    "version": "v2",
-    "versionSlug": "v-2",
+      "method": "POST",
+      "name": "Cancel a payment",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "/cancel",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payments API",
+          "urlSlug": "payments-api",
+        },
+        Object {
+          "name": "Cancel a payment",
+          "urlSlug": "cancel-a-payment",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2",
+      "urlSlug": "v-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2-constant",
-    "path": "primer-api/payments-api/refund-a-payment",
-    "subtitle": "By default, this request will refund the full amount.
+    "endpoint": Object {
+      "description": "By default, this request will refund the full amount.
 
 Optionally, pass in a lesser amount for a partial refund.",
-    "title": "Refund a payment",
-    "type": "endpoint",
-    "version": "v2",
-    "versionSlug": "v-2",
+      "method": "POST",
+      "name": "Refund a payment",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "/refund",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payments API",
+          "urlSlug": "payments-api",
+        },
+        Object {
+          "name": "Refund a payment",
+          "urlSlug": "refund-a-payment",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2",
+      "urlSlug": "v-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2-constant",
-    "path": "primer-api/payments-api/resume-a-payment",
-    "subtitle": "Resume a payment's workflow execution from a paused state. This is usually required when a Workflow was paused in order to get
+    "endpoint": Object {
+      "description": "Resume a payment's workflow execution from a paused state. This is usually required when a Workflow was paused in order to get
 further information from the customer, or when waiting for an asynchronous response from a third party connection.",
-    "title": "Resume a payment",
-    "type": "endpoint",
-    "version": "v2",
-    "versionSlug": "v-2",
+      "method": "POST",
+      "name": "Resume a payment",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "/resume",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payments API",
+          "urlSlug": "payments-api",
+        },
+        Object {
+          "name": "Resume a payment",
+          "urlSlug": "resume-a-payment",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2",
+      "urlSlug": "v-2",
+    },
   },
   Object {
+    "endpoint": Object {
+      "description": "Retrieve a payment by its ID.",
+      "method": "GET",
+      "name": "Get a payment",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
     "indexSegmentId": "v2-constant",
-    "path": "primer-api/payments-api/get-a-payment",
-    "subtitle": "Retrieve a payment by its ID.",
-    "title": "Get a payment",
-    "type": "endpoint",
-    "version": "v2",
-    "versionSlug": "v-2",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payments API",
+          "urlSlug": "payments-api",
+        },
+        Object {
+          "name": "Get a payment",
+          "urlSlug": "get-a-payment",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2",
+      "urlSlug": "v-2",
+    },
   },
   Object {
-    "indexSegmentId": "v2-constant",
-    "path": "primer-api/payment-methods-api/save-a-payment-method-token",
-    "subtitle": "Save a SINGLE_USE payment method token so it can be used again later.
+    "endpoint": Object {
+      "description": "Save a SINGLE_USE payment method token so it can be used again later.
 
 If you try to vault an already vaulted token, you will get the existing vaulted token back.",
-    "title": "Save a payment method token",
-    "type": "endpoint",
-    "version": "v2",
-    "versionSlug": "v-2",
+      "method": "POST",
+      "name": "Save a payment method token",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payment-instruments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "token",
+          },
+          Object {
+            "type": "literal",
+            "value": "/vault",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "v2-constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payment Methods API",
+          "urlSlug": "payment-methods-api",
+        },
+        Object {
+          "name": "Save a payment method token",
+          "urlSlug": "save-a-payment-method-token",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2",
+      "urlSlug": "v-2",
+    },
   },
   Object {
+    "endpoint": Object {
+      "description": "Retrieve a list of stored payment methods for a customer.",
+      "method": "GET",
+      "name": "List saved payment methods",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payment-instruments",
+          },
+        ],
+      },
+    },
     "indexSegmentId": "v2-constant",
-    "path": "primer-api/payment-methods-api/list-saved-payment-methods",
-    "subtitle": "Retrieve a list of stored payment methods for a customer.",
-    "title": "List saved payment methods",
-    "type": "endpoint",
-    "version": "v2",
-    "versionSlug": "v-2",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payment Methods API",
+          "urlSlug": "payment-methods-api",
+        },
+        Object {
+          "name": "List saved payment methods",
+          "urlSlug": "list-saved-payment-methods",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2",
+      "urlSlug": "v-2",
+    },
   },
   Object {
+    "endpoint": Object {
+      "description": "Delete a saved payment method.",
+      "method": "DELETE",
+      "name": "Delete a saved payment method",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payment-instruments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "token",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
     "indexSegmentId": "v2-constant",
-    "path": "primer-api/payment-methods-api/delete-a-saved-payment-method",
-    "subtitle": "Delete a saved payment method.",
-    "title": "Delete a saved payment method",
-    "type": "endpoint",
-    "version": "v2",
-    "versionSlug": "v-2",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payment Methods API",
+          "urlSlug": "payment-methods-api",
+        },
+        Object {
+          "name": "Delete a saved payment method",
+          "urlSlug": "delete-a-saved-payment-method",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2",
+      "urlSlug": "v-2",
+    },
   },
   Object {
+    "endpoint": Object {
+      "description": "Update a saved payment method to be the default stored payment method for a customer.",
+      "method": "POST",
+      "name": "Update the default saved payment method",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/payment-instruments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "token",
+          },
+          Object {
+            "type": "literal",
+            "value": "/default",
+          },
+        ],
+      },
+    },
     "indexSegmentId": "v2-constant",
-    "path": "primer-api/payment-methods-api/update-the-default-saved-payment-method",
-    "subtitle": "Update a saved payment method to be the default stored payment method for a customer.",
-    "title": "Update the default saved payment method",
-    "type": "endpoint",
-    "version": "v2",
-    "versionSlug": "v-2",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Primer API",
+          "urlSlug": "primer-api",
+        },
+        Object {
+          "name": "Payment Methods API",
+          "urlSlug": "payment-methods-api",
+        },
+        Object {
+          "name": "Update the default saved payment method",
+          "urlSlug": "update-the-default-saved-payment-method",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+    "version": Object {
+      "id": "v2",
+      "urlSlug": "v-2",
+    },
   },
 ]
 `;
@@ -1628,9 +3603,7 @@ If you try to vault an already vaulted token, you will get the existing vaulted 
 exports[`generateAlgoliaSearchRecordsForDocs {"name":"vellum"} 1`] = `
 Array [
   Object {
-    "indexSegmentId": "constant",
-    "path": "help-center/prompts/prompt-template-syntax",
-    "subtitle": "When using an LLM, you input a prompt and get back a completion. However, in order for a prompt to be reusable, you’ll want to be
+    "content": "When using an LLM, you input a prompt and get back a completion. However, in order for a prompt to be reusable, you’ll want to be
 able to specify certain parts of it dynamically.
 
 That’s where prompt templates come in. Prompt templates contain the fixed parts of a prompt with placeholders for the parts that
@@ -1668,13 +3641,28 @@ COMMENTS
 You can use jinja to leave comments in your prompt that don’t use up any tokens when compiled and sent to the LLM. For example,
 
 \`\`\` {# This is a comment #} Hello, world! \`\`\`",
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Help Center",
+          "urlSlug": "help-center",
+        },
+        Object {
+          "name": "Prompts",
+          "urlSlug": "prompts",
+        },
+        Object {
+          "name": "Prompt Template Syntax",
+          "urlSlug": "prompt-template-syntax",
+        },
+      ],
+    },
     "title": "Prompt Template Syntax",
-    "type": "page",
+    "type": "page-v2",
   },
   Object {
-    "indexSegmentId": "constant",
-    "path": "help-center/prompts/playground-history-and-collaboration",
-    "subtitle": "Vellum Playground is a powerful tool for rapid iteration and collaboration between multiple models and prompts. Save, tag, and
+    "content": "Vellum Playground is a powerful tool for rapid iteration and collaboration between multiple models and prompts. Save, tag, and
 share your work with ease using the features outlined below.
 
 
@@ -1710,13 +3698,28 @@ Share
 [https://vellum-ai.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F878ebe27-a33d-4d69-9b5d-168bac6b7350%2FScreenshot_5_9_23__7_26_PM.png?table=block&id=16065c5d-5cd4-4b32-adbb-89656696e93b&spaceId=71c05e3e-272b-4acf-9889-90a304d95d06&width=2000&userId=&cache=v2]
 
 With these powerful features, Vellum Playground makes it easy to collaborate, iterate, and share your work, all in one place.",
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Help Center",
+          "urlSlug": "help-center",
+        },
+        Object {
+          "name": "Prompts",
+          "urlSlug": "prompts",
+        },
+        Object {
+          "name": "Playground History and Collaboration",
+          "urlSlug": "playground-history-and-collaboration",
+        },
+      ],
+    },
     "title": "Playground History and Collaboration",
-    "type": "page",
+    "type": "page-v2",
   },
   Object {
-    "indexSegmentId": "constant",
-    "path": "help-center/documents/uploading-documents",
-    "subtitle": "Any document that you want to query against should be uploaded ahead of time at https://app.vellum.ai/document-indexes
+    "content": "Any document that you want to query against should be uploaded ahead of time at https://app.vellum.ai/document-indexes
 [https://app.vellum.ai/document-indexes].
 
 
@@ -1743,13 +3746,28 @@ Name - Human readable text which is how the document will be visible in Vellum's
 
 External ID - As the contents of a document change and the old documents becomes out of date, you can submit the updated document
 for reindexing re-uploading it and specifying the same \`External ID\`.",
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Help Center",
+          "urlSlug": "help-center",
+        },
+        Object {
+          "name": "Documents",
+          "urlSlug": "documents",
+        },
+        Object {
+          "name": "Uploading Documents",
+          "urlSlug": "uploading-documents",
+        },
+      ],
+    },
     "title": "Uploading Documents",
-    "type": "page",
+    "type": "page-v2",
   },
   Object {
-    "indexSegmentId": "constant",
-    "path": "help-center/deployments/monitoring-production-traffic",
-    "subtitle": "You can monitor production traffic of a Vellum Deployment through all the charts in the Monitoring tab. These charts can be
+    "content": "You can monitor production traffic of a Vellum Deployment through all the charts in the Monitoring tab. These charts can be
 filtered for various time ranges using the “Relative Date” button. This help doc details the charts you can see on this tab, if
 you’d like to see any other information about your Deployment, please don’t hesitate to reach out and we can add it in!
 
@@ -1766,13 +3784,28 @@ Number of Completions w/ Actuals Submitted: Number of requests that have an asso
 Average Latency over Time: Time taken for the request to complete
 
 Num LLM Provider Errors Over Time: Number of errors from the LLM provider",
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Help Center",
+          "urlSlug": "help-center",
+        },
+        Object {
+          "name": "Deployments",
+          "urlSlug": "deployments",
+        },
+        Object {
+          "name": "Monitoring production traffic",
+          "urlSlug": "monitoring-production-traffic",
+        },
+      ],
+    },
     "title": "Monitoring production traffic",
-    "type": "page",
+    "type": "page-v2",
   },
   Object {
-    "indexSegmentId": "constant",
-    "path": "api-reference/introduction/getting-started",
-    "subtitle": "WELCOME 👋
+    "content": "WELCOME 👋
 
 Welcome to Vellum's API documentation! Here you'll find information about the various endpoints available to you, as well as the
 parameters and responses that they accept and return.
@@ -1800,161 +3833,717 @@ OFFICIAL API CLIENTS:
 
 Vellum maintains official API clients for Python and Node/Typescript. We recommend using these clients to interact with all stable
 endpoints. You can find them here:",
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "Introduction",
+          "urlSlug": "introduction",
+        },
+        Object {
+          "name": "Getting started",
+          "urlSlug": "getting-started",
+        },
+      ],
+    },
     "title": "Getting started",
-    "type": "page",
+    "type": "page-v2",
   },
   Object {
-    "indexSegmentId": "constant",
-    "path": "api-reference/execute-workflow-stream",
-    "subtitle": "Stable
+    "endpoint": Object {
+      "description": "Stable
 
 Executes a deployed Workflow and streams back its results.",
-    "title": "Execute Workflow Stream",
-    "type": "endpoint",
+      "method": "POST",
+      "name": "Execute Workflow Stream",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/v1/execute-workflow-stream",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "API Reference",
+          "skipUrlSlug": true,
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "Execute Workflow Stream",
+          "urlSlug": "execute-workflow-stream",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
   },
   Object {
-    "indexSegmentId": "constant",
-    "path": "api-reference/generate",
-    "subtitle": "Stable
+    "endpoint": Object {
+      "description": "Stable
 
 Generate a completion using a previously defined deployment.
 
 Note: Uses a base url of https://predict.vellum.ai.",
-    "title": "Generate",
-    "type": "endpoint",
+      "method": "POST",
+      "name": "Generate",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/v1/generate",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "API Reference",
+          "skipUrlSlug": true,
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "Generate",
+          "urlSlug": "generate",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
   },
   Object {
-    "indexSegmentId": "constant",
-    "path": "api-reference/generate-stream",
-    "subtitle": "Stable
+    "endpoint": Object {
+      "description": "Stable
 
 Generate a stream of completions using a previously defined deployment.
 
 Note: Uses a base url of https://predict.vellum.ai.",
-    "title": "Generate Stream",
-    "type": "endpoint",
+      "method": "POST",
+      "name": "Generate Stream",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/v1/generate-stream",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "API Reference",
+          "skipUrlSlug": true,
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "Generate Stream",
+          "urlSlug": "generate-stream",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
   },
   Object {
-    "indexSegmentId": "constant",
-    "path": "api-reference/search",
-    "subtitle": "Stable
+    "endpoint": Object {
+      "description": "Stable
 
 Perform a search against a document index.
 
 Note: Uses a base url of https://predict.vellum.ai.",
-    "title": "Search",
-    "type": "endpoint",
+      "method": "POST",
+      "name": "Search",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/v1/search",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "API Reference",
+          "skipUrlSlug": true,
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "Search",
+          "urlSlug": "search",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
   },
   Object {
-    "indexSegmentId": "constant",
-    "path": "api-reference/submit-completion-actuals",
-    "subtitle": "Stable
+    "endpoint": Object {
+      "description": "Stable
 
 Used to submit feedback regarding the quality of previously generated completions.
 
 Note: Uses a base url of https://predict.vellum.ai.",
-    "title": "Submit Completion Actuals",
-    "type": "endpoint",
+      "method": "POST",
+      "name": "Submit Completion Actuals",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/v1/submit-completion-actuals",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "API Reference",
+          "skipUrlSlug": true,
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "Submit Completion Actuals",
+          "urlSlug": "submit-completion-actuals",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
   },
   Object {
-    "indexSegmentId": "constant",
-    "path": "api-reference/submit-workflow-execution-actuals",
-    "subtitle": "Stable
+    "endpoint": Object {
+      "description": "Stable
 
 Used to submit feedback regarding the quality of previous workflow execution and its outputs.
 
 Note: Uses a base url of https://predict.vellum.ai.",
-    "title": "Submit Workflow Execution Actuals",
-    "type": "endpoint",
+      "method": "POST",
+      "name": "Submit Workflow Execution Actuals",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/v1/submit-workflow-execution-actuals",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "API Reference",
+          "skipUrlSlug": true,
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "Submit Workflow Execution Actuals",
+          "urlSlug": "submit-workflow-execution-actuals",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
   },
   Object {
-    "indexSegmentId": "constant",
-    "path": "api-reference/deployments/retrieve",
-    "subtitle": "Unstable
+    "endpoint": Object {
+      "description": "Unstable
 
 Used to retrieve a deployment given its ID or name.",
-    "title": "Retrieve",
-    "type": "endpoint",
+      "method": "GET",
+      "name": "Retrieve",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/v1/deployments/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "API Reference",
+          "skipUrlSlug": true,
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "deployments",
+          "urlSlug": "deployments",
+        },
+        Object {
+          "name": "Retrieve",
+          "urlSlug": "retrieve",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
   },
   Object {
-    "indexSegmentId": "constant",
-    "path": "api-reference/document-indexes/create",
-    "subtitle": "Unstable
+    "endpoint": Object {
+      "description": "Unstable
 
 Creates a new document index.",
-    "title": "Create",
-    "type": "endpoint",
+      "method": "POST",
+      "name": "Create",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/v1/document-indexes",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "API Reference",
+          "skipUrlSlug": true,
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "documentIndexes",
+          "urlSlug": "document-indexes",
+        },
+        Object {
+          "name": "Create",
+          "urlSlug": "create",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
   },
   Object {
-    "indexSegmentId": "constant",
-    "path": "api-reference/documents/list",
-    "subtitle": "Stable
+    "endpoint": Object {
+      "description": "Stable
 
 Used to list documents. Optionally filter on supported fields.",
-    "title": "List",
-    "type": "endpoint",
+      "method": "GET",
+      "name": "List",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/v1/documents",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "API Reference",
+          "skipUrlSlug": true,
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "documents",
+          "urlSlug": "documents",
+        },
+        Object {
+          "name": "List",
+          "urlSlug": "list",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
   },
   Object {
-    "indexSegmentId": "constant",
-    "path": "api-reference/documents/partial-update",
-    "subtitle": "Unstable
+    "endpoint": Object {
+      "description": "Unstable
 
 Update a Document, keying off of its Vellum-generated ID. Particularly useful for updating its metadata.",
-    "title": "Partial Update",
-    "type": "endpoint",
+      "method": "PATCH",
+      "name": "Partial Update",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/v1/documents/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "API Reference",
+          "skipUrlSlug": true,
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "documents",
+          "urlSlug": "documents",
+        },
+        Object {
+          "name": "Partial Update",
+          "urlSlug": "partial-update",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
   },
   Object {
+    "endpoint": Object {
+      "method": "DELETE",
+      "name": "Destroy",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/v1/documents/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
     "indexSegmentId": "constant",
-    "path": "api-reference/documents/destroy",
-    "subtitle": "",
-    "title": "Destroy",
-    "type": "endpoint",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "API Reference",
+          "skipUrlSlug": true,
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "documents",
+          "urlSlug": "documents",
+        },
+        Object {
+          "name": "Destroy",
+          "urlSlug": "destroy",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
   },
   Object {
-    "indexSegmentId": "constant",
-    "path": "api-reference/documents/upload",
-    "subtitle": "Stable
+    "endpoint": Object {
+      "description": "Stable
 
 Upload a document to be indexed and used for search.
 
 Note: Uses a base url of https://documents.vellum.ai.",
-    "title": "Upload",
-    "type": "endpoint",
+      "method": "POST",
+      "name": "Upload",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/v1/upload-document",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "API Reference",
+          "skipUrlSlug": true,
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "documents",
+          "urlSlug": "documents",
+        },
+        Object {
+          "name": "Upload",
+          "urlSlug": "upload",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
   },
   Object {
-    "indexSegmentId": "constant",
-    "path": "api-reference/model-versions/retrieve",
-    "subtitle": "Unstable
+    "endpoint": Object {
+      "description": "Unstable
 
 Used to retrieve a model version given its ID.",
-    "title": "Retrieve",
-    "type": "endpoint",
+      "method": "GET",
+      "name": "Retrieve",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/v1/model-versions/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "API Reference",
+          "skipUrlSlug": true,
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "modelVersions",
+          "urlSlug": "model-versions",
+        },
+        Object {
+          "name": "Retrieve",
+          "urlSlug": "retrieve",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
   },
   Object {
-    "indexSegmentId": "constant",
-    "path": "api-reference/model-versions/model-version-compile-prompt",
-    "subtitle": "Unstable
+    "endpoint": Object {
+      "description": "Unstable
 
 Compiles the prompt backing the model version using the provided input values.",
-    "title": "Model Version Compile Prompt",
-    "type": "endpoint",
+      "method": "POST",
+      "name": "Model Version Compile Prompt",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/v1/model-versions/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "/compile-prompt",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "API Reference",
+          "skipUrlSlug": true,
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "modelVersions",
+          "urlSlug": "model-versions",
+        },
+        Object {
+          "name": "Model Version Compile Prompt",
+          "urlSlug": "model-version-compile-prompt",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
   },
   Object {
-    "indexSegmentId": "constant",
-    "path": "api-reference/registered-prompts/register-prompt",
-    "subtitle": "Unstable
+    "endpoint": Object {
+      "description": "Unstable
 
 Registers a prompt within Vellum and creates associated Vellum entities. Intended to be used by integration partners, not directly
 by Vellum users.
 
 Under the hood, this endpoint creates a new sandbox, a new model version, and a new deployment.",
-    "title": "Register Prompt",
-    "type": "endpoint",
+      "method": "POST",
+      "name": "Register Prompt",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/v1/registered-prompts/register",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "API Reference",
+          "skipUrlSlug": true,
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "registeredPrompts",
+          "urlSlug": "registered-prompts",
+        },
+        Object {
+          "name": "Register Prompt",
+          "urlSlug": "register-prompt",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
   },
   Object {
-    "indexSegmentId": "constant",
-    "path": "api-reference/sandboxes/upsert-sandbox-scenario",
-    "subtitle": "Unstable
+    "endpoint": Object {
+      "description": "Unstable
 
 Upserts a new scenario for a sandbox, keying off of the optionally provided scenario id.
 
@@ -1963,22 +4552,116 @@ be appended to the end.
 
 Note that a full replacement of the scenario is performed, so any fields not provided will be removed or overwritten with default
 values.",
-    "title": "Upsert Sandbox Scenario",
-    "type": "endpoint",
+      "method": "POST",
+      "name": "Upsert Sandbox Scenario",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/v1/sandboxes/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "/scenarios",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "API Reference",
+          "skipUrlSlug": true,
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "sandboxes",
+          "urlSlug": "sandboxes",
+        },
+        Object {
+          "name": "Upsert Sandbox Scenario",
+          "urlSlug": "upsert-sandbox-scenario",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
   },
   Object {
-    "indexSegmentId": "constant",
-    "path": "api-reference/sandboxes/delete-sandbox-scenario",
-    "subtitle": "Unstable
+    "endpoint": Object {
+      "description": "Unstable
 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
-    "title": "Delete Sandbox Scenario",
-    "type": "endpoint",
+      "method": "DELETE",
+      "name": "Delete Sandbox Scenario",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/v1/sandboxes/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "/scenarios/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "scenario_id",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "API Reference",
+          "skipUrlSlug": true,
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "sandboxes",
+          "urlSlug": "sandboxes",
+        },
+        Object {
+          "name": "Delete Sandbox Scenario",
+          "urlSlug": "delete-sandbox-scenario",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
   },
   Object {
-    "indexSegmentId": "constant",
-    "path": "api-reference/test-suites/upsert-test-suite-test-case",
-    "subtitle": "Unstable
+    "endpoint": Object {
+      "description": "Unstable
 
 Upserts a new test case for a test suite, keying off of the optionally provided test case id.
 
@@ -1987,17 +4670,112 @@ will be appended to the end.
 
 Note that a full replacement of the test case is performed, so any fields not provided will be removed or overwritten with default
 values.",
-    "title": "Upsert Test Suite Test Case",
-    "type": "endpoint",
+      "method": "POST",
+      "name": "Upsert Test Suite Test Case",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/v1/test-suites/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "/test-cases",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "API Reference",
+          "skipUrlSlug": true,
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "testSuites",
+          "urlSlug": "test-suites",
+        },
+        Object {
+          "name": "Upsert Test Suite Test Case",
+          "urlSlug": "upsert-test-suite-test-case",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
   },
   Object {
-    "indexSegmentId": "constant",
-    "path": "api-reference/test-suites/delete-test-suite-test-case",
-    "subtitle": "Unstable
+    "endpoint": Object {
+      "description": "Unstable
 
 Deletes an existing test case for a test suite, keying off of the test case id.",
-    "title": "Delete Test Suite Test Case",
-    "type": "endpoint",
+      "method": "DELETE",
+      "name": "Delete Test Suite Test Case",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+          Object {
+            "type": "literal",
+            "value": "/v1/test-suites/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "id",
+          },
+          Object {
+            "type": "literal",
+            "value": "/test-cases/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "test_case_id",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "API Reference",
+          "skipUrlSlug": true,
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "testSuites",
+          "urlSlug": "test-suites",
+        },
+        Object {
+          "name": "Delete Test Suite Test Case",
+          "urlSlug": "delete-test-suite-test-case",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
   },
 ]
 `;

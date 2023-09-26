@@ -316,22 +316,74 @@ types:
       name: string
       url: string
 
-  AlgoliaRecordType:
-    enum:
-      - endpoint
-      - page
-
-  AlgoliaRecord:
-    audiences:
-      - read
+  AlgoliaEndpointRecord:
     properties:
-      type: AlgoliaRecordType
       title: string
       subtitle: string
       path: string # path does not include version slug
       version: optional<VersionId>
       versionSlug: optional<string>
       indexSegmentId: optional<string>
+
+  AlgoliaPageRecord:
+    properties:
+      title: string
+      subtitle: string
+      path: string # path does not include version slug
+      version: optional<VersionId>
+      versionSlug: optional<string>
+      indexSegmentId: optional<string>
+
+  AlgoliaRecordEndpointPath:
+    properties:
+      parts: list<apiReadV1Endpoint.EndpointPathPart>
+
+  AlgoliaRecordPathPart:
+    properties:
+      name: string
+      urlSlug: string
+      skipUrlSlug: optional<boolean>
+
+  AlgoliaRecordPath:
+    docs: The path corresponding to a search record represented as a list of parts. If the docs are versioned, the version prefix must be added when building the string representation of the path.
+    properties:
+      parts: list<AlgoliaRecordPathPart>
+
+  AlgoliaRecordEndpointSummary:
+    properties:
+      name: optional<string>
+      description: optional<string>
+      method: apiReadV1Endpoint.HttpMethod
+      path: AlgoliaRecordEndpointPath
+
+  AlgoliaRecordVersion:
+    properties:
+      id: VersionId
+      urlSlug: optional<string>
+
+  AlgoliaEndpointRecordV2:
+    properties:
+      endpoint: AlgoliaRecordEndpointSummary
+      path: AlgoliaRecordPath
+      version: optional<AlgoliaRecordVersion>
+      indexSegmentId: string
+
+  AlgoliaPageRecordV2:
+    properties:
+      title: string
+      content: string
+      path: AlgoliaRecordPath
+      version: optional<AlgoliaRecordVersion>
+      indexSegmentId: string
+
+  AlgoliaRecord:
+    audiences:
+      - read
+    union:
+      endpoint: AlgoliaEndpointRecord
+      page: AlgoliaPageRecord
+      endpoint-v2: AlgoliaEndpointRecordV2
+      page-v2: AlgoliaPageRecordV2
 
 errors:
   DomainNotRegisteredError:
