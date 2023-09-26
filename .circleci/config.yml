@@ -52,19 +52,23 @@ jobs:
       - run:
           command: yarn test:ete
           name: Test ETE
-
-  deploy-dev:
+  
+  migrate-dev: 
     circleci_ip_ranges: true
     docker:
       - image: cimg/node:lts
     steps:
       - attach_workspace: { at: /home/circleci }
-      - aws-cli/setup
-      - setup_remote_docker:
-          version: 20.10.14
       - run:
           command: yarn run dev:db:migrate
           name: prisma deploy
+
+  deploy-dev:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - attach_workspace: { at: /home/circleci }
+      - aws-cli/setup
       - run:
           command: |
             git_version="$(scripts/git-version.sh)"
@@ -74,41 +78,48 @@ jobs:
             npm install
             VERSION="${git_version}" cdk deploy fdr-dev --require-approval never --progress events
           name: cdk deploy
-
-  deploy-dev2:
+  
+  migrate-dev2: 
     circleci_ip_ranges: true
     docker:
       - image: cimg/node:lts
     steps:
       - attach_workspace: { at: /home/circleci }
-      - aws-cli/setup
-      - setup_remote_docker:
-          version: 20.10.14
       - run:
           command: yarn run dev:db:migrate
           name: prisma deploy
+
+  deploy-dev2:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - attach_workspace: { at: /home/circleci }
+      - aws-cli/setup
       - run:
           command: |
             git_version="$(scripts/git-version.sh)"
-            yarn run dev:docker "${git_version}"
             npm install -g aws-cdk
             cd fdr-deploy
             npm install
             VERSION="${git_version}" cdk deploy fdr-dev2 --require-approval never --progress events
           name: cdk deploy
-
-  deploy-prod:
+  
+  migrate-prod: 
     circleci_ip_ranges: true
     docker:
       - image: cimg/node:lts
     steps:
       - attach_workspace: { at: /home/circleci }
-      - aws-cli/setup
-      - setup_remote_docker:
-          version: 20.10.14
       - run:
           command: yarn run prod:db:migrate
           name: prisma deploy
+
+  deploy-prod:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - attach_workspace: { at: /home/circleci }
+      - aws-cli/setup
       - run:
           command: |
             git_version="$(scripts/git-version.sh)"
@@ -118,11 +129,6 @@ jobs:
             npm install
             VERSION="${git_version}" cdk deploy fdr-prod --require-approval never --progress events
           name: cdk deploy
-      - run:
-          name: fern register --environment Production
-          command: |
-            npm install -g fern-api
-            fern register-v2 --environment Production
 
   publish-sdks:
     machine:
@@ -168,9 +174,18 @@ workflows:
             tags:
               only: /.*/
           requires: [compile]
+      
+      - migrate-dev:
+          requires: [check, ete-test]
+          filters:
+            branches:
+              only:
+                - main
+          context:
+            - fern-dev
 
       - deploy-dev:
-          requires: [check, ete-test]
+          requires: [check, ete-test, migrate-dev]
           filters:
             branches:
               only:
@@ -182,9 +197,18 @@ workflows:
             - fern-tokens
             - fdr-algolia-dev
             - slack
+      
+      - migrate-dev2:
+          requires: [check, ete-test]
+          filters:
+            branches:
+              only:
+                - main
+          context:
+            - fern-dev2
 
       - deploy-dev2:
-          requires: [check, ete-test]
+          requires: [check, ete-test, migrate-dev2]
           filters:
             branches:
               only:
@@ -196,6 +220,17 @@ workflows:
             - fern-tokens
             - fdr-algolia-dev
             - slack
+
+      - migrate-prod:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only:
+                - /.*/
+          context:
+            - fern-prod
+          requires: [check, ete-test]
 
       - deploy-prod:
           filters:
@@ -211,7 +246,7 @@ workflows:
             - fern-tokens
             - fdr-algolia-prod
             - slack
-          requires: [check, ete-test]
+          requires: [check, ete-test, migrate-prod]
 
       - publish-sdks:
           filters:
