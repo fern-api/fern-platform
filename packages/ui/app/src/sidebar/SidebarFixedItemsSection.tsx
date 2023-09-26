@@ -16,7 +16,7 @@ export declare namespace SidebarFixedItemsSection {
 }
 
 const UnmemoizedSidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> = ({ className, hideSearchBar }) => {
-    const { docsInfo, activeTabIndex, navigateToPath, getFullSlug } = useDocsContext();
+    const { docsInfo, activeTabIndex, navigateToPath, getFullSlug, theme } = useDocsContext();
     const { openSearchDialog } = useSearchContext();
     const searchService = useSearchService();
     const { activeNavigationConfig } = docsInfo;
@@ -26,8 +26,8 @@ const UnmemoizedSidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Prop
     const router = useRouter();
 
     const searchBar = useMemo(() => {
-        return showSearchBar ? <SidebarSearchBar onClick={openSearchDialog} /> : null;
-    }, [showSearchBar, openSearchDialog]);
+        return showSearchBar ? <SidebarSearchBar theme={theme} onClick={openSearchDialog} /> : null;
+    }, [theme, showSearchBar, openSearchDialog]);
 
     const tabs = useMemo(() => {
         if (!showTabs) {
