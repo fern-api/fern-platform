@@ -136,6 +136,8 @@ export class FdrDeployStack extends Stack {
 
         fargateService.targetGroup.setAttribute("deregistration_delay.timeout_seconds", "30");
 
+        fargateService.loadBalancer.setAttribute("idle_timeout.timeout_seconds", "900");
+
         fargateService.targetGroup.configureHealthCheck({
             healthyHttpCodes: "200",
             path: "/health",
