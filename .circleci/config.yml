@@ -60,6 +60,8 @@ jobs:
     steps:
       - attach_workspace: { at: /home/circleci }
       - aws-cli/setup
+      - setup_remote_docker:
+          version: 20.10.14
       - run:
           command: yarn run dev:db:migrate
           name: prisma deploy
@@ -80,6 +82,8 @@ jobs:
     steps:
       - attach_workspace: { at: /home/circleci }
       - aws-cli/setup
+      - setup_remote_docker:
+          version: 20.10.14
       - run:
           command: yarn run dev:db:migrate
           name: prisma deploy
@@ -100,6 +104,8 @@ jobs:
     steps:
       - attach_workspace: { at: /home/circleci }
       - aws-cli/setup
+      - setup_remote_docker:
+          version: 20.10.14
       - run:
           command: yarn run prod:db:migrate
           name: prisma deploy
