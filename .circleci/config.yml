@@ -55,8 +55,8 @@ jobs:
 
   deploy-dev:
     circleci_ip_ranges: true
-    machine:
-      image: ubuntu-2004:current
+    docker:
+      - image: cimg/node:lts
     steps:
       - attach_workspace: { at: /home/circleci }
       - aws-cli/setup
@@ -75,8 +75,8 @@ jobs:
 
   deploy-dev2:
     circleci_ip_ranges: true
-    machine:
-      image: ubuntu-2004:current
+    docker:
+      - image: cimg/node:lts
     steps:
       - attach_workspace: { at: /home/circleci }
       - aws-cli/setup
@@ -95,8 +95,8 @@ jobs:
 
   deploy-prod:
     circleci_ip_ranges: true
-    machine:
-      image: ubuntu-2004:current
+    docker:
+      - image: cimg/node:lts
     steps:
       - attach_workspace: { at: /home/circleci }
       - aws-cli/setup
