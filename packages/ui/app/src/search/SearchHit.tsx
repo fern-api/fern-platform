@@ -7,6 +7,7 @@ import { useSearchContext } from "../search-context/useSearchContext";
 import { EndpointRecord } from "./content/EndpointRecord";
 import { PageRecord } from "./content/PageRecord";
 import type { SearchRecord } from "./types";
+import { getHrefForSearchRecord, getPathForSearchRecord } from "./util";
 
 export declare namespace SearchHit {
     export interface Props {
@@ -22,35 +23,8 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ setRef, hit, isHovered, o
     const { navigateToPath } = useDocsContext();
     const { closeSearchDialog } = useSearchContext();
 
-    const path = useMemo(() => {
-        switch (hit.type) {
-            case "page":
-            case "endpoint":
-                return hit.path;
-            case "page-v2":
-            case "endpoint-v2":
-                return hit.path.parts
-                    .filter((p) => p.skipUrlSlug !== true)
-                    .map((p) => p.urlSlug)
-                    .join("/");
-        }
-    }, [hit.type, hit.path]);
-
-    const href = useMemo(() => {
-        if (hit.type === "endpoint" || hit.type === "page") {
-            if (hit.versionSlug == null) {
-                return `/${path}`;
-            } else {
-                return `/${hit.versionSlug}/${path}`;
-            }
-        } else {
-            if (hit.version == null) {
-                return `/${path}`;
-            } else {
-                return `/${hit.version.urlSlug}/${path}`;
-            }
-        }
-    }, [hit, path]);
+    const path = useMemo(() => getPathForSearchRecord(hit), [hit]);
+    const href = useMemo(() => getHrefForSearchRecord(hit), [hit]);
 
     const handleClick = useCallback(() => {
         closeSearchDialog();

@@ -8,6 +8,7 @@ import { useInfiniteHits, useInstantSearch } from "react-instantsearch-hooks-web
 import { useSearchContext } from "../search-context/useSearchContext";
 import { SearchHit } from "./SearchHit";
 import type { SearchRecord } from "./types";
+import { getHrefForSearchRecord } from "./util";
 
 type Progress = "error" | "pending" | "success";
 
@@ -89,10 +90,9 @@ export const SearchHits: React.FC = () => {
             if (hoveredSearchHit == null) {
                 return;
             }
-            const { versionSlug, path } = hoveredSearchHit.record;
-            const href = `/${versionSlug != null ? `${versionSlug}/` : ""}${path}`;
-            void router.push(href);
+            const href = getHrefForSearchRecord(hoveredSearchHit.record);
             closeSearchDialog();
+            void router.push(href);
         },
         preventDefault: true,
     });
