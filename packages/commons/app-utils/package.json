@@ -27,7 +27,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-fern/registry-browser": "0.21.0-2-g96ea287",
+    "@fern-fern/registry-browser": "0.23.1-6-gd18235e",
     "@fern-ui/core-utils": "workspace:*",
     "lodash-es": "^4.17.21",
     "next-mdx-remote": "^4.4.1",
