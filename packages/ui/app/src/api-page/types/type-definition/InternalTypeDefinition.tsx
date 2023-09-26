@@ -6,7 +6,9 @@ import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
+import { useHashContext } from "../../../hash-context/useHashContext";
 import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
+import { getAnchorId } from "../../utils/getAnchorId";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
@@ -39,6 +41,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     anchorIdParts,
 }) => {
     const { resolveTypeById } = useApiDefinitionContext();
+    const { hashInfo } = useHashContext();
 
     const collapsableContent = useMemo(
         () =>
@@ -82,7 +85,15 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
         [resolveTypeById, typeShape, anchorIdParts]
     );
 
-    const { value: isCollapsed, toggleValue: toggleIsCollapsed } = useBooleanState(true);
+    const { value: isCollapsed, toggleValue: toggleIsCollapsed, setFalse: expandDefinition } = useBooleanState(true);
+
+    const anchorIdSoFar = getAnchorId(anchorIdParts);
+
+    useEffect(() => {
+        if (hashInfo.status === "exists" && hashInfo.anchor.startsWith(anchorIdSoFar)) {
+            expandDefinition();
+        }
+    }, [hashInfo, anchorIdSoFar, expandDefinition]);
 
     const { isHovering, ...containerCallbacks } = useIsHovering();
 
