@@ -13,11 +13,16 @@ export declare namespace PageRecord {
 export const PageRecord: React.FC<PageRecord.Props> = ({ hit, isHovered }) => {
     return (
         <>
-            <div className="border-border-default-light dark:border-border-default-dark flex flex-col items-center justify-center rounded-md border p-1">
+            <div
+                className={classNames("flex flex-col items-center justify-center rounded-md border p-1", {
+                    "border-border-default-light dark:border-border-default-dark": !isHovered,
+                    "border-white bg-white": isHovered,
+                })}
+            >
                 <Icon
                     className={classNames({
                         "!text-text-muted-light dark:!text-text-muted-dark": !isHovered,
-                        "!text-text-primary-light dark:!text-text-primary-dark": isHovered,
+                        "!text-accent-primary": isHovered,
                     })}
                     size={14}
                     icon="document"
@@ -27,7 +32,10 @@ export const PageRecord: React.FC<PageRecord.Props> = ({ hit, isHovered }) => {
             <div className="flex w-full flex-col space-y-1.5">
                 <div className="flex justify-between">
                     <Snippet
-                        className="text-text-primary-light dark:text-text-primary-dark line-clamp-1 text-start"
+                        className={classNames("line-clamp-1 text-start", {
+                            "text-text-primary-light dark:text-text-primary-dark": !isHovered,
+                            "text-white": isHovered,
+                        })}
                         attribute="title"
                         highlightedTagName="span"
                         hit={hit}
@@ -35,7 +43,7 @@ export const PageRecord: React.FC<PageRecord.Props> = ({ hit, isHovered }) => {
                     <div
                         className={classNames("text-xs uppercase tracking-widest", {
                             "text-text-disabled-light dark:text-text-disabled-dark": !isHovered,
-                            "text-text-primary-light dark:text-text-primary-dark": isHovered,
+                            "text-white": isHovered,
                         })}
                     >
                         Page
@@ -44,7 +52,7 @@ export const PageRecord: React.FC<PageRecord.Props> = ({ hit, isHovered }) => {
                 <div className="flex flex-col items-start">
                     <Snippet
                         className={classNames("line-clamp-1 text-start", {
-                            "text-text-primary-light dark:text-text-primary-dark": isHovered,
+                            "text-white": isHovered,
                             "t-muted": !isHovered,
                         })}
                         attribute="subtitle"
