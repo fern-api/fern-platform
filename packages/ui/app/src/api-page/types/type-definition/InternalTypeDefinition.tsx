@@ -6,6 +6,7 @@ import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
+import type { NavigationInfo } from "../../../navigation-context/NavigationContext";
 import { useNavigationContext } from "../../../navigation-context/useNavigationContext";
 import { getAnchorId } from "../../../util/anchor";
 import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
@@ -33,6 +34,14 @@ interface CollapsibleContent {
     elementNameSingular: string;
     elementNamePlural: string;
     separatorText?: string;
+}
+
+function shouldExpandDefinition(navigation: NavigationInfo, curAnchorId: string) {
+    if (navigation.status !== "initial-navigation-to-anchor") {
+        return false;
+    }
+    const { anchorId: destAnchorId } = navigation;
+    return destAnchorId.startsWith(`${curAnchorId}-`);
 }
 
 export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
@@ -90,11 +99,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     const anchorIdSoFar = getAnchorId(anchorIdParts);
 
     useEffect(() => {
-        if (
-            navigation.status === "initial-navigation-to-anchor" &&
-            navigation.anchorId.startsWith(anchorIdSoFar) &&
-            navigation.anchorId !== anchorIdSoFar
-        ) {
+        if (shouldExpandDefinition(navigation, anchorIdSoFar)) {
             expandDefinition();
         }
     }, [navigation, anchorIdSoFar, expandDefinition]);
