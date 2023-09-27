@@ -5,7 +5,11 @@ export type NavigationInfo =
           status: "nil";
       }
     | {
-          status: "initial-navigation-to-anchor" | "initial-navigation-to-anchor-complete";
+          status:
+              | "initial-navigation-to-anchor"
+              | "initial-navigation-to-anchor-complete"
+              | "subsequent-navigation-to-anchor"
+              | "subsequent-navigation-to-anchor-complete";
           /** Anchor without the leading '#' */
           anchorId: string;
       }
@@ -19,4 +23,5 @@ export const NavigationContext = React.createContext<() => NavigationContextValu
 
 export interface NavigationContextValue {
     navigation: NavigationInfo;
+    navigateToAnchor: (anchorId: string) => Promise<void>;
 }

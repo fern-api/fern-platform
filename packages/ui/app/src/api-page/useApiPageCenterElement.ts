@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
+import { HEADER_HEIGHT } from "../constants";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useIsSlugSelected } from "../docs-context/useIsSlugSelected";
+import { useNavigationContext } from "../navigation-context/useNavigationContext";
 
 export declare namespace useApiPageCenterElement {
     export interface Args {
@@ -14,21 +16,26 @@ export declare namespace useApiPageCenterElement {
 }
 
 export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args): useApiPageCenterElement.Return {
+    const { navigation } = useNavigationContext();
     const { registerNavigateToPathListener, onScrollToPath, getFullSlug } = useDocsContext();
 
     const targetRef = useRef<HTMLElement | null>(null);
 
     const onChangeIsInVerticalCenter = useCallback(
         (newIsInVerticalCenter: boolean) => {
-            if (newIsInVerticalCenter) {
+            if (
+                newIsInVerticalCenter &&
+                navigation.status !== "initial-navigation-to-anchor" &&
+                navigation.status !== "subsequent-navigation-to-anchor"
+            ) {
                 onScrollToPath(slug);
             }
         },
-        [onScrollToPath, slug]
+        [onScrollToPath, slug, navigation.status]
     );
 
     const handleIsSelected = useCallback(() => {
-        const headerHeight = 64; // 4rem
+        const headerHeight = HEADER_HEIGHT;
         window.scrollTo({ top: (targetRef.current?.offsetTop ?? 0) - headerHeight });
     }, []);
 

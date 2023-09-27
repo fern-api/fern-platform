@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { useCallback } from "react";
-import { getAnchorNode } from "../util/anchor";
+import { useNavigationContext } from "../navigation-context/useNavigationContext";
 import { LinkIcon } from "./icons/LinkIcon";
 
 export declare namespace AbsolutelyPositionedAnchor {
@@ -17,14 +17,11 @@ export const AbsolutelyPositionedAnchor: React.FC<AbsolutelyPositionedAnchor.Pro
     verticalPosition,
     anchor,
 }) => {
+    const { navigateToAnchor } = useNavigationContext();
+
     const onClick = useCallback(async () => {
-        if (typeof window !== "undefined" && typeof document !== "undefined") {
-            const node = getAnchorNode(anchor);
-            node?.scrollIntoView({ behavior: "smooth" });
-            window.location.hash = `#${anchor}`;
-            await window.navigator.clipboard.writeText(window.location.href);
-        }
-    }, [anchor]);
+        await navigateToAnchor(anchor);
+    }, [navigateToAnchor, anchor]);
 
     return (
         <div

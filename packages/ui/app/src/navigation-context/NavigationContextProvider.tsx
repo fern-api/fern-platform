@@ -1,6 +1,6 @@
 import { PropsWithChildren, useCallback, useLayoutEffect, useState } from "react";
 import { HEADER_HEIGHT } from "../constants";
-import { extractAnchorFromWindow, getAnchorSelector } from "../util/anchor";
+import { extractAnchorFromWindow, getAnchorNode, getAnchorSelector } from "../util/anchor";
 import { waitForElement, waitForPageLoad } from "../util/dom";
 import { sleep } from "../util/general";
 import { NavigationContext, type NavigationContextValue, type NavigationInfo } from "./NavigationContext";
@@ -9,6 +9,16 @@ export declare namespace NavigationContextProvider {}
 
 export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const [navigationInfo, setNavigationInfo] = useState<NavigationInfo>({ status: "nil" });
+
+    const navigateToAnchor = useCallback(async (anchorId: string) => {
+        setNavigationInfo({ status: "subsequent-navigation-to-anchor", anchorId });
+        const node = getAnchorNode(anchorId);
+        node?.scrollIntoView({ behavior: "smooth" });
+        window.location.hash = `#${anchorId}`;
+        await window.navigator.clipboard.writeText(window.location.href);
+        await sleep(300);
+        setNavigationInfo({ status: "subsequent-navigation-to-anchor-complete", anchorId });
+    }, []);
 
     const tryNavigateToAnchorOnPageLoad = async (anchorId: string) => {
         setNavigationInfo({ status: "initial-navigation-to-anchor", anchorId });
@@ -53,7 +63,13 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
         }
     }, []);
 
-    const contextValue = useCallback((): NavigationContextValue => ({ navigation: navigationInfo }), [navigationInfo]);
+    const contextValue = useCallback(
+        (): NavigationContextValue => ({
+            navigation: navigationInfo,
+            navigateToAnchor,
+        }),
+        [navigationInfo, navigateToAnchor]
+    );
 
     return <NavigationContext.Provider value={contextValue}>{children}</NavigationContext.Provider>;
 };
