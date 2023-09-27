@@ -21,7 +21,8 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
             node = await waitForElement(anchorSelector, 3_000);
         }
         if (node == null) {
-            // TODO: Handle properly
+            window.location.hash = "";
+            setNavigationInfo({ status: "idle" });
             return;
         } else {
             const yOffset = -HEADER_HEIGHT;
