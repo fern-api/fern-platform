@@ -3727,7 +3727,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["next", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:13.4.4"],\
             ["normalize.css", "npm:8.0.1"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["posthog-js", "npm:1.50.0"],\
+            ["posthog-js", "npm:1.81.1"],\
             ["prettier", "npm:2.7.1"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
@@ -14125,12 +14125,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["posthog-js", [\
-        ["npm:1.50.0", {\
-          "packageLocation": "./.yarn/cache/posthog-js-npm-1.50.0-0d166867ca-7de26cee61.zip/node_modules/posthog-js/",\
+        ["npm:1.81.1", {\
+          "packageLocation": "./.yarn/cache/posthog-js-npm-1.81.1-6dbc1e321f-da7925f3ce.zip/node_modules/posthog-js/",\
           "packageDependencies": [\
-            ["posthog-js", "npm:1.50.0"],\
-            ["fflate", "npm:0.4.8"],\
-            ["rrweb-snapshot", "npm:1.1.14"]\
+            ["posthog-js", "npm:1.81.1"],\
+            ["fflate", "npm:0.4.8"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -15305,15 +15304,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["rollup", "npm:3.23.0"],\
             ["fsevents", "patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["rrweb-snapshot", [\
-        ["npm:1.1.14", {\
-          "packageLocation": "./.yarn/cache/rrweb-snapshot-npm-1.1.14-4c8ef9c1da-2e9a30233b.zip/node_modules/rrweb-snapshot/",\
-          "packageDependencies": [\
-            ["rrweb-snapshot", "npm:1.1.14"]\
           ],\
           "linkType": "HARD"\
         }]\
