@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { useCallback } from "react";
+import { getAnchorNode } from "../util/anchor";
 import { LinkIcon } from "./icons/LinkIcon";
 
 export declare namespace AbsolutelyPositionedAnchor {
@@ -18,7 +19,7 @@ export const AbsolutelyPositionedAnchor: React.FC<AbsolutelyPositionedAnchor.Pro
 }) => {
     const onClick = useCallback(async () => {
         if (typeof window !== "undefined" && typeof document !== "undefined") {
-            const node = document.querySelector(`div[data-anchor="${anchor}"]`);
+            const node = getAnchorNode(anchor);
             node?.scrollIntoView({ behavior: "smooth" });
             window.location.hash = `#${anchor}`;
             await window.navigator.clipboard.writeText(window.location.href);

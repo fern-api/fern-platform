@@ -5,7 +5,7 @@ export type HashInfo =
           status: "loading";
       }
     | {
-          status: "exists";
+          status: "navigating" | "navigated";
           /** Anchor without the leading '#' */
           anchor: string;
           parts: string[];
