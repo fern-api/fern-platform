@@ -90,7 +90,11 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     const anchorIdSoFar = getAnchorId(anchorIdParts);
 
     useEffect(() => {
-        if (hashInfo.status === "navigating" && hashInfo.anchorId.startsWith(anchorIdSoFar)) {
+        if (
+            hashInfo.status === "navigating" &&
+            hashInfo.anchorId.startsWith(anchorIdSoFar) &&
+            hashInfo.anchorId !== anchorIdSoFar
+        ) {
             expandDefinition();
         }
     }, [hashInfo, anchorIdSoFar, expandDefinition]);
