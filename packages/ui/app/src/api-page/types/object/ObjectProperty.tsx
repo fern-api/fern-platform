@@ -92,7 +92,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchorIdParts, 
 
     return (
         <div
-            id={anchorId}
+            data-anchor={anchorId}
             className={classNames("flex relative flex-col py-3 scroll-mt-16", {
                 "px-3": !contextValue.isRootTypeDefinition,
             })}

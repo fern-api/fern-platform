@@ -19,7 +19,7 @@ export declare namespace EndpointParameter {
 export const EndpointParameter: React.FC<EndpointParameter.Props> = ({ name, description, anchorIdParts, type }) => {
     const anchor = getAnchorId(anchorIdParts);
     return (
-        <div id={anchor} className="group/anchor-container relative flex scroll-mt-16 flex-col gap-2 py-3">
+        <div data-anchor={anchor} className="group/anchor-container relative flex scroll-mt-16 flex-col gap-2 py-3">
             {anchor != null && <AbsolutelyPositionedAnchor verticalPosition="default" anchor={anchor} />}
             <div className="flex items-baseline gap-1">
                 <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">{name}</MonospaceText>

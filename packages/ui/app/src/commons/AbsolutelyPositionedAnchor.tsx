@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { useCallback } from "react";
 import { LinkIcon } from "./icons/LinkIcon";
 
 export declare namespace AbsolutelyPositionedAnchor {
@@ -15,6 +16,15 @@ export const AbsolutelyPositionedAnchor: React.FC<AbsolutelyPositionedAnchor.Pro
     verticalPosition,
     anchor,
 }) => {
+    const onClick = useCallback(async () => {
+        if (typeof window !== "undefined" && typeof document !== "undefined") {
+            const node = document.querySelector(`div[data-anchor="${anchor}"]`);
+            node?.scrollIntoView({ behavior: "smooth" });
+            window.location.hash = `#${anchor}`;
+            await window.navigator.clipboard.writeText(window.location.href);
+        }
+    }, [anchor]);
+
     return (
         <div
             className={classNames(
@@ -25,9 +35,9 @@ export const AbsolutelyPositionedAnchor: React.FC<AbsolutelyPositionedAnchor.Pro
                 }
             )}
         >
-            <a href={`#${anchor}`}>
+            <button onClick={onClick}>
                 <LinkIcon className="t-muted hover:text-text-primary-light hover:dark:text-text-primary-dark h-3.5 w-3.5 transition" />
-            </a>
+            </button>
         </div>
     );
 };
