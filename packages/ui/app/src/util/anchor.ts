@@ -4,8 +4,12 @@ export function getAnchorId(anchorIdParts: string[]): string {
     return anchorIdParts.map((anchorId) => snakeCase(anchorId)).join("-");
 }
 
+export function getAnchorSelector(anchorId: string): string {
+    return `div[data-anchor="${anchorId}"]`;
+}
+
 export function getAnchorNode(anchorId: string): Element | null {
-    return document.querySelector(`div[data-anchor="${anchorId}"]`);
+    return document.querySelector(getAnchorSelector(anchorId));
 }
 
 export function extractAnchorFromWindow(): string | undefined {
