@@ -2228,7 +2228,7 @@ __metadata:
     next: ^13.4.4
     normalize.css: ^8.0.1
     organize-imports-cli: ^0.10.0
-    posthog-js: ^1.50.0
+    posthog-js: ^1.81.1
     prettier: ^2.7.1
     react: ^18.2.0
     react-dom: ^18.2.0
@@ -10986,13 +10986,12 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"posthog-js@npm:^1.50.0":
-  version: 1.50.0
-  resolution: "posthog-js@npm:1.50.0"
+"posthog-js@npm:^1.81.1":
+  version: 1.81.1
+  resolution: "posthog-js@npm:1.81.1"
   dependencies:
     fflate: ^0.4.1
-    rrweb-snapshot: ^1.1.14
-  checksum: 7de26cee61712197d97f38adb7c9909b267c72d1f5f3bb0474b934725a451176544ec67a5f55491af36c96481a86f535668b55d975f826bd4d130d9049a623fe
+  checksum: da7925f3cecb82f393bfbf682418a2b0e3cb65267b7b45f464cec360a480fdb4bb80ba529dceda3edb2c73d86b8d1fd908decc6acab10dff35d0dbd64181f165
   languageName: node
   linkType: hard
 
@@ -11864,13 +11863,6 @@ env-cmd@toddbluhm/env-cmd:
   bin:
     rollup: dist/bin/rollup
   checksum: 0721065cf725c5611815be61d2b01f20b4d0027e17035f6e76384d38396b56cf6ed21a3db78eb004d9db4d24c8a6a19da4563b4ff96b5dd36f0a0f7a3baf85e8
-  languageName: node
-  linkType: hard
-
-"rrweb-snapshot@npm:^1.1.14":
-  version: 1.1.14
-  resolution: "rrweb-snapshot@npm:1.1.14"
-  checksum: 2e9a30233b542824bbca46af5588d1d7c909efafa00b38fb79d59637af17ec0f3fbe60ed37c4195448804a22aea0f47531da25a42af6ac9dc6281c3c6e5693db
   languageName: node
   linkType: hard
 
