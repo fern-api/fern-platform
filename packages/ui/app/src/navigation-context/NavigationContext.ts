@@ -14,10 +14,10 @@ export type HashInfo =
           status: "not-exists";
       };
 
-export const HashContext = React.createContext<() => HashContextValue>(() => {
-    throw new Error("HashContextValueProvider is not present in this tree.");
+export const NavigationContext = React.createContext<() => NavigationContextValue>(() => {
+    throw new Error("NavigationContextValueProvider is not present in this tree.");
 });
 
-export interface HashContextValue {
+export interface NavigationContextValue {
     hashInfo: HashInfo;
 }

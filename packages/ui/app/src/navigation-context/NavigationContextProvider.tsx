@@ -3,11 +3,11 @@ import { HEADER_HEIGHT } from "../constants";
 import { getAnchorNode } from "../util/anchor";
 import { waitUntilPageIsLoaded } from "../util/dom";
 import { sleep } from "../util/general";
-import { HashContext, type HashContextValue, type HashInfo } from "./HashContext";
+import { NavigationContext, type HashInfo, type NavigationContextValue } from "./NavigationContext";
 
-export declare namespace HashContextProvider {}
+export declare namespace NavigationContextProvider {}
 
-export const HashContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
+export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const [hashInfo, setHashInfo] = useState<HashInfo>({ status: "loading" });
 
     const navigateToAnchorOnPageLoad = async (anchor: string, parts: string[]) => {
@@ -39,7 +39,7 @@ export const HashContextProvider: React.FC<PropsWithChildren> = ({ children }) =
         }
     }, []);
 
-    const contextValue = useCallback((): HashContextValue => ({ hashInfo }), [hashInfo]);
+    const contextValue = useCallback((): NavigationContextValue => ({ hashInfo }), [hashInfo]);
 
-    return <HashContext.Provider value={contextValue}>{children}</HashContext.Provider>;
+    return <NavigationContext.Provider value={contextValue}>{children}</NavigationContext.Provider>;
 };

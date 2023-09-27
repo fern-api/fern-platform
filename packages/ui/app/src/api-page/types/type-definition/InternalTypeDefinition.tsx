@@ -6,7 +6,7 @@ import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
-import { useHashContext } from "../../../hash-context/useHashContext";
+import { useNavigationContext } from "../../../navigation-context/useNavigationContext";
 import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
 import { getAnchorId } from "../../utils/getAnchorId";
 import {
@@ -41,7 +41,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     anchorIdParts,
 }) => {
     const { resolveTypeById } = useApiDefinitionContext();
-    const { hashInfo } = useHashContext();
+    const { hashInfo } = useNavigationContext();
 
     const collapsableContent = useMemo(
         () =>
