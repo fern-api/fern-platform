@@ -31,7 +31,6 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
         }
         const anchorId = extractAnchorFromWindow();
         if (anchorId != null) {
-            const anchorId = window.location.hash.substring(1, window.location.hash.length);
             setHashInfo({ status: "navigating", anchorId });
             void navigateToAnchorOnPageLoad(anchorId);
         } else {
