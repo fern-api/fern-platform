@@ -4,9 +4,9 @@ import { useCallback, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
+import { getAnchorId } from "../../../util/anchor";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
-import { getAnchorId } from "../../utils/getAnchorId";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,

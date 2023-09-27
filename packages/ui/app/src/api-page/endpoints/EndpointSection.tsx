@@ -1,6 +1,6 @@
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
+import { getAnchorId } from "../../util/anchor";
 import { Markdown } from "../markdown/Markdown";
-import { getAnchorId } from "../utils/getAnchorId";
 
 export declare namespace EndpointSection {
     export type Props = React.PropsWithChildren<{

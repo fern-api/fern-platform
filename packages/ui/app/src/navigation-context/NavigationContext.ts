@@ -7,8 +7,7 @@ export type HashInfo =
     | {
           status: "navigating" | "navigated";
           /** Anchor without the leading '#' */
-          anchor: string;
-          parts: string[];
+          anchorId: string;
       }
     | {
           status: "not-exists";

@@ -7,8 +7,8 @@ import classNames from "classnames";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { useNavigationContext } from "../../../navigation-context/useNavigationContext";
+import { getAnchorId } from "../../../util/anchor";
 import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
-import { getAnchorId } from "../../utils/getAnchorId";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
@@ -90,7 +90,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     const anchorIdSoFar = getAnchorId(anchorIdParts);
 
     useEffect(() => {
-        if (hashInfo.status === "navigating" && hashInfo.anchor.startsWith(anchorIdSoFar)) {
+        if (hashInfo.status === "navigating" && hashInfo.anchorId.startsWith(anchorIdSoFar)) {
             expandDefinition();
         }
     }, [hashInfo, anchorIdSoFar, expandDefinition]);
