@@ -41,7 +41,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     anchorIdParts,
 }) => {
     const { resolveTypeById } = useApiDefinitionContext();
-    const { hashInfo } = useNavigationContext();
+    const { navigation } = useNavigationContext();
 
     const collapsableContent = useMemo(
         () =>
@@ -91,13 +91,13 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
 
     useEffect(() => {
         if (
-            hashInfo.status === "navigating" &&
-            hashInfo.anchorId.startsWith(anchorIdSoFar) &&
-            hashInfo.anchorId !== anchorIdSoFar
+            navigation.status === "initial-navigation-to-anchor" &&
+            navigation.anchorId.startsWith(anchorIdSoFar) &&
+            navigation.anchorId !== anchorIdSoFar
         ) {
             expandDefinition();
         }
-    }, [hashInfo, anchorIdSoFar, expandDefinition]);
+    }, [navigation, anchorIdSoFar, expandDefinition]);
 
     const { isHovering, ...containerCallbacks } = useIsHovering();
 

@@ -3,14 +3,15 @@ import { HEADER_HEIGHT } from "../constants";
 import { extractAnchorFromWindow, getAnchorSelector } from "../util/anchor";
 import { waitForElement, waitForPageLoad } from "../util/dom";
 import { sleep } from "../util/general";
-import { NavigationContext, type HashInfo, type NavigationContextValue } from "./NavigationContext";
+import { NavigationContext, type NavigationContextValue, type NavigationInfo } from "./NavigationContext";
 
 export declare namespace NavigationContextProvider {}
 
 export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
-    const [hashInfo, setHashInfo] = useState<HashInfo>({ status: "loading" });
+    const [navigationInfo, setNavigationInfo] = useState<NavigationInfo>({ status: "nil" });
 
     const tryNavigateToAnchorOnPageLoad = async (anchorId: string) => {
+        setNavigationInfo({ status: "initial-navigation-to-anchor", anchorId });
         const pageLoadPromise = waitForPageLoad();
         const anchorSelector = getAnchorSelector(anchorId);
         let node = await waitForElement(anchorSelector);
@@ -35,7 +36,7 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
             // we can set up a listener for scroll movements but that may be an overkill for this function
             await sleep(300);
 
-            setHashInfo({ status: "navigated", anchorId });
+            setNavigationInfo({ status: "initial-navigation-to-anchor-complete", anchorId });
         }
     };
 
@@ -45,14 +46,13 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
         }
         const anchorId = extractAnchorFromWindow();
         if (anchorId != null) {
-            setHashInfo({ status: "navigating", anchorId });
             void tryNavigateToAnchorOnPageLoad(anchorId);
         } else {
-            setHashInfo({ status: "not-exists" });
+            setNavigationInfo({ status: "idle" });
         }
     }, []);
 
-    const contextValue = useCallback((): NavigationContextValue => ({ hashInfo }), [hashInfo]);
+    const contextValue = useCallback((): NavigationContextValue => ({ navigation: navigationInfo }), [navigationInfo]);
 
     return <NavigationContext.Provider value={contextValue}>{children}</NavigationContext.Provider>;
 };

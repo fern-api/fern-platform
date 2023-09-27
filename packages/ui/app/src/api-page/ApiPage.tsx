@@ -11,13 +11,13 @@ export declare namespace ApiPage {
 }
 
 export const ApiPage: React.FC<ApiPage.Props> = () => {
-    const { hashInfo } = useNavigationContext();
+    const { navigation } = useNavigationContext();
     const { apiDefinition, apiSlug, apiSection } = useApiDefinitionContext();
 
     return (
         <div
             className={classNames("min-h-0 pb-36", {
-                "opacity-0": hashInfo.status === "loading" || hashInfo.status === "navigating",
+                "opacity-0": navigation.status === "loading" || navigation.status === "initial-navigation-to-anchor",
             })}
         >
             {apiSection.artifacts != null && areApiArtifactsNonEmpty(apiSection.artifacts) && (

@@ -1,16 +1,16 @@
 import React from "react";
 
-export type HashInfo =
+export type NavigationInfo =
     | {
-          status: "loading";
+          status: "nil";
       }
     | {
-          status: "navigating" | "navigated";
+          status: "initial-navigation-to-anchor" | "initial-navigation-to-anchor-complete";
           /** Anchor without the leading '#' */
           anchorId: string;
       }
     | {
-          status: "not-exists";
+          status: "idle";
       };
 
 export const NavigationContext = React.createContext<() => NavigationContextValue>(() => {
@@ -18,5 +18,5 @@ export const NavigationContext = React.createContext<() => NavigationContextValu
 });
 
 export interface NavigationContextValue {
-    hashInfo: HashInfo;
+    navigation: NavigationInfo;
 }
