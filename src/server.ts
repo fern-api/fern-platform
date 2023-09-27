@@ -9,6 +9,7 @@ import { getDocsReadService } from "./controllers/docs/v1/getDocsReadService";
 import { getDocsWriteService } from "./controllers/docs/v1/getDocsWriteService";
 import { getDocsReadV2Service } from "./controllers/docs/v2/getDocsReadV2Service";
 import { getDocsWriteV2Service } from "./controllers/docs/v2/getDocsWriteV2Service";
+import { getSnippetsService } from "./controllers/snippets/getSnippetsService";
 
 const PORT = 8080;
 
@@ -51,6 +52,7 @@ try {
                 },
             },
         },
+        snippets: getSnippetsService(app),
     });
     registerBackgroundTasks(app);
     app.logger.info(`Listening for requests on port ${PORT}`);

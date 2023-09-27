@@ -1,0 +1,225 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: true
+  base-path: /snippets
+  endpoints:
+    get:
+      path: ""
+      docs: Get snippet by endpoint method and path
+      display-name: Get snippet for endpoint
+      method: POST
+      request:
+        name: GetSnippetRequest
+        body:
+          properties:
+            apiId:
+              type: optional<commons.ApiId>
+              docs: |
+                If you have more than one API, you must specify its ID.
+            sdks:
+              type: optional<list<SDK>>
+              docs: |
+                The SDKs for which to load snippets. If unspecified,
+                snippets for the latest published SDKs will be returned.
+            endpoint: EndpointIdentifier
+      response: list<Snippet>
+      errors:
+        - EndpointNotFound
+        - SDKNotFound
+        - ApiIdNotFound
+      examples:
+        - request:
+            endpoint:
+              method: GET
+              path: /v1/search
+          response:
+            body:
+              - sdk:
+                  type: python
+                  package: vellum-ai
+                  version: 1.2.1
+                code: |
+                  import Vellum from vellum.client
+
+                  client = Vellum(api_key="YOUR_API_KEY")
+                  client.search(query="Find documents written in the last 5 days")
+              - sdk:
+                  type: typescript
+                  package: vellum-ai
+                  version: 1.2.1
+                code: |
+                  import { VellumClient } from "vellum-ai";
+
+                  const vellum = VellumClient({
+                    apiKey="YOUR_API_KEY"
+                  })
+                  vellum.search({
+                    query: "Find documents written in the last 5 days"
+                  })
+
+    load:
+      path: /load
+      display-name: Load all snippets
+      method: POST
+      request:
+        name: ListSnippetsRequest
+        query-parameters:
+          page: optional<integer>
+        body:
+          properties:
+            apiId:
+              type: optional<commons.ApiId>
+              docs: |
+                If you have more than one API, you must specify its ID.
+            sdks:
+              type: optional<list<SDK>>
+              docs: |
+                The SDKs for which to load snippets. If unspecified,
+                snippets for the latest published SDKs will be returned.
+      response: SnippetsPage
+      examples:
+        - request: {}
+          response:
+            body:
+              next: "page_123402"
+              endpoints:
+                /v1/search:
+                  GET:
+                    - sdk:
+                        type: python
+                        package: vellum-ai
+                        version: 1.2.1
+                      code: |
+                        import Vellum from vellum.client
+
+                        client = Vellum(api_key="YOUR_API_KEY")
+                        client.search(query="Find documents written in the last 5 days")
+                    - sdk:
+                        type: typescript
+                        package: vellum-ai
+                        version: 1.2.1
+                      code: |
+                        import { VellumClient } from "vellum-ai";
+
+                        const vellum = VellumClient({
+                          apiKey="YOUR_API_KEY"
+                        })
+                        vellum.search({
+                          query: "Find documents written in the last 5 days"
+                        })
+                v1/document-indexes:
+                  POST:
+                    - sdk:
+                        type: python
+                        package: vellum-ai
+                        version: 1.2.1
+                      code: |
+                        import Vellum from vellum.client
+
+                        client = Vellum(api_key="YOUR_API_KEY")
+                        client.document_indexes.create(name="meeting-reports", status="ACTIVE")
+                    - sdk:
+                        type: typescript
+                        package: vellum-ai
+                        version: 1.2.1
+                      code: |
+                        import { VellumClient } from "vellum-ai";
+
+                        const vellum = VellumClient({
+                          apiKey="YOUR_API_KEY"
+                        })
+                        vellum.documentIndexes.create({
+                          name: "meeting-reports",
+                          status: "ACTIVE"
+                        })
+
+types:
+  EndpointIdentifier:
+    properties:
+      path: EndpointPath
+      method: EndpointMethod
+
+  EndpointPath:
+    type: string
+    docs: The relative path for an endpont (e.g. `/users/{userId}`)
+
+  EndpointMethod:
+    enum:
+      - PUT
+      - POST
+      - GET
+      - PATCH
+      - DELETE
+
+  Language:
+    enum:
+      - python
+      - typescript
+      - go
+      - java
+
+  SnippetsPage:
+    properties:
+      next:
+        type: optional<string>
+        docs: If present, pass this into the `page` query parameter to load the next page.
+      endpoints:  map<EndpointPath, SnippetsForPath>
+
+  SnippetsForPath:
+    type: map<EndpointMethod, list<Snippet>>
+
+  Snippet:
+    properties:
+      sdk:
+        type: SDK
+        docs: The SDK the snippet is from.
+      code: string
+
+  SDK:
+    union:
+      typescript: TypeScriptSDK
+      python: PythonSDK
+      go: GoSDK
+      java: JavaSDK
+
+  TypeScriptSDK:
+    properties:
+      package: string
+      version: string
+
+  PythonSDK:
+    properties:
+      package: string
+      version: string
+
+  GoSDK:
+    properties:
+      githubRepo: string
+      version: string
+
+  JavaSDK:
+    properties:
+      group:
+        type: string
+        docs: The maven repository group (e.g. `com.stripe.java`)
+      artifact:
+        type: string
+        docs: The artifact (e.g. `stripe-java`)
+      version: string
+
+errors:
+  EndpointNotFound:
+    status-code: 404
+    docs: The requested endpoint was not found
+
+  SDKNotFound:
+    status-code: 404
+    docs: The requested SDK was not found
+
+  ApiIdNotFound:
+    status-code: 404
+    docs: The requested ApId was not found

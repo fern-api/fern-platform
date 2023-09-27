@@ -11,6 +11,7 @@ import { getDocsReadService } from "../../controllers/docs/v1/getDocsReadService
 import { getDocsWriteService } from "../../controllers/docs/v1/getDocsWriteService";
 import { getDocsReadV2Service } from "../../controllers/docs/v2/getDocsReadV2Service";
 import { getDocsWriteV2Service } from "../../controllers/docs/v2/getDocsWriteV2Service";
+import { getSnippetsService } from "../../controllers/snippets/getSnippetsService";
 import { FernRegistry, FernRegistryClient } from "../generated";
 import { createMockFdrApplication } from "../mock";
 import { createMockDocs, createMockIndexSegment } from "./util";
@@ -47,6 +48,7 @@ beforeAll(async () => {
                 register: { _root: getRegisterApiService(serverApp) },
             },
         },
+        snippets: getSnippetsService(serverApp),
     });
     console.log(`Listening for requests on port ${PORT}`);
     server = app.listen(PORT);

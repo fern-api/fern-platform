@@ -15,6 +15,8 @@ export { ReadService as APIV1ReadService } from "./generated/api/resources/api/r
 export * as APIV1Write from "./generated/api/resources/api/resources/v1/resources/register";
 export { RegisterService as APIV1WriteService } from "./generated/api/resources/api/resources/v1/resources/register/service/RegisterService";
 
+export { SnippetsService } from "./generated/api/resources/snippets/service/SnippetsService";
+
 export { register } from "./generated/register";
 
 export { FernRegistry as FdrAPI } from "./generated";
