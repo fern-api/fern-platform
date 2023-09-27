@@ -2,6 +2,7 @@ import cors from "cors";
 import express from "express";
 import { register } from "./api";
 import { FdrApplication, getConfig } from "./app";
+import { LOGGER } from "./app/FdrApplication";
 import { registerBackgroundTasks } from "./background";
 import { getReadApiService } from "./controllers/api/getApiReadService";
 import { getRegisterApiService } from "./controllers/api/getRegisterApiService";
@@ -12,13 +13,13 @@ import { getDocsWriteV2Service } from "./controllers/docs/v2/getDocsWriteV2Servi
 
 const PORT = 8080;
 
-if (typeof process !== "undefined") {
-    process.on("uncaughtException", (err) => {
-        console.error("===> process.on('uncaughtException') <===");
-        console.error(err);
-        console.error("^^^^ process.on('uncaughtException') ^^^^");
-    });
-}
+process.on("uncaughtException", (err) => {
+    LOGGER.error("Process exiting with uncauth exception", err);
+});
+
+process.on("exit", (exit) => {
+    LOGGER.error("Process exiting with code", exit);
+});
 
 void main();
 
