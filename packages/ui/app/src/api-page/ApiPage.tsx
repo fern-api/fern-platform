@@ -17,7 +17,7 @@ export const ApiPage: React.FC<ApiPage.Props> = () => {
     return (
         <div
             className={classNames("min-h-0 pb-36", {
-                "opacity-0": navigation.status === "loading" || navigation.status === "initial-navigation-to-anchor",
+                "opacity-0": navigation.status === "nil" || navigation.status === "initial-navigation-to-anchor",
             })}
         >
             {apiSection.artifacts != null && areApiArtifactsNonEmpty(apiSection.artifacts) && (
