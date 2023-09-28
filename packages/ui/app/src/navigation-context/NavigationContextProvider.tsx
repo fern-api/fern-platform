@@ -51,7 +51,10 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
         }
 
         if (node == null) {
-            window.location.hash = "";
+            const [hrefWithoutHash] = window.location.href.split("#");
+            if (hrefWithoutHash != null) {
+                window.history.pushState({}, "", hrefWithoutHash);
+            }
             setNavigationInfo({ status: "idle" });
             return;
         } else {
