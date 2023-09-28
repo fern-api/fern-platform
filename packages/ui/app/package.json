@@ -57,6 +57,7 @@
     "react-error-boundary": "^4.0.10",
     "react-instantsearch-hooks-web": "^6.45.0",
     "react-intersection-observer": "^9.4.3",
+    "react-loading-skeleton": "^3.3.1",
     "react-markdown": "^8.0.5",
     "react-syntax-highlighter": "^15.5.0",
     "rehype-raw": "^6.1.1",
