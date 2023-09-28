@@ -70,6 +70,7 @@ export class FdrDeployStack extends Stack {
                     allowedHeaders: ["*"],
                 },
             ],
+            versioned: true
         });
 
         const cloudmapNamespace = environmentInfo.cloudMapNamespaceInfo.namespaceName;
