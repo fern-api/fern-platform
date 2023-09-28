@@ -1,12 +1,27 @@
 /**
  * @returns A Promise that resolves to a boolean indicating whether the page was already loaded.
  */
-export function waitForPageLoad(): Promise<boolean> {
+export function waitForPageToLoad(): Promise<boolean> {
     return new Promise<boolean>((res) => {
         if (document.readyState === "complete") {
             res(true);
         } else {
             window.addEventListener("load", () => res(false), {
+                once: true,
+            });
+        }
+    });
+}
+
+/**
+ * @returns A Promise that resolves to a boolean indicating whether the dom content was already loaded.
+ */
+export function waitForDomContentToLoad(): Promise<boolean> {
+    return new Promise<boolean>((res) => {
+        if (document.readyState === "complete" || document.readyState === "interactive") {
+            res(true);
+        } else {
+            window.addEventListener("DOMContentLoaded", () => res(false), {
                 once: true,
             });
         }
