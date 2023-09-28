@@ -22,17 +22,14 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
             node.scrollIntoView({ behavior: "smooth" });
             window.location.hash = `#${anchorId}`;
             await window.navigator.clipboard.writeText(window.location.href);
+            // Need to wait some time for the scroll animation to finish. scrollIntoView() is async and there is
+            // no straightforward way of us knowing whether this particular scroll has completed successfully
             await sleep(2_000);
             setNavigationInfo({ status: NavigationStatus.SUBSEQUENT_NAVIGATION_TO_ANCHOR_COMPLETE, anchorId });
         } else {
             // eslint-disable-next-line no-console
             console.error(`Could not find the node for anchor "${anchorId}". Navigation can't be completed.`);
         }
-    }, []);
-
-    const markNavigationStatusAsIdle = useCallback(async () => {
-        await sleep(200);
-        setNavigationInfo({ status: "idle" });
     }, []);
 
     const tryNavigateToAnchorOnPageLoad = async (anchorId: string) => {
@@ -87,9 +84,9 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
         if (anchorId != null) {
             void tryNavigateToAnchorOnPageLoad(anchorId);
         } else {
-            void markNavigationStatusAsIdle();
+            setNavigationInfo({ status: "idle" });
         }
-    }, [markNavigationStatusAsIdle]);
+    }, []);
 
     const contextValue = useCallback(
         (): NavigationContextValue => ({
