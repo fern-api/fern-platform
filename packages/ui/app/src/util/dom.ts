@@ -28,7 +28,7 @@ export function waitForDomContentToLoad(): Promise<boolean> {
     });
 }
 
-export function waitForElement(selector: string, timeout = 10_000): Promise<Element | undefined> {
+export function waitForElement(selector: string, timeout?: number): Promise<Element | undefined> {
     return new Promise((res) => {
         const node = document.querySelector(selector);
         if (node) {
@@ -48,12 +48,15 @@ export function waitForElement(selector: string, timeout = 10_000): Promise<Elem
             subtree: true,
         });
         isObserving = true;
-        setTimeout(() => {
-            if (isObserving) {
-                observer.disconnect();
-                isObserving = false;
-                res(undefined);
-            }
-        }, timeout);
+
+        if (typeof timeout === "number") {
+            setTimeout(() => {
+                if (isObserving) {
+                    observer.disconnect();
+                    isObserving = false;
+                    res(undefined);
+                }
+            }, timeout);
+        }
     });
 }

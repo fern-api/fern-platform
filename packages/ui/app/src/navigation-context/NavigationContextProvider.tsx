@@ -35,18 +35,27 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
         const pageLoadPromise = waitForPageToLoad();
         const domContentLoadPromise = waitForDomContentToLoad();
         const anchorSelector = getAnchorSelector(anchorId);
-        let node = await waitForElement(anchorSelector);
-        if (node == null) {
-            await domContentLoadPromise;
-            // Wait for 3 more seconds
-            node = await waitForElement(anchorSelector, 3_000);
+
+        let node: Element | undefined;
+
+        const raceResult = await Promise.race([domContentLoadPromise, waitForElement(anchorSelector)]);
+
+        if (typeof raceResult === "object") {
+            // Already found the node
+            node = raceResult;
+        } else if (typeof raceResult === "boolean") {
+            // DOM content has been loaded but the element has still not appeared. We wait for the page to load
+            // and query synchronously one last time
+            await pageLoadPromise;
+            node = getAnchorNode(anchorId);
         }
+
         if (node == null) {
             window.location.hash = "";
             setNavigationInfo({ status: "idle" });
             return;
         } else {
-            // Wait for page to load to avoid outdated scroll position
+            // Wait for the page to load to avoid outdated scroll position
             await pageLoadPromise;
 
             const yOffset = -HEADER_HEIGHT;

@@ -8,8 +8,8 @@ export function getAnchorSelector(anchorId: string): string {
     return `div[data-anchor="${anchorId}"]`;
 }
 
-export function getAnchorNode(anchorId: string): Element | null {
-    return document.querySelector(getAnchorSelector(anchorId));
+export function getAnchorNode(anchorId: string): Element | undefined {
+    return document.querySelector(getAnchorSelector(anchorId)) ?? undefined;
 }
 
 export function extractAnchorFromWindow(): string | undefined {
