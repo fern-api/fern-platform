@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
-import { HEADER_HEIGHT } from "../constants";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useIsSlugSelected } from "../docs-context/useIsSlugSelected";
 import { NavigationStatus } from "../navigation-context/NavigationContext";
@@ -36,8 +35,7 @@ export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args):
     );
 
     const handleIsSelected = useCallback(() => {
-        const headerHeight = HEADER_HEIGHT;
-        window.scrollTo({ top: (targetRef.current?.offsetTop ?? 0) - headerHeight });
+        window.scrollTo({ top: targetRef.current?.offsetTop ?? 0 });
     }, []);
 
     useEffect(
