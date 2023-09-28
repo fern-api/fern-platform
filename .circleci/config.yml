@@ -53,32 +53,6 @@ jobs:
           command: yarn test:ete
           name: Test ETE
   
-  migrate-dev: 
-    circleci_ip_ranges: true
-    docker:
-      - image: cimg/node:lts
-    steps:
-      - attach_workspace: { at: /home/circleci }
-      - run:
-          command: yarn run dev:db:migrate
-          name: prisma deploy
-
-  deploy-dev:
-    machine:
-      image: ubuntu-2004:current
-    steps:
-      - attach_workspace: { at: /home/circleci }
-      - aws-cli/setup
-      - run:
-          command: |
-            git_version="$(scripts/git-version.sh)"
-            yarn run dev:docker "${git_version}"
-            npm install -g aws-cdk
-            cd fdr-deploy
-            npm install
-            VERSION="${git_version}" cdk deploy fdr-dev --require-approval never --progress events
-          name: cdk deploy
-  
   migrate-dev2: 
     circleci_ip_ranges: true
     docker:
@@ -175,29 +149,6 @@ workflows:
             tags:
               only: /.*/
           requires: [compile]
-      
-      - migrate-dev:
-          requires: [check, ete-test]
-          filters:
-            branches:
-              only:
-                - main
-          context:
-            - fern-dev
-
-      - deploy-dev:
-          requires: [check, ete-test, migrate-dev]
-          filters:
-            branches:
-              only:
-                - main
-          context:
-            - aws
-            - github
-            - fern-dev
-            - fern-tokens
-            - fdr-algolia-dev
-            - slack
       
       - migrate-dev2:
           requires: [check, ete-test]
