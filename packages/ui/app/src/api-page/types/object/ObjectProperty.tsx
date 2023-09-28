@@ -98,9 +98,9 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchorIdParts, 
             })}
         >
             <div className="flex items-baseline gap-2">
-                <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName}>
-                    <div className="group/anchor-container relative">
-                        <AbsolutelyPositionedAnchor verticalPosition="center" anchor={anchorId} />
+                <div className="group/anchor-container relative">
+                    <AbsolutelyPositionedAnchor verticalPosition="center" anchor={anchorId} />
+                    <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName}>
                         <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">
                             {property.key}
                         </MonospaceText>
