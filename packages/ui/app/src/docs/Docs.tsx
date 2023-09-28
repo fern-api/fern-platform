@@ -1,6 +1,7 @@
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand } from "@fern-ui/react-commons";
 import { memo, useMemo } from "react";
+import { HEADER_HEIGHT } from "../constants";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useSearchContext } from "../search-context/useSearchContext";
@@ -50,8 +51,12 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                     searchService={searchService}
                 />
             )}
+
             <div className="relative flex min-h-0 flex-1 flex-col">
-                <div className="border-border-concealed-light dark:border-border-concealed-dark bg-background/50 dark:shadow-header sticky inset-x-0 top-0 z-20 h-16 border-b backdrop-blur-xl">
+                <div
+                    className="border-border-concealed-light dark:border-border-concealed-dark bg-background/50 dark:shadow-header sticky inset-x-0 top-0 z-20 border-b backdrop-blur-xl"
+                    style={{ height: HEADER_HEIGHT }}
+                >
                     <Header
                         className="max-w-8xl mx-auto"
                         docsDefinition={docsDefinition}
