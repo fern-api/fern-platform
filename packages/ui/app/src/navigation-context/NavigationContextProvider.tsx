@@ -52,6 +52,8 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
             // Wait for page to load to avoid outdated scroll position
             await pageLoadPromise;
 
+            await sleep(5_000);
+
             window.scrollTo({ top: y, behavior: "auto" });
 
             // Since scrolling is done async, we can just wait a little before updating navigation status. Alternatively,
