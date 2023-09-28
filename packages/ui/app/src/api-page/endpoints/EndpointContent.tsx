@@ -156,6 +156,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                             event.stopPropagation();
                                             setSelectedErrorIndex(idx);
                                         }}
+                                        selectError={(_, idx) => setSelectedErrorIndex(idx)}
                                         onHoverProperty={onHoverResponseProperty}
                                         selectedErrorIndex={selectedErrorIndex}
                                         anchorIdParts={[...anchorIdParts, "errors"]}

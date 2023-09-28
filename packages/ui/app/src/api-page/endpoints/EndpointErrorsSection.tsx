@@ -11,6 +11,7 @@ export declare namespace EndpointErrorsSection {
             index: number,
             event: React.MouseEvent<HTMLButtonElement>
         ) => void;
+        selectError: (e: FernRegistry.api.v1.read.ErrorDeclaration, index: number) => void;
         selectedErrorIndex: number | null;
         anchorIdParts: string[];
     }
@@ -21,6 +22,7 @@ export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
     selectedErrorIndex,
     onHoverProperty,
     onClickError,
+    selectError,
     anchorIdParts,
 }) => {
     return (
@@ -34,6 +36,7 @@ export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
                         isLast={idx === errors.length - 1}
                         isSelected={idx === selectedErrorIndex}
                         onClick={(event) => onClickError(error, idx, event)}
+                        select={() => selectError(error, idx)}
                         onHoverProperty={onHoverProperty}
                         anchorIdParts={[...anchorIdParts, `${idx}`]}
                     />

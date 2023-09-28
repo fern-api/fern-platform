@@ -1,9 +1,20 @@
 import { FernRegistry } from "@fern-fern/registry-browser";
 import classNames from "classnames";
-import { memo, MouseEventHandler } from "react";
+import { memo, MouseEventHandler, useEffect } from "react";
+import { NavigationInfo } from "../../navigation-context/NavigationContext";
+import { useNavigationContext } from "../../navigation-context/useNavigationContext";
+import { getAnchorId } from "../../util/anchor";
 import { type JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
+
+function shouldSelectError(navigation: NavigationInfo, curAnchorId: string) {
+    if (navigation.status !== "initial-navigation-to-anchor") {
+        return false;
+    }
+    const { anchorId: destAnchorId } = navigation;
+    return destAnchorId.startsWith(`${curAnchorId}-`);
+}
 
 export declare namespace EndpointError {
     export interface Props {
@@ -12,6 +23,7 @@ export declare namespace EndpointError {
         isLast: boolean;
         isSelected: boolean;
         onClick: MouseEventHandler<HTMLButtonElement>;
+        select: () => void;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: string[];
     }
@@ -24,8 +36,18 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
     isSelected,
     onHoverProperty,
     onClick,
+    select,
     anchorIdParts,
 }) {
+    const { navigation } = useNavigationContext();
+    const anchorIdSoFar = getAnchorId(anchorIdParts);
+
+    useEffect(() => {
+        if (shouldSelectError(navigation, anchorIdSoFar)) {
+            select();
+        }
+    }, [navigation, anchorIdSoFar, select]);
+
     return (
         <button
             className={classNames(
