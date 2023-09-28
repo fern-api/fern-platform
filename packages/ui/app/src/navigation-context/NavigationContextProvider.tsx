@@ -16,7 +16,7 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
         node?.scrollIntoView({ behavior: "smooth" });
         window.location.hash = `#${anchorId}`;
         await window.navigator.clipboard.writeText(window.location.href);
-        await sleep(300);
+        await sleep(2_000);
         setNavigationInfo({ status: "subsequent-navigation-to-anchor-complete", anchorId });
     }, []);
 
@@ -45,7 +45,7 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
 
             // Since scrolling is done async, we can just wait a little before updating navigation status. Alternatively,
             // we can set up a listener for scroll movements but that may be an overkill for this function
-            await sleep(300);
+            await sleep(500);
 
             setNavigationInfo({ status: "initial-navigation-to-anchor-complete", anchorId });
         }
