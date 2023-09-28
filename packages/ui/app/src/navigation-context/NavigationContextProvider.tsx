@@ -46,11 +46,11 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
             setNavigationInfo({ status: "idle" });
             return;
         } else {
-            const yOffset = -HEADER_HEIGHT;
-            const y = node.getBoundingClientRect().top + window.scrollY + yOffset;
-
             // Wait for page to load to avoid outdated scroll position
             await pageLoadPromise;
+
+            const yOffset = -HEADER_HEIGHT;
+            const y = node.getBoundingClientRect().top + window.scrollY + yOffset;
 
             window.scrollTo({ top: y, behavior: "auto" });
 
