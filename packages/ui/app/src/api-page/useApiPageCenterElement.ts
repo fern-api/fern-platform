@@ -35,7 +35,6 @@ export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args):
     );
 
     const handleIsSelected = useCallback(() => {
-        // eslint-disable-next-line
         // const headerHeight = HEADER_HEIGHT;
         // window.scrollTo({ top: (targetRef.current?.offsetTop ?? 0) - headerHeight });
     }, []);
