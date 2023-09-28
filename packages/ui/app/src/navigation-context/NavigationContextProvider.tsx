@@ -20,6 +20,11 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
         setNavigationInfo({ status: "subsequent-navigation-to-anchor-complete", anchorId });
     }, []);
 
+    const markNavigationStatusAsIdle = useCallback(async () => {
+        await sleep(200);
+        setNavigationInfo({ status: "idle" });
+    }, []);
+
     const tryNavigateToAnchorOnPageLoad = async (anchorId: string) => {
         setNavigationInfo({ status: "initial-navigation-to-anchor", anchorId });
         const pageLoadPromise = waitForPageLoad();
@@ -59,9 +64,9 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
         if (anchorId != null) {
             void tryNavigateToAnchorOnPageLoad(anchorId);
         } else {
-            setNavigationInfo({ status: "idle" });
+            void markNavigationStatusAsIdle();
         }
-    }, []);
+    }, [markNavigationStatusAsIdle]);
 
     const contextValue = useCallback(
         (): NavigationContextValue => ({

@@ -1,7 +1,5 @@
-import classNames from "classnames";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
-import { useNavigationContext } from "../navigation-context/useNavigationContext";
 import { ApiPackageContents } from "./ApiPackageContents";
 import { ApiArtifacts } from "./artifacts/ApiArtifacts";
 import { areApiArtifactsNonEmpty } from "./artifacts/areApiArtifactsNonEmpty";
@@ -11,15 +9,10 @@ export declare namespace ApiPage {
 }
 
 export const ApiPage: React.FC<ApiPage.Props> = () => {
-    const { navigation } = useNavigationContext();
     const { apiDefinition, apiSlug, apiSection } = useApiDefinitionContext();
 
     return (
-        <div
-            className={classNames("min-h-0 pb-36", {
-                "opacity-0": navigation.status === "nil" || navigation.status === "initial-navigation-to-anchor",
-            })}
-        >
+        <div className="min-h-0 pb-36">
             {apiSection.artifacts != null && areApiArtifactsNonEmpty(apiSection.artifacts) && (
                 <ApiArtifacts apiArtifacts={apiSection.artifacts} />
             )}
