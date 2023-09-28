@@ -46,13 +46,16 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
             setNavigationInfo({ status: "idle" });
             return;
         } else {
-            const yOffset = -HEADER_HEIGHT;
-            const y = node.getBoundingClientRect().top + window.scrollY + yOffset;
-
             // Wait for page to load to avoid outdated scroll position
             await pageLoadPromise;
 
             await sleep(5_000);
+
+            const yOffset = -HEADER_HEIGHT;
+            const y = node.getBoundingClientRect().top + window.scrollY + yOffset;
+
+            // eslint-disable-next-line
+            console.log("Scrolling to position:", y);
 
             window.scrollTo({ top: y, behavior: "auto" });
 
