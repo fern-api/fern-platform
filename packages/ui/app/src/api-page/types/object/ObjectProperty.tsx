@@ -4,9 +4,9 @@ import { useCallback, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
+import { getAnchorId } from "../../../util/anchor";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
-import { getAnchorId } from "../../utils/getAnchorId";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
@@ -92,15 +92,15 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchorIdParts, 
 
     return (
         <div
-            id={anchorId}
+            data-anchor={anchorId}
             className={classNames("flex relative flex-col py-3 scroll-mt-16", {
                 "px-3": !contextValue.isRootTypeDefinition,
             })}
         >
             <div className="flex items-baseline gap-2">
-                <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName}>
-                    <div className="group/anchor-container relative">
-                        <AbsolutelyPositionedAnchor verticalPosition="center" anchor={anchorId} />
+                <div className="group/anchor-container relative">
+                    <AbsolutelyPositionedAnchor verticalPosition="center" anchor={anchorId} />
+                    <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName}>
                         <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">
                             {property.key}
                         </MonospaceText>

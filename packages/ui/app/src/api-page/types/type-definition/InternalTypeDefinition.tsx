@@ -6,6 +6,9 @@ import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
+import { NavigationInfo, NavigationStatus } from "../../../navigation-context/NavigationContext";
+import { useNavigationContext } from "../../../navigation-context/useNavigationContext";
+import { getAnchorId } from "../../../util/anchor";
 import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
 import {
     TypeDefinitionContext,
@@ -33,12 +36,21 @@ interface CollapsibleContent {
     separatorText?: string;
 }
 
+function shouldExpandDefinition(navigation: NavigationInfo, curAnchorId: string) {
+    if (navigation.status !== NavigationStatus.INITIAL_NAVIGATION_TO_ANCHOR) {
+        return false;
+    }
+    const { anchorId: destAnchorId } = navigation;
+    return destAnchorId.startsWith(`${curAnchorId}-`);
+}
+
 export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     typeShape,
     isCollapsible,
     anchorIdParts,
 }) => {
     const { resolveTypeById } = useApiDefinitionContext();
+    const { navigation } = useNavigationContext();
 
     const collapsableContent = useMemo(
         () =>
@@ -82,7 +94,15 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
         [resolveTypeById, typeShape, anchorIdParts]
     );
 
-    const { value: isCollapsed, toggleValue: toggleIsCollapsed } = useBooleanState(true);
+    const { value: isCollapsed, toggleValue: toggleIsCollapsed, setFalse: expandDefinition } = useBooleanState(true);
+
+    const anchorIdSoFar = getAnchorId(anchorIdParts);
+
+    useEffect(() => {
+        if (shouldExpandDefinition(navigation, anchorIdSoFar)) {
+            expandDefinition();
+        }
+    }, [navigation, anchorIdSoFar, expandDefinition]);
 
     const { isHovering, ...containerCallbacks } = useIsHovering();
 

@@ -1,4 +1,6 @@
 import classNames from "classnames";
+import { useCallback } from "react";
+import { useNavigationContext } from "../navigation-context/useNavigationContext";
 import { LinkIcon } from "./icons/LinkIcon";
 
 export declare namespace AbsolutelyPositionedAnchor {
@@ -15,6 +17,12 @@ export const AbsolutelyPositionedAnchor: React.FC<AbsolutelyPositionedAnchor.Pro
     verticalPosition,
     anchor,
 }) => {
+    const { navigateToAnchor } = useNavigationContext();
+
+    const onClick = useCallback(async () => {
+        await navigateToAnchor(anchor);
+    }, [navigateToAnchor, anchor]);
+
     return (
         <div
             className={classNames(
@@ -25,9 +33,9 @@ export const AbsolutelyPositionedAnchor: React.FC<AbsolutelyPositionedAnchor.Pro
                 }
             )}
         >
-            <a href={`#${anchor}`}>
+            <button onClick={onClick}>
                 <LinkIcon className="t-muted hover:text-text-primary-light hover:dark:text-text-primary-dark h-3.5 w-3.5 transition" />
-            </a>
+            </button>
         </div>
     );
 };
