@@ -49,8 +49,6 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
             // Wait for page to load to avoid outdated scroll position
             await pageLoadPromise;
 
-            await sleep(5_000);
-
             const yOffset = -HEADER_HEIGHT;
             const y = node.getBoundingClientRect().top + window.scrollY + yOffset;
 
