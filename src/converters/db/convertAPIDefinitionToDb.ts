@@ -142,6 +142,21 @@ function transformEndpoint({
         request: writeShape.request != null ? transformHttpRequestToDb({ writeShape: writeShape.request }) : undefined,
         response: writeShape.response,
         errors: writeShape.errors ?? [],
+        errorsV2:
+            writeShape.errorsV2 ?? writeShape.errors != null
+                ? writeShape.errors?.map((error) => {
+                      return {
+                          ...error,
+                          type:
+                              error.type != null
+                                  ? {
+                                        type: "alias",
+                                        value: error.type,
+                                    }
+                                  : undefined,
+                      };
+                  })
+                : undefined,
         examples: getExampleEndpointCalls({ writeShape, apiDefinition }),
         description: writeShape.description,
         htmlDescription,

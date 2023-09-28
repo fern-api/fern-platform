@@ -31,6 +31,7 @@ types:
       request: optional<HttpRequest>
       response: optional<HttpResponse>
       errors: optional<list<ErrorDeclaration>>
+      errorsV2: optional<list<ErrorDeclarationV2>>
       examples: list<ExampleEndpointCall>
 
   Environment:
@@ -112,6 +113,13 @@ types:
     properties:
       type: optional<type.TypeReference>
       statusCode: integer
+  
+  ErrorDeclarationV2: 
+    extends: commons.WithDescription
+    properties: 
+      type: optional<type.TypeShape>
+      statusCode: integer
+      name: optional<string>
 
   HttpResponseBodyShape:
     union:

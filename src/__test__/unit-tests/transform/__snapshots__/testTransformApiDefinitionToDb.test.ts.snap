@@ -39,6 +39,7 @@ Object {
             },
           ],
           "errors": Array [],
+          "errorsV2": Array [],
           "examples": Array [
             Object {
               "codeExamples": Object {
@@ -236,6 +237,12 @@ Object {
           "errors": Array [
             Object {
               "statusCode": 401,
+            },
+          ],
+          "errorsV2": Array [
+            Object {
+              "statusCode": 401,
+              "type": undefined,
             },
           ],
           "examples": Array [
@@ -1090,6 +1097,35 @@ Generate a completion using a previously defined deployment.
             },
           },
         ],
+        "errorsV2": Array [
+          Object {
+            "statusCode": 400,
+            "type": Object {
+              "type": "alias",
+              "value": Object {
+                "type": "unknown",
+              },
+            },
+          },
+          Object {
+            "statusCode": 404,
+            "type": Object {
+              "type": "alias",
+              "value": Object {
+                "type": "unknown",
+              },
+            },
+          },
+          Object {
+            "statusCode": 500,
+            "type": Object {
+              "type": "alias",
+              "value": Object {
+                "type": "unknown",
+              },
+            },
+          },
+        ],
         "examples": Array [
           Object {
             "codeExamples": Object {
@@ -1354,6 +1390,35 @@ Generate a stream of completions using a previously defined deployment.
             },
           },
         ],
+        "errorsV2": Array [
+          Object {
+            "statusCode": 400,
+            "type": Object {
+              "type": "alias",
+              "value": Object {
+                "type": "unknown",
+              },
+            },
+          },
+          Object {
+            "statusCode": 404,
+            "type": Object {
+              "type": "alias",
+              "value": Object {
+                "type": "unknown",
+              },
+            },
+          },
+          Object {
+            "statusCode": 500,
+            "type": Object {
+              "type": "alias",
+              "value": Object {
+                "type": "unknown",
+              },
+            },
+          },
+        ],
         "examples": Array [
           Object {
             "codeExamples": Object {
@@ -1577,6 +1642,35 @@ Perform a search against a document index.
             },
           },
         ],
+        "errorsV2": Array [
+          Object {
+            "statusCode": 400,
+            "type": Object {
+              "type": "alias",
+              "value": Object {
+                "type": "unknown",
+              },
+            },
+          },
+          Object {
+            "statusCode": 404,
+            "type": Object {
+              "type": "alias",
+              "value": Object {
+                "type": "unknown",
+              },
+            },
+          },
+          Object {
+            "statusCode": 500,
+            "type": Object {
+              "type": "alias",
+              "value": Object {
+                "type": "unknown",
+              },
+            },
+          },
+        ],
         "examples": Array [
           Object {
             "codeExamples": Object {
@@ -1795,6 +1889,35 @@ Used to submit feedback regarding the quality of previously generated completion
             "statusCode": 500,
             "type": Object {
               "type": "unknown",
+            },
+          },
+        ],
+        "errorsV2": Array [
+          Object {
+            "statusCode": 400,
+            "type": Object {
+              "type": "alias",
+              "value": Object {
+                "type": "unknown",
+              },
+            },
+          },
+          Object {
+            "statusCode": 404,
+            "type": Object {
+              "type": "alias",
+              "value": Object {
+                "type": "unknown",
+              },
+            },
+          },
+          Object {
+            "statusCode": 500,
+            "type": Object {
+              "type": "alias",
+              "value": Object {
+                "type": "unknown",
+              },
             },
           },
         ],
@@ -2074,6 +2197,7 @@ Used to retrieve a deployment given its ID or name.
             },
           ],
           "errors": Array [],
+          "errorsV2": Array [],
           "examples": Array [
             Object {
               "codeExamples": Object {
@@ -2189,6 +2313,7 @@ Creates a new document index.",
             },
           ],
           "errors": Array [],
+          "errorsV2": Array [],
           "examples": Array [
             Object {
               "codeExamples": Object {
@@ -2378,6 +2503,7 @@ Used to list documents. Optionally filter on supported fields.
             },
           ],
           "errors": Array [],
+          "errorsV2": Array [],
           "examples": Array [
             Object {
               "codeExamples": Object {
@@ -2549,6 +2675,35 @@ Upload a document to be indexed and used for search.
               },
             },
           ],
+          "errorsV2": Array [
+            Object {
+              "statusCode": 400,
+              "type": Object {
+                "type": "alias",
+                "value": Object {
+                  "type": "unknown",
+                },
+              },
+            },
+            Object {
+              "statusCode": 404,
+              "type": Object {
+                "type": "alias",
+                "value": Object {
+                  "type": "unknown",
+                },
+              },
+            },
+            Object {
+              "statusCode": 500,
+              "type": Object {
+                "type": "alias",
+                "value": Object {
+                  "type": "unknown",
+                },
+              },
+            },
+          ],
           "examples": Array [
             Object {
               "codeExamples": Object {
@@ -2695,6 +2850,7 @@ Used to retrieve a model version given its ID.
             },
           ],
           "errors": Array [],
+          "errorsV2": Array [],
           "examples": Array [
             Object {
               "codeExamples": Object {
@@ -2844,6 +3000,7 @@ Compiles the prompt backing the model version using the provided input values.",
             },
           ],
           "errors": Array [],
+          "errorsV2": Array [],
           "examples": Array [
             Object {
               "codeExamples": Object {
@@ -2991,6 +3148,18 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
               "type": Object {
                 "type": "id",
                 "value": "type_:RegisterPromptErrorResponse",
+              },
+            },
+          ],
+          "errorsV2": Array [
+            Object {
+              "statusCode": 409,
+              "type": Object {
+                "type": "alias",
+                "value": Object {
+                  "type": "id",
+                  "value": "type_:RegisterPromptErrorResponse",
+                },
               },
             },
           ],
@@ -3274,6 +3443,7 @@ or overwritten with default values.",
             },
           ],
           "errors": Array [],
+          "errorsV2": Array [],
           "examples": Array [
             Object {
               "codeExamples": Object {
@@ -3450,6 +3620,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
             },
           ],
           "errors": Array [],
+          "errorsV2": Array [],
           "examples": Array [
             Object {
               "codeExamples": Object {
@@ -3570,6 +3741,7 @@ or overwritten with default values.",
             },
           ],
           "errors": Array [],
+          "errorsV2": Array [],
           "examples": Array [
             Object {
               "codeExamples": Object {
@@ -3737,6 +3909,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
             },
           ],
           "errors": Array [],
+          "errorsV2": Array [],
           "examples": Array [
             Object {
               "codeExamples": Object {

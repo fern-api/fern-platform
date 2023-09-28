@@ -72,6 +72,21 @@ function transformEndpoint({
         request: dbShape.request != null ? transformHttpRequest({ dbShape: dbShape.request }) : undefined,
         response: dbShape.response,
         errors: dbShape.errors ?? [],
+        errorsV2:
+            dbShape.errorsV2 ?? dbShape.errors != null
+                ? dbShape.errors?.map((error) => {
+                      return {
+                          ...error,
+                          type:
+                              error.type != null
+                                  ? {
+                                        type: "alias",
+                                        value: error.type,
+                                    }
+                                  : undefined,
+                      };
+                  })
+                : undefined,
         examples: dbShape.examples,
         description: dbShape.description,
         htmlDescription: dbShape.htmlDescription,
