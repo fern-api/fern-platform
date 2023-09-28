@@ -3,7 +3,12 @@ import { HEADER_HEIGHT } from "../constants";
 import { extractAnchorFromWindow, getAnchorNode, getAnchorSelector } from "../util/anchor";
 import { waitForDomContentToLoad, waitForElement, waitForPageToLoad } from "../util/dom";
 import { sleep } from "../util/general";
-import { NavigationContext, type NavigationContextValue, type NavigationInfo } from "./NavigationContext";
+import {
+    NavigationContext,
+    NavigationStatus,
+    type NavigationContextValue,
+    type NavigationInfo,
+} from "./NavigationContext";
 
 export declare namespace NavigationContextProvider {}
 
@@ -18,7 +23,7 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
             window.location.hash = `#${anchorId}`;
             await window.navigator.clipboard.writeText(window.location.href);
             await sleep(2_000);
-            setNavigationInfo({ status: "subsequent-navigation-to-anchor-complete", anchorId });
+            setNavigationInfo({ status: NavigationStatus.SUBSEQUENT_NAVIGATION_TO_ANCHOR_COMPLETE, anchorId });
         } else {
             // eslint-disable-next-line no-console
             console.error(`Could not find the node for anchor "${anchorId}". Navigation can't be completed.`);
@@ -31,7 +36,7 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
     }, []);
 
     const tryNavigateToAnchorOnPageLoad = async (anchorId: string) => {
-        setNavigationInfo({ status: "initial-navigation-to-anchor", anchorId });
+        setNavigationInfo({ status: NavigationStatus.INITIAL_NAVIGATION_TO_ANCHOR, anchorId });
         const pageLoadPromise = waitForPageToLoad();
         const domContentLoadPromise = waitForDomContentToLoad();
         const anchorSelector = getAnchorSelector(anchorId);
@@ -70,7 +75,7 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
             // we can set up a listener for scroll movements but that may be an overkill for this function
             await sleep(500);
 
-            setNavigationInfo({ status: "initial-navigation-to-anchor-complete", anchorId });
+            setNavigationInfo({ status: NavigationStatus.INITIAL_NAVIGATION_TO_ANCHOR_COMPLETE, anchorId });
         }
     };
 

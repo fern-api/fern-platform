@@ -3,6 +3,7 @@ import { useInView } from "react-intersection-observer";
 import { HEADER_HEIGHT } from "../constants";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useIsSlugSelected } from "../docs-context/useIsSlugSelected";
+import { NavigationStatus } from "../navigation-context/NavigationContext";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
 
 export declare namespace useApiPageCenterElement {
@@ -25,8 +26,8 @@ export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args):
         (newIsInVerticalCenter: boolean) => {
             if (
                 newIsInVerticalCenter &&
-                navigation.status !== "initial-navigation-to-anchor" &&
-                navigation.status !== "subsequent-navigation-to-anchor"
+                navigation.status !== NavigationStatus.INITIAL_NAVIGATION_TO_ANCHOR &&
+                navigation.status !== NavigationStatus.SUBSEQUENT_NAVIGATION_TO_ANCHOR
             ) {
                 onScrollToPath(slug);
             }

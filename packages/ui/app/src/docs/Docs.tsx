@@ -5,6 +5,7 @@ import { memo, useMemo } from "react";
 import { HEADER_HEIGHT } from "../constants";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
+import { NavigationStatus } from "../navigation-context/NavigationContext";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
 import { useSearchContext } from "../search-context/useSearchContext";
 import { SearchDialog } from "../search/SearchDialog";
@@ -40,7 +41,9 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
         }
     }, [colorsV3, theme]);
 
-    const hideContent = navigation.status === "nil" || navigation.status === "initial-navigation-to-anchor";
+    const hideContent =
+        navigation.status === NavigationStatus.NIL ||
+        navigation.status === NavigationStatus.INITIAL_NAVIGATION_TO_ANCHOR;
 
     return (
         <>

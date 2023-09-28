@@ -1,7 +1,7 @@
 import { FernRegistry } from "@fern-fern/registry-browser";
 import classNames from "classnames";
 import { memo, MouseEventHandler, useEffect } from "react";
-import { NavigationInfo } from "../../navigation-context/NavigationContext";
+import { NavigationInfo, NavigationStatus } from "../../navigation-context/NavigationContext";
 import { useNavigationContext } from "../../navigation-context/useNavigationContext";
 import { getAnchorId } from "../../util/anchor";
 import { type JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
@@ -9,7 +9,7 @@ import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceD
 import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
 
 function shouldSelectError(navigation: NavigationInfo, curAnchorId: string) {
-    if (navigation.status !== "initial-navigation-to-anchor") {
+    if (navigation.status !== NavigationStatus.INITIAL_NAVIGATION_TO_ANCHOR) {
         return false;
     }
     const { anchorId: destAnchorId } = navigation;

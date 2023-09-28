@@ -6,7 +6,7 @@ import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
-import type { NavigationInfo } from "../../../navigation-context/NavigationContext";
+import { NavigationInfo, NavigationStatus } from "../../../navigation-context/NavigationContext";
 import { useNavigationContext } from "../../../navigation-context/useNavigationContext";
 import { getAnchorId } from "../../../util/anchor";
 import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
@@ -37,7 +37,7 @@ interface CollapsibleContent {
 }
 
 function shouldExpandDefinition(navigation: NavigationInfo, curAnchorId: string) {
-    if (navigation.status !== "initial-navigation-to-anchor") {
+    if (navigation.status !== NavigationStatus.INITIAL_NAVIGATION_TO_ANCHOR) {
         return false;
     }
     const { anchorId: destAnchorId } = navigation;
