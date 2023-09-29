@@ -18,6 +18,7 @@ import {
 import { DiscriminatedUnionVariant } from "../discriminated-union/DiscriminatedUnionVariant";
 import { EnumValue } from "../enum/EnumValue";
 import { ObjectProperty } from "../object/ObjectProperty";
+import { UndiscriminatedUnionVariant } from "../undiscriminated-union/UndiscriminatedUnionVariant";
 import styles from "./InternalTypeDefinition.module.scss";
 import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 
@@ -67,8 +68,25 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                     elementNameSingular: "property",
                     elementNamePlural: "properties",
                 }),
-                // TODO
-                undiscriminatedUnion: () => undefined,
+                undiscriminatedUnion: (union) => ({
+                    elements: union.variants
+                        .sort((v1, v2) => {
+                            if (v1.type.type === "id") {
+                                return v2.type.type === "id" ? 0 : -1;
+                            }
+                            return v2.type.type !== "id" ? 0 : 1;
+                        })
+                        .map((variant, variantIdx) => (
+                            <UndiscriminatedUnionVariant
+                                key={variantIdx}
+                                unionVariant={variant}
+                                anchorIdParts={anchorIdParts}
+                            />
+                        )),
+                    elementNameSingular: "variant",
+                    elementNamePlural: "variants",
+                    separatorText: "OR",
+                }),
                 discriminatedUnion: (union) => ({
                     elements: union.variants.map((variant) => (
                         <DiscriminatedUnionVariant

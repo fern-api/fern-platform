@@ -3323,10 +3323,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/registry-browser", [\
-        ["npm:0.23.1-6-gd18235e", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-registry-browser-npm-0.23.1-6-gd18235e-0ea7ee19f5-22f27c0fc4.zip/node_modules/@fern-fern/registry-browser/",\
+        ["npm:0.26.0-1-g7cf6a78", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-registry-browser-npm-0.26.0-1-g7cf6a78-a1a0540c22-57d13218d2.zip/node_modules/@fern-fern/registry-browser/",\
           "packageDependencies": [\
-            ["@fern-fern/registry-browser", "npm:0.23.1-6-gd18235e"],\
+            ["@fern-fern/registry-browser", "npm:0.26.0-1-g7cf6a78"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["@ungap/url-search-params", "npm:0.2.2"],\
             ["axios", "npm:1.4.0"],\
@@ -3341,7 +3341,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/commons/app-utils/",\
           "packageDependencies": [\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
-            ["@fern-fern/registry-browser", "npm:0.23.1-6-gd18235e"],\
+            ["@fern-fern/registry-browser", "npm:0.26.0-1-g7cf6a78"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.9"],\
@@ -3442,7 +3442,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/ui/fe-bundle/",\
           "packageDependencies": [\
             ["@fern-ui/fe-bundle", "workspace:packages/ui/fe-bundle"],\
-            ["@fern-fern/registry-browser", "npm:0.23.1-6-gd18235e"],\
+            ["@fern-fern/registry-browser", "npm:0.26.0-1-g7cf6a78"],\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/theme", "workspace:packages/commons/react/theme"],\
@@ -3699,7 +3699,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@blueprintjs/icons", "npm:4.9.0"],\
             ["@blueprintjs/popover2", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.8.0"],\
             ["@blueprintjs/select", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.5.1"],\
-            ["@fern-fern/registry-browser", "npm:0.23.1-6-gd18235e"],\
+            ["@fern-fern/registry-browser", "npm:0.26.0-1-g7cf6a78"],\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/react-commons", "workspace:packages/commons/react/react-commons"],\

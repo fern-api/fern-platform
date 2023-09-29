@@ -33,7 +33,7 @@
     "@blueprintjs/icons": "^4.4.0",
     "@blueprintjs/popover2": "^1.8.0",
     "@blueprintjs/select": "^4.4.2",
-    "@fern-fern/registry-browser": "0.23.1-6-gd18235e",
+    "@fern-fern/registry-browser": "0.26.0-1-g7cf6a78",
     "@fern-ui/app-utils": "workspace:*",
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/react-commons": "workspace:*",
