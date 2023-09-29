@@ -6,7 +6,6 @@ import { useNavigationContext } from "../../navigation-context/useNavigationCont
 import { getAnchorId } from "../../util/anchor";
 import { type JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
-import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
 
 function shouldSelectError(navigation: NavigationInfo, curAnchorId: string) {
     if (navigation.status !== NavigationStatus.INITIAL_NAVIGATION_TO_ANCHOR) {
@@ -18,7 +17,7 @@ function shouldSelectError(navigation: NavigationInfo, curAnchorId: string) {
 
 export declare namespace EndpointError {
     export interface Props {
-        error: FernRegistry.api.v1.read.ErrorDeclaration;
+        error: FernRegistry.api.v1.read.ErrorDeclarationV2;
         isFirst: boolean;
         isLast: boolean;
         isSelected: boolean;
@@ -70,25 +69,28 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
             onClick={onClick}
         >
             <div className="flex items-baseline space-x-2">
-                <div className="rounded bg-red-500/20 p-1 text-xs text-red-400">{error.statusCode}</div>
-                <div className="t-muted text-xs">
-                    {error.type != null && <TypeShorthand type={error.type} plural={false} />}
+                <div className="rounded bg-red-500/20 px-2 py-1 text-xs text-red-400">
+                    {error.name ?? error.statusCode}
                 </div>
             </div>
-            {error.description != null && error.description.length > 0 && (
-                <div className="t-muted mt-3 text-start text-base font-light leading-7">{error.description}</div>
-            )}
 
-            {isSelected && (
-                <div className="border-border-concealed-light dark:border-border-concealed-dark mt-2 w-full border-t text-start">
-                    {error.type != null && (
-                        <TypeReferenceDefinitions
-                            isCollapsible={false}
-                            type={error.type}
-                            onHoverProperty={onHoverProperty}
-                            anchorIdParts={anchorIdParts}
-                        />
-                    )}
+            {isSelected && error.type != null && (
+                <div className="w-full">
+                    <div className="t-muted mt-3 w-full text-start text-sm font-light leading-7">
+                        This error returns an object.{/* TODO: Make dynamic */}
+                    </div>
+
+                    <div className="border-border-default-light dark:border-border-default-dark mt-2 w-full border-t text-start">
+                        {error.type.type === "alias" ? (
+                            <TypeReferenceDefinitions
+                                isCollapsible
+                                isError
+                                type={error.type.value}
+                                onHoverProperty={onHoverProperty}
+                                anchorIdParts={anchorIdParts}
+                            />
+                        ) : null}
+                    </div>
                 </div>
             )}
         </button>

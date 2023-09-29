@@ -74,6 +74,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
     }, [endpoint.examples, selectedError]);
 
     const endpointExample = example ? <EndpointExample endpoint={endpoint} example={example} /> : null;
+    const errors = endpoint.errorsV2 ?? [];
 
     return (
         <div
@@ -148,10 +149,10 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                     />
                                 </EndpointSection>
                             )}
-                            {apiSection.showErrors && endpoint.errors.length > 0 && (
+                            {apiSection.showErrors && errors.length > 0 && (
                                 <EndpointSection title="Errors" anchorIdParts={[...anchorIdParts, "response"]}>
                                     <EndpointErrorsSection
-                                        errors={endpoint.errors}
+                                        errors={errors}
                                         onClickError={(_, idx, event) => {
                                             event.stopPropagation();
                                             setSelectedErrorIndex(idx);
