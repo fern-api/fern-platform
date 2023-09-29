@@ -550,10 +550,6 @@ quick velocity without breaking your code.",
           "urlSlug": "auth",
         },
         Object {
-          "name": "v2",
-          "urlSlug": "v-2",
-        },
-        Object {
           "name": "Get Token",
           "urlSlug": "get-token",
         },
@@ -646,10 +642,6 @@ A schema of the response object can be found here: Change Healthcare Docs
           "urlSlug": "encounters",
         },
         Object {
-          "name": "v4",
-          "urlSlug": "v-4",
-        },
-        Object {
           "name": "Get all encounters",
           "urlSlug": "get-all-encounters",
         },
@@ -694,10 +686,6 @@ A schema of the response object can be found here: Change Healthcare Docs
           "urlSlug": "encounters",
         },
         Object {
-          "name": "v4",
-          "urlSlug": "v-4",
-        },
-        Object {
           "name": "Get encounter",
           "urlSlug": "get-encounter",
         },
@@ -732,10 +720,6 @@ A schema of the response object can be found here: Change Healthcare Docs
         Object {
           "name": "encounters",
           "urlSlug": "encounters",
-        },
-        Object {
-          "name": "v4",
-          "urlSlug": "v-4",
         },
         Object {
           "name": "Create encounter",
@@ -782,10 +766,6 @@ A schema of the response object can be found here: Change Healthcare Docs
           "urlSlug": "encounters",
         },
         Object {
-          "name": "v4",
-          "urlSlug": "v-4",
-        },
-        Object {
           "name": "Update encounter",
           "urlSlug": "update-encounter",
         },
@@ -820,10 +800,6 @@ A schema of the response object can be found here: Change Healthcare Docs
         Object {
           "name": "expected-network-status",
           "urlSlug": "expected-network-status",
-        },
-        Object {
-          "name": "v1",
-          "urlSlug": "v-1",
         },
         Object {
           "name": "Compute network status",
@@ -910,10 +886,6 @@ A schema of the response object can be found here: Change Healthcare Docs
           "urlSlug": "guarantor",
         },
         Object {
-          "name": "v1",
-          "urlSlug": "v-1",
-        },
-        Object {
           "name": "Create",
           "urlSlug": "create",
         },
@@ -958,10 +930,6 @@ A schema of the response object can be found here: Change Healthcare Docs
           "urlSlug": "guarantor",
         },
         Object {
-          "name": "v1",
-          "urlSlug": "v-1",
-        },
-        Object {
           "name": "Get",
           "urlSlug": "get",
         },
@@ -1004,10 +972,6 @@ A schema of the response object can be found here: Change Healthcare Docs
         Object {
           "name": "guarantor",
           "urlSlug": "guarantor",
-        },
-        Object {
-          "name": "v1",
-          "urlSlug": "v-1",
         },
         Object {
           "name": "Update",
@@ -1228,10 +1192,6 @@ A schema of the response object can be found here: Change Healthcare Docs
         Object {
           "name": "tasks",
           "urlSlug": "tasks",
-        },
-        Object {
-          "name": "v3",
-          "urlSlug": "v-3",
         },
         Object {
           "name": "Get Actions",

@@ -1,8 +1,8 @@
 import { v4 as uuid } from "uuid";
-import { APIV1Db, DocsV1Db } from "../../api";
+import { APIV1Db, APIV1Read, DocsV1Db } from "../../api";
+import { LOGGER } from "../../app/FdrApplication";
 import { convertMarkdownToText, truncateToBytes } from "../../util";
 import { isUnversionedTabbedNavigationConfig } from "../../util/fern/db";
-import { getSubpackageParentPathParts, type PathPart } from "../../util/fern/db/subpackage";
 import { compact } from "../../util/object";
 import type { AlgoliaSearchRecord, IndexSegment } from "./types";
 
@@ -170,6 +170,8 @@ export class AlgoliaSearchRecordGenerator {
         context: NavigationContext
     ): AlgoliaSearchRecord[] {
         const { rootPackage, subpackages } = apiDef;
+        const subpackagePathParts = getPathPartsBySubpackage({ definition: apiDef });
+
         const records: AlgoliaSearchRecord[] = [];
 
         rootPackage.endpoints.forEach((e) => {
@@ -177,13 +179,16 @@ export class AlgoliaSearchRecordGenerator {
             records.push(...endpointRecords);
         });
 
-        Object.values(subpackages).forEach((subpackage) => {
-            const { parent } = subpackage;
-            const parentPathParts = parent != null ? getSubpackageParentPathParts(subpackage, apiDef) : [];
+        Object.entries(subpackages).forEach(([id, subpackage]) => {
+            const pathParts = subpackagePathParts[id];
+            if (pathParts == null) {
+                LOGGER.error("Excluding subpackage from search. Failed to find path parts for subpackage id=", id);
+                return;
+            }
             subpackage.endpoints.forEach((e) => {
                 const endpointRecords = this.generateAlgoliaSearchRecordsForEndpointDefinition(
                     e,
-                    context.withPathParts([...parentPathParts, { name: subpackage.name, urlSlug: subpackage.urlSlug }])
+                    context.withPathParts(pathParts)
                 );
                 records.push(...endpointRecords);
             });
@@ -235,4 +240,88 @@ export class AlgoliaSearchRecordGenerator {
         // Add records for query parameters, request/response body etc.
         return records;
     }
+}
+
+interface PathPart {
+    name: string;
+    urlSlug: string;
+    skipUrlSlug?: boolean;
+}
+
+function getPathPartsBySubpackage({
+    definition,
+}: {
+    definition: APIV1Db.DbApiDefinition;
+}): Record<APIV1Read.SubpackageId, PathPart[]> {
+    return getPathPartsBySubpackageHelper({
+        definition,
+        subpackages: getSubpackagesMap({ definition, subpackages: definition.rootPackage.subpackages }),
+        pathParts: [],
+    });
+}
+
+function getPathPartsBySubpackageHelper({
+    definition,
+    subpackages,
+    pathParts,
+}: {
+    definition: APIV1Db.DbApiDefinition;
+    subpackages: Record<APIV1Read.SubpackageId, APIV1Db.DbApiDefinitionSubpackage>;
+    pathParts: PathPart[];
+}): Record<APIV1Read.SubpackageId, PathPart[]> {
+    let result: Record<APIV1Read.SubpackageId, PathPart[]> = {};
+    for (const [id, subpackage] of Object.entries(subpackages)) {
+        if (subpackage.pointsTo != null) {
+            const pointedToSubpackage = definition.subpackages[subpackage.pointsTo];
+            if (pointedToSubpackage == null) {
+                LOGGER.error("Failed to find pointedTo subpackage for API. id=", id);
+                continue;
+            }
+            result = {
+                ...result,
+                ...getPathPartsBySubpackageHelper({
+                    definition,
+                    subpackages: {
+                        [subpackage.pointsTo]: {
+                            ...pointedToSubpackage,
+                            urlSlug: subpackage.urlSlug,
+                            name: subpackage.name,
+                        },
+                    },
+                    pathParts,
+                }),
+            };
+        } else {
+            const path: PathPart[] = [...pathParts, { name: subpackage.name, urlSlug: subpackage.urlSlug }];
+            result[id] = path;
+            result = {
+                ...result,
+                ...getPathPartsBySubpackageHelper({
+                    definition,
+                    subpackages: getSubpackagesMap({ definition, subpackages: subpackage.subpackages }),
+                    pathParts: path,
+                }),
+            };
+        }
+    }
+    return result;
+}
+
+function getSubpackagesMap({
+    definition,
+    subpackages,
+}: {
+    definition: APIV1Db.DbApiDefinition;
+    subpackages: APIV1Read.SubpackageId[];
+}): Record<APIV1Read.SubpackageId, APIV1Db.DbApiDefinitionSubpackage> {
+    return Object.fromEntries(
+        subpackages.map((id) => {
+            const subpackage = definition.subpackages[id];
+            if (subpackage == null) {
+                LOGGER.error("Failed to find subpackage for API. id=", id);
+                return [];
+            }
+            return [id, subpackage];
+        })
+    );
 }
