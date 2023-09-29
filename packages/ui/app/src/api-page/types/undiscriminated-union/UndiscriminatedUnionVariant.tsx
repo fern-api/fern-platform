@@ -1,7 +1,6 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import { useCallback } from "react";
-import { toTitleCase } from "../../../util/string";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import {
     TypeDefinitionContext,
@@ -11,49 +10,66 @@ import {
 import { InternalTypeReferenceDefinitions } from "../type-reference/InternalTypeReferenceDefinitions";
 import { TypeShorthand } from "../type-shorthand/TypeShorthand";
 
-function getIconContentForPrimitiveType(type: FernRegistryApiRead.PrimitiveType) {
+type IconInfo = {
+    content: string;
+    size: number;
+};
+
+function getIconInfoForPrimitiveType(type: FernRegistryApiRead.PrimitiveType): IconInfo {
     switch (type.type) {
         case "integer":
         case "long":
         case "double":
-            return type.type === "double" ? "1.2" : "123";
+            return type.type === "double"
+                ? {
+                      content: "1.2",
+                      size: 6,
+                  }
+                : {
+                      content: "123",
+                      size: 6,
+                  };
         case "boolean":
-            return "true";
+            return { content: "true", size: 6 };
         case "uuid":
         case "date":
         case "datetime":
         case "base64":
         case "string":
-            return "abc";
+            return { content: "abc", size: 6 };
     }
 }
 
-function getIconContentForTypeReference(typeRef: FernRegistryApiRead.TypeReference): string | null {
+function getIconInfoForTypeReference(typeRef: FernRegistryApiRead.TypeReference): IconInfo | null {
     switch (typeRef.type) {
         case "id":
             return null;
         case "primitive":
-            return getIconContentForPrimitiveType(typeRef.value);
+            return getIconInfoForPrimitiveType(typeRef.value);
         case "map":
-            return "<K,V>";
+            return { content: "{}", size: 9 };
         case "literal":
-            return "!";
+            return { content: "!", size: 9 };
         case "list":
         case "set":
         case "optional":
-            return getIconContentForTypeReference(typeRef.itemType);
+            return getIconInfoForTypeReference(typeRef.itemType);
         case "unknown":
-            return "?";
+            return { content: "{}", size: 9 };
     }
 }
 
 function getIconForTypeReference(typeRef: FernRegistryApiRead.TypeReference): JSX.Element | null {
-    const content = getIconContentForTypeReference(typeRef);
-    if (content == null) {
+    const info = getIconInfoForTypeReference(typeRef);
+    if (info == null) {
         return null;
     }
+    const { content, size } = info;
     return (
-        <div className="border-border-default-light dark:border-border-default-dark flex h-6 w-6 items-center justify-center rounded border text-[6px]">
+        <div
+            className="border-border-default-light dark:border-border-default-dark flex h-6 w-6 items-center justify-center rounded border"
+            style={{ fontSize: size }}
+        >
             {content}
         </div>
     );
