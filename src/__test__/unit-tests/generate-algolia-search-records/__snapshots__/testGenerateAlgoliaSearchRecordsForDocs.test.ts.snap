@@ -1,5 +1,1365 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`generateAlgoliaSearchRecordsForDocs {"name":"candid"} 1`] = `
+Array [
+  Object {
+    "content": "ENCOUNTERS
+
+Candid's primary entry point for submitting encounter information is the Encounters [../api-reference/encounters] endpoint. Candid
+uses the information sent to this endpoint to submit claims.
+
+
+ELIGIBILITY
+
+Candid's Eligibility [../api-reference/eligibility] endpoint can be used to run real-time eligibility checks on patients to
+confirm active medical coverage and to understand the patient's benefits (co-pays, deductibles, etc).
+
+
+EXPORTS
+
+Candid's Exports [../api-reference/exports] endpoints are used to programmatically download CSV exports of changes to a claim's
+status and associated metadata (e.g., service line amounts, patient and subscriber info, provider info).
+
+
+TASKS
+
+Candid's Tasks [../api-reference/tasks] endpoint can be used to embed Candid's Tasks in another system, like your integrated EMR
+partner.
+
+
+EXAMPLE WORKFLOW USING CANDID'S PRODUCTS
+
+ 1. When a patient signs up or schedules an appointment, Eligibility [../api-reference/eligibility] is used to run a real-time
+    eligibility check to confirm the patient's medical coverage.
+ 2. A day before the patient's appointment, Eligibility [../api-reference/eligibility] is used again to re-confirm the patient's
+    coverage. It may have lapsed since they scheduled the appointment.
+ 3. After visit has been completed, an Encounter [../api-reference/encounters] is submitted to Candid. This either happens in
+    real-time immediately when the visit is completed and/or signed, or in a batch job at the end of the day.
+ 4. Exports [../api-reference/exports] are downloaded and processed daily. Patient payments are sent to collect the balance owed
+    on finalized adjudicated claims based on this data.
+ 5. Tasks [../api-reference/tasks] are synchronized with your system if you are not working them directly in the Candid app.",
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Introduction",
+          "urlSlug": "introduction",
+        },
+        Object {
+          "name": "Our Products",
+          "urlSlug": "our-products",
+        },
+      ],
+    },
+    "title": "Our Products",
+    "type": "page-v2",
+  },
+  Object {
+    "content": "Candid Health supports most payers. You can find a list of supported payers with their respective payer_id, payer_name, and cpid
+below.
+
+The payer_id and payer_name should be used in the corresponding subscriber's insurance card information and when you use the
+Encounters [../api-reference/encounters] endpoint.
+
+The cpid should be used in the tradingPartnerServiceId field of the Eligibility [../api-reference/eligibility] endpoint. The cpid
+is a Change Healthcare defined payer identifier.
+
+When denoting a claim as self-pay, please use the responsible party field on the Encounters [../api-reference/encounters]
+endpoint.
+
+
+IMPORTANT
+
+When submitting claims to Candid, please ensure you are using the exact payer_name that is listed below. The relationship between
+payer_name and payer_id is not one-to-one, meaning that certain payer_ids are used for multiple payers. As such, Candid has to do
+a match on a combination of payer_name and payer_id to determine the right place to send the claim in those instances.
+
+View list of supported Payer IDs, Payer Names, and CPIDs or download a CSV here
+[https://app.joincandidhealth.com/dynamic-files/payers-list.csv].",
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Introduction",
+          "urlSlug": "introduction",
+        },
+        Object {
+          "name": "Payer Information",
+          "urlSlug": "payer-information",
+        },
+      ],
+    },
+    "title": "Payer Information",
+    "type": "page-v2",
+  },
+  Object {
+    "content": "This page outlines how to use our Python and TypeScript SDKs to interact with our API. Specifically, you'll learn how to make a
+request to create an Encounter.
+
+
+PREREQUISITES
+
+ * Python 3.x or TypeScript 4.x installed on your system
+ * Candid Client ID
+ * Candid Client Secret
+
+
+INSTALLATION
+
+First, install the SDK using your package manager: bash pip install candidhealth # or poetry install, etc bash yarn add
+candidhealth # or npm install, pnpm i, etc.
+
+
+AUTHENTICATION
+
+To make requests to our API, you'll need to use your API key for authentication. Initialize the SDK as follows:
+
+\`\`\`python from candid.client import CandidApiClient from candid.environment import CandidApiEnvironment
+
+client = CandidApiClient(
+    environment=CandidApiEnvironment.STAGING,
+    options=CandidApiClientOptions(
+        client_id=\\"YOUR_CLIENT_ID\\",
+        client_secret=\\"YOUR_CLIENT_SECRET\\"
+    )
+)
+\`\`\`
+</CodeBlock>
+<CodeBlock title=\\"TypeScript\\">
+\`\`\`typescript
+import { CandidApi, CandidApiClient, CandidApiEnvironment } from \\"candidhealth\\";
+
+const client = new CandidApiClient({
+    environment: CandidApiEnvironment.Staging,
+    clientId: \\"YOUR_CLIENT_ID\\",
+    clientSecret: \\"YOUR_CLIENT_SECRET\\",
+});
+\`\`\`
+</CodeBlock>
+
+
+Candid provides two environments, STAGING and PRODUCTION. Take care to pass the correct environment when creating your API client
+so that requests are routed correctly.
+
+
+MAKING AN EXAMPLE REQUEST
+
+In this example, we'll create an Encounter using the V4 API.
+
+\`\`\`python created_encounter = client.encounters.v_4.create( external_id=EncounterExternalId(\\"emr-claim-id-abcd\\"),
+date_of_service=Date(\\"2023-05-23\\"), billable_status=BillableStatusType.BILLABLE, # or BillableStatusType.NOT_BILLABLE
+responsible_party=ResponsiblePartyType.INSURANCE_PAY, # or ResponsiblePartyType.SELF_PAY patient=PatientCreate(
+external_id=\\"emr-patient-id-123\\", first_name=\\"Loki\\", last_name=\\"Laufeyson\\", date_of_birth=Date(\\"1983-12-17\\"), gender=Gender.MALE,
+address=StreetAddressShortZip( address_1=\\"1234 Main St\\", address_2=\\"Apt 9876\\", city=\\"Asgard\\", state=State.CA, zip_code=\\"94109\\",
+zip_plus_four_code=\\"1234\\", ), ), patient_authorized_release=True, billing_provider=BillingProvider( organization_name=\\"Acme Health
+PC\\", npi=\\"1234567890\\", tax_id=\\"123456789\\", address=StreetAddressLongZip( address_1=\\"1234 Main St\\", address_2=\\"Apt 9876\\",
+city=\\"Asgard\\", state=State.CA, zip_code=\\"94109\\", zip_plus_four_code=\\"1234\\", ), ), rendering_provider=RenderingProvider(
+first_name=\\"Doctor\\", last_name=\\"Strange\\", npi=\\"9876543210\\", ), diagnoses=[ DiagnosisCreate(code_type=DiagnosisTypeCode.ABF,
+code=\\"Z63.88\\"), DiagnosisCreate(code_type=DiagnosisTypeCode.ABF, code=\\"E66.66\\"), ],
+place_of_service_code=FacilityTypeCode.TELEHEALTH, service_lines=[ ServiceLineCreate( procedure_code=\\"99212\\", modifiers=[],
+quantity=Decimal(\\"1.0\\"), units=ServiceLineUnits.UN, charge_amount_cents=1500, diagnosis_pointers=[0, 1], ), ], clinical_notes=[],
+provider_accepts_assignment=True, benefits_assigned_to_provider=True, ) \`\`\` \`\`\`typescript const createEncounterResponse = await
+client.encounters.v4.create({ externalId: CandidApi.EncounterExternalId(\\"emr-claim-id-abcd\\"), dateOfService:
+CandidApi.Date_(\\"2023-05-23\\"), billableStatus: \\"BILLABLE\\", // or \\"NOT_BILLABLE responsibleParty: \\"INSURANCE_PAY\\", // or \\"SELF_PAY\\"
+patient: { externalId: \\"emr-patient-id-123\\", firstName: \\"Loki\\", lastName: \\"Laufeyson\\", dateOfBirth: CandidApi.Date_(\\"1983-12-17\\"),
+gender: \\"male\\", address: { address1: \\"1234 Main St\\", address2: \\"Apt 9876\\", city: \\"Asgard\\", state: \\"CA\\", zipCode: \\"94109\\",
+zipPlusFourCode: \\"1234\\", }, }, patientAuthorizedRelease: true, billingProvider: { organizationName: \\"Acme Health PC\\", npi:
+\\"1234567890\\", taxId: \\"123456789\\", address: { address1: \\"1234 Main St\\", address2: \\"Apt 9876\\", city: \\"Asgard\\", state: \\"CA\\", zipCode:
+\\"94109\\", zipPlusFourCode: \\"1234\\", }, }, renderingProvider: { firstName: \\"Doctor\\", lastName: \\"Strange\\", npi: \\"9876543210\\", },
+diagnoses: [ { codeType: \\"ABF\\", code: \\"Z63.88\\" }, { codeType: \\"ABF\\", code: \\"E66.66\\" }, ], placeOfServiceCode: \\"02\\", //
+telemedicine serviceLines: [ { procedureCode: \\"99212\\", modifiers: [], quantity: CandidApi.Decimal(\\"1.0\\"), units: \\"UN\\",
+chargeAmountCents: 1500, diagnosisPointers: [0, 1], } ], clinicalNotes: [], providerAcceptsAssignment: true,
+benefitsAssignedToProvider: true, }); \`\`\`
+
+
+ERROR HANDLING
+
+Each endpoint in our SDK documents which errors and exceptions can be raised if the request fails. These can be caught and handled
+via native exception-handling:
+
+\`\`\`python from candid.resources.encounters.resources.v_4.errors import EncounterExternalIdUniquenessError
+
+try:
+    created_encounter = client.encounters.v_4.create(...)
+except EncounterExternalIdUniquenessError as e:
+    print(f\\"An error occurred: {e}\\")
+\`\`\`
+</CodeBlock>
+<CodeBlock title=\\"TypeScript\\">
+\`\`\`typescript
+if (createEncounterResponse.ok) {
+    const { body: newEncounter } = createEncounterResponse;
+    console.log(newEncounter.encounterId);
+} else {
+    console.error(createEncounterResponse.error);
+}
+\`\`\`
+</CodeBlock>
+
+
+## Full Source Code \`\`\`python from candid.candid_api_client import CandidApiClient, CandidApiClientOptions from candid import (
+CandidApiEnvironment, EncounterExternalId, Date, PatientCreate, Gender, StreetAddressShortZip, State, StreetAddressLongZip,
+DiagnosisCreate, DiagnosisTypeCode, FacilityTypeCode, ServiceLineCreate, ServiceLineUnits, Decimal, ) from
+candid.resources.encounter_providers.resources.v_2 import BillingProvider, RenderingProvider from
+candid.resources.encounters.resources.v_4 import BillableStatusType, ResponsiblePartyType
+
+client = CandidApiClient(
+    environment=CandidApiEnvironment.STAGING,
+    options=CandidApiClientOptions(
+        client_id=\\"YOUR_CLIENT_ID\\",
+        client_secret=\\"YOUR_CLIENT_SECRET\\"
+    )
+)
+
+created_encounter = client.encounters.v_4.create(
+    external_id=EncounterExternalId(\\"emr-claim-id-abcd\\"),
+    date_of_service=Date(\\"2023-05-23\\"),
+    billable_status=BillableStatusType.BILLABLE,  # or BillableStatusType.NOT_BILLABLE
+    responsible_party=ResponsiblePartyType.INSURANCE_PAY,  # or ResponsiblePartyType.SELF_PAY
+    patient=PatientCreate(
+        external_id=\\"emr-patient-id-123\\",
+        first_name=\\"Loki\\",
+        last_name=\\"Laufeyson\\",
+        date_of_birth=Date(\\"1983-12-17\\"),
+        gender=Gender.MALE,
+        address=StreetAddressShortZip(
+            address_1=\\"1234 Main St\\",
+            address_2=\\"Apt 9876\\",
+            city=\\"Asgard\\",
+            state=State.CA,
+            zip_code=\\"94109\\",
+            zip_plus_four_code=\\"1234\\",
+        ),
+    ),
+    patient_authorized_release=True,
+    billing_provider=BillingProvider(
+        organization_name=\\"Acme Health PC\\",
+        npi=\\"1234567890\\",
+        tax_id=\\"123456789\\",
+        address=StreetAddressLongZip(
+            address_1=\\"1234 Main St\\",
+            address_2=\\"Apt 9876\\",
+            city=\\"Asgard\\",
+            state=State.CA,
+            zip_code=\\"94109\\",
+            zip_plus_four_code=\\"1234\\",
+        ),
+    ),
+    rendering_provider=RenderingProvider(
+        first_name=\\"Doctor\\",
+        last_name=\\"Strange\\",
+        npi=\\"9876543210\\",
+    ),
+    diagnoses=[
+        DiagnosisCreate(code_type=DiagnosisTypeCode.ABF, code=\\"Z63.88\\"),
+        DiagnosisCreate(code_type=DiagnosisTypeCode.ABF, code=\\"E66.66\\"),
+    ],
+    place_of_service_code=FacilityTypeCode.TELEHEALTH,
+    service_lines=[
+        ServiceLineCreate(
+            procedure_code=\\"99212\\",
+            modifiers=[],
+            quantity=Decimal(\\"1.0\\"),
+            units=ServiceLineUnits.UN,
+            charge_amount_cents=1500,
+            diagnosis_pointers=[0, 1],
+        ),
+    ],
+    clinical_notes=[],
+    provider_accepts_assignment=True,
+    benefits_assigned_to_provider=True,
+)
+\`\`\`
+</CodeBlock>
+<CodeBlock title=\\"TypeScript\\">
+\`\`\`typescript
+import { CandidApi, CandidApiClient, CandidApiEnvironment } from \\"candidhealth\\";
+
+const client = new CandidApiClient({
+    environment: CandidApiEnvironment.Staging,
+    clientId: \\"YOUR_CLIENT_ID\\",
+    clientSecret: \\"YOUR_CLIENT_SECRET\\",
+});
+
+const createEncounterResponse = await client.encounters.v4.create({
+    externalId: CandidApi.EncounterExternalId(\\"emr-claim-id-abcd\\"),
+    dateOfService: CandidApi.Date_(\\"2023-05-23\\"),
+    billableStatus: \\"BILLABLE\\", // or \\"NOT_BILLABLE
+    responsibleParty: \\"INSURANCE_PAY\\", // or \\"SELF_PAY\\"
+    patient: {
+        externalId: \\"emr-patient-id-123\\",
+        firstName: \\"Loki\\",
+        lastName: \\"Laufeyson\\",
+        dateOfBirth: CandidApi.Date_(\\"1983-12-17\\"),
+        gender: \\"male\\",
+        address: {
+            address1: \\"1234 Main St\\",
+            address2: \\"Apt 9876\\",
+            city: \\"Asgard\\",
+            state: \\"CA\\",
+            zipCode: \\"94109\\",
+            zipPlusFourCode: \\"1234\\",
+        },
+    },
+    patientAuthorizedRelease: true,
+    billingProvider: {
+        organizationName: \\"Acme Health PC\\",
+        npi: \\"1234567890\\",
+        taxId: \\"123456789\\",
+        address: {
+            address1: \\"1234 Main St\\",
+            address2: \\"Apt 9876\\",
+            city: \\"Asgard\\",
+            state: \\"CA\\",
+            zipCode: \\"94109\\",
+            zipPlusFourCode: \\"1234\\",
+        },
+    },
+    renderingProvider: {
+        firstName: \\"Doctor\\",
+        lastName: \\"Strange\\",
+        npi: \\"9876543210\\",
+    },
+    diagnoses: [
+        { codeType: \\"ABF\\", code: \\"Z63.88\\" },
+        { codeType: \\"ABF\\", code: \\"E66.66\\" },
+    ],
+    placeOfServiceCode: \\"02\\", // telemedicine
+    serviceLines: [
+        {
+            procedureCode: \\"99212\\",
+            modifiers: [],
+            quantity: CandidApi.Decimal(\\"1.0\\"),
+            units: \\"UN\\",
+            chargeAmountCents: 1500,
+            diagnosisPointers: [0, 1],
+        }
+    ],
+    clinicalNotes: [],
+    providerAcceptsAssignment: true,
+    benefitsAssignedToProvider: true,
+});
+\`\`\`
+</CodeBlock>
+",
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "Introduction",
+          "urlSlug": "introduction",
+        },
+        Object {
+          "name": "Getting Started",
+          "urlSlug": "getting-started",
+        },
+      ],
+    },
+    "title": "Getting Started",
+    "type": "page-v2",
+  },
+  Object {
+    "content": "We strive to keep our API integration experience seamless. When making API design decisions, we do the following:
+
+ * We aim to use the same APIs internally that you use. This allows us to catch errors early and to make sure that our API is easy
+   to use.
+ * We aim to make our API simple. We want to make sure that you can get up and running quickly. We also want to make sure that you
+   don't have to write a lot of code to use our API.
+ * We aim to make our API consistent. Whether it is naming conventions, data types, or the way that we pass back errors, we want
+   to make sure that our API works similarly across different services and endpoints.
+ * We aim to make our API reliable. We want to make sure that our API is always available and that it always works as expected.
+ * We bias against breaking changes. We try our best to make sure that you don't have to make changes to your existing code unless
+   there is a good reason.
+ * We aim to use the same terminology that you use. We want to make sure that our API is easy to understand and that you don't
+   have to learn a new vocabulary to use it. Sometimes, you may find issues before we do. You may find places where we can do the
+   things above better. If you do, please let us know! We are always looking for ways to improve our API, and you can reach us by
+   emailing support@joincandidhealth.com [support@joincandidhealth.com].",
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Principles",
+          "urlSlug": "api-principles",
+        },
+        Object {
+          "name": "Design Principles",
+          "urlSlug": "design-principles",
+        },
+      ],
+    },
+    "title": "Design Principles",
+    "type": "page-v2",
+  },
+  Object {
+    "content": "Endpoints in our API live in one of three states: incubating, available, and deprecated.
+
+ * Incubating: Endpoints in this state can be used, but proceed with caution. We are still working on them, and they may change or
+   break at any time.
+ * Available: Endpoints in this state are available and reliable to use. We actively provide support for them, so please do let us
+   know if anything is not working as expected!
+ * Deprecated: Endpoints in this state are available to use, however we generally will have a recommendation of something better
+   to use (maybe a new version or a different endpoint). We provide support for these on a case-by-case basis, sometimes asking
+   you to upgrade your client to resolve any issues.
+
+Our endpoint documentation will specify if the endpoint is incubating or deprecated. Otherwise, you can safely assume that it is
+available.",
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Principles",
+          "urlSlug": "api-principles",
+        },
+        Object {
+          "name": "Development Lifecycle",
+          "urlSlug": "development-lifecycle",
+        },
+      ],
+    },
+    "title": "Development Lifecycle",
+    "type": "page-v2",
+  },
+  Object {
+    "content": "We do our absolute best to avoid breaking changes in our API. However, sometimes we need to make changes to our API that will
+break existing clients. Here's how we recommend thinking about breaking changes from us:
+
+ 1. Endpoints marked as Incubating are subject to breaking changes without notice.
+ 2. Endpoints marked as Available or Deprecated are generally not subject to breaking changes, only being done in rare cases when
+    no other options exist.
+ 3. Any breaking changes that we do make will be clearly documented in the Breaking Changes page in our API documentation along
+    with a date, so there is always a historical record.
+ 4. We try to notify you of breaking changes as early as possible. We do this by sending an email to a breaking changes email list
+    we keep. If you would like to be added to this list, please email support@joincandidhealth.com [support@joincandidhealth.com].
+
+
+WHAT IS A BREAKING CHANGE
+
+We consider a break any change that meets one of the two following criteria:
+
+ * A schema change to a request shape that leads to a previously valid client request shape becoming invalid.
+ * A schema change to a response shape that leads to a previously valid client response parser becoming invalid.
+
+Here are some examples of changes that we consider non-breaking:
+
+ * Adding a new field to an existing response shape
+ * Making a required field on a request shape optional
+ * Removing an optional field on a response shape
+
+Here are some examples of changes that we consider breaking:
+
+ * Removing a required field on a response shape
+ * Changing the data type of a field",
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Principles",
+          "urlSlug": "api-principles",
+        },
+        Object {
+          "name": "Breaking Changes",
+          "urlSlug": "breaking-changes",
+        },
+      ],
+    },
+    "title": "Breaking Changes",
+    "type": "page-v2",
+  },
+  Object {
+    "content": "TYPE ALIASES & BRANDING
+
+For many string or UUID types, you may notice we alias / brand them as their own type. Branding is a technique to preserve the
+underlying type but distinguish it as a new type, so it is easier to avoid mixing them up while developing.
+
+This also allows us to communicate extra information to you about how they may be intended to be used. For example, we brand
+decimal strings with the type Decimal to indicate that the server will parse them into Python Decimal objects.
+
+When using them in the API requests, these types all still serialize as JSON strings in the HTTP payload. However, if you are
+using our typed clients (SDK), the client will provide them to you as the branded type.
+
+
+PAGINATION
+
+We use pagination in our API to make sure that we don't return too much data at once. Many of our endpoints return an extension of
+the ResourcePage type:
+
+ResourcePage:
+  items: T[]
+  next_page_token: PageToken | None
+  prev_page_token: PageToken | None
+
+
+
+DECIMALS
+
+We avoid using floating-point arithmetic that leads to imprecision. Instead, we use the Decimal type, which is a string alias type
+that represents a decimal number as a string. These decimal strings are parsed into the Python Decimal class
+[https://docs.python.org/3/library/decimal.html#decimal-objects].
+
+
+UNIONS
+
+We use unions to represent a type that can be one of several different types. When a union shape is used, our union discriminant
+will always be the type field unless otherwise specified.
+
+We also expect that it is a non-breaking change to add a new union member to a union type. This means that if you handle a union
+field in a response, we expect you to gracefully handle an _other case. This allows us to better serve and improve our APIs at a
+quick velocity without breaking your code.",
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Principles",
+          "urlSlug": "api-principles",
+        },
+        Object {
+          "name": "Conventions",
+          "urlSlug": "conventions",
+        },
+      ],
+    },
+    "title": "Conventions",
+    "type": "page-v2",
+  },
+  Object {
+    "endpoint": Object {
+      "method": "POST",
+      "name": "Get Token",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "/api/auth/v2",
+          },
+          Object {
+            "type": "literal",
+            "value": "/token",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "auth",
+          "urlSlug": "auth",
+        },
+        Object {
+          "name": "v2",
+          "urlSlug": "v-2",
+        },
+        Object {
+          "name": "Get Token",
+          "urlSlug": "get-token",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+  },
+  Object {
+    "endpoint": Object {
+      "description": "This API is a wrapper around Change Healthcare's eligibility API. Below are some helpful documentation links:
+
+ * Candid Health Support article [https://support.joincandidhealth.com/hc/en-us/articles/7937415468820]
+ * Change Healthcare - API Reference: Check Eligibility
+   [https://developers.changehealthcare.com/eligibilityandclaims/reference/medicaleligibility]
+ * Change Healthcare - Guides: Eligibility FAQs
+   [https://developers.changehealthcare.com/eligibilityandclaims/docs/eligibility-api-requests]
+ * Change Healthcare - Guides: Sandbox API Values and Test Responses
+   [https://developers.changehealthcare.com/eligibilityandclaims/docs/eligibility-sandbox-api-values-and-test-responses]
+ * Change Healthcare - Guides: Sandbox Predefined Fields and Values
+   [https://developers.changehealthcare.com/eligibilityandclaims/docs/sandbox-predefined-fields-and-values]
+ * Change Healthcare - Guides: Using Test Payers in the Sandbox
+   [https://developers.changehealthcare.com/eligibilityandclaims/docs/use-the-test-payers-in-the-sandbox-api]
+
+A schema of the response object can be found here: Change Healthcare Docs
+[https://developers.changehealthcare.com/eligibilityandclaims/reference/medicaleligibility]",
+      "method": "POST",
+      "name": "Submit encounter eligibility check",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "/api/eligibility/v2",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "eligibility",
+          "urlSlug": "eligibility",
+        },
+        Object {
+          "name": "v2",
+          "urlSlug": "v-2",
+        },
+        Object {
+          "name": "Submit encounter eligibility check",
+          "urlSlug": "submit-encounter-eligibility-check",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+  },
+  Object {
+    "endpoint": Object {
+      "method": "GET",
+      "name": "Get all encounters",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "/api/encounters/v4",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "encounters",
+          "urlSlug": "encounters",
+        },
+        Object {
+          "name": "v4",
+          "urlSlug": "v-4",
+        },
+        Object {
+          "name": "Get all encounters",
+          "urlSlug": "get-all-encounters",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+  },
+  Object {
+    "endpoint": Object {
+      "method": "GET",
+      "name": "Get encounter",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "/api/encounters/v4",
+          },
+          Object {
+            "type": "literal",
+            "value": "/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "encounter_id",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "encounters",
+          "urlSlug": "encounters",
+        },
+        Object {
+          "name": "v4",
+          "urlSlug": "v-4",
+        },
+        Object {
+          "name": "Get encounter",
+          "urlSlug": "get-encounter",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+  },
+  Object {
+    "endpoint": Object {
+      "method": "POST",
+      "name": "Create encounter",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "/api/encounters/v4",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "encounters",
+          "urlSlug": "encounters",
+        },
+        Object {
+          "name": "v4",
+          "urlSlug": "v-4",
+        },
+        Object {
+          "name": "Create encounter",
+          "urlSlug": "create-encounter",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+  },
+  Object {
+    "endpoint": Object {
+      "method": "PATCH",
+      "name": "Update encounter",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "/api/encounters/v4",
+          },
+          Object {
+            "type": "literal",
+            "value": "/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "encounter_id",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "encounters",
+          "urlSlug": "encounters",
+        },
+        Object {
+          "name": "v4",
+          "urlSlug": "v-4",
+        },
+        Object {
+          "name": "Update encounter",
+          "urlSlug": "update-encounter",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+  },
+  Object {
+    "endpoint": Object {
+      "method": "POST",
+      "name": "Compute network status",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "/api/expected-network-status/v1",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "expected-network-status",
+          "urlSlug": "expected-network-status",
+        },
+        Object {
+          "name": "v1",
+          "urlSlug": "v-1",
+        },
+        Object {
+          "name": "Compute network status",
+          "urlSlug": "compute-network-status",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+  },
+  Object {
+    "endpoint": Object {
+      "method": "GET",
+      "name": "Get Exports",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "/api/exports/v3",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "exports",
+          "urlSlug": "exports",
+        },
+        Object {
+          "name": "v3",
+          "urlSlug": "v-3",
+        },
+        Object {
+          "name": "Get Exports",
+          "urlSlug": "get-exports",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+  },
+  Object {
+    "endpoint": Object {
+      "method": "POST",
+      "name": "Create",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "/api/guarantors/v1",
+          },
+          Object {
+            "type": "literal",
+            "value": "/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "encounter_id",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "guarantor",
+          "urlSlug": "guarantor",
+        },
+        Object {
+          "name": "v1",
+          "urlSlug": "v-1",
+        },
+        Object {
+          "name": "Create",
+          "urlSlug": "create",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+  },
+  Object {
+    "endpoint": Object {
+      "method": "GET",
+      "name": "Get",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "/api/guarantors/v1",
+          },
+          Object {
+            "type": "literal",
+            "value": "/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "guarantor_id",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "guarantor",
+          "urlSlug": "guarantor",
+        },
+        Object {
+          "name": "v1",
+          "urlSlug": "v-1",
+        },
+        Object {
+          "name": "Get",
+          "urlSlug": "get",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+  },
+  Object {
+    "endpoint": Object {
+      "method": "PATCH",
+      "name": "Update",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "/api/guarantors/v1",
+          },
+          Object {
+            "type": "literal",
+            "value": "/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "guarantor_id",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "guarantor",
+          "urlSlug": "guarantor",
+        },
+        Object {
+          "name": "v1",
+          "urlSlug": "v-1",
+        },
+        Object {
+          "name": "Update",
+          "urlSlug": "update",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+  },
+  Object {
+    "endpoint": Object {
+      "method": "GET",
+      "name": "Get",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "/api/organization-providers/v3",
+          },
+          Object {
+            "type": "literal",
+            "value": "/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "organization_provider_id",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "organization-providers",
+          "urlSlug": "organization-providers",
+        },
+        Object {
+          "name": "v3",
+          "urlSlug": "v-3",
+        },
+        Object {
+          "name": "Get",
+          "urlSlug": "get",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+  },
+  Object {
+    "endpoint": Object {
+      "method": "GET",
+      "name": "Get Multi",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "/api/organization-providers/v3",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "organization-providers",
+          "urlSlug": "organization-providers",
+        },
+        Object {
+          "name": "v3",
+          "urlSlug": "v-3",
+        },
+        Object {
+          "name": "Get Multi",
+          "urlSlug": "get-multi",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+  },
+  Object {
+    "endpoint": Object {
+      "method": "POST",
+      "name": "Create",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "/api/organization-providers/v3",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "organization-providers",
+          "urlSlug": "organization-providers",
+        },
+        Object {
+          "name": "v3",
+          "urlSlug": "v-3",
+        },
+        Object {
+          "name": "Create",
+          "urlSlug": "create",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+  },
+  Object {
+    "endpoint": Object {
+      "method": "PATCH",
+      "name": "Update",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "/api/organization-providers/v3",
+          },
+          Object {
+            "type": "literal",
+            "value": "/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "organization_provider_id",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "organization-providers",
+          "urlSlug": "organization-providers",
+        },
+        Object {
+          "name": "v3",
+          "urlSlug": "v-3",
+        },
+        Object {
+          "name": "Update",
+          "urlSlug": "update",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+  },
+  Object {
+    "endpoint": Object {
+      "method": "GET",
+      "name": "Get Actions",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "/api/tasks/v3",
+          },
+          Object {
+            "type": "literal",
+            "value": "/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "task_id",
+          },
+          Object {
+            "type": "literal",
+            "value": "/actions",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "tasks",
+          "urlSlug": "tasks",
+        },
+        Object {
+          "name": "v3",
+          "urlSlug": "v-3",
+        },
+        Object {
+          "name": "Get Actions",
+          "urlSlug": "get-actions",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+  },
+  Object {
+    "endpoint": Object {
+      "method": "POST",
+      "name": "Create billing note",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "/api/billing_notes/v2",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "billing-notes",
+          "urlSlug": "billing-notes",
+        },
+        Object {
+          "name": "Create billing note",
+          "urlSlug": "create-billing-note",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+  },
+  Object {
+    "endpoint": Object {
+      "method": "GET",
+      "name": "Get payer",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "/api/payers/v3",
+          },
+          Object {
+            "type": "literal",
+            "value": "/",
+          },
+          Object {
+            "type": "pathParameter",
+            "value": "payer_uuid",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "payers",
+          "urlSlug": "payers",
+        },
+        Object {
+          "name": "Get payer",
+          "urlSlug": "get-payer",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+  },
+  Object {
+    "endpoint": Object {
+      "method": "GET",
+      "name": "Get all payers",
+      "path": Object {
+        "parts": Array [
+          Object {
+            "type": "literal",
+            "value": "/api/payers/v3",
+          },
+          Object {
+            "type": "literal",
+            "value": "",
+          },
+        ],
+      },
+    },
+    "indexSegmentId": "constant",
+    "path": Object {
+      "parts": Array [
+        Object {
+          "name": "API Reference",
+          "urlSlug": "api-reference",
+        },
+        Object {
+          "name": "payers",
+          "urlSlug": "payers",
+        },
+        Object {
+          "name": "Get all payers",
+          "urlSlug": "get-all-payers",
+        },
+      ],
+    },
+    "type": "endpoint-v2",
+  },
+]
+`;
+
 exports[`generateAlgoliaSearchRecordsForDocs {"name":"primer"} 1`] = `
 Array [
   Object {

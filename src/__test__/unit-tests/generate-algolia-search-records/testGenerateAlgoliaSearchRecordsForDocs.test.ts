@@ -15,6 +15,9 @@ const FIXTURES: Fixture[] = [
     {
         name: "vellum",
     },
+    {
+        name: "candid",
+    },
 ];
 
 function loadDocsDefinition(fixture: Fixture) {
