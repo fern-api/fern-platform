@@ -1,4 +1,4 @@
-import { kebabCase } from "lodash";
+import { kebabCase, startCase } from "lodash";
 import { marked } from "marked";
 import { APIV1Db, APIV1Write, FdrAPI } from "../../api";
 import { assertNever, type WithoutQuestionMarks } from "../../util";
@@ -410,6 +410,7 @@ function transformUnDiscriminatedVariant({
         description: writeShape.description,
         htmlDescription,
         type: writeShape.type,
+        displayName: writeShape.typeName != null ? startCase(writeShape.typeName) : undefined,
         descriptionContainsMarkdown:
             writeShape.description != null ? mayContainMarkdown(writeShape.description) : false,
     };

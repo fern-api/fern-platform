@@ -87,6 +87,7 @@ types:
   UndiscriminatedUnionVariant:
     extends: commons.WithDescription
     properties:
+      displayName: optional<string>
       type: TypeReference
 
   DiscriminatedUnionType:
