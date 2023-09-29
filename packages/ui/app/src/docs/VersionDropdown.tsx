@@ -94,12 +94,16 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
                                                     {availability != null && (
                                                         <span
                                                             className={classNames(
-                                                                "rounded px-1 py-0.5 text-[11px] font-normal",
+                                                                "rounded px-1 py-0.5 text-[11px] font-normal border",
                                                                 {
-                                                                    "bg-accent-highlight":
+                                                                    "bg-accent-highlight border-transparent":
                                                                         versionSlug === selectedVersionSlug && !active,
-                                                                    "bg-tag-default-light dark:bg-tag-default-dark":
+                                                                    "bg-tag-default-light dark:bg-tag-default-dark border-transparent":
                                                                         versionSlug !== selectedVersionSlug && !active,
+                                                                },
+                                                                {
+                                                                    "border-accent-primary/75":
+                                                                        versionSlug === selectedVersionSlug && active,
                                                                 }
                                                             )}
                                                         >
