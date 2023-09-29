@@ -143,8 +143,9 @@ function transformEndpoint({
         response: writeShape.response,
         errors: writeShape.errors ?? [],
         errorsV2:
-            writeShape.errorsV2 ?? writeShape.errors != null
-                ? writeShape.errors?.map((error) => {
+            writeShape.errorsV2 ??
+            (writeShape.errors != null
+                ? writeShape.errors.map((error) => {
                       return {
                           ...error,
                           type:
@@ -156,7 +157,7 @@ function transformEndpoint({
                                   : undefined,
                       };
                   })
-                : undefined,
+                : undefined),
         examples: getExampleEndpointCalls({ writeShape, apiDefinition }),
         description: writeShape.description,
         htmlDescription,

@@ -73,8 +73,9 @@ function transformEndpoint({
         response: dbShape.response,
         errors: dbShape.errors ?? [],
         errorsV2:
-            dbShape.errorsV2 ?? dbShape.errors != null
-                ? dbShape.errors?.map((error) => {
+            dbShape.errorsV2 ??
+            (dbShape.errors != null
+                ? dbShape.errors.map((error) => {
                       return {
                           ...error,
                           type:
@@ -86,7 +87,7 @@ function transformEndpoint({
                                   : undefined,
                       };
                   })
-                : undefined,
+                : undefined),
         examples: dbShape.examples,
         description: dbShape.description,
         htmlDescription: dbShape.htmlDescription,
