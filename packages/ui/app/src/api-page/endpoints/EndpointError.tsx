@@ -1,11 +1,15 @@
 import { FernRegistry } from "@fern-fern/registry-browser";
 import classNames from "classnames";
 import { memo, MouseEventHandler, useEffect } from "react";
+import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { NavigationInfo, NavigationStatus } from "../../navigation-context/NavigationContext";
 import { useNavigationContext } from "../../navigation-context/useNavigationContext";
 import { getAnchorId } from "../../util/anchor";
 import { type JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
+import { TypeDefinitionContextProvider } from "../types/context/TypeDefinitionContextProvider";
+import { ObjectProperty } from "../types/object/ObjectProperty";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
+import { getAllObjectProperties } from "../utils/getAllObjectProperties";
 
 function shouldSelectError(navigation: NavigationInfo, curAnchorId: string) {
     if (navigation.status !== NavigationStatus.INITIAL_NAVIGATION_TO_ANCHOR) {
@@ -39,6 +43,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
     anchorIdParts,
 }) {
     const { navigation } = useNavigationContext();
+    const { resolveTypeById } = useApiDefinitionContext();
     const anchorIdSoFar = getAnchorId(anchorIdParts);
 
     useEffect(() => {
@@ -89,6 +94,19 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                                 onHoverProperty={onHoverProperty}
                                 anchorIdParts={anchorIdParts}
                             />
+                        ) : error.type.type === "object" ? (
+                            <TypeDefinitionContextProvider onHoverProperty={onHoverProperty}>
+                                <div>
+                                    {getAllObjectProperties(error.type, resolveTypeById).map((property) => (
+                                        <ObjectProperty
+                                            key={property.key}
+                                            property={property}
+                                            anchorIdParts={[...anchorIdParts, property.key]}
+                                            isError
+                                        />
+                                    ))}
+                                </div>
+                            </TypeDefinitionContextProvider>
                         ) : null}
                     </div>
                 </div>
