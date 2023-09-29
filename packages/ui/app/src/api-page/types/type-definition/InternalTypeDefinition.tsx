@@ -69,13 +69,20 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                     elementNamePlural: "properties",
                 }),
                 undiscriminatedUnion: (union) => ({
-                    elements: union.variants.map((variant, variantIdx) => (
-                        <UndiscriminatedUnionVariant
-                            key={variantIdx}
-                            unionVariant={variant}
-                            anchorIdParts={anchorIdParts}
-                        />
-                    )),
+                    elements: union.variants
+                        .sort((v1, v2) => {
+                            if (v1.type.type === "id") {
+                                return v2.type.type === "id" ? 0 : -1;
+                            }
+                            return v2.type.type !== "id" ? 0 : 1;
+                        })
+                        .map((variant, variantIdx) => (
+                            <UndiscriminatedUnionVariant
+                                key={variantIdx}
+                                unionVariant={variant}
+                                anchorIdParts={anchorIdParts}
+                            />
+                        )),
                     elementNameSingular: "variant",
                     elementNamePlural: "variants",
                     separatorText: "OR",
