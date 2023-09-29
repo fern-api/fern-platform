@@ -80,9 +80,6 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
         [contextValue]
     );
 
-    // TODO: Replace with the actual name
-    const [, inferredName] = unionVariant.type.type === "id" ? unionVariant.type.value.split(":") : [];
-
     return (
         <div
             className={classNames("flex flex-col py-3", {
@@ -92,8 +89,8 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
             <div className="flex flex-col">
                 <div className="t-muted flex items-center space-x-2.5">
                     {getIconForTypeReference(unionVariant.type)}
-                    {inferredName == null ? null : (
-                        <span className="t-primary text-sm">{toTitleCase(inferredName)}</span>
+                    {unionVariant.displayName == null ? null : (
+                        <span className="t-primary text-sm">{unionVariant.displayName}</span>
                     )}
                     <span className="t-muted text-xs">
                         <TypeShorthand type={unionVariant.type} plural={false} />
