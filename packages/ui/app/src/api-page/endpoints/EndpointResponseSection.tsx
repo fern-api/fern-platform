@@ -52,6 +52,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                         isCollapsible={false}
                         onHoverProperty={onHoverProperty}
                         anchorIdParts={anchorIdParts}
+                        isError={false}
                     />
                 ),
                 fileDownload: () => null,

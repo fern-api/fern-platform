@@ -19,10 +19,10 @@ import { DiscriminatedUnionVariant } from "../discriminated-union/DiscriminatedU
 import { EnumValue } from "../enum/EnumValue";
 import { ObjectProperty } from "../object/ObjectProperty";
 import { UndiscriminatedUnionVariant } from "../undiscriminated-union/UndiscriminatedUnionVariant";
-import styles from "./InternalTypeDefinition.module.scss";
+import styles from "./InternalTypeDefinitionError.module.scss";
 import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 
-export declare namespace InternalTypeDefinition {
+export declare namespace InternalTypeDefinitionError {
     export interface Props {
         typeShape: FernRegistryApiRead.TypeShape;
         isCollapsible: boolean;
@@ -45,7 +45,7 @@ function shouldExpandDefinition(navigation: NavigationInfo, curAnchorId: string)
     return destAnchorId.startsWith(`${curAnchorId}-`);
 }
 
-export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
+export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.Props> = ({
     typeShape,
     isCollapsible,
     anchorIdParts,

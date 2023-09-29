@@ -3,12 +3,14 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import React from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
+import { InternalTypeDefinitionError } from "../type-definition/InternalTypeDefinitionError";
 import { ListTypeContextProvider } from "./ListTypeContextProvider";
 import { MapTypeContextProvider } from "./MapTypeContextProvider";
 
 export declare namespace InternalTypeReferenceDefinitions {
     export interface Props {
         type: FernRegistryApiRead.TypeReference;
+        isError: boolean;
         isCollapsible: boolean;
         className?: string;
         anchorIdParts: string[];
@@ -17,6 +19,7 @@ export declare namespace InternalTypeReferenceDefinitions {
 
 export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDefinitions.Props> = ({
     type,
+    isError,
     isCollapsible,
     className,
     anchorIdParts,
@@ -31,12 +34,20 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     <InternalTypeReferenceDefinitions
                         type={typeShape.value}
                         isCollapsible={isCollapsible}
+                        isError={isError}
                         className={className}
                         anchorIdParts={anchorIdParts}
                     />
                 );
             }
-            return (
+            return isError ? (
+                <InternalTypeDefinitionError
+                    key={typeId}
+                    typeShape={typeShape}
+                    isCollapsible={isCollapsible}
+                    anchorIdParts={anchorIdParts}
+                />
+            ) : (
                 <InternalTypeDefinition
                     key={typeId}
                     typeShape={typeShape}
@@ -51,6 +62,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 <InternalTypeReferenceDefinitions
                     type={itemType}
                     isCollapsible={isCollapsible}
+                    isError={isError}
                     className={className}
                     anchorIdParts={anchorIdParts}
                 />
@@ -61,6 +73,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 <InternalTypeReferenceDefinitions
                     type={itemType}
                     isCollapsible={isCollapsible}
+                    isError={isError}
                     className={className}
                     anchorIdParts={anchorIdParts}
                 />
@@ -70,6 +83,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
             <InternalTypeReferenceDefinitions
                 type={itemType}
                 isCollapsible={isCollapsible}
+                isError={isError}
                 className={className}
                 anchorIdParts={anchorIdParts}
             />
@@ -79,12 +93,14 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 <InternalTypeReferenceDefinitions
                     type={keyType}
                     isCollapsible={isCollapsible}
+                    isError={isError}
                     className={className}
                     anchorIdParts={anchorIdParts}
                 />
                 <InternalTypeReferenceDefinitions
                     type={valueType}
                     isCollapsible={isCollapsible}
+                    isError={isError}
                     className={className}
                     anchorIdParts={anchorIdParts}
                 />

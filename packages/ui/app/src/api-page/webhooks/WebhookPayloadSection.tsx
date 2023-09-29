@@ -44,6 +44,7 @@ export const WebhookPayloadSection: React.FC<WebhookPayloadSection.Props> = ({
                         isCollapsible={false}
                         onHoverProperty={onHoverProperty}
                         anchorIdParts={anchorIdParts}
+                        isError={false}
                     />
                 ),
                 _other: () => null,
