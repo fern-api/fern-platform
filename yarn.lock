@@ -1851,16 +1851,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/registry-browser@npm:0.23.1-6-gd18235e":
-  version: 0.23.1-6-gd18235e
-  resolution: "@fern-fern/registry-browser@npm:0.23.1-6-gd18235e"
+"@fern-fern/registry-browser@npm:0.26.0-1-g7cf6a78":
+  version: 0.26.0-1-g7cf6a78
+  resolution: "@fern-fern/registry-browser@npm:0.26.0-1-g7cf6a78"
   dependencies:
     "@types/url-join": 4.0.1
     "@ungap/url-search-params": 0.2.2
     axios: 1.4.0
     js-base64: 3.7.2
     url-join: 4.0.1
-  checksum: 22f27c0fc4d5884087cf302493b6a462b04b95ab8a80872889489b1361293338dcb8c50ab6d29951b8b30230103af6c478ab093270db684100c8820f819270b2
+  checksum: 57d13218d2f7caa14185856d66853791c8040b82d7ab4c6bd90ad56d4e0cbce0b5ab8d65801d99109c56a3374fdca689a0c81fe64ad8ce1e2a9b83bd85ca27ae
   languageName: node
   linkType: hard
 
@@ -1868,7 +1868,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/app-utils@workspace:packages/commons/app-utils"
   dependencies:
-    "@fern-fern/registry-browser": 0.23.1-6-gd18235e
+    "@fern-fern/registry-browser": 0.26.0-1-g7cf6a78
     "@fern-ui/core-utils": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/lodash-es": 4.17.9
@@ -1961,7 +1961,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/fe-bundle@workspace:packages/ui/fe-bundle"
   dependencies:
-    "@fern-fern/registry-browser": 0.23.1-6-gd18235e
+    "@fern-fern/registry-browser": 0.26.0-1-g7cf6a78
     "@fern-ui/app-utils": "workspace:*"
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/theme": "workspace:*"
@@ -2200,7 +2200,7 @@ __metadata:
     "@blueprintjs/icons": ^4.4.0
     "@blueprintjs/popover2": ^1.8.0
     "@blueprintjs/select": ^4.4.2
-    "@fern-fern/registry-browser": 0.23.1-6-gd18235e
+    "@fern-fern/registry-browser": 0.26.0-1-g7cf6a78
     "@fern-ui/app-utils": "workspace:*"
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/react-commons": "workspace:*"
