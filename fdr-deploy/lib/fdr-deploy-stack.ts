@@ -1,18 +1,18 @@
 import { EnvironmentInfo, EnvironmentType } from "@fern-fern/fern-cloud-sdk/api";
 import { RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
+import { Alarm } from "aws-cdk-lib/aws-cloudwatch";
+import * as actions from "aws-cdk-lib/aws-cloudwatch-actions";
 import { Peer, Port, SecurityGroup, Vpc } from "aws-cdk-lib/aws-ec2";
 import { Cluster, ContainerImage, LogDriver, Volume } from "aws-cdk-lib/aws-ecs";
 import { ApplicationLoadBalancedFargateService } from "aws-cdk-lib/aws-ecs-patterns";
-import { ApplicationProtocol } from "aws-cdk-lib/aws-elasticloadbalancingv2";
+import { ApplicationProtocol, HttpCodeTarget } from "aws-cdk-lib/aws-elasticloadbalancingv2";
 import { LogGroup } from "aws-cdk-lib/aws-logs";
 import { HostedZone } from "aws-cdk-lib/aws-route53";
 import { Bucket, HttpMethods } from "aws-cdk-lib/aws-s3";
-import { Construct } from "constructs";
 import * as sns from "aws-cdk-lib/aws-sns";
-import * as actions from "aws-cdk-lib/aws-cloudwatch-actions";
 import { EmailSubscription } from "aws-cdk-lib/aws-sns-subscriptions";
-import { Alarm } from "aws-cdk-lib/aws-cloudwatch";
+import { Construct } from "constructs";
 
 const CONTAINER_NAME = "fern-definition-registry";
 const SERVICE_NAME = "fdr";
@@ -70,7 +70,7 @@ export class FdrDeployStack extends Stack {
                     allowedHeaders: ["*"],
                 },
             ],
-            versioned: true
+            versioned: true,
         });
 
         const cloudmapNamespace = environmentInfo.cloudMapNamespaceInfo.namespaceName;
@@ -152,6 +152,22 @@ export class FdrDeployStack extends Stack {
             evaluationPeriods: 5,
         });
         lbResponseTimeAlarm.addAlarmAction(new actions.SnsAction(snsTopic));
+
+        const lbUnhealthyHostCountAlarm = new Alarm(this, "fdr-lb-unhealthy-host-count-alarm", {
+            alarmName: `${id} Load Balancer Unhealthy Host Count Alarm`,
+            metric: fargateService.targetGroup.metrics.unhealthyHostCount(),
+            threshold: 1,
+            evaluationPeriods: 5,
+        });
+        lbUnhealthyHostCountAlarm.addAlarmAction(new actions.SnsAction(snsTopic));
+
+        const lb500CountAlarm = new Alarm(this, "fdr-lb-5XX-count", {
+            alarmName: `${id} Load Balancer 500 Error Alarm`,
+            metric: fargateService.loadBalancer.metrics.httpCodeTarget(HttpCodeTarget.TARGET_5XX_COUNT),
+            threshold: 2,
+            evaluationPeriods: 5,
+        });
+        lb500CountAlarm.addAlarmAction(new actions.SnsAction(snsTopic));
     }
 }
 
