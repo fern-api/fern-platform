@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { MouseEventHandler, useState } from "react";
+import { MouseEventHandler, MutableRefObject, useState } from "react";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
 import styles from "./TitledExample.module.scss";
 
@@ -10,7 +10,9 @@ export declare namespace TitledExample {
         actions?: JSX.Element;
         className?: string;
         children: JSX.Element | ((parent: HTMLElement | undefined) => JSX.Element);
+        copyToClipboardText?: string;
         onClick?: MouseEventHandler<HTMLDivElement>;
+        containerRef?: MutableRefObject<HTMLDivElement | null>;
     }
 }
 
@@ -20,9 +22,14 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
     className,
     actions,
     children,
+    copyToClipboardText,
     onClick,
+    containerRef,
 }) => {
     const [contentRef, setContentRef] = useState<HTMLElement | null>(null);
+
+    // innerText will not be available if the content is virtualized
+    const copyToClipboardContent = copyToClipboardText ?? contentRef?.innerText;
 
     return (
         <div
@@ -31,6 +38,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                 className
             )}
             onClick={onClick}
+            ref={containerRef}
         >
             <div
                 className={classNames(
@@ -53,7 +61,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                 </div>
                 <div className="flex gap-2">
                     {actions}
-                    <CopyToClipboardButton content={contentRef?.innerText} />
+                    <CopyToClipboardButton content={copyToClipboardContent} />
                 </div>
             </div>
             <div className="flex min-h-0 flex-1">
@@ -66,7 +74,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                     )}
                 >
                     <div
-                        className="dark:bg-background-primary-dark flex-1 overflow-auto whitespace-pre bg-gray-100/90 py-4"
+                        className="dark:bg-background-primary-dark flex-1 overflow-auto whitespace-pre bg-gray-100/90"
                         ref={setContentRef}
                     >
                         {typeof children === "function" ? children(contentRef ?? undefined) : children}

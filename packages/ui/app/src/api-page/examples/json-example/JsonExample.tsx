@@ -1,7 +1,8 @@
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { zip } from "lodash-es";
-import React, { ReactNode, useEffect, useMemo, useRef } from "react";
+import React, { ReactNode, useCallback, useEffect, useMemo, useRef } from "react";
+import { AutoSizer, Grid, GridCellProps, Index } from "react-virtualized";
 import { JsonPropertyPath } from "./contexts/JsonPropertyPath";
 import { JsonExampleString } from "./JsonExampleString";
 import { visitJsonItem } from "./visitJsonItem";
@@ -104,6 +105,8 @@ function flattenJson(
 }
 
 const TAB_WIDTH = 2;
+const LINE_HEIGHT = 21.5;
+const CHAR_WIDTH = 7.2;
 
 function renderJsonLine(line: JsonLine): ReactNode {
     switch (line.type) {
@@ -214,6 +217,43 @@ function renderJsonLine(line: JsonLine): ReactNode {
     }
 }
 
+function getJsonLineLength(line: JsonLine): number {
+    switch (line.type) {
+        case "boolean":
+            return (
+                2 * line.depth +
+                (line.key != null ? line.key.length + 4 : 0) +
+                line.value.toString().length +
+                (line.comma ? 1 : 0)
+            );
+        case "list":
+            return 2 * line.depth + (line.key != null ? line.key.length + 4 : 0) + 1;
+        case "listEnd":
+            return 2 * line.depth + 1 + (line.comma ? 1 : 0);
+        case "null":
+            return 2 * line.depth + (line.key != null ? line.key.length + 4 : 0) + 4 + (line.comma ? 1 : 0);
+        case "number":
+            return (
+                2 * line.depth +
+                (line.key != null ? line.key.length + 4 : 0) +
+                line.value.toString().length +
+                (line.comma ? 1 : 0)
+            );
+        case "object":
+            return 2 * line.depth + (line.key != null ? line.key.length + 4 : 0) + 1;
+        case "objectEnd":
+            return 2 * line.depth + 1 + (line.comma ? 1 : 0);
+        case "string":
+            return (
+                2 * line.depth +
+                (line.key != null ? line.key.length + 4 : 0) +
+                line.value.length +
+                2 +
+                (line.comma ? 1 : 0)
+            );
+    }
+}
+
 function checkIsSelected(selectedPropertyHash: string[] | undefined, line: JsonLine): boolean {
     if (selectedPropertyHash == null) {
         return false;
@@ -232,13 +272,20 @@ export declare namespace JsonExample {
     export interface Props {
         json: unknown;
         selectedProperty: JsonPropertyPath | undefined;
-        parent: HTMLElement | undefined;
+        maxContentHeight: number;
     }
 }
 
-export const JsonExample = React.memo<JsonExample.Props>(function JsonExample({ json, parent, selectedProperty }) {
+export const JsonExample = React.memo<JsonExample.Props>(function JsonExample({
+    json,
+    selectedProperty,
+    maxContentHeight,
+}) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const jsonLines = useMemo(() => flattenJson(json), [useDeepCompareMemoize(json)]);
+    const maxCharLength = Math.max(...jsonLines.map((line) => getJsonLineLength(line)));
+    const maxColumnWidth = maxCharLength * CHAR_WIDTH + 16 * 2;
+    const contentHeight = jsonLines.length * LINE_HEIGHT + 40;
     const selectedPropertyHash = useDeepCompareMemoize(
         selectedProperty?.map((path) => {
             if (path.type === "listItem") {
@@ -256,50 +303,71 @@ export const JsonExample = React.memo<JsonExample.Props>(function JsonExample({ 
         [jsonLines, selectedPropertyHash]
     );
 
-    const lineRefs = useRef<Array<HTMLDivElement | null>>(new Array(jsonLines.length).fill(null));
-
-    const setLineRef = (i: number, element: HTMLDivElement | null) => {
-        lineRefs.current[i] = element;
-    };
-
     const topLineAnchorIdx = isSelectedArr.findIndex((isSelected) => isSelected);
 
+    const listRef = useRef<Grid>(null);
+
     useEffect(() => {
-        if (parent == null) {
-            return;
-        }
         if (topLineAnchorIdx > -1) {
-            const targetBBox = lineRefs.current[topLineAnchorIdx]?.getBoundingClientRect();
-            if (targetBBox == null) {
-                return;
-            }
-            const containerBBox = parent.getBoundingClientRect();
-            parent.scrollTo({
-                top: parent.scrollTop + targetBBox.y - containerBBox.y - 20,
-                left: 0,
-                behavior: "smooth",
+            listRef.current?.scrollToPosition({
+                scrollLeft: 0,
+                scrollTop: topLineAnchorIdx * LINE_HEIGHT - 20,
             });
         }
-    }, [parent, topLineAnchorIdx]);
+    }, [topLineAnchorIdx]);
 
-    return (
-        <>
-            {jsonLines.map((line, i) => {
-                const isSelected = isSelectedArr[i] ?? false;
-                return (
+    const getRowHeight = useCallback(
+        ({ index }: Index) => {
+            return index === 0 || index === jsonLines.length + 1 ? 20 : LINE_HEIGHT;
+        },
+        [jsonLines.length]
+    );
+
+    const renderCell = useCallback(
+        ({ style, key, rowIndex }: GridCellProps) => {
+            if (rowIndex === 0 || rowIndex === jsonLines.length + 1) {
+                // vertical padding
+                return <div style={style} key={key} />;
+            }
+            const line = jsonLines[rowIndex - 1];
+            const isSelected = isSelectedArr[rowIndex] ?? false;
+            if (line == null) {
+                return <div style={style} key={key} />;
+            }
+            return (
+                <div style={style} key={key}>
                     <div
                         className={classNames(
                             "relative w-fit min-w-full px-4 transition py-px",
                             isSelected ? "bg-accent-primary/20" : "bg-transparent"
                         )}
-                        key={i}
-                        ref={(element) => setLineRef(i, element)}
+                        style={{
+                            lineHeight: `${LINE_HEIGHT}px`,
+                        }}
                     >
                         {isSelected && <div className="bg-accent-primary absolute inset-y-0 left-0 w-1" />}
                         {renderJsonLine(line)}
                     </div>
-                );
-            })}
-        </>
+                </div>
+            );
+        },
+        [isSelectedArr, jsonLines]
+    );
+
+    return (
+        <AutoSizer disableHeight={true}>
+            {({ width }) => (
+                <Grid
+                    ref={listRef}
+                    height={contentHeight > maxContentHeight ? maxContentHeight : contentHeight}
+                    rowHeight={getRowHeight}
+                    columnWidth={maxColumnWidth}
+                    rowCount={jsonLines.length + 2}
+                    columnCount={1}
+                    width={width}
+                    cellRenderer={renderCell}
+                />
+            )}
+        </AutoSizer>
     );
 });
