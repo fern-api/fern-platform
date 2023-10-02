@@ -124,6 +124,12 @@ module.exports = {
                     "@apply bg-tag-danger-light dark:bg-tag-danger-dark": {},
                 },
                 // Border
+                ".border-concealed": {
+                    "@apply border-border-concealed-light dark:border-border-concealed-dark": {},
+                },
+                ".border-default": {
+                    "@apply border-border-default-light dark:border-border-default-dark": {},
+                },
                 ".border-success": {
                     "@apply border-border-success-light dark:border-border-success-dark": {},
                 },

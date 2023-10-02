@@ -19,10 +19,10 @@ import { DiscriminatedUnionVariant } from "../discriminated-union/DiscriminatedU
 import { EnumValue } from "../enum/EnumValue";
 import { ObjectProperty } from "../object/ObjectProperty";
 import { UndiscriminatedUnionVariant } from "../undiscriminated-union/UndiscriminatedUnionVariant";
-import styles from "./InternalTypeDefinition.module.scss";
+import styles from "./InternalTypeDefinitionError.module.scss";
 import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 
-export declare namespace InternalTypeDefinition {
+export declare namespace InternalTypeDefinitionError {
     export interface Props {
         typeShape: FernRegistryApiRead.TypeShape;
         isCollapsible: boolean;
@@ -45,7 +45,7 @@ function shouldExpandDefinition(navigation: NavigationInfo, curAnchorId: string)
     return destAnchorId.startsWith(`${curAnchorId}-`);
 }
 
-export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
+export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.Props> = ({
     typeShape,
     isCollapsible,
     anchorIdParts,
@@ -63,7 +63,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                             key={property.key}
                             property={property}
                             anchorIdParts={[...anchorIdParts, property.key]}
-                            applyErrorStyles={false}
+                            applyErrorStyles
                         />
                     )),
                     elementNameSingular: "property",
@@ -179,7 +179,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
         <div className="mt-2 flex flex-col">
             <div className="flex flex-col items-start">
                 <div
-                    className="border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded border"
+                    className="border-default flex flex-col overflow-visible rounded border"
                     style={{
                         width: isCollapsed ? originalButtonWidth : "100%",
                     }}
@@ -188,10 +188,10 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                     <div
                         {...containerCallbacks}
                         className={classNames(
-                            "flex gap-1 items-center border-b hover:bg-tag-default-light dark:hover:bg-tag-default-dark cursor-pointer px-2 py-1 transition t-muted",
+                            "flex gap-1 items-center rounded border-b hover:bg-tag-default-light dark:hover:bg-tag-default-dark cursor-pointer px-2 py-1 transition t-muted",
                             {
                                 "border-transparent": isCollapsed,
-                                "border-border-default-light dark:border-border-default-dark": !isCollapsed,
+                                "border-concealed": !isCollapsed,
                             }
                         )}
                         onClick={(e) => {

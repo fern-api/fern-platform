@@ -1,12 +1,17 @@
 import { FernRegistry } from "@fern-fern/registry-browser";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { memo, MouseEventHandler, useEffect } from "react";
 import { NavigationInfo, NavigationStatus } from "../../navigation-context/NavigationContext";
 import { useNavigationContext } from "../../navigation-context/useNavigationContext";
 import { getAnchorId } from "../../util/anchor";
+import { toTitleCase } from "../../util/string";
 import { type JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
+import { TypeDefinitionContextProvider } from "../types/context/TypeDefinitionContextProvider";
+import { InternalTypeDefinitionError } from "../types/type-definition/InternalTypeDefinitionError";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
+import { getErrorNameForStatus } from "../utils/getErrorNameForStatus";
 
 function shouldSelectError(navigation: NavigationInfo, curAnchorId: string) {
     if (navigation.status !== NavigationStatus.INITIAL_NAVIGATION_TO_ANCHOR) {
@@ -18,7 +23,7 @@ function shouldSelectError(navigation: NavigationInfo, curAnchorId: string) {
 
 export declare namespace EndpointError {
     export interface Props {
-        error: FernRegistry.api.v1.read.ErrorDeclaration;
+        error: FernRegistry.api.v1.read.ErrorDeclarationV2;
         isFirst: boolean;
         isLast: boolean;
         isSelected: boolean;
@@ -70,25 +75,50 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
             onClick={onClick}
         >
             <div className="flex items-baseline space-x-2">
-                <div className="rounded bg-red-500/20 p-1 text-xs text-red-400">{error.statusCode}</div>
+                <div className="rounded bg-red-500/20 px-2 py-1 text-xs text-red-400">{error.statusCode}</div>
                 <div className="t-muted text-xs">
-                    {error.type != null && <TypeShorthand type={error.type} plural={false} />}
+                    {error.name != null ? toTitleCase(error.name) : getErrorNameForStatus(error.statusCode)}
                 </div>
             </div>
-            {error.description != null && error.description.length > 0 && (
-                <div className="t-muted mt-3 text-start text-base font-light leading-7">{error.description}</div>
-            )}
 
-            {isSelected && (
-                <div className="border-border-concealed-light dark:border-border-concealed-dark mt-2 w-full border-t text-start">
-                    {error.type != null && (
-                        <TypeReferenceDefinitions
-                            isCollapsible={false}
-                            type={error.type}
-                            onHoverProperty={onHoverProperty}
-                            anchorIdParts={anchorIdParts}
-                        />
-                    )}
+            {isSelected && error.type != null && (
+                <div className="w-full pb-3">
+                    <div className="t-muted mt-3 w-full text-start text-sm font-light leading-7">
+                        This error returns{" "}
+                        {visitDiscriminatedUnion(error.type, "type")._visit<string | JSX.Element>({
+                            alias: (type) => (
+                                <>
+                                    <TypeShorthand type={type.value} plural={false} withArticle />.
+                                </>
+                            ),
+                            object: () => "an object.",
+                            discriminatedUnion: () => "a union.",
+                            undiscriminatedUnion: () => "a union.",
+                            enum: () => "an enum.",
+                            _other: () => "unknown.",
+                        })}
+                    </div>
+                    {error.type.type === "alias" ? (
+                        <div className="w-full text-start">
+                            <TypeReferenceDefinitions
+                                isCollapsible
+                                applyErrorStyles
+                                type={error.type.value}
+                                onHoverProperty={onHoverProperty}
+                                anchorIdParts={anchorIdParts}
+                            />
+                        </div>
+                    ) : error.type.type === "object" ? (
+                        <div className="mt-2.5 w-full text-start">
+                            <TypeDefinitionContextProvider onHoverProperty={onHoverProperty}>
+                                <InternalTypeDefinitionError
+                                    isCollapsible
+                                    typeShape={error.type}
+                                    anchorIdParts={anchorIdParts}
+                                />
+                            </TypeDefinitionContextProvider>
+                        </div>
+                    ) : null}
                 </div>
             )}
         </button>

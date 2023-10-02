@@ -28,7 +28,12 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({ name, des
                 </div>
             </div>
             <ApiPageDescription isMarkdown={true} description={description} />
-            <TypeReferenceDefinitions type={type} isCollapsible anchorIdParts={anchorIdParts} />
+            <TypeReferenceDefinitions
+                type={type}
+                isCollapsible
+                anchorIdParts={anchorIdParts}
+                applyErrorStyles={false}
+            />
         </div>
     );
 };
