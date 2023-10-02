@@ -1,4 +1,5 @@
 import { FernRegistry } from "@fern-fern/registry-browser";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { memo, MouseEventHandler, useEffect } from "react";
 import { NavigationInfo, NavigationStatus } from "../../navigation-context/NavigationContext";
@@ -9,6 +10,7 @@ import { type JsonPropertyPath } from "../examples/json-example/contexts/JsonPro
 import { TypeDefinitionContextProvider } from "../types/context/TypeDefinitionContextProvider";
 import { InternalTypeDefinitionError } from "../types/type-definition/InternalTypeDefinitionError";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
+import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
 
 function shouldSelectError(navigation: NavigationInfo, curAnchorId: string) {
     if (navigation.status !== NavigationStatus.INITIAL_NAVIGATION_TO_ANCHOR) {
@@ -79,11 +81,22 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
             {isSelected && error.type != null && (
                 <div className="w-full pb-3">
                     <div className="t-muted mt-3 w-full text-start text-sm font-light leading-7">
-                        This error returns an object.{/* TODO: Make dynamic */}
+                        This error returns{" "}
+                        {visitDiscriminatedUnion(error.type, "type")._visit<string | JSX.Element>({
+                            alias: (type) => (
+                                <>
+                                    <TypeShorthand type={type.value} plural={false} withArticle />.
+                                </>
+                            ),
+                            object: () => "an object.",
+                            discriminatedUnion: () => "a union.",
+                            undiscriminatedUnion: () => "a union.",
+                            enum: () => "an enum.",
+                            _other: () => "unknown.",
+                        })}
                     </div>
-
-                    <div className="mt-2.5 w-full text-start">
-                        {error.type.type === "alias" ? (
+                    {error.type.type === "alias" ? (
+                        <div className="w-full text-start">
                             <TypeReferenceDefinitions
                                 isCollapsible
                                 isError
@@ -91,7 +104,9 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                                 onHoverProperty={onHoverProperty}
                                 anchorIdParts={anchorIdParts}
                             />
-                        ) : error.type.type === "object" ? (
+                        </div>
+                    ) : error.type.type === "object" ? (
+                        <div className="mt-2.5 w-full text-start">
                             <TypeDefinitionContextProvider onHoverProperty={onHoverProperty}>
                                 <InternalTypeDefinitionError
                                     isCollapsible
@@ -99,8 +114,8 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                                     anchorIdParts={anchorIdParts}
                                 />
                             </TypeDefinitionContextProvider>
-                        ) : null}
-                    </div>
+                        </div>
+                    ) : null}
                 </div>
             )}
         </button>
