@@ -1,7 +1,7 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CurlExample } from "../../examples/curl-example/CurlExample";
-import { JsonExample } from "../../examples/json-example/JsonExample";
+import { JsonExampleVirtualized } from "../../examples/json-example/JsonExample";
 import { TitledExample } from "../../examples/TitledExample";
 import { useEndpointContext } from "../endpoint-context/useEndpointContext";
 
@@ -72,7 +72,7 @@ export const EndpointExample: React.FC<EndpointExample.Props> = ({ endpoint, exa
                         }}
                         copyToClipboardText={() => JSON.stringify(example.responseBody, undefined, 2)}
                     >
-                        <JsonExample
+                        <JsonExampleVirtualized
                             json={example.responseBody}
                             selectedProperty={hoveredResponsePropertyPath}
                             maxContentHeight={maxRemainingSize}

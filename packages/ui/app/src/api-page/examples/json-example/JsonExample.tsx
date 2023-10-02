@@ -29,11 +29,87 @@ export declare namespace JsonExample {
     export interface Props {
         json: unknown;
         selectedProperty: JsonPropertyPath | undefined;
+        parent: HTMLElement | undefined;
+    }
+}
+
+export const JsonExample = React.memo<JsonExample.Props>(function JsonExample({ json, parent, selectedProperty }) {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const jsonLines = useMemo(() => flattenJsonToLines(json), [useDeepCompareMemoize(json)]);
+    const selectedPropertyHash = useDeepCompareMemoize(
+        selectedProperty?.map((path) => {
+            if (path.type === "listItem") {
+                return `${path.index ?? "*"}`;
+            } else if (path.type === "objectProperty") {
+                return path.propertyName ?? "*";
+            } else {
+                return path.propertyName;
+            }
+        })
+    );
+
+    const isSelectedArr = useMemo(
+        () => jsonLines.map((line) => checkIsSelected(selectedPropertyHash, line)),
+        [jsonLines, selectedPropertyHash]
+    );
+
+    const lineRefs = useRef<Array<HTMLDivElement | null>>(new Array(jsonLines.length).fill(null));
+
+    const setLineRef = (i: number, element: HTMLDivElement | null) => {
+        lineRefs.current[i] = element;
+    };
+
+    const topLineAnchorIdx = isSelectedArr.findIndex((isSelected) => isSelected);
+
+    useEffect(() => {
+        if (parent == null) {
+            return;
+        }
+        if (topLineAnchorIdx > -1) {
+            const targetBBox = lineRefs.current[topLineAnchorIdx]?.getBoundingClientRect();
+            if (targetBBox == null) {
+                return;
+            }
+            const containerBBox = parent.getBoundingClientRect();
+            parent.scrollTo({
+                top: parent.scrollTop + targetBBox.y - containerBBox.y - 20,
+                left: 0,
+                behavior: "smooth",
+            });
+        }
+    }, [parent, topLineAnchorIdx]);
+
+    return (
+        <>
+            {jsonLines.map((line, i) => {
+                const isSelected = isSelectedArr[i] ?? false;
+                return (
+                    <div
+                        className={classNames(
+                            "relative w-fit min-w-full px-4 transition py-px",
+                            isSelected ? "bg-accent-primary/20" : "bg-transparent"
+                        )}
+                        key={i}
+                        ref={(element) => setLineRef(i, element)}
+                    >
+                        {isSelected && <div className="bg-accent-primary absolute inset-y-0 left-0 w-1" />}
+                        {renderJsonLine(line)}
+                    </div>
+                );
+            })}
+        </>
+    );
+});
+
+export declare namespace JsonExampleVirtualized {
+    export interface Props {
+        json: unknown;
+        selectedProperty: JsonPropertyPath | undefined;
         maxContentHeight: number;
     }
 }
 
-export const JsonExample = React.memo<JsonExample.Props>(function JsonExample({
+export const JsonExampleVirtualized = React.memo<JsonExampleVirtualized.Props>(function JsonExample({
     json,
     selectedProperty,
     maxContentHeight,
