@@ -3,7 +3,7 @@ import { getEndpointTitleAsString, getSubpackageTitle, isSubpackage } from "@fer
 import useSize from "@react-hook/size";
 import classNames from "classnames";
 import dynamic from "next/dynamic";
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
@@ -34,6 +34,15 @@ export declare namespace EndpointContent {
     }
 }
 
+function isElementInViewport(el: HTMLDivElement): boolean {
+    const rect = el.getBoundingClientRect();
+    if (window == null) {
+        return false;
+    }
+
+    return rect.bottom <= window.innerHeight || rect.top >= 0 || (rect.top < 0 && rect.bottom > window.innerHeight);
+}
+
 export const EndpointContent = React.memo<EndpointContent.Props>(function EndpointContent({
     endpoint,
     package: package_,
@@ -56,6 +65,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
         [setHoveredResponsePropertyPath]
     );
 
+    const containerRef = useRef<HTMLDivElement>(null);
     const endpointUrlOuterContainerRef = useRef<null | HTMLDivElement>(null);
     const endpointUrlInnerContainerRef = useRef<null | HTMLDivElement>(null);
     const [endpointUrlOuterContainerWidth] = useSize(endpointUrlOuterContainerRef);
@@ -73,6 +83,21 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
         return endpoint.examples.find((e) => e.responseStatusCode === selectedError.statusCode) ?? null;
     }, [endpoint.examples, selectedError]);
 
+    const [isInViewport, setIsInViewport] = useState(false);
+    useEffect(() => {
+        const calcAndSetIsInViewport = () => {
+            if (containerRef.current != null) {
+                setIsInViewport(isElementInViewport(containerRef.current));
+            }
+        };
+        window.addEventListener("scroll", calcAndSetIsInViewport);
+        window.addEventListener("resize", calcAndSetIsInViewport);
+        return () => {
+            window.removeEventListener("scroll", calcAndSetIsInViewport);
+            window.removeEventListener("resize", calcAndSetIsInViewport);
+        };
+    }, []);
+
     const endpointExample = example ? <EndpointExample endpoint={endpoint} example={example} /> : null;
 
     return (
@@ -81,6 +106,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                 "border-border-default-light dark:border-border-default-dark border-b": !hideBottomSeparator,
             })}
             onClick={() => setSelectedErrorIndex(null)}
+            ref={containerRef}
         >
             <div
                 className="flex min-w-0 flex-1 flex-col justify-between lg:flex-row lg:space-x-[4vw]"
@@ -167,22 +193,26 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                     </div>
                 </div>
 
-                <div
-                    className={classNames(
-                        "flex-1 sticky self-start min-w-sm max-w-lg ml-auto",
-                        "pb-10 pt-8",
-                        // the 4rem is the same as the h-10 as the Header
-                        "max-h-[calc(100vh-4rem)]",
-                        // hide on mobile,
-                        "hidden lg:flex",
-                        // header offset
-                        "top-16"
-                    )}
-                >
-                    {endpointExample}
-                </div>
+                {isInViewport && (
+                    <>
+                        <div
+                            className={classNames(
+                                "flex-1 sticky self-start min-w-sm max-w-lg ml-auto",
+                                "pb-10 pt-8",
+                                // the 4rem is the same as the h-10 as the Header
+                                "max-h-[calc(100vh-4rem)]",
+                                // hide on mobile,
+                                "hidden lg:flex",
+                                // header offset
+                                "top-16"
+                            )}
+                        >
+                            {endpointExample}
+                        </div>
 
-                <div className="mt-10 flex max-h-[150vh] lg:mt-0 lg:hidden">{endpointExample}</div>
+                        <div className="mt-10 flex max-h-[150vh] lg:mt-0 lg:hidden">{endpointExample}</div>
+                    </>
+                )}
             </div>
         </div>
     );
