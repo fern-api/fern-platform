@@ -63,6 +63,9 @@ const UnmemoizedSidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = (
         });
     }, [docsDefinition, docsInfo.activeNavigationConfig, activeTab]);
 
+    /**
+     * @returns Whether navigation was successful
+     */
     const navigateToSubpackageFirstChild = useCallback(
         (apiId: ApiDefinitionId, slugs: string[], subpackage: ApiDefinitionSubpackage) => {
             const firstNavigatable = subpackage.endpoints[0] ?? subpackage.webhooks[0];
@@ -75,17 +78,29 @@ const UnmemoizedSidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = (
                 });
                 navigateToPath(slugToNavigate);
                 closeMobileSidebar();
+                return true;
             } else {
                 // Check if it has nested subpackages
-                const [firstChildSubpackageId] = subpackage.subpackages;
-                if (firstChildSubpackageId != null) {
-                    const childSubpackage = docsDefinition.apis[apiId]?.subpackages[firstChildSubpackageId];
-                    if (childSubpackage == null) {
-                        return;
+                let i = 0;
+                while (i < subpackage.subpackages.length) {
+                    const childSubpackageId = subpackage.subpackages[i];
+                    if (childSubpackageId != null) {
+                        const childSubpackage = docsDefinition.apis[apiId]?.subpackages[childSubpackageId];
+                        if (childSubpackage != null) {
+                            const success = navigateToSubpackageFirstChild(
+                                apiId,
+                                [...slugs, childSubpackage.urlSlug],
+                                childSubpackage
+                            );
+                            if (success) {
+                                return true;
+                            }
+                        }
                     }
-                    navigateToSubpackageFirstChild(apiId, [...slugs, childSubpackage.urlSlug], childSubpackage);
+                    i++;
                 }
             }
+            return false;
         },
         [closeMobileSidebar, docsDefinition.apis, getFullSlug, isChildSelected, navigateToPath, pushRoute]
     );
