@@ -8,7 +8,8 @@ import { Cluster, ContainerImage, LogDriver, Volume } from "aws-cdk-lib/aws-ecs"
 import { ApplicationLoadBalancedFargateService } from "aws-cdk-lib/aws-ecs-patterns";
 import { ApplicationProtocol, HttpCodeTarget } from "aws-cdk-lib/aws-elasticloadbalancingv2";
 import { LogGroup } from "aws-cdk-lib/aws-logs";
-import { HostedZone } from "aws-cdk-lib/aws-route53";
+import { ARecord, HostedZone, RecordTarget } from "aws-cdk-lib/aws-route53";
+import { LoadBalancerTarget } from "aws-cdk-lib/aws-route53-targets";
 import { Bucket, HttpMethods } from "aws-cdk-lib/aws-s3";
 import * as sns from "aws-cdk-lib/aws-sns";
 import { EmailSubscription } from "aws-cdk-lib/aws-sns-subscriptions";
@@ -115,6 +116,15 @@ export class FdrDeployStack extends Stack {
                 zoneName: environmentInfo.route53Info.hostedZoneName,
             }),
             domainName: getServiceDomainName(environmentType, environmentInfo),
+        });
+
+        new ARecord(this, "api-domain", {
+            zone: HostedZone.fromHostedZoneAttributes(this, "zoneId", {
+                hostedZoneId: environmentInfo.route53Info.hostedZoneId,
+                zoneName: environmentInfo.route53Info.hostedZoneName,
+            }),
+            target: RecordTarget.fromAlias(new LoadBalancerTarget(fargateService.loadBalancer)),
+            recordName: environmentType === "PROD" ? "api" : `api-${environmentType.toLowerCase()}`,
         });
 
         const efsVolume: Volume = {

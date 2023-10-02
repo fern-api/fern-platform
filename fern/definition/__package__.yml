@@ -11,6 +11,7 @@ service:
       path: ""
       docs: Get snippet by endpoint method and path
       display-name: Get snippet for endpoint
+      availability: pre-release
       audiences: 
         - external
       method: POST
@@ -72,6 +73,7 @@ service:
       path: /load
       display-name: Load all snippets
       method: POST
+      availability: pre-release
       audiences: 
         - external
       request:
