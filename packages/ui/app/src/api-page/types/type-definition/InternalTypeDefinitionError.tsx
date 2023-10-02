@@ -63,7 +63,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                             key={property.key}
                             property={property}
                             anchorIdParts={[...anchorIdParts, property.key]}
-                            isError={false}
+                            isError
                         />
                     )),
                     elementNameSingular: "property",
@@ -179,7 +179,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
         <div className="mt-2 flex flex-col">
             <div className="flex flex-col items-start">
                 <div
-                    className="border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded border"
+                    className="border-default flex flex-col overflow-visible rounded border"
                     style={{
                         width: isCollapsed ? originalButtonWidth : "100%",
                     }}
@@ -188,10 +188,10 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                     <div
                         {...containerCallbacks}
                         className={classNames(
-                            "flex gap-1 items-center border-b hover:bg-tag-default-light dark:hover:bg-tag-default-dark cursor-pointer px-2 py-1 transition t-muted",
+                            "flex gap-1 items-center rounded border-b hover:bg-tag-default-light dark:hover:bg-tag-default-dark cursor-pointer px-2 py-1 transition t-muted",
                             {
                                 "border-transparent": isCollapsed,
-                                "border-border-default-light dark:border-border-default-dark": !isCollapsed,
+                                "border-concealed": !isCollapsed,
                             }
                         )}
                         onClick={(e) => {

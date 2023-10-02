@@ -25,9 +25,12 @@ export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
     selectError,
     anchorIdParts,
 }) => {
+    const sortedErrors = [...errors]
+        .sort((e1, e2) => (e1.name != null && e2.name != null ? e1.name.localeCompare(e2.name) : 0))
+        .sort((e1, e2) => e1.statusCode - e2.statusCode);
     return (
         <div className="border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded-md border">
-            {errors.map((error, idx) => {
+            {sortedErrors.map((error, idx) => {
                 return (
                     <EndpointError
                         key={idx}
