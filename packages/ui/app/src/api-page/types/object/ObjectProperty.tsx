@@ -24,11 +24,11 @@ export declare namespace ObjectProperty {
     export interface Props {
         property: FernRegistryApiRead.ObjectProperty;
         anchorIdParts: string[];
-        isError: boolean;
+        applyErrorStyles: boolean;
     }
 }
 
-export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchorIdParts, property, isError }) => {
+export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchorIdParts, property, applyErrorStyles }) => {
     const anchorId = getAnchorId(anchorIdParts);
     const { resolveTypeById } = useApiDefinitionContext();
 
@@ -117,7 +117,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchorIdParts, 
                     <InternalTypeReferenceDefinitions
                         type={property.valueType}
                         isCollapsible
-                        isError={isError}
+                        applyErrorStyles={applyErrorStyles}
                         anchorIdParts={anchorIdParts}
                     />
                 </TypeDefinitionContext.Provider>

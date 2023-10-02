@@ -63,7 +63,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                             key={property.key}
                             property={property}
                             anchorIdParts={[...anchorIdParts, property.key]}
-                            isError={false}
+                            applyErrorStyles={false}
                         />
                     )),
                     elementNameSingular: "property",
@@ -82,7 +82,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                                 key={variantIdx}
                                 unionVariant={variant}
                                 anchorIdParts={anchorIdParts}
-                                isError={false}
+                                applyErrorStyles={false}
                             />
                         )),
                     elementNameSingular: "variant",

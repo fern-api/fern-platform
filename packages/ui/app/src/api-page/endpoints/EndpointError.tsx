@@ -102,7 +102,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                         <div className="w-full text-start">
                             <TypeReferenceDefinitions
                                 isCollapsible
-                                isError
+                                applyErrorStyles
                                 type={error.type.value}
                                 onHoverProperty={onHoverProperty}
                                 anchorIdParts={anchorIdParts}

@@ -10,7 +10,7 @@ import { MapTypeContextProvider } from "./MapTypeContextProvider";
 export declare namespace InternalTypeReferenceDefinitions {
     export interface Props {
         type: FernRegistryApiRead.TypeReference;
-        isError: boolean;
+        applyErrorStyles: boolean;
         isCollapsible: boolean;
         className?: string;
         anchorIdParts: string[];
@@ -19,7 +19,7 @@ export declare namespace InternalTypeReferenceDefinitions {
 
 export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDefinitions.Props> = ({
     type,
-    isError,
+    applyErrorStyles,
     isCollapsible,
     className,
     anchorIdParts,
@@ -34,13 +34,13 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     <InternalTypeReferenceDefinitions
                         type={typeShape.value}
                         isCollapsible={isCollapsible}
-                        isError={isError}
+                        applyErrorStyles={applyErrorStyles}
                         className={className}
                         anchorIdParts={anchorIdParts}
                     />
                 );
             }
-            return isError ? (
+            return applyErrorStyles ? (
                 <InternalTypeDefinitionError
                     key={typeId}
                     typeShape={typeShape}
@@ -62,7 +62,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 <InternalTypeReferenceDefinitions
                     type={itemType}
                     isCollapsible={isCollapsible}
-                    isError={isError}
+                    applyErrorStyles={applyErrorStyles}
                     className={className}
                     anchorIdParts={anchorIdParts}
                 />
@@ -73,7 +73,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 <InternalTypeReferenceDefinitions
                     type={itemType}
                     isCollapsible={isCollapsible}
-                    isError={isError}
+                    applyErrorStyles={applyErrorStyles}
                     className={className}
                     anchorIdParts={anchorIdParts}
                 />
@@ -83,7 +83,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
             <InternalTypeReferenceDefinitions
                 type={itemType}
                 isCollapsible={isCollapsible}
-                isError={isError}
+                applyErrorStyles={applyErrorStyles}
                 className={className}
                 anchorIdParts={anchorIdParts}
             />
@@ -93,14 +93,14 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 <InternalTypeReferenceDefinitions
                     type={keyType}
                     isCollapsible={isCollapsible}
-                    isError={isError}
+                    applyErrorStyles={applyErrorStyles}
                     className={className}
                     anchorIdParts={anchorIdParts}
                 />
                 <InternalTypeReferenceDefinitions
                     type={valueType}
                     isCollapsible={isCollapsible}
-                    isError={isError}
+                    applyErrorStyles={applyErrorStyles}
                     className={className}
                     anchorIdParts={anchorIdParts}
                 />

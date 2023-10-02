@@ -5,7 +5,7 @@ import { ApiPageDescription } from "../../ApiPageDescription";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
-    useTypeDefinitionContext,
+    useTypeDefinitionContext
 } from "../context/TypeDefinitionContext";
 import { InternalTypeReferenceDefinitions } from "../type-reference/InternalTypeReferenceDefinitions";
 import { TypeShorthand } from "../type-shorthand/TypeShorthand";
@@ -79,14 +79,14 @@ export declare namespace UndiscriminatedUnionVariant {
     export interface Props {
         unionVariant: FernRegistryApiRead.UndiscriminatedUnionVariant;
         anchorIdParts: string[];
-        isError: boolean;
+        applyErrorStyles: boolean;
     }
 }
 
 export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.Props> = ({
     unionVariant,
     anchorIdParts,
-    isError,
+    applyErrorStyles,
 }) => {
     const { isRootTypeDefinition } = useTypeDefinitionContext();
     const contextValue = useTypeDefinitionContext();
@@ -120,7 +120,7 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
                         type={unionVariant.type}
                         anchorIdParts={anchorIdParts}
                         isCollapsible
-                        isError={isError}
+                        applyErrorStyles={applyErrorStyles}
                     />
                 </TypeDefinitionContext.Provider>
             </div>

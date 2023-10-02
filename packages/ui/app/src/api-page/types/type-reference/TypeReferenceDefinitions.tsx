@@ -6,7 +6,7 @@ import { InternalTypeReferenceDefinitions } from "./InternalTypeReferenceDefinit
 export declare namespace TypeReferenceDefinitions {
     export interface Props {
         type: FernRegistryApiRead.TypeReference;
-        isError: boolean;
+        applyErrorStyles: boolean;
         isCollapsible: boolean;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: string[];
@@ -17,7 +17,7 @@ export declare namespace TypeReferenceDefinitions {
 export const TypeReferenceDefinitions: React.FC<TypeReferenceDefinitions.Props> = ({
     type,
     isCollapsible,
-    isError,
+    applyErrorStyles,
     onHoverProperty,
     anchorIdParts,
     className,
@@ -27,7 +27,7 @@ export const TypeReferenceDefinitions: React.FC<TypeReferenceDefinitions.Props> 
             <InternalTypeReferenceDefinitions
                 type={type}
                 isCollapsible={isCollapsible}
-                isError={isError}
+                applyErrorStyles={applyErrorStyles}
                 className={className}
                 anchorIdParts={anchorIdParts}
             />

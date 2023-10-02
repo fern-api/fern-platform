@@ -32,7 +32,7 @@ export const WebhookHeadersSection: React.FC<WebhookHeadersSection.Props> = ({ w
                             type={header.type}
                             isCollapsible
                             anchorIdParts={anchorIdParts}
-                            isError={false}
+                            applyErrorStyles={false}
                         />
                     </div>
                 </div>
