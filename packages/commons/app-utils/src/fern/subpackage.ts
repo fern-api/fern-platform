@@ -37,24 +37,18 @@ export function getSlugForFirstNavigatableEndpointOrWebhook(
     if (firstNavigatable != null) {
         return joinUrlSlugs(...(slugs as [string, ...string[]]), firstNavigatable.urlSlug);
     }
-    // Check if it has nested subpackages
-    let i = 0;
-    while (i < subpackage.subpackages.length) {
-        const childSubpackageId = subpackage.subpackages[i];
-        if (childSubpackageId != null) {
-            const childSubpackage = apiDefinition.subpackages[childSubpackageId];
-            if (childSubpackage != null) {
-                const slug = getSlugForFirstNavigatableEndpointOrWebhook(
-                    apiDefinition,
-                    [...slugs, childSubpackage.urlSlug],
-                    childSubpackage
-                );
-                if (slug != null) {
-                    return slug;
-                }
+    for (const childSubpackageId of subpackage.subpackages) {
+        const childSubpackage = apiDefinition.subpackages[childSubpackageId];
+        if (childSubpackage != null) {
+            const slug = getSlugForFirstNavigatableEndpointOrWebhook(
+                apiDefinition,
+                [...slugs, childSubpackage.urlSlug],
+                childSubpackage
+            );
+            if (slug != null) {
+                return slug;
             }
         }
-        i++;
     }
     return undefined;
 }
