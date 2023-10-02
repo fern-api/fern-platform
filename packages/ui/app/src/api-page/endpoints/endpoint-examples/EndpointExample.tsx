@@ -70,7 +70,7 @@ export const EndpointExample: React.FC<EndpointExample.Props> = ({ endpoint, exa
                         onClick={(e) => {
                             e.stopPropagation();
                         }}
-                        copyToClipboardText={JSON.stringify(example.responseBody, undefined, 2)}
+                        copyToClipboardText={() => JSON.stringify(example.responseBody, undefined, 2)}
                     >
                         <JsonExample
                             json={example.responseBody}

@@ -6,7 +6,7 @@ import { CopyIcon } from "./icons/CopyIcon";
 export declare namespace CopyToClipboardButton {
     export interface Props {
         className?: string;
-        content?: string;
+        content?: string | (() => string);
     }
 }
 

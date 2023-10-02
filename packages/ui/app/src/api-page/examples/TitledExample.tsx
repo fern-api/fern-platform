@@ -10,7 +10,7 @@ export declare namespace TitledExample {
         actions?: JSX.Element;
         className?: string;
         children: JSX.Element | ((parent: HTMLElement | undefined) => JSX.Element);
-        copyToClipboardText?: string;
+        copyToClipboardText?: () => string; // use provider to lazily compute clipboard text
         onClick?: MouseEventHandler<HTMLDivElement>;
         containerRef?: MutableRefObject<HTMLDivElement | null>;
     }
