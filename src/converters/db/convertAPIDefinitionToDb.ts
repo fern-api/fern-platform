@@ -194,7 +194,7 @@ function getExampleEndpointCalls({
     }
 
     const registeredErrorExampleStatusCodes = new Set(registeredErrorExamples.map((e) => e.responseStatusCode));
-    const errorsMissingAnExample = (writeShape.errors ?? []).filter(
+    const errorsMissingAnExample = (writeShape.errorsV2 ?? []).filter(
         (e) => !registeredErrorExampleStatusCodes.has(e.statusCode)
     );
     const generatedErrorExamples = errorsMissingAnExample.map((e) =>

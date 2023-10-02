@@ -4,6 +4,7 @@ import { LOGGER } from "../../../app/FdrApplication";
 import { assertNever } from "../../../util";
 import {
     generateExampleFromTypeReference,
+    generateExampleFromTypeShape,
     generateHttpRequestBodyExample,
     generateHttpResponseBodyExample,
 } from "./generateHttpBodyExample";
@@ -17,7 +18,7 @@ const MAX_OPTIONAL_EXAMPLES_FOR_QUERY_PARAMS = 2;
 export function generateEndpointExampleCall(
     endpointDefinition: APIV1Write.EndpointDefinition,
     apiDefinition: APIV1Write.ApiDefinition,
-    error?: APIV1Write.ErrorDeclaration
+    error?: APIV1Write.ErrorDeclarationV2
 ): APIV1Write.ExampleEndpointCall {
     try {
         const resolveTypeById = (typeId: APIV1Write.TypeId): APIV1Write.TypeDefinition => {
@@ -75,7 +76,7 @@ export function generateEndpointExampleCall(
                 endpointDefinition.response != null && error == null
                     ? generateHttpResponseBodyExample(endpointDefinition.response.type, resolveTypeById)
                     : error?.type != null
-                    ? generateExampleFromTypeReference(error.type, resolveTypeById, false, new Set(), 0)
+                    ? generateExampleFromTypeShape(error.type, resolveTypeById, false, new Set(), 0)
                     : undefined,
         };
         return {

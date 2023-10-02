@@ -13,6 +13,9 @@ const FIXTURES: Fixture[] = [
     {
         name: "string",
     },
+    {
+        name: "candid",
+    },
 ];
 
 function loadFdrApiDefinition(fixture: Fixture) {

@@ -179,6 +179,16 @@ function generateExampleFromId(
     depth: number
 ): unknown {
     const shape = resolveTypeById(id).shape;
+    return generateExampleFromTypeShape(shape, resolveTypeById, ignoreOptionals, visited, depth);
+}
+
+export function generateExampleFromTypeShape(
+    shape: APIV1Write.TypeShape,
+    resolveTypeById: (typeId: APIV1Write.TypeId) => APIV1Write.TypeDefinition,
+    ignoreOptionals: boolean,
+    visited: Set<string>,
+    depth: number
+): unknown {
     switch (shape.type) {
         case "object":
             return generateExampleObject(shape, resolveTypeById, ignoreOptionals, visited, depth);
