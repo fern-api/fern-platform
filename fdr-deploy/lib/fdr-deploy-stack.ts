@@ -115,10 +115,7 @@ export class FdrDeployStack extends Stack {
             enableECSManagedTags: true,
             protocol: ApplicationProtocol.HTTPS,
             certificate,
-            domainZone: HostedZone.fromHostedZoneAttributes(this, "zoneId", {
-                hostedZoneId: environmentInfo.route53Info.hostedZoneId,
-                zoneName: environmentInfo.route53Info.hostedZoneName,
-            }),
+            domainZone: hostedZone,
             domainName: getServiceDomainName(environmentType, environmentInfo),
         });
 
