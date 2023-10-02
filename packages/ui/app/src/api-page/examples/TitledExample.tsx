@@ -13,6 +13,7 @@ export declare namespace TitledExample {
         copyToClipboardText?: () => string; // use provider to lazily compute clipboard text
         onClick?: MouseEventHandler<HTMLDivElement>;
         containerRef?: MutableRefObject<HTMLDivElement | null>;
+        disablePadding?: boolean;
     }
 }
 
@@ -25,6 +26,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
     copyToClipboardText,
     onClick,
     containerRef,
+    disablePadding = false,
 }) => {
     const [contentRef, setContentRef] = useState<HTMLElement | null>(null);
 
@@ -74,7 +76,12 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                     )}
                 >
                     <div
-                        className="dark:bg-background-primary-dark flex-1 overflow-auto whitespace-pre bg-gray-100/90"
+                        className={classNames(
+                            "dark:bg-background-primary-dark flex-1 overflow-auto whitespace-pre bg-gray-100/90",
+                            {
+                                "py-4": !disablePadding,
+                            }
+                        )}
                         ref={setContentRef}
                     >
                         {typeof children === "function" ? children(contentRef ?? undefined) : children}

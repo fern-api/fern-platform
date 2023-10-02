@@ -71,6 +71,7 @@ export const EndpointExample: React.FC<EndpointExample.Props> = ({ endpoint, exa
                             e.stopPropagation();
                         }}
                         copyToClipboardText={() => JSON.stringify(example.responseBody, undefined, 2)}
+                        disablePadding={true}
                     >
                         <JsonExampleVirtualized
                             json={example.responseBody}
