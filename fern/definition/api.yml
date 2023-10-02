@@ -3,3 +3,5 @@ auth: bearer
 error-discrimination:
   strategy: property
   property-name: error
+audiences: 
+  - external

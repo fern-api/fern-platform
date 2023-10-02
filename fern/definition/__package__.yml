@@ -11,6 +11,8 @@ service:
       path: ""
       docs: Get snippet by endpoint method and path
       display-name: Get snippet for endpoint
+      audiences: 
+        - external
       method: POST
       request:
         name: GetSnippetRequest
@@ -38,20 +40,25 @@ service:
               path: /v1/search
           response:
             body:
-              - sdk:
-                  type: python
+              - type: python
+                sdk:
                   package: vellum-ai
                   version: 1.2.1
-                code: |
+                sync_client: |
                   import Vellum from vellum.client
 
                   client = Vellum(api_key="YOUR_API_KEY")
                   client.search(query="Find documents written in the last 5 days")
-              - sdk:
-                  type: typescript
+                async_client: |
+                  import VellumAsync from vellum.client
+
+                  client = VellumAsync(api_key="YOUR_API_KEY")
+                  await client.search(query="Find documents written in the last 5 days")
+              - type: typescript
+                sdk:
                   package: vellum-ai
                   version: 1.2.1
-                code: |
+                client: |
                   import { VellumClient } from "vellum-ai";
 
                   const vellum = VellumClient({
@@ -65,6 +72,8 @@ service:
       path: /load
       display-name: Load all snippets
       method: POST
+      audiences: 
+        - external
       request:
         name: ListSnippetsRequest
         query-parameters:
@@ -86,23 +95,28 @@ service:
           response:
             body:
               next: "page_123402"
-              endpoints:
+              snippets:
                 /v1/search:
                   GET:
-                    - sdk:
-                        type: python
+                    - type: python
+                      sdk:
                         package: vellum-ai
                         version: 1.2.1
-                      code: |
+                      sync_client: |
                         import Vellum from vellum.client
 
                         client = Vellum(api_key="YOUR_API_KEY")
                         client.search(query="Find documents written in the last 5 days")
-                    - sdk:
-                        type: typescript
+                      async_client: |
+                        import Vellum from vellum.client
+
+                        client = Vellum(api_key="YOUR_API_KEY")
+                        client.search(query="Find documents written in the last 5 days")
+                    - type: typescript
+                      sdk:
                         package: vellum-ai
                         version: 1.2.1
-                      code: |
+                      client: |
                         import { VellumClient } from "vellum-ai";
 
                         const vellum = VellumClient({
@@ -113,20 +127,25 @@ service:
                         })
                 v1/document-indexes:
                   POST:
-                    - sdk:
-                        type: python
+                    - type: python
+                      sdk:
                         package: vellum-ai
                         version: 1.2.1
-                      code: |
+                      sync_client: |
                         import Vellum from vellum.client
 
                         client = Vellum(api_key="YOUR_API_KEY")
                         client.document_indexes.create(name="meeting-reports", status="ACTIVE")
-                    - sdk:
-                        type: typescript
+                      async_client: |
+                        import VellumAsync from vellum.client
+
+                        client = VellumAsync(api_key="YOUR_API_KEY")
+                        await client.document_indexes.create(name="meeting-reports", status="ACTIVE")
+                    - type: typescript
+                      sdk:
                         package: vellum-ai
                         version: 1.2.1
-                      code: |
+                      client: |
                         import { VellumClient } from "vellum-ai";
 
                         const vellum = VellumClient({
@@ -154,30 +173,6 @@ types:
       - GET
       - PATCH
       - DELETE
-
-  Language:
-    enum:
-      - python
-      - typescript
-      - go
-      - java
-
-  SnippetsPage:
-    properties:
-      next:
-        type: optional<string>
-        docs: If present, pass this into the `page` query parameter to load the next page.
-      endpoints:  map<EndpointPath, SnippetsForPath>
-
-  SnippetsForPath:
-    type: map<EndpointMethod, list<Snippet>>
-
-  Snippet:
-    properties:
-      sdk:
-        type: SDK
-        docs: The SDK the snippet is from.
-      code: string
 
   SDK:
     union:
@@ -210,6 +205,51 @@ types:
         type: string
         docs: The artifact (e.g. `stripe-java`)
       version: string
+  
+  ####### Load Snippets #######
+
+  SnippetsPage:
+    properties:
+      next:
+        type: optional<string>
+        docs: If present, pass this into the `page` query parameter to load the next page.
+      snippets:  
+        type: map<EndpointPath, SnippetsByEndpointMethod>
+        docs: | 
+          The snippets are returned as a map of endpoint path (e.g. `/api/users`) 
+          to a map of endpoint method (e.g. `POST`) to snippets. 
+  
+  SnippetsByEndpointMethod: 
+    type: map<EndpointMethod, list<Snippet>>
+
+  Snippet: 
+    union: 
+      typescript: TypeScriptSnippet
+      python: PythonSnippet
+      java: JavaSnippet
+      go: GoSnippet
+  
+  TypeScriptSnippet: 
+    properties: 
+      sdk: TypeScriptSDK
+      client: string
+  
+  PythonSnippet: 
+    properties: 
+      sdk: PythonSDK
+      async_client: string
+      sync_client: string
+  
+  GoSnippet: 
+    properties: 
+      sdk: GoSDK
+      client: string
+  
+  JavaSnippet: 
+    properties: 
+      sdk: JavaSDK
+      async_client: string
+      sync_client: string
 
 errors:
   EndpointNotFound:
@@ -223,3 +263,7 @@ errors:
   ApiIdNotFound:
     status-code: 404
     docs: The requested ApId was not found
+
+  OrgIdNotFound:
+    status-code: 404
+    docs: The requested OrgId was not found

@@ -1,15 +1,12 @@
 import { SnippetsService } from "../../api";
-import type { FdrApplication } from "../../app";
 
-export function getSnippetsService(_: FdrApplication): SnippetsService {
+export function getSnippetsService(): SnippetsService {
     return new SnippetsService({
         get: async () => {
-            // TODO: Implement me!
-            return;
+            throw new Error("Unimplimented");
         },
         load: async () => {
-            // TODO: Implement me!
-            return;
+            throw new Error("Unimplimented");
         },
     });
 }

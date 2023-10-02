@@ -126,6 +126,11 @@ jobs:
           command: |
             git_version="$(scripts/git-version.sh)"
             fern generate --group internal-write --version "${git_version}" --log-level debug
+      - run:
+          name: Register definition
+          command: |
+            git_version="$(scripts/git-version.sh)"
+            fern register --version "${git_version}"
 
 workflows:
   version: 2

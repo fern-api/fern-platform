@@ -1,0 +1,104 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+  snippets: __package__.yml
+
+service:
+  auth: true
+  base-path: /snippets
+  endpoints:
+    createSnippetsForSDK:
+      path: /create
+      docs: Store endpoint snippets for a particular SDK.
+      display-name: Store snippets
+      method: POST
+      request:
+        name: CreateSnippetRequest
+        body:
+          properties:
+            orgId:
+              type: commons.OrgId
+              docs: |
+                The organization to create snippets for.
+            apiId:
+              type: commons.ApiId
+              docs: |
+                The API name. 
+            snippets: SDKSnippetsCreate
+      errors:
+        - snippets.SDKNotFound
+        - snippets.ApiIdNotFound
+        - snippets.OrgIdNotFound
+
+types: 
+  SDKSnippetsCreate: 
+    union:
+      typescript: TypescriptSDKSnippetsCreate
+      python: PythonSDKSnippetCreate
+      go: GoSDKSnippetsCreate
+      java: JavaSDKSnippetsCreate
+
+  TypescriptSDKSnippetsCreate:
+    properties:
+      sdk: snippets.TypeScriptSDK
+      snippets: list<SingleTypescriptSnippetCreate>
+
+  PythonSDKSnippetCreate:
+    properties:
+      sdk: snippets.PythonSDK
+      snippets: list<SinglePythonSnippetCreate>
+
+  GoSDKSnippetsCreate:
+    properties: 
+      sdk: snippets.GoSDK
+      snippets: list<SingleGoSnippetCreate>
+
+  JavaSDKSnippetsCreate: 
+    properties: 
+      sdk: snippets.JavaSDK
+      snippets: list<SingleJavaSnippetCreate>
+  
+
+  # Single creates
+  
+  SingleTypescriptSnippetCreate:
+    properties:
+      endpoint: snippets.EndpointIdentifier
+      snippet: TypeScriptSnippetCode
+
+  SinglePythonSnippetCreate:
+    properties:
+      endpoint: snippets.EndpointIdentifier
+      snippet: PythonSnippetCode
+
+  SingleGoSnippetCreate:
+    properties:
+      endpoint: snippets.EndpointIdentifier
+      snippet: GoSnippetCode
+
+  SingleJavaSnippetCreate:
+    properties:
+      endpoint: snippets.EndpointIdentifier
+      snippet: JavaSnippetCode
+  
+  # Snippet Code
+  
+  TypeScriptSnippetCode:
+    properties:
+      client: string
+
+  PythonSnippetCode:
+    properties:
+      async_client: string
+      sync_client: string
+
+  GoSnippetCode:
+    properties:
+      client: string
+
+  JavaSnippetCode:
+    properties:
+      async_client: string
+      sync_client: string
+      
