@@ -82,13 +82,13 @@ export const JsonExampleVirtualized = React.memo<JsonExampleVirtualized.Props>(f
     const listRef = useRef<Grid>(null);
 
     useEffect(() => {
-        if (topLineAnchorIdx > -1) {
+        if (topLineAnchorIdx > -1 && contentHeight > maxContentHeight) {
             listRef.current?.scrollToPosition({
                 scrollLeft: 0,
                 scrollTop: topLineAnchorIdx * LINE_HEIGHT - VERTICAL_PADDING,
             });
         }
-    }, [topLineAnchorIdx]);
+    }, [contentHeight, maxContentHeight, topLineAnchorIdx]);
 
     const getRowHeight = useCallback(
         ({ index }: Index) => {
@@ -104,7 +104,7 @@ export const JsonExampleVirtualized = React.memo<JsonExampleVirtualized.Props>(f
                 return <div style={style} key={key} />;
             }
             const line = jsonLines[rowIndex - 1];
-            const isSelected = isSelectedArr[rowIndex] ?? false;
+            const isSelected = isSelectedArr[rowIndex - 1] ?? false;
             if (line == null) {
                 return <div style={style} key={key} />;
             }
@@ -116,7 +116,8 @@ export const JsonExampleVirtualized = React.memo<JsonExampleVirtualized.Props>(f
                             isSelected ? "bg-accent-primary/20" : "bg-transparent"
                         )}
                         style={{
-                            lineHeight: `${LINE_HEIGHT}px`,
+                            lineHeight: LINE_HEIGHT,
+                            height: LINE_HEIGHT,
                         }}
                     >
                         {isSelected && <div className="bg-accent-primary absolute inset-y-0 left-0 w-1" />}
@@ -135,7 +136,7 @@ export const JsonExampleVirtualized = React.memo<JsonExampleVirtualized.Props>(f
                     ref={listRef}
                     height={contentHeight > maxContentHeight ? maxContentHeight : contentHeight}
                     rowHeight={getRowHeight}
-                    columnWidth={maxColumnWidth}
+                    columnWidth={maxColumnWidth < width ? width : maxColumnWidth}
                     rowCount={jsonLines.length + 2}
                     columnCount={1}
                     width={width}
