@@ -11,6 +11,7 @@ import { TypeDefinitionContextProvider } from "../types/context/TypeDefinitionCo
 import { InternalTypeDefinitionError } from "../types/type-definition/InternalTypeDefinitionError";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
+import { getErrorNameForStatus } from "../utils/getErrorNameForStatus";
 
 function shouldSelectError(navigation: NavigationInfo, curAnchorId: string) {
     if (navigation.status !== NavigationStatus.INITIAL_NAVIGATION_TO_ANCHOR) {
@@ -75,7 +76,9 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
         >
             <div className="flex items-baseline space-x-2">
                 <div className="rounded bg-red-500/20 px-2 py-1 text-xs text-red-400">{error.statusCode}</div>
-                {error.name != null ? <div className="t-muted text-xs">{toTitleCase(error.name)}</div> : null}
+                <div className="t-muted text-xs">
+                    {error.name != null ? toTitleCase(error.name) : getErrorNameForStatus(error.statusCode)}
+                </div>
             </div>
 
             {isSelected && error.type != null && (

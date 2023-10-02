@@ -64,7 +64,14 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
         endpointUrlInnerContainerWidth / endpointUrlOuterContainerWidth > URL_OVERFLOW_THRESHOLD;
 
     const [selectedErrorIndex, setSelectedErrorIndex] = useState<number | null>(null);
-    const selectedError = selectedErrorIndex == null ? null : endpoint.errors[selectedErrorIndex] ?? null;
+
+    const errors = useMemo(() => {
+        return [...(endpoint.errorsV2 ?? [])]
+            .sort((e1, e2) => (e1.name != null && e2.name != null ? e1.name.localeCompare(e2.name) : 0))
+            .sort((e1, e2) => e1.statusCode - e2.statusCode);
+    }, [endpoint.errorsV2]);
+
+    const selectedError = selectedErrorIndex == null ? null : errors[selectedErrorIndex] ?? null;
     const example = useMemo(() => {
         if (selectedError == null) {
             // Look for success example
@@ -74,7 +81,6 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
     }, [endpoint.examples, selectedError]);
 
     const endpointExample = example ? <EndpointExample endpoint={endpoint} example={example} /> : null;
-    const errors = endpoint.errorsV2 ?? [];
 
     return (
         <div
