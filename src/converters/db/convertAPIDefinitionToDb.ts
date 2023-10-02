@@ -3,6 +3,7 @@ import { marked } from "marked";
 import { APIV1Db, APIV1Write, FdrAPI } from "../../api";
 import { assertNever, type WithoutQuestionMarks } from "../../util";
 import { mayContainMarkdown } from "../../util/markdown";
+import { titleCase } from "../../util/titleCase";
 import { generateEndpointExampleCall } from "./examples/generateEndpointExampleCall";
 import { generateWebhookExample } from "./examples/generateWebhookExample";
 
@@ -143,8 +144,14 @@ function transformEndpoint({
         response: writeShape.response,
         errors: writeShape.errors ?? [],
         errorsV2:
-            writeShape.errorsV2 ??
-            (writeShape.errors != null
+            writeShape.errorsV2 != null
+                ? writeShape.errorsV2.map((errorV2) => {
+                      return {
+                          ...errorV2,
+                          name: errorV2.name != null ? titleCase(errorV2.name) : undefined,
+                      };
+                  })
+                : writeShape.errors != null
                 ? writeShape.errors.map((error) => {
                       return {
                           ...error,
@@ -157,7 +164,7 @@ function transformEndpoint({
                                   : undefined,
                       };
                   })
-                : undefined),
+                : undefined,
         examples: getExampleEndpointCalls({ writeShape, apiDefinition }),
         description: writeShape.description,
         htmlDescription,
