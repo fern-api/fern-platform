@@ -75,6 +75,10 @@ export class FdrDeployStack extends Stack {
         });
 
         const cloudmapNamespace = environmentInfo.cloudMapNamespaceInfo.namespaceName;
+        const hostedZone = HostedZone.fromHostedZoneAttributes(this, "zoneId", {
+            hostedZoneId: environmentInfo.route53Info.hostedZoneId,
+            zoneName: environmentInfo.route53Info.hostedZoneName,
+        });
         const fargateService = new ApplicationLoadBalancedFargateService(this, SERVICE_NAME, {
             serviceName: SERVICE_NAME,
             cluster,
@@ -119,10 +123,7 @@ export class FdrDeployStack extends Stack {
         });
 
         new ARecord(this, "api-domain", {
-            zone: HostedZone.fromHostedZoneAttributes(this, "zoneId", {
-                hostedZoneId: environmentInfo.route53Info.hostedZoneId,
-                zoneName: environmentInfo.route53Info.hostedZoneName,
-            }),
+            zone: hostedZone,
             target: RecordTarget.fromAlias(new LoadBalancerTarget(fargateService.loadBalancer)),
             recordName: environmentType === "PROD" ? "api" : `api-${environmentType.toLowerCase()}`,
         });
