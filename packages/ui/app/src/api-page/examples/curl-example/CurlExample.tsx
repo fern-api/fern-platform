@@ -2,7 +2,7 @@ import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/
 import { getEndpointEnvironmentUrl } from "@fern-ui/app-utils";
 import { assertNever, assertNeverNoThrow, noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { JsonPropertyPath } from "../json-example/contexts/JsonPropertyPath";
 import { JsonExampleString } from "../json-example/JsonExampleString";
@@ -26,6 +26,8 @@ export declare namespace CurlExample {
 }
 
 const CURL_PREFIX = "curl ";
+const LINE_HEIGHT = 21.5;
+const VERTICAL_PADDING = 20;
 
 export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, selectedProperty, parent }) => {
     const { apiDefinition } = useApiDefinitionContext();
@@ -202,6 +204,19 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
         isSelectedArr,
         jsonLines,
     ]);
+
+    const firstJsonLine = partsExcludingCurlCommand.findIndex((part) => part.type === "jsx");
+    const topLineAnchorIdx = isSelectedArr.findIndex((isSelected) => isSelected);
+
+    useEffect(() => {
+        if (firstJsonLine > -1 && topLineAnchorIdx > -1) {
+            parent?.scrollTo({
+                top: topLineAnchorIdx * LINE_HEIGHT - VERTICAL_PADDING,
+                left: 0,
+                behavior: "smooth",
+            });
+        }
+    }, [firstJsonLine, parent, topLineAnchorIdx]);
 
     return (
         <>
