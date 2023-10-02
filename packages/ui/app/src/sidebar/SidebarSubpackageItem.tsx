@@ -99,8 +99,8 @@ const UnmemoizedSidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = (
                     }
                     i++;
                 }
+                return false;
             }
-            return false;
         },
         [closeMobileSidebar, docsDefinition.apis, getFullSlug, isChildSelected, navigateToPath, pushRoute]
     );
