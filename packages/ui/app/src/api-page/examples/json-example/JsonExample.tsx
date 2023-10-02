@@ -1,29 +1,14 @@
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import classNames from "classnames";
-import { zip } from "lodash-es";
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { AutoSizer, Grid, GridCellProps, Index } from "react-virtualized";
 import { JsonPropertyPath } from "./contexts/JsonPropertyPath";
-import { flattenJsonToLines, getJsonLineLength, JsonLine, renderJsonLine } from "./jsonLineUtils";
+import { flattenJsonToLines, getIsSelectedArr, getJsonLineLength, renderJsonLine } from "./jsonLineUtils";
 
 const LINE_HEIGHT = 21.5;
 const CHAR_WIDTH = 7.2;
 const HORIZONTAL_PADDING = 16;
 const VERTICAL_PADDING = 20;
-
-function checkIsSelected(selectedPropertyHash: string[] | undefined, line: JsonLine): boolean {
-    if (selectedPropertyHash == null) {
-        return false;
-    }
-    if (selectedPropertyHash.length === 0) {
-        return true;
-    }
-    if (selectedPropertyHash.length > line.path.length) {
-        return false;
-    }
-    const pathToMatch = line.path.slice(0, selectedPropertyHash.length);
-    return zip(selectedPropertyHash, pathToMatch).every(([left, right]) => left === "*" || left === right);
-}
 
 export declare namespace JsonExample {
     export interface Props {
@@ -36,43 +21,15 @@ export declare namespace JsonExample {
 export const JsonExample = React.memo<JsonExample.Props>(function JsonExample({ json, parent, selectedProperty }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const jsonLines = useMemo(() => flattenJsonToLines(json), [useDeepCompareMemoize(json)]);
-    const selectedPropertyHash = useDeepCompareMemoize(
-        selectedProperty?.map((path) => {
-            if (path.type === "listItem") {
-                return `${path.index ?? "*"}`;
-            } else if (path.type === "objectProperty") {
-                return path.propertyName ?? "*";
-            } else {
-                return path.propertyName;
-            }
-        })
-    );
 
-    const isSelectedArr = useMemo(
-        () => jsonLines.map((line) => checkIsSelected(selectedPropertyHash, line)),
-        [jsonLines, selectedPropertyHash]
-    );
-
-    const lineRefs = useRef<Array<HTMLDivElement | null>>(new Array(jsonLines.length).fill(null));
-
-    const setLineRef = (i: number, element: HTMLDivElement | null) => {
-        lineRefs.current[i] = element;
-    };
+    const isSelectedArr = useMemo(() => getIsSelectedArr(jsonLines, selectedProperty), [jsonLines, selectedProperty]);
 
     const topLineAnchorIdx = isSelectedArr.findIndex((isSelected) => isSelected);
 
     useEffect(() => {
-        if (parent == null) {
-            return;
-        }
         if (topLineAnchorIdx > -1) {
-            const targetBBox = lineRefs.current[topLineAnchorIdx]?.getBoundingClientRect();
-            if (targetBBox == null) {
-                return;
-            }
-            const containerBBox = parent.getBoundingClientRect();
-            parent.scrollTo({
-                top: parent.scrollTop + targetBBox.y - containerBBox.y - 20,
+            parent?.scrollTo({
+                top: topLineAnchorIdx * LINE_HEIGHT - VERTICAL_PADDING,
                 left: 0,
                 behavior: "smooth",
             });
@@ -90,7 +47,6 @@ export const JsonExample = React.memo<JsonExample.Props>(function JsonExample({ 
                             isSelected ? "bg-accent-primary/20" : "bg-transparent"
                         )}
                         key={i}
-                        ref={(element) => setLineRef(i, element)}
                     >
                         {isSelected && <div className="bg-accent-primary absolute inset-y-0 left-0 w-1" />}
                         {renderJsonLine(line)}
@@ -119,22 +75,7 @@ export const JsonExampleVirtualized = React.memo<JsonExampleVirtualized.Props>(f
     const maxCharLength = Math.max(...jsonLines.map((line) => getJsonLineLength(line)));
     const maxColumnWidth = maxCharLength * CHAR_WIDTH + HORIZONTAL_PADDING * 2;
     const contentHeight = jsonLines.length * LINE_HEIGHT + VERTICAL_PADDING * 2;
-    const selectedPropertyHash = useDeepCompareMemoize(
-        selectedProperty?.map((path) => {
-            if (path.type === "listItem") {
-                return `${path.index ?? "*"}`;
-            } else if (path.type === "objectProperty") {
-                return path.propertyName ?? "*";
-            } else {
-                return path.propertyName;
-            }
-        })
-    );
-
-    const isSelectedArr = useMemo(
-        () => jsonLines.map((line) => checkIsSelected(selectedPropertyHash, line)),
-        [jsonLines, selectedPropertyHash]
-    );
+    const isSelectedArr = useMemo(() => getIsSelectedArr(jsonLines, selectedProperty), [jsonLines, selectedProperty]);
 
     const topLineAnchorIdx = isSelectedArr.findIndex((isSelected) => isSelected);
 

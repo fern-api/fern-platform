@@ -1,5 +1,5 @@
+import classNames from "classnames";
 import React from "react";
-import { JsonExampleLine } from "../json-example/JsonExampleLine";
 import { CurlExamplePart } from "./CurlExamplePart";
 
 export declare namespace CurlExampleLine {
@@ -14,12 +14,12 @@ export const CurlExampleLine: React.FC<CurlExampleLine.Props> = ({ part, indentI
     const { excludeTrailingBackslash = false, excludeIndent = false } = part;
 
     return (
-        <JsonExampleLine>
+        <div className={classNames("relative w-fit min-w-full px-4 transition py-px", "bg-transparent")}>
             {" ".repeat(excludeIndent ? 0 : indentInSpaces)}
             {part.value}
             {!excludeTrailingBackslash && !isLastPart && (
                 <span className="text-text-primary-light dark:text-text-primary-dark">{" \\"}</span>
             )}
-        </JsonExampleLine>
+        </div>
     );
 };

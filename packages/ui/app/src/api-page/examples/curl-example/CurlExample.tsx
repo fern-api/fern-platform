@@ -1,14 +1,17 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { getEndpointEnvironmentUrl } from "@fern-ui/app-utils";
 import { assertNever, assertNeverNoThrow, noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import React, { useCallback, useMemo } from "react";
+import classNames from "classnames";
+import React, { useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
-import { JsonExampleContext, JsonExampleContextValue } from "../json-example/contexts/JsonExampleContext";
 import { JsonPropertyPath } from "../json-example/contexts/JsonPropertyPath";
 import { JsonExampleString } from "../json-example/JsonExampleString";
-import { JsonItemBottomLine } from "../json-example/JsonItemBottomLine";
-import { JsonItemMiddleLines } from "../json-example/JsonItemMiddleLines";
-import { JsonItemTopLine } from "../json-example/JsonItemTopLine";
+import {
+    flattenJsonToLines,
+    getIsSelectedArr,
+    renderJsonLine,
+    renderJsonLineValue,
+} from "../json-example/jsonLineUtils";
 import { CurlExampleLine } from "./CurlExampleLine";
 import { CurlExamplePart } from "./CurlExamplePart";
 import { CurlParameter } from "./CurlParameter";
@@ -27,15 +30,9 @@ const CURL_PREFIX = "curl ";
 export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, selectedProperty, parent }) => {
     const { apiDefinition } = useApiDefinitionContext();
 
-    const contextValue = useCallback(
-        (): JsonExampleContextValue => ({
-            selectedProperty,
-            containerRef: parent,
-        }),
-        [parent, selectedProperty]
-    );
-
     const environmentUrl = useMemo(() => getEndpointEnvironmentUrl(endpoint) ?? "localhost:8000", [endpoint]);
+    const jsonLines = flattenJsonToLines(example.requestBody);
+    const isSelectedArr = getIsSelectedArr(jsonLines, selectedProperty);
 
     const partsExcludingCurlCommand = useMemo(() => {
         const parts: CurlExamplePart[] = [];
@@ -115,9 +112,23 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
                     });
                     break;
                 case "object":
-                case "reference":
-                    parts.push(
-                        {
+                case "reference": {
+                    if (jsonLines.length === 1 && jsonLines[0] != null) {
+                        parts.push({
+                            type: "line",
+                            value: (
+                                <>
+                                    <CurlParameter paramKey="--data" /> <JsonExampleString value="'" doNotAddQuotes />
+                                    <span className="text-text-primary-light dark:text-text-primary-dark">
+                                        {renderJsonLineValue(jsonLines[0])}
+                                    </span>
+                                    <JsonExampleString value="'" doNotAddQuotes />
+                                </>
+                            ),
+                            excludeTrailingBackslash: true,
+                        });
+                    } else {
+                        parts.push({
                             type: "line",
                             value: (
                                 <>
@@ -125,24 +136,34 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
                                 </>
                             ),
                             excludeTrailingBackslash: true,
-                        },
-                        {
-                            type: "jsx",
-                            jsx: (
-                                <>
-                                    <JsonItemTopLine value={example.requestBody} isNonLastItemInCollection={false} />
-                                    <JsonItemMiddleLines value={example.requestBody} />
-                                    <JsonItemBottomLine value={example.requestBody} isNonLastItemInCollection={false} />
-                                </>
-                            ),
-                        },
-                        {
+                        });
+                        parts.push(
+                            ...jsonLines.map((line, i): CurlExamplePart.Jsx => {
+                                const isSelected = isSelectedArr[i] ?? false;
+                                const jsx = (
+                                    <div
+                                        className={classNames(
+                                            "relative w-fit min-w-full px-4 transition py-px",
+                                            isSelected ? "bg-accent-primary/20" : "bg-transparent"
+                                        )}
+                                    >
+                                        {isSelected && (
+                                            <div className="bg-accent-primary absolute inset-y-0 left-0 w-1" />
+                                        )}
+                                        {renderJsonLine(line)}
+                                    </div>
+                                );
+                                return { type: "jsx", jsx };
+                            })
+                        );
+                        parts.push({
                             type: "line",
                             value: <JsonExampleString value="'" doNotAddQuotes />,
                             excludeIndent: true,
-                        }
-                    );
+                        });
+                    }
                     break;
+                }
                 default:
                     assertNeverNoThrow(endpoint.request.type);
             }
@@ -178,11 +199,12 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
         example.headers,
         example.path,
         example.queryParameters,
-        example.requestBody,
+        isSelectedArr,
+        jsonLines,
     ]);
 
     return (
-        <JsonExampleContext.Provider value={contextValue}>
+        <>
             {partsExcludingCurlCommand.map((part, index) => {
                 switch (part.type) {
                     case "jsx":
@@ -200,6 +222,6 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
                         assertNever(part);
                 }
             })}
-        </JsonExampleContext.Provider>
+        </>
     );
 };
