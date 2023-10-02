@@ -3,7 +3,8 @@ import { getEndpointTitleAsString, getSubpackageTitle, isSubpackage } from "@fer
 import useSize from "@react-hook/size";
 import classNames from "classnames";
 import dynamic from "next/dynamic";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
+import { useInView } from "react-intersection-observer";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
@@ -34,15 +35,6 @@ export declare namespace EndpointContent {
     }
 }
 
-function isElementInViewport(el: HTMLDivElement): boolean {
-    const rect = el.getBoundingClientRect();
-    if (window == null) {
-        return false;
-    }
-
-    return rect.bottom <= window.innerHeight || rect.top >= 0 || (rect.top < 0 && rect.bottom > window.innerHeight);
-}
-
 export const EndpointContent = React.memo<EndpointContent.Props>(function EndpointContent({
     endpoint,
     package: package_,
@@ -50,6 +42,10 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
     setContainerRef,
     anchorIdParts,
 }) {
+    const [isInViewport, setIsInViewport] = useState(false);
+    const { ref: containerRef } = useInView({
+        onChange: setIsInViewport,
+    });
     const { apiSection } = useApiDefinitionContext();
     const { setHoveredRequestPropertyPath, setHoveredResponsePropertyPath } = useEndpointContext();
     const onHoverRequestProperty = useCallback(
@@ -65,7 +61,6 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
         [setHoveredResponsePropertyPath]
     );
 
-    const containerRef = useRef<HTMLDivElement>(null);
     const endpointUrlOuterContainerRef = useRef<null | HTMLDivElement>(null);
     const endpointUrlInnerContainerRef = useRef<null | HTMLDivElement>(null);
     const [endpointUrlOuterContainerWidth] = useSize(endpointUrlOuterContainerRef);
@@ -82,21 +77,6 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
         }
         return endpoint.examples.find((e) => e.responseStatusCode === selectedError.statusCode) ?? null;
     }, [endpoint.examples, selectedError]);
-
-    const [isInViewport, setIsInViewport] = useState(false);
-    useEffect(() => {
-        const calcAndSetIsInViewport = () => {
-            if (containerRef.current != null) {
-                setIsInViewport(isElementInViewport(containerRef.current));
-            }
-        };
-        window.addEventListener("scroll", calcAndSetIsInViewport);
-        window.addEventListener("resize", calcAndSetIsInViewport);
-        return () => {
-            window.removeEventListener("scroll", calcAndSetIsInViewport);
-            window.removeEventListener("resize", calcAndSetIsInViewport);
-        };
-    }, []);
 
     const endpointExample = example ? <EndpointExample endpoint={endpoint} example={example} /> : null;
 
