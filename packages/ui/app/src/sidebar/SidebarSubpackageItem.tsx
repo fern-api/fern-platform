@@ -1,14 +1,15 @@
 import { Text } from "@blueprintjs/core";
-import { ApiDefinitionId } from "@fern-fern/registry-browser/api";
-import { ApiDefinitionSubpackage } from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { isUnversionedTabbedNavigationConfig, UrlPathResolver } from "@fern-ui/app-utils";
+import {
+    getSlugForFirstNavigatableEndpointOrWebhook,
+    isUnversionedTabbedNavigationConfig,
+    UrlPathResolver,
+} from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { NextRouter } from "next/router";
 import { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 import { DocsInfo, NavigateToPathOpts } from "../docs-context/DocsContext";
-import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
@@ -63,55 +64,29 @@ const UnmemoizedSidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = (
         });
     }, [docsDefinition, docsInfo.activeNavigationConfig, activeTab]);
 
-    /**
-     * @returns Whether navigation was successful
-     */
-    const navigateToSubpackageFirstChild = useCallback(
-        (apiId: ApiDefinitionId, slugs: string[], subpackage: ApiDefinitionSubpackage) => {
-            const firstNavigatable = subpackage.endpoints[0] ?? subpackage.webhooks[0];
-            if (firstNavigatable != null) {
-                // Navigate to the endpoint or webhook page
-                const slugToNavigate = joinUrlSlugs(...(slugs as [string, ...string[]]), firstNavigatable.urlSlug);
-                void pushRoute("/" + getFullSlug(slugToNavigate), undefined, {
+    const handleClick = useCallback(async () => {
+        const resolvedUrlPath = await urlPathResolver.resolveSlug(slug);
+        if (resolvedUrlPath?.type === "apiSubpackage") {
+            const apiId = resolvedUrlPath.apiSection.api;
+            const apiDefinition = docsDefinition.apis[apiId];
+            if (apiDefinition == null) {
+                return;
+            }
+            const slugToNavigate = getSlugForFirstNavigatableEndpointOrWebhook(
+                apiDefinition,
+                [resolvedUrlPath.slug],
+                resolvedUrlPath.subpackage
+            );
+            if (slugToNavigate != null) {
+                void pushRoute(`/${slugToNavigate}`, undefined, {
                     shallow: isChildSelected,
                     scroll: !isChildSelected,
                 });
                 navigateToPath(slugToNavigate);
                 closeMobileSidebar();
-                return true;
-            } else {
-                // Check if it has nested subpackages
-                let i = 0;
-                while (i < subpackage.subpackages.length) {
-                    const childSubpackageId = subpackage.subpackages[i];
-                    if (childSubpackageId != null) {
-                        const childSubpackage = docsDefinition.apis[apiId]?.subpackages[childSubpackageId];
-                        if (childSubpackage != null) {
-                            const success = navigateToSubpackageFirstChild(
-                                apiId,
-                                [...slugs, childSubpackage.urlSlug],
-                                childSubpackage
-                            );
-                            if (success) {
-                                return true;
-                            }
-                        }
-                    }
-                    i++;
-                }
-                return false;
             }
-        },
-        [closeMobileSidebar, docsDefinition.apis, getFullSlug, isChildSelected, navigateToPath, pushRoute]
-    );
-
-    const handleClick = useCallback(async () => {
-        const resolvedUrlPath = await urlPathResolver.resolveSlug(slug);
-        if (resolvedUrlPath?.type === "apiSubpackage") {
-            const apiId = resolvedUrlPath.apiSection.api;
-            navigateToSubpackageFirstChild(apiId, [resolvedUrlPath.slug], resolvedUrlPath.subpackage);
         }
-    }, [navigateToSubpackageFirstChild, slug, urlPathResolver]);
+    }, [closeMobileSidebar, docsDefinition.apis, isChildSelected, navigateToPath, pushRoute, slug, urlPathResolver]);
 
     const fullSlug = getFullSlug(slug);
 

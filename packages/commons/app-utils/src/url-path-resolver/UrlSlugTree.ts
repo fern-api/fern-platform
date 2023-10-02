@@ -1,6 +1,7 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { assertNever, noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { joinUrlSlugs } from "../url";
 
 export interface UrlSlugTreeConfig {
     items: FernRegistryDocsRead.NavigationItem[];
@@ -652,15 +653,6 @@ function getApiSlug(node: UrlSlugTreeNode): string | undefined {
 
 function areApiArtifactsNonEmpty(apiArtifacts: FernRegistryDocsRead.ApiArtifacts): boolean {
     return apiArtifacts.sdks.length > 0 || apiArtifacts.postman != null;
-}
-
-function joinUrlSlugs(...parts: [string, ...string[]]): string {
-    return parts.reduce((a, b) => {
-        if (a === "") {
-            return b;
-        }
-        return `${a}/${b}`;
-    });
 }
 
 function resolveSubpackage(

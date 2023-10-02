@@ -1,5 +1,6 @@
 import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { startCase } from "lodash-es";
+import { joinUrlSlugs } from "../url";
 
 export function doesSubpackageHaveEndpointsOrWebhooksRecursive(
     subpackageId: FernRegistryApiRead.SubpackageId,
@@ -25,4 +26,35 @@ export function getSubpackageTitle(subpackage: FernRegistryApiRead.ApiDefinition
     }
 
     return s;
+}
+
+export function getSlugForFirstNavigatableEndpointOrWebhook(
+    apiDefinition: FernRegistryApiRead.ApiDefinition,
+    slugs: string[],
+    subpackage: FernRegistryApiRead.ApiDefinitionSubpackage
+): string | undefined {
+    const firstNavigatable = subpackage.endpoints[0] ?? subpackage.webhooks[0];
+    if (firstNavigatable != null) {
+        return joinUrlSlugs(...(slugs as [string, ...string[]]), firstNavigatable.urlSlug);
+    }
+    // Check if it has nested subpackages
+    let i = 0;
+    while (i < subpackage.subpackages.length) {
+        const childSubpackageId = subpackage.subpackages[i];
+        if (childSubpackageId != null) {
+            const childSubpackage = apiDefinition.subpackages[childSubpackageId];
+            if (childSubpackage != null) {
+                const slug = getSlugForFirstNavigatableEndpointOrWebhook(
+                    apiDefinition,
+                    [...slugs, childSubpackage.urlSlug],
+                    childSubpackage
+                );
+                if (slug != null) {
+                    return slug;
+                }
+            }
+        }
+        i++;
+    }
+    return undefined;
 }
