@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getSlugForFirstNavigatableEndpointOrWebhook() {"name":"primer-v2.1"} 1`] = `
+[
+  "retrieve-a-client-session",
+  "search-list-payments",
+  "save-a-payment-method-token",
+]
+`;
+
+exports[`getSlugForFirstNavigatableEndpointOrWebhook() {"name":"primer-v2.2"} 1`] = `
+[
+  "retrieve-a-client-session",
+  "search-list-payments",
+  "save-a-payment-method-token",
+  "create-an-external-payment",
+  "get-a-loyalty-customers-points-balance",
+]
+`;
