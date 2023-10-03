@@ -12,6 +12,7 @@ import { useEventCallback } from "@fern-ui/react-commons";
 import { useTheme } from "@fern-ui/theme";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
+import { useNavigationContext } from "../navigation-context/useNavigationContext";
 import {
     DocsContext,
     DocsContextValue,
@@ -56,6 +57,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     children,
 }) => {
     const router = useRouter();
+    const { notifyIntentToGoBack, markBackNavigationAsComplete } = useNavigationContext();
 
     const [activeVersionSlug, _setActiveVersionSlug] = useState(inferredVersionSlug);
     const [activeTabIndex, setActiveTabIndex] = useState(inferredTabIndex);
@@ -260,6 +262,21 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             clearTimeout(timeout);
         };
     });
+
+    useEffect(() => {
+        router.beforePopState(({ as }) => {
+            notifyIntentToGoBack();
+            const slug = as.substring(1, as.length);
+            if (slug.length > 0) {
+                navigateToPath(slug);
+                const fullSlug = getFullSlug(slug);
+                void router.replace(`/${fullSlug}`, undefined, { shallow: true, scroll: false }).then(() => {
+                    markBackNavigationAsComplete();
+                });
+            }
+            return true;
+        });
+    }, [router, navigateToPath, notifyIntentToGoBack, markBackNavigationAsComplete, getFullSlug]);
 
     const scrollToPathListeners = useSlugListeners("scrollToPath", { selectedSlug });
 
