@@ -11,7 +11,7 @@ export function getPathsToRevalidateForVersionedDocs({
     navigationConfig: VersionedNavigationConfig;
     apis: Record<FernRegistry.ApiDefinitionId, FernRegistry.api.v1.read.ApiDefinition>;
 }): Set<string> {
-    const pathsToRevalidate: Set<string> = new Set<string>(["/"]);
+    const pathsToRevalidate: Set<string> = new Set<string>();
     navigationConfig.versions.forEach((version, idx) => {
         pathsToRevalidate.add(`/${version.urlSlug}`);
         if (isUnversionedUntabbedNavigationConfig(version.config)) {
