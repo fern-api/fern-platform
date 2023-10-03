@@ -1,3 +1,4 @@
+import NodeCache from "node-cache";
 import { DocsV2Read, DocsV2ReadService } from "../../../api";
 import type { FdrApplication } from "../../../app";
 import { convertApiDefinitionsToRead } from "../../../converters/read/convertAPIDefinitionToRead";
@@ -6,6 +7,12 @@ import { getParsedUrl } from "../../../util";
 import { getDocsDefinition, getDocsForDomain } from "../v1/getDocsReadService";
 
 const DOCS_DOMAIN_REGX = /^([^.\s]+)/;
+const SECONDS_IN_ONE_HOUR = 60 * 60;
+
+const DOCS_CONFIG_ID_CACHE = new NodeCache({
+    stdTTL: SECONDS_IN_ONE_HOUR,
+    maxKeys: 100,
+});
 
 export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
     return new DocsV2ReadService({
@@ -44,15 +51,26 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
             }
         },
         getDocsConfigById: async (req, res) => {
-            const loadDocsConfigResponse = await app.dao.docsV2().loadDocsConfigByInstanceId(req.params.docsConfigId);
-            if (loadDocsConfigResponse == null) {
-                throw new DocsV2Read.DocsDefinitionNotFoundError();
+            let docsConfig: DocsV2Read.GetDocsConfigByIdResponse | undefined =
+                DOCS_CONFIG_ID_CACHE.get<DocsV2Read.GetDocsConfigByIdResponse>(req.params.docsConfigId);
+            if (docsConfig == null) {
+                const loadDocsConfigResponse = await app.dao
+                    .docsV2()
+                    .loadDocsConfigByInstanceId(req.params.docsConfigId);
+                if (loadDocsConfigResponse == null) {
+                    throw new DocsV2Read.DocsDefinitionNotFoundError();
+                }
+                const apiDefinitions = await app.dao.apis().loadAPIDefinitions(loadDocsConfigResponse.referencedApis);
+                docsConfig = {
+                    docsConfig: convertDbDocsConfigToRead({ dbShape: loadDocsConfigResponse.docsConfig }),
+                    apis: convertApiDefinitionsToRead(apiDefinitions),
+                };
+                DOCS_CONFIG_ID_CACHE.set(req.params.docsConfigId, {
+                    docsConfig: convertDbDocsConfigToRead({ dbShape: loadDocsConfigResponse.docsConfig }),
+                    apis: convertApiDefinitionsToRead(apiDefinitions),
+                });
             }
-            const apiDefinitions = await app.dao.apis().loadAPIDefinitions(loadDocsConfigResponse.referencedApis);
-            return res.send({
-                docsConfig: convertDbDocsConfigToRead({ dbShape: loadDocsConfigResponse.docsConfig }),
-                apis: convertApiDefinitionsToRead(apiDefinitions),
-            });
+            return res.send(docsConfig);
         },
         getSearchApiKeyForIndexSegment: async (req, res) => {
             const { indexSegmentId } = req.body;

@@ -152,6 +152,7 @@ export class FdrDeployStack extends Stack {
             path: "/health",
             port: "8080",
             timeout: Duration.seconds(60),
+            interval: Duration.seconds(90),
         });
 
         const lbResponseTimeAlarm = new Alarm(this, "fdr-lb-target-respones-time-alarm", {
