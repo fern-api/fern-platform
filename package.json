@@ -63,6 +63,7 @@
     "dev": "nodemon src/server.ts ",
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
+    "prisma:format": "prisma format",
     "prisma:generate": "prisma generate",
     "test:ete": "dotenv -e .env.ete -- ./scripts/ete-tests.sh",
     "test:db": "dotenv -e .env.test -- ./scripts/db-tests.sh",

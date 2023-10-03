@@ -53,8 +53,8 @@ try {
                 },
             },
         },
-        _root: getSnippetsService(),
-        snippetsFactory: getSnippetsFactoryService(),
+        _root: getSnippetsService(app),
+        snippetsFactory: getSnippetsFactoryService(app),
     });
     registerBackgroundTasks(app);
     app.logger.info(`Listening for requests on port ${PORT}`);

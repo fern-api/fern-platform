@@ -28,10 +28,11 @@ const app = express();
 const prisma = new PrismaClient({
     log: ["query", "info", "warn", "error"],
 });
+let serverApp: FdrApplication | undefined;
 let server: http.Server | undefined;
 
 beforeAll(async () => {
-    const serverApp = createMockFdrApplication();
+    serverApp = createMockFdrApplication();
     register(app, {
         docs: {
             v1: {
@@ -49,8 +50,8 @@ beforeAll(async () => {
                 register: { _root: getRegisterApiService(serverApp) },
             },
         },
-        _root: getSnippetsService(),
-        snippetsFactory: getSnippetsFactoryService(),
+        _root: getSnippetsService(serverApp),
+        snippetsFactory: getSnippetsFactoryService(serverApp),
     });
     console.log(`Listening for requests on port ${PORT}`);
     server = app.listen(PORT);
@@ -271,4 +272,84 @@ describe("algolia index segment deleter", () => {
             expect(newIndexSegmentRecordIds.has(s.id)).toBe(true);
         });
     });
+});
+
+it("snippets dao", async () => {
+    // create snippets
+    await serverApp?.dao.snippets().storeSnippets({
+        storeSnippetsInfo: {
+            orgId: "acme",
+            apiId: "api",
+            sdk: {
+                type: "python",
+                sdk: {
+                    package: "acme",
+                    version: "0.0.1",
+                },
+                snippets: [
+                    {
+                        endpoint: {
+                            path: "/users/v1",
+                            method: FernRegistry.EndpointMethod.Get,
+                        },
+                        snippet: {
+                            async_client: "invalid",
+                            sync_client: "invalid",
+                        }
+                    },
+                ]
+            },
+        },
+    });
+    // overwrite snippets for the same SDK
+    await serverApp?.dao.snippets().storeSnippets({
+        storeSnippetsInfo: {
+            orgId: "acme",
+            apiId: "api",
+            sdk: {
+                type: "python",
+                sdk: {
+                    package: "acme",
+                    version: "0.0.1",
+                },
+                snippets: [
+                    {
+                        endpoint: {
+                            path: "/users/v1",
+                            method: FernRegistry.EndpointMethod.Get,
+                        },
+                        snippet: {
+                            async_client: "client = AsyncAcme(api_key='YOUR_API_KEY')",
+                            sync_client: "client = Acme(api_key='YOUR_API_KEY')",
+                        }
+                    },
+                ]
+            },
+        }
+    });
+    // get snippets
+    const response = await serverApp?.dao.snippets().loadSnippets({
+        loadSnippetsInfo: {
+            orgId: "acme",
+            apiId: "api",
+            endpointIdentifier: {
+                path: "/users/v1",
+                method: FernRegistry.EndpointMethod.Get,
+            }
+        }
+    });
+    expect(response).not.toEqual(undefined);
+    expect(response?.snippets.length).toEqual(1);
+
+    const snippet = response?.snippets[0];
+    expect(snippet).not.toEqual(undefined);
+    expect(snippet?.type).toEqual("python");
+
+    if (snippet?.type != "python") {
+        throw new Error("expected a python snippet");
+    }
+    expect(snippet.sdk.package).toEqual("acme");
+    expect(snippet.sdk.version).toEqual("0.0.1");
+    expect(snippet.async_client).toEqual("client = AsyncAcme(api_key='YOUR_API_KEY')");
+    expect(snippet.sync_client).toEqual("client = Acme(api_key='YOUR_API_KEY')");
 });

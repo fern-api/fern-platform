@@ -15,8 +15,8 @@ export { ReadService as APIV1ReadService } from "./generated/api/resources/api/r
 export * as APIV1Write from "./generated/api/resources/api/resources/v1/resources/register";
 export { RegisterService as APIV1WriteService } from "./generated/api/resources/api/resources/v1/resources/register/service/RegisterService";
 
-export { RootService as SnippetsService } from "./generated/api/service/RootService";
 export { SnippetsFactoryService } from "./generated/api/resources/snippetsFactory/service/SnippetsFactoryService";
+export { RootService as SnippetsService } from "./generated/api/service/RootService";
 
 export { register } from "./generated/register";
 

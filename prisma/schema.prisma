@@ -62,3 +62,38 @@ model OverwrittenAlgoliaIndex {
 
   @@map("overwritten_algolia_indexes")
 }
+
+model Snippet {
+  id             String     @id
+  orgId          String
+  apiName        String
+  endpointPath   String
+  endpointMethod HttpMethod
+  sdkId          String
+  sdk            Sdk        @relation(fields: [sdkId], references: [id], onDelete: Cascade)
+  snippet        Bytes
+  createdAt      DateTime   @default(now())
+}
+
+model Sdk {
+  id        String    @id
+  language  Language
+  sdk       Bytes
+  createdAt DateTime  @default(now())
+  Snippet   Snippet[]
+}
+
+enum HttpMethod {
+  PUT
+  POST
+  GET
+  PATCH
+  DELETE
+}
+
+enum Language {
+  TYPESCRIPT
+  PYTHON
+  GO
+  JAVA
+}
