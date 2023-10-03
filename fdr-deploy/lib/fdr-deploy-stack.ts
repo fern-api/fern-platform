@@ -1,5 +1,5 @@
 import { EnvironmentInfo, EnvironmentType } from "@fern-fern/fern-cloud-sdk/api";
-import { RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
+import { Duration, RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 import { Alarm } from "aws-cdk-lib/aws-cloudwatch";
 import * as actions from "aws-cdk-lib/aws-cloudwatch-actions";
@@ -151,6 +151,7 @@ export class FdrDeployStack extends Stack {
             healthyHttpCodes: "200",
             path: "/health",
             port: "8080",
+            timeout: Duration.seconds(60),
         });
 
         const lbResponseTimeAlarm = new Alarm(this, "fdr-lb-target-respones-time-alarm", {
