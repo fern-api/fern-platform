@@ -32,6 +32,14 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
         }
     }, []);
 
+    const notifyIntentToGoBack = useCallback(() => {
+        setNavigationInfo({ status: NavigationStatus.BACK_NAVIGATION });
+    }, []);
+
+    const markBackNavigationAsComplete = useCallback(() => {
+        setNavigationInfo({ status: NavigationStatus.BACK_NAVIGATION_COMPLETE });
+    }, []);
+
     const tryNavigateToAnchorOnPageLoad = async (anchorId: string) => {
         setNavigationInfo({ status: NavigationStatus.INITIAL_NAVIGATION_TO_ANCHOR, anchorId });
         const pageLoadPromise = waitForPageToLoad();
@@ -92,8 +100,10 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
         (): NavigationContextValue => ({
             navigation: navigationInfo,
             navigateToAnchor,
+            notifyIntentToGoBack,
+            markBackNavigationAsComplete,
         }),
-        [navigationInfo, navigateToAnchor]
+        [navigationInfo, navigateToAnchor, notifyIntentToGoBack, markBackNavigationAsComplete]
     );
 
     return <NavigationContext.Provider value={contextValue}>{children}</NavigationContext.Provider>;
