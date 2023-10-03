@@ -3,7 +3,7 @@ import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources
 import {
     getSlugForFirstNavigatableEndpointOrWebhook,
     isUnversionedTabbedNavigationConfig,
-    UrlPathResolver
+    UrlPathResolver,
 } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { NextRouter } from "next/router";
