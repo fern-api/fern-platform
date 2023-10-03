@@ -78,7 +78,7 @@ const UnmemoizedSidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = (
                 resolvedUrlPath.subpackage
             );
             if (slugToNavigate != null) {
-                void pushRoute(`/${slugToNavigate}`, undefined, {
+                void pushRoute(`/${getFullSlug(slugToNavigate)}`, undefined, {
                     shallow: isChildSelected,
                     scroll: !isChildSelected,
                 });
@@ -86,7 +86,16 @@ const UnmemoizedSidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = (
                 closeMobileSidebar();
             }
         }
-    }, [closeMobileSidebar, docsDefinition.apis, isChildSelected, navigateToPath, pushRoute, slug, urlPathResolver]);
+    }, [
+        closeMobileSidebar,
+        docsDefinition.apis,
+        isChildSelected,
+        navigateToPath,
+        pushRoute,
+        slug,
+        urlPathResolver,
+        getFullSlug,
+    ]);
 
     const fullSlug = getFullSlug(slug);
 
