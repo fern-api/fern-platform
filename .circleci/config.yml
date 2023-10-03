@@ -117,6 +117,11 @@ jobs:
           command: |
             npm install -g fern-api
       - run:
+          name: Publish FDR Fiddle SDK
+          command: |
+            git_version="$(scripts/git-version.sh)"
+            fern generate --group fiddle --version "${git_version}" --log-level debug
+      - run:
           name: Publish FDR Read SDKs
           command: |
             git_version="$(scripts/git-version.sh)"

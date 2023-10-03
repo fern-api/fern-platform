@@ -12,6 +12,8 @@ service:
       path: /create
       docs: Store endpoint snippets for a particular SDK.
       display-name: Store snippets
+      audiences:
+        - fiddle
       method: POST
       request:
         name: CreateSnippetRequest

@@ -5,3 +5,4 @@ error-discrimination:
   property-name: error
 audiences: 
   - external
+  - fiddle
