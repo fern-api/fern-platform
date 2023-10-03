@@ -268,7 +268,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             notifyIntentToGoBack();
             const slug = as.substring(1, as.length);
             if (slug.length > 0) {
-                navigateToPath(slug);
+                navigateToPath(slug, { omitTabSlug: true, omitVersionSlug: true });
                 const fullSlug = getFullSlug(slug);
                 void router.replace(`/${fullSlug}`, undefined, { shallow: true, scroll: false }).then(() => {
                     markBackNavigationAsComplete();
