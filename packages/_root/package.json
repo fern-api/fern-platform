@@ -37,6 +37,7 @@
     "@fern-ui/routing-utils": "workspace:*",
     "@fern-ui/scripts": "workspace:*",
     "@fern-ui/split-view": "workspace:*",
+    "@fern-ui/test-utils": "workspace:*",
     "@fern-ui/theme": "workspace:*",
     "@fern-ui/toaster": "workspace:*",
     "@fern-ui/ui": "workspace:*"

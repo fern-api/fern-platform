@@ -64,6 +64,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/commons/react/toaster"\
       },\
       {\
+        "name": "@fern-ui/test-utils",\
+        "reference": "workspace:packages/commons/test-utils"\
+      },\
+      {\
         "name": "@fern-ui/scripts",\
         "reference": "workspace:packages/scripts"\
       },\
@@ -91,6 +95,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-ui/routing-utils", ["workspace:packages/commons/react/routing-utils"]],\
       ["@fern-ui/scripts", ["workspace:packages/scripts"]],\
       ["@fern-ui/split-view", ["workspace:packages/commons/react/split-view"]],\
+      ["@fern-ui/test-utils", ["workspace:packages/commons/test-utils"]],\
       ["@fern-ui/theme", ["workspace:packages/commons/react/theme"]],\
       ["@fern-ui/toaster", ["workspace:packages/commons/react/toaster"]],\
       ["@fern-ui/ui", ["workspace:packages/ui/app"]],\
@@ -3343,6 +3348,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
             ["@fern-fern/registry-browser", "npm:0.26.0-1-g7cf6a78"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
+            ["@fern-ui/test-utils", "workspace:packages/commons/test-utils"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.9"],\
             ["@types/node", "npm:18.7.18"],\
@@ -3351,7 +3357,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.26.0"],\
             ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.5.0"],\
             ["lodash-es", "npm:4.17.21"],\
-            ["next-mdx-remote", "virtual:b977a69fb19c4d0f85f8b91df4d5bbb0d247e9cfda57636e95b33f40dfc5a05b68c27a163035a0eb7204d129d5e24e42811c10b0902ee38cf8cf4debee72619b#npm:4.4.1"],\
+            ["next-mdx-remote", "virtual:5eac09cb88648b6042a1cbcf4beaf2fcf94891f69de8f98fcf27aa433e1d0e1a9d3ca0069a517e1bbdbbb584ece2acbbe91356ed2955e24ca8dbfbd0abe3ddf1#npm:4.4.1"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["react", "npm:18.2.0"],\
@@ -3402,6 +3408,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/routing-utils", "workspace:packages/commons/react/routing-utils"],\
             ["@fern-ui/scripts", "workspace:packages/scripts"],\
             ["@fern-ui/split-view", "workspace:packages/commons/react/split-view"],\
+            ["@fern-ui/test-utils", "workspace:packages/commons/test-utils"],\
             ["@fern-ui/theme", "workspace:packages/commons/react/theme"],\
             ["@fern-ui/toaster", "workspace:packages/commons/react/toaster"],\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
@@ -3640,6 +3647,31 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["stylelint", "npm:14.14.0"],\
             ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"],\
             ["vite", "virtual:83226786336e3ec1d65bc4d7ab2fe8e410a92ae0faa428c376517262a7687f8c564f714ddc7188c47ae46ee441f6c920894158bd24f5245f2836019a45954fca#npm:4.4.9"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@fern-ui/test-utils", [\
+        ["workspace:packages/commons/test-utils", {\
+          "packageLocation": "./packages/commons/test-utils/",\
+          "packageDependencies": [\
+            ["@fern-ui/test-utils", "workspace:packages/commons/test-utils"],\
+            ["@fern-fern/registry-browser", "npm:0.26.0-1-g7cf6a78"],\
+            ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
+            ["@types/jest", "npm:29.0.3"],\
+            ["@types/lodash-es", "npm:4.17.9"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["@types/react", "npm:18.0.20"],\
+            ["depcheck", "npm:1.4.3"],\
+            ["eslint", "npm:8.26.0"],\
+            ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.5.0"],\
+            ["lodash-es", "npm:4.17.21"],\
+            ["next-mdx-remote", "virtual:5eac09cb88648b6042a1cbcf4beaf2fcf94891f69de8f98fcf27aa433e1d0e1a9d3ca0069a517e1bbdbbb584ece2acbbe91356ed2955e24ca8dbfbd0abe3ddf1#npm:4.4.1"],\
+            ["organize-imports-cli", "npm:0.10.0"],\
+            ["prettier", "npm:2.7.1"],\
+            ["react", "npm:18.2.0"],\
+            ["remark-gfm", "npm:3.0.1"],\
+            ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -4356,10 +4388,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:768b38baf4a727fec4c9bf2e5007f3b449130b8d1ef5d0fb32646ea61382b8ccc1afd5c7f375b3111c9a46316596e43bcef9c03285b77cee52880d48aca23cf7#npm:2.3.0", {\
-          "packageLocation": "./.yarn/__virtual__/@mdx-js-react-virtual-bb8dd417fe/0/cache/@mdx-js-react-npm-2.3.0-d5582a450b-f45fe77955.zip/node_modules/@mdx-js/react/",\
+        ["virtual:da3a50c9471d6126afa7e25b15d395b21a51db01a8f2755044ec4179d5b2ced99023397b04023dd0b40f793dffc356cf0f7834dceff86f9e818216b4879fec69#npm:2.3.0", {\
+          "packageLocation": "./.yarn/__virtual__/@mdx-js-react-virtual-8a7c5f199d/0/cache/@mdx-js-react-npm-2.3.0-d5582a450b-f45fe77955.zip/node_modules/@mdx-js/react/",\
           "packageDependencies": [\
-            ["@mdx-js/react", "virtual:768b38baf4a727fec4c9bf2e5007f3b449130b8d1ef5d0fb32646ea61382b8ccc1afd5c7f375b3111c9a46316596e43bcef9c03285b77cee52880d48aca23cf7#npm:2.3.0"],\
+            ["@mdx-js/react", "virtual:da3a50c9471d6126afa7e25b15d395b21a51db01a8f2755044ec4179d5b2ced99023397b04023dd0b40f793dffc356cf0f7834dceff86f9e818216b4879fec69#npm:2.3.0"],\
             ["@types/mdx", "npm:2.0.5"],\
             ["@types/react", "npm:18.0.20"],\
             ["react", "npm:18.2.0"]\
@@ -13096,12 +13128,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:b977a69fb19c4d0f85f8b91df4d5bbb0d247e9cfda57636e95b33f40dfc5a05b68c27a163035a0eb7204d129d5e24e42811c10b0902ee38cf8cf4debee72619b#npm:4.4.1", {\
-          "packageLocation": "./.yarn/__virtual__/next-mdx-remote-virtual-768b38baf4/0/cache/next-mdx-remote-npm-4.4.1-2a17ed923a-95cd77d03a.zip/node_modules/next-mdx-remote/",\
+        ["virtual:5eac09cb88648b6042a1cbcf4beaf2fcf94891f69de8f98fcf27aa433e1d0e1a9d3ca0069a517e1bbdbbb584ece2acbbe91356ed2955e24ca8dbfbd0abe3ddf1#npm:4.4.1", {\
+          "packageLocation": "./.yarn/__virtual__/next-mdx-remote-virtual-da3a50c947/0/cache/next-mdx-remote-npm-4.4.1-2a17ed923a-95cd77d03a.zip/node_modules/next-mdx-remote/",\
           "packageDependencies": [\
-            ["next-mdx-remote", "virtual:b977a69fb19c4d0f85f8b91df4d5bbb0d247e9cfda57636e95b33f40dfc5a05b68c27a163035a0eb7204d129d5e24e42811c10b0902ee38cf8cf4debee72619b#npm:4.4.1"],\
+            ["next-mdx-remote", "virtual:5eac09cb88648b6042a1cbcf4beaf2fcf94891f69de8f98fcf27aa433e1d0e1a9d3ca0069a517e1bbdbbb584ece2acbbe91356ed2955e24ca8dbfbd0abe3ddf1#npm:4.4.1"],\
             ["@mdx-js/mdx", "npm:2.3.0"],\
-            ["@mdx-js/react", "virtual:768b38baf4a727fec4c9bf2e5007f3b449130b8d1ef5d0fb32646ea61382b8ccc1afd5c7f375b3111c9a46316596e43bcef9c03285b77cee52880d48aca23cf7#npm:2.3.0"],\
+            ["@mdx-js/react", "virtual:da3a50c9471d6126afa7e25b15d395b21a51db01a8f2755044ec4179d5b2ced99023397b04023dd0b40f793dffc356cf0f7834dceff86f9e818216b4879fec69#npm:2.3.0"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", null],\
             ["react", "npm:18.2.0"],\
