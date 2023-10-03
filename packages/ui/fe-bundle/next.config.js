@@ -2,6 +2,9 @@
 const nextConfig = {
     transpilePackages: ["@fern-ui/ui"],
     productionBrowserSourceMaps: true,
+    experimental: {
+        scrollRestoration: true,
+    },
     rewrites: async () => [
         {
             has: [
