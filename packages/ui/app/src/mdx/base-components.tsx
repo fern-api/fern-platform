@@ -262,7 +262,7 @@ export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className
     }
 
     return (
-        <a {...rest} href={href} className={classNamesCombined}>
+        <a {...rest} href={href} className={classNamesCombined} target="_blank" rel="noopener noreferrer">
             {children}
         </a>
     );
