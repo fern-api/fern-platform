@@ -28,6 +28,14 @@ interface NavigationInfoSubsequentNavigationToAnchorComplete {
     anchorId: string;
 }
 
+interface NavigationInfoBackNavigation {
+    status: "back-navigation";
+}
+
+interface NavigationInfoBackNavigationComplete {
+    status: "back-navigation-complete";
+}
+
 interface NavigationInfoIdle {
     status: "idle";
 }
@@ -38,6 +46,8 @@ export type NavigationInfo =
     | NavigationInfoInitialNavigationToAnchorComplete
     | NavigationInfoSubsequentNavigationToAnchor
     | NavigationInfoSubsequentNavigationToAnchorComplete
+    | NavigationInfoBackNavigation
+    | NavigationInfoBackNavigationComplete
     | NavigationInfoIdle;
 
 export const NavigationStatus = {
@@ -46,6 +56,8 @@ export const NavigationStatus = {
     INITIAL_NAVIGATION_TO_ANCHOR_COMPLETE: "initial-navigation-to-anchor-complete",
     SUBSEQUENT_NAVIGATION_TO_ANCHOR: "subsequent-navigation-to-anchor",
     SUBSEQUENT_NAVIGATION_TO_ANCHOR_COMPLETE: "subsequent-navigation-to-anchor-complete",
+    BACK_NAVIGATION: "back-navigation",
+    BACK_NAVIGATION_COMPLETE: "back-navigation-complete",
     IDLE: "idle",
 } as const;
 
@@ -58,4 +70,6 @@ export const NavigationContext = React.createContext<() => NavigationContextValu
 export interface NavigationContextValue {
     navigation: NavigationInfo;
     navigateToAnchor: (anchorId: string) => Promise<void>;
+    notifyIntentToGoBack: () => void;
+    markBackNavigationAsComplete: () => void;
 }
