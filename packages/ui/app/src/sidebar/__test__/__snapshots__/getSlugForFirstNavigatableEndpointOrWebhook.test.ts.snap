@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`resolveFirstNavigatableSlug() primer-1 1`] = `
+exports[`getSlugForFirstNavigatableEndpointOrWebhook() primer-1 1`] = `
 {
   "67c83aa4-e686-4f16-b02d-4c27a6e92f91": [
     "payment-status-update",
