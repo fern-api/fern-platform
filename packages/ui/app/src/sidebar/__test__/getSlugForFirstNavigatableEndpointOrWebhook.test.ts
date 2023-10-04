@@ -11,7 +11,7 @@ const FIXTURES: Fixture[] = [
     },
 ];
 
-describe("resolveFirstNavigatableSlug()", () => {
+describe("getSlugForFirstNavigatableEndpointOrWebhook()", () => {
     for (const fixture of FIXTURES) {
         it(`${fixture.name}-${fixture.revision}`, async () => {
             const docsDefinition = loadDocsDefinition(fixture.name, fixture.revision);
