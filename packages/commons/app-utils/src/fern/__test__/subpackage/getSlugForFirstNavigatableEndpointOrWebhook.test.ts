@@ -1,42 +1,30 @@
-import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import { resolve } from "path";
+import { loadDocsDefinition } from "@fern-ui/test-utils";
 import { getSlugForFirstNavigatableEndpointOrWebhook } from "../../subpackage";
-
-const FIXTURES_DIR = resolve(__dirname, "fixtures");
-const FIXTURES: Fixture[] = [
-    {
-        name: "primer-v2.1",
-    },
-    {
-        name: "primer-v2.2",
-    },
-];
-
-function loadFdrApiDefinition(fixture: Fixture): FernRegistryApiRead.ApiDefinition {
-    const filePath = resolve(FIXTURES_DIR, fixture.name, "fdr.json");
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    return require(filePath) as FernRegistryApiRead.ApiDefinition;
-}
 
 interface Fixture {
     name: string;
-    only?: boolean;
+    revision: number | string;
 }
+
+const FIXTURES: Fixture[] = [
+    {
+        name: "primer",
+        revision: 1,
+    },
+];
 
 describe("getSlugForFirstNavigatableEndpointOrWebhook()", () => {
     for (const fixture of FIXTURES) {
-        const { only = false } = fixture;
-        (only ? it.only : it)(
-            `${JSON.stringify(fixture)}`,
-            async () => {
-                const apiDef = loadFdrApiDefinition(fixture);
+        it(`${fixture.name}-${fixture.revision}`, async () => {
+            const docsDef = loadDocsDefinition(fixture.name, fixture.revision);
+            const navigatablesByApiId: Record<string, (string | null)[]> = {};
+            Object.values(docsDef.apis).forEach((apiDef) => {
                 const navigatables = Object.values(apiDef.subpackages).map(
                     (s) => getSlugForFirstNavigatableEndpointOrWebhook(apiDef, [], s) ?? null
                 );
-                // eslint-disable-next-line jest/no-standalone-expect
-                expect(navigatables).toMatchSnapshot();
-            },
-            90_000
-        );
+                navigatablesByApiId[apiDef.id] = navigatables;
+            });
+            expect(navigatablesByApiId).toMatchSnapshot();
+        }, 90_000);
     }
 });
