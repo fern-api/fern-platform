@@ -79,7 +79,7 @@ export const H1: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     const slug = getSlugFromText(text);
     return (
         <h1
-            id={slug}
+            data-anchor={slug}
             className={classNames(
                 className,
                 "relative group/anchor-container scroll-mt-16 !text-text-primary-light dark:!text-text-primary-dark text-2xl font-semibold mt-10 mb-3"
@@ -98,7 +98,7 @@ export const H2: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     const slug = getSlugFromText(text);
     return (
         <h2
-            id={slug}
+            data-anchor={slug}
             className={classNames(
                 className,
                 "relative group/anchor-container scroll-mt-16 !text-text-primary-light dark:!text-text-primary-dark text-xl font-semibold mt-10 mb-3"
@@ -117,7 +117,7 @@ export const H3: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     const slug = getSlugFromText(text);
     return (
         <h3
-            id={slug}
+            data-anchor={slug}
             className={classNames(
                 className,
                 "relative group/anchor-container scroll-mt-16 !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
@@ -136,7 +136,7 @@ export const H4: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     const slug = getSlugFromText(text);
     return (
         <h4
-            id={slug}
+            data-anchor={slug}
             className={classNames(
                 className,
                 "relative group/anchor-container scroll-mt-16 !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
@@ -155,7 +155,7 @@ export const H5: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     const slug = getSlugFromText(text);
     return (
         <h5
-            id={slug}
+            data-anchor={slug}
             className={classNames(
                 className,
                 "relative group/anchor-container scroll-mt-16 !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
@@ -174,7 +174,7 @@ export const H6: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     const slug = getSlugFromText(text);
     return (
         <h6
-            id={slug}
+            data-anchor={slug}
             className={classNames(
                 className,
                 "relative group/anchor-container scroll-mt-16 !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"

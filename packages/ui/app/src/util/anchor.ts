@@ -5,7 +5,10 @@ export function getAnchorId(anchorIdParts: string[]): string {
 }
 
 export function getAnchorSelector(anchorId: string): string {
-    return `div[data-anchor="${anchorId}"]`;
+    const selector = ["div", "h1", "h2", "h3", "h4", "h5", "h6"]
+        .map((tag) => `${tag}[data-anchor="${anchorId}"]`)
+        .join(", ");
+    return selector;
 }
 
 export function getAnchorNode(anchorId: string): Element | undefined {
