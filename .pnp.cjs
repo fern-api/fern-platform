@@ -3348,7 +3348,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
             ["@fern-fern/registry-browser", "npm:0.26.0-1-g7cf6a78"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-ui/test-utils", "workspace:packages/commons/test-utils"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.9"],\
             ["@types/node", "npm:18.7.18"],\

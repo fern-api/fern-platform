@@ -1870,7 +1870,6 @@ __metadata:
   dependencies:
     "@fern-fern/registry-browser": 0.26.0-1-g7cf6a78
     "@fern-ui/core-utils": "workspace:*"
-    "@fern-ui/test-utils": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/lodash-es": 4.17.9
     "@types/node": ^18.7.18
