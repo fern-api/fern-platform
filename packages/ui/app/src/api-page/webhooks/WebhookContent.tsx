@@ -121,7 +121,9 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                         // the 4rem is the same as the h-10 as the Header
                         "max-h-[calc(100vh-4rem)]",
                         // hide on mobile,
-                        "hidden lg:flex"
+                        "hidden lg:flex",
+                        // header offset
+                        "top-16"
                     )}
                 >
                     {webhookExample}
