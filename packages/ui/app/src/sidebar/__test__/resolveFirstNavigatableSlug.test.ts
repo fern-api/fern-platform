@@ -4,42 +4,9 @@ import {
     UrlPathResolver,
 } from "@fern-ui/app-utils";
 import { loadDocsDefinition } from "@fern-ui/test-utils";
-import { getFullSlug } from "../../../docs-context/getFullSlug";
-import { resolveFirstNavigatableSlug, type ResolveResult } from "../../resolveFirstNavigatableSlug";
-
-interface TabbedVersionedFixture {
-    type: "tabbed-versioned";
-    name: string;
-    revision: number | string;
-    activeVersionId: string;
-    activeTabSlug: string;
-}
-
-interface TabbedUnversionedFixture {
-    type: "tabbed-unversioned";
-    name: string;
-    revision: number | string;
-    activeTabSlug: string;
-}
-
-interface UntabbedVersionedFixture {
-    type: "untabbed-versioned";
-    name: string;
-    revision: number | string;
-    activeVersionId: string;
-}
-
-interface UntabbedUnversionedFixture {
-    type: "untabbed-unversioned";
-    name: string;
-    revision: number | string;
-}
-
-type Fixture =
-    | TabbedVersionedFixture
-    | TabbedUnversionedFixture
-    | UntabbedVersionedFixture
-    | UntabbedUnversionedFixture;
+import { getFullSlug } from "../../docs-context/getFullSlug";
+import { resolveFirstNavigatableSlug, type ResolveResult } from "../resolveFirstNavigatableSlug";
+import { type Fixture } from "./commons";
 
 const FIXTURES: Fixture[] = [
     {
@@ -84,6 +51,7 @@ describe("resolveFirstNavigatableSlug()", () => {
 
                     const activeVersionSlugConst = activeVersionSlug;
 
+                    // TODO: Replace with the new resolver to complete the tests
                     const resolver = new UrlPathResolver({
                         items,
                         loadApiDefinition: (id) => docsDefinition.apis[id],
