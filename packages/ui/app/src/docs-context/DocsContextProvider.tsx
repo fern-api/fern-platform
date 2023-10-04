@@ -4,6 +4,7 @@ import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources
 import {
     assertIsUnversionedNavigationConfig,
     assertIsVersionedNavigationConfig,
+    getFirstNavigatableItemSlugInDefinition,
     isUnversionedUntabbedNavigationConfig,
     type ResolvedUrlPath,
 } from "@fern-ui/app-utils";
@@ -12,6 +13,7 @@ import { useEventCallback } from "@fern-ui/react-commons";
 import { useTheme } from "@fern-ui/theme";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
+import { useNavigationContext } from "../navigation-context/useNavigationContext";
 import {
     DocsContext,
     DocsContextValue,
@@ -56,6 +58,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     children,
 }) => {
     const router = useRouter();
+    const { notifyIntentToGoBack, markBackNavigationAsComplete } = useNavigationContext();
 
     const [activeVersionSlug, _setActiveVersionSlug] = useState(inferredVersionSlug);
     const [activeTabIndex, setActiveTabIndex] = useState(inferredTabIndex);
@@ -260,6 +263,19 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             clearTimeout(timeout);
         };
     });
+
+    useEffect(() => {
+        router.beforePopState(({ as }) => {
+            notifyIntentToGoBack();
+            const slugCandidate = as.substring(1, as.length);
+            const slug = slugCandidate === "" ? getFirstNavigatableItemSlugInDefinition(docsDefinition) : slugCandidate;
+            if (slug != null) {
+                navigateToPath(slug, { omitTabSlug: true, omitVersionSlug: true });
+            }
+            markBackNavigationAsComplete();
+            return true;
+        });
+    }, [router, navigateToPath, notifyIntentToGoBack, markBackNavigationAsComplete, getFullSlug, docsDefinition]);
 
     const scrollToPathListeners = useSlugListeners("scrollToPath", { selectedSlug });
 

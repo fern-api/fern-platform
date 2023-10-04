@@ -20,7 +20,7 @@ export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = memo(function 
         <button
             onClick={onClick}
             className={classNames(
-                "dark:border-border-default-dark border-border-default-light group flex items-center rounded-lg border px-2.5 py-2 transition",
+                "dark:border-border-default-dark border-border-default-light group flex items-center rounded-lg border px-2.5 py-2",
                 {
                     "bg-background-primary-dark hover:bg-background-hover-dark": theme === "dark",
                     "bg-background-primary-light hover:bg-background-hover-light": theme === "light",
@@ -29,14 +29,14 @@ export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = memo(function 
         >
             <div className="flex items-center space-x-3">
                 <SearchIcon className="text-intent-default h-5 w-5" />
-                <div className="text-text-disabled-light group-hover:text-intent-default dark:text-text-disabled-dark transition">
+                <div className="text-text-disabled-light group-hover:text-intent-default dark:text-text-disabled-dark">
                     Search...
                 </div>
             </div>
 
             <PlatformSpecificContent>
                 {(platform) => (
-                    <div className="text-text-disabled-light group-hover:text-intent-default dark:text-text-disabled-dark ml-auto text-start text-xs tracking-wide transition">
+                    <div className="text-text-disabled-light group-hover:text-intent-default dark:text-text-disabled-dark ml-auto text-start text-xs tracking-wide">
                         {visitDiscriminatedUnion({ platform }, "platform")._visit({
                             mac: () => "CMD+K",
                             windows: () => "CTRL+K",
