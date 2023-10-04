@@ -42,6 +42,14 @@ export function assertIsUnversionedNavigationConfig(
     }
 }
 
+export function assertIsUnversionedUntabbedNavigationConfig(
+    config: FernRegistryDocsRead.NavigationConfig
+): asserts config is FernRegistryDocsRead.UnversionedUntabbedNavigationConfig {
+    if (!isUnversionedUntabbedNavigationConfig(config)) {
+        throw new Error("Invalid navigation config. Expected unversioned and untabbed.");
+    }
+}
+
 export function getVersionAvailabilityLabel(availability: FernRegistryDocsRead.VersionAvailability): string {
     switch (availability) {
         case "Beta":

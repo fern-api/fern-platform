@@ -3,8 +3,11 @@ import { resolve } from "path";
 
 const PATH_TO_DOCS_DEFINITIONS = resolve(__dirname, "../docs-definitions");
 
-export function loadDocsDefinition(name: string, revision: number | string): FernRegistryDocsRead.DocsDefinition {
+export function loadDocsDefinition(
+    name: string,
+    revision: number | string
+): FernRegistryDocsRead.DocsDefinition | undefined {
     const filePath = resolve(PATH_TO_DOCS_DEFINITIONS, name, `${revision}.json`);
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    return require(filePath) as FernRegistryDocsRead.DocsDefinition;
+    return require(filePath) as FernRegistryDocsRead.DocsDefinition | undefined;
 }

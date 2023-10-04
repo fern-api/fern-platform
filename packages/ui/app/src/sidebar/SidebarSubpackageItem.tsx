@@ -1,16 +1,13 @@
 import { Text } from "@blueprintjs/core";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import {
-    getSlugForFirstNavigatableEndpointOrWebhook,
-    isUnversionedTabbedNavigationConfig,
-    UrlPathResolver,
-} from "@fern-ui/app-utils";
+import { isUnversionedTabbedNavigationConfig, UrlPathResolver } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { NextRouter } from "next/router";
 import { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 import { DocsInfo, NavigateToPathOpts } from "../docs-context/DocsContext";
 import { useDocsContext } from "../docs-context/useDocsContext";
+import { resolveFirstNavigatableSlug } from "./resolveFirstNavigatableSlug";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace SidebarSubpackageItem {
@@ -65,30 +62,22 @@ const UnmemoizedSidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = (
     }, [docsDefinition, docsInfo.activeNavigationConfig, activeTab]);
 
     const handleClick = useCallback(async () => {
-        const resolvedUrlPath = await urlPathResolver.resolveSlug(slug);
-        if (resolvedUrlPath?.type === "apiSubpackage") {
-            const apiId = resolvedUrlPath.apiSection.api;
-            const apiDefinition = docsDefinition.apis[apiId];
-            if (apiDefinition == null) {
-                return;
-            }
-            const slugToNavigate = getSlugForFirstNavigatableEndpointOrWebhook(
-                apiDefinition,
-                [resolvedUrlPath.slug],
-                resolvedUrlPath.subpackage
-            );
-            if (slugToNavigate != null) {
-                void pushRoute(`/${getFullSlug(slugToNavigate)}`, undefined, {
-                    shallow: isChildSelected,
-                    scroll: !isChildSelected,
-                });
-                navigateToPath(slugToNavigate);
-                closeMobileSidebar();
-            }
+        const resolveResult = await resolveFirstNavigatableSlug(slug, urlPathResolver, {
+            docsDefinition,
+            getFullSlug,
+        });
+        if (resolveResult != null) {
+            const { slugToNavigate, pathToPush } = resolveResult;
+            void pushRoute(pathToPush, undefined, {
+                shallow: isChildSelected,
+                scroll: !isChildSelected,
+            });
+            navigateToPath(slugToNavigate);
+            closeMobileSidebar();
         }
     }, [
         closeMobileSidebar,
-        docsDefinition.apis,
+        docsDefinition,
         isChildSelected,
         navigateToPath,
         pushRoute,

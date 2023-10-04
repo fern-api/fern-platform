@@ -3736,6 +3736,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/react-commons", "workspace:packages/commons/react/react-commons"],\
             ["@fern-ui/routing-utils", "workspace:packages/commons/react/routing-utils"],\
+            ["@fern-ui/test-utils", "workspace:packages/commons/test-utils"],\
             ["@fern-ui/theme", "workspace:packages/commons/react/theme"],\
             ["@fontsource/ibm-plex-mono", "npm:4.5.13"],\
             ["@fortawesome/fontawesome-svg-core", "npm:6.4.2"],\
