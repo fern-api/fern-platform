@@ -16,6 +16,7 @@ export function getPathsForUnversionedUntabbedDocs({
         loadApiDefinition: (id) => apis[id],
     });
     return new Set<string>([
+        "/",
         ...urlSlugTree.getAllSlugs().map((slug) => {
             if (prefix != null) {
                 return `${prefix}/${slug}`;
