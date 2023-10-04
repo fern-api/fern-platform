@@ -29,9 +29,9 @@ export function getSubpackageTitle(subpackage: FernRegistryApiRead.ApiDefinition
 }
 
 export function getSlugForFirstNavigatableEndpointOrWebhook(
-    apiDefinition: FernRegistryApiRead.ApiDefinition,
+    subpackage: FernRegistryApiRead.ApiDefinitionSubpackage,
     slugs: string[],
-    subpackage: FernRegistryApiRead.ApiDefinitionSubpackage
+    apiDefinition: FernRegistryApiRead.ApiDefinition
 ): string | undefined {
     const firstNavigatable = subpackage.endpoints[0] ?? subpackage.webhooks[0];
     if (firstNavigatable != null) {
@@ -41,9 +41,9 @@ export function getSlugForFirstNavigatableEndpointOrWebhook(
         const childSubpackage = apiDefinition.subpackages[childSubpackageId];
         if (childSubpackage != null) {
             const slug = getSlugForFirstNavigatableEndpointOrWebhook(
-                apiDefinition,
+                childSubpackage,
                 [...slugs, childSubpackage.urlSlug],
-                childSubpackage
+                apiDefinition
             );
             if (slug != null) {
                 return slug;

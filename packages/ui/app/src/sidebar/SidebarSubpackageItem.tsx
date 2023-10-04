@@ -73,9 +73,9 @@ const UnmemoizedSidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = (
                 return;
             }
             const slugToNavigate = getSlugForFirstNavigatableEndpointOrWebhook(
-                apiDefinition,
+                resolvedUrlPath.subpackage,
                 [resolvedUrlPath.slug],
-                resolvedUrlPath.subpackage
+                apiDefinition
             );
             if (slugToNavigate != null) {
                 void pushRoute(`/${getFullSlug(slugToNavigate)}`, undefined, {
