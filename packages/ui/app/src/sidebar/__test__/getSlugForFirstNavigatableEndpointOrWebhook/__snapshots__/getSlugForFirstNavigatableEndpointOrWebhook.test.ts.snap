@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`resolveFirstNavigatableSlug() primer-1 1`] = `
+{
+  "67c83aa4-e686-4f16-b02d-4c27a6e92f91": [
+    undefined,
+    undefined,
+  ],
+  "73803ef9-1d14-46c9-9c0b-ece23481f286": [
+    undefined,
+    undefined,
+    undefined,
+  ],
+  "95ddda06-15e0-44ae-8e19-3131ee929616": [
+    undefined,
+    undefined,
+    undefined,
+  ],
+  "d0eefb20-05d3-41e0-af7a-29afd2b1694e": [
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+  ],
+}
+`;
