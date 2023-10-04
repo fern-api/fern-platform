@@ -5,6 +5,7 @@
   "references": [
     { "path": "../../commons/app-utils" },
     { "path": "../../commons/core-utils" },
+    { "path": "../../commons/test-utils" },
     { "path": "../../commons/react/react-commons" },
     { "path": "../../commons/react/routing-utils" },
     { "path": "../../commons/react/theme" }
