@@ -1,6 +1,6 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 
-const ep1: FernRegistryApiRead.EndpointDefinition = {
+const EP_1: FernRegistryApiRead.EndpointDefinition = {
     id: FernRegistryApiRead.EndpointId("ep1"),
     authed: false,
     environments: [],
@@ -14,7 +14,7 @@ const ep1: FernRegistryApiRead.EndpointDefinition = {
     availability: "Beta",
 };
 
-const ep2: FernRegistryApiRead.EndpointDefinition = {
+const EP_2: FernRegistryApiRead.EndpointDefinition = {
     id: FernRegistryApiRead.EndpointId("ep2"),
     authed: false,
     environments: [],
@@ -28,8 +28,8 @@ const ep2: FernRegistryApiRead.EndpointDefinition = {
     availability: "Beta",
 };
 
-export const subpackageEmpty: FernRegistryApiRead.ApiDefinitionSubpackage = {
-    subpackageId: FernRegistryApiRead.SubpackageId("subpackageEmpty"),
+export const SUBPACKAGE_EMPTY: FernRegistryApiRead.ApiDefinitionSubpackage = {
+    subpackageId: FernRegistryApiRead.SubpackageId("sub1"),
     endpoints: [],
     name: "",
     subpackages: [],
@@ -38,9 +38,9 @@ export const subpackageEmpty: FernRegistryApiRead.ApiDefinitionSubpackage = {
     webhooks: [],
 };
 
-export const subpackageWith2Endpoints: FernRegistryApiRead.ApiDefinitionSubpackage = {
-    subpackageId: FernRegistryApiRead.SubpackageId("subpackageWith2Endpoints"),
-    endpoints: [ep1, ep2],
+export const SUBPACKAGE_WITH_2_ENDPOINTS: FernRegistryApiRead.ApiDefinitionSubpackage = {
+    subpackageId: FernRegistryApiRead.SubpackageId("sub2"),
+    endpoints: [EP_1, EP_2],
     name: "",
     subpackages: [],
     types: [],
@@ -48,17 +48,17 @@ export const subpackageWith2Endpoints: FernRegistryApiRead.ApiDefinitionSubpacka
     webhooks: [],
 };
 
-export const subpackageWithNestedSubpackages: FernRegistryApiRead.ApiDefinitionSubpackage = {
+export const SUBPACKAGE_WITH_NESTED_SUBPACKAGES: FernRegistryApiRead.ApiDefinitionSubpackage = {
     subpackageId: FernRegistryApiRead.SubpackageId("sub3"),
     endpoints: [],
     name: "",
-    subpackages: [subpackageEmpty.subpackageId, subpackageWith2Endpoints.subpackageId],
+    subpackages: [SUBPACKAGE_EMPTY.subpackageId, SUBPACKAGE_WITH_2_ENDPOINTS.subpackageId],
     types: [],
     urlSlug: "sub_3",
     webhooks: [],
 };
 
-export const definition: FernRegistryApiRead.ApiDefinition = {
+export const DEFINITION: FernRegistryApiRead.ApiDefinition = {
     id: "definition" as FernRegistryApiRead.ApiDefinition["id"],
     rootPackage: {
         endpoints: [],
@@ -67,9 +67,9 @@ export const definition: FernRegistryApiRead.ApiDefinition = {
         webhooks: [],
     },
     subpackages: {
-        [subpackageEmpty.subpackageId]: subpackageEmpty,
-        [subpackageWith2Endpoints.subpackageId]: subpackageWith2Endpoints,
-        [subpackageWithNestedSubpackages.subpackageId]: subpackageWithNestedSubpackages,
+        [SUBPACKAGE_EMPTY.subpackageId]: SUBPACKAGE_EMPTY,
+        [SUBPACKAGE_WITH_2_ENDPOINTS.subpackageId]: SUBPACKAGE_WITH_2_ENDPOINTS,
+        [SUBPACKAGE_WITH_NESTED_SUBPACKAGES.subpackageId]: SUBPACKAGE_WITH_NESTED_SUBPACKAGES,
     },
     types: {},
 };
