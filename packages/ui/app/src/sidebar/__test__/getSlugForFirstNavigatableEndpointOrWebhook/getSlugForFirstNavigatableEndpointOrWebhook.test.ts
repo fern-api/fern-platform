@@ -88,6 +88,13 @@ describe("resolveFirstNavigatableSlug()", () => {
                         items,
                         loadApiDefinition: (id) => docsDefinition.apis[id],
                         loadApiPage: (id) => docsDefinition.pages[id],
+                        loadMdxCompiler: async () => ({
+                            serialize: async () => ({
+                                scope: {},
+                                compiledSource: "",
+                                frontmatter: {},
+                            }),
+                        }),
                     });
 
                     await Promise.all(

@@ -1,27 +1,36 @@
 import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { assertNever } from "@fern-ui/core-utils";
-import { serialize } from "next-mdx-remote/serialize";
+import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import remarkGfm from "remark-gfm";
 import { ResolvedUrlPath } from "./ResolvedUrlPath";
 import { UrlSlugTree, UrlSlugTreeNode } from "./UrlSlugTree";
 
 const REMARK_PLUGINS = [remarkGfm];
 
+type SerializeParams = Parameters<typeof import("next-mdx-remote/serialize")["serialize"]>;
+
+type MdxCompilerModule = {
+    serialize: (...params: SerializeParams) => Promise<MDXRemoteSerializeResult>;
+};
+
 export interface UrlPathResolverConfig {
     items: FernRegistryDocsRead.NavigationItem[];
     loadApiPage: (id: FernRegistryDocsRead.PageId) => FernRegistryDocsRead.PageContent | undefined;
     loadApiDefinition: (id: FernRegistryApiRead.ApiDefinition["id"]) => FernRegistryApiRead.ApiDefinition | undefined;
+    loadMdxCompiler?: () => Promise<MdxCompilerModule>;
 }
 
 export class UrlPathResolver {
     private readonly urlSlugTree: UrlSlugTree;
+    private readonly mdxCompilerPromise: Promise<MdxCompilerModule>;
 
     constructor(private readonly config: UrlPathResolverConfig) {
         this.urlSlugTree = new UrlSlugTree({
             items: config.items,
             loadApiDefinition: config.loadApiDefinition,
         });
+        this.mdxCompilerPromise = config.loadMdxCompiler?.() ?? import("next-mdx-remote/serialize");
     }
 
     public async resolveSlug(slug: string): Promise<ResolvedUrlPath | undefined> {
@@ -40,12 +49,13 @@ export class UrlPathResolver {
                     section: node.section,
                     slug: node.slug,
                 };
-            case "page":
+            case "page": {
+                const mod = await this.mdxCompilerPromise;
                 return {
                     type: "mdx-page",
                     page: node.page,
                     slug: node.slug,
-                    serializedMdxContent: await serialize(this.getPage(node.page.id).markdown, {
+                    serializedMdxContent: await mod.serialize(this.getPage(node.page.id).markdown, {
                         scope: {},
                         mdxOptions: {
                             remarkPlugins: REMARK_PLUGINS,
@@ -54,6 +64,7 @@ export class UrlPathResolver {
                         parseFrontmatter: false,
                     }),
                 };
+            }
             case "api":
                 return {
                     type: "api",
