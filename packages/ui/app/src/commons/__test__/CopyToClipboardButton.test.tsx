@@ -11,18 +11,27 @@ Object.defineProperty(navigator, "clipboard", {
 });
 
 import { cleanup, fireEvent, render } from "@testing-library/react";
+import renderer from "react-test-renderer";
 import { CopyToClipboardButton } from "../CopyToClipboardButton";
 
 afterEach(cleanup);
 
-it("CopyToClipboardButton changes the text after click", () => {
-    const { getByTestId } = render(<CopyToClipboardButton content="abc" testId="copy-btn" />);
+describe("CopyToClipboardButton", () => {
+    it("renders correctly", async () => {
+        const component = renderer.create(<CopyToClipboardButton testId="copy-btn" />);
+        const tree = component.toJSON() as renderer.ReactTestRendererJSON;
+        expect(tree).toMatchSnapshot();
+    });
 
-    const innerHtmlBeforeClick = getByTestId("copy-btn").innerHTML;
+    it("changes content after click", () => {
+        const { getByTestId } = render(<CopyToClipboardButton content="abc" testId="copy-btn" />);
 
-    fireEvent.click(getByTestId("copy-btn"));
+        const innerHtmlBeforeClick = getByTestId("copy-btn").innerHTML;
 
-    const innerHtmlAfterClick = getByTestId("copy-btn").innerHTML;
+        fireEvent.click(getByTestId("copy-btn"));
 
-    expect(innerHtmlAfterClick).not.toEqual(innerHtmlBeforeClick);
+        const innerHtmlAfterClick = getByTestId("copy-btn").innerHTML;
+
+        expect(innerHtmlAfterClick).not.toEqual(innerHtmlBeforeClick);
+    });
 });
