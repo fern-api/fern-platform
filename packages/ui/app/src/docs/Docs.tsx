@@ -79,8 +79,12 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                 <div className="max-w-8xl relative mx-auto flex min-h-0 w-full flex-1">
                     <div className="hidden w-72 md:flex">
                         <div
-                            className="sticky top-16 w-full overflow-auto overflow-x-hidden"
-                            style={{ maxHeight: "calc(100vh - 4rem)", opacity: hideContent ? 0 : undefined }}
+                            className="sticky w-full overflow-auto overflow-x-hidden"
+                            style={{
+                                maxHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
+                                opacity: hideContent ? 0 : undefined,
+                                top: HEADER_HEIGHT,
+                            }}
                             id="sidebar-container"
                         >
                             <Sidebar />
@@ -88,8 +92,12 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                     </div>
                     {isMobileSidebarOpen && (
                         <div
-                            className="bg-background fixed inset-x-0 bottom-0 top-16 z-10 flex overflow-auto overflow-x-hidden md:hidden"
-                            style={{ maxHeight: "calc(100vh - 4rem)", opacity: hideContent ? 0 : undefined }}
+                            className="bg-background fixed inset-x-0 bottom-0 z-10 flex overflow-auto overflow-x-hidden md:hidden"
+                            style={{
+                                maxHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
+                                opacity: hideContent ? 0 : undefined,
+                                top: HEADER_HEIGHT,
+                            }}
                         >
                             <Sidebar hideSearchBar />
                         </div>

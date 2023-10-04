@@ -2,6 +2,7 @@ import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/reso
 import { isUnversionedUntabbedNavigationConfig, type ResolvedUrlPath } from "@fern-ui/app-utils";
 import { useCallback, useMemo } from "react";
 import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
+import { HEADER_HEIGHT } from "../constants";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { MdxContent } from "../mdx/MdxContent";
 import { TableOfContents } from "./TableOfContents";
@@ -71,10 +72,11 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
             </div>
             <div className="hidden w-64 xl:flex">
                 <TableOfContents
-                    className="sticky top-16 w-full overflow-auto overflow-x-hidden py-8"
+                    className="sticky w-full overflow-auto overflow-x-hidden py-8"
                     markdown={page.markdown}
                     style={{
-                        maxHeight: "calc(100vh - 4rem)",
+                        maxHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
+                        top: HEADER_HEIGHT,
                     }}
                 />
             </div>

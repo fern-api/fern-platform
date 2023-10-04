@@ -5,6 +5,7 @@ import classNames from "classnames";
 import dynamic from "next/dynamic";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
+import { HEADER_HEIGHT } from "../../constants";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { useEndpointContext } from "./endpoint-context/useEndpointContext";
@@ -181,10 +182,9 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                         // the 4rem is the same as the h-10 as the Header
                         "max-h-[calc(100vh-4rem)]",
                         // hide on mobile,
-                        "hidden lg:flex",
-                        // header offset
-                        "top-16"
+                        "hidden lg:flex"
                     )}
+                    style={{ top: HEADER_HEIGHT }}
                 >
                     {endpointExample}
                 </div>
