@@ -7,10 +7,11 @@ export declare namespace CopyToClipboardButton {
     export interface Props {
         className?: string;
         content?: string;
+        testId?: string;
     }
 }
 
-export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({ className, content }) => {
+export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({ className, content, testId }) => {
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(content);
 
     return (
@@ -18,6 +19,7 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({ c
             className={classNames("cursor-pointer", className)}
             onClick={copyToClipboard}
             disabled={copyToClipboard == null}
+            data-testid={testId}
         >
             {wasJustCopied ? (
                 <div className="bg-tag-primary flex h-4 w-4 items-center justify-center rounded-sm">
