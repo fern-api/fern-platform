@@ -1,3 +1,4 @@
+import { OrgIdsResponse } from "src/services/auth/AuthService";
 import { DocsV1Db } from "../api";
 import { FdrApplication, type FdrConfig } from "../app";
 import { type FdrServices } from "../app/FdrApplication";
@@ -32,8 +33,22 @@ class MockAlgoliaService implements AlgoliaService {
 }
 
 class MockAuthService implements AuthService {
+    orgIds: string[];
+
+    constructor({ orgIds }: { orgIds: string[] }) {
+        this.orgIds = orgIds;
+    }
+
     async checkUserBelongsToOrg(): Promise<void> {
         return;
+    }
+
+    async getOrgIdsFromAuthHeader(authHeader: { authHeader: string | undefined }): Promise<OrgIdsResponse> {
+        console.log(`AuthService mock received authHeader ${JSON.stringify(authHeader)}`);
+        return {
+            type: "success",
+            orgIds: this.orgIds,
+        };
     }
 }
 
@@ -76,9 +91,11 @@ export function createMockFdrConfig(): FdrConfig {
     };
 }
 
-export function createMockFdrApplication(services?: Partial<FdrServices>) {
+export function createMockFdrApplication({ orgIds, services }: { orgIds?: string[]; services?: Partial<FdrServices> }) {
     return new FdrApplication(createMockFdrConfig(), {
-        auth: new MockAuthService(),
+        auth: new MockAuthService({
+            orgIds: orgIds ?? [],
+        }),
         algolia: new MockAlgoliaService(),
         slack: new MockSlackService(),
         revalidator: new MockRevalidatorService(),

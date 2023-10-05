@@ -20,6 +20,11 @@ service:
         name: GetSnippetRequest
         body:
           properties:
+            orgId:
+              type: optional<commons.OrgId>
+              docs: |
+                If the same API is defined across multiple organization,
+                you must specify an organization ID.
             apiId:
               type: optional<commons.ApiId>
               docs: |
@@ -32,9 +37,13 @@ service:
             endpoint: EndpointIdentifier
       response: list<Snippet>
       errors:
-        - EndpointNotFound
-        - SDKNotFound
+        - commons.UnauthorizedError
+        - commons.UserNotInOrgError
+        - commons.UnavailableError
         - ApiIdNotFound
+        - EndpointNotFound
+        - OrgIdNotFound
+        - SDKNotFound
       examples:
         - request:
             endpoint:
@@ -84,6 +93,11 @@ service:
           page: optional<integer>
         body:
           properties:
+            orgId:
+              type: optional<commons.OrgId>
+              docs: |
+                If the same API is defined across multiple organization,
+                you must specify an organization ID.
             apiId:
               type: optional<commons.ApiId>
               docs: |
@@ -94,11 +108,18 @@ service:
                 The SDKs for which to load snippets. If unspecified,
                 snippets for the latest published SDKs will be returned.
       response: SnippetsPage
+      errors:
+        - commons.UnauthorizedError
+        - commons.UserNotInOrgError
+        - commons.UnavailableError
+        - ApiIdNotFound
+        - OrgIdNotFound
+        - SDKNotFound
       examples:
         - request: {}
           response:
             body:
-              next: "page_123402"
+              next: 2
               snippets:
                 /v1/search:
                   GET:
@@ -215,7 +236,7 @@ types:
   SnippetsPage:
     properties:
       next:
-        type: optional<string>
+        type: optional<integer>
         docs: If present, pass this into the `page` query parameter to load the next page.
       snippets:  
         type: map<EndpointPath, SnippetsByEndpointMethod>
@@ -256,18 +277,37 @@ types:
       sync_client: string
 
 errors:
-  EndpointNotFound:
-    status-code: 404
-    docs: The requested endpoint was not found
+  ApiIdRequiredError:
+    status-code: 400
+    docs: "An ApiId is required"
+    type: string
 
-  SDKNotFound:
-    status-code: 404
-    docs: The requested SDK was not found
+  OrgIdRequiredError:
+    status-code: 400
+    docs: "An OrgId is required"
+    type: string
+
+  InvalidPageError:
+    status-code: 400
+    docs: "Page must be >=1"
+    type: string
 
   ApiIdNotFound:
     status-code: 404
     docs: The requested ApId was not found
+    type: string
+
+  EndpointNotFound:
+    status-code: 404
+    docs: The requested endpoint was not found
+    type: string
 
   OrgIdNotFound:
     status-code: 404
     docs: The requested OrgId was not found
+    type: string
+
+  SDKNotFound:
+    status-code: 404
+    docs: The requested SDK was not found
+    type: string

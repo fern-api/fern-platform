@@ -13,11 +13,16 @@ import { getDocsReadV2Service } from "../../controllers/docs/v2/getDocsReadV2Ser
 import { getDocsWriteV2Service } from "../../controllers/docs/v2/getDocsWriteV2Service";
 import { getSnippetsFactoryService } from "../../controllers/snippets/getSnippetsFactoryService";
 import { getSnippetsService } from "../../controllers/snippets/getSnippetsService";
-import { FernRegistry, FernRegistryClient } from "../generated";
+import { DEFAULT_SNIPPETS_PAGE_SIZE } from "../../db/SnippetsDao";
+import { FernRegistry, FernRegistryClient, FernRegistryError } from "../generated";
 import { createMockFdrApplication } from "../mock";
 import { createMockDocs, createMockIndexSegment } from "./util";
 
 const PORT = 9999;
+
+const UNAUTHENTICATED_CLIENT = new FernRegistryClient({
+    environment: `http://localhost:${PORT}/`,
+});
 
 const CLIENT = new FernRegistryClient({
     environment: `http://localhost:${PORT}/`,
@@ -32,7 +37,9 @@ let serverApp: FdrApplication | undefined;
 let server: http.Server | undefined;
 
 beforeAll(async () => {
-    serverApp = createMockFdrApplication();
+    serverApp = createMockFdrApplication({
+        orgIds: ["acme"],
+    });
     register(app, {
         docs: {
             v1: {
@@ -224,7 +231,7 @@ describe("algolia index segment deleter", () => {
     let serverApp: FdrApplication;
 
     beforeAll(() => {
-        serverApp = createMockFdrApplication();
+        serverApp = createMockFdrApplication({});
     });
 
     it("correctly deletes old inactive index segments for unversioned docs", async () => {
@@ -295,9 +302,9 @@ it("snippets dao", async () => {
                         snippet: {
                             async_client: "invalid",
                             sync_client: "invalid",
-                        }
+                        },
                     },
-                ]
+                ],
             },
         },
     });
@@ -321,11 +328,11 @@ it("snippets dao", async () => {
                         snippet: {
                             async_client: "client = AsyncAcme(api_key='YOUR_API_KEY')",
                             sync_client: "client = Acme(api_key='YOUR_API_KEY')",
-                        }
+                        },
                     },
-                ]
+                ],
             },
-        }
+        },
     });
     // get snippets
     const response = await serverApp?.dao.snippets().loadSnippets({
@@ -335,21 +342,240 @@ it("snippets dao", async () => {
             endpointIdentifier: {
                 path: "/users/v1",
                 method: FernRegistry.EndpointMethod.Get,
-            }
-        }
+            },
+            sdks: undefined,
+            page: undefined,
+        },
     });
     expect(response).not.toEqual(undefined);
-    expect(response?.snippets.length).toEqual(1);
+    expect(Object.keys(response?.snippets ?? {}).length).toEqual(1);
 
-    const snippet = response?.snippets[0];
+    const snippets = response?.snippets["/users/v1"]?.GET;
+    if (snippets === undefined) {
+        throw new Error("snippets were undefined");
+    }
+    expect(snippets).not.toEqual(undefined);
+    expect(snippets.length).toEqual(1);
+
+    const snippet = snippets[0];
+    if (snippet === undefined) {
+        throw new Error("snippet was undefined");
+    }
     expect(snippet).not.toEqual(undefined);
-    expect(snippet?.type).toEqual("python");
+    expect(snippet.type).toEqual("python");
 
-    if (snippet?.type != "python") {
+    if (snippet.type != "python") {
         throw new Error("expected a python snippet");
     }
     expect(snippet.sdk.package).toEqual("acme");
     expect(snippet.sdk.version).toEqual("0.0.1");
     expect(snippet.async_client).toEqual("client = AsyncAcme(api_key='YOUR_API_KEY')");
     expect(snippet.sync_client).toEqual("client = Acme(api_key='YOUR_API_KEY')");
+});
+
+it("get snippets", async () => {
+    // register API definition for acme org
+    await CLIENT.api.v1.register.registerApiDefinition({
+        orgId: "acme",
+        apiId: "petstore",
+        definition: EMPTY_REGISTER_API_DEFINITION,
+    });
+    // create snippets
+    await CLIENT.snippetsFactory.createSnippetsForSdk({
+        orgId: "acme",
+        apiId: "petstore",
+        snippets: {
+            type: "typescript",
+            sdk: {
+                package: "acme",
+                version: "0.0.1",
+            },
+            snippets: [
+                {
+                    endpoint: {
+                        path: "/users/v1",
+                        method: FernRegistry.EndpointMethod.Get,
+                    },
+                    snippet: {
+                        client: "const petstore = new PetstoreClient({\napiKey: 'YOUR_API_KEY',\n});",
+                    },
+                },
+            ],
+        },
+    });
+    // get snippets
+    const snippets = await CLIENT.get({
+        apiId: "petstore",
+        endpoint: {
+            path: "/users/v1",
+            method: FernRegistry.EndpointMethod.Get,
+        },
+    });
+    expect(snippets.length).toEqual(1);
+
+    const snippet = snippets[0] as FernRegistry.TypeScriptSnippet;
+    expect(snippet.sdk.package).toEqual("acme");
+    expect(snippet.sdk.version).toEqual("0.0.1");
+    expect(snippet.client).toEqual("const petstore = new PetstoreClient({\napiKey: 'YOUR_API_KEY',\n});");
+});
+
+it("load snippets", async () => {
+    // register API definition for acme org
+    await CLIENT.api.v1.register.registerApiDefinition({
+        orgId: "acme",
+        apiId: "user",
+        definition: EMPTY_REGISTER_API_DEFINITION,
+    });
+    // initialize enough snippets to occupy two pages
+    const snippets: FernRegistry.SingleTypescriptSnippetCreate[] = [];
+    for (let i = 0; i < DEFAULT_SNIPPETS_PAGE_SIZE * 2; i++) {
+        snippets.push({
+            endpoint: {
+                path: `/users/v${i}`,
+                method: FernRegistry.EndpointMethod.Get,
+            },
+            snippet: {
+                client: `const clientV${i} = new UserClient({\napiKey: 'YOUR_API_KEY',\n});`,
+            },
+        });
+    }
+    // create snippets
+    await CLIENT.snippetsFactory.createSnippetsForSdk({
+        orgId: "acme",
+        apiId: "petstore",
+        snippets: {
+            type: "typescript",
+            sdk: {
+                package: "acme",
+                version: "0.0.1",
+            },
+            snippets: snippets,
+        },
+    });
+    // load snippets (first page)
+    const firstResponse = await CLIENT.load({
+        apiId: "petstore",
+    });
+    expect(firstResponse.next).toEqual(2);
+    expect(Object.keys(firstResponse.snippets).length).toEqual(DEFAULT_SNIPPETS_PAGE_SIZE);
+
+    for (let i = 0; i < DEFAULT_SNIPPETS_PAGE_SIZE; i++) {
+        const snippetsForEndpointMethod = firstResponse.snippets[`/users/v${i}`];
+        const responseSnippets = snippetsForEndpointMethod?.GET;
+        expect(responseSnippets?.length).toEqual(1);
+        if (responseSnippets === undefined) {
+            throw new Error("response snippets must not be undefined");
+        }
+        const snippet = responseSnippets[0] as FernRegistry.TypeScriptSnippet;
+        expect(snippet.sdk.package).toEqual("acme");
+        expect(snippet.sdk.version).toEqual("0.0.1");
+        expect(snippet.client).toEqual(`const clientV${i} = new UserClient({\napiKey: 'YOUR_API_KEY',\n});`);
+    }
+
+    // load snippets (second page)
+    const secondResponse = await CLIENT.load({
+        apiId: "petstore",
+        page: firstResponse.next,
+    });
+    expect(Object.keys(secondResponse.snippets).length).toEqual(DEFAULT_SNIPPETS_PAGE_SIZE);
+
+    for (let i = DEFAULT_SNIPPETS_PAGE_SIZE; i < DEFAULT_SNIPPETS_PAGE_SIZE * 2; i++) {
+        const snippetsForEndpointMethod = secondResponse.snippets[`/users/v${i}`];
+        const responseSnippets = snippetsForEndpointMethod?.GET;
+        expect(responseSnippets?.length).toEqual(1);
+        if (responseSnippets === undefined) {
+            throw new Error("response snippets must not be undefined");
+        }
+        const snippet = responseSnippets[0] as FernRegistry.TypeScriptSnippet;
+        expect(snippet.sdk.package).toEqual("acme");
+        expect(snippet.sdk.version).toEqual("0.0.1");
+        expect(snippet.client).toEqual(`const clientV${i} = new UserClient({\napiKey: 'YOUR_API_KEY',\n});`);
+    }
+    expect(secondResponse.next).toEqual(3);
+});
+
+it("get snippets (unauthenticated)", async () => {
+    // register API definition for acme org
+    await CLIENT.api.v1.register.registerApiDefinition({
+        orgId: "acme",
+        apiId: "user",
+        definition: EMPTY_REGISTER_API_DEFINITION,
+    });
+    // create snippets
+    await CLIENT.snippetsFactory.createSnippetsForSdk({
+        orgId: "acme",
+        apiId: "user",
+        snippets: {
+            type: "go",
+            sdk: {
+                githubRepo: "fern-api/user-go",
+                version: "0.0.1",
+            },
+            snippets: [
+                {
+                    endpoint: {
+                        path: "/users/v1",
+                        method: FernRegistry.EndpointMethod.Get,
+                    },
+                    snippet: {
+                        client: "client := userclient.New(userclient.WithAuthToken('YOUR_AUTH_TOKEN')",
+                    },
+                },
+            ],
+        },
+    });
+    // get snippets
+    let unauthorizedErrorThrown = false;
+    try {
+        await UNAUTHENTICATED_CLIENT.get({
+            apiId: "user",
+            endpoint: {
+                path: "/users/v1",
+                method: FernRegistry.EndpointMethod.Get,
+            },
+        });
+    } catch (err: unknown) {
+        unauthorizedErrorThrown = err instanceof FernRegistryError && err.statusCode == 401;
+    }
+    expect(unauthorizedErrorThrown).toEqual(true);
+});
+
+it("snippets apiId not found", async () => {
+    // create snippets
+    await CLIENT.snippetsFactory.createSnippetsForSdk({
+        orgId: "acme",
+        apiId: "petstore",
+        snippets: {
+            type: "typescript",
+            sdk: {
+                package: "acme",
+                version: "0.0.1",
+            },
+            snippets: [
+                {
+                    endpoint: {
+                        path: "/users/v1",
+                        method: FernRegistry.EndpointMethod.Get,
+                    },
+                    snippet: {
+                        client: "const acme = new AcmeClient({\napiKey: 'YOUR_API_KEY',\n});",
+                    },
+                },
+            ],
+        },
+    });
+    // get not found apiId
+    let notFoundErrorThrown = false;
+    try {
+        await CLIENT.get({
+            apiId: "dne",
+            endpoint: {
+                path: "/users/v1",
+                method: FernRegistry.EndpointMethod.Get,
+            },
+        });
+    } catch (err: unknown) {
+        notFoundErrorThrown = err instanceof FernRegistryError && err.statusCode == 404;
+    }
+    expect(notFoundErrorThrown).toEqual(true);
 });

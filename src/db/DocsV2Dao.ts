@@ -4,7 +4,7 @@ import { DocsV1Db } from "../api";
 import { DocsRegistrationInfo } from "../controllers/docs/v2/getDocsWriteV2Service";
 import type { IndexSegment } from "../services/algolia";
 import { WithoutQuestionMarks, readBuffer, writeBuffer } from "../util";
-import { IndexSegmentIds, ReferencedAPIDefinitionIds } from "./types";
+import { IndexSegmentIds, PrismaTransaction, ReferencedAPIDefinitionIds } from "./types";
 
 export interface StoreDocsDefinitionResponse {
     previousAlogliaIndex?: string;
@@ -42,8 +42,6 @@ export interface DocsV2Dao {
         indexSegments: IndexSegment[];
     }): Promise<StoreDocsDefinitionResponse>;
 }
-
-type PrismaTransaction = Omit<PrismaClient, "$connect" | "$disconnect" | "$on" | "$transaction" | "$use">;
 
 export class DocsV2DaoImpl implements DocsV2Dao {
     constructor(private readonly prisma: PrismaClient) {}

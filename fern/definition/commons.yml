@@ -16,8 +16,21 @@ types:
     docs: The ID of a particular docs config.
 
 errors: 
-  UserNotInOrgError:
-    status-code: 403
+  BadRequestError:
+    status-code: 400
+    type: string
 
   UnauthorizedError:
     status-code: 401
+    type: string
+
+  UserNotInOrgError:
+    status-code: 403
+
+  InternalError:
+    status-code: 500
+    type: string
+
+  UnavailableError:
+    status-code: 503
+    type: string

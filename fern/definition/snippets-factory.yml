@@ -29,9 +29,11 @@ service:
                 The API name. 
             snippets: SDKSnippetsCreate
       errors:
-        - snippets.SDKNotFound
+        - commons.UnauthorizedError
+        - commons.UserNotInOrgError
         - snippets.ApiIdNotFound
         - snippets.OrgIdNotFound
+        - snippets.SDKNotFound
 
 types: 
   SDKSnippetsCreate: 

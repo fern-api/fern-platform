@@ -1,10 +1,30 @@
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
-import { FdrAPI } from "../../api";
-import type { FdrApplication, FdrConfig } from "../../app";
 import winston from "winston";
+import { FdrAPI } from "../../api";
+import { FernRegistryError } from "../../api/generated";
+import type { FdrApplication, FdrConfig } from "../../app";
+
+export type OrgIdsResponse = SuccessOrgIdsResponse | ErrorOrgIdsResponse; 
+
+export interface SuccessOrgIdsResponse {
+  type: "success";
+  orgIds: string[] | undefined,
+}
+
+
+export interface ErrorOrgIdsResponse {
+  type: "error";
+  err: FernRegistryError,
+}
 
 export interface AuthService {
     checkUserBelongsToOrg({ authHeader, orgId }: { authHeader: string | undefined; orgId: string }): Promise<void>;
+
+    getOrgIdsFromAuthHeader({
+        authHeader,
+    }: {
+        authHeader: string | undefined;
+    }): Promise<OrgIdsResponse>;
 }
 
 export class AuthServiceImpl implements AuthService {
@@ -12,6 +32,38 @@ export class AuthServiceImpl implements AuthService {
 
     constructor(private readonly app: FdrApplication) {
         this.logger = app.logger;
+    }
+
+    async getOrgIdsFromAuthHeader({
+        authHeader
+    }: {
+        authHeader: string | undefined;
+    }): Promise<OrgIdsResponse> {
+        if (authHeader == null) {
+            return {
+                type: "error",
+                err: new FdrAPI.UnauthorizedError("Authorization header was not specified"),
+            };
+        }
+        const token = getTokenFromAuthHeader(authHeader);
+        const venus = getVenusClient({
+            config: this.app.config,
+            token,
+        });
+        const response = await venus.user.getMyOrganizations({
+            pageId: 1,
+        });
+        if (!response.ok) {
+            this.logger.error("Failed to make request to venus", response.error);
+            return {
+                type: "error",
+                err: new FdrAPI.UnavailableError("Failed to resolve user's organizations"),
+            };
+        }
+        return {
+            type: "success",
+            orgIds: response.body.organizations,
+        };
     }
 
     async checkUserBelongsToOrg({
@@ -22,7 +74,7 @@ export class AuthServiceImpl implements AuthService {
         orgId: string;
     }): Promise<void> {
         if (authHeader == null) {
-            throw new FdrAPI.UnauthorizedError();
+            throw new FdrAPI.UnauthorizedError("Authorization header was not specified");
         }
         const token = getTokenFromAuthHeader(authHeader);
         const venus = getVenusClient({
@@ -32,7 +84,7 @@ export class AuthServiceImpl implements AuthService {
         const response = await venus.organization.isMember(FernVenusApi.OrganizationId(orgId));
         if (!response.ok) {
             this.logger.error("Failed to make request to venus", response.error);
-            throw new Error("Failed to make request to venus.");
+            throw new FdrAPI.UnavailableError("Failed to resolve user's organizations");
         }
         const belongsToOrg = response.body;
         if (!belongsToOrg) {
