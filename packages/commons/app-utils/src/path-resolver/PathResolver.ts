@@ -2,15 +2,7 @@ import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/reso
 import { noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isUnversionedTabbedNavigationConfig, isVersionedNavigationConfig } from "../fern";
 import type { ResolvedNode, ResolvedNodeTab, ResolvedNodeVersion, UrlSlug } from "./types";
-
-function joinUrlSlugs(...parts: string[]): string {
-    return parts.reduce((a, b) => {
-        if (a === "") {
-            return b;
-        }
-        return `${a}/${b}`;
-    });
-}
+import { joinUrlSlugs } from "./util";
 
 export interface PathResolverConfig {
     docsDefinition: FernRegistryDocsRead.DocsDefinition;
