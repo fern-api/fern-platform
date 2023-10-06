@@ -2,7 +2,7 @@ import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/reso
 import { noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isUnversionedTabbedNavigationConfig, isVersionedNavigationConfig } from "../fern";
 import { NODE_FACTORY } from "./node-factory";
-import type { ResolvedNode, ResolvedNodeTab, ResolvedNodeVersion, UrlSlug } from "./types";
+import type { ResolvedNavigatableNode, ResolvedNode, ResolvedNodeTab, ResolvedNodeVersion, UrlSlug } from "./types";
 import { joinUrlSlugs } from "./util";
 
 export interface PathResolverConfig {
@@ -10,19 +10,38 @@ export interface PathResolverConfig {
 }
 
 export class PathResolver {
-    private tree: Map<UrlSlug, ResolvedNode>;
+    private readonly nodesBySlug: Map<UrlSlug, ResolvedNode>;
 
     public constructor(public readonly config: PathResolverConfig) {
-        this.tree = new Map();
+        this.nodesBySlug = new Map();
         this.preprocessDefinition();
     }
 
     public resolveSlug(slug: UrlSlug): ResolvedNode | undefined {
-        return this.tree.get(slug);
+        return this.nodesBySlug.get(slug);
+    }
+
+    public resolveNavigatable(slug: string): ResolvedNavigatableNode | undefined;
+    public resolveNavigatable(resolvedNode: ResolvedNode): ResolvedNavigatableNode;
+    public resolveNavigatable(slugOrNode: string | ResolvedNode): ResolvedNavigatableNode | undefined {
+        const resolvedNode = typeof slugOrNode === "string" ? this.nodesBySlug.get(slugOrNode) : slugOrNode;
+        return resolvedNode != null ? this.#resolveNavigatable(resolvedNode) : undefined;
+    }
+
+    #resolveNavigatable(resolvedNode: ResolvedNode): ResolvedNavigatableNode | undefined {
+        let cur: ResolvedNode | undefined = resolvedNode;
+        while (cur != null) {
+            if (cur.type === "endpoint" || cur.type === "page") {
+                return cur;
+            }
+            // TODO: Go to first child
+            cur = cur.children.get(cur.slug);
+        }
+        return undefined;
     }
 
     public getAllSlugs(): UrlSlug[] {
-        return Array.from(this.tree.keys());
+        return Array.from(this.nodesBySlug.keys());
     }
 
     private preprocessDefinition() {
@@ -33,14 +52,14 @@ export class PathResolver {
                     slug: version.urlSlug,
                     version: { id: version.version, slug: version.urlSlug },
                 });
-                this.tree.set(joinUrlSlugs(versionNode.slug), versionNode);
+                this.nodesBySlug.set(joinUrlSlugs(versionNode.slug), versionNode);
                 if (isUnversionedTabbedNavigationConfig(version.config)) {
                     version.config.tabs.forEach((tab, tabIndex) => {
                         const tabNode = NODE_FACTORY.tab.create({
                             slug: tab.urlSlug,
                             version: { id: version.version, slug: version.urlSlug },
                         });
-                        this.tree.set(joinUrlSlugs(versionNode.slug, tabNode.slug), tabNode);
+                        this.nodesBySlug.set(joinUrlSlugs(versionNode.slug, tabNode.slug), tabNode);
                         versionNode.children.set(tabNode.slug, tabNode);
                         this.deepTraverseItems(
                             tab.items,
@@ -56,7 +75,7 @@ export class PathResolver {
                         );
                         if (versionIndex === 0) {
                             // Special handling for default version
-                            this.tree.set(joinUrlSlugs(tabNode.slug), tabNode);
+                            this.nodesBySlug.set(joinUrlSlugs(tabNode.slug), tabNode);
                             this.deepTraverseItems(
                                 tab.items,
                                 {
@@ -99,7 +118,7 @@ export class PathResolver {
             if (isUnversionedTabbedNavigationConfig(navigationConfig)) {
                 navigationConfig.tabs.forEach((tab, tabIndex) => {
                     const tabNode = NODE_FACTORY.tab.create({ slug: tab.urlSlug });
-                    this.tree.set(tabNode.slug, tabNode);
+                    this.nodesBySlug.set(tabNode.slug, tabNode);
                     this.deepTraverseItems(
                         tab.items,
                         null,
@@ -132,7 +151,7 @@ export class PathResolver {
                         version,
                         tab,
                     };
-                    this.tree.set(joinUrlSlugs(...slugs, node.slug), node);
+                    this.nodesBySlug.set(joinUrlSlugs(...slugs, node.slug), node);
                 },
                 api: (item) => {
                     const node: ResolvedNode.ApiSection = {
@@ -143,7 +162,7 @@ export class PathResolver {
                         version,
                         tab,
                     };
-                    this.tree.set(joinUrlSlugs(...slugs, node.slug), node);
+                    this.nodesBySlug.set(joinUrlSlugs(...slugs, node.slug), node);
                 },
                 section: (item) => {
                     const node: ResolvedNode.DocsSection = {
@@ -154,7 +173,7 @@ export class PathResolver {
                         version,
                         tab,
                     };
-                    this.tree.set(joinUrlSlugs(...slugs, node.slug), node);
+                    this.nodesBySlug.set(joinUrlSlugs(...slugs, node.slug), node);
                     this.deepTraverseItems(item.items, version, tab, [...slugs, node.slug]);
                 },
                 _other: noop,

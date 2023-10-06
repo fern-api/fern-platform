@@ -15,6 +15,8 @@ export type ResolvedNode =
     | ResolvedNode.Endpoint
     | ResolvedNode.Page;
 
+export type ResolvedNavigatableNode = ResolvedNode.Endpoint | ResolvedNode.Page;
+
 export interface ResolvedNodeVersion {
     id: string;
     slug: string;
