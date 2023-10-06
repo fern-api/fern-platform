@@ -1,9 +1,9 @@
 import type { DefinitionNode, FullSlug } from "./types";
 import { joinUrlSlugs } from "./util";
 
-export function buildDefinitionMap(node: DefinitionNode): Map<FullSlug, DefinitionNode> {
+export function buildDefinitionMap(root: DefinitionNode): Map<FullSlug, DefinitionNode> {
     const map = new Map<string, DefinitionNode>();
-    traversePreOrder(node, (node, slugs) => {
+    traversePreOrder(root, (node, slugs) => {
         if (node.type !== "root" && node.version?.index === 0) {
             // Special handling for default version
             const [, ...slugsWithoutVersion] = slugs;
