@@ -20,6 +20,10 @@ export class PathResolver {
     private readonly root: ResolvedNode.Root;
     private readonly nodesBySlug: Map<UrlSlug, ResolvedNode>;
 
+    public get rootNavigatable(): ResolvedNavigatableNode | undefined {
+        return this.#resolveNavigatable(this.root);
+    }
+
     public constructor(public readonly config: PathResolverConfig) {
         this.root = NODE_FACTORY.root.create();
         this.nodesBySlug = new Map();
@@ -152,41 +156,34 @@ export class PathResolver {
         navigationItems.forEach((item) => {
             visitDiscriminatedUnion(item, "type")._visit({
                 page: (item) => {
-                    const node: ResolvedNode.Page = {
-                        type: "page",
-                        page: item,
+                    const node = NODE_FACTORY.page.create({
                         slug: item.urlSlug,
                         version,
                         tab,
-                    };
+                        page: item,
+                    });
                     parent.children.set(node.slug, node);
                     parent.childrenOrdering.push(node.slug);
                     this.nodesBySlug.set(joinUrlSlugs(...slugs, node.slug), node);
                 },
                 api: (item) => {
-                    const node: ResolvedNode.ApiSection = {
-                        type: "api-section",
+                    const node = NODE_FACTORY.apiSection.create({
                         section: item,
-                        children: new Map(),
-                        childrenOrdering: [],
                         slug: item.urlSlug,
                         version,
                         tab,
-                    };
+                    });
                     parent.children.set(node.slug, node);
                     parent.childrenOrdering.push(node.slug);
                     this.nodesBySlug.set(joinUrlSlugs(...slugs, node.slug), node);
                 },
                 section: (item) => {
-                    const node: ResolvedNode.DocsSection = {
-                        type: "docs-section",
+                    const node = NODE_FACTORY.docsSection.create({
                         section: item,
-                        children: new Map(),
-                        childrenOrdering: [],
                         slug: item.urlSlug,
                         version,
                         tab,
-                    };
+                    });
                     parent.children.set(node.slug, node);
                     parent.childrenOrdering.push(node.slug);
                     this.nodesBySlug.set(joinUrlSlugs(...slugs, node.slug), node);

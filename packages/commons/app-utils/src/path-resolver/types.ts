@@ -6,6 +6,13 @@ import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/reso
  */
 export type UrlSlug = string;
 
+export interface BaseNode {
+    /**
+     * Represents a slug part e.g. `getting-started`.
+     */
+    slug: string;
+}
+
 export type ResolvedNode =
     | ResolvedNode.Root
     | ResolvedNode.Version
@@ -31,32 +38,28 @@ export interface ResolvedNodeTab {
 }
 
 export declare namespace ResolvedNode {
-    export interface Root {
+    export interface Root extends BaseNode {
         type: "root";
-        slug: "";
         children: Map<UrlSlug, ResolvedNode>;
         childrenOrdering: UrlSlug[];
     }
 
-    export interface Version {
+    export interface Version extends BaseNode {
         type: "version";
-        slug: string;
         version: ResolvedNodeVersion;
         children: Map<UrlSlug, Exclude<ResolvedNode, ResolvedNode.Version>>;
         childrenOrdering: UrlSlug[];
     }
 
-    export interface Tab {
+    export interface Tab extends BaseNode {
         type: "tab";
-        slug: string;
         version: ResolvedNodeVersion | null;
         children: Map<UrlSlug, Exclude<ResolvedNode, ResolvedNode.Version>>;
         childrenOrdering: UrlSlug[];
     }
 
-    export interface DocsSection {
+    export interface DocsSection extends BaseNode {
         type: "docs-section";
-        slug: string;
         version: ResolvedNodeVersion | null;
         tab: ResolvedNodeTab | null;
         section: FernRegistryDocsRead.DocsSection;
@@ -64,9 +67,8 @@ export declare namespace ResolvedNode {
         childrenOrdering: UrlSlug[];
     }
 
-    export interface ApiSection {
+    export interface ApiSection extends BaseNode {
         type: "api-section";
-        slug: string;
         version: ResolvedNodeVersion | null;
         tab: ResolvedNodeTab | null;
         section: FernRegistryDocsRead.ApiSection;
@@ -74,27 +76,25 @@ export declare namespace ResolvedNode {
         childrenOrdering: UrlSlug[];
     }
 
-    export interface ApiSubpackage {
+    export interface ApiSubpackage extends BaseNode {
         type: "api-subpackage";
-        slug: string;
         version: ResolvedNodeVersion | null;
         tab: ResolvedNodeTab | null;
+        section: FernRegistryDocsRead.ApiSection;
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
         children: Map<UrlSlug, Exclude<ResolvedNode, ResolvedNode.Version | ResolvedNode.Tab>>;
         childrenOrdering: UrlSlug[];
     }
 
-    export interface Endpoint {
+    export interface Endpoint extends BaseNode {
         type: "endpoint";
-        slug: string;
         version: ResolvedNodeVersion | null;
         tab: ResolvedNodeTab | null;
         endpoint: FernRegistryApiRead.EndpointDefinition;
     }
 
-    export interface Page {
+    export interface Page extends BaseNode {
         type: "page";
-        slug: string;
         version: ResolvedNodeVersion | null;
         tab: ResolvedNodeTab | null;
         page: FernRegistryDocsRead.PageMetadata;
