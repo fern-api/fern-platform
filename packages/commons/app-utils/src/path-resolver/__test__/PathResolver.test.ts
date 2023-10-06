@@ -27,7 +27,7 @@ describe("PathResolver", () => {
                     docsDefinition: DEFINITION_UNVERSIONED_UNTABBED,
                 });
                 const resolvedNode = resolver.resolveSlug("introduction");
-                expect(resolvedNode?.type).toEqual("section");
+                expect(resolvedNode?.type).toEqual("docs-section");
             });
         });
     });
