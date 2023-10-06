@@ -265,15 +265,31 @@ export class SnippetsDaoImpl implements SnippetsDao {
         storeSnippetsInfo: StoreSnippetsInfo;
     }): Promise<StoreSnippetsResponse> {
         return await this.prisma.$transaction(async (tx) => {
+            const dbApi = await tx.snippetApi.findUnique({
+                where: {
+                    orgId_apiName: {
+                        orgId: storeSnippetsInfo.orgId,
+                        apiName: storeSnippetsInfo.apiId,
+                    },
+                },
+            });
+            if (dbApi === null) {
+                await tx.snippetApi.create({
+                    data: {
+                        orgId: storeSnippetsInfo.orgId,
+                        apiName: storeSnippetsInfo.apiId,
+                    },
+                });
+            }
             const sdkInfo = sdkInfoFromSnippetsCreate({
                 sdkSnippetsCreate: storeSnippetsInfo.sdk,
             });
-            const sdks = await tx.sdk.findUnique({
+            const dbSdk = await tx.sdk.findUnique({
                 where: {
                     id: sdkInfo.id,
                 },
             });
-            if (sdks !== null) {
+            if (dbSdk !== null) {
                 // Overwrite the SDK and all of its snippets that already exist.
                 await tx.sdk.delete({
                     where: {

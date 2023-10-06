@@ -8,7 +8,7 @@ export type OrgIdsResponse = SuccessOrgIdsResponse | ErrorOrgIdsResponse;
 
 export interface SuccessOrgIdsResponse {
   type: "success";
-  orgIds: string[] | undefined,
+  orgIds: Set<string> | undefined,
 }
 
 
@@ -62,7 +62,7 @@ export class AuthServiceImpl implements AuthService {
         }
         return {
             type: "success",
-            orgIds: response.body.organizations,
+            orgIds: new Set<string>(response.body.organizations),
         };
     }
 

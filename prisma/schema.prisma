@@ -83,6 +83,14 @@ model Sdk {
   Snippet   Snippet[]
 }
 
+model SnippetApi {
+  orgId     String
+  apiName   String
+  createdAt DateTime @default(now())
+
+  @@id([orgId, apiName])
+}
+
 enum HttpMethod {
   PUT
   POST

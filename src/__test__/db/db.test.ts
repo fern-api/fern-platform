@@ -419,6 +419,46 @@ it("get snippets", async () => {
     expect(snippet.client).toEqual("const petstore = new PetstoreClient({\napiKey: 'YOUR_API_KEY',\n});");
 });
 
+it("get snippets with unregistered API", async () => {
+    // create snippets
+    await CLIENT.snippetsFactory.createSnippetsForSdk({
+        orgId: "acme",
+        apiId: "fresh",
+        snippets: {
+            type: "typescript",
+            sdk: {
+                package: "acme",
+                version: "0.0.1",
+            },
+            snippets: [
+                {
+                    endpoint: {
+                        path: "/users/v1",
+                        method: FernRegistry.EndpointMethod.Get,
+                    },
+                    snippet: {
+                        client: "const petstore = new PetstoreClient({\napiKey: 'YOUR_API_KEY',\n});",
+                    },
+                },
+            ],
+        },
+    });
+    // get snippets
+    const snippets = await CLIENT.get({
+        apiId: "fresh",
+        endpoint: {
+            path: "/users/v1",
+            method: FernRegistry.EndpointMethod.Get,
+        },
+    });
+    expect(snippets.length).toEqual(1);
+
+    const snippet = snippets[0] as FernRegistry.TypeScriptSnippet;
+    expect(snippet.sdk.package).toEqual("acme");
+    expect(snippet.sdk.version).toEqual("0.0.1");
+    expect(snippet.client).toEqual("const petstore = new PetstoreClient({\napiKey: 'YOUR_API_KEY',\n});");
+});
+
 it("load snippets", async () => {
     // register API definition for acme org
     await CLIENT.api.v1.register.registerApiDefinition({

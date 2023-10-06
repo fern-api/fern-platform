@@ -1,8 +1,8 @@
 import { SnippetsService } from "../../api";
-import { ApiIdNotFound, InvalidPageError, ApiIdRequiredError, OrgIdRequiredError, OrgIdNotFound } from "../../api/generated/api/errors";
+import { ApiIdNotFound, ApiIdRequiredError, InvalidPageError, OrgIdNotFound, OrgIdRequiredError } from "../../api/generated/api/errors";
 import { InternalError, UnauthorizedError } from "../../api/generated/api/resources/commons/errors";
 import { type FdrApplication } from "../../app";
-import { LoadAPIInfosRequest } from "../../db/APIDefinitionDao";
+import { LoadSnippetAPIsRequest } from "../../db/SnippetAPIsDao";
 import { LoadSnippetsResponse } from "../../db/SnippetsDao";
 
 export interface ApiInfo {
@@ -27,19 +27,30 @@ async function getApiInfo({
     if (orgIdsResponse.type === "error") {
         throw orgIdsResponse.err;
     }
-    if (orgIdsResponse.orgIds?.length === 0) {
-        throw new OrgIdNotFound("No organizations were resolved");
+    if (orgIdsResponse.orgIds?.size === 0) {
+        throw new OrgIdNotFound("No organizations were resolved for this user");
     }
-    const loadAPIInfosRequest: LoadAPIInfosRequest = {
-        orgIds: orgIdsResponse.orgIds,
+    if (orgId != null && orgIdsResponse.orgIds != null ? orgIdsResponse.orgIds.has(orgId) : false) {
+        throw new UnauthorizedError(`You are not a member of organization ${orgId}`);
     }
-    if (apiId !== undefined) {
-        loadAPIInfosRequest.apiNames = [
-            apiId,
-        ]
+    if (orgId != null && apiId != null) {
+        const snippetAPI = await app.dao.snippetAPIs().loadSnippetAPI({
+            loadSnippetAPIRequest: {
+                orgId: orgId,
+                apiName: apiId,
+            }
+        });
+        return {
+            orgId: snippetAPI.orgId,
+            apiId: snippetAPI.apiName,
+        };
     }
-    const apiInfos = await app.dao.apis().loadAPIInfos({
-        loadAPIInfosRequest: loadAPIInfosRequest,
+    const loadSnippetAPIsRequest: LoadSnippetAPIsRequest = {
+        orgIds: orgId != null ? [orgId] : Array.from(orgIdsResponse.orgIds ?? []),
+        apiName: apiId != null ? apiId : undefined,
+    }
+    const apiInfos = await app.dao.snippetAPIs().loadSnippetAPIs({
+        loadSnippetAPIsRequest: loadSnippetAPIsRequest,
     })
     if (apiInfos.length === 0) {
         if (apiId !== undefined) {

@@ -47,7 +47,7 @@ class MockAuthService implements AuthService {
         console.log(`AuthService mock received authHeader ${JSON.stringify(authHeader)}`);
         return {
             type: "success",
-            orgIds: this.orgIds,
+            orgIds: new Set<string>(this.orgIds),
         };
     }
 }
