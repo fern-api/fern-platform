@@ -15,33 +15,33 @@ export interface BaseNode {
     slug: ItemSlug;
 }
 
-export type ResolvedNode =
-    | ResolvedNode.Root
-    | ResolvedNode.Version
-    | ResolvedNode.Tab
-    | ResolvedNode.DocsSection
-    | ResolvedNode.ApiSection
-    | ResolvedNode.ApiSubpackage
-    | ResolvedNode.Endpoint
-    | ResolvedNode.Page;
+export type DefinitionNode =
+    | DefinitionNode.Root
+    | DefinitionNode.Version
+    | DefinitionNode.Tab
+    | DefinitionNode.DocsSection
+    | DefinitionNode.ApiSection
+    | DefinitionNode.ApiSubpackage
+    | DefinitionNode.Endpoint
+    | DefinitionNode.Page;
 
-export type ResolvedNavigatableNode = ResolvedNode.Endpoint | ResolvedNode.Page;
-export type ResolvedChildNode = Exclude<ResolvedNode, ResolvedNode.Root>;
-export type ResolvedParentNode = Exclude<ResolvedNode, ResolvedNavigatableNode>;
+export type ResolvedNavigatableNode = DefinitionNode.Endpoint | DefinitionNode.Page;
+export type ResolvedChildNode = Exclude<DefinitionNode, DefinitionNode.Root>;
+export type ResolvedParentNode = Exclude<DefinitionNode, ResolvedNavigatableNode>;
 
-export interface ResolvedNodeVersion {
+export interface DefinitionNodeVersion {
     id: string;
     slug: string;
     index: number;
 }
 
-export interface ResolvedNodeTab {
+export interface DefinitionNodeTab {
     slug: string;
     /** The 0-based index of the tab. */
     index: number;
 }
 
-export declare namespace ResolvedNode {
+export declare namespace DefinitionNode {
     export interface Root extends BaseNode {
         type: "root";
         children: Map<FullSlug, ResolvedChildNode>;
@@ -50,22 +50,22 @@ export declare namespace ResolvedNode {
 
     export interface Version extends BaseNode {
         type: "version";
-        version: ResolvedNodeVersion;
+        version: DefinitionNodeVersion;
         children: Map<FullSlug, ResolvedChildNode>;
         childrenOrdering: FullSlug[];
     }
 
     export interface Tab extends BaseNode {
         type: "tab";
-        version: ResolvedNodeVersion | null;
+        version: DefinitionNodeVersion | null;
         children: Map<FullSlug, ResolvedChildNode>;
         childrenOrdering: FullSlug[];
     }
 
     export interface DocsSection extends BaseNode {
         type: "docs-section";
-        version: ResolvedNodeVersion | null;
-        tab: ResolvedNodeTab | null;
+        version: DefinitionNodeVersion | null;
+        tab: DefinitionNodeTab | null;
         section: FernRegistryDocsRead.DocsSection;
         children: Map<FullSlug, ResolvedChildNode>;
         childrenOrdering: FullSlug[];
@@ -73,8 +73,8 @@ export declare namespace ResolvedNode {
 
     export interface ApiSection extends BaseNode {
         type: "api-section";
-        version: ResolvedNodeVersion | null;
-        tab: ResolvedNodeTab | null;
+        version: DefinitionNodeVersion | null;
+        tab: DefinitionNodeTab | null;
         section: FernRegistryDocsRead.ApiSection;
         children: Map<FullSlug, ResolvedChildNode>;
         childrenOrdering: FullSlug[];
@@ -82,8 +82,8 @@ export declare namespace ResolvedNode {
 
     export interface ApiSubpackage extends BaseNode {
         type: "api-subpackage";
-        version: ResolvedNodeVersion | null;
-        tab: ResolvedNodeTab | null;
+        version: DefinitionNodeVersion | null;
+        tab: DefinitionNodeTab | null;
         section: FernRegistryDocsRead.ApiSection;
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
         children: Map<FullSlug, ResolvedChildNode>;
@@ -92,15 +92,15 @@ export declare namespace ResolvedNode {
 
     export interface Endpoint extends BaseNode {
         type: "endpoint";
-        version: ResolvedNodeVersion | null;
-        tab: ResolvedNodeTab | null;
+        version: DefinitionNodeVersion | null;
+        tab: DefinitionNodeTab | null;
         endpoint: FernRegistryApiRead.EndpointDefinition;
     }
 
     export interface Page extends BaseNode {
         type: "page";
-        version: ResolvedNodeVersion | null;
-        tab: ResolvedNodeTab | null;
+        version: DefinitionNodeVersion | null;
+        tab: DefinitionNodeTab | null;
         page: FernRegistryDocsRead.PageMetadata;
     }
 }

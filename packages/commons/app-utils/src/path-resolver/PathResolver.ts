@@ -1,15 +1,15 @@
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { buildNodeMap } from "./build-map";
-import { buildDocsDefinitionTree } from "./build-tree";
-import type { FullSlug, ResolvedNavigatableNode, ResolvedNode } from "./types";
+import { buildDefinitionMap } from "./build-map";
+import { buildDefinitionTree } from "./build-tree";
+import type { DefinitionNode, FullSlug, ResolvedNavigatableNode } from "./types";
 
 export interface PathResolverConfig {
     docsDefinition: FernRegistryDocsRead.DocsDefinition;
 }
 
 export class PathResolver {
-    private readonly root: ResolvedNode.Root;
-    private readonly nodesByFullSlug: Map<FullSlug, ResolvedNode>;
+    private readonly root: DefinitionNode.Root;
+    private readonly nodesByFullSlug: Map<FullSlug, DefinitionNode>;
 
     public get rootNavigatable(): ResolvedNavigatableNode | undefined {
         return this.#resolveNavigatable(this.root);
@@ -22,24 +22,24 @@ export class PathResolver {
     }
 
     private preprocessDefinition() {
-        const tree = buildDocsDefinitionTree(this.config.docsDefinition);
-        const map = buildNodeMap(tree);
+        const tree = buildDefinitionTree(this.config.docsDefinition);
+        const map = buildDefinitionMap(tree);
         return { tree, map };
     }
 
-    public resolveSlug(slug: FullSlug): ResolvedNode | undefined {
+    public resolveSlug(slug: FullSlug): DefinitionNode | undefined {
         return this.nodesByFullSlug.get(slug);
     }
 
     public resolveNavigatable(slug: string): ResolvedNavigatableNode | undefined;
-    public resolveNavigatable(resolvedNode: ResolvedNode): ResolvedNavigatableNode;
-    public resolveNavigatable(slugOrNode: string | ResolvedNode): ResolvedNavigatableNode | undefined {
-        const resolvedNode = typeof slugOrNode === "string" ? this.nodesByFullSlug.get(slugOrNode) : slugOrNode;
-        return resolvedNode != null ? this.#resolveNavigatable(resolvedNode) : undefined;
+    public resolveNavigatable(node: DefinitionNode): ResolvedNavigatableNode;
+    public resolveNavigatable(slugOrNode: string | DefinitionNode): ResolvedNavigatableNode | undefined {
+        const node = typeof slugOrNode === "string" ? this.nodesByFullSlug.get(slugOrNode) : slugOrNode;
+        return node != null ? this.#resolveNavigatable(node) : undefined;
     }
 
-    #resolveNavigatable(resolvedNode: ResolvedNode): ResolvedNavigatableNode | undefined {
-        let cur: ResolvedNode | undefined = resolvedNode;
+    #resolveNavigatable(node: DefinitionNode): ResolvedNavigatableNode | undefined {
+        let cur: DefinitionNode | undefined = node;
         while (cur != null) {
             if (cur.type === "endpoint" || cur.type === "page") {
                 return cur;

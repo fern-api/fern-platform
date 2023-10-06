@@ -2,19 +2,19 @@ import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/reso
 import { isUnversionedTabbedNavigationConfig, isVersionedNavigationConfig } from "../fern";
 import { NODE_FACTORY } from "./node-factory";
 import type {
+    DefinitionNode,
+    DefinitionNodeTab,
+    DefinitionNodeVersion,
     ResolvedChildNode,
-    ResolvedNode,
-    ResolvedNodeTab,
-    ResolvedNodeVersion,
     ResolvedParentNode,
 } from "./types";
 
 type TraversalContext = {
-    version: ResolvedNodeVersion | null;
-    tab: ResolvedNodeTab | null;
+    version: DefinitionNodeVersion | null;
+    tab: DefinitionNodeTab | null;
 };
 
-export function buildDocsDefinitionTree(docsDefinition: FernRegistryDocsRead.DocsDefinition): ResolvedNode.Root {
+export function buildDefinitionTree(docsDefinition: FernRegistryDocsRead.DocsDefinition): DefinitionNode.Root {
     const root = NODE_FACTORY.root.create();
     const navigationConfig = docsDefinition.config.navigation;
 
@@ -109,7 +109,7 @@ function buildNodesForNavigationItems(
 function buildNodeForNavigationItem(
     item: FernRegistryDocsRead.NavigationItem,
     context: TraversalContext
-): ResolvedNode {
+): DefinitionNode {
     const { version, tab } = context;
     switch (item.type) {
         case "page": {

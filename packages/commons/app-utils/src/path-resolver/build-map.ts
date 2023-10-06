@@ -1,8 +1,8 @@
-import type { FullSlug, ResolvedNode } from "./types";
+import type { DefinitionNode, FullSlug } from "./types";
 import { joinUrlSlugs } from "./util";
 
-export function buildNodeMap(node: ResolvedNode): Map<FullSlug, ResolvedNode> {
-    const map = new Map<string, ResolvedNode>();
+export function buildDefinitionMap(node: DefinitionNode): Map<FullSlug, DefinitionNode> {
+    const map = new Map<string, DefinitionNode>();
     traversePreOrder(node, (node, slugs) => {
         if (node.type !== "root" && node.version?.index === 0) {
             // Special handling for default version
@@ -17,8 +17,8 @@ export function buildNodeMap(node: ResolvedNode): Map<FullSlug, ResolvedNode> {
 }
 
 function traversePreOrder(
-    node: ResolvedNode,
-    cb: (node: ResolvedNode, slugs: string[]) => void,
+    node: DefinitionNode,
+    cb: (node: DefinitionNode, slugs: string[]) => void,
     slugs: string[] = []
 ): void {
     cb(node, slugs);
