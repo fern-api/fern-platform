@@ -136,7 +136,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["lodash-es", "npm:4.17.21"],\
             ["mrlint", "npm:0.0.124"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:2.8.8"],\
             ["react", "npm:18.2.0"],\
             ["styled-jsx", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:5.1.2"],\
             ["stylelint", "npm:14.14.0"],\
@@ -9593,7 +9593,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["lodash-es", "npm:4.17.21"],\
             ["mrlint", "npm:0.0.124"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
+            ["prettier", "npm:2.8.8"],\
             ["react", "npm:18.2.0"],\
             ["styled-jsx", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:5.1.2"],\
             ["stylelint", "npm:14.14.0"],\
@@ -15044,6 +15044,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/prettier-npm-2.7.1-d1f40f5e1a-55a4409182.zip/node_modules/prettier/",\
           "packageDependencies": [\
             ["prettier", "npm:2.7.1"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:2.8.8", {\
+          "packageLocation": "./.yarn/cache/prettier-npm-2.8.8-430828a36c-b49e409431.zip/node_modules/prettier/",\
+          "packageDependencies": [\
+            ["prettier", "npm:2.8.8"]\
           ],\
           "linkType": "HARD"\
         }]\
