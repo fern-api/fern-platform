@@ -2,15 +2,17 @@ import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resou
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 
 /**
- * A slug is a string like `"introduction/getting-started"` with no leading `"/"`
+ * Represents a slug part like `getting-started` with no leading `"/"`
  */
-export type UrlSlug = string;
+export type ItemSlug = string;
+
+/**
+ * A full slug is a complete slug string for a page like `"introduction/getting-started"` with no leading `"/"`
+ */
+export type FullSlug = string;
 
 export interface BaseNode {
-    /**
-     * Represents a slug part e.g. `getting-started`.
-     */
-    slug: string;
+    slug: ItemSlug;
 }
 
 export type ResolvedNode =
@@ -24,6 +26,7 @@ export type ResolvedNode =
     | ResolvedNode.Page;
 
 export type ResolvedNavigatableNode = ResolvedNode.Endpoint | ResolvedNode.Page;
+export type ResolvedChildNode = Exclude<ResolvedNode, ResolvedNode.Root>;
 export type ResolvedParentNode = Exclude<ResolvedNode, ResolvedNavigatableNode>;
 
 export interface ResolvedNodeVersion {
@@ -40,22 +43,22 @@ export interface ResolvedNodeTab {
 export declare namespace ResolvedNode {
     export interface Root extends BaseNode {
         type: "root";
-        children: Map<UrlSlug, ResolvedNode>;
-        childrenOrdering: UrlSlug[];
+        children: Map<FullSlug, ResolvedChildNode>;
+        childrenOrdering: FullSlug[];
     }
 
     export interface Version extends BaseNode {
         type: "version";
         version: ResolvedNodeVersion;
-        children: Map<UrlSlug, Exclude<ResolvedNode, ResolvedNode.Version>>;
-        childrenOrdering: UrlSlug[];
+        children: Map<FullSlug, ResolvedChildNode>;
+        childrenOrdering: FullSlug[];
     }
 
     export interface Tab extends BaseNode {
         type: "tab";
         version: ResolvedNodeVersion | null;
-        children: Map<UrlSlug, Exclude<ResolvedNode, ResolvedNode.Version>>;
-        childrenOrdering: UrlSlug[];
+        children: Map<FullSlug, ResolvedChildNode>;
+        childrenOrdering: FullSlug[];
     }
 
     export interface DocsSection extends BaseNode {
@@ -63,8 +66,8 @@ export declare namespace ResolvedNode {
         version: ResolvedNodeVersion | null;
         tab: ResolvedNodeTab | null;
         section: FernRegistryDocsRead.DocsSection;
-        children: Map<UrlSlug, Exclude<ResolvedNode, ResolvedNode.Version | ResolvedNode.Tab>>;
-        childrenOrdering: UrlSlug[];
+        children: Map<FullSlug, ResolvedChildNode>;
+        childrenOrdering: FullSlug[];
     }
 
     export interface ApiSection extends BaseNode {
@@ -72,8 +75,8 @@ export declare namespace ResolvedNode {
         version: ResolvedNodeVersion | null;
         tab: ResolvedNodeTab | null;
         section: FernRegistryDocsRead.ApiSection;
-        children: Map<UrlSlug, Exclude<ResolvedNode, ResolvedNode.Version | ResolvedNode.Tab>>;
-        childrenOrdering: UrlSlug[];
+        children: Map<FullSlug, ResolvedChildNode>;
+        childrenOrdering: FullSlug[];
     }
 
     export interface ApiSubpackage extends BaseNode {
@@ -82,8 +85,8 @@ export declare namespace ResolvedNode {
         tab: ResolvedNodeTab | null;
         section: FernRegistryDocsRead.ApiSection;
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
-        children: Map<UrlSlug, Exclude<ResolvedNode, ResolvedNode.Version | ResolvedNode.Tab>>;
-        childrenOrdering: UrlSlug[];
+        children: Map<FullSlug, ResolvedChildNode>;
+        childrenOrdering: FullSlug[];
     }
 
     export interface Endpoint extends BaseNode {

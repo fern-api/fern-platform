@@ -12,6 +12,7 @@ describe("PathResolver", () => {
                     docsDefinition: DEFINITION_UNVERSIONED_UNTABBED,
                 });
                 const expectedSlugs = new Set([
+                    "",
                     "introduction",
                     "introduction/authentication",
                     "introduction/getting-started",
@@ -49,6 +50,7 @@ describe("PathResolver", () => {
                     docsDefinition: DEFINITION_UNVERSIONED_TABBED,
                 });
                 const expectedSlugs = new Set([
+                    "",
                     "welcome",
                     "welcome/introduction",
                     "welcome/introduction/authentication",
@@ -86,6 +88,7 @@ describe("PathResolver", () => {
                     docsDefinition: DEFINITION_VERSIONED_UNTABBED,
                 });
                 const expectedSlugs = new Set([
+                    "",
                     // Default version
                     "introduction",
                     "introduction/getting-started",
@@ -116,6 +119,7 @@ describe("PathResolver", () => {
                     docsDefinition: DEFINITION_VERSIONED_TABBED,
                 });
                 const expectedSlugs = new Set([
+                    "",
                     // Default version
                     "welcome",
                     "welcome/introduction",
