@@ -1,6 +1,7 @@
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isUnversionedTabbedNavigationConfig, isVersionedNavigationConfig } from "../fern";
+import { NODE_FACTORY } from "./node-factory";
 import type { ResolvedNode, ResolvedNodeTab, ResolvedNodeVersion, UrlSlug } from "./types";
 import { joinUrlSlugs } from "./util";
 
@@ -27,41 +28,31 @@ export class PathResolver {
     private preprocessDefinition() {
         const navigationConfig = this.config.docsDefinition.config.navigation;
         if (isVersionedNavigationConfig(navigationConfig)) {
-            navigationConfig.versions.forEach((versionConfigData, versionIndex) => {
-                const versionNode: ResolvedNode.Version = {
-                    type: "version",
-                    slug: versionConfigData.urlSlug,
-                    version: {
-                        id: versionConfigData.version,
-                        slug: versionConfigData.urlSlug,
-                    },
-                    children: new Map(),
-                };
+            navigationConfig.versions.forEach((version, versionIndex) => {
+                const versionNode = NODE_FACTORY.version.create({
+                    slug: version.urlSlug,
+                    version: { id: version.version, slug: version.urlSlug },
+                });
                 this.tree.set(joinUrlSlugs(versionNode.slug), versionNode);
-                if (isUnversionedTabbedNavigationConfig(versionConfigData.config)) {
-                    versionConfigData.config.tabs.forEach((tab, tabIndex) => {
-                        const tabNode: ResolvedNode.Tab = {
-                            type: "tab",
+                if (isUnversionedTabbedNavigationConfig(version.config)) {
+                    version.config.tabs.forEach((tab, tabIndex) => {
+                        const tabNode = NODE_FACTORY.tab.create({
                             slug: tab.urlSlug,
-                            version: {
-                                id: versionConfigData.version,
-                                slug: versionConfigData.urlSlug,
-                            },
-                            children: new Map(),
-                        };
+                            version: { id: version.version, slug: version.urlSlug },
+                        });
                         this.tree.set(joinUrlSlugs(versionNode.slug, tabNode.slug), tabNode);
                         versionNode.children.set(tabNode.slug, tabNode);
                         this.deepTraverseItems(
                             tab.items,
                             {
-                                id: versionConfigData.version,
-                                slug: versionConfigData.urlSlug,
+                                id: version.version,
+                                slug: version.urlSlug,
                             },
                             {
                                 slug: tab.urlSlug,
                                 index: tabIndex,
                             },
-                            [versionConfigData.urlSlug, tab.urlSlug]
+                            [version.urlSlug, tab.urlSlug]
                         );
                         if (versionIndex === 0) {
                             // Special handling for default version
@@ -69,8 +60,8 @@ export class PathResolver {
                             this.deepTraverseItems(
                                 tab.items,
                                 {
-                                    id: versionConfigData.version,
-                                    slug: versionConfigData.urlSlug,
+                                    id: version.version,
+                                    slug: version.urlSlug,
                                 },
                                 {
                                     slug: tab.urlSlug,
@@ -82,21 +73,21 @@ export class PathResolver {
                     });
                 } else {
                     this.deepTraverseItems(
-                        versionConfigData.config.items,
+                        version.config.items,
                         {
-                            id: versionConfigData.version,
-                            slug: versionConfigData.urlSlug,
+                            id: version.version,
+                            slug: version.urlSlug,
                         },
                         null,
-                        [versionConfigData.urlSlug]
+                        [version.urlSlug]
                     );
                     if (versionIndex === 0) {
                         // Special handling for default version
                         this.deepTraverseItems(
-                            versionConfigData.config.items,
+                            version.config.items,
                             {
-                                id: versionConfigData.version,
-                                slug: versionConfigData.urlSlug,
+                                id: version.version,
+                                slug: version.urlSlug,
                             },
                             null,
                             []
@@ -107,12 +98,7 @@ export class PathResolver {
         } else {
             if (isUnversionedTabbedNavigationConfig(navigationConfig)) {
                 navigationConfig.tabs.forEach((tab, tabIndex) => {
-                    const tabNode: ResolvedNode.Tab = {
-                        type: "tab",
-                        slug: tab.urlSlug,
-                        version: null,
-                        children: new Map(),
-                    };
+                    const tabNode = NODE_FACTORY.tab.create({ slug: tab.urlSlug });
                     this.tree.set(tabNode.slug, tabNode);
                     this.deepTraverseItems(
                         tab.items,
