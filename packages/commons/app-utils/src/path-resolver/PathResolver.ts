@@ -1,7 +1,7 @@
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isUnversionedTabbedNavigationConfig, isVersionedNavigationConfig } from "../fern";
-import type { ResolvedNode, UrlSlug } from "./types";
+import type { ResolvedNode, ResolvedNodeTab, ResolvedNodeVersion, UrlSlug } from "./types";
 
 function joinUrlSlugs(...parts: string[]): string {
     return parts.reduce((a, b) => {
@@ -35,50 +35,102 @@ export class PathResolver {
     private preprocessDefinition() {
         const navigationConfig = this.config.docsDefinition.config.navigation;
         if (isVersionedNavigationConfig(navigationConfig)) {
-            navigationConfig.versions.forEach((v, versionIndex) => {
+            navigationConfig.versions.forEach((versionConfigData, versionIndex) => {
                 const versionNode: ResolvedNode.Version = {
                     type: "version",
-                    slug: v.urlSlug,
-                    versionId: v.version,
+                    slug: versionConfigData.urlSlug,
+                    version: {
+                        id: versionConfigData.version,
+                        slug: versionConfigData.urlSlug,
+                    },
                     children: new Map(),
                 };
                 this.tree.set(joinUrlSlugs(versionNode.slug), versionNode);
-                if (isUnversionedTabbedNavigationConfig(v.config)) {
-                    v.config.tabs.forEach((t) => {
+                if (isUnversionedTabbedNavigationConfig(versionConfigData.config)) {
+                    versionConfigData.config.tabs.forEach((tab, tabIndex) => {
                         const tabNode: ResolvedNode.Tab = {
                             type: "tab",
-                            slug: t.urlSlug,
-                            versionId: v.version,
+                            slug: tab.urlSlug,
+                            version: {
+                                id: versionConfigData.version,
+                                slug: versionConfigData.urlSlug,
+                            },
                             children: new Map(),
                         };
                         this.tree.set(joinUrlSlugs(versionNode.slug, tabNode.slug), tabNode);
                         versionNode.children.set(tabNode.slug, tabNode);
-                        this.deepTraverseItems(t.items, v.version, t.urlSlug, [v.urlSlug, t.urlSlug]);
+                        this.deepTraverseItems(
+                            tab.items,
+                            {
+                                id: versionConfigData.version,
+                                slug: versionConfigData.urlSlug,
+                            },
+                            {
+                                slug: tab.urlSlug,
+                                index: tabIndex,
+                            },
+                            [versionConfigData.urlSlug, tab.urlSlug]
+                        );
                         if (versionIndex === 0) {
                             // Special handling for default version
                             this.tree.set(joinUrlSlugs(tabNode.slug), tabNode);
-                            this.deepTraverseItems(t.items, v.version, t.urlSlug, [t.urlSlug]);
+                            this.deepTraverseItems(
+                                tab.items,
+                                {
+                                    id: versionConfigData.version,
+                                    slug: versionConfigData.urlSlug,
+                                },
+                                {
+                                    slug: tab.urlSlug,
+                                    index: tabIndex,
+                                },
+                                [tab.urlSlug]
+                            );
                         }
                     });
                 } else {
-                    this.deepTraverseItems(v.config.items, v.version, null, [v.urlSlug]);
+                    this.deepTraverseItems(
+                        versionConfigData.config.items,
+                        {
+                            id: versionConfigData.version,
+                            slug: versionConfigData.urlSlug,
+                        },
+                        null,
+                        [versionConfigData.urlSlug]
+                    );
                     if (versionIndex === 0) {
                         // Special handling for default version
-                        this.deepTraverseItems(v.config.items, v.version, null, []);
+                        this.deepTraverseItems(
+                            versionConfigData.config.items,
+                            {
+                                id: versionConfigData.version,
+                                slug: versionConfigData.urlSlug,
+                            },
+                            null,
+                            []
+                        );
                     }
                 }
             });
         } else {
             if (isUnversionedTabbedNavigationConfig(navigationConfig)) {
-                navigationConfig.tabs.forEach((t) => {
+                navigationConfig.tabs.forEach((tab, tabIndex) => {
                     const tabNode: ResolvedNode.Tab = {
                         type: "tab",
-                        slug: t.urlSlug,
-                        versionId: null,
+                        slug: tab.urlSlug,
+                        version: null,
                         children: new Map(),
                     };
                     this.tree.set(tabNode.slug, tabNode);
-                    this.deepTraverseItems(t.items, null, t.urlSlug, [t.urlSlug]);
+                    this.deepTraverseItems(
+                        tab.items,
+                        null,
+                        {
+                            slug: tab.urlSlug,
+                            index: tabIndex,
+                        },
+                        [tab.urlSlug]
+                    );
                 });
             } else {
                 this.deepTraverseItems(navigationConfig.items, null, null, []);
@@ -88,8 +140,8 @@ export class PathResolver {
 
     private deepTraverseItems(
         navigationItems: FernRegistryDocsRead.NavigationItem[],
-        versionId: string | null,
-        tabSlug: string | null,
+        version: ResolvedNodeVersion | null,
+        tab: ResolvedNodeTab | null,
         slugs: string[]
     ) {
         navigationItems.forEach((item) => {
@@ -99,8 +151,8 @@ export class PathResolver {
                         type: "page",
                         page: item,
                         slug: item.urlSlug,
-                        versionId,
-                        tabSlug,
+                        version,
+                        tab,
                     };
                     this.tree.set(joinUrlSlugs(...slugs, node.slug), node);
                 },
@@ -110,8 +162,8 @@ export class PathResolver {
                         section: item,
                         children: new Map(),
                         slug: item.urlSlug,
-                        versionId,
-                        tabSlug,
+                        version,
+                        tab,
                     };
                     this.tree.set(joinUrlSlugs(...slugs, node.slug), node);
                 },
@@ -121,11 +173,11 @@ export class PathResolver {
                         section: item,
                         children: new Map(),
                         slug: item.urlSlug,
-                        versionId,
-                        tabSlug,
+                        version,
+                        tab,
                     };
                     this.tree.set(joinUrlSlugs(...slugs, node.slug), node);
-                    this.deepTraverseItems(item.items, versionId, tabSlug, [...slugs, node.slug]);
+                    this.deepTraverseItems(item.items, version, tab, [...slugs, node.slug]);
                 },
                 _other: noop,
             });

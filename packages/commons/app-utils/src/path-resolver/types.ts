@@ -15,26 +15,37 @@ export type ResolvedNode =
     | ResolvedNode.Endpoint
     | ResolvedNode.Page;
 
+export interface ResolvedNodeVersion {
+    id: string;
+    slug: string;
+}
+
+export interface ResolvedNodeTab {
+    slug: string;
+    /** The 0-based index of the tab. */
+    index: number;
+}
+
 export declare namespace ResolvedNode {
     export interface Version {
         type: "version";
         slug: string;
-        versionId: string;
+        version: ResolvedNodeVersion;
         children: Map<UrlSlug, Exclude<ResolvedNode, ResolvedNode.Version>>;
     }
 
     export interface Tab {
         type: "tab";
         slug: string;
-        versionId: string | null;
+        version: ResolvedNodeVersion | null;
         children: Map<UrlSlug, Exclude<ResolvedNode, ResolvedNode.Version>>;
     }
 
     export interface DocsSection {
         type: "docs-section";
         slug: string;
-        versionId: string | null;
-        tabSlug: string | null;
+        version: ResolvedNodeVersion | null;
+        tab: ResolvedNodeTab | null;
         section: FernRegistryDocsRead.DocsSection;
         children: Map<UrlSlug, Exclude<ResolvedNode, ResolvedNode.Version | ResolvedNode.Tab>>;
     }
@@ -42,8 +53,8 @@ export declare namespace ResolvedNode {
     export interface ApiSection {
         type: "api-section";
         slug: string;
-        versionId: string | null;
-        tabSlug: string | null;
+        version: ResolvedNodeVersion | null;
+        tab: ResolvedNodeTab | null;
         section: FernRegistryDocsRead.ApiSection;
         children: Map<UrlSlug, Exclude<ResolvedNode, ResolvedNode.Version | ResolvedNode.Tab>>;
     }
@@ -51,8 +62,8 @@ export declare namespace ResolvedNode {
     export interface ApiSubpackage {
         type: "api-subpackage";
         slug: string;
-        versionId: string | null;
-        tabSlug: string | null;
+        version: ResolvedNodeVersion | null;
+        tab: ResolvedNodeTab | null;
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
         children: Map<UrlSlug, Exclude<ResolvedNode, ResolvedNode.Version | ResolvedNode.Tab>>;
     }
@@ -60,16 +71,16 @@ export declare namespace ResolvedNode {
     export interface Endpoint {
         type: "endpoint";
         slug: string;
-        versionId: string | null;
-        tabSlug: string | null;
+        version: ResolvedNodeVersion | null;
+        tab: ResolvedNodeTab | null;
         endpoint: FernRegistryApiRead.EndpointDefinition;
     }
 
     export interface Page {
         type: "page";
         slug: string;
-        versionId: string | null;
-        tabSlug: string | null;
+        version: ResolvedNodeVersion | null;
+        tab: ResolvedNodeTab | null;
         page: FernRegistryDocsRead.PageMetadata;
     }
 }
