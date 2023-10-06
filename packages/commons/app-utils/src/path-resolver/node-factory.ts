@@ -100,6 +100,26 @@ function createApiSubpackage({
     };
 }
 
+function createEndpoint({
+    slug,
+    version,
+    tab,
+    endpoint,
+}: {
+    slug: string;
+    version?: DefinitionNodeVersion | null;
+    tab?: DefinitionNodeTab | null;
+    endpoint: FernRegistryApiRead.EndpointDefinition;
+}): DefinitionNode.Endpoint {
+    return {
+        type: "endpoint",
+        slug,
+        version: version ?? null,
+        tab: tab ?? null,
+        endpoint,
+    };
+}
+
 function createPage({
     slug,
     version,
@@ -138,6 +158,9 @@ export const NODE_FACTORY = {
     },
     apiSubpackage: {
         create: createApiSubpackage,
+    },
+    endpoint: {
+        create: createEndpoint,
     },
     page: {
         create: createPage,

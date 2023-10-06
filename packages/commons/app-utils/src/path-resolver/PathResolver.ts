@@ -1,7 +1,7 @@
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { buildDefinitionMap } from "./build-map";
 import { buildDefinitionTree } from "./build-tree";
-import type { DefinitionNode, FullSlug, ResolvedNavigatableNode } from "./types";
+import type { DefinitionNode, FullSlug, NavigatableDefinitionNode } from "./types";
 
 export interface PathResolverConfig {
     docsDefinition: FernRegistryDocsRead.DocsDefinition;
@@ -11,7 +11,7 @@ export class PathResolver {
     private readonly root: DefinitionNode.Root;
     private readonly nodesByFullSlug: Map<FullSlug, DefinitionNode>;
 
-    public get rootNavigatable(): ResolvedNavigatableNode | undefined {
+    public get rootNavigatable(): NavigatableDefinitionNode | undefined {
         return this.#resolveNavigatable(this.root);
     }
 
@@ -31,14 +31,14 @@ export class PathResolver {
         return this.nodesByFullSlug.get(slug);
     }
 
-    public resolveNavigatable(slug: string): ResolvedNavigatableNode | undefined;
-    public resolveNavigatable(node: DefinitionNode): ResolvedNavigatableNode;
-    public resolveNavigatable(slugOrNode: string | DefinitionNode): ResolvedNavigatableNode | undefined {
+    public resolveNavigatable(slug: string): NavigatableDefinitionNode | undefined;
+    public resolveNavigatable(node: DefinitionNode): NavigatableDefinitionNode;
+    public resolveNavigatable(slugOrNode: string | DefinitionNode): NavigatableDefinitionNode | undefined {
         const node = typeof slugOrNode === "string" ? this.nodesByFullSlug.get(slugOrNode) : slugOrNode;
         return node != null ? this.#resolveNavigatable(node) : undefined;
     }
 
-    #resolveNavigatable(node: DefinitionNode): ResolvedNavigatableNode | undefined {
+    #resolveNavigatable(node: DefinitionNode): NavigatableDefinitionNode | undefined {
         let cur: DefinitionNode | undefined = node;
         while (cur != null) {
             if (cur.type === "endpoint" || cur.type === "page") {

@@ -3,6 +3,7 @@ import { DEFINITION_UNVERSIONED_TABBED } from "./mock-definitions/unversioned-ta
 import { DEFINITION_UNVERSIONED_UNTABBED } from "./mock-definitions/unversioned-untabbed";
 import { DEFINITION_VERSIONED_TABBED } from "./mock-definitions/versioned-tabbed";
 import { DEFINITION_VERSIONED_UNTABBED } from "./mock-definitions/versioned-untabbed";
+import { DEFINITION_WITH_API } from "./mock-definitions/with-api-definition";
 
 describe("PathResolver", () => {
     describe("with unversioned and untabbed docs", () => {
@@ -157,6 +158,41 @@ describe("PathResolver", () => {
                     "v1-2/help-center/documents",
                     "v1-2/help-center/documents/uploading-documents",
                     "v1-2/help-center/documents/deleting-documents",
+                ]);
+                const actualSlugs = new Set(resolver.getAllSlugs());
+                expect(actualSlugs).toEqual(expectedSlugs);
+            });
+        });
+    });
+
+    describe("with api definition", () => {
+        describe("getAllSlugs", () => {
+            it("correctly returns all slugs", () => {
+                const resolver = new PathResolver({
+                    docsDefinition: DEFINITION_WITH_API,
+                });
+                const expectedSlugs = new Set([
+                    "",
+                    // Markdown
+                    "welcome",
+                    "welcome/introduction",
+                    "welcome/introduction/authentication",
+                    "welcome/introduction/getting-started",
+                    "welcome/advanced-concepts",
+                    "welcome/advanced-concepts/streaming",
+                    "welcome/advanced-concepts/sharding",
+                    "help-center",
+                    "help-center/documents",
+                    "help-center/documents/uploading-documents",
+                    "help-center/documents/deleting-documents",
+                    // API
+                    "api-reference",
+                    "api-reference/client-api",
+                    "api-reference/client-api/generate-completion",
+                    "api-reference/client-api/delete-completion",
+                    "api-reference/client-api/agents",
+                    "api-reference/client-api/agents/create-agent",
+                    "api-reference/client-api/agents/update-agent",
                 ]);
                 const actualSlugs = new Set(resolver.getAllSlugs());
                 expect(actualSlugs).toEqual(expectedSlugs);

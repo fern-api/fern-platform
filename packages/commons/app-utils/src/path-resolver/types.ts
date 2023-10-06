@@ -25,9 +25,9 @@ export type DefinitionNode =
     | DefinitionNode.Endpoint
     | DefinitionNode.Page;
 
-export type ResolvedNavigatableNode = DefinitionNode.Endpoint | DefinitionNode.Page;
-export type ResolvedChildNode = Exclude<DefinitionNode, DefinitionNode.Root>;
-export type ResolvedParentNode = Exclude<DefinitionNode, ResolvedNavigatableNode>;
+export type NavigatableDefinitionNode = DefinitionNode.Endpoint | DefinitionNode.Page;
+export type ChildDefinitionNode = Exclude<DefinitionNode, DefinitionNode.Root>;
+export type ParentDefinitionNode = Exclude<DefinitionNode, NavigatableDefinitionNode>;
 
 export interface DefinitionNodeVersion {
     id: string;
@@ -44,21 +44,21 @@ export interface DefinitionNodeTab {
 export declare namespace DefinitionNode {
     export interface Root extends BaseNode {
         type: "root";
-        children: Map<FullSlug, ResolvedChildNode>;
+        children: Map<FullSlug, ChildDefinitionNode>;
         childrenOrdering: FullSlug[];
     }
 
     export interface Version extends BaseNode {
         type: "version";
         version: DefinitionNodeVersion;
-        children: Map<FullSlug, ResolvedChildNode>;
+        children: Map<FullSlug, ChildDefinitionNode>;
         childrenOrdering: FullSlug[];
     }
 
     export interface Tab extends BaseNode {
         type: "tab";
         version: DefinitionNodeVersion | null;
-        children: Map<FullSlug, ResolvedChildNode>;
+        children: Map<FullSlug, ChildDefinitionNode>;
         childrenOrdering: FullSlug[];
     }
 
@@ -67,7 +67,7 @@ export declare namespace DefinitionNode {
         version: DefinitionNodeVersion | null;
         tab: DefinitionNodeTab | null;
         section: FernRegistryDocsRead.DocsSection;
-        children: Map<FullSlug, ResolvedChildNode>;
+        children: Map<FullSlug, ChildDefinitionNode>;
         childrenOrdering: FullSlug[];
     }
 
@@ -76,7 +76,7 @@ export declare namespace DefinitionNode {
         version: DefinitionNodeVersion | null;
         tab: DefinitionNodeTab | null;
         section: FernRegistryDocsRead.ApiSection;
-        children: Map<FullSlug, ResolvedChildNode>;
+        children: Map<FullSlug, ChildDefinitionNode>;
         childrenOrdering: FullSlug[];
     }
 
@@ -86,7 +86,7 @@ export declare namespace DefinitionNode {
         tab: DefinitionNodeTab | null;
         section: FernRegistryDocsRead.ApiSection;
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
-        children: Map<FullSlug, ResolvedChildNode>;
+        children: Map<FullSlug, ChildDefinitionNode>;
         childrenOrdering: FullSlug[];
     }
 
