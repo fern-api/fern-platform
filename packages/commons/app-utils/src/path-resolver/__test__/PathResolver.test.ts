@@ -30,6 +30,16 @@ describe("PathResolver", () => {
                 expect(resolvedNode?.type).toEqual("docs-section");
             });
         });
+
+        describe("resolveNavigatable", () => {
+            it("resolves to the correct navigatable node", () => {
+                const resolver = new PathResolver({
+                    docsDefinition: DEFINITION_UNVERSIONED_UNTABBED,
+                });
+                const resolvedNode = resolver.resolveNavigatable("introduction");
+                expect(resolvedNode?.type === "page" && resolvedNode.page.urlSlug === "getting-started").toBeTruthy();
+            });
+        });
     });
 
     describe("with unversioned and tabbed docs", () => {
@@ -53,6 +63,18 @@ describe("PathResolver", () => {
                 ]);
                 const actualSlugs = new Set(resolver.getAllSlugs());
                 expect(actualSlugs).toEqual(expectedSlugs);
+            });
+        });
+
+        describe("resolveNavigatable", () => {
+            it("resolves to the correct navigatable node", () => {
+                const resolver = new PathResolver({
+                    docsDefinition: DEFINITION_UNVERSIONED_TABBED,
+                });
+                const resolvedNode = resolver.resolveNavigatable("help-center");
+                expect(
+                    resolvedNode?.type === "page" && resolvedNode.page.urlSlug === "uploading-documents"
+                ).toBeTruthy();
             });
         });
     });

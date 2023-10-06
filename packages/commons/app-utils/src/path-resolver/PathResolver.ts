@@ -2,7 +2,14 @@ import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/reso
 import { noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isUnversionedTabbedNavigationConfig, isVersionedNavigationConfig } from "../fern";
 import { NODE_FACTORY } from "./node-factory";
-import type { ResolvedNavigatableNode, ResolvedNode, ResolvedNodeTab, ResolvedNodeVersion, UrlSlug } from "./types";
+import type {
+    ResolvedNavigatableNode,
+    ResolvedNode,
+    ResolvedNodeTab,
+    ResolvedNodeVersion,
+    ResolvedParentNode,
+    UrlSlug,
+} from "./types";
 import { joinUrlSlugs } from "./util";
 
 export interface PathResolverConfig {
@@ -10,9 +17,11 @@ export interface PathResolverConfig {
 }
 
 export class PathResolver {
+    private readonly root: ResolvedNode.Root;
     private readonly nodesBySlug: Map<UrlSlug, ResolvedNode>;
 
     public constructor(public readonly config: PathResolverConfig) {
+        this.root = NODE_FACTORY.root.create();
         this.nodesBySlug = new Map();
         this.preprocessDefinition();
     }
@@ -34,8 +43,8 @@ export class PathResolver {
             if (cur.type === "endpoint" || cur.type === "page") {
                 return cur;
             }
-            // TODO: Go to first child
-            cur = cur.children.get(cur.slug);
+            const firstChildSlug: string | undefined = cur.childrenOrdering[0];
+            cur = firstChildSlug != null ? cur.children.get(firstChildSlug) : undefined;
         }
         return undefined;
     }
@@ -52,6 +61,8 @@ export class PathResolver {
                     slug: version.urlSlug,
                     version: { id: version.version, slug: version.urlSlug },
                 });
+                this.root.children.set(versionNode.slug, versionNode);
+                this.root.childrenOrdering.push(versionNode.slug);
                 this.nodesBySlug.set(joinUrlSlugs(versionNode.slug), versionNode);
                 if (isUnversionedTabbedNavigationConfig(version.config)) {
                     version.config.tabs.forEach((tab, tabIndex) => {
@@ -59,24 +70,11 @@ export class PathResolver {
                             slug: tab.urlSlug,
                             version: { id: version.version, slug: version.urlSlug },
                         });
-                        this.nodesBySlug.set(joinUrlSlugs(versionNode.slug, tabNode.slug), tabNode);
-                        versionNode.children.set(tabNode.slug, tabNode);
-                        this.deepTraverseItems(
-                            tab.items,
-                            {
-                                id: version.version,
-                                slug: version.urlSlug,
-                            },
-                            {
-                                slug: tab.urlSlug,
-                                index: tabIndex,
-                            },
-                            [version.urlSlug, tab.urlSlug]
-                        );
                         if (versionIndex === 0) {
                             // Special handling for default version
                             this.nodesBySlug.set(joinUrlSlugs(tabNode.slug), tabNode);
                             this.deepTraverseItems(
+                                tabNode,
                                 tab.items,
                                 {
                                     id: version.version,
@@ -89,25 +87,38 @@ export class PathResolver {
                                 [tab.urlSlug]
                             );
                         }
+                        versionNode.children.set(tabNode.slug, tabNode);
+                        versionNode.childrenOrdering.push(tabNode.slug);
+                        this.nodesBySlug.set(joinUrlSlugs(versionNode.slug, tabNode.slug), tabNode);
+                        versionNode.children.set(tabNode.slug, tabNode);
+                        this.deepTraverseItems(
+                            tabNode,
+                            tab.items,
+                            {
+                                id: version.version,
+                                slug: version.urlSlug,
+                            },
+                            {
+                                slug: tab.urlSlug,
+                                index: tabIndex,
+                            },
+                            [version.urlSlug, tab.urlSlug]
+                        );
                     });
                 } else {
                     this.deepTraverseItems(
+                        versionNode,
                         version.config.items,
-                        {
-                            id: version.version,
-                            slug: version.urlSlug,
-                        },
+                        { id: version.version, slug: version.urlSlug },
                         null,
                         [version.urlSlug]
                     );
                     if (versionIndex === 0) {
                         // Special handling for default version
                         this.deepTraverseItems(
+                            versionNode,
                             version.config.items,
-                            {
-                                id: version.version,
-                                slug: version.urlSlug,
-                            },
+                            { id: version.version, slug: version.urlSlug },
                             null,
                             []
                         );
@@ -118,24 +129,21 @@ export class PathResolver {
             if (isUnversionedTabbedNavigationConfig(navigationConfig)) {
                 navigationConfig.tabs.forEach((tab, tabIndex) => {
                     const tabNode = NODE_FACTORY.tab.create({ slug: tab.urlSlug });
+                    this.root.children.set(tabNode.slug, tabNode);
+                    this.root.childrenOrdering.push(tabNode.slug);
                     this.nodesBySlug.set(tabNode.slug, tabNode);
-                    this.deepTraverseItems(
-                        tab.items,
-                        null,
-                        {
-                            slug: tab.urlSlug,
-                            index: tabIndex,
-                        },
-                        [tab.urlSlug]
-                    );
+                    this.deepTraverseItems(tabNode, tab.items, null, { slug: tab.urlSlug, index: tabIndex }, [
+                        tab.urlSlug,
+                    ]);
                 });
             } else {
-                this.deepTraverseItems(navigationConfig.items, null, null, []);
+                this.deepTraverseItems(this.root, navigationConfig.items, null, null, []);
             }
         }
     }
 
     private deepTraverseItems(
+        parent: ResolvedParentNode,
         navigationItems: FernRegistryDocsRead.NavigationItem[],
         version: ResolvedNodeVersion | null,
         tab: ResolvedNodeTab | null,
@@ -151,6 +159,8 @@ export class PathResolver {
                         version,
                         tab,
                     };
+                    parent.children.set(node.slug, node);
+                    parent.childrenOrdering.push(node.slug);
                     this.nodesBySlug.set(joinUrlSlugs(...slugs, node.slug), node);
                 },
                 api: (item) => {
@@ -158,10 +168,13 @@ export class PathResolver {
                         type: "api-section",
                         section: item,
                         children: new Map(),
+                        childrenOrdering: [],
                         slug: item.urlSlug,
                         version,
                         tab,
                     };
+                    parent.children.set(node.slug, node);
+                    parent.childrenOrdering.push(node.slug);
                     this.nodesBySlug.set(joinUrlSlugs(...slugs, node.slug), node);
                 },
                 section: (item) => {
@@ -169,12 +182,15 @@ export class PathResolver {
                         type: "docs-section",
                         section: item,
                         children: new Map(),
+                        childrenOrdering: [],
                         slug: item.urlSlug,
                         version,
                         tab,
                     };
+                    parent.children.set(node.slug, node);
+                    parent.childrenOrdering.push(node.slug);
                     this.nodesBySlug.set(joinUrlSlugs(...slugs, node.slug), node);
-                    this.deepTraverseItems(item.items, version, tab, [...slugs, node.slug]);
+                    this.deepTraverseItems(node, item.items, version, tab, [...slugs, node.slug]);
                 },
                 _other: noop,
             });

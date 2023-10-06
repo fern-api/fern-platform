@@ -7,6 +7,7 @@ import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/reso
 export type UrlSlug = string;
 
 export type ResolvedNode =
+    | ResolvedNode.Root
     | ResolvedNode.Version
     | ResolvedNode.Tab
     | ResolvedNode.DocsSection
@@ -16,6 +17,7 @@ export type ResolvedNode =
     | ResolvedNode.Page;
 
 export type ResolvedNavigatableNode = ResolvedNode.Endpoint | ResolvedNode.Page;
+export type ResolvedParentNode = Exclude<ResolvedNode, ResolvedNavigatableNode>;
 
 export interface ResolvedNodeVersion {
     id: string;
@@ -29,11 +31,19 @@ export interface ResolvedNodeTab {
 }
 
 export declare namespace ResolvedNode {
+    export interface Root {
+        type: "root";
+        slug: "";
+        children: Map<UrlSlug, ResolvedNode>;
+        childrenOrdering: UrlSlug[];
+    }
+
     export interface Version {
         type: "version";
         slug: string;
         version: ResolvedNodeVersion;
         children: Map<UrlSlug, Exclude<ResolvedNode, ResolvedNode.Version>>;
+        childrenOrdering: UrlSlug[];
     }
 
     export interface Tab {
@@ -41,6 +51,7 @@ export declare namespace ResolvedNode {
         slug: string;
         version: ResolvedNodeVersion | null;
         children: Map<UrlSlug, Exclude<ResolvedNode, ResolvedNode.Version>>;
+        childrenOrdering: UrlSlug[];
     }
 
     export interface DocsSection {
@@ -50,6 +61,7 @@ export declare namespace ResolvedNode {
         tab: ResolvedNodeTab | null;
         section: FernRegistryDocsRead.DocsSection;
         children: Map<UrlSlug, Exclude<ResolvedNode, ResolvedNode.Version | ResolvedNode.Tab>>;
+        childrenOrdering: UrlSlug[];
     }
 
     export interface ApiSection {
@@ -59,6 +71,7 @@ export declare namespace ResolvedNode {
         tab: ResolvedNodeTab | null;
         section: FernRegistryDocsRead.ApiSection;
         children: Map<UrlSlug, Exclude<ResolvedNode, ResolvedNode.Version | ResolvedNode.Tab>>;
+        childrenOrdering: UrlSlug[];
     }
 
     export interface ApiSubpackage {
@@ -68,6 +81,7 @@ export declare namespace ResolvedNode {
         tab: ResolvedNodeTab | null;
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
         children: Map<UrlSlug, Exclude<ResolvedNode, ResolvedNode.Version | ResolvedNode.Tab>>;
+        childrenOrdering: UrlSlug[];
     }
 
     export interface Endpoint {

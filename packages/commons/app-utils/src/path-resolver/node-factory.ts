@@ -1,8 +1,14 @@
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-
 import { ResolvedNode, ResolvedNodeTab, ResolvedNodeVersion } from "./types";
 
-type Func<T extends unknown[], R> = (...args: T) => R;
+function createRoot(): ResolvedNode.Root {
+    return {
+        type: "root",
+        slug: "",
+        children: new Map(),
+        childrenOrdering: [],
+    };
+}
 
 function createVersion({ slug, version }: { slug: string; version: ResolvedNodeVersion }): ResolvedNode.Version {
     return {
@@ -10,6 +16,7 @@ function createVersion({ slug, version }: { slug: string; version: ResolvedNodeV
         slug,
         version,
         children: new Map(),
+        childrenOrdering: [],
     };
 }
 
@@ -19,6 +26,7 @@ function createTab({ slug, version }: { slug: string; version?: ResolvedNodeVers
         slug,
         version: version ?? null,
         children: new Map(),
+        childrenOrdering: [],
     };
 }
 
@@ -40,10 +48,14 @@ function createDocsSection({
         tab: tab ?? null,
         section,
         children: new Map(),
+        childrenOrdering: [],
     };
 }
 
 export const NODE_FACTORY = {
+    root: {
+        create: createRoot,
+    },
     version: {
         create: createVersion,
     },
@@ -53,4 +65,4 @@ export const NODE_FACTORY = {
     docsSection: {
         create: createDocsSection,
     },
-} satisfies Record<string, { create: Func<never, ResolvedNode> }>;
+};
