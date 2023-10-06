@@ -3,7 +3,14 @@ import { joinUrlSlugs } from "./util";
 
 export function buildNodeMap(node: ResolvedNode): Map<FullSlug, ResolvedNode> {
     const map = new Map<string, ResolvedNode>();
-    traversePreOrder(node, (node, fullSlug) => {
+    traversePreOrder(node, (node, slugs) => {
+        if (node.type !== "root" && node.version?.index === 0) {
+            // Special handling for default version
+            const [, ...slugsWithoutVersion] = slugs;
+            const fullSlug = joinUrlSlugs(...slugsWithoutVersion);
+            map.set(fullSlug, node);
+        }
+        const fullSlug = joinUrlSlugs(...slugs);
         map.set(fullSlug, node);
     });
     return map;
@@ -11,10 +18,10 @@ export function buildNodeMap(node: ResolvedNode): Map<FullSlug, ResolvedNode> {
 
 function traversePreOrder(
     node: ResolvedNode,
-    cb: (node: ResolvedNode, fullSlug: string) => void,
+    cb: (node: ResolvedNode, slugs: string[]) => void,
     slugs: string[] = []
 ): void {
-    cb(node, joinUrlSlugs(...slugs));
+    cb(node, slugs);
     if (node.type === "page" || node.type === "endpoint") {
         return;
     }

@@ -32,6 +32,7 @@ export type ResolvedParentNode = Exclude<ResolvedNode, ResolvedNavigatableNode>;
 export interface ResolvedNodeVersion {
     id: string;
     slug: string;
+    index: number;
 }
 
 export interface ResolvedNodeTab {

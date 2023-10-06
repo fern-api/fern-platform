@@ -19,23 +19,35 @@ export function buildDocsDefinitionTree(docsDefinition: FernRegistryDocsRead.Doc
     const navigationConfig = docsDefinition.config.navigation;
 
     if (isVersionedNavigationConfig(navigationConfig)) {
-        navigationConfig.versions.forEach((version) => {
+        navigationConfig.versions.forEach((version, versionIndex) => {
             const versionNode = NODE_FACTORY.version.create({
                 slug: version.urlSlug,
-                version: { id: version.version, slug: version.urlSlug },
+                version: {
+                    id: version.version,
+                    slug: version.urlSlug,
+                    index: versionIndex,
+                },
             });
             addNodeChild(root, versionNode);
             if (isUnversionedTabbedNavigationConfig(version.config)) {
                 const tabNodes = version.config.tabs.map((tab, tabIndex) => {
                     return buildNodeForNavigationTab(tab, {
-                        version: { id: version.version, slug: version.urlSlug },
+                        version: {
+                            id: version.version,
+                            slug: version.urlSlug,
+                            index: versionIndex,
+                        },
                         tab: { slug: tab.urlSlug, index: tabIndex },
                     });
                 });
                 addNodeChildren(versionNode, tabNodes);
             } else {
                 const children = buildNodesForNavigationItems(version.config.items, {
-                    version: { id: version.version, slug: version.urlSlug },
+                    version: {
+                        id: version.version,
+                        slug: version.urlSlug,
+                        index: versionIndex,
+                    },
                     tab: null,
                 });
                 addNodeChildren(versionNode, children);
