@@ -28,7 +28,14 @@ function traversePreOrder(
     for (const childSlug of node.childrenOrdering) {
         const childNode = node.children.get(childSlug);
         if (childNode != null) {
-            traversePreOrder(childNode, cb, [...slugs, childNode.slug]);
+            const nextSlugs = [...slugs];
+            if (
+                (childNode.type !== "docs-section" && childNode.type !== "api-section") ||
+                !childNode.section.skipUrlSlug
+            ) {
+                nextSlugs.push(childNode.slug);
+            }
+            traversePreOrder(childNode, cb, nextSlugs);
         }
     }
 }

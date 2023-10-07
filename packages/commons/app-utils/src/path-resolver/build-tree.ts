@@ -147,7 +147,7 @@ function buildNodeForDocsSection(
         version,
         tab,
     });
-    const children = buildNodesForNavigationItems(section.items, [...parentSlugs, section.urlSlug], context);
+    const children = buildNodesForNavigationItems(section.items, nextSectionParentSlugs(section, parentSlugs), context);
     addNodeChildren(node, children);
     return node;
 }
@@ -170,11 +170,11 @@ function buildNodeForApiSection(
         throw new Error(`API definition '${apiDefinitionId}' was not found.`);
     }
     apiDefinition.rootPackage.endpoints.forEach((endpoint) => {
-        const endpointNode = buildNodeForEndpoint(endpoint, [...parentSlugs, section.urlSlug], context);
+        const endpointNode = buildNodeForEndpoint(endpoint, nextSectionParentSlugs(section, parentSlugs), context);
         addNodeChild(node, endpointNode);
     });
     apiDefinition.rootPackage.webhooks.forEach((webhook) => {
-        const webhookNode = buildNodeForWebhook(webhook, [...parentSlugs, section.urlSlug], context);
+        const webhookNode = buildNodeForWebhook(webhook, nextSectionParentSlugs(section, parentSlugs), context);
         addNodeChild(node, webhookNode);
     });
     apiDefinition.rootPackage.subpackages.forEach((subpackageId) => {
@@ -186,7 +186,7 @@ function buildNodeForApiSection(
             subpackage,
             section,
             apiDefinition,
-            [...parentSlugs, section.urlSlug],
+            nextSectionParentSlugs(section, parentSlugs),
             context
         );
         addNodeChild(node, subpackageNode);
@@ -264,6 +264,13 @@ function buildNodeForSubpackage(
         addNodeChild(node, subpackageNode);
     });
     return node;
+}
+
+function nextSectionParentSlugs(
+    section: FernRegistryDocsRead.ApiSection | FernRegistryDocsRead.DocsSection,
+    parentSlugs: string[]
+) {
+    return section.skipUrlSlug ? [...parentSlugs] : [...parentSlugs, section.urlSlug];
 }
 
 function addNodeChildren(parent: ParentDefinitionNode, children: ChildDefinitionNode[]) {

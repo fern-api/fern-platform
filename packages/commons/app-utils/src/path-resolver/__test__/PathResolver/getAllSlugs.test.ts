@@ -4,6 +4,7 @@ import { DEFINITION_UNVERSIONED_UNTABBED } from "./mock-definitions/unversioned-
 import { DEFINITION_VERSIONED_TABBED } from "./mock-definitions/versioned-tabbed";
 import { DEFINITION_VERSIONED_UNTABBED } from "./mock-definitions/versioned-untabbed";
 import { DEFINITION_WITH_API } from "./mock-definitions/with-api-definition";
+import { DEFINITION_WITH_SKIPPED_SLUGS } from "./mock-definitions/with-skipped-slugs";
 
 describe("getAllSlugs", () => {
     describe("correctly returns all slugs", () => {
@@ -144,6 +145,28 @@ describe("getAllSlugs", () => {
                 "api-reference/client-api/agents",
                 "api-reference/client-api/agents/create-agent",
                 "api-reference/client-api/agents/update-agent",
+            ]);
+            const actualSlugs = new Set(resolver.getAllSlugs());
+            expect(actualSlugs).toEqual(expectedSlugs);
+        });
+
+        it("with skipped slugs", () => {
+            const resolver = new PathResolver({
+                docsDefinition: DEFINITION_WITH_SKIPPED_SLUGS,
+            });
+            const expectedSlugs = new Set([
+                "",
+                // Markdown
+                "help-center",
+                "help-center/uploading-documents",
+                "help-center/deleting-documents",
+                // API
+                "api-reference",
+                "api-reference/generate-completion",
+                "api-reference/delete-completion",
+                "api-reference/agents",
+                "api-reference/agents/create-agent",
+                "api-reference/agents/update-agent",
             ]);
             const actualSlugs = new Set(resolver.getAllSlugs());
             expect(actualSlugs).toEqual(expectedSlugs);
