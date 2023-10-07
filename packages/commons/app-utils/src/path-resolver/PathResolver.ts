@@ -7,9 +7,6 @@ export interface PathResolverConfig {
     docsDefinition: FernRegistryDocsRead.DocsDefinition;
 }
 
-/**
- * A data structure that takes a docs definition and uses
- */
 export class PathResolver {
     readonly #tree: DefinitionNode.Root;
     readonly #nodesByFullSlug: Map<FullSlug, DefinitionNode>;
@@ -42,7 +39,7 @@ export class PathResolver {
     #resolveNavigatable(node: DefinitionNode): NavigatableDefinitionNode | undefined {
         let cur: DefinitionNode | undefined = node;
         while (cur != null) {
-            if (cur.type === "endpoint" || cur.type === "page") {
+            if (cur.type === "endpoint" || cur.type === "webhook" || cur.type === "page") {
                 return cur;
             }
             const firstChildSlug: string | undefined = cur.childrenOrdering[0];

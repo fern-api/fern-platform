@@ -120,6 +120,26 @@ function createEndpoint({
     };
 }
 
+function createWebhook({
+    slug,
+    version,
+    tab,
+    webhook,
+}: {
+    slug: string;
+    version?: DefinitionNodeVersion | null;
+    tab?: DefinitionNodeTab | null;
+    webhook: FernRegistryApiRead.WebhookDefinition;
+}): DefinitionNode.Webhook {
+    return {
+        type: "webhook",
+        slug,
+        version: version ?? null,
+        tab: tab ?? null,
+        webhook,
+    };
+}
+
 function createPage({
     slug,
     version,
@@ -161,6 +181,9 @@ export const NODE_FACTORY = {
     },
     endpoint: {
         create: createEndpoint,
+    },
+    webhook: {
+        create: createWebhook,
     },
     page: {
         create: createPage,

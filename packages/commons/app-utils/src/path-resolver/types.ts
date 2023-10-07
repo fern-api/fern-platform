@@ -23,22 +23,23 @@ export type DefinitionNode =
     | DefinitionNode.ApiSection
     | DefinitionNode.ApiSubpackage
     | DefinitionNode.Endpoint
+    | DefinitionNode.Webhook
     | DefinitionNode.Page;
 
 export type DefinitionNodeType = DefinitionNode["type"];
 
-export type NavigatableDefinitionNode = DefinitionNode.Endpoint | DefinitionNode.Page;
+export type NavigatableDefinitionNode = DefinitionNode.Endpoint | DefinitionNode.Webhook | DefinitionNode.Page;
 export type ChildDefinitionNode = Exclude<DefinitionNode, DefinitionNode.Root>;
 export type ParentDefinitionNode = Exclude<DefinitionNode, NavigatableDefinitionNode>;
 
 export interface DefinitionNodeVersion {
     id: string;
-    slug: string;
+    slug: ItemSlug;
     index: number;
 }
 
 export interface DefinitionNodeTab {
-    slug: string;
+    slug: ItemSlug;
     /** The 0-based index of the tab. */
     index: number;
 }
@@ -47,21 +48,21 @@ export declare namespace DefinitionNode {
     export interface Root extends BaseNode {
         type: "root";
         children: Map<FullSlug, ChildDefinitionNode>;
-        childrenOrdering: FullSlug[];
+        childrenOrdering: ItemSlug[];
     }
 
     export interface Version extends BaseNode {
         type: "version";
         version: DefinitionNodeVersion;
         children: Map<FullSlug, ChildDefinitionNode>;
-        childrenOrdering: FullSlug[];
+        childrenOrdering: ItemSlug[];
     }
 
     export interface Tab extends BaseNode {
         type: "tab";
         version: DefinitionNodeVersion | null;
         children: Map<FullSlug, ChildDefinitionNode>;
-        childrenOrdering: FullSlug[];
+        childrenOrdering: ItemSlug[];
     }
 
     export interface DocsSection extends BaseNode {
@@ -70,7 +71,7 @@ export declare namespace DefinitionNode {
         tab: DefinitionNodeTab | null;
         section: FernRegistryDocsRead.DocsSection;
         children: Map<FullSlug, ChildDefinitionNode>;
-        childrenOrdering: FullSlug[];
+        childrenOrdering: ItemSlug[];
     }
 
     export interface ApiSection extends BaseNode {
@@ -79,7 +80,7 @@ export declare namespace DefinitionNode {
         tab: DefinitionNodeTab | null;
         section: FernRegistryDocsRead.ApiSection;
         children: Map<FullSlug, ChildDefinitionNode>;
-        childrenOrdering: FullSlug[];
+        childrenOrdering: ItemSlug[];
     }
 
     export interface ApiSubpackage extends BaseNode {
@@ -89,7 +90,7 @@ export declare namespace DefinitionNode {
         section: FernRegistryDocsRead.ApiSection;
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
         children: Map<FullSlug, ChildDefinitionNode>;
-        childrenOrdering: FullSlug[];
+        childrenOrdering: ItemSlug[];
     }
 
     export interface Endpoint extends BaseNode {
@@ -97,6 +98,13 @@ export declare namespace DefinitionNode {
         version: DefinitionNodeVersion | null;
         tab: DefinitionNodeTab | null;
         endpoint: FernRegistryApiRead.EndpointDefinition;
+    }
+
+    export interface Webhook extends BaseNode {
+        type: "webhook";
+        version: DefinitionNodeVersion | null;
+        tab: DefinitionNodeTab | null;
+        webhook: FernRegistryApiRead.WebhookDefinition;
     }
 
     export interface Page extends BaseNode {

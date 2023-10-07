@@ -155,6 +155,10 @@ function buildNodeForApiSection(section: FernRegistryDocsRead.ApiSection, contex
         const endpointNode = buildNodeForEndpoint(endpoint, context);
         addNodeChild(node, endpointNode);
     });
+    apiDefinition.rootPackage.webhooks.forEach((webhook) => {
+        const webhookNode = buildNodeForWebhook(webhook, context);
+        addNodeChild(node, webhookNode);
+    });
     apiDefinition.rootPackage.subpackages.forEach((subpackageId) => {
         const subpackage = apiDefinition.subpackages[subpackageId];
         if (subpackage == null) {
@@ -180,6 +184,20 @@ function buildNodeForEndpoint(
     return node;
 }
 
+function buildNodeForWebhook(
+    webhook: FernRegistryApiRead.WebhookDefinition,
+    context: BuildContext
+): DefinitionNode.Webhook {
+    const { version, tab } = context;
+    const node = NODE_FACTORY.webhook.create({
+        webhook,
+        slug: webhook.urlSlug,
+        version,
+        tab,
+    });
+    return node;
+}
+
 function buildNodeForSubpackage(
     subpackage: FernRegistryApiRead.ApiDefinitionSubpackage,
     section: FernRegistryDocsRead.ApiSection,
@@ -197,6 +215,10 @@ function buildNodeForSubpackage(
     subpackage.endpoints.forEach((endpoint) => {
         const endpointNode = buildNodeForEndpoint(endpoint, context);
         addNodeChild(node, endpointNode);
+    });
+    subpackage.webhooks.forEach((webhook) => {
+        const webhookNode = buildNodeForWebhook(webhook, context);
+        addNodeChild(node, webhookNode);
     });
     subpackage.subpackages.forEach((subpackageId) => {
         const childSubpackage = apiDefinition.subpackages[subpackageId];

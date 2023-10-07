@@ -22,7 +22,7 @@ function traversePreOrder(
     slugs: string[] = []
 ): void {
     cb(node, slugs);
-    if (node.type === "page" || node.type === "endpoint") {
+    if (node.type === "page" || node.type === "endpoint" || node.type === "webhook") {
         return;
     }
     for (const childSlug of node.childrenOrdering) {
