@@ -116,5 +116,6 @@ module.exports = {
         "tailwindcss/no-custom-classname": "off",
         "@blueprintjs/html-components": "off",
         "@typescript-eslint/strict-boolean-expressions": "error",
+        "jest/expect-expect": ["error", { assertFunctionNames: ["expect*"] }],
     },
 };

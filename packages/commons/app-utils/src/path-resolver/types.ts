@@ -25,6 +25,8 @@ export type DefinitionNode =
     | DefinitionNode.Endpoint
     | DefinitionNode.Page;
 
+export type DefinitionNodeType = DefinitionNode["type"];
+
 export type NavigatableDefinitionNode = DefinitionNode.Endpoint | DefinitionNode.Page;
 export type ChildDefinitionNode = Exclude<DefinitionNode, DefinitionNode.Root>;
 export type ParentDefinitionNode = Exclude<DefinitionNode, NavigatableDefinitionNode>;

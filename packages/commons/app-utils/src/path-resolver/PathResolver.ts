@@ -7,34 +7,35 @@ export interface PathResolverConfig {
     docsDefinition: FernRegistryDocsRead.DocsDefinition;
 }
 
+/**
+ * A data structure that takes a docs definition and uses
+ */
 export class PathResolver {
-    private readonly root: DefinitionNode.Root;
-    private readonly nodesByFullSlug: Map<FullSlug, DefinitionNode>;
-
-    public get rootNavigatable(): NavigatableDefinitionNode | undefined {
-        return this.#resolveNavigatable(this.root);
-    }
+    readonly #tree: DefinitionNode.Root;
+    readonly #nodesByFullSlug: Map<FullSlug, DefinitionNode>;
+    public readonly rootNavigatable: NavigatableDefinitionNode | undefined;
 
     public constructor(public readonly config: PathResolverConfig) {
-        const { tree, map } = this.preprocessDefinition();
-        this.root = tree;
-        this.nodesByFullSlug = map;
+        const { tree, map } = this.#preprocessDefinition();
+        this.#tree = tree;
+        this.#nodesByFullSlug = map;
+        this.rootNavigatable = this.#resolveNavigatable(this.#tree);
     }
 
-    private preprocessDefinition() {
+    #preprocessDefinition() {
         const tree = buildDefinitionTree(this.config.docsDefinition);
         const map = buildDefinitionMap(tree);
         return { tree, map };
     }
 
-    public resolveSlug(slug: FullSlug): DefinitionNode | undefined {
-        return this.nodesByFullSlug.get(slug);
+    public resolveSlug(fullSlug: FullSlug): DefinitionNode | undefined {
+        return this.#nodesByFullSlug.get(fullSlug);
     }
 
-    public resolveNavigatable(slug: string): NavigatableDefinitionNode | undefined;
+    public resolveNavigatable(fullSlug: FullSlug): NavigatableDefinitionNode | undefined;
     public resolveNavigatable(node: DefinitionNode): NavigatableDefinitionNode;
     public resolveNavigatable(slugOrNode: string | DefinitionNode): NavigatableDefinitionNode | undefined {
-        const node = typeof slugOrNode === "string" ? this.nodesByFullSlug.get(slugOrNode) : slugOrNode;
+        const node = typeof slugOrNode === "string" ? this.#nodesByFullSlug.get(slugOrNode) : slugOrNode;
         return node != null ? this.#resolveNavigatable(node) : undefined;
     }
 
@@ -51,6 +52,6 @@ export class PathResolver {
     }
 
     public getAllSlugs(): FullSlug[] {
-        return Array.from(this.nodesByFullSlug.keys());
+        return Array.from(this.#nodesByFullSlug.keys());
     }
 }
