@@ -4,6 +4,6 @@
 export function joinUrlSlugs(...parts: string[]): string {
     return parts
         .filter((part) => part.length > 0)
-        .map((part) => part)
+        .map(encodeURIComponent)
         .join("/");
 }
