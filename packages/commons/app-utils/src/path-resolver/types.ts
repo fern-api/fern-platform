@@ -15,6 +15,13 @@ export interface BaseNode {
     slug: ItemSlug;
 }
 
+export interface NavigatableNode {
+    /**
+     * Path slug without version.
+     */
+    leadingSlug: FullSlug;
+}
+
 export type DefinitionNode =
     | DefinitionNode.Root
     | DefinitionNode.Version
@@ -93,21 +100,21 @@ export declare namespace DefinitionNode {
         childrenOrdering: ItemSlug[];
     }
 
-    export interface Endpoint extends BaseNode {
+    export interface Endpoint extends BaseNode, NavigatableNode {
         type: "endpoint";
         version: DefinitionNodeVersion | null;
         tab: DefinitionNodeTab | null;
         endpoint: FernRegistryApiRead.EndpointDefinition;
     }
 
-    export interface Webhook extends BaseNode {
+    export interface Webhook extends BaseNode, NavigatableNode {
         type: "webhook";
         version: DefinitionNodeVersion | null;
         tab: DefinitionNodeTab | null;
         webhook: FernRegistryApiRead.WebhookDefinition;
     }
 
-    export interface Page extends BaseNode {
+    export interface Page extends BaseNode, NavigatableNode {
         type: "page";
         version: DefinitionNodeVersion | null;
         tab: DefinitionNodeTab | null;

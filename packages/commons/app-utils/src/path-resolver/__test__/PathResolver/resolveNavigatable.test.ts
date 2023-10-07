@@ -15,6 +15,7 @@ describe("resolveNavigatable", () => {
             const resolvedNode = resolver.resolveNavigatable("introduction");
             expectPageNode(resolvedNode);
             expect(resolvedNode.slug).toEqual("getting-started");
+            expect(resolvedNode.leadingSlug).toEqual("introduction/getting-started");
         });
 
         it("with unversioned and tabbed docs", () => {
@@ -24,6 +25,7 @@ describe("resolveNavigatable", () => {
             const resolvedNode = resolver.resolveNavigatable("help-center");
             expectPageNode(resolvedNode);
             expect(resolvedNode.slug).toEqual("uploading-documents");
+            expect(resolvedNode.leadingSlug).toEqual("help-center/documents/uploading-documents");
         });
 
         it("with versioned and untabbed docs", () => {
@@ -33,6 +35,7 @@ describe("resolveNavigatable", () => {
             const resolvedNode = resolver.resolveNavigatable("introduction");
             expectPageNode(resolvedNode);
             expect(resolvedNode.slug).toEqual("getting-started");
+            expect(resolvedNode.leadingSlug).toEqual("introduction/getting-started");
         });
 
         it("with versioned and tabbed docs", () => {
@@ -42,6 +45,7 @@ describe("resolveNavigatable", () => {
             const resolvedNode = resolver.resolveNavigatable("v1-2");
             expectPageNode(resolvedNode);
             expect(resolvedNode.slug).toEqual("getting-started");
+            expect(resolvedNode.leadingSlug).toEqual("welcome/introduction/getting-started");
         });
 
         it("with api definition", () => {
@@ -51,6 +55,7 @@ describe("resolveNavigatable", () => {
             const resolvedNode = resolver.resolveNavigatable("api-reference");
             expectEndpointNode(resolvedNode);
             expect(resolvedNode.slug).toEqual("generate-completion");
+            expect(resolvedNode.leadingSlug).toEqual("api-reference/client-api/generate-completion");
         });
     });
 });

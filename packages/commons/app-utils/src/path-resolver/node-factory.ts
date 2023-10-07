@@ -102,11 +102,13 @@ function createApiSubpackage({
 
 function createEndpoint({
     slug,
+    leadingSlug,
     version,
     tab,
     endpoint,
 }: {
     slug: string;
+    leadingSlug: string;
     version?: DefinitionNodeVersion | null;
     tab?: DefinitionNodeTab | null;
     endpoint: FernRegistryApiRead.EndpointDefinition;
@@ -114,6 +116,7 @@ function createEndpoint({
     return {
         type: "endpoint",
         slug,
+        leadingSlug,
         version: version ?? null,
         tab: tab ?? null,
         endpoint,
@@ -122,11 +125,13 @@ function createEndpoint({
 
 function createWebhook({
     slug,
+    leadingSlug,
     version,
     tab,
     webhook,
 }: {
     slug: string;
+    leadingSlug: string;
     version?: DefinitionNodeVersion | null;
     tab?: DefinitionNodeTab | null;
     webhook: FernRegistryApiRead.WebhookDefinition;
@@ -134,6 +139,7 @@ function createWebhook({
     return {
         type: "webhook",
         slug,
+        leadingSlug,
         version: version ?? null,
         tab: tab ?? null,
         webhook,
@@ -142,11 +148,13 @@ function createWebhook({
 
 function createPage({
     slug,
+    leadingSlug,
     version,
     tab,
     page,
 }: {
     slug: string;
+    leadingSlug: string;
     version?: DefinitionNodeVersion | null;
     tab?: DefinitionNodeTab | null;
     page: FernRegistryDocsRead.PageMetadata;
@@ -154,6 +162,7 @@ function createPage({
     return {
         type: "page",
         slug,
+        leadingSlug,
         version: version ?? null,
         tab: tab ?? null,
         page,
