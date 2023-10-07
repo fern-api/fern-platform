@@ -37,13 +37,17 @@ export class PathResolver {
     }
 
     #resolveNavigatable(node: DefinitionNode): NavigatableDefinitionNode | undefined {
-        let cur: DefinitionNode | undefined = node;
-        while (cur != null) {
-            if (cur.type === "endpoint" || cur.type === "webhook" || cur.type === "page") {
-                return cur;
+        if (node.type === "page" || node.type === "endpoint" || node.type === "webhook") {
+            return node;
+        }
+        for (const childSlug of node.childrenOrdering) {
+            const childNode = node.children.get(childSlug);
+            if (childNode != null) {
+                const foundNode = this.#resolveNavigatable(childNode);
+                if (foundNode != null) {
+                    return foundNode;
+                }
             }
-            const firstChildSlug: string | undefined = cur.childrenOrdering[0];
-            cur = firstChildSlug != null ? cur.children.get(firstChildSlug) : undefined;
         }
         return undefined;
     }
