@@ -1,27 +1,17 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import { getEndpointTitleAsString, getSubpackageTitle, isSubpackage } from "@fern-ui/app-utils";
-import useSize from "@react-hook/size";
 import classNames from "classnames";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { HEADER_HEIGHT } from "../../constants";
 import { useLayoutBreakpoint } from "../../docs-context/useLayoutBreakpoint";
-import { ApiPageDescription } from "../ApiPageDescription";
 import { CurlExample } from "../examples/curl-example/CurlExample";
 import { getCurlLines } from "../examples/curl-example/curlUtils";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { JsonExampleVirtualized } from "../examples/json-example/JsonExample";
 import { flattenJsonToLines } from "../examples/json-example/jsonLineUtils";
 import { TitledExample } from "../examples/TitledExample";
-import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
-import { EndpointErrorsSection } from "./EndpointErrorsSection";
-import { EndpointRequestSection } from "./EndpointRequestSection";
-import { EndpointResponseSection } from "./EndpointResponseSection";
-import { EndpointSection } from "./EndpointSection";
-import { EndpointUrl } from "./EndpointUrl";
-import { PathParametersSection } from "./PathParametersSection";
-import { QueryParametersSection } from "./QueryParametersSection";
+import { EndpointContentLeft } from "./EndpointContentLeft";
 
 const URL_OVERFLOW_THRESHOLD = 0.95;
 
@@ -41,13 +31,13 @@ const PADDING_TOP = 32;
 const PADDING_BOTTOM = 40;
 const LINE_HEIGHT = 21.5;
 
-export const EndpointContent = React.memo<EndpointContent.Props>(function EndpointContent({
+export const EndpointContent: React.FC<EndpointContent.Props> = ({
     endpoint,
     package: package_,
     hideBottomSeparator = false,
     setContainerRef,
     anchorIdParts,
-}) {
+}) => {
     const layoutBreakpoint = useLayoutBreakpoint();
     const [isInViewport, setIsInViewport] = useState(false);
     const { ref: containerRef } = useInView({
@@ -69,13 +59,6 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
         },
         [setHoveredResponsePropertyPath]
     );
-
-    const endpointUrlOuterContainerRef = useRef<null | HTMLDivElement>(null);
-    const endpointUrlInnerContainerRef = useRef<null | HTMLDivElement>(null);
-    const [endpointUrlOuterContainerWidth] = useSize(endpointUrlOuterContainerRef);
-    const [endpointUrlInnerContainerWidth] = useSize(endpointUrlInnerContainerRef);
-    const isUrlAboutToOverflow =
-        endpointUrlInnerContainerWidth / endpointUrlOuterContainerWidth > URL_OVERFLOW_THRESHOLD;
 
     const [selectedErrorIndex, setSelectedErrorIndex] = useState<number | null>(null);
 
@@ -129,17 +112,19 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
         }
     }, [curlLines.length, example?.responseBody, jsonLines.length]);
 
-    const [[requestHeight, responseHeight], setExampleHeights] = useState<[number, number]>(calculateEndpointHeights);
+    const [[requestHeight, responseHeight], setExampleHeights] = useState<[number, number]>([0, 0]);
 
     useEffect(() => {
         if (typeof window !== "undefined") {
-            const updateExampleHeights = () => {
+            const handleResize = () => {
                 setExampleHeights(calculateEndpointHeights());
             };
 
-            window.addEventListener("resize", updateExampleHeights);
+            window.addEventListener("resize", handleResize);
+
+            handleResize();
             return () => {
-                window.removeEventListener("resize", updateExampleHeights);
+                window.removeEventListener("resize", handleResize);
             };
         }
         return;
@@ -213,85 +198,20 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                         minHeight: layoutBreakpoint === "lg" ? `${exampleHeight}px` : undefined,
                     }}
                 >
-                    <div className="pb-2 pt-8">
-                        {isSubpackage(package_) && (
-                            <div className="text-accent-primary mb-4 text-xs font-semibold uppercase tracking-wider">
-                                {getSubpackageTitle(package_)}
-                            </div>
-                        )}
-                        <div>
-                            <span className="typography-font-heading text-text-primary-light dark:text-text-primary-dark text-3xl font-bold">
-                                {getEndpointTitleAsString(endpoint)}
-                            </span>
-                            {endpoint.availability != null && (
-                                <span className="relative">
-                                    <EndpointAvailabilityTag
-                                        className="absolute -top-1.5 left-2.5 inline-block"
-                                        availability={endpoint.availability}
-                                    />
-                                </span>
-                            )}
-                        </div>
-                    </div>
-                    <div ref={endpointUrlOuterContainerRef} className="flex max-w-full flex-col items-start">
-                        <EndpointUrl
-                            ref={endpointUrlInnerContainerRef}
-                            className="max-w-full"
-                            urlStyle={isUrlAboutToOverflow ? "overflow" : "default"}
-                            endpoint={endpoint}
-                        />
-                    </div>
-                    <ApiPageDescription className="mt-3" description={endpoint.description} isMarkdown={true} />
-                    <div className="mt-8 flex">
-                        <div className="flex flex-1 flex-col gap-12">
-                            {endpoint.path.pathParameters.length > 0 && (
-                                <PathParametersSection
-                                    pathParameters={endpoint.path.pathParameters}
-                                    anchorIdParts={[...anchorIdParts, "path"]}
-                                />
-                            )}
-                            {endpoint.queryParameters.length > 0 && (
-                                <QueryParametersSection
-                                    queryParameters={endpoint.queryParameters}
-                                    anchorIdParts={[...anchorIdParts, "query"]}
-                                />
-                            )}
-                            {endpoint.request != null && (
-                                <EndpointSection title="Request" anchorIdParts={[...anchorIdParts, "request"]}>
-                                    <EndpointRequestSection
-                                        httpRequest={endpoint.request}
-                                        onHoverProperty={onHoverRequestProperty}
-                                        anchorIdParts={[...anchorIdParts, "request"]}
-                                    />
-                                </EndpointSection>
-                            )}
-                            {endpoint.response != null && (
-                                <EndpointSection title="Response" anchorIdParts={[...anchorIdParts, "response"]}>
-                                    <EndpointResponseSection
-                                        httpResponse={endpoint.response}
-                                        onHoverProperty={onHoverResponseProperty}
-                                        anchorIdParts={[...anchorIdParts, "response"]}
-                                    />
-                                </EndpointSection>
-                            )}
-                            {apiSection.showErrors && errors.length > 0 && (
-                                <EndpointSection title="Errors" anchorIdParts={[...anchorIdParts, "response"]}>
-                                    <EndpointErrorsSection
-                                        errors={errors}
-                                        onClickError={(_, idx, event) => {
-                                            event.stopPropagation();
-                                            setSelectedErrorIndex(idx);
-                                        }}
-                                        selectError={(_, idx) => setSelectedErrorIndex(idx)}
-                                        onHoverProperty={onHoverResponseProperty}
-                                        selectedErrorIndex={selectedErrorIndex}
-                                        anchorIdParts={[...anchorIdParts, "errors"]}
-                                    />
-                                </EndpointSection>
-                            )}
-                        </div>
-                    </div>
+                    <EndpointContentLeft
+                        endpoint={endpoint}
+                        package={package_}
+                        anchorIdParts={anchorIdParts}
+                        apiSection={apiSection}
+                        onHoverRequestProperty={onHoverRequestProperty}
+                        onHoverResponseProperty={onHoverResponseProperty}
+                        errors={errors}
+                        selectedErrorIndex={selectedErrorIndex}
+                        setSelectedErrorIndex={setSelectedErrorIndex}
+                    />
                 </div>
+
+                <div style={{ height: `${exampleHeight}px` }} />
 
                 {isInViewport && (
                     <div
@@ -313,4 +233,4 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
             </div>
         </div>
     );
-});
+};

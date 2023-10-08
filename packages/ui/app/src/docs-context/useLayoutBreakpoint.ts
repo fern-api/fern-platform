@@ -14,6 +14,7 @@ export function useLayoutBreakpoint(): "sm" | "md" | "lg" {
                     setBreakpoint("lg");
                 }
             };
+            handleResize();
 
             window.addEventListener("resize", handleResize);
             return () => {
