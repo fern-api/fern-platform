@@ -72,4 +72,5 @@ export interface NavigationContextValue {
     navigateToAnchor: (anchorId: string) => Promise<void>;
     notifyIntentToGoBack: () => void;
     markBackNavigationAsComplete: () => void;
+    userHasScrolled: boolean;
 }

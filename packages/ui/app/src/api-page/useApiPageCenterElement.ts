@@ -4,6 +4,7 @@ import { useDocsContext } from "../docs-context/useDocsContext";
 import { useIsSlugSelected } from "../docs-context/useIsSlugSelected";
 import { NavigationStatus } from "../navigation-context/NavigationContext";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
+import { extractAnchorFromWindow } from "../util/anchor";
 
 export declare namespace useApiPageCenterElement {
     export interface Args {
@@ -16,7 +17,7 @@ export declare namespace useApiPageCenterElement {
 }
 
 export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args): useApiPageCenterElement.Return {
-    const { navigation } = useNavigationContext();
+    const { navigation, userHasScrolled } = useNavigationContext();
     const { registerNavigateToPathListener, onScrollToPath, getFullSlug } = useDocsContext();
 
     const targetRef = useRef<HTMLElement | null>(null);
@@ -45,13 +46,34 @@ export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args):
     );
 
     const isSelected = useIsSlugSelected(getFullSlug(slug));
+
     useEffect(() => {
-        if (isSelected) {
-            handleIsSelected();
+        if (typeof window === "undefined" || userHasScrolled) {
+            return;
         }
-        // only run on initial mount
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+        const maybeScrollToSelected = () => {
+            if (isSelected) {
+                handleIsSelected();
+            }
+        };
+        maybeScrollToSelected();
+        const anchorId = extractAnchorFromWindow();
+        if (anchorId != null) {
+            return;
+        }
+        const docsContent = document.getElementById("docs-content");
+        if (docsContent == null) {
+            return;
+        }
+        const observer = new window.ResizeObserver(() => {
+            maybeScrollToSelected();
+        });
+        observer.observe(docsContent);
+        return () => {
+            observer.unobserve(docsContent);
+            observer.disconnect();
+        };
+    }, [handleIsSelected, isSelected, userHasScrolled]);
 
     const { ref: setRefForInVerticalCenterIntersectionObserver } = useInView({
         // https://stackoverflow.com/questions/54807535/intersection-observer-api-observe-the-center-of-the-viewport

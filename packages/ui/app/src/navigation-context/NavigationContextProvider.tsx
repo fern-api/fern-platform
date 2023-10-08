@@ -1,4 +1,4 @@
-import { PropsWithChildren, useCallback, useLayoutEffect, useState } from "react";
+import { PropsWithChildren, useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { HEADER_HEIGHT } from "../constants";
 import { extractAnchorFromWindow, getAnchorNode, getAnchorSelector } from "../util/anchor";
 import { waitForDomContentToLoad, waitForElement, waitForPageToLoad } from "../util/dom";
@@ -14,6 +14,24 @@ export declare namespace NavigationContextProvider {}
 
 export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const [navigationInfo, setNavigationInfo] = useState<NavigationInfo>({ status: "nil" });
+    const [userHasScrolled, setUserHasScrolled] = useState(false);
+
+    useEffect(() => {
+        if (typeof window === "undefined") {
+            return;
+        }
+        const handleScroll = () => {
+            setUserHasScrolled(true);
+        };
+        window.addEventListener("wheel", handleScroll);
+        window.addEventListener("touchmove", handleScroll);
+        window.addEventListener("hashchange", handleScroll);
+        return () => {
+            window.addEventListener("wheel", handleScroll);
+            window.removeEventListener("touchmove", handleScroll);
+            window.addEventListener("hashchange", handleScroll);
+        };
+    }, []);
 
     const navigateToAnchor = useCallback(async (anchorId: string) => {
         setNavigationInfo({ status: "subsequent-navigation-to-anchor", anchorId });
@@ -77,7 +95,7 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
 
             // Since scrolling is done async, we can just wait a little before updating navigation status. Alternatively,
             // we can set up a listener for scroll movements but that may be an overkill for this function
-            await sleep(500);
+            // await sleep(500);
 
             setNavigationInfo({ status: NavigationStatus.INITIAL_NAVIGATION_TO_ANCHOR_COMPLETE, anchorId });
         }
@@ -95,14 +113,43 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
         }
     }, []);
 
+    useEffect(() => {
+        const anchorId = extractAnchorFromWindow();
+        if (typeof window === "undefined" || anchorId == null || userHasScrolled) {
+            return;
+        }
+        const maybeScrollToSelected = () => {
+            if (navigationInfo.status === NavigationStatus.INITIAL_NAVIGATION_TO_ANCHOR_COMPLETE) {
+                const node = getAnchorNode(anchorId);
+                if (node != null) {
+                    window.scrollTo({ top: node.offsetTop, behavior: "auto" });
+                }
+            }
+        };
+        maybeScrollToSelected();
+        const docsContent = document.getElementById("docs-content");
+        if (docsContent == null) {
+            return;
+        }
+        const observer = new window.ResizeObserver(() => {
+            maybeScrollToSelected();
+        });
+        observer.observe(docsContent);
+        return () => {
+            observer.unobserve(docsContent);
+            observer.disconnect();
+        };
+    }, [navigationInfo.status, userHasScrolled]);
+
     const contextValue = useCallback(
         (): NavigationContextValue => ({
             navigation: navigationInfo,
             navigateToAnchor,
             notifyIntentToGoBack,
             markBackNavigationAsComplete,
+            userHasScrolled,
         }),
-        [navigationInfo, navigateToAnchor, notifyIntentToGoBack, markBackNavigationAsComplete]
+        [navigationInfo, navigateToAnchor, notifyIntentToGoBack, markBackNavigationAsComplete, userHasScrolled]
     );
 
     return <NavigationContext.Provider value={contextValue}>{children}</NavigationContext.Provider>;
