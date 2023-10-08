@@ -26,6 +26,8 @@ const TITLED_EXAMPLE_PADDING = 43;
 const PADDING_TOP = 32;
 const PADDING_BOTTOM = 40;
 const LINE_HEIGHT = 21.5;
+const MOBILE_MAX_LINES = 20;
+const CONTENT_PADDING = 40 + TITLED_EXAMPLE_PADDING;
 
 export const EndpointContent: React.FC<EndpointContent.Props> = ({
     endpoint,
@@ -86,27 +88,34 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         if (typeof window === "undefined") {
             return [0, 0];
         }
+        if (layoutBreakpoint !== "lg") {
+            const requestLines = Math.min(MOBILE_MAX_LINES + 0.5, curlLines.length);
+            const responseLines = Math.min(MOBILE_MAX_LINES + 0.5, jsonLines.length);
+            const requestContainerHeight = requestLines * LINE_HEIGHT + CONTENT_PADDING;
+            const responseContainerHeight = responseLines * LINE_HEIGHT + CONTENT_PADDING;
+            return [requestContainerHeight, responseContainerHeight];
+        }
+        const maxRequestContainerHeight = curlLines.length * LINE_HEIGHT + CONTENT_PADDING;
+        const maxResponseContainerHeight = jsonLines.length * LINE_HEIGHT + CONTENT_PADDING;
         const containerHeight = window.innerHeight - HEADER_HEIGHT - PADDING_TOP - PADDING_BOTTOM;
-        const requestContentHeight = curlLines.length * LINE_HEIGHT + 40 + TITLED_EXAMPLE_PADDING;
-        const responseContentHeight = jsonLines.length * LINE_HEIGHT + 40 + TITLED_EXAMPLE_PADDING;
         const halfContainerHeight = (containerHeight - GAP_6) / 2;
         if (example?.responseBody == null) {
-            return [Math.min(requestContentHeight, containerHeight), 0];
+            return [Math.min(maxRequestContainerHeight, containerHeight), 0];
         }
-        if (requestContentHeight >= halfContainerHeight && responseContentHeight >= halfContainerHeight) {
+        if (maxRequestContainerHeight >= halfContainerHeight && maxResponseContainerHeight >= halfContainerHeight) {
             return [halfContainerHeight, halfContainerHeight];
-        } else if (requestContentHeight + responseContentHeight <= containerHeight - GAP_6) {
-            return [requestContentHeight, responseContentHeight];
-        } else if (requestContentHeight < halfContainerHeight) {
-            const remainingContainerHeight = containerHeight - requestContentHeight - GAP_6;
-            return [requestContentHeight, Math.min(remainingContainerHeight, responseContentHeight)];
-        } else if (responseContentHeight < halfContainerHeight) {
-            const remainingContainerHeight = containerHeight - responseContentHeight - GAP_6;
-            return [Math.min(remainingContainerHeight, requestContentHeight), responseContentHeight];
+        } else if (maxRequestContainerHeight + maxResponseContainerHeight <= containerHeight - GAP_6) {
+            return [maxRequestContainerHeight, maxResponseContainerHeight];
+        } else if (maxRequestContainerHeight < halfContainerHeight) {
+            const remainingContainerHeight = containerHeight - maxRequestContainerHeight - GAP_6;
+            return [maxRequestContainerHeight, Math.min(remainingContainerHeight, maxResponseContainerHeight)];
+        } else if (maxResponseContainerHeight < halfContainerHeight) {
+            const remainingContainerHeight = containerHeight - maxResponseContainerHeight - GAP_6;
+            return [Math.min(remainingContainerHeight, maxRequestContainerHeight), maxResponseContainerHeight];
         } else {
             return [0, 0];
         }
-    }, [curlLines.length, example?.responseBody, jsonLines.length]);
+    }, [curlLines.length, example?.responseBody, jsonLines.length, layoutBreakpoint]);
 
     const [[requestHeight, responseHeight], setExampleHeights] = useState<[number, number]>([0, 0]);
 
