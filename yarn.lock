@@ -2394,6 +2394,7 @@ __metadata:
     react-markdown: ^8.0.5
     react-syntax-highlighter: ^15.5.0
     react-test-renderer: ^18.2.0
+    react-virtuoso: ^4.6.0
     rehype-raw: ^6.1.1
     remark-gfm: ^3.0.1
     stylelint: ^14.14.0
@@ -12239,6 +12240,16 @@ env-cmd@toddbluhm/env-cmd:
     react: ">=16.6.0"
     react-dom: ">=16.6.0"
   checksum: 75602840106aa9c6545149d6d7ae1502fb7b7abadcce70a6954c4b64a438ff1cd16fc77a0a1e5197cdd72da398f39eb929ea06f9005c45b132ed34e056ebdeb1
+  languageName: node
+  linkType: hard
+
+"react-virtuoso@npm:^4.6.0":
+  version: 4.6.0
+  resolution: "react-virtuoso@npm:4.6.0"
+  peerDependencies:
+    react: ">=16 || >=17 || >= 18"
+    react-dom: ">=16 || >=17 || >= 18"
+  checksum: 9bf788e8d17ae6de7883b96173d5a8a3cf753e647b720487a39bbf65ab517e61f72b83ab45ba3467cb4d9dd0426cc89d382c5675828b1bf70c3179c0be4c1d1e
   languageName: node
   linkType: hard
 

@@ -8,7 +8,7 @@ export declare namespace useCopyToClipboard {
     }
 }
 
-export function useCopyToClipboard(content: string | undefined): useCopyToClipboard.Return {
+export function useCopyToClipboard(content: string | (() => string) | undefined): useCopyToClipboard.Return {
     const [wasJustCopied, setWasJustCopied] = useState(false);
 
     const copyToClipboard = useMemo(() => {
@@ -17,7 +17,7 @@ export function useCopyToClipboard(content: string | undefined): useCopyToClipbo
         }
         return async () => {
             setWasJustCopied(true);
-            await navigator.clipboard.writeText(content);
+            await navigator.clipboard.writeText(typeof content === "function" ? content() : content);
         };
     }, [content]);
 

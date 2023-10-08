@@ -1,205 +1,81 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import { getEndpointEnvironmentUrl } from "@fern-ui/app-utils";
-import { assertNever, assertNeverNoThrow, noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import React, { useCallback, useMemo } from "react";
-import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
-import { JsonExampleContext, JsonExampleContextValue } from "../json-example/contexts/JsonExampleContext";
+import { assertNever } from "@fern-ui/core-utils";
+import classNames from "classnames";
+import React, { useMemo } from "react";
 import { JsonPropertyPath } from "../json-example/contexts/JsonPropertyPath";
-import { JsonExampleString } from "../json-example/JsonExampleString";
-import { JsonItemBottomLine } from "../json-example/JsonItemBottomLine";
-import { JsonItemMiddleLines } from "../json-example/JsonItemMiddleLines";
-import { JsonItemTopLine } from "../json-example/JsonItemTopLine";
-import { CurlExampleLine } from "./CurlExampleLine";
-import { CurlExamplePart } from "./CurlExamplePart";
+import { getIsSelectedArr, renderJsonLine } from "../json-example/jsonLineUtils";
+import { VirtualizedExample } from "../VirtualizedExample";
 import { CurlParameter } from "./CurlParameter";
+import { CurlLine, CurlLineJson } from "./curlUtils";
 
 export declare namespace CurlExample {
     export interface Props {
-        endpoint: FernRegistryApiRead.EndpointDefinition;
-        example: FernRegistryApiRead.ExampleEndpointCall;
+        curlLines: CurlLine[];
         selectedProperty: JsonPropertyPath | undefined;
-        parent: HTMLElement | undefined;
+        height: number;
     }
 }
 
 const CURL_PREFIX = "curl ";
 
-export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, selectedProperty, parent }) => {
-    const { apiDefinition } = useApiDefinitionContext();
+export const CurlExample: React.FC<CurlExample.Props> = ({ curlLines, selectedProperty, height }) => {
+    const firstJsonLine = curlLines.findIndex((part) => part.type === "json");
+    const isSelectedArr = useMemo(() => {
+        const jsonLines = curlLines
+            .filter((part): part is CurlLineJson => part.type === "json")
+            .map((json) => json.line);
+        return getIsSelectedArr(jsonLines, selectedProperty);
+    }, [curlLines, selectedProperty]);
+    const topLineAnchorIdx = isSelectedArr.findIndex((isSelected) => isSelected);
 
-    const contextValue = useCallback(
-        (): JsonExampleContextValue => ({
-            selectedProperty,
-            containerRef: parent,
-        }),
-        [parent, selectedProperty]
-    );
+    const firstSelectedIdx = firstJsonLine > -1 && topLineAnchorIdx > -1 ? firstJsonLine + topLineAnchorIdx : undefined;
 
-    const environmentUrl = useMemo(() => getEndpointEnvironmentUrl(endpoint) ?? "localhost:8000", [endpoint]);
+    const curlElement = <span className="text-yellow-600 dark:text-yellow-100">{CURL_PREFIX}</span>;
 
-    const partsExcludingCurlCommand = useMemo(() => {
-        const parts: CurlExamplePart[] = [];
-
-        if (endpoint.method !== "GET") {
-            parts.push({
-                type: "line",
-                value: <CurlParameter paramKey="-X" value={endpoint.method.toUpperCase()} doNotStringifyValue />,
-            });
-        }
-
-        parts.push({
-            type: "line",
-            value: <CurlParameter paramKey="--url" value={`${environmentUrl}${example.path}`} />,
-        });
-
-        for (const queryParam of endpoint.queryParameters) {
-            const value = example.queryParameters[queryParam.key];
-            if (value != null) {
-                parts.push({
-                    type: "line",
-                    // eslint-disable-next-line @typescript-eslint/no-base-to-string
-                    value: <CurlParameter paramKey="--url-query" value={`${queryParam.key}=${value}`} />,
-                });
+    const itemContent = (index: number, part: CurlLine) => {
+        switch (part.type) {
+            case "param": {
+                const { excludeIndent = false, excludeTrailingBackslash = false } = part;
+                const isLastPart = index === curlLines.length - 1;
+                return (
+                    <div className={classNames("relative w-fit min-w-full px-4 transition py-px", "bg-transparent")}>
+                        {index === 0 ? curlElement : " ".repeat(excludeIndent ? 0 : CURL_PREFIX.length)}
+                        <CurlParameter
+                            key={index}
+                            paramKey={part.paramKey}
+                            value={part.value}
+                            doNotStringifyValue={part.doNotStringifyValue}
+                        />
+                        {!excludeTrailingBackslash && !isLastPart && (
+                            <span className="text-text-primary-light dark:text-text-primary-dark">{" \\"}</span>
+                        )}
+                    </div>
+                );
             }
-        }
-
-        const requestContentType = endpoint.request != null ? endpoint.request.contentType : undefined;
-        if (requestContentType != null) {
-            parts.push({
-                type: "line",
-                value: <CurlParameter paramKey="--header" value={`Content-Type: ${requestContentType}`} />,
-            });
-        }
-
-        if (apiDefinition.auth != null && endpoint.authed) {
-            visitDiscriminatedUnion(apiDefinition.auth, "type")._visit({
-                basicAuth: ({ usernameName = "username", passwordName = "password" }) => {
-                    parts.push({
-                        type: "line",
-                        value: <CurlParameter paramKey="--user" value={`${usernameName}:${passwordName}`} />,
-                    });
-                },
-                bearerAuth: ({ tokenName = "token" }) => {
-                    parts.push({
-                        type: "line",
-                        value: <CurlParameter paramKey="--header" value={`Authorization <${tokenName}>`} />,
-                    });
-                },
-                header: ({ headerWireValue, nameOverride = headerWireValue }) => {
-                    parts.push({
-                        type: "line",
-                        value: <CurlParameter paramKey="--header" value={`${headerWireValue}: <${nameOverride}>`} />,
-                    });
-                },
-                _other: noop,
-            });
-        }
-
-        for (const header of endpoint.headers) {
-            const value = example.headers[header.key];
-            if (value != null) {
-                parts.push({
-                    type: "line",
-                    // eslint-disable-next-line @typescript-eslint/no-base-to-string
-                    value: <CurlParameter paramKey="--header" value={`${header.key}: ${value}`} />,
-                });
+            case "json": {
+                const isSelected = isSelectedArr[index - firstJsonLine] ?? false;
+                return (
+                    <div
+                        className={classNames(
+                            "relative w-fit min-w-full px-4 transition py-px",
+                            isSelected ? "bg-accent-primary/20" : "bg-transparent"
+                        )}
+                    >
+                        {isSelected && <div className="bg-accent-primary absolute inset-y-0 left-0 w-1" />}
+                        {renderJsonLine(part.line)}
+                    </div>
+                );
             }
+            default:
+                assertNever(part);
         }
-
-        if (endpoint.request != null) {
-            switch (endpoint.request.type.type) {
-                case "fileUpload":
-                    parts.push({
-                        type: "line",
-                        value: <CurlParameter paramKey="--data" value="@file" />,
-                    });
-                    break;
-                case "object":
-                case "reference":
-                    parts.push(
-                        {
-                            type: "line",
-                            value: (
-                                <>
-                                    <CurlParameter paramKey="--data" /> <JsonExampleString value="'" doNotAddQuotes />
-                                </>
-                            ),
-                            excludeTrailingBackslash: true,
-                        },
-                        {
-                            type: "jsx",
-                            jsx: (
-                                <>
-                                    <JsonItemTopLine value={example.requestBody} isNonLastItemInCollection={false} />
-                                    <JsonItemMiddleLines value={example.requestBody} />
-                                    <JsonItemBottomLine value={example.requestBody} isNonLastItemInCollection={false} />
-                                </>
-                            ),
-                        },
-                        {
-                            type: "line",
-                            value: <JsonExampleString value="'" doNotAddQuotes />,
-                            excludeIndent: true,
-                        }
-                    );
-                    break;
-                default:
-                    assertNeverNoThrow(endpoint.request.type);
-            }
-        }
-
-        const curlElement = <span className="text-yellow-600 dark:text-yellow-100">{CURL_PREFIX}</span>;
-        if (parts[0]?.type === "line") {
-            parts[0] = {
-                ...parts[0],
-                value: (
-                    <>
-                        {curlElement}
-                        {parts[0].value}
-                    </>
-                ),
-            };
-        } else {
-            parts.unshift({
-                type: "line",
-                value: curlElement,
-            });
-        }
-
-        return parts;
-    }, [
-        apiDefinition.auth,
-        endpoint.authed,
-        endpoint.headers,
-        endpoint.method,
-        endpoint.queryParameters,
-        endpoint.request,
-        environmentUrl,
-        example.headers,
-        example.path,
-        example.queryParameters,
-        example.requestBody,
-    ]);
+    };
 
     return (
-        <JsonExampleContext.Provider value={contextValue}>
-            {partsExcludingCurlCommand.map((part, index) => {
-                switch (part.type) {
-                    case "jsx":
-                        return <React.Fragment key={index}>{part.jsx}</React.Fragment>;
-                    case "line":
-                        return (
-                            <CurlExampleLine
-                                key={index}
-                                part={part}
-                                indentInSpaces={index > 0 ? CURL_PREFIX.length : 0}
-                                isLastPart={index === partsExcludingCurlCommand.length - 1}
-                            />
-                        );
-                    default:
-                        assertNever(part);
-                }
-            })}
-        </JsonExampleContext.Provider>
+        <VirtualizedExample<CurlLine>
+            data={curlLines}
+            itemContent={itemContent}
+            height={height}
+            scrollToRow={firstSelectedIdx}
+        />
     );
 };
