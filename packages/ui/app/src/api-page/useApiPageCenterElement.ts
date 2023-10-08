@@ -26,7 +26,8 @@ export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args):
             if (
                 newIsInVerticalCenter &&
                 navigation.status !== NavigationStatus.INITIAL_NAVIGATION_TO_ANCHOR &&
-                navigation.status !== NavigationStatus.SUBSEQUENT_NAVIGATION_TO_ANCHOR
+                navigation.status !== NavigationStatus.SUBSEQUENT_NAVIGATION_TO_ANCHOR &&
+                navigation.status !== NavigationStatus.BACK_NAVIGATION
             ) {
                 onScrollToPath(slug);
             }

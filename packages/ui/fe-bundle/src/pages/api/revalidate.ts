@@ -26,6 +26,7 @@ const handler: NextApiHandler = async (req, res) => {
         // req.headers.host to make the network request
         if (typeof req.headers["x-fern-host"] === "string") {
             req.headers.host = req.headers["x-fern-host"];
+            res.setHeader("host", req.headers["x-fern-host"]);
         }
 
         let pathsToRevalidate: string[] = [];

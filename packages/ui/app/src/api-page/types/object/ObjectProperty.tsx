@@ -4,6 +4,7 @@ import { useCallback, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
+import { HEADER_HEIGHT } from "../../../constants";
 import { getAnchorId } from "../../../util/anchor";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
@@ -24,10 +25,11 @@ export declare namespace ObjectProperty {
     export interface Props {
         property: FernRegistryApiRead.ObjectProperty;
         anchorIdParts: string[];
+        applyErrorStyles: boolean;
     }
 }
 
-export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchorIdParts, property }) => {
+export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchorIdParts, property, applyErrorStyles }) => {
     const anchorId = getAnchorId(anchorIdParts);
     const { resolveTypeById } = useApiDefinitionContext();
 
@@ -93,9 +95,10 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchorIdParts, 
     return (
         <div
             data-anchor={anchorId}
-            className={classNames("flex relative flex-col py-3 scroll-mt-16", {
+            className={classNames("flex relative flex-col py-3", {
                 "px-3": !contextValue.isRootTypeDefinition,
             })}
+            style={{ scrollMarginTop: HEADER_HEIGHT }}
         >
             <div className="flex items-baseline gap-2">
                 <div className="group/anchor-container relative">
@@ -116,6 +119,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchorIdParts, 
                     <InternalTypeReferenceDefinitions
                         type={property.valueType}
                         isCollapsible
+                        applyErrorStyles={applyErrorStyles}
                         anchorIdParts={anchorIdParts}
                     />
                 </TypeDefinitionContext.Provider>

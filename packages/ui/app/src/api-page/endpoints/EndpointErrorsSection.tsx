@@ -4,14 +4,14 @@ import { EndpointError } from "./EndpointError";
 
 export declare namespace EndpointErrorsSection {
     export interface Props {
-        errors: FernRegistry.api.v1.read.ErrorDeclaration[];
+        errors: FernRegistry.api.v1.read.ErrorDeclarationV2[];
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         onClickError: (
-            e: FernRegistry.api.v1.read.ErrorDeclaration,
+            e: FernRegistry.api.v1.read.ErrorDeclarationV2,
             index: number,
             event: React.MouseEvent<HTMLButtonElement>
         ) => void;
-        selectError: (e: FernRegistry.api.v1.read.ErrorDeclaration, index: number) => void;
+        selectError: (e: FernRegistry.api.v1.read.ErrorDeclarationV2, index: number) => void;
         selectedErrorIndex: number | null;
         anchorIdParts: string[];
     }
