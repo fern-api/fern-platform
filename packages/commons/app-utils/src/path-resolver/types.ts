@@ -51,11 +51,25 @@ export interface DefinitionNodeTab {
     index: number;
 }
 
+export type DefinitionInfo = DefinitionInfo.UnversionedUntabbed | DefinitionInfo.Versioned;
+
+export declare namespace DefinitionInfo {
+    export interface UnversionedUntabbed {
+        type: "unversioned";
+    }
+
+    export interface Versioned {
+        type: "versioned";
+        defaultVersionNode: DefinitionNode.Version;
+    }
+}
+
 export declare namespace DefinitionNode {
     export interface Root extends BaseNode {
         type: "root";
         children: Map<FullSlug, ChildDefinitionNode>;
         childrenOrdering: ItemSlug[];
+        info: DefinitionInfo;
     }
 
     export interface Version extends BaseNode {
