@@ -77,7 +77,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                 >
                     <div
                         className={classNames(
-                            "dark:bg-background-primary-dark flex-1 overflow-auto whitespace-pre bg-gray-100/90",
+                            "dark:bg-background-primary-dark flex-1 overflow-hidden whitespace-pre bg-gray-100/90",
                             {
                                 "py-4": !disablePadding,
                             }
