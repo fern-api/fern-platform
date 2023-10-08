@@ -1,7 +1,9 @@
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { buildDefinitionMap } from "./build-map";
+import { joinUrlSlugs } from "../slug";
+import { buildResolutionMap } from "./build-map";
 import { buildDefinitionTree } from "./build-tree";
 import type { DefinitionNode, FullSlug, NavigatableDefinitionNode } from "./types";
+import { isLeafNode, traversePreOrder } from "./util";
 
 export interface PathResolverConfig {
     docsDefinition: FernRegistryDocsRead.DocsDefinition;
@@ -9,35 +11,44 @@ export interface PathResolverConfig {
 
 export class PathResolver {
     readonly #tree: DefinitionNode.Root;
-    readonly #nodesByFullSlug: Map<FullSlug, DefinitionNode>;
+    readonly #map: Map<FullSlug, DefinitionNode | DefinitionNode[]>;
     public readonly rootNavigatable: NavigatableDefinitionNode | undefined;
 
     public constructor(public readonly config: PathResolverConfig) {
         const { tree, map } = this.#preprocessDefinition();
         this.#tree = tree;
-        this.#nodesByFullSlug = map;
+        this.#map = map;
         this.rootNavigatable = this.#resolveNavigatable(this.#tree);
     }
 
     #preprocessDefinition() {
         const tree = buildDefinitionTree(this.config.docsDefinition);
-        const map = buildDefinitionMap(tree);
+        const map = buildResolutionMap(tree);
         return { tree, map };
     }
 
     public resolveSlug(fullSlug: FullSlug): DefinitionNode | undefined {
-        return this.#nodesByFullSlug.get(fullSlug);
+        const nodeOrNodes = this.#map.get(fullSlug);
+        if (Array.isArray(nodeOrNodes)) {
+            const collisions = nodeOrNodes.map((node) => node.type);
+            throw new Error(
+                `Slug cannot be resolved due to ${
+                    collisions.length
+                } collisions.\nColliding node types: ${collisions.join(", ")}`
+            );
+        }
+        return nodeOrNodes;
     }
 
     public resolveNavigatable(fullSlug: FullSlug): NavigatableDefinitionNode | undefined;
     public resolveNavigatable(node: DefinitionNode): NavigatableDefinitionNode;
     public resolveNavigatable(slugOrNode: string | DefinitionNode): NavigatableDefinitionNode | undefined {
-        const node = typeof slugOrNode === "string" ? this.#nodesByFullSlug.get(slugOrNode) : slugOrNode;
+        const node = typeof slugOrNode === "string" ? this.resolveSlug(slugOrNode) : slugOrNode;
         return node != null ? this.#resolveNavigatable(node) : undefined;
     }
 
     #resolveNavigatable(node: DefinitionNode): NavigatableDefinitionNode | undefined {
-        if (node.type === "page" || node.type === "endpoint" || node.type === "webhook") {
+        if (isLeafNode(node)) {
             return node;
         }
         for (const childSlug of node.childrenOrdering) {
@@ -52,7 +63,21 @@ export class PathResolver {
         return undefined;
     }
 
+    public traverse(cb: (node: DefinitionNode, fullSlug: FullSlug) => void): void {
+        traversePreOrder(this.#tree, (node, slugs) => cb(node, joinUrlSlugs(...slugs)), []);
+    }
+
     public getAllSlugs(): FullSlug[] {
-        return Array.from(this.#nodesByFullSlug.keys());
+        return Array.from(this.#map.keys());
+    }
+
+    public getCollidingNodes(): Map<string, DefinitionNode[]> {
+        const nodesBySlug = new Map<string, DefinitionNode[]>();
+        this.#map.forEach((val, key) => {
+            if (Array.isArray(val)) {
+                nodesBySlug.set(key, val);
+            }
+        });
+        return nodesBySlug;
     }
 }

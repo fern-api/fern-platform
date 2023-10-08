@@ -1,6 +1,7 @@
 import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { isUnversionedTabbedNavigationConfig, isVersionedNavigationConfig } from "../fern";
+import { joinUrlSlugs } from "../slug";
 import { NODE_FACTORY } from "./node-factory";
 import type {
     ChildDefinitionNode,
@@ -10,16 +11,16 @@ import type {
     ItemSlug,
     ParentDefinitionNode,
 } from "./types";
-import { joinUrlSlugs } from "./util";
 
-type BuildContext = {
+interface BuildContext {
     definition: FernRegistryDocsRead.DocsDefinition;
     version: DefinitionNodeVersion | null;
     tab: DefinitionNodeTab | null;
-};
+}
 
 export function buildDefinitionTree(definition: FernRegistryDocsRead.DocsDefinition): DefinitionNode.Root {
     const root = NODE_FACTORY.root.create();
+
     const navigationConfig = definition.config.navigation;
 
     if (isVersionedNavigationConfig(navigationConfig)) {
@@ -32,6 +33,12 @@ export function buildDefinitionTree(definition: FernRegistryDocsRead.DocsDefinit
                     index: versionIndex,
                 },
             });
+            if (versionIndex === 0) {
+                root.info = {
+                    type: "versioned",
+                    defaultVersionNode: versionNode,
+                };
+            }
             addNodeChild(root, versionNode);
             if (isUnversionedTabbedNavigationConfig(version.config)) {
                 const tabNodes = version.config.tabs.map((tab, tabIndex) => {

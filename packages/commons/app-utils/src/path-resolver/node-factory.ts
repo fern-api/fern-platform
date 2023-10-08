@@ -8,6 +8,7 @@ function createRoot(): DefinitionNode.Root {
         slug: "",
         children: new Map(),
         childrenOrdering: [],
+        info: { type: "unversioned" },
     };
 }
 
