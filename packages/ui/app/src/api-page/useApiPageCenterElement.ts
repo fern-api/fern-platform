@@ -47,6 +47,7 @@ export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args):
 
     const isSelected = useIsSlugSelected(getFullSlug(slug));
 
+    const anchorId = extractAnchorFromWindow();
     useEffect(() => {
         if (typeof window === "undefined" || userHasScrolled) {
             return;
@@ -57,7 +58,6 @@ export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args):
             }
         };
         maybeScrollToSelected();
-        const anchorId = extractAnchorFromWindow();
         if (anchorId != null) {
             return;
         }
@@ -73,7 +73,7 @@ export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args):
             observer.unobserve(docsContent);
             observer.disconnect();
         };
-    }, [handleIsSelected, isSelected, userHasScrolled]);
+    }, [anchorId, handleIsSelected, isSelected, userHasScrolled]);
 
     const { ref: setRefForInVerticalCenterIntersectionObserver } = useInView({
         // https://stackoverflow.com/questions/54807535/intersection-observer-api-observe-the-center-of-the-viewport

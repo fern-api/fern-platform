@@ -90,7 +90,7 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
                 href={`/${fullSlug}`}
                 onClick={handleClick}
                 className="!no-underline"
-                shallow={true}
+                shallow={false}
                 scroll={!shallow}
             >
                 <SidebarItemLayout title={renderTitle} isSelected={isSelected} />
