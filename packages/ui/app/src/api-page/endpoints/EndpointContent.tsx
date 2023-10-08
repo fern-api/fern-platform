@@ -24,11 +24,6 @@ import { QueryParametersSection } from "./QueryParametersSection";
 
 const URL_OVERFLOW_THRESHOLD = 0.95;
 
-// const EndpointExample = dynamic({
-//     ssr: false,
-//     loader: () => import("./endpoint-examples/EndpointExample").then((mod) => mod.EndpointExample),
-// });
-
 export declare namespace EndpointContent {
     export interface Props {
         endpoint: FernRegistryApiRead.EndpointDefinition;
