@@ -22,7 +22,7 @@ export function VirtualizedExample<T>({
     const virtuosoRef = useRef<VirtuosoHandle>(null);
 
     useEffect(() => {
-        if (scrollToRow != null) {
+        if (scrollToRow != null && scrollToRow > -1) {
             virtuosoRef.current?.scrollToIndex({
                 index: scrollToRow,
                 align: "start",
@@ -36,7 +36,8 @@ export function VirtualizedExample<T>({
         <Virtuoso
             data={data}
             itemContent={itemContent}
-            fixedItemHeight={LINE_HEIGHT}
+            defaultItemHeight={LINE_HEIGHT}
+            height={height}
             style={{
                 height: `${height}px`,
             }}

@@ -6,6 +6,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useInView } from "react-intersection-observer";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { HEADER_HEIGHT } from "../../constants";
+import { useLayoutBreakpoint } from "../../docs-context/useLayoutBreakpoint";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { CurlExample } from "../examples/curl-example/CurlExample";
 import { getCurlLines } from "../examples/curl-example/curlUtils";
@@ -47,6 +48,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
     setContainerRef,
     anchorIdParts,
 }) {
+    const layoutBreakpoint = useLayoutBreakpoint();
     const [isInViewport, setIsInViewport] = useState(false);
     const { ref: containerRef } = useInView({
         onChange: setIsInViewport,
@@ -143,6 +145,56 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
         return;
     }, [calculateEndpointHeights]);
 
+    const renderExample = () => {
+        if (example == null) {
+            return null;
+        }
+
+        return (
+            <div className="flex min-h-0 flex-1 flex-col">
+                <div className="grid min-h-0 flex-1 flex-col gap-6">
+                    <TitledExample
+                        title="Request"
+                        type="primary"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                        }}
+                        disablePadding={true}
+                        copyToClipboardText={() => {
+                            // TODO
+                            return "";
+                        }}
+                    >
+                        <CurlExample
+                            curlLines={curlLines}
+                            selectedProperty={hoveredRequestPropertyPath}
+                            height={requestHeight - TITLED_EXAMPLE_PADDING}
+                        />
+                    </TitledExample>
+                    {example.responseBody != null && (
+                        <TitledExample
+                            title={example.responseStatusCode >= 400 ? "Error Response" : "Response"}
+                            type={example.responseStatusCode >= 400 ? "warning" : "primary"}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                            }}
+                            copyToClipboardText={() => JSON.stringify(example.responseBody, undefined, 2)}
+                            disablePadding={true}
+                        >
+                            <JsonExampleVirtualized
+                                jsonLines={jsonLines}
+                                selectedProperty={hoveredResponsePropertyPath}
+                                height={responseHeight - TITLED_EXAMPLE_PADDING}
+                            />
+                        </TitledExample>
+                    )}
+                </div>
+            </div>
+        );
+    };
+
+    const exampleHeight = requestHeight + responseHeight + GAP_6 + 70;
+
     return (
         <div
             className={classNames("pb-20 pl-6 md:pl-12 pr-4", {
@@ -158,7 +210,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                 <div
                     className="flex min-w-0 max-w-2xl flex-1 flex-col"
                     style={{
-                        minHeight: `${requestHeight + responseHeight + GAP_6 + 70}px`,
+                        minHeight: layoutBreakpoint === "lg" ? `${exampleHeight}px` : undefined,
                     }}
                 >
                     <div className="pb-2 pt-8">
@@ -253,47 +305,11 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                             "mt-10 lg:mt-0 lg:top-16"
                         )}
                     >
-                        {example ? (
-                            <div className="flex min-h-0 flex-1 flex-col">
-                                <div className="grid min-h-0 flex-1 flex-col gap-6">
-                                    <TitledExample
-                                        title="Request"
-                                        type="primary"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                        }}
-                                        disablePadding={true}
-                                    >
-                                        <CurlExample
-                                            curlLines={curlLines}
-                                            selectedProperty={hoveredRequestPropertyPath}
-                                            height={requestHeight - TITLED_EXAMPLE_PADDING}
-                                        />
-                                    </TitledExample>
-                                    {example.responseBody != null && (
-                                        <TitledExample
-                                            title={example.responseStatusCode >= 400 ? "Error Response" : "Response"}
-                                            type={example.responseStatusCode >= 400 ? "warning" : "primary"}
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                            }}
-                                            copyToClipboardText={() =>
-                                                JSON.stringify(example.responseBody, undefined, 2)
-                                            }
-                                            disablePadding={true}
-                                        >
-                                            <JsonExampleVirtualized
-                                                jsonLines={jsonLines}
-                                                selectedProperty={hoveredResponsePropertyPath}
-                                                height={responseHeight - TITLED_EXAMPLE_PADDING}
-                                            />
-                                        </TitledExample>
-                                    )}
-                                </div>
-                            </div>
-                        ) : null}
+                        {renderExample()}
                     </div>
                 )}
+
+                {!isInViewport && layoutBreakpoint !== "lg" && <div style={{ height: `${exampleHeight}px` }} />}
             </div>
         </div>
     );

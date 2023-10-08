@@ -122,11 +122,11 @@ export function getCurlLines(
                         paramKey: "--data",
                         value: (
                             <>
-                                <JsonExampleString value="'" doNotAddQuotes />
+                                <JsonExampleString value="'" doNotStringify />
                                 <span className="text-text-primary-light dark:text-text-primary-dark">
                                     {renderJsonLineValue(jsonLines[0])}
                                 </span>
-                                <JsonExampleString value="'" doNotAddQuotes />
+                                <JsonExampleString value="'" doNotStringify />
                             </>
                         ),
                         excludeTrailingBackslash: true,
@@ -137,14 +137,14 @@ export function getCurlLines(
                         {
                             type: "param",
                             paramKey: "--data",
-                            value: <JsonExampleString value="'" doNotAddQuotes />,
+                            value: <JsonExampleString value="'" doNotStringify />,
                             excludeTrailingBackslash: true,
                             doNotStringifyValue: true,
                         },
                         ...jsonLines.map((line): CurlLine => ({ type: "json", line })),
                         {
                             type: "param",
-                            value: <JsonExampleString value="'" doNotAddQuotes />,
+                            value: <JsonExampleString value="'" doNotStringify />,
                             excludeIndent: true,
                             doNotStringifyValue: true,
                         }
