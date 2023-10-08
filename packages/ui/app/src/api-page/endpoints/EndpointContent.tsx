@@ -13,8 +13,6 @@ import { flattenJsonToLines } from "../examples/json-example/jsonLineUtils";
 import { TitledExample } from "../examples/TitledExample";
 import { EndpointContentLeft } from "./EndpointContentLeft";
 
-const URL_OVERFLOW_THRESHOLD = 0.95;
-
 export declare namespace EndpointContent {
     export interface Props {
         endpoint: FernRegistryApiRead.EndpointDefinition;
