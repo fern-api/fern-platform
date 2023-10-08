@@ -10,6 +10,7 @@ import { DEFINITION_VERSIONED_UNTABBED } from "./mock-definitions/versioned-unta
 import { DEFINITION_VERSIONED_WITH_SKIPPED_SLUGS } from "./mock-definitions/versioned-with-skipped-slugs";
 import { DEFINITION_WITH_API } from "./mock-definitions/with-api-definition";
 import { DEFINITION_WITH_COLLIDING_SLUGS } from "./mock-definitions/with-colliding-slugs";
+import { DEFINITION_WITH_COLLIDING_SLUGS_2 } from "./mock-definitions/with-colliding-slugs-2";
 
 describe("resolveSlug", () => {
     describe("resolves invalid slug to undefined", () => {
@@ -119,13 +120,27 @@ describe("resolveSlug", () => {
             });
         });
 
-        it("with collisions", () => {
-            const resolver = new PathResolver({
-                docsDefinition: DEFINITION_WITH_COLLIDING_SLUGS,
+        describe("with collisions", () => {
+            it("case 1", () => {
+                const resolver = new PathResolver({
+                    docsDefinition: DEFINITION_WITH_COLLIDING_SLUGS,
+                });
+                expect(() => resolver.resolveSlug("v1")).toThrow(PathCollisionError);
+                expect(() => resolver.resolveSlug("v1/introduction")).toThrow(PathCollisionError);
+                expect(() => resolver.resolveSlug("v1/introduction/getting-started")).toThrow(PathCollisionError);
             });
-            expect(() => resolver.resolveSlug("v1")).toThrow(PathCollisionError);
-            expect(() => resolver.resolveSlug("v1/introduction")).toThrow(PathCollisionError);
-            expect(() => resolver.resolveSlug("v1/introduction/getting-started")).toThrow(PathCollisionError);
+
+            it("case 2", () => {
+                const resolver = new PathResolver({
+                    docsDefinition: DEFINITION_WITH_COLLIDING_SLUGS_2,
+                });
+                expect(() => resolver.resolveSlug("v1")).toThrow();
+                const node1 = resolver.resolveSlug("v1/welcome/getting-started");
+                const node2 = resolver.resolveSlug("v1/introduction/getting-started");
+                expectPageNode(node1);
+                expectPageNode(node2);
+                expect(Object.is(node1, node2)).toBeFalsy();
+            });
         });
     });
 });
