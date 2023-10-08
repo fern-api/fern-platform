@@ -3,6 +3,7 @@ import { getSubpackageTitle, isSubpackage } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { snakeCase } from "lodash-es";
 import React, { useCallback } from "react";
+import { HEADER_HEIGHT } from "../../constants";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
@@ -121,10 +122,9 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                         // the 4rem is the same as the h-10 as the Header
                         "max-h-[calc(100vh-4rem)]",
                         // hide on mobile,
-                        "hidden lg:flex",
-                        // header offset
-                        "top-16"
+                        "hidden lg:flex"
                     )}
+                    style={{ top: HEADER_HEIGHT }}
                 >
                     {webhookExample}
                 </div>

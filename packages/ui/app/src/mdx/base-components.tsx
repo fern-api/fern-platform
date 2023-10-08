@@ -2,6 +2,7 @@ import classNames from "classnames";
 import Link from "next/link";
 import React, { AnchorHTMLAttributes, HTMLAttributes } from "react";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
+import { HEADER_HEIGHT } from "../constants";
 import { useDocsContext } from "../docs-context/useDocsContext";
 
 export const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({ className, ...rest }) => {
@@ -82,8 +83,11 @@ export const H1: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(
                 className,
-                "relative group/anchor-container scroll-mt-16 !text-text-primary-light dark:!text-text-primary-dark text-2xl font-semibold mt-10 mb-3"
+                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-2xl font-semibold mt-10 mb-3"
             )}
+            style={{
+                scrollMarginTop: HEADER_HEIGHT,
+            }}
             {...rest}
         >
             <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
@@ -101,8 +105,11 @@ export const H2: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(
                 className,
-                "relative group/anchor-container scroll-mt-16 !text-text-primary-light dark:!text-text-primary-dark text-xl font-semibold mt-10 mb-3"
+                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-xl font-semibold mt-10 mb-3"
             )}
+            style={{
+                scrollMarginTop: HEADER_HEIGHT,
+            }}
             {...rest}
         >
             <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
@@ -120,8 +127,11 @@ export const H3: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(
                 className,
-                "relative group/anchor-container scroll-mt-16 !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
+                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
             )}
+            style={{
+                scrollMarginTop: HEADER_HEIGHT,
+            }}
             {...rest}
         >
             <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
@@ -139,8 +149,11 @@ export const H4: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(
                 className,
-                "relative group/anchor-container scroll-mt-16 !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
+                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
             )}
+            style={{
+                scrollMarginTop: HEADER_HEIGHT,
+            }}
             {...rest}
         >
             <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
@@ -158,8 +171,11 @@ export const H5: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(
                 className,
-                "relative group/anchor-container scroll-mt-16 !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
+                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
             )}
+            style={{
+                scrollMarginTop: HEADER_HEIGHT,
+            }}
             {...rest}
         >
             <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
@@ -177,8 +193,11 @@ export const H6: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(
                 className,
-                "relative group/anchor-container scroll-mt-16 !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
+                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
             )}
+            style={{
+                scrollMarginTop: HEADER_HEIGHT,
+            }}
             {...rest}
         >
             <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
