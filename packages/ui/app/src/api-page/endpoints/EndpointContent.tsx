@@ -95,7 +95,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
     const jsonLines = useMemo(() => flattenJsonToLines(example?.responseBody), [example?.responseBody]);
 
     const calculateEndpointHeights = useCallback((): [number, number] => {
-        if (window == null) {
+        if (typeof window === "undefined") {
             return [0, 0];
         }
         const containerHeight = window.innerHeight - HEADER_HEIGHT - PADDING_TOP - PADDING_BOTTOM;
@@ -123,7 +123,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
     const [[requestHeight, responseHeight], setExampleHeights] = useState<[number, number]>(calculateEndpointHeights);
 
     useEffect(() => {
-        if (window != null) {
+        if (typeof window === "undefined") {
             const updateExampleHeights = () => {
                 setExampleHeights(calculateEndpointHeights());
             };
