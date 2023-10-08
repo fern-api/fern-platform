@@ -1,10 +1,10 @@
 import { PathResolver } from "../../PathResolver";
 import { DEFINITION_UNVERSIONED_TABBED } from "./mock-definitions/unversioned-tabbed";
 import { DEFINITION_UNVERSIONED_UNTABBED } from "./mock-definitions/unversioned-untabbed";
+import { DEFINITION_UNVERSIONED_WITH_SKIPPED_SLUGS } from "./mock-definitions/unversioned-with-skipped-slugs";
 import { DEFINITION_VERSIONED_TABBED } from "./mock-definitions/versioned-tabbed";
 import { DEFINITION_VERSIONED_UNTABBED } from "./mock-definitions/versioned-untabbed";
 import { DEFINITION_WITH_API } from "./mock-definitions/with-api-definition";
-import { DEFINITION_WITH_SKIPPED_SLUGS } from "./mock-definitions/with-skipped-slugs";
 
 describe("getAllSlugs", () => {
     describe("correctly returns all slugs", () => {
@@ -152,7 +152,7 @@ describe("getAllSlugs", () => {
 
         it("with skipped slugs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_WITH_SKIPPED_SLUGS,
+                docsDefinition: DEFINITION_UNVERSIONED_WITH_SKIPPED_SLUGS,
             });
             const expectedSlugs = new Set([
                 "",

@@ -30,6 +30,9 @@ export function buildResolutionMap(tree: DefinitionNode.Root): Map<FullSlug, Def
             if (Object.is(node, defaultVersionNode)) {
                 return;
             }
+            if (isSectionNode(node) && node.section.skipUrlSlug) {
+                return;
+            }
             insertNodeIntoMap(node, slugs);
         });
     }

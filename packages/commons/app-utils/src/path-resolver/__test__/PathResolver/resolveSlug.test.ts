@@ -4,11 +4,12 @@ import { DefinitionNodeType, FullSlug } from "../../types";
 import { expectDocsSectionNode, expectNode, expectPageNode } from "../util";
 import { DEFINITION_UNVERSIONED_TABBED } from "./mock-definitions/unversioned-tabbed";
 import { DEFINITION_UNVERSIONED_UNTABBED } from "./mock-definitions/unversioned-untabbed";
+import { DEFINITION_UNVERSIONED_WITH_SKIPPED_SLUGS } from "./mock-definitions/unversioned-with-skipped-slugs";
 import { DEFINITION_VERSIONED_TABBED } from "./mock-definitions/versioned-tabbed";
 import { DEFINITION_VERSIONED_UNTABBED } from "./mock-definitions/versioned-untabbed";
+import { DEFINITION_VERSIONED_WITH_SKIPPED_SLUGS } from "./mock-definitions/versioned-with-skipped-slugs";
 import { DEFINITION_WITH_API } from "./mock-definitions/with-api-definition";
 import { DEFINITION_WITH_COLLIDING_SLUGS } from "./mock-definitions/with-colliding-slugs";
-import { DEFINITION_WITH_SKIPPED_SLUGS } from "./mock-definitions/with-skipped-slugs";
 
 describe("resolveSlug", () => {
     describe("resolves invalid slug to undefined", () => {
@@ -76,21 +77,45 @@ describe("resolveSlug", () => {
             expectNode(resolvedNode).toBeOfType("endpoint");
         });
 
-        it("with skipped slugs", () => {
-            const resolver = new PathResolver({
-                docsDefinition: DEFINITION_WITH_SKIPPED_SLUGS,
+        describe("with skipped slugs", () => {
+            it("case 1: unversioned", () => {
+                const resolver = new PathResolver({
+                    docsDefinition: DEFINITION_UNVERSIONED_WITH_SKIPPED_SLUGS,
+                });
+                const tuples: [FullSlug, DefinitionNodeType | undefined][] = [
+                    ["help-center", "tab"],
+                    ["help-center/documents", undefined],
+                    ["help-center/documents/uploading-documents", undefined],
+                    ["help-center/uploading-documents", "page"],
+                    ["api-reference/api-reference/generate-completion", undefined],
+                    ["api-reference/generate-completion", "endpoint"],
+                ];
+                tuples.forEach(([slug, type]) => {
+                    const resolvedNode = resolver.resolveSlug(slug);
+                    expectNode(resolvedNode).toBeOfType(type);
+                });
             });
-            const tuples: [FullSlug, DefinitionNodeType | undefined][] = [
-                ["help-center", "tab"],
-                ["help-center/documents", undefined],
-                ["help-center/documents/uploading-documents", undefined],
-                ["help-center/uploading-documents", "page"],
-                ["api-reference/api-reference/generate-completion", undefined],
-                ["api-reference/generate-completion", "endpoint"],
-            ];
-            tuples.forEach(([slug, type]) => {
-                const resolvedNode = resolver.resolveSlug(slug);
-                expectNode(resolvedNode).toBeOfType(type);
+
+            it("case 2: versioned", () => {
+                const resolver = new PathResolver({
+                    docsDefinition: DEFINITION_VERSIONED_WITH_SKIPPED_SLUGS,
+                });
+                const tuples: [FullSlug, DefinitionNodeType | undefined][] = [
+                    ["v2", "version"],
+                    ["v2/introduction", undefined],
+                    ["v2/introduction/getting-started", undefined],
+                    ["introduction", undefined],
+                    ["introduction/getting-started", undefined],
+                    ["getting-started", "page"],
+                    ["changelog", "page"],
+                    ["v1-2", "version"],
+                    ["v1-2/getting-started", "page"],
+                    ["v1-2/authentication", "page"],
+                ];
+                tuples.forEach(([slug, type]) => {
+                    const resolvedNode = resolver.resolveSlug(slug);
+                    expectNode(resolvedNode).toBeOfType(type);
+                });
             });
         });
 

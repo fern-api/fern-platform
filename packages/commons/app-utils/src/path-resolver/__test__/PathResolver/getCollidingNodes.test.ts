@@ -2,11 +2,11 @@ import { PathResolver } from "../../PathResolver";
 import { DefinitionNodeType } from "../../types";
 import { DEFINITION_UNVERSIONED_TABBED } from "./mock-definitions/unversioned-tabbed";
 import { DEFINITION_UNVERSIONED_UNTABBED } from "./mock-definitions/unversioned-untabbed";
+import { DEFINITION_UNVERSIONED_WITH_SKIPPED_SLUGS } from "./mock-definitions/unversioned-with-skipped-slugs";
 import { DEFINITION_VERSIONED_TABBED } from "./mock-definitions/versioned-tabbed";
 import { DEFINITION_VERSIONED_UNTABBED } from "./mock-definitions/versioned-untabbed";
 import { DEFINITION_WITH_API } from "./mock-definitions/with-api-definition";
 import { DEFINITION_WITH_COLLIDING_SLUGS } from "./mock-definitions/with-colliding-slugs";
-import { DEFINITION_WITH_SKIPPED_SLUGS } from "./mock-definitions/with-skipped-slugs";
 
 describe("getAllSlugs", () => {
     describe("correctly finds no collisions", () => {
@@ -47,7 +47,7 @@ describe("getAllSlugs", () => {
 
         it("with skipped slugs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_WITH_SKIPPED_SLUGS,
+                docsDefinition: DEFINITION_UNVERSIONED_WITH_SKIPPED_SLUGS,
             });
             expect(resolver.getCollidingNodes().size).toEqual(0);
         });

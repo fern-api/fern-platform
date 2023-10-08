@@ -73,7 +73,7 @@ const API_DEF_1: FernRegistryApiRead.ApiDefinition = {
     types: {},
 };
 
-export const DEFINITION_WITH_SKIPPED_SLUGS: FernRegistryDocsRead.DocsDefinition = {
+export const DEFINITION_UNVERSIONED_WITH_SKIPPED_SLUGS: FernRegistryDocsRead.DocsDefinition = {
     pages: {},
     apis: {
         [API_DEF_1.id]: API_DEF_1,
