@@ -52,7 +52,7 @@ export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args):
             return;
         }
         const maybeScrollToSelected = () => {
-            if (isSelected) {
+            if (isSelected && extractAnchorFromWindow() == null) {
                 handleIsSelected();
             }
         };
@@ -62,9 +62,7 @@ export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args):
             return;
         }
         const observer = new window.ResizeObserver(() => {
-            if (extractAnchorFromWindow() != null) {
-                maybeScrollToSelected();
-            }
+            maybeScrollToSelected();
         });
         observer.observe(docsContent);
         return () => {
