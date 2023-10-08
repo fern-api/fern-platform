@@ -1,28 +1,15 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import { getEndpointTitleAsString, getSubpackageTitle, isSubpackage } from "@fern-ui/app-utils";
-import useSize from "@react-hook/size";
 import classNames from "classnames";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useLayoutEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { HEADER_HEIGHT } from "../../constants";
-import { ApiPageDescription } from "../ApiPageDescription";
-import { CurlExample } from "../examples/curl-example/CurlExample";
+import { useLayoutBreakpoint } from "../../docs-context/useLayoutBreakpoint";
 import { getCurlLines } from "../examples/curl-example/curlUtils";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
-import { JsonExampleVirtualized } from "../examples/json-example/JsonExample";
 import { flattenJsonToLines } from "../examples/json-example/jsonLineUtils";
-import { TitledExample } from "../examples/TitledExample";
-import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
-import { EndpointErrorsSection } from "./EndpointErrorsSection";
-import { EndpointRequestSection } from "./EndpointRequestSection";
-import { EndpointResponseSection } from "./EndpointResponseSection";
-import { EndpointSection } from "./EndpointSection";
-import { EndpointUrl } from "./EndpointUrl";
-import { PathParametersSection } from "./PathParametersSection";
-import { QueryParametersSection } from "./QueryParametersSection";
-
-const URL_OVERFLOW_THRESHOLD = 0.95;
+import { EndpointContentCodeSnippets } from "./EndpointContentCodeSnippets";
+import { EndpointContentLeft } from "./EndpointContentLeft";
 
 export declare namespace EndpointContent {
     export interface Props {
@@ -39,14 +26,17 @@ const TITLED_EXAMPLE_PADDING = 43;
 const PADDING_TOP = 32;
 const PADDING_BOTTOM = 40;
 const LINE_HEIGHT = 21.5;
+const MOBILE_MAX_LINES = 20;
+const CONTENT_PADDING = 40 + TITLED_EXAMPLE_PADDING;
 
-export const EndpointContent = React.memo<EndpointContent.Props>(function EndpointContent({
+export const EndpointContent: React.FC<EndpointContent.Props> = ({
     endpoint,
     package: package_,
     hideBottomSeparator = false,
     setContainerRef,
     anchorIdParts,
-}) {
+}) => {
+    const layoutBreakpoint = useLayoutBreakpoint();
     const [isInViewport, setIsInViewport] = useState(false);
     const { ref: containerRef } = useInView({
         onChange: setIsInViewport,
@@ -67,13 +57,6 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
         },
         [setHoveredResponsePropertyPath]
     );
-
-    const endpointUrlOuterContainerRef = useRef<null | HTMLDivElement>(null);
-    const endpointUrlInnerContainerRef = useRef<null | HTMLDivElement>(null);
-    const [endpointUrlOuterContainerWidth] = useSize(endpointUrlOuterContainerRef);
-    const [endpointUrlInnerContainerWidth] = useSize(endpointUrlInnerContainerRef);
-    const isUrlAboutToOverflow =
-        endpointUrlInnerContainerWidth / endpointUrlOuterContainerWidth > URL_OVERFLOW_THRESHOLD;
 
     const [selectedErrorIndex, setSelectedErrorIndex] = useState<number | null>(null);
 
@@ -105,43 +88,54 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
         if (typeof window === "undefined") {
             return [0, 0];
         }
+        if (layoutBreakpoint !== "lg") {
+            const requestLines = Math.min(MOBILE_MAX_LINES + 0.5, curlLines.length);
+            const responseLines = Math.min(MOBILE_MAX_LINES + 0.5, jsonLines.length);
+            const requestContainerHeight = requestLines * LINE_HEIGHT + CONTENT_PADDING;
+            const responseContainerHeight = responseLines * LINE_HEIGHT + CONTENT_PADDING;
+            return [requestContainerHeight, responseContainerHeight];
+        }
+        const maxRequestContainerHeight = curlLines.length * LINE_HEIGHT + CONTENT_PADDING;
+        const maxResponseContainerHeight = jsonLines.length * LINE_HEIGHT + CONTENT_PADDING;
         const containerHeight = window.innerHeight - HEADER_HEIGHT - PADDING_TOP - PADDING_BOTTOM;
-        const requestContentHeight = curlLines.length * LINE_HEIGHT + 40 + TITLED_EXAMPLE_PADDING;
-        const responseContentHeight = jsonLines.length * LINE_HEIGHT + 40 + TITLED_EXAMPLE_PADDING;
         const halfContainerHeight = (containerHeight - GAP_6) / 2;
         if (example?.responseBody == null) {
-            return [Math.min(requestContentHeight, containerHeight), 0];
+            return [Math.min(maxRequestContainerHeight, containerHeight), 0];
         }
-        if (requestContentHeight >= halfContainerHeight && responseContentHeight >= halfContainerHeight) {
+        if (maxRequestContainerHeight >= halfContainerHeight && maxResponseContainerHeight >= halfContainerHeight) {
             return [halfContainerHeight, halfContainerHeight];
-        } else if (requestContentHeight + responseContentHeight <= containerHeight - GAP_6) {
-            return [requestContentHeight, responseContentHeight];
-        } else if (requestContentHeight < halfContainerHeight) {
-            const remainingContainerHeight = containerHeight - requestContentHeight - GAP_6;
-            return [requestContentHeight, Math.min(remainingContainerHeight, responseContentHeight)];
-        } else if (responseContentHeight < halfContainerHeight) {
-            const remainingContainerHeight = containerHeight - responseContentHeight - GAP_6;
-            return [Math.min(remainingContainerHeight, requestContentHeight), responseContentHeight];
+        } else if (maxRequestContainerHeight + maxResponseContainerHeight <= containerHeight - GAP_6) {
+            return [maxRequestContainerHeight, maxResponseContainerHeight];
+        } else if (maxRequestContainerHeight < halfContainerHeight) {
+            const remainingContainerHeight = containerHeight - maxRequestContainerHeight - GAP_6;
+            return [maxRequestContainerHeight, Math.min(remainingContainerHeight, maxResponseContainerHeight)];
+        } else if (maxResponseContainerHeight < halfContainerHeight) {
+            const remainingContainerHeight = containerHeight - maxResponseContainerHeight - GAP_6;
+            return [Math.min(remainingContainerHeight, maxRequestContainerHeight), maxResponseContainerHeight];
         } else {
             return [0, 0];
         }
-    }, [curlLines.length, example?.responseBody, jsonLines.length]);
+    }, [curlLines.length, example?.responseBody, jsonLines.length, layoutBreakpoint]);
 
-    const [[requestHeight, responseHeight], setExampleHeights] = useState<[number, number]>(calculateEndpointHeights);
+    const [[requestHeight, responseHeight], setExampleHeights] = useState<[number, number]>([0, 0]);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (typeof window !== "undefined") {
-            const updateExampleHeights = () => {
+            const handleResize = () => {
                 setExampleHeights(calculateEndpointHeights());
             };
 
-            window.addEventListener("resize", updateExampleHeights);
+            window.addEventListener("resize", handleResize);
+
+            handleResize();
             return () => {
-                window.removeEventListener("resize", updateExampleHeights);
+                window.removeEventListener("resize", handleResize);
             };
         }
         return;
     }, [calculateEndpointHeights]);
+
+    const exampleHeight = requestHeight + responseHeight + GAP_6 + 70;
 
     return (
         <div
@@ -158,143 +152,47 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                 <div
                     className="flex min-w-0 max-w-2xl flex-1 flex-col"
                     style={{
-                        minHeight: `${requestHeight + responseHeight + GAP_6 + 70}px`,
+                        minHeight: layoutBreakpoint === "lg" ? `${exampleHeight}px` : undefined,
                     }}
                 >
-                    <div className="pb-2 pt-8">
-                        {isSubpackage(package_) && (
-                            <div className="text-accent-primary mb-4 text-xs font-semibold uppercase tracking-wider">
-                                {getSubpackageTitle(package_)}
-                            </div>
-                        )}
-                        <div>
-                            <span className="typography-font-heading text-text-primary-light dark:text-text-primary-dark text-3xl font-bold">
-                                {getEndpointTitleAsString(endpoint)}
-                            </span>
-                            {endpoint.availability != null && (
-                                <span className="relative">
-                                    <EndpointAvailabilityTag
-                                        className="absolute -top-1.5 left-2.5 inline-block"
-                                        availability={endpoint.availability}
-                                    />
-                                </span>
-                            )}
-                        </div>
-                    </div>
-                    <div ref={endpointUrlOuterContainerRef} className="flex max-w-full flex-col items-start">
-                        <EndpointUrl
-                            ref={endpointUrlInnerContainerRef}
-                            className="max-w-full"
-                            urlStyle={isUrlAboutToOverflow ? "overflow" : "default"}
-                            endpoint={endpoint}
-                        />
-                    </div>
-                    <ApiPageDescription className="mt-3" description={endpoint.description} isMarkdown={true} />
-                    <div className="mt-8 flex">
-                        <div className="flex flex-1 flex-col gap-12">
-                            {endpoint.path.pathParameters.length > 0 && (
-                                <PathParametersSection
-                                    pathParameters={endpoint.path.pathParameters}
-                                    anchorIdParts={[...anchorIdParts, "path"]}
-                                />
-                            )}
-                            {endpoint.queryParameters.length > 0 && (
-                                <QueryParametersSection
-                                    queryParameters={endpoint.queryParameters}
-                                    anchorIdParts={[...anchorIdParts, "query"]}
-                                />
-                            )}
-                            {endpoint.request != null && (
-                                <EndpointSection title="Request" anchorIdParts={[...anchorIdParts, "request"]}>
-                                    <EndpointRequestSection
-                                        httpRequest={endpoint.request}
-                                        onHoverProperty={onHoverRequestProperty}
-                                        anchorIdParts={[...anchorIdParts, "request"]}
-                                    />
-                                </EndpointSection>
-                            )}
-                            {endpoint.response != null && (
-                                <EndpointSection title="Response" anchorIdParts={[...anchorIdParts, "response"]}>
-                                    <EndpointResponseSection
-                                        httpResponse={endpoint.response}
-                                        onHoverProperty={onHoverResponseProperty}
-                                        anchorIdParts={[...anchorIdParts, "response"]}
-                                    />
-                                </EndpointSection>
-                            )}
-                            {apiSection.showErrors && errors.length > 0 && (
-                                <EndpointSection title="Errors" anchorIdParts={[...anchorIdParts, "response"]}>
-                                    <EndpointErrorsSection
-                                        errors={errors}
-                                        onClickError={(_, idx, event) => {
-                                            event.stopPropagation();
-                                            setSelectedErrorIndex(idx);
-                                        }}
-                                        selectError={(_, idx) => setSelectedErrorIndex(idx)}
-                                        onHoverProperty={onHoverResponseProperty}
-                                        selectedErrorIndex={selectedErrorIndex}
-                                        anchorIdParts={[...anchorIdParts, "errors"]}
-                                    />
-                                </EndpointSection>
-                            )}
-                        </div>
-                    </div>
+                    <EndpointContentLeft
+                        endpoint={endpoint}
+                        package={package_}
+                        anchorIdParts={anchorIdParts}
+                        apiSection={apiSection}
+                        onHoverRequestProperty={onHoverRequestProperty}
+                        onHoverResponseProperty={onHoverResponseProperty}
+                        errors={errors}
+                        selectedErrorIndex={selectedErrorIndex}
+                        setSelectedErrorIndex={setSelectedErrorIndex}
+                    />
                 </div>
 
-                {isInViewport && (
-                    <div
-                        className={classNames(
-                            "lg:flex-1 lg:sticky lg:self-start lg:min-w-sm lg:max-w-lg lg:ml-auto",
-                            "pb-10 pt-8",
-                            // the 4rem is the same as the h-10 as the Header
-                            "max-h-[150vh] lg:max-h-[calc(100vh-4rem)]",
-                            "flex",
-                            // header offset
-                            "mt-10 lg:mt-0 lg:top-16"
-                        )}
-                    >
-                        {example ? (
-                            <div className="flex min-h-0 flex-1 flex-col">
-                                <div className="grid min-h-0 flex-1 flex-col gap-6">
-                                    <TitledExample
-                                        title="Request"
-                                        type="primary"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                        }}
-                                        disablePadding={true}
-                                    >
-                                        <CurlExample
-                                            curlLines={curlLines}
-                                            selectedProperty={hoveredRequestPropertyPath}
-                                            height={requestHeight - TITLED_EXAMPLE_PADDING}
-                                        />
-                                    </TitledExample>
-                                    {example.responseBody != null && (
-                                        <TitledExample
-                                            title={example.responseStatusCode >= 400 ? "Error Response" : "Response"}
-                                            type={example.responseStatusCode >= 400 ? "warning" : "primary"}
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                            }}
-                                            copyToClipboardText={() =>
-                                                JSON.stringify(example.responseBody, undefined, 2)
-                                            }
-                                            disablePadding={true}
-                                        >
-                                            <JsonExampleVirtualized
-                                                jsonLines={jsonLines}
-                                                selectedProperty={hoveredResponsePropertyPath}
-                                                height={responseHeight - TITLED_EXAMPLE_PADDING}
-                                            />
-                                        </TitledExample>
-                                    )}
-                                </div>
-                            </div>
-                        ) : null}
-                    </div>
-                )}
+                <div
+                    className={classNames(
+                        "lg:flex-1 lg:sticky lg:self-start lg:min-w-sm lg:max-w-lg lg:ml-auto",
+                        "pb-10 pt-8",
+                        // the 4rem is the same as the h-10 as the Header
+                        "max-h-[150vh] lg:max-h-[calc(100vh-4rem)]",
+                        "flex",
+                        // header offset
+                        "mt-10 lg:mt-0 lg:top-16"
+                    )}
+                    style={{ height: `${exampleHeight}px` }}
+                >
+                    {isInViewport && example != null && (
+                        <EndpointContentCodeSnippets
+                            example={example}
+                            requestCurlLines={curlLines}
+                            responseJsonLines={jsonLines}
+                            hoveredRequestPropertyPath={hoveredRequestPropertyPath}
+                            hoveredResponsePropertyPath={hoveredResponsePropertyPath}
+                            requestHeight={requestHeight}
+                            responseHeight={responseHeight}
+                        />
+                    )}
+                </div>
             </div>
         </div>
     );
-});
+};

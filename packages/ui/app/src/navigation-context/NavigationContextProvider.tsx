@@ -46,7 +46,7 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
         const domContentLoadPromise = waitForDomContentToLoad();
         const anchorSelector = getAnchorSelector(anchorId);
 
-        let node: Element | undefined;
+        let node: HTMLElement | undefined;
 
         const raceResult = await Promise.race([domContentLoadPromise, waitForElement(anchorSelector)]);
 
@@ -71,8 +71,7 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
             // Wait for the page to load to avoid outdated scroll position
             await pageLoadPromise;
 
-            const yOffset = -HEADER_HEIGHT;
-            const y = node.getBoundingClientRect().top + window.scrollY + yOffset;
+            const y = node.offsetTop - HEADER_HEIGHT;
 
             window.scrollTo({ top: y, behavior: "auto" });
 
