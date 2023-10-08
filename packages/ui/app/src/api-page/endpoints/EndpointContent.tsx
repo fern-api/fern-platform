@@ -123,7 +123,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
     const [[requestHeight, responseHeight], setExampleHeights] = useState<[number, number]>(calculateEndpointHeights);
 
     useEffect(() => {
-        if (typeof window === "undefined") {
+        if (typeof window !== "undefined") {
             const updateExampleHeights = () => {
                 setExampleHeights(calculateEndpointHeights());
             };
