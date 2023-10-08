@@ -211,23 +211,20 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
                 <div style={{ height: `${exampleHeight}px` }} />
 
-                {isInViewport && (
-                    <div
-                        className={classNames(
-                            "lg:flex-1 lg:sticky lg:self-start lg:min-w-sm lg:max-w-lg lg:ml-auto",
-                            "pb-10 pt-8",
-                            // the 4rem is the same as the h-10 as the Header
-                            "max-h-[150vh] lg:max-h-[calc(100vh-4rem)]",
-                            "flex",
-                            // header offset
-                            "mt-10 lg:mt-0 lg:top-16"
-                        )}
-                    >
-                        {renderExample()}
-                    </div>
-                )}
-
-                {!isInViewport && layoutBreakpoint !== "lg" && <div style={{ height: `${exampleHeight}px` }} />}
+                <div
+                    className={classNames(
+                        "lg:flex-1 lg:sticky lg:self-start lg:min-w-sm lg:max-w-lg lg:ml-auto",
+                        "pb-10 pt-8",
+                        // the 4rem is the same as the h-10 as the Header
+                        "max-h-[150vh] lg:max-h-[calc(100vh-4rem)]",
+                        "flex",
+                        // header offset
+                        "mt-10 lg:mt-0 lg:top-16"
+                    )}
+                    style={{ height: layoutBreakpoint !== "lg" ? `${exampleHeight}px` : undefined }}
+                >
+                    {isInViewport && renderExample()}
+                </div>
             </div>
         </div>
     );
