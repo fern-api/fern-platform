@@ -151,7 +151,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                 <div
                     className="flex min-w-0 max-w-2xl flex-1 flex-col"
                     style={{
-                        minHeight: `${requestHeight + responseHeight + GAP_6}px`,
+                        minHeight: `${requestHeight + responseHeight + GAP_6 + 70}px`,
                     }}
                 >
                     <div className="pb-2 pt-8">
