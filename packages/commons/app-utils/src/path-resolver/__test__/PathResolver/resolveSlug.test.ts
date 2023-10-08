@@ -1,3 +1,4 @@
+import { PathCollisionError } from "../../errors";
 import { PathResolver } from "../../PathResolver";
 import { DefinitionNodeType, FullSlug } from "../../types";
 import { expectDocsSectionNode, expectNode, expectPageNode } from "../util";
@@ -6,6 +7,7 @@ import { DEFINITION_UNVERSIONED_UNTABBED } from "./mock-definitions/unversioned-
 import { DEFINITION_VERSIONED_TABBED } from "./mock-definitions/versioned-tabbed";
 import { DEFINITION_VERSIONED_UNTABBED } from "./mock-definitions/versioned-untabbed";
 import { DEFINITION_WITH_API } from "./mock-definitions/with-api-definition";
+import { DEFINITION_WITH_COLLIDING_SLUGS } from "./mock-definitions/with-colliding-slugs";
 import { DEFINITION_WITH_SKIPPED_SLUGS } from "./mock-definitions/with-skipped-slugs";
 
 describe("resolveSlug", () => {
@@ -90,6 +92,15 @@ describe("resolveSlug", () => {
                 const resolvedNode = resolver.resolveSlug(slug);
                 expectNode(resolvedNode).toBeOfType(type);
             });
+        });
+
+        it("with collisions", () => {
+            const resolver = new PathResolver({
+                docsDefinition: DEFINITION_WITH_COLLIDING_SLUGS,
+            });
+            expect(() => resolver.resolveSlug("v1")).toThrow(PathCollisionError);
+            expect(() => resolver.resolveSlug("v1/introduction")).toThrow(PathCollisionError);
+            expect(() => resolver.resolveSlug("v1/introduction/getting-started")).toThrow(PathCollisionError);
         });
     });
 });

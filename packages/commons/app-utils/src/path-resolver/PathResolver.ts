@@ -2,6 +2,7 @@ import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/reso
 import { joinUrlSlugs } from "../slug";
 import { buildResolutionMap } from "./build-map";
 import { buildDefinitionTree } from "./build-tree";
+import { PathCollisionError } from "./errors";
 import type { DefinitionNode, FullSlug, NavigatableDefinitionNode } from "./types";
 import { isLeafNode, traversePreOrder } from "./util";
 
@@ -27,19 +28,6 @@ export class PathResolver {
         return { tree, map };
     }
 
-    public resolveSlug(fullSlug: FullSlug): DefinitionNode | undefined {
-        const nodeOrNodes = this.#map.get(fullSlug);
-        if (Array.isArray(nodeOrNodes)) {
-            const collisions = nodeOrNodes.map((node) => node.type);
-            throw new Error(
-                `Slug cannot be resolved due to ${
-                    collisions.length
-                } collisions.\nColliding node types: ${collisions.join(", ")}`
-            );
-        }
-        return nodeOrNodes;
-    }
-
     public resolveNavigatable(fullSlug: FullSlug): NavigatableDefinitionNode | undefined;
     public resolveNavigatable(node: DefinitionNode): NavigatableDefinitionNode;
     public resolveNavigatable(slugOrNode: string | DefinitionNode): NavigatableDefinitionNode | undefined {
@@ -61,6 +49,14 @@ export class PathResolver {
             }
         }
         return undefined;
+    }
+
+    public resolveSlug(fullSlug: FullSlug): DefinitionNode | undefined {
+        const nodeOrNodes = this.#map.get(fullSlug);
+        if (Array.isArray(nodeOrNodes)) {
+            throw new PathCollisionError(fullSlug, nodeOrNodes);
+        }
+        return nodeOrNodes;
     }
 
     public traverse(cb: (node: DefinitionNode, fullSlug: FullSlug) => void): void {
