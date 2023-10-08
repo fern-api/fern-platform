@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 
 export function useLayoutBreakpoint(): "sm" | "md" | "lg" {
-    const [layoutBreakpoint, setBreakpoint] = useState<"sm" | "md" | "lg">("sm");
+    const [layoutBreakpoint, setBreakpoint] = useState<"sm" | "md" | "lg">("lg");
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (typeof window !== "undefined") {
             const handleResize = () => {
                 if (window.innerWidth < 768) {
@@ -14,9 +14,11 @@ export function useLayoutBreakpoint(): "sm" | "md" | "lg" {
                     setBreakpoint("lg");
                 }
             };
-            handleResize();
 
             window.addEventListener("resize", handleResize);
+
+            handleResize();
+
             return () => {
                 window.removeEventListener("resize", handleResize);
             };

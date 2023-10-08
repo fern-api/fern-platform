@@ -28,15 +28,15 @@ export function waitForDomContentToLoad(): Promise<boolean> {
     });
 }
 
-export function waitForElement(selector: string, timeout?: number): Promise<Element | undefined> {
+export function waitForElement(selector: string, timeout?: number): Promise<HTMLElement | undefined> {
     return new Promise((res) => {
-        const node = document.querySelector(selector);
+        const node = document.querySelector<HTMLElement>(selector);
         if (node) {
             return res(node);
         }
         let isObserving = false;
         const observer = new MutationObserver(() => {
-            const node = document.querySelector(selector);
+            const node = document.querySelector<HTMLElement>(selector);
             if (node) {
                 observer.disconnect();
                 isObserving = false;

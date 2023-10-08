@@ -1,16 +1,14 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useLayoutEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { HEADER_HEIGHT } from "../../constants";
 import { useLayoutBreakpoint } from "../../docs-context/useLayoutBreakpoint";
-import { CurlExample } from "../examples/curl-example/CurlExample";
 import { getCurlLines } from "../examples/curl-example/curlUtils";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
-import { JsonExampleVirtualized } from "../examples/json-example/JsonExample";
 import { flattenJsonToLines } from "../examples/json-example/jsonLineUtils";
-import { TitledExample } from "../examples/TitledExample";
+import { EndpointContentCodeSnippets } from "./EndpointContentCodeSnippets";
 import { EndpointContentLeft } from "./EndpointContentLeft";
 
 export declare namespace EndpointContent {
@@ -112,7 +110,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     const [[requestHeight, responseHeight], setExampleHeights] = useState<[number, number]>([0, 0]);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (typeof window !== "undefined") {
             const handleResize = () => {
                 setExampleHeights(calculateEndpointHeights());
@@ -127,54 +125,6 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         }
         return;
     }, [calculateEndpointHeights]);
-
-    const renderExample = () => {
-        if (example == null) {
-            return null;
-        }
-
-        return (
-            <div className="flex min-h-0 flex-1 flex-col">
-                <div className="grid min-h-0 flex-1 flex-col gap-6">
-                    <TitledExample
-                        title="Request"
-                        type="primary"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                        }}
-                        disablePadding={true}
-                        copyToClipboardText={() => {
-                            // TODO
-                            return "";
-                        }}
-                    >
-                        <CurlExample
-                            curlLines={curlLines}
-                            selectedProperty={hoveredRequestPropertyPath}
-                            height={requestHeight - TITLED_EXAMPLE_PADDING}
-                        />
-                    </TitledExample>
-                    {example.responseBody != null && (
-                        <TitledExample
-                            title={example.responseStatusCode >= 400 ? "Error Response" : "Response"}
-                            type={example.responseStatusCode >= 400 ? "warning" : "primary"}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                            }}
-                            copyToClipboardText={() => JSON.stringify(example.responseBody, undefined, 2)}
-                            disablePadding={true}
-                        >
-                            <JsonExampleVirtualized
-                                jsonLines={jsonLines}
-                                selectedProperty={hoveredResponsePropertyPath}
-                                height={responseHeight - TITLED_EXAMPLE_PADDING}
-                            />
-                        </TitledExample>
-                    )}
-                </div>
-            </div>
-        );
-    };
 
     const exampleHeight = requestHeight + responseHeight + GAP_6 + 70;
 
@@ -209,8 +159,6 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                     />
                 </div>
 
-                <div style={{ height: `${exampleHeight}px` }} />
-
                 <div
                     className={classNames(
                         "lg:flex-1 lg:sticky lg:self-start lg:min-w-sm lg:max-w-lg lg:ml-auto",
@@ -221,9 +169,19 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                         // header offset
                         "mt-10 lg:mt-0 lg:top-16"
                     )}
-                    style={{ height: layoutBreakpoint !== "lg" ? `${exampleHeight}px` : undefined }}
+                    style={{ height: `${exampleHeight}px` }}
                 >
-                    {isInViewport && renderExample()}
+                    {isInViewport && example != null && (
+                        <EndpointContentCodeSnippets
+                            example={example}
+                            requestCurlLines={curlLines}
+                            responseJsonLines={jsonLines}
+                            hoveredRequestPropertyPath={hoveredRequestPropertyPath}
+                            hoveredResponsePropertyPath={hoveredResponsePropertyPath}
+                            requestHeight={requestHeight}
+                            responseHeight={responseHeight}
+                        />
+                    )}
                 </div>
             </div>
         </div>
