@@ -600,6 +600,46 @@ it("load snippets", async () => {
     expect(secondResponse.next).toEqual(3);
 });
 
+it("user not part of org", async () => {
+    // create snippets
+    await CLIENT.snippetsFactory.createSnippetsForSdk({
+        orgId: "private",
+        apiId: "baz",
+        snippets: {
+            type: "go",
+            sdk: {
+                githubRepo: "fern-api/user-go",
+                version: "0.0.1",
+            },
+            snippets: [
+                {
+                    endpoint: {
+                        path: "/users/v1",
+                        method: FernRegistry.EndpointMethod.Get,
+                    },
+                    snippet: {
+                        client: "client := userclient.New(userclient.WithAuthToken('YOUR_AUTH_TOKEN')",
+                    },
+                },
+            ],
+        },
+    });
+    // get snippets
+    let unauthorizedErrorThrown = false;
+    try {
+        await CLIENT.get({
+            orgId: "private",
+            endpoint: {
+                path: "/users/v1",
+                method: FernRegistry.EndpointMethod.Get,
+            },
+        });
+    } catch (err: unknown) {
+        unauthorizedErrorThrown = err instanceof FernRegistryError && err.statusCode == 401;
+    }
+    expect(unauthorizedErrorThrown).toEqual(true);
+});
+
 it("snippets apiId not found", async () => {
     // create snippets
     await CLIENT.snippetsFactory.createSnippetsForSdk({
