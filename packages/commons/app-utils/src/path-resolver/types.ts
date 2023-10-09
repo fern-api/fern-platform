@@ -51,10 +51,10 @@ export interface DefinitionNodeTab {
     index: number;
 }
 
-export type DefinitionInfo = DefinitionInfo.UnversionedUntabbed | DefinitionInfo.Versioned;
+export type DefinitionInfo = DefinitionInfo.Unversioned | DefinitionInfo.Versioned;
 
 export declare namespace DefinitionInfo {
-    export interface UnversionedUntabbed {
+    export interface Unversioned {
         type: "unversioned";
     }
 
