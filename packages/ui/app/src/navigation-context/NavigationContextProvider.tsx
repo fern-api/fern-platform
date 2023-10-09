@@ -48,13 +48,15 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
     const resizeObserver = useRef<ResizeObserver>();
 
     const observeDocContent = useCallback((element: HTMLDivElement) => {
+        const handleNavigate = () => {
+            if (justNavigatedTo.current != null) {
+                navigateToRoute.current(justNavigatedTo.current, false);
+            }
+        };
         if (element != null) {
             resizeObserver.current?.disconnect();
-            resizeObserver.current = new window.ResizeObserver(() => {
-                if (justNavigatedTo.current != null) {
-                    navigateToRoute.current(justNavigatedTo.current, false);
-                }
-            });
+            handleNavigate();
+            resizeObserver.current = new window.ResizeObserver(handleNavigate);
             resizeObserver.current.observe(element);
         }
     }, []);
