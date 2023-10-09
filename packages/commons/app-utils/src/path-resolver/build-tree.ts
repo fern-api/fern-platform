@@ -42,26 +42,37 @@ export function buildDefinitionTree(definition: FernRegistryDocsRead.DocsDefinit
             addNodeChild(root, versionNode);
             if (isUnversionedTabbedNavigationConfig(version.config)) {
                 const tabNodes = version.config.tabs.map((tab, tabIndex) => {
-                    return buildNodeForNavigationTab(tab, [], {
+                    return buildNodeForNavigationTab({
+                        tab,
+                        parentSlugs: [],
+                        context: {
+                            definition,
+                            version: {
+                                id: version.version,
+                                slug: version.urlSlug,
+                                index: versionIndex,
+                            },
+                            tab: {
+                                slug: tab.urlSlug,
+                                index: tabIndex,
+                            },
+                        },
+                    });
+                });
+                addNodeChildren(versionNode, tabNodes);
+            } else {
+                const children = buildNodesForNavigationItems({
+                    items: version.config.items,
+                    parentSlugs: [],
+                    context: {
                         definition,
                         version: {
                             id: version.version,
                             slug: version.urlSlug,
                             index: versionIndex,
                         },
-                        tab: { slug: tab.urlSlug, index: tabIndex },
-                    });
-                });
-                addNodeChildren(versionNode, tabNodes);
-            } else {
-                const children = buildNodesForNavigationItems(version.config.items, [], {
-                    definition,
-                    version: {
-                        id: version.version,
-                        slug: version.urlSlug,
-                        index: versionIndex,
+                        tab: null,
                     },
-                    tab: null,
                 });
                 addNodeChildren(versionNode, children);
             }
@@ -72,18 +83,29 @@ export function buildDefinitionTree(definition: FernRegistryDocsRead.DocsDefinit
 
     if (isUnversionedTabbedNavigationConfig(navigationConfig)) {
         const tabNodes = navigationConfig.tabs.map((tab, tabIndex) => {
-            return buildNodeForNavigationTab(tab, [], {
-                definition,
-                version: null,
-                tab: { slug: tab.urlSlug, index: tabIndex },
+            return buildNodeForNavigationTab({
+                tab,
+                parentSlugs: [],
+                context: {
+                    definition,
+                    version: null,
+                    tab: {
+                        slug: tab.urlSlug,
+                        index: tabIndex,
+                    },
+                },
             });
         });
         addNodeChildren(root, tabNodes);
     } else {
-        const children = buildNodesForNavigationItems(navigationConfig.items, [], {
-            definition,
-            version: null,
-            tab: null,
+        const children = buildNodesForNavigationItems({
+            items: navigationConfig.items,
+            parentSlugs: [],
+            context: {
+                definition,
+                version: null,
+                tab: null,
+            },
         });
         addNodeChildren(root, children);
     }
@@ -91,36 +113,56 @@ export function buildDefinitionTree(definition: FernRegistryDocsRead.DocsDefinit
     return root;
 }
 
-function buildNodeForNavigationTab(
-    tab: FernRegistryDocsRead.NavigationTab,
-    parentSlugs: string[],
-    context: BuildContext
-): ChildDefinitionNode {
+function buildNodeForNavigationTab({
+    tab,
+    parentSlugs,
+    context,
+}: {
+    tab: FernRegistryDocsRead.NavigationTab;
+    parentSlugs: string[];
+    context: BuildContext;
+}): ChildDefinitionNode {
     const { version } = context;
     const node = NODE_FACTORY.tab.create({
         slug: tab.urlSlug,
         version,
     });
-    const children = buildNodesForNavigationItems(tab.items, [...parentSlugs, tab.urlSlug], context);
+    const children = buildNodesForNavigationItems({
+        items: tab.items,
+        parentSlugs: [...parentSlugs, tab.urlSlug],
+        context,
+    });
     addNodeChildren(node, children);
     return node;
 }
 
-function buildNodesForNavigationItems(
-    items: FernRegistryDocsRead.NavigationItem[],
-    parentSlugs: string[],
-    context: BuildContext
-): ChildDefinitionNode[] {
+function buildNodesForNavigationItems({
+    items,
+    parentSlugs,
+    context,
+}: {
+    items: FernRegistryDocsRead.NavigationItem[];
+    parentSlugs: string[];
+    context: BuildContext;
+}): ChildDefinitionNode[] {
     return items.map((childItem) =>
-        buildNodeForNavigationItem(childItem, [...parentSlugs], context)
+        buildNodeForNavigationItem({
+            item: childItem,
+            parentSlugs: [...parentSlugs],
+            context,
+        })
     ) as ChildDefinitionNode[];
 }
 
-function buildNodeForNavigationItem(
-    item: FernRegistryDocsRead.NavigationItem,
-    parentSlugs: string[],
-    context: BuildContext
-): DefinitionNode {
+function buildNodeForNavigationItem({
+    item,
+    parentSlugs,
+    context,
+}: {
+    item: FernRegistryDocsRead.NavigationItem;
+    parentSlugs: string[];
+    context: BuildContext;
+}): DefinitionNode {
     const { version, tab } = context;
     switch (item.type) {
         case "page": {
@@ -135,20 +177,32 @@ function buildNodeForNavigationItem(
         }
         case "section": {
             const docsSection = item;
-            return buildNodeForDocsSection(docsSection, [...parentSlugs], context);
+            return buildNodeForDocsSection({
+                section: docsSection,
+                parentSlugs: [...parentSlugs],
+                context,
+            });
         }
         case "api": {
             const apiSection = item;
-            return buildNodeForApiSection(apiSection, [...parentSlugs], context);
+            return buildNodeForApiSection({
+                section: apiSection,
+                parentSlugs: [...parentSlugs],
+                context,
+            });
         }
     }
 }
 
-function buildNodeForDocsSection(
-    section: FernRegistryDocsRead.DocsSection,
-    parentSlugs: string[],
-    context: BuildContext
-): DefinitionNode.DocsSection {
+function buildNodeForDocsSection({
+    section,
+    parentSlugs,
+    context,
+}: {
+    section: FernRegistryDocsRead.DocsSection;
+    parentSlugs: string[];
+    context: BuildContext;
+}): DefinitionNode.DocsSection {
     const { version, tab } = context;
     const node = NODE_FACTORY.docsSection.create({
         section,
@@ -156,16 +210,24 @@ function buildNodeForDocsSection(
         version,
         tab,
     });
-    const children = buildNodesForNavigationItems(section.items, nextSectionParentSlugs(section, parentSlugs), context);
+    const children = buildNodesForNavigationItems({
+        items: section.items,
+        parentSlugs: nextSectionParentSlugs(section, parentSlugs),
+        context,
+    });
     addNodeChildren(node, children);
     return node;
 }
 
-function buildNodeForApiSection(
-    section: FernRegistryDocsRead.ApiSection,
-    parentSlugs: string[],
-    context: BuildContext
-): DefinitionNode {
+function buildNodeForApiSection({
+    section,
+    parentSlugs,
+    context,
+}: {
+    section: FernRegistryDocsRead.ApiSection;
+    parentSlugs: string[];
+    context: BuildContext;
+}): DefinitionNode {
     const { definition, version, tab } = context;
     const node = NODE_FACTORY.apiSection.create({
         section,
@@ -179,11 +241,19 @@ function buildNodeForApiSection(
         throw new Error(`API definition '${apiDefinitionId}' was not found.`);
     }
     apiDefinition.rootPackage.endpoints.forEach((endpoint) => {
-        const endpointNode = buildNodeForEndpoint(endpoint, nextSectionParentSlugs(section, parentSlugs), context);
+        const endpointNode = buildNodeForEndpoint({
+            endpoint,
+            parentSlugs: nextSectionParentSlugs(section, parentSlugs),
+            context,
+        });
         addNodeChild(node, endpointNode);
     });
     apiDefinition.rootPackage.webhooks.forEach((webhook) => {
-        const webhookNode = buildNodeForWebhook(webhook, nextSectionParentSlugs(section, parentSlugs), context);
+        const webhookNode = buildNodeForWebhook({
+            webhook,
+            parentSlugs: nextSectionParentSlugs(section, parentSlugs),
+            context,
+        });
         addNodeChild(node, webhookNode);
     });
     apiDefinition.rootPackage.subpackages.forEach((subpackageId) => {
@@ -191,23 +261,27 @@ function buildNodeForApiSection(
         if (subpackage == null) {
             throw new Error(`Subpackage '${subpackageId}' was not found.`);
         }
-        const subpackageNode = buildNodeForSubpackage(
+        const subpackageNode = buildNodeForSubpackage({
             subpackage,
             section,
             apiDefinition,
-            nextSectionParentSlugs(section, parentSlugs),
-            context
-        );
+            parentSlugs: nextSectionParentSlugs(section, parentSlugs),
+            context,
+        });
         addNodeChild(node, subpackageNode);
     });
     return node;
 }
 
-function buildNodeForEndpoint(
-    endpoint: FernRegistryApiRead.EndpointDefinition,
-    parentSlugs: ItemSlug[],
-    context: BuildContext
-): DefinitionNode.Endpoint {
+function buildNodeForEndpoint({
+    endpoint,
+    parentSlugs,
+    context,
+}: {
+    endpoint: FernRegistryApiRead.EndpointDefinition;
+    parentSlugs: ItemSlug[];
+    context: BuildContext;
+}): DefinitionNode.Endpoint {
     const { version, tab } = context;
     const node = NODE_FACTORY.endpoint.create({
         endpoint,
@@ -219,11 +293,15 @@ function buildNodeForEndpoint(
     return node;
 }
 
-function buildNodeForWebhook(
-    webhook: FernRegistryApiRead.WebhookDefinition,
-    parentSlugs: ItemSlug[],
-    context: BuildContext
-): DefinitionNode.Webhook {
+function buildNodeForWebhook({
+    webhook,
+    parentSlugs,
+    context,
+}: {
+    webhook: FernRegistryApiRead.WebhookDefinition;
+    parentSlugs: ItemSlug[];
+    context: BuildContext;
+}): DefinitionNode.Webhook {
     const { version, tab } = context;
     const node = NODE_FACTORY.webhook.create({
         webhook,
@@ -235,13 +313,19 @@ function buildNodeForWebhook(
     return node;
 }
 
-function buildNodeForSubpackage(
-    subpackage: FernRegistryApiRead.ApiDefinitionSubpackage,
-    section: FernRegistryDocsRead.ApiSection,
-    apiDefinition: FernRegistryApiRead.ApiDefinition,
-    parentSlugs: ItemSlug[],
-    context: BuildContext
-): DefinitionNode.ApiSubpackage {
+function buildNodeForSubpackage({
+    subpackage,
+    section,
+    apiDefinition,
+    parentSlugs,
+    context,
+}: {
+    subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
+    section: FernRegistryDocsRead.ApiSection;
+    apiDefinition: FernRegistryApiRead.ApiDefinition;
+    parentSlugs: ItemSlug[];
+    context: BuildContext;
+}): DefinitionNode.ApiSubpackage {
     const { version, tab } = context;
     const node = NODE_FACTORY.apiSubpackage.create({
         section,
@@ -251,11 +335,19 @@ function buildNodeForSubpackage(
         tab,
     });
     subpackage.endpoints.forEach((endpoint) => {
-        const endpointNode = buildNodeForEndpoint(endpoint, [...parentSlugs, subpackage.urlSlug], context);
+        const endpointNode = buildNodeForEndpoint({
+            endpoint,
+            parentSlugs: [...parentSlugs, subpackage.urlSlug],
+            context,
+        });
         addNodeChild(node, endpointNode);
     });
     subpackage.webhooks.forEach((webhook) => {
-        const webhookNode = buildNodeForWebhook(webhook, [...parentSlugs, subpackage.urlSlug], context);
+        const webhookNode = buildNodeForWebhook({
+            webhook,
+            parentSlugs: [...parentSlugs, subpackage.urlSlug],
+            context,
+        });
         addNodeChild(node, webhookNode);
     });
     subpackage.subpackages.forEach((subpackageId) => {
@@ -263,13 +355,13 @@ function buildNodeForSubpackage(
         if (childSubpackage == null) {
             throw new Error(`Subpackage '${subpackageId}' was not found.`);
         }
-        const subpackageNode = buildNodeForSubpackage(
-            childSubpackage,
+        const subpackageNode = buildNodeForSubpackage({
+            subpackage: childSubpackage,
             section,
             apiDefinition,
-            [...parentSlugs, subpackage.urlSlug],
-            context
-        );
+            parentSlugs: [...parentSlugs, subpackage.urlSlug],
+            context,
+        });
         addNodeChild(node, subpackageNode);
     });
     return node;
