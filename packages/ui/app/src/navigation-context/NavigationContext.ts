@@ -3,10 +3,12 @@ import React from "react";
 
 export const NavigationContext = React.createContext<NavigationContextValue>({
     justNavigated: false,
+    userIsScrolling: () => false,
     observeDocContent: noop,
 });
 
 export interface NavigationContextValue {
     justNavigated: boolean;
+    userIsScrolling: () => boolean;
     observeDocContent: (element: HTMLDivElement) => void;
 }

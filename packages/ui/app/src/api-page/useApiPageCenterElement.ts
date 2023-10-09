@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useIsSlugSelected } from "../docs-context/useIsSlugSelected";
@@ -15,17 +15,14 @@ export declare namespace useApiPageCenterElement {
 }
 
 export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args): useApiPageCenterElement.Return {
-    const { justNavigated } = useNavigationContext();
+    const { userIsScrolling } = useNavigationContext();
     const { onScrollToPath, getFullSlug } = useDocsContext();
 
-    const onChangeIsInVerticalCenter = useCallback(
-        (newIsInVerticalCenter: boolean) => {
-            if (newIsInVerticalCenter && !justNavigated) {
-                onScrollToPath(slug);
-            }
-        },
-        [justNavigated, onScrollToPath, slug]
-    );
+    const onChangeIsInVerticalCenter = useRef((newIsInVerticalCenter: boolean) => {
+        if (newIsInVerticalCenter && userIsScrolling()) {
+            onScrollToPath(slug);
+        }
+    });
 
     const isSelected = useIsSlugSelected(getFullSlug(slug));
 
@@ -34,7 +31,7 @@ export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args):
         rootMargin: "-50% 0px",
         threshold: 0,
         initialInView: isSelected,
-        onChange: onChangeIsInVerticalCenter,
+        onChange: onChangeIsInVerticalCenter.current,
     });
 
     return {

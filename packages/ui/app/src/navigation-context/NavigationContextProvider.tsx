@@ -81,6 +81,7 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
         <NavigationContext.Provider
             value={{
                 justNavigated: justNavigatedTo.current != null,
+                userIsScrolling: () => userIsScrolling.current,
                 observeDocContent,
             }}
         >
