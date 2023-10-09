@@ -116,7 +116,7 @@ function buildNodeForNavigationTab({
     context: BuildContext;
 }): ChildDocsNode {
     const { version } = context;
-    const node = NodeFactory.createTab({
+    const tabNode = NodeFactory.createTab({
         slug: tab.urlSlug,
         version,
     });
@@ -125,8 +125,8 @@ function buildNodeForNavigationTab({
         parentSlugs: [...parentSlugs, tab.urlSlug],
         context,
     });
-    addNodeChildren(node, children);
-    return node;
+    addNodeChildren(tabNode, children);
+    return tabNode;
 }
 
 function buildNodesForNavigationItems({
@@ -197,7 +197,7 @@ function buildNodeForDocsSection({
     context: BuildContext;
 }): DocsNode.DocsSection {
     const { version, tab } = context;
-    const node = NodeFactory.createDocsSection({
+    const sectionNode = NodeFactory.createDocsSection({
         section,
         slug: section.urlSlug,
         version,
@@ -208,8 +208,8 @@ function buildNodeForDocsSection({
         parentSlugs: nextSectionParentSlugs(section, parentSlugs),
         context,
     });
-    addNodeChildren(node, children);
-    return node;
+    addNodeChildren(sectionNode, children);
+    return sectionNode;
 }
 
 function buildNodeForApiSection({
@@ -222,7 +222,7 @@ function buildNodeForApiSection({
     context: BuildContext;
 }): DocsNode {
     const { definition, version, tab } = context;
-    const node = NodeFactory.createApiSection({
+    const sectionNode = NodeFactory.createApiSection({
         section,
         slug: section.urlSlug,
         version,
@@ -239,7 +239,7 @@ function buildNodeForApiSection({
             parentSlugs: nextSectionParentSlugs(section, parentSlugs),
             context,
         });
-        addNodeChild(node, endpointNode);
+        addNodeChild(sectionNode, endpointNode);
     });
     apiDefinition.rootPackage.webhooks.forEach((webhook) => {
         const webhookNode = buildNodeForWebhook({
@@ -247,7 +247,7 @@ function buildNodeForApiSection({
             parentSlugs: nextSectionParentSlugs(section, parentSlugs),
             context,
         });
-        addNodeChild(node, webhookNode);
+        addNodeChild(sectionNode, webhookNode);
     });
     apiDefinition.rootPackage.subpackages.forEach((subpackageId) => {
         const subpackage = apiDefinition.subpackages[subpackageId];
@@ -261,9 +261,9 @@ function buildNodeForApiSection({
             parentSlugs: nextSectionParentSlugs(section, parentSlugs),
             context,
         });
-        addNodeChild(node, subpackageNode);
+        addNodeChild(sectionNode, subpackageNode);
     });
-    return node;
+    return sectionNode;
 }
 
 function buildNodeForEndpoint({
@@ -276,14 +276,14 @@ function buildNodeForEndpoint({
     context: BuildContext;
 }): DocsNode.Endpoint {
     const { version, tab } = context;
-    const node = NodeFactory.createEndpoint({
+    const endpointNode = NodeFactory.createEndpoint({
         endpoint,
         slug: endpoint.urlSlug,
         leadingSlug: joinUrlSlugs(...parentSlugs, endpoint.urlSlug),
         version,
         tab,
     });
-    return node;
+    return endpointNode;
 }
 
 function buildNodeForWebhook({
@@ -296,14 +296,14 @@ function buildNodeForWebhook({
     context: BuildContext;
 }): DocsNode.Webhook {
     const { version, tab } = context;
-    const node = NodeFactory.createWebhook({
+    const webhookNode = NodeFactory.createWebhook({
         webhook,
         slug: webhook.urlSlug,
         leadingSlug: joinUrlSlugs(...parentSlugs, webhook.urlSlug),
         version,
         tab,
     });
-    return node;
+    return webhookNode;
 }
 
 function buildNodeForSubpackage({
@@ -320,7 +320,7 @@ function buildNodeForSubpackage({
     context: BuildContext;
 }): DocsNode.ApiSubpackage {
     const { version, tab } = context;
-    const node = NodeFactory.createApiSubpackage({
+    const subpackageNode = NodeFactory.createApiSubpackage({
         section,
         subpackage,
         slug: subpackage.urlSlug,
@@ -333,7 +333,7 @@ function buildNodeForSubpackage({
             parentSlugs: [...parentSlugs, subpackage.urlSlug],
             context,
         });
-        addNodeChild(node, endpointNode);
+        addNodeChild(subpackageNode, endpointNode);
     });
     subpackage.webhooks.forEach((webhook) => {
         const webhookNode = buildNodeForWebhook({
@@ -341,23 +341,23 @@ function buildNodeForSubpackage({
             parentSlugs: [...parentSlugs, subpackage.urlSlug],
             context,
         });
-        addNodeChild(node, webhookNode);
+        addNodeChild(subpackageNode, webhookNode);
     });
     subpackage.subpackages.forEach((subpackageId) => {
         const childSubpackage = apiDefinition.subpackages[subpackageId];
         if (childSubpackage == null) {
             throw new Error(`Subpackage '${subpackageId}' was not found.`);
         }
-        const subpackageNode = buildNodeForSubpackage({
+        const childSubpackageNode = buildNodeForSubpackage({
             subpackage: childSubpackage,
             section,
             apiDefinition,
             parentSlugs: [...parentSlugs, subpackage.urlSlug],
             context,
         });
-        addNodeChild(node, subpackageNode);
+        addNodeChild(subpackageNode, childSubpackageNode);
     });
-    return node;
+    return subpackageNode;
 }
 
 function nextSectionParentSlugs(
