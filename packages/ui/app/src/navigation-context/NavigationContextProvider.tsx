@@ -1,3 +1,4 @@
+import { useBooleanState } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useRef } from "react";
@@ -10,6 +11,7 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
     const router = useRouter();
     const userIsScrolling = useRef(false);
     const justNavigatedTo = useRef<string | undefined>(router.asPath);
+    const { value: hasInitialized, setTrue: markAsInitialized } = useBooleanState(false);
 
     const navigateToRoute = useRef((route: string, smoothScroll: boolean) => {
         if (!userIsScrolling.current) {
@@ -25,6 +27,7 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
             navigateToRoute.current(router.asPath, false);
         };
         handleInit();
+        markAsInitialized();
         window.addEventListener("DOMContentLoaded", handleInit);
         return () => {
             window.removeEventListener("DOMContentLoaded", handleInit);
@@ -89,6 +92,7 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
     return (
         <NavigationContext.Provider
             value={{
+                hasInitialized,
                 justNavigated: justNavigatedTo.current != null,
                 userIsScrolling: () => userIsScrolling.current,
                 observeDocContent,
