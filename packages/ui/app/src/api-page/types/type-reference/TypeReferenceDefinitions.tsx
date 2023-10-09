@@ -11,6 +11,7 @@ export declare namespace TypeReferenceDefinitions {
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: string[];
         className?: string;
+        route: string;
     }
 }
 
@@ -21,6 +22,7 @@ export const TypeReferenceDefinitions: React.FC<TypeReferenceDefinitions.Props> 
     onHoverProperty,
     anchorIdParts,
     className,
+    route,
 }) => {
     return (
         <TypeDefinitionContextProvider onHoverProperty={onHoverProperty}>
@@ -30,6 +32,7 @@ export const TypeReferenceDefinitions: React.FC<TypeReferenceDefinitions.Props> 
                 applyErrorStyles={applyErrorStyles}
                 className={className}
                 anchorIdParts={anchorIdParts}
+                route={route}
             />
         </TypeDefinitionContextProvider>
     );

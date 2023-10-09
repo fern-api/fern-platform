@@ -2,6 +2,7 @@ import { H2 } from "@blueprintjs/core";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { API_ARTIFACTS_TITLE } from "../../config";
+import { HEADER_HEIGHT } from "../../constants";
 import { joinUrlSlugs } from "../../docs-context/joinUrlSlugs";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
@@ -27,7 +28,7 @@ export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiArtifacts }) => 
 
     return (
         <ApiPageMargins>
-            <div ref={setTargetRef}>
+            <div ref={setTargetRef} data-route={`/${slug}`} style={{ scrollMarginTop: HEADER_HEIGHT }}>
                 <H2 className="pt-20">{API_ARTIFACTS_TITLE}</H2>
                 <div className="t-muted mt-5 text-lg">
                     Official open-source client libraries for your favorite platforms.

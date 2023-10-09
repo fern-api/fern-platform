@@ -4,10 +4,9 @@ import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
+import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
-import { NavigationInfo, NavigationStatus } from "../../../navigation-context/NavigationContext";
-import { useNavigationContext } from "../../../navigation-context/useNavigationContext";
 import { getAnchorId } from "../../../util/anchor";
 import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
 import {
@@ -27,6 +26,7 @@ export declare namespace InternalTypeDefinition {
         typeShape: FernRegistryApiRead.TypeShape;
         isCollapsible: boolean;
         anchorIdParts: string[];
+        route: string;
     }
 }
 
@@ -37,21 +37,14 @@ interface CollapsibleContent {
     separatorText?: string;
 }
 
-function shouldExpandDefinition(navigation: NavigationInfo, curAnchorId: string) {
-    if (navigation.status !== NavigationStatus.INITIAL_NAVIGATION_TO_ANCHOR) {
-        return false;
-    }
-    const { anchorId: destAnchorId } = navigation;
-    return destAnchorId.startsWith(`${curAnchorId}-`);
-}
-
 export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     typeShape,
     isCollapsible,
     anchorIdParts,
+    route,
 }) => {
     const { resolveTypeById } = useApiDefinitionContext();
-    const { navigation } = useNavigationContext();
+    const router = useRouter();
 
     const collapsableContent = useMemo(
         () =>
@@ -64,6 +57,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                             property={property}
                             anchorIdParts={[...anchorIdParts, property.key]}
                             applyErrorStyles={false}
+                            route={route}
                         />
                     )),
                     elementNameSingular: "property",
@@ -83,6 +77,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                                 unionVariant={variant}
                                 anchorIdParts={anchorIdParts}
                                 applyErrorStyles={false}
+                                route={route}
                             />
                         )),
                     elementNameSingular: "variant",
@@ -96,6 +91,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                             discriminant={union.discriminant}
                             unionVariant={variant}
                             anchorIdParts={anchorIdParts}
+                            route={route}
                         />
                     )),
                     elementNameSingular: "variant",
@@ -111,18 +107,13 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                 }),
                 _other: () => undefined,
             }),
-        [resolveTypeById, typeShape, anchorIdParts]
+        [typeShape, resolveTypeById, anchorIdParts, route]
     );
 
-    const { value: isCollapsed, toggleValue: toggleIsCollapsed, setFalse: expandDefinition } = useBooleanState(true);
-
     const anchorIdSoFar = getAnchorId(anchorIdParts);
-
-    useEffect(() => {
-        if (shouldExpandDefinition(navigation, anchorIdSoFar)) {
-            expandDefinition();
-        }
-    }, [navigation, anchorIdSoFar, expandDefinition]);
+    const { value: isCollapsed, toggleValue: toggleIsCollapsed } = useBooleanState(
+        !router.asPath.startsWith(`${route}#${anchorIdSoFar}-`)
+    );
 
     const { isHovering, ...containerCallbacks } = useIsHovering();
 

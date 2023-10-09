@@ -8,6 +8,7 @@ export declare namespace EndpointParametersSection {
         title: string;
         parameters: EndpointParameter.Props[];
         anchorIdParts: string[];
+        route: string;
     }
 }
 
@@ -15,9 +16,10 @@ export const EndpointParametersSection: React.FC<EndpointParametersSection.Props
     title,
     parameters,
     anchorIdParts,
+    route,
 }) => {
     return (
-        <EndpointSection title={title} anchorIdParts={anchorIdParts}>
+        <EndpointSection title={title} anchorIdParts={anchorIdParts} route={route}>
             <div className="flex flex-col">
                 {parameters.map((parameter, index) => (
                     <div className="flex flex-col" key={index}>

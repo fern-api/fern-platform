@@ -18,6 +18,7 @@ export declare namespace EndpointContent {
         anchorIdParts: string[];
         hideBottomSeparator?: boolean;
         setContainerRef: (ref: HTMLElement | null) => void;
+        route: string;
     }
 }
 
@@ -35,6 +36,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     hideBottomSeparator = false,
     setContainerRef,
     anchorIdParts,
+    route,
 }) => {
     const layoutBreakpoint = useLayoutBreakpoint();
     const [isInViewport, setIsInViewport] = useState(false);
@@ -148,6 +150,8 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
             <div
                 className="flex min-w-0 flex-1 flex-col justify-between lg:flex-row lg:space-x-[4vw]"
                 ref={setContainerRef}
+                data-route={route}
+                style={{ scrollMarginTop: HEADER_HEIGHT }}
             >
                 <div
                     className="flex min-w-0 max-w-2xl flex-1 flex-col"
@@ -165,6 +169,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                         errors={errors}
                         selectedErrorIndex={selectedErrorIndex}
                         setSelectedErrorIndex={setSelectedErrorIndex}
+                        route={route}
                     />
                 </div>
 

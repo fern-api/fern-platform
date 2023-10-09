@@ -5,7 +5,6 @@ import { memo, useMemo } from "react";
 import { HEADER_HEIGHT } from "../constants";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
-import { NavigationStatus } from "../navigation-context/NavigationContext";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
 import { useSearchContext } from "../search-context/useSearchContext";
 import { SearchDialog } from "../search/SearchDialog";
@@ -16,7 +15,7 @@ import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
 
 export const Docs: React.FC = memo(function UnmemoizedDocs() {
-    const { navigation } = useNavigationContext();
+    const { observeDocContent, hasInitialized } = useNavigationContext();
     const docsContext = useDocsContext();
     const { docsDefinition, docsInfo, theme } = docsContext;
     const searchContext = useSearchContext();
@@ -41,10 +40,6 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
         }
     }, [colorsV3, theme]);
 
-    const hideContent =
-        navigation.status === NavigationStatus.NIL ||
-        navigation.status === NavigationStatus.INITIAL_NAVIGATION_TO_ANCHOR;
-
     return (
         <>
             <BgImageGradient
@@ -60,7 +55,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                 />
             )}
 
-            <div className="relative flex min-h-0 flex-1 flex-col">
+            <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
                 <div
                     className="border-border-concealed-light dark:border-border-concealed-dark bg-background/50 dark:shadow-header sticky inset-x-0 top-0 z-20 border-b backdrop-blur-xl"
                     style={{ height: HEADER_HEIGHT }}
@@ -76,13 +71,17 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                     />
                 </div>
 
-                <div className="max-w-8xl relative mx-auto flex min-h-0 w-full flex-1">
+                <div
+                    className="max-w-8xl relative mx-auto flex min-h-0 w-full flex-1"
+                    style={{
+                        opacity: hasInitialized ? undefined : 0,
+                    }}
+                >
                     <div className="hidden w-72 md:flex">
                         <div
                             className="sticky w-full overflow-auto overflow-x-hidden"
                             style={{
                                 maxHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
-                                opacity: hideContent ? 0 : undefined,
                                 top: HEADER_HEIGHT,
                             }}
                             id="sidebar-container"
@@ -95,7 +94,6 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                             className="bg-background fixed inset-x-0 bottom-0 z-10 flex overflow-auto overflow-x-hidden md:hidden"
                             style={{
                                 maxHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
-                                opacity: hideContent ? 0 : undefined,
                                 top: HEADER_HEIGHT,
                             }}
                         >
@@ -103,11 +101,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                         </div>
                     )}
 
-                    <div
-                        className={classNames("relative flex w-full min-w-0 flex-1 flex-col", {
-                            "opacity-0": hideContent,
-                        })}
-                    >
+                    <div className={classNames("relative flex w-full min-w-0 flex-1 flex-col")}>
                         <DocsMainContent />
                     </div>
                 </div>

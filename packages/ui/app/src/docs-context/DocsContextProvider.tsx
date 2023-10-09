@@ -12,8 +12,7 @@ import { assertNever } from "@fern-ui/core-utils";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { useTheme } from "@fern-ui/theme";
 import { useRouter } from "next/router";
-import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
-import { useNavigationContext } from "../navigation-context/useNavigationContext";
+import { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
     DocsContext,
     DocsContextValue,
@@ -58,7 +57,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     children,
 }) => {
     const router = useRouter();
-    const { notifyIntentToGoBack, markBackNavigationAsComplete } = useNavigationContext();
 
     const [activeVersionSlug, _setActiveVersionSlug] = useState(inferredVersionSlug);
     const [activeTabIndex, setActiveTabIndex] = useState(inferredTabIndex);
@@ -188,7 +186,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
 
     const navigateToPathListeners = useSlugListeners("navigateToPath", { selectedSlug });
 
-    const [justNavigated, setJustNavigated] = useState(false);
+    const justNavigated = useRef(false);
 
     const inferTabIndexFromSlug = useCallback(
         (fullSlug: string) => {
@@ -241,7 +239,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     );
 
     const navigateToPath = useEventCallback((slugWithoutVersion: string, opts?: NavigateToPathOpts) => {
-        setJustNavigated(true);
+        justNavigated.current = true;
         const slug = getFullSlug(slugWithoutVersion, opts);
         setSelectedSlug(slug);
         // Figure out which tab we're navigating to and set the active index
@@ -254,10 +252,9 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
                 `Could not find the tab index corresponding to the slug "${slug}". This may be due to bad user input or a bug in the application.`
             );
         }
-
-        navigateToPathListeners.invokeListeners(slug);
+        // navigateToPathListeners.invokeListeners(slug);
         const timeout = setTimeout(() => {
-            setJustNavigated(false);
+            justNavigated.current = false;
         }, 500);
         return () => {
             clearTimeout(timeout);
@@ -266,22 +263,20 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
 
     useEffect(() => {
         router.beforePopState(({ as }) => {
-            notifyIntentToGoBack();
             const slugCandidate = as.substring(1, as.length);
             const slug = slugCandidate === "" ? getFirstNavigatableItemSlugInDefinition(docsDefinition) : slugCandidate;
             if (slug != null) {
                 navigateToPath(slug, { omitTabSlug: true, omitVersionSlug: true });
             }
-            markBackNavigationAsComplete();
             return true;
         });
-    }, [router, navigateToPath, notifyIntentToGoBack, markBackNavigationAsComplete, getFullSlug, docsDefinition]);
+    }, [router, navigateToPath, getFullSlug, docsDefinition]);
 
     const scrollToPathListeners = useSlugListeners("scrollToPath", { selectedSlug });
 
     const onScrollToPath = useEventCallback((slugWithoutVersion: string) => {
         const slug = getFullSlug(slugWithoutVersion);
-        if (justNavigated || slug === selectedSlug) {
+        if (justNavigated.current || slug === selectedSlug) {
             return;
         }
         setSelectedSlug(slug);

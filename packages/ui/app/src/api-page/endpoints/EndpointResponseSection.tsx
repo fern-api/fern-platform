@@ -11,6 +11,7 @@ export declare namespace EndpointResponseSection {
         httpResponse: FernRegistryApiRead.HttpResponse;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: string[];
+        route: string;
     }
 }
 
@@ -18,6 +19,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
     httpResponse,
     onHoverProperty,
     anchorIdParts,
+    route,
 }) => {
     return (
         <div className="flex flex-col">
@@ -44,6 +46,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                         isCollapsible={false}
                         onHoverProperty={onHoverProperty}
                         anchorIdParts={anchorIdParts}
+                        route={route}
                     />
                 ),
                 reference: (type) => (
@@ -53,6 +56,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                         onHoverProperty={onHoverProperty}
                         anchorIdParts={anchorIdParts}
                         applyErrorStyles={false}
+                        route={route}
                     />
                 ),
                 fileDownload: () => null,

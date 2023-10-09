@@ -1,11 +1,10 @@
 import classNames from "classnames";
-import { useCallback } from "react";
-import { useNavigationContext } from "../navigation-context/useNavigationContext";
+import Link from "next/link";
 import { LinkIcon } from "./icons/LinkIcon";
 
 export declare namespace AbsolutelyPositionedAnchor {
     export interface Props {
-        anchor: string;
+        route: string;
         verticalPosition: "center" | "default";
     }
 }
@@ -13,16 +12,7 @@ export declare namespace AbsolutelyPositionedAnchor {
 /**
  * Can only be used with a parent div that has `position` set to `"relative"`.
  */
-export const AbsolutelyPositionedAnchor: React.FC<AbsolutelyPositionedAnchor.Props> = ({
-    verticalPosition,
-    anchor,
-}) => {
-    const { navigateToAnchor } = useNavigationContext();
-
-    const onClick = useCallback(async () => {
-        await navigateToAnchor(anchor);
-    }, [navigateToAnchor, anchor]);
-
+export const AbsolutelyPositionedAnchor: React.FC<AbsolutelyPositionedAnchor.Props> = ({ verticalPosition, route }) => {
     return (
         <div
             className={classNames(
@@ -33,9 +23,12 @@ export const AbsolutelyPositionedAnchor: React.FC<AbsolutelyPositionedAnchor.Pro
                 }
             )}
         >
-            <button onClick={onClick}>
+            {/* <button onClick={onClick}>
                 <LinkIcon className="t-muted hover:text-text-primary-light hover:dark:text-text-primary-dark h-3.5 w-3.5 transition" />
-            </button>
+            </button> */}
+            <Link href={route} shallow={true} scroll={false} replace={true}>
+                <LinkIcon className="t-muted hover:text-text-primary-light hover:dark:text-text-primary-dark h-3.5 w-3.5 transition" />
+            </Link>
         </div>
     );
 };

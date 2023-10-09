@@ -25,11 +25,17 @@ export declare namespace ObjectProperty {
     export interface Props {
         property: FernRegistryApiRead.ObjectProperty;
         anchorIdParts: string[];
+        route: string;
         applyErrorStyles: boolean;
     }
 }
 
-export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchorIdParts, property, applyErrorStyles }) => {
+export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
+    anchorIdParts,
+    route,
+    property,
+    applyErrorStyles,
+}) => {
     const anchorId = getAnchorId(anchorIdParts);
     const { resolveTypeById } = useApiDefinitionContext();
 
@@ -92,9 +98,11 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchorIdParts, 
         return undefined;
     }, [property.description, property.descriptionContainsMarkdown, property.valueType, resolveTypeById]);
 
+    const anchorRoute = `${route}#${anchorId}`;
+
     return (
         <div
-            data-anchor={anchorId}
+            data-route={anchorRoute}
             className={classNames("flex relative flex-col py-3", {
                 "px-3": !contextValue.isRootTypeDefinition,
             })}
@@ -102,7 +110,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchorIdParts, 
         >
             <div className="flex items-baseline gap-2">
                 <div className="group/anchor-container relative">
-                    <AbsolutelyPositionedAnchor verticalPosition="center" anchor={anchorId} />
+                    <AbsolutelyPositionedAnchor verticalPosition="center" route={anchorRoute} />
                     <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName}>
                         <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">
                             {property.key}
@@ -121,6 +129,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchorIdParts, 
                         isCollapsible
                         applyErrorStyles={applyErrorStyles}
                         anchorIdParts={anchorIdParts}
+                        route={route}
                     />
                 </TypeDefinitionContext.Provider>
             </div>

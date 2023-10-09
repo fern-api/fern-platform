@@ -1,75 +1,16 @@
+import { noop } from "instantsearch.js/es/lib/utils";
 import React from "react";
 
-interface NavigationInfoNil {
-    status: "nil";
-}
-
-interface NavigationInfoInitialNavigationToAnchor {
-    status: "initial-navigation-to-anchor";
-    /** Anchor without the leading '#' */
-    anchorId: string;
-}
-
-interface NavigationInfoInitialNavigationToAnchorComplete {
-    status: "initial-navigation-to-anchor-complete";
-    /** Anchor without the leading '#' */
-    anchorId: string;
-}
-
-interface NavigationInfoSubsequentNavigationToAnchor {
-    status: "subsequent-navigation-to-anchor";
-    /** Anchor without the leading '#' */
-    anchorId: string;
-}
-
-interface NavigationInfoSubsequentNavigationToAnchorComplete {
-    status: "subsequent-navigation-to-anchor-complete";
-    /** Anchor without the leading '#' */
-    anchorId: string;
-}
-
-interface NavigationInfoBackNavigation {
-    status: "back-navigation";
-}
-
-interface NavigationInfoBackNavigationComplete {
-    status: "back-navigation-complete";
-}
-
-interface NavigationInfoIdle {
-    status: "idle";
-}
-
-export type NavigationInfo =
-    | NavigationInfoNil
-    | NavigationInfoInitialNavigationToAnchor
-    | NavigationInfoInitialNavigationToAnchorComplete
-    | NavigationInfoSubsequentNavigationToAnchor
-    | NavigationInfoSubsequentNavigationToAnchorComplete
-    | NavigationInfoBackNavigation
-    | NavigationInfoBackNavigationComplete
-    | NavigationInfoIdle;
-
-export const NavigationStatus = {
-    NIL: "nil",
-    INITIAL_NAVIGATION_TO_ANCHOR: "initial-navigation-to-anchor",
-    INITIAL_NAVIGATION_TO_ANCHOR_COMPLETE: "initial-navigation-to-anchor-complete",
-    SUBSEQUENT_NAVIGATION_TO_ANCHOR: "subsequent-navigation-to-anchor",
-    SUBSEQUENT_NAVIGATION_TO_ANCHOR_COMPLETE: "subsequent-navigation-to-anchor-complete",
-    BACK_NAVIGATION: "back-navigation",
-    BACK_NAVIGATION_COMPLETE: "back-navigation-complete",
-    IDLE: "idle",
-} as const;
-
-export type NavigationStatus = (typeof NavigationStatus)[keyof typeof NavigationStatus];
-
-export const NavigationContext = React.createContext<() => NavigationContextValue>(() => {
-    throw new Error("NavigationContextValueProvider is not present in this tree.");
+export const NavigationContext = React.createContext<NavigationContextValue>({
+    justNavigated: false,
+    hasInitialized: false,
+    userIsScrolling: () => false,
+    observeDocContent: noop,
 });
 
 export interface NavigationContextValue {
-    navigation: NavigationInfo;
-    navigateToAnchor: (anchorId: string) => Promise<void>;
-    notifyIntentToGoBack: () => void;
-    markBackNavigationAsComplete: () => void;
+    justNavigated: boolean;
+    hasInitialized: boolean;
+    userIsScrolling: () => boolean;
+    observeDocContent: (element: HTMLDivElement) => void;
 }

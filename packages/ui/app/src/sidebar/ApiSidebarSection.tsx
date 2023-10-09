@@ -67,7 +67,7 @@ export const ApiSidebarSection: React.FC<ApiSidebarSection.Props> = ({
             <ApiPackageSidebarSectionContents
                 package={apiDefinition.rootPackage}
                 slug={slug}
-                shallow={selectedSlug?.includes(slug) ?? false}
+                // shallow={selectedSlug?.includes(slug) ?? false}
                 selectedSlug={selectedSlug}
                 navigateToPath={navigateToPath}
                 registerScrolledToPathListener={registerScrolledToPathListener}

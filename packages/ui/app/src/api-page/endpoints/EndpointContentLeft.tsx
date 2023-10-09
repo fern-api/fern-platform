@@ -28,6 +28,7 @@ export declare namespace EndpointContentLeft {
         errors: FernRegistryApiRead.ErrorDeclarationV2[];
         selectedErrorIndex: number | null;
         setSelectedErrorIndex: (idx: number | null) => void;
+        route: string;
     }
 }
 
@@ -41,6 +42,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     errors,
     selectedErrorIndex,
     setSelectedErrorIndex,
+    route,
 }) => {
     return (
         <>
@@ -72,34 +74,38 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                         <PathParametersSection
                             pathParameters={endpoint.path.pathParameters}
                             anchorIdParts={[...anchorIdParts, "path"]}
+                            route={route}
                         />
                     )}
                     {endpoint.queryParameters.length > 0 && (
                         <QueryParametersSection
                             queryParameters={endpoint.queryParameters}
                             anchorIdParts={[...anchorIdParts, "query"]}
+                            route={route}
                         />
                     )}
                     {endpoint.request != null && (
-                        <EndpointSection title="Request" anchorIdParts={[...anchorIdParts, "request"]}>
+                        <EndpointSection title="Request" anchorIdParts={[...anchorIdParts, "request"]} route={route}>
                             <EndpointRequestSection
                                 httpRequest={endpoint.request}
                                 onHoverProperty={onHoverRequestProperty}
                                 anchorIdParts={[...anchorIdParts, "request"]}
+                                route={route}
                             />
                         </EndpointSection>
                     )}
                     {endpoint.response != null && (
-                        <EndpointSection title="Response" anchorIdParts={[...anchorIdParts, "response"]}>
+                        <EndpointSection title="Response" anchorIdParts={[...anchorIdParts, "response"]} route={route}>
                             <EndpointResponseSection
                                 httpResponse={endpoint.response}
                                 onHoverProperty={onHoverResponseProperty}
                                 anchorIdParts={[...anchorIdParts, "response"]}
+                                route={route}
                             />
                         </EndpointSection>
                     )}
                     {apiSection.showErrors && errors.length > 0 && (
-                        <EndpointSection title="Errors" anchorIdParts={[...anchorIdParts, "response"]}>
+                        <EndpointSection title="Errors" anchorIdParts={[...anchorIdParts, "errors"]} route={route}>
                             <EndpointErrorsSection
                                 errors={errors}
                                 onClickError={(_, idx, event) => {
@@ -110,6 +116,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                 onHoverProperty={onHoverResponseProperty}
                                 selectedErrorIndex={selectedErrorIndex}
                                 anchorIdParts={[...anchorIdParts, "errors"]}
+                                route={route}
                             />
                         </EndpointSection>
                     )}
