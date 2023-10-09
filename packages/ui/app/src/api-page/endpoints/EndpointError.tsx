@@ -12,10 +12,6 @@ import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceD
 import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
 import { getErrorNameForStatus } from "../utils/getErrorNameForStatus";
 
-function shouldSelectError(currentRoute: string, slug: string, curAnchorId: string) {
-    return currentRoute.startsWith(`/${slug}#${curAnchorId}-`);
-}
-
 export declare namespace EndpointError {
     export interface Props {
         error: FernRegistry.api.v1.read.ErrorDeclarationV2;
