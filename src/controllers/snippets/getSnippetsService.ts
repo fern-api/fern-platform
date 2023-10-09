@@ -1,5 +1,5 @@
 import { SnippetsService } from "../../api";
-import { ApiIdNotFound, ApiIdRequiredError, InvalidPageError, OrgIdNotFound, OrgIdRequiredError } from "../../api/generated/api/errors";
+import { OrgIdAndApiIdNotFound, ApiIdNotFound, ApiIdRequiredError, InvalidPageError, OrgIdNotFound, OrgIdRequiredError } from "../../api/generated/api/errors";
 import { InternalError, UnauthorizedError } from "../../api/generated/api/resources/commons/errors";
 import { type FdrApplication } from "../../app";
 import { LoadSnippetAPIsRequest } from "../../db/SnippetAPIsDao";
@@ -27,10 +27,10 @@ async function getApiInfo({
     if (orgIdsResponse.type === "error") {
         throw orgIdsResponse.err;
     }
-    if (orgIdsResponse.orgIds?.size === 0) {
+    if (orgIdsResponse.orgIds.size === 0) {
         throw new OrgIdNotFound("No organizations were resolved for this user");
     }
-    if (orgId != null && orgIdsResponse.orgIds != null ? orgIdsResponse.orgIds.has(orgId) : false) {
+    if (orgId != null ? orgIdsResponse.orgIds.has(orgId) : false) {
         throw new UnauthorizedError(`You are not a member of organization ${orgId}`);
     }
     if (orgId != null && apiId != null) {
@@ -40,25 +40,30 @@ async function getApiInfo({
                 apiName: apiId,
             }
         });
+        if (snippetAPI === null) {
+            throw new OrgIdAndApiIdNotFound(`Organization ${orgId} does not have API ${apiId}`);
+        }
         return {
             orgId: snippetAPI.orgId,
             apiId: snippetAPI.apiName,
         };
     }
     const loadSnippetAPIsRequest: LoadSnippetAPIsRequest = {
-        orgIds: orgId != null ? [orgId] : Array.from(orgIdsResponse.orgIds ?? []),
+        orgIds: orgId != null ? [orgId] : Array.from(orgIdsResponse.orgIds),
         apiName: apiId != null ? apiId : undefined,
     }
     const apiInfos = await app.dao.snippetAPIs().loadSnippetAPIs({
         loadSnippetAPIsRequest: loadSnippetAPIsRequest,
     })
     if (apiInfos.length === 0) {
+        app.logger.debug(`Loaded zero snippet APIs with request: ${JSON.stringify(loadSnippetAPIsRequest)}`);
         if (apiId !== undefined) {
             throw new ApiIdNotFound(`An API with id ${apiId} was not found`);
         }
         throw new ApiIdRequiredError("No APIs were found; please specify an apiId");
     }
     if (apiInfos.length > 1) {
+        app.logger.debug(`Loaded too many snippet APIs with request: ${JSON.stringify(loadSnippetAPIsRequest)}`);
         if (apiId !== undefined && orgId !== undefined) {
             throw new InternalError(`Internal error; multiple APIs associated with organization ${orgId} and API ${apiId}`);
         }

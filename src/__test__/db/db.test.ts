@@ -281,6 +281,64 @@ describe("algolia index segment deleter", () => {
     });
 });
 
+it("snippet api dao", async () => {
+    // create snippets
+    await serverApp?.dao.snippets().storeSnippets({
+        storeSnippetsInfo: {
+            orgId: "example",
+            apiId: "bar",
+            sdk: {
+                type: "python",
+                sdk: {
+                    package: "acme",
+                    version: "0.0.1",
+                },
+                snippets: [
+                    {
+                        endpoint: {
+                            path: "/users/v1",
+                            method: FernRegistry.EndpointMethod.Get,
+                        },
+                        snippet: {
+                            async_client: "invalid",
+                            sync_client: "invalid",
+                        },
+                    },
+                ],
+            },
+        },
+    });
+    // get snippets with orgId
+    const snippetAPIs = await serverApp?.dao.snippetAPIs().loadSnippetAPIs({
+        loadSnippetAPIsRequest: {
+            orgIds: ["example", "fern"],
+            apiName: undefined,
+        },
+    });
+    expect(snippetAPIs).not.toEqual(undefined);
+    expect(snippetAPIs?.length).toEqual(1);
+
+    const snippetAPI = snippetAPIs?.[0];
+    expect(snippetAPI).not.toEqual(undefined);
+    expect(snippetAPI?.orgId).toEqual("example");
+    expect(snippetAPI?.apiName).toEqual("bar");
+
+    // get snippets with orgId and apiId
+    const sameSnippetAPIs = await serverApp?.dao.snippetAPIs().loadSnippetAPIs({
+        loadSnippetAPIsRequest: {
+            orgIds: ["example", "fern"],
+            apiName: "bar",
+        },
+    });
+    expect(sameSnippetAPIs).not.toEqual(undefined);
+    expect(sameSnippetAPIs?.length).toEqual(1);
+
+    const sameSnippetAPI = snippetAPIs?.[0];
+    expect(sameSnippetAPI).not.toEqual(undefined);
+    expect(sameSnippetAPI?.orgId).toEqual("example");
+    expect(sameSnippetAPI?.apiName).toEqual("bar");
+});
+
 it("snippets dao", async () => {
     // create snippets
     await serverApp?.dao.snippets().storeSnippets({
@@ -492,6 +550,7 @@ it("load snippets", async () => {
             snippets: snippets,
         },
     });
+
     // load snippets (first page)
     const firstResponse = await CLIENT.load({
         apiId: "petstore",
@@ -515,6 +574,13 @@ it("load snippets", async () => {
     // load snippets (second page)
     const secondResponse = await CLIENT.load({
         apiId: "petstore",
+        sdks: [
+            {
+                type: "typescript",
+                package: "acme",
+                version: "0.0.1",
+            }
+        ],
         page: firstResponse.next,
     });
     expect(Object.keys(secondResponse.snippets).length).toEqual(DEFAULT_SNIPPETS_PAGE_SIZE);
@@ -532,6 +598,46 @@ it("load snippets", async () => {
         expect(snippet.client).toEqual(`const clientV${i} = new UserClient({\napiKey: 'YOUR_API_KEY',\n});`);
     }
     expect(secondResponse.next).toEqual(3);
+});
+
+it("snippets apiId not found", async () => {
+    // create snippets
+    await CLIENT.snippetsFactory.createSnippetsForSdk({
+        orgId: "acme",
+        apiId: "petstore",
+        snippets: {
+            type: "typescript",
+            sdk: {
+                package: "acme",
+                version: "0.0.1",
+            },
+            snippets: [
+                {
+                    endpoint: {
+                        path: "/users/v1",
+                        method: FernRegistry.EndpointMethod.Get,
+                    },
+                    snippet: {
+                        client: "const acme = new AcmeClient({\napiKey: 'YOUR_API_KEY',\n});",
+                    },
+                },
+            ],
+        },
+    });
+    // get not found apiId
+    let notFoundErrorThrown = false;
+    try {
+        await CLIENT.get({
+            apiId: "dne",
+            endpoint: {
+                path: "/users/v1",
+                method: FernRegistry.EndpointMethod.Get,
+            },
+        });
+    } catch (err: unknown) {
+        notFoundErrorThrown = err instanceof FernRegistryError && err.statusCode == 404;
+    }
+    expect(notFoundErrorThrown).toEqual(true);
 });
 
 it("get snippets (unauthenticated)", async () => {
@@ -580,42 +686,3 @@ it("get snippets (unauthenticated)", async () => {
     expect(unauthorizedErrorThrown).toEqual(true);
 });
 
-it("snippets apiId not found", async () => {
-    // create snippets
-    await CLIENT.snippetsFactory.createSnippetsForSdk({
-        orgId: "acme",
-        apiId: "petstore",
-        snippets: {
-            type: "typescript",
-            sdk: {
-                package: "acme",
-                version: "0.0.1",
-            },
-            snippets: [
-                {
-                    endpoint: {
-                        path: "/users/v1",
-                        method: FernRegistry.EndpointMethod.Get,
-                    },
-                    snippet: {
-                        client: "const acme = new AcmeClient({\napiKey: 'YOUR_API_KEY',\n});",
-                    },
-                },
-            ],
-        },
-    });
-    // get not found apiId
-    let notFoundErrorThrown = false;
-    try {
-        await CLIENT.get({
-            apiId: "dne",
-            endpoint: {
-                path: "/users/v1",
-                method: FernRegistry.EndpointMethod.Get,
-            },
-        });
-    } catch (err: unknown) {
-        notFoundErrorThrown = err instanceof FernRegistryError && err.statusCode == 404;
-    }
-    expect(notFoundErrorThrown).toEqual(true);
-});

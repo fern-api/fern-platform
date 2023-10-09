@@ -8,7 +8,7 @@ export type OrgIdsResponse = SuccessOrgIdsResponse | ErrorOrgIdsResponse;
 
 export interface SuccessOrgIdsResponse {
   type: "success";
-  orgIds: Set<string> | undefined,
+  orgIds: Set<string>,
 }
 
 
@@ -60,6 +60,7 @@ export class AuthServiceImpl implements AuthService {
                 err: new FdrAPI.UnavailableError("Failed to resolve user's organizations"),
             };
         }
+        this.logger.debug(`User belongs to organizations: ${response.body.organizations}`);
         return {
             type: "success",
             orgIds: new Set<string>(response.body.organizations),

@@ -11,7 +11,11 @@ export interface LoadSnippetAPIsRequest {
 }
 
 export interface SnippetAPIsDao {
-    loadSnippetAPI({ loadSnippetAPIRequest }: { loadSnippetAPIRequest: LoadSnippetAPIRequest }): Promise<SnippetApi>;
+    loadSnippetAPI({
+        loadSnippetAPIRequest,
+    }: {
+        loadSnippetAPIRequest: LoadSnippetAPIRequest;
+    }): Promise<SnippetApi | null>;
 
     loadSnippetAPIs({
         loadSnippetAPIsRequest,
@@ -27,8 +31,8 @@ export class SnippetAPIsDaoImpl implements SnippetAPIsDao {
         loadSnippetAPIRequest,
     }: {
         loadSnippetAPIRequest: LoadSnippetAPIRequest;
-    }): Promise<SnippetApi> {
-        return await this.prisma.snippetApi.findUniqueOrThrow({
+    }): Promise<SnippetApi | null> {
+        return await this.prisma.snippetApi.findUnique({
             where: {
                 orgId_apiName: {
                     orgId: loadSnippetAPIRequest.orgId,

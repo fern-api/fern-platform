@@ -40,9 +40,12 @@ service:
         - commons.UnauthorizedError
         - commons.UserNotInOrgError
         - commons.UnavailableError
+        - ApiIdRequiredError
+        - OrgIdRequiredError
+        - OrgIdAndApiIdNotFound
+        - OrgIdNotFound
         - ApiIdNotFound
         - EndpointNotFound
-        - OrgIdNotFound
         - SDKNotFound
       examples:
         - request:
@@ -112,8 +115,12 @@ service:
         - commons.UnauthorizedError
         - commons.UserNotInOrgError
         - commons.UnavailableError
-        - ApiIdNotFound
+        - InvalidPageError
+        - ApiIdRequiredError
+        - OrgIdRequiredError
+        - OrgIdAndApiIdNotFound
         - OrgIdNotFound
+        - ApiIdNotFound
         - SDKNotFound
       examples:
         - request: {}
@@ -290,6 +297,11 @@ errors:
   InvalidPageError:
     status-code: 400
     docs: "Page must be >=1"
+    type: string
+
+  OrgIdAndApiIdNotFound:
+    status-code: 400
+    docs: The requested OrgId and ApiId was not found
     type: string
 
   ApiIdNotFound:
