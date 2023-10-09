@@ -1,5 +1,5 @@
 import { PathResolver } from "../../PathResolver";
-import { DefinitionNodeType } from "../../types";
+import { DocsNodeType } from "../../types";
 import { DEFINITION_UNVERSIONED_TABBED } from "./mock-definitions/unversioned-tabbed";
 import { DEFINITION_UNVERSIONED_UNTABBED } from "./mock-definitions/unversioned-untabbed";
 import { DEFINITION_UNVERSIONED_WITH_SKIPPED_SLUGS } from "./mock-definitions/unversioned-with-skipped-slugs";
@@ -58,7 +58,7 @@ describe("getAllSlugs", () => {
             const resolver = new PathResolver({
                 docsDefinition: DEFINITION_WITH_COLLIDING_SLUGS,
             });
-            type SlugNodeListTuple = [string, DefinitionNodeType[]];
+            type SlugNodeListTuple = [string, DocsNodeType[]];
             const expectedCollisions: SlugNodeListTuple[] = [
                 ["v1", ["tab", "version"]],
                 ["v1/introduction", ["docs-section", "tab"]],

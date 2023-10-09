@@ -1,18 +1,16 @@
-import type { DefinitionNode, NavigatableDefinitionNode } from "./types";
+import type { DocsNode, NavigatableDocsNode } from "./types";
 
-export function isLeafNode(node: DefinitionNode): node is NavigatableDefinitionNode {
+export function isLeafNode(node: DocsNode): node is NavigatableDocsNode {
     return node.type === "endpoint" || node.type === "webhook" || node.type === "page";
 }
 
-export function isSectionNode(
-    node: DefinitionNode | undefined
-): node is DefinitionNode.ApiSection | DefinitionNode.DocsSection {
+export function isSectionNode(node: DocsNode | undefined): node is DocsNode.ApiSection | DocsNode.DocsSection {
     return node?.type === "api-section" || node?.type === "docs-section";
 }
 
 export function traversePreOrder(
-    node: DefinitionNode,
-    cb: (node: DefinitionNode, slugs: string[]) => void,
+    node: DocsNode,
+    cb: (node: DocsNode, slugs: string[]) => void,
     slugs: string[] = []
 ): void {
     cb(node, slugs);

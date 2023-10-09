@@ -1,11 +1,11 @@
 import { joinUrlSlugs } from "../slug";
-import type { DefinitionNode, FullSlug, ItemSlug } from "./types";
+import type { DocsNode, FullSlug, ItemSlug } from "./types";
 import { isSectionNode, traversePreOrder } from "./util";
 
-export function buildResolutionMap(tree: DefinitionNode.Root): Map<FullSlug, DefinitionNode | DefinitionNode[]> {
-    const map = new Map<FullSlug, DefinitionNode | DefinitionNode[]>();
+export function buildResolutionMap(tree: DocsNode.Root): Map<FullSlug, DocsNode | DocsNode[]> {
+    const map = new Map<FullSlug, DocsNode | DocsNode[]>();
 
-    const insertNodeIntoMap = (node: DefinitionNode, slugs: ItemSlug[]) => {
+    const insertNodeIntoMap = (node: DocsNode, slugs: ItemSlug[]) => {
         const fullSlug = joinUrlSlugs(...slugs);
         const val = map.get(fullSlug);
         if (Array.isArray(val)) {

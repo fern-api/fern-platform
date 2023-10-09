@@ -1,8 +1,8 @@
 import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { DefinitionNode, DefinitionNodeTab, DefinitionNodeVersion } from "./types";
+import { DocsNode, DocsNodeTab, DocsNodeVersion } from "./types";
 
-function createRoot(): DefinitionNode.Root {
+function createRoot(): DocsNode.Root {
     return {
         type: "root",
         slug: "",
@@ -12,7 +12,7 @@ function createRoot(): DefinitionNode.Root {
     };
 }
 
-function createVersion({ slug, version }: { slug: string; version: DefinitionNodeVersion }): DefinitionNode.Version {
+function createVersion({ slug, version }: { slug: string; version: DocsNodeVersion }): DocsNode.Version {
     return {
         type: "version",
         slug,
@@ -22,7 +22,7 @@ function createVersion({ slug, version }: { slug: string; version: DefinitionNod
     };
 }
 
-function createTab({ slug, version }: { slug: string; version?: DefinitionNodeVersion | null }): DefinitionNode.Tab {
+function createTab({ slug, version }: { slug: string; version?: DocsNodeVersion | null }): DocsNode.Tab {
     return {
         type: "tab",
         slug,
@@ -39,10 +39,10 @@ function createDocsSection({
     section,
 }: {
     slug: string;
-    version?: DefinitionNodeVersion | null;
-    tab?: DefinitionNodeTab | null;
+    version?: DocsNodeVersion | null;
+    tab?: DocsNodeTab | null;
     section: FernRegistryDocsRead.DocsSection;
-}): DefinitionNode.DocsSection {
+}): DocsNode.DocsSection {
     return {
         type: "docs-section",
         slug,
@@ -61,10 +61,10 @@ function createApiSection({
     section,
 }: {
     slug: string;
-    version?: DefinitionNodeVersion | null;
-    tab?: DefinitionNodeTab | null;
+    version?: DocsNodeVersion | null;
+    tab?: DocsNodeTab | null;
     section: FernRegistryDocsRead.ApiSection;
-}): DefinitionNode.ApiSection {
+}): DocsNode.ApiSection {
     return {
         type: "api-section",
         slug,
@@ -84,11 +84,11 @@ function createApiSubpackage({
     subpackage,
 }: {
     slug: string;
-    version?: DefinitionNodeVersion | null;
-    tab?: DefinitionNodeTab | null;
+    version?: DocsNodeVersion | null;
+    tab?: DocsNodeTab | null;
     section: FernRegistryDocsRead.ApiSection;
     subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
-}): DefinitionNode.ApiSubpackage {
+}): DocsNode.ApiSubpackage {
     return {
         type: "api-subpackage",
         slug,
@@ -110,10 +110,10 @@ function createEndpoint({
 }: {
     slug: string;
     leadingSlug: string;
-    version?: DefinitionNodeVersion | null;
-    tab?: DefinitionNodeTab | null;
+    version?: DocsNodeVersion | null;
+    tab?: DocsNodeTab | null;
     endpoint: FernRegistryApiRead.EndpointDefinition;
-}): DefinitionNode.Endpoint {
+}): DocsNode.Endpoint {
     return {
         type: "endpoint",
         slug,
@@ -133,10 +133,10 @@ function createWebhook({
 }: {
     slug: string;
     leadingSlug: string;
-    version?: DefinitionNodeVersion | null;
-    tab?: DefinitionNodeTab | null;
+    version?: DocsNodeVersion | null;
+    tab?: DocsNodeTab | null;
     webhook: FernRegistryApiRead.WebhookDefinition;
-}): DefinitionNode.Webhook {
+}): DocsNode.Webhook {
     return {
         type: "webhook",
         slug,
@@ -156,10 +156,10 @@ function createPage({
 }: {
     slug: string;
     leadingSlug: string;
-    version?: DefinitionNodeVersion | null;
-    tab?: DefinitionNodeTab | null;
+    version?: DocsNodeVersion | null;
+    tab?: DocsNodeTab | null;
     page: FernRegistryDocsRead.PageMetadata;
-}): DefinitionNode.Page {
+}): DocsNode.Page {
     return {
         type: "page",
         slug,

@@ -22,30 +22,30 @@ export interface NavigatableNode {
     leadingSlug: FullSlug;
 }
 
-export type DefinitionNode =
-    | DefinitionNode.Root
-    | DefinitionNode.Version
-    | DefinitionNode.Tab
-    | DefinitionNode.DocsSection
-    | DefinitionNode.ApiSection
-    | DefinitionNode.ApiSubpackage
-    | DefinitionNode.Endpoint
-    | DefinitionNode.Webhook
-    | DefinitionNode.Page;
+export type DocsNode =
+    | DocsNode.Root
+    | DocsNode.Version
+    | DocsNode.Tab
+    | DocsNode.DocsSection
+    | DocsNode.ApiSection
+    | DocsNode.ApiSubpackage
+    | DocsNode.Endpoint
+    | DocsNode.Webhook
+    | DocsNode.Page;
 
-export type DefinitionNodeType = DefinitionNode["type"];
+export type DocsNodeType = DocsNode["type"];
 
-export type NavigatableDefinitionNode = DefinitionNode.Endpoint | DefinitionNode.Webhook | DefinitionNode.Page;
-export type ChildDefinitionNode = Exclude<DefinitionNode, DefinitionNode.Root>;
-export type ParentDefinitionNode = Exclude<DefinitionNode, NavigatableDefinitionNode>;
+export type NavigatableDocsNode = DocsNode.Endpoint | DocsNode.Webhook | DocsNode.Page;
+export type ChildDocsNode = Exclude<DocsNode, DocsNode.Root>;
+export type ParentDocsNode = Exclude<DocsNode, NavigatableDocsNode>;
 
-export interface DefinitionNodeVersion {
+export interface DocsNodeVersion {
     id: string;
     slug: ItemSlug;
     index: number;
 }
 
-export interface DefinitionNodeTab {
+export interface DocsNodeTab {
     slug: ItemSlug;
     /** The 0-based index of the tab. */
     index: number;
@@ -60,78 +60,78 @@ export declare namespace DefinitionInfo {
 
     export interface Versioned {
         type: "versioned";
-        defaultVersionNode: DefinitionNode.Version;
+        defaultVersionNode: DocsNode.Version;
     }
 }
 
-export declare namespace DefinitionNode {
+export declare namespace DocsNode {
     export interface Root extends BaseNode {
         type: "root";
-        children: Map<FullSlug, ChildDefinitionNode>;
+        children: Map<FullSlug, ChildDocsNode>;
         childrenOrdering: ItemSlug[];
         info: DefinitionInfo;
     }
 
     export interface Version extends BaseNode {
         type: "version";
-        version: DefinitionNodeVersion;
-        children: Map<FullSlug, ChildDefinitionNode>;
+        version: DocsNodeVersion;
+        children: Map<FullSlug, ChildDocsNode>;
         childrenOrdering: ItemSlug[];
     }
 
     export interface Tab extends BaseNode {
         type: "tab";
-        version: DefinitionNodeVersion | null;
-        children: Map<FullSlug, ChildDefinitionNode>;
+        version: DocsNodeVersion | null;
+        children: Map<FullSlug, ChildDocsNode>;
         childrenOrdering: ItemSlug[];
     }
 
     export interface DocsSection extends BaseNode {
         type: "docs-section";
-        version: DefinitionNodeVersion | null;
-        tab: DefinitionNodeTab | null;
+        version: DocsNodeVersion | null;
+        tab: DocsNodeTab | null;
         section: FernRegistryDocsRead.DocsSection;
-        children: Map<FullSlug, ChildDefinitionNode>;
+        children: Map<FullSlug, ChildDocsNode>;
         childrenOrdering: ItemSlug[];
     }
 
     export interface ApiSection extends BaseNode {
         type: "api-section";
-        version: DefinitionNodeVersion | null;
-        tab: DefinitionNodeTab | null;
+        version: DocsNodeVersion | null;
+        tab: DocsNodeTab | null;
         section: FernRegistryDocsRead.ApiSection;
-        children: Map<FullSlug, ChildDefinitionNode>;
+        children: Map<FullSlug, ChildDocsNode>;
         childrenOrdering: ItemSlug[];
     }
 
     export interface ApiSubpackage extends BaseNode {
         type: "api-subpackage";
-        version: DefinitionNodeVersion | null;
-        tab: DefinitionNodeTab | null;
+        version: DocsNodeVersion | null;
+        tab: DocsNodeTab | null;
         section: FernRegistryDocsRead.ApiSection;
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
-        children: Map<FullSlug, ChildDefinitionNode>;
+        children: Map<FullSlug, ChildDocsNode>;
         childrenOrdering: ItemSlug[];
     }
 
     export interface Endpoint extends BaseNode, NavigatableNode {
         type: "endpoint";
-        version: DefinitionNodeVersion | null;
-        tab: DefinitionNodeTab | null;
+        version: DocsNodeVersion | null;
+        tab: DocsNodeTab | null;
         endpoint: FernRegistryApiRead.EndpointDefinition;
     }
 
     export interface Webhook extends BaseNode, NavigatableNode {
         type: "webhook";
-        version: DefinitionNodeVersion | null;
-        tab: DefinitionNodeTab | null;
+        version: DocsNodeVersion | null;
+        tab: DocsNodeTab | null;
         webhook: FernRegistryApiRead.WebhookDefinition;
     }
 
     export interface Page extends BaseNode, NavigatableNode {
         type: "page";
-        version: DefinitionNodeVersion | null;
-        tab: DefinitionNodeTab | null;
+        version: DocsNodeVersion | null;
+        tab: DocsNodeTab | null;
         page: FernRegistryDocsRead.PageMetadata;
     }
 }

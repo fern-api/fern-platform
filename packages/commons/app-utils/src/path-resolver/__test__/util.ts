@@ -1,22 +1,22 @@
-import type { DefinitionNode, DefinitionNodeType } from "../types";
+import type { DocsNode, DocsNodeType } from "../types";
 
-export function expectDocsSectionNode(node: DefinitionNode | undefined): asserts node is DefinitionNode.DocsSection {
+export function expectDocsSectionNode(node: DocsNode | undefined): asserts node is DocsNode.DocsSection {
     expectNode(node).toBeOfType("docs-section");
 }
 
-export function expectEndpointNode(node: DefinitionNode | undefined): asserts node is DefinitionNode.Endpoint {
+export function expectEndpointNode(node: DocsNode | undefined): asserts node is DocsNode.Endpoint {
     expectNode(node).toBeOfType("endpoint");
 }
 
-export function expectPageNode(node: DefinitionNode | undefined): asserts node is DefinitionNode.Page {
+export function expectPageNode(node: DocsNode | undefined): asserts node is DocsNode.Page {
     expectNode(node).toBeOfType("page");
 }
 
 interface NodeExpectation {
-    toBeOfType: (type: DefinitionNodeType | undefined) => void;
+    toBeOfType: (type: DocsNodeType | undefined) => void;
 }
 
-export function expectNode(node: DefinitionNode | undefined): NodeExpectation {
+export function expectNode(node: DocsNode | undefined): NodeExpectation {
     return {
         toBeOfType: (type) => {
             expect(node?.type).toEqual(type);

@@ -3,7 +3,7 @@ import { joinUrlSlugs } from "../slug";
 import { buildResolutionMap } from "./build-map";
 import { buildDefinitionTree } from "./build-tree";
 import { PathCollisionError } from "./errors";
-import type { DefinitionNode, FullSlug, NavigatableDefinitionNode } from "./types";
+import type { DocsNode, FullSlug, NavigatableDocsNode } from "./types";
 import { isLeafNode, traversePreOrder } from "./util";
 
 export interface PathResolverConfig {
@@ -11,9 +11,9 @@ export interface PathResolverConfig {
 }
 
 export class PathResolver {
-    readonly #tree: DefinitionNode.Root;
-    readonly #map: Map<FullSlug, DefinitionNode | DefinitionNode[]>;
-    public readonly rootNavigatable: NavigatableDefinitionNode | undefined;
+    readonly #tree: DocsNode.Root;
+    readonly #map: Map<FullSlug, DocsNode | DocsNode[]>;
+    public readonly rootNavigatable: NavigatableDocsNode | undefined;
 
     public constructor(public readonly config: PathResolverConfig) {
         const { tree, map } = this.#preprocessDefinition();
@@ -28,14 +28,14 @@ export class PathResolver {
         return { tree, map };
     }
 
-    public resolveNavigatable(fullSlug: FullSlug): NavigatableDefinitionNode | undefined;
-    public resolveNavigatable(node: DefinitionNode): NavigatableDefinitionNode;
-    public resolveNavigatable(slugOrNode: string | DefinitionNode): NavigatableDefinitionNode | undefined {
+    public resolveNavigatable(fullSlug: FullSlug): NavigatableDocsNode | undefined;
+    public resolveNavigatable(node: DocsNode): NavigatableDocsNode;
+    public resolveNavigatable(slugOrNode: string | DocsNode): NavigatableDocsNode | undefined {
         const node = typeof slugOrNode === "string" ? this.resolveSlug(slugOrNode) : slugOrNode;
         return node != null ? this.#resolveNavigatable(node) : undefined;
     }
 
-    #resolveNavigatable(node: DefinitionNode): NavigatableDefinitionNode | undefined {
+    #resolveNavigatable(node: DocsNode): NavigatableDocsNode | undefined {
         if (isLeafNode(node)) {
             return node;
         }
@@ -51,7 +51,7 @@ export class PathResolver {
         return undefined;
     }
 
-    public resolveSlug(fullSlug: FullSlug): DefinitionNode | undefined {
+    public resolveSlug(fullSlug: FullSlug): DocsNode | undefined {
         const nodeOrNodes = this.#map.get(fullSlug);
         if (Array.isArray(nodeOrNodes)) {
             throw new PathCollisionError(fullSlug, nodeOrNodes);
@@ -59,7 +59,7 @@ export class PathResolver {
         return nodeOrNodes;
     }
 
-    public traverse(cb: (node: DefinitionNode, fullSlug: FullSlug) => void): void {
+    public traverse(cb: (node: DocsNode, fullSlug: FullSlug) => void): void {
         traversePreOrder(this.#tree, (node, slugs) => cb(node, joinUrlSlugs(...slugs)), []);
     }
 
@@ -67,8 +67,8 @@ export class PathResolver {
         return Array.from(this.#map.keys());
     }
 
-    public getCollidingNodes(): Map<string, DefinitionNode[]> {
-        const nodesBySlug = new Map<string, DefinitionNode[]>();
+    public getCollidingNodes(): Map<string, DocsNode[]> {
+        const nodesBySlug = new Map<string, DocsNode[]>();
         this.#map.forEach((val, key) => {
             if (Array.isArray(val)) {
                 nodesBySlug.set(key, val);

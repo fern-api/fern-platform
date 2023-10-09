@@ -1,6 +1,6 @@
 import { PathCollisionError } from "../../errors";
 import { PathResolver } from "../../PathResolver";
-import { DefinitionNodeType, FullSlug } from "../../types";
+import { DocsNodeType, FullSlug } from "../../types";
 import { expectDocsSectionNode, expectNode, expectPageNode } from "../util";
 import { DEFINITION_UNVERSIONED_TABBED } from "./mock-definitions/unversioned-tabbed";
 import { DEFINITION_UNVERSIONED_UNTABBED } from "./mock-definitions/unversioned-untabbed";
@@ -44,7 +44,7 @@ describe("resolveSlug", () => {
             const resolver = new PathResolver({
                 docsDefinition: DEFINITION_VERSIONED_UNTABBED,
             });
-            const tuples: [FullSlug, DefinitionNodeType][] = [
+            const tuples: [FullSlug, DocsNodeType][] = [
                 ["v2/introduction/changelog", "page"],
                 ["introduction/changelog", "page"],
                 ["v1-2/introduction/authentication", "page"],
@@ -59,7 +59,7 @@ describe("resolveSlug", () => {
             const resolver = new PathResolver({
                 docsDefinition: DEFINITION_VERSIONED_TABBED,
             });
-            const tuples: [FullSlug, DefinitionNodeType][] = [
+            const tuples: [FullSlug, DocsNodeType][] = [
                 ["v2/help-center/documents/deleting-documents", "page"],
                 ["help-center/documents/deleting-documents", "page"],
                 ["v1-2/welcome/advanced-concepts", "docs-section"],
@@ -83,7 +83,7 @@ describe("resolveSlug", () => {
                 const resolver = new PathResolver({
                     docsDefinition: DEFINITION_UNVERSIONED_WITH_SKIPPED_SLUGS,
                 });
-                const tuples: [FullSlug, DefinitionNodeType | undefined][] = [
+                const tuples: [FullSlug, DocsNodeType | undefined][] = [
                     ["help-center", "tab"],
                     ["help-center/documents", undefined],
                     ["help-center/documents/uploading-documents", undefined],
@@ -101,7 +101,7 @@ describe("resolveSlug", () => {
                 const resolver = new PathResolver({
                     docsDefinition: DEFINITION_VERSIONED_WITH_SKIPPED_SLUGS,
                 });
-                const tuples: [FullSlug, DefinitionNodeType | undefined][] = [
+                const tuples: [FullSlug, DocsNodeType | undefined][] = [
                     ["v2", "version"],
                     ["v2/introduction", undefined],
                     ["v2/introduction/getting-started", undefined],
