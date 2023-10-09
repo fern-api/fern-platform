@@ -61,7 +61,7 @@ export const NavigationStatus = {
     IDLE: "idle",
 } as const;
 
-export type NavigationStatus = typeof NavigationStatus[keyof typeof NavigationStatus];
+export type NavigationStatus = (typeof NavigationStatus)[keyof typeof NavigationStatus];
 
 export const NavigationContext = React.createContext<() => NavigationContextValue>(() => {
     throw new Error("NavigationContextValueProvider is not present in this tree.");

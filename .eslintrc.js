@@ -86,6 +86,7 @@ module.exports = {
                 allow: ["private-constructors", "protected-constructors", "decoratedFunctions"],
             },
         ],
+        "@typescript-eslint/no-extraneous-class": "off",
         "jest/unbound-method": ["error"],
         "object-shorthand": ["error"],
         "@typescript-eslint/no-invalid-void-type": "off",
@@ -116,5 +117,6 @@ module.exports = {
         "tailwindcss/no-custom-classname": "off",
         "@blueprintjs/html-components": "off",
         "@typescript-eslint/strict-boolean-expressions": "error",
+        "jest/expect-expect": ["error", { assertFunctionNames: ["expect*"] }],
     },
 };
