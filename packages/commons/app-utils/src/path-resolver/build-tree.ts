@@ -66,24 +66,26 @@ export function buildDefinitionTree(definition: FernRegistryDocsRead.DocsDefinit
                 addNodeChildren(versionNode, children);
             }
         });
-    } else {
-        if (isUnversionedTabbedNavigationConfig(navigationConfig)) {
-            const tabNodes = navigationConfig.tabs.map((tab, tabIndex) => {
-                return buildNodeForNavigationTab(tab, [], {
-                    definition,
-                    version: null,
-                    tab: { slug: tab.urlSlug, index: tabIndex },
-                });
-            });
-            addNodeChildren(root, tabNodes);
-        } else {
-            const children = buildNodesForNavigationItems(navigationConfig.items, [], {
+
+        return root;
+    }
+
+    if (isUnversionedTabbedNavigationConfig(navigationConfig)) {
+        const tabNodes = navigationConfig.tabs.map((tab, tabIndex) => {
+            return buildNodeForNavigationTab(tab, [], {
                 definition,
                 version: null,
-                tab: null,
+                tab: { slug: tab.urlSlug, index: tabIndex },
             });
-            addNodeChildren(root, children);
-        }
+        });
+        addNodeChildren(root, tabNodes);
+    } else {
+        const children = buildNodesForNavigationItems(navigationConfig.items, [], {
+            definition,
+            version: null,
+            tab: null,
+        });
+        addNodeChildren(root, children);
     }
 
     return root;
