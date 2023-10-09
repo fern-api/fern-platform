@@ -14,6 +14,7 @@ export declare namespace InternalTypeReferenceDefinitions {
         isCollapsible: boolean;
         className?: string;
         anchorIdParts: string[];
+        route: string;
     }
 }
 
@@ -23,6 +24,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
     isCollapsible,
     className,
     anchorIdParts,
+    route,
 }) => {
     const { resolveTypeById } = useApiDefinitionContext();
 
@@ -37,6 +39,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                         applyErrorStyles={applyErrorStyles}
                         className={className}
                         anchorIdParts={anchorIdParts}
+                        route={route}
                     />
                 );
             }
@@ -46,6 +49,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     typeShape={typeShape}
                     isCollapsible={isCollapsible}
                     anchorIdParts={anchorIdParts}
+                    route={route}
                 />
             ) : (
                 <InternalTypeDefinition
@@ -53,6 +57,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     typeShape={typeShape}
                     isCollapsible={isCollapsible}
                     anchorIdParts={anchorIdParts}
+                    route={route}
                 />
             );
         },
@@ -65,6 +70,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     applyErrorStyles={applyErrorStyles}
                     className={className}
                     anchorIdParts={anchorIdParts}
+                    route={route}
                 />
             </ListTypeContextProvider>
         ),
@@ -76,6 +82,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     applyErrorStyles={applyErrorStyles}
                     className={className}
                     anchorIdParts={anchorIdParts}
+                    route={route}
                 />
             </ListTypeContextProvider>
         ),
@@ -86,6 +93,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 applyErrorStyles={applyErrorStyles}
                 className={className}
                 anchorIdParts={anchorIdParts}
+                route={route}
             />
         ),
         map: ({ keyType, valueType }) => (
@@ -96,6 +104,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     applyErrorStyles={applyErrorStyles}
                     className={className}
                     anchorIdParts={anchorIdParts}
+                    route={route}
                 />
                 <InternalTypeReferenceDefinitions
                     type={valueType}
@@ -103,6 +112,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     applyErrorStyles={applyErrorStyles}
                     className={className}
                     anchorIdParts={anchorIdParts}
+                    route={route}
                 />
             </MapTypeContextProvider>
         ),

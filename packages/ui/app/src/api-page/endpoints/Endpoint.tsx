@@ -1,4 +1,5 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { useDocsContext } from "../../docs-context/useDocsContext";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContent } from "./EndpointContent";
 
@@ -19,7 +20,9 @@ export const Endpoint: React.FC<Endpoint.Props> = ({
     isLastInApi,
     anchorIdParts,
 }) => {
+    const { getFullSlug } = useDocsContext();
     const { setTargetRef } = useApiPageCenterElement({ slug });
+    const route = `/${getFullSlug(slug)}`;
 
     return (
         <EndpointContent
@@ -28,6 +31,7 @@ export const Endpoint: React.FC<Endpoint.Props> = ({
             package={package_}
             hideBottomSeparator={isLastInApi}
             anchorIdParts={[...anchorIdParts, endpoint.id]}
+            route={route}
         />
     );
 };

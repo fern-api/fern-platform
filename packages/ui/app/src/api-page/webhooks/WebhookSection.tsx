@@ -6,21 +6,21 @@ export declare namespace WebhookSection {
     export type Props = React.PropsWithChildren<{
         title: string;
         description?: string;
-        anchor: string;
+        route: string;
     }>;
 }
 
-export const WebhookSection: React.FC<WebhookSection.Props> = ({ title, description, anchor, children }) => {
+export const WebhookSection: React.FC<WebhookSection.Props> = ({ title, description, route, children }) => {
     return (
         <div
-            data-anchor={anchor}
+            data-route={route}
             className="flex flex-col"
             style={{
                 scrollMarginTop: HEADER_HEIGHT,
             }}
         >
             <div className="group/anchor-container relative mb-3 flex items-center">
-                <AbsolutelyPositionedAnchor anchor={anchor} verticalPosition="center" />
+                <AbsolutelyPositionedAnchor route={route} verticalPosition="center" />
                 <div className="text-text-primary-light dark:text-text-primary-dark text-xl font-extrabold">
                     {title}
                 </div>

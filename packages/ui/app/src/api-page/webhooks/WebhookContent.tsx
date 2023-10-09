@@ -21,6 +21,7 @@ export declare namespace WebhookContent {
         hideBottomSeparator?: boolean;
         setContainerRef: (ref: HTMLElement | null) => void;
         anchorIdParts: string[];
+        route: string;
     }
 }
 
@@ -30,6 +31,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
     hideBottomSeparator = false,
     setContainerRef,
     anchorIdParts,
+    route,
 }) {
     const { setHoveredPayloadPropertyPath } = useWebhookContext();
     const onHoverPayloadProperty = useCallback(
@@ -41,7 +43,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
 
     const computeAnchor = useCallback(
         (
-            attributeType: "payload" | "response",
+            attributeType: "headers" | "payload" | "response",
             attribute?:
                 | FernRegistryApiRead.ObjectProperty
                 | FernRegistryApiRead.PathParameter
@@ -71,7 +73,12 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                 "border-border-default-light dark:border-border-default-dark border-b": !hideBottomSeparator,
             })}
         >
-            <div className="flex min-w-0 flex-1 flex-col lg:flex-row lg:space-x-[4vw]" ref={setContainerRef}>
+            <div
+                className="flex min-w-0 flex-1 flex-col lg:flex-row lg:space-x-[4vw]"
+                ref={setContainerRef}
+                data-route={route}
+                style={{ scrollMarginTop: HEADER_HEIGHT }}
+            >
                 <div className="flex min-w-0 max-w-2xl flex-1 flex-col">
                     <div className="py-8">
                         {isSubpackage(package_) && (
@@ -87,8 +94,12 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                     {webhook.headers.length > 0 && (
                         <div className="mt-8 flex">
                             <div className="flex flex-1 flex-col gap-12">
-                                <WebhookSection title="Headers" anchor={computeAnchor("payload")}>
-                                    <WebhookHeadersSection webhook={webhook} anchorIdParts={anchorIdParts} />
+                                <WebhookSection title="Headers" route={`${route}#${computeAnchor("headers")}`}>
+                                    <WebhookHeadersSection
+                                        webhook={webhook}
+                                        anchorIdParts={anchorIdParts}
+                                        route={route}
+                                    />
                                 </WebhookSection>
                             </div>
                         </div>
@@ -96,11 +107,12 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
 
                     <div className="mt-8 flex">
                         <div className="flex flex-1 flex-col gap-12">
-                            <WebhookSection title="Payload" anchor={computeAnchor("payload")}>
+                            <WebhookSection title="Payload" route={`${route}#${computeAnchor("payload")}`}>
                                 <WebhookPayloadSection
                                     payload={webhook.payload}
                                     onHoverProperty={onHoverPayloadProperty}
                                     anchorIdParts={anchorIdParts}
+                                    route={route}
                                 />
                             </WebhookSection>
                         </div>
@@ -108,7 +120,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
 
                     <div className="mt-8 flex">
                         <div className="flex flex-1 flex-col gap-12">
-                            <WebhookSection title="Response" anchor={computeAnchor("response")}>
+                            <WebhookSection title="Response" route={`${route}#${computeAnchor("response")}`}>
                                 <WebhookResponseSection />
                             </WebhookSection>
                         </div>

@@ -90,7 +90,7 @@ export const H1: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             }}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
+            <AbsolutelyPositionedAnchor route={slug} verticalPosition="center" />
             <span>{children}</span>
         </h1>
     );
@@ -112,7 +112,7 @@ export const H2: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             }}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
+            <AbsolutelyPositionedAnchor route={slug} verticalPosition="center" />
             {children}
         </h2>
     );
@@ -134,7 +134,7 @@ export const H3: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             }}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
+            <AbsolutelyPositionedAnchor route={slug} verticalPosition="center" />
             {children}
         </h3>
     );
@@ -156,7 +156,7 @@ export const H4: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             }}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
+            <AbsolutelyPositionedAnchor route={slug} verticalPosition="center" />
             {children}
         </h4>
     );
@@ -178,7 +178,7 @@ export const H5: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             }}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
+            <AbsolutelyPositionedAnchor route={slug} verticalPosition="center" />
             {children}
         </h5>
     );
@@ -200,7 +200,7 @@ export const H6: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             }}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor anchor={slug} verticalPosition="center" />
+            <AbsolutelyPositionedAnchor route={slug} verticalPosition="center" />
             {children}
         </h6>
     );

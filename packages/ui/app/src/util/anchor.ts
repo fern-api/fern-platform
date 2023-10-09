@@ -12,6 +12,14 @@ export function getAnchorNode(anchorId: string): HTMLElement | undefined {
     return document.querySelector<HTMLElement>(getAnchorSelector(anchorId)) ?? undefined;
 }
 
+export function getRouteSelector(route: string): string {
+    return `div[data-route="${route}"]`;
+}
+
+export function getRouteNode(route: string): HTMLElement | undefined {
+    return document.querySelector<HTMLElement>(getRouteSelector(route)) ?? undefined;
+}
+
 export function extractAnchorFromWindow(): string | undefined {
     const { hash } = window.location;
     if (!hash.startsWith("#")) {

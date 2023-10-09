@@ -14,18 +14,26 @@ export declare namespace EndpointParameter {
         descriptionContainsMarkdown: boolean;
         type: FernRegistryApiRead.TypeReference;
         anchorIdParts: string[];
+        route: string;
     }
 }
 
-export const EndpointParameter: React.FC<EndpointParameter.Props> = ({ name, description, anchorIdParts, type }) => {
-    const anchor = getAnchorId(anchorIdParts);
+export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
+    name,
+    description,
+    anchorIdParts,
+    route,
+    type,
+}) => {
+    const anchorId = getAnchorId(anchorIdParts);
+    const anchorRoute = `${route}#${anchorId}`;
     return (
         <div
-            data-anchor={anchor}
+            data-route={anchorRoute}
             className="group/anchor-container relative flex flex-col gap-2 py-3"
             style={{ scrollMarginTop: HEADER_HEIGHT }}
         >
-            {anchor != null && <AbsolutelyPositionedAnchor verticalPosition="default" anchor={anchor} />}
+            <AbsolutelyPositionedAnchor verticalPosition="default" route={anchorRoute} />
             <div className="flex items-baseline gap-1">
                 <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">{name}</MonospaceText>
                 <div className="t-muted text-xs">
@@ -38,6 +46,7 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({ name, des
                 isCollapsible
                 anchorIdParts={anchorIdParts}
                 applyErrorStyles={false}
+                route={route}
             />
         </div>
     );

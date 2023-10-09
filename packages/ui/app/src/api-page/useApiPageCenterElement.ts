@@ -2,9 +2,7 @@ import { useCallback, useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useIsSlugSelected } from "../docs-context/useIsSlugSelected";
-import { NavigationStatus } from "../navigation-context/NavigationContext";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
-import { extractAnchorFromWindow } from "../util/anchor";
 
 export declare namespace useApiPageCenterElement {
     export interface Args {
@@ -17,27 +15,22 @@ export declare namespace useApiPageCenterElement {
 }
 
 export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args): useApiPageCenterElement.Return {
-    const { navigation, userHasScrolled } = useNavigationContext();
+    const { justNavigated } = useNavigationContext();
     const { registerNavigateToPathListener, onScrollToPath, getFullSlug } = useDocsContext();
 
     const targetRef = useRef<HTMLElement | null>(null);
 
     const onChangeIsInVerticalCenter = useCallback(
         (newIsInVerticalCenter: boolean) => {
-            if (
-                newIsInVerticalCenter &&
-                navigation.status !== NavigationStatus.INITIAL_NAVIGATION_TO_ANCHOR &&
-                navigation.status !== NavigationStatus.SUBSEQUENT_NAVIGATION_TO_ANCHOR &&
-                navigation.status !== NavigationStatus.BACK_NAVIGATION
-            ) {
+            if (newIsInVerticalCenter && !justNavigated) {
                 onScrollToPath(slug);
             }
         },
-        [onScrollToPath, slug, navigation.status]
+        [justNavigated, onScrollToPath, slug]
     );
 
     const handleIsSelected = useCallback(() => {
-        window.scrollTo({ top: targetRef.current?.offsetTop ?? 0 });
+        // window.scrollTo({ top: targetRef.current?.offsetTop ?? 0 });
     }, []);
 
     useEffect(
@@ -46,30 +39,6 @@ export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args):
     );
 
     const isSelected = useIsSlugSelected(getFullSlug(slug));
-
-    useEffect(() => {
-        if (typeof window === "undefined" || userHasScrolled) {
-            return;
-        }
-        const maybeScrollToSelected = () => {
-            if (isSelected && extractAnchorFromWindow() == null) {
-                handleIsSelected();
-            }
-        };
-        maybeScrollToSelected();
-        const docsContent = document.getElementById("docs-content");
-        if (docsContent == null) {
-            return;
-        }
-        const observer = new window.ResizeObserver(() => {
-            maybeScrollToSelected();
-        });
-        observer.observe(docsContent);
-        return () => {
-            observer.unobserve(docsContent);
-            observer.disconnect();
-        };
-    }, [handleIsSelected, isSelected, userHasScrolled]);
 
     const { ref: setRefForInVerticalCenterIntersectionObserver } = useInView({
         // https://stackoverflow.com/questions/54807535/intersection-observer-api-observe-the-center-of-the-viewport

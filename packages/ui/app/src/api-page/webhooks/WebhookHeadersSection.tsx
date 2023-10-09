@@ -9,10 +9,11 @@ export declare namespace WebhookHeadersSection {
     export interface Props {
         webhook: FernRegistryApiRead.WebhookDefinition;
         anchorIdParts: string[];
+        route: string;
     }
 }
 
-export const WebhookHeadersSection: React.FC<WebhookHeadersSection.Props> = ({ webhook, anchorIdParts }) => {
+export const WebhookHeadersSection: React.FC<WebhookHeadersSection.Props> = ({ webhook, anchorIdParts, route }) => {
     return (
         <div className="flex flex-col">
             {webhook.headers.map((header, index) => (
@@ -33,6 +34,7 @@ export const WebhookHeadersSection: React.FC<WebhookHeadersSection.Props> = ({ w
                             isCollapsible
                             anchorIdParts={anchorIdParts}
                             applyErrorStyles={false}
+                            route={route}
                         />
                     </div>
                 </div>

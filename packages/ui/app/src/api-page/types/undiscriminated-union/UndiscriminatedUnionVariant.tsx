@@ -80,6 +80,7 @@ export declare namespace UndiscriminatedUnionVariant {
         unionVariant: FernRegistryApiRead.UndiscriminatedUnionVariant;
         anchorIdParts: string[];
         applyErrorStyles: boolean;
+        route: string;
     }
 }
 
@@ -87,6 +88,7 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
     unionVariant,
     anchorIdParts,
     applyErrorStyles,
+    route,
 }) => {
     const { isRootTypeDefinition } = useTypeDefinitionContext();
     const contextValue = useTypeDefinitionContext();
@@ -121,6 +123,7 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
                         anchorIdParts={anchorIdParts}
                         isCollapsible
                         applyErrorStyles={applyErrorStyles}
+                        route={route}
                     />
                 </TypeDefinitionContext.Provider>
             </div>

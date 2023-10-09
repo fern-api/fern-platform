@@ -16,6 +16,7 @@ export declare namespace DiscriminatedUnionVariant {
         discriminant: string;
         unionVariant: FernRegistryApiRead.DiscriminatedUnionVariant;
         anchorIdParts: string[];
+        route: string;
     }
 }
 
@@ -23,6 +24,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
     discriminant,
     unionVariant,
     anchorIdParts,
+    route,
 }) => {
     const { isRootTypeDefinition } = useTypeDefinitionContext();
 
@@ -74,7 +76,12 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
             <div className="flex flex-col">
                 <ApiPageDescription description={unionVariant.description} isMarkdown={true} />
                 <TypeDefinitionContext.Provider value={newContextValue}>
-                    <InternalTypeDefinition typeShape={shape} isCollapsible={true} anchorIdParts={anchorIdParts} />
+                    <InternalTypeDefinition
+                        typeShape={shape}
+                        isCollapsible={true}
+                        anchorIdParts={anchorIdParts}
+                        route={route}
+                    />
                 </TypeDefinitionContext.Provider>
             </div>
         </div>

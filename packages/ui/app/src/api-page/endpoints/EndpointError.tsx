@@ -1,9 +1,8 @@
 import { FernRegistry } from "@fern-fern/registry-browser";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
+import { useRouter } from "next/router";
 import { memo, MouseEventHandler, useEffect } from "react";
-import { NavigationInfo, NavigationStatus } from "../../navigation-context/NavigationContext";
-import { useNavigationContext } from "../../navigation-context/useNavigationContext";
 import { getAnchorId } from "../../util/anchor";
 import { toTitleCase } from "../../util/string";
 import { type JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
@@ -13,12 +12,8 @@ import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceD
 import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
 import { getErrorNameForStatus } from "../utils/getErrorNameForStatus";
 
-function shouldSelectError(navigation: NavigationInfo, curAnchorId: string) {
-    if (navigation.status !== NavigationStatus.INITIAL_NAVIGATION_TO_ANCHOR) {
-        return false;
-    }
-    const { anchorId: destAnchorId } = navigation;
-    return destAnchorId.startsWith(`${curAnchorId}-`);
+function shouldSelectError(currentRoute: string, slug: string, curAnchorId: string) {
+    return currentRoute.startsWith(`/${slug}#${curAnchorId}-`);
 }
 
 export declare namespace EndpointError {
@@ -31,6 +26,7 @@ export declare namespace EndpointError {
         select: () => void;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: string[];
+        route: string;
     }
 }
 
@@ -43,15 +39,16 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
     onClick,
     select,
     anchorIdParts,
+    route,
 }) {
-    const { navigation } = useNavigationContext();
+    const router = useRouter();
     const anchorIdSoFar = getAnchorId(anchorIdParts);
 
     useEffect(() => {
-        if (shouldSelectError(navigation, anchorIdSoFar)) {
+        if (router.asPath.startsWith(`${route}#${anchorIdSoFar}-`)) {
             select();
         }
-    }, [navigation, anchorIdSoFar, select]);
+    }, [anchorIdSoFar, select, router.asPath, route]);
 
     return (
         <button
@@ -106,6 +103,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                                 type={error.type.value}
                                 onHoverProperty={onHoverProperty}
                                 anchorIdParts={anchorIdParts}
+                                route={route}
                             />
                         </div>
                     ) : error.type.type === "object" ? (
@@ -115,6 +113,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                                     isCollapsible
                                     typeShape={error.type}
                                     anchorIdParts={anchorIdParts}
+                                    route={route}
                                 />
                             </TypeDefinitionContextProvider>
                         </div>
