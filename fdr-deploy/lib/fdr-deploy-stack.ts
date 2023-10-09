@@ -11,6 +11,7 @@ import { LogGroup } from "aws-cdk-lib/aws-logs";
 import { ARecord, HostedZone, RecordTarget } from "aws-cdk-lib/aws-route53";
 import { LoadBalancerTarget } from "aws-cdk-lib/aws-route53-targets";
 import { Bucket, HttpMethods } from "aws-cdk-lib/aws-s3";
+import { PrivateDnsNamespace } from "aws-cdk-lib/aws-servicediscovery";
 import * as sns from "aws-cdk-lib/aws-sns";
 import { EmailSubscription } from "aws-cdk-lib/aws-sns-subscriptions";
 import { Construct } from "constructs";
@@ -74,7 +75,12 @@ export class FdrDeployStack extends Stack {
             versioned: true,
         });
 
-        const cloudmapNamespace = environmentInfo.cloudMapNamespaceInfo.namespaceName;
+        const cloudmapNamespaceName = environmentInfo.cloudMapNamespaceInfo.namespaceName;
+        const cloudMapNamespace = PrivateDnsNamespace.fromPrivateDnsNamespaceAttributes(this, "private-cloudmap", {
+            namespaceArn: environmentInfo.cloudMapNamespaceInfo.namespaceArn,
+            namespaceId: environmentInfo.cloudMapNamespaceInfo.namespaceId,
+            namespaceName: cloudmapNamespaceName,
+        });
         const hostedZone = HostedZone.fromHostedZoneAttributes(this, "zoneId", {
             hostedZoneId: environmentInfo.route53Info.hostedZoneId,
             zoneName: environmentInfo.route53Info.hostedZoneName,
@@ -89,7 +95,7 @@ export class FdrDeployStack extends Stack {
             taskImageOptions: {
                 image: ContainerImage.fromTarball(`../docker/build/tar/fern-definition-registry:${version}.tar`),
                 environment: {
-                    VENUS_URL: `http://venus.${cloudmapNamespace}:8080/`,
+                    VENUS_URL: `http://venus.${cloudmapNamespaceName}:8080/`,
                     AWS_ACCESS_KEY_ID: getEnvironmentVariableOrThrow("AWS_ACCESS_KEY_ID"),
                     AWS_SECRET_ACCESS_KEY: getEnvironmentVariableOrThrow("AWS_SECRET_ACCESS_KEY"),
                     S3_BUCKET_NAME: fdrBucket.bucketName,
@@ -117,6 +123,13 @@ export class FdrDeployStack extends Stack {
             certificate,
             domainZone: hostedZone,
             domainName: getServiceDomainName(environmentType, environmentInfo),
+            cloudMapOptions:
+                cloudMapNamespace != null
+                    ? {
+                          cloudMapNamespace,
+                          name: SERVICE_NAME,
+                      }
+                    : undefined,
         });
 
         new ARecord(this, "api-domain", {
