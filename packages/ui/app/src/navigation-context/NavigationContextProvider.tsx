@@ -21,7 +21,14 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
 
     // on mount, scroll directly to routed element
     useEffect(() => {
-        navigateToRoute.current(router.asPath, false);
+        const handleInit = () => {
+            navigateToRoute.current(router.asPath, false);
+        };
+        handleInit();
+        window.addEventListener("DOMContentLoaded", handleInit);
+        return () => {
+            window.removeEventListener("DOMContentLoaded", handleInit);
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
