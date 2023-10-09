@@ -31,9 +31,13 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
         };
         router.events.on("routeChangeStart", handleRouteChangeStart);
         router.events.on("hashChangeStart", handleRouteChangeStart);
+        router.events.on("routeChangeComplete", handleRouteChangeStart);
+        router.events.on("hashChangeComplete", handleRouteChangeStart);
         return () => {
             router.events.off("routeChangeStart", handleRouteChangeStart);
             router.events.off("hashChangeStart", handleRouteChangeStart);
+            router.events.off("routeChangeComplete", handleRouteChangeStart);
+            router.events.off("hashChangeComplete", handleRouteChangeStart);
         };
     }, [navigateToRoute, router.events]);
 
