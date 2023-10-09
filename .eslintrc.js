@@ -86,6 +86,7 @@ module.exports = {
                 allow: ["private-constructors", "protected-constructors", "decoratedFunctions"],
             },
         ],
+        "@typescript-eslint/no-extraneous-class": "off",
         "jest/unbound-method": ["error"],
         "object-shorthand": ["error"],
         "@typescript-eslint/no-invalid-void-type": "off",

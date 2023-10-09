@@ -2,7 +2,7 @@ import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resou
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { isUnversionedTabbedNavigationConfig, isVersionedNavigationConfig } from "../fern";
 import { joinUrlSlugs } from "../slug";
-import { NODE_FACTORY } from "./node-factory";
+import { NodeFactory } from "./node-factory";
 import type { ChildDocsNode, DocsNode, DocsNodeTab, DocsNodeVersion, ItemSlug, ParentDocsNode } from "./types";
 
 interface BuildContext {
@@ -12,13 +12,13 @@ interface BuildContext {
 }
 
 export function buildDefinitionTree(definition: FernRegistryDocsRead.DocsDefinition): DocsNode.Root {
-    const root = NODE_FACTORY.root.create();
+    const root = NodeFactory.createRoot();
 
     const navigationConfig = definition.config.navigation;
 
     if (isVersionedNavigationConfig(navigationConfig)) {
         navigationConfig.versions.forEach((version, versionIndex) => {
-            const versionNode = NODE_FACTORY.version.create({
+            const versionNode = NodeFactory.createVersion({
                 slug: version.urlSlug,
                 version: {
                     id: version.version,
@@ -116,7 +116,7 @@ function buildNodeForNavigationTab({
     context: BuildContext;
 }): ChildDocsNode {
     const { version } = context;
-    const node = NODE_FACTORY.tab.create({
+    const node = NodeFactory.createTab({
         slug: tab.urlSlug,
         version,
     });
@@ -160,7 +160,7 @@ function buildNodeForNavigationItem({
     switch (item.type) {
         case "page": {
             const page = item;
-            return NODE_FACTORY.page.create({
+            return NodeFactory.createPage({
                 slug: page.urlSlug,
                 leadingSlug: joinUrlSlugs(...parentSlugs, page.urlSlug),
                 version,
@@ -197,7 +197,7 @@ function buildNodeForDocsSection({
     context: BuildContext;
 }): DocsNode.DocsSection {
     const { version, tab } = context;
-    const node = NODE_FACTORY.docsSection.create({
+    const node = NodeFactory.createDocsSection({
         section,
         slug: section.urlSlug,
         version,
@@ -222,7 +222,7 @@ function buildNodeForApiSection({
     context: BuildContext;
 }): DocsNode {
     const { definition, version, tab } = context;
-    const node = NODE_FACTORY.apiSection.create({
+    const node = NodeFactory.createApiSection({
         section,
         slug: section.urlSlug,
         version,
@@ -276,7 +276,7 @@ function buildNodeForEndpoint({
     context: BuildContext;
 }): DocsNode.Endpoint {
     const { version, tab } = context;
-    const node = NODE_FACTORY.endpoint.create({
+    const node = NodeFactory.createEndpoint({
         endpoint,
         slug: endpoint.urlSlug,
         leadingSlug: joinUrlSlugs(...parentSlugs, endpoint.urlSlug),
@@ -296,7 +296,7 @@ function buildNodeForWebhook({
     context: BuildContext;
 }): DocsNode.Webhook {
     const { version, tab } = context;
-    const node = NODE_FACTORY.webhook.create({
+    const node = NodeFactory.createWebhook({
         webhook,
         slug: webhook.urlSlug,
         leadingSlug: joinUrlSlugs(...parentSlugs, webhook.urlSlug),
@@ -320,7 +320,7 @@ function buildNodeForSubpackage({
     context: BuildContext;
 }): DocsNode.ApiSubpackage {
     const { version, tab } = context;
-    const node = NODE_FACTORY.apiSubpackage.create({
+    const node = NodeFactory.createApiSubpackage({
         section,
         subpackage,
         slug: subpackage.urlSlug,
