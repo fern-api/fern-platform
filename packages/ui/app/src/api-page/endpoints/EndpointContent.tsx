@@ -3,12 +3,12 @@ import classNames from "classnames";
 import React, { useCallback, useLayoutEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
+import ApiPlayground from "../../api-playground/ApiPlayground";
 import { HEADER_HEIGHT } from "../../constants";
 import { useLayoutBreakpoint } from "../../docs-context/useLayoutBreakpoint";
 import { getCurlLines } from "../examples/curl-example/curlUtils";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { flattenJsonToLines } from "../examples/json-example/jsonLineUtils";
-import { EndpointContentCodeSnippets } from "./EndpointContentCodeSnippets";
 import { EndpointContentLeft } from "./EndpointContentLeft";
 
 export declare namespace EndpointContent {
@@ -186,15 +186,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                     style={{ height: `${exampleHeight}px` }}
                 >
                     {isInViewport && example != null && (
-                        <EndpointContentCodeSnippets
-                            example={example}
-                            requestCurlLines={curlLines}
-                            responseJsonLines={jsonLines}
-                            hoveredRequestPropertyPath={hoveredRequestPropertyPath}
-                            hoveredResponsePropertyPath={hoveredResponsePropertyPath}
-                            requestHeight={requestHeight}
-                            responseHeight={responseHeight}
-                        />
+                        <ApiPlayground req={curlLines} res={jsonLines} example={example} />
                     )}
                 </div>
             </div>
