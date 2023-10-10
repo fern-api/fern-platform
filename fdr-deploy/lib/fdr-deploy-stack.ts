@@ -42,6 +42,7 @@ export class FdrDeployStack extends Stack {
             allowAllOutbound: true,
         });
         fdrSg.addIngressRule(Peer.anyIpv4(), Port.tcp(443), "allow HTTPS traffic from anywhere");
+        fdrSg.addIngressRule(Peer.ipv4(environmentInfo.vpcIpv4Cidr), Port.allTcp());
 
         const cluster = Cluster.fromClusterAttributes(this, "cluster", {
             clusterName: environmentInfo.ecsInfo.clusterName,
