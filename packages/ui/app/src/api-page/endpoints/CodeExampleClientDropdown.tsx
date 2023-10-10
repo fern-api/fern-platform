@@ -82,7 +82,7 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                                         {({ active }) => (
                                             <button
                                                 className={classNames(
-                                                    "flex w-full !no-underline items-center p-2 space-x-3",
+                                                    "flex w-full !no-underline justify-between items-center p-2",
                                                     {
                                                         "bg-tag-primary": active,
                                                         "!text-accent-primary":
@@ -96,15 +96,21 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                                                 )}
                                                 onClick={() => onClickClient(clientId)}
                                             >
-                                                <FontAwesomeIcon
-                                                    className="h-4 w-4"
-                                                    icon={getIconForClient(clientId)}
-                                                />
-                                                <div className="flex items-center space-x-2 whitespace-nowrap">
-                                                    <span className="font-mono text-xs font-normal">{clientName}</span>
+                                                <div className="flex items-center space-x-3">
+                                                    <FontAwesomeIcon
+                                                        className="h-4 w-4"
+                                                        icon={getIconForClient(clientId)}
+                                                    />
+
+                                                    <div className="flex items-center whitespace-nowrap">
+                                                        <span className="font-mono text-xs font-normal">
+                                                            {clientName}
+                                                        </span>
+                                                    </div>
                                                 </div>
+
                                                 <CheckIcon
-                                                    className={classNames("h-3 w-3", {
+                                                    className={classNames("h-3 w-3 ml-3", {
                                                         visible: clientId === selectedClient.id,
                                                         invisible: clientId !== selectedClient.id,
                                                     })}

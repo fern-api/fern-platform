@@ -103,11 +103,12 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     />
                 ) : (
                     <CodeBlockSkeleton
-                        className="rounded-b-x w-0 min-w-full pt-1.5"
+                        className="rounded-b-x w-0 min-w-full overflow-y-auto pt-1.5"
                         content={selectedClient.example}
                         language={selectedClient.language}
                         theme={theme}
                         usePlainStyles
+                        style={{ height: requestHeight - TITLED_EXAMPLE_PADDING }}
                     />
                 )}
             </TitledExample>

@@ -10,6 +10,7 @@ type CodeBlockSkeletonProps = {
     language: string;
     content: string;
     usePlainStyles?: boolean;
+    style?: React.CSSProperties;
 };
 
 export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
@@ -18,6 +19,7 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
     language,
     content,
     usePlainStyles = false,
+    style,
 }) => {
     return (
         <div
@@ -30,6 +32,7 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
                 },
                 className
             )}
+            style={style}
         >
             <SyntaxHighlighter
                 style={theme === "dark" ? prism.vscDarkPlus : prism.oneLight}
