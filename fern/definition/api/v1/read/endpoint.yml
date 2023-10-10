@@ -136,6 +136,7 @@ types:
   CodeExamples:
     properties:
       nodeAxios: optional<string>
+      pythonSdk: optional<PythonSnippet>
 
   ExampleEndpointRequest:
     properties:
@@ -151,3 +152,8 @@ types:
     properties:
       json: unknown
       filename: string
+    
+  PythonSnippet: 
+    properties: 
+      async_client: string
+      sync_client: string
