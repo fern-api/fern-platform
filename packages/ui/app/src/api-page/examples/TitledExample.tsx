@@ -10,6 +10,7 @@ export declare namespace TitledExample {
         actions?: JSX.Element;
         className?: string;
         children: JSX.Element | ((parent: HTMLElement | undefined) => JSX.Element);
+        titleSiblings?: JSX.Element;
         copyToClipboardText?: () => string; // use provider to lazily compute clipboard text
         onClick?: MouseEventHandler<HTMLDivElement>;
         containerRef?: MutableRefObject<HTMLDivElement | null>;
@@ -23,6 +24,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
     className,
     actions,
     children,
+    titleSiblings,
     copyToClipboardText,
     onClick,
     containerRef,
@@ -36,7 +38,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
     return (
         <div
             className={classNames(
-                "flex flex-col rounded-xl border border-border-default-light dark:border-border-default-dark overflow-hidden basis-full",
+                "flex flex-col rounded-xl border border-border-default-light dark:border-border-default-dark overflow-visible basis-full",
                 className
             )}
             onClick={onClick}
@@ -44,7 +46,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
         >
             <div
                 className={classNames(
-                    "border-border-default-light dark:border-border-default-dark flex h-10 items-center justify-between border-b py-1 pl-3 pr-2",
+                    "border-border-default-light rounded-t-xl dark:border-border-default-dark flex h-10 items-center justify-between border-b py-1 pl-3 pr-2",
                     {
                         "bg-gray-200/90 dark:bg-[#19181C]": type === "primary",
                         "bg-red-500/20": type === "warning",
@@ -62,6 +64,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                     </div>
                 </div>
                 <div className="flex gap-2">
+                    {titleSiblings}
                     {actions}
                     <CopyToClipboardButton content={copyToClipboardContent} />
                 </div>
@@ -77,7 +80,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                 >
                     <div
                         className={classNames(
-                            "dark:bg-background-primary-dark flex-1 overflow-hidden whitespace-pre bg-gray-100/90",
+                            "dark:bg-background-primary-dark flex-1 overflow-hidden rounded-b-xl whitespace-pre bg-gray-100/90",
                             {
                                 "py-4": !disablePadding,
                             }

@@ -4,15 +4,9 @@ import { Fragment } from "react";
 import { FontAwesomeIcon } from "../../commons/FontAwesomeIcon";
 import { CheckIcon } from "../../commons/icons/CheckIcon";
 import { ChevronDownIcon } from "../../commons/icons/ChevronDownIcon";
+import type { CodeExampleClientId, CodeExampleClient } from "./code-example";
 
-type ClientId = "curl" | "python" | "python-async";
-
-export interface CodeExampleClient {
-    id: ClientId;
-    name: string;
-}
-
-function getIconForClient(clientId: ClientId) {
+function getIconForClient(clientId: CodeExampleClientId) {
     switch (clientId) {
         case "curl":
             return "fa-solid fa-code";
@@ -25,16 +19,14 @@ function getIconForClient(clientId: ClientId) {
 export declare namespace CodeExampleClientDropdown {
     export interface Props {
         clients: CodeExampleClient[];
-        selectedClientId: ClientId;
-        selectedClientName: string;
-        onClickClient: (id: string) => void;
+        selectedClient: CodeExampleClient;
+        onClickClient: (clientId: CodeExampleClientId) => void;
     }
 }
 
 export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props> = ({
     clients,
-    selectedClientId,
-    selectedClientName,
+    selectedClient,
     onClickClient,
 }) => {
     return (
@@ -58,9 +50,9 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                         {({ open }) => {
                             return (
                                 <>
-                                    <FontAwesomeIcon className="h-4 w-4" icon={getIconForClient(selectedClientId)} />
+                                    <FontAwesomeIcon className="h-4 w-4" icon={getIconForClient(selectedClient.id)} />
                                     <span className="font-mono text-xs font-normal transition-colors">
-                                        {selectedClientName}
+                                        {selectedClient.name}
                                     </span>
                                     <ChevronDownIcon
                                         className={classNames("h-5 w-5 transition", {
@@ -94,10 +86,10 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                                                     {
                                                         "bg-tag-primary": active,
                                                         "!text-accent-primary":
-                                                            clientId === selectedClientId ||
-                                                            (active && clientId !== selectedClientId),
+                                                            clientId === selectedClient.id ||
+                                                            (active && clientId !== selectedClient.id),
                                                         "!text-text-muted-light dark:!text-text-muted-dark":
-                                                            !active && clientId !== selectedClientId,
+                                                            !active && clientId !== selectedClient.id,
                                                         "rounded-t-md": idx === 0,
                                                         "rounded-b-md": idx === clients.length - 1,
                                                     }
@@ -113,8 +105,8 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                                                 </div>
                                                 <CheckIcon
                                                     className={classNames("h-3 w-3", {
-                                                        visible: clientId === selectedClientId,
-                                                        invisible: clientId !== selectedClientId,
+                                                        visible: clientId === selectedClient.id,
+                                                        invisible: clientId !== selectedClient.id,
                                                     })}
                                                 />
                                             </button>

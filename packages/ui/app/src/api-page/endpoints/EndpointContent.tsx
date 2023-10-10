@@ -4,6 +4,7 @@ import React, { useCallback, useLayoutEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { HEADER_HEIGHT } from "../../constants";
+import { useDocsContext } from "../../docs-context/useDocsContext";
 import { useLayoutBreakpoint } from "../../docs-context/useLayoutBreakpoint";
 import { getCurlLines } from "../examples/curl-example/curlUtils";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
@@ -44,6 +45,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         onChange: setIsInViewport,
         rootMargin: "100%",
     });
+    const { theme } = useDocsContext();
     const { apiSection, apiDefinition } = useApiDefinitionContext();
     const [hoveredRequestPropertyPath, setHoveredRequestPropertyPath] = useState<JsonPropertyPath | undefined>();
     const [hoveredResponsePropertyPath, setHoveredResponsePropertyPath] = useState<JsonPropertyPath | undefined>();
@@ -187,6 +189,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                 >
                     {isInViewport && example != null && (
                         <EndpointContentCodeSnippets
+                            theme={theme}
                             example={example}
                             requestCurlLines={curlLines}
                             responseJsonLines={jsonLines}

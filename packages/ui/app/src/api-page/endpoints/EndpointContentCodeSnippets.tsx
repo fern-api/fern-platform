@@ -1,15 +1,20 @@
 "use client";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import { memo } from "react";
+import { memo, useMemo, useState } from "react";
 import { CurlExample } from "../examples/curl-example/CurlExample";
+import type { CodeExampleClient } from "./code-example";
+import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
 import { CurlLine } from "../examples/curl-example/curlUtils";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { JsonExampleVirtualized } from "../examples/json-example/JsonExample";
 import { JsonLine } from "../examples/json-example/jsonLineUtils";
 import { TitledExample } from "../examples/TitledExample";
+import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";
+import { type Theme } from "@fern-ui/theme";
 
 export declare namespace EndpointContentCodeSnippets {
     export interface Props {
+        theme?: Theme;
         example: FernRegistryApiRead.ExampleEndpointCall;
         requestCurlLines: CurlLine[];
         responseJsonLines: JsonLine[];
@@ -22,7 +27,35 @@ export declare namespace EndpointContentCodeSnippets {
 
 const TITLED_EXAMPLE_PADDING = 43;
 
+const DEFAULT_CLIENT: CodeExampleClient = {
+    id: "curl",
+    name: "Curl",
+};
+
+function getAvailableExampleClients(example: FernRegistryApiRead.ExampleEndpointCall): CodeExampleClient[] {
+    const clients: CodeExampleClient[] = [DEFAULT_CLIENT];
+    const { pythonSdk } = example.codeExamples;
+    if (pythonSdk != null) {
+        clients.push(
+            {
+                id: "python",
+                name: "Python",
+                language: "python",
+                example: pythonSdk.sync_client,
+            },
+            {
+                id: "python-async",
+                name: "Python Async",
+                language: "python",
+                example: pythonSdk.async_client,
+            }
+        );
+    }
+    return clients;
+}
+
 const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippets.Props> = ({
+    theme,
     example,
     requestCurlLines,
     responseJsonLines,
@@ -31,6 +64,9 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     requestHeight,
     responseHeight,
 }) => {
+    const [selectedClient, setSelectedClient] = useState<CodeExampleClient>(DEFAULT_CLIENT);
+    const availableClients = useMemo(() => getAvailableExampleClients(example), [example]);
+
     return (
         <div className="grid min-h-0 flex-1 grid-rows-[repeat(auto-fit,_minmax(0,_min-content))] gap-6">
             <TitledExample
@@ -44,12 +80,34 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     // TODO
                     return "";
                 }}
+                titleSiblings={
+                    <CodeExampleClientDropdown
+                        clients={availableClients}
+                        onClickClient={(clientId) => {
+                            const client = availableClients.find((c) => c.id === clientId);
+                            if (client != null) {
+                                setSelectedClient(client);
+                            }
+                        }}
+                        selectedClient={selectedClient}
+                    />
+                }
             >
-                <CurlExample
-                    curlLines={requestCurlLines}
-                    selectedProperty={hoveredRequestPropertyPath}
-                    height={requestHeight - TITLED_EXAMPLE_PADDING}
-                />
+                {selectedClient.id === "curl" ? (
+                    <CurlExample
+                        curlLines={requestCurlLines}
+                        selectedProperty={hoveredRequestPropertyPath}
+                        height={requestHeight - TITLED_EXAMPLE_PADDING}
+                    />
+                ) : (
+                    <CodeBlockSkeleton
+                        className="rounded-b-xl"
+                        content={selectedClient.example}
+                        language={selectedClient.language}
+                        theme={theme}
+                        usePlainStyles
+                    />
+                )}
             </TitledExample>
             {example.responseBody != null && (
                 <TitledExample
