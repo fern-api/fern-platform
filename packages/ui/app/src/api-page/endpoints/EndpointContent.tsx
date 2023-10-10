@@ -6,6 +6,7 @@ import { useApiDefinitionContext } from "../../api-context/useApiDefinitionConte
 import { HEADER_HEIGHT } from "../../constants";
 import { useDocsContext } from "../../docs-context/useDocsContext";
 import { useLayoutBreakpoint } from "../../docs-context/useLayoutBreakpoint";
+import { type CodeExampleClient } from "../examples/code-example";
 import { getCurlLines } from "../examples/curl-example/curlUtils";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { flattenJsonToLines } from "../examples/json-example/jsonLineUtils";
@@ -30,6 +31,34 @@ const PADDING_BOTTOM = 40;
 const LINE_HEIGHT = 21.5;
 const MOBILE_MAX_LINES = 20;
 const CONTENT_PADDING = 40 + TITLED_EXAMPLE_PADDING;
+
+const DEFAULT_CLIENT: CodeExampleClient = {
+    id: "curl",
+    name: "Curl",
+};
+
+function getAvailableExampleClients(example: FernRegistryApiRead.ExampleEndpointCall): CodeExampleClient[] {
+    const clients: CodeExampleClient[] = [DEFAULT_CLIENT];
+    const { pythonSdk } = example.codeExamples;
+    if (pythonSdk != null) {
+        clients.push(
+            {
+                id: "python",
+                name: "Python",
+                language: "python",
+                example: pythonSdk.sync_client,
+            },
+            {
+                id: "python-async",
+                name: "Python (Async)",
+                language: "python",
+                example: pythonSdk.async_client,
+            }
+        );
+    }
+
+    return clients;
+}
 
 export const EndpointContent: React.FC<EndpointContent.Props> = ({
     endpoint,
@@ -62,6 +91,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         [setHoveredResponsePropertyPath]
     );
 
+    const [selectedExampleClient, setSelectedExampleClient] = useState<CodeExampleClient>(DEFAULT_CLIENT);
     const [selectedErrorIndex, setSelectedErrorIndex] = useState<number | null>(null);
 
     const errors = useMemo(() => {
@@ -78,6 +108,11 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         }
         return endpoint.examples.find((e) => e.responseStatusCode === selectedError.statusCode) ?? null;
     }, [endpoint.examples, selectedError]);
+
+    const availableExampleClients = useMemo(
+        () => (example != null ? getAvailableExampleClients(example) : []),
+        [example]
+    );
 
     const curlLines = useMemo(
         () =>
@@ -191,6 +226,9 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                         <EndpointContentCodeSnippets
                             theme={theme}
                             example={example}
+                            availableExampleClients={availableExampleClients}
+                            selectedExampleClient={selectedExampleClient}
+                            onClickExampleClient={setSelectedExampleClient}
                             requestCurlLines={curlLines}
                             responseJsonLines={jsonLines}
                             hoveredRequestPropertyPath={hoveredRequestPropertyPath}

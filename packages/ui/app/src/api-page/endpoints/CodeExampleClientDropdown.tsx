@@ -4,7 +4,7 @@ import { Fragment } from "react";
 import { FontAwesomeIcon } from "../../commons/FontAwesomeIcon";
 import { CheckIcon } from "../../commons/icons/CheckIcon";
 import { ChevronDownIcon } from "../../commons/icons/ChevronDownIcon";
-import type { CodeExampleClientId, CodeExampleClient } from "../examples//code-example";
+import type { CodeExampleClient, CodeExampleClientId } from "../examples//code-example";
 
 function getIconForClient(clientId: CodeExampleClientId) {
     switch (clientId) {
