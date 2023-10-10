@@ -6,9 +6,8 @@ import {
     assertIsVersionedNavigationConfig,
     getFirstNavigatableItemSlugInDefinition,
     isUnversionedUntabbedNavigationConfig,
-    type ResolvedUrlPath,
+    type NavigatableDocsNode,
 } from "@fern-ui/app-utils";
-import { assertNever } from "@fern-ui/core-utils";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { useTheme } from "@fern-ui/theme";
 import { useRouter } from "next/router";
@@ -39,25 +38,23 @@ function findTabIndexWithinTabbedNavigationConfig(
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
-        inferredVersionSlug: string | null;
-        inferredTabIndex: number | null;
-        resolvedUrlPath: ResolvedUrlPath;
-        nextPath: ResolvedUrlPath | undefined;
-        previousPath: ResolvedUrlPath | undefined;
+        resolvedNavigatable: NavigatableDocsNode;
+        nextNavigatable: NavigatableDocsNode | undefined;
+        previousNavigatable: NavigatableDocsNode | undefined;
     }>;
 }
 
 export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     docsDefinition,
-    inferredVersionSlug,
-    inferredTabIndex,
-    resolvedUrlPath,
-    nextPath,
-    previousPath,
+    resolvedNavigatable,
+    nextNavigatable,
+    previousNavigatable,
     children,
 }) => {
     const router = useRouter();
 
+    const inferredVersionSlug = resolvedNavigatable.version?.slug ?? null;
+    const inferredTabIndex = resolvedNavigatable.tab?.index ?? null;
     const [activeVersionSlug, _setActiveVersionSlug] = useState(inferredVersionSlug);
     const [activeTabIndex, setActiveTabIndex] = useState(inferredTabIndex);
 
@@ -80,7 +77,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
                 activeNavigationConfig: configData.version.config,
                 activeVersionName: configData.version.version,
                 activeVersionSlug,
-                // TODO: The first version is not necessarily the default version
                 isDefaultVersion: configData.index === 0,
                 versions: docsDefinition.config.navigation.versions.map(({ version, urlSlug, availability }) => ({
                     versionName: version,
@@ -109,7 +105,12 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
         (slug: string, opts?: GetFullSlugOpts) => {
             const { omitVersionSlug = false, omitTabSlug = false } = opts ?? {};
             const parts: string[] = [];
-            if (!omitVersionSlug && docsInfo.type === "versioned" && !docsInfo.isDefaultVersion && versionSlug) {
+            if (
+                !omitVersionSlug &&
+                docsInfo.type === "versioned" &&
+                !docsInfo.isDefaultVersion &&
+                versionSlug.length > 0
+            ) {
                 parts.push(`${versionSlug}/`);
             }
             if (!omitTabSlug && activeTab != null) {
@@ -121,24 +122,8 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
         [versionSlug, activeTab, docsInfo]
     );
 
-    const selectedSlugFromUrl = useMemo(() => {
-        switch (resolvedUrlPath.type) {
-            case "clientLibraries":
-            case "endpoint":
-            case "webhook":
-            case "mdx-page":
-            case "topLevelEndpoint":
-            case "topLevelWebhook":
-            case "apiSubpackage":
-                return getFullSlug(resolvedUrlPath.slug);
-            case "api":
-            case "section":
-                return undefined;
-            default:
-                assertNever(resolvedUrlPath);
-        }
-    }, [resolvedUrlPath, getFullSlug]);
-
+    // TODO: Set based on resolved navigatable
+    const selectedSlugFromUrl = undefined as string | undefined;
     const [selectedSlug, setSelectedSlug] = useState(selectedSlugFromUrl);
 
     const setActiveVersionSlug = useCallback((version: string) => {
@@ -301,9 +286,9 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             navigateToPath,
             onScrollToPath,
             registerScrolledToPathListener: scrollToPathListeners.registerListener,
-            resolvedPathFromUrl: resolvedUrlPath,
-            nextPath,
-            previousPath,
+            resolvedNavigatableFromUrl: resolvedNavigatable,
+            nextNavigatable,
+            previousNavigatable,
             selectedSlug,
             theme,
             setTheme,
@@ -317,14 +302,14 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             getFullSlug,
             navigateToPath,
             navigateToPathListeners.registerListener,
-            nextPath,
             onScrollToPath,
-            previousPath,
             resolveApi,
             resolveFile,
             resolvePage,
-            resolvedUrlPath,
             scrollToPathListeners.registerListener,
+            resolvedNavigatable,
+            nextNavigatable,
+            previousNavigatable,
             selectedSlug,
             theme,
             setTheme,

@@ -15,7 +15,7 @@ export interface BaseNode {
     slug: ItemSlug;
 }
 
-export interface NavigatableNode {
+interface NavigatableNode {
     /**
      * Path slug without version.
      */
