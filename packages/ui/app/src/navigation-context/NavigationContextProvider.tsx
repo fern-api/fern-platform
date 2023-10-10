@@ -12,8 +12,6 @@ export declare namespace NavigationContextProvider {
     export type Props = PropsWithChildren<{
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
         resolvedNavigatable: NavigatableDocsNode;
-        nextNavigatable: NavigatableDocsNode | undefined;
-        previousNavigatable: NavigatableDocsNode | undefined;
     }>;
 }
 

@@ -2,6 +2,7 @@ export { MDXRemote, type MDXRemoteProps, type MDXRemoteSerializeResult } from "n
 export * from "./fern";
 export * from "./path-resolver";
 export * from "./mdx";
+export * from "./serialize-node";
 export { getSlugFromUrl } from "./url-path-resolver/getSlugFromUrl";
 export { type ResolvedUrlPath } from "./url-path-resolver/ResolvedUrlPath";
 export { UrlPathResolver } from "./url-path-resolver/UrlPathResolver";

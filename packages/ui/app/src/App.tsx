@@ -22,12 +22,10 @@ export declare namespace App {
     export interface Props {
         docs: FernRegistryDocsRead.LoadDocsForUrlResponse;
         resolvedNavigatable: NavigatableDocsNode;
-        nextNavigatable: NavigatableDocsNode | undefined;
-        previousNavigatable: NavigatableDocsNode | undefined;
     }
 }
 
-export const App: React.FC<App.Props> = ({ docs, resolvedNavigatable, nextNavigatable, previousNavigatable }) => {
+export const App: React.FC<App.Props> = ({ docs, resolvedNavigatable }) => {
     useEffect(() => {
         if (process.env.NEXT_PUBLIC_POSTHOG_API_KEY != null && process.env.NEXT_PUBLIC_POSTHOG_API_KEY.length > 0) {
             initializePosthog(process.env.NEXT_PUBLIC_POSTHOG_API_KEY);
@@ -40,17 +38,10 @@ export const App: React.FC<App.Props> = ({ docs, resolvedNavigatable, nextNaviga
                 (children, Context) => (
                     <Context>{children}</Context>
                 ),
-                <DocsContextProvider
-                    docsDefinition={docs.definition}
-                    resolvedNavigatable={resolvedNavigatable}
-                    nextNavigatable={nextNavigatable}
-                    previousNavigatable={previousNavigatable}
-                >
+                <DocsContextProvider docsDefinition={docs.definition} resolvedNavigatable={resolvedNavigatable}>
                     <NavigationContextProvider
                         docsDefinition={docs.definition}
                         resolvedNavigatable={resolvedNavigatable}
-                        nextNavigatable={nextNavigatable}
-                        previousNavigatable={previousNavigatable}
                     >
                         <Docs />
                     </NavigationContextProvider>

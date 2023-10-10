@@ -10,16 +10,12 @@ export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
         resolvedNavigatable: NavigatableDocsNode;
-        nextNavigatable: NavigatableDocsNode | undefined;
-        previousNavigatable: NavigatableDocsNode | undefined;
     }>;
 }
 
 export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     docsDefinition,
     resolvedNavigatable,
-    previousNavigatable,
-    nextNavigatable,
     children,
 }) => {
     const resolveApi = useCallback(
@@ -60,26 +56,14 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     const contextValue = useCallback(
         (): DocsContextValue => ({
             docsDefinition,
+            resolvedNavigatable,
             resolveApi,
             resolvePage,
             resolveFile,
-            resolvedNavigatable,
-            nextNavigatable,
-            previousNavigatable,
             theme,
             setTheme,
         }),
-        [
-            docsDefinition,
-            resolveApi,
-            resolveFile,
-            resolvePage,
-            resolvedNavigatable,
-            nextNavigatable,
-            previousNavigatable,
-            theme,
-            setTheme,
-        ]
+        [docsDefinition, resolveApi, resolveFile, resolvePage, resolvedNavigatable, theme, setTheme]
     );
 
     return <DocsContext.Provider value={contextValue}>{children}</DocsContext.Provider>;

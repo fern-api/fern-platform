@@ -1,5 +1,10 @@
 import * as FernRegistryDocsReadV2 from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
-import { getSlugFromUrl, PathResolver, type NavigatableDocsNode } from "@fern-ui/app-utils";
+import {
+    getSlugFromUrl,
+    PathResolver,
+    type SerializedNavigatableNode,
+    serializeNavigatableNode,
+} from "@fern-ui/app-utils";
 import { App } from "@fern-ui/ui";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
@@ -7,15 +12,14 @@ import { REGISTRY_SERVICE } from "../../service";
 import { loadDocsBackgroundImage } from "../../utils/theme/loadDocsBackgroundImage";
 import { generateFontFaces, loadDocTypography } from "../../utils/theme/loadDocsTypography";
 import { useColorTheme } from "../../utils/theme/useColorTheme";
+import { buildUrl } from "./buildUrl";
 
 export declare namespace Docs {
     export interface Props {
         docs: FernRegistryDocsReadV2.LoadDocsForUrlResponse;
         typographyStyleSheet?: string;
         backgroundImageStyleSheet: string | null;
-        resolvedNavigatable: NavigatableDocsNode;
-        nextNavigatable: NavigatableDocsNode | null;
-        previousNavigatable: NavigatableDocsNode | null;
+        resolvedNavigatable: SerializedNavigatableNode;
     }
 }
 
@@ -24,8 +28,6 @@ export default function Docs({
     typographyStyleSheet = "",
     backgroundImageStyleSheet = "",
     resolvedNavigatable,
-    nextNavigatable,
-    previousNavigatable,
 }: Docs.Props): JSX.Element {
     const colorThemeStyleSheet = useColorTheme(docs.definition);
     return (
@@ -50,12 +52,7 @@ export default function Docs({
                         <link rel="icon" id="favicon" href={docs.definition.files[docs.definition.config.favicon]} />
                     )}
                 </Head>
-                <App
-                    docs={docs}
-                    resolvedNavigatable={resolvedNavigatable}
-                    nextNavigatable={nextNavigatable ?? undefined}
-                    previousNavigatable={previousNavigatable ?? undefined}
-                />
+                <App docs={docs} resolvedNavigatable={resolvedNavigatable} />
             </main>
         </>
     );
@@ -83,12 +80,12 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         };
     }
 
-    const typographyConfig = loadDocTypography(docs.body.definition);
+    const docsDefinition = docs.body.definition;
+    const typographyConfig = loadDocTypography(docsDefinition);
     const typographyStyleSheet = generateFontFaces(typographyConfig);
-    const backgroundImageStyleSheet = loadDocsBackgroundImage(docs.body.definition);
-
+    const backgroundImageStyleSheet = loadDocsBackgroundImage(docsDefinition);
+    const resolver = new PathResolver({ docsDefinition });
     const slug = getSlugFromUrl({ pathname, basePath: docs.body.baseUrl.basePath });
-    const resolver = new PathResolver({ docsDefinition: docs.body.definition });
     const resolvedNavigatable = resolver.resolveNavigatable(slug);
 
     if (resolvedNavigatable == null) {
@@ -100,19 +97,15 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         };
     }
 
-    // TODO: Implement
-    const [previousNavigatable, nextNavigatable] = await Promise.all([null, null]);
+    const serializedNavigatable = await serializeNavigatableNode({ node: resolvedNavigatable, docsDefinition });
 
     return {
         success: true,
         props: {
             docs: docs.body,
-            inferredVersionSlug: null,
             typographyStyleSheet,
             backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
-            resolvedNavigatable,
-            previousNavigatable: previousNavigatable ?? null,
-            nextNavigatable: nextNavigatable ?? null,
+            resolvedNavigatable: serializedNavigatable,
         },
     };
 };
@@ -120,11 +113,3 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
 export const getStaticPaths: GetStaticPaths = () => {
     return { paths: [], fallback: "blocking" };
 };
-
-function buildUrl({ host, pathname }: { host: string; pathname: string }): string {
-    const hostWithoutTrailingSlash = host.endsWith("/") ? host.slice(0, -1) : host;
-    if (pathname.length === 0) {
-        return hostWithoutTrailingSlash;
-    }
-    return `${hostWithoutTrailingSlash}/${pathname}`;
-}

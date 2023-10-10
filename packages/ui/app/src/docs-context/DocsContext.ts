@@ -11,14 +11,11 @@ export const DocsContext = React.createContext<() => DocsContextValue>(() => {
 
 export interface DocsContextValue {
     docsDefinition: FernRegistryDocsRead.DocsDefinition;
+    resolvedNavigatable: NavigatableDocsNode;
 
     resolveApi: (apiId: FernRegistry.ApiDefinitionId) => FernRegistryApiRead.ApiDefinition;
     resolvePage: (pageId: FernRegistryDocsRead.PageId) => FernRegistryDocsRead.PageContent;
     resolveFile: (fileId: FernRegistryDocsRead.FileId) => FernRegistryDocsRead.Url;
-
-    resolvedNavigatable: NavigatableDocsNode;
-    nextNavigatable: NavigatableDocsNode | undefined;
-    previousNavigatable: NavigatableDocsNode | undefined;
 
     theme: Theme | undefined;
     setTheme: (theme: Theme) => void;
