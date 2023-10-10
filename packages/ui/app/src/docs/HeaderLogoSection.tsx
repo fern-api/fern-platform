@@ -1,11 +1,13 @@
 import { DEFAULT_LOGO_HEIGHT } from "../config";
 import { useDocsContext } from "../docs-context/useDocsContext";
+import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { VersionDropdown } from "./VersionDropdown";
 
 export declare namespace HeaderLogoSection {}
 
 export const HeaderLogoSection: React.FC = () => {
-    const { resolveFile, docsDefinition, docsInfo, setActiveVersionSlug, navigateToPath, theme } = useDocsContext();
+    const { resolveFile, docsDefinition, theme } = useDocsContext();
+    const { definitionInfo } = useDocsSelectors();
     const { logo, logoV2, logoHeight, logoHref } = docsDefinition.config;
 
     if (theme == null) {
@@ -13,7 +15,7 @@ export const HeaderLogoSection: React.FC = () => {
     }
 
     const logoForTheme = logoV2 != null ? logoV2[theme] : logo;
-    const hasMultipleVersions = docsInfo.type === "versioned";
+    const hasMultipleVersions = definitionInfo.type === "versioned";
     const hasLogo = logoForTheme != null;
     const hasLogoHref = logoHref != null;
 
@@ -47,8 +49,7 @@ export const HeaderLogoSection: React.FC = () => {
                         selectedVersionName={docsInfo.activeVersionName}
                         selectedVersionSlug={docsInfo.activeVersionSlug}
                         onClickVersion={(versionSlug) => {
-                            setActiveVersionSlug(versionSlug);
-                            navigateToPath(`/${versionSlug}`, { omitVersionSlug: true });
+                            // TODO: Reimplement with new resolver
                         }}
                     />
                 </div>

@@ -1,15 +1,14 @@
-import { getVersionAvailabilityLabel } from "@fern-ui/app-utils";
+import { DocsNode, getVersionAvailabilityLabel } from "@fern-ui/app-utils";
 import { Menu, Transition } from "@headlessui/react";
 import classNames from "classnames";
 import Link from "next/link";
 import { Fragment } from "react";
 import { CheckIcon } from "../commons/icons/CheckIcon";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
-import { DocsInfoVersion } from "../docs-context/DocsContext";
 
 export declare namespace VersionDropdown {
     export interface Props {
-        versions: DocsInfoVersion[];
+        versions: DocsNode.Version[];
         selectedVersionName: string | undefined;
         selectedVersionSlug: string | undefined;
         onClickVersion: (versionSlug: string) => void;
@@ -68,7 +67,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
                     <Menu.Items className="border-border-primary bg-background absolute left-0 mt-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md border shadow-lg">
                         <div>
                             {versions.map((v, idx) => {
-                                const { versionName, versionSlug, availability } = v;
+                                const { id: versionName, slug: versionSlug, availability } = v.info;
                                 return (
                                     <Menu.Item key={idx}>
                                         {({ active }) => (

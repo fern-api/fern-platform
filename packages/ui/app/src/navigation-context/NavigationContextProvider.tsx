@@ -152,6 +152,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             value={{
                 hasInitialized,
                 justNavigated: justNavigatedTo.current != null,
+                activeNavigatable,
                 navigateToPath,
                 getFullSlug,
                 userIsScrolling: () => userIsScrolling.current,

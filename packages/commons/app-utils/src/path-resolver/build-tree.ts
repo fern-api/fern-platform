@@ -18,6 +18,7 @@ export function buildDefinitionTree(definition: FernRegistryDocsRead.DocsDefinit
                     id: version.version,
                     slug: version.urlSlug,
                     index: versionIndex,
+                    availability: version.availability ?? null,
                 },
             });
             if (versionIndex === 0) {
@@ -25,7 +26,11 @@ export function buildDefinitionTree(definition: FernRegistryDocsRead.DocsDefinit
                     type: "versioned",
                     definition,
                     defaultVersionNode: versionNode,
+                    versions: [],
                 };
+            }
+            if (root.info.type === "versioned") {
+                root.info.versions.push(versionNode);
             }
             addNodeChild(root, versionNode);
             const navigationConfig = version.config;
@@ -125,6 +130,7 @@ function buildNodeForNavigationTab({
         slug: tab.urlSlug,
         version: context.version,
         index,
+        items: tab.items,
     });
     const children = buildNodesForNavigationItems({
         items: tab.items,

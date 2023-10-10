@@ -3,7 +3,6 @@ import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { memo } from "react";
-import { DocsInfo, NavigateToPathOpts } from "../docs-context/DocsContext";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { ApiSidebarSection } from "./ApiSidebarSection";
 import { SidebarDocsSection } from "./SidebarDocsSection";
@@ -15,13 +14,11 @@ export declare namespace SidebarItems {
         navigationItems: FernRegistryDocsRead.NavigationItem[];
 
         selectedSlug: string | undefined;
-        navigateToPath: (slugWithoutVersion: string, opts?: NavigateToPathOpts | undefined) => void;
         registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
         getFullSlug: (slug: string) => string;
         closeMobileSidebar: () => void;
 
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
-        docsInfo: DocsInfo;
         activeTabIndex: number | null;
         resolveApi: (apiId: FernRegistry.ApiDefinitionId) => FernRegistryApiRead.ApiDefinition;
     }
@@ -31,12 +28,10 @@ const UnmemoizedSidebarItems: React.FC<SidebarItems.Props> = ({
     slug,
     navigationItems,
     selectedSlug,
-    navigateToPath,
     registerScrolledToPathListener,
     getFullSlug,
     closeMobileSidebar,
     docsDefinition,
-    docsInfo,
     activeTabIndex,
     resolveApi,
 }) => {
@@ -50,7 +45,6 @@ const UnmemoizedSidebarItems: React.FC<SidebarItems.Props> = ({
                             slug={joinUrlSlugs(slug, pageMetadata.urlSlug)}
                             fullSlug={getFullSlug(joinUrlSlugs(slug, pageMetadata.urlSlug))}
                             title={pageMetadata.title}
-                            navigateToPath={navigateToPath}
                             registerScrolledToPathListener={registerScrolledToPathListener}
                             isSelected={getFullSlug(joinUrlSlugs(slug, pageMetadata.urlSlug)) === selectedSlug}
                             closeMobileSidebar={closeMobileSidebar}
@@ -62,12 +56,10 @@ const UnmemoizedSidebarItems: React.FC<SidebarItems.Props> = ({
                             slug={joinUrlSlugs(slug, section.urlSlug)}
                             section={section}
                             selectedSlug={selectedSlug}
-                            navigateToPath={navigateToPath}
                             registerScrolledToPathListener={registerScrolledToPathListener}
                             getFullSlug={getFullSlug}
                             closeMobileSidebar={closeMobileSidebar}
                             docsDefinition={docsDefinition}
-                            docsInfo={docsInfo}
                             activeTabIndex={activeTabIndex}
                             resolveApi={resolveApi}
                         />
@@ -78,12 +70,10 @@ const UnmemoizedSidebarItems: React.FC<SidebarItems.Props> = ({
                             slug={joinUrlSlugs(slug, apiSection.urlSlug)}
                             apiSection={apiSection}
                             selectedSlug={selectedSlug}
-                            navigateToPath={navigateToPath}
                             registerScrolledToPathListener={registerScrolledToPathListener}
                             getFullSlug={getFullSlug}
                             closeMobileSidebar={closeMobileSidebar}
                             docsDefinition={docsDefinition}
-                            docsInfo={docsInfo}
                             activeTabIndex={activeTabIndex}
                             resolveApi={resolveApi}
                         />

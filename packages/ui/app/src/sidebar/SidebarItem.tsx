@@ -2,7 +2,6 @@ import { Text } from "@blueprintjs/core";
 import classNames from "classnames";
 import Link from "next/link";
 import { memo, useCallback, useEffect, useRef } from "react";
-import { NavigateToPathOpts } from "../docs-context/DocsContext";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace SidebarItem {
@@ -15,7 +14,6 @@ export declare namespace SidebarItem {
         rightElement?: JSX.Element;
         indent?: boolean;
         shallow?: boolean;
-        navigateToPath: (slugWithoutVersion: string, opts?: NavigateToPathOpts | undefined) => void;
         registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
         closeMobileSidebar: () => void;
         isSelected: boolean;
@@ -31,15 +29,14 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
     rightElement,
     indent = false,
     shallow = false,
-    navigateToPath,
     registerScrolledToPathListener,
     closeMobileSidebar,
     isSelected,
 }) => {
     const handleClick = useCallback(() => {
-        navigateToPath(slug);
+        // TODO: Implement with the new resolver
         closeMobileSidebar();
-    }, [navigateToPath, closeMobileSidebar, slug]);
+    }, [closeMobileSidebar, slug]);
 
     const renderTitle = useCallback(
         ({ isHovering }: { isHovering: boolean }) => {

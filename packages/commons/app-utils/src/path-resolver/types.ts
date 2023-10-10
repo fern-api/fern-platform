@@ -81,6 +81,7 @@ export interface VersionInfo {
     id: string;
     slug: ItemSlug;
     index: number;
+    availability: FernRegistryDocsRead.VersionAvailability | null;
 }
 
 export type DefinitionInfo = DefinitionInfo.Unversioned | DefinitionInfo.Versioned;
@@ -95,6 +96,7 @@ export declare namespace DefinitionInfo {
         type: "versioned";
         definition: FernRegistryDocsRead.DocsDefinition;
         defaultVersionNode: DocsNode.Version;
+        versions: DocsNode.Version[];
     }
 }
 
@@ -117,6 +119,7 @@ export declare namespace DocsNode {
         type: "tab";
         version: Version | null;
         index: number;
+        items: FernRegistryDocsRead.NavigationItem[];
         children: Record<FullSlug, ChildDocsNode>;
         childrenOrdering: ItemSlug[];
     }

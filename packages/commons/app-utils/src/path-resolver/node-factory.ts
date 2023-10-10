@@ -27,16 +27,19 @@ export class NodeFactory {
         slug,
         version,
         index,
+        items,
     }: {
         slug: string;
         version?: DocsNode.Version | null;
         index: number;
+        items: FernRegistryDocsRead.NavigationItem[];
     }): DocsNode.Tab {
         return {
             type: "tab",
             slug,
             version: version ?? null,
             index,
+            items,
             children: {},
             childrenOrdering: [],
         };

@@ -23,6 +23,8 @@ export interface NavigateToPathOpts extends GetFullSlugOpts {}
 const emptyDefinition = DefinitionObjectFactory.createDocsDefinition();
 
 export const NavigationContext = React.createContext<NavigationContextValue>({
+    hasInitialized: false,
+    justNavigated: false,
     activeNavigatable: NodeFactory.createPage({
         slug: "",
         leadingSlug: "",
@@ -34,12 +36,11 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
         context: {
             type: "unversioned-untabbed",
             root: NodeFactory.createRoot(emptyDefinition),
+            navigationConfig: { items: [] },
             version: null,
             tab: null,
         },
     }),
-    hasInitialized: false,
-    justNavigated: false,
     navigateToPath: noop,
     getFullSlug: () => "",
     userIsScrolling: () => false,
@@ -49,9 +50,9 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
 });
 
 export interface NavigationContextValue {
-    activeNavigatable: NavigatableDocsNode;
     hasInitialized: boolean;
     justNavigated: boolean;
+    activeNavigatable: NavigatableDocsNode;
     navigateToPath: (slugWithoutVersion: string, opts?: NavigateToPathOpts) => void;
     /** Returns the version-prefixed slug. */
     getFullSlug: (slug: string, opts?: { tabSlug?: string }) => string;

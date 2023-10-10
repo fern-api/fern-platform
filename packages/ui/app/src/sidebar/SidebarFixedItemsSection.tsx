@@ -1,10 +1,11 @@
-import { getFirstNavigatableItem, isUnversionedTabbedNavigationConfig } from "@fern-ui/app-utils";
+import { getFirstNavigatableItem } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import { memo, useMemo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useNavigationContext } from "../navigation-context";
 import { useSearchContext } from "../search-context/useSearchContext";
+import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { useSearchService } from "../services/useSearchService";
 import { SidebarSearchBar } from "./SidebarSearchBar";
 import { SidebarTabButton } from "./SidebarTabButton";
@@ -17,14 +18,14 @@ export declare namespace SidebarFixedItemsSection {
 }
 
 const UnmemoizedSidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> = ({ className, hideSearchBar }) => {
-    const { navigateToPath, getFullSlug } = useNavigationContext();
+    const { navigateToPath, getFullSlug, activeNavigatable } = useNavigationContext();
     const { theme } = useDocsContext();
+    const { activeNavigationConfigContext } = useDocsSelectors();
     const { openSearchDialog } = useSearchContext();
     const searchService = useSearchService();
-    const { activeNavigationConfig } = docsInfo;
 
     const showSearchBar = !hideSearchBar && searchService.isAvailable;
-    const showTabs = isUnversionedTabbedNavigationConfig(activeNavigationConfig);
+    const showTabs = activeNavigationConfigContext.type === "tabbed";
     const router = useRouter();
 
     const searchBar = useMemo(() => {
@@ -37,11 +38,11 @@ const UnmemoizedSidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Prop
         }
         return (
             <div className="mt-3 flex flex-col">
-                {activeNavigationConfig.tabs.map((tab, idx) => (
+                {activeNavigationConfigContext.config.tabs.map((tab, idx) => (
                     <SidebarTabButton
                         key={idx}
                         tab={tab}
-                        isSelected={idx === activeTabIndex}
+                        isSelected={idx === activeNavigatable.context.tab?.index}
                         onClick={() => {
                             const [firstTabItem] = tab.items;
                             if (firstTabItem == null) {
@@ -60,7 +61,7 @@ const UnmemoizedSidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Prop
                 ))}
             </div>
         );
-    }, [showTabs, activeNavigationConfig, activeTabIndex, getFullSlug, navigateToPath, router]);
+    }, [showTabs, activeNavigationConfigContext, activeNavigatable, getFullSlug, navigateToPath, router]);
 
     if (!showSearchBar && !showTabs) {
         return null;

@@ -3,7 +3,6 @@ import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources
 import { doesSubpackageHaveEndpointsOrWebhooksRecursive, getSubpackageTitle } from "@fern-ui/app-utils";
 import { useRouter } from "next/router";
 import { useContext, useMemo } from "react";
-import { DocsInfo, NavigateToPathOpts } from "../docs-context/DocsContext";
 import { ApiPackageSidebarSectionContents } from "./ApiPackageSidebarSectionContents";
 import { SidebarContext } from "./context/SidebarContext";
 import { SidebarGroup } from "./SidebarGroup";
@@ -18,10 +17,8 @@ export declare namespace ApiSubpackageSidebarSection {
         resolveSubpackageById: (
             subpackageId: FernRegistryApiRead.SubpackageId
         ) => FernRegistryApiRead.ApiDefinitionSubpackage;
-        navigateToPath: (slugWithoutVersion: string, opts?: NavigateToPathOpts | undefined) => void;
         registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
-        docsInfo: DocsInfo;
         activeTabIndex: number | null;
         closeMobileSidebar: () => void;
     }
@@ -33,10 +30,8 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
     selectedSlug,
     getFullSlug,
     resolveSubpackageById,
-    navigateToPath,
     registerScrolledToPathListener,
     docsDefinition,
-    docsInfo,
     activeTabIndex,
     closeMobileSidebar,
 }) => {
@@ -63,10 +58,8 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
                     isChildSelected={isChildSelected}
                     slug={slug}
                     getFullSlug={getFullSlug}
-                    navigateToPath={navigateToPath}
                     registerScrolledToPathListener={registerScrolledToPathListener}
                     docsDefinition={docsDefinition}
-                    docsInfo={docsInfo}
                     activeTabIndex={activeTabIndex}
                     closeMobileSidebar={closeMobileSidebar}
                     pushRoute={router.push}
@@ -79,13 +72,11 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
                     slug={slug}
                     shallow={true}
                     selectedSlug={selectedSlug}
-                    navigateToPath={navigateToPath}
                     registerScrolledToPathListener={registerScrolledToPathListener}
                     getFullSlug={getFullSlug}
                     closeMobileSidebar={closeMobileSidebar}
                     resolveSubpackageById={resolveSubpackageById}
                     docsDefinition={docsDefinition}
-                    docsInfo={docsInfo}
                     activeTabIndex={activeTabIndex}
                 />
             )}

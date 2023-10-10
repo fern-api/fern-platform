@@ -2,7 +2,7 @@ import { NonIdealState } from "@blueprintjs/core";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { assertNeverNoThrow } from "@fern-ui/core-utils";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
-import { useDocsContext } from "../docs-context/useDocsContext";
+import { useNavigationContext } from "../navigation-context";
 import { Redirect } from "./Redirect";
 
 export declare namespace RedirectToFirstNavigationItem {
@@ -13,7 +13,7 @@ export declare namespace RedirectToFirstNavigationItem {
 }
 
 export const RedirectToFirstNavigationItem: React.FC<RedirectToFirstNavigationItem.Props> = ({ items, slug }) => {
-    const { getFullSlug } = useDocsContext();
+    const { getFullSlug } = useNavigationContext();
     const firstItem = items[0];
     if (firstItem != null) {
         switch (firstItem.type) {
