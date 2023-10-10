@@ -46,7 +46,12 @@ export const App: React.FC<App.Props> = ({ docs, resolvedNavigatable, nextNaviga
                     nextNavigatable={nextNavigatable}
                     previousNavigatable={previousNavigatable}
                 >
-                    <NavigationContextProvider docsDefinition={docs.definition}>
+                    <NavigationContextProvider
+                        docsDefinition={docs.definition}
+                        resolvedNavigatable={resolvedNavigatable}
+                        nextNavigatable={nextNavigatable}
+                        previousNavigatable={previousNavigatable}
+                    >
                         <Docs />
                     </NavigationContextProvider>
                 </DocsContextProvider>

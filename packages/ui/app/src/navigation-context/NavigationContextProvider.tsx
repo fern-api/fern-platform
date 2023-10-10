@@ -1,23 +1,52 @@
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { PathResolver } from "@fern-ui/app-utils";
-import { useBooleanState } from "@fern-ui/react-commons";
+import { getFirstNavigatableItemSlugInDefinition, PathResolver, type NavigatableDocsNode } from "@fern-ui/app-utils";
+import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
 import { useRouter } from "next/router";
-import { PropsWithChildren, useCallback, useEffect, useMemo, useRef } from "react";
+import { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getRouteNode } from "../util/anchor";
-import { NavigationContext } from "./NavigationContext";
+import { NavigationContext, type NavigateToPathOpts } from "./NavigationContext";
+import { useSlugListeners } from "./useSlugListeners";
 
 export declare namespace NavigationContextProvider {
     export type Props = PropsWithChildren<{
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
+        resolvedNavigatable: NavigatableDocsNode;
+        nextNavigatable: NavigatableDocsNode | undefined;
+        previousNavigatable: NavigatableDocsNode | undefined;
     }>;
 }
 
-export const NavigationContextProvider: React.FC<NavigationContextProvider.Props> = ({ docsDefinition, children }) => {
+export const NavigationContextProvider: React.FC<NavigationContextProvider.Props> = ({
+    docsDefinition,
+    resolvedNavigatable,
+    children,
+}) => {
     const router = useRouter();
     const userIsScrolling = useRef(false);
     const justNavigatedTo = useRef<string | undefined>(router.asPath);
     const { value: hasInitialized, setTrue: markAsInitialized } = useBooleanState(false);
+    const [activeDocsNode, setActiveDocsNode] = useState(resolvedNavigatable);
+    const resolver = useMemo(() => new PathResolver({ docsDefinition }), [docsDefinition]);
+
+    // TODO: Confirm
+    const selectedSlug = activeDocsNode.leadingSlug;
+
+    const getFullSlug = useCallback((_: string) => {
+        // TODO: Implement
+        return "abc";
+    }, []);
+
+    const navigateToPath = useEventCallback((slug: string, opts?: NavigateToPathOpts) => {
+        justNavigated.current = true;
+        // navigateToPathListeners.invokeListeners(slug);
+        const timeout = setTimeout(() => {
+            justNavigated.current = false;
+        }, 500);
+        return () => {
+            clearTimeout(timeout);
+        };
+    });
 
     const navigateToRoute = useRef((route: string, smoothScroll: boolean) => {
         if (!userIsScrolling.current) {
@@ -26,8 +55,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             justNavigatedTo.current = route;
         }
     });
-
-    const resolver = useMemo(() => new PathResolver({ docsDefinition }), [docsDefinition]);
 
     // on mount, scroll directly to routed element
     useEffect(() => {
@@ -97,12 +124,40 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         };
     }, []);
 
+    const justNavigated = useRef(false);
+
+    const navigateToPathListeners = useSlugListeners("navigateToPath", { selectedSlug });
+    const scrollToPathListeners = useSlugListeners("scrollToPath", { selectedSlug });
+
+    const onScrollToPath = useEventCallback((slugWithoutVersion: string) => {
+        const slug = getFullSlug(slugWithoutVersion);
+        if (justNavigated.current || slug === selectedSlug) {
+            return;
+        }
+        void router.replace(`/${slug}`, undefined, { shallow: true, scroll: false });
+        scrollToPathListeners.invokeListeners(slug);
+    });
+
+    useEffect(() => {
+        router.beforePopState(({ as }) => {
+            const slugCandidate = as.substring(1, as.length);
+            const slug = slugCandidate === "" ? getFirstNavigatableItemSlugInDefinition(docsDefinition) : slugCandidate;
+            if (slug != null) {
+                navigateToPath(slug, { omitTabSlug: true, omitVersionSlug: true });
+            }
+            return true;
+        });
+    }, [router, navigateToPath, docsDefinition]);
+
     return (
         <NavigationContext.Provider
             value={{
                 hasInitialized,
                 justNavigated: justNavigatedTo.current != null,
+                navigateToPath,
+                getFullSlug,
                 userIsScrolling: () => userIsScrolling.current,
+                onScrollToPath,
                 observeDocContent,
                 resolver,
             }}
