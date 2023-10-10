@@ -1,16 +1,24 @@
 "use client";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { type Theme } from "@fern-ui/theme";
 import { memo } from "react";
+import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";
+import type { CodeExampleClient } from "../examples/code-example";
 import { CurlExample } from "../examples/curl-example/CurlExample";
 import { CurlLine } from "../examples/curl-example/curlUtils";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { JsonExampleVirtualized } from "../examples/json-example/JsonExample";
 import { JsonLine } from "../examples/json-example/jsonLineUtils";
 import { TitledExample } from "../examples/TitledExample";
+import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
 
 export declare namespace EndpointContentCodeSnippets {
     export interface Props {
+        theme?: Theme;
         example: FernRegistryApiRead.ExampleEndpointCall;
+        availableExampleClients: CodeExampleClient[];
+        selectedExampleClient: CodeExampleClient;
+        onClickExampleClient: (client: CodeExampleClient) => void;
         requestCurlLines: CurlLine[];
         responseJsonLines: JsonLine[];
         hoveredRequestPropertyPath: JsonPropertyPath | undefined;
@@ -23,7 +31,11 @@ export declare namespace EndpointContentCodeSnippets {
 const TITLED_EXAMPLE_PADDING = 43;
 
 const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippets.Props> = ({
+    theme,
     example,
+    availableExampleClients,
+    selectedExampleClient,
+    onClickExampleClient,
     requestCurlLines,
     responseJsonLines,
     hoveredRequestPropertyPath,
@@ -44,12 +56,37 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     // TODO
                     return "";
                 }}
+                actions={
+                    availableExampleClients.length > 1 ? (
+                        <CodeExampleClientDropdown
+                            clients={availableExampleClients}
+                            onClickClient={(clientId) => {
+                                const client = availableExampleClients.find((c) => c.id === clientId);
+                                if (client != null) {
+                                    onClickExampleClient(client);
+                                }
+                            }}
+                            selectedClient={selectedExampleClient}
+                        />
+                    ) : undefined
+                }
             >
-                <CurlExample
-                    curlLines={requestCurlLines}
-                    selectedProperty={hoveredRequestPropertyPath}
-                    height={requestHeight - TITLED_EXAMPLE_PADDING}
-                />
+                {selectedExampleClient.id === "curl" ? (
+                    <CurlExample
+                        curlLines={requestCurlLines}
+                        selectedProperty={hoveredRequestPropertyPath}
+                        height={requestHeight - TITLED_EXAMPLE_PADDING}
+                    />
+                ) : (
+                    <CodeBlockSkeleton
+                        className="rounded-b-x w-0 min-w-full overflow-y-auto pt-1.5"
+                        content={selectedExampleClient.example}
+                        language={selectedExampleClient.language}
+                        theme={theme}
+                        usePlainStyles
+                        style={{ height: requestHeight - TITLED_EXAMPLE_PADDING }}
+                    />
+                )}
             </TitledExample>
             {example.responseBody != null && (
                 <TitledExample

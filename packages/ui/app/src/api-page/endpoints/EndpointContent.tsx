@@ -4,7 +4,9 @@ import React, { useCallback, useLayoutEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { HEADER_HEIGHT } from "../../constants";
+import { useDocsContext } from "../../docs-context/useDocsContext";
 import { useLayoutBreakpoint } from "../../docs-context/useLayoutBreakpoint";
+import { type CodeExampleClient } from "../examples/code-example";
 import { getCurlLines } from "../examples/curl-example/curlUtils";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { flattenJsonToLines } from "../examples/json-example/jsonLineUtils";
@@ -30,6 +32,34 @@ const LINE_HEIGHT = 21.5;
 const MOBILE_MAX_LINES = 20;
 const CONTENT_PADDING = 40 + TITLED_EXAMPLE_PADDING;
 
+const DEFAULT_CLIENT: CodeExampleClient = {
+    id: "curl",
+    name: "Curl",
+};
+
+function getAvailableExampleClients(example: FernRegistryApiRead.ExampleEndpointCall): CodeExampleClient[] {
+    const clients: CodeExampleClient[] = [DEFAULT_CLIENT];
+    const { pythonSdk } = example.codeExamples;
+    if (pythonSdk != null) {
+        clients.push(
+            {
+                id: "python",
+                name: "Python",
+                language: "python",
+                example: pythonSdk.sync_client,
+            },
+            {
+                id: "python-async",
+                name: "Python (Async)",
+                language: "python",
+                example: pythonSdk.async_client,
+            }
+        );
+    }
+
+    return clients;
+}
+
 export const EndpointContent: React.FC<EndpointContent.Props> = ({
     endpoint,
     package: package_,
@@ -44,6 +74,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         onChange: setIsInViewport,
         rootMargin: "100%",
     });
+    const { theme } = useDocsContext();
     const { apiSection, apiDefinition } = useApiDefinitionContext();
     const [hoveredRequestPropertyPath, setHoveredRequestPropertyPath] = useState<JsonPropertyPath | undefined>();
     const [hoveredResponsePropertyPath, setHoveredResponsePropertyPath] = useState<JsonPropertyPath | undefined>();
@@ -60,6 +91,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         [setHoveredResponsePropertyPath]
     );
 
+    const [selectedExampleClient, setSelectedExampleClient] = useState<CodeExampleClient>(DEFAULT_CLIENT);
     const [selectedErrorIndex, setSelectedErrorIndex] = useState<number | null>(null);
 
     const errors = useMemo(() => {
@@ -77,6 +109,11 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         return endpoint.examples.find((e) => e.responseStatusCode === selectedError.statusCode) ?? null;
     }, [endpoint.examples, selectedError]);
 
+    const availableExampleClients = useMemo(
+        () => (example != null ? getAvailableExampleClients(example) : []),
+        [example]
+    );
+
     const curlLines = useMemo(
         () =>
             example != null
@@ -84,6 +121,12 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                 : [],
         [apiDefinition, endpoint, example]
     );
+    const selectedExampleClientLineCount = useMemo(() => {
+        return selectedExampleClient.id === "curl"
+            ? curlLines.length
+            : selectedExampleClient.example.split("\n").length;
+    }, [curlLines.length, selectedExampleClient]);
+
     const jsonLines = useMemo(() => flattenJsonToLines(example?.responseBody), [example?.responseBody]);
 
     const calculateEndpointHeights = useCallback((): [number, number] => {
@@ -91,13 +134,13 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
             return [0, 0];
         }
         if (layoutBreakpoint !== "lg") {
-            const requestLines = Math.min(MOBILE_MAX_LINES + 0.5, curlLines.length);
+            const requestLines = Math.min(MOBILE_MAX_LINES + 0.5, selectedExampleClientLineCount);
             const responseLines = Math.min(MOBILE_MAX_LINES + 0.5, jsonLines.length);
             const requestContainerHeight = requestLines * LINE_HEIGHT + CONTENT_PADDING;
             const responseContainerHeight = responseLines * LINE_HEIGHT + CONTENT_PADDING;
             return [requestContainerHeight, responseContainerHeight];
         }
-        const maxRequestContainerHeight = curlLines.length * LINE_HEIGHT + CONTENT_PADDING;
+        const maxRequestContainerHeight = selectedExampleClientLineCount * LINE_HEIGHT + CONTENT_PADDING;
         const maxResponseContainerHeight = jsonLines.length * LINE_HEIGHT + CONTENT_PADDING;
         const containerHeight = window.innerHeight - HEADER_HEIGHT - PADDING_TOP - PADDING_BOTTOM;
         const halfContainerHeight = (containerHeight - GAP_6) / 2;
@@ -117,7 +160,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         } else {
             return [0, 0];
         }
-    }, [curlLines.length, example?.responseBody, jsonLines.length, layoutBreakpoint]);
+    }, [selectedExampleClientLineCount, example?.responseBody, jsonLines.length, layoutBreakpoint]);
 
     const [[requestHeight, responseHeight], setExampleHeights] = useState<[number, number]>([0, 0]);
 
@@ -187,7 +230,11 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                 >
                     {isInViewport && example != null && (
                         <EndpointContentCodeSnippets
+                            theme={theme}
                             example={example}
+                            availableExampleClients={availableExampleClients}
+                            selectedExampleClient={selectedExampleClient}
+                            onClickExampleClient={setSelectedExampleClient}
                             requestCurlLines={curlLines}
                             responseJsonLines={jsonLines}
                             hoveredRequestPropertyPath={hoveredRequestPropertyPath}
