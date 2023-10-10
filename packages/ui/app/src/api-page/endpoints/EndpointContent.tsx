@@ -121,6 +121,12 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                 : [],
         [apiDefinition, endpoint, example]
     );
+    const selectedExampleClientLineCount = useMemo(() => {
+        return selectedExampleClient.id === "curl"
+            ? curlLines.length
+            : selectedExampleClient.example.split("\n").length;
+    }, [curlLines.length, selectedExampleClient]);
+
     const jsonLines = useMemo(() => flattenJsonToLines(example?.responseBody), [example?.responseBody]);
 
     const calculateEndpointHeights = useCallback((): [number, number] => {
@@ -128,13 +134,13 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
             return [0, 0];
         }
         if (layoutBreakpoint !== "lg") {
-            const requestLines = Math.min(MOBILE_MAX_LINES + 0.5, curlLines.length);
+            const requestLines = Math.min(MOBILE_MAX_LINES + 0.5, selectedExampleClientLineCount);
             const responseLines = Math.min(MOBILE_MAX_LINES + 0.5, jsonLines.length);
             const requestContainerHeight = requestLines * LINE_HEIGHT + CONTENT_PADDING;
             const responseContainerHeight = responseLines * LINE_HEIGHT + CONTENT_PADDING;
             return [requestContainerHeight, responseContainerHeight];
         }
-        const maxRequestContainerHeight = curlLines.length * LINE_HEIGHT + CONTENT_PADDING;
+        const maxRequestContainerHeight = selectedExampleClientLineCount * LINE_HEIGHT + CONTENT_PADDING;
         const maxResponseContainerHeight = jsonLines.length * LINE_HEIGHT + CONTENT_PADDING;
         const containerHeight = window.innerHeight - HEADER_HEIGHT - PADDING_TOP - PADDING_BOTTOM;
         const halfContainerHeight = (containerHeight - GAP_6) / 2;
@@ -154,7 +160,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         } else {
             return [0, 0];
         }
-    }, [curlLines.length, example?.responseBody, jsonLines.length, layoutBreakpoint]);
+    }, [selectedExampleClientLineCount, example?.responseBody, jsonLines.length, layoutBreakpoint]);
 
     const [[requestHeight, responseHeight], setExampleHeights] = useState<[number, number]>([0, 0]);
 
