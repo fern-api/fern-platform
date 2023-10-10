@@ -47,6 +47,7 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
     onScrollToPath: noop,
     observeDocContent: noop,
     resolver: new PathResolver({ docsDefinition: emptyDefinition }),
+    registerScrolledToPathListener: () => noop,
 });
 
 export interface NavigationContextValue {
@@ -60,4 +61,5 @@ export interface NavigationContextValue {
     onScrollToPath: (slug: string) => void;
     observeDocContent: (element: HTMLDivElement) => void;
     resolver: PathResolver;
+    registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
 }

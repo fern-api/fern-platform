@@ -1,11 +1,11 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { useLayoutBreakpoint } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import React, { useCallback, useLayoutEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { HEADER_HEIGHT } from "../../constants";
 import { useDocsContext } from "../../docs-context/useDocsContext";
-import { useLayoutBreakpoint } from "../../docs-context/useLayoutBreakpoint";
 import { type CodeExampleClient } from "../examples/code-example";
 import { getCurlLines } from "../examples/curl-example/curlUtils";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";

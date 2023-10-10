@@ -7,7 +7,7 @@ export declare namespace HeaderLogoSection {}
 
 export const HeaderLogoSection: React.FC = () => {
     const { resolveFile, docsDefinition, theme } = useDocsContext();
-    const { definitionInfo } = useDocsSelectors();
+    const { definitionInfo, activeVersionContext } = useDocsSelectors();
     const { logo, logoV2, logoHeight, logoHref } = docsDefinition.config;
 
     if (theme == null) {
@@ -16,6 +16,10 @@ export const HeaderLogoSection: React.FC = () => {
 
     const logoForTheme = logoV2 != null ? logoV2[theme] : logo;
     const hasMultipleVersions = definitionInfo.type === "versioned";
+    const activeVersionName =
+        activeVersionContext.type === "versioned" ? activeVersionContext.version.info.id : undefined;
+    const activeVersionSlug =
+        activeVersionContext.type === "versioned" ? activeVersionContext.version.info.slug : undefined;
     const hasLogo = logoForTheme != null;
     const hasLogoHref = logoHref != null;
 
@@ -45,10 +49,10 @@ export const HeaderLogoSection: React.FC = () => {
             {hasMultipleVersions && (
                 <div>
                     <VersionDropdown
-                        versions={docsInfo.versions}
-                        selectedVersionName={docsInfo.activeVersionName}
-                        selectedVersionSlug={docsInfo.activeVersionSlug}
-                        onClickVersion={(versionSlug) => {
+                        versions={definitionInfo.versions}
+                        selectedVersionName={activeVersionName}
+                        selectedVersionSlug={activeVersionSlug}
+                        onClickVersion={() => {
                             // TODO: Reimplement with new resolver
                         }}
                     />

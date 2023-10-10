@@ -5,6 +5,7 @@ import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavi
 import { HEADER_HEIGHT } from "../constants";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { MdxContent } from "../mdx/MdxContent";
+import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { TableOfContents } from "./TableOfContents";
 
 export declare namespace CustomDocsPage {
@@ -14,11 +15,10 @@ export declare namespace CustomDocsPage {
 }
 
 export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
-    const { resolvePage, docsInfo } = useDocsContext();
+    const { resolvePage } = useDocsContext();
+    const { activeNavigationConfigContext } = useDocsSelectors();
 
     const page = useMemo(() => resolvePage(path.page.id), [path.page.id, resolvePage]);
-
-    const { activeNavigationConfig } = docsInfo;
 
     const findTitle = useCallback(
         (navigationItems: FernRegistryDocsRead.NavigationItem[]) => {
@@ -37,10 +37,10 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
     );
 
     const sectionTitle = useMemo(() => {
-        if (isUnversionedUntabbedNavigationConfig(activeNavigationConfig)) {
-            return findTitle(activeNavigationConfig.items);
+        if (isUnversionedUntabbedNavigationConfig(activeNavigationConfigContext.config)) {
+            return findTitle(activeNavigationConfigContext.config.items);
         } else {
-            for (const tab of activeNavigationConfig.tabs) {
+            for (const tab of activeNavigationConfigContext.config.tabs) {
                 const title = findTitle(tab.items);
                 if (title != null) {
                     return title;
@@ -48,7 +48,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
             }
             return undefined;
         }
-    }, [activeNavigationConfig, findTitle]);
+    }, [activeNavigationConfigContext, findTitle]);
 
     const content = useMemo(() => {
         return <MdxContent mdx={path.serializedMdxContent} />;

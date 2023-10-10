@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import Link from "next/link";
 import { FontAwesomeIcon } from "../../commons/FontAwesomeIcon";
-import { useDocsContext } from "../../docs-context/useDocsContext";
 
 export declare namespace Card {
     export interface Props {
@@ -14,8 +13,6 @@ export declare namespace Card {
 }
 
 export const Card: React.FC<Card.Props> = ({ title, icon, iconPosition = "top", children, href }) => {
-    const { navigateToPath } = useDocsContext();
-
     const isInternalUrl = typeof href === "string" && href.startsWith("/");
 
     const className = classNames(
@@ -41,18 +38,14 @@ export const Card: React.FC<Card.Props> = ({ title, icon, iconPosition = "top", 
     );
 
     if (isInternalUrl) {
-        const slug = href.slice(1, href.length);
+        // const slug = href.slice(1, href.length);
         return (
             <Link
                 className={className}
                 href={href}
-                onClick={() =>
-                    navigateToPath(slug, {
-                        // We need to omit these because we expect the user to provide them in the href
-                        omitVersionSlug: true,
-                        omitTabSlug: true,
-                    })
-                }
+                onClick={() => {
+                    // TODO: Implement
+                }}
             >
                 {content}
             </Link>

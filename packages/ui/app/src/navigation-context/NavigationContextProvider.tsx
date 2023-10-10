@@ -24,18 +24,18 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const userIsScrolling = useRef(false);
     const justNavigatedTo = useRef<string | undefined>(router.asPath);
     const { value: hasInitialized, setTrue: markAsInitialized } = useBooleanState(false);
-    const [activeDocsNode, setActiveDocsNode] = useState(resolvedNavigatable);
+    const [activeNavigatable] = useState(resolvedNavigatable);
     const resolver = useMemo(() => new PathResolver({ docsDefinition }), [docsDefinition]);
 
     // TODO: Confirm
-    const selectedSlug = activeDocsNode.leadingSlug;
+    const selectedSlug = activeNavigatable.leadingSlug;
 
     const getFullSlug = useCallback((_: string) => {
         // TODO: Implement
         return "abc";
     }, []);
 
-    const navigateToPath = useEventCallback((slug: string, opts?: NavigateToPathOpts) => {
+    const navigateToPath = useEventCallback((_1: string, _2?: NavigateToPathOpts) => {
         justNavigated.current = true;
         // navigateToPathListeners.invokeListeners(slug);
         const timeout = setTimeout(() => {
@@ -124,7 +124,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     const justNavigated = useRef(false);
 
-    const navigateToPathListeners = useSlugListeners("navigateToPath", { selectedSlug });
+    // const navigateToPathListeners = useSlugListeners("navigateToPath", { selectedSlug });
     const scrollToPathListeners = useSlugListeners("scrollToPath", { selectedSlug });
 
     const onScrollToPath = useEventCallback((slugWithoutVersion: string) => {
@@ -159,6 +159,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 onScrollToPath,
                 observeDocContent,
                 resolver,
+                registerScrolledToPathListener: scrollToPathListeners.registerListener,
             }}
         >
             {children}

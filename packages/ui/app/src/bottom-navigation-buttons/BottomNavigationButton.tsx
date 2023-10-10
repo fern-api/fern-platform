@@ -4,7 +4,7 @@ import { type ResolvedUrlPath } from "@fern-ui/app-utils";
 import { assertNever } from "@fern-ui/core-utils";
 import Link from "next/link";
 import { useCallback, useMemo } from "react";
-import { useDocsContext } from "../docs-context/useDocsContext";
+import { useNavigationContext } from "../navigation-context";
 
 export declare namespace BottomNavigationButton {
     export interface Props {
@@ -14,7 +14,7 @@ export declare namespace BottomNavigationButton {
 }
 
 export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({ path, direction }) => {
-    const { navigateToPath, getFullSlug } = useDocsContext();
+    const { getFullSlug } = useNavigationContext();
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
     const visitDirection = <T extends unknown>({ previous, next }: { previous: T; next: T }): T => {
@@ -35,8 +35,8 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
     const iconElement = <Icon icon={iconName} />;
 
     const onClick = useCallback(() => {
-        navigateToPath(path.slug);
-    }, [navigateToPath, path.slug]);
+        // TODO: Implement
+    }, []);
 
     const text = useMemo(() => {
         switch (path.type) {

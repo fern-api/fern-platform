@@ -18,8 +18,8 @@ export declare namespace Sidebar {
 }
 
 export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expandAllSections = false }) => {
-    const { registerScrolledToPathListener, docsDefinition, resolveApi } = useDocsContext();
-    const { getFullSlug, activeNavigatable } = useNavigationContext();
+    const { docsDefinition, resolveApi } = useDocsContext();
+    const { getFullSlug, activeNavigatable, registerScrolledToPathListener } = useNavigationContext();
     const { activeNavigationConfigContext, selectedSlug } = useDocsSelectors();
     const { closeMobileSidebar } = useMobileSidebarContext();
 
