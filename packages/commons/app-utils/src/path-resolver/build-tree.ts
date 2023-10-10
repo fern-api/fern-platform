@@ -3,16 +3,10 @@ import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/reso
 import { isUnversionedTabbedNavigationConfig, isVersionedNavigationConfig } from "../fern";
 import { joinUrlSlugs } from "../slug";
 import { NodeFactory } from "./node-factory";
-import type { ChildDocsNode, DocsNode, DocsNodeTab, DocsNodeVersion, ItemSlug, ParentDocsNode } from "./types";
-
-interface BuildContext {
-    definition: FernRegistryDocsRead.DocsDefinition;
-    version: DocsNodeVersion | null;
-    tab: DocsNodeTab | null;
-}
+import type { ChildDocsNode, DocsNode, ItemSlug, NodeDocsContext, ParentDocsNode } from "./types";
 
 export function buildDefinitionTree(definition: FernRegistryDocsRead.DocsDefinition): DocsNode.Root {
-    const root = NodeFactory.createRoot();
+    const root = NodeFactory.createRoot(definition);
 
     const navigationConfig = definition.config.navigation;
 
@@ -20,7 +14,7 @@ export function buildDefinitionTree(definition: FernRegistryDocsRead.DocsDefinit
         navigationConfig.versions.forEach((version, versionIndex) => {
             const versionNode = NodeFactory.createVersion({
                 slug: version.urlSlug,
-                version: {
+                info: {
                     id: version.version,
                     slug: version.urlSlug,
                     index: versionIndex,
@@ -29,6 +23,7 @@ export function buildDefinitionTree(definition: FernRegistryDocsRead.DocsDefinit
             if (versionIndex === 0) {
                 root.info = {
                     type: "versioned",
+                    definition,
                     defaultVersionNode: versionNode,
                 };
             }
@@ -37,19 +32,10 @@ export function buildDefinitionTree(definition: FernRegistryDocsRead.DocsDefinit
                 const tabNodes = version.config.tabs.map((tab, tabIndex) => {
                     return buildNodeForNavigationTab({
                         tab,
+                        index: tabIndex,
                         parentSlugs: [],
-                        context: {
-                            definition,
-                            version: {
-                                id: version.version,
-                                slug: version.urlSlug,
-                                index: versionIndex,
-                            },
-                            tab: {
-                                slug: tab.urlSlug,
-                                index: tabIndex,
-                            },
-                        },
+                        root,
+                        version: versionNode,
                     });
                 });
                 addNodeChildren(versionNode, tabNodes);
@@ -58,12 +44,9 @@ export function buildDefinitionTree(definition: FernRegistryDocsRead.DocsDefinit
                     items: version.config.items,
                     parentSlugs: [],
                     context: {
-                        definition,
-                        version: {
-                            id: version.version,
-                            slug: version.urlSlug,
-                            index: versionIndex,
-                        },
+                        type: "versioned-untabbed",
+                        root,
+                        version: versionNode,
                         tab: null,
                     },
                 });
@@ -78,15 +61,9 @@ export function buildDefinitionTree(definition: FernRegistryDocsRead.DocsDefinit
         const tabNodes = navigationConfig.tabs.map((tab, tabIndex) => {
             return buildNodeForNavigationTab({
                 tab,
+                index: tabIndex,
                 parentSlugs: [],
-                context: {
-                    definition,
-                    version: null,
-                    tab: {
-                        slug: tab.urlSlug,
-                        index: tabIndex,
-                    },
-                },
+                root,
             });
         });
         addNodeChildren(root, tabNodes);
@@ -95,7 +72,8 @@ export function buildDefinitionTree(definition: FernRegistryDocsRead.DocsDefinit
             items: navigationConfig.items,
             parentSlugs: [],
             context: {
-                definition,
+                type: "unversioned-untabbed",
+                root,
                 version: null,
                 tab: null,
             },
@@ -108,22 +86,39 @@ export function buildDefinitionTree(definition: FernRegistryDocsRead.DocsDefinit
 
 function buildNodeForNavigationTab({
     tab,
+    index,
     parentSlugs,
-    context,
+    root,
+    version,
 }: {
     tab: FernRegistryDocsRead.NavigationTab;
+    index: number;
     parentSlugs: string[];
-    context: BuildContext;
+    root: DocsNode.Root;
+    version?: DocsNode.Version;
 }): ChildDocsNode {
-    const { version } = context;
     const tabNode = NodeFactory.createTab({
         slug: tab.urlSlug,
         version,
+        index,
     });
     const children = buildNodesForNavigationItems({
         items: tab.items,
         parentSlugs: [...parentSlugs, tab.urlSlug],
-        context,
+        context:
+            version != null
+                ? {
+                      type: "versioned-tabbed",
+                      root,
+                      version,
+                      tab: tabNode,
+                  }
+                : {
+                      type: "unversioned-untabbed",
+                      root,
+                      version: null,
+                      tab: null,
+                  },
     });
     addNodeChildren(tabNode, children);
     return tabNode;
@@ -136,7 +131,7 @@ function buildNodesForNavigationItems({
 }: {
     items: FernRegistryDocsRead.NavigationItem[];
     parentSlugs: string[];
-    context: BuildContext;
+    context: NodeDocsContext;
 }): ChildDocsNode[] {
     return items.map((childItem) =>
         buildNodeForNavigationItem({
@@ -154,18 +149,16 @@ function buildNodeForNavigationItem({
 }: {
     item: FernRegistryDocsRead.NavigationItem;
     parentSlugs: string[];
-    context: BuildContext;
+    context: NodeDocsContext;
 }): DocsNode {
-    const { version, tab } = context;
     switch (item.type) {
         case "page": {
             const page = item;
             return NodeFactory.createPage({
                 slug: page.urlSlug,
                 leadingSlug: joinUrlSlugs(...parentSlugs, page.urlSlug),
-                version,
-                tab,
                 page,
+                context,
             });
         }
         case "section": {
@@ -194,14 +187,12 @@ function buildNodeForDocsSection({
 }: {
     section: FernRegistryDocsRead.DocsSection;
     parentSlugs: string[];
-    context: BuildContext;
+    context: NodeDocsContext;
 }): DocsNode.DocsSection {
-    const { version, tab } = context;
     const sectionNode = NodeFactory.createDocsSection({
         section,
         slug: section.urlSlug,
-        version,
-        tab,
+        context,
     });
     const children = buildNodesForNavigationItems({
         items: section.items,
@@ -219,14 +210,13 @@ function buildNodeForApiSection({
 }: {
     section: FernRegistryDocsRead.ApiSection;
     parentSlugs: string[];
-    context: BuildContext;
+    context: NodeDocsContext;
 }): DocsNode {
-    const { definition, version, tab } = context;
+    const { definition } = context.root.info;
     const sectionNode = NodeFactory.createApiSection({
         section,
         slug: section.urlSlug,
-        version,
-        tab,
+        context,
     });
     const apiDefinitionId = section.api;
     const apiDefinition = definition.apis[apiDefinitionId];
@@ -273,15 +263,13 @@ function buildNodeForEndpoint({
 }: {
     endpoint: FernRegistryApiRead.EndpointDefinition;
     parentSlugs: ItemSlug[];
-    context: BuildContext;
+    context: NodeDocsContext;
 }): DocsNode.Endpoint {
-    const { version, tab } = context;
     const endpointNode = NodeFactory.createEndpoint({
         endpoint,
         slug: endpoint.urlSlug,
         leadingSlug: joinUrlSlugs(...parentSlugs, endpoint.urlSlug),
-        version,
-        tab,
+        context,
     });
     return endpointNode;
 }
@@ -293,15 +281,13 @@ function buildNodeForWebhook({
 }: {
     webhook: FernRegistryApiRead.WebhookDefinition;
     parentSlugs: ItemSlug[];
-    context: BuildContext;
+    context: NodeDocsContext;
 }): DocsNode.Webhook {
-    const { version, tab } = context;
     const webhookNode = NodeFactory.createWebhook({
         webhook,
         slug: webhook.urlSlug,
         leadingSlug: joinUrlSlugs(...parentSlugs, webhook.urlSlug),
-        version,
-        tab,
+        context,
     });
     return webhookNode;
 }
@@ -317,15 +303,13 @@ function buildNodeForSubpackage({
     section: FernRegistryDocsRead.ApiSection;
     apiDefinition: FernRegistryApiRead.ApiDefinition;
     parentSlugs: ItemSlug[];
-    context: BuildContext;
+    context: NodeDocsContext;
 }): DocsNode.ApiSubpackage {
-    const { version, tab } = context;
     const subpackageNode = NodeFactory.createApiSubpackage({
         section,
         subpackage,
         slug: subpackage.urlSlug,
-        version,
-        tab,
+        context,
     });
     subpackage.endpoints.forEach((endpoint) => {
         const endpointNode = buildNodeForEndpoint({

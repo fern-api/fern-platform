@@ -39,15 +39,43 @@ export type NavigatableDocsNode = DocsNode.Endpoint | DocsNode.Webhook | DocsNod
 export type ChildDocsNode = Exclude<DocsNode, DocsNode.Root>;
 export type ParentDocsNode = Exclude<DocsNode, NavigatableDocsNode>;
 
-export interface DocsNodeVersion {
-    id: string;
-    slug: ItemSlug;
-    index: number;
+export interface NodeDocsContextUnversionedUntabbed {
+    type: "unversioned-untabbed";
+    root: DocsNode.Root;
+    version: null;
+    tab: null;
 }
 
-export interface DocsNodeTab {
+export interface NodeDocsContextUnversionedTabbed {
+    type: "unversioned-tabbed";
+    root: DocsNode.Root;
+    version: null;
+    tab: DocsNode.Tab;
+}
+
+export interface NodeDocsContextVersionedUntabbed {
+    type: "versioned-untabbed";
+    root: DocsNode.Root;
+    version: DocsNode.Version;
+    tab: null;
+}
+
+export interface NodeDocsContextVersionedTabbed {
+    type: "versioned-tabbed";
+    root: DocsNode.Root;
+    version: DocsNode.Version;
+    tab: DocsNode.Tab;
+}
+
+export type NodeDocsContext =
+    | NodeDocsContextUnversionedUntabbed
+    | NodeDocsContextUnversionedTabbed
+    | NodeDocsContextVersionedUntabbed
+    | NodeDocsContextVersionedTabbed;
+
+export interface VersionInfo {
+    id: string;
     slug: ItemSlug;
-    /** The 0-based index of the tab. */
     index: number;
 }
 
@@ -56,10 +84,12 @@ export type DefinitionInfo = DefinitionInfo.Unversioned | DefinitionInfo.Version
 export declare namespace DefinitionInfo {
     export interface Unversioned {
         type: "unversioned";
+        definition: FernRegistryDocsRead.DocsDefinition;
     }
 
     export interface Versioned {
         type: "versioned";
+        definition: FernRegistryDocsRead.DocsDefinition;
         defaultVersionNode: DocsNode.Version;
     }
 }
@@ -74,64 +104,59 @@ export declare namespace DocsNode {
 
     export interface Version extends BaseNode {
         type: "version";
-        version: DocsNodeVersion;
+        info: VersionInfo;
         children: Record<FullSlug, ChildDocsNode>;
         childrenOrdering: ItemSlug[];
     }
 
     export interface Tab extends BaseNode {
         type: "tab";
-        version: DocsNodeVersion | null;
+        version: Version | null;
+        index: number;
         children: Record<FullSlug, ChildDocsNode>;
         childrenOrdering: ItemSlug[];
     }
 
     export interface DocsSection extends BaseNode {
         type: "docs-section";
-        version: DocsNodeVersion | null;
-        tab: DocsNodeTab | null;
         section: FernRegistryDocsRead.DocsSection;
         children: Record<FullSlug, ChildDocsNode>;
         childrenOrdering: ItemSlug[];
+        context: NodeDocsContext;
     }
 
     export interface ApiSection extends BaseNode {
         type: "api-section";
-        version: DocsNodeVersion | null;
-        tab: DocsNodeTab | null;
         section: FernRegistryDocsRead.ApiSection;
         children: Record<FullSlug, ChildDocsNode>;
         childrenOrdering: ItemSlug[];
+        context: NodeDocsContext;
     }
 
     export interface ApiSubpackage extends BaseNode {
         type: "api-subpackage";
-        version: DocsNodeVersion | null;
-        tab: DocsNodeTab | null;
         section: FernRegistryDocsRead.ApiSection;
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
         children: Record<FullSlug, ChildDocsNode>;
         childrenOrdering: ItemSlug[];
+        context: NodeDocsContext;
     }
 
     export interface Endpoint extends BaseNode, NavigatableNode {
         type: "endpoint";
-        version: DocsNodeVersion | null;
-        tab: DocsNodeTab | null;
         endpoint: FernRegistryApiRead.EndpointDefinition;
+        context: NodeDocsContext;
     }
 
     export interface Webhook extends BaseNode, NavigatableNode {
         type: "webhook";
-        version: DocsNodeVersion | null;
-        tab: DocsNodeTab | null;
         webhook: FernRegistryApiRead.WebhookDefinition;
+        context: NodeDocsContext;
     }
 
     export interface Page extends BaseNode, NavigatableNode {
         type: "page";
-        version: DocsNodeVersion | null;
-        tab: DocsNodeTab | null;
         page: FernRegistryDocsRead.PageMetadata;
+        context: NodeDocsContext;
     }
 }
