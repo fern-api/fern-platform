@@ -67,7 +67,7 @@ export class PathResolver {
         return Array.from(this.#map.keys());
     }
 
-    public getCollidingNodes(): Map<string, DocsNode[]> {
+    public getCollisions(): Map<string, DocsNode[]> {
         const nodesBySlug = new Map<string, DocsNode[]>();
         this.#map.forEach((val, key) => {
             if (Array.isArray(val)) {

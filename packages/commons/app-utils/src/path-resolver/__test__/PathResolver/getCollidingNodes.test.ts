@@ -14,42 +14,42 @@ describe("getAllSlugs", () => {
             const resolver = new PathResolver({
                 docsDefinition: DEFINITION_UNVERSIONED_UNTABBED,
             });
-            expect(resolver.getCollidingNodes().size).toEqual(0);
+            expect(resolver.getCollisions().size).toEqual(0);
         });
 
         it("with unversioned and tabbed docs", () => {
             const resolver = new PathResolver({
                 docsDefinition: DEFINITION_UNVERSIONED_TABBED,
             });
-            expect(resolver.getCollidingNodes().size).toEqual(0);
+            expect(resolver.getCollisions().size).toEqual(0);
         });
 
         it("with versioned and untabbed docs", () => {
             const resolver = new PathResolver({
                 docsDefinition: DEFINITION_VERSIONED_UNTABBED,
             });
-            expect(resolver.getCollidingNodes().size).toEqual(0);
+            expect(resolver.getCollisions().size).toEqual(0);
         });
 
         it("with versioned and tabbed docs", () => {
             const resolver = new PathResolver({
                 docsDefinition: DEFINITION_VERSIONED_TABBED,
             });
-            expect(resolver.getCollidingNodes().size).toEqual(0);
+            expect(resolver.getCollisions().size).toEqual(0);
         });
 
         it("with api definition", () => {
             const resolver = new PathResolver({
                 docsDefinition: DEFINITION_WITH_API,
             });
-            expect(resolver.getCollidingNodes().size).toEqual(0);
+            expect(resolver.getCollisions().size).toEqual(0);
         });
 
         it("with skipped slugs", () => {
             const resolver = new PathResolver({
                 docsDefinition: DEFINITION_UNVERSIONED_WITH_SKIPPED_SLUGS,
             });
-            expect(resolver.getCollidingNodes().size).toEqual(0);
+            expect(resolver.getCollisions().size).toEqual(0);
         });
     });
 
@@ -64,7 +64,7 @@ describe("getAllSlugs", () => {
                 ["v1/introduction", ["docs-section", "tab"]],
                 ["v1/introduction/getting-started", ["page", "page"]],
             ];
-            const actualCollisions: SlugNodeListTuple[] = Array.from(resolver.getCollidingNodes().entries()).map(
+            const actualCollisions: SlugNodeListTuple[] = Array.from(resolver.getCollisions().entries()).map(
                 ([slug, nodes]) => [slug, nodes.map((node) => node.type).sort()]
             );
             expect(actualCollisions).toEqual(expectedCollisions);
