@@ -1,7 +1,8 @@
 "use client";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import { memo } from "react";
 import { type Theme } from "@fern-ui/theme";
+import { memo } from "react";
+import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";
 import type { CodeExampleClient } from "../examples/code-example";
 import { CurlExample } from "../examples/curl-example/CurlExample";
 import { CurlLine } from "../examples/curl-example/curlUtils";
@@ -9,7 +10,6 @@ import { JsonPropertyPath } from "../examples/json-example/contexts/JsonProperty
 import { JsonExampleVirtualized } from "../examples/json-example/JsonExample";
 import { JsonLine } from "../examples/json-example/jsonLineUtils";
 import { TitledExample } from "../examples/TitledExample";
-import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";
 import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
 
 export declare namespace EndpointContentCodeSnippets {
