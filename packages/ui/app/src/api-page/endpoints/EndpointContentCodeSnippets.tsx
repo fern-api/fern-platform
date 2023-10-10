@@ -1,7 +1,7 @@
 "use client";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { memo } from "react";
-import { CurlExample } from "../examples/curl-example/CurlExample";
+import ApiPlayground from "../../api-playground/ApiPlayground";
 import { CurlLine } from "../examples/curl-example/curlUtils";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { JsonExampleVirtualized } from "../examples/json-example/JsonExample";
@@ -33,24 +33,12 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
 }) => {
     return (
         <div className="grid min-h-0 flex-1 grid-rows-[repeat(auto-fit,_minmax(0,_min-content))] gap-6">
-            <TitledExample
-                title="Request"
-                type="primary"
-                onClick={(e) => {
-                    e.stopPropagation();
-                }}
-                disablePadding={true}
-                copyToClipboardText={() => {
-                    // TODO
-                    return "";
-                }}
-            >
-                <CurlExample
-                    curlLines={requestCurlLines}
-                    selectedProperty={hoveredRequestPropertyPath}
-                    height={requestHeight - TITLED_EXAMPLE_PADDING}
-                />
-            </TitledExample>
+            <ApiPlayground
+                curlLines={requestCurlLines}
+                hoveredPath={hoveredRequestPropertyPath}
+                height={requestHeight}
+            />
+
             {example.responseBody != null && (
                 <TitledExample
                     title={example.responseStatusCode >= 400 ? "Error Response" : "Response"}
