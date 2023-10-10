@@ -12,8 +12,10 @@ module.exports = {
     ],
     theme: {
         extend: {
+            fontFamily: { apiCode: "Berkeley Mono" },
             fontSize: {
                 base: ["0.9575rem", { lineHeight: "1.3rem" }],
+                xxs: 0.625,
             },
             listStyleImage: {
                 "dash-dark": 'url("/dash-dark.svg")',

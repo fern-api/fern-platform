@@ -186,7 +186,14 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                     style={{ height: `${exampleHeight}px` }}
                 >
                     {isInViewport && example != null && (
-                        <ApiPlayground req={curlLines} res={jsonLines} example={example} />
+                        <ApiPlayground
+                            endpoint={endpoint}
+                            req={curlLines}
+                            res={jsonLines}
+                            example={example}
+                            selectedReqProp={hoveredRequestPropertyPath}
+                            selectedResProp={hoveredResponsePropertyPath}
+                        />
                     )}
                 </div>
             </div>

@@ -1,7 +1,6 @@
 "use client";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { memo } from "react";
-import ApiPlayground from "../../api-playground/ApiPlayground";
 import { CurlExample } from "../examples/curl-example/CurlExample";
 import { CurlLine } from "../examples/curl-example/curlUtils";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
