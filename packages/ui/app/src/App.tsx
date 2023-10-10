@@ -14,6 +14,7 @@ import styles from "./App.module.scss";
 import { CONTEXTS } from "./contexts";
 import { DocsContextProvider } from "./docs-context/DocsContextProvider";
 import { Docs } from "./docs/Docs";
+import { NavigationContextProvider } from "./navigation-context/NavigationContextProvider";
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -56,7 +57,9 @@ export const App: React.FC<App.Props> = ({
                     nextPath={nextPath}
                     previousPath={previousPath}
                 >
-                    <Docs />
+                    <NavigationContextProvider docsDefinition={docs.definition}>
+                        <Docs />
+                    </NavigationContextProvider>
                 </DocsContextProvider>
             )}
         </div>

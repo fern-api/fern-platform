@@ -1,4 +1,5 @@
-import { noop } from "instantsearch.js/es/lib/utils";
+import { DefinitionObjectFactory, PathResolver } from "@fern-ui/app-utils";
+import { noop } from "@fern-ui/core-utils";
 import React from "react";
 
 export const NavigationContext = React.createContext<NavigationContextValue>({
@@ -6,6 +7,9 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
     hasInitialized: false,
     userIsScrolling: () => false,
     observeDocContent: noop,
+    resolver: new PathResolver({
+        docsDefinition: DefinitionObjectFactory.createDocsDefinition(),
+    }),
 });
 
 export interface NavigationContextValue {
@@ -13,4 +17,5 @@ export interface NavigationContextValue {
     hasInitialized: boolean;
     userIsScrolling: () => boolean;
     observeDocContent: (element: HTMLDivElement) => void;
+    resolver: PathResolver;
 }

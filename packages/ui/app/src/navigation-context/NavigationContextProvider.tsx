@@ -1,13 +1,19 @@
+import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { PathResolver } from "@fern-ui/app-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
 import { useRouter } from "next/router";
-import { PropsWithChildren, useCallback, useEffect, useRef } from "react";
+import { PropsWithChildren, useCallback, useEffect, useMemo, useRef } from "react";
 import { getRouteNode } from "../util/anchor";
 import { NavigationContext } from "./NavigationContext";
 
-export declare namespace NavigationContextProvider {}
+export declare namespace NavigationContextProvider {
+    export type Props = PropsWithChildren<{
+        docsDefinition: FernRegistryDocsRead.DocsDefinition;
+    }>;
+}
 
-export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
+export const NavigationContextProvider: React.FC<NavigationContextProvider.Props> = ({ docsDefinition, children }) => {
     const router = useRouter();
     const userIsScrolling = useRef(false);
     const justNavigatedTo = useRef<string | undefined>(router.asPath);
@@ -20,6 +26,8 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
             justNavigatedTo.current = route;
         }
     });
+
+    const resolver = useMemo(() => new PathResolver({ docsDefinition }), [docsDefinition]);
 
     // on mount, scroll directly to routed element
     useEffect(() => {
@@ -96,6 +104,7 @@ export const NavigationContextProvider: React.FC<PropsWithChildren> = ({ childre
                 justNavigated: justNavigatedTo.current != null,
                 userIsScrolling: () => userIsScrolling.current,
                 observeDocContent,
+                resolver,
             }}
         >
             {children}
