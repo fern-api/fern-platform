@@ -10,7 +10,6 @@ export declare namespace TitledExample {
         actions?: JSX.Element;
         className?: string;
         children: JSX.Element | ((parent: HTMLElement | undefined) => JSX.Element);
-        titleSiblings?: JSX.Element;
         copyToClipboardText?: () => string; // use provider to lazily compute clipboard text
         onClick?: MouseEventHandler<HTMLDivElement>;
         containerRef?: MutableRefObject<HTMLDivElement | null>;
@@ -24,7 +23,6 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
     className,
     actions,
     children,
-    titleSiblings,
     copyToClipboardText,
     onClick,
     containerRef,
@@ -64,7 +62,6 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                     </div>
                 </div>
                 <div className="flex gap-2">
-                    {titleSiblings}
                     {actions}
                     <CopyToClipboardButton content={copyToClipboardContent} />
                 </div>

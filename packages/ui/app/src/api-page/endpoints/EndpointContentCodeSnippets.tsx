@@ -80,7 +80,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     // TODO
                     return "";
                 }}
-                titleSiblings={
+                actions={
                     <CodeExampleClientDropdown
                         clients={availableClients}
                         onClickClient={(clientId) => {
@@ -101,7 +101,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     />
                 ) : (
                     <CodeBlockSkeleton
-                        className="rounded-b-xl"
+                        className="rounded-b-xl pt-1.5"
                         content={selectedClient.example}
                         language={selectedClient.language}
                         theme={theme}
