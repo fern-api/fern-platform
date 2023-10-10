@@ -42,6 +42,7 @@ export type ParentDocsNode = Exclude<DocsNode, NavigatableDocsNode>;
 export interface NodeDocsContextUnversionedUntabbed {
     type: "unversioned-untabbed";
     root: DocsNode.Root;
+    navigationConfig: FernRegistryDocsRead.UnversionedUntabbedNavigationConfig;
     version: null;
     tab: null;
 }
@@ -49,6 +50,7 @@ export interface NodeDocsContextUnversionedUntabbed {
 export interface NodeDocsContextUnversionedTabbed {
     type: "unversioned-tabbed";
     root: DocsNode.Root;
+    navigationConfig: FernRegistryDocsRead.UnversionedTabbedNavigationConfig;
     version: null;
     tab: DocsNode.Tab;
 }
@@ -56,6 +58,7 @@ export interface NodeDocsContextUnversionedTabbed {
 export interface NodeDocsContextVersionedUntabbed {
     type: "versioned-untabbed";
     root: DocsNode.Root;
+    navigationConfig: FernRegistryDocsRead.UnversionedUntabbedNavigationConfig;
     version: DocsNode.Version;
     tab: null;
 }
@@ -63,6 +66,7 @@ export interface NodeDocsContextVersionedUntabbed {
 export interface NodeDocsContextVersionedTabbed {
     type: "versioned-tabbed";
     root: DocsNode.Root;
+    navigationConfig: FernRegistryDocsRead.UnversionedTabbedNavigationConfig;
     version: DocsNode.Version;
     tab: DocsNode.Tab;
 }
