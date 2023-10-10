@@ -2,7 +2,7 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { memo, useMemo, useState } from "react";
 import { CurlExample } from "../examples/curl-example/CurlExample";
-import type { CodeExampleClient } from "./code-example";
+import type { CodeExampleClient } from "../examples/code-example";
 import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
 import { CurlLine } from "../examples/curl-example/curlUtils";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
@@ -45,7 +45,7 @@ function getAvailableExampleClients(example: FernRegistryApiRead.ExampleEndpoint
             },
             {
                 id: "python-async",
-                name: "Python Async",
+                name: "Python (Async)",
                 language: "python",
                 example: pythonSdk.async_client,
             }
