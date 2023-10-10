@@ -3,6 +3,7 @@ import classNames from "classnames";
 import { useRouter } from "next/router";
 import { memo, useMemo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
+import { useNavigationContext } from "../navigation-context";
 import { useSearchContext } from "../search-context/useSearchContext";
 import { useSearchService } from "../services/useSearchService";
 import { SidebarSearchBar } from "./SidebarSearchBar";
@@ -16,7 +17,8 @@ export declare namespace SidebarFixedItemsSection {
 }
 
 const UnmemoizedSidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> = ({ className, hideSearchBar }) => {
-    const { docsInfo, activeTabIndex, navigateToPath, getFullSlug, theme } = useDocsContext();
+    const { navigateToPath, getFullSlug } = useNavigationContext();
+    const { theme } = useDocsContext();
     const { openSearchDialog } = useSearchContext();
     const searchService = useSearchService();
     const { activeNavigationConfig } = docsInfo;

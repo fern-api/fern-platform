@@ -1,4 +1,5 @@
-import { DefinitionObjectFactory, PathResolver } from "@fern-ui/app-utils";
+import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { DefinitionObjectFactory, type NavigatableDocsNode, PathResolver, NodeFactory } from "@fern-ui/app-utils";
 import { noop } from "@fern-ui/core-utils";
 import React from "react";
 
@@ -19,7 +20,24 @@ export interface GetFullSlugOpts {
 
 export interface NavigateToPathOpts extends GetFullSlugOpts {}
 
+const emptyDefinition = DefinitionObjectFactory.createDocsDefinition();
+
 export const NavigationContext = React.createContext<NavigationContextValue>({
+    activeNavigatable: NodeFactory.createPage({
+        slug: "",
+        leadingSlug: "",
+        page: {
+            id: FernRegistryDocsRead.PageId(""),
+            title: "",
+            urlSlug: "",
+        },
+        context: {
+            type: "unversioned-untabbed",
+            root: NodeFactory.createRoot(emptyDefinition),
+            version: null,
+            tab: null,
+        },
+    }),
     hasInitialized: false,
     justNavigated: false,
     navigateToPath: noop,
@@ -27,12 +45,11 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
     userIsScrolling: () => false,
     onScrollToPath: noop,
     observeDocContent: noop,
-    resolver: new PathResolver({
-        docsDefinition: DefinitionObjectFactory.createDocsDefinition(),
-    }),
+    resolver: new PathResolver({ docsDefinition: emptyDefinition }),
 });
 
 export interface NavigationContextValue {
+    activeNavigatable: NavigatableDocsNode;
     hasInitialized: boolean;
     justNavigated: boolean;
     navigateToPath: (slugWithoutVersion: string, opts?: NavigateToPathOpts) => void;
