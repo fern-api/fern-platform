@@ -80,6 +80,7 @@ const EMPTY_REGISTER_API_DEFINITION: FernRegistry.api.v1.register.ApiDefinition 
     },
     subpackages: {},
     types: {},
+    sdksWithSnippets: [],
 };
 
 const MOCK_REGISTER_API_DEFINITION: FernRegistry.api.v1.register.ApiDefinition = {
@@ -88,6 +89,7 @@ const MOCK_REGISTER_API_DEFINITION: FernRegistry.api.v1.register.ApiDefinition =
             {
                 id: "dummy",
                 method: "POST",
+                fullEndpointPath: "/dummy",
                 path: {
                     parts: [{ type: "literal", value: "dummy" }],
                     pathParameters: [],
@@ -102,6 +104,7 @@ const MOCK_REGISTER_API_DEFINITION: FernRegistry.api.v1.register.ApiDefinition =
     },
     subpackages: {},
     types: {},
+    sdksWithSnippets: [],
 };
 
 it("definition register", async () => {

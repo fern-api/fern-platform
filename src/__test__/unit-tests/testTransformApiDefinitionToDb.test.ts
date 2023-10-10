@@ -24,6 +24,7 @@ it("api register", async () => {
             },
         },
         subpackages: {},
+        sdksWithSnippets: [],
     };
     const dbApiDefinition = transformApiDefinitionForDb(apiDefinition, "id");
     expect(dbApiDefinition).toEqual({

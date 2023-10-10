@@ -3,6 +3,7 @@
 imports:
   endpoint: endpoint.yml
   type: type.yml
+  rootSnippet: ../../../__package__.yml
   rootCommons: ../../../commons.yml
   commons: commons.yml
   webhook: webhook.yml
@@ -39,6 +40,7 @@ types:
       types: map<type.TypeId, type.TypeDefinition>
       subpackages: map<SubpackageId, ApiDefinitionSubpackage>
       auth: optional<ApiAuth>
+      sdksWithSnippets: optional<list<rootSnippet.SDK>>
 
   ApiDefinitionPackage:
     properties:

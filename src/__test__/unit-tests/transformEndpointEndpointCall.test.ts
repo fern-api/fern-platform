@@ -7,6 +7,7 @@ describe("transformEndpointEndpointCall", () => {
             id: "endpoint-id",
             description: "This is some ```markdown```",
             method: APIV1Write.HttpMethod.Post,
+            fullEndpointPath: "/prefix/{pathParam}/suffix",
             path: {
                 parts: [
                     { type: "literal", value: "/prefix" },
