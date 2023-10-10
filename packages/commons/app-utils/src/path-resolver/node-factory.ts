@@ -7,7 +7,7 @@ export class NodeFactory {
         return {
             type: "root",
             slug: "",
-            children: new Map(),
+            children: {},
             childrenOrdering: [],
             info: { type: "unversioned" },
         };
@@ -18,7 +18,7 @@ export class NodeFactory {
             type: "version",
             slug,
             version,
-            children: new Map(),
+            children: {},
             childrenOrdering: [],
         };
     }
@@ -28,7 +28,7 @@ export class NodeFactory {
             type: "tab",
             slug,
             version: version ?? null,
-            children: new Map(),
+            children: {},
             childrenOrdering: [],
         };
     }
@@ -50,7 +50,7 @@ export class NodeFactory {
             version: version ?? null,
             tab: tab ?? null,
             section,
-            children: new Map(),
+            children: {},
             childrenOrdering: [],
         };
     }
@@ -72,7 +72,7 @@ export class NodeFactory {
             version: version ?? null,
             tab: tab ?? null,
             section,
-            children: new Map(),
+            children: {},
             childrenOrdering: [],
         };
     }
@@ -97,7 +97,7 @@ export class NodeFactory {
             tab: tab ?? null,
             section,
             subpackage,
-            children: new Map(),
+            children: {},
             childrenOrdering: [],
         };
     }

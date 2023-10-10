@@ -67,7 +67,7 @@ export declare namespace DefinitionInfo {
 export declare namespace DocsNode {
     export interface Root extends BaseNode {
         type: "root";
-        children: Map<FullSlug, ChildDocsNode>;
+        children: Record<FullSlug, ChildDocsNode>;
         childrenOrdering: ItemSlug[];
         info: DefinitionInfo;
     }
@@ -75,14 +75,14 @@ export declare namespace DocsNode {
     export interface Version extends BaseNode {
         type: "version";
         version: DocsNodeVersion;
-        children: Map<FullSlug, ChildDocsNode>;
+        children: Record<FullSlug, ChildDocsNode>;
         childrenOrdering: ItemSlug[];
     }
 
     export interface Tab extends BaseNode {
         type: "tab";
         version: DocsNodeVersion | null;
-        children: Map<FullSlug, ChildDocsNode>;
+        children: Record<FullSlug, ChildDocsNode>;
         childrenOrdering: ItemSlug[];
     }
 
@@ -91,7 +91,7 @@ export declare namespace DocsNode {
         version: DocsNodeVersion | null;
         tab: DocsNodeTab | null;
         section: FernRegistryDocsRead.DocsSection;
-        children: Map<FullSlug, ChildDocsNode>;
+        children: Record<FullSlug, ChildDocsNode>;
         childrenOrdering: ItemSlug[];
     }
 
@@ -100,7 +100,7 @@ export declare namespace DocsNode {
         version: DocsNodeVersion | null;
         tab: DocsNodeTab | null;
         section: FernRegistryDocsRead.ApiSection;
-        children: Map<FullSlug, ChildDocsNode>;
+        children: Record<FullSlug, ChildDocsNode>;
         childrenOrdering: ItemSlug[];
     }
 
@@ -110,7 +110,7 @@ export declare namespace DocsNode {
         tab: DocsNodeTab | null;
         section: FernRegistryDocsRead.ApiSection;
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
-        children: Map<FullSlug, ChildDocsNode>;
+        children: Record<FullSlug, ChildDocsNode>;
         childrenOrdering: ItemSlug[];
     }
 

@@ -14,6 +14,7 @@
     "clean": "yarn workspace @fern-ui/compile-root run clean",
     "compile": "yarn workspace @fern-ui/compile-root run compile",
     "test": "yarn compile && jest --passWithNoTests",
+    "test:only": "jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --report-unused-disable-directives",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "lint:monorepo": "mrlint lint",

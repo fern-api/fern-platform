@@ -18,7 +18,7 @@ export function traversePreOrder(
         return;
     }
     for (const childSlug of node.childrenOrdering) {
-        const childNode = node.children.get(childSlug);
+        const childNode = node.children[childSlug];
         if (childNode != null) {
             const nextSlugs = [...slugs];
             if (!isSectionNode(childNode) || !childNode.section.skipUrlSlug) {

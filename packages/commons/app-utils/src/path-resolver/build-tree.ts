@@ -374,6 +374,6 @@ function addNodeChildren(parent: ParentDocsNode, children: ChildDocsNode[]) {
 }
 
 function addNodeChild(parent: ParentDocsNode, child: ChildDocsNode) {
-    parent.children.set(child.slug, child);
+    parent.children[child.slug] = child;
     parent.childrenOrdering.push(child.slug);
 }

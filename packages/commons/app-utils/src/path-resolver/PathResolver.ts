@@ -40,7 +40,7 @@ export class PathResolver {
             return node;
         }
         for (const childSlug of node.childrenOrdering) {
-            const childNode = node.children.get(childSlug);
+            const childNode = node.children[childSlug];
             if (childNode != null) {
                 const foundNode = this.#resolveNavigatable(childNode);
                 if (foundNode != null) {
