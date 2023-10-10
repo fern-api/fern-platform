@@ -81,16 +81,18 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     return "";
                 }}
                 actions={
-                    <CodeExampleClientDropdown
-                        clients={availableClients}
-                        onClickClient={(clientId) => {
-                            const client = availableClients.find((c) => c.id === clientId);
-                            if (client != null) {
-                                setSelectedClient(client);
-                            }
-                        }}
-                        selectedClient={selectedClient}
-                    />
+                    availableClients.length > 1 ? (
+                        <CodeExampleClientDropdown
+                            clients={availableClients}
+                            onClickClient={(clientId) => {
+                                const client = availableClients.find((c) => c.id === clientId);
+                                if (client != null) {
+                                    setSelectedClient(client);
+                                }
+                            }}
+                            selectedClient={selectedClient}
+                        />
+                    ) : undefined
                 }
             >
                 {selectedClient.id === "curl" ? (
@@ -101,7 +103,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     />
                 ) : (
                     <CodeBlockSkeleton
-                        className="rounded-b-xl pt-1.5"
+                        className="rounded-b-x w-0 min-w-full pt-1.5"
                         content={selectedClient.example}
                         language={selectedClient.language}
                         theme={theme}
