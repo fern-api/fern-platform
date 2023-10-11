@@ -7,6 +7,8 @@ export interface NavigatableNeighbors {
     nextNavigatable: NavigatableDocsNode | null;
 }
 
+// This is the algorithm from the previous resolver, adjusted to versions and tabs.
+// We may need to revise it.
 export function buildNodeToNeighborsMap(root: DocsNode.Root): Map<string, NavigatableNeighbors> {
     const map = new Map<FullSlug, NavigatableNeighbors>();
 
