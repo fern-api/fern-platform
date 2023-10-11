@@ -1,22 +1,21 @@
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { DocsNode, isUnversionedUntabbedNavigationConfig } from "@fern-ui/app-utils";
+import { DocsNode, isUnversionedUntabbedNavigationConfig, SerializedMdxContent } from "@fern-ui/app-utils";
 import { useCallback, useMemo } from "react";
 import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
 import { HEADER_HEIGHT } from "../constants";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { MdxContent } from "../mdx/MdxContent";
-import { ResolvedPath } from "../ResolvedPath";
 import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { TableOfContents } from "./TableOfContents";
 
 export declare namespace CustomDocsPage {
     export interface Props {
         navigatable: DocsNode.Page;
-        resolvedPath: ResolvedPath.MdxPage;
+        serializedMdxContent: SerializedMdxContent | undefined;
     }
 }
 
-export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ navigatable, resolvedPath }) => {
+export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ navigatable, serializedMdxContent }) => {
     const { resolvePage } = useDocsContext();
     const { activeNavigationConfigContext } = useDocsSelectors();
 
@@ -53,8 +52,8 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ navigatable, re
     }, [activeNavigationConfigContext, findTitle]);
 
     const content = useMemo(() => {
-        return <MdxContent mdx={resolvedPath.serializedMdxContent} />;
-    }, [resolvedPath]);
+        return serializedMdxContent != null ? <MdxContent mdx={serializedMdxContent} /> : null;
+    }, [serializedMdxContent]);
 
     return (
         <div className="flex space-x-16 px-6 md:px-12">

@@ -8,15 +8,12 @@ export declare namespace DocsMainContent {
 }
 
 export const DocsMainContent: React.FC<DocsMainContent.Props> = () => {
-    const { resolvedPath, activeNavigatable } = useNavigationContext();
+    const { activeNavigatable, serializedMdxContent } = useNavigationContext();
 
     // TODO: Implement
     switch (activeNavigatable.type) {
         case "page":
-            if (resolvedPath.type === "other") {
-                return null;
-            }
-            return <CustomDocsPage resolvedPath={resolvedPath} navigatable={activeNavigatable} />;
+            return <CustomDocsPage serializedMdxContent={serializedMdxContent} navigatable={activeNavigatable} />;
         case "top-level-endpoint":
         case "top-level-webhook":
         case "endpoint":

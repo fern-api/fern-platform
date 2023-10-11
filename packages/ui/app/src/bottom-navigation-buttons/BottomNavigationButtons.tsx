@@ -1,9 +1,9 @@
-// import { BottomNavigationButton } from "./BottomNavigationButton";
+import { BottomNavigationButton } from "./BottomNavigationButton";
+import { useNavigationContext } from "../navigation-context";
 
 export const BottomNavigationButtons: React.FC = () => {
-    // TODO: Implement
-    const nextNavigatable = null;
-    const previousNavigatable = null;
+    const { navigatableNeighbors } = useNavigationContext();
+    const { previousNavigatable, nextNavigatable } = navigatableNeighbors;
 
     if (previousNavigatable == null && nextNavigatable == null) {
         return null;
@@ -13,9 +13,16 @@ export const BottomNavigationButtons: React.FC = () => {
         <div className="flex flex-col">
             <div className="mb-6 mt-10 h-px bg-[#A7A7B0]/20"></div>
             <div className="flex justify-between">
-                {/* TODO: Add */}
-                {/* {previousNavigatable != null ? <BottomNavigationButton path={null} direction="previous" /> : <div />}
-                {nextNavigatable != null ? <BottomNavigationButton path={null} direction="next" /> : <div />} */}
+                {previousNavigatable != null ? (
+                    <BottomNavigationButton navigatable={previousNavigatable} direction="previous" />
+                ) : (
+                    <div />
+                )}
+                {nextNavigatable != null ? (
+                    <BottomNavigationButton navigatable={nextNavigatable} direction="next" />
+                ) : (
+                    <div />
+                )}
             </div>
         </div>
     );

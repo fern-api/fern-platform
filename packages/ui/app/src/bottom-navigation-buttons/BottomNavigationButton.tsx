@@ -1,21 +1,18 @@
 import { Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
-import { type ResolvedUrlPath } from "@fern-ui/app-utils";
+import { getFullSlugForNavigatable, NavigatableDocsNode } from "@fern-ui/app-utils";
 import { assertNever } from "@fern-ui/core-utils";
 import Link from "next/link";
 import { useCallback, useMemo } from "react";
-import { useNavigationContext } from "../navigation-context";
 
 export declare namespace BottomNavigationButton {
     export interface Props {
-        path: ResolvedUrlPath;
+        navigatable: NavigatableDocsNode;
         direction: "previous" | "next";
     }
 }
 
-export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({ path, direction }) => {
-    const { getFullSlug } = useNavigationContext();
-
+export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({ navigatable, direction }) => {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
     const visitDirection = <T extends unknown>({ previous, next }: { previous: T; next: T }): T => {
         switch (direction) {
@@ -28,6 +25,8 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
         }
     };
 
+    const fullSlug = getFullSlugForNavigatable(navigatable);
+
     const iconName = visitDirection({
         previous: IconNames.CHEVRON_LEFT,
         next: IconNames.CHEVRON_RIGHT,
@@ -39,36 +38,29 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
     }, []);
 
     const text = useMemo(() => {
-        switch (path.type) {
-            case "section":
-                return path.section.title;
-            case "mdx-page":
-                return path.page.title;
-            case "api":
-            case "clientLibraries":
-            case "apiSubpackage":
+        switch (navigatable.type) {
+            case "page":
+                return navigatable.page.title;
+            case "top-level-endpoint":
             case "endpoint":
-            case "topLevelEndpoint":
-                return path.apiSection.title;
+                return navigatable.endpoint.name;
+            case "top-level-webhook":
             case "webhook":
-            case "topLevelWebhook":
-                return path.apiSection.title;
-            default:
-                assertNever(path);
+                return navigatable.webhook.name;
         }
-    }, [path]);
+    }, [navigatable]);
 
     return (
         <Link
             className="!text-accent-primary/80 hover:!text-accent-primary flex cursor-pointer items-center gap-2 rounded !no-underline transition"
             onClick={onClick}
-            href={`/${getFullSlug(path.slug)}`}
+            href={`/${fullSlug}`}
         >
             {visitDirection({
                 previous: iconElement,
                 next: null,
             })}
-            <div className="font-medium">{text}</div>
+            <div className="font-medium">{text ?? "Unknown"}</div>
             {visitDirection({
                 previous: null,
                 next: iconElement,

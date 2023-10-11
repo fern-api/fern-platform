@@ -4,6 +4,7 @@ import {
     PathResolver,
     joinUrlSlugs,
     getFullSlugForNavigatable,
+    SerializedMdxContent,
 } from "@fern-ui/app-utils";
 import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
@@ -32,6 +33,18 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const { value: hasInitialized, setTrue: markAsInitialized } = useBooleanState(false);
     const resolver = useMemo(() => new PathResolver({ docsDefinition }), [docsDefinition]);
 
+    const [serializedMdxContent, setSerializedMdxContent] = useState<SerializedMdxContent | undefined>(
+        resolvedPath.type === "mdx-page" ? resolvedPath.serializedMdxContent : undefined
+    );
+
+    useEffect(() => {
+        if (resolvedPath.type === "mdx-page") {
+            setSerializedMdxContent(resolvedPath.serializedMdxContent);
+        } else {
+            setSerializedMdxContent(undefined);
+        }
+    }, [resolvedPath]);
+
     const resolvedNavigatable = useMemo(() => {
         const node = resolver.resolveNavigatable(resolvedPath.fullSlug);
         if (node == null) {
@@ -43,6 +56,11 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     }, [resolver, resolvedPath]);
 
     const [activeNavigatable, setActiveNavigatable] = useState(resolvedNavigatable);
+
+    const navigatableNeighbors = useMemo(
+        () => resolver.getNeighborsForNavigatable(activeNavigatable),
+        [resolver, activeNavigatable]
+    );
 
     const selectedSlug = getFullSlugForNavigatable(activeNavigatable);
 
@@ -159,6 +177,9 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         justNavigated.current = true;
         const navigatable = resolver.resolveNavigatable(fullSlug);
         if (navigatable != null) {
+            if (navigatable.type === "page") {
+                setSerializedMdxContent(undefined);
+            }
             setActiveNavigatable(navigatable);
         }
         // navigateToPathListeners.invokeListeners(slug);
@@ -184,7 +205,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     return (
         <NavigationContext.Provider
             value={{
-                resolvedPath,
                 hasInitialized,
                 justNavigated: justNavigatedTo.current != null,
                 activeNavigatable,
@@ -195,6 +215,8 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 observeDocContent,
                 resolver,
                 registerScrolledToPathListener: scrollToPathListeners.registerListener,
+                serializedMdxContent,
+                navigatableNeighbors,
             }}
         >
             {children}
