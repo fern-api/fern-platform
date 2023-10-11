@@ -1,0 +1,28 @@
+import { PropsWithChildren, useCallback, useRef } from "react";
+import { LRUCache } from "lru-cache";
+import { FullSlug, SerializedMdxContent } from "@fern-ui/app-utils";
+import { CacheContext, CacheContextValue } from "./CacheContext";
+
+export declare namespace CacheContextProvider {}
+
+export const CacheContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
+    const lruCache = useRef(new LRUCache<FullSlug, SerializedMdxContent>({ max: 50 }));
+
+    const storeSerializedMdxContent = useCallback(
+        (fullSlug: FullSlug, serializedMdxContent: SerializedMdxContent) =>
+            lruCache.current.set(fullSlug, serializedMdxContent),
+        []
+    );
+
+    const getSerializedMdxContent = useCallback((fullSlug: FullSlug) => lruCache.current.get(fullSlug), []);
+
+    const contextValue = useCallback(
+        (): CacheContextValue => ({
+            storeSerializedMdxContent,
+            getSerializedMdxContent,
+        }),
+        [storeSerializedMdxContent, getSerializedMdxContent]
+    );
+
+    return <CacheContext.Provider value={contextValue}>{children}</CacheContext.Provider>;
+};

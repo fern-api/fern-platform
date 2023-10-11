@@ -48,6 +48,7 @@
     "classnames": "^2.3.1",
     "instantsearch.js": "^4.56.3",
     "lodash-es": "^4.17.21",
+    "lru-cache": "^10.0.1",
     "marked": "^5.0.3",
     "next": "^13.4.4",
     "normalize.css": "^8.0.1",

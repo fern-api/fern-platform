@@ -101,8 +101,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
                                                                         versionSlug !== selectedVersionSlug && !active,
                                                                 },
                                                                 {
-                                                                    "border-accent-primary/75":
-                                                                        versionSlug === selectedVersionSlug && active,
+                                                                    "border-accent-primary/75": active,
                                                                 }
                                                             )}
                                                         >

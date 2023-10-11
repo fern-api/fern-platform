@@ -2384,6 +2384,7 @@ __metadata:
     instantsearch.js: ^4.56.3
     jest: ^29.4.0
     lodash-es: ^4.17.21
+    lru-cache: ^10.0.1
     marked: ^5.0.3
     next: ^13.4.4
     normalize.css: ^8.0.1
@@ -9677,6 +9678,13 @@ env-cmd@toddbluhm/env-cmd:
     fault: ^1.0.0
     highlight.js: ~10.7.0
   checksum: 14a1815d6bae202ddee313fc60f06d46e5235c02fa483a77950b401d85b4c1e12290145ccd17a716b07f9328bd5864aa2d402b6a819ff3be7c833d9748ff8ba7
+  languageName: node
+  linkType: hard
+
+"lru-cache@npm:^10.0.1":
+  version: 10.0.1
+  resolution: "lru-cache@npm:10.0.1"
+  checksum: 06f8d0e1ceabd76bb6f644a26dbb0b4c471b79c7b514c13c6856113879b3bf369eb7b497dad4ff2b7e2636db202412394865b33c332100876d838ad1372f0181
   languageName: node
   linkType: hard
 
