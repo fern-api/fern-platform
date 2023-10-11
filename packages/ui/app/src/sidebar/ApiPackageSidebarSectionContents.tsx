@@ -39,7 +39,6 @@ export const ApiPackageSidebarSectionContents: React.FC<ApiPackageSidebarSection
             {package_.endpoints.map((endpoint, endpointIndex) => (
                 <SidebarItem
                     key={endpointIndex}
-                    slug={joinUrlSlugs(slug, endpoint.urlSlug)}
                     title={getEndpointTitleAsString(endpoint)}
                     indent={isSubpackage(package_)}
                     shallow={shallow}
@@ -52,7 +51,6 @@ export const ApiPackageSidebarSectionContents: React.FC<ApiPackageSidebarSection
             {package_.webhooks.map((webhook, webhookIndex) => (
                 <SidebarItem
                     key={webhookIndex}
-                    slug={joinUrlSlugs(slug, webhook.urlSlug)}
                     title={webhook.name ?? ""}
                     indent={isSubpackage(package_)}
                     shallow={shallow}

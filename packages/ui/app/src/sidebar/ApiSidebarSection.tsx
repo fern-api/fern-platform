@@ -49,7 +49,6 @@ export const ApiSidebarSection: React.FC<ApiSidebarSection.Props> = ({
         <SidebarGroup title={<NonClickableSidebarGroupTitle title={apiSection.title} />} includeTopMargin>
             {apiSection.artifacts != null && areApiArtifactsNonEmpty(apiSection.artifacts) && (
                 <SidebarItem
-                    slug={innerSlug}
                     fullSlug={fullSlug}
                     title={API_ARTIFACTS_TITLE}
                     registerScrolledToPathListener={registerScrolledToPathListener}
