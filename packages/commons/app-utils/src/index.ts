@@ -1,7 +1,7 @@
 export { MDXRemote, type MDXRemoteProps, type MDXRemoteSerializeResult } from "next-mdx-remote";
 export * from "./fern";
-export * from "./path-resolver";
 export * from "./mdx";
+export * from "./path-resolver";
 export * from "./serialize-node";
 export { getFullSlugForNavigatable, joinUrlSlugs } from "./slug";
 export { getSlugFromUrl } from "./url-path-resolver/getSlugFromUrl";

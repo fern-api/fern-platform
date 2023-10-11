@@ -1,5 +1,5 @@
-import { serialize } from "next-mdx-remote/serialize";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
+import { serialize } from "next-mdx-remote/serialize";
 import remarkGfm from "remark-gfm";
 
 const REMARK_PLUGINS = [remarkGfm];
