@@ -109,11 +109,13 @@ export class NodeFactory {
         slug,
         leadingSlug,
         endpoint,
+        section,
         context,
     }: {
         slug: string;
         leadingSlug: string;
         endpoint: FernRegistryApiRead.EndpointDefinition;
+        section: FernRegistryDocsRead.ApiSection;
         context: NodeDocsContext;
     }): DocsNode.TopLevelEndpoint {
         return {
@@ -121,6 +123,7 @@ export class NodeFactory {
             slug,
             leadingSlug,
             endpoint,
+            section,
             context,
         };
     }
@@ -155,11 +158,13 @@ export class NodeFactory {
         slug,
         leadingSlug,
         webhook,
+        section,
         context,
     }: {
         slug: string;
         leadingSlug: string;
         webhook: FernRegistryApiRead.WebhookDefinition;
+        section: FernRegistryDocsRead.ApiSection;
         context: NodeDocsContext;
     }): DocsNode.TopLevelWebhook {
         return {
@@ -167,6 +172,7 @@ export class NodeFactory {
             slug,
             leadingSlug,
             webhook,
+            section,
             context,
         };
     }

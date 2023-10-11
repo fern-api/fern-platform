@@ -2,6 +2,7 @@ import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources
 import { DefinitionObjectFactory, type NavigatableDocsNode, PathResolver, NodeFactory } from "@fern-ui/app-utils";
 import { noop } from "@fern-ui/core-utils";
 import React from "react";
+import { ResolvedPath } from "../ResolvedPath";
 
 export interface GetFullSlugOpts {
     /**
@@ -23,6 +24,7 @@ export interface NavigateToPathOpts extends GetFullSlugOpts {}
 const emptyDefinition = DefinitionObjectFactory.createDocsDefinition();
 
 export const NavigationContext = React.createContext<NavigationContextValue>({
+    resolvedPath: { type: "other", fullSlug: "" },
     hasInitialized: false,
     justNavigated: false,
     activeNavigatable: NodeFactory.createPage({
@@ -51,6 +53,7 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
 });
 
 export interface NavigationContextValue {
+    resolvedPath: ResolvedPath;
     hasInitialized: boolean;
     justNavigated: boolean;
     activeNavigatable: NavigatableDocsNode;

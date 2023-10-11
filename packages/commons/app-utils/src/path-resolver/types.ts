@@ -159,6 +159,7 @@ export declare namespace DocsNode {
     export interface TopLevelEndpoint extends BaseNode, NavigatableNode {
         type: "top-level-endpoint";
         endpoint: FernRegistryApiRead.EndpointDefinition;
+        section: FernRegistryDocsRead.ApiSection;
         context: NodeDocsContext;
     }
 
@@ -173,6 +174,7 @@ export declare namespace DocsNode {
     export interface TopLevelWebhook extends BaseNode, NavigatableNode {
         type: "top-level-webhook";
         webhook: FernRegistryApiRead.WebhookDefinition;
+        section: FernRegistryDocsRead.ApiSection;
         context: NodeDocsContext;
     }
 

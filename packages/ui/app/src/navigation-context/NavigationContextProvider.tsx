@@ -162,6 +162,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     return (
         <NavigationContext.Provider
             value={{
+                resolvedPath,
                 hasInitialized,
                 justNavigated: justNavigatedTo.current != null,
                 activeNavigatable,
