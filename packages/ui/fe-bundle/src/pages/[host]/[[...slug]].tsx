@@ -7,7 +7,7 @@ import { REGISTRY_SERVICE } from "../../service";
 import { loadDocsBackgroundImage } from "../../utils/theme/loadDocsBackgroundImage";
 import { generateFontFaces, loadDocTypography } from "../../utils/theme/loadDocsTypography";
 import { useColorTheme } from "../../utils/theme/useColorTheme";
-import { buildUrl } from "./buildUrl";
+import { buildUrl } from "../../utils/buildUrl";
 
 export declare namespace Docs {
     export interface Props {
