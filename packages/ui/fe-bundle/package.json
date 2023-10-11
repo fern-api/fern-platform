@@ -43,6 +43,7 @@
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/theme": "workspace:*",
     "@fern-ui/ui": "workspace:*",
+    "@fortawesome/fontawesome-pro": "^6.4.2",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-brands-svg-icons": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",

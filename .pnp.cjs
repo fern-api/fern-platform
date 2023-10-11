@@ -3668,6 +3668,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/theme", "workspace:packages/commons/react/theme"],\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
+            ["@fortawesome/fontawesome-pro", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Ffontawesome-pro%2F-%2F6.4.2%2Ffontawesome-pro-6.4.2.tgz"],\
             ["@fortawesome/fontawesome-svg-core", "npm:6.4.2"],\
             ["@fortawesome/free-brands-svg-icons", "npm:6.4.2"],\
             ["@fortawesome/free-solid-svg-icons", "npm:6.4.2"],\
@@ -3984,6 +3985,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/unplugged/@fortawesome-fontawesome-common-types-npm-6.4.2-1f8b184e1e/node_modules/@fortawesome/fontawesome-common-types/",\
           "packageDependencies": [\
             ["@fortawesome/fontawesome-common-types", "npm:6.4.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@fortawesome/fontawesome-pro", [\
+        ["npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Ffontawesome-pro%2F-%2F6.4.2%2Ffontawesome-pro-6.4.2.tgz", {\
+          "packageLocation": "./.yarn/unplugged/@fortawesome-fontawesome-pro-npm-6.4.2-3223fb22c2/node_modules/@fortawesome/fontawesome-pro/",\
+          "packageDependencies": [\
+            ["@fortawesome/fontawesome-pro", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Ffontawesome-pro%2F-%2F6.4.2%2Ffontawesome-pro-6.4.2.tgz"]\
           ],\
           "linkType": "HARD"\
         }]\
