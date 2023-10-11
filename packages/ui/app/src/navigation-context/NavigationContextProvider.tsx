@@ -57,7 +57,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     const [activeNavigatable, setActiveNavigatable] = useState(resolvedNavigatable);
 
-    const navigatableNeighbors = useMemo(
+    const activeNavigatableNeighbors = useMemo(
         () => resolver.getNeighborsForNavigatable(activeNavigatable),
         [resolver, activeNavigatable]
     );
@@ -216,7 +216,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 resolver,
                 registerScrolledToPathListener: scrollToPathListeners.registerListener,
                 serializedMdxContent,
-                navigatableNeighbors,
+                activeNavigatableNeighbors,
             }}
         >
             {children}

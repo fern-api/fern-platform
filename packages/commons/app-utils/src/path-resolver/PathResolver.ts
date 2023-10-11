@@ -4,22 +4,17 @@ import { buildResolutionMap } from "./build-map";
 import { buildNodeToNeighborsMap } from "./build-neighbors";
 import { buildDefinitionTree } from "./build-tree";
 import { PathCollisionError } from "./errors";
-import type { DocsNode, FullSlug, NavigatableDocsNode } from "./types";
+import type { DocsNode, FullSlug, NavigatableDocsNode, NodeNeighbors } from "./types";
 import { isLeafNode, traversePreOrder } from "./util";
 
 export interface PathResolverConfig {
     docsDefinition: FernRegistryDocsRead.DocsDefinition;
 }
 
-export interface NavigatableNeighbors {
-    previousNavigatable: NavigatableDocsNode | null;
-    nextNavigatable: NavigatableDocsNode | null;
-}
-
 export class PathResolver {
     readonly #tree: DocsNode.Root;
     readonly #map: Map<FullSlug, DocsNode | DocsNode[]>;
-    readonly #nodeToNeighbors: Map<FullSlug, NavigatableNeighbors>;
+    readonly #nodeToNeighbors: Map<FullSlug, NodeNeighbors>;
     public readonly rootNavigatable: NavigatableDocsNode | undefined;
 
     public constructor(public readonly config: PathResolverConfig) {
@@ -86,10 +81,10 @@ export class PathResolver {
         return nodesBySlug;
     }
 
-    public getNeighborsForNavigatable(fullSlugOrNode: string | NavigatableDocsNode): NavigatableNeighbors {
+    public getNeighborsForNavigatable(fullSlugOrNode: string | NavigatableDocsNode): NodeNeighbors {
         const fullSlug =
             typeof fullSlugOrNode === "string" ? fullSlugOrNode : getFullSlugForNavigatable(fullSlugOrNode);
         const neighbors = this.#nodeToNeighbors.get(fullSlug);
-        return neighbors ?? { previousNavigatable: null, nextNavigatable: null };
+        return neighbors ?? { previous: null, next: null };
     }
 }

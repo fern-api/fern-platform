@@ -206,3 +206,8 @@ export declare namespace DocsNode {
         context: NodeDocsContext;
     }
 }
+
+export interface NodeNeighbors {
+    previous: DocsNode | null;
+    next: DocsNode | null;
+}

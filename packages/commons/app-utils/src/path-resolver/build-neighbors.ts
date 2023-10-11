@@ -1,16 +1,11 @@
 import { getFullSlugForNavigatable } from "../slug";
-import type { DocsNode, FullSlug, NavigatableDocsNode, ParentDocsNode } from "./types";
+import type { DocsNode, FullSlug, ParentDocsNode, NodeNeighbors } from "./types";
 import { isLeafNode } from "./util";
-
-export interface NavigatableNeighbors {
-    previousNavigatable: NavigatableDocsNode | null;
-    nextNavigatable: NavigatableDocsNode | null;
-}
 
 // This is the algorithm from the previous resolver, adjusted to versions and tabs.
 // We may need to revise it.
-export function buildNodeToNeighborsMap(root: DocsNode.Root): Map<string, NavigatableNeighbors> {
-    const map = new Map<FullSlug, NavigatableNeighbors>();
+export function buildNodeToNeighborsMap(root: DocsNode.Root): Map<string, NodeNeighbors> {
+    const map = new Map<FullSlug, NodeNeighbors>();
 
     if (root.info.type === "versioned") {
         root.info.versions.forEach((v) => {
@@ -50,7 +45,7 @@ function getOrderedNodeChildren(node: ParentDocsNode) {
     return children;
 }
 
-function populateNeighbors(unversionedAndUntabbedRootNodes: DocsNode[], map: Map<FullSlug, NavigatableNeighbors>) {
+function populateNeighbors(unversionedAndUntabbedRootNodes: DocsNode[], map: Map<FullSlug, NodeNeighbors>) {
     const nodesInOrder = traverseInOrder(unversionedAndUntabbedRootNodes);
     let indexOfPreviousNavigatable = -1,
         indexOfPreviousPreviousNavigatable = -1,
@@ -62,21 +57,21 @@ function populateNeighbors(unversionedAndUntabbedRootNodes: DocsNode[], map: Map
                 ? getIndexOfFirstNavigatable(nodesInOrder, { startingAt: index + 1 })
                 : indexOfNextNavigatable;
 
-        let previousNavigatable = nodesInOrder[indexOfPreviousNavigatable] as NavigatableDocsNode;
-        const nextNavigatable = nodesInOrder[newIndexOfNextNavigatable] as NavigatableDocsNode;
+        let previousNavigatable = nodesInOrder[indexOfPreviousNavigatable];
+        const nextNavigatable = nodesInOrder[newIndexOfNextNavigatable];
 
         const apiSlug = getApiSlug(node);
         if (apiSlug != null && previousNavigatable != null) {
             const apiSlugOfPrevious = getApiSlug(previousNavigatable);
             if (apiSlugOfPrevious === apiSlug) {
-                previousNavigatable = nodesInOrder[indexOfPreviousPreviousNavigatable] as NavigatableDocsNode;
+                previousNavigatable = nodesInOrder[indexOfPreviousPreviousNavigatable];
             }
         }
 
         if (isLeafNode(node)) {
             map.set(getFullSlugForNavigatable(node), {
-                previousNavigatable: previousNavigatable ?? null,
-                nextNavigatable: nextNavigatable ?? null,
+                previous: previousNavigatable ?? null,
+                next: nextNavigatable ?? null,
             });
         }
 

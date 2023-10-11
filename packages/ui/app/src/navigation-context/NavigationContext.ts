@@ -5,7 +5,7 @@ import {
     PathResolver,
     NodeFactory,
     SerializedMdxContent,
-    type NavigatableNeighbors,
+    type NodeNeighbors,
 } from "@fern-ui/app-utils";
 import { noop } from "@fern-ui/core-utils";
 import React from "react";
@@ -48,6 +48,10 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
             tab: null,
         },
     }),
+    activeNavigatableNeighbors: {
+        previous: null,
+        next: null,
+    },
     navigateToPath: noop,
     getFullSlug: () => "",
     userIsScrolling: () => false,
@@ -56,16 +60,13 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
     resolver: new PathResolver({ docsDefinition: emptyDefinition }),
     registerScrolledToPathListener: () => noop,
     serializedMdxContent: undefined,
-    navigatableNeighbors: {
-        previousNavigatable: null,
-        nextNavigatable: null,
-    },
 });
 
 export interface NavigationContextValue {
     hasInitialized: boolean;
     justNavigated: boolean;
     activeNavigatable: NavigatableDocsNode;
+    activeNavigatableNeighbors: NodeNeighbors;
     navigateToPath: (slugWithoutVersion: string, opts?: NavigateToPathOpts) => void;
     /** Returns the version-prefixed slug. */
     getFullSlug: (slug: string, opts?: { tabSlug?: string }) => string;
@@ -76,5 +77,4 @@ export interface NavigationContextValue {
     registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
     // This may need to be placed elsewhere
     serializedMdxContent: SerializedMdxContent | undefined;
-    navigatableNeighbors: NavigatableNeighbors;
 }
