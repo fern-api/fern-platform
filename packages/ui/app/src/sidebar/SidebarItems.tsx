@@ -64,20 +64,22 @@ const UnmemoizedSidebarItems: React.FC<SidebarItems.Props> = ({
                             resolveApi={resolveApi}
                         />
                     ),
-                    api: (apiSection) => (
-                        <ApiSidebarSection
-                            key={apiSection.urlSlug}
-                            slug={joinUrlSlugs(slug, apiSection.urlSlug)}
-                            apiSection={apiSection}
-                            selectedSlug={selectedSlug}
-                            registerScrolledToPathListener={registerScrolledToPathListener}
-                            getFullSlug={getFullSlug}
-                            closeMobileSidebar={closeMobileSidebar}
-                            docsDefinition={docsDefinition}
-                            activeTabIndex={activeTabIndex}
-                            resolveApi={resolveApi}
-                        />
-                    ),
+                    api: (apiSection) => {
+                        return (
+                            <ApiSidebarSection
+                                key={apiSection.urlSlug}
+                                slug={joinUrlSlugs(slug, apiSection.urlSlug)}
+                                apiSection={apiSection}
+                                selectedSlug={selectedSlug}
+                                registerScrolledToPathListener={registerScrolledToPathListener}
+                                getFullSlug={getFullSlug}
+                                closeMobileSidebar={closeMobileSidebar}
+                                docsDefinition={docsDefinition}
+                                activeTabIndex={activeTabIndex}
+                                resolveApi={resolveApi}
+                            />
+                        );
+                    },
                     _other: () => null,
                 })
             )}

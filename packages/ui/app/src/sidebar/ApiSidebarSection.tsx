@@ -44,7 +44,7 @@ export const ApiSidebarSection: React.FC<ApiSidebarSection.Props> = ({
         [apiDefinition]
     );
     const innerSlug = joinUrlSlugs(slug, "client-libraries");
-    const fullSlug = getFullSlug(joinUrlSlugs(innerSlug, "client-libraries"));
+    const fullSlug = joinUrlSlugs(innerSlug, "client-libraries");
     return (
         <SidebarGroup title={<NonClickableSidebarGroupTitle title={apiSection.title} />} includeTopMargin>
             {apiSection.artifacts != null && areApiArtifactsNonEmpty(apiSection.artifacts) && (

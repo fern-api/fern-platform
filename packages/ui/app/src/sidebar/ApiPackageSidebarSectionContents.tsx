@@ -36,18 +36,20 @@ export const ApiPackageSidebarSectionContents: React.FC<ApiPackageSidebarSection
 }) => {
     return (
         <div className="flex flex-col">
-            {package_.endpoints.map((endpoint, endpointIndex) => (
-                <SidebarItem
-                    key={endpointIndex}
-                    title={getEndpointTitleAsString(endpoint)}
-                    indent={isSubpackage(package_)}
-                    shallow={shallow}
-                    registerScrolledToPathListener={registerScrolledToPathListener}
-                    fullSlug={getFullSlug(joinUrlSlugs(slug, endpoint.urlSlug))}
-                    closeMobileSidebar={closeMobileSidebar}
-                    isSelected={getFullSlug(joinUrlSlugs(slug, endpoint.urlSlug)) === selectedSlug}
-                />
-            ))}
+            {package_.endpoints.map((endpoint, endpointIndex) => {
+                return (
+                    <SidebarItem
+                        key={endpointIndex}
+                        title={getEndpointTitleAsString(endpoint)}
+                        indent={isSubpackage(package_)}
+                        shallow={shallow}
+                        registerScrolledToPathListener={registerScrolledToPathListener}
+                        fullSlug={joinUrlSlugs(slug, endpoint.urlSlug)}
+                        closeMobileSidebar={closeMobileSidebar}
+                        isSelected={joinUrlSlugs(slug, endpoint.urlSlug) === selectedSlug}
+                    />
+                );
+            })}
             {package_.webhooks.map((webhook, webhookIndex) => (
                 <SidebarItem
                     key={webhookIndex}
