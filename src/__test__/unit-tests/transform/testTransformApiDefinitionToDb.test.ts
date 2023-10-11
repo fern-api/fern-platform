@@ -5,7 +5,7 @@ import { SDKSnippetHolder } from "../../../converters/db/snippets/SDKSnippetHold
 
 const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
     snippetsBySdkId: {},
-    sdkIdToPackage: {},
+    packageToSdkId: {},
     snippetsConfiguration: {},
 });
 

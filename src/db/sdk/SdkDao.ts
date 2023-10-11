@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { SdkId } from "../types";
 
 export interface SdkDao {
-    getLatestSdkIdsForPackages(sdkPackages: string[]): Promise<Record<SdkId, string>>;
+    getLatestSdkIdsForPackages(sdkPackages: string[]): Promise<Record<string, SdkId>>;
 
     getLatestSdkIdForPackage(sdkPackages: string): Promise<SdkId | undefined>;
 }
@@ -15,7 +15,7 @@ export class SdkDaoImpl implements SdkDao {
         for (const sdkPackage of sdkPackages) {
             const sdkId = await this.getLatestSdkIdForPackage(sdkPackage);
             if (sdkId != null) {
-                sdkIds[sdkId] = sdkPackage;
+                sdkIds[sdkPackage] = sdkId;
             }
         }
         return sdkIds;

@@ -429,6 +429,29 @@ it("snippets dao", async () => {
     expect(snippet.sdk.version).toEqual("0.0.1");
     expect(snippet.async_client).toEqual("client = AsyncAcme(api_key='YOUR_API_KEY')");
     expect(snippet.sync_client).toEqual("client = Acme(api_key='YOUR_API_KEY')");
+
+    const sdkId = await serverApp?.dao.sdks().getLatestSdkIdForPackage("acme");
+    expect(sdkId).toEqual("python|acme|0.0.1");
+
+    const snippetsForSdkId = await serverApp?.dao.snippets().loadAllSnippetsForSdkIds(sdkId != null ? [sdkId] : []);
+    expect(snippetsForSdkId).toEqual({
+        "python|acme|0.0.1": {
+            "/users/v1": {
+                DELETE: [],
+                GET: [
+                    {
+                        async_client: "client = AsyncAcme(api_key='YOUR_API_KEY')",
+                        sdk: { package: "acme", version: "0.0.1" },
+                        sync_client: "client = Acme(api_key='YOUR_API_KEY')",
+                        type: "python",
+                    },
+                ],
+                PATCH: [],
+                POST: [],
+                PUT: [],
+            },
+        },
+    });
 });
 
 it("get snippets", async () => {

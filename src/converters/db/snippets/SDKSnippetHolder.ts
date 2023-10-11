@@ -2,18 +2,18 @@ import { FdrAPI, APIV1Write, APIV1Read } from "../../../api";
 
 export interface SdkSnippetHolderArgs {
     snippetsBySdkId: Record<string, Record<FdrAPI.EndpointPath, FdrAPI.SnippetsByEndpointMethod>>;
-    sdkIdToPackage: Record<string, string>;
+    packageToSdkId: Record<string, string>;
     snippetsConfiguration: APIV1Write.SnippetsConfig;
 }
 
 export class SDKSnippetHolder {
     private snippetsConfiguration: APIV1Write.SnippetsConfig;
     private snippetsBySdkId: Record<string, Record<FdrAPI.EndpointPath, FdrAPI.SnippetsByEndpointMethod>>;
-    private sdkIdToPackage: Record<string, string>;
+    private packageToSdkId: Record<string, string>;
 
-    constructor({ snippetsBySdkId, sdkIdToPackage, snippetsConfiguration }: SdkSnippetHolderArgs) {
+    constructor({ snippetsBySdkId, packageToSdkId, snippetsConfiguration }: SdkSnippetHolderArgs) {
         this.snippetsBySdkId = snippetsBySdkId;
-        this.sdkIdToPackage = sdkIdToPackage;
+        this.packageToSdkId = packageToSdkId;
         this.snippetsConfiguration = snippetsConfiguration;
     }
 
@@ -27,13 +27,13 @@ export class SDKSnippetHolder {
         if (this.snippetsConfiguration.pythonSdk == null) {
             return undefined;
         }
-        const sdkId = this.sdkIdToPackage[this.snippetsConfiguration.pythonSdk.package];
+        const sdkId = this.packageToSdkId[this.snippetsConfiguration.pythonSdk.package];
         if (sdkId == null) {
             return undefined;
         }
         const snippetsForEndpoint = this.snippetsBySdkId[sdkId]?.[endpointPath]?.[endpointMethod];
         // if no snippets for this endpoint or multiple snippets just return undefined
-        if (snippetsForEndpoint == null || snippetsForEndpoint.length > 0) {
+        if (snippetsForEndpoint == null || snippetsForEndpoint.length > 1) {
             return undefined;
         }
         if (snippetsForEndpoint[0]?.type !== "python") {

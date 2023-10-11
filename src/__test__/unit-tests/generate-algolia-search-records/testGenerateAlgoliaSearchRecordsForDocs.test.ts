@@ -47,7 +47,7 @@ interface Fixture {
 
 const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
     snippetsBySdkId: {},
-    sdkIdToPackage: {},
+    packageToSdkId: {},
     snippetsConfiguration: {},
 });
 

@@ -20,12 +20,12 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
             });
             const snippetsConfiguration = req.body.definition.snippetsConfiguration ?? {};
             const packagesForSnippets = getPackagesAsArrayFromSnippetsConfig(snippetsConfiguration);
-            const sdkIdToPackage = await app.dao.sdks().getLatestSdkIdsForPackages(packagesForSnippets);
-            const snippetsBySdkId = await app.dao.snippets().loadAllSnippetsForSdkIds(Object.keys(sdkIdToPackage));
+            const packageToSdkId = await app.dao.sdks().getLatestSdkIdsForPackages(packagesForSnippets);
+            const snippetsBySdkId = await app.dao.snippets().loadAllSnippetsForSdkIds(Object.values(packageToSdkId));
             const apiDefinitionId = uuidv4();
             const snippetHolder = new SDKSnippetHolder({
                 snippetsBySdkId,
-                sdkIdToPackage,
+                packageToSdkId,
                 snippetsConfiguration,
             });
             const transformedApiDefinition = transformApiDefinitionForDb(

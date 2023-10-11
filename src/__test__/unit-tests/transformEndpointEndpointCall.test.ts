@@ -4,7 +4,7 @@ import { transformExampleEndpointCall } from "../../converters/db/convertAPIDefi
 
 const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
     snippetsBySdkId: {},
-    sdkIdToPackage: {},
+    packageToSdkId: {},
     snippetsConfiguration: {},
 });
 

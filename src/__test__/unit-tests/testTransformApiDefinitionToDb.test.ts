@@ -4,7 +4,7 @@ import { transformApiDefinitionForDb } from "../../converters/db/convertAPIDefin
 
 const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
     snippetsBySdkId: {},
-    sdkIdToPackage: {},
+    packageToSdkId: {},
     snippetsConfiguration: {},
 });
 
