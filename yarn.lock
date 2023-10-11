@@ -2120,7 +2120,6 @@ __metadata:
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/theme": "workspace:*"
     "@fern-ui/ui": "workspace:*"
-    "@fortawesome/fontawesome-pro": ^6.4.2
     "@fortawesome/fontawesome-svg-core": ^6.4.2
     "@fortawesome/free-brands-svg-icons": ^6.4.2
     "@fortawesome/free-solid-svg-icons": ^6.4.2
@@ -2419,13 +2418,6 @@ __metadata:
   version: 6.4.2
   resolution: "@fortawesome/fontawesome-common-types@npm:6.4.2"
   checksum: 4a22932bd0cac65be1d35b739624f366b6c247b60eb5b8f66218957f54ce1cae56e2a20ea88789ede45d1e1c0c1014f160e01c1752122ec174ad0823e60f94bf
-  languageName: node
-  linkType: hard
-
-"@fortawesome/fontawesome-pro@npm:^6.4.2":
-  version: 6.4.2
-  resolution: "@fortawesome/fontawesome-pro@npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Ffontawesome-pro%2F-%2F6.4.2%2Ffontawesome-pro-6.4.2.tgz"
-  checksum: 8af23532c35c189ef9b5a6d6fc59e8ede0446f0e26dc80fe5665d69c6694f0195b906bf0d9b041276ca29cb274080abc946b89c3e89e41498149b184ff207180
   languageName: node
   linkType: hard
 
