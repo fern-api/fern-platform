@@ -167,6 +167,7 @@ workflows:
           context:
             - vercel-prod
             - fe-algolia-prod
+            - fontawesome
 
       - check-docs-release-is-allowed:
           filters:
