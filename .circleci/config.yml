@@ -130,26 +130,36 @@ workflows:
           filters:
             tags:
               only: /.*/
+          context:
+            - fontawesome
 
       - eslint:
           filters:
             tags:
               only: /.*/
+          context:
+            - fontawesome
 
       - organize-imports:
           filters:
             tags:
               only: /.*/
+          context:
+            - fontawesome
 
       - compile:
           filters:
             tags:
               only: /.*/
+          context:
+            - fontawesome
 
       - test:
           filters:
             tags:
               only: /.*/
+          context:
+            - fontawesome
 
       - deploy-docs-prod:
           filters:
@@ -167,7 +177,6 @@ workflows:
           context:
             - vercel-prod
             - fe-algolia-prod
-            - fontawesome
 
       - check-docs-release-is-allowed:
           filters:
