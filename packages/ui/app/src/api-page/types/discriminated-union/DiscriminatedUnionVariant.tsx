@@ -7,7 +7,7 @@ import { ApiPageDescription } from "../../ApiPageDescription";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
-    useTypeDefinitionContext
+    useTypeDefinitionContext,
 } from "../context/TypeDefinitionContext";
 import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
 

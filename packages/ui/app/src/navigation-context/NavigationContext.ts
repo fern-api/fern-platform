@@ -1,6 +1,11 @@
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import {
-    DefinitionObjectFactory, NodeFactory, PathResolver, SerializedMdxContent, type NavigatableDocsNode, type NodeNeighbors
+    DefinitionObjectFactory,
+    NodeFactory,
+    PathResolver,
+    SerializedMdxContent,
+    type NavigatableDocsNode,
+    type NodeNeighbors,
 } from "@fern-ui/app-utils";
 import { noop } from "@fern-ui/core-utils";
 import React from "react";

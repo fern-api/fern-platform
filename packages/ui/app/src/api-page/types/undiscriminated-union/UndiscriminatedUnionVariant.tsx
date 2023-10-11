@@ -5,7 +5,7 @@ import { ApiPageDescription } from "../../ApiPageDescription";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
-    useTypeDefinitionContext
+    useTypeDefinitionContext,
 } from "../context/TypeDefinitionContext";
 import { InternalTypeReferenceDefinitions } from "../type-reference/InternalTypeReferenceDefinitions";
 import { TypeShorthand } from "../type-shorthand/TypeShorthand";

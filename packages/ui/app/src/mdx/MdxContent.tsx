@@ -21,7 +21,7 @@ import {
     Th,
     Thead,
     Tr,
-    Ul
+    Ul,
 } from "./base-components";
 import { Availability } from "./components/Availability";
 import { Callout } from "./components/Callout";
