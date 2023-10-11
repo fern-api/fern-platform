@@ -3671,6 +3671,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fortawesome/fontawesome-svg-core", "npm:6.4.2"],\
             ["@fortawesome/free-brands-svg-icons", "npm:6.4.2"],\
             ["@fortawesome/free-solid-svg-icons", "npm:6.4.2"],\
+            ["@fortawesome/pro-duotone-svg-icons", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-duotone-svg-icons%2F-%2F6.4.2%2Fpro-duotone-svg-icons-6.4.2.tgz"],\
+            ["@fortawesome/pro-light-svg-icons", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-light-svg-icons%2F-%2F6.4.2%2Fpro-light-svg-icons-6.4.2.tgz"],\
+            ["@fortawesome/pro-regular-svg-icons", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-regular-svg-icons%2F-%2F6.4.2%2Fpro-regular-svg-icons-6.4.2.tgz"],\
+            ["@fortawesome/pro-solid-svg-icons", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-solid-svg-icons%2F-%2F6.4.2%2Fpro-solid-svg-icons-6.4.2.tgz"],\
             ["@tailwindcss/typography", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:0.5.9"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
@@ -4013,6 +4017,46 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/unplugged/@fortawesome-free-solid-svg-icons-npm-6.4.2-c582f5c032/node_modules/@fortawesome/free-solid-svg-icons/",\
           "packageDependencies": [\
             ["@fortawesome/free-solid-svg-icons", "npm:6.4.2"],\
+            ["@fortawesome/fontawesome-common-types", "npm:6.4.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@fortawesome/pro-duotone-svg-icons", [\
+        ["npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-duotone-svg-icons%2F-%2F6.4.2%2Fpro-duotone-svg-icons-6.4.2.tgz", {\
+          "packageLocation": "./.yarn/unplugged/@fortawesome-pro-duotone-svg-icons-npm-6.4.2-f0a98834db/node_modules/@fortawesome/pro-duotone-svg-icons/",\
+          "packageDependencies": [\
+            ["@fortawesome/pro-duotone-svg-icons", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-duotone-svg-icons%2F-%2F6.4.2%2Fpro-duotone-svg-icons-6.4.2.tgz"],\
+            ["@fortawesome/fontawesome-common-types", "npm:6.4.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@fortawesome/pro-light-svg-icons", [\
+        ["npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-light-svg-icons%2F-%2F6.4.2%2Fpro-light-svg-icons-6.4.2.tgz", {\
+          "packageLocation": "./.yarn/unplugged/@fortawesome-pro-light-svg-icons-npm-6.4.2-f9513a5b14/node_modules/@fortawesome/pro-light-svg-icons/",\
+          "packageDependencies": [\
+            ["@fortawesome/pro-light-svg-icons", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-light-svg-icons%2F-%2F6.4.2%2Fpro-light-svg-icons-6.4.2.tgz"],\
+            ["@fortawesome/fontawesome-common-types", "npm:6.4.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@fortawesome/pro-regular-svg-icons", [\
+        ["npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-regular-svg-icons%2F-%2F6.4.2%2Fpro-regular-svg-icons-6.4.2.tgz", {\
+          "packageLocation": "./.yarn/unplugged/@fortawesome-pro-regular-svg-icons-npm-6.4.2-64f69e3e7f/node_modules/@fortawesome/pro-regular-svg-icons/",\
+          "packageDependencies": [\
+            ["@fortawesome/pro-regular-svg-icons", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-regular-svg-icons%2F-%2F6.4.2%2Fpro-regular-svg-icons-6.4.2.tgz"],\
+            ["@fortawesome/fontawesome-common-types", "npm:6.4.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@fortawesome/pro-solid-svg-icons", [\
+        ["npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-solid-svg-icons%2F-%2F6.4.2%2Fpro-solid-svg-icons-6.4.2.tgz", {\
+          "packageLocation": "./.yarn/unplugged/@fortawesome-pro-solid-svg-icons-npm-6.4.2-291c35e3da/node_modules/@fortawesome/pro-solid-svg-icons/",\
+          "packageDependencies": [\
+            ["@fortawesome/pro-solid-svg-icons", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-solid-svg-icons%2F-%2F6.4.2%2Fpro-solid-svg-icons-6.4.2.tgz"],\
             ["@fortawesome/fontawesome-common-types", "npm:6.4.2"]\
           ],\
           "linkType": "HARD"\
