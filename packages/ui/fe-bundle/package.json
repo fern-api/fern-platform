@@ -40,7 +40,6 @@
   "dependencies": {
     "@fern-fern/registry-browser": "0.32.0-8-g775d3cc",
     "@fern-ui/app-utils": "workspace:*",
-    "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/theme": "workspace:*",
     "@fern-ui/ui": "workspace:*",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",

@@ -3665,7 +3665,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/fe-bundle", "workspace:packages/ui/fe-bundle"],\
             ["@fern-fern/registry-browser", "npm:0.32.0-8-g775d3cc"],\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
-            ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/theme", "workspace:packages/commons/react/theme"],\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
             ["@fortawesome/fontawesome-svg-core", "npm:6.4.2"],\
