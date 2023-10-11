@@ -3,7 +3,7 @@ import { getFullSlugForNavigatable, joinUrlSlugs } from "../slug";
 import { buildResolutionMap } from "./build-map";
 import { buildNodeToNeighborsMap } from "./build-neighbors";
 import { buildDefinitionTree } from "./build-tree";
-import { ImplementationError, PathCollisionError } from "./errors";
+import { PathCollisionError } from "./errors";
 import type { DocsNode, FullSlug, NavigatableDocsNode } from "./types";
 import { isLeafNode, traversePreOrder } from "./util";
 
@@ -90,9 +90,6 @@ export class PathResolver {
         const fullSlug =
             typeof fullSlugOrNode === "string" ? fullSlugOrNode : getFullSlugForNavigatable(fullSlugOrNode);
         const neighbors = this.#nodeToNeighbors.get(fullSlug);
-        if (neighbors == null) {
-            throw new ImplementationError("Cannot find node neighbors.");
-        }
-        return neighbors;
+        return neighbors ?? { previousNavigatable: null, nextNavigatable: null };
     }
 }

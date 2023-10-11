@@ -1,5 +1,5 @@
 import { getFullSlugForNavigatable } from "../slug";
-import type { DocsNode, FullSlug, NavigatableDocsNode } from "./types";
+import type { DocsNode, FullSlug, NavigatableDocsNode, ParentDocsNode } from "./types";
 import { isLeafNode } from "./util";
 
 export interface NavigatableNeighbors {
@@ -14,21 +14,42 @@ export function buildNodeToNeighborsMap(root: DocsNode.Root): Map<string, Naviga
         root.info.versions.forEach((v) => {
             if (v.tabInfo.type === "tabbed") {
                 v.tabInfo.tabs.forEach((t) => {
-                    populateNeighbors(t, map);
+                    populateNeighbors(getOrderedNodeChildren(t), map);
                 });
             } else {
-                populateNeighbors(v, map);
+                populateNeighbors(getOrderedNodeChildren(v), map);
             }
         });
     } else {
-        populateNeighbors(root, map);
+        const children = getOrderedNodeChildren(root);
+        const hasTabs = children.some((c) => c.type === "tab");
+        if (hasTabs) {
+            children.forEach((c) => {
+                if (c.type === "tab") {
+                    populateNeighbors(getOrderedNodeChildren(c), map);
+                }
+            });
+        } else {
+            populateNeighbors(children, map);
+        }
     }
 
     return map;
 }
 
-function populateNeighbors(unversionedAndUntabbedRoot: DocsNode, map: Map<FullSlug, NavigatableNeighbors>) {
-    const nodesInOrder = traverseInOrder(Object.values(unversionedAndUntabbedRoot));
+function getOrderedNodeChildren(node: ParentDocsNode) {
+    const children: DocsNode[] = [];
+    for (const childSlug of node.childrenOrdering) {
+        const child = node.children[childSlug];
+        if (child != null) {
+            children.push(child);
+        }
+    }
+    return children;
+}
+
+function populateNeighbors(unversionedAndUntabbedRootNodes: DocsNode[], map: Map<FullSlug, NavigatableNeighbors>) {
+    const nodesInOrder = traverseInOrder(unversionedAndUntabbedRootNodes);
     let indexOfPreviousNavigatable = -1,
         indexOfPreviousPreviousNavigatable = -1,
         indexOfNextNavigatable = getIndexOfFirstNavigatable(nodesInOrder, { startingAt: 0 });
