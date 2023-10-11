@@ -1,12 +1,17 @@
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { getFirstNavigatableItemSlugInDefinition, PathResolver } from "@fern-ui/app-utils";
+import {
+    getFirstNavigatableItemSlugInDefinition,
+    PathResolver,
+    joinUrlSlugs,
+    getFullSlugForNavigatable,
+} from "@fern-ui/app-utils";
 import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { type ResolvedPath } from "../ResolvedPath";
 import { getRouteNode } from "../util/anchor";
-import { NavigationContext, type NavigateToPathOpts } from "./NavigationContext";
+import { NavigationContext } from "./NavigationContext";
 import { useSlugListeners } from "./useSlugListeners";
 
 export declare namespace NavigationContextProvider {
@@ -37,26 +42,25 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         return node;
     }, [resolver, resolvedPath]);
 
-    const [activeNavigatable] = useState(resolvedNavigatable);
+    const [activeNavigatable, setActiveNavigatable] = useState(resolvedNavigatable);
 
-    // TODO: Confirm
-    const selectedSlug = activeNavigatable.leadingSlug;
+    const selectedSlug = getFullSlugForNavigatable(activeNavigatable);
 
-    const getFullSlug = useCallback((_: string) => {
-        // TODO: Implement
-        return "abc";
-    }, []);
-
-    const navigateToPath = useEventCallback((_1: string, _2?: NavigateToPathOpts) => {
-        justNavigated.current = true;
-        // navigateToPathListeners.invokeListeners(slug);
-        const timeout = setTimeout(() => {
-            justNavigated.current = false;
-        }, 500);
-        return () => {
-            clearTimeout(timeout);
-        };
-    });
+    const getFullSlug = useCallback(
+        (slug: string) => {
+            const parts: string[] = [];
+            // TODO: Implement
+            if (
+                activeNavigatable.context.type === "versioned-tabbed" ||
+                activeNavigatable.context.type === "versioned-untabbed"
+            ) {
+                parts.push(activeNavigatable.context.version.slug);
+            }
+            parts.push(slug);
+            return joinUrlSlugs(...parts);
+        },
+        [activeNavigatable]
+    );
 
     const navigateToRoute = useRef((route: string, smoothScroll: boolean) => {
         if (!userIsScrolling.current) {
@@ -139,13 +143,38 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     // const navigateToPathListeners = useSlugListeners("navigateToPath", { selectedSlug });
     const scrollToPathListeners = useSlugListeners("scrollToPath", { selectedSlug });
 
-    const onScrollToPath = useEventCallback((slugWithoutVersion: string) => {
-        const slug = getFullSlug(slugWithoutVersion);
-        if (justNavigated.current || slug === selectedSlug) {
+    const onScrollToPath = useEventCallback((fullSlug: string) => {
+        if (justNavigated.current || fullSlug === selectedSlug) {
             return;
         }
-        void router.replace(`/${slug}`, undefined, { shallow: true, scroll: false });
-        scrollToPathListeners.invokeListeners(slug);
+        console.log(`SLUG="${fullSlug}"`);
+        const navigatable = resolver.resolveNavigatable(fullSlug);
+        if (navigatable != null) {
+            console.log("Activating node", navigatable);
+            setActiveNavigatable(navigatable);
+        } else {
+            console.log("Cannot resolve node", navigatable);
+        }
+        void router.replace(`/${fullSlug}`, undefined, { shallow: true, scroll: false });
+        scrollToPathListeners.invokeListeners(fullSlug);
+    });
+
+    const navigateToPath = useEventCallback((fullSlug: string) => {
+        justNavigated.current = true;
+        const navigatable = resolver.resolveNavigatable(fullSlug);
+        if (navigatable != null) {
+            console.log("Activating node", navigatable);
+            setActiveNavigatable(navigatable);
+        } else {
+            console.log("Cannot resolve node", navigatable);
+        }
+        // navigateToPathListeners.invokeListeners(slug);
+        const timeout = setTimeout(() => {
+            justNavigated.current = false;
+        }, 500);
+        return () => {
+            clearTimeout(timeout);
+        };
     });
 
     useEffect(() => {
@@ -153,7 +182,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             const slugCandidate = as.substring(1, as.length);
             const slug = slugCandidate === "" ? getFirstNavigatableItemSlugInDefinition(docsDefinition) : slugCandidate;
             if (slug != null) {
-                navigateToPath(slug, { omitTabSlug: true, omitVersionSlug: true });
+                navigateToPath(slug);
             }
             return true;
         });

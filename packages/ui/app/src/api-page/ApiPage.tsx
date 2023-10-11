@@ -1,5 +1,6 @@
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
+import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { ApiPackageContents } from "./ApiPackageContents";
 import { ApiArtifacts } from "./artifacts/ApiArtifacts";
 import { areApiArtifactsNonEmpty } from "./artifacts/areApiArtifactsNonEmpty";
@@ -10,6 +11,8 @@ export declare namespace ApiPage {
 
 export const ApiPage: React.FC<ApiPage.Props> = () => {
     const { apiDefinition, apiSlug, apiSection } = useApiDefinitionContext();
+    const { computeFullSlug } = useDocsSelectors();
+    const slug = computeFullSlug(apiSlug);
 
     return (
         <div className="min-h-0 pb-36">
@@ -18,7 +21,7 @@ export const ApiPage: React.FC<ApiPage.Props> = () => {
             )}
             <ApiPackageContents
                 package={apiDefinition.rootPackage}
-                slug={apiSlug}
+                slug={slug}
                 isLastInParentPackage={false}
                 anchorIdParts={[]}
             />

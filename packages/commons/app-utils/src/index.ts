@@ -3,7 +3,7 @@ export * from "./fern";
 export * from "./path-resolver";
 export * from "./mdx";
 export * from "./serialize-node";
-export { getFullSlugForNavigatable } from "./slug";
+export { getFullSlugForNavigatable, joinUrlSlugs } from "./slug";
 export { getSlugFromUrl } from "./url-path-resolver/getSlugFromUrl";
 export { type ResolvedUrlPath } from "./url-path-resolver/ResolvedUrlPath";
 export { UrlPathResolver } from "./url-path-resolver/UrlPathResolver";

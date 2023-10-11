@@ -1,5 +1,5 @@
-import { type DefinitionInfo, DocsNode } from "@fern-ui/app-utils";
-import { useMemo } from "react";
+import { type DefinitionInfo, DocsNode, joinUrlSlugs } from "@fern-ui/app-utils";
+import { useCallback, useMemo } from "react";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 
@@ -8,6 +8,8 @@ interface DocsSelectors {
     activeVersionContext: ActiveVersionContext;
     activeNavigationConfigContext: ActiveNavigationConfigContext;
     selectedSlug: string;
+    /** Prefixes a given slug with the currently active version and tab slugs. */
+    computeFullSlug: (slug: string) => string;
 }
 
 interface ActiveVersionContextUnversioned {
@@ -62,10 +64,27 @@ export function useDocsSelectors(): DocsSelectors {
 
     const selectedSlug = useMemo(() => activeNavigatable.leadingSlug, [activeNavigatable]);
 
+    const computeFullSlug = useCallback(
+        (slug: string) => {
+            const c = activeNavigatable.context;
+            const parts: string[] = [];
+            if (c.type === "versioned-tabbed" || c.type === "versioned-untabbed") {
+                parts.push(c.version.slug);
+            }
+            if (c.type === "unversioned-tabbed" || c.type === "versioned-tabbed") {
+                parts.push(c.tab.slug);
+            }
+            parts.push(slug);
+            return joinUrlSlugs(...parts);
+        },
+        [activeNavigatable.context]
+    );
+
     return {
         definitionInfo,
         activeVersionContext,
         activeNavigationConfigContext,
         selectedSlug,
+        computeFullSlug,
     };
 }
