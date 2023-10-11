@@ -1,9 +1,10 @@
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { getFirstNavigatableItemSlugInDefinition, PathResolver, type NavigatableDocsNode } from "@fern-ui/app-utils";
+import { getFirstNavigatableItemSlugInDefinition, PathResolver } from "@fern-ui/app-utils";
 import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type ResolvedPath } from "../ResolvedPath";
 import { getRouteNode } from "../util/anchor";
 import { NavigationContext, type NavigateToPathOpts } from "./NavigationContext";
 import { useSlugListeners } from "./useSlugListeners";
@@ -11,21 +12,32 @@ import { useSlugListeners } from "./useSlugListeners";
 export declare namespace NavigationContextProvider {
     export type Props = PropsWithChildren<{
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
-        resolvedNavigatable: NavigatableDocsNode;
+        resolvedPath: ResolvedPath;
     }>;
 }
 
 export const NavigationContextProvider: React.FC<NavigationContextProvider.Props> = ({
     docsDefinition,
-    resolvedNavigatable,
+    resolvedPath,
     children,
 }) => {
     const router = useRouter();
     const userIsScrolling = useRef(false);
     const justNavigatedTo = useRef<string | undefined>(router.asPath);
     const { value: hasInitialized, setTrue: markAsInitialized } = useBooleanState(false);
-    const [activeNavigatable] = useState(resolvedNavigatable);
     const resolver = useMemo(() => new PathResolver({ docsDefinition }), [docsDefinition]);
+
+    const resolvedNavigatable = useMemo(() => {
+        const node = resolver.resolveNavigatable(resolvedPath.fullSlug);
+        if (node == null) {
+            throw new Error(
+                `Implementation Error. Cannot resolve navigatable for resolved path ${resolvedPath.fullSlug}`
+            );
+        }
+        return node;
+    }, [resolver, resolvedPath]);
+
+    const [activeNavigatable] = useState(resolvedNavigatable);
 
     // TODO: Confirm
     const selectedSlug = activeNavigatable.leadingSlug;

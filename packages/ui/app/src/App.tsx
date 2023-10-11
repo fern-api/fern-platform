@@ -4,7 +4,6 @@ import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import "@blueprintjs/popover2/lib/css/blueprint-popover2.css";
 import "@blueprintjs/select/lib/css/blueprint-select.css";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
-import { type NavigatableDocsNode } from "@fern-ui/app-utils";
 import "@fontsource/ibm-plex-mono";
 import classNames from "classnames";
 import "normalize.css";
@@ -15,17 +14,18 @@ import { CONTEXTS } from "./contexts";
 import { DocsContextProvider } from "./docs-context/DocsContextProvider";
 import { Docs } from "./docs/Docs";
 import { NavigationContextProvider } from "./navigation-context/NavigationContextProvider";
+import { type ResolvedPath } from "./ResolvedPath";
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
 export declare namespace App {
     export interface Props {
         docs: FernRegistryDocsRead.LoadDocsForUrlResponse;
-        resolvedNavigatable: NavigatableDocsNode;
+        resolvedPath: ResolvedPath;
     }
 }
 
-export const App: React.FC<App.Props> = ({ docs, resolvedNavigatable }) => {
+export const App: React.FC<App.Props> = ({ docs, resolvedPath }) => {
     useEffect(() => {
         if (process.env.NEXT_PUBLIC_POSTHOG_API_KEY != null && process.env.NEXT_PUBLIC_POSTHOG_API_KEY.length > 0) {
             initializePosthog(process.env.NEXT_PUBLIC_POSTHOG_API_KEY);
@@ -38,11 +38,8 @@ export const App: React.FC<App.Props> = ({ docs, resolvedNavigatable }) => {
                 (children, Context) => (
                     <Context>{children}</Context>
                 ),
-                <DocsContextProvider docsDefinition={docs.definition} resolvedNavigatable={resolvedNavigatable}>
-                    <NavigationContextProvider
-                        docsDefinition={docs.definition}
-                        resolvedNavigatable={resolvedNavigatable}
-                    >
+                <DocsContextProvider docsDefinition={docs.definition}>
+                    <NavigationContextProvider docsDefinition={docs.definition} resolvedPath={resolvedPath}>
                         <Docs />
                     </NavigationContextProvider>
                 </DocsContextProvider>

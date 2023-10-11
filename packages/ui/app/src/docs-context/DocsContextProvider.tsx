@@ -1,7 +1,6 @@
 import { FernRegistry } from "@fern-fern/registry-browser";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { type NavigatableDocsNode } from "@fern-ui/app-utils";
 import { useTheme } from "@fern-ui/theme";
 import { PropsWithChildren, useCallback } from "react";
 import { DocsContext, DocsContextValue } from "./DocsContext";
@@ -9,15 +8,10 @@ import { DocsContext, DocsContextValue } from "./DocsContext";
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
-        resolvedNavigatable: NavigatableDocsNode;
     }>;
 }
 
-export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
-    docsDefinition,
-    resolvedNavigatable,
-    children,
-}) => {
+export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsDefinition, children }) => {
     const resolveApi = useCallback(
         (apiId: FernRegistry.ApiDefinitionId): FernRegistryApiRead.ApiDefinition => {
             const api = docsDefinition.apis[apiId];
@@ -56,14 +50,13 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     const contextValue = useCallback(
         (): DocsContextValue => ({
             docsDefinition,
-            resolvedNavigatable,
             resolveApi,
             resolvePage,
             resolveFile,
             theme,
             setTheme,
         }),
-        [docsDefinition, resolveApi, resolveFile, resolvePage, resolvedNavigatable, theme, setTheme]
+        [docsDefinition, resolveApi, resolveFile, resolvePage, theme, setTheme]
     );
 
     return <DocsContext.Provider value={contextValue}>{children}</DocsContext.Provider>;

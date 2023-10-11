@@ -1,11 +1,6 @@
 import * as FernRegistryDocsReadV2 from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
-import {
-    getSlugFromUrl,
-    PathResolver,
-    type SerializedNavigatableNode,
-    serializeNavigatableNode,
-} from "@fern-ui/app-utils";
-import { App } from "@fern-ui/ui";
+import { getSlugFromUrl, PathResolver, serializeNavigatableNode, getFullSlugForNavigatable } from "@fern-ui/app-utils";
+import { App, type ResolvedPath } from "@fern-ui/ui";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import { REGISTRY_SERVICE } from "../../service";
@@ -19,7 +14,7 @@ export declare namespace Docs {
         docs: FernRegistryDocsReadV2.LoadDocsForUrlResponse;
         typographyStyleSheet?: string;
         backgroundImageStyleSheet: string | null;
-        resolvedNavigatable: SerializedNavigatableNode;
+        resolvedPath: ResolvedPath;
     }
 }
 
@@ -27,7 +22,7 @@ export default function Docs({
     docs,
     typographyStyleSheet = "",
     backgroundImageStyleSheet = "",
-    resolvedNavigatable,
+    resolvedPath,
 }: Docs.Props): JSX.Element {
     const colorThemeStyleSheet = useColorTheme(docs.definition);
     return (
@@ -52,7 +47,7 @@ export default function Docs({
                         <link rel="icon" id="favicon" href={docs.definition.files[docs.definition.config.favicon]} />
                     )}
                 </Head>
-                <App docs={docs} resolvedNavigatable={resolvedNavigatable} />
+                <App docs={docs} resolvedPath={resolvedPath} />
             </main>
         </>
     );
@@ -99,13 +94,24 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
 
     const serializedNavigatable = await serializeNavigatableNode({ node: resolvedNavigatable, docsDefinition });
 
+    const fullSlug = getFullSlugForNavigatable(serializedNavigatable);
+
     return {
-        success: true,
         props: {
             docs: docs.body,
             typographyStyleSheet,
             backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
-            resolvedNavigatable: serializedNavigatable,
+            resolvedPath:
+                serializedNavigatable.type === "page"
+                    ? {
+                          type: "mdx-page",
+                          fullSlug,
+                          serializedMdxContent: serializedNavigatable.serializedMdxContent,
+                      }
+                    : {
+                          type: "other",
+                          fullSlug,
+                      },
         },
     };
 };
