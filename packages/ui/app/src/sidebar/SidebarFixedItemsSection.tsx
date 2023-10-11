@@ -1,4 +1,3 @@
-import { getFirstNavigatableItem } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import { memo, useMemo } from "react";
@@ -18,9 +17,9 @@ export declare namespace SidebarFixedItemsSection {
 }
 
 const UnmemoizedSidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> = ({ className, hideSearchBar }) => {
-    const { navigateToPath, getFullSlug, activeNavigatable } = useNavigationContext();
+    const { navigateToPath, activeNavigatable } = useNavigationContext();
     const { theme } = useDocsContext();
-    const { activeNavigationConfigContext } = useDocsSelectors();
+    const { activeNavigationConfigContext, withVersionSlug } = useDocsSelectors();
     const { openSearchDialog } = useSearchContext();
     const searchService = useSearchService();
 
@@ -44,24 +43,15 @@ const UnmemoizedSidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Prop
                         tab={tab}
                         isSelected={idx === activeNavigatable.context.tab?.index}
                         onClick={() => {
-                            const [firstTabItem] = tab.items;
-                            if (firstTabItem == null) {
-                                return;
-                            }
-                            const slugToNavigate = getFirstNavigatableItem(firstTabItem);
-                            if (slugToNavigate == null) {
-                                return;
-                            }
-                            navigateToPath(slugToNavigate, {
-                                tabSlug: tab.urlSlug,
-                            });
-                            void router.push("/" + getFullSlug(slugToNavigate, { tabSlug: tab.urlSlug }));
+                            const fullSlug = withVersionSlug(tab.urlSlug);
+                            navigateToPath(fullSlug);
+                            void router.replace(`/${fullSlug}`, undefined);
                         }}
                     />
                 ))}
             </div>
         );
-    }, [showTabs, activeNavigationConfigContext, activeNavigatable, getFullSlug, navigateToPath, router]);
+    }, [showTabs, activeNavigationConfigContext, activeNavigatable, withVersionSlug, navigateToPath, router]);
 
     if (!showSearchBar && !showTabs) {
         return null;

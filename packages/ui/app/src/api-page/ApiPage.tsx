@@ -11,8 +11,8 @@ export declare namespace ApiPage {
 
 export const ApiPage: React.FC<ApiPage.Props> = () => {
     const { apiDefinition, apiSlug, apiSection } = useApiDefinitionContext();
-    const { computeFullSlug } = useDocsSelectors();
-    const slug = computeFullSlug(apiSlug);
+    const { withVersionAndTabSlugs } = useDocsSelectors();
+    const slug = withVersionAndTabSlugs(apiSlug);
 
     return (
         <div className="min-h-0 pb-36">
