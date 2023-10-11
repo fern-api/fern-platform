@@ -42,12 +42,12 @@ const UnmemoizedSidebarItems: React.FC<SidebarItems.Props> = ({
                     page: (pageMetadata) => (
                         <SidebarItem
                             key={pageMetadata.urlSlug}
-                            slug={joinUrlSlugs(slug, pageMetadata.urlSlug)}
                             fullSlug={getFullSlug(joinUrlSlugs(slug, pageMetadata.urlSlug))}
                             title={pageMetadata.title}
                             registerScrolledToPathListener={registerScrolledToPathListener}
                             isSelected={getFullSlug(joinUrlSlugs(slug, pageMetadata.urlSlug)) === selectedSlug}
                             closeMobileSidebar={closeMobileSidebar}
+                            shallow={false}
                         />
                     ),
                     section: (section) => (

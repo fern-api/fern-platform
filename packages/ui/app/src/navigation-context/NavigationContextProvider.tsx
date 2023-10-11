@@ -147,13 +147,9 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         if (justNavigated.current || fullSlug === selectedSlug) {
             return;
         }
-        console.log(`SLUG="${fullSlug}"`);
         const navigatable = resolver.resolveNavigatable(fullSlug);
         if (navigatable != null) {
-            console.log("Activating node", navigatable);
             setActiveNavigatable(navigatable);
-        } else {
-            console.log("Cannot resolve node", navigatable);
         }
         void router.replace(`/${fullSlug}`, undefined, { shallow: true, scroll: false });
         scrollToPathListeners.invokeListeners(fullSlug);
@@ -163,10 +159,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         justNavigated.current = true;
         const navigatable = resolver.resolveNavigatable(fullSlug);
         if (navigatable != null) {
-            console.log("Activating node", navigatable);
             setActiveNavigatable(navigatable);
-        } else {
-            console.log("Cannot resolve node", navigatable);
         }
         // navigateToPathListeners.invokeListeners(slug);
         const timeout = setTimeout(() => {

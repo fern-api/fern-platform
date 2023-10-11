@@ -2,13 +2,13 @@ import { Text } from "@blueprintjs/core";
 import classNames from "classnames";
 import Link from "next/link";
 import { memo, useCallback, useEffect, useRef } from "react";
+import { useNavigationContext } from "../navigation-context";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace SidebarItem {
     export interface Props {
         title: JSX.Element | string;
         className?: string;
-        slug: string;
         fullSlug: string;
         leftElement?: JSX.Element;
         rightElement?: JSX.Element;
@@ -23,7 +23,6 @@ export declare namespace SidebarItem {
 const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
     title,
     className,
-    slug,
     fullSlug,
     leftElement,
     rightElement,
@@ -33,10 +32,11 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
     closeMobileSidebar,
     isSelected,
 }) => {
+    const { navigateToPath } = useNavigationContext();
     const handleClick = useCallback(() => {
-        // TODO: Implement with the new resolver
+        navigateToPath(fullSlug);
         closeMobileSidebar();
-    }, [closeMobileSidebar, slug]);
+    }, [closeMobileSidebar, navigateToPath, fullSlug]);
 
     const renderTitle = useCallback(
         ({ isHovering }: { isHovering: boolean }) => {
@@ -98,5 +98,5 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
 
 export const SidebarItem = memo(
     UnmemoizedSidebarItem,
-    (prev, next) => prev.isSelected === next.isSelected && prev.slug === next.slug && prev.fullSlug === next.fullSlug
+    (prev, next) => prev.isSelected === next.isSelected && prev.fullSlug === next.fullSlug
 );
