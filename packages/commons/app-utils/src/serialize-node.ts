@@ -6,7 +6,12 @@ export type SerializedPageNode = DocsNode.Page & {
     serializedMdxContent: SerializedMdxContent;
 };
 
-export type SerializedNavigatableNode = DocsNode.Endpoint | DocsNode.Webhook | SerializedPageNode;
+export type SerializedNavigatableNode =
+    | DocsNode.TopLevelEndpoint
+    | DocsNode.Endpoint
+    | DocsNode.TopLevelWebhook
+    | DocsNode.Webhook
+    | SerializedPageNode;
 
 export async function serializePageNode({
     pageNode,

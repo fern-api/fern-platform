@@ -29,13 +29,20 @@ export type DocsNode =
     | DocsNode.DocsSection
     | DocsNode.ApiSection
     | DocsNode.ApiSubpackage
+    | DocsNode.TopLevelEndpoint
     | DocsNode.Endpoint
+    | DocsNode.TopLevelWebhook
     | DocsNode.Webhook
     | DocsNode.Page;
 
 export type DocsNodeType = DocsNode["type"];
 
-export type NavigatableDocsNode = DocsNode.Endpoint | DocsNode.Webhook | DocsNode.Page;
+export type NavigatableDocsNode =
+    | DocsNode.TopLevelEndpoint
+    | DocsNode.Endpoint
+    | DocsNode.TopLevelWebhook
+    | DocsNode.Webhook
+    | DocsNode.Page;
 export type ChildDocsNode = Exclude<DocsNode, DocsNode.Root>;
 export type ParentDocsNode = Exclude<DocsNode, NavigatableDocsNode>;
 
@@ -149,15 +156,31 @@ export declare namespace DocsNode {
         context: NodeDocsContext;
     }
 
+    export interface TopLevelEndpoint extends BaseNode, NavigatableNode {
+        type: "top-level-endpoint";
+        endpoint: FernRegistryApiRead.EndpointDefinition;
+        context: NodeDocsContext;
+    }
+
     export interface Endpoint extends BaseNode, NavigatableNode {
         type: "endpoint";
         endpoint: FernRegistryApiRead.EndpointDefinition;
+        section: FernRegistryDocsRead.ApiSection;
+        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
+        context: NodeDocsContext;
+    }
+
+    export interface TopLevelWebhook extends BaseNode, NavigatableNode {
+        type: "top-level-webhook";
+        webhook: FernRegistryApiRead.WebhookDefinition;
         context: NodeDocsContext;
     }
 
     export interface Webhook extends BaseNode, NavigatableNode {
         type: "webhook";
         webhook: FernRegistryApiRead.WebhookDefinition;
+        section: FernRegistryDocsRead.ApiSection;
+        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
         context: NodeDocsContext;
     }
 

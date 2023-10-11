@@ -105,7 +105,7 @@ export class NodeFactory {
         };
     }
 
-    public static createEndpoint({
+    public static createTopLevelEndpoint({
         slug,
         leadingSlug,
         endpoint,
@@ -115,9 +115,9 @@ export class NodeFactory {
         leadingSlug: string;
         endpoint: FernRegistryApiRead.EndpointDefinition;
         context: NodeDocsContext;
-    }): DocsNode.Endpoint {
+    }): DocsNode.TopLevelEndpoint {
         return {
-            type: "endpoint",
+            type: "top-level-endpoint",
             slug,
             leadingSlug,
             endpoint,
@@ -125,7 +125,33 @@ export class NodeFactory {
         };
     }
 
-    public static createWebhook({
+    public static createEndpoint({
+        slug,
+        leadingSlug,
+        endpoint,
+        section,
+        subpackage,
+        context,
+    }: {
+        slug: string;
+        leadingSlug: string;
+        endpoint: FernRegistryApiRead.EndpointDefinition;
+        section: FernRegistryDocsRead.ApiSection;
+        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
+        context: NodeDocsContext;
+    }): DocsNode.Endpoint {
+        return {
+            type: "endpoint",
+            slug,
+            leadingSlug,
+            endpoint,
+            section,
+            subpackage,
+            context,
+        };
+    }
+
+    public static createTopLevelWebhook({
         slug,
         leadingSlug,
         webhook,
@@ -135,12 +161,38 @@ export class NodeFactory {
         leadingSlug: string;
         webhook: FernRegistryApiRead.WebhookDefinition;
         context: NodeDocsContext;
+    }): DocsNode.TopLevelWebhook {
+        return {
+            type: "top-level-webhook",
+            slug,
+            leadingSlug,
+            webhook,
+            context,
+        };
+    }
+
+    public static createWebhook({
+        slug,
+        leadingSlug,
+        webhook,
+        section,
+        subpackage,
+        context,
+    }: {
+        slug: string;
+        leadingSlug: string;
+        webhook: FernRegistryApiRead.WebhookDefinition;
+        section: FernRegistryDocsRead.ApiSection;
+        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
+        context: NodeDocsContext;
     }): DocsNode.Webhook {
         return {
             type: "webhook",
             slug,
             leadingSlug,
             webhook,
+            section,
+            subpackage,
             context,
         };
     }

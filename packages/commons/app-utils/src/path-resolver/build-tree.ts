@@ -256,7 +256,7 @@ function buildNodeForApiSection({
         throw new Error(`API definition '${apiDefinitionId}' was not found.`);
     }
     apiDefinition.rootPackage.endpoints.forEach((endpoint) => {
-        const endpointNode = buildNodeForEndpoint({
+        const endpointNode = buildNodeForTopLevelEndpoint({
             endpoint,
             parentSlugs: nextSectionParentSlugs(section, parentSlugs),
             context,
@@ -264,7 +264,7 @@ function buildNodeForApiSection({
         addNodeChild(sectionNode, endpointNode);
     });
     apiDefinition.rootPackage.webhooks.forEach((webhook) => {
-        const webhookNode = buildNodeForWebhook({
+        const webhookNode = buildNodeForTopLevelWebhook({
             webhook,
             parentSlugs: nextSectionParentSlugs(section, parentSlugs),
             context,
@@ -288,7 +288,7 @@ function buildNodeForApiSection({
     return sectionNode;
 }
 
-function buildNodeForEndpoint({
+function buildNodeForTopLevelEndpoint({
     endpoint,
     parentSlugs,
     context,
@@ -296,8 +296,8 @@ function buildNodeForEndpoint({
     endpoint: FernRegistryApiRead.EndpointDefinition;
     parentSlugs: ItemSlug[];
     context: NodeDocsContext;
-}): DocsNode.Endpoint {
-    const endpointNode = NodeFactory.createEndpoint({
+}): DocsNode.TopLevelEndpoint {
+    const endpointNode = NodeFactory.createTopLevelEndpoint({
         endpoint,
         slug: endpoint.urlSlug,
         leadingSlug: joinUrlSlugs(...parentSlugs, endpoint.urlSlug),
@@ -306,7 +306,31 @@ function buildNodeForEndpoint({
     return endpointNode;
 }
 
-function buildNodeForWebhook({
+function buildNodeForEndpoint({
+    endpoint,
+    section,
+    subpackage,
+    parentSlugs,
+    context,
+}: {
+    endpoint: FernRegistryApiRead.EndpointDefinition;
+    section: FernRegistryDocsRead.ApiSection;
+    subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
+    parentSlugs: ItemSlug[];
+    context: NodeDocsContext;
+}): DocsNode.Endpoint {
+    const endpointNode = NodeFactory.createEndpoint({
+        endpoint,
+        section,
+        subpackage,
+        slug: endpoint.urlSlug,
+        leadingSlug: joinUrlSlugs(...parentSlugs, endpoint.urlSlug),
+        context,
+    });
+    return endpointNode;
+}
+
+function buildNodeForTopLevelWebhook({
     webhook,
     parentSlugs,
     context,
@@ -314,9 +338,33 @@ function buildNodeForWebhook({
     webhook: FernRegistryApiRead.WebhookDefinition;
     parentSlugs: ItemSlug[];
     context: NodeDocsContext;
+}): DocsNode.TopLevelWebhook {
+    const webhookNode = NodeFactory.createTopLevelWebhook({
+        webhook,
+        slug: webhook.urlSlug,
+        leadingSlug: joinUrlSlugs(...parentSlugs, webhook.urlSlug),
+        context,
+    });
+    return webhookNode;
+}
+
+function buildNodeForWebhook({
+    webhook,
+    section,
+    subpackage,
+    parentSlugs,
+    context,
+}: {
+    webhook: FernRegistryApiRead.WebhookDefinition;
+    section: FernRegistryDocsRead.ApiSection;
+    subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
+    parentSlugs: ItemSlug[];
+    context: NodeDocsContext;
 }): DocsNode.Webhook {
     const webhookNode = NodeFactory.createWebhook({
         webhook,
+        section,
+        subpackage,
         slug: webhook.urlSlug,
         leadingSlug: joinUrlSlugs(...parentSlugs, webhook.urlSlug),
         context,
@@ -346,6 +394,8 @@ function buildNodeForSubpackage({
     subpackage.endpoints.forEach((endpoint) => {
         const endpointNode = buildNodeForEndpoint({
             endpoint,
+            section,
+            subpackage,
             parentSlugs: [...parentSlugs, subpackage.urlSlug],
             context,
         });
@@ -354,6 +404,8 @@ function buildNodeForSubpackage({
     subpackage.webhooks.forEach((webhook) => {
         const webhookNode = buildNodeForWebhook({
             webhook,
+            section,
+            subpackage,
             parentSlugs: [...parentSlugs, subpackage.urlSlug],
             context,
         });
