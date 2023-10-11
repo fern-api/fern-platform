@@ -1,13 +1,20 @@
 import { SnippetsService } from "../../api";
-import { OrgIdAndApiIdNotFound, ApiIdNotFound, ApiIdRequiredError, InvalidPageError, OrgIdNotFound, OrgIdRequiredError } from "../../api/generated/api/errors";
+import {
+    OrgIdAndApiIdNotFound,
+    ApiIdNotFound,
+    ApiIdRequiredError,
+    InvalidPageError,
+    OrgIdNotFound,
+    OrgIdRequiredError,
+} from "../../api/generated/api/errors";
 import { InternalError, UnauthorizedError } from "../../api/generated/api/resources/commons/errors";
 import { type FdrApplication } from "../../app";
-import { LoadSnippetAPIsRequest } from "../../db/SnippetAPIsDao";
-import { LoadSnippetsResponse } from "../../db/SnippetsDao";
+import { LoadSnippetAPIsRequest } from "../../db/snippetApis/SnippetAPIsDao";
+import { DbSnippetsPage } from "../../db/snippets/SnippetsDao";
 
 export interface ApiInfo {
-    orgId: string
-    apiId: string
+    orgId: string;
+    apiId: string;
 }
 
 async function getApiInfo({
@@ -16,10 +23,10 @@ async function getApiInfo({
     orgId,
     apiId,
 }: {
-    app: FdrApplication,
-    authorization: string,
-    orgId?: string,
-    apiId?: string,
+    app: FdrApplication;
+    authorization: string;
+    orgId?: string;
+    apiId?: string;
 }): Promise<ApiInfo> {
     const orgIdsResponse = await app.services.auth.getOrgIdsFromAuthHeader({
         authHeader: authorization,
@@ -38,7 +45,7 @@ async function getApiInfo({
             loadSnippetAPIRequest: {
                 orgId: orgId,
                 apiName: apiId,
-            }
+            },
         });
         if (snippetAPI === null) {
             throw new OrgIdAndApiIdNotFound(`Organization ${orgId} does not have API ${apiId}`);
@@ -51,10 +58,10 @@ async function getApiInfo({
     const loadSnippetAPIsRequest: LoadSnippetAPIsRequest = {
         orgIds: orgId != null ? [orgId] : Array.from(orgIdsResponse.orgIds),
         apiName: apiId != null ? apiId : undefined,
-    }
+    };
     const apiInfos = await app.dao.snippetAPIs().loadSnippetAPIs({
         loadSnippetAPIsRequest: loadSnippetAPIsRequest,
-    })
+    });
     if (apiInfos.length === 0) {
         app.logger.error(`Loaded zero snippet APIs with request: ${JSON.stringify(loadSnippetAPIsRequest)}`);
         if (apiId !== undefined) {
@@ -65,7 +72,9 @@ async function getApiInfo({
     if (apiInfos.length > 1) {
         app.logger.error(`Loaded too many snippet APIs with request: ${JSON.stringify(loadSnippetAPIsRequest)}`);
         if (apiId !== undefined && orgId !== undefined) {
-            throw new InternalError(`Internal error; multiple APIs associated with organization ${orgId} and API ${apiId}`);
+            throw new InternalError(
+                `Internal error; multiple APIs associated with organization ${orgId} and API ${apiId}`
+            );
         }
         if (apiId !== undefined) {
             throw new OrgIdRequiredError(`Multiple APIs named ${apiId} were found; please provide an orgId`);
@@ -79,7 +88,7 @@ async function getApiInfo({
     return {
         orgId: apiInfo.orgId,
         apiId: apiInfo.apiName,
-    }
+    };
 }
 
 export function getSnippetsService(app: FdrApplication): SnippetsService {
@@ -93,15 +102,15 @@ export function getSnippetsService(app: FdrApplication): SnippetsService {
                 authorization: req.headers.authorization,
                 orgId: req.body.orgId,
                 apiId: req.body.apiId,
-            })
-            const response: LoadSnippetsResponse = await app.dao.snippets().loadSnippets({
+            });
+            const response: DbSnippetsPage = await app.dao.snippets().loadSnippetsPage({
                 loadSnippetsInfo: {
                     orgId: apiInfo.orgId,
                     apiId: apiInfo.apiId,
                     endpointIdentifier: req.body.endpoint,
                     sdks: req.body.sdks,
                     page: undefined,
-                }
+                },
             });
             const snippetsForEndpointPath = response.snippets[req.body.endpoint.path];
             if (snippetsForEndpointPath === undefined) {
@@ -119,7 +128,7 @@ export function getSnippetsService(app: FdrApplication): SnippetsService {
                 authorization: req.headers.authorization,
                 orgId: req.body.orgId,
                 apiId: req.body.apiId,
-            })
+            });
             // TODO: The cast shouldn't be necessary but the query parameter is being
             // passed in as a string (even though it's typed as a number), so we
             // need to use the + operator to make it a number.
@@ -127,14 +136,14 @@ export function getSnippetsService(app: FdrApplication): SnippetsService {
             if (page !== undefined && page <= 0) {
                 throw new InvalidPageError("Query parameter 'page' must be >= 1");
             }
-            const response: LoadSnippetsResponse = await app.dao.snippets().loadSnippets({
+            const response: DbSnippetsPage = await app.dao.snippets().loadSnippetsPage({
                 loadSnippetsInfo: {
                     orgId: apiInfo.orgId,
                     apiId: apiInfo.apiId,
                     endpointIdentifier: undefined,
                     sdks: req.body.sdks,
                     page: page,
-                }
+                },
             });
             return res.send({
                 next: response.nextPage,

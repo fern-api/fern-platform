@@ -1,5 +1,12 @@
+import { SDKSnippetHolder } from "../../converters/db/snippets/SDKSnippetHolder";
 import { APIV1Write } from "../../api";
 import { transformApiDefinitionForDb } from "../../converters/db/convertAPIDefinitionToDb";
+
+const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
+    snippetsBySdkId: {},
+    sdkIdToPackage: {},
+    snippetsConfiguration: {},
+});
 
 it("api register", async () => {
     const apiDefinition: APIV1Write.ApiDefinition = {
@@ -24,9 +31,8 @@ it("api register", async () => {
             },
         },
         subpackages: {},
-        sdksWithSnippets: [],
     };
-    const dbApiDefinition = transformApiDefinitionForDb(apiDefinition, "id");
+    const dbApiDefinition = transformApiDefinitionForDb(apiDefinition, "id", EMPTY_SNIPPET_HOLDER);
     expect(dbApiDefinition).toEqual({
         auth: undefined,
         id: "id",

@@ -1,6 +1,13 @@
 import { resolve } from "path";
 import { transformApiDefinitionForDb } from "../../../converters/db/convertAPIDefinitionToDb";
 import type * as APIV1Write from "../../generated/api/resources/api/resources/v1/resources/register";
+import { SDKSnippetHolder } from "../../../converters/db/snippets/SDKSnippetHolder";
+
+const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
+    snippetsBySdkId: {},
+    sdkIdToPackage: {},
+    snippetsConfiguration: {},
+});
 
 const FIXTURES_DIR = resolve(__dirname, "fixtures");
 const FIXTURES: Fixture[] = [
@@ -36,7 +43,7 @@ describe("transformApiDefinitionToDb", () => {
             `${JSON.stringify(fixture)}`,
             async () => {
                 const apiDef = loadFdrApiDefinition(fixture);
-                const dbApiDefinition = transformApiDefinitionForDb(apiDef, "id");
+                const dbApiDefinition = transformApiDefinitionForDb(apiDef, "id", EMPTY_SNIPPET_HOLDER);
                 expect(dbApiDefinition).toMatchSnapshot();
             },
             90_000

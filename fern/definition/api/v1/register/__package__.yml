@@ -3,7 +3,6 @@
 imports:
   endpoint: endpoint.yml
   type: type.yml
-  rootSnippet: ../../../__package__.yml
   rootCommons: ../../../commons.yml
   commons: commons.yml
   webhook: webhook.yml
@@ -40,7 +39,30 @@ types:
       types: map<type.TypeId, type.TypeDefinition>
       subpackages: map<SubpackageId, ApiDefinitionSubpackage>
       auth: optional<ApiAuth>
-      sdksWithSnippets: optional<list<rootSnippet.SDK>>
+      snippetsConfiguration: optional<SnippetsConfig>
+  
+  SnippetsConfig:
+    properties:
+      typescriptSdk: optional<TypescriptPackage>
+      pythonSdk: optional<PythonPackage>
+      goSdk: optional<GoModule>
+      javaSdk: optional<JavaCoordinate>
+
+  TypescriptPackage:
+    properties:
+      package: string
+
+  PythonPackage:
+    properties:
+      package: string
+
+  GoModule:
+    properties:
+      githubRepo: string
+  
+  JavaCoordinate: 
+    properties: 
+      coordinate: string
 
   ApiDefinitionPackage:
     properties:

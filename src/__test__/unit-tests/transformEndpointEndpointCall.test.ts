@@ -1,5 +1,12 @@
+import { SDKSnippetHolder } from "../../converters/db/snippets/SDKSnippetHolder";
 import { APIV1Write } from "../../api";
 import { transformExampleEndpointCall } from "../../converters/db/convertAPIDefinitionToDb";
+
+const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
+    snippetsBySdkId: {},
+    sdkIdToPackage: {},
+    snippetsConfiguration: {},
+});
 
 describe("transformEndpointEndpointCall", () => {
     it("correctly transforms", () => {
@@ -7,7 +14,6 @@ describe("transformEndpointEndpointCall", () => {
             id: "endpoint-id",
             description: "This is some ```markdown```",
             method: APIV1Write.HttpMethod.Post,
-            fullEndpointPath: "/prefix/{pathParam}/suffix",
             path: {
                 parts: [
                     { type: "literal", value: "/prefix" },
@@ -60,6 +66,7 @@ describe("transformEndpointEndpointCall", () => {
                 },
                 responseStatusCode: 200,
             },
+            snippets: EMPTY_SNIPPET_HOLDER,
         });
 
         expect(transformed).toEqual({

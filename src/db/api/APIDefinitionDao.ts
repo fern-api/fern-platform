@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
-import { APIV1Db } from "../api";
-import { readBuffer } from "../util";
+import { APIV1Db } from "../../api";
+import { readBuffer } from "../../util";
 
 export interface APIDefinitionDao {
     loadAPIDefinition(apiDefinitionId: string): Promise<APIV1Db.DbApiDefinition | undefined>;

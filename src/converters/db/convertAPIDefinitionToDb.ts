@@ -6,10 +6,12 @@ import { mayContainMarkdown } from "../../util/markdown";
 import { titleCase } from "../../util/titleCase";
 import { generateEndpointExampleCall } from "./examples/generateEndpointExampleCall";
 import { generateWebhookExample } from "./examples/generateWebhookExample";
+import { SDKSnippetHolder } from "./snippets/SDKSnippetHolder";
 
 export function transformApiDefinitionForDb(
     writeShape: APIV1Write.ApiDefinition,
-    id: FdrAPI.ApiDefinitionId
+    id: FdrAPI.ApiDefinitionId,
+    snippets: SDKSnippetHolder
 ): WithoutQuestionMarks<APIV1Db.DbApiDefinition> {
     const subpackageToParent: Record<APIV1Write.SubpackageId, APIV1Write.SubpackageId> = {};
     for (const [parentId, parentContents] of entries(writeShape.subpackages)) {
@@ -17,14 +19,17 @@ export function transformApiDefinitionForDb(
             subpackageToParent[subpackageId] = parentId;
         }
     }
-
     const context = new ApiDefinitionTransformationContext();
-
     return {
         id,
         rootPackage: {
             endpoints: writeShape.rootPackage.endpoints.map((endpoint) =>
-                transformEndpoint({ writeShape: endpoint, apiDefinition: writeShape, context })
+                transformEndpoint({
+                    writeShape: endpoint,
+                    apiDefinition: writeShape,
+                    context,
+                    snippets: snippets,
+                })
             ),
             webhooks:
                 writeShape.rootPackage.webhooks?.map((webhook) =>
@@ -47,6 +52,7 @@ export function transformApiDefinitionForDb(
                 subpackageToParent,
                 apiDefinition: writeShape,
                 context,
+                snippets,
             });
             return subpackages;
         }, {}),
@@ -61,16 +67,18 @@ function transformSubpackage({
     subpackageToParent,
     apiDefinition,
     context,
+    snippets,
 }: {
     writeShape: APIV1Write.ApiDefinitionSubpackage;
     id: APIV1Write.SubpackageId;
     subpackageToParent: Record<APIV1Write.SubpackageId, APIV1Write.SubpackageId>;
     apiDefinition: APIV1Write.ApiDefinition;
     context: ApiDefinitionTransformationContext;
+    snippets: SDKSnippetHolder;
 }): WithoutQuestionMarks<APIV1Db.DbApiDefinitionSubpackage> {
     const parent = subpackageToParent[id];
     const endpoints = writeShape.endpoints.map((endpoint) =>
-        transformEndpoint({ writeShape: endpoint, apiDefinition, context })
+        transformEndpoint({ writeShape: endpoint, apiDefinition, context, snippets })
     );
     const webhooks = writeShape.webhooks?.map((webhook) => transformWebhook({ writeShape: webhook, apiDefinition }));
     const htmlDescription = getHtmlDescription(writeShape.description);
@@ -122,10 +130,12 @@ function transformEndpoint({
     writeShape,
     apiDefinition,
     context,
+    snippets,
 }: {
     writeShape: APIV1Write.EndpointDefinition;
     apiDefinition: APIV1Write.ApiDefinition;
     context: ApiDefinitionTransformationContext;
+    snippets: SDKSnippetHolder;
 }): WithoutQuestionMarks<APIV1Db.DbEndpointDefinition> {
     context.registerEnvironments(writeShape.environments ?? []);
     const htmlDescription = getHtmlDescription(writeShape.description);
@@ -165,7 +175,11 @@ function transformEndpoint({
                       };
                   })
                 : undefined,
-        examples: getExampleEndpointCalls({ writeShape, apiDefinition }),
+        examples: getExampleEndpointCalls({
+            writeShape,
+            apiDefinition,
+            snippets,
+        }),
         description: writeShape.description,
         htmlDescription,
         authed: writeShape.auth,
@@ -177,9 +191,11 @@ function transformEndpoint({
 function getExampleEndpointCalls({
     writeShape,
     apiDefinition,
+    snippets,
 }: {
     writeShape: APIV1Write.EndpointDefinition;
     apiDefinition: APIV1Write.ApiDefinition;
+    snippets: SDKSnippetHolder;
 }) {
     const examples: APIV1Write.ExampleEndpointCall[] = [];
 
@@ -207,6 +223,7 @@ function getExampleEndpointCalls({
         transformExampleEndpointCall({
             writeShape: example,
             endpointDefinition: writeShape,
+            snippets,
         })
     );
 }
@@ -275,10 +292,17 @@ function transformHttpRequestToDb({
 // exported for testing
 export function transformExampleEndpointCall({
     writeShape,
+    endpointDefinition,
+    snippets,
 }: {
     writeShape: APIV1Write.ExampleEndpointCall;
     endpointDefinition: APIV1Write.EndpointDefinition;
+    snippets: SDKSnippetHolder;
 }): WithoutQuestionMarks<FdrAPI.api.v1.read.ExampleEndpointCall> {
+    // TODO: Retrieve the snippet (if any) from the given set, and include it in
+    // the object returned from here.
+    //
+    // We will only map PythonSDK snippets for now.
     const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
@@ -292,12 +316,42 @@ export function transformExampleEndpointCall({
         requestBody: writeShape.requestBody,
         responseStatusCode: writeShape.responseStatusCode,
         responseBody: writeShape.responseBody,
-        codeExamples: {
-            nodeAxios: "",
-        },
+        codeExamples: transformCodeExamples({
+            endpointDefinition: endpointDefinition,
+            snippets: snippets,
+        }),
         requestBodyV2: undefined,
         responseBodyV2: undefined,
     };
+}
+
+function transformCodeExamples({
+    endpointDefinition,
+    snippets,
+}: {
+    endpointDefinition: APIV1Write.EndpointDefinition;
+    snippets: SDKSnippetHolder;
+}): FdrAPI.api.v1.read.CodeExamples {
+    const maybePythonSnippet = snippets.getPythonCodeSnippetForEndpoint({
+        endpointMethod: endpointDefinition.method,
+        endpointPath: getEndpointPathAsString(endpointDefinition),
+    });
+    return {
+        nodeAxios: "",
+        pythonSdk: maybePythonSnippet,
+    };
+}
+
+function getEndpointPathAsString(endpoint: APIV1Write.EndpointDefinition) {
+    let endpointPath = "";
+    for (const part of endpoint.path.parts) {
+        if (part.type === "literal") {
+            endpointPath += `${endpointPath}${part.value}`;
+        } else {
+            endpointPath += `${endpointPath}{${part.value}}`;
+        }
+    }
+    return endpointPath;
 }
 
 function transformTypeDefinition({

@@ -13,7 +13,7 @@ import { getDocsReadV2Service } from "../../controllers/docs/v2/getDocsReadV2Ser
 import { getDocsWriteV2Service } from "../../controllers/docs/v2/getDocsWriteV2Service";
 import { getSnippetsFactoryService } from "../../controllers/snippets/getSnippetsFactoryService";
 import { getSnippetsService } from "../../controllers/snippets/getSnippetsService";
-import { DEFAULT_SNIPPETS_PAGE_SIZE } from "../../db/SnippetsDao";
+import { DEFAULT_SNIPPETS_PAGE_SIZE } from "../../db/snippets/SnippetsDao";
 import { FernRegistry, FernRegistryClient, FernRegistryError } from "../generated";
 import { createMockFdrApplication } from "../mock";
 import { createMockDocs, createMockIndexSegment } from "./util";
@@ -80,7 +80,6 @@ const EMPTY_REGISTER_API_DEFINITION: FernRegistry.api.v1.register.ApiDefinition 
     },
     subpackages: {},
     types: {},
-    sdksWithSnippets: [],
 };
 
 const MOCK_REGISTER_API_DEFINITION: FernRegistry.api.v1.register.ApiDefinition = {
@@ -89,7 +88,6 @@ const MOCK_REGISTER_API_DEFINITION: FernRegistry.api.v1.register.ApiDefinition =
             {
                 id: "dummy",
                 method: "POST",
-                fullEndpointPath: "/dummy",
                 path: {
                     parts: [{ type: "literal", value: "dummy" }],
                     pathParameters: [],
@@ -104,7 +102,6 @@ const MOCK_REGISTER_API_DEFINITION: FernRegistry.api.v1.register.ApiDefinition =
     },
     subpackages: {},
     types: {},
-    sdksWithSnippets: [],
 };
 
 it("definition register", async () => {
@@ -396,7 +393,7 @@ it("snippets dao", async () => {
         },
     });
     // get snippets
-    const response = await serverApp?.dao.snippets().loadSnippets({
+    const response = await serverApp?.dao.snippets().loadSnippetsPage({
         loadSnippetsInfo: {
             orgId: "acme",
             apiId: "api",
@@ -582,7 +579,7 @@ it("load snippets", async () => {
                 type: "typescript",
                 package: "acme",
                 version: "0.0.1",
-            }
+            },
         ],
         page: firstResponse.next,
     });
@@ -728,4 +725,3 @@ it("get snippets (unauthenticated)", async () => {
     }
     expect(unauthorizedErrorThrown).toEqual(true);
 });
-

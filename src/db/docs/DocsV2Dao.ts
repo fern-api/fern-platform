@@ -1,10 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
-import { DocsV1Db } from "../api";
-import { DocsRegistrationInfo } from "../controllers/docs/v2/getDocsWriteV2Service";
-import type { IndexSegment } from "../services/algolia";
-import { WithoutQuestionMarks, readBuffer, writeBuffer } from "../util";
-import { IndexSegmentIds, PrismaTransaction, ReferencedAPIDefinitionIds } from "./types";
+import { DocsV1Db } from "../../api";
+import { DocsRegistrationInfo } from "../../controllers/docs/v2/getDocsWriteV2Service";
+import type { IndexSegment } from "../../services/algolia";
+import { WithoutQuestionMarks, readBuffer, writeBuffer } from "../../util";
+import { IndexSegmentIds, PrismaTransaction, ReferencedAPIDefinitionIds } from "../types";
 
 export interface StoreDocsDefinitionResponse {
     previousAlogliaIndex?: string;

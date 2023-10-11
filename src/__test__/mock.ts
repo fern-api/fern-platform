@@ -1,4 +1,4 @@
-import { OrgIdsResponse } from "src/services/auth/AuthService";
+import { OrgIdsResponse } from "../services/auth/AuthService";
 import { DocsV1Db } from "../api";
 import { FdrApplication, type FdrConfig } from "../app";
 import { type FdrServices } from "../app/FdrApplication";

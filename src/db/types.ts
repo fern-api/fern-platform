@@ -7,3 +7,5 @@ export type IndexSegmentIds = string[];
 
 // Prisma Transaction Type
 export type PrismaTransaction = Omit<PrismaClient, "$connect" | "$disconnect" | "$on" | "$transaction" | "$use">;
+
+export type SdkId = string;

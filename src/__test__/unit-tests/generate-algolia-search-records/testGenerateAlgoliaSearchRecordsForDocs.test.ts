@@ -6,6 +6,7 @@ import { transformWriteDocsDefinitionToDb } from "../../../converters/db/convert
 import type { AlgoliaSearchRecord } from "../../../services/algolia";
 import { AlgoliaSearchRecordGenerator } from "../../../services/algolia/AlgoliaSearchRecordGenerator";
 import { isVersionedNavigationConfig } from "../../../util/fern/db";
+import { SDKSnippetHolder } from "../../../converters/db/snippets/SDKSnippetHolder";
 
 const FIXTURES_DIR = resolve(__dirname, "fixtures");
 const FIXTURES: Fixture[] = [
@@ -44,6 +45,12 @@ interface Fixture {
     only?: boolean;
 }
 
+const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
+    snippetsBySdkId: {},
+    sdkIdToPackage: {},
+    snippetsConfiguration: {},
+});
+
 describe("generateAlgoliaSearchRecordsForDocs", () => {
     for (const fixture of FIXTURES) {
         const { only = false } = fixture;
@@ -58,7 +65,7 @@ describe("generateAlgoliaSearchRecordsForDocs", () => {
                 const preloadApiDefinitions = () => {
                     const apiIdDefinitionTuples = docsDefinition.referencedApis.map((id) => {
                         const apiDef = loadApiDefinition(fixture, id);
-                        return [id, transformApiDefinitionForDb(apiDef, id)] as const;
+                        return [id, transformApiDefinitionForDb(apiDef, id, EMPTY_SNIPPET_HOLDER)] as const;
                     });
 
                     return new Map(apiIdDefinitionTuples);

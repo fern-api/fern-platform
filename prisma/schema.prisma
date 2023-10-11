@@ -77,6 +77,9 @@ model Snippet {
 
 model Sdk {
   id        String    @id
+  // Optional for backcompat 
+  // Package name used by registry (e.g. @velllum/api or com.vellum.ai:vellum)
+  package   String?
   language  Language
   sdk       Bytes
   createdAt DateTime  @default(now())

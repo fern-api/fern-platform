@@ -9,8 +9,6 @@ types:
 
   EndpointId: string
 
-  FullEndpointPath: string
-
   Availability: 
     enum: 
       - GenerallyAvailable
@@ -27,7 +25,6 @@ types:
       method: HttpMethod
       id: EndpointId
       name: optional<string>
-      fullEndpointPath: optional<FullEndpointPath>
       path: EndpointPath
       queryParameters: list<QueryParameter>
       headers: list<Header>
