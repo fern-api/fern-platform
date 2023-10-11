@@ -1,5 +1,5 @@
-import { type SerializedMdxContent, serializeMdxContent } from "./mdx";
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { serializeMdxContent, type SerializedMdxContent } from "./mdx";
 import type { DocsNode, NavigatableDocsNode } from "./path-resolver";
 
 export type SerializedPageNode = DocsNode.Page & {

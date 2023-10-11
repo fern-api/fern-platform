@@ -1,10 +1,6 @@
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import {
-    getFirstNavigatableItemSlugInDefinition,
-    PathResolver,
-    joinUrlSlugs,
-    getFullSlugForNavigatable,
-    SerializedMdxContent,
+    getFirstNavigatableItemSlugInDefinition, getFullSlugForNavigatable, joinUrlSlugs, PathResolver, SerializedMdxContent
 } from "@fern-ui/app-utils";
 import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";

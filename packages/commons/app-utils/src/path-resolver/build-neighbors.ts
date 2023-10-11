@@ -1,5 +1,5 @@
 import { getFullSlugForNavigatable } from "../slug";
-import type { DocsNode, FullSlug, ParentDocsNode, NodeNeighbors } from "./types";
+import type { DocsNode, FullSlug, NodeNeighbors, ParentDocsNode } from "./types";
 import { isLeafNode } from "./util";
 
 // This is the algorithm from the previous resolver, adjusted to versions and tabs.

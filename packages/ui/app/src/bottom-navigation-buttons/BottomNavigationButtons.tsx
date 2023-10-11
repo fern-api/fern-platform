@@ -1,5 +1,5 @@
-import { BottomNavigationButton } from "./BottomNavigationButton";
 import { useNavigationContext } from "../navigation-context";
+import { BottomNavigationButton } from "./BottomNavigationButton";
 
 export const BottomNavigationButtons: React.FC = () => {
     const { activeNavigatableNeighbors } = useNavigationContext();

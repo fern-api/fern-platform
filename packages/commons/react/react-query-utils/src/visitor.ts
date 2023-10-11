@@ -3,7 +3,7 @@ import {
     QueryObserverLoadingResult,
     QueryObserverRefetchErrorResult,
     QueryObserverSuccessResult,
-    UseQueryResult,
+    UseQueryResult
 } from "@tanstack/react-query";
 
 export function visitUseQueryResult<T, U, E = unknown>(

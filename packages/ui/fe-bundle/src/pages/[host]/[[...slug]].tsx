@@ -1,13 +1,13 @@
 import * as FernRegistryDocsReadV2 from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
-import { getSlugFromUrl, PathResolver, serializeNavigatableNode, getFullSlugForNavigatable } from "@fern-ui/app-utils";
+import { getFullSlugForNavigatable, getSlugFromUrl, PathResolver, serializeNavigatableNode } from "@fern-ui/app-utils";
 import { App, type ResolvedPath } from "@fern-ui/ui";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import { REGISTRY_SERVICE } from "../../service";
+import { buildUrl } from "../../utils/buildUrl";
 import { loadDocsBackgroundImage } from "../../utils/theme/loadDocsBackgroundImage";
 import { generateFontFaces, loadDocTypography } from "../../utils/theme/loadDocsTypography";
 import { useColorTheme } from "../../utils/theme/useColorTheme";
-import { buildUrl } from "../../utils/buildUrl";
 
 export declare namespace Docs {
     export interface Props {

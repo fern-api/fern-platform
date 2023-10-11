@@ -3,13 +3,13 @@ import { useContext, useEffect, useMemo, useRef } from "react";
 import { JsonExampleBreadcrumb } from "./contexts/JsonExampleBreadcrumb";
 import {
     JsonExampleBreadcumbsContext,
-    JsonExampleBreadcumbsContextValue,
+    JsonExampleBreadcumbsContextValue
 } from "./contexts/JsonExampleBreadcumbsContext";
 import { useJsonExampleContext } from "./contexts/JsonExampleContext";
 import { JsonPropertyPath } from "./contexts/JsonPropertyPath";
 import {
     JsonPropertySelectionContext,
-    JsonPropertySelectionContextValue,
+    JsonPropertySelectionContextValue
 } from "./contexts/JsonPropertySelectionContext";
 import { JsonExampleLine } from "./JsonExampleLine";
 import { JsonItemBottomLine } from "./JsonItemBottomLine";
