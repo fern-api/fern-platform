@@ -7,6 +7,43 @@ import { DEFINITION_VERSIONED_UNTABBED } from "./mock-definitions/versioned-unta
 import { DEFINITION_WITH_API } from "./mock-definitions/with-api-definition";
 
 describe("resolveNavigatable", () => {
+    describe("resolves empty slug to root navigatable", () => {
+        it("with unversioned and untabbed docs", () => {
+            const resolver = new PathResolver({
+                docsDefinition: DEFINITION_UNVERSIONED_UNTABBED,
+            });
+            expect(Object.is(resolver.resolveNavigatable(""), resolver.rootNavigatable)).toBe(true);
+        });
+
+        it("with unversioned and tabbed docs", () => {
+            const resolver = new PathResolver({
+                docsDefinition: DEFINITION_UNVERSIONED_TABBED,
+            });
+            expect(Object.is(resolver.resolveNavigatable(""), resolver.rootNavigatable)).toBe(true);
+        });
+
+        it("with versioned and untabbed docs", () => {
+            const resolver = new PathResolver({
+                docsDefinition: DEFINITION_VERSIONED_UNTABBED,
+            });
+            expect(Object.is(resolver.resolveNavigatable(""), resolver.rootNavigatable)).toBe(true);
+        });
+
+        it("with versioned and tabbed docs", () => {
+            const resolver = new PathResolver({
+                docsDefinition: DEFINITION_VERSIONED_TABBED,
+            });
+            expect(Object.is(resolver.resolveNavigatable(""), resolver.rootNavigatable)).toBe(true);
+        });
+
+        it("with api definition", () => {
+            const resolver = new PathResolver({
+                docsDefinition: DEFINITION_WITH_API,
+            });
+            expect(Object.is(resolver.resolveNavigatable(""), resolver.rootNavigatable)).toBe(true);
+        });
+    });
+
     describe("resolves to the correct navigatable node", () => {
         it("with unversioned and untabbed docs", () => {
             const resolver = new PathResolver({
