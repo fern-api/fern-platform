@@ -91,8 +91,6 @@ export interface VersionInfo {
     availability: FernRegistryDocsRead.VersionAvailability | null;
 }
 
-export type DefinitionInfo = DefinitionInfo.Unversioned | DefinitionInfo.Versioned;
-
 export declare namespace DefinitionInfo {
     export interface Unversioned {
         type: "unversioned";
@@ -107,6 +105,21 @@ export declare namespace DefinitionInfo {
     }
 }
 
+export type DefinitionInfo = DefinitionInfo.Unversioned | DefinitionInfo.Versioned;
+
+export declare namespace TabInfo {
+    export interface Untabbed {
+        type: "untabbed";
+    }
+
+    export interface Tabbed {
+        type: "tabbed";
+        tabs: DocsNode.Tab[];
+    }
+}
+
+export type TabInfo = TabInfo.Untabbed | TabInfo.Tabbed;
+
 export declare namespace DocsNode {
     export interface Root extends BaseNode {
         type: "root";
@@ -120,6 +133,7 @@ export declare namespace DocsNode {
         info: VersionInfo;
         children: Record<FullSlug, ChildDocsNode>;
         childrenOrdering: ItemSlug[];
+        tabInfo: TabInfo;
     }
 
     export interface Tab extends BaseNode {

@@ -1,8 +1,9 @@
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { joinUrlSlugs } from "../slug";
+import { getFullSlugForNavigatable, joinUrlSlugs } from "../slug";
 import { buildResolutionMap } from "./build-map";
+import { buildNodeToNeighborsMap } from "./build-neighbors";
 import { buildDefinitionTree } from "./build-tree";
-import { PathCollisionError } from "./errors";
+import { ImplementationError, PathCollisionError } from "./errors";
 import type { DocsNode, FullSlug, NavigatableDocsNode } from "./types";
 import { isLeafNode, traversePreOrder } from "./util";
 
@@ -10,22 +11,30 @@ export interface PathResolverConfig {
     docsDefinition: FernRegistryDocsRead.DocsDefinition;
 }
 
+export interface NavigatableNeighbors {
+    previousNavigatable: NavigatableDocsNode | null;
+    nextNavigatable: NavigatableDocsNode | null;
+}
+
 export class PathResolver {
     readonly #tree: DocsNode.Root;
     readonly #map: Map<FullSlug, DocsNode | DocsNode[]>;
+    readonly #nodeToNeighbors: Map<FullSlug, NavigatableNeighbors>;
     public readonly rootNavigatable: NavigatableDocsNode | undefined;
 
     public constructor(public readonly config: PathResolverConfig) {
-        const { tree, map } = this.#preprocessDefinition();
+        const { tree, map, nodeToNeighbors } = this.#preprocessDefinition();
         this.#tree = tree;
         this.#map = map;
+        this.#nodeToNeighbors = nodeToNeighbors;
         this.rootNavigatable = this.#resolveNavigatable(this.#tree);
     }
 
     #preprocessDefinition() {
         const tree = buildDefinitionTree(this.config.docsDefinition);
         const map = buildResolutionMap(tree);
-        return { tree, map };
+        const nodeToNeighbors = buildNodeToNeighborsMap(tree);
+        return { tree, map, nodeToNeighbors };
     }
 
     public resolveNavigatable(fullSlug: FullSlug): NavigatableDocsNode | undefined;
@@ -75,5 +84,15 @@ export class PathResolver {
             }
         });
         return nodesBySlug;
+    }
+
+    public getNeighborsForNavigatable(fullSlugOrNode: string | NavigatableDocsNode): NavigatableNeighbors {
+        const fullSlug =
+            typeof fullSlugOrNode === "string" ? fullSlugOrNode : getFullSlugForNavigatable(fullSlugOrNode);
+        const neighbors = this.#nodeToNeighbors.get(fullSlug);
+        if (neighbors == null) {
+            throw new ImplementationError("Cannot find node neighbors.");
+        }
+        return neighbors;
     }
 }

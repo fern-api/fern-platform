@@ -20,6 +20,9 @@ export function buildDefinitionTree(definition: FernRegistryDocsRead.DocsDefinit
                     index: versionIndex,
                     availability: version.availability ?? null,
                 },
+                tabInfo: {
+                    type: "untabbed",
+                },
             });
             if (versionIndex === 0) {
                 root.info = {
@@ -48,6 +51,10 @@ export function buildDefinitionTree(definition: FernRegistryDocsRead.DocsDefinit
                         },
                     });
                 });
+                versionNode.tabInfo = {
+                    type: "tabbed",
+                    tabs: tabNodes,
+                };
                 addNodeChildren(versionNode, tabNodes);
             } else {
                 const children = buildNodesForNavigationItems({
@@ -125,7 +132,7 @@ function buildNodeForNavigationTab({
     index: number;
     parentSlugs: string[];
     context: BuildContext;
-}): ChildDocsNode {
+}): DocsNode.Tab {
     const tabNode = NodeFactory.createTab({
         slug: tab.urlSlug,
         version: context.version,

@@ -1,6 +1,6 @@
 import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { DocsNode, VersionInfo, NodeDocsContext } from "./types";
+import { DocsNode, VersionInfo, NodeDocsContext, TabInfo } from "./types";
 
 export class NodeFactory {
     public static createRoot(definition: FernRegistryDocsRead.DocsDefinition): DocsNode.Root {
@@ -13,13 +13,22 @@ export class NodeFactory {
         };
     }
 
-    public static createVersion({ slug, info }: { slug: string; info: VersionInfo }): DocsNode.Version {
+    public static createVersion({
+        slug,
+        info,
+        tabInfo,
+    }: {
+        slug: string;
+        info: VersionInfo;
+        tabInfo: TabInfo;
+    }): DocsNode.Version {
         return {
             type: "version",
             slug,
             info,
             children: {},
             childrenOrdering: [],
+            tabInfo,
         };
     }
 
