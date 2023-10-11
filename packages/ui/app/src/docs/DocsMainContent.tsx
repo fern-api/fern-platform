@@ -22,10 +22,7 @@ export const DocsMainContent: React.FC<DocsMainContent.Props> = () => {
         case "endpoint":
         case "webhook":
             return (
-                <ApiDefinitionContextProvider
-                    apiSection={activeNavigatable.section}
-                    apiSlug="api-reference" // TODO: Remove
-                >
+                <ApiDefinitionContextProvider apiSection={activeNavigatable.section}>
                     <ApiPage />
                 </ApiDefinitionContextProvider>
             );
