@@ -1,7 +1,13 @@
 import type { DocsNode, NavigatableDocsNode } from "./types";
 
 export function isLeafNode(node: DocsNode): node is NavigatableDocsNode {
-    return node.type === "endpoint" || node.type === "webhook" || node.type === "page";
+    return (
+        node.type === "top-level-endpoint" ||
+        node.type === "endpoint" ||
+        node.type === "top-level-webhook" ||
+        node.type === "webhook" ||
+        node.type === "page"
+    );
 }
 
 export function isSectionNode(node: DocsNode | undefined): node is DocsNode.ApiSection | DocsNode.DocsSection {

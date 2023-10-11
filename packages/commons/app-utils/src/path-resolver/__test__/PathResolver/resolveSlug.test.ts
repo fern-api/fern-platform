@@ -75,7 +75,7 @@ describe("resolveSlug", () => {
                 docsDefinition: DEFINITION_WITH_API,
             });
             const resolvedNode = resolver.resolveSlug("api-reference/client-api/generate-completion");
-            expectNode(resolvedNode).toBeOfType("endpoint");
+            expectNode(resolvedNode).toBeOfType("top-level-endpoint");
         });
 
         describe("with skipped slugs", () => {
@@ -89,7 +89,7 @@ describe("resolveSlug", () => {
                     ["help-center/documents/uploading-documents", undefined],
                     ["help-center/uploading-documents", "page"],
                     ["api-reference/api-reference/generate-completion", undefined],
-                    ["api-reference/generate-completion", "endpoint"],
+                    ["api-reference/generate-completion", "top-level-endpoint"],
                 ];
                 tuples.forEach(([slug, type]) => {
                     const resolvedNode = resolver.resolveSlug(slug);

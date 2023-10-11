@@ -1,14 +1,16 @@
 import { type SerializedMdxContent } from "@fern-ui/app-utils";
 
-interface ResolvedPathMdxPage {
-    type: "mdx-page";
-    fullSlug: string;
-    serializedMdxContent: SerializedMdxContent;
+export declare namespace ResolvedPath {
+    interface MdxPage {
+        type: "mdx-page";
+        fullSlug: string;
+        serializedMdxContent: SerializedMdxContent;
+    }
+
+    interface Other {
+        fullSlug: string;
+        type: "other";
+    }
 }
 
-interface ResolvedPathOther {
-    fullSlug: string;
-    type: "other";
-}
-
-export type ResolvedPath = ResolvedPathMdxPage | ResolvedPathOther;
+export type ResolvedPath = ResolvedPath.MdxPage | ResolvedPath.Other;

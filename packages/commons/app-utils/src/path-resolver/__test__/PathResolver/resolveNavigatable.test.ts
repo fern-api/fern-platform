@@ -1,5 +1,5 @@
 import { PathResolver } from "../../PathResolver";
-import { expectEndpointNode, expectPageNode } from "../util";
+import { expectPageNode, expectTopLevelEndpointNode } from "../util";
 import { DEFINITION_UNVERSIONED_TABBED } from "./mock-definitions/unversioned-tabbed";
 import { DEFINITION_UNVERSIONED_UNTABBED } from "./mock-definitions/unversioned-untabbed";
 import { DEFINITION_VERSIONED_TABBED } from "./mock-definitions/versioned-tabbed";
@@ -53,7 +53,7 @@ describe("resolveNavigatable", () => {
                 docsDefinition: DEFINITION_WITH_API,
             });
             const resolvedNode = resolver.resolveNavigatable("api-reference");
-            expectEndpointNode(resolvedNode);
+            expectTopLevelEndpointNode(resolvedNode);
             expect(resolvedNode.slug).toEqual("generate-completion");
             expect(resolvedNode.leadingSlug).toEqual("api-reference/client-api/generate-completion");
         });
