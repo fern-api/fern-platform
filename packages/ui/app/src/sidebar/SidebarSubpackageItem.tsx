@@ -1,9 +1,10 @@
 import { Text } from "@blueprintjs/core";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import classNames from "classnames";
-import { NextRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
 import { memo, useCallback, useEffect, useRef } from "react";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
+import { useNavigationContext } from "../navigation-context";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace SidebarSubpackageItem {
@@ -11,9 +12,8 @@ export declare namespace SidebarSubpackageItem {
         title: JSX.Element | string;
         isChildSelected: boolean;
         className?: string;
-        slug: string;
+        fullSlug: string;
         registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
-        getFullSlug: (slug: string) => string;
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
         activeTabIndex: number | null;
         closeMobileSidebar: () => void;
@@ -25,15 +25,16 @@ const UnmemoizedSidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = (
     title,
     isChildSelected,
     className,
-    slug,
+    fullSlug,
     registerScrolledToPathListener,
-    getFullSlug,
 }) => {
-    const handleClick = useCallback(async () => {
-        // TODO: Implement with new resolver
-    }, []);
+    const router = useRouter();
+    const { navigateToPath } = useNavigationContext();
 
-    const fullSlug = getFullSlug(slug);
+    const handleClick = useCallback(async () => {
+        navigateToPath(fullSlug);
+        void router.replace(`/${fullSlug}`, undefined, { shallow: true });
+    }, [fullSlug, navigateToPath, router]);
 
     const renderTitle = useCallback(
         ({ isHovering }: { isHovering: boolean }) => {
@@ -83,8 +84,5 @@ const UnmemoizedSidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = (
 
 export const SidebarSubpackageItem = memo(
     UnmemoizedSidebarSubpackageItem,
-    (prev, next) =>
-        prev.isChildSelected === next.isChildSelected &&
-        prev.getFullSlug === next.getFullSlug &&
-        prev.slug === next.slug
+    (prev, next) => prev.isChildSelected === next.isChildSelected && prev.fullSlug === next.fullSlug
 );

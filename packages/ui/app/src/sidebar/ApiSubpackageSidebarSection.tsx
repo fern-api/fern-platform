@@ -41,8 +41,8 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
         [resolveSubpackageById, subpackage.subpackageId]
     );
 
-    const isSelected = selectedSlug != null && selectedSlug === getFullSlug(slug);
-    const isChildSelected = selectedSlug != null && selectedSlug.startsWith(`${getFullSlug(slug)}/`);
+    const isSelected = selectedSlug != null && selectedSlug === slug;
+    const isChildSelected = selectedSlug != null && selectedSlug.startsWith(`${slug}/`);
     const { expandAllSections } = useContext(SidebarContext)();
     const isOpen = isSelected || isChildSelected || expandAllSections;
 
@@ -56,8 +56,7 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
                 <SidebarSubpackageItem
                     title={getSubpackageTitle(subpackage)}
                     isChildSelected={isChildSelected}
-                    slug={slug}
-                    getFullSlug={getFullSlug}
+                    fullSlug={slug}
                     registerScrolledToPathListener={registerScrolledToPathListener}
                     docsDefinition={docsDefinition}
                     activeTabIndex={activeTabIndex}
