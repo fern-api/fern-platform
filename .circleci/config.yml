@@ -132,7 +132,7 @@ jobs:
       - checkout
       - run:
           name: Download Fern
-          command: sudo npm install -g fern-dev
+          command: sudo npm install -g fern-api
       - run:
           name: Generate Customer Docs
           command: |
