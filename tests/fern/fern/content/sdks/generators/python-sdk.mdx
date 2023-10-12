@@ -1,0 +1,14 @@
+The Python SDK generator outputs a fully functional Python
+SDK. It can publish the SDK to pypi.org (or any other pypi repository).
+
+Check out the source code [here](https://github.com/fern-api/fern-python).
+
+<CodeBlock title="generators.yml">
+```yaml
+- name: fernapi/fern-python-sdk
+  version: 0.4.5
+  output:
+    location: pypi.buildwithfern.com
+    package-name: fern-{yourorg}-plantstore
+```
+</CodeBlock>

@@ -1,0 +1,14 @@
+The Java SDK generator outputs a fully functional Java
+SDK. It can publish the SDK to Maven Central (or any other Maven repository).
+
+Check out the source code[here](https://github.com/fern-api/fern-java)
+
+<CodeBlock title="generators.yml">
+```yaml
+- name: fernapi/fern-java-sdk
+  version: 0.3.6
+  output:
+    location: maven.buildwithfern.com
+    coordinate: com.{your-org}.fern:plantstore
+```
+</CodeBlock>
