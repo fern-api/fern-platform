@@ -14,7 +14,7 @@ export declare namespace useApiPageCenterElement {
 }
 
 export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args): useApiPageCenterElement.Return {
-    const { userIsScrolling, getFullSlug, onScrollToPath } = useNavigationContext();
+    const { userIsScrolling, onScrollToPath } = useNavigationContext();
     const { selectedSlug } = useDocsSelectors();
 
     const onChangeIsInVerticalCenter = useRef((newIsInVerticalCenter: boolean) => {
@@ -23,8 +23,7 @@ export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args):
         }
     });
 
-    // TODO: Revise
-    const isSelected = selectedSlug === getFullSlug(slug);
+    const isSelected = selectedSlug === slug;
 
     const { ref: setRefForInVerticalCenterIntersectionObserver } = useInView({
         // https://stackoverflow.com/questions/54807535/intersection-observer-api-observe-the-center-of-the-viewport

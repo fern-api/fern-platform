@@ -53,7 +53,6 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
         next: null,
     },
     navigateToPath: noop,
-    getFullSlug: () => "",
     userIsScrolling: () => false,
     onScrollToPath: noop,
     observeDocContent: noop,
@@ -68,8 +67,6 @@ export interface NavigationContextValue {
     activeNavigatable: NavigatableDocsNode;
     activeNavigatableNeighbors: NodeNeighbors;
     navigateToPath: (slugWithoutVersion: string, opts?: NavigateToPathOpts) => void;
-    /** Returns the version-prefixed slug. */
-    getFullSlug: (slug: string, opts?: { tabSlug?: string }) => string;
     userIsScrolling: () => boolean;
     onScrollToPath: (slug: string) => void;
     observeDocContent: (element: HTMLDivElement) => void;

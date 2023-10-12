@@ -11,7 +11,6 @@ export declare namespace ApiPackageSidebarSectionContents {
         slug: string;
         shallow?: boolean;
         registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
-        getFullSlug: (slug: string) => string;
         closeMobileSidebar: () => void;
         selectedSlug: string | undefined;
         resolveSubpackageById: (
@@ -27,7 +26,6 @@ export const ApiPackageSidebarSectionContents: React.FC<ApiPackageSidebarSection
     slug,
     shallow,
     registerScrolledToPathListener,
-    getFullSlug,
     closeMobileSidebar,
     selectedSlug,
     resolveSubpackageById,
@@ -57,16 +55,15 @@ export const ApiPackageSidebarSectionContents: React.FC<ApiPackageSidebarSection
                     indent={isSubpackage(package_)}
                     shallow={shallow}
                     registerScrolledToPathListener={registerScrolledToPathListener}
-                    fullSlug={getFullSlug(joinUrlSlugs(slug, webhook.urlSlug))}
+                    fullSlug={joinUrlSlugs(slug, webhook.urlSlug)}
                     closeMobileSidebar={closeMobileSidebar}
-                    isSelected={getFullSlug(joinUrlSlugs(slug, webhook.urlSlug)) === selectedSlug}
+                    isSelected={joinUrlSlugs(slug, webhook.urlSlug) === selectedSlug}
                 />
             ))}
             <ApiSubpackages
                 package={package_}
                 slug={slug}
                 registerScrolledToPathListener={registerScrolledToPathListener}
-                getFullSlug={getFullSlug}
                 closeMobileSidebar={closeMobileSidebar}
                 selectedSlug={selectedSlug}
                 resolveSubpackageById={resolveSubpackageById}

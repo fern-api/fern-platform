@@ -2,7 +2,6 @@ import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/reso
 import {
     getFirstNavigatableItemSlugInDefinition,
     getFullSlugForNavigatable,
-    joinUrlSlugs,
     PathResolver,
     SerializedMdxContent,
 } from "@fern-ui/app-utils";
@@ -10,11 +9,11 @@ import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCacheContext } from "../cache-context/useCacheContext";
 import { type ResolvedPath } from "../ResolvedPath";
 import { getRouteNode } from "../util/anchor";
 import { NavigationContext } from "./NavigationContext";
 import { useSlugListeners } from "./useSlugListeners";
-import { useCacheContext } from "../cache-context/useCacheContext";
 
 export declare namespace NavigationContextProvider {
     export type Props = PropsWithChildren<{
@@ -74,22 +73,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     );
 
     const selectedSlug = getFullSlugForNavigatable(activeNavigatable);
-
-    const getFullSlug = useCallback(
-        (slug: string) => {
-            const parts: string[] = [];
-            // TODO: Implement
-            if (
-                activeNavigatable.context.type === "versioned-tabbed" ||
-                activeNavigatable.context.type === "versioned-untabbed"
-            ) {
-                parts.push(activeNavigatable.context.version.slug);
-            }
-            parts.push(slug);
-            return joinUrlSlugs(...parts);
-        },
-        [activeNavigatable]
-    );
 
     const navigateToRoute = useRef((route: string, smoothScroll: boolean) => {
         if (!userIsScrolling.current) {
@@ -226,7 +209,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 justNavigated: justNavigatedTo.current != null,
                 activeNavigatable,
                 navigateToPath,
-                getFullSlug,
                 userIsScrolling: () => userIsScrolling.current,
                 onScrollToPath,
                 observeDocContent,

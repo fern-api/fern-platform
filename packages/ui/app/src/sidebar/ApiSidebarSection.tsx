@@ -16,7 +16,6 @@ export declare namespace ApiSidebarSection {
         apiSection: FernRegistryDocsRead.ApiSection;
         selectedSlug: string | undefined;
         registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
-        getFullSlug: (slug: string) => string;
         closeMobileSidebar: () => void;
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
         activeTabIndex: number | null;
@@ -28,7 +27,6 @@ export const ApiSidebarSection: React.FC<ApiSidebarSection.Props> = ({
     slug,
     selectedSlug,
     registerScrolledToPathListener,
-    getFullSlug,
     closeMobileSidebar,
     apiSection,
     docsDefinition,
@@ -62,7 +60,6 @@ export const ApiSidebarSection: React.FC<ApiSidebarSection.Props> = ({
                 // shallow={selectedSlug?.includes(slug) ?? false}
                 selectedSlug={selectedSlug}
                 registerScrolledToPathListener={registerScrolledToPathListener}
-                getFullSlug={getFullSlug}
                 closeMobileSidebar={closeMobileSidebar}
                 resolveSubpackageById={resolveSubpackageById}
                 docsDefinition={docsDefinition}

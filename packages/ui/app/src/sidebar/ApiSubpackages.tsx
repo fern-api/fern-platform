@@ -8,7 +8,6 @@ export declare namespace ApiSubpackages {
         package: FernRegistryApiRead.ApiDefinitionPackage;
         slug: string;
         selectedSlug: string | undefined;
-        getFullSlug: (slug: string) => string;
         resolveSubpackageById: (
             subpackageId: FernRegistryApiRead.SubpackageId
         ) => FernRegistryApiRead.ApiDefinitionSubpackage;
@@ -23,7 +22,6 @@ export const ApiSubpackages: React.FC<ApiSubpackages.Props> = ({
     slug,
     package: package_,
     selectedSlug,
-    getFullSlug,
     resolveSubpackageById,
     registerScrolledToPathListener,
     docsDefinition,
@@ -39,7 +37,6 @@ export const ApiSubpackages: React.FC<ApiSubpackages.Props> = ({
                         key={subpackageId}
                         subpackage={subpackage}
                         slug={joinUrlSlugs(slug, subpackage.urlSlug)}
-                        getFullSlug={getFullSlug}
                         registerScrolledToPathListener={registerScrolledToPathListener}
                         docsDefinition={docsDefinition}
                         activeTabIndex={activeTabIndex}

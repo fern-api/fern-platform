@@ -12,7 +12,6 @@ export declare namespace SidebarDocsSection {
 
         selectedSlug: string | undefined;
         registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
-        getFullSlug: (slug: string) => string;
         closeMobileSidebar: () => void;
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
         activeTabIndex: number | null;
@@ -25,7 +24,6 @@ export const SidebarDocsSection: React.FC<SidebarDocsSection.Props> = ({
     section,
     selectedSlug,
     registerScrolledToPathListener,
-    getFullSlug,
     closeMobileSidebar,
     docsDefinition,
     activeTabIndex,
@@ -38,7 +36,6 @@ export const SidebarDocsSection: React.FC<SidebarDocsSection.Props> = ({
                 navigationItems={section.items}
                 selectedSlug={selectedSlug}
                 registerScrolledToPathListener={registerScrolledToPathListener}
-                getFullSlug={getFullSlug}
                 closeMobileSidebar={closeMobileSidebar}
                 docsDefinition={docsDefinition}
                 activeTabIndex={activeTabIndex}

@@ -15,7 +15,6 @@ export declare namespace SidebarItems {
 
         selectedSlug: string | undefined;
         registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
-        getFullSlug: (slug: string) => string;
         closeMobileSidebar: () => void;
 
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
@@ -29,7 +28,6 @@ const UnmemoizedSidebarItems: React.FC<SidebarItems.Props> = ({
     navigationItems,
     selectedSlug,
     registerScrolledToPathListener,
-    getFullSlug,
     closeMobileSidebar,
     docsDefinition,
     activeTabIndex,
@@ -57,7 +55,6 @@ const UnmemoizedSidebarItems: React.FC<SidebarItems.Props> = ({
                             section={section}
                             selectedSlug={selectedSlug}
                             registerScrolledToPathListener={registerScrolledToPathListener}
-                            getFullSlug={getFullSlug}
                             closeMobileSidebar={closeMobileSidebar}
                             docsDefinition={docsDefinition}
                             activeTabIndex={activeTabIndex}
@@ -72,7 +69,6 @@ const UnmemoizedSidebarItems: React.FC<SidebarItems.Props> = ({
                                 apiSection={apiSection}
                                 selectedSlug={selectedSlug}
                                 registerScrolledToPathListener={registerScrolledToPathListener}
-                                getFullSlug={getFullSlug}
                                 closeMobileSidebar={closeMobileSidebar}
                                 docsDefinition={docsDefinition}
                                 activeTabIndex={activeTabIndex}

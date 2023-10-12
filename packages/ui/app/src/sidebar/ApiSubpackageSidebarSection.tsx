@@ -13,7 +13,6 @@ export declare namespace ApiSubpackageSidebarSection {
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
         slug: string;
         selectedSlug: string | undefined;
-        getFullSlug: (slug: string) => string;
         resolveSubpackageById: (
             subpackageId: FernRegistryApiRead.SubpackageId
         ) => FernRegistryApiRead.ApiDefinitionSubpackage;
@@ -28,7 +27,6 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
     subpackage,
     slug,
     selectedSlug,
-    getFullSlug,
     resolveSubpackageById,
     registerScrolledToPathListener,
     docsDefinition,
@@ -72,7 +70,6 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
                     shallow={true}
                     selectedSlug={selectedSlug}
                     registerScrolledToPathListener={registerScrolledToPathListener}
-                    getFullSlug={getFullSlug}
                     closeMobileSidebar={closeMobileSidebar}
                     resolveSubpackageById={resolveSubpackageById}
                     docsDefinition={docsDefinition}
