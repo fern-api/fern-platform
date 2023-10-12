@@ -43,7 +43,7 @@ const UnmemoizedSidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Prop
                         tab={tab}
                         isSelected={idx === activeNavigatable.context.tab?.index}
                         onClick={() => {
-                            const fullSlug = withVersionSlug(tab.urlSlug);
+                            const fullSlug = withVersionSlug(tab.urlSlug, { omitDefault: true });
                             navigateToPath(fullSlug);
                             void router.replace(`/${fullSlug}`, undefined);
                         }}

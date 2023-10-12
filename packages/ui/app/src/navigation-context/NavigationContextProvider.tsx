@@ -60,6 +60,10 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         return node;
     }, [resolver, resolvedPath]);
 
+    useEffect(() => {
+        setActiveNavigatable(resolvedNavigatable);
+    }, [resolvedNavigatable]);
+
     const [activeNavigatable, setActiveNavigatable] = useState(resolvedNavigatable);
 
     const activeNavigatableNeighbors = useMemo(
@@ -67,7 +71,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         [resolver, activeNavigatable]
     );
 
-    const selectedSlug = getFullSlugForNavigatable(activeNavigatable);
+    const selectedSlug = getFullSlugForNavigatable(activeNavigatable, { omitDefault: true });
 
     const navigateToRoute = useRef((route: string, smoothScroll: boolean) => {
         if (!userIsScrolling.current) {

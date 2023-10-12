@@ -10,7 +10,7 @@ export declare namespace ApiPackageSidebarSectionContents {
         package: FernRegistryApiRead.ApiDefinitionPackage;
         slug: string;
         shallow?: boolean;
-        registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
+        registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
         closeMobileSidebar: () => void;
         selectedSlug: string | undefined;
         resolveSubpackageById: (

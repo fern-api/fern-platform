@@ -36,7 +36,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
         return (
             <SidebarItems
                 navigationItems={navigationItems}
-                slug={withVersionAndTabSlugs("")}
+                slug={withVersionAndTabSlugs("", { omitDefault: true })}
                 selectedSlug={selectedSlug}
                 registerScrolledToPathListener={registerScrolledToPathListener}
                 closeMobileSidebar={closeMobileSidebar}

@@ -14,10 +14,17 @@ export function splitFullSlugIntoParts(fullSlug: string): string[] {
     return fullSlug.split("/").map(decodeURIComponent);
 }
 
-export function getFullSlugForNavigatable(node: NavigatableDocsNode): string {
+type GetFullSlugForNavigatableOpts = {
+    omitDefault?: boolean;
+};
+
+export function getFullSlugForNavigatable(node: NavigatableDocsNode, opts?: GetFullSlugForNavigatableOpts): string {
+    const { omitDefault = false } = opts ?? {};
     const parts: string[] = [];
     if (node.context.type === "versioned-tabbed" || node.context.type === "versioned-untabbed") {
-        parts.push(node.context.version.info.slug);
+        if (node.context.version.info.index !== 0 || !omitDefault) {
+            parts.push(node.context.version.info.slug);
+        }
     }
     parts.push(node.leadingSlug);
     return joinUrlSlugs(...parts);

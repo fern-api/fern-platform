@@ -14,7 +14,7 @@ export declare namespace SidebarItem {
         rightElement?: JSX.Element;
         indent?: boolean;
         shallow?: boolean;
-        registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
+        registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
         isSelected: boolean;
     }
 }

@@ -11,7 +11,7 @@ export declare namespace ApiSubpackages {
         resolveSubpackageById: (
             subpackageId: FernRegistryApiRead.SubpackageId
         ) => FernRegistryApiRead.ApiDefinitionSubpackage;
-        registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
+        registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
         activeTabIndex: number | null;
         closeMobileSidebar: () => void;

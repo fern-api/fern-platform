@@ -15,7 +15,7 @@ export declare namespace SidebarItems {
         navigationItems: FernRegistryDocsRead.NavigationItem[];
 
         selectedSlug: string | undefined;
-        registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
+        registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
         closeMobileSidebar: () => void;
 
         docsDefinition: FernRegistryDocsRead.DocsDefinition;

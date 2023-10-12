@@ -13,7 +13,7 @@ export declare namespace SidebarSubpackageItem {
         isChildSelected: boolean;
         className?: string;
         fullSlug: string;
-        registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
+        registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
         activeTabIndex: number | null;
         closeMobileSidebar: () => void;

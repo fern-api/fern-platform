@@ -3,15 +3,19 @@ import { DocsNode, getFullSlugForNavigatable, joinUrlSlugs, type DefinitionInfo 
 import { useCallback, useMemo } from "react";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
 
+type WithVersionSlugOpts = {
+    omitDefault?: boolean;
+};
+
 interface DocsSelectors {
     definitionInfo: DefinitionInfo;
     activeVersionContext: ActiveVersionContext;
     activeNavigationConfigContext: ActiveNavigationConfigContext;
     selectedSlug: string;
     /** Prefixes a given slug with the currently active version and tab slugs. */
-    withVersionAndTabSlugs: (slug: string) => string;
+    withVersionAndTabSlugs: (slug: string, opts?: WithVersionSlugOpts) => string;
     /** Prefixes a given slug with the currently active version slug. */
-    withVersionSlug: (slug: string) => string;
+    withVersionSlug: (slug: string, opts?: WithVersionSlugOpts) => string;
     /** Prefixes a given slug with the currently active tab slug. */
     withTabSlug: (slug: string) => string;
 }
@@ -66,7 +70,10 @@ export function useDocsSelectors(): DocsSelectors {
         }
     }, [activeNavigatable]);
 
-    const selectedSlug = useMemo(() => getFullSlugForNavigatable(activeNavigatable), [activeNavigatable]);
+    const selectedSlug = useMemo(
+        () => getFullSlugForNavigatable(activeNavigatable, { omitDefault: true }),
+        [activeNavigatable]
+    );
 
     const withTabSlug = useCallback(
         (slug: string) => {
@@ -80,10 +87,11 @@ export function useDocsSelectors(): DocsSelectors {
     );
 
     const withVersionSlug = useCallback(
-        (slug: string) => {
+        (slug: string, opts?: WithVersionSlugOpts) => {
+            const { omitDefault = false } = opts ?? {};
             const c = activeNavigatable.context;
             if (c.type === "versioned-tabbed" || c.type === "versioned-untabbed") {
-                return joinUrlSlugs(c.version.slug, slug);
+                return omitDefault && c.version.info.index === 0 ? slug : joinUrlSlugs(c.version.slug, slug);
             }
             return slug;
         },
@@ -91,7 +99,7 @@ export function useDocsSelectors(): DocsSelectors {
     );
 
     const withVersionAndTabSlugs = useCallback(
-        (slug: string) => withVersionSlug(withTabSlug(slug)),
+        (slug: string, opts?: WithVersionSlugOpts) => withVersionSlug(withTabSlug(slug), opts),
         [withVersionSlug, withTabSlug]
     );
 

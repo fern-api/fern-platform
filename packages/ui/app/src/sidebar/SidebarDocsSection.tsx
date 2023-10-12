@@ -11,7 +11,7 @@ export declare namespace SidebarDocsSection {
         section: FernRegistryDocsRead.DocsSection;
 
         selectedSlug: string | undefined;
-        registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
+        registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
         closeMobileSidebar: () => void;
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
         activeTabIndex: number | null;
