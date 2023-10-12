@@ -130,8 +130,6 @@ jobs:
         type: string
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: yarn
       - run:
           name: Download Fern
           command: sudo npm install -g fern-dev
