@@ -131,8 +131,10 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Download Fern
-          command: sudo npm install -g fern-api
+          name: Download fern-dev CLI
+          command: |
+            npm config set //registry.npmjs.org/:_authToken $YARN_NPM_AUTH_TOKEN
+            npm install -g @fern-api/fern-api-dev --prefix=$HOME/.local
       - run:
           name: Generate Customer Docs
           command: |
@@ -198,20 +200,37 @@ workflows:
       - generate-customer-docs:
           name: preview-docs-candid
           docs_path: tests/candid
+          context:
+            - npm
+            - fern-dev
       - generate-customer-docs:
           name: preview-docs-fern
           docs_path: tests/fern
           context:
             - fern-tokens
+            - npm
+            - fern-dev
       - generate-customer-docs:
           name: preview-docs-mercoa
           docs_path: tests/mercoa
+          context:
+            - npm
+            - fern-dev
       - generate-customer-docs:
           name: preview-docs-primer
           docs_path: tests/primer
+          context:
+            - npm
+            - fern-dev
       - generate-customer-docs:
           name: preview-docs-superagent
           docs_path: tests/superagent
+          context:
+            - npm
+            - fern-dev
       - generate-customer-docs:
           name: preview-docs-vellum
           docs_path: tests/vellum
+          context:
+            - npm
+            - fern-dev
