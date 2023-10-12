@@ -12,12 +12,12 @@ paths:
       description: List all agents
       operationId: List_all_agents_api_v1_agents_get
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AgentListOutput'
+                $ref: "#/components/schemas/AgentListOutput"
       security:
         - JWTBearer: []
     post:
@@ -30,21 +30,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/app__lib__models__agent__Agent'
+              $ref: "#/components/schemas/app__lib__models__agent__Agent"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AgentOutput'
-        '422':
+                $ref: "#/components/schemas/AgentOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
   /api/v1/agents/library:
@@ -55,12 +55,12 @@ paths:
       description: List all library agents
       operationId: List_library_agents_api_v1_agents_library_get
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AgentListOutput'
+                $ref: "#/components/schemas/AgentListOutput"
       security:
         - JWTBearer: []
   /api/v1/agents/{agentId}:
@@ -78,18 +78,18 @@ paths:
           name: agentId
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AgentOutput'
-        '422':
+                $ref: "#/components/schemas/AgentOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
     delete:
@@ -106,18 +106,18 @@ paths:
           name: agentId
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AgentOutput'
-        '422':
+                $ref: "#/components/schemas/AgentOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
     patch:
@@ -141,18 +141,18 @@ paths:
               type: object
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AgentOutput'
-        '422':
+                $ref: "#/components/schemas/AgentOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
   /api/v1/agents/{agentId}/predict:
@@ -173,21 +173,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PredictAgent'
+              $ref: "#/components/schemas/PredictAgent"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PredictAgentOutput'
-        '422':
+                $ref: "#/components/schemas/PredictAgentOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - APIKeyHeader: []
         - APIKeyHeader: []
@@ -207,18 +207,18 @@ paths:
           name: expand
           in: query
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AgentDocumentListOuput'
-        '422':
+                $ref: "#/components/schemas/AgentDocumentListOuput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
     post:
@@ -231,21 +231,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/app__lib__models__agent_document__AgentDocument'
+              $ref: "#/components/schemas/app__lib__models__agent_document__AgentDocument"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AgentDocumentOutput'
-        '422':
+                $ref: "#/components/schemas/AgentDocumentOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
   /api/v1/agent-documents/{agentDocumentId}:
@@ -263,18 +263,18 @@ paths:
           name: agentDocumentId
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AgentDocumentOutput'
-        '422':
+                $ref: "#/components/schemas/AgentDocumentOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
     delete:
@@ -291,18 +291,18 @@ paths:
           name: agentDocumentId
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AgentDocumentOutput'
-        '422':
+                $ref: "#/components/schemas/AgentDocumentOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
   /api/v1/tags:
@@ -313,12 +313,12 @@ paths:
       description: List all tags
       operationId: List_tags_api_v1_tags_get
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TagListOutput'
+                $ref: "#/components/schemas/TagListOutput"
       security:
         - JWTBearer: []
     post:
@@ -331,21 +331,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/app__lib__models__tag__Tag'
+              $ref: "#/components/schemas/app__lib__models__tag__Tag"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TagOutput'
-        '422':
+                $ref: "#/components/schemas/TagOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
   /api/v1/tags/{tagId}:
@@ -363,18 +363,18 @@ paths:
           name: tagId
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TagOutput'
-        '422':
+                $ref: "#/components/schemas/TagOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
     delete:
@@ -391,18 +391,18 @@ paths:
           name: tagId
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TagOutput'
-        '422':
+                $ref: "#/components/schemas/TagOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
     patch:
@@ -426,18 +426,18 @@ paths:
               type: object
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TagOutput'
-        '422':
+                $ref: "#/components/schemas/TagOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
   /api/v1/agent-tools:
@@ -456,18 +456,18 @@ paths:
           name: expand
           in: query
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AgentToolListOutput'
-        '422':
+                $ref: "#/components/schemas/AgentToolListOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
     post:
@@ -480,21 +480,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/app__lib__models__agent_tool__AgentTool'
+              $ref: "#/components/schemas/app__lib__models__agent_tool__AgentTool"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AgentToolOutput'
-        '422':
+                $ref: "#/components/schemas/AgentToolOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
   /api/v1/agent-tools/{agentToolId}:
@@ -512,18 +512,18 @@ paths:
           name: agentToolId
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AgentToolOutput'
-        '422':
+                $ref: "#/components/schemas/AgentToolOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
     delete:
@@ -540,18 +540,18 @@ paths:
           name: agentToolId
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AgentToolOutput'
-        '422':
+                $ref: "#/components/schemas/AgentToolOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
   /api/v1/auth/sign-in:
@@ -564,21 +564,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SignIn'
+              $ref: "#/components/schemas/SignIn"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SignInOutput'
-        '422':
+                $ref: "#/components/schemas/SignInOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
   /api/v1/auth/sign-up:
     post:
       tags:
@@ -589,21 +589,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SignUp'
+              $ref: "#/components/schemas/SignUp"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SignInOutput'
-        '422':
+                $ref: "#/components/schemas/SignInOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
   /api/v1/auth/oauth/callback:
     post:
       tags:
@@ -614,20 +614,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OAuth'
+              $ref: "#/components/schemas/OAuth"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema: {}
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
   /api/v1/users/me:
     get:
       tags:
@@ -635,12 +635,12 @@ paths:
       summary: Read User Me
       operationId: read_user_me_api_v1_users_me_get
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserOutput'
+                $ref: "#/components/schemas/UserOutput"
       security:
         - JWTBearer: []
   /api/v1/users/{userId}:
@@ -657,18 +657,18 @@ paths:
           name: userId
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserOutput'
-        '422':
+                $ref: "#/components/schemas/UserOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
   /api/v1/api-tokens:
     get:
       tags:
@@ -677,12 +677,12 @@ paths:
       description: List all API tokens
       operationId: List_API_tokens_api_v1_api_tokens_get
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiTokenListOutput'
+                $ref: "#/components/schemas/ApiTokenListOutput"
       security:
         - JWTBearer: []
     post:
@@ -695,21 +695,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/app__lib__models__api_token__ApiToken'
+              $ref: "#/components/schemas/app__lib__models__api_token__ApiToken"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiTokenOutput'
-        '422':
+                $ref: "#/components/schemas/ApiTokenOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
   /api/v1/api-tokens/{tokenId}:
@@ -727,18 +727,18 @@ paths:
           name: tokenId
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiTokenOutput'
-        '422':
+                $ref: "#/components/schemas/ApiTokenOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
     delete:
@@ -755,18 +755,18 @@ paths:
           name: tokenId
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiTokenOutput'
-        '422':
+                $ref: "#/components/schemas/ApiTokenOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
   /api/v1/documents:
@@ -777,12 +777,12 @@ paths:
       description: List all documents
       operationId: List_documents_api_v1_documents_get
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DocumentListOutput'
+                $ref: "#/components/schemas/DocumentListOutput"
       security:
         - JWTBearer: []
     post:
@@ -795,21 +795,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/app__lib__models__document__Document'
+              $ref: "#/components/schemas/app__lib__models__document__Document"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DocumentOuput'
-        '422':
+                $ref: "#/components/schemas/DocumentOuput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
   /api/v1/documents/{documentId}:
@@ -827,18 +827,18 @@ paths:
           name: documentId
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DocumentOuput'
-        '422':
+                $ref: "#/components/schemas/DocumentOuput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
     delete:
@@ -855,18 +855,18 @@ paths:
           name: documentId
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DocumentOuput'
-        '422':
+                $ref: "#/components/schemas/DocumentOuput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
     patch:
@@ -890,18 +890,18 @@ paths:
               type: object
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DocumentOuput'
-        '422':
+                $ref: "#/components/schemas/DocumentOuput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
   /api/v1/prompts:
@@ -912,12 +912,12 @@ paths:
       description: List all prompts
       operationId: List_prompts_api_v1_prompts_get
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PromptListOutput'
+                $ref: "#/components/schemas/PromptListOutput"
       security:
         - JWTBearer: []
     post:
@@ -930,21 +930,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/app__lib__models__prompt__Prompt'
+              $ref: "#/components/schemas/app__lib__models__prompt__Prompt"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PromptOutput'
-        '422':
+                $ref: "#/components/schemas/PromptOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
   /api/v1/prompts/{promptId}:
@@ -962,18 +962,18 @@ paths:
           name: promptId
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PromptOutput'
-        '422':
+                $ref: "#/components/schemas/PromptOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
     delete:
@@ -990,18 +990,18 @@ paths:
           name: promptId
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PromptOutput'
-        '422':
+                $ref: "#/components/schemas/PromptOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
     patch:
@@ -1025,18 +1025,18 @@ paths:
               type: object
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PromptOutput'
-        '422':
+                $ref: "#/components/schemas/PromptOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
   /api/v1/tools:
@@ -1047,12 +1047,12 @@ paths:
       description: List all tools
       operationId: List_tools_api_v1_tools_get
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ToolListOutput'
+                $ref: "#/components/schemas/ToolListOutput"
       security:
         - JWTBearer: []
     post:
@@ -1065,21 +1065,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/app__lib__models__tool__Tool'
+              $ref: "#/components/schemas/app__lib__models__tool__Tool"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ToolOutput'
-        '422':
+                $ref: "#/components/schemas/ToolOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
   /api/v1/tools/{toolId}:
@@ -1097,18 +1097,18 @@ paths:
           name: toolId
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ToolOutput'
-        '422':
+                $ref: "#/components/schemas/ToolOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
     delete:
@@ -1125,18 +1125,18 @@ paths:
           name: toolId
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ToolOutput'
-        '422':
+                $ref: "#/components/schemas/ToolOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
     patch:
@@ -1160,18 +1160,18 @@ paths:
               type: object
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ToolOutput'
-        '422':
+                $ref: "#/components/schemas/ToolOutput"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
   /api/v1/traces:
@@ -1182,7 +1182,7 @@ paths:
       description: List all agent traces
       operationId: List_agent_traces_api_v1_traces_get
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
@@ -1205,7 +1205,7 @@ components:
           title: Data
           type: array
           items:
-            $ref: '#/components/schemas/app__lib__models__response__AgentDocument'
+            $ref: "#/components/schemas/app__lib__models__response__AgentDocument"
     AgentDocumentOutput:
       title: AgentDocumentOutput
       required:
@@ -1216,7 +1216,7 @@ components:
           title: Success
           type: boolean
         data:
-          $ref: '#/components/schemas/app__lib__models__response__AgentDocument'
+          $ref: "#/components/schemas/app__lib__models__response__AgentDocument"
     AgentListOutput:
       title: AgentListOutput
       required:
@@ -1231,7 +1231,7 @@ components:
           title: Data
           type: array
           items:
-            $ref: '#/components/schemas/app__lib__models__response__Agent'
+            $ref: "#/components/schemas/app__lib__models__response__Agent"
     AgentOutput:
       title: AgentOutput
       required:
@@ -1242,7 +1242,7 @@ components:
           title: Success
           type: boolean
         data:
-          $ref: '#/components/schemas/app__lib__models__response__Agent'
+          $ref: "#/components/schemas/app__lib__models__response__Agent"
     AgentToolListOutput:
       title: AgentToolListOutput
       required:
@@ -1257,7 +1257,7 @@ components:
           title: Data
           type: array
           items:
-            $ref: '#/components/schemas/app__lib__models__response__AgentTool'
+            $ref: "#/components/schemas/app__lib__models__response__AgentTool"
     AgentToolOutput:
       title: AgentToolOutput
       required:
@@ -1268,7 +1268,7 @@ components:
           title: Success
           type: boolean
         data:
-          $ref: '#/components/schemas/app__lib__models__response__AgentTool'
+          $ref: "#/components/schemas/app__lib__models__response__AgentTool"
     AgentType:
       title: AgentType
       enum:
@@ -1291,7 +1291,7 @@ components:
           title: Data
           type: array
           items:
-            $ref: '#/components/schemas/app__lib__models__response__ApiToken'
+            $ref: "#/components/schemas/app__lib__models__response__ApiToken"
     ApiTokenOutput:
       title: ApiTokenOutput
       required:
@@ -1302,7 +1302,7 @@ components:
           title: Success
           type: boolean
         data:
-          $ref: '#/components/schemas/app__lib__models__response__ApiToken'
+          $ref: "#/components/schemas/app__lib__models__response__ApiToken"
     DocumentListOutput:
       title: DocumentListOutput
       required:
@@ -1317,7 +1317,7 @@ components:
           title: Data
           type: array
           items:
-            $ref: '#/components/schemas/app__lib__models__response__Document'
+            $ref: "#/components/schemas/app__lib__models__response__Document"
     DocumentOuput:
       title: DocumentOuput
       required:
@@ -1328,7 +1328,7 @@ components:
           title: Success
           type: boolean
         data:
-          $ref: '#/components/schemas/app__lib__models__response__Document'
+          $ref: "#/components/schemas/app__lib__models__response__Document"
     DocumentType:
       title: DocumentType
       enum:
@@ -1357,7 +1357,7 @@ components:
           title: Detail
           type: array
           items:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: "#/components/schemas/ValidationError"
     OAuth:
       title: OAuth
       required:
@@ -1427,7 +1427,7 @@ components:
           title: Data
           type: array
           items:
-            $ref: '#/components/schemas/app__lib__models__response__Prompt'
+            $ref: "#/components/schemas/app__lib__models__response__Prompt"
     PromptOutput:
       title: PromptOutput
       required:
@@ -1438,7 +1438,7 @@ components:
           title: Success
           type: boolean
         data:
-          $ref: '#/components/schemas/app__lib__models__response__Prompt'
+          $ref: "#/components/schemas/app__lib__models__response__Prompt"
     SignIn:
       title: SignIn
       required:
@@ -1498,7 +1498,7 @@ components:
           title: Data
           type: array
           items:
-            $ref: '#/components/schemas/app__lib__models__response__Tag'
+            $ref: "#/components/schemas/app__lib__models__response__Tag"
     TagOutput:
       title: TagOutput
       required:
@@ -1509,7 +1509,7 @@ components:
           title: Success
           type: boolean
         data:
-          $ref: '#/components/schemas/app__lib__models__response__Tag'
+          $ref: "#/components/schemas/app__lib__models__response__Tag"
     ToolListOutput:
       title: ToolListOutput
       required:
@@ -1524,7 +1524,7 @@ components:
           title: Data
           type: array
           items:
-            $ref: '#/components/schemas/app__lib__models__response__Tool'
+            $ref: "#/components/schemas/app__lib__models__response__Tool"
     ToolOutput:
       title: ToolOutput
       required:
@@ -1535,7 +1535,7 @@ components:
           title: Success
           type: boolean
         data:
-          $ref: '#/components/schemas/app__lib__models__response__Tool'
+          $ref: "#/components/schemas/app__lib__models__response__Tool"
     ToolType:
       title: ToolType
       enum:
@@ -1597,7 +1597,7 @@ components:
           title: Success
           type: boolean
         data:
-          $ref: '#/components/schemas/User'
+          $ref: "#/components/schemas/User"
     ValidationError:
       title: ValidationError
       required:
@@ -1788,7 +1788,7 @@ components:
           title: Name
           type: string
         type:
-          $ref: '#/components/schemas/AgentType'
+          $ref: "#/components/schemas/AgentType"
         llm:
           title: Llm
           type: object
@@ -1823,7 +1823,7 @@ components:
           title: Documentid
           type: string
         document:
-          $ref: '#/components/schemas/app__lib__models__response__Document'
+          $ref: "#/components/schemas/app__lib__models__response__Document"
         agentId:
           title: Agentid
           type: string
@@ -1853,7 +1853,7 @@ components:
           title: Toolid
           type: string
         tool:
-          $ref: '#/components/schemas/app__lib__models__response__Tool'
+          $ref: "#/components/schemas/app__lib__models__response__Tool"
         agentId:
           title: Agentid
           type: string
@@ -1909,7 +1909,7 @@ components:
           title: Userid
           type: string
         type:
-          $ref: '#/components/schemas/DocumentType'
+          $ref: "#/components/schemas/DocumentType"
         url:
           title: Url
           type: string
@@ -2027,7 +2027,7 @@ components:
           title: Description
           type: string
         type:
-          $ref: '#/components/schemas/ToolType'
+          $ref: "#/components/schemas/ToolType"
         metadata:
           title: Metadata
           type: object

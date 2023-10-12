@@ -14,12 +14,12 @@ paths:
       description: List all agents
       operationId: list_api_v1_agents_get
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AgentList'
+                $ref: "#/components/schemas/AgentList"
       security:
         - HTTPBearer: []
     post:
@@ -32,21 +32,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/app__models__request__Agent'
+              $ref: "#/components/schemas/app__models__request__Agent"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__models__response__Agent'
-        '422':
+                $ref: "#/components/schemas/app__models__response__Agent"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
   /api/v1/agents/{agent_id}:
@@ -64,18 +64,18 @@ paths:
           name: agent_id
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__models__response__Agent'
-        '422':
+                $ref: "#/components/schemas/app__models__response__Agent"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
     delete:
@@ -92,17 +92,17 @@ paths:
           name: agent_id
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema: {}
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
     patch:
@@ -122,21 +122,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/app__models__request__Agent'
+              $ref: "#/components/schemas/app__models__request__Agent"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__models__response__Agent'
-        '422':
+                $ref: "#/components/schemas/app__models__response__Agent"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
   /api/v1/agents/{agent_id}/invoke:
@@ -157,21 +157,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/app__models__request__AgentInvoke'
+              $ref: "#/components/schemas/app__models__request__AgentInvoke"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__models__response__AgentInvoke'
-        '422':
+                $ref: "#/components/schemas/app__models__response__AgentInvoke"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
   /api/v1/agents/{agent_id}/llms:
@@ -192,21 +192,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/app__models__request__AgentLLM'
+              $ref: "#/components/schemas/app__models__request__AgentLLM"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__models__response__Agent'
-        '422':
+                $ref: "#/components/schemas/app__models__response__Agent"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
   /api/v1/agents/{agent_id}/llms/{llm_id}:
@@ -230,17 +230,17 @@ paths:
           name: llm_id
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema: {}
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
   /api/v1/agents/{agent_id}/tools:
@@ -258,18 +258,18 @@ paths:
           name: agent_id
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AgentToolList'
-        '422':
+                $ref: "#/components/schemas/AgentToolList"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
     post:
@@ -289,21 +289,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/app__models__request__AgentTool'
+              $ref: "#/components/schemas/app__models__request__AgentTool"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__models__response__Agent'
-        '422':
+                $ref: "#/components/schemas/app__models__response__Agent"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
   /api/v1/agents/{agent_id}/tools/{tool_id}:
@@ -327,17 +327,17 @@ paths:
           name: tool_id
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema: {}
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
   /api/v1/agents/{agent_id}/datasources:
@@ -355,18 +355,18 @@ paths:
           name: agent_id
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AgentDatasosurceList'
-        '422':
+                $ref: "#/components/schemas/AgentDatasosurceList"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
     post:
@@ -386,21 +386,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/app__models__request__AgentDatasource'
+              $ref: "#/components/schemas/app__models__request__AgentDatasource"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__models__response__Agent'
-        '422':
+                $ref: "#/components/schemas/app__models__response__Agent"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
   /api/v1/agents/{agent_id}/datasources/{datasource_id}:
@@ -424,17 +424,17 @@ paths:
           name: datasource_id
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema: {}
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
   /api/v1/agents/{agent_id}/runs:
@@ -452,18 +452,18 @@ paths:
           name: agent_id
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AgentRunList'
-        '422':
+                $ref: "#/components/schemas/AgentRunList"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
   /api/v1/llms:
@@ -474,12 +474,12 @@ paths:
       description: List all LLMs
       operationId: list_api_v1_llms_get
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LLMList'
+                $ref: "#/components/schemas/LLMList"
       security:
         - HTTPBearer: []
     post:
@@ -492,21 +492,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/app__models__request__LLM'
+              $ref: "#/components/schemas/app__models__request__LLM"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__models__response__LLM'
-        '422':
+                $ref: "#/components/schemas/app__models__response__LLM"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
   /api/v1/llms/{llm_id}:
@@ -524,18 +524,18 @@ paths:
           name: llm_id
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__models__response__LLM'
-        '422':
+                $ref: "#/components/schemas/app__models__response__LLM"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
     patch:
@@ -555,21 +555,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/app__models__request__LLM'
+              $ref: "#/components/schemas/app__models__request__LLM"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__models__response__LLM'
-        '422':
+                $ref: "#/components/schemas/app__models__response__LLM"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
   /api/v1/api-users:
@@ -583,21 +583,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/app__models__request__ApiUser'
+              $ref: "#/components/schemas/app__models__request__ApiUser"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__models__response__ApiUser'
-        '422':
+                $ref: "#/components/schemas/app__models__response__ApiUser"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
   /api/v1/api-users/me:
     get:
       tags:
@@ -606,12 +606,12 @@ paths:
       description: Get a single api user
       operationId: get_api_v1_api_users_me_get
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__models__response__ApiUser'
+                $ref: "#/components/schemas/app__models__response__ApiUser"
       security:
         - HTTPBearer: []
     delete:
@@ -621,7 +621,7 @@ paths:
       description: Delete an api user
       operationId: delete_api_v1_api_users_me_delete
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
@@ -636,12 +636,12 @@ paths:
       description: List all datasources
       operationId: list_api_v1_datasources_get
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DatasourceList'
+                $ref: "#/components/schemas/DatasourceList"
       security:
         - HTTPBearer: []
     post:
@@ -654,21 +654,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/app__models__request__Datasource'
+              $ref: "#/components/schemas/app__models__request__Datasource"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__models__response__Datasource'
-        '422':
+                $ref: "#/components/schemas/app__models__response__Datasource"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
   /api/v1/datasources/{datasource_id}:
@@ -686,18 +686,18 @@ paths:
           name: datasource_id
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__models__response__Datasource'
-        '422':
+                $ref: "#/components/schemas/app__models__response__Datasource"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
     delete:
@@ -714,17 +714,17 @@ paths:
           name: datasource_id
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema: {}
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
     patch:
@@ -744,21 +744,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/app__models__request__Datasource'
+              $ref: "#/components/schemas/app__models__request__Datasource"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__models__response__Datasource'
-        '422':
+                $ref: "#/components/schemas/app__models__response__Datasource"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
   /api/v1/tools:
@@ -769,12 +769,12 @@ paths:
       description: List all tools
       operationId: list_api_v1_tools_get
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ToolList'
+                $ref: "#/components/schemas/ToolList"
       security:
         - HTTPBearer: []
     post:
@@ -787,21 +787,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/app__models__request__Tool'
+              $ref: "#/components/schemas/app__models__request__Tool"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__models__response__Tool'
-        '422':
+                $ref: "#/components/schemas/app__models__response__Tool"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
   /api/v1/tools/{tool_id}:
@@ -819,18 +819,18 @@ paths:
           name: tool_id
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__models__response__Tool'
-        '422':
+                $ref: "#/components/schemas/app__models__response__Tool"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
     delete:
@@ -847,17 +847,17 @@ paths:
           name: tool_id
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema: {}
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
     patch:
@@ -877,21 +877,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/app__models__request__Tool'
+              $ref: "#/components/schemas/app__models__request__Tool"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__models__response__Tool'
-        '422':
+                $ref: "#/components/schemas/app__models__response__Tool"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
   /api/v1/workflows:
@@ -902,12 +902,12 @@ paths:
       description: List all workflows
       operationId: list_api_v1_workflows_get
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WorkflowList'
+                $ref: "#/components/schemas/WorkflowList"
       security:
         - HTTPBearer: []
     post:
@@ -920,21 +920,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/app__models__request__Workflow'
+              $ref: "#/components/schemas/app__models__request__Workflow"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__models__response__Workflow'
-        '422':
+                $ref: "#/components/schemas/app__models__response__Workflow"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
   /api/v1/workflows/{workflow_id}:
@@ -952,18 +952,18 @@ paths:
           name: workflow_id
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__models__response__Workflow'
-        '422':
+                $ref: "#/components/schemas/app__models__response__Workflow"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
     delete:
@@ -980,17 +980,17 @@ paths:
           name: workflow_id
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema: {}
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
     patch:
@@ -1010,21 +1010,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/app__models__request__Workflow'
+              $ref: "#/components/schemas/app__models__request__Workflow"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__models__response__Workflow'
-        '422':
+                $ref: "#/components/schemas/app__models__response__Workflow"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
   /api/v1/workflows/{workflow_id}/invoke:
@@ -1045,20 +1045,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/WorkflowInvoke'
+              $ref: "#/components/schemas/WorkflowInvoke"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema: {}
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
   /api/v1/workflows/{workflow_id}/steps:
@@ -1076,18 +1076,18 @@ paths:
           name: workflow_id
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WorkflowList'
-        '422':
+                $ref: "#/components/schemas/WorkflowList"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
     post:
@@ -1107,21 +1107,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/app__models__request__WorkflowStep'
+              $ref: "#/components/schemas/app__models__request__WorkflowStep"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__models__response__Workflow'
-        '422':
+                $ref: "#/components/schemas/app__models__response__Workflow"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
   /api/v1/workflows/{workflow_id}/steps/{step_id}:
@@ -1145,17 +1145,17 @@ paths:
           name: step_id
           in: path
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema: {}
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       security:
         - HTTPBearer: []
 components:
@@ -1173,7 +1173,7 @@ components:
           title: Data
           type: array
           items:
-            $ref: '#/components/schemas/prisma__models__AgentDatasource'
+            $ref: "#/components/schemas/prisma__models__AgentDatasource"
     AgentList:
       title: AgentList
       required:
@@ -1187,7 +1187,7 @@ components:
           title: Data
           type: array
           items:
-            $ref: '#/components/schemas/prisma__models__Agent'
+            $ref: "#/components/schemas/prisma__models__Agent"
     AgentRunList:
       title: AgentRunList
       required:
@@ -1215,7 +1215,7 @@ components:
           title: Data
           type: array
           items:
-            $ref: '#/components/schemas/prisma__models__AgentTool'
+            $ref: "#/components/schemas/prisma__models__AgentTool"
     DatasourceList:
       title: DatasourceList
       required:
@@ -1229,7 +1229,7 @@ components:
           title: Data
           type: array
           items:
-            $ref: '#/components/schemas/prisma__models__Datasource'
+            $ref: "#/components/schemas/prisma__models__Datasource"
     DatasourceStatus:
       title: DatasourceStatus
       enum:
@@ -1268,7 +1268,7 @@ components:
           title: Detail
           type: array
           items:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: "#/components/schemas/ValidationError"
     LLMList:
       title: LLMList
       required:
@@ -1282,7 +1282,7 @@ components:
           title: Data
           type: array
           items:
-            $ref: '#/components/schemas/prisma__models__LLM'
+            $ref: "#/components/schemas/prisma__models__LLM"
     LLMModel:
       title: LLMModel
       enum:
@@ -1312,7 +1312,7 @@ components:
           title: Data
           type: array
           items:
-            $ref: '#/components/schemas/prisma__models__Tool'
+            $ref: "#/components/schemas/prisma__models__Tool"
     ToolType:
       title: ToolType
       enum:
@@ -1376,7 +1376,7 @@ components:
           title: Data
           type: array
           items:
-            $ref: '#/components/schemas/prisma__models__Workflow'
+            $ref: "#/components/schemas/prisma__models__Workflow"
     app__models__request__Agent:
       title: Agent
       required:
@@ -1565,7 +1565,7 @@ components:
           title: Success
           type: boolean
         data:
-          $ref: '#/components/schemas/prisma__models__Agent'
+          $ref: "#/components/schemas/prisma__models__Agent"
     app__models__response__AgentInvoke:
       title: AgentInvoke
       required:
@@ -1589,7 +1589,7 @@ components:
           title: Success
           type: boolean
         data:
-          $ref: '#/components/schemas/prisma__models__ApiUser'
+          $ref: "#/components/schemas/prisma__models__ApiUser"
     app__models__response__Datasource:
       title: Datasource
       required:
@@ -1600,7 +1600,7 @@ components:
           title: Success
           type: boolean
         data:
-          $ref: '#/components/schemas/prisma__models__Datasource'
+          $ref: "#/components/schemas/prisma__models__Datasource"
     app__models__response__LLM:
       title: LLM
       required:
@@ -1611,7 +1611,7 @@ components:
           title: Success
           type: boolean
         data:
-          $ref: '#/components/schemas/prisma__models__LLM'
+          $ref: "#/components/schemas/prisma__models__LLM"
     app__models__response__Tool:
       title: Tool
       required:
@@ -1622,7 +1622,7 @@ components:
           title: Success
           type: boolean
         data:
-          $ref: '#/components/schemas/prisma__models__Tool'
+          $ref: "#/components/schemas/prisma__models__Tool"
     app__models__response__Workflow:
       title: Workflow
       required:
@@ -1633,7 +1633,7 @@ components:
           title: Success
           type: boolean
         data:
-          $ref: '#/components/schemas/prisma__models__Workflow'
+          $ref: "#/components/schemas/prisma__models__Workflow"
     prisma__models__Agent:
       title: Agent
       required:
@@ -1674,9 +1674,9 @@ components:
           title: Llms
           type: array
           items:
-            $ref: '#/components/schemas/prisma__models__AgentLLM'
+            $ref: "#/components/schemas/prisma__models__AgentLLM"
         llmModel:
-          $ref: '#/components/schemas/LLMModel'
+          $ref: "#/components/schemas/LLMModel"
         prompt:
           title: Prompt
           type: string
@@ -1684,22 +1684,22 @@ components:
           title: Apiuserid
           type: string
         apiUser:
-          $ref: '#/components/schemas/prisma__models__ApiUser'
+          $ref: "#/components/schemas/prisma__models__ApiUser"
         datasources:
           title: Datasources
           type: array
           items:
-            $ref: '#/components/schemas/prisma__models__AgentDatasource'
+            $ref: "#/components/schemas/prisma__models__AgentDatasource"
         tools:
           title: Tools
           type: array
           items:
-            $ref: '#/components/schemas/prisma__models__AgentTool'
+            $ref: "#/components/schemas/prisma__models__AgentTool"
         workflowSteps:
           title: Workflowsteps
           type: array
           items:
-            $ref: '#/components/schemas/prisma__models__WorkflowStep'
+            $ref: "#/components/schemas/prisma__models__WorkflowStep"
       description: Represents a Agent record
     prisma__models__AgentDatasource:
       title: AgentDatasource
@@ -1717,9 +1717,9 @@ components:
           title: Datasourceid
           type: string
         agent:
-          $ref: '#/components/schemas/prisma__models__Agent'
+          $ref: "#/components/schemas/prisma__models__Agent"
         datasource:
-          $ref: '#/components/schemas/prisma__models__Datasource'
+          $ref: "#/components/schemas/prisma__models__Datasource"
         createdAt:
           title: Createdat
           type: string
@@ -1745,9 +1745,9 @@ components:
           title: Llmid
           type: string
         agent:
-          $ref: '#/components/schemas/prisma__models__Agent'
+          $ref: "#/components/schemas/prisma__models__Agent"
         llm:
-          $ref: '#/components/schemas/prisma__models__LLM'
+          $ref: "#/components/schemas/prisma__models__LLM"
         createdAt:
           title: Createdat
           type: string
@@ -1773,9 +1773,9 @@ components:
           title: Toolid
           type: string
         agent:
-          $ref: '#/components/schemas/prisma__models__Agent'
+          $ref: "#/components/schemas/prisma__models__Agent"
         tool:
-          $ref: '#/components/schemas/prisma__models__Tool'
+          $ref: "#/components/schemas/prisma__models__Tool"
         createdAt:
           title: Createdat
           type: string
@@ -1814,27 +1814,27 @@ components:
           title: Agents
           type: array
           items:
-            $ref: '#/components/schemas/prisma__models__Agent'
+            $ref: "#/components/schemas/prisma__models__Agent"
         llms:
           title: Llms
           type: array
           items:
-            $ref: '#/components/schemas/prisma__models__LLM'
+            $ref: "#/components/schemas/prisma__models__LLM"
         datasources:
           title: Datasources
           type: array
           items:
-            $ref: '#/components/schemas/prisma__models__Datasource'
+            $ref: "#/components/schemas/prisma__models__Datasource"
         tools:
           title: Tools
           type: array
           items:
-            $ref: '#/components/schemas/prisma__models__Tool'
+            $ref: "#/components/schemas/prisma__models__Tool"
         workflows:
           title: Workflows
           type: array
           items:
-            $ref: '#/components/schemas/prisma__models__Workflow'
+            $ref: "#/components/schemas/prisma__models__Workflow"
       description: Represents a ApiUser record
     prisma__models__Datasource:
       title: Datasource
@@ -1864,12 +1864,12 @@ components:
           title: Url
           type: string
         type:
-          $ref: '#/components/schemas/DatasourceType'
+          $ref: "#/components/schemas/DatasourceType"
         apiUserId:
           title: Apiuserid
           type: string
         apiUser:
-          $ref: '#/components/schemas/prisma__models__ApiUser'
+          $ref: "#/components/schemas/prisma__models__ApiUser"
         createdAt:
           title: Createdat
           type: string
@@ -1882,12 +1882,12 @@ components:
           title: Metadata
           type: string
         status:
-          $ref: '#/components/schemas/DatasourceStatus'
+          $ref: "#/components/schemas/DatasourceStatus"
         datasources:
           title: Datasources
           type: array
           items:
-            $ref: '#/components/schemas/prisma__models__AgentDatasource'
+            $ref: "#/components/schemas/prisma__models__AgentDatasource"
       description: Represents a Datasource record
     prisma__models__LLM:
       title: LLM
@@ -1904,7 +1904,7 @@ components:
           title: Id
           type: string
         provider:
-          $ref: '#/components/schemas/LLMProvider'
+          $ref: "#/components/schemas/LLMProvider"
         apiKey:
           title: Apikey
           type: string
@@ -1916,7 +1916,7 @@ components:
           title: Agents
           type: array
           items:
-            $ref: '#/components/schemas/prisma__models__AgentLLM'
+            $ref: "#/components/schemas/prisma__models__AgentLLM"
         createdAt:
           title: Createdat
           type: string
@@ -1929,7 +1929,7 @@ components:
           title: Apiuserid
           type: string
         apiUser:
-          $ref: '#/components/schemas/prisma__models__ApiUser'
+          $ref: "#/components/schemas/prisma__models__ApiUser"
       description: Represents a LLM record
     prisma__models__Tool:
       title: Tool
@@ -1955,7 +1955,7 @@ components:
           title: Description
           type: string
         type:
-          $ref: '#/components/schemas/ToolType'
+          $ref: "#/components/schemas/ToolType"
         returnDirect:
           title: Returndirect
           type: boolean
@@ -1974,12 +1974,12 @@ components:
           title: Apiuserid
           type: string
         apiUser:
-          $ref: '#/components/schemas/prisma__models__ApiUser'
+          $ref: "#/components/schemas/prisma__models__ApiUser"
         tools:
           title: Tools
           type: array
           items:
-            $ref: '#/components/schemas/prisma__models__AgentTool'
+            $ref: "#/components/schemas/prisma__models__AgentTool"
       description: Represents a Tool record
     prisma__models__Workflow:
       title: Workflow
@@ -2012,12 +2012,12 @@ components:
           title: Steps
           type: array
           items:
-            $ref: '#/components/schemas/prisma__models__WorkflowStep'
+            $ref: "#/components/schemas/prisma__models__WorkflowStep"
         apiUserId:
           title: Apiuserid
           type: string
         apiUser:
-          $ref: '#/components/schemas/prisma__models__ApiUser'
+          $ref: "#/components/schemas/prisma__models__ApiUser"
       description: Represents a Workflow record
     prisma__models__WorkflowStep:
       title: WorkflowStep
@@ -2042,7 +2042,7 @@ components:
           title: Workflowid
           type: string
         workflow:
-          $ref: '#/components/schemas/prisma__models__Workflow'
+          $ref: "#/components/schemas/prisma__models__Workflow"
         createdAt:
           title: Createdat
           type: string
@@ -2061,7 +2061,7 @@ components:
           title: Agentid
           type: string
         agent:
-          $ref: '#/components/schemas/prisma__models__Agent'
+          $ref: "#/components/schemas/prisma__models__Agent"
       description: Represents a WorkflowStep record
   securitySchemes:
     HTTPBearer:
