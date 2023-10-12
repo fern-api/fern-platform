@@ -1,0 +1,98 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  entity: ../../entity-types.yml
+
+service:
+  auth: true
+  base-path: /entity
+  endpoints:
+    getAll:
+      audiences:
+        - external
+      path: /{entityId}/users
+      path-parameters:
+        entityId: entity.EntityId
+      method: GET
+      docs: Get all entity users
+      display-name: Get all entity users
+      response: list<entity.EntityUserResponse>
+
+    create:
+      audiences:
+        - external
+      path: /{entityId}/user
+      path-parameters:
+        entityId: entity.EntityId
+      method: POST
+      request: entity.EntityUserRequest
+      response: entity.EntityUserResponse
+      display-name: Create entity user
+
+    get:
+      audiences:
+        - external
+      path: /{entityId}/user/{userId}
+      path-parameters:
+        entityId: entity.EntityId
+        userId: entity.EntityUserId
+      method: GET
+      docs: Get entity user
+      display-name: Get entity user
+      response: entity.EntityUserResponse
+
+    update:
+      audiences:
+        - external
+      path: /{entityId}/user/{userId}
+      path-parameters:
+        entityId: entity.EntityId
+        userId: entity.EntityUserId
+      method: POST
+      docs: Update entity user
+      display-name: Update entity user
+      request: entity.EntityUserRequest
+      response: entity.EntityUserResponse
+
+    delete:
+      audiences:
+        - external
+      path: /{entityId}/user/{userId}
+      path-parameters:
+        entityId: entity.EntityId
+        userId: entity.EntityUserId
+      method: DELETE
+      docs: Delete entity user
+      display-name: Delete entity user
+
+    getRawToken:
+      audiences:
+        - external
+      path: /{entityId}/user/{userId}/token
+      method: GET
+      docs: Get JWT token for entity user
+      display-name: Get JWT token for entity user
+      path-parameters:
+        entityId: entity.EntityId
+        userId: entity.EntityUserId
+      response: string
+      examples:
+        - path-parameters:
+            entityId: ent_a0f6ea94-0761-4a5e-a416-3c453cb7eced
+            userId: user_a0f6ea94-0761-4a5e-a416-3c453cb7eced
+          response:
+            body: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIzNDU2Nzg5LCJuYW1lIjoiSm9\
+              zZXBoIn0.OpOSSw7e485LOP5PrzScxHb7SR6sAOMRckfFwi4rp7o"
+
+    getToken:
+      audiences:
+        - external
+      path: /{entityId}/user/{userId}/token
+      method: POST
+      docs: Get JWT token for entity user with iFrame options
+      display-name: Get JWT token for entity user with iFrame options
+      path-parameters:
+        entityId: entity.EntityId
+        userId: entity.EntityUserId
+      request: entity.TokenGenerationOptions
+      response: string

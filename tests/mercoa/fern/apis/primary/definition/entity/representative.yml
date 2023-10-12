@@ -1,0 +1,55 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  entity: ../entity-types.yml
+  commons: ../commons.yml
+
+service:
+  auth: true
+  base-path: /entity/{entityId}
+  path-parameters:
+    entityId: entity.EntityId
+  endpoints:
+    getAll:
+      audiences:
+        - external
+      path: /representatives
+      docs: Get representatives for an entity
+      display-name: Get representatives for an entity
+      method: GET
+      response: list<entity.RepresentativeResponse>
+
+    create:
+      audiences:
+        - external
+      path: /representative
+      docs: Create representative
+      display-name: Create representative
+      method: POST
+      request: entity.RepresentativeRequest
+      response: entity.RepresentativeResponse
+      errors:
+        - entity.InvalidTaxId
+        - commons.InvalidPostalCode
+        - commons.InvalidStateOrProvince
+
+    get:
+      audiences:
+        - external
+      path: /representative/{representativeId}
+      method: GET
+      docs: Get representative
+      display-name: Get representative
+      path-parameters:
+        representativeId: entity.RepresentativeId
+      response: entity.RepresentativeResponse
+
+    delete:
+      audiences:
+        - external
+      path: /representative/{representativeId}
+      method: DELETE
+      docs: Delete representative
+      display-name: Delete representative
+      path-parameters:
+        representativeId: entity.RepresentativeId

@@ -1,0 +1,24 @@
+imports:
+  commons: commons.yml
+  entity: entity-types.yml
+
+name: api
+
+audiences:
+  - internal
+  - external
+
+default-environment: Production
+environments:
+  Production: https://api.mercoa.com
+
+error-discrimination:
+  strategy: property
+  property-name: errorName
+
+auth: bearer
+
+errors:
+  - commons.AuthHeaderMissingError
+  - commons.AuthHeaderMalformedError
+  - commons.Unauthorized
