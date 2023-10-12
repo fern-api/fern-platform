@@ -2,20 +2,19 @@ import { Text } from "@blueprintjs/core";
 import classNames from "classnames";
 import Link from "next/link";
 import { memo, useCallback, useEffect, useRef } from "react";
-import { useNavigationContext } from "../navigation-context";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace SidebarItem {
     export interface Props {
         title: JSX.Element | string;
         className?: string;
+        onClick: () => void;
         fullSlug: string;
         leftElement?: JSX.Element;
         rightElement?: JSX.Element;
         indent?: boolean;
         shallow?: boolean;
         registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
-        closeMobileSidebar: () => void;
         isSelected: boolean;
     }
 }
@@ -29,15 +28,9 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
     indent = false,
     shallow = false,
     registerScrolledToPathListener,
-    closeMobileSidebar,
+    onClick,
     isSelected,
 }) => {
-    const { navigateToPath } = useNavigationContext();
-    const handleClick = useCallback(() => {
-        navigateToPath(fullSlug);
-        closeMobileSidebar();
-    }, [closeMobileSidebar, navigateToPath, fullSlug]);
-
     const renderTitle = useCallback(
         ({ isHovering }: { isHovering: boolean }) => {
             return (
@@ -83,13 +76,7 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
 
     return (
         <div className={classNames(className)} ref={ref}>
-            <Link
-                href={`/${fullSlug}`}
-                onClick={handleClick}
-                className="!no-underline"
-                shallow={shallow}
-                scroll={!shallow}
-            >
+            <Link href={`/${fullSlug}`} onClick={onClick} className="!no-underline" shallow={shallow} scroll={false}>
                 <SidebarItemLayout title={renderTitle} isSelected={isSelected} />
             </Link>
         </div>

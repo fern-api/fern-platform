@@ -6,6 +6,7 @@ import { useCallback, useMemo } from "react";
 import { resolveSubpackage } from "../api-context/ApiDefinitionContextProvider";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { API_ARTIFACTS_TITLE } from "../config";
+import { useNavigationContext } from "../navigation-context";
 import { ApiPackageSidebarSectionContents } from "./ApiPackageSidebarSectionContents";
 import { NonClickableSidebarGroupTitle } from "./NonClickableSidebarGroupTitle";
 import { SidebarGroup } from "./SidebarGroup";
@@ -33,6 +34,7 @@ export const ApiSidebarSection: React.FC<ApiSidebarSection.Props> = ({
     activeTabIndex,
     resolveApi,
 }) => {
+    const { navigateToPath } = useNavigationContext();
     const apiDefinition = useMemo(() => resolveApi(apiSection.api), [apiSection.api, resolveApi]);
 
     const resolveSubpackageById = useCallback(
@@ -47,11 +49,14 @@ export const ApiSidebarSection: React.FC<ApiSidebarSection.Props> = ({
         <SidebarGroup title={<NonClickableSidebarGroupTitle title={apiSection.title} />} includeTopMargin>
             {apiSection.artifacts != null && areApiArtifactsNonEmpty(apiSection.artifacts) && (
                 <SidebarItem
+                    onClick={() => {
+                        navigateToPath(fullSlug);
+                        closeMobileSidebar();
+                    }}
                     fullSlug={fullSlug}
                     title={API_ARTIFACTS_TITLE}
                     registerScrolledToPathListener={registerScrolledToPathListener}
                     isSelected={fullSlug === selectedSlug}
-                    closeMobileSidebar={closeMobileSidebar}
                 />
             )}
             <ApiPackageSidebarSectionContents

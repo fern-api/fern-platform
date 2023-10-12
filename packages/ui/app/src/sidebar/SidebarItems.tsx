@@ -4,6 +4,7 @@ import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources
 import { joinUrlSlugs } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { memo } from "react";
+import { useNavigationContext } from "../navigation-context";
 import { ApiSidebarSection } from "./ApiSidebarSection";
 import { SidebarDocsSection } from "./SidebarDocsSection";
 import { SidebarItem } from "./SidebarItem";
@@ -33,21 +34,29 @@ const UnmemoizedSidebarItems: React.FC<SidebarItems.Props> = ({
     activeTabIndex,
     resolveApi,
 }) => {
+    const { navigateToPath } = useNavigationContext();
+
     return (
         <div className="flex flex-col">
             {navigationItems.map((navigationItem) =>
                 visitDiscriminatedUnion(navigationItem, "type")._visit({
-                    page: (pageMetadata) => (
-                        <SidebarItem
-                            key={pageMetadata.urlSlug}
-                            fullSlug={joinUrlSlugs(slug, pageMetadata.urlSlug)}
-                            title={pageMetadata.title}
-                            registerScrolledToPathListener={registerScrolledToPathListener}
-                            isSelected={joinUrlSlugs(slug, pageMetadata.urlSlug) === selectedSlug}
-                            closeMobileSidebar={closeMobileSidebar}
-                            shallow={false}
-                        />
-                    ),
+                    page: (pageMetadata) => {
+                        const fullSlug = joinUrlSlugs(slug, pageMetadata.urlSlug);
+                        return (
+                            <SidebarItem
+                                key={pageMetadata.urlSlug}
+                                onClick={() => {
+                                    navigateToPath(fullSlug);
+                                    closeMobileSidebar();
+                                }}
+                                fullSlug={fullSlug}
+                                title={pageMetadata.title}
+                                registerScrolledToPathListener={registerScrolledToPathListener}
+                                isSelected={fullSlug === selectedSlug}
+                                shallow
+                            />
+                        );
+                    },
                     section: (section) => (
                         <SidebarDocsSection
                             key={section.urlSlug}

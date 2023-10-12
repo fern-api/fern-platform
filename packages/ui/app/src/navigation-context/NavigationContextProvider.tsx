@@ -1,10 +1,5 @@
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import {
-    getFirstNavigatableItemSlugInDefinition,
-    getFullSlugForNavigatable,
-    PathResolver,
-    SerializedMdxContent,
-} from "@fern-ui/app-utils";
+import { getFullSlugForNavigatable, PathResolver, SerializedMdxContent } from "@fern-ui/app-utils";
 import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
 import { useRouter } from "next/router";
@@ -194,13 +189,14 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     useEffect(() => {
         router.beforePopState(({ as }) => {
             const slugCandidate = as.substring(1, as.length);
-            const slug = slugCandidate === "" ? getFirstNavigatableItemSlugInDefinition(docsDefinition) : slugCandidate;
-            if (slug != null) {
-                navigateToPath(slug);
+            const previousNavigatable = resolver.resolveNavigatable(slugCandidate);
+            if (previousNavigatable != null) {
+                const fullSlug = getFullSlugForNavigatable(previousNavigatable);
+                navigateToPath(fullSlug);
             }
             return true;
         });
-    }, [router, navigateToPath, docsDefinition]);
+    }, [router, navigateToPath, docsDefinition, resolver]);
 
     return (
         <NavigationContext.Provider
