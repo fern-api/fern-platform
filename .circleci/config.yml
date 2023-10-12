@@ -220,6 +220,17 @@ workflows:
           #     only:
           #       - main
       - generate-customer-docs:
+          name: preview-docs-flatfile
+          docs_path: tests/flatfile
+          context:
+            - fern-tokens
+            - npm
+            - fern-dev
+          # filters:
+          #   branches:
+          #     only:
+          #       - main
+      - generate-customer-docs:
           name: preview-docs-mercoa
           docs_path: tests/mercoa
           context:
