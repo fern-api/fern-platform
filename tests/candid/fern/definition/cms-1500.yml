@@ -1,0 +1,252 @@
+types:
+  CMS1500Content:
+    properties:
+      header_insurance_info: optional<InsuranceInfo>
+      box_1_insurance_type: optional<InsuranceType>
+      box_1_a_insured_id_number: optional<string>
+      box_2_patient_name: optional<string>
+      box_3_patient: optional<Box3Patient>
+      box_4_insured_name: optional<string>
+      box_5_patient_address: optional<AddressBox>
+      box_6_patient_relationship_to_insured: optional<PatientRelationshipToInsured>
+      box_7_insured_address: optional<AddressBox>
+      box_8_reserved_for_nucc_use: optional<string>
+      box_9_other_insured: optional<Box9OtherInsured>
+      box_10_patient_condition_related_to: optional<Box10PatientConditionRelatedTo>
+      box_11_insured: optional<Box11Insured>
+      box_12_patient_or_authorized_signature: optional<SignatureDateBox>
+      box_13_insured_or_authorized_signature: optional<string>
+      box_14_date_of_current_condition: optional<Box14DateOfCurrentCondition>
+      box_15_other_date: optional<Box15OtherDate>
+      box_16_dates_patient_unable_to_work: optional<Box16DatesPatientUnableToWork>
+      box_17_referring_provider: optional<Box17ReferringProvider>
+      box_18_hospitalization_dates: optional<Box18HospitalizationDates>
+      box_19_additional_claim_info: optional<string>
+      box_20_outside_lab: optional<Box20OutsideLab>
+      box_21_diagnoses: optional<Box21Diagnoses>
+      box_22_resubmission: optional<Box22Resubmission>
+      box_23_prior_authorization_number: optional<string>
+      box_24_service_lines: optional<Box24ServiceLines>
+      box_25_federal_tax_id_number: optional<Box25FederalTaxIdNumber>
+      box_26_patient_account_no: optional<string>
+      box_27_accepts_assignment: optional<boolean>
+      box_28_total_charge: optional<Box28TotalCharge>
+      box_29_amount_paid: optional<string>
+      box_31_physician_or_supplier_signature: optional<SignatureDateBox>
+      box_32_service_facility_info: optional<Box32ServiceFacilityInfo>
+      box_33_billing_provider_info: optional<Box33BillingProviderInfo>
+
+  # Common types
+  AddressBox:
+    properties:
+      address: optional<string>
+      city: optional<string>
+      state: optional<string>
+      zip_code: optional<string>
+      telephone: optional<PhoneNumberBox>
+
+  AddressBox3Line:
+    properties:
+      name: optional<string>
+      address: optional<string>
+      city_state_zip: optional<string>
+
+  DateBox:
+    properties:
+      month:
+        docs: mm format
+        type: optional<string>
+      day:
+        docs: dd format
+        type: optional<string>
+      year:
+        docs: yy format
+        type: optional<string>
+
+  PhoneNumberBox:
+    properties:
+      area_code: optional<string>
+      prefix_and_line_number: optional<string>
+
+  SignatureDateBox:
+    properties:
+      signature: optional<string>
+      date: optional<string>
+
+  # Enums
+  FederalTaxIdNumberType:
+    enum:
+      - SSN
+      - EIN
+
+  InsuranceType:
+    enum:
+      - MEDICARE
+      - MEDICAID
+      - TRICARE
+      - CHAMPVA
+      - GROUP_HEALTH_PLAN
+      - FECA_BLK_LUNG
+      - OTHER
+
+  PatientRelationshipToInsured:
+    enum:
+      - SELF
+      - SPOUSE
+      - CHILD
+      - OTHER
+
+  Sex:
+    enum:
+      - M
+      - F
+
+  # Specific box objects
+  InsuranceInfo:
+    properties:
+      name: optional<string>
+      address_1: optional<string>
+      address_2: optional<string>
+      city_state_zip: optional<string>
+
+  Box3Patient:
+    properties:
+      date_of_birth: optional<DateBox>
+      sex: optional<Sex>
+
+  Box9OtherInsured:
+    properties:
+      box_9_name: optional<string>
+      box_9_a_policy_or_group_number: optional<string>
+      box_9_b_reserved_for_nucc_use: optional<string>
+      box_9_c_reserved_for_nucc_use: optional<string>
+      box_9_d_insurance_plan_or_program_name: optional<string>
+
+  Box10PatientConditionRelatedTo:
+    properties:
+      box_10_a_employment: optional<boolean>
+      box_10_b_auto_accident: optional<boolean>
+      box_10_b_auto_accident_state: optional<string>
+      box_10_c_other_accident: optional<boolean>
+      box_10_d_claim_codes: optional<string>
+
+  Box11Insured:
+    properties:
+      box_11_policy_group_or_feca_number: optional<string>
+      box_11_a_date_of_birth: optional<DateBox>
+      box_11_a_sex: optional<Sex>
+      box_11_b_other_claim_id_qual: optional<string>
+      box_11_b_other_claim_id_number: optional<string>
+      box_11_c_insurance_plan_or_program_name: optional<string>
+      box_11_d_another_health_benefit_plan: optional<boolean>
+
+  Box14DateOfCurrentCondition:
+    properties:
+      date: optional<DateBox>
+      qual: optional<string>
+
+  Box15OtherDate:
+    properties:
+      qual: optional<string>
+      date: optional<DateBox>
+
+  Box16DatesPatientUnableToWork:
+    properties:
+      from: optional<DateBox>
+      to: optional<DateBox>
+
+  Box17ReferringProvider:
+    properties:
+      box_17_qual: optional<string>
+      box_17_name: optional<string>
+      box_17_a_id_qual: optional<string>
+      box_17_a_id_number: optional<string>
+      box_17_b_npi: optional<string>
+
+  Box18HospitalizationDates:
+    properties:
+      from: optional<DateBox>
+      to: optional<DateBox>
+
+  Box20OutsideLab:
+    properties:
+      outside_lab: optional<boolean>
+      charges: optional<string>
+
+  Box21Diagnoses:
+    properties:
+      icd_ind: optional<string>
+      box_21_a: optional<string>
+      box_21_b: optional<string>
+      box_21_c: optional<string>
+      box_21_d: optional<string>
+      box_21_e: optional<string>
+      box_21_f: optional<string>
+      box_21_g: optional<string>
+      box_21_h: optional<string>
+      box_21_i: optional<string>
+      box_21_j: optional<string>
+      box_21_k: optional<string>
+      box_21_l: optional<string>
+
+  Box22Resubmission:
+    properties:
+      code: optional<string>
+      original_ref_no: optional<string>
+
+  Box24ServiceLines:
+    properties:
+      service_line_1: optional<ServiceLineBox>
+      service_line_2: optional<ServiceLineBox>
+      service_line_3: optional<ServiceLineBox>
+      service_line_4: optional<ServiceLineBox>
+      service_line_5: optional<ServiceLineBox>
+      service_line_6: optional<ServiceLineBox>
+
+  ServiceLineBox:
+    properties:
+      box_24_a_from: optional<DateBox>
+      box_24_a_to: optional<DateBox>
+      box_24_b_place_of_service: optional<string>
+      box_24_c_emg: optional<string>
+      box_24_d_procedure_code: optional<string>
+      box_24_d_modifier: optional<ModifiersBox>
+      box_24_e_diagnosis_pointer: optional<string>
+      box_24_f_charges: optional<string>
+      box_24_g_days_or_units: optional<string>
+      box_24_h_epsdt: optional<string>
+      box_24_h_family_plan: optional<string>
+      box_24_i_id_qual: optional<string>
+      box_24_j_id_number: optional<string>
+      box_24_j_rendering_provider_npi: optional<string>
+      box_24_suppl: optional<string>
+
+  ModifiersBox:
+    properties:
+      modifier_1: optional<string>
+      modifier_2: optional<string>
+      modifier_3: optional<string>
+      modifier_4: optional<string>
+
+  Box25FederalTaxIdNumber:
+    properties:
+      id_number: optional<string>
+      id_qual: optional<FederalTaxIdNumberType>
+
+  Box28TotalCharge:
+    properties:
+      total_charges: optional<string>
+      two_seventy_six: optional<boolean>
+
+  Box32ServiceFacilityInfo:
+    properties:
+      box_32: optional<AddressBox3Line>
+      box_32_a_npi: optional<string>
+      box_32_b_other_id_number: optional<string>
+
+  Box33BillingProviderInfo:
+    properties:
+      phone_number: optional<PhoneNumberBox>
+      box_33: optional<AddressBox3Line>
+      box_33_a_npi: optional<string>
+      box_33_b_other_id_number: optional<string>

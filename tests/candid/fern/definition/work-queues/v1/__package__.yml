@@ -1,0 +1,75 @@
+imports:
+  commons: ../../commons.yml
+  users: ../../users/v2/__package__.yml
+
+service:
+  auth: true
+  base-path: /api/work-queues/v1
+  availability: in-development
+  endpoints:
+    get:
+      path: /{work_queue_id}
+      method: GET
+      path-parameters:
+        work_queue_id: commons.WorkQueueId
+      response: WorkQueueResponse
+      errors:
+        - WorkQueueNotFoundHttpError
+
+    getAllWorkQueues:
+      # NOTE(thomas/john): Because we anticipate only having <O(100) work queues, we are deciding to load the world
+      #  and then render the table UX declaratively (which depends on knowing the categories). Filtering will happen
+      #  on the frontend.
+      path: ""
+      method: GET
+      response: GetAllWorkQueuesResponse
+
+types:
+  WorkQueueCategoryType:
+    enum:
+      # TODO(thomas): Get all of the cats
+      - PRE_SUBMISSION
+      - REJECTIONS
+      - DENIALS
+      - POST_SUBMISSION
+      - STALE_CLAIMS
+      - CUSTOM
+      - CODING
+
+  WorkQueueCategory:
+    properties:
+      type: WorkQueueCategoryType
+      display_name: string
+      description: optional<string>
+
+  WorkQueue:
+    properties:
+      work_queue_id: commons.WorkQueueId
+      display_name: string
+      description: optional<string>
+      category: WorkQueueCategory
+      created_at: datetime
+      created_by: commons.UserId
+
+  WorkQueueStatistics:
+    properties:
+      num_claims: integer
+      # TODO(thomas): Average days in queue, etc.
+
+  WorkQueueResponse:
+    properties:
+      work_queue: WorkQueue
+      work_queue_statistics: WorkQueueStatistics
+
+  GetAllWorkQueuesResponse:
+    properties:
+      work_queues: list<WorkQueueResponse>
+
+  WorkQueueNotFoundError:
+    properties:
+      work_queue_id: commons.WorkQueueId
+
+errors:
+  WorkQueueNotFoundHttpError:
+    status-code: 404
+    type: WorkQueueNotFoundError

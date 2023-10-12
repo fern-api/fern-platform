@@ -1,0 +1,36 @@
+We do our absolute best to avoid breaking changes in our API.
+However, sometimes we need to make changes to our API that
+will break existing clients. Here's how we recommend thinking
+about breaking changes from us:
+
+1. Endpoints marked as `Incubating` are subject to breaking changes without notice.
+2. Endpoints marked as `Available` or `Deprecated` are generally not
+   subject to breaking changes, only being done in rare cases
+   when no other options exist.
+3. Any breaking changes that we do make will be clearly
+   documented in the Breaking Changes page in our API documentation along with
+   a date, so there is always a historical record.
+4. We try to notify you of breaking changes as early as possible.
+   We do this by sending an email to a breaking changes email list we keep.
+   If you would like to be added to this list, please email
+   [support@joincandidhealth.com](mailto:support@joincandidhealth.com).
+
+### What is a breaking change
+
+We consider a break any change that meets one of the two following criteria:
+
+- A schema change to a request shape that leads to a previously valid client
+  request shape becoming invalid.
+- A schema change to a response shape that leads to a previously valid client
+  response parser becoming invalid.
+
+Here are some examples of changes that we consider **non-breaking**:
+
+- Adding a new field to an existing response shape
+- Making a required field on a request shape optional
+- Removing an optional field on a response shape
+
+Here are some examples of changes that we consider **breaking**:
+
+- Removing a required field on a response shape
+- Changing the data type of a field

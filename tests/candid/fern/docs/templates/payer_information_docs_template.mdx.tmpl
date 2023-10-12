@@ -1,0 +1,19 @@
+Candid Health supports most payers. You can find a list of supported payers with their respective `payer_id`, `payer_name`, and `cpid` below.
+
+The `payer_id` and `payer_name` should be used in the corresponding subscriber\'s insurance card information and when you use the [Encounters](../api-reference/encounters) endpoint.
+
+The `cpid` should be used in the `tradingPartnerServiceId` field of the Eligibility endpoint. The `cpid` is a Change Healthcare defined payer identifier.
+
+When denoting a claim as self-pay, please use the `responsible party` field on the [Encounters](../api-reference/encounters) endpoint.
+
+### IMPORTANT
+When submitting claims to Candid, please ensure you are using the exact `payer_name` that is listed below. The relationship between `payer_name` and `payer_id` is not one-to-one, meaning that certain `payer_id`s are used for multiple payers. As such, Candid has to do a match on a combination of `payer_name` and `payer_id` to determine the right place to send the claim in those instances.
+
+<details>
+<summary>
+View list of supported Payer IDs, Payer Names, and CPIDs or <a href="/dynamic-files/payers-list.csv" target="_blank">download a CSV here</a>.
+</summary>
+
+{{ table_content }}
+
+</details>

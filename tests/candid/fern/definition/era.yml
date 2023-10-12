@@ -1,0 +1,15 @@
+imports:
+  commons: commons.yml
+
+types:
+  EraId: uuid
+
+  ERABase:
+    properties:
+      check_number: string
+      check_date: commons.Date
+
+  ERA:
+    extends: ERABase
+    properties:
+      era_id: EraId
