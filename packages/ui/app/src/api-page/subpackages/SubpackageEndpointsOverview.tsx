@@ -1,6 +1,6 @@
 import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useCallback } from "react";
-import { joinUrlSlugs } from "../../docs-context/joinUrlSlugs";
+import { joinUrlSlugs } from "@fern-ui/app-utils";
 import { useNavigationContext } from "../../navigation-context";
 import { EndpointDescriptor } from "./EndpointDescriptor";
 

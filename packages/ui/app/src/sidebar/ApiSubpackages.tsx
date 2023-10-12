@@ -1,6 +1,6 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
+import { joinUrlSlugs } from "@fern-ui/app-utils";
 import { ApiSubpackageSidebarSection } from "./ApiSubpackageSidebarSection";
 
 export declare namespace ApiSubpackages {

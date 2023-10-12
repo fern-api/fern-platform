@@ -10,7 +10,6 @@ export declare namespace DocsMainContent {
 export const DocsMainContent: React.FC<DocsMainContent.Props> = () => {
     const { activeNavigatable, serializedMdxContent } = useNavigationContext();
 
-    // TODO: Implement
     switch (activeNavigatable.type) {
         case "page":
             return <CustomDocsPage serializedMdxContent={serializedMdxContent} navigatable={activeNavigatable} />;
@@ -23,34 +22,7 @@ export const DocsMainContent: React.FC<DocsMainContent.Props> = () => {
                     <ApiPage />
                 </ApiDefinitionContextProvider>
             );
-        // case "api":
-        //     return (
-        //         <ApiDefinitionContextProvider
-        //             apiSection={resolvedPathFromUrl.apiSection}
-        //             apiSlug={resolvedPathFromUrl.slug}
-        //         >
-        //             <ApiPage />
-        //         </ApiDefinitionContextProvider>
-        //     );
-        // case "clientLibraries":
-        // case "apiSubpackage":
-        // return (
-        //     <ApiDefinitionContextProvider
-        //         apiSection={resolvedPathFromUrl.apiSection}
-        //         apiSlug={resolvedPathFromUrl.apiSlug}
-        //     >
-        //         <ApiPage />
-        //     </ApiDefinitionContextProvider>
-        // );
-        // case "section":
-        //     return (
-        //         <RedirectToFirstNavigationItem
-        //             items={resolvedPathFromUrl.section.items}
-        //             slug={resolvedPathFromUrl.slug}
-        //         />
-        //     );
-        // default:
-        //     assertNever(resolvedPathFromUrl);
+        default:
+            return null;
     }
-    return null;
 };

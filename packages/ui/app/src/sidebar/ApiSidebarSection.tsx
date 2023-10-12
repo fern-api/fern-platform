@@ -1,11 +1,11 @@
 import { FernRegistry } from "@fern-fern/registry-browser";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { joinUrlSlugs } from "@fern-ui/app-utils";
 import { useCallback, useMemo } from "react";
 import { resolveSubpackage } from "../api-context/ApiDefinitionContextProvider";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { API_ARTIFACTS_TITLE } from "../config";
-import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { ApiPackageSidebarSectionContents } from "./ApiPackageSidebarSectionContents";
 import { NonClickableSidebarGroupTitle } from "./NonClickableSidebarGroupTitle";
 import { SidebarGroup } from "./SidebarGroup";

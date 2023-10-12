@@ -1,6 +1,6 @@
 import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { startCase } from "lodash-es";
-import { joinUrlSlugs } from "../url";
+import { joinUrlSlugs } from "../slug";
 
 export function doesSubpackageHaveEndpointsOrWebhooksRecursive(
     subpackageId: FernRegistryApiRead.SubpackageId,

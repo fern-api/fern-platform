@@ -1,9 +1,9 @@
 import { FernRegistry } from "@fern-fern/registry-browser";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { joinUrlSlugs } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { memo } from "react";
-import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { ApiSidebarSection } from "./ApiSidebarSection";
 import { SidebarDocsSection } from "./SidebarDocsSection";
 import { SidebarItem } from "./SidebarItem";

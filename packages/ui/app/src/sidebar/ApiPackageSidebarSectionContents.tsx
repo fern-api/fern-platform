@@ -1,7 +1,6 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { getEndpointTitleAsString, isSubpackage } from "@fern-ui/app-utils";
-import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
+import { getEndpointTitleAsString, isSubpackage, joinUrlSlugs } from "@fern-ui/app-utils";
 import { ApiSubpackages } from "./ApiSubpackages";
 import { SidebarItem } from "./SidebarItem";
 
