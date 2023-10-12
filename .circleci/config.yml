@@ -123,8 +123,8 @@ jobs:
           command: vercel deploy --prebuilt --prod --token=${VERCEL_TOKEN}
 
   generate-customer-docs:
-    machine:
-      image: ubuntu-2004:current
+    docker:
+      - image: cimg/node:lts
     parameters:
       docs_path:
         type: string
@@ -134,12 +134,12 @@ jobs:
           pkg-manager: yarn
       - run:
           name: Download Fern
-          command: npm install -g fern-api
+          command: sudo npm install -g fern-dev
       - run:
           name: Generate Customer Docs
           command: |
             cd << parameters.docs_path >>
-            fern generate --docs --log-level debug
+            fern-dev generate --docs --log-level debug
             echo "Generated docs for customer!"
 
 workflows:
