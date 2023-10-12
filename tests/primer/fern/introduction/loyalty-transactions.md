@@ -23,7 +23,11 @@ Provide an `orderId` to link multiple transactions together.
 ## Get a list of transactions
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Call the [Loyalty Transactions](https://apiref.primer.io/reference/get_loyalty_transaction) endpoint to retrieve a list of all your transactions. In most cases it makes sense to filter by `connectionId`. You can also filter by `customerId` or `orderId`.
 =======
 Call the [Loyalty Transactions](https://apiref.primer.io/reference/get_loyalty_transaction) endpoint to retrieve a list of all your transactions. In most cases it makes sense to filter by `connectionId`. You can also filter by `customerId` or `orderId`.
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+Call the [Loyalty Transactions](https://apiref.primer.io/reference/get_loyalty_transaction) endpoint to retrieve a list of all your transactions. In most cases it makes sense to filter by `connectionId`. You can also filter by `customerId` or `orderId`.
+>>>>>>> 93748ff1 (Format code)

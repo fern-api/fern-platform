@@ -5,6 +5,7 @@ groups:
         version: 0.0.45
         output:
 <<<<<<< HEAD
+<<<<<<< HEAD
           location: postman
           api-key: ${POSTMAN_API_KEY}
           workspace-id: ${POSTMAN_WORKSPACE_ID}
@@ -13,3 +14,8 @@ groups:
           api-key: ${POSTMAN_API_KEY}
           workspace-id: ${POSTMAN_WORKSPACE_ID}
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+          location: postman
+          api-key: ${POSTMAN_API_KEY}
+          workspace-id: ${POSTMAN_WORKSPACE_ID}
+>>>>>>> 93748ff1 (Format code)

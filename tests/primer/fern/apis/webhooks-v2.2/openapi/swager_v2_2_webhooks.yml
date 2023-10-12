@@ -28,10 +28,14 @@ paths:
               allOf:
                 - $ref: "#/components/schemas/PaymentStatusWebhookPayload"
 <<<<<<< HEAD
+<<<<<<< HEAD
       parameters:
 =======
       parameters: 
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+      parameters:
+>>>>>>> 93748ff1 (Format code)
         - in: header
           name: X-Signature-Primary
           schema:
@@ -72,10 +76,14 @@ paths:
               allOf:
                 - $ref: "#/components/schemas/PaymentRefundWebhookPayload"
 <<<<<<< HEAD
+<<<<<<< HEAD
       parameters:
 =======
       parameters: 
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+      parameters:
+>>>>>>> 93748ff1 (Format code)
         - in: header
           name: X-Signature-Primary
           schema:
@@ -112,10 +120,14 @@ paths:
               allOf:
                 - $ref: "#/components/schemas/DisputeOpenWebhookPayload"
 <<<<<<< HEAD
+<<<<<<< HEAD
       parameters:
 =======
       parameters: 
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+      parameters:
+>>>>>>> 93748ff1 (Format code)
         - in: header
           name: X-Signature-Primary
           schema:
@@ -158,10 +170,14 @@ paths:
               allOf:
                 - $ref: "#/components/schemas/DisputeStatusWebhookPayload"
 <<<<<<< HEAD
+<<<<<<< HEAD
       parameters:
 =======
       parameters: 
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+      parameters:
+>>>>>>> 93748ff1 (Format code)
         - in: header
           name: X-Signature-Primary
           schema:
@@ -289,11 +305,15 @@ components:
           title: Payment descriptor
           type: string
 <<<<<<< HEAD
+<<<<<<< HEAD
           description: The description of the payment, as it would typically appear
 =======
           description:
             The description of the payment, as it would typically appear
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+          description: The description of the payment, as it would typically appear
+>>>>>>> 93748ff1 (Format code)
             on a bank statement.
         paymentType:
           allOf:
@@ -1046,11 +1066,15 @@ components:
               allOf:
                 - $ref: "#/components/schemas/PaymentStatus"
 <<<<<<< HEAD
+<<<<<<< HEAD
               description: See the payment [status table](../docs#payment-status)
 =======
               description:
                 See the payment [status table](../docs#payment-status)
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+              description: See the payment [status table](../docs#payment-status)
+>>>>>>> 93748ff1 (Format code)
                 for more information.
             orderId:
               title: Order ID
@@ -1098,11 +1122,15 @@ components:
               items:
                 $ref: "#/components/schemas/TransactionOverviewAPISchema"
 <<<<<<< HEAD
+<<<<<<< HEAD
               description: "A list summarizing the transactions that occurred while processing
 =======
               description:
                 "A list summarizing the transactions that occurred while processing
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+              description: "A list summarizing the transactions that occurred while processing
+>>>>>>> 93748ff1 (Format code)
                 the payment.
 
                 Note: a refund is a separate transaction and so will appear in
@@ -1164,11 +1192,15 @@ components:
               allOf:
                 - $ref: "#/components/schemas/PaymentStatus"
 <<<<<<< HEAD
+<<<<<<< HEAD
               description: See the payment [status table](../docs#payment-status)
 =======
               description:
                 See the payment [status table](../docs#payment-status)
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+              description: See the payment [status table](../docs#payment-status)
+>>>>>>> 93748ff1 (Format code)
                 for more information.
             orderId:
               title: Order ID
@@ -1216,11 +1248,15 @@ components:
               items:
                 $ref: "#/components/schemas/TransactionOverviewAPISchema"
 <<<<<<< HEAD
+<<<<<<< HEAD
               description: "A list summarizing the transactions that occurred while processing
 =======
               description:
                 "A list summarizing the transactions that occurred while processing
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+              description: "A list summarizing the transactions that occurred while processing
+>>>>>>> 93748ff1 (Format code)
                 the payment.
 
                 Note: a refund is a separate transaction and so will appear in
@@ -1283,6 +1319,7 @@ components:
           type: string
           enum:
 <<<<<<< HEAD
+<<<<<<< HEAD
             - RETRIEVAL
             - DISPUTE
             - PREARBITRATION
@@ -1291,6 +1328,11 @@ components:
            - DISPUTE
            - PREARBITRATION
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+            - RETRIEVAL
+            - DISPUTE
+            - PREARBITRATION
+>>>>>>> 93748ff1 (Format code)
           description: |
             The type of dispute event. More information on what the `type` field represents can be found in [Manage disputes](https://primer.io/docs/accept-payments/manage-disputes)
         status:
@@ -1298,6 +1340,9 @@ components:
           type: string
           enum:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93748ff1 (Format code)
             - OPEN
             - ACCEPTED
             - CHALLENGED
@@ -1305,6 +1350,7 @@ components:
             - CANCELLED
             - WON
             - LOST
+<<<<<<< HEAD
 =======
            - OPEN
            - ACCEPTED
@@ -1314,6 +1360,8 @@ components:
            - WON
            - LOST
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+>>>>>>> 93748ff1 (Format code)
           description: |
             To see which statuses are applicable for a dispute `type`, and how we map `status`, please see [Manage disputes](https://primer.io/docs/accept-payments/manage-disputes).
         primerAccountId:
@@ -1350,12 +1398,17 @@ components:
           type: string
           enum:
 <<<<<<< HEAD
+<<<<<<< HEAD
             - ADYEN
             - BRAINTREE
 =======
            - ADYEN
            - BRAINTREE
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+            - ADYEN
+            - BRAINTREE
+>>>>>>> 93748ff1 (Format code)
           description: The payment processor that you submitted a payment to, and received a dispute notification from.
         processorDisputeId:
           title: Processor Dispute ID
@@ -1407,10 +1460,13 @@ components:
           description: The merchant ID registered at the payment processor used for this dispute.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+>>>>>>> 93748ff1 (Format code)
     PaymentCardTokenAPISchema:
       title: PaymentCardTokenAPISchema
       required:
@@ -1481,11 +1537,15 @@ components:
           title: Processor message
           type: string
 <<<<<<< HEAD
+<<<<<<< HEAD
           description: In case of an error on the processor's part, we will return
 =======
           description:
             In case of an error on the processor's part, we will return
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+          description: In case of an error on the processor's part, we will return
+>>>>>>> 93748ff1 (Format code)
             the message returned by the processor. This is usually a human readable
             error.
 
@@ -1499,16 +1559,21 @@ components:
           title: Fraud Check
           $ref: "#/components/schemas/FraudCheckAPISchema"
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
         
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+
+>>>>>>> 93748ff1 (Format code)
     FraudCheckAPISchema:
       title: FraudCheckAPISchema
       description: |
         Results of the pre-authorization and post-authorization fraud checks.
       type: object
       properties:
+<<<<<<< HEAD
 <<<<<<< HEAD
         source:
           type: string
@@ -1519,13 +1584,20 @@ components:
         postAuthorizationResult:
 =======
         source: 
+=======
+        source:
+>>>>>>> 93748ff1 (Format code)
           type: string
           example: "FRAUD_PROVIDER"
-        preAuthorizationResult: 
+        preAuthorizationResult:
           $ref: "#/components/schemas/FraudDecisionTypeEnum"
           example: THREE_DS
+<<<<<<< HEAD
         postAuthorizationResult: 
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+        postAuthorizationResult:
+>>>>>>> 93748ff1 (Format code)
           $ref: "#/components/schemas/FraudDecisionTypeEnum"
           example: ACCEPT
 
@@ -1631,11 +1703,15 @@ components:
         - REQUESTED_PROGRAM_NOT_SUPPORTED
       type: string
 <<<<<<< HEAD
+<<<<<<< HEAD
       description: "This enum is derived from the `transStatusReason` on page 218
 =======
       description:
         "This enum is derived from the `transStatusReason` on page 218
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+      description: "This enum is derived from the `transStatusReason` on page 218
+>>>>>>> 93748ff1 (Format code)
         of the
 
         [EMV Co 3DS protocol specification](https://www.emvco.com/terms-of-use/?u=/wp-content/uploads/documents/EMVCo_3DS_Spec_v220_122018.pdf)
@@ -1754,11 +1830,15 @@ components:
           allOf:
             - $ref: "#/components/schemas/PaymentStatus"
 <<<<<<< HEAD
+<<<<<<< HEAD
           description: Transaction status, please refer to the [Transaction Status
 =======
           description:
             Transaction status, please refer to the [Transaction Status
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+          description: Transaction status, please refer to the [Transaction Status
+>>>>>>> 93748ff1 (Format code)
             Codes](#section/API-Usage-Guide/Payment-Status) table for more information
         processorStatusReason:
           title: Payment error
@@ -1855,11 +1935,15 @@ components:
       allOf:
         - $ref: "#/components/schemas/RecurringTransactionTypeEnum"
 <<<<<<< HEAD
+<<<<<<< HEAD
       description: "Payment types, primarily to be used for recurring payments.
 =======
       description:
         "Payment types, primarily to be used for recurring payments.
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+      description: "Payment types, primarily to be used for recurring payments.
+>>>>>>> 93748ff1 (Format code)
 
         Note: If you successfully vault a `SINGLE_USE` token on payment
         creation, then there's no need to set a value for this field and it will

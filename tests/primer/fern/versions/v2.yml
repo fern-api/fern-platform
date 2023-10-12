@@ -1,8 +1,12 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 navigation:
 =======
 navigation: 
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+navigation:
+>>>>>>> 93748ff1 (Format code)
   - section: Introduction
     contents:
       - page: Getting Started
@@ -18,7 +22,11 @@ navigation:
   - api-name: v2
     api: Primer API
 <<<<<<< HEAD
+<<<<<<< HEAD
     display-errors: true
 =======
     display-errors: true
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+    display-errors: true
+>>>>>>> 93748ff1 (Format code)

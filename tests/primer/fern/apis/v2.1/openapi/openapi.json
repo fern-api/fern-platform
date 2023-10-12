@@ -1561,6 +1561,7 @@
       "AccountFundingTypeEnum": {
         "title": "AccountFundingTypeEnum",
 <<<<<<< HEAD
+<<<<<<< HEAD
         "enum": ["CREDIT", "DEBIT", "PREPAID", "CHARGE", "DEFERRED_DEBIT", "UNKNOWN"],
 =======
         "enum": [
@@ -1572,6 +1573,9 @@
           "UNKNOWN"
         ],
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+        "enum": ["CREDIT", "DEBIT", "PREPAID", "CHARGE", "DEFERRED_DEBIT", "UNKNOWN"],
+>>>>>>> 93748ff1 (Format code)
         "type": "string",
         "description": "An enumeration."
       },
@@ -3224,6 +3228,7 @@
       "KlarnaSessionDetailsAPISchema": {
         "title": "KlarnaSessionDetailsAPISchema",
 <<<<<<< HEAD
+<<<<<<< HEAD
         "required": ["billingAddress", "purchaseCountry", "purchaseCurrency", "locale", "orderLines"],
 =======
         "required": [
@@ -3234,6 +3239,9 @@
           "orderLines"
         ],
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+        "required": ["billingAddress", "purchaseCountry", "purchaseCurrency", "locale", "orderLines"],
+>>>>>>> 93748ff1 (Format code)
         "type": "object",
         "properties": {
           "recurringDescription": {
@@ -3806,6 +3814,7 @@
       "PaymentSummaryAPISchema": {
         "title": "PaymentSummaryAPISchema",
 <<<<<<< HEAD
+<<<<<<< HEAD
         "required": ["id", "date", "status", "orderId", "currencyCode", "amount"],
 =======
         "required": [
@@ -3817,6 +3826,9 @@
           "amount"
         ],
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+        "required": ["id", "date", "status", "orderId", "currencyCode", "amount"],
+>>>>>>> 93748ff1 (Format code)
         "type": "object",
         "properties": {
           "id": {
@@ -3934,6 +3946,7 @@
       "ThreeDSecureAuthResponseCodeEnum": {
         "title": "ThreeDSecureAuthResponseCodeEnum",
 <<<<<<< HEAD
+<<<<<<< HEAD
         "enum": ["NOT_PERFORMED", "SKIPPED", "AUTH_SUCCESS", "AUTH_FAILED", "CHALLENGE", "METHOD"],
 =======
         "enum": [
@@ -3945,6 +3958,9 @@
           "METHOD"
         ],
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+        "enum": ["NOT_PERFORMED", "SKIPPED", "AUTH_SUCCESS", "AUTH_FAILED", "CHALLENGE", "METHOD"],
+>>>>>>> 93748ff1 (Format code)
         "type": "string",
         "description": "An enumeration."
       },
@@ -4073,6 +4089,7 @@
       "TransactionOverviewAPISchema": {
         "title": "TransactionOverviewAPISchema",
 <<<<<<< HEAD
+<<<<<<< HEAD
         "required": ["id", "processor", "processorMerchantId", "type", "status", "date", "amount", "currencyCode"],
 =======
         "required": [
@@ -4086,6 +4103,9 @@
           "currencyCode"
         ],
 >>>>>>> 67b36d8d (Init tests dir with primer)
+=======
+        "required": ["id", "processor", "processorMerchantId", "type", "status", "date", "amount", "currencyCode"],
+>>>>>>> 93748ff1 (Format code)
         "type": "object",
         "properties": {
           "date": {
