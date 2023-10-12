@@ -204,6 +204,10 @@ workflows:
             - fern-tokens
             - npm
             - fern-dev
+          # filters:
+          #   branches:
+          #     only:
+          #       - main
       - generate-customer-docs:
           name: preview-docs-fern
           docs_path: tests/fern
@@ -211,6 +215,10 @@ workflows:
             - fern-tokens
             - npm
             - fern-dev
+          # filters:
+          #   branches:
+          #     only:
+          #       - main
       - generate-customer-docs:
           name: preview-docs-mercoa
           docs_path: tests/mercoa
@@ -218,6 +226,10 @@ workflows:
             - fern-tokens
             - npm
             - fern-dev
+          # filters:
+          #   branches:
+          #     only:
+          #       - main
       - generate-customer-docs:
           name: preview-docs-primer
           docs_path: tests/primer
@@ -225,6 +237,10 @@ workflows:
             - fern-tokens
             - npm
             - fern-dev
+          # filters:
+          #   branches:
+          #     only:
+          #       - main
       - generate-customer-docs:
           name: preview-docs-superagent
           docs_path: tests/superagent
@@ -232,6 +248,10 @@ workflows:
             - fern-tokens
             - npm
             - fern-dev
+          # filters:
+          #   branches:
+          #     only:
+          #       - main
       - generate-customer-docs:
           name: preview-docs-vellum
           docs_path: tests/vellum
@@ -239,3 +259,7 @@ workflows:
             - fern-tokens
             - npm
             - fern-dev
+          # filters:
+          #   branches:
+          #     only:
+          #       - main
