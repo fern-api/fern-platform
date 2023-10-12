@@ -197,39 +197,15 @@ workflows:
     jobs:
       - generate-customer-docs:
           docs_path: tests/candid
-          filters:
-            branches:
-              only:
-                - main
       - generate-customer-docs:
           docs_path: tests/fern
           context:
             - fern-tokens
-          filters:
-            branches:
-              only:
-                - main
       - generate-customer-docs:
           docs_path: tests/mercoa
-          filters:
-            branches:
-              only:
-                - main
       - generate-customer-docs:
           docs_path: tests/primer
-          filters:
-            branches:
-              only:
-                - main
       - generate-customer-docs:
           docs_path: tests/superagent
-          filters:
-            branches:
-              only:
-                - main
       - generate-customer-docs:
           docs_path: tests/vellum
-          filters:
-            branches:
-              only:
-                - main
