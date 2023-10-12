@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  property: property.yml
+  commons: commons.yml
+  records: records.yml
+
+service:
+  auth: false
+  base-path: /webhook
+  audiences:
+    - internal
+  endpoints:
+    handle-stripe-webhook:
+      path: "/stripe"
+      method: POST
+      docs: Handle an incoming Stripe webhook
+      display-name: Handle Stripe webhook
+      response: commons.Success
+
+types:
+  StripeWebhook:
+    properties:
+      id: string
+      object: string
+      data: map<string, unknown>
+      request: StripeWebhookRequest
+      type: string
+
+  StripeWebhookRequest:
+    properties:
+      id: string
+      idempotency_key: string
