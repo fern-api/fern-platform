@@ -14,6 +14,7 @@ import { type ResolvedPath } from "../ResolvedPath";
 import { getRouteNode } from "../util/anchor";
 import { NavigationContext } from "./NavigationContext";
 import { useSlugListeners } from "./useSlugListeners";
+import { useCacheContext } from "../cache-context/useCacheContext";
 
 export declare namespace NavigationContextProvider {
     export type Props = PropsWithChildren<{
@@ -32,6 +33,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const justNavigatedTo = useRef<string | undefined>(router.asPath);
     const { value: hasInitialized, setTrue: markAsInitialized } = useBooleanState(false);
     const resolver = useMemo(() => new PathResolver({ docsDefinition }), [docsDefinition]);
+    const { storeSerializedMdxContent, getSerializedMdxContent } = useCacheContext();
 
     const [serializedMdxContent, setSerializedMdxContent] = useState<SerializedMdxContent | undefined>(
         resolvedPath.type === "mdx-page" ? resolvedPath.serializedMdxContent : undefined
@@ -44,6 +46,15 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             setSerializedMdxContent(undefined);
         }
     }, [resolvedPath]);
+
+    useEffect(() => {
+        if (resolvedPath.type === "mdx-page") {
+            const existing = getSerializedMdxContent(resolvedPath.fullSlug);
+            if (existing == null) {
+                storeSerializedMdxContent(resolvedPath.fullSlug, resolvedPath.serializedMdxContent);
+            }
+        }
+    }, [resolvedPath, getSerializedMdxContent, storeSerializedMdxContent]);
 
     const resolvedNavigatable = useMemo(() => {
         const node = resolver.resolveNavigatable(resolvedPath.fullSlug);
@@ -178,7 +189,13 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         const navigatable = resolver.resolveNavigatable(fullSlug);
         if (navigatable != null) {
             if (navigatable.type === "page") {
-                setSerializedMdxContent(undefined);
+                const navigatableFullSlug = getFullSlugForNavigatable(navigatable);
+                const existingSerializedMdxContent = getSerializedMdxContent(navigatableFullSlug);
+                if (existingSerializedMdxContent != null) {
+                    setSerializedMdxContent(existingSerializedMdxContent);
+                } else {
+                    setSerializedMdxContent(undefined);
+                }
             }
             setActiveNavigatable(navigatable);
         }

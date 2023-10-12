@@ -23,6 +23,7 @@ export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args):
         }
     });
 
+    // TODO: Revise
     const isSelected = selectedSlug === getFullSlug(slug);
 
     const { ref: setRefForInVerticalCenterIntersectionObserver } = useInView({
