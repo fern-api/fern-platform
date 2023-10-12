@@ -1,0 +1,21 @@
+Once you have your Workflow built in Vellum’s UI, we provide an easy way to use it in production. Vellum handles the execution of the Workflow — all you need to provide are the input variables to call the Workflow. Vellum abstracts away the need to store the prompts, semantic search & the business logic tying together these prompts in your code base. Using Workflows in production becomes a matter of minutes, not days.
+
+This help center article covers how to make the integration, and the monitoring options you have once in production.
+
+## Workflow Code Snippet Integration
+
+Once you Deploy the Workflow from the UI, you’re taken to a code snippet which you need to use to call this Workflow in production. The adjacent screenshot shows the Workflow Deployment’s name & its input variables
+
+![Workflow Details](https://storage.googleapis.com/vellum-public/help-docs/workflow_details.png)
+
+![Workflow API Code Snippet](https://storage.googleapis.com/vellum-public/help-docs/workflows_api_code_snippet.png)
+
+## Workflow Executions
+
+Once you start making requests to the Workflow, all the executions are stored in the Executions tab for monitoring purposes. Any time you find an edge case in production, you can save that specific Execution back as a Scenario for future testing. This is typically used to build out your test bank and debugging unexpected behavior. By running this Scenario in the UI you can see what the responses were at each step and tweak the Workflow logic (prompts, semantic search, business logic tying together the prompts)
+
+![Workflow Execution Observability](https://storage.googleapis.com/vellum-public/help-docs/workflow_executions.png)
+
+## Workflow Executions Details
+
+Clicking the View Details button on the Execution brings you to a UI where you can see the inputs, outputs and latency at each step of the Workflow when it was run in production
