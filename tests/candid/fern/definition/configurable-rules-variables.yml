@@ -26,7 +26,6 @@ service:
         - TypeDoesNotMatchValueHttpError
         - VariableWithNameAlreadyExistsHttpError
 
-
     getAllVariableSummaries:
       path: /summaries
       method: GET

@@ -42,7 +42,6 @@ types:
       total_billed_amount_cents: integer
       total_insurance_financial_information: EncounterFinancialInformation
 
-
 service:
   auth: true
   base-path: /api/encounters-internal/v1

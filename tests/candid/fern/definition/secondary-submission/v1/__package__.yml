@@ -1,4 +1,3 @@
-
 imports:
   commons: ../../commons.yml
   rules_engine_types: ../../rules_engine_types.yml
@@ -18,13 +17,13 @@ service:
       errors:
         - commons.EntityNotFoundError
     validate:
-        path: /{encounter_id}/validate
-        method: POST
-        path-parameters:
-            encounter_id: commons.EncounterId
-        response: SecondarySubmissionCheckResponse
-        errors:
-          - commons.EntityNotFoundError
+      path: /{encounter_id}/validate
+      method: POST
+      path-parameters:
+        encounter_id: commons.EncounterId
+      response: SecondarySubmissionCheckResponse
+      errors:
+        - commons.EntityNotFoundError
     prepopulate:
       path: /{encounter_id}/pre-populate
       method: GET

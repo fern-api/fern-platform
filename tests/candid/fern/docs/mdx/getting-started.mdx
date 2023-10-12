@@ -11,11 +11,7 @@ Specifically, you'll learn how to make a request to create an Encounter.
 
 First, install our Python SDK using your package manager:
 
-<CodeBlock title="Terminal">
-```bash
-pip install candidhealth # or poetry install, etc
-```
-</CodeBlock>
+<CodeBlock title="Terminal">```bash pip install candidhealth # or poetry install, etc ```</CodeBlock>
 
 ## Authentication
 
@@ -27,13 +23,14 @@ from candid.client import CandidApiClient
 from candid.environment import CandidApiEnvironment
 
 client = CandidApiClient(
-    environment=CandidApiEnvironment.STAGING,
-    options=CandidApiClientOptions(
-        client_id="YOUR_CLIENT_ID",
-        client_secret="YOUR_CLIENT_SECRET"
-    )
+environment=CandidApiEnvironment.STAGING,
+options=CandidApiClientOptions(
+client_id="YOUR_CLIENT_ID",
+client_secret="YOUR_CLIENT_SECRET"
 )
-```
+)
+
+````
 </CodeBlock>
 
 Candid provides two environments, `STAGING` and `PRODUCTION`. Take care to pass the correct environment when creating your API client so that requests are routed correctly.
@@ -102,7 +99,8 @@ created_encounter = client.encounters.v_4.create(
     provider_accepts_assignment=True,
     benefits_assigned_to_provider=True,
 )
-```
+````
+
 </CodeBlock>
 
 ## Error Handling
@@ -116,10 +114,11 @@ Python's native exception-handling:
 from candid.resources.encounters.resources.v_4.errors import EncounterExternalIdUniquenessError
 
 try:
-    created_encounter = client.encounters.v_4.create(...)
+created_encounter = client.encounters.v_4.create(...)
 except EncounterExternalIdUniquenessError as e:
-    print(f"An error occurred: {e}")
-```
+print(f"An error occurred: {e}")
+
+````
 </CodeBlock>
 
 ## Full Source Code
@@ -212,5 +211,6 @@ created_encounter = client.encounters.v_4.create(
     provider_accepts_assignment=True,
     benefits_assigned_to_provider=True,
 )
-```
+````
+
 </CodeBlock>

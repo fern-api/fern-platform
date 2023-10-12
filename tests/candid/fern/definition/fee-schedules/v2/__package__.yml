@@ -82,22 +82,22 @@ types:
 
   LicenseTypeCoverage:
     union:
-      all: { }
+      all: {}
       license_types: set<organizationProviders.LicenseType>
 
   NetworkCoverage:
     union:
-      all: { }
+      all: {}
       networks: set<Network>
 
   GeographyCoverage:
     union:
-      all: { }
+      all: {}
       geography: set<FeeScheduleGeography>
 
   PlaceOfServiceCoverage:
     union:
-      all: { }
+      all: {}
       place_of_services: set<PlaceOfServiceCategory>
 
   FeeScheduleConfigurationMechanism:

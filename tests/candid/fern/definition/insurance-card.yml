@@ -6,7 +6,6 @@ service:
   base-path: /api/insurance_cards/v2
   availability: in-development
   endpoints:
-
     update:
       path: /{insurance_card_id}
       method: PATCH

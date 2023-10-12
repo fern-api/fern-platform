@@ -5,7 +5,7 @@ imports:
 
 service:
   auth: true
-  base-path: '/paymentMethod'
+  base-path: "/paymentMethod"
   endpoints:
     getAll:
       audiences:

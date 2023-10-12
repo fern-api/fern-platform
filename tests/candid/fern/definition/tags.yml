@@ -4,7 +4,6 @@ service:
   auth: true
   base-path: /api/tags
   endpoints:
-
     getAll:
       method: GET
       path: /v3

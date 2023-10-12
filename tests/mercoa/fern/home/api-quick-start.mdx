@@ -3,10 +3,12 @@
 This guide shows you how to use Mercoa with just the API and without any frontend components or SDKs. This is useful if you are integrating with a system that already has a frontend, or if you are building a custom frontend.
 
 <Callout intent="info">
-We typically recommend using the frontend SDKs/components, as they speed up development and provide a better user experience.
+  We typically recommend using the frontend SDKs/components, as they speed up development and provide a better user
+  experience.
 </Callout>
 
 ## How it Works
+
 1. [Get your API Keys](#getting-your-api-keys)
 1. [Create an Entity](#create-an-entity)
 1. [Add an Entity Representative](#add-representative)
@@ -20,15 +22,13 @@ We typically recommend using the frontend SDKs/components, as they speed up deve
 
 You can find your API key and Organization ID in the [Mercoa Dashboard](https://mercoa.com/dashboard/developers).
 
-<Callout intent="warning">
-    Do not expose this key on the front-end, it is for back-end use only.
-</Callout>
+<Callout intent="warning">Do not expose this key on the front-end, it is for back-end use only.</Callout>
 
 ## Create an Entity
 
 Entities are individuals or businesses (your users) that will use the Mercoa platform. Before they can use Mercoa, they will need to be onboarded and go through KYC/KYB checks.
 
-You can use the [API](/api-reference/entity/create-entity ), the [Admin UI](https://mercoa.com/dashboard/entities), or contact us to do a bulk upload.
+You can use the [API](/api-reference/entity/create-entity), the [Admin UI](https://mercoa.com/dashboard/entities), or contact us to do a bulk upload.
 
 ## Add Representatives
 
@@ -38,14 +38,15 @@ You can add representatives using the [API](/api-reference/representative/create
 
 ## Verify Entity
 
-Once all representatives have been added, you can verify the entity. This will trigger KYC/KYB checks on the entity and will usually be instant. In cases where manual review is needed, this might take a few days. 
+Once all representatives have been added, you can verify the entity. This will trigger KYC/KYB checks on the entity and will usually be instant. In cases where manual review is needed, this might take a few days.
 
 Use the [API](/api-reference/entity/update-entity) or the Admin UI to verify the entity. When using the API, set the `ownersProvided` field to `true`.
 
 ## Create a Bank Account
 
 <Callout intent="info">
-    Instant Account Verification via Plaid is coming soon. If you already use Plaid to verify bank accounts, the existing Plaid token can be used. Please contact us for more information.
+  Instant Account Verification via Plaid is coming soon. If you already use Plaid to verify bank accounts, the existing
+  Plaid token can be used. Please contact us for more information.
 </Callout>
 
 <br />
@@ -79,6 +80,7 @@ Once the entity has accepted the Terms of Service, you can create an invoice for
     The vendor entity needs to be created, but only needs basic information like the legal name, email, and type of business. Vendor entities also do not need verified bank accounts.
 
     An invoice can also be created without a paymentDestinationId, but we recommend that you provide one. This will allow the invoice to be paid even if the vendor does not enter their information in the vendor portal.
+
 </Callout>
 
 <br />

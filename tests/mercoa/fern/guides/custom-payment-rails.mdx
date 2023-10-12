@@ -8,7 +8,9 @@ This lets you take advantage of Mercoa's invoice management, payment tracking, a
 <br />
 
 <Callout intent="info">
-  Entities that only use custom payment rails do not need to go through Mercoa's KYB/KYC checks. When creating entities that will only use custom payment rails, you only need to provide the required parameters and can skip adding EINs, representatives, etc.
+  Entities that only use custom payment rails do not need to go through Mercoa's KYB/KYC checks. When creating entities
+  that will only use custom payment rails, you only need to provide the required parameters and can skip adding EINs,
+  representatives, etc.
 </Callout>
 
 ## How it works
@@ -30,6 +32,7 @@ Once the payment is complete, your system needs to update the invoice as `paid`.
 A custom payment rail schema is a set of key/value pairs that define the data that is required to trigger a payment using your custom payment rail.
 
 For example, if you are using a custom payment rail to trigger a wire transfer, you might require the following data:
+
 - `accountNumber`
 - `routingNumber`
 - `recipientName`
@@ -76,7 +79,8 @@ Once you have defined a custom payment rail schema, you can create a `paymentMet
 The custom `paymentMethod` will contain the data that is required to trigger a payment using your custom payment rail, and a `foreignId` that can be used to identify the payment method in your system.
 
 <Callout intent="info">
-  The foreignId is a unique identifier for the payment method in your system. It is used to identify the payment method in your system when you receive a webhook notification.
+  The foreignId is a unique identifier for the payment method in your system. It is used to identify the payment method
+  in your system when you receive a webhook notification.
 </Callout>
 
 <br />
@@ -121,6 +125,4 @@ You can now use this `paymentMethod` just like any other payment method on an in
 
 In order to have Mercoa generate the UI elements for both the payer and the vendor, the custom schema must be activated on the [Payments Methods Dashboard](https://mercoa.com/dashboard/paymentmethods).
 
-<Callout intent="info">
-  UI generation is currently in development.
-</Callout>
+<Callout intent="info">UI generation is currently in development.</Callout>

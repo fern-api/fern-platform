@@ -21,8 +21,6 @@ types:
       state: commons.State
       provider_number: string
 
-
-
   IdentifierValue:
     union:
       medicare_provider_identifier: MedicareProviderIdentifier

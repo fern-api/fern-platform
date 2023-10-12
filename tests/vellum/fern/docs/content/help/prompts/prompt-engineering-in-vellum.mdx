@@ -24,13 +24,9 @@ but you can find jinja’s complete documentation
 
 Reference variables using double-curly-brackets. For example,
 
-<CodeBlock title="Reference Variables">
-  ``` You are a {{ personality_type }} AI assistant. ```
-</CodeBlock>
+<CodeBlock title="Reference Variables">``` You are a {{ personality_type }} AI assistant. ```</CodeBlock>
 
-<Callout intent="warning">
-  Note that all prompt variables are treated as strings!
-</Callout>
+<Callout intent="warning">Note that all prompt variables are treated as strings!</Callout>
 
 ### Conditionals
 
@@ -127,8 +123,8 @@ Here’s an example going from Text to Chat.
 
 ![Converting from Text Models to Chat Models](https://storage.googleapis.com/vellum-public/help-docs/text_to_chat_conversion.png)
 
-
 ### Function Calling
+
 Function Calling allows you to provide function definitions within your prompts the the model could use in deciding how to respond with each user prompt. It’s best to think of functions as a type of classifier prompt that pushes to model to respond with either:
 
 - The name of one of those functions, with associated parameter values.
@@ -155,18 +151,17 @@ When you then call the model with a prompt along with these function definitions
 
 Notice that in this example, the model is directing us to call the `get_current_weather` function with the `location` parameter set to `Boston, MA`. At this point, it is up to the _app developer_ to actually invoke the function - the model itself does not have access to the execution logic. These functions should represent public or private APIs that the app developer supports and could invoke once instructed by the model.
 
-Once the function is called and a response is observed, the response should be fed back to the LLM as a ********function******** message so that the model knows what was the outcome of calling that function. The model will then be able to use the response of that function when deciding how to respond next in order to satisfy the original prompt.
+Once the function is called and a response is observed, the response should be fed back to the LLM as a **\*\*\*\***function**\*\*\*\*** message so that the model knows what was the outcome of calling that function. The model will then be able to use the response of that function when deciding how to respond next in order to satisfy the original prompt.
 
 ![Assistant Response Following FUnction Call](https://storage.googleapis.com/vellum-public/help-docs/assistant_response_following_function.png)
 
-Notice that we need to specify the original response from the model as an *********assistant********* message, before following up with a ********function******** message. The final output from the model then represents its understanding of the user’s prompt and the output of the function it had access to.
+Notice that we need to specify the original response from the model as an ****\*****assistant****\***** message, before following up with a **\*\*\*\***function**\*\*\*\*** message. The final output from the model then represents its understanding of the user’s prompt and the output of the function it had access to.
 
 Once you have reached this point, you’ll have everything you’ll need to add functions to models! Function calling is best used for incorporating the following types of data into your prompts:
 
 - Runtime or recent data - New data that has become available that the developer’s APIs have access to but the model was not trained on
 - Proprietary data - Data the developer has collected that is specialized to their business proposition that gives their application a comparative advantage
 - Weighted data - Data that the model already has been trained on but that the developer would like to re-prioritize based on some special insights that could be inferred from their API
-
 
 # Previewing Compiled Prompts
 

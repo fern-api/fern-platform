@@ -20,7 +20,6 @@ service:
         invoiceId: invoice.InvoiceId
       response: invoice.InvoiceSurgeryResponse
 
-
     update:
       audiences:
         - internal

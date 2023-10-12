@@ -46,7 +46,6 @@ types:
       - procedure_code
       - allowed_amount_cents
 
-
   FeeScheduleConfigFilters:
     properties:
       procedure_code_search_term: optional<string>

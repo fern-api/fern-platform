@@ -6,7 +6,7 @@ imports:
 
 service:
   auth: true
-  base-path: '/entity/{entityId}'
+  base-path: "/entity/{entityId}"
   path-parameters:
     entityId: entity.EntityId
   endpoints:

@@ -1,6 +1,5 @@
 Learn about the data and statuses that an invoice goes through in Mercoa.
 
-
 [API Reference](/api-reference/invoice)
 
 # Lifecycle of an invoice
@@ -63,22 +62,17 @@ The `dueDate` is the date that the invoice is due.
 }
 ```
 
-
 <Callout intent="info">
-  Once an invoice is in the NEW state, the amount, currency, dueDate, payerId and
-  vendorId **cannot** be changed.
+  Once an invoice is in the NEW state, the amount, currency, dueDate, payerId and vendorId **cannot** be changed.
 </Callout>
 
 # 3. Getting approvals
 
 If the entity has an [approval policy](/api-reference/entity/approval-policy/create-an-approval-policy) set, the invoice will need to be approved by all relevant parties to move to the `APPROVED` state.
 
-
 <Callout intent="info">
-  If the entity does *NOT* have an [approval
-  policy](/api-reference/entity/create-approval-policy) set, the invoice will
-  automatically move into the APPROVED state and will not be in the NEW
-  state.
+  If the entity does *NOT* have an [approval policy](/api-reference/entity/create-approval-policy) set, the invoice will
+  automatically move into the APPROVED state and will not be in the NEW state.
 </Callout>
 
 <br />
@@ -114,9 +108,8 @@ To add an approval to the invoice, use the [approve](/api-reference/invoice/appr
 Once all approvals are complete, the invoice will automatically move to the `APPROVED` status, there is no need to update the invoice.
 
 <Callout intent="info">
-  Approvals and Rejections create a [comment](/api-reference/invoice/comment/add-a-comment) on
-  the invoice. You can use this to show a list of comments and approvals, as the
-  comments will have the approver details as part of the response.
+  Approvals and Rejections create a [comment](/api-reference/invoice/comment/add-a-comment) on the invoice. You can use
+  this to show a list of comments and approvals, as the comments will have the approver details as part of the response.
 </Callout>
 
 # 6. Scheduling the payment
@@ -163,6 +156,6 @@ No action is required, this is an automatic function.
 When the invoice amount is received by the vendor, the invoice will be set to the `PAID` state.
 
 <Callout intent="info">
-  If you are using custom payment rails, you are responsible for moving the
-  invoice into this state once the funds have settled.
+  If you are using custom payment rails, you are responsible for moving the invoice into this state once the funds have
+  settled.
 </Callout>

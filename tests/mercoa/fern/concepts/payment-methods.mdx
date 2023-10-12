@@ -2,18 +2,17 @@ Funding sources and disbursement methods.
 
 [API Reference](/api-reference/entity/payment-method/create-payment-method)
 
-Payment Methods are used as funding sources and disbursement for payments in Mercoa. Some payment methods can only be used as a funding source, others can only be used as a disbursement, and many can be used for both. 
+Payment Methods are used as funding sources and disbursement for payments in Mercoa. Some payment methods can only be used as a funding source, others can only be used as a disbursement, and many can be used for both.
 
 The following table shows the available payment methods and their capabilities.
 
-| Payment Method                   | Funding Source | Disbursement Method | Available |
-|--------------------------------- | -------------- | ------------------- | --------- |
-| [Bank Account](#bank-account)     | Yes            | Yes                 | Yes       |
-| Credit Card                      | Yes            | No                  | Soon      |
-| Check                            | No             | Yes                 | Soon      |
-| BNPL                             | Yes            | No                  | Soon      |
-| Virtual Card                     | No             | Yes                 | Later     |
-
+| Payment Method                | Funding Source | Disbursement Method | Available |
+| ----------------------------- | -------------- | ------------------- | --------- |
+| [Bank Account](#bank-account) | Yes            | Yes                 | Yes       |
+| Credit Card                   | Yes            | No                  | Soon      |
+| Check                         | No             | Yes                 | Soon      |
+| BNPL                          | Yes            | No                  | Soon      |
+| Virtual Card                  | No             | Yes                 | Later     |
 
 ## Bank Account
 
@@ -31,16 +30,17 @@ To create a bank account via API, you need to provide the following information:
 You can use the [bank lookup endpoint](/api-reference/bank-lookup/find-bank-account) to get the bank name from the routing number.
 
 <Callout intent="info">
-    You can also use the Mercoa admin dashboard to add a bank account, or your customer can add a bank account directly using the iFrame.
+  You can also use the Mercoa admin dashboard to add a bank account, or your customer can add a bank account directly
+  using the iFrame.
 </Callout>
 
 ### Using a Bank Account as a Funding Source
 
-To use a bank account as a funding source, you need to prove ownership of the account. This is done by depositing a small amount of money into the account and verifying that the amount matches the amount deposited. 
+To use a bank account as a funding source, you need to prove ownership of the account. This is done by depositing a small amount of money into the account and verifying that the amount matches the amount deposited.
 This is done by calling the [Initiate Micro Deposit](/api-reference/payment-method/initiate-micro-deposits) endpoint and then the [Verify Micro Deposit](/api-reference/payment-method/complete-micro-deposits) endpoint with the appropriate amounts.
 
 <Callout intent="info">
-    You can also use the Mercoa admin dashboard or iFrame to initiate and verify micro deposits.
+  You can also use the Mercoa admin dashboard or iFrame to initiate and verify micro deposits.
 </Callout>
 
 ### Using a Bank Account as a Disbursement Method

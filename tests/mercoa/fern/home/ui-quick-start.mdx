@@ -1,6 +1,7 @@
 ## Frontend Integration Guide
 
 ## How it Works
+
 1. [Get your API Keys](#getting-your-api-keys)
 1. [Create an entity](#create-an-entity)
 1. [Create an auth token for the Entity](#create-an-auth-token-for-the-entity)
@@ -8,9 +9,12 @@
 
 <br />
 
-<iframe style={{width: "100%", aspectRatio: "16/9"}} src="https://www.youtube.com/embed/juBQfoxn-hA"> </iframe>
+<iframe style={{ width: "100%", aspectRatio: "16/9" }} src="https://www.youtube.com/embed/juBQfoxn-hA">
+  {" "}
+</iframe>
 
 ## Authentication Flow
+
 Mercoa provides a drop-in iframe or React Component that is embedded into your front end.
 An auth token is generated from your back-end, and passed to the Mercoa component to authenticate your user.
 
@@ -33,19 +37,18 @@ You can use the [API](/api-reference/entity/create-entity), the [Admin UI](https
 The following fields are required to create an entity:
 
 | Individual | Business            |
-|------------|---------------------|
+| ---------- | ------------------- |
 | First Name | Legal Business Name |
 | Last Name  | Business Type       |
 | Email      | Email               |
 
-
-Once an Entity is created, Mercoa can capture KYC/KYB data from your directly from your users. 
+Once an Entity is created, Mercoa can capture KYC/KYB data from your directly from your users.
 
 You can also pass KYB/KYC data to Mercoa using the API if you already have this data, saving your users from going through the KYB/KYC onboarding. [Learn more](/concepts/entities).
 
 ## Create an Auth Token for the Entity
 
-Mercoa uses JWT tokens to authenticate users. You can generate this token with your `organizationId` and API key. 
+Mercoa uses JWT tokens to authenticate users. You can generate this token with your `organizationId` and API key.
 Create an endpoint that authenticates the user, generates a JWT with the user's `entityId`, and return the generated token.
 
 <CodeBlocks>
@@ -58,54 +61,54 @@ mercoa_client = Mercoa(token="YOUR_API_KEY")
 
 def generate_mercoa_token(request):
 
-  user = ... # This is the user returned from your database
+user = ... # This is the user returned from your database
 
-  entities = mercoa_client.entity.find(foreign_id=user.id) # Find the Mercoa Entity for the user
+entities = mercoa_client.entity.find(foreign_id=user.id) # Find the Mercoa Entity for the user
 
-  token = mercoa_client.entity.getToken(
-    entity_id=entities[0].id, # Generate a token for the user
-    {
-      # Optional iFrame Options
-      # See: https://mercoa.com/dashboard/developers#iframe
-      "pages": {"paymentMethods": True}
-    }
-  )
+token = mercoa_client.entity.getToken(
+entity_id=entities[0].id, # Generate a token for the user
+{ # Optional iFrame Options # See: https://mercoa.com/dashboard/developers#iframe
+"pages": {"paymentMethods": True}
+}
+)
 
-  return HttpResponse(token)
-  ```
-  </CodeBlock>
-  
-  <CodeBlock title="Node">
-  ```javascript
+return HttpResponse(token)
+
+````
+</CodeBlock>
+
+<CodeBlock title="Node">
+```javascript
 import { MercoaClient } from "@mercoa/javascript"
 
 const mercoa = new MercoaClient({
-  token: process.env.MERCOA_API_KEY,
+token: process.env.MERCOA_API_KEY,
 })
 
 app.get('/generateMercoaToken', async (req, res) => {
 
-  // ...
-  // Authenticate your user using your existing auth system
-  // ...
+// ...
+// Authenticate your user using your existing auth system
+// ...
 
-  const user = ... // This is the user returned from your database
+const user = ... // This is the user returned from your database
 
-  const entities = await mercoa.entity.find({ foreignId }) // Find existing Mercoa Entity
+const entities = await mercoa.entity.find({ foreignId }) // Find existing Mercoa Entity
 
-  const token = await mercoa.entity.getToken(entities[0].id, // Generate a token for the user
-  {
-    // Optional iFrame Options
-    // See: https://mercoa.com/dashboard/developers#iframe
-    pages: {
-      paymentMethods: true
-    }
-  })
+const token = await mercoa.entity.getToken(entities[0].id, // Generate a token for the user
+{
+  // Optional iFrame Options
+  // See: https://mercoa.com/dashboard/developers#iframe
+  pages: {
+    paymentMethods: true
+  }
+})
 
-  res.send(token)
+res.send(token)
 
 })
-  ```
+````
+
   </CodeBlock>
 </CodeBlocks>
 

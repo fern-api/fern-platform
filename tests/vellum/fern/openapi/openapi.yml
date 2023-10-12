@@ -42,35 +42,35 @@ paths:
       operationId: deployments_retrieve
       description: Used to retrieve a deployment given its ID or name.
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-        description: Either the Deployment's ID or its unique name
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: string
+          description: Either the Deployment's ID or its unique name
+          required: true
       tags:
-      - deployments
+        - deployments
       security:
-      - apiKeyAuth: []
+        - apiKeyAuth: []
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeploymentRead'
-          description: ''
+                $ref: "#/components/schemas/DeploymentRead"
+          description: ""
       x-fern-availability: beta
   /v1/document-indexes:
     post:
       operationId: document_indexes_create
       description: Creates a new document index.
       tags:
-      - document-indexes
+        - document-indexes
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DocumentIndexCreateRequest'
+              $ref: "#/components/schemas/DocumentIndexCreateRequest"
             examples:
               Example1:
                 value:
@@ -85,7 +85,7 @@ paths:
                     vectorizer:
                       model_name: hkunlp/instructor-xl
                       config:
-                        instruction_domain: ''
+                        instruction_domain: ""
                         instruction_document_text_type: plain_text
                         instruction_query_text_type: plain_text
                   copy_documents_from_index_id: null
@@ -129,80 +129,80 @@ paths:
                   vectorizes documents using one of OpenAI's embedding models.
         required: true
       security:
-      - apiKeyAuth: []
+        - apiKeyAuth: []
       responses:
-        '201':
+        "201":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DocumentIndexRead'
-          description: ''
+                $ref: "#/components/schemas/DocumentIndexRead"
+          description: ""
       x-fern-availability: beta
   /v1/document-indexes/{id}:
     get:
       operationId: document_indexes_retrieve
       description: Used to retrieve a Document Index given its ID or name.
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-        description: Either the Document Index's ID or its unique name
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: string
+          description: Either the Document Index's ID or its unique name
+          required: true
       tags:
-      - document-indexes
+        - document-indexes
       security:
-      - apiKeyAuth: []
+        - apiKeyAuth: []
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DocumentIndexRead'
-          description: ''
+                $ref: "#/components/schemas/DocumentIndexRead"
+          description: ""
       x-fern-availability: beta
   /v1/documents:
     get:
       operationId: documents_list
       description: Used to list documents. Optionally filter on supported fields.
       parameters:
-      - in: query
-        name: document_index_id
-        schema:
-          type: string
-          format: uuid
-        description: Filter down to only those documents that are included in the
-          specified index. You may provide either the Vellum-generated ID or the unique
-          name of the index specified upon initial creation.
-      - name: limit
-        required: false
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - name: offset
-        required: false
-        in: query
-        description: The initial index from which to return the results.
-        schema:
-          type: integer
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
+        - in: query
+          name: document_index_id
+          schema:
+            type: string
+            format: uuid
+          description: Filter down to only those documents that are included in the
+            specified index. You may provide either the Vellum-generated ID or the unique
+            name of the index specified upon initial creation.
+        - name: limit
+          required: false
+          in: query
+          description: Number of results to return per page.
+          schema:
+            type: integer
+        - name: offset
+          required: false
+          in: query
+          description: The initial index from which to return the results.
+          schema:
+            type: integer
+        - name: ordering
+          required: false
+          in: query
+          description: Which field to use when ordering the results.
+          schema:
+            type: string
       tags:
-      - documents
+        - documents
       security:
-      - apiKeyAuth: []
+        - apiKeyAuth: []
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedSlimDocumentList'
-          description: ''
+                $ref: "#/components/schemas/PaginatedSlimDocumentList"
+          description: ""
       x-fern-availability: ga
   /v1/documents/{id}:
     patch:
@@ -210,94 +210,94 @@ paths:
       description: Update a Document, keying off of its Vellum-generated ID. Particularly
         useful for updating its metadata.
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-          format: uuid
-        description: A UUID string identifying this document.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          description: A UUID string identifying this document.
+          required: true
       tags:
-      - documents
+        - documents
       requestBody:
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedDocumentUpdateRequest'
+              $ref: "#/components/schemas/PatchedDocumentUpdateRequest"
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedDocumentUpdateRequest'
+              $ref: "#/components/schemas/PatchedDocumentUpdateRequest"
       security:
-      - apiKeyAuth: []
+        - apiKeyAuth: []
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DocumentRead'
-          description: ''
+                $ref: "#/components/schemas/DocumentRead"
+          description: ""
       x-fern-availability: beta
     delete:
       operationId: documents_destroy
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-          format: uuid
-        description: A UUID string identifying this document.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          description: A UUID string identifying this document.
+          required: true
       tags:
-      - documents
+        - documents
       security:
-      - apiKeyAuth: []
+        - apiKeyAuth: []
       responses:
-        '204':
+        "204":
           description: No response body
   /v1/execute-workflow-stream:
     post:
       operationId: execute_workflow_stream
       description: Executes a deployed Workflow and streams back its results.
       tags:
-      - execute-workflow-stream
+        - execute-workflow-stream
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ExecuteWorkflowStreamRequest'
+              $ref: "#/components/schemas/ExecuteWorkflowStreamRequest"
         required: true
       security:
-      - apiKeyAuth: []
+        - apiKeyAuth: []
       responses:
-        '200':
+        "200":
           content:
             application/x-ndjson:
               schema:
-                $ref: '#/components/schemas/WorkflowStreamEvent'
-          description: ''
-        '400':
+                $ref: "#/components/schemas/WorkflowStreamEvent"
+          description: ""
+        "400":
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: {}
-          description: ''
-        '404':
+          description: ""
+        "404":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ExecuteWorkflowStreamErrorResponse'
-          description: ''
-        '500':
+                $ref: "#/components/schemas/ExecuteWorkflowStreamErrorResponse"
+          description: ""
+        "500":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ExecuteWorkflowStreamErrorResponse'
-          description: ''
+                $ref: "#/components/schemas/ExecuteWorkflowStreamErrorResponse"
+          description: ""
       x-fern-streaming: true
       servers:
-      - url: https://predict.vellum.ai
-        x-name: Predict
+        - url: https://predict.vellum.ai
+          x-name: Predict
   /v1/generate:
     post:
       operationId: generate
@@ -306,50 +306,50 @@ paths:
 
         **Note:** Uses a base url of `https://predict.vellum.ai`.
       tags:
-      - generate
+        - generate
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GenerateBodyRequest'
+              $ref: "#/components/schemas/GenerateBodyRequest"
         required: true
       security:
-      - apiKeyAuth: []
+        - apiKeyAuth: []
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenerateResponse'
-          description: ''
-        '400':
+                $ref: "#/components/schemas/GenerateResponse"
+          description: ""
+        "400":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenerateErrorResponse'
-          description: ''
-        '403':
+                $ref: "#/components/schemas/GenerateErrorResponse"
+          description: ""
+        "403":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenerateErrorResponse'
-          description: ''
-        '404':
+                $ref: "#/components/schemas/GenerateErrorResponse"
+          description: ""
+        "404":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenerateErrorResponse'
-          description: ''
-        '500':
+                $ref: "#/components/schemas/GenerateErrorResponse"
+          description: ""
+        "500":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenerateErrorResponse'
-          description: ''
+                $ref: "#/components/schemas/GenerateErrorResponse"
+          description: ""
       x-fern-availability: ga
       servers:
-      - url: https://predict.vellum.ai
-        x-name: Predict
+        - url: https://predict.vellum.ai
+          x-name: Predict
   /v1/generate-stream:
     post:
       operationId: generate_stream
@@ -358,74 +358,74 @@ paths:
 
         **Note:** Uses a base url of `https://predict.vellum.ai`.
       tags:
-      - generate-stream
+        - generate-stream
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GenerateStreamBodyRequest'
+              $ref: "#/components/schemas/GenerateStreamBodyRequest"
         required: true
       security:
-      - apiKeyAuth: []
+        - apiKeyAuth: []
       responses:
-        '200':
+        "200":
           content:
             application/x-ndjson:
               schema:
-                $ref: '#/components/schemas/GenerateStreamResponse'
-          description: ''
-        '400':
+                $ref: "#/components/schemas/GenerateStreamResponse"
+          description: ""
+        "400":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenerateErrorResponse'
-          description: ''
-        '403':
+                $ref: "#/components/schemas/GenerateErrorResponse"
+          description: ""
+        "403":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenerateErrorResponse'
-          description: ''
-        '404':
+                $ref: "#/components/schemas/GenerateErrorResponse"
+          description: ""
+        "404":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenerateErrorResponse'
-          description: ''
-        '500':
+                $ref: "#/components/schemas/GenerateErrorResponse"
+          description: ""
+        "500":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenerateErrorResponse'
-          description: ''
+                $ref: "#/components/schemas/GenerateErrorResponse"
+          description: ""
       x-fern-streaming: true
       x-fern-availability: ga
       servers:
-      - url: https://predict.vellum.ai
-        x-name: Predict
+        - url: https://predict.vellum.ai
+          x-name: Predict
   /v1/model-versions/{id}:
     get:
       operationId: model_versions_retrieve
       description: Used to retrieve a model version given its ID.
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-          format: uuid
-        description: A UUID string identifying this model version.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          description: A UUID string identifying this model version.
+          required: true
       tags:
-      - model-versions
+        - model-versions
       security:
-      - apiKeyAuth: []
+        - apiKeyAuth: []
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ModelVersionRead'
-          description: ''
+                $ref: "#/components/schemas/ModelVersionRead"
+          description: ""
       x-fern-availability: beta
   /v1/model-versions/{id}/compile-prompt:
     post:
@@ -433,30 +433,30 @@ paths:
       description: Compiles the prompt backing the model version using the provided
         input values.
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-          format: uuid
-        description: A UUID string identifying this model version.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          description: A UUID string identifying this model version.
+          required: true
       tags:
-      - model-versions
+        - model-versions
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ModelVersionCompilePromptRequestRequest'
+              $ref: "#/components/schemas/ModelVersionCompilePromptRequestRequest"
         required: true
       security:
-      - apiKeyAuth: []
+        - apiKeyAuth: []
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ModelVersionCompilePromptResponse'
-          description: ''
+                $ref: "#/components/schemas/ModelVersionCompilePromptResponse"
+          description: ""
       x-fern-availability: beta
   /v1/registered-prompts/register:
     post:
@@ -467,28 +467,28 @@ paths:
 
         Under the hood, this endpoint creates a new sandbox, a new model version, and a new deployment.
       tags:
-      - registered-prompts
+        - registered-prompts
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RegisterPromptRequestRequest'
+              $ref: "#/components/schemas/RegisterPromptRequestRequest"
         required: true
       security:
-      - apiKeyAuth: []
+        - apiKeyAuth: []
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RegisterPromptResponse'
-          description: ''
-        '409':
+                $ref: "#/components/schemas/RegisterPromptResponse"
+          description: ""
+        "409":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RegisterPromptErrorResponse'
-          description: ''
+                $ref: "#/components/schemas/RegisterPromptErrorResponse"
+          description: ""
       x-fern-availability: beta
   /v1/sandboxes/{id}/scenarios:
     post:
@@ -502,32 +502,32 @@ paths:
         Note that a full replacement of the scenario is performed, so any fields not provided will be removed
         or overwritten with default values.
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-          format: uuid
-        description: A UUID string identifying this sandbox.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          description: A UUID string identifying this sandbox.
+          required: true
       tags:
-      - sandboxes
+        - sandboxes
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpsertSandboxScenarioRequestRequest'
+              $ref: "#/components/schemas/UpsertSandboxScenarioRequestRequest"
             examples:
               Example1:
                 value:
                   id: 3ee58bf2-1e5c-415e-8b6c-02ca8b77f29d
                   label: Scenario 1
                   inputs:
-                  - key: var_1
-                    value: Hello, world!
-                    type: TEXT
-                  - key: var_2
-                    value: Why hello, there!
-                    type: TEXT
+                    - key: var_1
+                      value: Hello, world!
+                      type: TEXT
+                    - key: var_2
+                      value: Why hello, there!
+                      type: TEXT
                   metric_input_params:
                     params: {}
                 summary: Basic Example
@@ -538,13 +538,13 @@ paths:
                   id: 50c55d1d-4c37-4c83-afc1-9d895f286320
                   label: Scenario 2
                   inputs:
-                  - key: $chat_history
-                    type: CHAT_HISTORY
-                    chat_history:
-                    - role: USER
-                      text: What's your favorite color?
-                    - role: ASSISTANT
-                      text: AI's don't have a favorite color.... Yet.
+                    - key: $chat_history
+                      type: CHAT_HISTORY
+                      chat_history:
+                        - role: USER
+                          text: What's your favorite color?
+                        - role: ASSISTANT
+                          text: AI's don't have a favorite color.... Yet.
                   metric_input_params:
                     params: {}
                 summary: Chat History Example
@@ -552,14 +552,14 @@ paths:
                   the special $chat_history variable.
         required: true
       security:
-      - apiKeyAuth: []
+        - apiKeyAuth: []
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SandboxScenario'
-          description: ''
+                $ref: "#/components/schemas/SandboxScenario"
+          description: ""
       x-fern-availability: beta
   /v1/sandboxes/{id}/scenarios/{scenario_id}:
     delete:
@@ -567,25 +567,25 @@ paths:
       description: Deletes an existing scenario from a sandbox, keying off of the
         provided scenario id.
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-          format: uuid
-        description: A UUID string identifying this sandbox.
-        required: true
-      - in: path
-        name: scenario_id
-        schema:
-          type: string
-        description: An id identifying the scenario that you'd like to delete
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          description: A UUID string identifying this sandbox.
+          required: true
+        - in: path
+          name: scenario_id
+          schema:
+            type: string
+          description: An id identifying the scenario that you'd like to delete
+          required: true
       tags:
-      - sandboxes
+        - sandboxes
       security:
-      - apiKeyAuth: []
+        - apiKeyAuth: []
       responses:
-        '204':
+        "204":
           description: No response body
       x-fern-availability: beta
   /v1/search:
@@ -596,44 +596,44 @@ paths:
 
         **Note:** Uses a base url of `https://predict.vellum.ai`.
       tags:
-      - search
+        - search
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SearchRequestBodyRequest'
+              $ref: "#/components/schemas/SearchRequestBodyRequest"
         required: true
       security:
-      - apiKeyAuth: []
+        - apiKeyAuth: []
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchResponse'
-          description: ''
-        '400':
+                $ref: "#/components/schemas/SearchResponse"
+          description: ""
+        "400":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchErrorResponse'
-          description: ''
-        '404':
+                $ref: "#/components/schemas/SearchErrorResponse"
+          description: ""
+        "404":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchErrorResponse'
-          description: ''
-        '500':
+                $ref: "#/components/schemas/SearchErrorResponse"
+          description: ""
+        "500":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchErrorResponse'
-          description: ''
+                $ref: "#/components/schemas/SearchErrorResponse"
+          description: ""
       x-fern-availability: ga
       servers:
-      - url: https://predict.vellum.ai
-        x-name: Predict
+        - url: https://predict.vellum.ai
+          x-name: Predict
   /v1/submit-completion-actuals:
     post:
       operationId: submit_completion_actuals
@@ -642,40 +642,40 @@ paths:
 
         **Note:** Uses a base url of `https://predict.vellum.ai`.
       tags:
-      - submit-completion-actuals
+        - submit-completion-actuals
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SubmitCompletionActualsRequest'
+              $ref: "#/components/schemas/SubmitCompletionActualsRequest"
         required: true
       security:
-      - apiKeyAuth: []
+        - apiKeyAuth: []
       responses:
-        '200':
+        "200":
           description: No response body
-        '400':
+        "400":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SubmitCompletionActualsErrorResponse'
-          description: ''
-        '404':
+                $ref: "#/components/schemas/SubmitCompletionActualsErrorResponse"
+          description: ""
+        "404":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SubmitCompletionActualsErrorResponse'
-          description: ''
-        '500':
+                $ref: "#/components/schemas/SubmitCompletionActualsErrorResponse"
+          description: ""
+        "500":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SubmitCompletionActualsErrorResponse'
-          description: ''
+                $ref: "#/components/schemas/SubmitCompletionActualsErrorResponse"
+          description: ""
       x-fern-availability: ga
       servers:
-      - url: https://predict.vellum.ai
-        x-name: Predict
+        - url: https://predict.vellum.ai
+          x-name: Predict
   /v1/submit-workflow-execution-actuals:
     post:
       operationId: submit_workflow_execution_actuals
@@ -683,22 +683,22 @@ paths:
         \ workflow execution and its outputs.\n\n    **Note:** Uses a base url of\
         \ `https://predict.vellum.ai`.    "
       tags:
-      - submit-workflow-execution-actuals
+        - submit-workflow-execution-actuals
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SubmitWorkflowExecutionActualsRequest'
+              $ref: "#/components/schemas/SubmitWorkflowExecutionActualsRequest"
         required: true
       security:
-      - apiKeyAuth: []
+        - apiKeyAuth: []
       responses:
-        '200':
+        "200":
           description: No response body
       x-fern-availability: ga
       servers:
-      - url: https://predict.vellum.ai
-        x-name: Predict
+        - url: https://predict.vellum.ai
+          x-name: Predict
   /v1/test-suites/{id}/test-cases:
     post:
       operationId: upsert_test_suite_test_case
@@ -711,30 +711,30 @@ paths:
         Note that a full replacement of the test case is performed, so any fields not provided will be removed
         or overwritten with default values.
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-          format: uuid
-        description: A UUID string identifying this test suite.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          description: A UUID string identifying this test suite.
+          required: true
       tags:
-      - test-suites
+        - test-suites
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TestSuiteTestCaseRequest'
+              $ref: "#/components/schemas/TestSuiteTestCaseRequest"
         required: true
       security:
-      - apiKeyAuth: []
+        - apiKeyAuth: []
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TestSuiteTestCase'
-          description: ''
+                $ref: "#/components/schemas/TestSuiteTestCase"
+          description: ""
       x-fern-availability: beta
   /v1/test-suites/{id}/test-cases/{test_case_id}:
     delete:
@@ -742,25 +742,25 @@ paths:
       description: |
         Deletes an existing test case for a test suite, keying off of the test case id.
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-          format: uuid
-        description: A UUID string identifying this test suite.
-        required: true
-      - in: path
-        name: test_case_id
-        schema:
-          type: string
-        description: An id identifying the test case that you'd like to delete
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          description: A UUID string identifying this test suite.
+          required: true
+        - in: path
+          name: test_case_id
+          schema:
+            type: string
+          description: An id identifying the test case that you'd like to delete
+          required: true
       tags:
-      - test-suites
+        - test-suites
       security:
-      - apiKeyAuth: []
+        - apiKeyAuth: []
       responses:
-        '204':
+        "204":
           description: No response body
       x-fern-availability: beta
   /v1/upload-document:
@@ -771,47 +771,47 @@ paths:
 
         **Note:** Uses a base url of `https://documents.vellum.ai`.
       tags:
-      - documents
+        - documents
       requestBody:
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/UploadDocumentBodyRequest'
+              $ref: "#/components/schemas/UploadDocumentBodyRequest"
           application/json:
             schema:
-              $ref: '#/components/schemas/UploadDocumentBodyRequest'
+              $ref: "#/components/schemas/UploadDocumentBodyRequest"
         required: true
       security:
-      - apiKeyAuth: []
+        - apiKeyAuth: []
       responses:
-        '201':
+        "201":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UploadDocumentResponse'
-          description: ''
-        '400':
+                $ref: "#/components/schemas/UploadDocumentResponse"
+          description: ""
+        "400":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UploadDocumentErrorResponse'
-          description: ''
-        '404':
+                $ref: "#/components/schemas/UploadDocumentErrorResponse"
+          description: ""
+        "404":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UploadDocumentErrorResponse'
-          description: ''
-        '500':
+                $ref: "#/components/schemas/UploadDocumentErrorResponse"
+          description: ""
+        "500":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UploadDocumentErrorResponse'
-          description: ''
+                $ref: "#/components/schemas/UploadDocumentErrorResponse"
+          description: ""
       x-fern-availability: ga
       servers:
-      - url: https://documents.vellum.ai
-        x-name: Documents
+        - url: https://documents.vellum.ai
+          x-name: Documents
 components:
   schemas:
     ApiNodeResult:
@@ -820,10 +820,10 @@ components:
         type:
           type: string
         data:
-          $ref: '#/components/schemas/ApiNodeResultData'
+          $ref: "#/components/schemas/ApiNodeResultData"
       required:
-      - data
-      - type
+        - data
+        - type
     ApiNodeResultData:
       type: object
       properties:
@@ -843,16 +843,16 @@ components:
         status_code:
           type: integer
       required:
-      - json_output_id
-      - status_code
-      - status_code_output_id
-      - text_output_id
+        - json_output_id
+        - status_code
+        - status_code_output_id
+        - text_output_id
     BlockTypeEnum:
       enum:
-      - CHAT_MESSAGE
-      - CHAT_HISTORY
-      - JINJA
-      - FUNCTION_DEFINITION
+        - CHAT_MESSAGE
+        - CHAT_HISTORY
+        - JINJA
+        - FUNCTION_DEFINITION
       type: string
       description: |-
         * `CHAT_MESSAGE` - CHAT_MESSAGE
@@ -865,26 +865,26 @@ components:
         text:
           type: string
         role:
-          $ref: '#/components/schemas/ChatMessageRole'
+          $ref: "#/components/schemas/ChatMessageRole"
       required:
-      - role
-      - text
+        - role
+        - text
     ChatMessageRequest:
       type: object
       properties:
         text:
           type: string
         role:
-          $ref: '#/components/schemas/ChatMessageRole'
+          $ref: "#/components/schemas/ChatMessageRole"
       required:
-      - role
-      - text
+        - role
+        - text
     ChatMessageRole:
       enum:
-      - SYSTEM
-      - ASSISTANT
-      - USER
-      - FUNCTION
+        - SYSTEM
+        - ASSISTANT
+        - USER
+        - FUNCTION
       type: string
       description: |-
         * `SYSTEM` - System
@@ -897,10 +897,10 @@ components:
         type:
           type: string
         data:
-          $ref: '#/components/schemas/ConditionalNodeResultData'
+          $ref: "#/components/schemas/ConditionalNodeResultData"
       required:
-      - data
-      - type
+        - data
+        - type
     ConditionalNodeResultData:
       type: object
       properties:
@@ -929,7 +929,7 @@ components:
           maxLength: 150
         status:
           allOf:
-          - $ref: '#/components/schemas/DeploymentStatus'
+            - $ref: "#/components/schemas/DeploymentStatus"
           description: |-
             The current status of the deployment
 
@@ -938,7 +938,7 @@ components:
             * `ARCHIVED` - Archived
         environment:
           allOf:
-          - $ref: '#/components/schemas/EnvironmentEnum'
+            - $ref: "#/components/schemas/EnvironmentEnum"
           description: |-
             The environment this deployment is used in
 
@@ -947,7 +947,7 @@ components:
             * `PRODUCTION` - Production
         model_type:
           allOf:
-          - $ref: '#/components/schemas/ModelTypeDeprecated'
+            - $ref: "#/components/schemas/ModelTypeDeprecated"
           readOnly: true
           deprecated: true
         active_model_version_ids:
@@ -962,21 +962,21 @@ components:
         input_variables:
           type: array
           items:
-            $ref: '#/components/schemas/VellumVariable'
+            $ref: "#/components/schemas/VellumVariable"
       required:
-      - active_model_version_ids
-      - created
-      - id
-      - input_variables
-      - label
-      - last_deployed_on
-      - model_type
-      - name
+        - active_model_version_ids
+        - created
+        - id
+        - input_variables
+        - label
+        - last_deployed_on
+        - model_type
+        - name
     DeploymentStatus:
       enum:
-      - ACTIVE
-      - INACTIVE
-      - ARCHIVED
+        - ACTIVE
+        - INACTIVE
+        - ARCHIVED
       type: string
       description: |-
         * `ACTIVE` - Active
@@ -998,7 +998,7 @@ components:
             document is included in.
         indexing_state:
           allOf:
-          - $ref: '#/components/schemas/IndexingStateEnum'
+            - $ref: "#/components/schemas/IndexingStateEnum"
           description: |-
             An enum value representing where this document is along its indexing lifecycle for this index.
 
@@ -1008,8 +1008,8 @@ components:
             * `INDEXED` - Indexed
             * `FAILED` - Failed
       required:
-      - document_index_id
-      - id
+        - document_index_id
+        - id
     DocumentIndexCreateRequest:
       type: object
       properties:
@@ -1025,7 +1025,7 @@ components:
           maxLength: 150
         status:
           allOf:
-          - $ref: '#/components/schemas/DocumentIndexStatus'
+            - $ref: "#/components/schemas/DocumentIndexStatus"
           description: |-
             The current status of the document index
 
@@ -1033,7 +1033,7 @@ components:
             * `ARCHIVED` - Archived
         environment:
           allOf:
-          - $ref: '#/components/schemas/EnvironmentEnum'
+            - $ref: "#/components/schemas/EnvironmentEnum"
           description: |-
             The environment this document index is used in
 
@@ -1050,9 +1050,9 @@ components:
           description: Optionally specify the id of a document index from which you'd
             like to copy and re-index its documents into this newly created index
       required:
-      - indexing_config
-      - label
-      - name
+        - indexing_config
+        - label
+        - name
     DocumentIndexRead:
       type: object
       properties:
@@ -1074,7 +1074,7 @@ components:
           maxLength: 150
         status:
           allOf:
-          - $ref: '#/components/schemas/DocumentIndexStatus'
+            - $ref: "#/components/schemas/DocumentIndexStatus"
           description: |-
             The current status of the document index
 
@@ -1082,7 +1082,7 @@ components:
             * `ARCHIVED` - Archived
         environment:
           allOf:
-          - $ref: '#/components/schemas/EnvironmentEnum'
+            - $ref: "#/components/schemas/EnvironmentEnum"
           description: |-
             The environment this document index is used in
 
@@ -1094,15 +1094,15 @@ components:
           additionalProperties: {}
           description: Configuration representing how documents should be indexed
       required:
-      - created
-      - id
-      - indexing_config
-      - label
-      - name
+        - created
+        - id
+        - indexing_config
+        - label
+        - name
     DocumentIndexStatus:
       enum:
-      - ACTIVE
-      - ARCHIVED
+        - ACTIVE
+        - ARCHIVED
       type: string
       description: |-
         * `ACTIVE` - Active
@@ -1129,7 +1129,7 @@ components:
           maxLength: 1000
         processing_state:
           allOf:
-          - $ref: '#/components/schemas/ProcessingStateEnum'
+            - $ref: "#/components/schemas/ProcessingStateEnum"
           description: |-
             The current processing state of the document
 
@@ -1139,7 +1139,7 @@ components:
             * `FAILED` - Failed
         status:
           allOf:
-          - $ref: '#/components/schemas/DocumentStatus'
+            - $ref: "#/components/schemas/DocumentStatus"
           description: |-
             The current status of the document
 
@@ -1155,7 +1155,7 @@ components:
         document_to_document_indexes:
           type: array
           items:
-            $ref: '#/components/schemas/DocumentDocumentToDocumentIndex'
+            $ref: "#/components/schemas/DocumentDocumentToDocumentIndex"
         metadata:
           type: object
           additionalProperties: {}
@@ -1163,17 +1163,17 @@ components:
           description: A previously supplied JSON object containing metadata that
             can be filtered on when searching.
       required:
-      - document_to_document_indexes
-      - id
-      - label
-      - last_uploaded_at
-      - original_file_url
-      - processed_file_url
+        - document_to_document_indexes
+        - id
+        - label
+        - last_uploaded_at
+        - original_file_url
+        - processed_file_url
     DocumentStatus:
       enum:
-      - ACTIVE
+        - ACTIVE
       type: string
-      description: '* `ACTIVE` - Active'
+      description: "* `ACTIVE` - Active"
     EnrichedNormalizedCompletion:
       type: object
       properties:
@@ -1192,7 +1192,7 @@ components:
           description: The text generated by the LLM.
         finish_reason:
           allOf:
-          - $ref: '#/components/schemas/FinishReasonEnum'
+            - $ref: "#/components/schemas/FinishReasonEnum"
           nullable: true
           description: |-
             The reason the generation finished.
@@ -1202,7 +1202,7 @@ components:
             * `UNKNOWN` - UNKNOWN
         logprobs:
           allOf:
-          - $ref: '#/components/schemas/NormalizedLogProbs'
+            - $ref: "#/components/schemas/NormalizedLogProbs"
           nullable: true
           description: The logprobs of the completion. Only present if specified in
             the original request options.
@@ -1210,17 +1210,17 @@ components:
           type: string
           description: The ID of the model version used to generate this completion.
         type:
-          $ref: '#/components/schemas/VellumVariableType'
+          $ref: "#/components/schemas/VellumVariableType"
       required:
-      - finish_reason
-      - id
-      - model_version_id
-      - text
+        - finish_reason
+        - id
+        - model_version_id
+        - text
     EnvironmentEnum:
       enum:
-      - DEVELOPMENT
-      - STAGING
-      - PRODUCTION
+        - DEVELOPMENT
+        - STAGING
+        - PRODUCTION
       type: string
       description: |-
         * `DEVELOPMENT` - Development
@@ -1247,7 +1247,7 @@ components:
           type: string
           description: Details about why the request failed.
       required:
-      - detail
+        - detail
     ExecuteWorkflowStreamRequest:
       type: object
       properties:
@@ -1272,7 +1272,7 @@ components:
         inputs:
           type: array
           items:
-            $ref: '#/components/schemas/WorkflowRequestInputRequest'
+            $ref: "#/components/schemas/WorkflowRequestInputRequest"
         external_id:
           type: string
           nullable: true
@@ -1281,17 +1281,17 @@ components:
         event_types:
           type: array
           items:
-            $ref: '#/components/schemas/WorkflowExecutionEventType'
+            $ref: "#/components/schemas/WorkflowExecutionEventType"
           description: Optionally specify which events you want to receive. Defaults
             to only WORKFLOW events. Note that the schema of non-WORKFLOW events is
             unstable and should be used with caution.
       required:
-      - inputs
+        - inputs
     FinishReasonEnum:
       enum:
-      - LENGTH
-      - STOP
-      - UNKNOWN
+        - LENGTH
+        - STOP
+        - UNKNOWN
       type: string
       description: |-
         * `LENGTH` - LENGTH
@@ -1313,17 +1313,17 @@ components:
         requests:
           type: array
           items:
-            $ref: '#/components/schemas/GenerateRequest'
+            $ref: "#/components/schemas/GenerateRequest"
           description: The generation request to make. Bulk requests are no longer
             supported, this field must be an array of length 1.
         options:
           allOf:
-          - $ref: '#/components/schemas/GenerateOptionsRequest'
+            - $ref: "#/components/schemas/GenerateOptionsRequest"
           nullable: true
           description: Additional configuration that can be used to control what's
             included in the response.
       required:
-      - requests
+        - requests
     GenerateErrorResponse:
       type: object
       properties:
@@ -1331,13 +1331,13 @@ components:
           type: string
           description: Details about why the request failed.
       required:
-      - detail
+        - detail
     GenerateOptionsRequest:
       type: object
       properties:
         logprobs:
           allOf:
-          - $ref: '#/components/schemas/LogprobsEnum'
+            - $ref: "#/components/schemas/LogprobsEnum"
           description: |-
             Which logprobs to include, if any. Defaults to NONE.
 
@@ -1354,7 +1354,7 @@ components:
         chat_history:
           type: array
           items:
-            $ref: '#/components/schemas/ChatMessageRequest'
+            $ref: "#/components/schemas/ChatMessageRequest"
           description: Optionally provide a list of chat messages that'll be used
             in place of the special {$chat_history} variable, if included in the prompt.
         external_ids:
@@ -1367,28 +1367,28 @@ components:
             as represented outside of Vellum. Note that this should generally be a
             list of length one.
       required:
-      - input_values
+        - input_values
     GenerateResponse:
       type: object
       properties:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/GenerateResult'
+            $ref: "#/components/schemas/GenerateResult"
           description: The results of each generation request.
       required:
-      - results
+        - results
     GenerateResult:
       type: object
       properties:
         data:
           allOf:
-          - $ref: '#/components/schemas/GenerateResultData'
+            - $ref: "#/components/schemas/GenerateResultData"
           description: An object containing the resulting generation. This key will
             be absent if the LLM provider experienced an error.
         error:
           allOf:
-          - $ref: '#/components/schemas/GenerateResultError'
+            - $ref: "#/components/schemas/GenerateResultError"
           description: An object containing details about the error that occurred.
             This key will be absent if the LLM provider did not experience an error.
     GenerateResultData:
@@ -1397,11 +1397,11 @@ components:
         completions:
           type: array
           items:
-            $ref: '#/components/schemas/EnrichedNormalizedCompletion'
+            $ref: "#/components/schemas/EnrichedNormalizedCompletion"
           description: The generated completions. This will generally be a list of
             length one.
       required:
-      - completions
+        - completions
     GenerateResultError:
       type: object
       properties:
@@ -1409,7 +1409,7 @@ components:
           type: string
           description: The error message returned by the LLM provider.
       required:
-      - message
+        - message
     GenerateStreamBodyRequest:
       type: object
       properties:
@@ -1426,52 +1426,52 @@ components:
         requests:
           type: array
           items:
-            $ref: '#/components/schemas/GenerateRequest'
+            $ref: "#/components/schemas/GenerateRequest"
           description: The generation request to make. Bulk requests are no longer
             supported, this field must be an array of length 1.
         options:
           allOf:
-          - $ref: '#/components/schemas/GenerateOptionsRequest'
+            - $ref: "#/components/schemas/GenerateOptionsRequest"
           nullable: true
           description: Additional configuration that can be used to control what's
             included in the response.
       required:
-      - requests
+        - requests
     GenerateStreamResponse:
       type: object
       properties:
         delta:
-          $ref: '#/components/schemas/GenerateStreamResult'
+          $ref: "#/components/schemas/GenerateStreamResult"
       required:
-      - delta
+        - delta
     GenerateStreamResult:
       type: object
       properties:
         request_index:
           type: integer
         data:
-          $ref: '#/components/schemas/GenerateStreamResultData'
+          $ref: "#/components/schemas/GenerateStreamResultData"
         error:
-          $ref: '#/components/schemas/GenerateResultError'
+          $ref: "#/components/schemas/GenerateResultError"
       required:
-      - request_index
+        - request_index
     GenerateStreamResultData:
       type: object
       properties:
         completion_index:
           type: integer
         completion:
-          $ref: '#/components/schemas/EnrichedNormalizedCompletion'
+          $ref: "#/components/schemas/EnrichedNormalizedCompletion"
       required:
-      - completion
-      - completion_index
+        - completion
+        - completion_index
     IndexingStateEnum:
       enum:
-      - AWAITING_PROCESSING
-      - QUEUED
-      - INDEXING
-      - INDEXED
-      - FAILED
+        - AWAITING_PROCESSING
+        - QUEUED
+        - INDEXING
+        - INDEXED
+        - FAILED
       type: string
       description: |-
         * `AWAITING_PROCESSING` - Awaiting Processing
@@ -1481,24 +1481,24 @@ components:
         * `FAILED` - Failed
     LogicalOperator:
       enum:
-      - '='
-      - '!='
-      - <
-      - '>'
-      - <=
-      - '>='
-      - contains
-      - beginsWith
-      - endsWith
-      - doesNotContain
-      - doesNotBeginWith
-      - doesNotEndWith
-      - 'null'
-      - notNull
-      - in
-      - notIn
-      - between
-      - notBetween
+        - "="
+        - "!="
+        - <
+        - ">"
+        - <=
+        - ">="
+        - contains
+        - beginsWith
+        - endsWith
+        - doesNotContain
+        - doesNotBeginWith
+        - doesNotEndWith
+        - "null"
+        - notNull
+        - in
+        - notIn
+        - between
+        - notBetween
       type: string
       description: |-
         * `=` - EQUALS
@@ -1520,22 +1520,22 @@ components:
         * `between` - BETWEEN
         * `notBetween` - NOT_BETWEEN
       x-fern-enum:
-        '=':
+        "=":
           name: EQUALS
           description: Equals
-        '!=':
+        "!=":
           name: DOES_NOT_EQUAL
           description: Does not equal
         <:
           name: LESS_THAN
           description: Less than
-        '>':
+        ">":
           name: GREATER_THAN
           description: Greater than
         <=:
           name: LESS_THAN_OR_EQUAL_TO
           description: Less than or equal to
-        '>=':
+        ">=":
           name: GREATER_THAN_OR_EQUAL_TO
           description: Greater than or equal to
         contains:
@@ -1556,9 +1556,9 @@ components:
         doesNotEndWith:
           name: DOES_NOT_END_WITH
           description: Does not end with
-        'null':
-          name: 'NULL'
-          description: 'Null'
+        "null":
+          name: "NULL"
+          description: "Null"
         notNull:
           name: NOT_NULL
           description: Not null
@@ -1576,8 +1576,8 @@ components:
           description: Not between
     LogprobsEnum:
       enum:
-      - ALL
-      - NONE
+        - ALL
+        - NONE
       type: string
       description: |-
         * `ALL` - ALL
@@ -1587,7 +1587,7 @@ components:
       properties:
         combinator:
           allOf:
-          - $ref: '#/components/schemas/MetadataFilterRuleCombinator'
+            - $ref: "#/components/schemas/MetadataFilterRuleCombinator"
           nullable: true
         negated:
           type: boolean
@@ -1595,7 +1595,7 @@ components:
         rules:
           type: array
           items:
-            $ref: '#/components/schemas/MetadataFilterRuleRequest'
+            $ref: "#/components/schemas/MetadataFilterRuleRequest"
           nullable: true
         field:
           type: string
@@ -1603,7 +1603,7 @@ components:
           minLength: 1
         operator:
           allOf:
-          - $ref: '#/components/schemas/LogicalOperator'
+            - $ref: "#/components/schemas/LogicalOperator"
           nullable: true
         value:
           type: string
@@ -1611,8 +1611,8 @@ components:
           minLength: 1
     MetadataFilterRuleCombinator:
       enum:
-      - and
-      - or
+        - and
+        - or
       type: string
       description: |-
         * `and` - AND
@@ -1622,7 +1622,7 @@ components:
       properties:
         combinator:
           allOf:
-          - $ref: '#/components/schemas/MetadataFilterRuleCombinator'
+            - $ref: "#/components/schemas/MetadataFilterRuleCombinator"
           nullable: true
         negated:
           type: boolean
@@ -1630,7 +1630,7 @@ components:
         rules:
           type: array
           items:
-            $ref: '#/components/schemas/MetadataFilterRuleRequest'
+            $ref: "#/components/schemas/MetadataFilterRuleRequest"
           nullable: true
         field:
           type: string
@@ -1638,7 +1638,7 @@ components:
           minLength: 1
         operator:
           allOf:
-          - $ref: '#/components/schemas/LogicalOperator'
+            - $ref: "#/components/schemas/LogicalOperator"
           nullable: true
         value:
           type: string
@@ -1646,8 +1646,8 @@ components:
           minLength: 1
     ModelTypeDeprecated:
       enum:
-      - GENERATE
-      - CLASSIFY
+        - GENERATE
+        - CLASSIFY
       type: string
       description: |-
         * `GENERATE` - Generate
@@ -1661,12 +1661,12 @@ components:
             as identified by the LLM provider.
         sandbox_snapshot:
           allOf:
-          - $ref: '#/components/schemas/ModelVersionSandboxSnapshot'
+            - $ref: "#/components/schemas/ModelVersionSandboxSnapshot"
           nullable: true
           description: Information about the sandbox snapshot that was used to create
             this model version, if applicable.
       required:
-      - base_model
+        - base_model
     ModelVersionCompilePromptRequestRequest:
       type: object
       properties:
@@ -1676,16 +1676,16 @@ components:
           description: Key/value pairs for each variable found within the model version's
             prompt template.
       required:
-      - input_values
+        - input_values
     ModelVersionCompilePromptResponse:
       type: object
       properties:
         prompt:
           allOf:
-          - $ref: '#/components/schemas/ModelVersionCompiledPrompt'
+            - $ref: "#/components/schemas/ModelVersionCompiledPrompt"
           description: Information about the compiled prompt.
       required:
-      - prompt
+        - prompt
     ModelVersionCompiledPrompt:
       type: object
       properties:
@@ -1698,32 +1698,32 @@ components:
           minimum: 0
           description: The approximate number of tokens used by the compiled prompt.
       required:
-      - num_tokens
-      - text
+        - num_tokens
+        - text
     ModelVersionExecConfig:
       type: object
       properties:
         parameters:
           allOf:
-          - $ref: '#/components/schemas/ModelVersionExecConfigParameters'
+            - $ref: "#/components/schemas/ModelVersionExecConfigParameters"
           description: The generation parameters that are passed to the LLM provider
             at runtime.
         input_variables:
           type: array
           items:
-            $ref: '#/components/schemas/VellumVariable'
+            $ref: "#/components/schemas/VellumVariable"
           description: Input variables specified in the prompt template.
         prompt_template:
           type: string
           nullable: true
           description: The template used to generate prompts for this model version.
         prompt_block_data:
-          $ref: '#/components/schemas/PromptTemplateBlockData'
+          $ref: "#/components/schemas/PromptTemplateBlockData"
         prompt_syntax_version:
           type: integer
       required:
-      - input_variables
-      - parameters
+        - input_variables
+        - parameters
     ModelVersionExecConfigParameters:
       type: object
       properties:
@@ -1758,9 +1758,9 @@ components:
           type: number
           format: double
       required:
-      - frequency_penalty
-      - presence_penalty
-      - top_p
+        - frequency_penalty
+        - presence_penalty
+        - top_p
     ModelVersionRead:
       type: object
       properties:
@@ -1780,12 +1780,12 @@ components:
           maxLength: 150
         model_type:
           allOf:
-          - $ref: '#/components/schemas/ModelTypeDeprecated'
+            - $ref: "#/components/schemas/ModelTypeDeprecated"
           readOnly: true
           deprecated: true
         provider:
           allOf:
-          - $ref: '#/components/schemas/ProviderEnum'
+            - $ref: "#/components/schemas/ProviderEnum"
           description: |-
             Which LLM provider this model version is associated with.
 
@@ -1804,29 +1804,29 @@ components:
           maxLength: 250
         build_config:
           allOf:
-          - $ref: '#/components/schemas/ModelVersionBuildConfig'
+            - $ref: "#/components/schemas/ModelVersionBuildConfig"
           description: Configuration used to build this model version.
         exec_config:
           allOf:
-          - $ref: '#/components/schemas/ModelVersionExecConfig'
+            - $ref: "#/components/schemas/ModelVersionExecConfig"
           description: Configuration used to execute this model version.
         status:
-          $ref: '#/components/schemas/ModelVersionReadStatusEnum'
+          $ref: "#/components/schemas/ModelVersionReadStatusEnum"
       required:
-      - build_config
-      - created
-      - exec_config
-      - external_id
-      - id
-      - label
-      - model_type
-      - provider
+        - build_config
+        - created
+        - exec_config
+        - external_id
+        - id
+        - label
+        - model_type
+        - provider
     ModelVersionReadStatusEnum:
       enum:
-      - CREATING
-      - READY
-      - CREATION_FAILED
-      - DISABLED
+        - CREATING
+        - READY
+        - CREATION_FAILED
+        - DISABLED
       type: string
       description: |-
         * `CREATING` - Creating
@@ -1851,8 +1851,8 @@ components:
           nullable: true
           readOnly: true
       required:
-      - id
-      - sandbox_id
+        - id
+        - sandbox_id
     NodeInputCompiledChatHistoryValue:
       type: object
       properties:
@@ -1865,13 +1865,13 @@ components:
         value:
           type: array
           items:
-            $ref: '#/components/schemas/ChatMessage'
+            $ref: "#/components/schemas/ChatMessage"
           nullable: true
       required:
-      - key
-      - node_input_id
-      - type
-      - value
+        - key
+        - node_input_id
+        - type
+        - value
     NodeInputCompiledJsonValue:
       type: object
       properties:
@@ -1886,10 +1886,10 @@ components:
           additionalProperties: {}
           nullable: true
       required:
-      - key
-      - node_input_id
-      - type
-      - value
+        - key
+        - node_input_id
+        - type
+        - value
     NodeInputCompiledNumberValue:
       type: object
       properties:
@@ -1903,10 +1903,10 @@ components:
           type: integer
           nullable: true
       required:
-      - key
-      - node_input_id
-      - type
-      - value
+        - key
+        - node_input_id
+        - type
+        - value
     NodeInputCompiledSearchResultsValue:
       type: object
       properties:
@@ -1919,13 +1919,13 @@ components:
         value:
           type: array
           items:
-            $ref: '#/components/schemas/SearchResult'
+            $ref: "#/components/schemas/SearchResult"
           nullable: true
       required:
-      - key
-      - node_input_id
-      - type
-      - value
+        - key
+        - node_input_id
+        - type
+        - value
     NodeInputCompiledStringValue:
       type: object
       properties:
@@ -1939,39 +1939,39 @@ components:
           type: string
           nullable: true
       required:
-      - key
-      - node_input_id
-      - type
-      - value
+        - key
+        - node_input_id
+        - type
+        - value
     NodeInputVariableCompiledValue:
       oneOf:
-      - $ref: '#/components/schemas/NodeInputCompiledStringValue'
-      - $ref: '#/components/schemas/NodeInputCompiledNumberValue'
-      - $ref: '#/components/schemas/NodeInputCompiledJsonValue'
-      - $ref: '#/components/schemas/NodeInputCompiledChatHistoryValue'
-      - $ref: '#/components/schemas/NodeInputCompiledSearchResultsValue'
+        - $ref: "#/components/schemas/NodeInputCompiledStringValue"
+        - $ref: "#/components/schemas/NodeInputCompiledNumberValue"
+        - $ref: "#/components/schemas/NodeInputCompiledJsonValue"
+        - $ref: "#/components/schemas/NodeInputCompiledChatHistoryValue"
+        - $ref: "#/components/schemas/NodeInputCompiledSearchResultsValue"
       discriminator:
         propertyName: type
         mapping:
-          STRING: '#/components/schemas/NodeInputCompiledStringValue'
-          NUMBER: '#/components/schemas/NodeInputCompiledNumberValue'
-          JSON: '#/components/schemas/NodeInputCompiledJsonValue'
-          CHAT_HISTORY: '#/components/schemas/NodeInputCompiledChatHistoryValue'
-          SEARCH_RESULTS: '#/components/schemas/NodeInputCompiledSearchResultsValue'
+          STRING: "#/components/schemas/NodeInputCompiledStringValue"
+          NUMBER: "#/components/schemas/NodeInputCompiledNumberValue"
+          JSON: "#/components/schemas/NodeInputCompiledJsonValue"
+          CHAT_HISTORY: "#/components/schemas/NodeInputCompiledChatHistoryValue"
+          SEARCH_RESULTS: "#/components/schemas/NodeInputCompiledSearchResultsValue"
     NormalizedLogProbs:
       type: object
       properties:
         tokens:
           type: array
           items:
-            $ref: '#/components/schemas/NormalizedTokenLogProbs'
+            $ref: "#/components/schemas/NormalizedTokenLogProbs"
         likelihood:
           type: number
           format: double
           nullable: true
       required:
-      - likelihood
-      - tokens
+        - likelihood
+        - tokens
     NormalizedTokenLogProbs:
       type: object
       properties:
@@ -1990,10 +1990,10 @@ components:
         text_offset:
           type: integer
       required:
-      - logprob
-      - text_offset
-      - token
-      - top_logprobs
+        - logprob
+        - text_offset
+        - token
+        - top_logprobs
     PaginatedSlimDocumentList:
       type: object
       properties:
@@ -2013,7 +2013,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/SlimDocument'
+            $ref: "#/components/schemas/SlimDocument"
     PatchedDocumentUpdateRequest:
       type: object
       properties:
@@ -2025,7 +2025,7 @@ components:
           maxLength: 1000
         status:
           allOf:
-          - $ref: '#/components/schemas/DocumentStatus'
+            - $ref: "#/components/schemas/DocumentStatus"
           description: |-
             The current status of the document
 
@@ -2038,18 +2038,18 @@ components:
             that you'd like to filter upon later.
     ProcessingFailureReasonEnum:
       enum:
-      - EXCEEDED_CHARACTER_LIMIT
-      - INVALID_FILE
+        - EXCEEDED_CHARACTER_LIMIT
+        - INVALID_FILE
       type: string
       description: |-
         * `EXCEEDED_CHARACTER_LIMIT` - Exceeded Character Limit
         * `INVALID_FILE` - Invalid File
     ProcessingStateEnum:
       enum:
-      - QUEUED
-      - PROCESSING
-      - PROCESSED
-      - FAILED
+        - QUEUED
+        - PROCESSING
+        - PROCESSED
+        - FAILED
       type: string
       description: |-
         * `QUEUED` - Queued
@@ -2062,10 +2062,10 @@ components:
         type:
           type: string
         data:
-          $ref: '#/components/schemas/PromptNodeResultData'
+          $ref: "#/components/schemas/PromptNodeResultData"
       required:
-      - data
-      - type
+        - data
+        - type
     PromptNodeResultData:
       type: object
       properties:
@@ -2078,20 +2078,20 @@ components:
           type: string
           nullable: true
       required:
-      - output_id
+        - output_id
     PromptTemplateBlock:
       type: object
       properties:
         id:
           type: string
         block_type:
-          $ref: '#/components/schemas/BlockTypeEnum'
+          $ref: "#/components/schemas/BlockTypeEnum"
         properties:
-          $ref: '#/components/schemas/PromptTemplateBlockProperties'
+          $ref: "#/components/schemas/PromptTemplateBlockProperties"
       required:
-      - block_type
-      - id
-      - properties
+        - block_type
+        - id
+        - properties
     PromptTemplateBlockData:
       type: object
       properties:
@@ -2100,10 +2100,10 @@ components:
         blocks:
           type: array
           items:
-            $ref: '#/components/schemas/PromptTemplateBlock'
+            $ref: "#/components/schemas/PromptTemplateBlock"
       required:
-      - blocks
-      - version
+        - blocks
+        - version
     PromptTemplateBlockDataRequest:
       type: object
       properties:
@@ -2112,16 +2112,16 @@ components:
         blocks:
           type: array
           items:
-            $ref: '#/components/schemas/PromptTemplateBlockRequest'
+            $ref: "#/components/schemas/PromptTemplateBlockRequest"
       required:
-      - blocks
-      - version
+        - blocks
+        - version
     PromptTemplateBlockProperties:
       type: object
       properties:
         chat_role:
           allOf:
-          - $ref: '#/components/schemas/ChatMessageRole'
+            - $ref: "#/components/schemas/ChatMessageRole"
           nullable: true
         chat_message_unterminated:
           type: boolean
@@ -2131,7 +2131,7 @@ components:
           nullable: true
         template_type:
           allOf:
-          - $ref: '#/components/schemas/VellumVariableType'
+            - $ref: "#/components/schemas/VellumVariableType"
           nullable: true
         function_name:
           type: string
@@ -2149,14 +2149,14 @@ components:
         blocks:
           type: array
           items:
-            $ref: '#/components/schemas/PromptTemplateBlock'
+            $ref: "#/components/schemas/PromptTemplateBlock"
           nullable: true
     PromptTemplateBlockPropertiesRequest:
       type: object
       properties:
         chat_role:
           allOf:
-          - $ref: '#/components/schemas/ChatMessageRole'
+            - $ref: "#/components/schemas/ChatMessageRole"
           nullable: true
         chat_message_unterminated:
           type: boolean
@@ -2166,7 +2166,7 @@ components:
           nullable: true
         template_type:
           allOf:
-          - $ref: '#/components/schemas/VellumVariableType'
+            - $ref: "#/components/schemas/VellumVariableType"
           nullable: true
         function_name:
           type: string
@@ -2186,7 +2186,7 @@ components:
         blocks:
           type: array
           items:
-            $ref: '#/components/schemas/PromptTemplateBlockRequest'
+            $ref: "#/components/schemas/PromptTemplateBlockRequest"
           nullable: true
     PromptTemplateBlockRequest:
       type: object
@@ -2195,23 +2195,23 @@ components:
           type: string
           minLength: 1
         block_type:
-          $ref: '#/components/schemas/BlockTypeEnum'
+          $ref: "#/components/schemas/BlockTypeEnum"
         properties:
-          $ref: '#/components/schemas/PromptTemplateBlockPropertiesRequest'
+          $ref: "#/components/schemas/PromptTemplateBlockPropertiesRequest"
       required:
-      - block_type
-      - id
-      - properties
+        - block_type
+        - id
+        - properties
     ProviderEnum:
       enum:
-      - ANTHROPIC
-      - COHERE
-      - GOOGLE
-      - HOSTED
-      - MOSAICML
-      - MYSTIC
-      - OPENAI
-      - PYQ
+        - ANTHROPIC
+        - COHERE
+        - GOOGLE
+        - HOSTED
+        - MOSAICML
+        - MYSTIC
+        - OPENAI
+        - PYQ
       type: string
       description: |-
         * `ANTHROPIC` - Anthropic
@@ -2229,7 +2229,7 @@ components:
           type: string
           description: Details about why the request failed.
       required:
-      - detail
+        - detail
     RegisterPromptModelParametersRequest:
       type: object
       properties:
@@ -2262,12 +2262,12 @@ components:
             format: double
           nullable: true
       required:
-      - frequency_penalty
-      - max_tokens
-      - presence_penalty
-      - stop
-      - temperature
-      - top_p
+        - frequency_penalty
+        - max_tokens
+        - presence_penalty
+        - stop
+        - temperature
+        - top_p
     RegisterPromptPrompt:
       type: object
       properties:
@@ -2278,8 +2278,8 @@ components:
           type: string
           description: A human-friendly label for the generated prompt.
       required:
-      - id
-      - label
+        - id
+        - label
     RegisterPromptPromptInfoRequest:
       type: object
       properties:
@@ -2287,15 +2287,15 @@ components:
           type: integer
           default: 2
         prompt_block_data:
-          $ref: '#/components/schemas/PromptTemplateBlockDataRequest'
+          $ref: "#/components/schemas/PromptTemplateBlockDataRequest"
         input_variables:
           type: array
           items:
-            $ref: '#/components/schemas/RegisteredPromptInputVariableRequest'
+            $ref: "#/components/schemas/RegisteredPromptInputVariableRequest"
           description: The input variables specified in the prompt template.
       required:
-      - input_variables
-      - prompt_block_data
+        - input_variables
+        - prompt_block_data
     RegisterPromptRequestRequest:
       type: object
       properties:
@@ -2311,11 +2311,11 @@ components:
             in Vellum.
         prompt:
           allOf:
-          - $ref: '#/components/schemas/RegisterPromptPromptInfoRequest'
+            - $ref: "#/components/schemas/RegisterPromptPromptInfoRequest"
           description: Information about how to execute the prompt template.
         provider:
           allOf:
-          - $ref: '#/components/schemas/ProviderEnum'
+            - $ref: "#/components/schemas/ProviderEnum"
           description: |-
             The initial LLM provider to use for this prompt
 
@@ -2333,7 +2333,7 @@ components:
           description: The initial model to use for this prompt
         parameters:
           allOf:
-          - $ref: '#/components/schemas/RegisterPromptModelParametersRequest'
+            - $ref: "#/components/schemas/RegisterPromptModelParametersRequest"
           description: The initial model parameters to use for  this prompt
         meta:
           type: object
@@ -2341,41 +2341,41 @@ components:
           description: Optionally include additional metadata to store along with
             the prompt.
       required:
-      - label
-      - model
-      - name
-      - parameters
-      - prompt
-      - provider
+        - label
+        - model
+        - name
+        - parameters
+        - prompt
+        - provider
     RegisterPromptResponse:
       type: object
       properties:
         prompt:
           allOf:
-          - $ref: '#/components/schemas/RegisterPromptPrompt'
+            - $ref: "#/components/schemas/RegisterPromptPrompt"
           description: Information about the generated prompt
         sandbox_snapshot:
           allOf:
-          - $ref: '#/components/schemas/RegisteredPromptSandboxSnapshot'
+            - $ref: "#/components/schemas/RegisteredPromptSandboxSnapshot"
           description: Information about the generated sandbox snapshot
         sandbox:
           allOf:
-          - $ref: '#/components/schemas/RegisteredPromptSandbox'
+            - $ref: "#/components/schemas/RegisteredPromptSandbox"
           description: Information about the generated sandbox
         model_version:
           allOf:
-          - $ref: '#/components/schemas/RegisteredPromptModelVersion'
+            - $ref: "#/components/schemas/RegisteredPromptModelVersion"
           description: Information about the generated model version
         deployment:
           allOf:
-          - $ref: '#/components/schemas/RegisteredPromptDeployment'
+            - $ref: "#/components/schemas/RegisteredPromptDeployment"
           description: Information about the generated deployment
       required:
-      - deployment
-      - model_version
-      - prompt
-      - sandbox
-      - sandbox_snapshot
+        - deployment
+        - model_version
+        - prompt
+        - sandbox
+        - sandbox_snapshot
     RegisteredPromptDeployment:
       type: object
       properties:
@@ -2389,9 +2389,9 @@ components:
           type: string
           description: A human-friendly label for the generated deployment.
       required:
-      - id
-      - label
-      - name
+        - id
+        - label
+        - name
     RegisteredPromptInputVariableRequest:
       type: object
       properties:
@@ -2403,10 +2403,10 @@ components:
           minLength: 1
         type:
           allOf:
-          - $ref: '#/components/schemas/VellumVariableType'
+            - $ref: "#/components/schemas/VellumVariableType"
           default: STRING
       required:
-      - key
+        - key
     RegisteredPromptModelVersion:
       type: object
       properties:
@@ -2417,8 +2417,8 @@ components:
           type: string
           description: A human-friendly label for the generated model version.
       required:
-      - id
-      - label
+        - id
+        - label
     RegisteredPromptSandbox:
       type: object
       properties:
@@ -2429,8 +2429,8 @@ components:
           type: string
           description: A human-friendly label for the generated sandbox.
       required:
-      - id
-      - label
+        - id
+        - label
     RegisteredPromptSandboxSnapshot:
       type: object
       properties:
@@ -2438,20 +2438,20 @@ components:
           type: string
           description: The ID of the generated sandbox snapshot.
       required:
-      - id
+        - id
     SandboxMetricInputParams:
       type: object
       properties:
         params:
           allOf:
-          - $ref: '#/components/schemas/EvaluationParams'
+            - $ref: "#/components/schemas/EvaluationParams"
           nullable: true
     SandboxMetricInputParamsRequest:
       type: object
       properties:
         params:
           allOf:
-          - $ref: '#/components/schemas/EvaluationParamsRequest'
+            - $ref: "#/components/schemas/EvaluationParamsRequest"
           nullable: true
     SandboxScenario:
       type: object
@@ -2462,17 +2462,17 @@ components:
         inputs:
           type: array
           items:
-            $ref: '#/components/schemas/ScenarioInput'
+            $ref: "#/components/schemas/ScenarioInput"
           description: The inputs for the scenario
         id:
           type: string
           description: The id of the scenario
         metric_input_params:
-          $ref: '#/components/schemas/SandboxMetricInputParams'
+          $ref: "#/components/schemas/SandboxMetricInputParams"
       required:
-      - id
-      - inputs
-      - metric_input_params
+        - id
+        - inputs
+        - metric_input_params
     ScenarioInput:
       type: object
       properties:
@@ -2480,7 +2480,7 @@ components:
           type: string
         type:
           allOf:
-          - $ref: '#/components/schemas/ScenarioInputTypeEnum'
+            - $ref: "#/components/schemas/ScenarioInputTypeEnum"
           nullable: true
           default: TEXT
         value:
@@ -2488,9 +2488,9 @@ components:
         chat_history:
           type: array
           items:
-            $ref: '#/components/schemas/ChatMessage'
+            $ref: "#/components/schemas/ChatMessage"
       required:
-      - key
+        - key
     ScenarioInputRequest:
       type: object
       properties:
@@ -2499,7 +2499,7 @@ components:
           minLength: 1
         type:
           allOf:
-          - $ref: '#/components/schemas/ScenarioInputTypeEnum'
+            - $ref: "#/components/schemas/ScenarioInputTypeEnum"
           nullable: true
           default: TEXT
         value:
@@ -2507,13 +2507,13 @@ components:
         chat_history:
           type: array
           items:
-            $ref: '#/components/schemas/ChatMessageRequest'
+            $ref: "#/components/schemas/ChatMessageRequest"
       required:
-      - key
+        - key
     ScenarioInputTypeEnum:
       enum:
-      - TEXT
-      - CHAT_HISTORY
+        - TEXT
+        - CHAT_HISTORY
       type: string
       description: |-
         * `TEXT` - Text
@@ -2525,7 +2525,7 @@ components:
           type: string
           description: Details about why the request failed.
       required:
-      - detail
+        - detail
     SearchFiltersRequest:
       type: object
       properties:
@@ -2538,7 +2538,7 @@ components:
           description: The document external IDs to filter by
         metadata:
           allOf:
-          - $ref: '#/components/schemas/MetadataFilterConfigRequest'
+            - $ref: "#/components/schemas/MetadataFilterConfigRequest"
           nullable: true
           description: The metadata filters to apply to the search
     SearchNodeResult:
@@ -2547,10 +2547,10 @@ components:
         type:
           type: string
         data:
-          $ref: '#/components/schemas/SearchNodeResultData'
+          $ref: "#/components/schemas/SearchNodeResultData"
       required:
-      - data
-      - type
+        - data
+        - type
     SearchNodeResultData:
       type: object
       properties:
@@ -2559,7 +2559,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/SearchResult'
+            $ref: "#/components/schemas/SearchResult"
           description: The results of the search. Each result represents a chunk that
             matches the search query.
         text_output_id:
@@ -2568,9 +2568,9 @@ components:
           type: string
           nullable: true
       required:
-      - results
-      - results_output_id
-      - text_output_id
+        - results
+        - results_output_id
+        - text_output_id
     SearchRequestBodyRequest:
       type: object
       properties:
@@ -2592,11 +2592,11 @@ components:
           description: The query to search for.
         options:
           allOf:
-          - $ref: '#/components/schemas/SearchRequestOptionsRequest'
+            - $ref: "#/components/schemas/SearchRequestOptionsRequest"
           nullable: true
           description: Configuration options for the search.
       required:
-      - query
+        - query
     SearchRequestOptionsRequest:
       type: object
       properties:
@@ -2609,17 +2609,17 @@ components:
           description: The maximum number of results to return.
         weights:
           allOf:
-          - $ref: '#/components/schemas/SearchWeightsRequest'
+            - $ref: "#/components/schemas/SearchWeightsRequest"
           nullable: true
           description: The weights to use for the search. Must add up to 1.0.
         result_merging:
           allOf:
-          - $ref: '#/components/schemas/SearchResultMergingRequest'
+            - $ref: "#/components/schemas/SearchResultMergingRequest"
           nullable: true
           description: The configuration for merging results.
         filters:
           allOf:
-          - $ref: '#/components/schemas/SearchFiltersRequest'
+            - $ref: "#/components/schemas/SearchFiltersRequest"
           nullable: true
           description: The filters to apply to the search.
     SearchResponse:
@@ -2628,11 +2628,11 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/SearchResult'
+            $ref: "#/components/schemas/SearchResult"
           description: The results of the search. Each result represents a chunk that
             matches the search query.
       required:
-      - results
+        - results
     SearchResult:
       type: object
       properties:
@@ -2650,14 +2650,14 @@ components:
             type: string
         document:
           allOf:
-          - $ref: '#/components/schemas/SearchResultDocument'
+            - $ref: "#/components/schemas/SearchResultDocument"
           description: The document that contains the chunk that matched the search
             query.
       required:
-      - document
-      - keywords
-      - score
-      - text
+        - document
+        - keywords
+        - score
+        - text
     SearchResultDocument:
       type: object
       properties:
@@ -2683,8 +2683,8 @@ components:
           description: A previously supplied JSON object containing metadata that
             can be filtered on when searching.
       required:
-      - id
-      - label
+        - id
+        - label
     SearchResultMergingRequest:
       type: object
       properties:
@@ -2734,7 +2734,7 @@ components:
           maxLength: 1000
         processing_state:
           allOf:
-          - $ref: '#/components/schemas/ProcessingStateEnum'
+            - $ref: "#/components/schemas/ProcessingStateEnum"
           description: |-
             An enum value representing where this document is along its processing lifecycle. Note that this is different than its indexing lifecycle.
 
@@ -2744,7 +2744,7 @@ components:
             * `FAILED` - Failed
         processing_failure_reason:
           allOf:
-          - $ref: '#/components/schemas/ProcessingFailureReasonEnum'
+            - $ref: "#/components/schemas/ProcessingFailureReasonEnum"
           nullable: true
           description: |-
             An enum value representing why the document could not be processed. Is null unless processing_state is FAILED.
@@ -2753,7 +2753,7 @@ components:
             * `INVALID_FILE` - Invalid File
         status:
           allOf:
-          - $ref: '#/components/schemas/DocumentStatus'
+            - $ref: "#/components/schemas/DocumentStatus"
           description: |-
             The document's current status.
 
@@ -2773,12 +2773,12 @@ components:
         document_to_document_indexes:
           type: array
           items:
-            $ref: '#/components/schemas/DocumentDocumentToDocumentIndex'
+            $ref: "#/components/schemas/DocumentDocumentToDocumentIndex"
       required:
-      - document_to_document_indexes
-      - id
-      - label
-      - last_uploaded_at
+        - document_to_document_indexes
+        - id
+        - label
+        - last_uploaded_at
     SubmitCompletionActualRequest:
       type: object
       properties:
@@ -2819,7 +2819,7 @@ components:
         detail:
           type: string
       required:
-      - detail
+        - detail
     SubmitCompletionActualsRequest:
       type: object
       properties:
@@ -2836,28 +2836,28 @@ components:
         actuals:
           type: array
           items:
-            $ref: '#/components/schemas/SubmitCompletionActualRequest'
+            $ref: "#/components/schemas/SubmitCompletionActualRequest"
           description: Feedback regarding the quality of previously generated completions
       required:
-      - actuals
+        - actuals
     SubmitWorkflowExecutionActualRequest:
       oneOf:
-      - $ref: '#/components/schemas/WorkflowExecutionActualStringRequest'
-      - $ref: '#/components/schemas/WorkflowExecutionActualJsonRequest'
-      - $ref: '#/components/schemas/WorkflowExecutionActualChatHistoryRequest'
+        - $ref: "#/components/schemas/WorkflowExecutionActualStringRequest"
+        - $ref: "#/components/schemas/WorkflowExecutionActualJsonRequest"
+        - $ref: "#/components/schemas/WorkflowExecutionActualChatHistoryRequest"
       discriminator:
         propertyName: output_type
         mapping:
-          STRING: '#/components/schemas/WorkflowExecutionActualStringRequest'
-          JSON: '#/components/schemas/WorkflowExecutionActualJsonRequest'
-          CHAT_HISTORY: '#/components/schemas/WorkflowExecutionActualChatHistoryRequest'
+          STRING: "#/components/schemas/WorkflowExecutionActualStringRequest"
+          JSON: "#/components/schemas/WorkflowExecutionActualJsonRequest"
+          CHAT_HISTORY: "#/components/schemas/WorkflowExecutionActualChatHistoryRequest"
     SubmitWorkflowExecutionActualsRequest:
       type: object
       properties:
         actuals:
           type: array
           items:
-            $ref: '#/components/schemas/SubmitWorkflowExecutionActualRequest'
+            $ref: "#/components/schemas/SubmitWorkflowExecutionActualRequest"
           description: Feedback regarding the quality of an output on a previously
             executed workflow.
         execution_id:
@@ -2874,7 +2874,7 @@ components:
             the workflow, if applicable, that you'd now like to submit actuals for.
             Must provide either this or execution_id.
       required:
-      - actuals
+        - actuals
     TemplatingNodeChatHistoryResult:
       type: object
       properties:
@@ -2885,12 +2885,12 @@ components:
         value:
           type: array
           items:
-            $ref: '#/components/schemas/ChatMessage'
+            $ref: "#/components/schemas/ChatMessage"
           nullable: true
       required:
-      - id
-      - type
-      - value
+        - id
+        - type
+        - value
     TemplatingNodeJsonResult:
       type: object
       properties:
@@ -2903,9 +2903,9 @@ components:
           additionalProperties: {}
           nullable: true
       required:
-      - id
-      - type
-      - value
+        - id
+        - type
+        - value
     TemplatingNodeNumberResult:
       type: object
       properties:
@@ -2917,41 +2917,41 @@ components:
           type: integer
           nullable: true
       required:
-      - id
-      - type
-      - value
+        - id
+        - type
+        - value
     TemplatingNodeResult:
       type: object
       properties:
         type:
           type: string
         data:
-          $ref: '#/components/schemas/TemplatingNodeResultData'
+          $ref: "#/components/schemas/TemplatingNodeResultData"
       required:
-      - data
-      - type
+        - data
+        - type
     TemplatingNodeResultData:
       type: object
       properties:
         output:
-          $ref: '#/components/schemas/TemplatingNodeResultOutput'
+          $ref: "#/components/schemas/TemplatingNodeResultOutput"
       required:
-      - output
+        - output
     TemplatingNodeResultOutput:
       oneOf:
-      - $ref: '#/components/schemas/TemplatingNodeStringResult'
-      - $ref: '#/components/schemas/TemplatingNodeNumberResult'
-      - $ref: '#/components/schemas/TemplatingNodeJsonResult'
-      - $ref: '#/components/schemas/TemplatingNodeChatHistoryResult'
-      - $ref: '#/components/schemas/TemplatingNodeSearchResultsResult'
+        - $ref: "#/components/schemas/TemplatingNodeStringResult"
+        - $ref: "#/components/schemas/TemplatingNodeNumberResult"
+        - $ref: "#/components/schemas/TemplatingNodeJsonResult"
+        - $ref: "#/components/schemas/TemplatingNodeChatHistoryResult"
+        - $ref: "#/components/schemas/TemplatingNodeSearchResultsResult"
       discriminator:
         propertyName: type
         mapping:
-          STRING: '#/components/schemas/TemplatingNodeStringResult'
-          NUMBER: '#/components/schemas/TemplatingNodeNumberResult'
-          JSON: '#/components/schemas/TemplatingNodeJsonResult'
-          CHAT_HISTORY: '#/components/schemas/TemplatingNodeChatHistoryResult'
-          SEARCH_RESULTS: '#/components/schemas/TemplatingNodeSearchResultsResult'
+          STRING: "#/components/schemas/TemplatingNodeStringResult"
+          NUMBER: "#/components/schemas/TemplatingNodeNumberResult"
+          JSON: "#/components/schemas/TemplatingNodeJsonResult"
+          CHAT_HISTORY: "#/components/schemas/TemplatingNodeChatHistoryResult"
+          SEARCH_RESULTS: "#/components/schemas/TemplatingNodeSearchResultsResult"
     TemplatingNodeSearchResultsResult:
       type: object
       properties:
@@ -2962,12 +2962,12 @@ components:
         value:
           type: array
           items:
-            $ref: '#/components/schemas/SearchResult'
+            $ref: "#/components/schemas/SearchResult"
           nullable: true
       required:
-      - id
-      - type
-      - value
+        - id
+        - type
+        - value
     TemplatingNodeStringResult:
       type: object
       properties:
@@ -2979,9 +2979,9 @@ components:
           type: string
           nullable: true
       required:
-      - id
-      - type
-      - value
+        - id
+        - type
+        - value
     TerminalNodeChatHistoryResult:
       type: object
       properties:
@@ -2998,12 +2998,12 @@ components:
         value:
           type: array
           items:
-            $ref: '#/components/schemas/ChatMessage'
+            $ref: "#/components/schemas/ChatMessage"
           nullable: true
       required:
-      - name
-      - type
-      - value
+        - name
+        - type
+        - value
     TerminalNodeJsonResult:
       type: object
       properties:
@@ -3022,9 +3022,9 @@ components:
           additionalProperties: {}
           nullable: true
       required:
-      - name
-      - type
-      - value
+        - name
+        - type
+        - value
     TerminalNodeNumberResult:
       type: object
       properties:
@@ -3042,41 +3042,41 @@ components:
           type: integer
           nullable: true
       required:
-      - name
-      - type
-      - value
+        - name
+        - type
+        - value
     TerminalNodeResult:
       type: object
       properties:
         type:
           type: string
         data:
-          $ref: '#/components/schemas/TerminalNodeResultData'
+          $ref: "#/components/schemas/TerminalNodeResultData"
       required:
-      - data
-      - type
+        - data
+        - type
     TerminalNodeResultData:
       type: object
       properties:
         output:
-          $ref: '#/components/schemas/TerminalNodeResultOutput'
+          $ref: "#/components/schemas/TerminalNodeResultOutput"
       required:
-      - output
+        - output
     TerminalNodeResultOutput:
       oneOf:
-      - $ref: '#/components/schemas/TerminalNodeStringResult'
-      - $ref: '#/components/schemas/TerminalNodeNumberResult'
-      - $ref: '#/components/schemas/TerminalNodeJsonResult'
-      - $ref: '#/components/schemas/TerminalNodeChatHistoryResult'
-      - $ref: '#/components/schemas/TerminalNodeSearchResultsResult'
+        - $ref: "#/components/schemas/TerminalNodeStringResult"
+        - $ref: "#/components/schemas/TerminalNodeNumberResult"
+        - $ref: "#/components/schemas/TerminalNodeJsonResult"
+        - $ref: "#/components/schemas/TerminalNodeChatHistoryResult"
+        - $ref: "#/components/schemas/TerminalNodeSearchResultsResult"
       discriminator:
         propertyName: type
         mapping:
-          STRING: '#/components/schemas/TerminalNodeStringResult'
-          NUMBER: '#/components/schemas/TerminalNodeNumberResult'
-          JSON: '#/components/schemas/TerminalNodeJsonResult'
-          CHAT_HISTORY: '#/components/schemas/TerminalNodeChatHistoryResult'
-          SEARCH_RESULTS: '#/components/schemas/TerminalNodeSearchResultsResult'
+          STRING: "#/components/schemas/TerminalNodeStringResult"
+          NUMBER: "#/components/schemas/TerminalNodeNumberResult"
+          JSON: "#/components/schemas/TerminalNodeJsonResult"
+          CHAT_HISTORY: "#/components/schemas/TerminalNodeChatHistoryResult"
+          SEARCH_RESULTS: "#/components/schemas/TerminalNodeSearchResultsResult"
     TerminalNodeSearchResultsResult:
       type: object
       properties:
@@ -3093,12 +3093,12 @@ components:
         value:
           type: array
           items:
-            $ref: '#/components/schemas/SearchResult'
+            $ref: "#/components/schemas/SearchResult"
           nullable: true
       required:
-      - name
-      - type
-      - value
+        - name
+        - type
+        - value
     TerminalNodeStringResult:
       type: object
       properties:
@@ -3116,9 +3116,9 @@ components:
           type: string
           nullable: true
       required:
-      - name
-      - type
-      - value
+        - name
+        - type
+        - value
     TestSuiteTestCase:
       type: object
       properties:
@@ -3137,12 +3137,12 @@ components:
             expects.
         evaluation_params:
           allOf:
-          - $ref: '#/components/schemas/EvaluationParams'
+            - $ref: "#/components/schemas/EvaluationParams"
           description: Parameters to use when evaluating the test case, specific to
             the test suite's evaluation metric.
       required:
-      - evaluation_params
-      - input_values
+        - evaluation_params
+        - input_values
     TestSuiteTestCaseRequest:
       type: object
       properties:
@@ -3162,12 +3162,12 @@ components:
             expects.
         evaluation_params:
           allOf:
-          - $ref: '#/components/schemas/EvaluationParamsRequest'
+            - $ref: "#/components/schemas/EvaluationParamsRequest"
           description: Parameters to use when evaluating the test case, specific to
             the test suite's evaluation metric.
       required:
-      - evaluation_params
-      - input_values
+        - evaluation_params
+        - input_values
     UploadDocumentBodyRequest:
       type: object
       properties:
@@ -3209,15 +3209,15 @@ components:
           description: A stringified JSON object containing any metadata associated
             with the document that you'd like to filter upon later.
       required:
-      - contents
-      - label
+        - contents
+        - label
     UploadDocumentErrorResponse:
       type: object
       properties:
         detail:
           type: string
       required:
-      - detail
+        - detail
     UploadDocumentResponse:
       type: object
       properties:
@@ -3226,7 +3226,7 @@ components:
           format: uuid
           description: The ID of the newly created document.
       required:
-      - document_id
+        - document_id
     UpsertSandboxScenarioRequestRequest:
       type: object
       properties:
@@ -3236,7 +3236,7 @@ components:
         inputs:
           type: array
           items:
-            $ref: '#/components/schemas/ScenarioInputRequest'
+            $ref: "#/components/schemas/ScenarioInputRequest"
           description: The inputs for the scenario
         scenario_id:
           type: string
@@ -3244,9 +3244,9 @@ components:
           description: The id of the scenario to update. If none is provided, an id
             will be generated and a new scenario will be appended.
         metric_input_params:
-          $ref: '#/components/schemas/SandboxMetricInputParamsRequest'
+          $ref: "#/components/schemas/SandboxMetricInputParamsRequest"
       required:
-      - inputs
+        - inputs
     VellumVariable:
       type: object
       properties:
@@ -3255,18 +3255,18 @@ components:
         key:
           type: string
         type:
-          $ref: '#/components/schemas/VellumVariableType'
+          $ref: "#/components/schemas/VellumVariableType"
       required:
-      - id
-      - key
-      - type
+        - id
+        - key
+        - type
     VellumVariableType:
       enum:
-      - STRING
-      - NUMBER
-      - JSON
-      - CHAT_HISTORY
-      - SEARCH_RESULTS
+        - STRING
+        - NUMBER
+        - JSON
+        - CHAT_HISTORY
+        - SEARCH_RESULTS
       type: string
       description: |-
         * `STRING` - STRING
@@ -3280,10 +3280,10 @@ components:
         message:
           type: string
         code:
-          $ref: '#/components/schemas/WorkflowExecutionEventErrorCode'
+          $ref: "#/components/schemas/WorkflowExecutionEventErrorCode"
       required:
-      - code
-      - message
+        - code
+        - message
     WorkflowExecutionActualChatHistoryRequest:
       type: object
       properties:
@@ -3319,12 +3319,12 @@ components:
         desired_output_value:
           type: array
           items:
-            $ref: '#/components/schemas/ChatMessageRequest'
+            $ref: "#/components/schemas/ChatMessageRequest"
           nullable: true
           description: Optionally provide the value that the output ideally should
             have been.
       required:
-      - output_type
+        - output_type
     WorkflowExecutionActualJsonRequest:
       type: object
       properties:
@@ -3364,7 +3364,7 @@ components:
           description: Optionally provide the value that the output ideally should
             have been.
       required:
-      - output_type
+        - output_type
     WorkflowExecutionActualStringRequest:
       type: object
       properties:
@@ -3403,15 +3403,15 @@ components:
           description: Optionally provide the value that the output ideally should
             have been.
       required:
-      - output_type
+        - output_type
     WorkflowExecutionEventErrorCode:
       enum:
-      - WORKFLOW_INITIALIZATION
-      - NODE_EXECUTION_COUNT_LIMIT_REACHED
-      - INTERNAL_SERVER_ERROR
-      - NODE_EXECUTION
-      - LLM_PROVIDER
-      - INVALID_TEMPLATE
+        - WORKFLOW_INITIALIZATION
+        - NODE_EXECUTION_COUNT_LIMIT_REACHED
+        - INTERNAL_SERVER_ERROR
+        - NODE_EXECUTION
+        - LLM_PROVIDER
+        - INVALID_TEMPLATE
       type: string
       description: |-
         * `WORKFLOW_INITIALIZATION` - WORKFLOW_INITIALIZATION
@@ -3422,8 +3422,8 @@ components:
         * `INVALID_TEMPLATE` - INVALID_TEMPLATE
     WorkflowExecutionEventType:
       enum:
-      - NODE
-      - WORKFLOW
+        - NODE
+        - WORKFLOW
       type: string
       description: |-
         * `NODE` - Node
@@ -3442,11 +3442,11 @@ components:
         type:
           type: string
         data:
-          $ref: '#/components/schemas/WorkflowNodeResultEvent'
+          $ref: "#/components/schemas/WorkflowNodeResultEvent"
       required:
-      - data
-      - execution_id
-      - type
+        - data
+        - execution_id
+        - type
     WorkflowExecutionWorkflowResultEvent:
       type: object
       properties:
@@ -3462,28 +3462,28 @@ components:
         type:
           type: string
         data:
-          $ref: '#/components/schemas/WorkflowResultEvent'
+          $ref: "#/components/schemas/WorkflowResultEvent"
       required:
-      - data
-      - execution_id
-      - type
+        - data
+        - execution_id
+        - type
     WorkflowNodeResultData:
       oneOf:
-      - $ref: '#/components/schemas/PromptNodeResult'
-      - $ref: '#/components/schemas/SearchNodeResult'
-      - $ref: '#/components/schemas/TemplatingNodeResult'
-      - $ref: '#/components/schemas/ConditionalNodeResult'
-      - $ref: '#/components/schemas/ApiNodeResult'
-      - $ref: '#/components/schemas/TerminalNodeResult'
+        - $ref: "#/components/schemas/PromptNodeResult"
+        - $ref: "#/components/schemas/SearchNodeResult"
+        - $ref: "#/components/schemas/TemplatingNodeResult"
+        - $ref: "#/components/schemas/ConditionalNodeResult"
+        - $ref: "#/components/schemas/ApiNodeResult"
+        - $ref: "#/components/schemas/TerminalNodeResult"
       discriminator:
         propertyName: type
         mapping:
-          PROMPT: '#/components/schemas/PromptNodeResult'
-          SEARCH: '#/components/schemas/SearchNodeResult'
-          TEMPLATING: '#/components/schemas/TemplatingNodeResult'
-          CONDITIONAL: '#/components/schemas/ConditionalNodeResult'
-          API: '#/components/schemas/ApiNodeResult'
-          TERMINAL: '#/components/schemas/TerminalNodeResult'
+          PROMPT: "#/components/schemas/PromptNodeResult"
+          SEARCH: "#/components/schemas/SearchNodeResult"
+          TEMPLATING: "#/components/schemas/TemplatingNodeResult"
+          CONDITIONAL: "#/components/schemas/ConditionalNodeResult"
+          API: "#/components/schemas/ApiNodeResult"
+          TERMINAL: "#/components/schemas/TerminalNodeResult"
     WorkflowNodeResultEvent:
       type: object
       properties:
@@ -3494,36 +3494,36 @@ components:
         node_result_id:
           type: string
         state:
-          $ref: '#/components/schemas/WorkflowNodeResultEventState'
+          $ref: "#/components/schemas/WorkflowNodeResultEventState"
         ts:
           type: string
           format: date-time
           nullable: true
         data:
           allOf:
-          - $ref: '#/components/schemas/WorkflowNodeResultData'
+            - $ref: "#/components/schemas/WorkflowNodeResultData"
           nullable: true
         error:
           allOf:
-          - $ref: '#/components/schemas/WorkflowEventError'
+            - $ref: "#/components/schemas/WorkflowEventError"
           nullable: true
         input_values:
           type: array
           items:
-            $ref: '#/components/schemas/NodeInputVariableCompiledValue'
+            $ref: "#/components/schemas/NodeInputVariableCompiledValue"
           nullable: true
       required:
-      - data
-      - id
-      - node_id
-      - node_result_id
-      - state
+        - data
+        - id
+        - node_id
+        - node_result_id
+        - state
     WorkflowNodeResultEventState:
       enum:
-      - INITIATED
-      - STREAMING
-      - FULFILLED
-      - REJECTED
+        - INITIATED
+        - STREAMING
+        - FULFILLED
+        - REJECTED
       type: string
       description: |-
         * `INITIATED` - INITIATED
@@ -3542,22 +3542,22 @@ components:
         value:
           type: array
           items:
-            $ref: '#/components/schemas/ChatMessageRequest'
+            $ref: "#/components/schemas/ChatMessageRequest"
       required:
-      - name
-      - type
-      - value
+        - name
+        - type
+        - value
     WorkflowRequestInputRequest:
       oneOf:
-      - $ref: '#/components/schemas/WorkflowRequestStringInputRequest'
-      - $ref: '#/components/schemas/WorkflowRequestJSONInputRequest'
-      - $ref: '#/components/schemas/WorkflowRequestChatHistoryInputRequest'
+        - $ref: "#/components/schemas/WorkflowRequestStringInputRequest"
+        - $ref: "#/components/schemas/WorkflowRequestJSONInputRequest"
+        - $ref: "#/components/schemas/WorkflowRequestChatHistoryInputRequest"
       discriminator:
         propertyName: type
         mapping:
-          STRING: '#/components/schemas/WorkflowRequestStringInputRequest'
-          JSON: '#/components/schemas/WorkflowRequestJSONInputRequest'
-          CHAT_HISTORY: '#/components/schemas/WorkflowRequestChatHistoryInputRequest'
+          STRING: "#/components/schemas/WorkflowRequestStringInputRequest"
+          JSON: "#/components/schemas/WorkflowRequestJSONInputRequest"
+          CHAT_HISTORY: "#/components/schemas/WorkflowRequestChatHistoryInputRequest"
     WorkflowRequestJSONInputRequest:
       type: object
       properties:
@@ -3571,9 +3571,9 @@ components:
           type: object
           additionalProperties: {}
       required:
-      - name
-      - type
-      - value
+        - name
+        - type
+        - value
     WorkflowRequestStringInputRequest:
       type: object
       properties:
@@ -3586,47 +3586,47 @@ components:
         value:
           type: string
       required:
-      - name
-      - type
-      - value
+        - name
+        - type
+        - value
     WorkflowResultEvent:
       type: object
       properties:
         id:
           type: string
         state:
-          $ref: '#/components/schemas/WorkflowNodeResultEventState'
+          $ref: "#/components/schemas/WorkflowNodeResultEventState"
         ts:
           type: string
           format: date-time
         output:
           allOf:
-          - $ref: '#/components/schemas/WorkflowResultEventOutputData'
+            - $ref: "#/components/schemas/WorkflowResultEventOutputData"
           nullable: true
         error:
           allOf:
-          - $ref: '#/components/schemas/WorkflowEventError'
+            - $ref: "#/components/schemas/WorkflowEventError"
           nullable: true
       required:
-      - id
-      - output
-      - state
-      - ts
+        - id
+        - output
+        - state
+        - ts
     WorkflowResultEventOutputData:
       oneOf:
-      - $ref: '#/components/schemas/WorkflowResultEventOutputDataString'
-      - $ref: '#/components/schemas/WorkflowResultEventOutputDataNumber'
-      - $ref: '#/components/schemas/WorkflowResultEventOutputDataJSON'
-      - $ref: '#/components/schemas/WorkflowResultEventOutputDataChatHistory'
-      - $ref: '#/components/schemas/WorkflowResultEventOutputDataSearchResults'
+        - $ref: "#/components/schemas/WorkflowResultEventOutputDataString"
+        - $ref: "#/components/schemas/WorkflowResultEventOutputDataNumber"
+        - $ref: "#/components/schemas/WorkflowResultEventOutputDataJSON"
+        - $ref: "#/components/schemas/WorkflowResultEventOutputDataChatHistory"
+        - $ref: "#/components/schemas/WorkflowResultEventOutputDataSearchResults"
       discriminator:
         propertyName: type
         mapping:
-          STRING: '#/components/schemas/WorkflowResultEventOutputDataString'
-          NUMBER: '#/components/schemas/WorkflowResultEventOutputDataNumber'
-          JSON: '#/components/schemas/WorkflowResultEventOutputDataJSON'
-          CHAT_HISTORY: '#/components/schemas/WorkflowResultEventOutputDataChatHistory'
-          SEARCH_RESULTS: '#/components/schemas/WorkflowResultEventOutputDataSearchResults'
+          STRING: "#/components/schemas/WorkflowResultEventOutputDataString"
+          NUMBER: "#/components/schemas/WorkflowResultEventOutputDataNumber"
+          JSON: "#/components/schemas/WorkflowResultEventOutputDataJSON"
+          CHAT_HISTORY: "#/components/schemas/WorkflowResultEventOutputDataChatHistory"
+          SEARCH_RESULTS: "#/components/schemas/WorkflowResultEventOutputDataSearchResults"
     WorkflowResultEventOutputDataChatHistory:
       type: object
       properties:
@@ -3637,7 +3637,7 @@ components:
         name:
           type: string
         state:
-          $ref: '#/components/schemas/WorkflowNodeResultEventState'
+          $ref: "#/components/schemas/WorkflowNodeResultEventState"
         node_id:
           type: string
         delta:
@@ -3651,15 +3651,15 @@ components:
         value:
           type: array
           items:
-            $ref: '#/components/schemas/ChatMessage'
+            $ref: "#/components/schemas/ChatMessage"
           nullable: true
       required:
-      - delta
-      - name
-      - node_id
-      - state
-      - type
-      - value
+        - delta
+        - name
+        - node_id
+        - state
+        - type
+        - value
     WorkflowResultEventOutputDataJSON:
       type: object
       properties:
@@ -3670,7 +3670,7 @@ components:
         name:
           type: string
         state:
-          $ref: '#/components/schemas/WorkflowNodeResultEventState'
+          $ref: "#/components/schemas/WorkflowNodeResultEventState"
         node_id:
           type: string
         delta:
@@ -3686,12 +3686,12 @@ components:
           additionalProperties: {}
           nullable: true
       required:
-      - delta
-      - name
-      - node_id
-      - state
-      - type
-      - value
+        - delta
+        - name
+        - node_id
+        - state
+        - type
+        - value
     WorkflowResultEventOutputDataNumber:
       type: object
       properties:
@@ -3702,7 +3702,7 @@ components:
         name:
           type: string
         state:
-          $ref: '#/components/schemas/WorkflowNodeResultEventState'
+          $ref: "#/components/schemas/WorkflowNodeResultEventState"
         node_id:
           type: string
         delta:
@@ -3717,12 +3717,12 @@ components:
           type: integer
           nullable: true
       required:
-      - delta
-      - name
-      - node_id
-      - state
-      - type
-      - value
+        - delta
+        - name
+        - node_id
+        - state
+        - type
+        - value
     WorkflowResultEventOutputDataSearchResults:
       type: object
       properties:
@@ -3733,7 +3733,7 @@ components:
         name:
           type: string
         state:
-          $ref: '#/components/schemas/WorkflowNodeResultEventState'
+          $ref: "#/components/schemas/WorkflowNodeResultEventState"
         node_id:
           type: string
         delta:
@@ -3747,15 +3747,15 @@ components:
         value:
           type: array
           items:
-            $ref: '#/components/schemas/SearchResult'
+            $ref: "#/components/schemas/SearchResult"
           nullable: true
       required:
-      - delta
-      - name
-      - node_id
-      - state
-      - type
-      - value
+        - delta
+        - name
+        - node_id
+        - state
+        - type
+        - value
     WorkflowResultEventOutputDataString:
       type: object
       properties:
@@ -3766,7 +3766,7 @@ components:
         name:
           type: string
         state:
-          $ref: '#/components/schemas/WorkflowNodeResultEventState'
+          $ref: "#/components/schemas/WorkflowNodeResultEventState"
         node_id:
           type: string
         delta:
@@ -3782,21 +3782,21 @@ components:
           description: The entire string value. Will be non-null for events of state
             FULFILLED.
       required:
-      - delta
-      - name
-      - node_id
-      - state
-      - type
-      - value
+        - delta
+        - name
+        - node_id
+        - state
+        - type
+        - value
     WorkflowStreamEvent:
       oneOf:
-      - $ref: '#/components/schemas/WorkflowExecutionWorkflowResultEvent'
-      - $ref: '#/components/schemas/WorkflowExecutionNodeResultEvent'
+        - $ref: "#/components/schemas/WorkflowExecutionWorkflowResultEvent"
+        - $ref: "#/components/schemas/WorkflowExecutionNodeResultEvent"
       discriminator:
         propertyName: type
         mapping:
-          WORKFLOW: '#/components/schemas/WorkflowExecutionWorkflowResultEvent'
-          NODE: '#/components/schemas/WorkflowExecutionNodeResultEvent'
+          WORKFLOW: "#/components/schemas/WorkflowExecutionWorkflowResultEvent"
+          NODE: "#/components/schemas/WorkflowExecutionNodeResultEvent"
   securitySchemes:
     apiKeyAuth:
       type: apiKey
@@ -3804,6 +3804,6 @@ components:
       name: X_API_KEY
       description: API key based authentication
 servers:
-- url: https://api.vellum.ai
-  description: Default Server
-  x-name: Default
+  - url: https://api.vellum.ai
+    description: Default Server
+    x-name: Default

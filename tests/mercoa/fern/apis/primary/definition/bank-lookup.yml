@@ -7,7 +7,7 @@ service:
     find:
       audiences:
         - external
-      path: '/bankLookup'
+      path: "/bankLookup"
       method: GET
       display-name: Find bank account details
       docs: Find bank account details

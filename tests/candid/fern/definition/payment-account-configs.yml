@@ -123,13 +123,11 @@ service:
             docs: PatientExternalId to lookup
           billing_provider_npi:
             type: optional<BillingProviderNpi>
-            docs:
-              If provided, the API token associated with the BillingProviderNpi will be
+            docs: If provided, the API token associated with the BillingProviderNpi will be
               used to verify
           check_email_exists:
             type: optional<boolean>
-            docs:
-              If provided, then will also check to see if customer has email. If not,
+            docs: If provided, then will also check to see if customer has email. If not,
               then return false. Default = True
       response: VerifyCustomerExistsResponse
 

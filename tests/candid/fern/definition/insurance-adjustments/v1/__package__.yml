@@ -97,7 +97,6 @@ types:
       reason_code_error: CarcReasonCodeError
       amount_error: CarcAmountError
 
-
   RarcReasonCodeError:
     union:
       at_least_one_carc_required: {}
@@ -166,7 +165,6 @@ types:
       invalid_denied_adjustment_amount_error: InvalidDeniedAdjustmentAmountError
       insurance_adjustment_amount_is_greater_than_allowed_amount: {}
 
-
   CreateInsuranceAdjustmentFieldsErrorsType:
     properties:
       errors: map<commons.ServiceLineId, list<CreateInsuranceAdjustmentFieldError>>
@@ -205,7 +203,6 @@ service:
     # it's a little weird definition but this is the best way for us to leverage Fern behavior for
     # uploading files.
 
-
     # Below is a mocked upload attachment endpoint, that we can potentially just
     # uncomment once Fern supports file upload (07/18/23)
     #    UploadAttachmentRequest:
@@ -225,9 +222,6 @@ service:
       errors:
         - error: commons.EntityNotFoundError
           docs: raised when the insurance adjustment is not found
-
-
-
 
 errors:
   ValidateInsuranceAdjustmentFieldsError:

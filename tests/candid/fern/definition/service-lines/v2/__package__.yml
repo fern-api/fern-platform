@@ -5,7 +5,6 @@ imports:
   diagnoses: ../../diagnoses.yml
   invoices: ../../invoices.yml
 
-
 service:
   auth: true
   base-path: /api/service-lines/v2

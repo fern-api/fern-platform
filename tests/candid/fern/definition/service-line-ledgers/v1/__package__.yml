@@ -59,13 +59,10 @@ types:
       rarc: x12.Rarc
       description: optional<string>
 
-
-
   Check:
     properties:
       check_number: string
       check_posted_date: date
-
 
   RemitRowFinancialInformation:
     properties:
@@ -112,7 +109,6 @@ types:
       write_off_source: adjustments.AdjustmentSource
       write_off_id: commons.AdjustmentId
       write_off: adjustments.Adjustment
-
 
 service:
   auth: true

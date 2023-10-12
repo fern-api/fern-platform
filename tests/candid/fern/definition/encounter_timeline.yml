@@ -18,7 +18,6 @@ service:
         - commons.UnauthorizedError
 
 types:
-
   TimelineEventData:
     docs: Data common to all TimelineEvents
     properties:
@@ -73,7 +72,6 @@ types:
       payer_generated_control_number: optional<string>
       claim_note: optional<string>
       payer_responsibility: optional<commons.ClaimSubmissionPayerResponsibilityType>
-
 #  PayerCheckTimelineEvent:
 #    extends: TimelineEventData
 #    properties:

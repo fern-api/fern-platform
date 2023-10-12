@@ -7,7 +7,6 @@ service:
   auth: true
   base-path: /api/billing_notes/v2
   endpoints:
-
     create:
       display-name: Create billing note
       method: POST

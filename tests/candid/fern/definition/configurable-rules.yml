@@ -114,7 +114,6 @@ service:
     #   response: ConfigureRulesForStepResponse
 
 types:
-
   ConfigurableRule:
     properties:
       rule_id: pipeline-commons.ConfigurableRuleId

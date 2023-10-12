@@ -63,7 +63,6 @@ service:
           responsible_party: optional<ResponsiblePartyType>
           owner_of_next_action: optional<EncounterOwnerOfNextActionType>
 
-
     get:
       display-name: Get encounter
       method: GET
@@ -303,7 +302,6 @@ types:
         docs: |
           Defines the party to be billed with the initial balance owed on the claim.
 
-
   Encounter:
     extends: EncounterBase
     properties:
@@ -538,7 +536,7 @@ types:
     union:
       out_of_network: OutOfNetworkContractingStatusResult
       in_network: InNetworkContractingStatusResult
-      unknown: { }
+      unknown: {}
 
   OutOfNetworkContractingStatusResult:
     properties:

@@ -121,7 +121,7 @@ service:
         - path-parameters:
             invoiceId: inv_a0f6ea94-0761-4a5e-a416-3c453cb7eced
           response:
-            body: 'https://mercoa.com/vendors/accept-payment/?t=123456'
+            body: "https://mercoa.com/vendors/accept-payment/?t=123456"
 
     sendVendorEmail:
       audiences:

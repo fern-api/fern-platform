@@ -286,7 +286,6 @@ service:
     # it's a little weird definition but this is the best way for us to leverage Fern behavior for
     # uploading files.
 
-
     # Below is a mocked upload attachment endpoint, that we can potentially just
     # uncomment once Fern supports file upload (07/18/23)
     #    UploadAttachmentRequest:

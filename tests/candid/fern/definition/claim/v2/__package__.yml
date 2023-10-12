@@ -5,7 +5,6 @@ imports:
   payers: ../../payers.yml
   claims: ../../claims.yml
 
-
 service:
   auth: true
   base-path: /api/claims/v2
@@ -31,7 +30,6 @@ service:
       errors:
         - commons.EntityNotFoundError
         - commons.UnauthorizedError
-
 
 types:
   FeeScheduleEntryId: uuid

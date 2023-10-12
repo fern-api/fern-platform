@@ -7,7 +7,7 @@ service:
   auth: true
   availability: in-development
   audiences:
-   - external
+    - external
   base-path: /api/tasks/v3
   endpoints:
     get_actions:

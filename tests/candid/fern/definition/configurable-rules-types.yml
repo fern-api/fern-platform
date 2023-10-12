@@ -3,7 +3,6 @@ imports:
   tasks: tasks/commons.yml
 
 types:
-
   FieldName: string
 
   VariableId: uuid
@@ -126,7 +125,7 @@ types:
       datetime: datetime
       date: commons.Date
       decimal: commons.Decimal
-      empty: { }
+      empty: {}
 
   ObjectValue:
     properties:
@@ -277,17 +276,17 @@ types:
 
   HoldClaimAction:
     docs: Hold the claim.
-    properties: { }
+    properties: {}
 
   HoldReadyToSubmitClaimAction:
     docs: Hold the claim, but also indicate that it is ready for submission.
-    properties: { }
+    properties: {}
 
   HoldClaimAvailableAction:
-    properties: { }
+    properties: {}
 
   HoldReadyToSubmitClaimAvailableAction:
-    properties: { }
+    properties: {}
 
   HoldClaimExecutedAction:
     properties:
@@ -340,7 +339,7 @@ types:
       - DENIAL_RESOLUTION
 
   CreateTaskAvailableAction:
-    properties: { }
+    properties: {}
 
   CreateTaskV2AvailableAction:
     properties:
@@ -363,7 +362,7 @@ types:
 
   ThenValidateOrElseAvailableAction:
     # NOTE(thomas): For now, all scoped inputs are allowed to be used in the THEN condition and all scoped actions are allowed for OR_ELSE.
-    properties: { }
+    properties: {}
 
   ThenValidateOrElseExecutedAction:
     properties:
@@ -376,7 +375,7 @@ types:
 
   #  TODO: we might want to list available work queue IDs
   RouteToWorkQueueAvailableAction:
-    properties: { }
+    properties: {}
 
   RouteToWorkQueueExecutedAction:
     properties:

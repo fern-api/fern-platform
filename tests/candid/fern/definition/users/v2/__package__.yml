@@ -82,7 +82,6 @@ service:
         - error: commons.UnprocessableEntityError
           docs: If the page limit is < 1 or limit > 9999
 
-
     get_multi:
       method: GET
       path: ""

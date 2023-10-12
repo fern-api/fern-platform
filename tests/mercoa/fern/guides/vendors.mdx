@@ -4,10 +4,10 @@ Entities in Mercoa have access to a vendor network, which is accessible for each
 
 There are three levels of network:
 
-| Network Level | Description                                                                          |
-| ------------- | ------------------------------------------------------------------------------------ |
-| `Entity`      | Vendors who have been paid by the entity before or explicitly linked to the entity.  |
-| `Platform`    | Vendors who have been paid by any entity in your organization                        |
+| Network Level | Description                                                                           |
+| ------------- | ------------------------------------------------------------------------------------- |
+| `Entity`      | Vendors who have been paid by the entity before or explicitly linked to the entity.   |
+| `Platform`    | Vendors who have been paid by any entity in your organization                         |
 | `Mercoa`      | Vendors who have been verified by Mercoa and shared with all Mercoa partner platforms |
 
 # Creating Vendors
@@ -20,9 +20,9 @@ Using the [create entity](/api-reference/entity/create-entity) endpoint, create 
 
 ```ts
 {
-  isPayee: true // This marks the entity as able to receive funds
-  isPayor: false // This marks the entity as unable to pay funds
-  ownedByOrg: false // This indicated that you don't have a direct relationship with this entity (aka, they are your customer's vendor)
+  isPayee: true; // This marks the entity as able to receive funds
+  isPayor: false; // This marks the entity as unable to pay funds
+  ownedByOrg: false; // This indicated that you don't have a direct relationship with this entity (aka, they are your customer's vendor)
 }
 ```
 

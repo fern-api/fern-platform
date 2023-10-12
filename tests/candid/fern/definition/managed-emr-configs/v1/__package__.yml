@@ -185,27 +185,27 @@ types:
 
   CanvasEmrConfigUpdate:
     properties:
-        canvas_export_organization_name:
-            type: optional<string>
-            docs: The name of the organization that the Canvas EMR integration is for
-        canvas_client_id:
-            type: optional<string>
-            docs: The client ID for the Canvas EMR integration
-        canvas_client_secret:
-            type: optional<string>
-            docs: The client secret for the Canvas EMR integration
-        base_url:
-            type: optional<string>
-            docs: The base URL for the Canvas EMR integration
-        auth_base_url:
-            type: optional<string>
-            docs: The auth base URL for the Canvas EMR integration
-        candid_practitioner_id:
-            type: optional<string>
-            docs: The candid practitioner ID for the Canvas EMR integration
-        customer_task_owner:
-            type: optional<string>
-            docs: The customer task owner for the Canvas EMR integration
+      canvas_export_organization_name:
+        type: optional<string>
+        docs: The name of the organization that the Canvas EMR integration is for
+      canvas_client_id:
+        type: optional<string>
+        docs: The client ID for the Canvas EMR integration
+      canvas_client_secret:
+        type: optional<string>
+        docs: The client secret for the Canvas EMR integration
+      base_url:
+        type: optional<string>
+        docs: The base URL for the Canvas EMR integration
+      auth_base_url:
+        type: optional<string>
+        docs: The auth base URL for the Canvas EMR integration
+      candid_practitioner_id:
+        type: optional<string>
+        docs: The candid practitioner ID for the Canvas EMR integration
+      customer_task_owner:
+        type: optional<string>
+        docs: The customer task owner for the Canvas EMR integration
 
   IntegrationLevelElationServiceFacilityRoutingMetadata:
     properties:
@@ -214,10 +214,10 @@ types:
         docs: The default service facility group name for the Elation EMR integration
 
   RuleLevelElationServiceFacilityRoutingMetadata:
-    properties: { }
+    properties: {}
 
   FilterActionLevelElationServiceFacilityRoutingMetadata:
-    properties: { }
+    properties: {}
 
   ElationServiceFacilityRoutingMetadata:
     union:

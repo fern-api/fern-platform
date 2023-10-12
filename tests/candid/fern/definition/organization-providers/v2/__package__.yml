@@ -67,8 +67,7 @@ service:
           properties:
             npi:
               type: optional<string>
-              docs:
-                The NPI of the provider. This must be all digits [0-9] and exactly 10
+              docs: The NPI of the provider. This must be all digits [0-9] and exactly 10
                 characters long.
             is_rendering:
               type: optional<boolean>
@@ -126,8 +125,7 @@ types:
     properties:
       npi:
         type: string
-        docs:
-          The NPI of the provider. This must be all digits [0-9] and exactly 10
+        docs: The NPI of the provider. This must be all digits [0-9] and exactly 10
           characters long.
       is_rendering:
         type: boolean

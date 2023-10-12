@@ -65,7 +65,7 @@ service:
         policyId: entity.ApprovalPolicyId
       method: DELETE
       display-name: Delete approval policy
-      docs: 'Delete an invoice approval policy associated with Entity. BEWARE: Any approval policy deletion will result in all associated downstream policies also being deleted.'
+      docs: "Delete an invoice approval policy associated with Entity. BEWARE: Any approval policy deletion will result in all associated downstream policies also being deleted."
 
 errors:
   NumApproversUserListMismatchError:

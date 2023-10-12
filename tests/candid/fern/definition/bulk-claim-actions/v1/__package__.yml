@@ -21,25 +21,25 @@ types:
       date_of_service: date
   NotImplementedError:
     docs: "Bulk action is not yet implemented"
-    properties: { }
+    properties: {}
   NoPayerGeneratedControlNumberError:
     docs: "Claim does not have an associated payer-generated control number when one is required"
-    properties: { }
+    properties: {}
   TaskRequiredForWorkQueueError:
     docs: "A task is required to move a claim to a work queue"
-    properties: { }
+    properties: {}
   GenericWorkQueueError:
     docs: "An error has occurred which prevents the claim from being routed to the work queue"
-    properties: { }
+    properties: {}
   UserNotAuthorizedForResubmitError:
     docs: "User is not authorized for resubmission"
-    properties: { }
+    properties: {}
   UserNotAuthorizedToCloseAllOpenTasksError:
     docs: "User is not authorized to close all open tasks"
-    properties: { }
+    properties: {}
   ExecutionError:
     docs: "Error while executing action"
-    properties: { }
+    properties: {}
 
   CreateTaskConfig:
     properties:
@@ -51,14 +51,14 @@ types:
 
   # Actions
   BulkVoidClaimAction:
-    properties: { }
+    properties: {}
   BulkResubmitFreshClaimAction:
-    properties: { }
+    properties: {}
   BulkResubmitCorrectedClaimAction:
     properties:
       correction_reason: string
   BulkCloseTasksAndProcessClaimAction:
-    properties: { }
+    properties: {}
   MoveToWorkQueueClaimAction:
     properties:
       work_queue_id: commons.WorkQueueId

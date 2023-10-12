@@ -31,7 +31,6 @@ And responds with a JSON payload that conforms to the following schema:
   Vellum will soon support authenticated endpoints and the specification of auth headers and signing signatures.
 </Callout>
 
-
 2. You encode business logic behind your API that interprets the provided inputs and output and produces some numerical score representing the quality of the output.
 3. You select the “Webhook” evaluation metric within Vellum’s UI and provide the url to your webhook.
 4. Upon evaluation, Vellum will send the above payload to your webhook and expect the above response, rendering UI elements based on the response data accordingly.

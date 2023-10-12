@@ -10,14 +10,15 @@ As you apply filters/sorting, the page's url is updated. You can bookmark this l
 
 ![Completion Columns](https://storage.googleapis.com/vellum-public/help-docs/prompt_deployment_completion_columns.png)
 
-
 ## Capturing End-User Feedback
+
 Vellum has the concept of "Completion Actuals" where you can say, for a given request, what the output _should have been_ and what its quality was.
 This is particularly using for monitoring quality, and later, for usage as training data to fine-tune your own custom model.
 
 Capturing Actuals works best if your end users have some mechanism (usually via a UI) to provide feedback on the output of the model.
 
 For example, you're creating an AI Recruiting Email Generator for recruiters where they can use AI to generate rough draft, you might:
+
 1. Infer that if they hit "Send" without making edits, the quality was great (a 1.0 in Vellum)
 2. Infer that if they hit "Discard" then the quality was bad (a 0.0 in Vellum)
 3. Or you might have a 5-star "Rating" system that they can use to explicitly provide feedback on the quality of the output.
