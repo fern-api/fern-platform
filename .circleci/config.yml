@@ -123,13 +123,15 @@ jobs:
           command: vercel deploy --prebuilt --prod --token=${VERCEL_TOKEN}
 
   generate-customer-docs:
-    docker:
-      - image: cimg/node:lts
+    machine:
+      image: ubuntu-2004:current
     parameters:
       docs_path:
         type: string
     steps:
       - checkout
+      - node/install-packages:
+          pkg-manager: yarn
       - run:
           name: Download Fern
           command: npm install -g fern-api
@@ -196,16 +198,22 @@ workflows:
   preview-customer-docs:
     jobs:
       - generate-customer-docs:
+          name: preview-docs-candid
           docs_path: tests/candid
       - generate-customer-docs:
+          name: preview-docs-fern
           docs_path: tests/fern
           context:
             - fern-tokens
       - generate-customer-docs:
+          name: preview-docs-mercoa
           docs_path: tests/mercoa
       - generate-customer-docs:
+          name: preview-docs-primer
           docs_path: tests/primer
       - generate-customer-docs:
+          name: preview-docs-superagent
           docs_path: tests/superagent
       - generate-customer-docs:
+          name: preview-docs-vellum
           docs_path: tests/vellum
