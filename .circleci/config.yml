@@ -201,6 +201,7 @@ workflows:
           name: preview-docs-candid
           docs_path: tests/candid
           context:
+            - fern-tokens
             - npm
             - fern-dev
       - generate-customer-docs:
@@ -214,23 +215,27 @@ workflows:
           name: preview-docs-mercoa
           docs_path: tests/mercoa
           context:
+            - fern-tokens
             - npm
             - fern-dev
       - generate-customer-docs:
           name: preview-docs-primer
           docs_path: tests/primer
           context:
+            - fern-tokens
             - npm
             - fern-dev
       - generate-customer-docs:
           name: preview-docs-superagent
           docs_path: tests/superagent
           context:
+            - fern-tokens
             - npm
             - fern-dev
       - generate-customer-docs:
           name: preview-docs-vellum
           docs_path: tests/vellum
           context:
+            - fern-tokens
             - npm
             - fern-dev
