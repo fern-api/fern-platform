@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 navigation:
+=======
+navigation: 
+>>>>>>> 67b36d8d (Init tests dir with primer)
   - section: Introduction
     contents:
       - page: Getting Started
@@ -13,4 +17,8 @@ navigation:
         path: ../introduction/loyalty-transactions.md
   - api-name: v2.1
     api: Primer API
+<<<<<<< HEAD
     display-errors: true
+=======
+    display-errors: true
+>>>>>>> 67b36d8d (Init tests dir with primer)

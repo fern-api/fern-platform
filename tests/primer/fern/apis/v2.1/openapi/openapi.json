@@ -1560,7 +1560,18 @@
     "schemas": {
       "AccountFundingTypeEnum": {
         "title": "AccountFundingTypeEnum",
+<<<<<<< HEAD
         "enum": ["CREDIT", "DEBIT", "PREPAID", "CHARGE", "DEFERRED_DEBIT", "UNKNOWN"],
+=======
+        "enum": [
+          "CREDIT",
+          "DEBIT",
+          "PREPAID",
+          "CHARGE",
+          "DEFERRED_DEBIT",
+          "UNKNOWN"
+        ],
+>>>>>>> 67b36d8d (Init tests dir with primer)
         "type": "string",
         "description": "An enumeration."
       },
@@ -3212,7 +3223,17 @@
       },
       "KlarnaSessionDetailsAPISchema": {
         "title": "KlarnaSessionDetailsAPISchema",
+<<<<<<< HEAD
         "required": ["billingAddress", "purchaseCountry", "purchaseCurrency", "locale", "orderLines"],
+=======
+        "required": [
+          "billingAddress",
+          "purchaseCountry",
+          "purchaseCurrency",
+          "locale",
+          "orderLines"
+        ],
+>>>>>>> 67b36d8d (Init tests dir with primer)
         "type": "object",
         "properties": {
           "recurringDescription": {
@@ -3784,7 +3805,18 @@
       },
       "PaymentSummaryAPISchema": {
         "title": "PaymentSummaryAPISchema",
+<<<<<<< HEAD
         "required": ["id", "date", "status", "orderId", "currencyCode", "amount"],
+=======
+        "required": [
+          "id",
+          "date",
+          "status",
+          "orderId",
+          "currencyCode",
+          "amount"
+        ],
+>>>>>>> 67b36d8d (Init tests dir with primer)
         "type": "object",
         "properties": {
           "id": {
@@ -3901,7 +3933,18 @@
       },
       "ThreeDSecureAuthResponseCodeEnum": {
         "title": "ThreeDSecureAuthResponseCodeEnum",
+<<<<<<< HEAD
         "enum": ["NOT_PERFORMED", "SKIPPED", "AUTH_SUCCESS", "AUTH_FAILED", "CHALLENGE", "METHOD"],
+=======
+        "enum": [
+          "NOT_PERFORMED",
+          "SKIPPED",
+          "AUTH_SUCCESS",
+          "AUTH_FAILED",
+          "CHALLENGE",
+          "METHOD"
+        ],
+>>>>>>> 67b36d8d (Init tests dir with primer)
         "type": "string",
         "description": "An enumeration."
       },
@@ -4029,7 +4072,20 @@
       },
       "TransactionOverviewAPISchema": {
         "title": "TransactionOverviewAPISchema",
+<<<<<<< HEAD
         "required": ["id", "processor", "processorMerchantId", "type", "status", "date", "amount", "currencyCode"],
+=======
+        "required": [
+          "id",
+          "processor",
+          "processorMerchantId",
+          "type",
+          "status",
+          "date",
+          "amount",
+          "currencyCode"
+        ],
+>>>>>>> 67b36d8d (Init tests dir with primer)
         "type": "object",
         "properties": {
           "date": {

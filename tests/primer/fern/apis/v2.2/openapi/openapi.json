@@ -2374,7 +2374,18 @@
     "schemas": {
       "AccountFundingTypeEnum": {
         "title": "AccountFundingTypeEnum",
+<<<<<<< HEAD
         "enum": ["CREDIT", "DEBIT", "PREPAID", "CHARGE", "DEFERRED_DEBIT", "UNKNOWN"],
+=======
+        "enum": [
+          "CREDIT",
+          "DEBIT",
+          "PREPAID",
+          "CHARGE",
+          "DEFERRED_DEBIT",
+          "UNKNOWN"
+        ],
+>>>>>>> 67b36d8d (Init tests dir with primer)
         "type": "string",
         "description": "An enumeration."
       },
@@ -2429,7 +2440,16 @@
       },
       "BlockingPaymentActionTypeEnum": {
         "title": "BlockingPaymentActionTypeEnum",
+<<<<<<< HEAD
         "enum": ["3DS_AUTHENTICATION", "USE_PRIMER_SDK", "PAYMENT_METHOD_VOUCHER", "PROCESSOR_3DS"],
+=======
+        "enum": [
+          "3DS_AUTHENTICATION",
+          "USE_PRIMER_SDK",
+          "PAYMENT_METHOD_VOUCHER",
+          "PROCESSOR_3DS"
+        ],
+>>>>>>> 67b36d8d (Init tests dir with primer)
         "type": "string",
         "description": "An enumeration."
       },
@@ -3908,7 +3928,17 @@
       },
       "KlarnaSessionDetailsAPISchema": {
         "title": "KlarnaSessionDetailsAPISchema",
+<<<<<<< HEAD
         "required": ["billingAddress", "purchaseCountry", "purchaseCurrency", "locale", "orderLines"],
+=======
+        "required": [
+          "billingAddress",
+          "purchaseCountry",
+          "purchaseCurrency",
+          "locale",
+          "orderLines"
+        ],
+>>>>>>> 67b36d8d (Init tests dir with primer)
         "type": "object",
         "properties": {
           "recurringDescription": {
@@ -4401,7 +4431,18 @@
       },
       "PaymentSummaryAPISchema": {
         "title": "PaymentSummaryAPISchema",
+<<<<<<< HEAD
         "required": ["id", "date", "status", "orderId", "currencyCode", "amount"],
+=======
+        "required": [
+          "id",
+          "date",
+          "status",
+          "orderId",
+          "currencyCode",
+          "amount"
+        ],
+>>>>>>> 67b36d8d (Init tests dir with primer)
         "type": "object",
         "properties": {
           "id": {
@@ -4532,7 +4573,18 @@
       },
       "ThreeDSecureAuthResponseCodeEnum": {
         "title": "ThreeDSecureAuthResponseCodeEnum",
+<<<<<<< HEAD
         "enum": ["NOT_PERFORMED", "SKIPPED", "AUTH_SUCCESS", "AUTH_FAILED", "CHALLENGE", "METHOD"],
+=======
+        "enum": [
+          "NOT_PERFORMED",
+          "SKIPPED",
+          "AUTH_SUCCESS",
+          "AUTH_FAILED",
+          "CHALLENGE",
+          "METHOD"
+        ],
+>>>>>>> 67b36d8d (Init tests dir with primer)
         "type": "string",
         "description": "An enumeration."
       },
@@ -4651,7 +4703,20 @@
       },
       "TransactionOverviewAPISchema": {
         "title": "TransactionOverviewAPISchema",
+<<<<<<< HEAD
         "required": ["id", "processor", "processorMerchantId", "type", "status", "date", "amount", "currencyCode"],
+=======
+        "required": [
+          "id",
+          "processor",
+          "processorMerchantId",
+          "type",
+          "status",
+          "date",
+          "amount",
+          "currencyCode"
+        ],
+>>>>>>> 67b36d8d (Init tests dir with primer)
         "type": "object",
         "properties": {
           "date": {
@@ -5904,7 +5969,18 @@
             "description": "Additional data to be used throughout the payment lifecycle.\n\nAd dictionary of key-value pairs where the values can only be strings or integers.\n\ne.g. `{\"productId\": 1001, \"merchantId\": \"88278a\"}`"
           },
           "paymentType": {
+<<<<<<< HEAD
             "enum": ["FIRST_PAYMENT", "ECOMMERCE", "SUBSCRIPTION", "UNSCHEDULED", "MOTO", "IN_STORE"],
+=======
+            "enum": [
+              "FIRST_PAYMENT",
+              "ECOMMERCE",
+              "SUBSCRIPTION",
+              "UNSCHEDULED",
+              "MOTO",
+              "IN_STORE"
+            ],
+>>>>>>> 67b36d8d (Init tests dir with primer)
             "type": "string",
             "description": "Payment types, primarily to be used for recurring payments.\n\nNote: If you successfully vault a `SINGLE_USE` token on payment\ncreation, then there's no need to set a value for this field and it will\nbe flagged as `FIRST_PAYMENT`. Otherwise, see the table below for all\npossible values.\n\n\n| paymentType | Use case |\n| --- | --- |\n| `FIRST_PAYMENT` | a customer-initiated payment which is the first in a series of recurring payments or subscription, or a card on file scenario. |\n| `ECOMMERCE` | a customer-initiated payment using stored payment details where the cardholder is present. |\n| `SUBSCRIPTION` | a merchant-initiated payment as part of a series of payments on a fixed schedule and a set amount. |\n| `UNSCHEDULED` | a merchant-initiated payment using stored payment details with no fixed schedule or amount. |\n| `MOTO` | a merchant-initiated mail order or telephone order payment. |\n| `IN_STORE` | a customer-initiated payment where the customer is physically present in a shop. |"
           },
@@ -6151,7 +6227,18 @@
             "description": "Additional data to be used throughout the payment lifecycle.\n\nAd dictionary of key-value pairs where the values can only be strings or integers.\n\ne.g. `{\"productId\": 1001, \"merchantId\": \"88278a\"}`"
           },
           "paymentType": {
+<<<<<<< HEAD
             "enum": ["FIRST_PAYMENT", "ECOMMERCE", "SUBSCRIPTION", "UNSCHEDULED", "MOTO", "IN_STORE"],
+=======
+            "enum": [
+              "FIRST_PAYMENT",
+              "ECOMMERCE",
+              "SUBSCRIPTION",
+              "UNSCHEDULED",
+              "MOTO",
+              "IN_STORE"
+            ],
+>>>>>>> 67b36d8d (Init tests dir with primer)
             "type": "string",
             "description": "Payment types, primarily to be used for recurring payments.\n\nNote: If you successfully vault a `SINGLE_USE` token on payment\ncreation, then there's no need to set a value for this field and it will\nbe flagged as `FIRST_PAYMENT`. Otherwise, see the table below for all\npossible values.\n\n\n| paymentType | Use case |\n| --- | --- |\n| `FIRST_PAYMENT` | a customer-initiated payment which is the first in a series of recurring payments or subscription, or a card on file scenario. |\n| `ECOMMERCE` | a customer-initiated payment using stored payment details where the cardholder is present. |\n| `SUBSCRIPTION` | a merchant-initiated payment as part of a series of payments on a fixed schedule and a set amount. |\n| `UNSCHEDULED` | a merchant-initiated payment using stored payment details with no fixed schedule or amount. |\n| `MOTO` | a merchant-initiated mail order or telephone order payment. |\n| `IN_STORE` | a customer-initiated payment where the customer is physically present in a shop. |"
           },
@@ -6161,7 +6248,19 @@
             "maxLength": 250
           }
         },
+<<<<<<< HEAD
         "required": ["amount", "createdAt", "currencyCode", "order", "paymentId", "paymentMethod", "processor"]
+=======
+        "required": [
+          "amount",
+          "createdAt",
+          "currencyCode",
+          "order",
+          "paymentId",
+          "paymentMethod",
+          "processor"
+        ]
+>>>>>>> 67b36d8d (Init tests dir with primer)
       },
       "PaymentsInsightsPaymentMethod": {
         "type": "object",
@@ -6281,7 +6380,15 @@
         "type": "object",
         "properties": {
           "type": {
+<<<<<<< HEAD
             "enum": ["APPLICATION_ERROR", "GATEWAY_REJECTED", "ISSUER_DECLINED"],
+=======
+            "enum": [
+              "APPLICATION_ERROR",
+              "GATEWAY_REJECTED",
+              "ISSUER_DECLINED"
+            ],
+>>>>>>> 67b36d8d (Init tests dir with primer)
             "type": "string"
           },
           "declineType": {
@@ -6321,7 +6428,18 @@
           "transStatus": { "type": "string", "maxLength": 250 },
           "transStatusReason": { "type": "string", "maxLength": 250 },
           "responseCode": {
+<<<<<<< HEAD
             "enum": ["NOT_PERFORMED", "SKIPPED", "AUTH_SUCCESS", "AUTH_FAILED", "CHALLENGE", "METHOD"],
+=======
+            "enum": [
+              "NOT_PERFORMED",
+              "SKIPPED",
+              "AUTH_SUCCESS",
+              "AUTH_FAILED",
+              "CHALLENGE",
+              "METHOD"
+            ],
+>>>>>>> 67b36d8d (Init tests dir with primer)
             "type": "string",
             "description": "The response returned during the 3D Secure authentication call."
           },

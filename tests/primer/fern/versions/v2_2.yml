@@ -27,4 +27,8 @@ navigation:
     api-name: v2.2
     display-errors: true
   - api: Webhooks
+<<<<<<< HEAD
     api-name: webhooks-v2.2
+=======
+    api-name: webhooks-v2.2
+>>>>>>> 67b36d8d (Init tests dir with primer)

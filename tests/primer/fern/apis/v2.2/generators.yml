@@ -4,6 +4,12 @@ groups:
       - name: fernapi/fern-postman
         version: 0.0.45
         output:
+<<<<<<< HEAD
           location: postman
           api-key: ${POSTMAN_API_KEY}
           workspace-id: ${POSTMAN_WORKSPACE_ID}
+=======
+          location:  postman
+          api-key: ${POSTMAN_API_KEY}
+          workspace-id: ${POSTMAN_WORKSPACE_ID}
+>>>>>>> 67b36d8d (Init tests dir with primer)
