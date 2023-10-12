@@ -1,7 +1,7 @@
 import { NonIdealState } from "@blueprintjs/core";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { assertNeverNoThrow } from "@fern-ui/core-utils";
 import { joinUrlSlugs } from "@fern-ui/app-utils";
+import { assertNeverNoThrow } from "@fern-ui/core-utils";
 import { Redirect } from "./Redirect";
 
 export declare namespace RedirectToFirstNavigationItem {

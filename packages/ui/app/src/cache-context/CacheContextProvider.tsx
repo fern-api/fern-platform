@@ -1,6 +1,6 @@
-import { PropsWithChildren, useCallback, useRef } from "react";
-import { LRUCache } from "lru-cache";
 import { FullSlug, SerializedMdxContent } from "@fern-ui/app-utils";
+import { LRUCache } from "lru-cache";
+import { PropsWithChildren, useCallback, useRef } from "react";
 import { CacheContext, CacheContextValue } from "./CacheContext";
 
 export declare namespace CacheContextProvider {}
