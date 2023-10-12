@@ -10,15 +10,23 @@ As you apply filters/sorting, the page's url is updated. You can bookmark this l
 
 ![Completion Columns](https://storage.googleapis.com/vellum-public/help-docs/prompt_deployment_completion_columns.png)
 
+<<<<<<< HEAD
 ## Capturing End-User Feedback
 
+=======
+
+## Capturing End-User Feedback
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
 Vellum has the concept of "Completion Actuals" where you can say, for a given request, what the output _should have been_ and what its quality was.
 This is particularly using for monitoring quality, and later, for usage as training data to fine-tune your own custom model.
 
 Capturing Actuals works best if your end users have some mechanism (usually via a UI) to provide feedback on the output of the model.
 
 For example, you're creating an AI Recruiting Email Generator for recruiters where they can use AI to generate rough draft, you might:
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
 1. Infer that if they hit "Send" without making edits, the quality was great (a 1.0 in Vellum)
 2. Infer that if they hit "Discard" then the quality was bad (a 0.0 in Vellum)
 3. Or you might have a 5-star "Rating" system that they can use to explicitly provide feedback on the quality of the output.
@@ -27,4 +35,8 @@ In all cases, you could integrate with Vellum's Completion Actuals API to captur
 
 ![Deployment Actuals](https://storage.googleapis.com/vellum-public/help-docs/prompt_deployment_actuals.png)
 
+<<<<<<< HEAD
 Note that you reference a Completion made previously by the ID that Vellum generates and returns, or by some UUID that you track and provide via the "external_id" property.
+=======
+Note that you reference a Completion made previously by the ID that Vellum generates and returns, or by some UUID that you track and provide via the "external_id" property.
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)

@@ -42,6 +42,7 @@ paths:
       operationId: deployments_retrieve
       description: Used to retrieve a deployment given its ID or name.
       parameters:
+<<<<<<< HEAD
         - in: path
           name: id
           schema:
@@ -59,18 +60,45 @@ paths:
               schema:
                 $ref: "#/components/schemas/DeploymentRead"
           description: ""
+=======
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: Either the Deployment's ID or its unique name
+        required: true
+      tags:
+      - deployments
+      security:
+      - apiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentRead'
+          description: ''
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       x-fern-availability: beta
   /v1/document-indexes:
     post:
       operationId: document_indexes_create
       description: Creates a new document index.
       tags:
+<<<<<<< HEAD
         - document-indexes
+=======
+      - document-indexes
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       requestBody:
         content:
           application/json:
             schema:
+<<<<<<< HEAD
               $ref: "#/components/schemas/DocumentIndexCreateRequest"
+=======
+              $ref: '#/components/schemas/DocumentIndexCreateRequest'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
             examples:
               Example1:
                 value:
@@ -85,7 +113,11 @@ paths:
                     vectorizer:
                       model_name: hkunlp/instructor-xl
                       config:
+<<<<<<< HEAD
                         instruction_domain: ""
+=======
+                        instruction_domain: ''
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
                         instruction_document_text_type: plain_text
                         instruction_query_text_type: plain_text
                   copy_documents_from_index_id: null
@@ -129,6 +161,7 @@ paths:
                   vectorizes documents using one of OpenAI's embedding models.
         required: true
       security:
+<<<<<<< HEAD
         - apiKeyAuth: []
       responses:
         "201":
@@ -137,12 +170,23 @@ paths:
               schema:
                 $ref: "#/components/schemas/DocumentIndexRead"
           description: ""
+=======
+      - apiKeyAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentIndexRead'
+          description: ''
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       x-fern-availability: beta
   /v1/document-indexes/{id}:
     get:
       operationId: document_indexes_retrieve
       description: Used to retrieve a Document Index given its ID or name.
       parameters:
+<<<<<<< HEAD
         - in: path
           name: id
           schema:
@@ -160,12 +204,32 @@ paths:
               schema:
                 $ref: "#/components/schemas/DocumentIndexRead"
           description: ""
+=======
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: Either the Document Index's ID or its unique name
+        required: true
+      tags:
+      - document-indexes
+      security:
+      - apiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentIndexRead'
+          description: ''
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       x-fern-availability: beta
   /v1/documents:
     get:
       operationId: documents_list
       description: Used to list documents. Optionally filter on supported fields.
       parameters:
+<<<<<<< HEAD
         - in: query
           name: document_index_id
           schema:
@@ -203,6 +267,45 @@ paths:
               schema:
                 $ref: "#/components/schemas/PaginatedSlimDocumentList"
           description: ""
+=======
+      - in: query
+        name: document_index_id
+        schema:
+          type: string
+          format: uuid
+        description: Filter down to only those documents that are included in the
+          specified index. You may provide either the Vellum-generated ID or the unique
+          name of the index specified upon initial creation.
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      tags:
+      - documents
+      security:
+      - apiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedSlimDocumentList'
+          description: ''
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       x-fern-availability: ga
   /v1/documents/{id}:
     patch:
@@ -210,6 +313,7 @@ paths:
       description: Update a Document, keying off of its Vellum-generated ID. Particularly
         useful for updating its metadata.
       parameters:
+<<<<<<< HEAD
         - in: path
           name: id
           schema:
@@ -219,10 +323,22 @@ paths:
           required: true
       tags:
         - documents
+=======
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this document.
+        required: true
+      tags:
+      - documents
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       requestBody:
         content:
           multipart/form-data:
             schema:
+<<<<<<< HEAD
               $ref: "#/components/schemas/PatchedDocumentUpdateRequest"
           application/json:
             schema:
@@ -236,10 +352,26 @@ paths:
               schema:
                 $ref: "#/components/schemas/DocumentRead"
           description: ""
+=======
+              $ref: '#/components/schemas/PatchedDocumentUpdateRequest'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedDocumentUpdateRequest'
+      security:
+      - apiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentRead'
+          description: ''
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       x-fern-availability: beta
     delete:
       operationId: documents_destroy
       parameters:
+<<<<<<< HEAD
         - in: path
           name: id
           schema:
@@ -253,17 +385,37 @@ paths:
         - apiKeyAuth: []
       responses:
         "204":
+=======
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this document.
+        required: true
+      tags:
+      - documents
+      security:
+      - apiKeyAuth: []
+      responses:
+        '204':
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: No response body
   /v1/execute-workflow-stream:
     post:
       operationId: execute_workflow_stream
       description: Executes a deployed Workflow and streams back its results.
       tags:
+<<<<<<< HEAD
         - execute-workflow-stream
+=======
+      - execute-workflow-stream
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       requestBody:
         content:
           application/json:
             schema:
+<<<<<<< HEAD
               $ref: "#/components/schemas/ExecuteWorkflowStreamRequest"
         required: true
       security:
@@ -276,11 +428,26 @@ paths:
                 $ref: "#/components/schemas/WorkflowStreamEvent"
           description: ""
         "400":
+=======
+              $ref: '#/components/schemas/ExecuteWorkflowStreamRequest'
+        required: true
+      security:
+      - apiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/x-ndjson:
+              schema:
+                $ref: '#/components/schemas/WorkflowStreamEvent'
+          description: ''
+        '400':
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: {}
+<<<<<<< HEAD
           description: ""
         "404":
           content:
@@ -298,6 +465,25 @@ paths:
       servers:
         - url: https://predict.vellum.ai
           x-name: Predict
+=======
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecuteWorkflowStreamErrorResponse'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecuteWorkflowStreamErrorResponse'
+          description: ''
+      x-fern-streaming: true
+      servers:
+      - url: https://predict.vellum.ai
+        x-name: Predict
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
   /v1/generate:
     post:
       operationId: generate
@@ -306,11 +492,16 @@ paths:
 
         **Note:** Uses a base url of `https://predict.vellum.ai`.
       tags:
+<<<<<<< HEAD
         - generate
+=======
+      - generate
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       requestBody:
         content:
           application/json:
             schema:
+<<<<<<< HEAD
               $ref: "#/components/schemas/GenerateBodyRequest"
         required: true
       security:
@@ -350,6 +541,47 @@ paths:
       servers:
         - url: https://predict.vellum.ai
           x-name: Predict
+=======
+              $ref: '#/components/schemas/GenerateBodyRequest'
+        required: true
+      security:
+      - apiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateResponse'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateErrorResponse'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateErrorResponse'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateErrorResponse'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateErrorResponse'
+          description: ''
+      x-fern-availability: ga
+      servers:
+      - url: https://predict.vellum.ai
+        x-name: Predict
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
   /v1/generate-stream:
     post:
       operationId: generate_stream
@@ -358,11 +590,16 @@ paths:
 
         **Note:** Uses a base url of `https://predict.vellum.ai`.
       tags:
+<<<<<<< HEAD
         - generate-stream
+=======
+      - generate-stream
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       requestBody:
         content:
           application/json:
             schema:
+<<<<<<< HEAD
               $ref: "#/components/schemas/GenerateStreamBodyRequest"
         required: true
       security:
@@ -403,11 +640,54 @@ paths:
       servers:
         - url: https://predict.vellum.ai
           x-name: Predict
+=======
+              $ref: '#/components/schemas/GenerateStreamBodyRequest'
+        required: true
+      security:
+      - apiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/x-ndjson:
+              schema:
+                $ref: '#/components/schemas/GenerateStreamResponse'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateErrorResponse'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateErrorResponse'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateErrorResponse'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateErrorResponse'
+          description: ''
+      x-fern-streaming: true
+      x-fern-availability: ga
+      servers:
+      - url: https://predict.vellum.ai
+        x-name: Predict
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
   /v1/model-versions/{id}:
     get:
       operationId: model_versions_retrieve
       description: Used to retrieve a model version given its ID.
       parameters:
+<<<<<<< HEAD
         - in: path
           name: id
           schema:
@@ -426,6 +706,26 @@ paths:
               schema:
                 $ref: "#/components/schemas/ModelVersionRead"
           description: ""
+=======
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this model version.
+        required: true
+      tags:
+      - model-versions
+      security:
+      - apiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelVersionRead'
+          description: ''
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       x-fern-availability: beta
   /v1/model-versions/{id}/compile-prompt:
     post:
@@ -433,6 +733,7 @@ paths:
       description: Compiles the prompt backing the model version using the provided
         input values.
       parameters:
+<<<<<<< HEAD
         - in: path
           name: id
           schema:
@@ -442,10 +743,22 @@ paths:
           required: true
       tags:
         - model-versions
+=======
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this model version.
+        required: true
+      tags:
+      - model-versions
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       requestBody:
         content:
           application/json:
             schema:
+<<<<<<< HEAD
               $ref: "#/components/schemas/ModelVersionCompilePromptRequestRequest"
         required: true
       security:
@@ -457,6 +770,19 @@ paths:
               schema:
                 $ref: "#/components/schemas/ModelVersionCompilePromptResponse"
           description: ""
+=======
+              $ref: '#/components/schemas/ModelVersionCompilePromptRequestRequest'
+        required: true
+      security:
+      - apiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelVersionCompilePromptResponse'
+          description: ''
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       x-fern-availability: beta
   /v1/registered-prompts/register:
     post:
@@ -467,11 +793,16 @@ paths:
 
         Under the hood, this endpoint creates a new sandbox, a new model version, and a new deployment.
       tags:
+<<<<<<< HEAD
         - registered-prompts
+=======
+      - registered-prompts
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       requestBody:
         content:
           application/json:
             schema:
+<<<<<<< HEAD
               $ref: "#/components/schemas/RegisterPromptRequestRequest"
         required: true
       security:
@@ -489,6 +820,25 @@ paths:
               schema:
                 $ref: "#/components/schemas/RegisterPromptErrorResponse"
           description: ""
+=======
+              $ref: '#/components/schemas/RegisterPromptRequestRequest'
+        required: true
+      security:
+      - apiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterPromptResponse'
+          description: ''
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterPromptErrorResponse'
+          description: ''
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       x-fern-availability: beta
   /v1/sandboxes/{id}/scenarios:
     post:
@@ -502,6 +852,7 @@ paths:
         Note that a full replacement of the scenario is performed, so any fields not provided will be removed
         or overwritten with default values.
       parameters:
+<<<<<<< HEAD
         - in: path
           name: id
           schema:
@@ -511,23 +862,47 @@ paths:
           required: true
       tags:
         - sandboxes
+=======
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this sandbox.
+        required: true
+      tags:
+      - sandboxes
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       requestBody:
         content:
           application/json:
             schema:
+<<<<<<< HEAD
               $ref: "#/components/schemas/UpsertSandboxScenarioRequestRequest"
+=======
+              $ref: '#/components/schemas/UpsertSandboxScenarioRequestRequest'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
             examples:
               Example1:
                 value:
                   id: 3ee58bf2-1e5c-415e-8b6c-02ca8b77f29d
                   label: Scenario 1
                   inputs:
+<<<<<<< HEAD
                     - key: var_1
                       value: Hello, world!
                       type: TEXT
                     - key: var_2
                       value: Why hello, there!
                       type: TEXT
+=======
+                  - key: var_1
+                    value: Hello, world!
+                    type: TEXT
+                  - key: var_2
+                    value: Why hello, there!
+                    type: TEXT
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
                   metric_input_params:
                     params: {}
                 summary: Basic Example
@@ -538,6 +913,7 @@ paths:
                   id: 50c55d1d-4c37-4c83-afc1-9d895f286320
                   label: Scenario 2
                   inputs:
+<<<<<<< HEAD
                     - key: $chat_history
                       type: CHAT_HISTORY
                       chat_history:
@@ -545,6 +921,15 @@ paths:
                           text: What's your favorite color?
                         - role: ASSISTANT
                           text: AI's don't have a favorite color.... Yet.
+=======
+                  - key: $chat_history
+                    type: CHAT_HISTORY
+                    chat_history:
+                    - role: USER
+                      text: What's your favorite color?
+                    - role: ASSISTANT
+                      text: AI's don't have a favorite color.... Yet.
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
                   metric_input_params:
                     params: {}
                 summary: Chat History Example
@@ -552,6 +937,7 @@ paths:
                   the special $chat_history variable.
         required: true
       security:
+<<<<<<< HEAD
         - apiKeyAuth: []
       responses:
         "200":
@@ -560,6 +946,16 @@ paths:
               schema:
                 $ref: "#/components/schemas/SandboxScenario"
           description: ""
+=======
+      - apiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxScenario'
+          description: ''
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       x-fern-availability: beta
   /v1/sandboxes/{id}/scenarios/{scenario_id}:
     delete:
@@ -567,6 +963,7 @@ paths:
       description: Deletes an existing scenario from a sandbox, keying off of the
         provided scenario id.
       parameters:
+<<<<<<< HEAD
         - in: path
           name: id
           schema:
@@ -586,6 +983,27 @@ paths:
         - apiKeyAuth: []
       responses:
         "204":
+=======
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this sandbox.
+        required: true
+      - in: path
+        name: scenario_id
+        schema:
+          type: string
+        description: An id identifying the scenario that you'd like to delete
+        required: true
+      tags:
+      - sandboxes
+      security:
+      - apiKeyAuth: []
+      responses:
+        '204':
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: No response body
       x-fern-availability: beta
   /v1/search:
@@ -596,11 +1014,16 @@ paths:
 
         **Note:** Uses a base url of `https://predict.vellum.ai`.
       tags:
+<<<<<<< HEAD
         - search
+=======
+      - search
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       requestBody:
         content:
           application/json:
             schema:
+<<<<<<< HEAD
               $ref: "#/components/schemas/SearchRequestBodyRequest"
         required: true
       security:
@@ -634,6 +1057,41 @@ paths:
       servers:
         - url: https://predict.vellum.ai
           x-name: Predict
+=======
+              $ref: '#/components/schemas/SearchRequestBodyRequest'
+        required: true
+      security:
+      - apiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchErrorResponse'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchErrorResponse'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchErrorResponse'
+          description: ''
+      x-fern-availability: ga
+      servers:
+      - url: https://predict.vellum.ai
+        x-name: Predict
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
   /v1/submit-completion-actuals:
     post:
       operationId: submit_completion_actuals
@@ -642,11 +1100,16 @@ paths:
 
         **Note:** Uses a base url of `https://predict.vellum.ai`.
       tags:
+<<<<<<< HEAD
         - submit-completion-actuals
+=======
+      - submit-completion-actuals
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       requestBody:
         content:
           application/json:
             schema:
+<<<<<<< HEAD
               $ref: "#/components/schemas/SubmitCompletionActualsRequest"
         required: true
       security:
@@ -676,6 +1139,37 @@ paths:
       servers:
         - url: https://predict.vellum.ai
           x-name: Predict
+=======
+              $ref: '#/components/schemas/SubmitCompletionActualsRequest'
+        required: true
+      security:
+      - apiKeyAuth: []
+      responses:
+        '200':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubmitCompletionActualsErrorResponse'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubmitCompletionActualsErrorResponse'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubmitCompletionActualsErrorResponse'
+          description: ''
+      x-fern-availability: ga
+      servers:
+      - url: https://predict.vellum.ai
+        x-name: Predict
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
   /v1/submit-workflow-execution-actuals:
     post:
       operationId: submit_workflow_execution_actuals
@@ -683,11 +1177,16 @@ paths:
         \ workflow execution and its outputs.\n\n    **Note:** Uses a base url of\
         \ `https://predict.vellum.ai`.    "
       tags:
+<<<<<<< HEAD
         - submit-workflow-execution-actuals
+=======
+      - submit-workflow-execution-actuals
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       requestBody:
         content:
           application/json:
             schema:
+<<<<<<< HEAD
               $ref: "#/components/schemas/SubmitWorkflowExecutionActualsRequest"
         required: true
       security:
@@ -699,6 +1198,19 @@ paths:
       servers:
         - url: https://predict.vellum.ai
           x-name: Predict
+=======
+              $ref: '#/components/schemas/SubmitWorkflowExecutionActualsRequest'
+        required: true
+      security:
+      - apiKeyAuth: []
+      responses:
+        '200':
+          description: No response body
+      x-fern-availability: ga
+      servers:
+      - url: https://predict.vellum.ai
+        x-name: Predict
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
   /v1/test-suites/{id}/test-cases:
     post:
       operationId: upsert_test_suite_test_case
@@ -711,6 +1223,7 @@ paths:
         Note that a full replacement of the test case is performed, so any fields not provided will be removed
         or overwritten with default values.
       parameters:
+<<<<<<< HEAD
         - in: path
           name: id
           schema:
@@ -720,10 +1233,22 @@ paths:
           required: true
       tags:
         - test-suites
+=======
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this test suite.
+        required: true
+      tags:
+      - test-suites
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       requestBody:
         content:
           application/json:
             schema:
+<<<<<<< HEAD
               $ref: "#/components/schemas/TestSuiteTestCaseRequest"
         required: true
       security:
@@ -735,6 +1260,19 @@ paths:
               schema:
                 $ref: "#/components/schemas/TestSuiteTestCase"
           description: ""
+=======
+              $ref: '#/components/schemas/TestSuiteTestCaseRequest'
+        required: true
+      security:
+      - apiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestSuiteTestCase'
+          description: ''
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       x-fern-availability: beta
   /v1/test-suites/{id}/test-cases/{test_case_id}:
     delete:
@@ -742,6 +1280,7 @@ paths:
       description: |
         Deletes an existing test case for a test suite, keying off of the test case id.
       parameters:
+<<<<<<< HEAD
         - in: path
           name: id
           schema:
@@ -761,6 +1300,27 @@ paths:
         - apiKeyAuth: []
       responses:
         "204":
+=======
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this test suite.
+        required: true
+      - in: path
+        name: test_case_id
+        schema:
+          type: string
+        description: An id identifying the test case that you'd like to delete
+        required: true
+      tags:
+      - test-suites
+      security:
+      - apiKeyAuth: []
+      responses:
+        '204':
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: No response body
       x-fern-availability: beta
   /v1/upload-document:
@@ -771,11 +1331,16 @@ paths:
 
         **Note:** Uses a base url of `https://documents.vellum.ai`.
       tags:
+<<<<<<< HEAD
         - documents
+=======
+      - documents
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       requestBody:
         content:
           multipart/form-data:
             schema:
+<<<<<<< HEAD
               $ref: "#/components/schemas/UploadDocumentBodyRequest"
           application/json:
             schema:
@@ -812,6 +1377,44 @@ paths:
       servers:
         - url: https://documents.vellum.ai
           x-name: Documents
+=======
+              $ref: '#/components/schemas/UploadDocumentBodyRequest'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadDocumentBodyRequest'
+        required: true
+      security:
+      - apiKeyAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadDocumentResponse'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadDocumentErrorResponse'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadDocumentErrorResponse'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadDocumentErrorResponse'
+          description: ''
+      x-fern-availability: ga
+      servers:
+      - url: https://documents.vellum.ai
+        x-name: Documents
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
 components:
   schemas:
     ApiNodeResult:
@@ -820,10 +1423,17 @@ components:
         type:
           type: string
         data:
+<<<<<<< HEAD
           $ref: "#/components/schemas/ApiNodeResultData"
       required:
         - data
         - type
+=======
+          $ref: '#/components/schemas/ApiNodeResultData'
+      required:
+      - data
+      - type
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     ApiNodeResultData:
       type: object
       properties:
@@ -843,6 +1453,7 @@ components:
         status_code:
           type: integer
       required:
+<<<<<<< HEAD
         - json_output_id
         - status_code
         - status_code_output_id
@@ -853,6 +1464,18 @@ components:
         - CHAT_HISTORY
         - JINJA
         - FUNCTION_DEFINITION
+=======
+      - json_output_id
+      - status_code
+      - status_code_output_id
+      - text_output_id
+    BlockTypeEnum:
+      enum:
+      - CHAT_MESSAGE
+      - CHAT_HISTORY
+      - JINJA
+      - FUNCTION_DEFINITION
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       type: string
       description: |-
         * `CHAT_MESSAGE` - CHAT_MESSAGE
@@ -865,16 +1488,24 @@ components:
         text:
           type: string
         role:
+<<<<<<< HEAD
           $ref: "#/components/schemas/ChatMessageRole"
       required:
         - role
         - text
+=======
+          $ref: '#/components/schemas/ChatMessageRole'
+      required:
+      - role
+      - text
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     ChatMessageRequest:
       type: object
       properties:
         text:
           type: string
         role:
+<<<<<<< HEAD
           $ref: "#/components/schemas/ChatMessageRole"
       required:
         - role
@@ -885,6 +1516,18 @@ components:
         - ASSISTANT
         - USER
         - FUNCTION
+=======
+          $ref: '#/components/schemas/ChatMessageRole'
+      required:
+      - role
+      - text
+    ChatMessageRole:
+      enum:
+      - SYSTEM
+      - ASSISTANT
+      - USER
+      - FUNCTION
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       type: string
       description: |-
         * `SYSTEM` - System
@@ -897,10 +1540,17 @@ components:
         type:
           type: string
         data:
+<<<<<<< HEAD
           $ref: "#/components/schemas/ConditionalNodeResultData"
       required:
         - data
         - type
+=======
+          $ref: '#/components/schemas/ConditionalNodeResultData'
+      required:
+      - data
+      - type
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     ConditionalNodeResultData:
       type: object
       properties:
@@ -929,7 +1579,11 @@ components:
           maxLength: 150
         status:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/DeploymentStatus"
+=======
+          - $ref: '#/components/schemas/DeploymentStatus'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: |-
             The current status of the deployment
 
@@ -938,7 +1592,11 @@ components:
             * `ARCHIVED` - Archived
         environment:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/EnvironmentEnum"
+=======
+          - $ref: '#/components/schemas/EnvironmentEnum'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: |-
             The environment this deployment is used in
 
@@ -947,7 +1605,11 @@ components:
             * `PRODUCTION` - Production
         model_type:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/ModelTypeDeprecated"
+=======
+          - $ref: '#/components/schemas/ModelTypeDeprecated'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           readOnly: true
           deprecated: true
         active_model_version_ids:
@@ -962,6 +1624,7 @@ components:
         input_variables:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/VellumVariable"
       required:
         - active_model_version_ids
@@ -977,6 +1640,23 @@ components:
         - ACTIVE
         - INACTIVE
         - ARCHIVED
+=======
+            $ref: '#/components/schemas/VellumVariable'
+      required:
+      - active_model_version_ids
+      - created
+      - id
+      - input_variables
+      - label
+      - last_deployed_on
+      - model_type
+      - name
+    DeploymentStatus:
+      enum:
+      - ACTIVE
+      - INACTIVE
+      - ARCHIVED
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       type: string
       description: |-
         * `ACTIVE` - Active
@@ -998,7 +1678,11 @@ components:
             document is included in.
         indexing_state:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/IndexingStateEnum"
+=======
+          - $ref: '#/components/schemas/IndexingStateEnum'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: |-
             An enum value representing where this document is along its indexing lifecycle for this index.
 
@@ -1008,8 +1692,13 @@ components:
             * `INDEXED` - Indexed
             * `FAILED` - Failed
       required:
+<<<<<<< HEAD
         - document_index_id
         - id
+=======
+      - document_index_id
+      - id
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     DocumentIndexCreateRequest:
       type: object
       properties:
@@ -1025,7 +1714,11 @@ components:
           maxLength: 150
         status:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/DocumentIndexStatus"
+=======
+          - $ref: '#/components/schemas/DocumentIndexStatus'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: |-
             The current status of the document index
 
@@ -1033,7 +1726,11 @@ components:
             * `ARCHIVED` - Archived
         environment:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/EnvironmentEnum"
+=======
+          - $ref: '#/components/schemas/EnvironmentEnum'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: |-
             The environment this document index is used in
 
@@ -1050,9 +1747,15 @@ components:
           description: Optionally specify the id of a document index from which you'd
             like to copy and re-index its documents into this newly created index
       required:
+<<<<<<< HEAD
         - indexing_config
         - label
         - name
+=======
+      - indexing_config
+      - label
+      - name
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     DocumentIndexRead:
       type: object
       properties:
@@ -1074,7 +1777,11 @@ components:
           maxLength: 150
         status:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/DocumentIndexStatus"
+=======
+          - $ref: '#/components/schemas/DocumentIndexStatus'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: |-
             The current status of the document index
 
@@ -1082,7 +1789,11 @@ components:
             * `ARCHIVED` - Archived
         environment:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/EnvironmentEnum"
+=======
+          - $ref: '#/components/schemas/EnvironmentEnum'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: |-
             The environment this document index is used in
 
@@ -1094,6 +1805,7 @@ components:
           additionalProperties: {}
           description: Configuration representing how documents should be indexed
       required:
+<<<<<<< HEAD
         - created
         - id
         - indexing_config
@@ -1103,6 +1815,17 @@ components:
       enum:
         - ACTIVE
         - ARCHIVED
+=======
+      - created
+      - id
+      - indexing_config
+      - label
+      - name
+    DocumentIndexStatus:
+      enum:
+      - ACTIVE
+      - ARCHIVED
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       type: string
       description: |-
         * `ACTIVE` - Active
@@ -1129,7 +1852,11 @@ components:
           maxLength: 1000
         processing_state:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/ProcessingStateEnum"
+=======
+          - $ref: '#/components/schemas/ProcessingStateEnum'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: |-
             The current processing state of the document
 
@@ -1139,7 +1866,11 @@ components:
             * `FAILED` - Failed
         status:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/DocumentStatus"
+=======
+          - $ref: '#/components/schemas/DocumentStatus'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: |-
             The current status of the document
 
@@ -1155,7 +1886,11 @@ components:
         document_to_document_indexes:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/DocumentDocumentToDocumentIndex"
+=======
+            $ref: '#/components/schemas/DocumentDocumentToDocumentIndex'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
         metadata:
           type: object
           additionalProperties: {}
@@ -1163,6 +1898,7 @@ components:
           description: A previously supplied JSON object containing metadata that
             can be filtered on when searching.
       required:
+<<<<<<< HEAD
         - document_to_document_indexes
         - id
         - label
@@ -1174,6 +1910,19 @@ components:
         - ACTIVE
       type: string
       description: "* `ACTIVE` - Active"
+=======
+      - document_to_document_indexes
+      - id
+      - label
+      - last_uploaded_at
+      - original_file_url
+      - processed_file_url
+    DocumentStatus:
+      enum:
+      - ACTIVE
+      type: string
+      description: '* `ACTIVE` - Active'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     EnrichedNormalizedCompletion:
       type: object
       properties:
@@ -1192,7 +1941,11 @@ components:
           description: The text generated by the LLM.
         finish_reason:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/FinishReasonEnum"
+=======
+          - $ref: '#/components/schemas/FinishReasonEnum'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
           description: |-
             The reason the generation finished.
@@ -1202,7 +1955,11 @@ components:
             * `UNKNOWN` - UNKNOWN
         logprobs:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/NormalizedLogProbs"
+=======
+          - $ref: '#/components/schemas/NormalizedLogProbs'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
           description: The logprobs of the completion. Only present if specified in
             the original request options.
@@ -1210,6 +1967,7 @@ components:
           type: string
           description: The ID of the model version used to generate this completion.
         type:
+<<<<<<< HEAD
           $ref: "#/components/schemas/VellumVariableType"
       required:
         - finish_reason
@@ -1221,6 +1979,19 @@ components:
         - DEVELOPMENT
         - STAGING
         - PRODUCTION
+=======
+          $ref: '#/components/schemas/VellumVariableType'
+      required:
+      - finish_reason
+      - id
+      - model_version_id
+      - text
+    EnvironmentEnum:
+      enum:
+      - DEVELOPMENT
+      - STAGING
+      - PRODUCTION
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       type: string
       description: |-
         * `DEVELOPMENT` - Development
@@ -1247,7 +2018,11 @@ components:
           type: string
           description: Details about why the request failed.
       required:
+<<<<<<< HEAD
         - detail
+=======
+      - detail
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     ExecuteWorkflowStreamRequest:
       type: object
       properties:
@@ -1272,7 +2047,11 @@ components:
         inputs:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/WorkflowRequestInputRequest"
+=======
+            $ref: '#/components/schemas/WorkflowRequestInputRequest'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
         external_id:
           type: string
           nullable: true
@@ -1281,17 +2060,30 @@ components:
         event_types:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/WorkflowExecutionEventType"
+=======
+            $ref: '#/components/schemas/WorkflowExecutionEventType'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: Optionally specify which events you want to receive. Defaults
             to only WORKFLOW events. Note that the schema of non-WORKFLOW events is
             unstable and should be used with caution.
       required:
+<<<<<<< HEAD
         - inputs
     FinishReasonEnum:
       enum:
         - LENGTH
         - STOP
         - UNKNOWN
+=======
+      - inputs
+    FinishReasonEnum:
+      enum:
+      - LENGTH
+      - STOP
+      - UNKNOWN
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       type: string
       description: |-
         * `LENGTH` - LENGTH
@@ -1313,17 +2105,29 @@ components:
         requests:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/GenerateRequest"
+=======
+            $ref: '#/components/schemas/GenerateRequest'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: The generation request to make. Bulk requests are no longer
             supported, this field must be an array of length 1.
         options:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/GenerateOptionsRequest"
+=======
+          - $ref: '#/components/schemas/GenerateOptionsRequest'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
           description: Additional configuration that can be used to control what's
             included in the response.
       required:
+<<<<<<< HEAD
         - requests
+=======
+      - requests
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     GenerateErrorResponse:
       type: object
       properties:
@@ -1331,13 +2135,21 @@ components:
           type: string
           description: Details about why the request failed.
       required:
+<<<<<<< HEAD
         - detail
+=======
+      - detail
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     GenerateOptionsRequest:
       type: object
       properties:
         logprobs:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/LogprobsEnum"
+=======
+          - $ref: '#/components/schemas/LogprobsEnum'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: |-
             Which logprobs to include, if any. Defaults to NONE.
 
@@ -1354,7 +2166,11 @@ components:
         chat_history:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/ChatMessageRequest"
+=======
+            $ref: '#/components/schemas/ChatMessageRequest'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: Optionally provide a list of chat messages that'll be used
             in place of the special {$chat_history} variable, if included in the prompt.
         external_ids:
@@ -1367,28 +2183,47 @@ components:
             as represented outside of Vellum. Note that this should generally be a
             list of length one.
       required:
+<<<<<<< HEAD
         - input_values
+=======
+      - input_values
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     GenerateResponse:
       type: object
       properties:
         results:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/GenerateResult"
           description: The results of each generation request.
       required:
         - results
+=======
+            $ref: '#/components/schemas/GenerateResult'
+          description: The results of each generation request.
+      required:
+      - results
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     GenerateResult:
       type: object
       properties:
         data:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/GenerateResultData"
+=======
+          - $ref: '#/components/schemas/GenerateResultData'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: An object containing the resulting generation. This key will
             be absent if the LLM provider experienced an error.
         error:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/GenerateResultError"
+=======
+          - $ref: '#/components/schemas/GenerateResultError'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: An object containing details about the error that occurred.
             This key will be absent if the LLM provider did not experience an error.
     GenerateResultData:
@@ -1397,11 +2232,19 @@ components:
         completions:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/EnrichedNormalizedCompletion"
           description: The generated completions. This will generally be a list of
             length one.
       required:
         - completions
+=======
+            $ref: '#/components/schemas/EnrichedNormalizedCompletion'
+          description: The generated completions. This will generally be a list of
+            length one.
+      required:
+      - completions
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     GenerateResultError:
       type: object
       properties:
@@ -1409,7 +2252,11 @@ components:
           type: string
           description: The error message returned by the LLM provider.
       required:
+<<<<<<< HEAD
         - message
+=======
+      - message
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     GenerateStreamBodyRequest:
       type: object
       properties:
@@ -1426,41 +2273,68 @@ components:
         requests:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/GenerateRequest"
+=======
+            $ref: '#/components/schemas/GenerateRequest'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: The generation request to make. Bulk requests are no longer
             supported, this field must be an array of length 1.
         options:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/GenerateOptionsRequest"
+=======
+          - $ref: '#/components/schemas/GenerateOptionsRequest'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
           description: Additional configuration that can be used to control what's
             included in the response.
       required:
+<<<<<<< HEAD
         - requests
+=======
+      - requests
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     GenerateStreamResponse:
       type: object
       properties:
         delta:
+<<<<<<< HEAD
           $ref: "#/components/schemas/GenerateStreamResult"
       required:
         - delta
+=======
+          $ref: '#/components/schemas/GenerateStreamResult'
+      required:
+      - delta
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     GenerateStreamResult:
       type: object
       properties:
         request_index:
           type: integer
         data:
+<<<<<<< HEAD
           $ref: "#/components/schemas/GenerateStreamResultData"
         error:
           $ref: "#/components/schemas/GenerateResultError"
       required:
         - request_index
+=======
+          $ref: '#/components/schemas/GenerateStreamResultData'
+        error:
+          $ref: '#/components/schemas/GenerateResultError'
+      required:
+      - request_index
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     GenerateStreamResultData:
       type: object
       properties:
         completion_index:
           type: integer
         completion:
+<<<<<<< HEAD
           $ref: "#/components/schemas/EnrichedNormalizedCompletion"
       required:
         - completion
@@ -1472,6 +2346,19 @@ components:
         - INDEXING
         - INDEXED
         - FAILED
+=======
+          $ref: '#/components/schemas/EnrichedNormalizedCompletion'
+      required:
+      - completion
+      - completion_index
+    IndexingStateEnum:
+      enum:
+      - AWAITING_PROCESSING
+      - QUEUED
+      - INDEXING
+      - INDEXED
+      - FAILED
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       type: string
       description: |-
         * `AWAITING_PROCESSING` - Awaiting Processing
@@ -1481,6 +2368,7 @@ components:
         * `FAILED` - Failed
     LogicalOperator:
       enum:
+<<<<<<< HEAD
         - "="
         - "!="
         - <
@@ -1499,6 +2387,26 @@ components:
         - notIn
         - between
         - notBetween
+=======
+      - '='
+      - '!='
+      - <
+      - '>'
+      - <=
+      - '>='
+      - contains
+      - beginsWith
+      - endsWith
+      - doesNotContain
+      - doesNotBeginWith
+      - doesNotEndWith
+      - 'null'
+      - notNull
+      - in
+      - notIn
+      - between
+      - notBetween
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       type: string
       description: |-
         * `=` - EQUALS
@@ -1520,22 +2428,37 @@ components:
         * `between` - BETWEEN
         * `notBetween` - NOT_BETWEEN
       x-fern-enum:
+<<<<<<< HEAD
         "=":
           name: EQUALS
           description: Equals
         "!=":
+=======
+        '=':
+          name: EQUALS
+          description: Equals
+        '!=':
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           name: DOES_NOT_EQUAL
           description: Does not equal
         <:
           name: LESS_THAN
           description: Less than
+<<<<<<< HEAD
         ">":
+=======
+        '>':
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           name: GREATER_THAN
           description: Greater than
         <=:
           name: LESS_THAN_OR_EQUAL_TO
           description: Less than or equal to
+<<<<<<< HEAD
         ">=":
+=======
+        '>=':
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           name: GREATER_THAN_OR_EQUAL_TO
           description: Greater than or equal to
         contains:
@@ -1556,9 +2479,15 @@ components:
         doesNotEndWith:
           name: DOES_NOT_END_WITH
           description: Does not end with
+<<<<<<< HEAD
         "null":
           name: "NULL"
           description: "Null"
+=======
+        'null':
+          name: 'NULL'
+          description: 'Null'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
         notNull:
           name: NOT_NULL
           description: Not null
@@ -1576,8 +2505,13 @@ components:
           description: Not between
     LogprobsEnum:
       enum:
+<<<<<<< HEAD
         - ALL
         - NONE
+=======
+      - ALL
+      - NONE
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       type: string
       description: |-
         * `ALL` - ALL
@@ -1587,7 +2521,11 @@ components:
       properties:
         combinator:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/MetadataFilterRuleCombinator"
+=======
+          - $ref: '#/components/schemas/MetadataFilterRuleCombinator'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
         negated:
           type: boolean
@@ -1595,7 +2533,11 @@ components:
         rules:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/MetadataFilterRuleRequest"
+=======
+            $ref: '#/components/schemas/MetadataFilterRuleRequest'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
         field:
           type: string
@@ -1603,7 +2545,11 @@ components:
           minLength: 1
         operator:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/LogicalOperator"
+=======
+          - $ref: '#/components/schemas/LogicalOperator'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
         value:
           type: string
@@ -1611,8 +2557,13 @@ components:
           minLength: 1
     MetadataFilterRuleCombinator:
       enum:
+<<<<<<< HEAD
         - and
         - or
+=======
+      - and
+      - or
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       type: string
       description: |-
         * `and` - AND
@@ -1622,7 +2573,11 @@ components:
       properties:
         combinator:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/MetadataFilterRuleCombinator"
+=======
+          - $ref: '#/components/schemas/MetadataFilterRuleCombinator'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
         negated:
           type: boolean
@@ -1630,7 +2585,11 @@ components:
         rules:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/MetadataFilterRuleRequest"
+=======
+            $ref: '#/components/schemas/MetadataFilterRuleRequest'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
         field:
           type: string
@@ -1638,7 +2597,11 @@ components:
           minLength: 1
         operator:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/LogicalOperator"
+=======
+          - $ref: '#/components/schemas/LogicalOperator'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
         value:
           type: string
@@ -1646,8 +2609,13 @@ components:
           minLength: 1
     ModelTypeDeprecated:
       enum:
+<<<<<<< HEAD
         - GENERATE
         - CLASSIFY
+=======
+      - GENERATE
+      - CLASSIFY
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       type: string
       description: |-
         * `GENERATE` - Generate
@@ -1661,12 +2629,20 @@ components:
             as identified by the LLM provider.
         sandbox_snapshot:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/ModelVersionSandboxSnapshot"
+=======
+          - $ref: '#/components/schemas/ModelVersionSandboxSnapshot'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
           description: Information about the sandbox snapshot that was used to create
             this model version, if applicable.
       required:
+<<<<<<< HEAD
         - base_model
+=======
+      - base_model
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     ModelVersionCompilePromptRequestRequest:
       type: object
       properties:
@@ -1676,16 +2652,27 @@ components:
           description: Key/value pairs for each variable found within the model version's
             prompt template.
       required:
+<<<<<<< HEAD
         - input_values
+=======
+      - input_values
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     ModelVersionCompilePromptResponse:
       type: object
       properties:
         prompt:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/ModelVersionCompiledPrompt"
           description: Information about the compiled prompt.
       required:
         - prompt
+=======
+          - $ref: '#/components/schemas/ModelVersionCompiledPrompt'
+          description: Information about the compiled prompt.
+      required:
+      - prompt
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     ModelVersionCompiledPrompt:
       type: object
       properties:
@@ -1698,32 +2685,54 @@ components:
           minimum: 0
           description: The approximate number of tokens used by the compiled prompt.
       required:
+<<<<<<< HEAD
         - num_tokens
         - text
+=======
+      - num_tokens
+      - text
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     ModelVersionExecConfig:
       type: object
       properties:
         parameters:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/ModelVersionExecConfigParameters"
+=======
+          - $ref: '#/components/schemas/ModelVersionExecConfigParameters'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: The generation parameters that are passed to the LLM provider
             at runtime.
         input_variables:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/VellumVariable"
+=======
+            $ref: '#/components/schemas/VellumVariable'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: Input variables specified in the prompt template.
         prompt_template:
           type: string
           nullable: true
           description: The template used to generate prompts for this model version.
         prompt_block_data:
+<<<<<<< HEAD
           $ref: "#/components/schemas/PromptTemplateBlockData"
         prompt_syntax_version:
           type: integer
       required:
         - input_variables
         - parameters
+=======
+          $ref: '#/components/schemas/PromptTemplateBlockData'
+        prompt_syntax_version:
+          type: integer
+      required:
+      - input_variables
+      - parameters
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     ModelVersionExecConfigParameters:
       type: object
       properties:
@@ -1758,9 +2767,15 @@ components:
           type: number
           format: double
       required:
+<<<<<<< HEAD
         - frequency_penalty
         - presence_penalty
         - top_p
+=======
+      - frequency_penalty
+      - presence_penalty
+      - top_p
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     ModelVersionRead:
       type: object
       properties:
@@ -1780,12 +2795,20 @@ components:
           maxLength: 150
         model_type:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/ModelTypeDeprecated"
+=======
+          - $ref: '#/components/schemas/ModelTypeDeprecated'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           readOnly: true
           deprecated: true
         provider:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/ProviderEnum"
+=======
+          - $ref: '#/components/schemas/ProviderEnum'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: |-
             Which LLM provider this model version is associated with.
 
@@ -1804,6 +2827,7 @@ components:
           maxLength: 250
         build_config:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/ModelVersionBuildConfig"
           description: Configuration used to build this model version.
         exec_config:
@@ -1827,6 +2851,31 @@ components:
         - READY
         - CREATION_FAILED
         - DISABLED
+=======
+          - $ref: '#/components/schemas/ModelVersionBuildConfig'
+          description: Configuration used to build this model version.
+        exec_config:
+          allOf:
+          - $ref: '#/components/schemas/ModelVersionExecConfig'
+          description: Configuration used to execute this model version.
+        status:
+          $ref: '#/components/schemas/ModelVersionReadStatusEnum'
+      required:
+      - build_config
+      - created
+      - exec_config
+      - external_id
+      - id
+      - label
+      - model_type
+      - provider
+    ModelVersionReadStatusEnum:
+      enum:
+      - CREATING
+      - READY
+      - CREATION_FAILED
+      - DISABLED
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       type: string
       description: |-
         * `CREATING` - Creating
@@ -1851,8 +2900,13 @@ components:
           nullable: true
           readOnly: true
       required:
+<<<<<<< HEAD
         - id
         - sandbox_id
+=======
+      - id
+      - sandbox_id
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     NodeInputCompiledChatHistoryValue:
       type: object
       properties:
@@ -1865,6 +2919,7 @@ components:
         value:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/ChatMessage"
           nullable: true
       required:
@@ -1872,6 +2927,15 @@ components:
         - node_input_id
         - type
         - value
+=======
+            $ref: '#/components/schemas/ChatMessage'
+          nullable: true
+      required:
+      - key
+      - node_input_id
+      - type
+      - value
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     NodeInputCompiledJsonValue:
       type: object
       properties:
@@ -1886,10 +2950,17 @@ components:
           additionalProperties: {}
           nullable: true
       required:
+<<<<<<< HEAD
         - key
         - node_input_id
         - type
         - value
+=======
+      - key
+      - node_input_id
+      - type
+      - value
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     NodeInputCompiledNumberValue:
       type: object
       properties:
@@ -1903,10 +2974,17 @@ components:
           type: integer
           nullable: true
       required:
+<<<<<<< HEAD
         - key
         - node_input_id
         - type
         - value
+=======
+      - key
+      - node_input_id
+      - type
+      - value
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     NodeInputCompiledSearchResultsValue:
       type: object
       properties:
@@ -1919,6 +2997,7 @@ components:
         value:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/SearchResult"
           nullable: true
       required:
@@ -1926,6 +3005,15 @@ components:
         - node_input_id
         - type
         - value
+=======
+            $ref: '#/components/schemas/SearchResult'
+          nullable: true
+      required:
+      - key
+      - node_input_id
+      - type
+      - value
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     NodeInputCompiledStringValue:
       type: object
       properties:
@@ -1939,6 +3027,7 @@ components:
           type: string
           nullable: true
       required:
+<<<<<<< HEAD
         - key
         - node_input_id
         - type
@@ -1958,20 +3047,50 @@ components:
           JSON: "#/components/schemas/NodeInputCompiledJsonValue"
           CHAT_HISTORY: "#/components/schemas/NodeInputCompiledChatHistoryValue"
           SEARCH_RESULTS: "#/components/schemas/NodeInputCompiledSearchResultsValue"
+=======
+      - key
+      - node_input_id
+      - type
+      - value
+    NodeInputVariableCompiledValue:
+      oneOf:
+      - $ref: '#/components/schemas/NodeInputCompiledStringValue'
+      - $ref: '#/components/schemas/NodeInputCompiledNumberValue'
+      - $ref: '#/components/schemas/NodeInputCompiledJsonValue'
+      - $ref: '#/components/schemas/NodeInputCompiledChatHistoryValue'
+      - $ref: '#/components/schemas/NodeInputCompiledSearchResultsValue'
+      discriminator:
+        propertyName: type
+        mapping:
+          STRING: '#/components/schemas/NodeInputCompiledStringValue'
+          NUMBER: '#/components/schemas/NodeInputCompiledNumberValue'
+          JSON: '#/components/schemas/NodeInputCompiledJsonValue'
+          CHAT_HISTORY: '#/components/schemas/NodeInputCompiledChatHistoryValue'
+          SEARCH_RESULTS: '#/components/schemas/NodeInputCompiledSearchResultsValue'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     NormalizedLogProbs:
       type: object
       properties:
         tokens:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/NormalizedTokenLogProbs"
+=======
+            $ref: '#/components/schemas/NormalizedTokenLogProbs'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
         likelihood:
           type: number
           format: double
           nullable: true
       required:
+<<<<<<< HEAD
         - likelihood
         - tokens
+=======
+      - likelihood
+      - tokens
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     NormalizedTokenLogProbs:
       type: object
       properties:
@@ -1990,10 +3109,17 @@ components:
         text_offset:
           type: integer
       required:
+<<<<<<< HEAD
         - logprob
         - text_offset
         - token
         - top_logprobs
+=======
+      - logprob
+      - text_offset
+      - token
+      - top_logprobs
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     PaginatedSlimDocumentList:
       type: object
       properties:
@@ -2013,7 +3139,11 @@ components:
         results:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/SlimDocument"
+=======
+            $ref: '#/components/schemas/SlimDocument'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     PatchedDocumentUpdateRequest:
       type: object
       properties:
@@ -2025,7 +3155,11 @@ components:
           maxLength: 1000
         status:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/DocumentStatus"
+=======
+          - $ref: '#/components/schemas/DocumentStatus'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: |-
             The current status of the document
 
@@ -2038,18 +3172,30 @@ components:
             that you'd like to filter upon later.
     ProcessingFailureReasonEnum:
       enum:
+<<<<<<< HEAD
         - EXCEEDED_CHARACTER_LIMIT
         - INVALID_FILE
+=======
+      - EXCEEDED_CHARACTER_LIMIT
+      - INVALID_FILE
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       type: string
       description: |-
         * `EXCEEDED_CHARACTER_LIMIT` - Exceeded Character Limit
         * `INVALID_FILE` - Invalid File
     ProcessingStateEnum:
       enum:
+<<<<<<< HEAD
         - QUEUED
         - PROCESSING
         - PROCESSED
         - FAILED
+=======
+      - QUEUED
+      - PROCESSING
+      - PROCESSED
+      - FAILED
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       type: string
       description: |-
         * `QUEUED` - Queued
@@ -2062,10 +3208,17 @@ components:
         type:
           type: string
         data:
+<<<<<<< HEAD
           $ref: "#/components/schemas/PromptNodeResultData"
       required:
         - data
         - type
+=======
+          $ref: '#/components/schemas/PromptNodeResultData'
+      required:
+      - data
+      - type
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     PromptNodeResultData:
       type: object
       properties:
@@ -2078,13 +3231,18 @@ components:
           type: string
           nullable: true
       required:
+<<<<<<< HEAD
         - output_id
+=======
+      - output_id
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     PromptTemplateBlock:
       type: object
       properties:
         id:
           type: string
         block_type:
+<<<<<<< HEAD
           $ref: "#/components/schemas/BlockTypeEnum"
         properties:
           $ref: "#/components/schemas/PromptTemplateBlockProperties"
@@ -2092,6 +3250,15 @@ components:
         - block_type
         - id
         - properties
+=======
+          $ref: '#/components/schemas/BlockTypeEnum'
+        properties:
+          $ref: '#/components/schemas/PromptTemplateBlockProperties'
+      required:
+      - block_type
+      - id
+      - properties
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     PromptTemplateBlockData:
       type: object
       properties:
@@ -2100,10 +3267,17 @@ components:
         blocks:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/PromptTemplateBlock"
       required:
         - blocks
         - version
+=======
+            $ref: '#/components/schemas/PromptTemplateBlock'
+      required:
+      - blocks
+      - version
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     PromptTemplateBlockDataRequest:
       type: object
       properties:
@@ -2112,16 +3286,27 @@ components:
         blocks:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/PromptTemplateBlockRequest"
       required:
         - blocks
         - version
+=======
+            $ref: '#/components/schemas/PromptTemplateBlockRequest'
+      required:
+      - blocks
+      - version
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     PromptTemplateBlockProperties:
       type: object
       properties:
         chat_role:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/ChatMessageRole"
+=======
+          - $ref: '#/components/schemas/ChatMessageRole'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
         chat_message_unterminated:
           type: boolean
@@ -2131,7 +3316,11 @@ components:
           nullable: true
         template_type:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/VellumVariableType"
+=======
+          - $ref: '#/components/schemas/VellumVariableType'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
         function_name:
           type: string
@@ -2149,14 +3338,22 @@ components:
         blocks:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/PromptTemplateBlock"
+=======
+            $ref: '#/components/schemas/PromptTemplateBlock'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
     PromptTemplateBlockPropertiesRequest:
       type: object
       properties:
         chat_role:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/ChatMessageRole"
+=======
+          - $ref: '#/components/schemas/ChatMessageRole'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
         chat_message_unterminated:
           type: boolean
@@ -2166,7 +3363,11 @@ components:
           nullable: true
         template_type:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/VellumVariableType"
+=======
+          - $ref: '#/components/schemas/VellumVariableType'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
         function_name:
           type: string
@@ -2186,7 +3387,11 @@ components:
         blocks:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/PromptTemplateBlockRequest"
+=======
+            $ref: '#/components/schemas/PromptTemplateBlockRequest'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
     PromptTemplateBlockRequest:
       type: object
@@ -2195,6 +3400,7 @@ components:
           type: string
           minLength: 1
         block_type:
+<<<<<<< HEAD
           $ref: "#/components/schemas/BlockTypeEnum"
         properties:
           $ref: "#/components/schemas/PromptTemplateBlockPropertiesRequest"
@@ -2212,6 +3418,25 @@ components:
         - MYSTIC
         - OPENAI
         - PYQ
+=======
+          $ref: '#/components/schemas/BlockTypeEnum'
+        properties:
+          $ref: '#/components/schemas/PromptTemplateBlockPropertiesRequest'
+      required:
+      - block_type
+      - id
+      - properties
+    ProviderEnum:
+      enum:
+      - ANTHROPIC
+      - COHERE
+      - GOOGLE
+      - HOSTED
+      - MOSAICML
+      - MYSTIC
+      - OPENAI
+      - PYQ
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       type: string
       description: |-
         * `ANTHROPIC` - Anthropic
@@ -2229,7 +3454,11 @@ components:
           type: string
           description: Details about why the request failed.
       required:
+<<<<<<< HEAD
         - detail
+=======
+      - detail
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     RegisterPromptModelParametersRequest:
       type: object
       properties:
@@ -2262,12 +3491,21 @@ components:
             format: double
           nullable: true
       required:
+<<<<<<< HEAD
         - frequency_penalty
         - max_tokens
         - presence_penalty
         - stop
         - temperature
         - top_p
+=======
+      - frequency_penalty
+      - max_tokens
+      - presence_penalty
+      - stop
+      - temperature
+      - top_p
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     RegisterPromptPrompt:
       type: object
       properties:
@@ -2278,8 +3516,13 @@ components:
           type: string
           description: A human-friendly label for the generated prompt.
       required:
+<<<<<<< HEAD
         - id
         - label
+=======
+      - id
+      - label
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     RegisterPromptPromptInfoRequest:
       type: object
       properties:
@@ -2287,6 +3530,7 @@ components:
           type: integer
           default: 2
         prompt_block_data:
+<<<<<<< HEAD
           $ref: "#/components/schemas/PromptTemplateBlockDataRequest"
         input_variables:
           type: array
@@ -2296,6 +3540,17 @@ components:
       required:
         - input_variables
         - prompt_block_data
+=======
+          $ref: '#/components/schemas/PromptTemplateBlockDataRequest'
+        input_variables:
+          type: array
+          items:
+            $ref: '#/components/schemas/RegisteredPromptInputVariableRequest'
+          description: The input variables specified in the prompt template.
+      required:
+      - input_variables
+      - prompt_block_data
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     RegisterPromptRequestRequest:
       type: object
       properties:
@@ -2311,11 +3566,19 @@ components:
             in Vellum.
         prompt:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/RegisterPromptPromptInfoRequest"
           description: Information about how to execute the prompt template.
         provider:
           allOf:
             - $ref: "#/components/schemas/ProviderEnum"
+=======
+          - $ref: '#/components/schemas/RegisterPromptPromptInfoRequest'
+          description: Information about how to execute the prompt template.
+        provider:
+          allOf:
+          - $ref: '#/components/schemas/ProviderEnum'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: |-
             The initial LLM provider to use for this prompt
 
@@ -2333,7 +3596,11 @@ components:
           description: The initial model to use for this prompt
         parameters:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/RegisterPromptModelParametersRequest"
+=======
+          - $ref: '#/components/schemas/RegisterPromptModelParametersRequest'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: The initial model parameters to use for  this prompt
         meta:
           type: object
@@ -2341,17 +3608,27 @@ components:
           description: Optionally include additional metadata to store along with
             the prompt.
       required:
+<<<<<<< HEAD
         - label
         - model
         - name
         - parameters
         - prompt
         - provider
+=======
+      - label
+      - model
+      - name
+      - parameters
+      - prompt
+      - provider
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     RegisterPromptResponse:
       type: object
       properties:
         prompt:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/RegisterPromptPrompt"
           description: Information about the generated prompt
         sandbox_snapshot:
@@ -2376,6 +3653,32 @@ components:
         - prompt
         - sandbox
         - sandbox_snapshot
+=======
+          - $ref: '#/components/schemas/RegisterPromptPrompt'
+          description: Information about the generated prompt
+        sandbox_snapshot:
+          allOf:
+          - $ref: '#/components/schemas/RegisteredPromptSandboxSnapshot'
+          description: Information about the generated sandbox snapshot
+        sandbox:
+          allOf:
+          - $ref: '#/components/schemas/RegisteredPromptSandbox'
+          description: Information about the generated sandbox
+        model_version:
+          allOf:
+          - $ref: '#/components/schemas/RegisteredPromptModelVersion'
+          description: Information about the generated model version
+        deployment:
+          allOf:
+          - $ref: '#/components/schemas/RegisteredPromptDeployment'
+          description: Information about the generated deployment
+      required:
+      - deployment
+      - model_version
+      - prompt
+      - sandbox
+      - sandbox_snapshot
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     RegisteredPromptDeployment:
       type: object
       properties:
@@ -2389,9 +3692,15 @@ components:
           type: string
           description: A human-friendly label for the generated deployment.
       required:
+<<<<<<< HEAD
         - id
         - label
         - name
+=======
+      - id
+      - label
+      - name
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     RegisteredPromptInputVariableRequest:
       type: object
       properties:
@@ -2403,10 +3712,17 @@ components:
           minLength: 1
         type:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/VellumVariableType"
           default: STRING
       required:
         - key
+=======
+          - $ref: '#/components/schemas/VellumVariableType'
+          default: STRING
+      required:
+      - key
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     RegisteredPromptModelVersion:
       type: object
       properties:
@@ -2417,8 +3733,13 @@ components:
           type: string
           description: A human-friendly label for the generated model version.
       required:
+<<<<<<< HEAD
         - id
         - label
+=======
+      - id
+      - label
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     RegisteredPromptSandbox:
       type: object
       properties:
@@ -2429,8 +3750,13 @@ components:
           type: string
           description: A human-friendly label for the generated sandbox.
       required:
+<<<<<<< HEAD
         - id
         - label
+=======
+      - id
+      - label
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     RegisteredPromptSandboxSnapshot:
       type: object
       properties:
@@ -2438,20 +3764,32 @@ components:
           type: string
           description: The ID of the generated sandbox snapshot.
       required:
+<<<<<<< HEAD
         - id
+=======
+      - id
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     SandboxMetricInputParams:
       type: object
       properties:
         params:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/EvaluationParams"
+=======
+          - $ref: '#/components/schemas/EvaluationParams'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
     SandboxMetricInputParamsRequest:
       type: object
       properties:
         params:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/EvaluationParamsRequest"
+=======
+          - $ref: '#/components/schemas/EvaluationParamsRequest'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
     SandboxScenario:
       type: object
@@ -2462,17 +3800,29 @@ components:
         inputs:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/ScenarioInput"
+=======
+            $ref: '#/components/schemas/ScenarioInput'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: The inputs for the scenario
         id:
           type: string
           description: The id of the scenario
         metric_input_params:
+<<<<<<< HEAD
           $ref: "#/components/schemas/SandboxMetricInputParams"
       required:
         - id
         - inputs
         - metric_input_params
+=======
+          $ref: '#/components/schemas/SandboxMetricInputParams'
+      required:
+      - id
+      - inputs
+      - metric_input_params
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     ScenarioInput:
       type: object
       properties:
@@ -2480,7 +3830,11 @@ components:
           type: string
         type:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/ScenarioInputTypeEnum"
+=======
+          - $ref: '#/components/schemas/ScenarioInputTypeEnum'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
           default: TEXT
         value:
@@ -2488,9 +3842,15 @@ components:
         chat_history:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/ChatMessage"
       required:
         - key
+=======
+            $ref: '#/components/schemas/ChatMessage'
+      required:
+      - key
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     ScenarioInputRequest:
       type: object
       properties:
@@ -2499,7 +3859,11 @@ components:
           minLength: 1
         type:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/ScenarioInputTypeEnum"
+=======
+          - $ref: '#/components/schemas/ScenarioInputTypeEnum'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
           default: TEXT
         value:
@@ -2507,6 +3871,7 @@ components:
         chat_history:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/ChatMessageRequest"
       required:
         - key
@@ -2514,6 +3879,15 @@ components:
       enum:
         - TEXT
         - CHAT_HISTORY
+=======
+            $ref: '#/components/schemas/ChatMessageRequest'
+      required:
+      - key
+    ScenarioInputTypeEnum:
+      enum:
+      - TEXT
+      - CHAT_HISTORY
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       type: string
       description: |-
         * `TEXT` - Text
@@ -2525,7 +3899,11 @@ components:
           type: string
           description: Details about why the request failed.
       required:
+<<<<<<< HEAD
         - detail
+=======
+      - detail
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     SearchFiltersRequest:
       type: object
       properties:
@@ -2538,7 +3916,11 @@ components:
           description: The document external IDs to filter by
         metadata:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/MetadataFilterConfigRequest"
+=======
+          - $ref: '#/components/schemas/MetadataFilterConfigRequest'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
           description: The metadata filters to apply to the search
     SearchNodeResult:
@@ -2547,10 +3929,17 @@ components:
         type:
           type: string
         data:
+<<<<<<< HEAD
           $ref: "#/components/schemas/SearchNodeResultData"
       required:
         - data
         - type
+=======
+          $ref: '#/components/schemas/SearchNodeResultData'
+      required:
+      - data
+      - type
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     SearchNodeResultData:
       type: object
       properties:
@@ -2559,7 +3948,11 @@ components:
         results:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/SearchResult"
+=======
+            $ref: '#/components/schemas/SearchResult'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: The results of the search. Each result represents a chunk that
             matches the search query.
         text_output_id:
@@ -2568,9 +3961,15 @@ components:
           type: string
           nullable: true
       required:
+<<<<<<< HEAD
         - results
         - results_output_id
         - text_output_id
+=======
+      - results
+      - results_output_id
+      - text_output_id
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     SearchRequestBodyRequest:
       type: object
       properties:
@@ -2592,11 +3991,19 @@ components:
           description: The query to search for.
         options:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/SearchRequestOptionsRequest"
           nullable: true
           description: Configuration options for the search.
       required:
         - query
+=======
+          - $ref: '#/components/schemas/SearchRequestOptionsRequest'
+          nullable: true
+          description: Configuration options for the search.
+      required:
+      - query
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     SearchRequestOptionsRequest:
       type: object
       properties:
@@ -2609,17 +4016,29 @@ components:
           description: The maximum number of results to return.
         weights:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/SearchWeightsRequest"
+=======
+          - $ref: '#/components/schemas/SearchWeightsRequest'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
           description: The weights to use for the search. Must add up to 1.0.
         result_merging:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/SearchResultMergingRequest"
+=======
+          - $ref: '#/components/schemas/SearchResultMergingRequest'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
           description: The configuration for merging results.
         filters:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/SearchFiltersRequest"
+=======
+          - $ref: '#/components/schemas/SearchFiltersRequest'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
           description: The filters to apply to the search.
     SearchResponse:
@@ -2628,11 +4047,19 @@ components:
         results:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/SearchResult"
           description: The results of the search. Each result represents a chunk that
             matches the search query.
       required:
         - results
+=======
+            $ref: '#/components/schemas/SearchResult'
+          description: The results of the search. Each result represents a chunk that
+            matches the search query.
+      required:
+      - results
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     SearchResult:
       type: object
       properties:
@@ -2650,6 +4077,7 @@ components:
             type: string
         document:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/SearchResultDocument"
           description: The document that contains the chunk that matched the search
             query.
@@ -2658,6 +4086,16 @@ components:
         - keywords
         - score
         - text
+=======
+          - $ref: '#/components/schemas/SearchResultDocument'
+          description: The document that contains the chunk that matched the search
+            query.
+      required:
+      - document
+      - keywords
+      - score
+      - text
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     SearchResultDocument:
       type: object
       properties:
@@ -2683,8 +4121,13 @@ components:
           description: A previously supplied JSON object containing metadata that
             can be filtered on when searching.
       required:
+<<<<<<< HEAD
         - id
         - label
+=======
+      - id
+      - label
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     SearchResultMergingRequest:
       type: object
       properties:
@@ -2734,7 +4177,11 @@ components:
           maxLength: 1000
         processing_state:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/ProcessingStateEnum"
+=======
+          - $ref: '#/components/schemas/ProcessingStateEnum'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: |-
             An enum value representing where this document is along its processing lifecycle. Note that this is different than its indexing lifecycle.
 
@@ -2744,7 +4191,11 @@ components:
             * `FAILED` - Failed
         processing_failure_reason:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/ProcessingFailureReasonEnum"
+=======
+          - $ref: '#/components/schemas/ProcessingFailureReasonEnum'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
           description: |-
             An enum value representing why the document could not be processed. Is null unless processing_state is FAILED.
@@ -2753,7 +4204,11 @@ components:
             * `INVALID_FILE` - Invalid File
         status:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/DocumentStatus"
+=======
+          - $ref: '#/components/schemas/DocumentStatus'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: |-
             The document's current status.
 
@@ -2773,12 +4228,21 @@ components:
         document_to_document_indexes:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/DocumentDocumentToDocumentIndex"
       required:
         - document_to_document_indexes
         - id
         - label
         - last_uploaded_at
+=======
+            $ref: '#/components/schemas/DocumentDocumentToDocumentIndex'
+      required:
+      - document_to_document_indexes
+      - id
+      - label
+      - last_uploaded_at
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     SubmitCompletionActualRequest:
       type: object
       properties:
@@ -2819,7 +4283,11 @@ components:
         detail:
           type: string
       required:
+<<<<<<< HEAD
         - detail
+=======
+      - detail
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     SubmitCompletionActualsRequest:
       type: object
       properties:
@@ -2836,6 +4304,7 @@ components:
         actuals:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/SubmitCompletionActualRequest"
           description: Feedback regarding the quality of previously generated completions
       required:
@@ -2851,13 +4320,34 @@ components:
           STRING: "#/components/schemas/WorkflowExecutionActualStringRequest"
           JSON: "#/components/schemas/WorkflowExecutionActualJsonRequest"
           CHAT_HISTORY: "#/components/schemas/WorkflowExecutionActualChatHistoryRequest"
+=======
+            $ref: '#/components/schemas/SubmitCompletionActualRequest'
+          description: Feedback regarding the quality of previously generated completions
+      required:
+      - actuals
+    SubmitWorkflowExecutionActualRequest:
+      oneOf:
+      - $ref: '#/components/schemas/WorkflowExecutionActualStringRequest'
+      - $ref: '#/components/schemas/WorkflowExecutionActualJsonRequest'
+      - $ref: '#/components/schemas/WorkflowExecutionActualChatHistoryRequest'
+      discriminator:
+        propertyName: output_type
+        mapping:
+          STRING: '#/components/schemas/WorkflowExecutionActualStringRequest'
+          JSON: '#/components/schemas/WorkflowExecutionActualJsonRequest'
+          CHAT_HISTORY: '#/components/schemas/WorkflowExecutionActualChatHistoryRequest'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     SubmitWorkflowExecutionActualsRequest:
       type: object
       properties:
         actuals:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/SubmitWorkflowExecutionActualRequest"
+=======
+            $ref: '#/components/schemas/SubmitWorkflowExecutionActualRequest'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: Feedback regarding the quality of an output on a previously
             executed workflow.
         execution_id:
@@ -2874,7 +4364,11 @@ components:
             the workflow, if applicable, that you'd now like to submit actuals for.
             Must provide either this or execution_id.
       required:
+<<<<<<< HEAD
         - actuals
+=======
+      - actuals
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     TemplatingNodeChatHistoryResult:
       type: object
       properties:
@@ -2885,12 +4379,21 @@ components:
         value:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/ChatMessage"
           nullable: true
       required:
         - id
         - type
         - value
+=======
+            $ref: '#/components/schemas/ChatMessage'
+          nullable: true
+      required:
+      - id
+      - type
+      - value
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     TemplatingNodeJsonResult:
       type: object
       properties:
@@ -2903,9 +4406,15 @@ components:
           additionalProperties: {}
           nullable: true
       required:
+<<<<<<< HEAD
         - id
         - type
         - value
+=======
+      - id
+      - type
+      - value
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     TemplatingNodeNumberResult:
       type: object
       properties:
@@ -2917,23 +4426,37 @@ components:
           type: integer
           nullable: true
       required:
+<<<<<<< HEAD
         - id
         - type
         - value
+=======
+      - id
+      - type
+      - value
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     TemplatingNodeResult:
       type: object
       properties:
         type:
           type: string
         data:
+<<<<<<< HEAD
           $ref: "#/components/schemas/TemplatingNodeResultData"
       required:
         - data
         - type
+=======
+          $ref: '#/components/schemas/TemplatingNodeResultData'
+      required:
+      - data
+      - type
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     TemplatingNodeResultData:
       type: object
       properties:
         output:
+<<<<<<< HEAD
           $ref: "#/components/schemas/TemplatingNodeResultOutput"
       required:
         - output
@@ -2952,6 +4475,26 @@ components:
           JSON: "#/components/schemas/TemplatingNodeJsonResult"
           CHAT_HISTORY: "#/components/schemas/TemplatingNodeChatHistoryResult"
           SEARCH_RESULTS: "#/components/schemas/TemplatingNodeSearchResultsResult"
+=======
+          $ref: '#/components/schemas/TemplatingNodeResultOutput'
+      required:
+      - output
+    TemplatingNodeResultOutput:
+      oneOf:
+      - $ref: '#/components/schemas/TemplatingNodeStringResult'
+      - $ref: '#/components/schemas/TemplatingNodeNumberResult'
+      - $ref: '#/components/schemas/TemplatingNodeJsonResult'
+      - $ref: '#/components/schemas/TemplatingNodeChatHistoryResult'
+      - $ref: '#/components/schemas/TemplatingNodeSearchResultsResult'
+      discriminator:
+        propertyName: type
+        mapping:
+          STRING: '#/components/schemas/TemplatingNodeStringResult'
+          NUMBER: '#/components/schemas/TemplatingNodeNumberResult'
+          JSON: '#/components/schemas/TemplatingNodeJsonResult'
+          CHAT_HISTORY: '#/components/schemas/TemplatingNodeChatHistoryResult'
+          SEARCH_RESULTS: '#/components/schemas/TemplatingNodeSearchResultsResult'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     TemplatingNodeSearchResultsResult:
       type: object
       properties:
@@ -2962,12 +4505,21 @@ components:
         value:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/SearchResult"
           nullable: true
       required:
         - id
         - type
         - value
+=======
+            $ref: '#/components/schemas/SearchResult'
+          nullable: true
+      required:
+      - id
+      - type
+      - value
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     TemplatingNodeStringResult:
       type: object
       properties:
@@ -2979,9 +4531,15 @@ components:
           type: string
           nullable: true
       required:
+<<<<<<< HEAD
         - id
         - type
         - value
+=======
+      - id
+      - type
+      - value
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     TerminalNodeChatHistoryResult:
       type: object
       properties:
@@ -2998,12 +4556,21 @@ components:
         value:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/ChatMessage"
           nullable: true
       required:
         - name
         - type
         - value
+=======
+            $ref: '#/components/schemas/ChatMessage'
+          nullable: true
+      required:
+      - name
+      - type
+      - value
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     TerminalNodeJsonResult:
       type: object
       properties:
@@ -3022,9 +4589,15 @@ components:
           additionalProperties: {}
           nullable: true
       required:
+<<<<<<< HEAD
         - name
         - type
         - value
+=======
+      - name
+      - type
+      - value
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     TerminalNodeNumberResult:
       type: object
       properties:
@@ -3042,23 +4615,37 @@ components:
           type: integer
           nullable: true
       required:
+<<<<<<< HEAD
         - name
         - type
         - value
+=======
+      - name
+      - type
+      - value
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     TerminalNodeResult:
       type: object
       properties:
         type:
           type: string
         data:
+<<<<<<< HEAD
           $ref: "#/components/schemas/TerminalNodeResultData"
       required:
         - data
         - type
+=======
+          $ref: '#/components/schemas/TerminalNodeResultData'
+      required:
+      - data
+      - type
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     TerminalNodeResultData:
       type: object
       properties:
         output:
+<<<<<<< HEAD
           $ref: "#/components/schemas/TerminalNodeResultOutput"
       required:
         - output
@@ -3077,6 +4664,26 @@ components:
           JSON: "#/components/schemas/TerminalNodeJsonResult"
           CHAT_HISTORY: "#/components/schemas/TerminalNodeChatHistoryResult"
           SEARCH_RESULTS: "#/components/schemas/TerminalNodeSearchResultsResult"
+=======
+          $ref: '#/components/schemas/TerminalNodeResultOutput'
+      required:
+      - output
+    TerminalNodeResultOutput:
+      oneOf:
+      - $ref: '#/components/schemas/TerminalNodeStringResult'
+      - $ref: '#/components/schemas/TerminalNodeNumberResult'
+      - $ref: '#/components/schemas/TerminalNodeJsonResult'
+      - $ref: '#/components/schemas/TerminalNodeChatHistoryResult'
+      - $ref: '#/components/schemas/TerminalNodeSearchResultsResult'
+      discriminator:
+        propertyName: type
+        mapping:
+          STRING: '#/components/schemas/TerminalNodeStringResult'
+          NUMBER: '#/components/schemas/TerminalNodeNumberResult'
+          JSON: '#/components/schemas/TerminalNodeJsonResult'
+          CHAT_HISTORY: '#/components/schemas/TerminalNodeChatHistoryResult'
+          SEARCH_RESULTS: '#/components/schemas/TerminalNodeSearchResultsResult'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     TerminalNodeSearchResultsResult:
       type: object
       properties:
@@ -3093,12 +4700,21 @@ components:
         value:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/SearchResult"
           nullable: true
       required:
         - name
         - type
         - value
+=======
+            $ref: '#/components/schemas/SearchResult'
+          nullable: true
+      required:
+      - name
+      - type
+      - value
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     TerminalNodeStringResult:
       type: object
       properties:
@@ -3116,9 +4732,15 @@ components:
           type: string
           nullable: true
       required:
+<<<<<<< HEAD
         - name
         - type
         - value
+=======
+      - name
+      - type
+      - value
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     TestSuiteTestCase:
       type: object
       properties:
@@ -3137,12 +4759,21 @@ components:
             expects.
         evaluation_params:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/EvaluationParams"
           description: Parameters to use when evaluating the test case, specific to
             the test suite's evaluation metric.
       required:
         - evaluation_params
         - input_values
+=======
+          - $ref: '#/components/schemas/EvaluationParams'
+          description: Parameters to use when evaluating the test case, specific to
+            the test suite's evaluation metric.
+      required:
+      - evaluation_params
+      - input_values
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     TestSuiteTestCaseRequest:
       type: object
       properties:
@@ -3162,12 +4793,21 @@ components:
             expects.
         evaluation_params:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/EvaluationParamsRequest"
           description: Parameters to use when evaluating the test case, specific to
             the test suite's evaluation metric.
       required:
         - evaluation_params
         - input_values
+=======
+          - $ref: '#/components/schemas/EvaluationParamsRequest'
+          description: Parameters to use when evaluating the test case, specific to
+            the test suite's evaluation metric.
+      required:
+      - evaluation_params
+      - input_values
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     UploadDocumentBodyRequest:
       type: object
       properties:
@@ -3209,15 +4849,24 @@ components:
           description: A stringified JSON object containing any metadata associated
             with the document that you'd like to filter upon later.
       required:
+<<<<<<< HEAD
         - contents
         - label
+=======
+      - contents
+      - label
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     UploadDocumentErrorResponse:
       type: object
       properties:
         detail:
           type: string
       required:
+<<<<<<< HEAD
         - detail
+=======
+      - detail
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     UploadDocumentResponse:
       type: object
       properties:
@@ -3226,7 +4875,11 @@ components:
           format: uuid
           description: The ID of the newly created document.
       required:
+<<<<<<< HEAD
         - document_id
+=======
+      - document_id
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     UpsertSandboxScenarioRequestRequest:
       type: object
       properties:
@@ -3236,7 +4889,11 @@ components:
         inputs:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/ScenarioInputRequest"
+=======
+            $ref: '#/components/schemas/ScenarioInputRequest'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           description: The inputs for the scenario
         scenario_id:
           type: string
@@ -3244,9 +4901,15 @@ components:
           description: The id of the scenario to update. If none is provided, an id
             will be generated and a new scenario will be appended.
         metric_input_params:
+<<<<<<< HEAD
           $ref: "#/components/schemas/SandboxMetricInputParamsRequest"
       required:
         - inputs
+=======
+          $ref: '#/components/schemas/SandboxMetricInputParamsRequest'
+      required:
+      - inputs
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     VellumVariable:
       type: object
       properties:
@@ -3255,6 +4918,7 @@ components:
         key:
           type: string
         type:
+<<<<<<< HEAD
           $ref: "#/components/schemas/VellumVariableType"
       required:
         - id
@@ -3267,6 +4931,20 @@ components:
         - JSON
         - CHAT_HISTORY
         - SEARCH_RESULTS
+=======
+          $ref: '#/components/schemas/VellumVariableType'
+      required:
+      - id
+      - key
+      - type
+    VellumVariableType:
+      enum:
+      - STRING
+      - NUMBER
+      - JSON
+      - CHAT_HISTORY
+      - SEARCH_RESULTS
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       type: string
       description: |-
         * `STRING` - STRING
@@ -3280,10 +4958,17 @@ components:
         message:
           type: string
         code:
+<<<<<<< HEAD
           $ref: "#/components/schemas/WorkflowExecutionEventErrorCode"
       required:
         - code
         - message
+=======
+          $ref: '#/components/schemas/WorkflowExecutionEventErrorCode'
+      required:
+      - code
+      - message
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     WorkflowExecutionActualChatHistoryRequest:
       type: object
       properties:
@@ -3319,12 +5004,20 @@ components:
         desired_output_value:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/ChatMessageRequest"
+=======
+            $ref: '#/components/schemas/ChatMessageRequest'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
           description: Optionally provide the value that the output ideally should
             have been.
       required:
+<<<<<<< HEAD
         - output_type
+=======
+      - output_type
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     WorkflowExecutionActualJsonRequest:
       type: object
       properties:
@@ -3364,7 +5057,11 @@ components:
           description: Optionally provide the value that the output ideally should
             have been.
       required:
+<<<<<<< HEAD
         - output_type
+=======
+      - output_type
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     WorkflowExecutionActualStringRequest:
       type: object
       properties:
@@ -3403,6 +5100,7 @@ components:
           description: Optionally provide the value that the output ideally should
             have been.
       required:
+<<<<<<< HEAD
         - output_type
     WorkflowExecutionEventErrorCode:
       enum:
@@ -3412,6 +5110,17 @@ components:
         - NODE_EXECUTION
         - LLM_PROVIDER
         - INVALID_TEMPLATE
+=======
+      - output_type
+    WorkflowExecutionEventErrorCode:
+      enum:
+      - WORKFLOW_INITIALIZATION
+      - NODE_EXECUTION_COUNT_LIMIT_REACHED
+      - INTERNAL_SERVER_ERROR
+      - NODE_EXECUTION
+      - LLM_PROVIDER
+      - INVALID_TEMPLATE
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       type: string
       description: |-
         * `WORKFLOW_INITIALIZATION` - WORKFLOW_INITIALIZATION
@@ -3422,8 +5131,13 @@ components:
         * `INVALID_TEMPLATE` - INVALID_TEMPLATE
     WorkflowExecutionEventType:
       enum:
+<<<<<<< HEAD
         - NODE
         - WORKFLOW
+=======
+      - NODE
+      - WORKFLOW
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       type: string
       description: |-
         * `NODE` - Node
@@ -3442,11 +5156,19 @@ components:
         type:
           type: string
         data:
+<<<<<<< HEAD
           $ref: "#/components/schemas/WorkflowNodeResultEvent"
       required:
         - data
         - execution_id
         - type
+=======
+          $ref: '#/components/schemas/WorkflowNodeResultEvent'
+      required:
+      - data
+      - execution_id
+      - type
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     WorkflowExecutionWorkflowResultEvent:
       type: object
       properties:
@@ -3462,6 +5184,7 @@ components:
         type:
           type: string
         data:
+<<<<<<< HEAD
           $ref: "#/components/schemas/WorkflowResultEvent"
       required:
         - data
@@ -3484,6 +5207,30 @@ components:
           CONDITIONAL: "#/components/schemas/ConditionalNodeResult"
           API: "#/components/schemas/ApiNodeResult"
           TERMINAL: "#/components/schemas/TerminalNodeResult"
+=======
+          $ref: '#/components/schemas/WorkflowResultEvent'
+      required:
+      - data
+      - execution_id
+      - type
+    WorkflowNodeResultData:
+      oneOf:
+      - $ref: '#/components/schemas/PromptNodeResult'
+      - $ref: '#/components/schemas/SearchNodeResult'
+      - $ref: '#/components/schemas/TemplatingNodeResult'
+      - $ref: '#/components/schemas/ConditionalNodeResult'
+      - $ref: '#/components/schemas/ApiNodeResult'
+      - $ref: '#/components/schemas/TerminalNodeResult'
+      discriminator:
+        propertyName: type
+        mapping:
+          PROMPT: '#/components/schemas/PromptNodeResult'
+          SEARCH: '#/components/schemas/SearchNodeResult'
+          TEMPLATING: '#/components/schemas/TemplatingNodeResult'
+          CONDITIONAL: '#/components/schemas/ConditionalNodeResult'
+          API: '#/components/schemas/ApiNodeResult'
+          TERMINAL: '#/components/schemas/TerminalNodeResult'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     WorkflowNodeResultEvent:
       type: object
       properties:
@@ -3494,22 +5241,35 @@ components:
         node_result_id:
           type: string
         state:
+<<<<<<< HEAD
           $ref: "#/components/schemas/WorkflowNodeResultEventState"
+=======
+          $ref: '#/components/schemas/WorkflowNodeResultEventState'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
         ts:
           type: string
           format: date-time
           nullable: true
         data:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/WorkflowNodeResultData"
           nullable: true
         error:
           allOf:
             - $ref: "#/components/schemas/WorkflowEventError"
+=======
+          - $ref: '#/components/schemas/WorkflowNodeResultData'
+          nullable: true
+        error:
+          allOf:
+          - $ref: '#/components/schemas/WorkflowEventError'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
           nullable: true
         input_values:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/NodeInputVariableCompiledValue"
           nullable: true
       required:
@@ -3524,6 +5284,22 @@ components:
         - STREAMING
         - FULFILLED
         - REJECTED
+=======
+            $ref: '#/components/schemas/NodeInputVariableCompiledValue'
+          nullable: true
+      required:
+      - data
+      - id
+      - node_id
+      - node_result_id
+      - state
+    WorkflowNodeResultEventState:
+      enum:
+      - INITIATED
+      - STREAMING
+      - FULFILLED
+      - REJECTED
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
       type: string
       description: |-
         * `INITIATED` - INITIATED
@@ -3542,6 +5318,7 @@ components:
         value:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/ChatMessageRequest"
       required:
         - name
@@ -3558,6 +5335,24 @@ components:
           STRING: "#/components/schemas/WorkflowRequestStringInputRequest"
           JSON: "#/components/schemas/WorkflowRequestJSONInputRequest"
           CHAT_HISTORY: "#/components/schemas/WorkflowRequestChatHistoryInputRequest"
+=======
+            $ref: '#/components/schemas/ChatMessageRequest'
+      required:
+      - name
+      - type
+      - value
+    WorkflowRequestInputRequest:
+      oneOf:
+      - $ref: '#/components/schemas/WorkflowRequestStringInputRequest'
+      - $ref: '#/components/schemas/WorkflowRequestJSONInputRequest'
+      - $ref: '#/components/schemas/WorkflowRequestChatHistoryInputRequest'
+      discriminator:
+        propertyName: type
+        mapping:
+          STRING: '#/components/schemas/WorkflowRequestStringInputRequest'
+          JSON: '#/components/schemas/WorkflowRequestJSONInputRequest'
+          CHAT_HISTORY: '#/components/schemas/WorkflowRequestChatHistoryInputRequest'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     WorkflowRequestJSONInputRequest:
       type: object
       properties:
@@ -3571,9 +5366,15 @@ components:
           type: object
           additionalProperties: {}
       required:
+<<<<<<< HEAD
         - name
         - type
         - value
+=======
+      - name
+      - type
+      - value
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     WorkflowRequestStringInputRequest:
       type: object
       properties:
@@ -3586,21 +5387,32 @@ components:
         value:
           type: string
       required:
+<<<<<<< HEAD
         - name
         - type
         - value
+=======
+      - name
+      - type
+      - value
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     WorkflowResultEvent:
       type: object
       properties:
         id:
           type: string
         state:
+<<<<<<< HEAD
           $ref: "#/components/schemas/WorkflowNodeResultEventState"
+=======
+          $ref: '#/components/schemas/WorkflowNodeResultEventState'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
         ts:
           type: string
           format: date-time
         output:
           allOf:
+<<<<<<< HEAD
             - $ref: "#/components/schemas/WorkflowResultEventOutputData"
           nullable: true
         error:
@@ -3627,6 +5439,34 @@ components:
           JSON: "#/components/schemas/WorkflowResultEventOutputDataJSON"
           CHAT_HISTORY: "#/components/schemas/WorkflowResultEventOutputDataChatHistory"
           SEARCH_RESULTS: "#/components/schemas/WorkflowResultEventOutputDataSearchResults"
+=======
+          - $ref: '#/components/schemas/WorkflowResultEventOutputData'
+          nullable: true
+        error:
+          allOf:
+          - $ref: '#/components/schemas/WorkflowEventError'
+          nullable: true
+      required:
+      - id
+      - output
+      - state
+      - ts
+    WorkflowResultEventOutputData:
+      oneOf:
+      - $ref: '#/components/schemas/WorkflowResultEventOutputDataString'
+      - $ref: '#/components/schemas/WorkflowResultEventOutputDataNumber'
+      - $ref: '#/components/schemas/WorkflowResultEventOutputDataJSON'
+      - $ref: '#/components/schemas/WorkflowResultEventOutputDataChatHistory'
+      - $ref: '#/components/schemas/WorkflowResultEventOutputDataSearchResults'
+      discriminator:
+        propertyName: type
+        mapping:
+          STRING: '#/components/schemas/WorkflowResultEventOutputDataString'
+          NUMBER: '#/components/schemas/WorkflowResultEventOutputDataNumber'
+          JSON: '#/components/schemas/WorkflowResultEventOutputDataJSON'
+          CHAT_HISTORY: '#/components/schemas/WorkflowResultEventOutputDataChatHistory'
+          SEARCH_RESULTS: '#/components/schemas/WorkflowResultEventOutputDataSearchResults'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     WorkflowResultEventOutputDataChatHistory:
       type: object
       properties:
@@ -3637,7 +5477,11 @@ components:
         name:
           type: string
         state:
+<<<<<<< HEAD
           $ref: "#/components/schemas/WorkflowNodeResultEventState"
+=======
+          $ref: '#/components/schemas/WorkflowNodeResultEventState'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
         node_id:
           type: string
         delta:
@@ -3651,6 +5495,7 @@ components:
         value:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/ChatMessage"
           nullable: true
       required:
@@ -3660,6 +5505,17 @@ components:
         - state
         - type
         - value
+=======
+            $ref: '#/components/schemas/ChatMessage'
+          nullable: true
+      required:
+      - delta
+      - name
+      - node_id
+      - state
+      - type
+      - value
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     WorkflowResultEventOutputDataJSON:
       type: object
       properties:
@@ -3670,7 +5526,11 @@ components:
         name:
           type: string
         state:
+<<<<<<< HEAD
           $ref: "#/components/schemas/WorkflowNodeResultEventState"
+=======
+          $ref: '#/components/schemas/WorkflowNodeResultEventState'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
         node_id:
           type: string
         delta:
@@ -3686,12 +5546,21 @@ components:
           additionalProperties: {}
           nullable: true
       required:
+<<<<<<< HEAD
         - delta
         - name
         - node_id
         - state
         - type
         - value
+=======
+      - delta
+      - name
+      - node_id
+      - state
+      - type
+      - value
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     WorkflowResultEventOutputDataNumber:
       type: object
       properties:
@@ -3702,7 +5571,11 @@ components:
         name:
           type: string
         state:
+<<<<<<< HEAD
           $ref: "#/components/schemas/WorkflowNodeResultEventState"
+=======
+          $ref: '#/components/schemas/WorkflowNodeResultEventState'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
         node_id:
           type: string
         delta:
@@ -3717,12 +5590,21 @@ components:
           type: integer
           nullable: true
       required:
+<<<<<<< HEAD
         - delta
         - name
         - node_id
         - state
         - type
         - value
+=======
+      - delta
+      - name
+      - node_id
+      - state
+      - type
+      - value
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     WorkflowResultEventOutputDataSearchResults:
       type: object
       properties:
@@ -3733,7 +5615,11 @@ components:
         name:
           type: string
         state:
+<<<<<<< HEAD
           $ref: "#/components/schemas/WorkflowNodeResultEventState"
+=======
+          $ref: '#/components/schemas/WorkflowNodeResultEventState'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
         node_id:
           type: string
         delta:
@@ -3747,6 +5633,7 @@ components:
         value:
           type: array
           items:
+<<<<<<< HEAD
             $ref: "#/components/schemas/SearchResult"
           nullable: true
       required:
@@ -3756,6 +5643,17 @@ components:
         - state
         - type
         - value
+=======
+            $ref: '#/components/schemas/SearchResult'
+          nullable: true
+      required:
+      - delta
+      - name
+      - node_id
+      - state
+      - type
+      - value
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
     WorkflowResultEventOutputDataString:
       type: object
       properties:
@@ -3766,7 +5664,11 @@ components:
         name:
           type: string
         state:
+<<<<<<< HEAD
           $ref: "#/components/schemas/WorkflowNodeResultEventState"
+=======
+          $ref: '#/components/schemas/WorkflowNodeResultEventState'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
         node_id:
           type: string
         delta:
@@ -3782,6 +5684,7 @@ components:
           description: The entire string value. Will be non-null for events of state
             FULFILLED.
       required:
+<<<<<<< HEAD
         - delta
         - name
         - node_id
@@ -3797,6 +5700,23 @@ components:
         mapping:
           WORKFLOW: "#/components/schemas/WorkflowExecutionWorkflowResultEvent"
           NODE: "#/components/schemas/WorkflowExecutionNodeResultEvent"
+=======
+      - delta
+      - name
+      - node_id
+      - state
+      - type
+      - value
+    WorkflowStreamEvent:
+      oneOf:
+      - $ref: '#/components/schemas/WorkflowExecutionWorkflowResultEvent'
+      - $ref: '#/components/schemas/WorkflowExecutionNodeResultEvent'
+      discriminator:
+        propertyName: type
+        mapping:
+          WORKFLOW: '#/components/schemas/WorkflowExecutionWorkflowResultEvent'
+          NODE: '#/components/schemas/WorkflowExecutionNodeResultEvent'
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
   securitySchemes:
     apiKeyAuth:
       type: apiKey
@@ -3804,6 +5724,12 @@ components:
       name: X_API_KEY
       description: API key based authentication
 servers:
+<<<<<<< HEAD
   - url: https://api.vellum.ai
     description: Default Server
     x-name: Default
+=======
+- url: https://api.vellum.ai
+  description: Default Server
+  x-name: Default
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)

@@ -31,10 +31,18 @@ And responds with a JSON payload that conforms to the following schema:
   Vellum will soon support authenticated endpoints and the specification of auth headers and signing signatures.
 </Callout>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
 2. You encode business logic behind your API that interprets the provided inputs and output and produces some numerical score representing the quality of the output.
 3. You select the “Webhook” evaluation metric within Vellum’s UI and provide the url to your webhook.
 4. Upon evaluation, Vellum will send the above payload to your webhook and expect the above response, rendering UI elements based on the response data accordingly.
 
 If you want to test the Webhook evaluation metric without standing up your own endpoint, you can use this endpoint as an example. It’ll generate random numerical scores.
 
+<<<<<<< HEAD
 [https://api.vellum.ai/v1/webhooks/eval-metric-examples/rng](https://api.vellum.ai/v1/webhooks/eval-metric-examples/rng)
+=======
+[https://api.vellum.ai/v1/webhooks/eval-metric-examples/rng](https://api.vellum.ai/v1/webhooks/eval-metric-examples/rng)
+>>>>>>> 5a5eede0 (Add vellum docs to test dir)
