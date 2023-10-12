@@ -122,6 +122,24 @@ jobs:
           name: Deploy
           command: vercel deploy --prebuilt --prod --token=${VERCEL_TOKEN}
 
+  generate-customer-docs:
+    docker:
+      - image: cimg/node:lts
+    parameters:
+      docs_path:
+        type: string
+    steps:
+      - checkout
+      - run:
+          name: Download Fern
+          command: npm install -g fern-api
+      - run:
+          name: Generate Customer Docs
+          command: |
+            cd << parameters.docs_path >>
+            fern generate --docs --log-level debug
+            echo "Generated docs for customer!"
+
 workflows:
   version: 2
   build:
@@ -174,3 +192,44 @@ workflows:
               ignore: /.*/
             tags:
               only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
+
+  preview-customer-docs:
+    jobs:
+      - generate-customer-docs:
+          docs_path: tests/candid
+          filters:
+            branches:
+              only:
+                - main
+      - generate-customer-docs:
+          docs_path: tests/fern
+          context:
+            - fern-tokens
+          filters:
+            branches:
+              only:
+                - main
+      - generate-customer-docs:
+          docs_path: tests/mercoa
+          filters:
+            branches:
+              only:
+                - main
+      - generate-customer-docs:
+          docs_path: tests/primer
+          filters:
+            branches:
+              only:
+                - main
+      - generate-customer-docs:
+          docs_path: tests/superagent
+          filters:
+            branches:
+              only:
+                - main
+      - generate-customer-docs:
+          docs_path: tests/vellum
+          filters:
+            branches:
+              only:
+                - main
