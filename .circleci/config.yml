@@ -205,18 +205,16 @@ workflows:
           context:
             - fern-tokens
             - npm
-            - fern-dev
-          # filters:
-          #   branches:
-          #     only:
-          #       - main
+          filters:
+            branches:
+              only:
+                - main
       - generate-customer-docs:
           name: preview-docs-fern
           docs_path: tests/fern
           context:
             - fern-tokens
             - npm
-            - fern-dev
           filters:
             branches:
               only:
@@ -227,7 +225,6 @@ workflows:
           context:
             - fern-tokens
             - npm
-            - fern-dev
           filters:
             branches:
               only:
