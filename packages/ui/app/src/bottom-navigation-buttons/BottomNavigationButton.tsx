@@ -28,17 +28,20 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
     };
 
     const navigatable = useMemo(() => resolver.resolveNavigatable(docsNode), [resolver, docsNode]);
-    const fullSlug = useMemo(() => getFullSlugForNavigatable(navigatable), [navigatable]);
 
     const iconName = visitDirection({
         previous: IconNames.CHEVRON_LEFT,
         next: IconNames.CHEVRON_RIGHT,
     });
+
     const iconElement = <Icon icon={iconName} />;
 
     const onClick = useCallback(() => {
-        navigateToPath(fullSlug);
-    }, [navigateToPath, fullSlug]);
+        if (navigatable != null) {
+            const fullSlug = getFullSlugForNavigatable(navigatable, { omitDefault: true });
+            navigateToPath(fullSlug);
+        }
+    }, [navigateToPath, navigatable]);
 
     const text = useMemo(() => {
         switch (docsNode.type) {
@@ -59,6 +62,12 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
                 return undefined;
         }
     }, [docsNode]);
+
+    if (navigatable == null) {
+        return null;
+    }
+
+    const fullSlug = getFullSlugForNavigatable(navigatable, { omitDefault: true });
 
     return (
         <Link

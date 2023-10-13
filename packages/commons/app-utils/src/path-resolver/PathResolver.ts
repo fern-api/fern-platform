@@ -32,8 +32,6 @@ export class PathResolver {
         return { tree, map, nodeToNeighbors };
     }
 
-    public resolveNavigatable(fullSlug: FullSlug): NavigatableDocsNode | undefined;
-    public resolveNavigatable(node: DocsNode): NavigatableDocsNode;
     public resolveNavigatable(slugOrNode: string | DocsNode): NavigatableDocsNode | undefined {
         const node = typeof slugOrNode === "string" ? this.resolveSlug(slugOrNode) : slugOrNode;
         return node != null ? this.#resolveNavigatable(node) : undefined;
