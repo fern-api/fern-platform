@@ -3,12 +3,12 @@ import {
     DefinitionObjectFactory,
     NodeFactory,
     PathResolver,
-    SerializedMdxContent,
     type NavigatableDocsNode,
     type NodeNeighbors,
 } from "@fern-ui/app-utils";
 import { noop } from "@fern-ui/core-utils";
 import React from "react";
+import { ResolvedPath } from "../ResolvedPath";
 
 const emptyDefinition = DefinitionObjectFactory.createDocsDefinition();
 
@@ -41,7 +41,11 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
     observeDocContent: noop,
     resolver: new PathResolver({ docsDefinition: emptyDefinition }),
     registerScrolledToPathListener: () => noop,
-    serializedMdxContent: undefined,
+    resolvedPath: {
+        type: "custom-markdown-page",
+        fullSlug: "",
+        serializedMdxContent: { compiledSource: "", frontmatter: {}, scope: {} },
+    },
 });
 
 export interface NavigationContextValue {
@@ -55,6 +59,5 @@ export interface NavigationContextValue {
     observeDocContent: (element: HTMLDivElement) => void;
     resolver: PathResolver;
     registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
-    // This may need to be placed elsewhere
-    serializedMdxContent: SerializedMdxContent | undefined;
+    resolvedPath: ResolvedPath;
 }

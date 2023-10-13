@@ -104,13 +104,14 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
             resolvedPath:
                 serializedNavigatable.type === "page"
                     ? {
-                          type: "mdx-page",
+                          type: "custom-markdown-page",
                           fullSlug,
                           serializedMdxContent: serializedNavigatable.serializedMdxContent,
                       }
                     : {
-                          type: "other",
+                          type: "api-page",
                           fullSlug,
+                          apiSection: serializedNavigatable.section,
                       },
         },
     };

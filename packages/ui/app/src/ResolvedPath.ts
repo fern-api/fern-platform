@@ -1,16 +1,18 @@
+import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { type SerializedMdxContent } from "@fern-ui/app-utils";
 
 export declare namespace ResolvedPath {
-    interface MdxPage {
-        type: "mdx-page";
+    interface CustomMarkdownPage {
+        type: "custom-markdown-page";
         fullSlug: string;
         serializedMdxContent: SerializedMdxContent;
     }
 
-    interface Other {
+    interface ApiPage {
+        type: "api-page";
         fullSlug: string;
-        type: "other";
+        apiSection: FernRegistryDocsRead.ApiSection;
     }
 }
 
-export type ResolvedPath = ResolvedPath.MdxPage | ResolvedPath.Other;
+export type ResolvedPath = ResolvedPath.CustomMarkdownPage | ResolvedPath.ApiPage;

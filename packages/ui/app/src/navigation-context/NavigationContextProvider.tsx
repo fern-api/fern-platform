@@ -1,10 +1,9 @@
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { getFullSlugForNavigatable, PathResolver, SerializedMdxContent } from "@fern-ui/app-utils";
+import { getFullSlugForNavigatable, PathResolver } from "@fern-ui/app-utils";
 import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useCacheContext } from "../cache-context/useCacheContext";
 import { type ResolvedPath } from "../ResolvedPath";
 import { getRouteNode } from "../util/anchor";
 import { NavigationContext } from "./NavigationContext";
@@ -27,28 +26,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const justNavigatedTo = useRef<string | undefined>(router.asPath);
     const { value: hasInitialized, setTrue: markAsInitialized } = useBooleanState(false);
     const resolver = useMemo(() => new PathResolver({ docsDefinition }), [docsDefinition]);
-    const { storeSerializedMdxContent, getSerializedMdxContent } = useCacheContext();
-
-    const [serializedMdxContent, setSerializedMdxContent] = useState<SerializedMdxContent | undefined>(
-        resolvedPath.type === "mdx-page" ? resolvedPath.serializedMdxContent : undefined
-    );
-
-    useEffect(() => {
-        if (resolvedPath.type === "mdx-page") {
-            setSerializedMdxContent(resolvedPath.serializedMdxContent);
-        } else {
-            setSerializedMdxContent(undefined);
-        }
-    }, [resolvedPath]);
-
-    useEffect(() => {
-        if (resolvedPath.type === "mdx-page") {
-            const existing = getSerializedMdxContent(resolvedPath.fullSlug);
-            if (existing == null) {
-                storeSerializedMdxContent(resolvedPath.fullSlug, resolvedPath.serializedMdxContent);
-            }
-        }
-    }, [resolvedPath, getSerializedMdxContent, storeSerializedMdxContent]);
 
     const resolvedNavigatable = useMemo(() => {
         const node = resolver.resolveNavigatable(resolvedPath.fullSlug);
@@ -170,15 +147,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         justNavigated.current = true;
         const navigatable = resolver.resolveNavigatable(fullSlug);
         if (navigatable != null) {
-            if (navigatable.type === "page") {
-                const navigatableFullSlug = getFullSlugForNavigatable(navigatable);
-                const existingSerializedMdxContent = getSerializedMdxContent(navigatableFullSlug);
-                if (existingSerializedMdxContent != null) {
-                    setSerializedMdxContent(existingSerializedMdxContent);
-                } else {
-                    setSerializedMdxContent(undefined);
-                }
-            }
             setActiveNavigatable(navigatable);
         }
         // navigateToPathListeners.invokeListeners(slug);
@@ -214,8 +182,8 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 observeDocContent,
                 resolver,
                 registerScrolledToPathListener: scrollToPathListeners.registerListener,
-                serializedMdxContent,
                 activeNavigatableNeighbors,
+                resolvedPath,
             }}
         >
             {children}

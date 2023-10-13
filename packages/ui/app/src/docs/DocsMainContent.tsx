@@ -8,17 +8,22 @@ export declare namespace DocsMainContent {
 }
 
 export const DocsMainContent: React.FC<DocsMainContent.Props> = () => {
-    const { activeNavigatable, serializedMdxContent } = useNavigationContext();
+    const { activeNavigatable, resolvedPath } = useNavigationContext();
 
-    switch (activeNavigatable.type) {
-        case "page":
-            return <CustomDocsPage serializedMdxContent={serializedMdxContent} navigatable={activeNavigatable} />;
-        case "top-level-endpoint":
-        case "top-level-webhook":
-        case "endpoint":
-        case "webhook":
+    switch (resolvedPath.type) {
+        case "custom-markdown-page":
+            if (activeNavigatable.type !== "page") {
+                return null;
+            }
             return (
-                <ApiDefinitionContextProvider apiSection={activeNavigatable.section}>
+                <CustomDocsPage
+                    serializedMdxContent={resolvedPath.serializedMdxContent}
+                    navigatable={activeNavigatable}
+                />
+            );
+        case "api-page":
+            return (
+                <ApiDefinitionContextProvider apiSection={resolvedPath.apiSection}>
                     <ApiPage />
                 </ApiDefinitionContextProvider>
             );

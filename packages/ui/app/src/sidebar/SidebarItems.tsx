@@ -53,7 +53,6 @@ const UnmemoizedSidebarItems: React.FC<SidebarItems.Props> = ({
                                 title={pageMetadata.title}
                                 registerScrolledToPathListener={registerScrolledToPathListener}
                                 isSelected={fullSlug === selectedSlug}
-                                shallow
                             />
                         );
                     },
