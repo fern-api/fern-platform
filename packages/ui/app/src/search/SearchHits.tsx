@@ -1,14 +1,17 @@
 import { Spinner, SpinnerSize } from "@blueprintjs/core";
+import { getFullSlugForNavigatable } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import classNames from "classnames";
+import { Hit } from "instantsearch.js";
 import { useRouter } from "next/router";
-import React, { PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
+import React, { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch-hooks-web";
+import { useNavigationContext } from "../navigation-context";
 import { useSearchContext } from "../search-context/useSearchContext";
 import { SearchHit } from "./SearchHit";
 import type { SearchRecord } from "./types";
-import { getHrefForSearchRecord } from "./util";
+import { getFullPathForSearchRecord } from "./util";
 
 type Progress = "error" | "pending" | "success";
 
@@ -17,12 +20,25 @@ export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {
 };
 
 export const SearchHits: React.FC = () => {
+    const { resolver, navigateToPath } = useNavigationContext();
     const { closeSearchDialog } = useSearchContext();
     const { hits } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [hoveredSearchHitId, setHoveredSearchHitId] = useState<string | null>(null);
     const router = useRouter();
+
+    const getFullPathForHit = useCallback(
+        (hit: Hit<SearchRecord>) => {
+            const path = getFullPathForSearchRecord(hit);
+            const navigatable = resolver.resolveNavigatable(path);
+            if (navigatable == null) {
+                return "";
+            }
+            return getFullSlugForNavigatable(navigatable, { omitDefault: true });
+        },
+        [resolver]
+    );
 
     const refs = useRef(new Map<string, HTMLAnchorElement>());
 
@@ -90,9 +106,12 @@ export const SearchHits: React.FC = () => {
             if (hoveredSearchHit == null) {
                 return;
             }
-            const href = getHrefForSearchRecord(hoveredSearchHit.record);
             closeSearchDialog();
-            void router.push(href);
+            const fullPath = getFullPathForHit(hoveredSearchHit.record);
+            navigateToPath(fullPath);
+            void router.replace(`/${fullPath}`, undefined, {
+                shallow: true,
+            });
         },
         preventDefault: true,
     });
