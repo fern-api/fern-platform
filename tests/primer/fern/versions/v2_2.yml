@@ -1,0 +1,30 @@
+navigation:
+  - section: Introduction
+    collapsed: false
+    contents:
+      - page: Getting Started
+        path: ../introduction/getting-started.md
+      - page: Authentication
+        path: ../introduction/authentication.md
+      - page: API Responses
+        path: ../introduction/responses.md
+      - page: Idempotency Key
+        path: ../introduction/idempotency-key.md
+      - page: Loyalty Transactions
+        path: ../introduction/loyalty-transactions.md
+  - section: Changelog
+    collapsed: true
+    contents:
+      - page: API Migration Guide
+        path: ../changelog/migration-guide.md
+      - page: API v2.2
+        path: ../changelog/api-v22.md
+      - page: API v2.1
+        path: ../changelog/api-v21.md
+      - page: API v2
+        path: ../changelog/api-v2.md
+  - api: API Reference
+    api-name: v2.2
+    display-errors: true
+  - api: Webhooks
+    api-name: webhooks-v2.2
