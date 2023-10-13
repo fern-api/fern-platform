@@ -106,6 +106,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                     ? {
                           type: "custom-markdown-page",
                           fullSlug,
+                          page: serializedNavigatable.page,
                           serializedMdxContent: serializedNavigatable.serializedMdxContent,
                       }
                     : {

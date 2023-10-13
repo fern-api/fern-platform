@@ -39,14 +39,16 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     useEffect(() => {
         setActiveNavigatable(resolvedNavigatable);
+        if (resolvedNavigatable?.type === "page") {
+            window.scrollTo({ top: 0, behavior: "auto" });
+        }
     }, [resolvedNavigatable]);
 
     const [activeNavigatable, setActiveNavigatable] = useState(resolvedNavigatable);
 
-    const activeNavigatableNeighbors = useMemo(
-        () => resolver.getNeighborsForNavigatable(activeNavigatable),
-        [resolver, activeNavigatable]
-    );
+    const activeNavigatableNeighbors = useMemo(() => {
+        return resolver.getNeighborsForNavigatable(activeNavigatable);
+    }, [resolver, activeNavigatable]);
 
     const selectedSlug = getFullSlugForNavigatable(activeNavigatable, { omitDefault: true });
 

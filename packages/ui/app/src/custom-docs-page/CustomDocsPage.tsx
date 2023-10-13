@@ -5,6 +5,7 @@ import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavi
 import { HEADER_HEIGHT } from "../constants";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { MdxContent } from "../mdx/MdxContent";
+import { ResolvedPath } from "../ResolvedPath";
 import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { TableOfContents } from "./TableOfContents";
 
@@ -12,14 +13,15 @@ export declare namespace CustomDocsPage {
     export interface Props {
         navigatable: DocsNode.Page;
         serializedMdxContent: SerializedMdxContent | undefined;
+        resolvedPath: ResolvedPath.CustomMarkdownPage;
     }
 }
 
-export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ navigatable, serializedMdxContent }) => {
+export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ navigatable, serializedMdxContent, resolvedPath }) => {
     const { resolvePage } = useDocsContext();
     const { activeNavigationConfigContext } = useDocsSelectors();
 
-    const page = useMemo(() => resolvePage(navigatable.page.id), [navigatable.page.id, resolvePage]);
+    const page = useMemo(() => resolvePage(resolvedPath.page.id), [resolvedPath.page.id, resolvePage]);
 
     const findTitle = useCallback(
         (navigationItems: FernRegistryDocsRead.NavigationItem[]) => {
@@ -65,7 +67,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ navigatable, se
                 )}
 
                 <div className="text-text-primary-light dark:text-text-primary-dark mb-8 text-3xl font-bold">
-                    {navigatable.page.title}
+                    {resolvedPath.page.title}
                 </div>
                 {content}
                 <BottomNavigationButtons />

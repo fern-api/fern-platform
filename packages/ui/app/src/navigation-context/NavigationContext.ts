@@ -44,6 +44,11 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
     resolvedPath: {
         type: "custom-markdown-page",
         fullSlug: "",
+        page: {
+            id: FernRegistryDocsRead.PageId(""),
+            title: "",
+            urlSlug: "",
+        },
         serializedMdxContent: { compiledSource: "", frontmatter: {}, scope: {} },
     },
 });

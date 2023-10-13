@@ -13,7 +13,11 @@ export const DocsMainContent: React.FC<DocsMainContent.Props> = () => {
 
     if (activeNavigatable.type === "page" && resolvedPath.type === "custom-markdown-page") {
         return (
-            <CustomDocsPage serializedMdxContent={resolvedPath.serializedMdxContent} navigatable={activeNavigatable} />
+            <CustomDocsPage
+                serializedMdxContent={resolvedPath.serializedMdxContent}
+                navigatable={activeNavigatable}
+                resolvedPath={resolvedPath}
+            />
         );
     } else if (isApiNode(activeNavigatable)) {
         return (

@@ -5,6 +5,7 @@ export declare namespace ResolvedPath {
     interface CustomMarkdownPage {
         type: "custom-markdown-page";
         fullSlug: string;
+        page: FernRegistryDocsRead.PageMetadata;
         serializedMdxContent: SerializedMdxContent;
     }
 
