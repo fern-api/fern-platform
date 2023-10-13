@@ -1,3 +1,4 @@
+import { getFullSlugForNavigatable } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import Link from "next/link";
@@ -9,7 +10,7 @@ import { EndpointRecordV2 } from "./content/EndpointRecordV2";
 import { PageRecord } from "./content/PageRecord";
 import { PageRecordV2 } from "./content/PageRecordV2";
 import type { SearchRecord } from "./types";
-import { getHrefForSearchRecord, getPathForSearchRecord } from "./util";
+import { getFullPathForSearchRecord } from "./util";
 
 export declare namespace SearchHit {
     export interface Props {
@@ -22,16 +23,22 @@ export declare namespace SearchHit {
 }
 
 export const SearchHit: React.FC<SearchHit.Props> = ({ setRef, hit, isHovered, onMouseEnter, onMouseLeave }) => {
-    const { navigateToPath } = useNavigationContext();
+    const { navigateToPath, resolver } = useNavigationContext();
     const { closeSearchDialog } = useSearchContext();
 
-    const path = useMemo(() => getPathForSearchRecord(hit), [hit]);
-    const href = useMemo(() => getHrefForSearchRecord(hit), [hit]);
+    const fullPath = useMemo(() => {
+        const path = getFullPathForSearchRecord(hit);
+        const navigatable = resolver.resolveNavigatable(path);
+        if (navigatable == null) {
+            return "";
+        }
+        return getFullSlugForNavigatable(navigatable, { omitDefault: true });
+    }, [resolver, hit]);
 
     const handleClick = useCallback(() => {
         closeSearchDialog();
-        navigateToPath(path);
-    }, [closeSearchDialog, navigateToPath, path]);
+        navigateToPath(fullPath);
+    }, [closeSearchDialog, navigateToPath, fullPath]);
 
     const content = useMemo(() => {
         return visitDiscriminatedUnion(hit, "type")._visit({
@@ -50,7 +57,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ setRef, hit, isHovered, o
                 "bg-accent-primary": isHovered,
             })}
             onClick={handleClick}
-            href={href}
+            href={`/${fullPath}`}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
         >
