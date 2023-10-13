@@ -1,7 +1,7 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { assertNever, noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { joinUrlSlugs } from "../url";
+import { joinUrlSlugs } from "../slug";
 
 export interface UrlSlugTreeConfig {
     items: FernRegistryDocsRead.NavigationItem[];

@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { AnchorHTMLAttributes, HTMLAttributes } from "react";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
 import { HEADER_HEIGHT } from "../constants";
-import { useDocsContext } from "../docs-context/useDocsContext";
+import { useNavigationContext } from "../navigation-context";
 
 export const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({ className, ...rest }) => {
     return (
@@ -262,7 +262,7 @@ export const Li: React.FC<HTMLAttributes<HTMLLIElement>> = ({ className, ...rest
 };
 
 export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, children, href, ...rest }) => {
-    const { navigateToPath } = useDocsContext();
+    const { navigateToPath } = useNavigationContext();
 
     const isInternalUrl = typeof href === "string" && href.startsWith("/");
 

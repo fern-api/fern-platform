@@ -5,6 +5,7 @@ import { DEFINITION_UNVERSIONED_WITH_SKIPPED_SLUGS } from "./mock-definitions/un
 import { DEFINITION_VERSIONED_TABBED } from "./mock-definitions/versioned-tabbed";
 import { DEFINITION_VERSIONED_UNTABBED } from "./mock-definitions/versioned-untabbed";
 import { DEFINITION_WITH_API } from "./mock-definitions/with-api-definition";
+import { DEFINITION_WITH_POINTS_TO } from "./mock-definitions/with-points-to";
 
 describe("getAllSlugs", () => {
     describe("correctly returns all slugs", () => {
@@ -167,6 +168,24 @@ describe("getAllSlugs", () => {
                 "api-reference/agents",
                 "api-reference/agents/create-agent",
                 "api-reference/agents/update-agent",
+            ]);
+            const actualSlugs = new Set(resolver.getAllSlugs());
+            expect(actualSlugs).toEqual(expectedSlugs);
+        });
+
+        it("with the 'pointsTo' option", () => {
+            const resolver = new PathResolver({
+                docsDefinition: DEFINITION_WITH_POINTS_TO,
+            });
+            const expectedSlugs = new Set([
+                "",
+                "introduction",
+                "introduction/authentication",
+                "introduction/getting-started",
+                "api-reference",
+                "api-reference/new-sub",
+                "api-reference/new-sub/create-agent",
+                "api-reference/new-sub/update-agent",
             ]);
             const actualSlugs = new Set(resolver.getAllSlugs());
             expect(actualSlugs).toEqual(expectedSlugs);

@@ -15,9 +15,9 @@ import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
 
 export const Docs: React.FC = memo(function UnmemoizedDocs() {
-    const { observeDocContent, hasInitialized } = useNavigationContext();
+    const { observeDocContent, hasInitialized, activeNavigatable } = useNavigationContext();
     const docsContext = useDocsContext();
-    const { docsDefinition, docsInfo, theme } = docsContext;
+    const { docsDefinition, theme } = docsContext;
     const searchContext = useSearchContext();
     const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = searchContext;
     const searchService = useSearchService();
@@ -50,7 +50,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                 <SearchDialog
                     isOpen={isSearchDialogOpen}
                     onClose={closeSearchDialog}
-                    activeVersion={docsInfo.type === "versioned" ? docsInfo.activeVersionName : undefined}
+                    activeVersion={activeNavigatable.context.version?.info.id}
                     searchService={searchService}
                 />
             )}

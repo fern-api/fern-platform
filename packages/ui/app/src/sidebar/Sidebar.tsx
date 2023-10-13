@@ -1,8 +1,9 @@
-import { isUnversionedUntabbedNavigationConfig } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { useCallback, useMemo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
+import { useNavigationContext } from "../navigation-context";
+import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { BuiltWithFern } from "./BuiltWithFern";
 import { SidebarContext, SidebarContextValue } from "./context/SidebarContext";
 import styles from "./Sidebar.module.scss";
@@ -17,57 +18,42 @@ export declare namespace Sidebar {
 }
 
 export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expandAllSections = false }) => {
-    const {
-        docsInfo,
-        activeTab,
-        activeTabIndex,
-        selectedSlug,
-        navigateToPath,
-        registerScrolledToPathListener,
-        getFullSlug,
-        docsDefinition,
-        resolveApi,
-    } = useDocsContext();
+    const { docsDefinition, resolveApi } = useDocsContext();
+    const { activeNavigatable, registerScrolledToPathListener } = useNavigationContext();
+    const { activeNavigationConfigContext, selectedSlug, withVersionAndTabSlugs } = useDocsSelectors();
     const { closeMobileSidebar } = useMobileSidebarContext();
 
     const contextValue = useCallback((): SidebarContextValue => ({ expandAllSections }), [expandAllSections]);
 
-    const { activeNavigationConfig } = docsInfo;
-
     const sidebarItems = useMemo(() => {
-        const navigationItems = isUnversionedUntabbedNavigationConfig(activeNavigationConfig)
-            ? activeNavigationConfig.items
-            : activeTab?.items;
+        const navigationItems =
+            activeNavigationConfigContext.type === "tabbed"
+                ? activeNavigatable.context.tab?.items
+                : activeNavigationConfigContext.config.items;
         if (navigationItems == null) {
             return null;
         }
         return (
             <SidebarItems
                 navigationItems={navigationItems}
-                slug=""
+                slug={withVersionAndTabSlugs("", { omitDefault: true })}
                 selectedSlug={selectedSlug}
-                navigateToPath={navigateToPath}
                 registerScrolledToPathListener={registerScrolledToPathListener}
-                getFullSlug={getFullSlug}
                 closeMobileSidebar={closeMobileSidebar}
                 docsDefinition={docsDefinition}
-                docsInfo={docsInfo}
-                activeTabIndex={activeTabIndex}
+                activeTabIndex={activeNavigatable.context.tab?.index ?? null}
                 resolveApi={resolveApi}
             />
         );
     }, [
-        activeNavigationConfig,
-        activeTab,
-        activeTabIndex,
+        activeNavigationConfigContext,
+        activeNavigatable,
         closeMobileSidebar,
         docsDefinition,
-        docsInfo,
-        getFullSlug,
-        navigateToPath,
         registerScrolledToPathListener,
         resolveApi,
         selectedSlug,
+        withVersionAndTabSlugs,
     ]);
 
     return (

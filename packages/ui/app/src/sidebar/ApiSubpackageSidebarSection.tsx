@@ -3,7 +3,6 @@ import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources
 import { doesSubpackageHaveEndpointsOrWebhooksRecursive, getSubpackageTitle } from "@fern-ui/app-utils";
 import { useRouter } from "next/router";
 import { useContext, useMemo } from "react";
-import { DocsInfo, NavigateToPathOpts } from "../docs-context/DocsContext";
 import { ApiPackageSidebarSectionContents } from "./ApiPackageSidebarSectionContents";
 import { SidebarContext } from "./context/SidebarContext";
 import { SidebarGroup } from "./SidebarGroup";
@@ -14,14 +13,11 @@ export declare namespace ApiSubpackageSidebarSection {
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
         slug: string;
         selectedSlug: string | undefined;
-        getFullSlug: (slug: string) => string;
         resolveSubpackageById: (
             subpackageId: FernRegistryApiRead.SubpackageId
         ) => FernRegistryApiRead.ApiDefinitionSubpackage;
-        navigateToPath: (slugWithoutVersion: string, opts?: NavigateToPathOpts | undefined) => void;
-        registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
+        registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
-        docsInfo: DocsInfo;
         activeTabIndex: number | null;
         closeMobileSidebar: () => void;
     }
@@ -31,12 +27,9 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
     subpackage,
     slug,
     selectedSlug,
-    getFullSlug,
     resolveSubpackageById,
-    navigateToPath,
     registerScrolledToPathListener,
     docsDefinition,
-    docsInfo,
     activeTabIndex,
     closeMobileSidebar,
 }) => {
@@ -46,8 +39,8 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
         [resolveSubpackageById, subpackage.subpackageId]
     );
 
-    const isSelected = selectedSlug != null && selectedSlug === getFullSlug(slug);
-    const isChildSelected = selectedSlug != null && selectedSlug.startsWith(`${getFullSlug(slug)}/`);
+    const isSelected = selectedSlug != null && selectedSlug === slug;
+    const isChildSelected = selectedSlug != null && selectedSlug.startsWith(`${slug}/`);
     const { expandAllSections } = useContext(SidebarContext)();
     const isOpen = isSelected || isChildSelected || expandAllSections;
 
@@ -61,12 +54,9 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
                 <SidebarSubpackageItem
                     title={getSubpackageTitle(subpackage)}
                     isChildSelected={isChildSelected}
-                    slug={slug}
-                    getFullSlug={getFullSlug}
-                    navigateToPath={navigateToPath}
+                    fullSlug={slug}
                     registerScrolledToPathListener={registerScrolledToPathListener}
                     docsDefinition={docsDefinition}
-                    docsInfo={docsInfo}
                     activeTabIndex={activeTabIndex}
                     closeMobileSidebar={closeMobileSidebar}
                     pushRoute={router.push}
@@ -79,13 +69,10 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
                     slug={slug}
                     shallow={true}
                     selectedSlug={selectedSlug}
-                    navigateToPath={navigateToPath}
                     registerScrolledToPathListener={registerScrolledToPathListener}
-                    getFullSlug={getFullSlug}
                     closeMobileSidebar={closeMobileSidebar}
                     resolveSubpackageById={resolveSubpackageById}
                     docsDefinition={docsDefinition}
-                    docsInfo={docsInfo}
                     activeTabIndex={activeTabIndex}
                 />
             )}

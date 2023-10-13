@@ -1,51 +1,31 @@
-import { assertNever } from "@fern-ui/core-utils";
+import { isApiNode } from "@fern-ui/app-utils";
 import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContextProvider";
 import { ApiPage } from "../api-page/ApiPage";
 import { CustomDocsPage } from "../custom-docs-page/CustomDocsPage";
-import { useDocsContext } from "../docs-context/useDocsContext";
-import { RedirectToFirstNavigationItem } from "./RedirectToFirstNavigationItem";
+import { useNavigationContext } from "../navigation-context";
 
 export declare namespace DocsMainContent {
     export interface Props {}
 }
 
 export const DocsMainContent: React.FC<DocsMainContent.Props> = () => {
-    const { resolvedPathFromUrl } = useDocsContext();
+    const { activeNavigatable, resolvedPath } = useNavigationContext();
 
-    switch (resolvedPathFromUrl.type) {
-        case "mdx-page":
-            return <CustomDocsPage path={resolvedPathFromUrl} />;
-        case "api":
-            return (
-                <ApiDefinitionContextProvider
-                    apiSection={resolvedPathFromUrl.apiSection}
-                    apiSlug={resolvedPathFromUrl.slug}
-                >
-                    <ApiPage />
-                </ApiDefinitionContextProvider>
-            );
-        case "clientLibraries":
-        case "apiSubpackage":
-        case "endpoint":
-        case "webhook":
-        case "topLevelEndpoint":
-        case "topLevelWebhook":
-            return (
-                <ApiDefinitionContextProvider
-                    apiSection={resolvedPathFromUrl.apiSection}
-                    apiSlug={resolvedPathFromUrl.apiSlug}
-                >
-                    <ApiPage />
-                </ApiDefinitionContextProvider>
-            );
-        case "section":
-            return (
-                <RedirectToFirstNavigationItem
-                    items={resolvedPathFromUrl.section.items}
-                    slug={resolvedPathFromUrl.slug}
-                />
-            );
-        default:
-            assertNever(resolvedPathFromUrl);
+    if (activeNavigatable.type === "page" && resolvedPath.type === "custom-markdown-page") {
+        return (
+            <CustomDocsPage
+                serializedMdxContent={resolvedPath.serializedMdxContent}
+                navigatable={activeNavigatable}
+                resolvedPath={resolvedPath}
+            />
+        );
+    } else if (isApiNode(activeNavigatable)) {
+        return (
+            <ApiDefinitionContextProvider apiSection={activeNavigatable.section}>
+                <ApiPage />
+            </ApiDefinitionContextProvider>
+        );
+    } else {
+        return null;
     }
 };

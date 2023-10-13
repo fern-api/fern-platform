@@ -7,17 +7,16 @@ import { ApiDefinitionContext, ApiDefinitionContextValue } from "./ApiDefinition
 export declare namespace ApiDefinitionContextProvider {
     export type Props = React.PropsWithChildren<{
         apiSection: FernRegistryDocsRead.ApiSection;
-        apiSlug: string;
     }>;
 }
 
 export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider.Props> = ({
     apiSection,
-    apiSlug,
     children,
 }) => {
     const { resolveApi } = useDocsContext();
     const apiDefinition = resolveApi(apiSection.api);
+    const apiSlug = apiSection.skipUrlSlug ? "" : apiSection.urlSlug;
 
     const resolveSubpackageById = useCallback(
         (subpackageId: FernRegistryApiRead.SubpackageId): FernRegistryApiRead.ApiDefinitionSubpackage => {

@@ -1,10 +1,11 @@
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { joinUrlSlugs } from "../slug";
+import { getFullSlugForNavigatable, joinUrlSlugs } from "../slug";
 import { buildResolutionMap } from "./build-map";
+import { buildNodeToNeighborsMap } from "./build-neighbors";
 import { buildDefinitionTree } from "./build-tree";
 import { PathCollisionError } from "./errors";
-import type { DocsNode, FullSlug, NavigatableDocsNode } from "./types";
-import { isLeafNode, traversePreOrder } from "./util";
+import type { DocsNode, FullSlug, NavigatableDocsNode, NodeNeighbors } from "./types";
+import { isNavigatableNode, traversePreOrder } from "./util";
 
 export interface PathResolverConfig {
     docsDefinition: FernRegistryDocsRead.DocsDefinition;
@@ -13,34 +14,35 @@ export interface PathResolverConfig {
 export class PathResolver {
     readonly #tree: DocsNode.Root;
     readonly #map: Map<FullSlug, DocsNode | DocsNode[]>;
+    readonly #nodeToNeighbors: Map<FullSlug, NodeNeighbors>;
     public readonly rootNavigatable: NavigatableDocsNode | undefined;
 
     public constructor(public readonly config: PathResolverConfig) {
-        const { tree, map } = this.#preprocessDefinition();
+        const { tree, map, nodeToNeighbors } = this.#preprocessDefinition();
         this.#tree = tree;
         this.#map = map;
+        this.#nodeToNeighbors = nodeToNeighbors;
         this.rootNavigatable = this.#resolveNavigatable(this.#tree);
     }
 
     #preprocessDefinition() {
         const tree = buildDefinitionTree(this.config.docsDefinition);
         const map = buildResolutionMap(tree);
-        return { tree, map };
+        const nodeToNeighbors = buildNodeToNeighborsMap(tree);
+        return { tree, map, nodeToNeighbors };
     }
 
-    public resolveNavigatable(fullSlug: FullSlug): NavigatableDocsNode | undefined;
-    public resolveNavigatable(node: DocsNode): NavigatableDocsNode;
     public resolveNavigatable(slugOrNode: string | DocsNode): NavigatableDocsNode | undefined {
         const node = typeof slugOrNode === "string" ? this.resolveSlug(slugOrNode) : slugOrNode;
         return node != null ? this.#resolveNavigatable(node) : undefined;
     }
 
     #resolveNavigatable(node: DocsNode): NavigatableDocsNode | undefined {
-        if (isLeafNode(node)) {
+        if (isNavigatableNode(node)) {
             return node;
         }
         for (const childSlug of node.childrenOrdering) {
-            const childNode = node.children.get(childSlug);
+            const childNode = node.children[childSlug];
             if (childNode != null) {
                 const foundNode = this.#resolveNavigatable(childNode);
                 if (foundNode != null) {
@@ -67,7 +69,7 @@ export class PathResolver {
         return Array.from(this.#map.keys());
     }
 
-    public getCollidingNodes(): Map<string, DocsNode[]> {
+    public getCollisions(): Map<string, DocsNode[]> {
         const nodesBySlug = new Map<string, DocsNode[]>();
         this.#map.forEach((val, key) => {
             if (Array.isArray(val)) {
@@ -75,5 +77,12 @@ export class PathResolver {
             }
         });
         return nodesBySlug;
+    }
+
+    public getNeighborsForNavigatable(fullSlugOrNode: string | NavigatableDocsNode): NodeNeighbors {
+        const fullSlug =
+            typeof fullSlugOrNode === "string" ? fullSlugOrNode : getFullSlugForNavigatable(fullSlugOrNode);
+        const neighbors = this.#nodeToNeighbors.get(fullSlug);
+        return neighbors ?? { previous: null, next: null };
     }
 }

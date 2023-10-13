@@ -1,7 +1,6 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import { doesSubpackageHaveEndpointsOrWebhooksRecursive } from "@fern-ui/app-utils";
+import { doesSubpackageHaveEndpointsOrWebhooksRecursive, joinUrlSlugs } from "@fern-ui/app-utils";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
-import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { Endpoint } from "./endpoints/Endpoint";
 import { ApiSubpackage } from "./subpackages/ApiSubpackage";
 import { Webhook } from "./webhooks/Webhook";
@@ -30,7 +29,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                     key={endpoint.id}
                     endpoint={endpoint}
                     isLastInApi={isLastInParentPackage && idx === package_.endpoints.length - 1}
-                    slug={joinUrlSlugs(slug, endpoint.urlSlug)}
+                    fullSlug={joinUrlSlugs(slug, endpoint.urlSlug)}
                     package={package_}
                     anchorIdParts={anchorIdParts}
                 />
@@ -40,7 +39,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                     key={webhook.id}
                     webhook={webhook}
                     isLastInApi={isLastInParentPackage && idx === package_.webhooks.length - 1}
-                    slug={joinUrlSlugs(slug, webhook.urlSlug)}
+                    fullSlug={joinUrlSlugs(slug, webhook.urlSlug)}
                     package={package_}
                     anchorIdParts={anchorIdParts}
                 />

@@ -1,11 +1,17 @@
+import { useRouter } from "next/router";
 import { DEFAULT_LOGO_HEIGHT } from "../config";
 import { useDocsContext } from "../docs-context/useDocsContext";
+import { useNavigationContext } from "../navigation-context";
+import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { VersionDropdown } from "./VersionDropdown";
 
 export declare namespace HeaderLogoSection {}
 
 export const HeaderLogoSection: React.FC = () => {
-    const { resolveFile, docsDefinition, docsInfo, setActiveVersionSlug, navigateToPath, theme } = useDocsContext();
+    const router = useRouter();
+    const { navigateToPath } = useNavigationContext();
+    const { resolveFile, docsDefinition, theme } = useDocsContext();
+    const { definitionInfo, activeVersionContext } = useDocsSelectors();
     const { logo, logoV2, logoHeight, logoHref } = docsDefinition.config;
 
     if (theme == null) {
@@ -13,7 +19,11 @@ export const HeaderLogoSection: React.FC = () => {
     }
 
     const logoForTheme = logoV2 != null ? logoV2[theme] : logo;
-    const hasMultipleVersions = docsInfo.type === "versioned";
+    const hasMultipleVersions = definitionInfo.type === "versioned";
+    const activeVersionId =
+        activeVersionContext.type === "versioned" ? activeVersionContext.version.info.id : undefined;
+    const activeVersionSlug =
+        activeVersionContext.type === "versioned" ? activeVersionContext.version.info.slug : undefined;
     const hasLogo = logoForTheme != null;
     const hasLogoHref = logoHref != null;
 
@@ -43,12 +53,12 @@ export const HeaderLogoSection: React.FC = () => {
             {hasMultipleVersions && (
                 <div>
                     <VersionDropdown
-                        versions={docsInfo.versions}
-                        selectedVersionName={docsInfo.activeVersionName}
-                        selectedVersionSlug={docsInfo.activeVersionSlug}
+                        versions={definitionInfo.versions}
+                        selectedVersionName={activeVersionId}
+                        selectedVersionSlug={activeVersionSlug}
                         onClickVersion={(versionSlug) => {
-                            setActiveVersionSlug(versionSlug);
-                            navigateToPath(`/${versionSlug}`, { omitVersionSlug: true });
+                            navigateToPath(versionSlug);
+                            void router.replace(`/${versionSlug}`, undefined, { shallow: true });
                         }}
                     />
                 </div>

@@ -3,6 +3,7 @@ import { FernRegistry } from "@fern-fern/registry-browser";
 import { useCallback, useMemo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { getEnvConfig, type EnvironmentConfig } from "../env";
+import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { REGISTRY_SERVICE } from "./registry";
 
 export type SearchCredentials = {
@@ -21,7 +22,8 @@ export type SearchService =
       };
 
 export function useSearchService(): SearchService {
-    const { docsDefinition, docsInfo } = useDocsContext();
+    const { docsDefinition } = useDocsContext();
+    const { activeVersionContext } = useDocsSelectors();
     const { search: searchInfo } = docsDefinition;
 
     const createSearchApiKeyLoader = useCallback(
@@ -69,9 +71,6 @@ export function useSearchService(): SearchService {
                   }
                 : { isAvailable: false };
         } else if (searchInfo.value.type === "unversioned") {
-            if (docsInfo.type !== "unversioned") {
-                throw new Error("Inconsistent State: Received search info is unversioned but docs are versioned");
-            }
             if (envConfig.algoliaSearchIndex == null) {
                 throw new Error('Missing environment variable "NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX"');
             }
@@ -83,10 +82,10 @@ export function useSearchService(): SearchService {
                 index: envConfig.algoliaSearchIndex,
             };
         } else {
-            if (docsInfo.type !== "versioned") {
+            if (activeVersionContext.type !== "versioned") {
                 throw new Error("Inconsistent State: Received search info is versioned but docs are unversioned");
             }
-            const versionId = FernRegistry.docs.v1.read.VersionId(docsInfo.activeVersionName);
+            const versionId = FernRegistry.docs.v1.read.VersionId(activeVersionContext.version.info.id);
             const { indexSegmentsByVersionId } = searchInfo.value;
             const indexSegment = indexSegmentsByVersionId[versionId];
             if (indexSegment == null) {
@@ -103,5 +102,5 @@ export function useSearchService(): SearchService {
                 index: envConfig.algoliaSearchIndex,
             };
         }
-    }, [docsDefinition.algoliaSearchIndex, createSearchApiKeyLoader, docsInfo, searchInfo]);
+    }, [activeVersionContext, docsDefinition.algoliaSearchIndex, createSearchApiKeyLoader, searchInfo]);
 }

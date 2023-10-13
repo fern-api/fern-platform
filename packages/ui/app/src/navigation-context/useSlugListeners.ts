@@ -6,8 +6,8 @@ export declare namespace useSlugListeners {
     }
 
     export interface Return {
-        invokeListeners: (slugWithVersion: string) => void;
-        registerListener: (slugWithVersion: string, listener: () => void) => () => void;
+        invokeListeners: (slug: string) => void;
+        registerListener: (slug: string, listener: () => void) => () => void;
     }
 }
 
@@ -30,14 +30,14 @@ export function useSlugListeners(label: string, { selectedSlug }: useSlugListene
     }, []);
 
     const registerListener = useCallback(
-        (slugWithVersion: string, listener: () => void) => {
-            const listenersForPath = (listeners.current[slugWithVersion] ??= []);
+        (slug: string, listener: () => void) => {
+            const listenersForPath = (listeners.current[slug] ??= []);
             listenersForPath.push(listener);
-            if (slugWithVersion === selectedSlugRef.current) {
+            if (slug === selectedSlugRef.current) {
                 listener();
             }
             return () => {
-                const listenersForSlug = listeners.current[slugWithVersion];
+                const listenersForSlug = listeners.current[slug];
                 if (listenersForSlug != null) {
                     const indexOfListenerToDelete = listenersForSlug.indexOf(listener);
                     if (indexOfListenerToDelete === -1) {

@@ -1,173 +1,234 @@
 import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { DocsNode, DocsNodeTab, DocsNodeVersion } from "./types";
+import { DocsNode, NodeDocsContext, TabInfo, VersionInfo } from "./types";
 
 export class NodeFactory {
-    public static createRoot(): DocsNode.Root {
+    public static createRoot(definition: FernRegistryDocsRead.DocsDefinition): DocsNode.Root {
         return {
             type: "root",
             slug: "",
-            children: new Map(),
+            children: {},
             childrenOrdering: [],
-            info: { type: "unversioned" },
+            info: { type: "unversioned", definition },
         };
     }
 
-    public static createVersion({ slug, version }: { slug: string; version: DocsNodeVersion }): DocsNode.Version {
+    public static createVersion({
+        slug,
+        info,
+        tabInfo,
+    }: {
+        slug: string;
+        info: VersionInfo;
+        tabInfo: TabInfo;
+    }): DocsNode.Version {
         return {
             type: "version",
             slug,
-            version,
-            children: new Map(),
+            info,
+            children: {},
             childrenOrdering: [],
+            tabInfo,
         };
     }
 
-    public static createTab({ slug, version }: { slug: string; version?: DocsNodeVersion | null }): DocsNode.Tab {
+    public static createTab({
+        slug,
+        version,
+        index,
+        items,
+    }: {
+        slug: string;
+        version?: DocsNode.Version | null;
+        index: number;
+        items: FernRegistryDocsRead.NavigationItem[];
+    }): DocsNode.Tab {
         return {
             type: "tab",
             slug,
             version: version ?? null,
-            children: new Map(),
+            index,
+            items,
+            children: {},
             childrenOrdering: [],
         };
     }
 
     public static createDocsSection({
         slug,
-        version,
-        tab,
         section,
+        context,
     }: {
         slug: string;
-        version?: DocsNodeVersion | null;
-        tab?: DocsNodeTab | null;
         section: FernRegistryDocsRead.DocsSection;
+        context: NodeDocsContext;
     }): DocsNode.DocsSection {
         return {
             type: "docs-section",
             slug,
-            version: version ?? null,
-            tab: tab ?? null,
             section,
-            children: new Map(),
+            children: {},
             childrenOrdering: [],
+            context,
         };
     }
 
     public static createApiSection({
         slug,
-        version,
-        tab,
         section,
+        context,
     }: {
         slug: string;
-        version?: DocsNodeVersion | null;
-        tab?: DocsNodeTab | null;
         section: FernRegistryDocsRead.ApiSection;
+        context: NodeDocsContext;
     }): DocsNode.ApiSection {
         return {
             type: "api-section",
             slug,
-            version: version ?? null,
-            tab: tab ?? null,
             section,
-            children: new Map(),
+            children: {},
             childrenOrdering: [],
+            context,
         };
     }
 
     public static createApiSubpackage({
         slug,
-        version,
-        tab,
         section,
         subpackage,
+        context,
     }: {
         slug: string;
-        version?: DocsNodeVersion | null;
-        tab?: DocsNodeTab | null;
         section: FernRegistryDocsRead.ApiSection;
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
+        context: NodeDocsContext;
     }): DocsNode.ApiSubpackage {
         return {
             type: "api-subpackage",
             slug,
-            version: version ?? null,
-            tab: tab ?? null,
             section,
             subpackage,
-            children: new Map(),
+            children: {},
             childrenOrdering: [],
+            context,
+        };
+    }
+
+    public static createTopLevelEndpoint({
+        slug,
+        leadingSlug,
+        endpoint,
+        section,
+        context,
+    }: {
+        slug: string;
+        leadingSlug: string;
+        endpoint: FernRegistryApiRead.EndpointDefinition;
+        section: FernRegistryDocsRead.ApiSection;
+        context: NodeDocsContext;
+    }): DocsNode.TopLevelEndpoint {
+        return {
+            type: "top-level-endpoint",
+            slug,
+            leadingSlug,
+            endpoint,
+            section,
+            context,
         };
     }
 
     public static createEndpoint({
         slug,
         leadingSlug,
-        version,
-        tab,
         endpoint,
+        section,
+        subpackage,
+        context,
     }: {
         slug: string;
         leadingSlug: string;
-        version?: DocsNodeVersion | null;
-        tab?: DocsNodeTab | null;
         endpoint: FernRegistryApiRead.EndpointDefinition;
+        section: FernRegistryDocsRead.ApiSection;
+        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
+        context: NodeDocsContext;
     }): DocsNode.Endpoint {
         return {
             type: "endpoint",
             slug,
             leadingSlug,
-            version: version ?? null,
-            tab: tab ?? null,
             endpoint,
+            section,
+            subpackage,
+            context,
+        };
+    }
+
+    public static createTopLevelWebhook({
+        slug,
+        leadingSlug,
+        webhook,
+        section,
+        context,
+    }: {
+        slug: string;
+        leadingSlug: string;
+        webhook: FernRegistryApiRead.WebhookDefinition;
+        section: FernRegistryDocsRead.ApiSection;
+        context: NodeDocsContext;
+    }): DocsNode.TopLevelWebhook {
+        return {
+            type: "top-level-webhook",
+            slug,
+            leadingSlug,
+            webhook,
+            section,
+            context,
         };
     }
 
     public static createWebhook({
         slug,
         leadingSlug,
-        version,
-        tab,
         webhook,
+        section,
+        subpackage,
+        context,
     }: {
         slug: string;
         leadingSlug: string;
-        version?: DocsNodeVersion | null;
-        tab?: DocsNodeTab | null;
         webhook: FernRegistryApiRead.WebhookDefinition;
+        section: FernRegistryDocsRead.ApiSection;
+        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
+        context: NodeDocsContext;
     }): DocsNode.Webhook {
         return {
             type: "webhook",
             slug,
             leadingSlug,
-            version: version ?? null,
-            tab: tab ?? null,
             webhook,
+            section,
+            subpackage,
+            context,
         };
     }
 
     public static createPage({
         slug,
         leadingSlug,
-        version,
-        tab,
         page,
+        context,
     }: {
         slug: string;
         leadingSlug: string;
-        version?: DocsNodeVersion | null;
-        tab?: DocsNodeTab | null;
         page: FernRegistryDocsRead.PageMetadata;
+        context: NodeDocsContext;
     }): DocsNode.Page {
         return {
             type: "page",
             slug,
             leadingSlug,
-            version: version ?? null,
-            tab: tab ?? null,
             page,
+            context,
         };
     }
 }

@@ -2,22 +2,19 @@ import { Text } from "@blueprintjs/core";
 import classNames from "classnames";
 import Link from "next/link";
 import { memo, useCallback, useEffect, useRef } from "react";
-import { NavigateToPathOpts } from "../docs-context/DocsContext";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace SidebarItem {
     export interface Props {
         title: JSX.Element | string;
         className?: string;
-        slug: string;
+        onClick: () => void;
         fullSlug: string;
         leftElement?: JSX.Element;
         rightElement?: JSX.Element;
         indent?: boolean;
         shallow?: boolean;
-        navigateToPath: (slugWithoutVersion: string, opts?: NavigateToPathOpts | undefined) => void;
-        registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
-        closeMobileSidebar: () => void;
+        registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
         isSelected: boolean;
     }
 }
@@ -25,22 +22,15 @@ export declare namespace SidebarItem {
 const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
     title,
     className,
-    slug,
     fullSlug,
     leftElement,
     rightElement,
     indent = false,
     shallow = false,
-    navigateToPath,
     registerScrolledToPathListener,
-    closeMobileSidebar,
+    onClick,
     isSelected,
 }) => {
-    const handleClick = useCallback(() => {
-        navigateToPath(slug);
-        closeMobileSidebar();
-    }, [navigateToPath, closeMobileSidebar, slug]);
-
     const renderTitle = useCallback(
         ({ isHovering }: { isHovering: boolean }) => {
             return (
@@ -86,13 +76,7 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
 
     return (
         <div className={classNames(className)} ref={ref}>
-            <Link
-                href={`/${fullSlug}`}
-                onClick={handleClick}
-                className="!no-underline"
-                shallow={shallow}
-                scroll={!shallow}
-            >
+            <Link href={`/${fullSlug}`} onClick={onClick} className="!no-underline" shallow={shallow} scroll={false}>
                 <SidebarItemLayout title={renderTitle} isSelected={isSelected} />
             </Link>
         </div>
@@ -101,5 +85,5 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
 
 export const SidebarItem = memo(
     UnmemoizedSidebarItem,
-    (prev, next) => prev.isSelected === next.isSelected && prev.slug === next.slug && prev.fullSlug === next.fullSlug
+    (prev, next) => prev.isSelected === next.isSelected && prev.fullSlug === next.fullSlug
 );

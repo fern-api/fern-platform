@@ -1,9 +1,10 @@
-import { getFirstNavigatableItem, isUnversionedTabbedNavigationConfig } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import { memo, useMemo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
+import { useNavigationContext } from "../navigation-context";
 import { useSearchContext } from "../search-context/useSearchContext";
+import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { useSearchService } from "../services/useSearchService";
 import { SidebarSearchBar } from "./SidebarSearchBar";
 import { SidebarTabButton } from "./SidebarTabButton";
@@ -16,13 +17,14 @@ export declare namespace SidebarFixedItemsSection {
 }
 
 const UnmemoizedSidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> = ({ className, hideSearchBar }) => {
-    const { docsInfo, activeTabIndex, navigateToPath, getFullSlug, theme } = useDocsContext();
+    const { navigateToPath, activeNavigatable } = useNavigationContext();
+    const { theme } = useDocsContext();
+    const { activeNavigationConfigContext, withVersionSlug } = useDocsSelectors();
     const { openSearchDialog } = useSearchContext();
     const searchService = useSearchService();
-    const { activeNavigationConfig } = docsInfo;
 
     const showSearchBar = !hideSearchBar && searchService.isAvailable;
-    const showTabs = isUnversionedTabbedNavigationConfig(activeNavigationConfig);
+    const showTabs = activeNavigationConfigContext.type === "tabbed";
     const router = useRouter();
 
     const searchBar = useMemo(() => {
@@ -35,30 +37,21 @@ const UnmemoizedSidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Prop
         }
         return (
             <div className="mt-3 flex flex-col">
-                {activeNavigationConfig.tabs.map((tab, idx) => (
+                {activeNavigationConfigContext.config.tabs.map((tab, idx) => (
                     <SidebarTabButton
                         key={idx}
                         tab={tab}
-                        isSelected={idx === activeTabIndex}
+                        isSelected={idx === activeNavigatable.context.tab?.index}
                         onClick={() => {
-                            const [firstTabItem] = tab.items;
-                            if (firstTabItem == null) {
-                                return;
-                            }
-                            const slugToNavigate = getFirstNavigatableItem(firstTabItem);
-                            if (slugToNavigate == null) {
-                                return;
-                            }
-                            navigateToPath(slugToNavigate, {
-                                tabSlug: tab.urlSlug,
-                            });
-                            void router.push("/" + getFullSlug(slugToNavigate, { tabSlug: tab.urlSlug }));
+                            const fullSlug = withVersionSlug(tab.urlSlug, { omitDefault: true });
+                            navigateToPath(fullSlug);
+                            void router.replace(`/${fullSlug}`, undefined);
                         }}
                     />
                 ))}
             </div>
         );
-    }, [showTabs, activeNavigationConfig, activeTabIndex, getFullSlug, navigateToPath, router]);
+    }, [showTabs, activeNavigationConfigContext, activeNavigatable, withVersionSlug, navigateToPath, router]);
 
     if (!showSearchBar && !showTabs) {
         return null;
