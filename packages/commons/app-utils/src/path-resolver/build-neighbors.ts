@@ -1,6 +1,6 @@
 import { getFullSlugForNavigatable } from "../slug";
 import type { DocsNode, FullSlug, NodeNeighbors, ParentDocsNode } from "./types";
-import { isLeafNode } from "./util";
+import { isNavigatableNode } from "./util";
 
 // This is the algorithm from the previous resolver, adjusted to versions and tabs.
 // We may need to revise it.
@@ -68,7 +68,7 @@ function populateNeighbors(unversionedAndUntabbedRootNodes: DocsNode[], map: Map
             }
         }
 
-        if (isLeafNode(node)) {
+        if (isNavigatableNode(node)) {
             map.set(getFullSlugForNavigatable(node), {
                 previous: previousNavigatable ?? null,
                 next: nextNavigatable ?? null,

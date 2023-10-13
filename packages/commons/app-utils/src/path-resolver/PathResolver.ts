@@ -5,7 +5,7 @@ import { buildNodeToNeighborsMap } from "./build-neighbors";
 import { buildDefinitionTree } from "./build-tree";
 import { PathCollisionError } from "./errors";
 import type { DocsNode, FullSlug, NavigatableDocsNode, NodeNeighbors } from "./types";
-import { isLeafNode, traversePreOrder } from "./util";
+import { isNavigatableNode, traversePreOrder } from "./util";
 
 export interface PathResolverConfig {
     docsDefinition: FernRegistryDocsRead.DocsDefinition;
@@ -38,7 +38,7 @@ export class PathResolver {
     }
 
     #resolveNavigatable(node: DocsNode): NavigatableDocsNode | undefined {
-        if (isLeafNode(node)) {
+        if (isNavigatableNode(node)) {
             return node;
         }
         for (const childSlug of node.childrenOrdering) {

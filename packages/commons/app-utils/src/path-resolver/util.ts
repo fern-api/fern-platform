@@ -11,7 +11,7 @@ export function isApiNode(node: DocsNode): node is ApiDocsNode {
     );
 }
 
-export function isLeafNode(node: DocsNode): node is NavigatableDocsNode {
+export function isNavigatableNode(node: DocsNode): node is NavigatableDocsNode {
     return (
         node.type === "top-level-endpoint" ||
         node.type === "endpoint" ||
@@ -31,7 +31,7 @@ export function traversePreOrder(
     slugs: string[] = []
 ): void {
     cb(node, slugs);
-    if (isLeafNode(node)) {
+    if (isNavigatableNode(node)) {
         return;
     }
     for (const childSlug of node.childrenOrdering) {
