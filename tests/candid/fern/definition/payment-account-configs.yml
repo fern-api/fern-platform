@@ -1,0 +1,317 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+docs: |
+  PaymentAccountConfig reprents a configuration record for integration with third party payment processors.
+  If an organization has some or all of their billing providers with their own third party payment processor
+  accounts, then an instance of PaymentAccountConfig must be created for each billing provider npi with their own third
+  party payment processor account. There must not be any overlap of such PaymentAccountConfig records with respect to the
+  billing provider npi, i.e., there must be only one PaymentAccountConfig identified by the billing provider npi.
+  The only exception is the default billing provider npi, represented as "*". The PaymentAccountConfig containing the default
+  billing provider npi ("*") will be used in case the billing provider npi cannot be matched to a PaymentAccountConfig.
+  If all of the billing providers for an organization share the same third party payment processor account, then simple ["*"]
+  as the billing_provider_npis should suffice.
+imports:
+  commons: commons.yml
+
+service:
+  auth: true
+  base-path: /api/payment_account_configs/v1
+  endpoints:
+    get:
+      docs: |
+        Returns PaymentAccountConfig identified by the id.
+        If the given id is not found, then 404 response will be returned.
+        If the authenticated user does not have permission to view the PaymentAccountConfig
+        identified by the id, then 403 response will be returned
+      method: GET
+      path: /{id}
+      path-parameters:
+        id:
+          type: PaymentAccountConfigId
+          docs: PaymentAccountConfigId to be returned
+      response: PaymentAccountConfig
+      errors:
+        - commons.EntityNotFoundError
+        - commons.UnauthorizedError
+    getAll:
+      docs: Returns all PaymentAccountConfigs for the authenticated user's
+        organization
+      method: GET
+      path: ""
+      response: list<PaymentAccountConfig>
+    create:
+      docs: |
+        Creates the given PaymentAccountConfig, and returns the newly created PaymentAccountConfig.
+        If the provided PaymentAccountApiToken is either invalid or does not have all of the requried permissions, then 422 response will be returned.
+        If there already exists a PaymentAccountConfig for the organization with the same npi, then 422 response will be returned.
+      method: POST
+      path: ""
+      request: PaymentAccountConfigCreate
+      response: PaymentAccountConfig
+      errors:
+        - error: commons.UnprocessableEntityError
+          docs: thrown if the provided PaymentAccountConfigCreate.api_token is invalid
+        - commons.EntityConflictError
+        - PaymentAccountConfigNameAlreadyExistsError
+    patch:
+      docs: |
+        Patch PaymentAccountConfig identified the id.
+        If PaymentAccountConfig is not found by the provided id, then 404 will be returned.
+        If the authenticated user does not have the permission to update the PaymentAccountConfig identified by the id, then 403 will be returned.
+        If the provided PaymentAccountApiToken is either invalid or does not have all of teh requried permissions, then 422 response will be returned.
+        If there already exists a PaymentAccountConfig for the organization with the same npi, then 422 response will be returned.
+      method: PATCH
+      path: /{id}
+      path-parameters:
+        id:
+          type: PaymentAccountConfigId
+          docs: PaymentAccountConfigId to be patched
+      request: PaymentAccountConfigPatch
+      response: PaymentAccountConfig
+      errors:
+        - commons.UnprocessableEntityError
+        - commons.EntityNotFoundError
+        - commons.UnauthorizedError
+        - PaymentAccountConfigNameAlreadyExistsError
+    delete:
+      docs: |
+        Deletes the PaymentAccountConfig identified by the id.
+        If PaymentAccountConfig is not found by the provided id, then 404 will be returned.
+        If the authenticated user does not have the permission to update the PaymentAccountConfig identified
+        by the id, then 403 will be returned
+      method: DELETE
+      path: /{id}
+      path-parameters:
+        id:
+          type: PaymentAccountConfigId
+          docs: PaymentAccountConfigId to be deleted
+      errors:
+        - commons.EntityNotFoundError
+        - commons.UnauthorizedError
+    verifyCanInvoice:
+      docs: |
+        Verify that the provided claims can be invoiced for the provided patient_external_id.
+        Invoice creation requires that there exists a valid PaymentAccountConfig for the claim's billing provider npi
+        and the third party payment processor's customer can be identified by the patient_external_id.
+      method: POST
+      path: /verify_can_invoice
+      request: VerifyCanInvoiceRequest
+      response: VerifyCanInvoiceResponse
+      errors:
+        - error: commons.EntityNotFoundError
+          docs: thrown if claim_id is not found
+    verifyApiToken:
+      docs: |
+        Verify that the provided PaymentAccountApiToken is a valid token.
+        Verification includes that the provided token has all of the appropriate permissions.
+      method: POST
+      path: /verify_api_token
+      request: PaymentAccountApiToken
+      response: boolean
+    verifyCustomerExists:
+      docs: |
+        Verifies that the provided PatientExternalId is associated with a third party payment processor's customer.
+        If the customer exists, then the URL for the customer specific page will be return. Otherwise, the URL for the general
+        customer page will be returned (this generally is a page listing the existing customers).
+      method: GET
+      path: /verify_customer_exists
+      request:
+        name: VerifyCustomerExistsRequest
+        query-parameters:
+          patient_external_id:
+            type: commons.PatientExternalId
+            docs: PatientExternalId to lookup
+          billing_provider_npi:
+            type: optional<BillingProviderNpi>
+            docs: If provided, the API token associated with the BillingProviderNpi will be
+              used to verify
+          check_email_exists:
+            type: optional<boolean>
+            docs: If provided, then will also check to see if customer has email. If not,
+              then return false. Default = True
+      response: VerifyCustomerExistsResponse
+
+types:
+  PaymentAccountConfigId: uuid
+  PaymentAccountApiToken: string
+  BillingProviderNpi: string
+
+  PaymentAccountType:
+    enum:
+      - Chargebee
+      - Square
+      - Stripe
+      - Cedar
+
+  PaymentAccountConfig:
+    union:
+      chargebee: ChargebeePaymentAccountConfig
+      square: SquarePaymentAccountConfig
+      stripe: StripePaymentAccountConfig
+      cedar: CedarPaymentAccountConfig
+
+  ChargebeePaymentAccountConfig:
+    properties:
+      id: PaymentAccountConfigId
+      organization_id: commons.OrganizationId
+      billing_provider_npis: list<BillingProviderNpi>
+      account_name: string
+      description: optional<string>
+      enabled: boolean
+      site: optional<string>
+
+  CedarPaymentAccountConfig:
+    properties:
+      id: PaymentAccountConfigId
+      organization_id: commons.OrganizationId
+      billing_provider_npis: list<BillingProviderNpi>
+      account_name: string
+      description: optional<string>
+      enabled: boolean
+
+  SquarePaymentAccountConfig:
+    properties:
+      id: PaymentAccountConfigId
+      organization_id: commons.OrganizationId
+      billing_provider_npis: list<BillingProviderNpi>
+      account_name: string
+      description: optional<string>
+      enabled: boolean
+      locations: list<string>
+
+  StripePaymentAccountConfig:
+    properties:
+      id: PaymentAccountConfigId
+      organization_id: commons.OrganizationId
+      billing_provider_npis: list<BillingProviderNpi>
+      account_name: string
+      description: optional<string>
+      enabled: boolean
+      connect_account: boolean
+      subscribe_to_connected_sub_account_events: boolean
+      encounter_external_id_key: string
+      patient_external_id_key: string
+      auto_collect: boolean
+      auto_collect_threshold_cents: integer
+      auto_invoice: boolean
+      days_until_due: integer
+
+  PaymentAccountConfigCreate:
+    union:
+      chargebee: ChargebeePaymentAccountConfigCreate
+      square: SquarePaymentAccountConfigCreate
+      stripe: StripePaymentAccountConfigCreate
+
+  ChargebeePaymentAccountConfigCreate:
+    properties:
+      billing_provider_npis: list<BillingProviderNpi>
+      account_name: string
+      description: optional<string>
+      api_token: PaymentAccountApiToken
+      enabled: boolean
+      site: optional<string>
+
+  SquarePaymentAccountConfigCreate:
+    properties:
+      billing_provider_npis: list<BillingProviderNpi>
+      account_name: string
+      description: optional<string>
+      api_token: PaymentAccountApiToken
+      enabled: boolean
+      locations: list<string>
+
+  StripePaymentAccountConfigCreate:
+    properties:
+      billing_provider_npis: list<BillingProviderNpi>
+      account_name: string
+      description: optional<string>
+      api_token: PaymentAccountApiToken
+      enabled: boolean
+      connect_account: boolean
+      subscribe_to_connected_sub_account_events: boolean
+      encounter_external_id_key: string
+      patient_external_id_key: string
+      auto_collect: boolean
+      auto_collect_threshold_cents: integer
+      auto_invoice: boolean
+      days_until_due: integer
+
+  PaymentAccountConfigPatch:
+    union:
+      chargebee: ChargebeePaymentAccountConfigPatch
+      square: SquarePaymentAccountConfigPatch
+      stripe: StripePaymentAccountConfigPatch
+
+  ChargebeePaymentAccountConfigPatch:
+    properties:
+      billing_provider_npis: optional<list<BillingProviderNpi>>
+      account_name: optional<string>
+      description: optional<string>
+      api_token: optional<PaymentAccountApiToken>
+      enabled: optional<boolean>
+      site: optional<string>
+
+  SquarePaymentAccountConfigPatch:
+    properties:
+      billing_provider_npis: optional<list<BillingProviderNpi>>
+      account_name: optional<string>
+      description: optional<string>
+      api_token: optional<PaymentAccountApiToken>
+      enabled: optional<boolean>
+      locations: optional<list<string>>
+
+  StripePaymentAccountConfigPatch:
+    properties:
+      billing_provider_npis: optional<list<BillingProviderNpi>>
+      account_name: optional<string>
+      description: optional<string>
+      api_token: optional<PaymentAccountApiToken>
+      enabled: optional<boolean>
+      connect_account: optional<boolean>
+      subscribe_to_connected_sub_account_events: optional<boolean>
+      encounter_external_id_key: optional<string>
+      patient_external_id_key: optional<string>
+      auto_collect: optional<boolean>
+      auto_collect_threshold_cents: optional<integer>
+      auto_invoice: optional<boolean>
+      days_until_due: optional<integer>
+
+  VerifyCanInvoiceResultType:
+    enum:
+      - Success
+      - PaymentAccountConfigMissing
+      - CustomerNotFound
+      - CustomerEmailNotFound
+
+  VerifyCanInvoiceRequest:
+    properties:
+      claim_ids: list<commons.ClaimId>
+      patient_external_id: commons.PatientExternalId
+      check_email_exists:
+        type: optional<boolean>
+        docs: whether to check the existence of customer email. Default=True
+
+  VerifyCanInvoiceResponse:
+    properties:
+      items: list<VerifyCanInvoiceResponseItem>
+
+  VerifyCanInvoiceResponseItem:
+    properties:
+      claim_id: commons.ClaimId
+      patient_external_id: commons.PatientExternalId
+      result: VerifyCanInvoiceResultType
+      customer_url: string
+
+  VerifyCustomerExistsResponse:
+    properties:
+      result: VerifyCanInvoiceResultType
+      customer_url: string
+
+  PaymentAccountConfigNameAlreadyExistsErrorContent:
+    properties:
+      message: string
+
+errors:
+  PaymentAccountConfigNameAlreadyExistsError:
+    status-code: 422
+    type: PaymentAccountConfigNameAlreadyExistsErrorContent

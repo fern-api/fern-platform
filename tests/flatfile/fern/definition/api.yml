@@ -1,0 +1,18 @@
+name: api
+display-name: Flatfile API
+docs: >-
+  Build your next data integration on Flatfile''s data exchange platform.
+  This API provides access to Flatfile workbooks, and all the tools
+  required to build a workflow out of them.'
+auth: bearer
+environments:
+  Production: https://api.x.flatfile.com/v1
+default-environment: Production
+error-discrimination:
+  strategy: status-code
+audiences:
+  - public
+  - internal
+  - deprecated
+headers:
+  X-Disable-Hooks: literal<"true">

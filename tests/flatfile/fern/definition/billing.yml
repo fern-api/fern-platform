@@ -1,0 +1,201 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  property: property.yml
+  commons: commons.yml
+  records: records.yml
+
+service:
+  auth: true
+  base-path: /billing
+  audiences:
+    - internal
+  endpoints:
+    list:
+      path: "/products"
+      method: GET
+      docs: List the available products
+      display-name: List products
+      response: ProductsResponse
+
+    post:
+      path: "/checkoutsession/create"
+      method: POST
+      docs: Creates a checkout session
+      display-name: Create a checkout session
+      request: CreateCheckoutSessionRequest
+      response: CreateCheckoutSessionResponse
+
+    get-subscriptions:
+      path: "/subscriptions"
+      method: GET
+      docs: List the subscriptions for the current user
+      display-name: List subscriptions
+      response: BillingSubscriptions
+
+    cancel-subscriptions:
+      path: "/subscriptions"
+      method: DELETE
+      docs: Cancel the subscriptions for the current user
+      response: commons.Success
+
+    update-subscription:
+      path: "/subscription/{subscriptionId}"
+      method: PUT
+      docs: Update a subscription for the current user
+      path-parameters:
+        subscriptionId:
+          docs: ID of subscription
+          type: commons.BillingSubscriptionId
+      request: SubscriptionUpdates
+      response: BillingSubscription
+
+    cancel-subscription:
+      path: "/subscription/{subscriptionId}"
+      method: DELETE
+      docs: Cancel a subscription for the current user
+      path-parameters:
+        subscriptionId:
+          docs: ID of subscription
+          type: commons.BillingSubscriptionId
+      response: commons.Success
+
+    get-plan:
+      path: "/plan"
+      method: GET
+      docs: Get the plan for the current user's account
+      response: BillingPlanWithUsageResponse
+
+    get-limits:
+      path: "/limits"
+      method: GET
+      docs: Get the limits for the current user's account
+      response: BillingLimitsResponse
+
+types:
+  ProductsResponse:
+    properties:
+      data: list<Product>
+
+  CreateCheckoutSessionResponse:
+    properties:
+      data: CheckoutSession
+
+  CreateCheckoutSessionRequest:
+    docs: Checkout session request body
+    properties:
+      lineItems: list<LineItem>
+      successUrl: string
+
+  SubscriptionUpdates:
+    docs: Updates to a subscription
+    properties:
+      lineItems: list<LineItem>
+
+  BillingSubscriptions:
+    docs: A list of billing subscriptions
+    properties:
+      data: list<BillingSubscription>
+
+  BillingSubscription:
+    docs: A billing subscription
+    properties:
+      id: commons.BillingSubscriptionId
+      stripeSubscriptionId: string
+      status: string
+      account_id: commons.AccountId
+      items: list<BillingSubscriptionItem>
+
+  BillingSubscriptionItem:
+    docs: A billing subscription item
+    properties:
+      price: StripePrice
+      product: Product
+      quantity: integer
+
+  Product:
+    docs: A product as returned by Stripe
+    properties:
+      id: string
+      object: string
+      active: boolean
+      attributes: list<string>
+      created: integer
+      default_price: StripePrice
+      description: string
+      metadata: StripeMetadata
+      name: string
+
+  Price:
+    docs: A price as returned by Stripe
+    properties:
+      id: string
+
+  StripePrice:
+    docs: A price as returned by Stripe
+    properties:
+      id: string
+      unit_amount: integer
+      tiers: optional<list<StripePriceTier>>
+
+  StripeMetadata:
+    docs: Metadata as returned by Stripe
+    properties:
+      canSelfServe: optional<string>
+      commitment: optional<string>
+      isDefaultSelection: optional<string>
+      interval: optional<string>
+      planType: optional<string>
+      platform: optional<string>
+      prepayId: optional<string>
+      proOnly: optional<string>
+      productType: optional<string>
+      unitLabel: optional<string>
+      usageType: optional<string>
+
+  StripePriceTier:
+    docs: A price tier as returned by Stripe
+    properties:
+      unit_amount: integer
+
+  CheckoutSession:
+    docs: A Checkout Session as returned by Stripe
+    properties:
+      id: optional<string>
+      object: optional<string>
+
+  LineItem:
+    docs: A line item passed to a checkout session or subscription
+    properties:
+      price: string
+      quantity: integer
+
+  BillingPlanWithUsageResponse:
+    docs: A billing plan with usage as returned by us
+    properties:
+      data: BillingPlanWithUsage
+
+  BillingPlanWithUsage:
+    docs: A billing plan with usage as returned by us
+    properties:
+      accountId: commons.AccountId
+      plan: string
+      pdvs: integer
+      files: integer
+      fromDate: datetime
+      toDate: datetime
+      freeFileLimit: integer
+      freePdvLimit: integer
+
+  BillingLimitsResponse:
+    docs: A billing limits response as returned by us
+    properties:
+      data: BillingLimits
+
+  BillingLimits:
+    docs: A billing limits as returned by us
+    properties:
+      fromDate: datetime
+      toDate: datetime
+      fileUploadIsLockedUntilPayment: boolean
+      sheetIsLockedUntilPayment: boolean

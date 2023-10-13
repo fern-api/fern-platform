@@ -1,0 +1,46 @@
+Learn what information we require for business representatives.
+
+[API Reference](/api-reference/entity/representative/create-representative)
+
+## About business representatives
+
+A business representative is someone with financial ownership or significant control over a business entity. In order to meet federal regulations, Mercoa is required to collect and verify information about these individuals. We have two categories for business representatives:
+
+- Controllers
+- Owners
+
+If you’re providing information for a business representative, they must be either a controller or an owner (see below for more information). In some instances, the controller and owner can be the same person.
+If this is the case, set both `isController` and `isOwner` to `true`. We allow a maximum of 7 business representatives for a Mercoa account.
+
+<Callout intent="info">
+  This only applies to entities set up as businesses. Entities that are set up as individuals will not have a business
+  representative.
+</Callout>
+
+## Controller
+
+In compliance with regulatory guidelines, we require you to provide information for at least one verified business representative who exercises significant control over the company.
+Some examples of business representatives include the CEO, COO, Treasurer, President, Vice President, or Managing Partner.
+
+## Financial ownership
+
+Additionally, we are required to verify all individuals with a ≥25% ownership stake of the company. Ownership information can be provided by creating a representative where `isOwner` = `true` and providing the `ownershipPercentage`. If the representative you’ve created does not own ≥25% of your
+company, you can indicate that by making sure `isOwner` = `false` and leaving the ownership percentage field blank.
+
+## Requirements
+
+Below, we’ve consolidated the data requirements for owners and controllers.
+
+| Required information | Owner        | Controller   |
+| -------------------- | ------------ | ------------ |
+| Legal name           | yes          | yes          |
+| Personal address     | yes          | yes          |
+| Email or phone #     | yes          | yes          |
+| Date of birth        | yes          | yes          |
+| Last 4 of SSN\*      | yes          | yes          |
+| isController         | not required | yes          |
+| Job title            | not required | yes          |
+| isOwner              | yes          | not required |
+| Ownership percentage | yes          | not required |
+
+<Callout intent="info">*Note that in some instances, we will require the full SSN.</Callout>

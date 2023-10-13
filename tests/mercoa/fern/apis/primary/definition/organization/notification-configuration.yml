@@ -1,0 +1,51 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  entity: ../entity-types.yml
+  organization: ../organization-types.yml
+
+service:
+  auth: true
+  base-path: /organization
+  endpoints:
+    getAll:
+      audiences:
+        - external
+      path: /notification-configurations
+      method: GET
+      docs: Retrieve all notification configurations
+      display-name: Retrieve all notification configurations
+      response: list<organization.NotificationConfigurationResponse>
+
+    get:
+      audiences:
+        - external
+      path: /notification-configuration/{notificationType}
+      path-parameters:
+        notificationType: entity.NotificationType
+      method: GET
+      docs: Retrieve notification configuration for this notification type
+      display-name: Retrieve notification configuration associated with this organization
+      response: organization.NotificationConfigurationResponse
+
+    update:
+      audiences:
+        - external
+      path: /notification-configuration/{notificationType}
+      path-parameters:
+        notificationType: entity.NotificationType
+      method: POST
+      docs: Update notification configuration for this notification type
+      display-name: Update notification configuration for this notification type
+      request: organization.NotificationConfigurationRequest
+      response: organization.NotificationConfigurationResponse
+
+    reset:
+      audiences:
+        - external
+      path: /notification-configuration/{notificationType}
+      path-parameters:
+        notificationType: entity.NotificationType
+      method: DELETE
+      docs: Reset notification configuration for this notification type
+      display-name: Reset notification configuration for this notification type

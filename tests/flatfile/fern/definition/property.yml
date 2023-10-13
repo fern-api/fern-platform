@@ -1,0 +1,233 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  Property:
+    union:
+      string: StringProperty
+      number: NumberProperty
+      boolean: BooleanProperty
+      date: DateProperty
+      enum: EnumProperty
+      reference: ReferenceProperty
+    examples:
+      - name: String response
+        value:
+          key: code
+          type: string
+          label: Product Code
+          description: Unique identifier defining an individual product.
+          constraints:
+            - type: unique
+              config:
+                case_sensitive: false
+          config:
+            size: tiny
+      - name: Number response
+        value:
+          key: price
+          type: number
+          config: $NumberConfig.Example0
+      - name: Boolean response
+        value:
+          key: editable
+          type: boolean
+          config:
+            allow_indeterminate: true
+      - name: Date response
+        value:
+          key: Start date
+          type: date
+      - name: Enum response
+        value:
+          key: category
+          label: Product Category
+          type: enum
+          is_array: false
+          multi: true
+          config:
+            allow_custom: false
+            options:
+              - value: 9
+                label: Kitchenware
+                icon: pots-and-pans
+                color: "#f00000"
+                meta:
+                  product_code_prefix: KI-
+              - value: 9
+                label: Clothing
+                meta:
+                  product_code_prefix: CL-
+      - name: Reference response
+        value:
+          key: user reference
+          type: reference
+          config:
+            ref: /sheet/users/3
+            relationship: has-many
+            key: id
+
+  BaseProperty:
+    properties:
+      key: string
+      label:
+        type: optional<string>
+        docs: User friendly field name
+      description: optional<string>
+      constraints: optional<list<Constraint>>
+      readonly: optional<boolean>
+      metadata:
+        type: optional<unknown>
+        docs: Useful for any contextual metadata regarding the schema. Store any valid json here.
+
+  ArrayableProperty:
+    properties:
+      is_array:
+        docs: Will allow multiple values and store as an array
+        type: optional<boolean>
+
+  StringProperty:
+    docs: Defines a property that should be stored and read as a basic string. Database engines should expect any length of text to be provided here unless explicitly defined in the config.
+    extends:
+      - BaseProperty
+    properties:
+      config: optional<StringConfig>
+
+  NumberProperty:
+    docs: Defines a property that should be stored and read as either an integer or floating point number. Database engines should look at the configuration to determine ideal storage format.
+    extends:
+      - BaseProperty
+      - ArrayableProperty
+    properties:
+      config: optional<NumberConfig>
+
+  NumberConfig:
+    properties:
+      decimal_places:
+        docs: Number of decimal places to round data to
+        type: integer
+    examples:
+      - name: Example0
+        value:
+          decimal_places: 2
+
+  BooleanProperty:
+    docs: A `true` or `false` value type. Matching engines should attempt to resolve all common ways of representing this value and it should usually be displayed as a checkbox.
+    extends: BaseProperty
+    properties:
+      config: optional<BooleanPropertyConfig>
+
+  BooleanPropertyConfig:
+    properties:
+      allow_indeterminate:
+        type: boolean
+        docs: Allow a neither true or false state to be stored as `null`
+
+  DateProperty:
+    docs: Store a field as a GMT date. Data hooks must convert this value into a `YYYY-MM-DD` format in order for it to be considered a valid value. Datetime should be a separate and future supported value as it must consider timezone.
+    extends:
+      - BaseProperty
+
+  EnumProperty:
+    docs: Defines an enumerated list of options for the user to select from. Matching tooling attempts to resolve incoming data assigment to a valid option. The maximum number of options for this list is `100`. For larger lists, users should use the reference or future `lookup` types.
+    extends:
+      - BaseProperty
+      - ArrayableProperty
+    properties:
+      multi:
+        docs: Will allow multiple values and store / provide the values in an array if set. Not all field types support arrays.
+        type: optional<boolean>
+      config: EnumPropertyConfig
+
+  EnumPropertyConfig:
+    properties:
+      allow_custom:
+        type: optional<boolean>
+        docs: Permit the user to create new options for this specific field.
+      options: list<EnumPropertyOption>
+
+  EnumPropertyOption:
+    properties:
+      label:
+        docs: A visual label for this option, defaults to value if not provided
+        type: optional<string>
+      description:
+        docs: A short description for this option
+        type: optional<string>
+      color:
+        docs: An optional color to assign this option
+        type: optional<string>
+      icon:
+        docs: A reference pointer to a previously registered icon
+        type: optional<string>
+      meta:
+        docs: >-
+          An arbitrary JSON object to be associated with this option and made
+          available to hooks
+        type: optional<map<string, unknown>>
+      value:
+        docs: >-
+          The value or ID of this option. This value will be sent in egress. 
+          The type is a string | integer | boolean.
+        type: unknown
+
+  ReferenceProperty:
+    docs: Defines a reference to another sheet. Links should be established automatically by the matching engine or similar upon an evaluation of unique or similar columns between datasets.
+    extends:
+      - BaseProperty
+      - ArrayableProperty
+    properties:
+      config: ReferencePropertyConfig
+
+  ReferencePropertyConfig:
+    properties:
+      ref:
+        type: string
+        docs: Full path reference to a sheet configuration. Must be in the same workbook.
+      key:
+        type: string
+        docs: Key of the property to use as the reference key. Defaults to `id`
+      relationship:
+        type: ReferencePropertyRelationship
+        docs: The type of relationship this defines
+
+  ReferencePropertyRelationship:
+    enum:
+      - value: has-one
+        name: has_one
+      - value: has-many
+        name: has_many
+
+  Constraint:
+    union:
+      required: {}
+      unique: UniqueConstraint
+      computed: {}
+
+  UniqueConstraint:
+    properties:
+      config: optional<UniqueConstraintConfig>
+
+  UniqueConstraintConfig:
+    properties:
+      case_sensitive:
+        type: optional<boolean>
+        docs: Ignore casing when determining uniqueness
+      ignore_empty:
+        type: optional<boolean>
+        docs: Do not flag empty values as duplicate
+
+  StringConfig:
+    properties:
+      size: StringConfigOptions
+
+  StringConfigOptions:
+    docs: How much text should be storeable in this field
+    enum:
+      - value: tiny
+        docs: up to 255 characters
+      - value: normal
+        docs: 64kb (default)
+      - value: medium
+        docs: 16mb
+      - value: long
+        docs: 4gb

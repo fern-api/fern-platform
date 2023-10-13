@@ -1,0 +1,20 @@
+The TypeScript Node SDK generator outputs a fully functional TypeScript/JavaScript
+SDK for server-side usage. It can publish the SDK to npmjs.org (or any other npm repository).
+
+Checkout the source code [here](https://github.com/fern-api/fern-typescript).
+
+### Config options
+
+- `namespaceExport`: Allows you to control the name of the generated namespace export and client class.
+
+<CodeBlock title="generators.yml">
+```yaml
+- name: fernapi/fern-typescript-node-sdk
+  version: 0.7.2
+  output:
+    location: npm.buildwithfern.com
+    package-name: "@fern-{your-org}/plantstore"
+  config: 
+    namespaceExport: PlantStore
+```
+</CodeBlock>

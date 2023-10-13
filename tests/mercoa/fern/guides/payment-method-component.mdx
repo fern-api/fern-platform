@@ -1,0 +1,26 @@
+<Callout intent="info">If you are using the iFrame component, this will automatically be handled for you.</Callout>
+
+<br />
+
+While some payment methods can be added directly via API, others like credit cards and Plaid require you to host a secure iFrame that allows Mercoa to collect this information from your users in a PCI compliant manner.
+
+Mercoa makes this easy by providing a secure iFrame that you can embed in your app. This iFrame will allow your users to add and manage payment methods in your app.
+
+## Generate a user token
+
+Before you can embed the iFrame, you will need to generate a user token. This token will be used to authenticate the user in the iFrame.
+
+Follow [this guide](/home/i-frame-quick-start#create-an-auth-token-for-the-entity) to learn how to generate a user token.
+
+## Embed the iFrame
+
+Once you have a user token, you can embed the iFrame in your app.
+
+```html
+<iframe
+  src="https://app.mercoa.com/embedded/payment-methods?token=<USER_TOKEN>"
+  width="100%"
+  height="100%"
+  style="border: none;"
+></iframe>
+```

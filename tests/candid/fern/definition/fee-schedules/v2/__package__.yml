@@ -1,0 +1,208 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+imports:
+  commons: ../../commons.yml
+  payers: ../../payers.yml
+  organizationProviders: ../../organization-providers/v2/__package__.yml
+
+types:
+  FeeScheduleId: uuid
+  BoundFeeScheduleId: uuid
+  FeeScheduleEntryId: uuid
+
+  Network:
+    enum:
+      - name: PPO
+        value: "12"
+        docs: Preferred Provider Organization (PPO)
+      - name: POS
+        value: "13"
+        docs: Point of Service (POS)
+      - name: EPO
+        value: "14"
+        docs: Exclusive Provider Organization (EPO)
+      - name: INDEMNITY_INSURANCE
+        value: "15"
+        docs: Indemnity Insurance
+      - name: HMO_MEDICARE_RISK
+        value: "16"
+        docs: Health Maintenance Organization (HMO) Medicare Risk
+      - name: DMO
+        value: "17"
+        docs: Dental Maintenance Organization
+      - name: AUTO
+        value: "AM"
+        docs: Automobile Medical
+      - name: CHAMPUS
+        value: "CH"
+        docs: CHAMPUS
+      - name: DISABILITY
+        value: "DS"
+        docs: Disability
+      - name: HMO
+        value: "HM"
+        docs: Health Maintenance Organization (HMO)
+      - name: LIABILITY
+        value: "LM"
+        docs: Liability Medical
+      - name: MEDICARE_PART_A
+        value: "MA"
+        docs: Medicare Part A
+      - name: MEDICARE_PART_B
+        value: "MB"
+        docs: Medicare Part B
+      - name: MEDICAID
+        value: "MC"
+        docs: Medicaid
+      - name: OTHER_FEDERAL_PROGRAM
+        value: "OF"
+        docs: Other Federal Program
+      - name: TITLE_V
+        value: "TV"
+        docs: Title V
+      - name: VETERANS_AFFAIRS_PLAN
+        value: "VA"
+        docs: Veterans Affairs Plan
+      - name: WORKERS_COMP_HEALTH_CLAIM
+        value: "WC"
+        docs: Workers' Compensation Health Claim
+      - name: MUTUALLY_DEFINED
+        value: "ZZ"
+        docs: Mutually Defined
+
+  PlaceOfServiceCategory:
+    enum:
+      - FACILITY
+      - NON_FACILITY
+      - NOT_APPLICABLE
+
+  FeeScheduleGeography:
+    properties:
+      state: commons.State
+      county: optional<string>
+
+  LicenseTypeCoverage:
+    union:
+      all: {}
+      license_types: set<organizationProviders.LicenseType>
+
+  NetworkCoverage:
+    union:
+      all: {}
+      networks: set<Network>
+
+  GeographyCoverage:
+    union:
+      all: {}
+      geography: set<FeeScheduleGeography>
+
+  PlaceOfServiceCoverage:
+    union:
+      all: {}
+      place_of_services: set<PlaceOfServiceCategory>
+
+  FeeScheduleConfigurationMechanism:
+    enum:
+      - name: legacy
+        value: legacy
+        docs: The hard-coded CSV fee schedule configuration without dimensionality.
+      - name: dimensioned
+        value: dimensioned
+        docs: The dimensioned fee schedules eventually managed via Candid App.
+
+  GetFeeScheduleConfigurationMechanismResponse:
+    properties:
+      mechanism: FeeScheduleConfigurationMechanism
+
+  ReferenceFeeScheduleMetadata:
+    properties:
+      percentage: integer # 100 => 100%
+      reference_name: string # e.g. Medicare Texas
+
+  BoundFeeSchedule:
+    properties:
+      bound_fee_schedule_id: BoundFeeScheduleId
+      fee_schedule_id: FeeScheduleId
+      reference_fee_schedule: optional<ReferenceFeeScheduleMetadata>
+      license_type_coverage: LicenseTypeCoverage
+      network_coverage: NetworkCoverage
+      geography_coverage: GeographyCoverage
+      place_of_service_coverage: PlaceOfServiceCoverage
+      effective_date_range: commons.DateRangeRequiredEnd
+
+  GroupedFeeSchedules:
+    properties:
+      billing_npi: string
+      bound_fee_schedules: list<BoundFeeSchedule>
+
+  GetGroupedFeeSchedulesForPayerPage:
+    extends: commons.ResourcePage
+    properties:
+      items: list<GroupedFeeSchedules>
+
+  GetGroupedFeeSchedulesForPayerResponse:
+    properties:
+      page: GetGroupedFeeSchedulesForPayerPage
+
+  FeeScheduleEntry:
+    properties:
+      id: FeeScheduleEntryId
+      procedure_code: string
+      modifier: optional<string>
+      contracted_rate_cents: integer
+
+  GetBoundFeeScheduleResponse:
+    properties:
+      bound_fee_schedule: BoundFeeSchedule
+      entries: list<FeeScheduleEntry>
+
+service:
+  auth: true
+  base-path: /api/fee-schedules/v2
+  availability: in-development
+  endpoints:
+    get_fee_schedule_configuration_mechanism:
+      docs: Gets which fee schedule configuration mechanism the current organization is using.
+      method: GET
+      path: "/fee-schedule-configuration-mechanism"
+      response: GetFeeScheduleConfigurationMechanismResponse
+
+    get_grouped_fee_schedules_for_payer:
+      docs: |
+        Gets bound fee schedules for a given payer grouped by billing provider NPI.
+        This is intended for Candid App usage, different from a get_multi endpoint that
+        doesn't data wrangle the modeling into the presentation shape.
+      method: GET
+      path: "/grouped"
+      request:
+        name: GetGroupedFeeSchedulesForPayerRequest
+        query-parameters:
+          payer_uuid:
+            type: payers.PayerUuid
+            docs: The payer
+          license_types:
+            type: optional<organizationProviders.LicenseType>
+            allow-multiple: true
+          geographies:
+            type: optional<commons.State>
+            allow-multiple: true
+          networks:
+            type: optional<Network>
+            allow-multiple: true
+          limit:
+            type: optional<integer>
+            docs: Limit the number of results returned. Defaults to 100.
+          page_token:
+            type: optional<commons.PageToken>
+            docs: The page token to continue paging through a previous request
+      response: GetGroupedFeeSchedulesForPayerResponse
+      errors:
+        - commons.HttpRequestValidationError
+
+    get_bound_fee_schedule:
+      docs: Get the unpaginated fee schedule entries for a provided bound fee schedule.
+      method: GET
+      path: "/{fee_schedule_id}/{bound_fee_schedule_id}"
+      path-parameters:
+        fee_schedule_id: FeeScheduleId
+        bound_fee_schedule_id: BoundFeeScheduleId
+      response: GetBoundFeeScheduleResponse

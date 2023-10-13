@@ -1,0 +1,532 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+  property: property.yml
+  records: records.yml
+
+service:
+  auth: true
+  base-path: /jobs
+  audiences:
+    - public
+  endpoints:
+    list:
+      path: ""
+      method: GET
+      display-name: List jobs
+      request:
+        name: ListJobsRequest
+        query-parameters:
+          environmentId: optional<commons.EnvironmentId>
+          spaceId: optional<commons.SpaceId>
+          workbookId: optional<commons.WorkbookId>
+          fileId: optional<commons.FileId>
+          pageSize:
+            docs: Number of jobs to return in a page (default 20)
+            type: optional<integer>
+          pageNumber:
+            docs: Based on pageSize, which page of jobs to return
+            type: optional<integer>
+          sortDirection:
+            type: optional<commons.SortDirection>
+      response: ListJobsResponse
+
+    create:
+      path: ""
+      method: POST
+      display-name: Create a job
+      request: JobConfig
+      response: JobResponse
+
+    get:
+      path: /{jobId}
+      method: GET
+      display-name: Get a job
+      path-parameters:
+        jobId: commons.JobId
+      response: JobResponse
+
+    update:
+      path: /{jobId}
+      method: PATCH
+      display-name: Update a job
+      path-parameters:
+        jobId: commons.JobId
+      request: JobUpdate
+      response: JobResponse
+
+    delete:
+      path: /{jobId}
+      method: DELETE
+      display-name: Delete a job
+      path-parameters:
+        jobId: commons.JobId
+      response: commons.Success
+
+    execute:
+      path: /{jobId}/execute
+      method: POST
+      docs: Execute a job and return the job
+      display-name: Execute a job
+      path-parameters:
+        jobId:
+          docs: ID of job to return
+          type: string
+      response: commons.Success
+
+    getExecutionPlan:
+      path: /{jobId}/plan
+      method: GET
+      docs: Returns a single job's execution plan
+      display-name: Get a job's execution plan
+      path-parameters:
+        jobId:
+          docs: ID of job to return
+          type: commons.JobId
+      response: JobPlanResponse
+
+    updateExecutionPlan:
+      path: /{jobId}/plan
+      method: PUT
+      docs: Update a job's entire execution plan
+      display-name: Replace a job's plan
+      path-parameters:
+        jobId:
+          docs: ID of job to return
+          type: commons.JobId
+      request: JobExecutionPlanRequest
+      response: JobPlanResponse
+
+    updateExecutionPlanFields:
+      path: /{jobId}/plan
+      method: PATCH
+      docs: Update one or more individual fields on a job's execution plan
+      display-name: Update a job's plan
+      path-parameters:
+        jobId:
+          docs: ID of job to return
+          type: string
+      request: JobExecutionPlanConfigRequest
+      response: JobPlanResponse
+
+    ack:
+      path: /{jobId}/ack
+      method: POST
+      docs: Acknowledge a job and return the job
+      display-name: Acknowledge a job
+      path-parameters:
+        jobId:
+          docs: ID of job to return
+          type: commons.JobId
+      request: optional<JobAckDetails>
+      response: JobResponse
+
+    ackOutcome:
+      path: /{jobId}/outcome/ack
+      method: POST
+      docs: Acknowledge a job outcome and return the job
+      display-name: Acknowledge a job outcome
+      path-parameters:
+        jobId:
+          docs: ID of job to return
+          type: commons.JobId
+      response: JobResponse
+
+    complete:
+      path: /{jobId}/complete
+      method: POST
+      docs: Complete a job and return the job
+      display-name: Complete a job
+      path-parameters:
+        jobId:
+          docs: ID of job to return
+          type: commons.JobId
+      request: optional<JobOutcome>
+      response: JobResponse
+
+    fail:
+      path: /{jobId}/fail
+      method: POST
+      docs: Fail a job and return the job
+      display-name: Fail a job
+      path-parameters:
+        jobId:
+          docs: ID of job to return
+          type: commons.JobId
+      request: optional<JobOutcome>
+      response: JobResponse
+
+    cancel:
+      path: /{jobId}/cancel
+      method: POST
+      docs: Cancel a job and return the job
+      display-name: Cancel a job
+      path-parameters:
+        jobId:
+          docs: ID of job to return
+          type: commons.JobId
+      request: optional<JobCancelDetails>
+      response: JobResponse
+
+types:
+  ListJobsResponse:
+    properties:
+      pagination: optional<commons.Pagination>
+      data: list<Job>
+
+  JobResponse:
+    properties:
+      data: Job
+
+  JobPlanResponse:
+    properties:
+      data: JobPlan
+
+  Job:
+    docs: A single unit of work that will execute asynchronously
+    extends: JobConfig
+    properties:
+      id: commons.JobId
+      createdAt:
+        docs: Date the item was created
+        type: datetime
+      updatedAt:
+        docs: Date the item was last updated
+        type: datetime
+      startedAt:
+        type: optional<datetime>
+        docs: the time that the job started at
+      finishedAt:
+        type: optional<datetime>
+        docs: the time that the job finished at
+      outcomeAcknowledgedAt:
+        type: optional<datetime>
+        docs: the time that the job's outcome has been acknowledged by a user
+
+  JobConfig:
+    docs: A single unit of work that a pipeline will execute
+    properties:
+      type:
+        docs: The type of job
+        type: JobType
+      operation:
+        docs: the type of operation to perform on the data. For example, "export".
+        type: string
+      source: JobSource
+      destination: optional<JobDestination>
+      config:
+        type: optional<JobUpdateConfig>
+        availability: deprecated
+      trigger:
+        docs: the type of trigger to use for this job
+        type: optional<Trigger>
+      status:
+        docs: the status of the job
+        type: optional<JobStatus>
+      progress:
+        docs: the progress of the job
+        type: optional<double>
+      fileId: optional<commons.FileId>
+      mode:
+        docs: the mode of the job
+        type: optional<JobMode>
+      input:
+        docs: Input parameters for this job type.
+        type: optional<map<string, unknown>>
+      subject:
+        docs: Subject parameters for this job type.
+        type: optional<JobSubject>
+      outcome:
+        docs: Outcome summary of job.
+        type: optional<map<string, unknown>>
+      info:
+        docs: Current status of job in text
+        type: optional<string>
+      managed:
+        docs: Indicates if Flatfile is managing the control flow of this job or if it is being manually tracked.
+        type: optional<boolean>
+
+  JobUpdate:
+    docs: A single unit of work that will be executed
+    properties:
+      config: optional<JobUpdateConfig>
+      status:
+        docs: the status of the job
+        type: optional<JobStatus>
+      progress:
+        docs: the progress of the job
+        type: optional<double>
+      outcomeAcknowledgedAt:
+        type: optional<datetime>
+        docs: the time that the job's outcome has been acknowledged by a user
+
+  JobUpdateConfig:
+    discriminated: false
+    union:
+      - DeleteRecordsJobConfig
+      - FileJobConfig
+      - PipelineJobConfig
+      - ExportJobConfig
+      - MutateJobConfig
+      - FindAndReplaceJobConfig
+      - EmptyObject
+
+  JobSource:
+    docs: The id of a file, workbook, or sheet
+    type: string
+
+  JobDestination:
+    docs: The id of the workbook where extracted file data will be sent
+    type: commons.WorkbookId
+
+  DeleteRecordsJobConfig:
+    docs: The configuration for a delete job
+    properties:
+      filter: optional<commons.Filter>
+      filterField:
+        type: optional<commons.FilterField>
+      searchValue:
+        type: optional<commons.SearchValue>
+      searchField:
+        type: optional<commons.SearchField>
+      q:
+        type: optional<string>
+        docs: FFQL query to filter records
+      sheet: commons.SheetId
+      exceptions:
+        type: optional<list<commons.RecordId>>
+        docs: List of record ids to exclude from deletion
+
+  FileJobConfig:
+    properties:
+      driver:
+        docs: The driver to use for extracting data from the file
+        type: Driver
+
+  MutateJobConfig:
+    audiences:
+      - internal
+    properties:
+      sheetId: commons.SheetId
+      mutateRecord:
+        type: string
+        docs: A JavaScript function that will be run on each record in the sheet, it should return a mutated record.
+      mutationId:
+        type: optional<string>
+        docs: If the mutation was generated through some sort of id-ed process, this links this job and that process.
+      filter: optional<commons.Filter>
+      filterField: optional<commons.FilterField>
+      searchValue: optional<commons.SearchValue>
+      searchField: optional<commons.SearchField>
+      q: optional<string>
+      ids:
+        docs: >
+          The Record Ids param (ids) is a list of record ids that can be passed to several record endpoints allowing the user to identify specific records to INCLUDE in the query, or specific records to EXCLUDE, depending on whether or not filters are being applied. When passing a query param that filters the record dataset, such as 'searchValue', or a 'filter' of 'valid' | 'error' | 'all', the 'ids' param will EXCLUDE those records from the filtered results. For basic queries that do not filter the dataset, passing record ids in the 'ids' param will limit the dataset to INCLUDE just those specific records
+        type: optional<list<commons.RecordId>>
+
+  Driver:
+    docs: The driver to use for extracting data from the file
+    enum:
+      - csv
+
+  Trigger:
+    docs: the type of trigger to use for this job
+    enum:
+      - manual
+      - immediate
+
+  PipelineJobConfig:
+    properties:
+      sourceSheetId: commons.SheetId
+      destinationSheetId: commons.SheetId
+
+  JobType:
+    docs: The type of job
+    enum:
+      - file
+      - workbook
+      - sheet
+
+  JobStatus:
+    docs: the status of the job
+    enum:
+      - planning
+      - ready
+      - executing
+      - complete
+      - failed
+
+  JobMode:
+    docs: the mode of the job
+    enum:
+      - foreground
+      - background
+
+  JobSubject:
+    docs: Subject parameters for this job type
+    discriminant: type
+    union:
+      resource: ResourceJobSubject
+      collection: CollectionJobSubject
+
+  CollectionJobSubject:
+    properties:
+      resource: string
+      params: optional<map<string, unknown>>
+      query: optional<map<string, unknown>>
+
+  ResourceJobSubject:
+    properties:
+      id: string
+
+  JobPlanObject:
+    properties:
+      data: JobPlan
+
+  JobPlan:
+    docs: The job/plan tuple that contains the full plan and the jobs status
+    properties:
+      job: Job
+      plan: JobExecutionPlan
+
+  JobExecutionPlanRequest:
+    extends: JobExecutionPlan
+    properties:
+      fileId: commons.FileId
+      jobId: commons.JobId
+
+  JobExecutionPlanConfigRequest:
+    extends: JobExecutionPlanConfig
+    properties:
+      fileId: commons.FileId
+      jobId: commons.JobId
+
+  JobAckDetails:
+    docs: Details about the user who acknowledged the job
+    properties:
+      info: optional<string>
+      progress: optional<integer>
+
+  JobOutcome:
+    docs: Outcome summary of a job
+    properties:
+      outcome: optional<map<string, unknown>>
+      info: optional<string>
+
+  JobCancelDetails:
+    docs: Info about the reason the job was canceled
+    properties:
+      info: optional<string>
+
+  JobExecutionPlan:
+    docs: >-
+      The execution plan for a job, for example, for a map job, the execution
+      plan is the mapping of the source sheet to the destination sheet.
+    properties:
+      fieldMapping:
+        type: list<Edge>
+      unmappedSourceFields: list<SourceField>
+      unmappedDestinationFields: list<DestinationField>
+
+  JobExecutionPlanConfig:
+    docs: >-
+      The execution plan for a job, for example, for a map job, the execution
+      plan is the mapping of the source sheet to the destination sheet.
+    properties:
+      fieldMapping:
+        type: optional<list<Edge>>
+      unmappedSourceFields: optional<list<SourceField>>
+      unmappedDestinationFields: optional<list<DestinationField>>
+
+  Edge:
+    properties:
+      sourceField: property.Property
+      destinationField: property.Property
+      preview: optional<list<string>>
+      enumDetails:
+        docs: >-
+          Only available if one or more of the destination fields is of type
+          enum. Provides category mapping.
+        type: optional<EnumDetails>
+      metadata: optional<Metadata>
+
+  SourceField:
+    properties:
+      sourceField: property.Property
+      preview: optional<list<string>>
+
+  DestinationField:
+    properties:
+      destinationField: property.Property
+      preview: optional<list<string>>
+
+  EnumDetails:
+    docs: >-
+      Only available if one or more of the destination fields is of type enum.
+      Provides category mapping.
+    properties:
+      mapping: optional<list<CategoryMapping>>
+      unusedSourceValues: optional<list<string>>
+      unusedDestinationValues: optional<list<string>>
+
+  Metadata:
+    properties:
+      certainty: optional<Certainty>
+      confidence: optional<double>
+      source: optional<string>
+
+  Certainty:
+    enum:
+      - absolute
+      - strong
+      - moderate
+      - weak
+
+  CategoryMapping:
+    properties:
+      sourceValue: optional<string>
+      destinationValue: optional<string>
+
+  FindAndReplaceJobConfig:
+    properties:
+      filter: optional<commons.Filter>
+      filterField: optional<commons.FilterField>
+      searchValue: optional<commons.SearchValue>
+      searchField: optional<commons.SearchField>
+      q: optional<string>
+      ids:
+        docs: >
+          The Record Ids param (ids) is a list of record ids that can be passed to several record endpoints allowing the user to identify specific records to INCLUDE in the query, or specific records to EXCLUDE, depending on whether or not filters are being applied. When passing a query param that filters the record dataset, such as 'searchValue', or a 'filter' of 'valid' | 'error' | 'all', the 'ids' param will EXCLUDE those records from the filtered results. For basic queries that do not filter the dataset, passing record ids in the 'ids' param will limit the dataset to INCLUDE just those specific records
+        type: optional<list<commons.RecordId>>
+      find:
+        type: optional<records.CellValueUnion>
+        docs: A value to find for a given field in a sheet. Wrap the value in "" for exact match
+      replace:
+        type: optional<records.CellValueUnion>
+        docs: The value to replace found values with
+      fieldKey:
+        type: string
+        docs: A unique key used to identify a field in a sheet
+
+  ExportJobConfig:
+    properties:
+      options: ExportOptions
+
+  ExportOptions:
+    properties:
+      versionId: optional<commons.VersionId>
+      sortField: optional<commons.SortField>
+      sortDirection: optional<commons.SortDirection>
+      filter: optional<commons.Filter>
+      filterField: optional<commons.FilterField>
+      searchValue: optional<commons.SearchValue>
+      searchField: optional<commons.SearchField>
+      q: optional<string>
+      ids:
+        docs: >
+          The Record Ids param (ids) is a list of record ids that can be passed to several record endpoints allowing the user to identify specific records to INCLUDE in the query, or specific records to EXCLUDE, depending on whether or not filters are being applied. When passing a query param that filters the record dataset, such as 'searchValue', or a 'filter' of 'valid' | 'error' | 'all', the 'ids' param will EXCLUDE those records from the filtered results. For basic queries that do not filter the dataset, passing record ids in the 'ids' param will limit the dataset to INCLUDE just those specific records
+        type: optional<list<commons.RecordId>>
+
+  EmptyObject:
+    properties: {}

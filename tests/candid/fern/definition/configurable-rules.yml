@@ -1,0 +1,283 @@
+imports:
+  commons: commons.yml
+  configurable-rules-types: configurable-rules-types.yml
+  configurable-rules-variables: configurable-rules-variables.yml
+  pipeline-commons: pipeline-commons.yml
+
+service:
+  auth: true
+  base-path: /api/configurable-rules/v1
+  availability: in-development
+  audiences:
+    - configurable-rules
+  endpoints:
+    create:
+      path: ""
+      method: POST
+      request:
+        name: ConfigurableRuleCreate
+        body:
+          properties:
+            name: string
+            description: optional<string>
+            scope: Scope
+            statement: configurable-rules-types.Statement
+            # Whether the configurable rule is turned on to run. If omitted, defaults to False (disabled).
+            is_enabled: optional<boolean>
+      response: ConfigurableRule
+      errors:
+        # Scope errors
+        - ConfigForScopeComputationHttpError
+        - ScopeDoesNotSupportConfigurableRulesHttpError
+        - UnknownScopeHttpError
+        # Validation errors
+        - RuleValidationHttpFailure
+
+    getLegalComparisons:
+      path: /comparisons
+      method: GET
+      response: LegalComparisonsResponse
+
+    get:
+      path: /{configurable_rule_id}
+      method: GET
+      path-parameters:
+        configurable_rule_id: pipeline-commons.ConfigurableRuleId
+      response: ConfigurableRule
+      errors:
+        - RuleNotFoundHttpError
+
+    update:
+      path: /{configurable_rule_id}
+      method: PATCH
+      path-parameters:
+        configurable_rule_id: pipeline-commons.ConfigurableRuleId
+      request:
+        name: ConfigurableRuleUpdate
+        body:
+          properties:
+            name: optional<string>
+            description: optional<string>
+            statement: optional<configurable-rules-types.Statement>
+            # Whether the configurable rule is turned on to run.
+            is_enabled: optional<boolean>
+      response: ConfigurableRule
+      errors:
+        - RuleNotFoundHttpError
+        # Scope errors
+        - ConfigForScopeComputationHttpError
+        - ScopeDoesNotSupportConfigurableRulesHttpError
+        - UnknownScopeHttpError
+        # Validation errors
+        - RuleValidationHttpFailure
+
+    delete:
+      path: /{configurable_rule_id}
+      method: DELETE
+      path-parameters:
+        configurable_rule_id: pipeline-commons.ConfigurableRuleId
+      errors:
+        - RuleNotFoundHttpError
+
+    resolveConfigForScope:
+      path: /config-for-scope
+      method: POST
+      request:
+        name: ConfigForScopeRequest
+        body:
+          properties:
+            scope: Scope
+      response: ConfigForScopeResponse
+      errors:
+        - ConfigForScopeComputationHttpError
+        - ScopeDoesNotSupportConfigurableRulesHttpError
+        - UnknownScopeHttpError
+
+    validateRule:
+      path: /validate
+      method: POST
+      request:
+        name: ValidateRuleRequest
+        body:
+          properties:
+            name: string
+            description: optional<string>
+            scope: Scope
+            statement: configurable-rules-types.Statement
+      response: ValidateRuleResponse
+      errors:
+        - ConfigForScopeComputationHttpError
+    # configureRulesForStep:
+    #   path: /rules-for-step
+    #   method: PUT
+    #   request: ConfigureRulesForStepRequest
+    #   response: ConfigureRulesForStepResponse
+
+types:
+  ConfigurableRule:
+    properties:
+      rule_id: pipeline-commons.ConfigurableRuleId
+      name: string
+      description: optional<string>
+      scope: Scope
+      statement: configurable-rules-types.Statement
+      is_enabled:
+        docs: Whether the configurable rule is turned on to run.
+        type: boolean
+
+  ConfigForScopeResponse:
+    properties:
+      inputs: configurable-rules-types.Field
+      available_actions: list<configurable-rules-types.AvailableActionWithMetadata>
+
+  Scope:
+    union:
+      # For now, inputs and actions/outputs are dictated by Step
+      step_locator: StepLocator
+
+  StepLocator:
+    properties:
+      pipeline_id: pipeline-commons.PipelineId
+      phase_id: pipeline-commons.PhaseId
+      step_id: pipeline-commons.StepId
+
+  LegalComparisonsResponse:
+    properties:
+      # NOTE(thomas/john): We are punting the ability for object comparisons
+      supported_comparisons: list<configurable-rules-types.ValidComparison>
+
+  ValidateRuleResponse:
+    properties:
+      result: RuleValidationResult
+
+  RuleRunResult:
+    union:
+      action_performed: configurable-rules-types.ExecutedAction
+      no_action_performed: {}
+      unexpected_error: {}
+
+  RuleValidationResult:
+    union:
+      success: {}
+      scope_does_not_support_configurable_rules_error: ScopeDoesNotSupportConfigurableRulesError
+      unknown_scope_error: UnknownScopeError
+      validation_failure: RuleValidationFailure
+
+  RuleValidationFailure:
+    properties:
+      errors: list<RuleValidationError>
+
+  RuleValidationError:
+    union:
+      invalid_statement: InvalidStatementError
+      rule_with_name_already_exists: RuleWithNameAlreadyExistsError
+
+  InvalidStatementError:
+    union:
+      action_not_available_error: ActionNotAvailableError
+      covariant_list_literal_error: CovariantListLiteralError
+      duplicate_object_field_names: DuplicateObjectFieldNamesError
+      empty_list_literal_error: EmptyListLiteralError
+      incorrect_type_for_path_element_error: IncorrectTypeForPathElementError
+      mismatched_types_for_comparator_error: MismatchedTypesForComparatorError
+      missing_object_field_error: MissingObjectFieldError
+      variable_not_found_error: configurable-rules-variables.VariableNotFoundError
+      illegal_index_for_nth_item_error: IllegalIndexForNthItemError
+      work_queue_not_found_error: WorkQueueNotFoundError
+      work_queue_not_in_scope_error: WorkQueueNotInScopeError
+
+  ActionNotAvailableError:
+    properties:
+      provided_action: configurable-rules-types.Action
+      available_actions: list<configurable-rules-types.AvailableActionWithMetadata>
+
+  CovariantListLiteralError:
+    properties:
+      provided_list: list<configurable-rules-types.FieldValue>
+      contained_types: set<configurable-rules-types.FieldType>
+
+  DuplicateObjectFieldNamesError:
+    properties:
+      conflicting_fields: list<configurable-rules-types.ObjectFieldValue>
+
+  EmptyListLiteralError:
+    properties: {}
+
+  IncorrectTypeForPathElementError:
+    properties:
+      error_location: configurable-rules-types.Path
+      field_type_at_error_location: configurable-rules-types.FieldType
+      requested_path_element: configurable-rules-types.PathElement
+
+  MismatchedTypesForComparatorError:
+    properties:
+      provided_lhs: configurable-rules-types.Comparable
+      resolved_lhs_type: configurable-rules-types.FieldType
+      comparator: configurable-rules-types.Comparator
+      provided_rhs: configurable-rules-types.Comparable
+      resolved_rhs_type: configurable-rules-types.FieldType
+
+  MissingObjectFieldError:
+    properties:
+      error_location: configurable-rules-types.Path
+      requested_field_name: configurable-rules-types.FieldName
+      available_field_names: set<configurable-rules-types.FieldName>
+
+  IllegalIndexForNthItemError:
+    properties:
+      error_location: configurable-rules-types.Path
+      index: integer
+
+  WorkQueueNotFoundError:
+    properties:
+      work_queue_id: commons.WorkQueueId
+
+  WorkQueueNotInScopeError:
+    properties:
+      work_queue_id: commons.WorkQueueId
+
+  RuleWithNameAlreadyExistsError:
+    properties:
+      name: string
+
+  RuleNotFoundError:
+    properties:
+      rule_id: pipeline-commons.ConfigurableRuleId
+
+  ConfigForScopeComputationError:
+    properties:
+      scope: Scope
+
+  ScopeDoesNotSupportConfigurableRulesError:
+    properties:
+      scope: Scope
+
+  ScopeNotEnabledForOrgError:
+    properties:
+      organization_id: commons.OrganizationId
+      scope: Scope
+
+  UnknownScopeError:
+    properties:
+      scope: Scope
+
+errors:
+  RuleValidationHttpFailure:
+    status-code: 422
+    type: RuleValidationFailure
+
+  RuleNotFoundHttpError:
+    status-code: 404
+    type: RuleNotFoundError
+
+  ConfigForScopeComputationHttpError:
+    status-code: 500
+    type: ConfigForScopeComputationError
+
+  ScopeDoesNotSupportConfigurableRulesHttpError:
+    status-code: 422
+    type: ScopeDoesNotSupportConfigurableRulesError
+
+  UnknownScopeHttpError:
+    status-code: 422
+    type: UnknownScopeError

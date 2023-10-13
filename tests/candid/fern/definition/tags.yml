@@ -1,0 +1,43 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: true
+  base-path: /api/tags
+  endpoints:
+    getAll:
+      method: GET
+      path: /v3
+      response: list<Tag>
+
+    create:
+      method: POST
+      path: /v3
+      request: TagCreate
+      response: Tag
+
+types:
+  TagId: string
+
+  TagCreate:
+    properties:
+      tag_id: TagId
+      description: string
+      color: TagColorEnum
+
+  Tag:
+    extends: TagCreate
+    properties:
+      creator_id: string
+
+  TagColorEnum:
+    enum:
+      - black
+      - white
+      - gray
+      - red
+      - yellow
+      - green
+      - blue
+      - indigo
+      - purple
+      - pink

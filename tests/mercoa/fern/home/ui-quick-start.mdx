@@ -1,0 +1,142 @@
+## Frontend Integration Guide
+
+## How it Works
+
+1. [Get your API Keys](#getting-your-api-keys)
+1. [Create an entity](#create-an-entity)
+1. [Create an auth token for the Entity](#create-an-auth-token-for-the-entity)
+1. [Embed the Mercoa component](#embedding-the-mercoa-component)
+
+<br />
+
+<iframe style={{ width: "100%", aspectRatio: "16/9" }} src="https://www.youtube.com/embed/juBQfoxn-hA">
+  {" "}
+</iframe>
+
+## Authentication Flow
+
+Mercoa provides a drop-in iframe or React Component that is embedded into your front end.
+An auth token is generated from your back-end, and passed to the Mercoa component to authenticate your user.
+
+![Auth Flow](https://i.ibb.co/VMDL8yh/authflow.png)
+
+Once the front-end component is authenticated, your users can start paying invoices and bills!
+
+## Getting your API Keys
+
+You can find your API key and Organization ID in the [Mercoa Dashboard](https://mercoa.com/dashboard/developers).
+
+<b>Do NOT expose this key on the front-end</b>, it is for back-end use only.
+
+## Create an Entity
+
+Entities are individuals or businesses (your users) that will use the Mercoa platform. Before they can use Mercoa, they will need to be onboarded and go through KYC/KYB checks.
+
+You can use the [API](/api-reference/entity/create-entity), the [Admin UI](https://mercoa.com/dashboard/entities), or contact us to do a bulk upload.
+
+The following fields are required to create an entity:
+
+| Individual | Business            |
+| ---------- | ------------------- |
+| First Name | Legal Business Name |
+| Last Name  | Business Type       |
+| Email      | Email               |
+
+Once an Entity is created, Mercoa can capture KYC/KYB data from your directly from your users.
+
+You can also pass KYB/KYC data to Mercoa using the API if you already have this data, saving your users from going through the KYB/KYC onboarding. [Learn more](/concepts/entities).
+
+## Create an Auth Token for the Entity
+
+Mercoa uses JWT tokens to authenticate users. You can generate this token with your `organizationId` and API key.
+Create an endpoint that authenticates the user, generates a JWT with the user's `entityId`, and return the generated token.
+
+<CodeBlocks>
+  <CodeBlock title="Python">
+  ```python
+from django.http import HttpResponse
+from mercoa.client import Mercoa
+
+mercoa_client = Mercoa(token="YOUR_API_KEY")
+
+def generate_mercoa_token(request):
+
+user = ... # This is the user returned from your database
+
+entities = mercoa_client.entity.find(foreign_id=user.id) # Find the Mercoa Entity for the user
+
+token = mercoa_client.entity.getToken(
+entity_id=entities[0].id, # Generate a token for the user
+{ # Optional iFrame Options # See: https://mercoa.com/dashboard/developers#iframe
+"pages": {"paymentMethods": True}
+}
+)
+
+return HttpResponse(token)
+
+````
+</CodeBlock>
+
+<CodeBlock title="Node">
+```javascript
+import { MercoaClient } from "@mercoa/javascript"
+
+const mercoa = new MercoaClient({
+token: process.env.MERCOA_API_KEY,
+})
+
+app.get('/generateMercoaToken', async (req, res) => {
+
+// ...
+// Authenticate your user using your existing auth system
+// ...
+
+const user = ... // This is the user returned from your database
+
+const entities = await mercoa.entity.find({ foreignId }) // Find existing Mercoa Entity
+
+const token = await mercoa.entity.getToken(entities[0].id, // Generate a token for the user
+{
+  // Optional iFrame Options
+  // See: https://mercoa.com/dashboard/developers#iframe
+  pages: {
+    paymentMethods: true
+  }
+})
+
+res.send(token)
+
+})
+````
+
+  </CodeBlock>
+</CodeBlocks>
+
+## Embedding the Mercoa Component
+
+Now you have the token, pass it to the Mercoa component to authenticate your user and render the Mercoa AP inbox.
+
+You can use the React component if you need full control over the design and layout, or use the iframe for a simpler integration.
+
+<CodeBlock title="iFrame">
+  ```javascript
+<script>
+  
+  // Call Your Token Generator Endpoint
+  // Use the same auth scheme you use for all in-app AJAX calls
+  fetch('your-api/generateMercoaToken').then(async resp => {
+    if(resp.status === 200) {
+      const mercoaIframe = document.getElementById('mercoaIframe')
+      mercoaIframe.src = `https://mercoa.com/embedded?token=${await resp.text()}`
+    }
+  })
+
+<script>
+
+<iframe src='https://mercoa.com/embedded' id='mercoaIframe' style='display:block;width:100%;height:100vh;border:none;' frameborder="0" allow="clipboard-write">  
+  ```
+</CodeBlock>
+
+<Callout intent="warning">
+  The React library is currently unreleased. Please check back soon!
+</Callout>

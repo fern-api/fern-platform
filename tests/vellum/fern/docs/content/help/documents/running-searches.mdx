@@ -1,0 +1,40 @@
+Vellum Search can be used to include relevant context in a prompt at run-time that fits within LLM token window limits. Typically, the query that produces the search results comes from an end-user.
+
+For example, here’s a prompt used to answer questions, pulling the source materials for an answer from a document index. The remainder of this article references variables from this prompt to explain the mechanics.
+
+```
+Answer questions based on the context provided below without
+using any other knowledge. If the question can't be answered
+using the provided context say "Sorry, I don't know."
+Answer in the following format:
+
+Question: ..
+Answer: ..
+
+---
+{context_str}
+---
+Question: {query_str}
+Answer:
+```
+
+## Step 1: How to add relevant context to `context_str` variable
+
+In Vellum Playground, each variable has a 🔍 icon to include search results in Playground
+
+![Prompt Search Icon](https://storage.googleapis.com/vellum-public/help-docs/prompt_search_icon.png)
+
+Clicking this button opens up a modal to return Search results for a given query. Follow these steps in the modal:
+
+- Enter the Document Index that should be queried against
+- Type the search query (note: this should be the same as the `query_str` in the prompt variable)
+- Choose the number of chunks to be returned, the separators between each chunk and hit Run. By default, Vellum returns 3 chunks and uses new lines as separators.
+- Clicking Apply adds these results to the `context_str` variable
+
+![Prompt Search Dialog](https://storage.googleapis.com/vellum-public/help-docs/prompt_search_dialog.png)
+
+## Step 2: How to use the context to get results
+
+Copy/paste the same user query into the `query_str` variable. Hit Run on the Playground and see the results against a variety of prompts.
+
+![Prompt Search Results](https://storage.googleapis.com/vellum-public/help-docs/prompt_search_results.png)

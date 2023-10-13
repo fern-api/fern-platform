@@ -1,0 +1,42 @@
+# This service is for internal iteration, testing, and demonstration of Fern and API middleware.
+# It is not served by staging or production environments.
+imports:
+  commons: ../../commons.yml
+
+types:
+  Movie:
+    properties:
+      name: string
+      director: Director
+      year_of_release: integer
+
+  Director:
+    properties:
+      name: string
+
+  MovieCreate:
+    properties:
+      name: string
+      director: Director
+      year_of_release: integer
+
+service:
+  auth: true
+  base-path: /api/internal-api-testing/v1
+  availability: in-development
+  endpoints:
+    create_movie:
+      method: POST
+      path: "/movies"
+      request: MovieCreate
+      response: Movie
+      errors:
+        - commons.EntityConflictError
+    get_movie:
+      method: GET
+      path: "/movies/{movie_name}"
+      path-parameters:
+        movie_name: string
+      response: Movie
+      errors:
+        - commons.EntityNotFoundError

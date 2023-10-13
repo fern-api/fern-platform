@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: ../../commons.yml
+  entity: ../../entity-types.yml
+  invoice: ../../invoice-types.yml
+
+service:
+  auth: true
+  base-path: /
+  endpoints:
+    get:
+      audiences:
+        - internal
+      path: /invoice-surgery/{invoiceId}
+      method: GET
+      display-name: Get invoice
+      docs: Get invoice
+      path-parameters:
+        invoiceId: invoice.InvoiceId
+      response: invoice.InvoiceSurgeryResponse
+
+    update:
+      audiences:
+        - internal
+      path: /invoice-surgery/{invoiceId}
+      method: POST
+      display-name: Update invoice
+      docs: Update invoice
+      path-parameters:
+        invoiceId: invoice.InvoiceId
+      request:
+        body: invoice.InvoiceSurgeryRequest

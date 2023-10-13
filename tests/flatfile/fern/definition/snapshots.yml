@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  property: property.yml
+  commons: commons.yml
+  sheets: sheets.yml
+
+service:
+  auth: true
+  base-path: /snapshots
+  audiences:
+    - public
+  endpoints:
+    restoreSnapshot:
+      path: /{snapshotId}
+      method: PUT
+      docs: Restores a snapshot of a sheet
+      display-name: Restore a snapshot
+      path-parameters:
+        snapshotId:
+          docs: ID of snapshot
+          type: commons.SnapshotId
+      response: sheets.SnapshotResponse
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError
+
+    deleteSnapshot:
+      path: /{snapshotId}
+      method: DELETE
+      docs: Deletes a snapshot of a sheet
+      display-name: Delete a snapshot
+      path-parameters:
+        snapshotId:
+          docs: ID of snapshot
+          type: commons.SnapshotId
+      response: commons.Success
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError

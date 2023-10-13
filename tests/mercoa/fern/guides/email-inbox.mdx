@@ -1,0 +1,45 @@
+Mercoa's email inbox allows you to provide an email address for your users to send invoices to. Any email sent to the customer's inbox with an attached invoice PDF or image will be automatically processed.
+Your users can then view, approve, and pay the invoice from the Mercoa dashboard. You can also use the [Mercoa API](/api-reference/invoice/get-invoice) to access the invoices directly.
+
+Emails sent to the Mercoa inbox need to have at least one PDF or image
+attachment. Each attachment will be processed as a separate invoice.
+
+## Setup
+
+To set up an email inbox, you will need to add a domain to your Mercoa account. We recommend using `ap.yourcompany.com` as the domain name, where `yourcompany.com` is your company's domain name.
+Using the `ap` subdomain will ensure that your email inbox is not confused with your company's main email inbox.
+
+Go to the [Developer Portal](https://mercoa.com/developers) and enter your domain in the `Email Inbox Domain` field. Please enter the full domain name, including the `ap` subdomain, for example: `ap.yourcompany.com`.
+
+## Creating Email Addresses
+
+Once you have added a domain to your Mercoa account, you can create email addresses for your users.
+
+If you haven't already, [create an `Entity`](/concepts/entities) for each of your users. If you are only using Mercoa for email inboxes, entities do not need to be verified.
+
+By default, Mercoa will create the email based on the `Entity` name.
+
+You can change this email address in the Admin UI or using the [API](/api-reference/entity/update-entity) with the `emailTo` field.
+For example, if your email domain is `ap.myplatform.com` and you want your entity to have `acme@ap.myplatform.com`, set the `emailTo` to `acme`.
+
+### Forwarding Rules and Aliases
+
+If your entity already has an AP inbox, for example `ap@acme.com`, you can ask them to set up a forwarding rule to auto-forward all emails to your `acme@ap.yourplatform.com` email address.
+When doing this, it is important to ensure you add `ap@acme.com` to the entity's `emailToAlias` field. Unlike `emailTo`, use the full email address for the alias. You can add as many aliases to an entity as needed.
+
+## DNS
+
+Add the following DNS records to your domain:
+
+| Type | Name                | Value                                                                                                                                                                                                                            | TTL |
+| :--- | :------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-- |
+| TXT  | ap                  | sendinblue-code:7b6f0d911824fce3b5d4fd8f30a5fcdd                                                                                                                                                                                 | 300 |
+| TXT  | mail.\_domainkey.ap | k=rsa;p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDeMVIzrCa3T14JsNY0IRv5/2V1/v2itlviLQBwXsa7shBD6TrBkswsFUToPyMRWC9tbR/5ey0nRBH0ZVxp+lsmTxid2Y2z+FApQ6ra2VsXfbJP3HE6wAO0YTVEJt1TmeczhEd2Jiz/fcabIISgXEdSpTYJhb0ct0VJRxcg4c8c7wIDAQAB | 300 |
+| MX   | ap                  | 10 inbound1.sendinblue.com.                                                                                                                                                                                                      | 300 |
+| MX   | ap                  | 20 inbound2.sendinblue.com.                                                                                                                                                                                                      | 300 |
+
+Once this step is complete, it can take up to 24 hours for the DNS records to propagate. Please [contact us](mailto:support@mercoa.com) to speed up the process!
+
+## Webhooks
+
+Mercoa can send a webhook to your server when an invoice is received. You can use this webhook to automatically process the invoice in your system. You can learn more about creating webhooks [here](/concepts/webhooks).

@@ -1,0 +1,50 @@
+imports:
+  commons: commons.yml
+
+types:
+  RaResult:
+    properties:
+      ra_run_id: commons.RaRunId
+      summary: string
+      # TODO(dgodow): Add EventResult here when we have a use case for it on the FE.
+
+  RulesEnginePipelineType:
+    enum:
+      - CLAIM_SUBMISSION
+      - SELF_PAY
+      - OVERRIDE_CLAIM_SUBMISSION
+      - TIMELY_FILING
+      - INSURANCE_RESUBMISSION
+      - REJECTIONS
+      - SECONDARY_SUBMISSION
+
+  RulesEngineProcessFailure:
+    properties:
+      reason: string
+
+  RulesEngineProcessSuccess:
+    properties:
+      pipeline_type: RulesEnginePipelineType
+
+  RulesEngineProcessSuccessSync:
+    extends: RulesEngineProcessSuccess
+    properties:
+      ra_result: RaResult
+
+  RulesEngineProcessSuccessAsync:
+    extends: RulesEngineProcessSuccess
+
+  RulesEngineProcessResult:
+    union:
+      failure: RulesEngineProcessFailure
+      success_async: RulesEngineProcessSuccessAsync
+      success_sync: RulesEngineProcessSuccessSync
+
+  RulesEngineCheckFailure:
+    properties:
+      reason: string
+
+  RulesEngineCheckResponse:
+    union:
+      success: {}
+      failure: RulesEngineCheckFailure

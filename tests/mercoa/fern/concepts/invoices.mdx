@@ -1,0 +1,161 @@
+Learn about the data and statuses that an invoice goes through in Mercoa.
+
+[API Reference](/api-reference/invoice)
+
+# Lifecycle of an invoice
+
+The invoice lifecycle is as follows:
+
+![Invoice Lifecycle](https://i.ibb.co/n7RckML/invoice-lifecycle.png)
+
+This guide will go through the minimum required data to get an invoice through the complete lifecycle.
+If you are using the [Mercoa iframe](/ui-quick-start), all these steps are automatically handled for you.
+
+# 1. Creating a Draft
+
+If an invoice is [created](/api-reference/invoice/create-invoice) and saved as draft, or if it comes in through the [email inbox](/guides/email-inbox) it will be in the `DRAFT` state.
+
+## What needs to be set to get in this state?
+
+### PayerId
+
+The payer is the [entity](/concepts/entities) that is paying the invoice.
+
+```ts
+// Example
+{
+  status: 'DRAFT',
+  payerId: 'ent_123456',
+}
+```
+
+All other information is optional. An invoice can be in the `DRAFT` while being partially updated with information until it has all the requirements to get into the `NEW` state.
+
+# 2. Getting ready for approval
+
+An invoice that has all information required to be approved can be moved to the `NEW` state.
+
+## What needs to be set to get in this state?
+
+### Vendor ID
+
+The vendor is the [Entity](/entities) that is receiving the payment for the invoice. The vendor needs to be [created](/api-reference/entity/create-entity)
+and have a valid profile.
+
+### Amount and Currency
+
+The `amount` is the total amount of the invoice. This is the amount that will be paid to the vendor. The `currency` is the currency that the invoice is in, e.g. `USD`.
+
+### Due Date
+
+The `dueDate` is the date that the invoice is due.
+
+```ts
+// Example
+{
+  status: 'NEW',
+  payerId: 'ent_123456',
+  vendorId: 'ent_987654',
+  amount: 1000,
+  currency: 'USD',
+  dueDate: '2021-01-15'
+}
+```
+
+<Callout intent="info">
+  Once an invoice is in the NEW state, the amount, currency, dueDate, payerId and vendorId **cannot** be changed.
+</Callout>
+
+# 3. Getting approvals
+
+If the entity has an [approval policy](/api-reference/entity/approval-policy/create-an-approval-policy) set, the invoice will need to be approved by all relevant parties to move to the `APPROVED` state.
+
+<Callout intent="info">
+  If the entity does *NOT* have an [approval policy](/api-reference/entity/create-approval-policy) set, the invoice will
+  automatically move into the APPROVED state and will not be in the NEW state.
+</Callout>
+
+<br />
+
+When the invoice is created, a snapshot of the approval policy will be saved to the invoice. This means that any changes to the policy in the future will not reflect on previously created invoices.
+A list of `approvers` will be created on the invoice. An `approver` can be an individual [entity user](/api-reference/entity/user/get-all-entity-users) or a list of roles.
+
+```ts
+// Example Approvers list on an invoice
+{
+  ...
+  approvers: [{
+    roles: ['approver', 'controller'],
+    action: 'NONE'
+  },{
+    userId: 'user_123456',
+    roles: ['approver', 'controller'],
+    action: 'NONE'
+  }]
+}
+```
+
+If an `approver` is a specific user, only that user can fill that approval. Otherwise, any user with an appropriate role can fill an approval.
+
+In the example above, any user with the role `approver` or `controller` can approver as the first approver, but only `user_123456` can be the second approver.
+
+A user can only fill one approval, and currently approver order is not enforced.
+
+If only a role is provided, you can update the approvers list by providing a `userId` for a user that is in the appropriate role. Once the `userId` is set, only that user can approve the invoice, and it cannot be changed.
+
+To add an approval to the invoice, use the [approve](/api-reference/invoice/approval/approve-invoice) endpoint. You can pass in an optional `text` field if the user wants to add a comment with their approval.
+
+Once all approvals are complete, the invoice will automatically move to the `APPROVED` status, there is no need to update the invoice.
+
+<Callout intent="info">
+  Approvals and Rejections create a [comment](/api-reference/invoice/comment/add-a-comment) on the invoice. You can use
+  this to show a list of comments and approvals, as the comments will have the approver details as part of the response.
+</Callout>
+
+# 6. Scheduling the payment
+
+Once all approvers have been set, you can schedule the payment.
+
+## What needs to be set to get in this state?
+
+### paymentSourceId
+
+This is the [payment method](/api-reference/entity/payment-method) for the payer (funding source)
+
+### paymentDestinationId
+
+This is the [payment method](/api-reference/entity/payment-method) for the vendor (disbursement method)
+
+### Deduction Date
+
+This is the date funds will be triggered to moved
+
+```ts
+// Example
+{
+  status: 'SCHEDULED',
+  payerId: 'ent_123456',
+  vendorId: 'ent_987654',
+  amount: 1000,
+  currency: 'USD',
+  dueDate: '2021-01-15'
+  deductionDate: '2021-01-13'
+  paymentSourceId: 'pm_123456',
+  paymentDestinationId: 'pm_987654'
+}
+```
+
+# 5. Pending
+
+On the `deductionDate`, at or before 1PM EST, the payment will be triggered and the invoice will be in the `PENDING` state. This means that the invoice amount will be deducted from the payer's account and sent to the vendor.
+
+No action is required, this is an automatic function.
+
+# 6. Paid
+
+When the invoice amount is received by the vendor, the invoice will be set to the `PAID` state.
+
+<Callout intent="info">
+  If you are using custom payment rails, you are responsible for moving the invoice into this state once the funds have
+  settled.
+</Callout>

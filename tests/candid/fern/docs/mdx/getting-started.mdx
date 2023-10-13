@@ -1,0 +1,216 @@
+This page outlines how to use our Python SDK to interact with our API.
+Specifically, you'll learn how to make a request to create an Encounter.
+
+## Prerequisites
+
+- Python 3.x installed on your system
+- Candid Client ID
+- Candid Client Secret
+
+## Installation
+
+First, install our Python SDK using your package manager:
+
+<CodeBlock title="Terminal">```bash pip install candidhealth # or poetry install, etc ```</CodeBlock>
+
+## Authentication
+
+To make requests to our API, you'll need to use your API key for authentication. Initialize the SDK as follows:
+
+<CodeBlock title="main.py">
+```python
+from candid.client import CandidApiClient
+from candid.environment import CandidApiEnvironment
+
+client = CandidApiClient(
+environment=CandidApiEnvironment.STAGING,
+options=CandidApiClientOptions(
+client_id="YOUR_CLIENT_ID",
+client_secret="YOUR_CLIENT_SECRET"
+)
+)
+
+````
+</CodeBlock>
+
+Candid provides two environments, `STAGING` and `PRODUCTION`. Take care to pass the correct environment when creating your API client so that requests are routed correctly.
+
+## Making an Example Request
+
+In this example, we'll create an Encounter using the V4 API.
+
+<CodeBlock title="main.py">
+```python
+created_encounter = client.encounters.v_4.create(
+    external_id=EncounterExternalId("emr-claim-id-abcd"),
+    date_of_service=Date("2023-05-23"),
+    billable_status=BillableStatusType.BILLABLE,  # or BillableStatusType.NOT_BILLABLE
+    responsible_party=ResponsiblePartyType.INSURANCE_PAY,  # or ResponsiblePartyType.SELF_PAY
+    patient=PatientCreate(
+        external_id="emr-patient-id-123",
+        first_name="Loki",
+        last_name="Laufeyson",
+        date_of_birth=Date("1983-12-17"),
+        gender=Gender.MALE,
+        address=StreetAddressShortZip(
+            address_1="1234 Main St",
+            address_2="Apt 9876",
+            city="Asgard",
+            state=State.CA,
+            zip_code="94109",
+            zip_plus_four_code="1234",
+        ),
+    ),
+    patient_authorized_release=True,
+    billing_provider=BillingProvider(
+        organization_name="Acme Health PC",
+        npi="1234567890",
+        tax_id="123456789",
+        address=StreetAddressLongZip(
+            address_1="1234 Main St",
+            address_2="Apt 9876",
+            city="Asgard",
+            state=State.CA,
+            zip_code="94109",
+            zip_plus_four_code="1234",
+        ),
+    ),
+    rendering_provider=RenderingProvider(
+        first_name="Doctor",
+        last_name="Strange",
+        npi="9876543210",
+    ),
+    diagnoses=[
+        DiagnosisCreate(code_type=DiagnosisTypeCode.ABF, code="Z63.88"),
+        DiagnosisCreate(code_type=DiagnosisTypeCode.ABF, code="E66.66"),
+    ],
+    place_of_service_code=FacilityTypeCode.TELEHEALTH,
+    service_lines=[
+        ServiceLineCreate(
+            procedure_code="99212",
+            modifiers=[],
+            quantity=Decimal("1.0"),
+            units=ServiceLineUnits.UN,
+            charge_amount_cents=1500,
+            diagnosis_pointers=[0, 1],
+        ),
+    ],
+    clinical_notes=[],
+    provider_accepts_assignment=True,
+    benefits_assigned_to_provider=True,
+)
+````
+
+</CodeBlock>
+
+## Error Handling
+
+Each endpoint in our SDK documents which errors and exceptions can be raised
+if the request fails. These can be caught and handled via
+Python's native exception-handling:
+
+<CodeBlock title="main.py">
+```python
+from candid.resources.encounters.resources.v_4.errors import EncounterExternalIdUniquenessError
+
+try:
+created_encounter = client.encounters.v_4.create(...)
+except EncounterExternalIdUniquenessError as e:
+print(f"An error occurred: {e}")
+
+````
+</CodeBlock>
+
+## Full Source Code
+
+<CodeBlock title="main.py">
+```python
+from candid.candid_api_client import CandidApiClient, CandidApiClientOptions
+from candid import (
+    CandidApiEnvironment,
+    EncounterExternalId,
+    Date,
+    PatientCreate,
+    Gender,
+    StreetAddressShortZip,
+    State,
+    StreetAddressLongZip,
+    DiagnosisCreate,
+    DiagnosisTypeCode,
+    FacilityTypeCode,
+    ServiceLineCreate,
+    ServiceLineUnits,
+    Decimal,
+)
+from candid.resources.encounter_providers.resources.v_2 import BillingProvider, RenderingProvider
+from candid.resources.encounters.resources.v_4 import BillableStatusType, ResponsiblePartyType
+
+client = CandidApiClient(
+    environment=CandidApiEnvironment.STAGING,
+    options=CandidApiClientOptions(
+        client_id="YOUR_CLIENT_ID",
+        client_secret="YOUR_CLIENT_SECRET"
+    )
+)
+
+created_encounter = client.encounters.v_4.create(
+    external_id=EncounterExternalId("emr-claim-id-abcd"),
+    date_of_service=Date("2023-05-23"),
+    billable_status=BillableStatusType.BILLABLE,  # or BillableStatusType.NOT_BILLABLE
+    responsible_party=ResponsiblePartyType.INSURANCE_PAY,  # or ResponsiblePartyType.SELF_PAY
+    patient=PatientCreate(
+        external_id="emr-patient-id-123",
+        first_name="Loki",
+        last_name="Laufeyson",
+        date_of_birth=Date("1983-12-17"),
+        gender=Gender.MALE,
+        address=StreetAddressShortZip(
+            address_1="1234 Main St",
+            address_2="Apt 9876",
+            city="Asgard",
+            state=State.CA,
+            zip_code="94109",
+            zip_plus_four_code="1234",
+        ),
+    ),
+    patient_authorized_release=True,
+    billing_provider=BillingProvider(
+        organization_name="Acme Health PC",
+        npi="1234567890",
+        tax_id="123456789",
+        address=StreetAddressLongZip(
+            address_1="1234 Main St",
+            address_2="Apt 9876",
+            city="Asgard",
+            state=State.CA,
+            zip_code="94109",
+            zip_plus_four_code="1234",
+        ),
+    ),
+    rendering_provider=RenderingProvider(
+        first_name="Doctor",
+        last_name="Strange",
+        npi="9876543210",
+    ),
+    diagnoses=[
+        DiagnosisCreate(code_type=DiagnosisTypeCode.ABF, code="Z63.88"),
+        DiagnosisCreate(code_type=DiagnosisTypeCode.ABF, code="E66.66"),
+    ],
+    place_of_service_code=FacilityTypeCode.TELEHEALTH,
+    service_lines=[
+        ServiceLineCreate(
+            procedure_code="99212",
+            modifiers=[],
+            quantity=Decimal("1.0"),
+            units=ServiceLineUnits.UN,
+            charge_amount_cents=1500,
+            diagnosis_pointers=[0, 1],
+        ),
+    ],
+    clinical_notes=[],
+    provider_accepts_assignment=True,
+    benefits_assigned_to_provider=True,
+)
+````
+
+</CodeBlock>

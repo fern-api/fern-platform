@@ -1,0 +1,126 @@
+imports:
+  commons: ../../commons.yml
+  x12: ../../x12/v1/__package__.yml
+  adjustments: ../../adjustments.yml
+  patient-payments: ../../patient-payments/v3/__package__.yml
+  remits: ../../remits/v1/__package__.yml
+
+types:
+  GetLedgerTablesResponse:
+    properties:
+      service_line_tables: map<commons.ServiceLineId, ServiceLineLedgerTable>
+
+  ServiceLineLedgerTable:
+    properties:
+      service_line_id: commons.ServiceLineId
+      rows: list<LedgerTableRow>
+
+  LedgerTableRowDetails:
+    union:
+      charge_row: ChargeRow
+      remit_row: RemitRow
+      patient_payment_row: PatientPaymentRow
+      write_off_row: WriteOffRow
+
+  LedgerRowId: uuid
+  EventLocator: string
+
+  LedgerTableRow:
+    properties:
+      event_date: datetime
+      description: optional<string>
+      event_locator: EventLocator
+      details: LedgerTableRowDetails
+
+  ChargeRow:
+    properties:
+      billed_amount_cents: integer
+      claim_submission_id: commons.ClaimSubmissionId
+
+  RemitRow:
+    properties:
+      payer_information: RemitRowPayerInformation
+      financial_information: RemitRowFinancialInformation
+      denial_reason: optional<string>
+      # TODO(jess): How do you associate a carc with a rarc?
+      carcs: list<CarcPopoverDetails>
+      rarcs: list<RarcPopoverDetails>
+      check: optional<Check>
+
+  CarcPopoverDetails:
+    properties:
+      carc: x12.Carc
+      group_code: commons.ClaimAdjustmentGroupCodes
+      amount_cents: integer
+      description: optional<string>
+
+  RarcPopoverDetails:
+    properties:
+      rarc: x12.Rarc
+      description: optional<string>
+
+  Check:
+    properties:
+      check_number: string
+      check_posted_date: date
+
+  RemitRowFinancialInformation:
+    properties:
+      billed_amount_cents: integer
+      allowed_amount_cents: integer
+      insurance_adjusted_amount_cents: integer
+      insurance_paid_amount_cents: integer
+      copay_cents: integer
+      coinsurance_cents: integer
+      deductible_cents: integer
+      other_patient_responsibility_cents: integer
+      remit: remits.Remit
+
+  RemitRowPayerInformation:
+    properties:
+      payer_responsibility_type: commons.ClaimSubmissionPayerResponsibilityType
+      era_payer: EraPayer
+
+  EraPayer:
+    docs: The raw payer information from the ERA. This is not guaranteed to match the payer in our system.
+    properties:
+      era_payer_name: string
+      era_payer_id:
+        type: optional<string>
+        docs: >
+          The national payer ID of the payer, if present in the payer's
+          additional qualifications section ERA under code '2U'.
+
+  PatientPaymentRow:
+    properties:
+      patient_paid_cents: integer
+      patient_payment_note: optional<string>
+      patient_payment_datetime: datetime
+      patient_payment_source: patient-payments.PatientPaymentSource
+      patient_payment_id: patient-payments.PatientPaymentId
+      patient_payment: patient-payments.PatientPayment
+
+  WriteOffRow:
+    properties:
+      write_off_cents: integer
+      write_off_note: optional<string>
+      # TODO(jess): Move this into the adjustment object?
+      write_off_datetime: datetime
+      write_off_source: adjustments.AdjustmentSource
+      write_off_id: commons.AdjustmentId
+      write_off: adjustments.Adjustment
+
+service:
+  auth: true
+  base-path: /api/service-line-ledgers/v1
+  availability: in-development
+  endpoints:
+    get_ledger_tables:
+      path: /table/{encounter_id}
+      method: GET
+      path-parameters:
+        encounter_id: commons.EncounterId
+      response: GetLedgerTablesResponse
+      errors:
+        - commons.EntityNotFoundError
+        - commons.UnauthorizedError

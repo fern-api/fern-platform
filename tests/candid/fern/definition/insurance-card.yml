@@ -1,0 +1,73 @@
+imports:
+  commons: commons.yml
+
+service:
+  auth: true
+  base-path: /api/insurance_cards/v2
+  availability: in-development
+  endpoints:
+    update:
+      path: /{insurance_card_id}
+      method: PATCH
+      path-parameters:
+        insurance_card_id: InsuranceCardId
+      request:
+        name: InsuranceCardUpdate
+        body:
+          extends: InsuranceCardBase
+          properties:
+            member_id: optional<string>
+            payer_name: optional<string>
+            payer_id: optional<string>
+      response: InsuranceCard
+
+    get_images:
+      path: /{insurance_card_id}/images
+      method: GET
+      path-parameters:
+        insurance_card_id: InsuranceCardId
+      response: InsuranceCardImages
+
+types:
+  InsuranceCardId: uuid
+
+  InsuranceCardBase:
+    properties:
+      group_number:
+        type: optional<string>
+        docs: Box 11 on the CMS-1500 claim form.
+      plan_name:
+        type: optional<string>
+        docs: Box 11c on the CMS-1500 claim form.
+      plan_type: optional<commons.SourceOfPaymentCode>
+      insurance_type: optional<commons.InsuranceTypeCode>
+
+  InsuranceCardCreate:
+    extends: InsuranceCardBase
+    properties:
+      # Should be kept in sync with properties in InsuranceCard
+      member_id: string
+      payer_name: string
+      payer_id: string
+      rx_bin: optional<string>
+      rx_pcn: optional<string>
+      image_url_front: optional<string>
+      image_url_back: optional<string>
+      emr_payer_crosswalk: optional<commons.EmrPayerCrosswalk>
+
+  InsuranceCard:
+    extends: InsuranceCardBase
+    properties:
+      insurance_card_id: InsuranceCardId
+      member_id: string
+      payer_name: string
+      payer_id: string
+      rx_bin: optional<string>
+      rx_pcn: optional<string>
+      image_url_front: optional<string>
+      image_url_back: optional<string>
+
+  InsuranceCardImages:
+    properties:
+      signed_image_url_front: optional<string>
+      signed_image_url_back: optional<string>

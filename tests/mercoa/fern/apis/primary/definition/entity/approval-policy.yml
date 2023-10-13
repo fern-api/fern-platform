@@ -1,0 +1,77 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  entity: ../entity-types.yml
+
+service:
+  auth: true
+  base-path: /entity/{entityId}
+  path-parameters:
+    entityId: entity.EntityId
+  endpoints:
+    getAll:
+      audiences:
+        - external
+      path: /approval-policies
+      method: GET
+      docs: Retrieve all invoice approval policies associated with Entity
+      display-name: Get all approval policies
+      response: list<entity.ApprovalPolicyResponse>
+
+    create:
+      audiences:
+        - external
+      path: /approval-policy
+      method: POST
+      docs: Create an invoice approval policy associated with Entity
+      display-name: Create an approval policy
+      request: entity.ApprovalPolicyRequest
+      response: entity.ApprovalPolicyResponse
+      errors:
+        - NumApproversUserListMismatchError
+        - NumApproverLessThanOneError
+
+    get:
+      audiences:
+        - external
+      path: /approval-policy/{policyId}
+      path-parameters:
+        policyId: entity.ApprovalPolicyId
+      method: GET
+      docs: Retrieve an invoice approval policy associated with Entity
+      display-name: Get an approval policy
+      response: entity.ApprovalPolicyResponse
+
+    update:
+      audiences:
+        - external
+      path: /approval-policy/{policyId}
+      path-parameters:
+        policyId: entity.ApprovalPolicyId
+      method: POST
+      docs: Update an invoice approval policy associated with Entity
+      display-name: Update approval policy
+      request: entity.ApprovalPolicyUpdateRequest
+      response: entity.ApprovalPolicyResponse
+      errors:
+        - NumApproversUserListMismatchError
+        - NumApproverLessThanOneError
+
+    delete:
+      audiences:
+        - external
+      path: /approval-policy/{policyId}
+      path-parameters:
+        policyId: entity.ApprovalPolicyId
+      method: DELETE
+      display-name: Delete approval policy
+      docs: "Delete an invoice approval policy associated with Entity. BEWARE: Any approval policy deletion will result in all associated downstream policies also being deleted."
+
+errors:
+  NumApproversUserListMismatchError:
+    status-code: 400
+    type: string
+
+  NumApproverLessThanOneError:
+    status-code: 400
+    type: string

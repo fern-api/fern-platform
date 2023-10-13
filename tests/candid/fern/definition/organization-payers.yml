@@ -1,0 +1,73 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+imports:
+  commons: commons.yml
+  payers: payers.yml
+
+types:
+  OrganizationPayerSummary:
+    properties:
+      fee_schedule_count: integer
+
+  OrganizationPayer:
+    properties:
+      payer: payers.Payer
+      summary: OrganizationPayerSummary
+      # Can add more organization-specific info here in future
+
+  OrganizationPayersPage:
+    extends: commons.ResourcePage
+    properties:
+      items: list<OrganizationPayer>
+
+  GetMultiOrganizationPayersResponse:
+    properties:
+      page: OrganizationPayersPage
+
+  AddOrganizationPayerRequest:
+    properties:
+      payer_uuid: payers.PayerUuid
+
+  AddOrganizationPayerResponse: OrganizationPayer
+
+  SearchOrganizationPayerSearchResult:
+    union:
+      match: OrganizationPayer
+      no_match: {}
+
+  SearchOrganizationPayerResponse:
+    properties:
+      search_result: SearchOrganizationPayerSearchResult
+
+service:
+  auth: true
+  base-path: /api/organization-payers/v1
+  availability: in-development
+  endpoints:
+    search:
+      docs: Search for the payer given a payer uuid.
+      method: GET
+      path: "/search"
+      request:
+        name: SearchOrganizationPayerRequest
+        query-parameters:
+          payer_uuid: payers.PayerUuid
+      response: SearchOrganizationPayerResponse
+
+    get_multi:
+      docs: Get the payers affiliated with the current organization.
+      method: GET
+      path: ""
+      response: GetMultiOrganizationPayersResponse
+      request:
+        name: GetMultiOrganizationPayersRequest
+        query-parameters:
+          limit: optional<integer>
+          page_token: optional<commons.PageToken>
+          payer_search_term: optional<string>
+
+    add_organization_payer:
+      docs: Associate a payer with the current organization. If the payer is already associated, nothing is done.
+      method: PUT
+      path: "/add"
+      response: AddOrganizationPayerResponse
+      request: AddOrganizationPayerRequest

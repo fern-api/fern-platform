@@ -1,0 +1,45 @@
+Create and verify your customers
+
+[API Reference](/api-reference/entity)
+
+Before your customers can start using Mercoa, they need to be added as an `Entity`. Entities are the businesses that use Mercoa to pay and get paid.
+
+For every invoice that needs to be paid, there are at least two entities involved:
+
+- `payer`
+- `vendor`
+
+## Creating an Entity
+
+You can create an entity on the Mercoa [Admin UI](https://mercoa.com/dashboard/entities) or via [API](/api-reference/entity/create-entity).
+
+You will need to create an entity for each of your customers that will use Mercoa, and verify them before they can start paying bills.
+
+- If you are using the Mercoa iframe, vendor entities will be created automatically.
+- If you are using the API, you will need to create the vendor entities as well. Vendor entities **do not** need to be verified before they can receive payments.
+
+See [this guide](/guides/vendors) for more details on vendors.
+
+## Know Your Customer Verification
+
+Banking regulations require that financial institutions perform a “Know Your Customer” (KYC) process to verify an individual or business identity before enabling certain capabilities.
+All Mercoa accounts are also checked against OFAC and sanctions lists to ensure they are not forbidden from conducting business in the United States.
+
+### Requirements
+
+| Individual              | Business                |
+| ----------------------- | ----------------------- |
+| Legal name              | Legal name              |
+| Phone or email          | Website or description  |
+| Address                 | Business type           |
+| Date of birth           | EIN                     |
+| Last 4 of SSN\*         | Address                 |
+| KYC verification        | Phone                   |
+| Accept Terms of Service | KYC verification        |
+|                         | Business representative |
+
+<Callout intent="info">Note that in some instances, we will require the full SSN.</Callout>
+
+<br />
+Separate from KYC, Mercoa business entities must verify business representatives before a business account can be verified.
+[Learn more here](/concepts/business-representative)

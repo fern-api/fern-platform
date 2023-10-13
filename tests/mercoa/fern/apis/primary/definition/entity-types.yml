@@ -1,0 +1,412 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+  invoice: invoice-types.yml
+  paymentMethod: payment-method-types.yml
+
+types:
+  EntityId: string
+  EntityUserId: string
+  ApprovalPolicyId: string
+  RepresentativeId: string
+  NotificationId: string
+
+  EntityRequest:
+    properties:
+      foreignId: optional<string>
+      emailTo:
+        docs: Email inbox address. Do not include the @domain.com
+        type: optional<string>
+      emailToAlias:
+        docs: Email inbox alias addresses. Used when forwarding emails to the emailTo address from an alias. Include the full email address.
+        type: optional<list<string>>
+      ownedByOrg:
+        docs: If this entity has a direct relationship with your organization, set this to true. Otherwise, set to false.
+        type: optional<boolean>
+      accountType: AccountType
+      profile: ProfileRequest
+      isPayor:
+        docs: If this entity will be paying invoices, set this to true. In the near future, this will be a required parameter. Currently if this parameter is not set, it will default to true if ownedByOrg is true, and false otherwise.
+        type: optional<boolean>
+      isPayee:
+        docs: If this entity will be receiving payments, set this to true. In the near future, this will be a required parameter. Currently if this parameter is not set, it will default to false if ownedByOrg is true, and true otherwise.
+        type: optional<boolean>
+
+  EntityUpdateRequest:
+    properties:
+      foreignId: optional<string>
+      emailTo:
+        docs: Email inbox address. Do not include the @domain.com
+        type: optional<string>
+      emailToAlias:
+        docs: Email inbox alias addresses. Used when forwarding emails to the emailTo address from an alias. Include the full email address.
+        type: optional<list<string>>
+      ownedByOrg:
+        docs: If this entity has a direct relationship with your organization, set this to true. Otherwise, set to false.
+        type: optional<boolean>
+      accountType: optional<AccountType>
+      profile: optional<ProfileRequest>
+      isPayor:
+        docs: If this entity will be paying invoices, set this to true.
+        type: optional<boolean>
+      isPayee:
+        docs: If this entity will be receiving payments, set this to true.
+        type: optional<boolean>
+
+  EntityResponse:
+    properties:
+      id: EntityId
+      foreignId: optional<string>
+      emailTo: optional<string>
+      emailToAlias: optional<list<string>>
+      ownedByOrg: boolean
+      accountType: AccountType
+      name: string
+      email: string
+      profile: ProfileResponse
+      status: EntityStatus
+      acceptedTos: boolean
+      isPayor:
+        docs: True if this entity can pay invoices.
+        type: boolean
+      isPayee:
+        docs: True if this entity can receive payments.
+        type: boolean
+      createdAt: datetime
+      updatedAt: datetime
+
+  EntityAddPayeesRequest:
+    properties:
+      payees:
+        docs: List of payee entity IDs to associate with the entity
+        type: list<EntityId>
+
+  EntityArchivePayeesRequest:
+    properties:
+      payees:
+        docs: List of payee entity IDs to archive
+        type: list<EntityId>
+
+  ProfileRequest:
+    properties:
+      business: optional<BusinessProfileRequest>
+      individual: optional<IndividualProfileRequest>
+
+  ProfileResponse:
+    properties:
+      business: optional<BusinessProfileResponse>
+      individual: optional<IndividualProfileResponse>
+
+  BusinessProfileRequest:
+    properties:
+      email: optional<string>
+      legalBusinessName: string
+      businessType: optional<BusinessType>
+      phone: optional<commons.PhoneNumber>
+      doingBusinessAs: optional<string>
+      website:
+        docs: Website URL for the business. Must be in the format http://www.example.com
+        type: optional<string>
+      description:
+        docs: Description of the business. Required for KYB if website is not provided.
+        type: optional<string>
+      address: optional<commons.Address>
+      taxId:
+        docs: Tax ID for the business. Currently only EIN is supported. Must be in the format XX-XXXXXXX.
+        type: optional<TaxID>
+      formationDate:
+        docs: Date of business formation
+        type: optional<datetime>
+
+  BusinessProfileResponse:
+    properties:
+      email: optional<string>
+      legalBusinessName: string
+      businessType: optional<BusinessType>
+      phone: optional<commons.PhoneNumber>
+      doingBusinessAs: optional<string>
+      website: optional<string>
+      description: optional<string>
+      address: optional<commons.Address>
+      ownersProvided: optional<boolean>
+      taxIDProvided: boolean
+
+  IndividualProfileRequest:
+    properties:
+      email: optional<string>
+      name: commons.FullName
+      phone: optional<commons.PhoneNumber>
+      address: optional<commons.Address>
+      birthDate: optional<commons.BirthDate>
+      governmentID: optional<commons.IndividualGovernmentID>
+
+  IndividualProfileResponse:
+    properties:
+      email: string
+      name: commons.FullName
+      phone: optional<commons.PhoneNumber>
+      address: optional<commons.Address>
+      birthDateProvided: boolean
+      governmentIDProvided: boolean
+
+  TaxID:
+    properties:
+      ein: Ein
+  Ein:
+    properties:
+      number: string
+
+  BusinessType:
+    enum:
+      - soleProprietorship
+      - unincorporatedAssociation
+      - trust
+      - publicCorporation
+      - privateCorporation
+      - llc
+      - partnership
+      - unincorporatedNonProfit
+      - incorporatedNonProfit
+  AccountType:
+    enum:
+      - business
+      - individual
+  EntityStatus:
+    enum:
+      - unverified
+      - pending
+      - resubmit
+      - review
+      - verified
+      - failed
+
+  ApprovalPolicyRequest:
+    properties:
+      trigger: Trigger
+      rule: Rule
+      upstreamPolicyId:
+        type: ApprovalPolicyId
+        docs: "Use 'root' if no upstreamPolicyId is intended to be set."
+
+  ApprovalPolicyUpdateRequest:
+    properties:
+      trigger: optional<Trigger>
+      rule: optional<Rule>
+      upstreamPolicyId: optional<ApprovalPolicyId>
+
+  ApprovalPolicyResponse:
+    properties:
+      id: ApprovalPolicyId
+      trigger: Trigger
+      rule: Rule
+      upstreamPolicyId: ApprovalPolicyId
+
+  Trigger:
+    union:
+      amount: AmountTrigger
+      all: unknown
+
+  AmountTrigger:
+    properties:
+      amount: double
+      currency: paymentMethod.CurrencyCode
+
+  Rule:
+    union:
+      approver: ApproverRule
+
+  IdentifierList:
+    union:
+      rolesList: list<string>
+      userList: list<EntityUserId>
+
+  ApproverRule:
+    properties:
+      numApprovers: integer
+      identifierList: IdentifierList
+
+  FindCounterpartiesResponse:
+    properties:
+      entityCounterparties:
+        docs: Counterparties that have been paid by this entity
+        type: list<CounterpartyResponse>
+      platformCounterparties:
+        docs: Counterparties that have paid by any entity on your platform
+        type: list<CounterpartyResponse>
+      mercoaCounterparties:
+        docs: External counterparties that have been verified by Mercoa
+        type: list<CounterpartyResponse>
+
+  CounterpartyResponse:
+    extends: EntityResponse
+    properties:
+      paymentMethods: list<paymentMethod.PaymentMethodResponse>
+
+  RepresentativeRequest:
+    properties:
+      name: commons.FullName
+      phone: commons.PhoneNumber
+      email: string
+      address: commons.Address
+      birthDate: commons.BirthDate
+      governmentID: commons.IndividualGovernmentID
+      responsibilities: Responsibilities
+
+  RepresentativeResponse:
+    properties:
+      id: RepresentativeId
+      name: commons.FullName
+      phone: commons.PhoneNumber
+      email: string
+      address: commons.Address
+      birthDateProvided: boolean
+      governmentIDProvided: boolean
+      responsibilities: Responsibilities
+      createdOn: datetime
+      updatedOn: datetime
+      disabledOn: optional<datetime>
+
+  Responsibilities:
+    properties:
+      jobTitle: optional<string>
+      isController: optional<boolean>
+      isOwner: optional<boolean>
+      ownershipPercentage: optional<double>
+
+  EntityUserRequest:
+    properties:
+      foreignId: optional<string>
+      email: optional<string>
+      name: optional<string>
+      roles:
+        docs: 'List of roles. A role can be any string. For example: "payer", "approver", "viewer"'
+        type: optional<list<string>>
+
+  EntityUserResponse:
+    properties:
+      id: EntityUserId
+      foreignId:
+        docs: Id from external auth provider or your auth system
+        type: optional<string>
+      email: optional<string>
+      name: optional<string>
+      roles: list<string>
+      createdAt: datetime
+      updatedAt: datetime
+
+  NotificationType:
+    enum:
+      - INVOICE_APPROVAL_NEEDED
+      - INVOICE_APPROVED
+      - INVOICE_REJECTED
+      - INVOICE_SCHEDULED
+      - INVOICE_PENDING
+      - INVOICE_PAID
+      - INVOICE_CANCELED
+      - INVOICE_CREATED
+      - INVOICE_EMAILED
+
+  NotificationResponse:
+    properties:
+      id: NotificationId
+      invoiceId:
+        docs: The invoice ID that this notification is related to. This field is only present for notifications related to invoices.
+        type: optional<invoice.InvoiceId>
+      type: NotificationType
+      createdAt: datetime
+
+  NotificationPolicyRequest:
+    properties:
+      additionalRoles:
+        docs: List of user roles that should receive notifications in addition to the default users for this notification type
+        type: list<string>
+
+  NotificationPolicyResponse:
+    properties:
+      additionalRoles:
+        docs: List of user roles that should receive notifications in addition to the default users for this notification type
+        type: list<string>
+      type: NotificationType
+
+  UserNotificationPolicyResponse:
+    properties:
+      disabled:
+        docs: True if the selected notification type is disabled for this user
+        type: boolean
+      type: NotificationType
+
+  FindNotificationResponse:
+    properties:
+      count:
+        type: integer
+        docs: Total number of notifications for the given start and end date filters. This value is not limited by the limit parameter. It is provided so that you can determine how many pages of results are available.
+      hasMore:
+        type: boolean
+        docs: True if there are more notifications available for the given start and end date filters.
+      data: list<NotificationResponse>
+
+  FindEntityResponse:
+    properties:
+      count:
+        type: integer
+        docs: Total number of notifications for the given start and end date filters. This value is not limited by the limit parameter. It is provided so that you can determine how many pages of results are available.
+      hasMore:
+        type: boolean
+        docs: True if there are more notifications available for the given start and end date filters.
+      data: list<EntityResponse>
+
+  ProcessKybRequest:
+    properties:
+      reviewerEmail: string
+
+  TokenGenerationInvoiceOptions:
+    properties:
+      status: list<invoice.InvoiceStatus>
+
+  TokenGenerationPagesOptions:
+    properties:
+      paymentMethods: optional<boolean>
+      representatives: optional<boolean>
+      notifications: optional<boolean>
+
+  TokenGenerationStyleOptions:
+    properties:
+      primaryColor: string
+
+  VendorNetwork:
+    enum:
+      - all
+      - platform
+      - entity
+
+  TokenGenerationVendorOptions:
+    properties:
+      disableCreation: optional<boolean>
+      network: VendorNetwork
+
+  TokenGenerationOptions:
+    properties:
+      invoice: optional<TokenGenerationInvoiceOptions>
+      pages: optional<TokenGenerationPagesOptions>
+      style: optional<TokenGenerationStyleOptions>
+      vendors: optional<TokenGenerationVendorOptions>
+
+  EntityOnboardingLinkType:
+    enum:
+      - PAYEE
+      - PAYOR
+
+  EntityMetadataResponse:
+    properties:
+      key: string
+      value: list<string>
+
+errors:
+  InvalidTaxId:
+    status-code: 400
+    type: string
+
+  EntityForeignIdAlreadyExists:
+    status-code: 400
+    type: string

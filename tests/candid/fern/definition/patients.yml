@@ -1,0 +1,128 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+  individual: individual.yml
+  patient-payments: patient-payments/v2/__package__.yml
+
+service:
+  auth: true
+  base-path: /api/patients/v1
+  endpoints:
+    getAll:
+      method: GET
+      path: ""
+      response: PatientRollupSummariesPage
+      request:
+        name: GetAllPatientsRequest
+        query-parameters:
+          limit:
+            type: optional<integer>
+            docs: Defaults to 100
+          multi_field_search_string: optional<string>
+          date_of_birth: optional<commons.Date>
+          has_secondary_insurance: optional<boolean>
+          sort:
+            type: optional<PatientRollupSummarySortOptions>
+            docs: Defaults to most recent date of service desc
+          page_token: optional<commons.PageToken>
+
+    get:
+      method: GET
+      path: /{patient_external_id}
+      path-parameters:
+        patient_external_id: commons.PatientExternalId
+      request:
+        name: GetPatientByExternalIdRequest
+        query-parameters:
+          encoded:
+            type: optional<boolean>
+            docs: |
+              Denotes whether the patient_external_id is base64 encoded. This can be used to
+              enable sending patient_external_ids which have otherwise illegal characters like
+              slashes.
+      response: PatientRollup
+      errors:
+        - error: MissingPrimarySubscriberError
+          docs: Thrown if the encounter is missing a subscriber primary
+        - error: InvalidBase64EncodingError
+          docs: Thrown if the patient_external_id is not correctly base64 encoded but encoded is set to True
+
+types:
+  PatientRollupSummariesPage:
+    extends: commons.ResourcePage
+    properties:
+      items: list<PatientRollupSummary>
+
+  PatientRollupSummarySortOptions:
+    enum:
+      - most_recent_date_of_service_asc
+      - most_recent_date_of_service_desc
+      - last_name_asc
+      - last_name_desc
+      - insurance_payment_total_cents_asc
+      - insurance_payment_total_cents_desc
+      - patient_payment_total_cents_asc
+      - patient_payment_total_cents_desc
+      - patient_balance_total_cents_asc
+      - patient_balance_total_cents_desc
+      - patient_balance_excluding_open_invoice_total_cents_asc
+      - patient_balance_excluding_open_invoice_total_cents_desc
+      - days_since_last_invoice_asc
+      - days_since_last_invoice_desc
+      - pending_invoice_count_asc
+      - pending_invoice_count_desc
+      - manual_adjustments_total_cents_asc
+      - manual_adjustments_total_cents_desc
+
+  PatientRollupSummary:
+    properties:
+      patient: commons.PatientExternalId
+      first_name: string
+      last_name: string
+      date_of_birth: commons.Date
+      most_recent_date_of_service: commons.Date
+      most_recent_encounter_id: commons.EncounterId
+      encounter_count: integer
+      insurance_payment_total_cents: integer
+      patient_payment_total_cents: integer
+      patient_balance_total_cents: integer
+      patient_balance_excluding_open_invoice_total_cents: integer
+      has_secondary_insurance: boolean
+      days_since_last_invoice: optional<integer>
+      pending_invoice_count: integer
+      manual_adjustments_total_cents: integer
+
+  PatientRollup:
+    properties:
+      insurance_payment_total_cents: integer
+      patient_payment_total_cents: integer
+      patient_balance_total_cents: integer
+      patient_balance_excluding_open_invoice_total_cents: integer
+      manual_adjustments_total_cents: integer
+      patient: individual.Patient
+      subscriber_primary: optional<individual.Subscriber>
+      subscriber_secondary: optional<individual.Subscriber>
+      ordered_encounter_ids: list<commons.EncounterId>
+      ordered_adjustment_ids: list<commons.AdjustmentId>
+      ordered_patient_payment_ids: list<patient-payments.PatientPaymentId>
+
+  MissingPrimarySubscriberErrorMessage:
+    properties:
+      message: optional<string>
+
+  BaseErrorMessage:
+    properties:
+      message: optional<string>
+
+  InvalidBase64EncodingErrorMessage:
+    extends: BaseErrorMessage
+
+errors:
+  MissingPrimarySubscriberError:
+    status-code: 422
+    type: MissingPrimarySubscriberErrorMessage
+
+  InvalidBase64EncodingError:
+    status-code: 422
+    type: InvalidBase64EncodingErrorMessage

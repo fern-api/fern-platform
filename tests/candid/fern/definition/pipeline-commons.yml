@@ -1,0 +1,7 @@
+types:
+  PipelineId: string
+  PhaseId: string
+  StepId: string
+  RuleId: string
+
+  ConfigurableRuleId: uuid

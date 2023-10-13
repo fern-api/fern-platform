@@ -1,0 +1,32 @@
+imports:
+  commons: commons.yml
+  service-lines: service-lines/v2/__package__.yml
+  era: era.yml
+
+types:
+  Claim:
+    properties:
+      claim_id: commons.ClaimId
+      status: ClaimStatus
+      clearinghouse: optional<string>
+      clearinghouse_claim_id: optional<string>
+      payer_claim_id: optional<string>
+      service_lines: list<service-lines.ServiceLine>
+      eras: list<era.ERA>
+
+  ClaimStatus:
+    enum:
+      - biller_received
+      - coded
+      - submitted_to_payer
+      - missing_information
+      - not_billable
+      - waiting_for_provider
+      - era_received
+      - rejected
+      - denied
+      - paid
+      - paid_incorrectly
+      - finalized_paid
+      - finalized_denied
+      - held_by_customer
