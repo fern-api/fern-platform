@@ -1,3 +1,4 @@
+import { isApiNode } from "@fern-ui/app-utils";
 import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContextProvider";
 import { ApiPage } from "../api-page/ApiPage";
 import { CustomDocsPage } from "../custom-docs-page/CustomDocsPage";
@@ -10,24 +11,17 @@ export declare namespace DocsMainContent {
 export const DocsMainContent: React.FC<DocsMainContent.Props> = () => {
     const { activeNavigatable, resolvedPath } = useNavigationContext();
 
-    switch (resolvedPath.type) {
-        case "custom-markdown-page":
-            if (activeNavigatable.type !== "page") {
-                return null;
-            }
-            return (
-                <CustomDocsPage
-                    serializedMdxContent={resolvedPath.serializedMdxContent}
-                    navigatable={activeNavigatable}
-                />
-            );
-        case "api-page":
-            return (
-                <ApiDefinitionContextProvider apiSection={resolvedPath.apiSection}>
-                    <ApiPage />
-                </ApiDefinitionContextProvider>
-            );
-        default:
-            return null;
+    if (activeNavigatable.type === "page" && resolvedPath.type === "custom-markdown-page") {
+        return (
+            <CustomDocsPage serializedMdxContent={resolvedPath.serializedMdxContent} navigatable={activeNavigatable} />
+        );
+    } else if (isApiNode(activeNavigatable)) {
+        return (
+            <ApiDefinitionContextProvider apiSection={activeNavigatable.section}>
+                <ApiPage />
+            </ApiDefinitionContextProvider>
+        );
+    } else {
+        return null;
     }
 };

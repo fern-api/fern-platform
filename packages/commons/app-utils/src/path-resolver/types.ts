@@ -43,6 +43,13 @@ export type NavigatableDocsNode =
     | DocsNode.TopLevelWebhook
     | DocsNode.Webhook
     | DocsNode.Page;
+export type ApiDocsNode =
+    | DocsNode.ApiSection
+    | DocsNode.ApiSubpackage
+    | DocsNode.TopLevelEndpoint
+    | DocsNode.Endpoint
+    | DocsNode.TopLevelWebhook
+    | DocsNode.Webhook;
 export type ChildDocsNode = Exclude<DocsNode, DocsNode.Root>;
 export type ParentDocsNode = Exclude<DocsNode, NavigatableDocsNode>;
 

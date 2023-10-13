@@ -1,4 +1,15 @@
-import type { DocsNode, NavigatableDocsNode } from "./types";
+import type { DocsNode, NavigatableDocsNode, ApiDocsNode } from "./types";
+
+export function isApiNode(node: DocsNode): node is ApiDocsNode {
+    return (
+        node.type === "api-section" ||
+        node.type === "api-subpackage" ||
+        node.type === "top-level-endpoint" ||
+        node.type === "endpoint" ||
+        node.type === "top-level-webhook" ||
+        node.type === "webhook"
+    );
+}
 
 export function isLeafNode(node: DocsNode): node is NavigatableDocsNode {
     return (
