@@ -109,7 +109,7 @@ async function tryRevalidate(res: NextApiResponse, path: string): Promise<Revali
             type: "success",
         };
     } catch (err) {
-        // Non-200 validations are still valid because (i.e. if a page is no longer present, it should be revalidated to 404)
+        // Non-200 revalidations are okay because it correctly updates the page (i.e. if a page is no longer present, it should be revalidated to 404)
         return {
             type: "success",
         };
