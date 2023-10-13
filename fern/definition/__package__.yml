@@ -123,7 +123,15 @@ service:
         - ApiIdNotFound
         - SDKNotFound
       examples:
-        - request: {}
+        - query-parameters:
+            page: 1
+          request:
+            orgId: vellum
+            apiId: vellum-ai
+            sdks:
+              - type: python
+                package: vellum-ai
+                version: 1.2.1
           response:
             body:
               next: 2
