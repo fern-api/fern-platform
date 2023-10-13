@@ -94,8 +94,6 @@ function traverseInOrder(nodes: DocsNode[]): DocsNode[] {
             case "api-subpackage":
                 inOrder.push(...traverseInOrder(Object.values(node.children)));
                 break;
-            // TODO: Add
-            // case "client-libraries":
             case "page":
             case "top-level-endpoint":
             case "top-level-webhook":

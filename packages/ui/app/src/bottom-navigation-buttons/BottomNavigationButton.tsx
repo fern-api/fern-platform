@@ -48,7 +48,6 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
             case "docs-section":
             case "api-section":
             case "api-subpackage":
-                // TODO: clientLibraries ?
                 return docsNode.section.title;
             case "page":
                 return docsNode.page.title;
