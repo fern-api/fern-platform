@@ -1,10 +1,11 @@
 import * as FernRegistryDocsReadV2 from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
-import { getFullSlugForNavigatable, getSlugFromUrl, PathResolver, serializeNavigatableNode } from "@fern-ui/app-utils";
+import { getSlugFromUrl, PathResolver } from "@fern-ui/app-utils";
 import { App, type ResolvedPath } from "@fern-ui/ui";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import { REGISTRY_SERVICE } from "../../service";
 import { buildUrl } from "../../utils/buildUrl";
+import { convertNavigatableToResolvedPath } from "../../utils/convertNavigatableToResolvedPath";
 import { loadDocsBackgroundImage } from "../../utils/theme/loadDocsBackgroundImage";
 import { generateFontFaces, loadDocTypography } from "../../utils/theme/loadDocsTypography";
 import { useColorTheme } from "../../utils/theme/useColorTheme";
@@ -92,28 +93,17 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         };
     }
 
-    const serializedNavigatable = await serializeNavigatableNode({ node: resolvedNavigatable, docsDefinition });
-
-    const fullSlug = getFullSlugForNavigatable(serializedNavigatable);
+    const resolvedPath = await convertNavigatableToResolvedPath({
+        navigatable: resolvedNavigatable,
+        docsDefinition,
+    });
 
     return {
         props: {
             docs: docs.body,
             typographyStyleSheet,
             backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
-            resolvedPath:
-                serializedNavigatable.type === "page"
-                    ? {
-                          type: "custom-markdown-page",
-                          fullSlug,
-                          page: serializedNavigatable.page,
-                          serializedMdxContent: serializedNavigatable.serializedMdxContent,
-                      }
-                    : {
-                          type: "api-page",
-                          fullSlug,
-                          apiSection: serializedNavigatable.section,
-                      },
+            resolvedPath,
         },
     };
 };
