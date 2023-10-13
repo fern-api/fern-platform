@@ -109,11 +109,9 @@ async function tryRevalidate(res: NextApiResponse, path: string): Promise<Revali
             type: "success",
         };
     } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error(err);
+        // Non-200 revalidations are okay because it correctly updates the page (i.e. if a page is no longer present, it should be revalidated to 404)
         return {
-            type: "failure",
-            error: (err as Error)?.message ?? "No error message",
+            type: "success",
         };
     }
 }
