@@ -34,7 +34,7 @@ const CONTENT_PADDING = 40 + TITLED_EXAMPLE_PADDING;
 
 const DEFAULT_CLIENT: CodeExampleClient = {
     id: "curl",
-    name: "Curl",
+    name: "cURL",
 };
 
 function getAvailableExampleClients(example: FernRegistryApiRead.ExampleEndpointCall): CodeExampleClient[] {
