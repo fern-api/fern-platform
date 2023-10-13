@@ -1,4 +1,4 @@
-import type { DocsNode, NavigatableDocsNode, ApiDocsNode } from "./types";
+import type { ApiDocsNode, DocsNode, NavigatableDocsNode } from "./types";
 
 export function isApiNode(node: DocsNode): node is ApiDocsNode {
     return (
