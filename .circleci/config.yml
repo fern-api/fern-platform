@@ -138,7 +138,8 @@ jobs:
       - run:
           name: Generate Customer Docs
           command: |
-            echo "export FERN_TOKEN=$FERN_ORG_TOKEN_DEV" >> $BASH_ENV
+            echo 'export FERN_TOKEN="$FERN_ORG_TOKEN_DEV"' >> $BASH_ENV
+            source "$BASH_ENV"
             cd << parameters.docs_path >>
             fern-dev generate --docs --log-level debug
             echo "Generated docs for customer!"
