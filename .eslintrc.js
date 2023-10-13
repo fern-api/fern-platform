@@ -48,8 +48,10 @@ module.exports = {
         "@blueprintjs/classes-constants": "off",
         "@blueprintjs/html-components": "off",
         "@typescript-eslint/no-unused-vars": [
-            "warn",
+            "error",
             {
+                varsIgnorePattern: "^_",
+                argsIgnorePattern: "^_",
                 ignoreRestSiblings: true,
             },
         ],
@@ -80,6 +82,14 @@ module.exports = {
         "@typescript-eslint/strict-boolean-expressions": "off",
         "jest/expect-expect": ["error", { assertFunctionNames: ["expect*"] }],
         "linebreak-style": ["error", "unix"],
+        "no-console": "error",
+        "no-empty": [
+            "error",
+            {
+                allowEmptyCatch: true,
+            },
+        ],
+        "no-unused-vars": "off",
         quotes: [
             "error",
             "double",
@@ -89,15 +99,8 @@ module.exports = {
         ],
         semi: ["error", "always"],
         indent: "off",
-        "no-empty": [
-            "error",
-            {
-                allowEmptyCatch: true,
-            },
-        ],
         "jest/unbound-method": ["error"],
         "object-shorthand": ["error"],
-        "no-unused-vars": "off",
         "deprecation/deprecation": "error",
         "import/no-internal-modules": [
             "error",
@@ -113,7 +116,6 @@ module.exports = {
             },
         ],
         curly: "error",
-        "no-console": "error",
         "react/react-in-jsx-scope": "off",
         "react/prop-types": "off",
         "tailwindcss/no-custom-classname": "off",
