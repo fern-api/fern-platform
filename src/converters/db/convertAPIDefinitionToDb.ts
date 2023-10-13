@@ -299,10 +299,6 @@ export function transformExampleEndpointCall({
     endpointDefinition: APIV1Write.EndpointDefinition;
     snippets: SDKSnippetHolder;
 }): WithoutQuestionMarks<FdrAPI.api.v1.read.ExampleEndpointCall> {
-    // TODO: Retrieve the snippet (if any) from the given set, and include it in
-    // the object returned from here.
-    //
-    // We will only map PythonSDK snippets for now.
     const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
@@ -346,9 +342,9 @@ function getEndpointPathAsString(endpoint: APIV1Write.EndpointDefinition) {
     let endpointPath = "";
     for (const part of endpoint.path.parts) {
         if (part.type === "literal") {
-            endpointPath += `${endpointPath}${part.value}`;
+            endpointPath += `${part.value}`;
         } else {
-            endpointPath += `${endpointPath}{${part.value}}`;
+            endpointPath += `{${part.value}}`;
         }
     }
     return endpointPath;

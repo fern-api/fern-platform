@@ -16,7 +16,7 @@ import { getSnippetsService } from "../../controllers/snippets/getSnippetsServic
 import { DEFAULT_SNIPPETS_PAGE_SIZE } from "../../db/snippets/SnippetsDao";
 import { FernRegistry, FernRegistryClient, FernRegistryError } from "../generated";
 import { createMockFdrApplication } from "../mock";
-import { createMockDocs, createMockIndexSegment } from "./util";
+import { createApiDefinition, createMockDocs, createMockIndexSegment } from "./util";
 
 const PORT = 9999;
 
@@ -82,27 +82,16 @@ const EMPTY_REGISTER_API_DEFINITION: FernRegistry.api.v1.register.ApiDefinition 
     types: {},
 };
 
-const MOCK_REGISTER_API_DEFINITION: FernRegistry.api.v1.register.ApiDefinition = {
-    rootPackage: {
-        endpoints: [
-            {
-                id: "dummy",
-                method: "POST",
-                path: {
-                    parts: [{ type: "literal", value: "dummy" }],
-                    pathParameters: [],
-                },
-                headers: [],
-                queryParameters: [],
-                examples: [],
-            },
-        ],
-        types: [],
-        subpackages: [],
+const MOCK_REGISTER_API_DEFINITION: FernRegistry.api.v1.register.ApiDefinition = createApiDefinition(
+    {
+        endpointId: "dummy",
+        endpointMethod: "POST",
+        endpointPath: {
+            parts: [{ type: "literal", value: "dummy" }],
+            pathParameters: [],
+        },
     },
-    subpackages: {},
-    types: {},
-};
+)
 
 it("definition register", async () => {
     // register empty definition
@@ -455,30 +444,25 @@ it("snippets dao", async () => {
 });
 
 it("get snippets", async () => {
-    // register API definition for acme org
-    await CLIENT.api.v1.register.registerApiDefinition({
-        orgId: "acme",
-        apiId: "petstore",
-        definition: EMPTY_REGISTER_API_DEFINITION,
-    });
     // create snippets
     await CLIENT.snippetsFactory.createSnippetsForSdk({
         orgId: "acme",
-        apiId: "petstore",
+        apiId: "foo",
         snippets: {
-            type: "typescript",
+            type: "python",
             sdk: {
                 package: "acme",
-                version: "0.0.1",
+                version: "0.0.2",
             },
             snippets: [
                 {
                     endpoint: {
-                        path: "/users/v1",
-                        method: FernRegistry.EndpointMethod.Get,
+                        path: "/snippets/load",
+                        method: FernRegistry.EndpointMethod.Post,
                     },
                     snippet: {
-                        client: "const petstore = new PetstoreClient({\napiKey: 'YOUR_API_KEY',\n});",
+                        asyncClient: "const petstore = new AsyncPetstoreClient(\napi_key='YOUR_API_KEY',\n)",
+                        syncClient: "const petstore = new PetstoreClient(\napi_key='YOUR_API_KEY',\n)",
                     },
                 },
             ],
@@ -486,18 +470,79 @@ it("get snippets", async () => {
     });
     // get snippets
     const snippets = await CLIENT.get({
-        apiId: "petstore",
+        apiId: "foo",
         endpoint: {
-            path: "/users/v1",
-            method: FernRegistry.EndpointMethod.Get,
+            path: "/snippets/load",
+            method: FernRegistry.EndpointMethod.Post,
         },
     });
     expect(snippets.length).toEqual(1);
 
-    const snippet = snippets[0] as FernRegistry.TypeScriptSnippet;
+    const snippet = snippets[0] as FernRegistry.PythonSnippet;
     expect(snippet.sdk.package).toEqual("acme");
-    expect(snippet.sdk.version).toEqual("0.0.1");
-    expect(snippet.client).toEqual("const petstore = new PetstoreClient({\napiKey: 'YOUR_API_KEY',\n});");
+    expect(snippet.sdk.version).toEqual("0.0.2");
+    expect(snippet.asyncClient).toEqual("const petstore = new AsyncPetstoreClient(\napi_key='YOUR_API_KEY',\n)");
+    expect(snippet.syncClient).toEqual("const petstore = new PetstoreClient(\napi_key='YOUR_API_KEY',\n)");
+    // register API definition for acme org
+    const apiDefinitionResponse = await CLIENT.api.v1.register.registerApiDefinition({
+        orgId: "acme",
+        apiId: "foo",
+        definition:  createApiDefinition({
+            endpointId: "/snippets/load",
+            endpointMethod: "POST",
+            endpointPath: {
+                parts: [
+                    { type: "literal", value: "/snippets" },
+                    { type: "literal", value: "/load" },
+                ],
+                pathParameters: [],
+            },
+            snippetsConfig: {
+                pythonSdk: {
+                    package: "acme",
+                },
+            }
+        }),
+    });
+    // register docs
+    const startDocsRegisterResponse = await CLIENT.docs.v2.write.startDocsRegister({
+        orgId: "acme",
+        apiId: "foo",
+        domain: "https://acme.docs.buildwithfern.com",
+        customDomains: [],
+        filepaths: ["logo.png", "guides/guide.mdx"],
+    });
+    await CLIENT.docs.v2.write.finishDocsRegister(startDocsRegisterResponse.docsRegistrationId, {
+        docsDefinition: {
+            pages: {},
+            config: {
+                navigation: {
+                    items: [
+                        {
+                            type: "api",
+                            title: "Acme API",
+                            api: apiDefinitionResponse.apiDefinitionId,
+                        },
+                    ],
+                },
+                typography: {
+                    headingsFont: {
+                        name: "Syne",
+                        fontFile: fontFileId,
+                    },
+                },
+            },
+        },
+    });
+    // get docs for url
+    const docs = await CLIENT.docs.v2.read.getDocsForUrl({
+        url: "https://acme.docs.buildwithfern.com",
+    });
+    const apiDefinition = docs.definition.apis[apiDefinitionResponse.apiDefinitionId];
+    expect(apiDefinition).not.toEqual(undefined);
+    expect(apiDefinition?.rootPackage.endpoints[0]?.examples[0]?.codeExamples.pythonSdk).not.toEqual(undefined);
+    expect(apiDefinition?.rootPackage.endpoints[0]?.examples[0]?.codeExamples.pythonSdk?.asyncClient).toEqual("const petstore = new AsyncPetstoreClient(\napi_key='YOUR_API_KEY',\n)");
+    expect(apiDefinition?.rootPackage.endpoints[0]?.examples[0]?.codeExamples.pythonSdk?.syncClient).toEqual("const petstore = new PetstoreClient(\napi_key='YOUR_API_KEY',\n)");
 });
 
 it("get snippets with unregistered API", async () => {
