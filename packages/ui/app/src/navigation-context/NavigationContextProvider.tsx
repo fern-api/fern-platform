@@ -23,7 +23,8 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 }) => {
     const router = useRouter();
     const userIsScrolling = useRef(false);
-    const justNavigatedTo = useRef<string | undefined>(router.asPath);
+    const resolvedRoute = `/${resolvedPath.fullSlug}`;
+    const justNavigatedTo = useRef<string | undefined>(resolvedRoute);
     const { value: hasInitialized, setTrue: markAsInitialized } = useBooleanState(false);
     const resolver = useMemo(() => new PathResolver({ docsDefinition }), [docsDefinition]);
 
@@ -63,7 +64,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     // on mount, scroll directly to routed element
     useEffect(() => {
         const handleInit = () => {
-            navigateToRoute.current(router.asPath, false);
+            navigateToRoute.current(resolvedRoute, false);
         };
         handleInit();
         markAsInitialized();
