@@ -5,6 +5,20 @@ import { joinUrlSlugs } from "../slug";
 import { NodeFactory } from "./node-factory";
 import type { ChildDocsNode, DocsNode, ItemSlug, NodeDocsContext, ParentDocsNode } from "./types";
 
+type BuildContext =
+    | {
+          type: "versioned";
+          root: DocsNode.Root;
+          version: DocsNode.Version;
+          navigationConfig: FernRegistryDocsRead.UnversionedTabbedNavigationConfig;
+      }
+    | {
+          type: "unversioned";
+          root: DocsNode.Root;
+          version: null;
+          navigationConfig: FernRegistryDocsRead.UnversionedTabbedNavigationConfig;
+      };
+
 export function buildDefinitionTree(definition: FernRegistryDocsRead.DocsDefinition): DocsNode.Root {
     const root = NodeFactory.createRoot(definition);
 
@@ -108,19 +122,25 @@ export function buildDefinitionTree(definition: FernRegistryDocsRead.DocsDefinit
     return root;
 }
 
-type BuildContext =
-    | {
-          type: "versioned";
-          root: DocsNode.Root;
-          version: DocsNode.Version;
-          navigationConfig: FernRegistryDocsRead.UnversionedTabbedNavigationConfig;
-      }
-    | {
-          type: "unversioned";
-          root: DocsNode.Root;
-          version: null;
-          navigationConfig: FernRegistryDocsRead.UnversionedTabbedNavigationConfig;
-      };
+function resolveSubpackage(
+    apiDefinition: FernRegistryApiRead.ApiDefinition,
+    subpackageId: FernRegistryApiRead.SubpackageId
+): FernRegistryApiRead.ApiDefinitionSubpackage {
+    const subpackage = apiDefinition.subpackages[subpackageId];
+    if (subpackage == null) {
+        throw new Error("Subpackage does not exist");
+    }
+    if (subpackage.pointsTo != null) {
+        const resolvedSubpackage = resolveSubpackage(apiDefinition, subpackage.pointsTo);
+        return {
+            ...resolvedSubpackage,
+            name: subpackage.name,
+            urlSlug: subpackage.urlSlug,
+        };
+    } else {
+        return subpackage;
+    }
+}
 
 function buildNodeForNavigationTab({
     tab,
@@ -281,10 +301,7 @@ function buildNodeForApiSection({
         addNodeChild(sectionNode, webhookNode);
     });
     apiDefinition.rootPackage.subpackages.forEach((subpackageId) => {
-        const subpackage = apiDefinition.subpackages[subpackageId];
-        if (subpackage == null) {
-            throw new Error(`Subpackage '${subpackageId}' was not found.`);
-        }
+        const subpackage = resolveSubpackage(apiDefinition, subpackageId);
         const subpackageNode = buildNodeForSubpackage({
             subpackage,
             section,
@@ -427,10 +444,7 @@ function buildNodeForSubpackage({
         addNodeChild(subpackageNode, webhookNode);
     });
     subpackage.subpackages.forEach((subpackageId) => {
-        const childSubpackage = apiDefinition.subpackages[subpackageId];
-        if (childSubpackage == null) {
-            throw new Error(`Subpackage '${subpackageId}' was not found.`);
-        }
+        const childSubpackage = resolveSubpackage(apiDefinition, subpackageId);
         const childSubpackageNode = buildNodeForSubpackage({
             subpackage: childSubpackage,
             section,

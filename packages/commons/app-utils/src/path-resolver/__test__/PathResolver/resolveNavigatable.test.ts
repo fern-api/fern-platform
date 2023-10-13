@@ -1,10 +1,11 @@
 import { PathResolver } from "../../PathResolver";
-import { expectPageNode, expectTopLevelEndpointNode } from "../util";
+import { expectEndpointNode, expectPageNode, expectTopLevelEndpointNode } from "../util";
 import { DEFINITION_UNVERSIONED_TABBED } from "./mock-definitions/unversioned-tabbed";
 import { DEFINITION_UNVERSIONED_UNTABBED } from "./mock-definitions/unversioned-untabbed";
 import { DEFINITION_VERSIONED_TABBED } from "./mock-definitions/versioned-tabbed";
 import { DEFINITION_VERSIONED_UNTABBED } from "./mock-definitions/versioned-untabbed";
 import { DEFINITION_WITH_API } from "./mock-definitions/with-api-definition";
+import { DEFINITION_WITH_POINTS_TO } from "./mock-definitions/with-points-to";
 
 describe("resolveNavigatable", () => {
     describe("resolves empty slug to root navigatable", () => {
@@ -39,6 +40,13 @@ describe("resolveNavigatable", () => {
         it("with api definition", () => {
             const resolver = new PathResolver({
                 docsDefinition: DEFINITION_WITH_API,
+            });
+            expect(Object.is(resolver.resolveNavigatable(""), resolver.rootNavigatable)).toBe(true);
+        });
+
+        it("with the 'pointsTo' option", () => {
+            const resolver = new PathResolver({
+                docsDefinition: DEFINITION_WITH_POINTS_TO,
             });
             expect(Object.is(resolver.resolveNavigatable(""), resolver.rootNavigatable)).toBe(true);
         });
@@ -93,6 +101,16 @@ describe("resolveNavigatable", () => {
             expectTopLevelEndpointNode(resolvedNode);
             expect(resolvedNode.slug).toEqual("generate-completion");
             expect(resolvedNode.leadingSlug).toEqual("api-reference/client-api/generate-completion");
+        });
+
+        it("with the 'pointsTo' option", () => {
+            const resolver = new PathResolver({
+                docsDefinition: DEFINITION_WITH_POINTS_TO,
+            });
+            const resolvedNode = resolver.resolveNavigatable("api-reference");
+            expectEndpointNode(resolvedNode);
+            expect(resolvedNode.slug).toEqual("create-agent");
+            expect(resolvedNode.leadingSlug).toEqual("api-reference/new-sub/create-agent");
         });
     });
 });

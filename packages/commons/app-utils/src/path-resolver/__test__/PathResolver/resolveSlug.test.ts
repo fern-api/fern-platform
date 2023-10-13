@@ -11,6 +11,7 @@ import { DEFINITION_VERSIONED_WITH_SKIPPED_SLUGS } from "./mock-definitions/vers
 import { DEFINITION_WITH_API } from "./mock-definitions/with-api-definition";
 import { DEFINITION_WITH_COLLIDING_SLUGS } from "./mock-definitions/with-colliding-slugs";
 import { DEFINITION_WITH_COLLIDING_SLUGS_2 } from "./mock-definitions/with-colliding-slugs-2";
+import { DEFINITION_WITH_POINTS_TO } from "./mock-definitions/with-points-to";
 
 describe("resolveSlug", () => {
     describe("resolves invalid slug to undefined", () => {
@@ -118,6 +119,17 @@ describe("resolveSlug", () => {
                     expectNode(resolvedNode).toBeOfType(type);
                 });
             });
+        });
+
+        it("with the 'pointsTo' option", () => {
+            const resolver = new PathResolver({
+                docsDefinition: DEFINITION_WITH_POINTS_TO,
+            });
+            const nodeForOldSub = resolver.resolveSlug("api-reference/old-sub");
+            expectNode(nodeForOldSub).toBeOfType(undefined);
+
+            const nodeForNewSub = resolver.resolveSlug("api-reference/new-sub");
+            expectNode(nodeForNewSub).toBeOfType("api-subpackage");
         });
 
         describe("with collisions", () => {

@@ -7,6 +7,7 @@ import { DEFINITION_VERSIONED_TABBED } from "./mock-definitions/versioned-tabbed
 import { DEFINITION_VERSIONED_UNTABBED } from "./mock-definitions/versioned-untabbed";
 import { DEFINITION_WITH_API } from "./mock-definitions/with-api-definition";
 import { DEFINITION_WITH_COLLIDING_SLUGS } from "./mock-definitions/with-colliding-slugs";
+import { DEFINITION_WITH_POINTS_TO } from "./mock-definitions/with-points-to";
 
 describe("getAllSlugs", () => {
     describe("correctly finds no collisions", () => {
@@ -48,6 +49,13 @@ describe("getAllSlugs", () => {
         it("with skipped slugs", () => {
             const resolver = new PathResolver({
                 docsDefinition: DEFINITION_UNVERSIONED_WITH_SKIPPED_SLUGS,
+            });
+            expect(resolver.getCollisions().size).toEqual(0);
+        });
+
+        it("with the 'pointsTo' option", () => {
+            const resolver = new PathResolver({
+                docsDefinition: DEFINITION_WITH_POINTS_TO,
             });
             expect(resolver.getCollisions().size).toEqual(0);
         });
