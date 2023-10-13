@@ -138,6 +138,7 @@ jobs:
       - run:
           name: Generate Customer Docs
           command: |
+            echo "export FERN_TOKEN=$FERN_ORG_TOKEN_DEV" >> $BASH_ENV
             cd << parameters.docs_path >>
             fern-dev generate --docs --log-level debug
             echo "Generated docs for customer!"
@@ -215,10 +216,10 @@ workflows:
             - fern-tokens
             - npm
             - fern-dev
-          # filters:
-          #   branches:
-          #     only:
-          #       - main
+          filters:
+            branches:
+              only:
+                - main
       - generate-customer-docs:
           name: preview-docs-flatfile
           docs_path: tests/flatfile
@@ -226,51 +227,47 @@ workflows:
             - fern-tokens
             - npm
             - fern-dev
-          # filters:
-          #   branches:
-          #     only:
-          #       - main
+          filters:
+            branches:
+              only:
+                - main
       - generate-customer-docs:
           name: preview-docs-mercoa
           docs_path: tests/mercoa
           context:
             - fern-tokens
             - npm
-            - fern-dev
-          # filters:
-          #   branches:
-          #     only:
-          #       - main
+          filters:
+            branches:
+              only:
+                - main
       - generate-customer-docs:
           name: preview-docs-primer
           docs_path: tests/primer
           context:
             - fern-tokens
             - npm
-            - fern-dev
-          # filters:
-          #   branches:
-          #     only:
-          #       - main
+          filters:
+            branches:
+              only:
+                - main
       - generate-customer-docs:
           name: preview-docs-superagent
           docs_path: tests/superagent
           context:
             - fern-tokens
             - npm
-            - fern-dev
-          # filters:
-          #   branches:
-          #     only:
-          #       - main
+          filters:
+            branches:
+              only:
+                - main
       - generate-customer-docs:
           name: preview-docs-vellum
           docs_path: tests/vellum
           context:
             - fern-tokens
             - npm
-            - fern-dev
-          # filters:
-          #   branches:
-          #     only:
-          #       - main
+          filters:
+            branches:
+              only:
+                - main
