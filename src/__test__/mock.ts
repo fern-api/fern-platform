@@ -43,8 +43,7 @@ class MockAuthService implements AuthService {
         return;
     }
 
-    async getOrgIdsFromAuthHeader(authHeader: { authHeader: string | undefined }): Promise<OrgIdsResponse> {
-        console.log(`AuthService mock received authHeader ${JSON.stringify(authHeader)}`);
+    async getOrgIdsFromAuthHeader(_authHeader: { authHeader: string | undefined }): Promise<OrgIdsResponse> {
         return {
             type: "success",
             orgIds: new Set<string>(this.orgIds),

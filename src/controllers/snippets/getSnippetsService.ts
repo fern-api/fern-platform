@@ -1,94 +1,28 @@
 import { SnippetsService } from "../../api";
-import {
-    OrgIdAndApiIdNotFound,
-    ApiIdNotFound,
-    ApiIdRequiredError,
-    InvalidPageError,
-    OrgIdNotFound,
-    OrgIdRequiredError,
-} from "../../api/generated/api/errors";
-import { InternalError, UnauthorizedError } from "../../api/generated/api/resources/commons/errors";
+import { InvalidPageError } from "../../api/generated/api/errors";
+import { UnauthorizedError } from "../../api/generated/api/resources/commons/errors";
 import { type FdrApplication } from "../../app";
-import { LoadSnippetAPIsRequest } from "../../db/snippetApis/SnippetAPIsDao";
 import { DbSnippetsPage } from "../../db/snippets/SnippetsDao";
+import { APIResolver, ResolvedAPI } from "./APIResolver";
 
-export interface ApiInfo {
-    orgId: string;
-    apiId: string;
-}
-
-async function getApiInfo({
-    app,
-    authorization,
+async function resolveApi({
     orgId,
     apiId,
+    apiInferrer,
 }: {
-    app: FdrApplication;
-    authorization: string;
-    orgId?: string;
-    apiId?: string;
-}): Promise<ApiInfo> {
-    const orgIdsResponse = await app.services.auth.getOrgIdsFromAuthHeader({
-        authHeader: authorization,
-    });
-    if (orgIdsResponse.type === "error") {
-        throw orgIdsResponse.err;
-    }
-    if (orgIdsResponse.orgIds.size === 0) {
-        throw new OrgIdNotFound("No organizations were resolved for this user");
-    }
-    if (orgId != null ? !orgIdsResponse.orgIds.has(orgId) : false) {
-        throw new UnauthorizedError(`You are not a member of organization ${orgId}`);
-    }
+    orgId: string | undefined;
+    apiId: string | undefined;
+    apiInferrer: APIResolver;
+}): Promise<ResolvedAPI> {
     if (orgId != null && apiId != null) {
-        const snippetAPI = await app.dao.snippetAPIs().loadSnippetAPI({
-            loadSnippetAPIRequest: {
-                orgId: orgId,
-                apiName: apiId,
-            },
-        });
-        if (snippetAPI === null) {
-            throw new OrgIdAndApiIdNotFound(`Organization ${orgId} does not have API ${apiId}`);
-        }
-        return {
-            orgId: snippetAPI.orgId,
-            apiId: snippetAPI.apiName,
-        };
+        return await apiInferrer.resolveWithOrgAndApiId({ orgId, apiId });
+    } else if (orgId != null && apiId == null) {
+        return await apiInferrer.resolveWithOrgId({ orgId });
+    } else if (orgId == null && apiId != null) {
+        return await apiInferrer.resolveWithApiId({ apiId });
+    } else {
+        return await apiInferrer.resolve();
     }
-    const loadSnippetAPIsRequest: LoadSnippetAPIsRequest = {
-        orgIds: orgId != null ? [orgId] : Array.from(orgIdsResponse.orgIds),
-        apiName: apiId != null ? apiId : undefined,
-    };
-    const apiInfos = await app.dao.snippetAPIs().loadSnippetAPIs({
-        loadSnippetAPIsRequest: loadSnippetAPIsRequest,
-    });
-    if (apiInfos.length === 0) {
-        app.logger.error(`Loaded zero snippet APIs with request: ${JSON.stringify(loadSnippetAPIsRequest)}`);
-        if (apiId !== undefined) {
-            throw new ApiIdNotFound(`An API with id ${apiId} was not found`);
-        }
-        throw new ApiIdRequiredError("No APIs were found; please specify an apiId");
-    }
-    if (apiInfos.length > 1) {
-        app.logger.error(`Loaded too many snippet APIs with request: ${JSON.stringify(loadSnippetAPIsRequest)}`);
-        if (apiId !== undefined && orgId !== undefined) {
-            throw new InternalError(
-                `Internal error; multiple APIs associated with organization ${orgId} and API ${apiId}`
-            );
-        }
-        if (apiId !== undefined) {
-            throw new OrgIdRequiredError(`Multiple APIs named ${apiId} were found; please provide an orgId`);
-        }
-        throw new ApiIdRequiredError("Multiple APIs were found; please provide an apiId");
-    }
-    const apiInfo = apiInfos[0];
-    if (apiInfo === undefined) {
-        throw new InternalError("Internal error; resolved an undefined API");
-    }
-    return {
-        orgId: apiInfo.orgId,
-        apiId: apiInfo.apiName,
-    };
 }
 
 export function getSnippetsService(app: FdrApplication): SnippetsService {
@@ -97,11 +31,11 @@ export function getSnippetsService(app: FdrApplication): SnippetsService {
             if (req.headers.authorization === undefined) {
                 throw new UnauthorizedError("You must be authorized to load snippets");
             }
-            const apiInfo = await getApiInfo({
-                app: app,
-                authorization: req.headers.authorization,
+            const apiInferrer = new APIResolver(app, req.headers.authorization);
+            const apiInfo = await resolveApi({
                 orgId: req.body.orgId,
                 apiId: req.body.apiId,
+                apiInferrer,
             });
             const response: DbSnippetsPage = await app.dao.snippets().loadSnippetsPage({
                 loadSnippetsInfo: {
@@ -123,11 +57,11 @@ export function getSnippetsService(app: FdrApplication): SnippetsService {
             if (req.headers.authorization === undefined) {
                 throw new UnauthorizedError("You must be authorized to load snippets");
             }
-            const apiInfo = await getApiInfo({
-                app: app,
-                authorization: req.headers.authorization,
+            const apiInferrer = new APIResolver(app, req.headers.authorization);
+            const apiInfo = await resolveApi({
                 orgId: req.body.orgId,
                 apiId: req.body.apiId,
+                apiInferrer,
             });
             // TODO: The cast shouldn't be necessary but the query parameter is being
             // passed in as a string (even though it's typed as a number), so we

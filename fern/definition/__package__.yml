@@ -44,7 +44,6 @@ service:
         - OrgIdRequiredError
         - OrgIdAndApiIdNotFound
         - OrgIdNotFound
-        - ApiIdNotFound
         - EndpointNotFound
         - SDKNotFound
       examples:
@@ -120,7 +119,6 @@ service:
         - OrgIdRequiredError
         - OrgIdAndApiIdNotFound
         - OrgIdNotFound
-        - ApiIdNotFound
         - SDKNotFound
       examples:
         - query-parameters:
@@ -308,13 +306,8 @@ errors:
     type: string
 
   OrgIdAndApiIdNotFound:
-    status-code: 400
-    docs: The requested OrgId and ApiId was not found
-    type: string
-
-  ApiIdNotFound:
     status-code: 404
-    docs: The requested ApId was not found
+    docs: The requested OrgId and ApiId was not found
     type: string
 
   EndpointNotFound:

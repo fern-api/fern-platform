@@ -31,7 +31,6 @@ service:
       errors:
         - commons.UnauthorizedError
         - commons.UserNotInOrgError
-        - snippets.ApiIdNotFound
         - snippets.OrgIdNotFound
         - snippets.SDKNotFound
 
