@@ -29,37 +29,20 @@ const handler: NextApiHandler = async (req, res) => {
             res.setHeader("host", req.headers["x-fern-host"]);
         }
 
-        let resolver;
-
-        if (docsConfigId != null) {
-            const docsConfigResponse = await REGISTRY_SERVICE.docs.v2.read.getDocsConfigById(docsConfigId);
-            if (!docsConfigResponse.ok) {
-                // eslint-disable-next-line no-console
-                console.error("Failed to fetch docs by config id", docsConfigResponse.error);
-                return res.status(500).send("Failed to load docs for: " + docsConfigId);
-            }
-            resolver = new PathResolver({
-                definition: {
-                    apis: docsConfigResponse.body.apis,
-                    docsConfig: docsConfigResponse.body.docsConfig,
-                },
-            });
-        } else {
-            const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
-                url,
-            });
-            if (!docs.ok) {
-                // eslint-disable-next-line no-console
-                console.error("Failed to fetch docs", docs.error);
-                return res.status(500).send("Failed to load docs for: " + url);
-            }
-            resolver = new PathResolver({
-                definition: {
-                    apis: docs.body.definition.apis,
-                    docsConfig: docs.body.definition.config,
-                },
-            });
+        const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
+            url,
+        });
+        if (!docs.ok) {
+            // eslint-disable-next-line no-console
+            console.error("Failed to fetch docs", docs.error);
+            return res.status(500).send("Failed to load docs for: " + url);
         }
+        const resolver = new PathResolver({
+            definition: {
+                apis: docs.body.definition.apis,
+                docsConfig: docs.body.definition.config,
+            },
+        });
 
         // eslint-disable-next-line no-console
         console.log("Finding paths to revalidate");
