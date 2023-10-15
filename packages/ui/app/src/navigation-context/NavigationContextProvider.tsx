@@ -54,10 +54,12 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     const selectedSlug = getFullSlugForNavigatable(activeNavigatable, { omitDefault: true });
 
-    const navigateToRoute = useRef((route: string) => {
+    const navigateToRoute = useRef((route: string, disableSmooth = false) => {
         if (!userIsScrolling.current) {
             const node = getRouteNode(route);
-            node?.scrollIntoView();
+            node?.scrollIntoView({
+                behavior: route.includes("#") && !disableSmooth ? "smooth" : "auto",
+            });
             justNavigatedTo.current = route;
         }
     });
@@ -101,7 +103,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const observeDocContent = useCallback((element: HTMLDivElement) => {
         const handleNavigate = () => {
             if (justNavigatedTo.current != null) {
-                navigateToRoute.current(justNavigatedTo.current);
+                navigateToRoute.current(justNavigatedTo.current, true);
             }
         };
         if (element != null) {
