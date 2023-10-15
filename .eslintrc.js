@@ -45,13 +45,25 @@ module.exports = {
     },
     ignorePatterns: ["*.js", "*.jsx"],
     rules: {
-        "@blueprintjs/classes-constants": "off",
-        "@blueprintjs/html-components": "off",
-        "@typescript-eslint/no-unused-vars": [
+        "linebreak-style": ["error", "unix"],
+        quotes: [
+            "error",
+            "double",
+            {
+                avoidEscape: true,
+            },
+        ],
+        semi: ["error", "always"],
+        indent: "off",
+        "no-empty": [
             "error",
             {
-                varsIgnorePattern: "^_",
-                argsIgnorePattern: "^_",
+                allowEmptyCatch: true,
+            },
+        ],
+        "@typescript-eslint/no-unused-vars": [
+            "warn",
+            {
                 ignoreRestSiblings: true,
             },
         ],
@@ -74,33 +86,13 @@ module.exports = {
                 allow: ["private-constructors", "protected-constructors", "decoratedFunctions"],
             },
         ],
-        "@typescript-eslint/await-thenable": "error",
-        "@typescript-eslint/no-base-to-string": "error",
         "@typescript-eslint/no-extraneous-class": "off",
-        "@typescript-eslint/no-invalid-void-type": "off",
-        "@typescript-eslint/prefer-optional-chain": "off",
-        "@typescript-eslint/strict-boolean-expressions": "off",
-        "jest/expect-expect": ["error", { assertFunctionNames: ["expect*"] }],
-        "linebreak-style": ["error", "unix"],
-        "no-console": "error",
-        "no-empty": [
-            "error",
-            {
-                allowEmptyCatch: true,
-            },
-        ],
-        "no-unused-vars": "off",
-        quotes: [
-            "error",
-            "double",
-            {
-                avoidEscape: true,
-            },
-        ],
-        semi: ["error", "always"],
-        indent: "off",
         "jest/unbound-method": ["error"],
         "object-shorthand": ["error"],
+        "@typescript-eslint/no-invalid-void-type": "off",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/prefer-optional-chain": "off",
         "deprecation/deprecation": "error",
         "import/no-internal-modules": [
             "error",
@@ -108,6 +100,7 @@ module.exports = {
                 forbid: ["@fern-ui/*/**"],
             },
         ],
+        "@typescript-eslint/no-base-to-string": "error",
         eqeqeq: [
             "error",
             "always",
@@ -116,8 +109,14 @@ module.exports = {
             },
         ],
         curly: "error",
+        "no-console": "error",
         "react/react-in-jsx-scope": "off",
         "react/prop-types": "off",
+        "@typescript-eslint/await-thenable": "error",
+        "@blueprintjs/classes-constants": "off",
         "tailwindcss/no-custom-classname": "off",
+        "@blueprintjs/html-components": "off",
+        "@typescript-eslint/strict-boolean-expressions": "error",
+        "jest/expect-expect": ["error", { assertFunctionNames: ["expect*"] }],
     },
 };

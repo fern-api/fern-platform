@@ -1,4 +1,5 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { useDocsContext } from "../../docs-context/useDocsContext";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { WebhookContextProvider } from "./webhook-context/WebhookContextProvider";
 import { WebhookContent } from "./WebhookContent";
@@ -8,20 +9,14 @@ export declare namespace Webhook {
         webhook: FernRegistryApiRead.WebhookDefinition;
         isLastInApi: boolean;
         package: FernRegistryApiRead.ApiDefinitionPackage;
-        fullSlug: string;
+        slug: string;
         anchorIdParts: string[];
     }
 }
 
-export const Webhook: React.FC<Webhook.Props> = ({
-    webhook,
-    fullSlug,
-    package: package_,
-    isLastInApi,
-    anchorIdParts,
-}) => {
-    const { setTargetRef } = useApiPageCenterElement({ slug: fullSlug });
-    const route = `/${fullSlug}`;
+export const Webhook: React.FC<Webhook.Props> = ({ webhook, slug, package: package_, isLastInApi, anchorIdParts }) => {
+    const { getFullSlug } = useDocsContext();
+    const { setTargetRef } = useApiPageCenterElement({ slug });
 
     return (
         <WebhookContextProvider>
@@ -31,7 +26,7 @@ export const Webhook: React.FC<Webhook.Props> = ({
                 package={package_}
                 hideBottomSeparator={isLastInApi}
                 anchorIdParts={anchorIdParts}
-                route={route}
+                route={`/${getFullSlug(slug)}`}
             />
         </WebhookContextProvider>
     );

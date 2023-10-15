@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import Link from "next/link";
 import { FontAwesomeIcon } from "../../commons/FontAwesomeIcon";
-import { useNavigationContext } from "../../navigation-context";
+import { useDocsContext } from "../../docs-context/useDocsContext";
 
 export declare namespace Card {
     export interface Props {
@@ -14,9 +14,9 @@ export declare namespace Card {
 }
 
 export const Card: React.FC<Card.Props> = ({ title, icon, iconPosition = "top", children, href }) => {
-    const { navigateToPath } = useNavigationContext();
+    const { navigateToPath } = useDocsContext();
+
     const isInternalUrl = typeof href === "string" && href.startsWith("/");
-    const isUrlOnThisPage = typeof href === "string" && href.startsWith("#");
 
     const className = classNames(
         "border-border-default-light dark:border-border-default-dark bg-background-tertiary-light dark:bg-background-tertiary-dark flex items-start rounded-lg border p-4 !no-underline hover:transition",
@@ -40,17 +40,19 @@ export const Card: React.FC<Card.Props> = ({ title, icon, iconPosition = "top", 
         </>
     );
 
-    if (isInternalUrl || isUrlOnThisPage) {
+    if (isInternalUrl) {
         const slug = href.slice(1, href.length);
         return (
             <Link
                 className={className}
                 href={href}
-                onClick={() => {
-                    if (isInternalUrl) {
-                        navigateToPath(slug);
-                    }
-                }}
+                onClick={() =>
+                    navigateToPath(slug, {
+                        // We need to omit these because we expect the user to provide them in the href
+                        omitVersionSlug: true,
+                        omitTabSlug: true,
+                    })
+                }
             >
                 {content}
             </Link>

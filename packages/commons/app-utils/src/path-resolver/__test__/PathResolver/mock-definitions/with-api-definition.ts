@@ -1,6 +1,5 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { DocsDefinitionSummary } from "../../../types";
 
 const API_DEF_1: FernRegistryApiRead.ApiDefinition = {
     id: "api-1" as FernRegistryApiRead.ApiDefinition["id"],
@@ -74,11 +73,13 @@ const API_DEF_1: FernRegistryApiRead.ApiDefinition = {
     types: {},
 };
 
-export const DEFINITION_WITH_API: DocsDefinitionSummary = {
+export const DEFINITION_WITH_API: FernRegistryDocsRead.DocsDefinition = {
+    pages: {},
     apis: {
         [API_DEF_1.id]: API_DEF_1,
     },
-    docsConfig: {
+    files: {},
+    config: {
         colorsV3: {
             type: "dark",
             accentPrimary: { r: 0, g: 0, b: 0 },
@@ -180,6 +181,16 @@ export const DEFINITION_WITH_API: DocsDefinitionSummary = {
                     ],
                 },
             ],
+        },
+    },
+    search: {
+        type: "singleAlgoliaIndex",
+        value: {
+            type: "unversioned",
+            indexSegment: {
+                id: FernRegistryDocsRead.IndexSegmentId("seg_1"),
+                searchApiKey: "",
+            },
         },
     },
 };

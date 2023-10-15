@@ -1,6 +1,6 @@
-import { PathResolver } from "@fern-ui/app-utils";
 import { NextApiHandler, NextApiResponse } from "next";
 import { REGISTRY_SERVICE } from "../../service";
+import { getPathsToRevalidate } from "../../utils/revalidation/getPathsToRevalidate";
 
 export interface Request {
     url: string;
@@ -29,25 +29,40 @@ const handler: NextApiHandler = async (req, res) => {
             res.setHeader("host", req.headers["x-fern-host"]);
         }
 
-        const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
-            url,
-        });
-        if (!docs.ok) {
+        let pathsToRevalidate: string[] = [];
+        if (docsConfigId != null) {
+            const docsConfigResponse = await REGISTRY_SERVICE.docs.v2.read.getDocsConfigById(docsConfigId);
+            if (!docsConfigResponse.ok) {
+                // eslint-disable-next-line no-console
+                console.error("Failed to fetch docs by config id", docsConfigResponse.error);
+                return res.status(500).send("Failed to load docs for: " + docsConfigId);
+            }
+
             // eslint-disable-next-line no-console
-            console.error("Failed to fetch docs", docs.error);
-            return res.status(500).send("Failed to load docs for: " + url);
-        }
-        const resolver = new PathResolver({
-            definition: {
+            console.log("Finding paths to revalidate");
+
+            pathsToRevalidate = getPathsToRevalidate({
+                navigationConfig: docsConfigResponse.body.docsConfig.navigation,
+                apis: docsConfigResponse.body.apis,
+            });
+        } else {
+            const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
+                url,
+            });
+            if (!docs.ok) {
+                // eslint-disable-next-line no-console
+                console.error("Failed to fetch docs", docs.error);
+                return res.status(500).send("Failed to load docs for: " + url);
+            }
+
+            // eslint-disable-next-line no-console
+            console.log("Finding paths to revalidate");
+
+            pathsToRevalidate = getPathsToRevalidate({
+                navigationConfig: docs.body.definition.config.navigation,
                 apis: docs.body.definition.apis,
-                docsConfig: docs.body.definition.config,
-            },
-        });
-
-        // eslint-disable-next-line no-console
-        console.log("Finding paths to revalidate");
-
-        const pathsToRevalidate = resolver.getAllSlugsWithLeadingSlash();
+            });
+        }
 
         // eslint-disable-next-line no-console
         console.log(`Found ${pathsToRevalidate.length} paths to revalidate`);

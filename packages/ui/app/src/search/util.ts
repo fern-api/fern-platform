@@ -1,23 +1,6 @@
 import type { SearchRecord } from "./types";
 
-export function getFullPathForSearchRecord(record: SearchRecord): string {
-    const leadingPath = getLeadingPathForSearchRecord(record);
-    if (record.type === "endpoint" || record.type === "page") {
-        if (record.versionSlug == null) {
-            return `${leadingPath}`;
-        } else {
-            return `${record.versionSlug}/${leadingPath}`;
-        }
-    } else {
-        if (record.version == null) {
-            return `${leadingPath}`;
-        } else {
-            return `${record.version.urlSlug}/${leadingPath}`;
-        }
-    }
-}
-
-function getLeadingPathForSearchRecord(record: SearchRecord): string {
+export function getPathForSearchRecord(record: SearchRecord): string {
     switch (record.type) {
         case "page":
         case "endpoint":
@@ -28,5 +11,22 @@ function getLeadingPathForSearchRecord(record: SearchRecord): string {
                 .filter((p) => p.skipUrlSlug !== true)
                 .map((p) => p.urlSlug)
                 .join("/");
+    }
+}
+
+export function getHrefForSearchRecord(record: SearchRecord): string {
+    const path = getPathForSearchRecord(record);
+    if (record.type === "endpoint" || record.type === "page") {
+        if (record.versionSlug == null) {
+            return `/${path}`;
+        } else {
+            return `/${record.versionSlug}/${path}`;
+        }
+    } else {
+        if (record.version == null) {
+            return `/${path}`;
+        } else {
+            return `/${record.version.urlSlug}/${path}`;
+        }
     }
 }

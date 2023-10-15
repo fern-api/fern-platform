@@ -196,21 +196,6 @@ export function renderJsonLineValue(line: JsonLine): ReactNode {
     });
 }
 
-export function jsonLineValueToString(line: JsonLine): string {
-    return visitJsonLine(line, {
-        objectEmpty: () => "{}",
-        objectStart: () => "{",
-        objectEnd: () => "}",
-        listEmpty: () => "[]",
-        listStart: () => "[",
-        listEnd: () => "]",
-        string: (line) => JSON.stringify(line.value),
-        number: (line) => `${line.value}`,
-        boolean: (line) => line.value.toString(),
-        null: () => "null",
-    });
-}
-
 export function renderJsonLine(line: JsonLine, tabWidth = TAB_WIDTH): ReactNode {
     return visitJsonLine(line, {
         objectEmpty: (line) => (
@@ -287,46 +272,6 @@ export function renderJsonLine(line: JsonLine, tabWidth = TAB_WIDTH): ReactNode 
                 {line.comma ? renderComma() : null}
             </>
         ),
-    });
-}
-
-export function jsonLineToString(line: JsonLine, tabWidth = TAB_WIDTH): string {
-    return visitJsonLine(line, {
-        objectEmpty: (line) =>
-            `${" ".repeat(tabWidth * line.depth)}${line.key != null ? `"${line.key}": ` : ""}${jsonLineValueToString(
-                line
-            )}`,
-        objectStart: (line) =>
-            `${" ".repeat(tabWidth * line.depth)}${line.key != null ? `"${line.key}": ` : ""}${jsonLineValueToString(
-                line
-            )}`,
-        objectEnd: (line) =>
-            `${" ".repeat(tabWidth * line.depth)}${jsonLineValueToString(line)}${line.comma ? "," : ""}`,
-        listEmpty: (line) =>
-            `${" ".repeat(tabWidth * line.depth)}${line.key != null ? `"${line.key}": ` : ""}${jsonLineValueToString(
-                line
-            )}`,
-        listStart: (line) =>
-            `${" ".repeat(tabWidth * line.depth)}${line.key != null ? `"${line.key}": ` : ""}${jsonLineValueToString(
-                line
-            )}`,
-        listEnd: (line) => `${" ".repeat(tabWidth * line.depth)}${jsonLineValueToString(line)}${line.comma ? "," : ""}`,
-        string: (line) =>
-            `${" ".repeat(tabWidth * line.depth)}${line.key != null ? `"${line.key}": ` : ""}${jsonLineValueToString(
-                line
-            )}${line.comma ? "," : ""}`,
-        number: (line) =>
-            `${" ".repeat(tabWidth * line.depth)}${line.key != null ? `"${line.key}": ` : ""}${jsonLineValueToString(
-                line
-            )}${line.comma ? "," : ""}`,
-        boolean: (line) =>
-            `${" ".repeat(tabWidth * line.depth)}${line.key != null ? `"${line.key}": ` : ""}${jsonLineValueToString(
-                line
-            )}${line.comma ? "," : ""}`,
-        null: (line) =>
-            `${" ".repeat(tabWidth * line.depth)}${line.key != null ? `"${line.key}": ` : ""}${jsonLineValueToString(
-                line
-            )}${line.comma ? "," : ""}`,
     });
 }
 

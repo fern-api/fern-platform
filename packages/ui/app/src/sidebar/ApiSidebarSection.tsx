@@ -1,12 +1,12 @@
 import { FernRegistry } from "@fern-fern/registry-browser";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { joinUrlSlugs } from "@fern-ui/app-utils";
 import { useCallback, useMemo } from "react";
 import { resolveSubpackage } from "../api-context/ApiDefinitionContextProvider";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { API_ARTIFACTS_TITLE } from "../config";
-import { useNavigationContext } from "../navigation-context";
+import { DocsInfo, NavigateToPathOpts } from "../docs-context/DocsContext";
+import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { ApiPackageSidebarSectionContents } from "./ApiPackageSidebarSectionContents";
 import { NonClickableSidebarGroupTitle } from "./NonClickableSidebarGroupTitle";
 import { SidebarGroup } from "./SidebarGroup";
@@ -16,9 +16,13 @@ export declare namespace ApiSidebarSection {
         slug: string;
         apiSection: FernRegistryDocsRead.ApiSection;
         selectedSlug: string | undefined;
-        registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
+        navigateToPath: (slugWithoutVersion: string, opts?: NavigateToPathOpts | undefined) => void;
+        registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
+        getFullSlug: (slug: string) => string;
         closeMobileSidebar: () => void;
+
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
+        docsInfo: DocsInfo;
         activeTabIndex: number | null;
         resolveApi: (apiId: FernRegistry.ApiDefinitionId) => FernRegistryApiRead.ApiDefinition;
     }
@@ -27,14 +31,16 @@ export declare namespace ApiSidebarSection {
 export const ApiSidebarSection: React.FC<ApiSidebarSection.Props> = ({
     slug,
     selectedSlug,
+    navigateToPath,
     registerScrolledToPathListener,
+    getFullSlug,
     closeMobileSidebar,
     apiSection,
     docsDefinition,
+    docsInfo,
     activeTabIndex,
     resolveApi,
 }) => {
-    const { navigateToPath } = useNavigationContext();
     const apiDefinition = useMemo(() => resolveApi(apiSection.api), [apiSection.api, resolveApi]);
 
     const resolveSubpackageById = useCallback(
@@ -44,19 +50,18 @@ export const ApiSidebarSection: React.FC<ApiSidebarSection.Props> = ({
         [apiDefinition]
     );
     const innerSlug = joinUrlSlugs(slug, "client-libraries");
-    const fullSlug = joinUrlSlugs(innerSlug, "client-libraries");
+    const fullSlug = getFullSlug(joinUrlSlugs(innerSlug, "client-libraries"));
     return (
         <SidebarGroup title={<NonClickableSidebarGroupTitle title={apiSection.title} />} includeTopMargin>
             {apiSection.artifacts != null && areApiArtifactsNonEmpty(apiSection.artifacts) && (
                 <SidebarItem
-                    onClick={() => {
-                        navigateToPath(fullSlug);
-                        closeMobileSidebar();
-                    }}
+                    slug={innerSlug}
                     fullSlug={fullSlug}
                     title={API_ARTIFACTS_TITLE}
+                    navigateToPath={navigateToPath}
                     registerScrolledToPathListener={registerScrolledToPathListener}
                     isSelected={fullSlug === selectedSlug}
+                    closeMobileSidebar={closeMobileSidebar}
                 />
             )}
             <ApiPackageSidebarSectionContents
@@ -64,10 +69,13 @@ export const ApiSidebarSection: React.FC<ApiSidebarSection.Props> = ({
                 slug={slug}
                 // shallow={selectedSlug?.includes(slug) ?? false}
                 selectedSlug={selectedSlug}
+                navigateToPath={navigateToPath}
                 registerScrolledToPathListener={registerScrolledToPathListener}
+                getFullSlug={getFullSlug}
                 closeMobileSidebar={closeMobileSidebar}
                 resolveSubpackageById={resolveSubpackageById}
                 docsDefinition={docsDefinition}
+                docsInfo={docsInfo}
                 activeTabIndex={activeTabIndex}
             />
         </SidebarGroup>

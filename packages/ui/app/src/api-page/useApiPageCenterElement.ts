@@ -1,7 +1,8 @@
 import { useRef } from "react";
 import { useInView } from "react-intersection-observer";
+import { useDocsContext } from "../docs-context/useDocsContext";
+import { useIsSlugSelected } from "../docs-context/useIsSlugSelected";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
-import { useDocsSelectors } from "../selectors/useDocsSelectors";
 
 export declare namespace useApiPageCenterElement {
     export interface Args {
@@ -14,8 +15,8 @@ export declare namespace useApiPageCenterElement {
 }
 
 export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args): useApiPageCenterElement.Return {
-    const { userIsScrolling, onScrollToPath } = useNavigationContext();
-    const { selectedSlug } = useDocsSelectors();
+    const { userIsScrolling } = useNavigationContext();
+    const { onScrollToPath, getFullSlug } = useDocsContext();
 
     const onChangeIsInVerticalCenter = useRef((newIsInVerticalCenter: boolean) => {
         if (newIsInVerticalCenter && userIsScrolling()) {
@@ -23,7 +24,7 @@ export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args):
         }
     });
 
-    const isSelected = selectedSlug === slug;
+    const isSelected = useIsSlugSelected(getFullSlug(slug));
 
     const { ref: setRefForInVerticalCenterIntersectionObserver } = useInView({
         // https://stackoverflow.com/questions/54807535/intersection-observer-api-observe-the-center-of-the-viewport

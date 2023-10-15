@@ -1,27 +1,24 @@
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { DocsNode, isUnversionedUntabbedNavigationConfig, SerializedMdxContent } from "@fern-ui/app-utils";
+import { isUnversionedUntabbedNavigationConfig, type ResolvedUrlPath } from "@fern-ui/app-utils";
 import { useCallback, useMemo } from "react";
 import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
 import { HEADER_HEIGHT } from "../constants";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { MdxContent } from "../mdx/MdxContent";
-import { ResolvedPath } from "../ResolvedPath";
-import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { TableOfContents } from "./TableOfContents";
 
 export declare namespace CustomDocsPage {
     export interface Props {
-        navigatable: DocsNode.Page;
-        serializedMdxContent: SerializedMdxContent | undefined;
-        resolvedPath: ResolvedPath.CustomMarkdownPage;
+        path: ResolvedUrlPath.MdxPage;
     }
 }
 
-export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ navigatable, serializedMdxContent, resolvedPath }) => {
-    const { resolvePage } = useDocsContext();
-    const { activeNavigationConfigContext } = useDocsSelectors();
+export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
+    const { resolvePage, docsInfo } = useDocsContext();
 
-    const page = useMemo(() => resolvePage(resolvedPath.page.id), [resolvedPath.page.id, resolvePage]);
+    const page = useMemo(() => resolvePage(path.page.id), [path.page.id, resolvePage]);
+
+    const { activeNavigationConfig } = docsInfo;
 
     const findTitle = useCallback(
         (navigationItems: FernRegistryDocsRead.NavigationItem[]) => {
@@ -29,21 +26,21 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ navigatable, se
                 if (navigationItem.type !== "section") {
                     continue;
                 }
-                const [sectionSlugInferredFromPath] = navigatable.leadingSlug.split("/");
+                const [sectionSlugInferredFromPath] = path.slug.split("/");
                 if (sectionSlugInferredFromPath != null && navigationItem.urlSlug === sectionSlugInferredFromPath) {
                     return navigationItem.title;
                 }
             }
             return undefined;
         },
-        [navigatable.leadingSlug]
+        [path.slug]
     );
 
     const sectionTitle = useMemo(() => {
-        if (isUnversionedUntabbedNavigationConfig(activeNavigationConfigContext.config)) {
-            return findTitle(activeNavigationConfigContext.config.items);
+        if (isUnversionedUntabbedNavigationConfig(activeNavigationConfig)) {
+            return findTitle(activeNavigationConfig.items);
         } else {
-            for (const tab of activeNavigationConfigContext.config.tabs) {
+            for (const tab of activeNavigationConfig.tabs) {
                 const title = findTitle(tab.items);
                 if (title != null) {
                     return title;
@@ -51,11 +48,11 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ navigatable, se
             }
             return undefined;
         }
-    }, [activeNavigationConfigContext, findTitle]);
+    }, [activeNavigationConfig, findTitle]);
 
     const content = useMemo(() => {
-        return serializedMdxContent != null ? <MdxContent mdx={serializedMdxContent} /> : null;
-    }, [serializedMdxContent]);
+        return <MdxContent mdx={path.serializedMdxContent} />;
+    }, [path]);
 
     return (
         <div className="flex space-x-16 px-6 md:px-12">
@@ -67,7 +64,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ navigatable, se
                 )}
 
                 <div className="text-text-primary-light dark:text-text-primary-dark mb-8 text-3xl font-bold">
-                    {resolvedPath.page.title}
+                    {path.page.title}
                 </div>
                 {content}
                 <BottomNavigationButtons />

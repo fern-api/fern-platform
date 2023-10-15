@@ -1,9 +1,10 @@
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { DocsDefinitionSummary } from "../../../types";
 
-export const DEFINITION_VERSIONED_TABBED: DocsDefinitionSummary = {
+export const DEFINITION_VERSIONED_TABBED: FernRegistryDocsRead.DocsDefinition = {
+    pages: {},
     apis: {},
-    docsConfig: {
+    files: {},
+    config: {
         colorsV3: {
             type: "dark",
             accentPrimary: { r: 0, g: 0, b: 0 },
@@ -177,6 +178,16 @@ export const DEFINITION_VERSIONED_TABBED: DocsDefinitionSummary = {
                     },
                 },
             ],
+        },
+    },
+    search: {
+        type: "singleAlgoliaIndex",
+        value: {
+            type: "unversioned",
+            indexSegment: {
+                id: FernRegistryDocsRead.IndexSegmentId("seg_1"),
+                searchApiKey: "",
+            },
         },
     },
 };

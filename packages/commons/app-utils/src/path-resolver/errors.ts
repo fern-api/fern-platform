@@ -8,9 +8,3 @@ export class PathCollisionError extends Error {
         );
     }
 }
-
-export class ImplementationError extends Error {
-    constructor(message: FullSlug) {
-        super(`Implementation Error: ${message}`);
-    }
-}

@@ -2,23 +2,13 @@ import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/
 import { getEndpointEnvironmentUrl } from "@fern-ui/app-utils";
 import { assertNeverNoThrow, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { noop } from "lodash-es";
-import { JsonLine, jsonLineToString } from "../json-example/jsonLineUtils";
-
-interface CurlParamValuesSymbol {
-    type: "symbol";
-    value: string;
-}
-interface CurlParamValuesJsonLine {
-    type: "jsonLine";
-    value: JsonLine;
-}
-
-export type CurlParamValues = CurlParamValuesSymbol | CurlParamValuesJsonLine;
+import { JsonExampleString } from "../json-example/JsonExampleString";
+import { JsonLine, renderJsonLineValue } from "../json-example/jsonLineUtils";
 
 interface CurlLineParam {
     type: "param";
     paramKey?: string;
-    value?: string | CurlParamValues[];
+    value?: string | JSX.Element;
     doNotStringifyValue?: boolean;
     excludeTrailingBackslash?: boolean;
     excludeIndent?: boolean;
@@ -130,11 +120,15 @@ export function getCurlLines(
                     parts.push({
                         type: "param",
                         paramKey: "--data",
-                        value: [
-                            { type: "symbol", value: "'" },
-                            { type: "jsonLine", value: jsonLines[0] },
-                            { type: "symbol", value: "'" },
-                        ],
+                        value: (
+                            <>
+                                <JsonExampleString value="'" doNotStringify />
+                                <span className="text-text-primary-light dark:text-text-primary-dark">
+                                    {renderJsonLineValue(jsonLines[0])}
+                                </span>
+                                <JsonExampleString value="'" doNotStringify />
+                            </>
+                        ),
                         excludeTrailingBackslash: true,
                         doNotStringifyValue: true,
                     });
@@ -143,14 +137,14 @@ export function getCurlLines(
                         {
                             type: "param",
                             paramKey: "--data",
-                            value: [{ type: "symbol", value: "'" }],
+                            value: <JsonExampleString value="'" doNotStringify />,
                             excludeTrailingBackslash: true,
                             doNotStringifyValue: true,
                         },
                         ...jsonLines.map((line): CurlLine => ({ type: "json", line })),
                         {
                             type: "param",
-                            value: [{ type: "symbol", value: "'" }],
+                            value: <JsonExampleString value="'" doNotStringify />,
                             excludeIndent: true,
                             doNotStringifyValue: true,
                         }
@@ -164,33 +158,4 @@ export function getCurlLines(
     }
 
     return parts;
-}
-
-const CURL_PREFIX = "curl ";
-const CURL_INDENT = " ".repeat(CURL_PREFIX.length);
-
-function curlParameterToString(
-    { excludeIndent, paramKey, doNotStringifyValue, value, excludeTrailingBackslash }: CurlLineParam,
-    index: number,
-    isLast: boolean
-): string {
-    const prefix = index === 0 ? CURL_PREFIX : excludeIndent ? "" : CURL_INDENT;
-
-    return `${prefix}${paramKey != null ? paramKey + " " : ""}${
-        doNotStringifyValue || typeof value !== "string"
-            ? typeof value === "string"
-                ? value
-                : value?.map((v) => (v.type === "symbol" ? v.value : jsonLineToString(v.value)))
-            : JSON.stringify(value)
-    }${excludeTrailingBackslash || isLast ? "" : " \\"}`;
-}
-
-export function curlLinesToString(curlLines: CurlLine[]): string {
-    return curlLines
-        .map((curlLine, index) =>
-            curlLine.type === "param"
-                ? curlParameterToString(curlLine, index, index === curlLines.length - 1)
-                : jsonLineToString(curlLine.line)
-        )
-        .join("\n");
 }

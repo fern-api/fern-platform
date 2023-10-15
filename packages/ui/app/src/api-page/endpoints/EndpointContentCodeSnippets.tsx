@@ -5,7 +5,7 @@ import { memo } from "react";
 import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";
 import type { CodeExampleClient } from "../examples/code-example";
 import { CurlExample } from "../examples/curl-example/CurlExample";
-import { CurlLine, curlLinesToString } from "../examples/curl-example/curlUtils";
+import { CurlLine } from "../examples/curl-example/curlUtils";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { JsonExampleVirtualized } from "../examples/json-example/JsonExample";
 import { JsonLine } from "../examples/json-example/jsonLineUtils";
@@ -53,9 +53,8 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 }}
                 disablePadding={true}
                 copyToClipboardText={() => {
-                    return selectedExampleClient.id === "curl"
-                        ? curlLinesToString(requestCurlLines)
-                        : selectedExampleClient.example;
+                    // TODO
+                    return "";
                 }}
                 actions={
                     availableExampleClients.length > 1 ? (
@@ -85,7 +84,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         language={selectedExampleClient.language}
                         theme={theme}
                         usePlainStyles
-                        style={{ maxHeight: requestHeight - TITLED_EXAMPLE_PADDING }}
+                        style={{ height: requestHeight - TITLED_EXAMPLE_PADDING }}
                     />
                 )}
             </TitledExample>

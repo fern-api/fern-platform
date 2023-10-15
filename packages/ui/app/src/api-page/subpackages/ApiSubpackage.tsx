@@ -21,8 +21,11 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({
     anchorIdParts,
 }) => {
     const { resolveSubpackageById } = useApiDefinitionContext();
+
     const subpackage = resolveSubpackageById(subpackageId);
+
     const { setTargetRef } = useApiPageCenterElement({ slug });
+
     return (
         <>
             <ApiPageMargins>

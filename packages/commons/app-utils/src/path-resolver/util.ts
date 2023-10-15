@@ -1,24 +1,7 @@
-import type { ApiDocsNode, DocsNode, NavigatableDocsNode } from "./types";
+import type { DocsNode, NavigatableDocsNode } from "./types";
 
-export function isApiNode(node: DocsNode): node is ApiDocsNode {
-    return (
-        node.type === "api-section" ||
-        node.type === "api-subpackage" ||
-        node.type === "top-level-endpoint" ||
-        node.type === "endpoint" ||
-        node.type === "top-level-webhook" ||
-        node.type === "webhook"
-    );
-}
-
-export function isNavigatableNode(node: DocsNode): node is NavigatableDocsNode {
-    return (
-        node.type === "top-level-endpoint" ||
-        node.type === "endpoint" ||
-        node.type === "top-level-webhook" ||
-        node.type === "webhook" ||
-        node.type === "page"
-    );
+export function isLeafNode(node: DocsNode): node is NavigatableDocsNode {
+    return node.type === "endpoint" || node.type === "webhook" || node.type === "page";
 }
 
 export function isSectionNode(node: DocsNode | undefined): node is DocsNode.ApiSection | DocsNode.DocsSection {
@@ -31,11 +14,11 @@ export function traversePreOrder(
     slugs: string[] = []
 ): void {
     cb(node, slugs);
-    if (isNavigatableNode(node)) {
+    if (isLeafNode(node)) {
         return;
     }
     for (const childSlug of node.childrenOrdering) {
-        const childNode = node.children[childSlug];
+        const childNode = node.children.get(childSlug);
         if (childNode != null) {
             const nextSlugs = [...slugs];
             if (!isSectionNode(childNode) || !childNode.section.skipUrlSlug) {

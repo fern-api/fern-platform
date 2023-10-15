@@ -1,6 +1,6 @@
-import { PathResolver } from "@fern-ui/app-utils";
 import { GetServerSideProps } from "next";
 import { REGISTRY_SERVICE } from "../../service";
+import { getPathsToRevalidate } from "../../utils/revalidation/getPathsToRevalidate";
 
 function SiteMap(): void {
     // getServerSideProps will do the heavy lifting
@@ -43,14 +43,14 @@ export const getServerSideProps: GetServerSideProps = async ({ params = {}, res 
         };
     }
 
-    const resolver = new PathResolver({
-        definition: {
-            apis: docs.body.definition.apis,
-            docsConfig: docs.body.definition.config,
-        },
+    const paths = getPathsToRevalidate({
+        navigationConfig: docs.body.definition.config.navigation,
+        apis: docs.body.definition.apis,
     });
 
-    const urls = resolver.getAllSlugsWithBaseURL(hostWithoutTrailingSlash);
+    const urls = paths.map((path) => {
+        return `https://${hostWithoutTrailingSlash}${path}`;
+    });
     const sitemap = getSitemapXml(urls);
 
     res.setHeader("Content-Type", "text/xml");

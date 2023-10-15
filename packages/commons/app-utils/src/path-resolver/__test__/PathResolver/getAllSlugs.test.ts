@@ -5,13 +5,12 @@ import { DEFINITION_UNVERSIONED_WITH_SKIPPED_SLUGS } from "./mock-definitions/un
 import { DEFINITION_VERSIONED_TABBED } from "./mock-definitions/versioned-tabbed";
 import { DEFINITION_VERSIONED_UNTABBED } from "./mock-definitions/versioned-untabbed";
 import { DEFINITION_WITH_API } from "./mock-definitions/with-api-definition";
-import { DEFINITION_WITH_POINTS_TO } from "./mock-definitions/with-points-to";
 
 describe("getAllSlugs", () => {
     describe("correctly returns all slugs", () => {
         it("with unversioned and untabbed docs", () => {
             const resolver = new PathResolver({
-                definition: DEFINITION_UNVERSIONED_UNTABBED,
+                docsDefinition: DEFINITION_UNVERSIONED_UNTABBED,
             });
             const expectedSlugs = new Set([
                 "",
@@ -25,7 +24,7 @@ describe("getAllSlugs", () => {
 
         it("with unversioned and tabbed docs", () => {
             const resolver = new PathResolver({
-                definition: DEFINITION_UNVERSIONED_TABBED,
+                docsDefinition: DEFINITION_UNVERSIONED_TABBED,
             });
             const expectedSlugs = new Set([
                 "",
@@ -47,7 +46,7 @@ describe("getAllSlugs", () => {
 
         it("with versioned and untabbed docs", () => {
             const resolver = new PathResolver({
-                definition: DEFINITION_VERSIONED_UNTABBED,
+                docsDefinition: DEFINITION_VERSIONED_UNTABBED,
             });
             const expectedSlugs = new Set([
                 "",
@@ -74,7 +73,7 @@ describe("getAllSlugs", () => {
 
         it("with versioned and tabbed docs", () => {
             const resolver = new PathResolver({
-                definition: DEFINITION_VERSIONED_TABBED,
+                docsDefinition: DEFINITION_VERSIONED_TABBED,
             });
             const expectedSlugs = new Set([
                 "",
@@ -122,7 +121,7 @@ describe("getAllSlugs", () => {
 
         it("with api definition", () => {
             const resolver = new PathResolver({
-                definition: DEFINITION_WITH_API,
+                docsDefinition: DEFINITION_WITH_API,
             });
             const expectedSlugs = new Set([
                 "",
@@ -153,7 +152,7 @@ describe("getAllSlugs", () => {
 
         it("with skipped slugs", () => {
             const resolver = new PathResolver({
-                definition: DEFINITION_UNVERSIONED_WITH_SKIPPED_SLUGS,
+                docsDefinition: DEFINITION_UNVERSIONED_WITH_SKIPPED_SLUGS,
             });
             const expectedSlugs = new Set([
                 "",
@@ -168,24 +167,6 @@ describe("getAllSlugs", () => {
                 "api-reference/agents",
                 "api-reference/agents/create-agent",
                 "api-reference/agents/update-agent",
-            ]);
-            const actualSlugs = new Set(resolver.getAllSlugs());
-            expect(actualSlugs).toEqual(expectedSlugs);
-        });
-
-        it("with the 'pointsTo' option", () => {
-            const resolver = new PathResolver({
-                definition: DEFINITION_WITH_POINTS_TO,
-            });
-            const expectedSlugs = new Set([
-                "",
-                "introduction",
-                "introduction/authentication",
-                "introduction/getting-started",
-                "api-reference",
-                "api-reference/new-sub",
-                "api-reference/new-sub/create-agent",
-                "api-reference/new-sub/update-agent",
             ]);
             const actualSlugs = new Set(resolver.getAllSlugs());
             expect(actualSlugs).toEqual(expectedSlugs);

@@ -4,10 +4,6 @@ export function expectDocsSectionNode(node: DocsNode | undefined): asserts node 
     expectNode(node).toBeOfType("docs-section");
 }
 
-export function expectTopLevelEndpointNode(node: DocsNode | undefined): asserts node is DocsNode.TopLevelEndpoint {
-    expectNode(node).toBeOfType("top-level-endpoint");
-}
-
 export function expectEndpointNode(node: DocsNode | undefined): asserts node is DocsNode.Endpoint {
     expectNode(node).toBeOfType("endpoint");
 }

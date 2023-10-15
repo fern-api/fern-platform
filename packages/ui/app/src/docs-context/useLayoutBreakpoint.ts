@@ -1,18 +1,11 @@
-import { PropsWithChildren, useEffect, useState } from "react";
-import { ViewportContext } from "./ViewportContext";
+import { useLayoutEffect, useState } from "react";
 
-export const ViewportContextProvider: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
+export function useLayoutBreakpoint(): "sm" | "md" | "lg" {
     const [layoutBreakpoint, setBreakpoint] = useState<"sm" | "md" | "lg">("lg");
-    const [viewportSize, setViewportSize] = useState<{ height: number; width: number }>({ height: 0, width: 0 });
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (typeof window !== "undefined") {
             const handleResize = () => {
-                setViewportSize({
-                    height: window.innerHeight,
-                    width: window.innerWidth,
-                });
-
                 if (window.innerWidth < 768) {
                     setBreakpoint("sm");
                 } else if (window.innerWidth < 1024) {
@@ -25,6 +18,7 @@ export const ViewportContextProvider: React.FC<PropsWithChildren<unknown>> = ({ 
             window.addEventListener("resize", handleResize);
 
             handleResize();
+
             return () => {
                 window.removeEventListener("resize", handleResize);
             };
@@ -32,5 +26,5 @@ export const ViewportContextProvider: React.FC<PropsWithChildren<unknown>> = ({ 
         return;
     }, []);
 
-    return <ViewportContext.Provider value={{ layoutBreakpoint, viewportSize }}>{children}</ViewportContext.Provider>;
-};
+    return layoutBreakpoint;
+}

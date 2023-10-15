@@ -11,13 +11,12 @@ import { DEFINITION_VERSIONED_WITH_SKIPPED_SLUGS } from "./mock-definitions/vers
 import { DEFINITION_WITH_API } from "./mock-definitions/with-api-definition";
 import { DEFINITION_WITH_COLLIDING_SLUGS } from "./mock-definitions/with-colliding-slugs";
 import { DEFINITION_WITH_COLLIDING_SLUGS_2 } from "./mock-definitions/with-colliding-slugs-2";
-import { DEFINITION_WITH_POINTS_TO } from "./mock-definitions/with-points-to";
 
 describe("resolveSlug", () => {
     describe("resolves invalid slug to undefined", () => {
         it("with versioned and untabbed docs", () => {
             const resolver = new PathResolver({
-                definition: DEFINITION_VERSIONED_UNTABBED,
+                docsDefinition: DEFINITION_VERSIONED_UNTABBED,
             });
             const resolvedNode = resolver.resolveSlug("abc");
             expect(resolvedNode).toBeUndefined();
@@ -27,7 +26,7 @@ describe("resolveSlug", () => {
     describe("resolves slug to the correct node", () => {
         it("with unversioned and untabbed docs", () => {
             const resolver = new PathResolver({
-                definition: DEFINITION_UNVERSIONED_UNTABBED,
+                docsDefinition: DEFINITION_UNVERSIONED_UNTABBED,
             });
             const resolvedNode = resolver.resolveSlug("introduction");
             expectDocsSectionNode(resolvedNode);
@@ -35,7 +34,7 @@ describe("resolveSlug", () => {
 
         it("with unversioned and tabbed docs", () => {
             const resolver = new PathResolver({
-                definition: DEFINITION_UNVERSIONED_TABBED,
+                docsDefinition: DEFINITION_UNVERSIONED_TABBED,
             });
             const resolvedNode = resolver.resolveSlug("help-center/documents/deleting-documents");
             expectPageNode(resolvedNode);
@@ -43,7 +42,7 @@ describe("resolveSlug", () => {
 
         it("with versioned and untabbed docs", () => {
             const resolver = new PathResolver({
-                definition: DEFINITION_VERSIONED_UNTABBED,
+                docsDefinition: DEFINITION_VERSIONED_UNTABBED,
             });
             const tuples: [FullSlug, DocsNodeType][] = [
                 ["v2/introduction/changelog", "page"],
@@ -58,7 +57,7 @@ describe("resolveSlug", () => {
 
         it("with versioned and tabbed docs", () => {
             const resolver = new PathResolver({
-                definition: DEFINITION_VERSIONED_TABBED,
+                docsDefinition: DEFINITION_VERSIONED_TABBED,
             });
             const tuples: [FullSlug, DocsNodeType][] = [
                 ["v2/help-center/documents/deleting-documents", "page"],
@@ -73,16 +72,16 @@ describe("resolveSlug", () => {
 
         it("with api definition", () => {
             const resolver = new PathResolver({
-                definition: DEFINITION_WITH_API,
+                docsDefinition: DEFINITION_WITH_API,
             });
             const resolvedNode = resolver.resolveSlug("api-reference/client-api/generate-completion");
-            expectNode(resolvedNode).toBeOfType("top-level-endpoint");
+            expectNode(resolvedNode).toBeOfType("endpoint");
         });
 
         describe("with skipped slugs", () => {
             it("case 1: unversioned", () => {
                 const resolver = new PathResolver({
-                    definition: DEFINITION_UNVERSIONED_WITH_SKIPPED_SLUGS,
+                    docsDefinition: DEFINITION_UNVERSIONED_WITH_SKIPPED_SLUGS,
                 });
                 const tuples: [FullSlug, DocsNodeType | undefined][] = [
                     ["help-center", "tab"],
@@ -90,7 +89,7 @@ describe("resolveSlug", () => {
                     ["help-center/documents/uploading-documents", undefined],
                     ["help-center/uploading-documents", "page"],
                     ["api-reference/api-reference/generate-completion", undefined],
-                    ["api-reference/generate-completion", "top-level-endpoint"],
+                    ["api-reference/generate-completion", "endpoint"],
                 ];
                 tuples.forEach(([slug, type]) => {
                     const resolvedNode = resolver.resolveSlug(slug);
@@ -100,7 +99,7 @@ describe("resolveSlug", () => {
 
             it("case 2: versioned", () => {
                 const resolver = new PathResolver({
-                    definition: DEFINITION_VERSIONED_WITH_SKIPPED_SLUGS,
+                    docsDefinition: DEFINITION_VERSIONED_WITH_SKIPPED_SLUGS,
                 });
                 const tuples: [FullSlug, DocsNodeType | undefined][] = [
                     ["v2", "version"],
@@ -121,21 +120,10 @@ describe("resolveSlug", () => {
             });
         });
 
-        it("with the 'pointsTo' option", () => {
-            const resolver = new PathResolver({
-                definition: DEFINITION_WITH_POINTS_TO,
-            });
-            const nodeForOldSub = resolver.resolveSlug("api-reference/old-sub");
-            expectNode(nodeForOldSub).toBeOfType(undefined);
-
-            const nodeForNewSub = resolver.resolveSlug("api-reference/new-sub");
-            expectNode(nodeForNewSub).toBeOfType("api-subpackage");
-        });
-
         describe("with collisions", () => {
             it("case 1", () => {
                 const resolver = new PathResolver({
-                    definition: DEFINITION_WITH_COLLIDING_SLUGS,
+                    docsDefinition: DEFINITION_WITH_COLLIDING_SLUGS,
                 });
                 expect(() => resolver.resolveSlug("v1")).toThrow(PathCollisionError);
                 expect(() => resolver.resolveSlug("v1/introduction")).toThrow(PathCollisionError);
@@ -144,7 +132,7 @@ describe("resolveSlug", () => {
 
             it("case 2", () => {
                 const resolver = new PathResolver({
-                    definition: DEFINITION_WITH_COLLIDING_SLUGS_2,
+                    docsDefinition: DEFINITION_WITH_COLLIDING_SLUGS_2,
                 });
                 expect(() => resolver.resolveSlug("v1")).toThrow();
                 const node1 = resolver.resolveSlug("v1/welcome/getting-started");

@@ -1,20 +1,21 @@
 import { Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
-import { DocsNode, getFullSlugForNavigatable } from "@fern-ui/app-utils";
+import { type ResolvedUrlPath } from "@fern-ui/app-utils";
 import { assertNever } from "@fern-ui/core-utils";
 import Link from "next/link";
 import { useCallback, useMemo } from "react";
-import { useNavigationContext } from "../navigation-context";
+import { useDocsContext } from "../docs-context/useDocsContext";
 
 export declare namespace BottomNavigationButton {
     export interface Props {
-        docsNode: DocsNode;
+        path: ResolvedUrlPath;
         direction: "previous" | "next";
     }
 }
 
-export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({ docsNode, direction }) => {
-    const { navigateToPath, resolver } = useNavigationContext();
+export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({ path, direction }) => {
+    const { navigateToPath, getFullSlug } = useDocsContext();
+
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
     const visitDirection = <T extends unknown>({ previous, next }: { previous: T; next: T }): T => {
         switch (direction) {
@@ -27,58 +28,47 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
         }
     };
 
-    const navigatable = useMemo(() => resolver.resolveNavigatable(docsNode), [resolver, docsNode]);
-
     const iconName = visitDirection({
         previous: IconNames.CHEVRON_LEFT,
         next: IconNames.CHEVRON_RIGHT,
     });
-
     const iconElement = <Icon icon={iconName} />;
 
     const onClick = useCallback(() => {
-        if (navigatable != null) {
-            const fullSlug = getFullSlugForNavigatable(navigatable, { omitDefault: true });
-            navigateToPath(fullSlug);
-        }
-    }, [navigateToPath, navigatable]);
+        navigateToPath(path.slug);
+    }, [navigateToPath, path.slug]);
 
     const text = useMemo(() => {
-        switch (docsNode.type) {
-            case "docs-section":
-            case "api-section":
-            case "api-subpackage":
-                return docsNode.section.title;
-            case "page":
-                return docsNode.page.title;
-            case "top-level-endpoint":
+        switch (path.type) {
+            case "section":
+                return path.section.title;
+            case "mdx-page":
+                return path.page.title;
+            case "api":
+            case "clientLibraries":
+            case "apiSubpackage":
             case "endpoint":
-                return docsNode.endpoint.name;
-            case "top-level-webhook":
+            case "topLevelEndpoint":
+                return path.apiSection.title;
             case "webhook":
-                return docsNode.webhook.name;
+            case "topLevelWebhook":
+                return path.apiSection.title;
             default:
-                return undefined;
+                assertNever(path);
         }
-    }, [docsNode]);
-
-    if (navigatable == null) {
-        return null;
-    }
-
-    const fullSlug = getFullSlugForNavigatable(navigatable, { omitDefault: true });
+    }, [path]);
 
     return (
         <Link
             className="!text-accent-primary/80 hover:!text-accent-primary flex cursor-pointer items-center gap-2 rounded !no-underline transition"
             onClick={onClick}
-            href={`/${fullSlug}`}
+            href={`/${getFullSlug(path.slug)}`}
         >
             {visitDirection({
                 previous: iconElement,
                 next: null,
             })}
-            <div className="font-medium">{text ?? "Unknown"}</div>
+            <div className="font-medium">{text}</div>
             {visitDirection({
                 previous: null,
                 next: iconElement,
