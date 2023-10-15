@@ -1,6 +1,6 @@
 import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { DocsNode, NodeDocsContext, TabInfo, VersionInfo, DocsDefinitionSummary } from "./types";
+import { DocsDefinitionSummary, DocsNode, NodeDocsContext, TabInfo, VersionInfo } from "./types";
 
 export class NodeFactory {
     public static createRoot(definition: DocsDefinitionSummary): DocsNode.Root {
