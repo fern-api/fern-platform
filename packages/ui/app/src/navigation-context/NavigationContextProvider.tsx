@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { type ResolvedPath } from "../ResolvedPath";
 import { getRouteNode } from "../util/anchor";
+import { getRouteForResolvedPath } from "./getRouteForResolvedPath";
 import { NavigationContext } from "./NavigationContext";
 import { useSlugListeners } from "./useSlugListeners";
 
@@ -23,7 +24,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 }) => {
     const router = useRouter();
     const userIsScrolling = useRef(false);
-    const resolvedRoute = `/${resolvedPath.fullSlug}`;
+    const resolvedRoute = getRouteForResolvedPath({ resolvedSlug: resolvedPath.fullSlug, asPath: router.asPath });
     const justNavigatedTo = useRef<string | undefined>(resolvedRoute);
     const { value: hasInitialized, setTrue: markAsInitialized } = useBooleanState(false);
     const resolver = useMemo(() => new PathResolver({ docsDefinition }), [docsDefinition]);
