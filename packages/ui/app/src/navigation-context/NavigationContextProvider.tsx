@@ -17,6 +17,14 @@ export declare namespace NavigationContextProvider {
     }>;
 }
 
+function shouldSmoothScroll(beforeRoute: string | undefined, afterRoute: string): boolean {
+    const [afterRouteBase, afterRouteAnchor] = afterRoute.split("#");
+    if (beforeRoute == null || afterRouteBase == null || afterRouteAnchor == null) {
+        return false;
+    }
+    return beforeRoute.startsWith(afterRouteBase);
+}
+
 export const NavigationContextProvider: React.FC<NavigationContextProvider.Props> = ({
     docsDefinition,
     resolvedPath,
@@ -54,10 +62,12 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     const selectedSlug = getFullSlugForNavigatable(activeNavigatable, { omitDefault: true });
 
-    const navigateToRoute = useRef((route: string) => {
+    const navigateToRoute = useRef((route: string, disableSmooth = false) => {
         if (!userIsScrolling.current) {
             const node = getRouteNode(route);
-            node?.scrollIntoView();
+            node?.scrollIntoView({
+                behavior: shouldSmoothScroll(resolvedRoute, route) && !disableSmooth ? "smooth" : "auto",
+            });
             justNavigatedTo.current = route;
         }
     });
@@ -101,7 +111,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const observeDocContent = useCallback((element: HTMLDivElement) => {
         const handleNavigate = () => {
             if (justNavigatedTo.current != null) {
-                navigateToRoute.current(justNavigatedTo.current);
+                navigateToRoute.current(justNavigatedTo.current, true);
             }
         };
         if (element != null) {
