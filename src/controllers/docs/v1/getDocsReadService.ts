@@ -53,7 +53,6 @@ export async function getDocsForDomain({
             docsV2 != null
                 ? {
                       algoliaIndex: docsV2.algoliaIndex ?? undefined,
-                      apiId: docsV2.apiName,
                       orgId: docsV2.orgID,
                       docsDefinition: migrateDocsDbDefinition(readBuffer(docsV2.docsDefinition)),
                       docsConfigInstanceId: docsV2.docsConfigInstanceId,

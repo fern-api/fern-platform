@@ -47,11 +47,11 @@ export function createMockDocs({
         path,
         indexSegmentIds,
         algoliaIndex: null,
-        apiName: "",
         docsDefinition: Buffer.from("nil"),
         orgID: "",
         updatedTime: new Date(),
         docsConfigInstanceId: "123",
+        isPreview: false,
     };
 }
 

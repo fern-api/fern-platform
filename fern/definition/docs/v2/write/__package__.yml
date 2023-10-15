@@ -22,7 +22,9 @@ service:
               docs: A `buildwithfern.com` url
             customDomains: list<string>
             orgId: rootCommons.OrgId
-            apiId: rootCommons.ApiId
+            apiId:
+              type: rootCommons.ApiId
+              availability: deprecated
             filepaths:
               type: list<v1DocsWrite.FilePath>
               docs: Relative filepath from docs folder.
@@ -30,7 +32,22 @@ service:
       errors:
         - InvalidDomainError
         - InvalidCustomDomainError
-
+    
+    startDocsPreviewRegister: 
+      auth: true
+      path: /preview/init
+      request: 
+        name: StartDocsPreviewRegisterRequestV2
+        body: 
+          properties: 
+            orgId: rootCommons.OrgId
+            filepaths:
+              type: list<v1DocsWrite.FilePath>
+              docs: Relative filepath from docs folder.
+      response: StartDocsPreviewRegisterResponse
+      errors:
+        - InvalidDomainError
+            
     finishDocsRegister:
       auth: true
       method: POST
@@ -47,6 +64,11 @@ service:
         - rootCommons.UserNotInOrgError
         - v1DocsWrite.DocsRegistrationIdNotFound
 types:
+  StartDocsPreviewRegisterResponse:
+    extends: v1DocsWrite.StartDocsRegisterResponse   
+    properties: 
+      previewUrl: string
+
   InvalidDomainErrorBody:
     properties:
       requiredDomainSuffix:

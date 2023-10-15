@@ -11,9 +11,9 @@ const DOCS_REGISTRATIONS: Record<DocsV1Write.DocsRegistrationId, DocsRegistratio
 export interface DocsRegistrationInfo {
     fernDomain: string;
     customDomains: ParsedCustomDomain[];
-    apiId: FdrAPI.ApiId;
     orgId: FdrAPI.OrgId;
     s3FileInfos: Record<DocsV1Write.FilePath, S3FileInfo>;
+    isPreview: boolean;
 }
 
 function validateDocsDomain({ app, domain }: { app: FdrApplication; domain: string }): string {
@@ -72,8 +72,8 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 fernDomain: domain,
                 customDomains,
                 orgId: req.body.orgId,
-                apiId: req.body.apiId,
                 s3FileInfos,
+                isPreview: false,
             };
             return res.send({
                 docsRegistrationId,
@@ -82,6 +82,34 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                         return [filepath, fileInfo.presignedUrl];
                     })
                 ),
+            });
+        },
+        startDocsPreviewRegister: async (req, res) => {
+            await app.services.auth.checkUserBelongsToOrg({
+                authHeader: req.headers.authorization,
+                orgId: req.body.orgId,
+            });
+            const docsRegistrationId = uuidv4();
+            const fernDomain = `${req.body.orgId}-preview-${docsRegistrationId}.${app.config.domainSuffix}`;
+            const s3FileInfos = await app.services.s3.getPresignedUploadUrls({
+                domain: fernDomain,
+                filepaths: req.body.filepaths,
+            });
+            DOCS_REGISTRATIONS[docsRegistrationId] = {
+                fernDomain,
+                customDomains: [],
+                orgId: req.body.orgId,
+                s3FileInfos,
+                isPreview: true,
+            };
+            return res.send({
+                docsRegistrationId,
+                uploadUrls: Object.fromEntries(
+                    Object.entries(s3FileInfos).map(([filepath, fileInfo]) => {
+                        return [filepath, fileInfo.presignedUrl];
+                    })
+                ),
+                previewUrl: `https://${fernDomain}`,
             });
         },
         finishDocsRegister: async (req, res) => {

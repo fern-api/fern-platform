@@ -29,7 +29,6 @@ model Docs {
 
 model DocsV2 {
   orgID                String
-  apiName              String
   updatedTime          DateTime @updatedAt
   domain               String
   path                 String
@@ -37,6 +36,7 @@ model DocsV2 {
   docsDefinition       Bytes
   indexSegmentIds      Json?
   docsConfigInstanceId String?
+  isPreview            Boolean  @default(false)
 
   @@id([domain, path])
 }

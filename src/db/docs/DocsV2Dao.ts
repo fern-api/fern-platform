@@ -13,7 +13,6 @@ export interface StoreDocsDefinitionResponse {
 
 export interface LoadDocsDefinitionByUrlResponse {
     orgId: string;
-    apiId: string;
     domain: string;
     path: string;
     algoliaIndex: string | undefined;
@@ -63,7 +62,6 @@ export class DocsV2DaoImpl implements DocsV2Dao {
         }
         return {
             algoliaIndex: docsDomain.algoliaIndex ?? undefined,
-            apiId: docsDomain.apiName,
             orgId: docsDomain.orgID,
             docsDefinition: migrateDocsDbDefinition(readBuffer(docsDomain.docsDefinition)),
             docsConfigInstanceId: docsDomain.docsConfigInstanceId,
@@ -134,10 +132,10 @@ export class DocsV2DaoImpl implements DocsV2Dao {
                 instanceId,
                 domain: docsRegistrationInfo.fernDomain,
                 path: "",
-                apiId: docsRegistrationInfo.apiId,
                 orgId: docsRegistrationInfo.orgId,
                 bufferDocsDefinition,
                 indexSegmentIds,
+                isPreview: docsRegistrationInfo.isPreview,
             });
 
             // Step 5: Upsert custom domains with the docs definition + algolia index
@@ -147,10 +145,10 @@ export class DocsV2DaoImpl implements DocsV2Dao {
                     instanceId,
                     domain: customDomain.hostname,
                     path: customDomain.path,
-                    apiId: docsRegistrationInfo.apiId,
                     orgId: docsRegistrationInfo.orgId,
                     bufferDocsDefinition,
                     indexSegmentIds,
+                    isPreview: docsRegistrationInfo.isPreview,
                 });
             }
 
@@ -172,18 +170,18 @@ async function createOrUpdateDocsDefinition({
     bufferDocsDefinition,
     domain,
     path,
-    apiId,
     orgId,
     indexSegmentIds,
+    isPreview,
 }: {
     tx: PrismaTransaction;
     instanceId: string;
     bufferDocsDefinition: Buffer;
     domain: string;
     path: string;
-    apiId: string;
     orgId: string;
     indexSegmentIds: IndexSegmentIds;
+    isPreview: boolean;
 }): Promise<void> {
     await tx.docsV2.upsert({
         where: {
@@ -196,17 +194,17 @@ async function createOrUpdateDocsDefinition({
             docsDefinition: bufferDocsDefinition,
             domain,
             path,
-            apiName: apiId,
             orgID: orgId,
             docsConfigInstanceId: instanceId,
             algoliaIndex: null,
+            isPreview,
         },
         update: {
             docsDefinition: bufferDocsDefinition,
-            apiName: apiId,
             orgID: orgId,
             docsConfigInstanceId: instanceId,
             indexSegmentIds,
+            isPreview,
         },
     });
 }
