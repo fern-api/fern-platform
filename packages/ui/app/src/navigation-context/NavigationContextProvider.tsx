@@ -17,14 +17,6 @@ export declare namespace NavigationContextProvider {
     }>;
 }
 
-function shouldSmoothScroll(beforeRoute: string | undefined, afterRoute: string): boolean {
-    const [afterRouteBase, afterRouteAnchor] = afterRoute.split("#");
-    if (beforeRoute == null || afterRouteBase == null || afterRouteAnchor == null) {
-        return false;
-    }
-    return beforeRoute.startsWith(afterRouteBase);
-}
-
 export const NavigationContextProvider: React.FC<NavigationContextProvider.Props> = ({
     docsDefinition,
     resolvedPath,
@@ -66,7 +58,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         if (!userIsScrolling.current) {
             const node = getRouteNode(route);
             node?.scrollIntoView({
-                behavior: shouldSmoothScroll(resolvedRoute, route) && !disableSmooth ? "smooth" : "auto",
+                behavior: route.includes("#") && !disableSmooth ? "smooth" : "auto",
             });
             justNavigatedTo.current = route;
         }
