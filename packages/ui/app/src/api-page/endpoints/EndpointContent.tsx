@@ -1,11 +1,11 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import { useLayoutBreakpoint } from "@fern-ui/react-commons";
 import classNames from "classnames";
-import React, { useCallback, useLayoutEffect, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { HEADER_HEIGHT } from "../../constants";
 import { useDocsContext } from "../../docs-context/useDocsContext";
+import { useViewportContext } from "../../viewport-context/useViewportContext";
 import { type CodeExampleClient } from "../examples/code-example";
 import { getCurlLines } from "../examples/curl-example/curlUtils";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
@@ -68,7 +68,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     anchorIdParts,
     route,
 }) => {
-    const layoutBreakpoint = useLayoutBreakpoint();
+    const { layoutBreakpoint, viewportSize } = useViewportContext();
     const [isInViewport, setIsInViewport] = useState(false);
     const { ref: containerRef } = useInView({
         onChange: setIsInViewport,
@@ -129,10 +129,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     const jsonLines = useMemo(() => flattenJsonToLines(example?.responseBody), [example?.responseBody]);
 
-    const calculateEndpointHeights = useCallback((): [number, number] => {
-        if (typeof window === "undefined") {
-            return [0, 0];
-        }
+    const [requestHeight, responseHeight] = useMemo((): [number, number] => {
         if (layoutBreakpoint !== "lg") {
             const requestLines = Math.min(MOBILE_MAX_LINES + 0.5, selectedExampleClientLineCount);
             const responseLines = Math.min(MOBILE_MAX_LINES + 0.5, jsonLines.length);
@@ -142,7 +139,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         }
         const maxRequestContainerHeight = selectedExampleClientLineCount * LINE_HEIGHT + CONTENT_PADDING;
         const maxResponseContainerHeight = jsonLines.length * LINE_HEIGHT + CONTENT_PADDING;
-        const containerHeight = window.innerHeight - HEADER_HEIGHT - PADDING_TOP - PADDING_BOTTOM;
+        const containerHeight = viewportSize.height - HEADER_HEIGHT - PADDING_TOP - PADDING_BOTTOM;
         const halfContainerHeight = (containerHeight - GAP_6) / 2;
         if (example?.responseBody == null) {
             return [Math.min(maxRequestContainerHeight, containerHeight), 0];
@@ -160,25 +157,13 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         } else {
             return [0, 0];
         }
-    }, [selectedExampleClientLineCount, example?.responseBody, jsonLines.length, layoutBreakpoint]);
-
-    const [[requestHeight, responseHeight], setExampleHeights] = useState<[number, number]>([0, 0]);
-
-    useLayoutEffect(() => {
-        if (typeof window !== "undefined") {
-            const handleResize = () => {
-                setExampleHeights(calculateEndpointHeights());
-            };
-
-            window.addEventListener("resize", handleResize);
-
-            handleResize();
-            return () => {
-                window.removeEventListener("resize", handleResize);
-            };
-        }
-        return;
-    }, [calculateEndpointHeights]);
+    }, [
+        layoutBreakpoint,
+        selectedExampleClientLineCount,
+        jsonLines.length,
+        viewportSize.height,
+        example?.responseBody,
+    ]);
 
     const exampleHeight = requestHeight + responseHeight + GAP_6 + 70;
 
