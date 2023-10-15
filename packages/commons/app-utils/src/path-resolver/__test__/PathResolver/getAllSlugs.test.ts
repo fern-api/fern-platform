@@ -11,7 +11,7 @@ describe("getAllSlugs", () => {
     describe("correctly returns all slugs", () => {
         it("with unversioned and untabbed docs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_UNVERSIONED_UNTABBED,
+                definition: DEFINITION_UNVERSIONED_UNTABBED,
             });
             const expectedSlugs = new Set([
                 "",
@@ -25,7 +25,7 @@ describe("getAllSlugs", () => {
 
         it("with unversioned and tabbed docs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_UNVERSIONED_TABBED,
+                definition: DEFINITION_UNVERSIONED_TABBED,
             });
             const expectedSlugs = new Set([
                 "",
@@ -47,7 +47,7 @@ describe("getAllSlugs", () => {
 
         it("with versioned and untabbed docs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_VERSIONED_UNTABBED,
+                definition: DEFINITION_VERSIONED_UNTABBED,
             });
             const expectedSlugs = new Set([
                 "",
@@ -74,7 +74,7 @@ describe("getAllSlugs", () => {
 
         it("with versioned and tabbed docs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_VERSIONED_TABBED,
+                definition: DEFINITION_VERSIONED_TABBED,
             });
             const expectedSlugs = new Set([
                 "",
@@ -122,7 +122,7 @@ describe("getAllSlugs", () => {
 
         it("with api definition", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_WITH_API,
+                definition: DEFINITION_WITH_API,
             });
             const expectedSlugs = new Set([
                 "",
@@ -153,7 +153,7 @@ describe("getAllSlugs", () => {
 
         it("with skipped slugs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_UNVERSIONED_WITH_SKIPPED_SLUGS,
+                definition: DEFINITION_UNVERSIONED_WITH_SKIPPED_SLUGS,
             });
             const expectedSlugs = new Set([
                 "",
@@ -175,7 +175,7 @@ describe("getAllSlugs", () => {
 
         it("with the 'pointsTo' option", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_WITH_POINTS_TO,
+                definition: DEFINITION_WITH_POINTS_TO,
             });
             const expectedSlugs = new Set([
                 "",

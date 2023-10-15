@@ -7,7 +7,7 @@ describe("getNeighbors", () => {
     describe("finds the correct neighbors", () => {
         it("with unversioned and untabbed docs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_UNVERSIONED_UNTABBED,
+                definition: DEFINITION_UNVERSIONED_UNTABBED,
             });
             const navigatable1 = resolver.resolveSlug("introduction/getting-started");
             const navigatable2 = resolver.resolveSlug("introduction/authentication");
@@ -25,7 +25,7 @@ describe("getNeighbors", () => {
 
         it("with unversioned and tabbed docs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_UNVERSIONED_TABBED,
+                definition: DEFINITION_UNVERSIONED_TABBED,
             });
             const navigatable0 = resolver.resolveSlug("welcome/introduction/authentication");
             const navigatable1 = resolver.resolveSlug("welcome/advanced-concepts/streaming");

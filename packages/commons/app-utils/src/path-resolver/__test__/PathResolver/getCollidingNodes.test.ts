@@ -13,49 +13,49 @@ describe("getAllSlugs", () => {
     describe("correctly finds no collisions", () => {
         it("with unversioned and untabbed docs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_UNVERSIONED_UNTABBED,
+                definition: DEFINITION_UNVERSIONED_UNTABBED,
             });
             expect(resolver.getCollisions().size).toEqual(0);
         });
 
         it("with unversioned and tabbed docs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_UNVERSIONED_TABBED,
+                definition: DEFINITION_UNVERSIONED_TABBED,
             });
             expect(resolver.getCollisions().size).toEqual(0);
         });
 
         it("with versioned and untabbed docs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_VERSIONED_UNTABBED,
+                definition: DEFINITION_VERSIONED_UNTABBED,
             });
             expect(resolver.getCollisions().size).toEqual(0);
         });
 
         it("with versioned and tabbed docs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_VERSIONED_TABBED,
+                definition: DEFINITION_VERSIONED_TABBED,
             });
             expect(resolver.getCollisions().size).toEqual(0);
         });
 
         it("with api definition", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_WITH_API,
+                definition: DEFINITION_WITH_API,
             });
             expect(resolver.getCollisions().size).toEqual(0);
         });
 
         it("with skipped slugs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_UNVERSIONED_WITH_SKIPPED_SLUGS,
+                definition: DEFINITION_UNVERSIONED_WITH_SKIPPED_SLUGS,
             });
             expect(resolver.getCollisions().size).toEqual(0);
         });
 
         it("with the 'pointsTo' option", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_WITH_POINTS_TO,
+                definition: DEFINITION_WITH_POINTS_TO,
             });
             expect(resolver.getCollisions().size).toEqual(0);
         });
@@ -64,7 +64,7 @@ describe("getAllSlugs", () => {
     describe("correctly finds all collisions", () => {
         it("with colliding slugs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_WITH_COLLIDING_SLUGS,
+                definition: DEFINITION_WITH_COLLIDING_SLUGS,
             });
             type SlugNodeListTuple = [string, DocsNodeType[]];
             const expectedCollisions: SlugNodeListTuple[] = [

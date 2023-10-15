@@ -27,7 +27,16 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const resolvedRoute = getRouteForResolvedPath({ resolvedSlug: resolvedPath.fullSlug, asPath: router.asPath });
     const justNavigatedTo = useRef<string | undefined>(resolvedRoute);
     const { value: hasInitialized, setTrue: markAsInitialized } = useBooleanState(false);
-    const resolver = useMemo(() => new PathResolver({ docsDefinition }), [docsDefinition]);
+    const resolver = useMemo(
+        () =>
+            new PathResolver({
+                definition: {
+                    apis: docsDefinition.apis,
+                    docsConfig: docsDefinition.config,
+                },
+            }),
+        [docsDefinition]
+    );
 
     const resolvedNavigatable = useMemo(() => {
         const node = resolver.resolveNavigatable(resolvedPath.fullSlug);

@@ -80,7 +80,12 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
     const typographyConfig = loadDocTypography(docsDefinition);
     const typographyStyleSheet = generateFontFaces(typographyConfig);
     const backgroundImageStyleSheet = loadDocsBackgroundImage(docsDefinition);
-    const resolver = new PathResolver({ docsDefinition });
+    const resolver = new PathResolver({
+        definition: {
+            apis: docs.body.definition.apis,
+            docsConfig: docs.body.definition.config,
+        },
+    });
     const slug = getSlugFromUrl({ pathname, basePath: docs.body.baseUrl.basePath });
     const resolvedNavigatable = resolver.resolveNavigatable(slug);
 

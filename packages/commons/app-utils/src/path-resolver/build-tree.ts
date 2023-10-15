@@ -3,7 +3,14 @@ import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/reso
 import { isUnversionedTabbedNavigationConfig, isVersionedNavigationConfig } from "../fern";
 import { joinUrlSlugs } from "../slug";
 import { NodeFactory } from "./node-factory";
-import type { ChildDocsNode, DocsNode, ItemSlug, NodeDocsContext, ParentDocsNode } from "./types";
+import type {
+    ChildDocsNode,
+    DocsDefinitionSummary,
+    DocsNode,
+    ItemSlug,
+    NodeDocsContext,
+    ParentDocsNode,
+} from "./types";
 
 type BuildContext =
     | {
@@ -19,10 +26,10 @@ type BuildContext =
           navigationConfig: FernRegistryDocsRead.UnversionedTabbedNavigationConfig;
       };
 
-export function buildDefinitionTree(definition: FernRegistryDocsRead.DocsDefinition): DocsNode.Root {
+export function buildDefinitionTree(definition: DocsDefinitionSummary): DocsNode.Root {
     const root = NodeFactory.createRoot(definition);
 
-    const rootNavigationConfig = definition.config.navigation;
+    const rootNavigationConfig = definition.docsConfig.navigation;
 
     if (isVersionedNavigationConfig(rootNavigationConfig)) {
         rootNavigationConfig.versions.forEach((version, versionIndex) => {

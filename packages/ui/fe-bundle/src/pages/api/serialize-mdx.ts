@@ -87,7 +87,12 @@ const handler: NextApiHandler = async (req, res: NextApiResponse<Response>) => {
 
         const docsDefinition = docs.body.definition;
 
-        const resolver = new PathResolver({ docsDefinition });
+        const resolver = new PathResolver({
+            definition: {
+                apis: docsDefinition.apis,
+                docsConfig: docsDefinition.config,
+            },
+        });
 
         const results: Result[] = await Promise.all(
             fullSlugs.map(async (fullSlug) => {

@@ -1,6 +1,11 @@
 import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 
+export interface DocsDefinitionSummary {
+    docsConfig: FernRegistryDocsRead.DocsConfig;
+    apis: Record<FernRegistryApiRead.ApiDefinition["id"], FernRegistryApiRead.ApiDefinition>;
+}
+
 /**
  * Represents a slug part like `getting-started` with no leading `"/"`
  */
@@ -101,12 +106,12 @@ export interface VersionInfo {
 export declare namespace DefinitionInfo {
     export interface Unversioned {
         type: "unversioned";
-        definition: FernRegistryDocsRead.DocsDefinition;
+        definition: DocsDefinitionSummary;
     }
 
     export interface Versioned {
         type: "versioned";
-        definition: FernRegistryDocsRead.DocsDefinition;
+        definition: DocsDefinitionSummary;
         defaultVersionNode: DocsNode.Version;
         versions: DocsNode.Version[];
     }

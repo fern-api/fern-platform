@@ -1,10 +1,9 @@
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { DocsDefinitionSummary } from "../../../types";
 
-export const DEFINITION_WITH_COLLIDING_SLUGS: FernRegistryDocsRead.DocsDefinition = {
-    pages: {},
+export const DEFINITION_WITH_COLLIDING_SLUGS: DocsDefinitionSummary = {
     apis: {},
-    files: {},
-    config: {
+    docsConfig: {
         colorsV3: {
             type: "dark",
             accentPrimary: { r: 0, g: 0, b: 0 },
@@ -129,16 +128,6 @@ export const DEFINITION_WITH_COLLIDING_SLUGS: FernRegistryDocsRead.DocsDefinitio
                     },
                 },
             ],
-        },
-    },
-    search: {
-        type: "singleAlgoliaIndex",
-        value: {
-            type: "unversioned",
-            indexSegment: {
-                id: FernRegistryDocsRead.IndexSegmentId("seg_1"),
-                searchApiKey: "",
-            },
         },
     },
 };
