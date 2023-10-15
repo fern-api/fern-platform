@@ -42,7 +42,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     useEffect(() => {
         setActiveNavigatable(resolvedNavigatable);
         if (resolvedNavigatable?.type === "page") {
-            window.scrollTo({ top: 0, behavior: "auto" });
+            window.scrollTo({ top: 0 });
         }
     }, [resolvedNavigatable]);
 
@@ -54,10 +54,10 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     const selectedSlug = getFullSlugForNavigatable(activeNavigatable, { omitDefault: true });
 
-    const navigateToRoute = useRef((route: string, smoothScroll: boolean) => {
+    const navigateToRoute = useRef((route: string) => {
         if (!userIsScrolling.current) {
             const node = getRouteNode(route);
-            node?.scrollIntoView({ behavior: smoothScroll ? "smooth" : "auto" });
+            node?.scrollIntoView();
             justNavigatedTo.current = route;
         }
     });
@@ -65,7 +65,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     // on mount, scroll directly to routed element
     useEffect(() => {
         const handleInit = () => {
-            navigateToRoute.current(resolvedRoute, false);
+            navigateToRoute.current(resolvedRoute);
         };
         handleInit();
         markAsInitialized();
@@ -77,8 +77,8 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     }, []);
 
     useEffect(() => {
-        const handleRouteChangeStart = (route: string, { shallow }: { shallow: boolean }) => {
-            navigateToRoute.current(route, shallow);
+        const handleRouteChangeStart = (route: string) => {
+            navigateToRoute.current(route);
         };
         router.events.on("routeChangeStart", handleRouteChangeStart);
         router.events.on("hashChangeStart", handleRouteChangeStart);
@@ -101,7 +101,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const observeDocContent = useCallback((element: HTMLDivElement) => {
         const handleNavigate = () => {
             if (justNavigatedTo.current != null) {
-                navigateToRoute.current(justNavigatedTo.current, false);
+                navigateToRoute.current(justNavigatedTo.current);
             }
         };
         if (element != null) {
