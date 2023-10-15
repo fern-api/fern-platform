@@ -1,6 +1,7 @@
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import {
     DefinitionObjectFactory,
+    DocsDefinitionSummary,
     NodeFactory,
     PathResolver,
     type NavigatableDocsNode,
@@ -11,6 +12,10 @@ import React from "react";
 import { ResolvedPath } from "../ResolvedPath";
 
 const emptyDefinition = DefinitionObjectFactory.createDocsDefinition();
+const emptyDefinitionSummary: DocsDefinitionSummary = {
+    apis: emptyDefinition.apis,
+    docsConfig: emptyDefinition.config,
+};
 
 export const NavigationContext = React.createContext<NavigationContextValue>({
     hasInitialized: false,
@@ -25,7 +30,7 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
         },
         context: {
             type: "unversioned-untabbed",
-            root: NodeFactory.createRoot(emptyDefinition),
+            root: NodeFactory.createRoot(emptyDefinitionSummary),
             navigationConfig: { items: [] },
             version: null,
             tab: null,
@@ -39,7 +44,7 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
     userIsScrolling: () => false,
     onScrollToPath: noop,
     observeDocContent: noop,
-    resolver: new PathResolver({ docsDefinition: emptyDefinition }),
+    resolver: new PathResolver({ definition: emptyDefinitionSummary }),
     registerScrolledToPathListener: () => noop,
     resolvedPath: {
         type: "custom-markdown-page",

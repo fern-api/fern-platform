@@ -1,14 +1,13 @@
-import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { getFullSlugForNavigatable, joinUrlSlugs } from "../slug";
 import { buildResolutionMap } from "./build-map";
 import { buildNodeToNeighborsMap } from "./build-neighbors";
 import { buildDefinitionTree } from "./build-tree";
 import { PathCollisionError } from "./errors";
-import type { DocsNode, FullSlug, NavigatableDocsNode, NodeNeighbors } from "./types";
+import type { DocsDefinitionSummary, DocsNode, FullSlug, NavigatableDocsNode, NodeNeighbors } from "./types";
 import { isNavigatableNode, traversePreOrder } from "./util";
 
 export interface PathResolverConfig {
-    docsDefinition: FernRegistryDocsRead.DocsDefinition;
+    definition: DocsDefinitionSummary;
 }
 
 export class PathResolver {
@@ -26,7 +25,7 @@ export class PathResolver {
     }
 
     #preprocessDefinition() {
-        const tree = buildDefinitionTree(this.config.docsDefinition);
+        const tree = buildDefinitionTree(this.config.definition);
         const map = buildResolutionMap(tree);
         const nodeToNeighbors = buildNodeToNeighborsMap(tree);
         return { tree, map, nodeToNeighbors };

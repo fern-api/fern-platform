@@ -10,7 +10,7 @@ describe("rootNavigatable", () => {
     describe("returns the correct root navigatable", () => {
         it("with unversioned and untabbed docs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_UNVERSIONED_UNTABBED,
+                definition: DEFINITION_UNVERSIONED_UNTABBED,
             });
             const resolvedNode = resolver.rootNavigatable;
             expectPageNode(resolvedNode);
@@ -19,7 +19,7 @@ describe("rootNavigatable", () => {
 
         it("with unversioned and tabbed docs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_UNVERSIONED_TABBED,
+                definition: DEFINITION_UNVERSIONED_TABBED,
             });
             const resolvedNode = resolver.rootNavigatable;
             expectPageNode(resolvedNode);
@@ -28,7 +28,7 @@ describe("rootNavigatable", () => {
 
         it("with versioned and untabbed docs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_VERSIONED_UNTABBED,
+                definition: DEFINITION_VERSIONED_UNTABBED,
             });
             const resolvedNode = resolver.rootNavigatable;
             expectPageNode(resolvedNode);
@@ -37,7 +37,7 @@ describe("rootNavigatable", () => {
 
         it("with versioned and tabbed docs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_VERSIONED_TABBED,
+                definition: DEFINITION_VERSIONED_TABBED,
             });
             const resolvedNode = resolver.rootNavigatable;
             expectPageNode(resolvedNode);
@@ -46,7 +46,7 @@ describe("rootNavigatable", () => {
 
         it("with api definition", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_WITH_API,
+                definition: DEFINITION_WITH_API,
             });
             const resolvedNode = resolver.rootNavigatable;
             expectPageNode(resolvedNode);

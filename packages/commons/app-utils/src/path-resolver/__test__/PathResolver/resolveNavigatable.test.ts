@@ -11,42 +11,42 @@ describe("resolveNavigatable", () => {
     describe("resolves empty slug to root navigatable", () => {
         it("with unversioned and untabbed docs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_UNVERSIONED_UNTABBED,
+                definition: DEFINITION_UNVERSIONED_UNTABBED,
             });
             expect(Object.is(resolver.resolveNavigatable(""), resolver.rootNavigatable)).toBe(true);
         });
 
         it("with unversioned and tabbed docs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_UNVERSIONED_TABBED,
+                definition: DEFINITION_UNVERSIONED_TABBED,
             });
             expect(Object.is(resolver.resolveNavigatable(""), resolver.rootNavigatable)).toBe(true);
         });
 
         it("with versioned and untabbed docs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_VERSIONED_UNTABBED,
+                definition: DEFINITION_VERSIONED_UNTABBED,
             });
             expect(Object.is(resolver.resolveNavigatable(""), resolver.rootNavigatable)).toBe(true);
         });
 
         it("with versioned and tabbed docs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_VERSIONED_TABBED,
+                definition: DEFINITION_VERSIONED_TABBED,
             });
             expect(Object.is(resolver.resolveNavigatable(""), resolver.rootNavigatable)).toBe(true);
         });
 
         it("with api definition", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_WITH_API,
+                definition: DEFINITION_WITH_API,
             });
             expect(Object.is(resolver.resolveNavigatable(""), resolver.rootNavigatable)).toBe(true);
         });
 
         it("with the 'pointsTo' option", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_WITH_POINTS_TO,
+                definition: DEFINITION_WITH_POINTS_TO,
             });
             expect(Object.is(resolver.resolveNavigatable(""), resolver.rootNavigatable)).toBe(true);
         });
@@ -55,7 +55,7 @@ describe("resolveNavigatable", () => {
     describe("resolves to the correct navigatable node", () => {
         it("with unversioned and untabbed docs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_UNVERSIONED_UNTABBED,
+                definition: DEFINITION_UNVERSIONED_UNTABBED,
             });
             const resolvedNode = resolver.resolveNavigatable("introduction");
             expectPageNode(resolvedNode);
@@ -65,7 +65,7 @@ describe("resolveNavigatable", () => {
 
         it("with unversioned and tabbed docs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_UNVERSIONED_TABBED,
+                definition: DEFINITION_UNVERSIONED_TABBED,
             });
             const resolvedNode = resolver.resolveNavigatable("help-center");
             expectPageNode(resolvedNode);
@@ -75,7 +75,7 @@ describe("resolveNavigatable", () => {
 
         it("with versioned and untabbed docs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_VERSIONED_UNTABBED,
+                definition: DEFINITION_VERSIONED_UNTABBED,
             });
             const resolvedNode = resolver.resolveNavigatable("introduction");
             expectPageNode(resolvedNode);
@@ -85,7 +85,7 @@ describe("resolveNavigatable", () => {
 
         it("with versioned and tabbed docs", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_VERSIONED_TABBED,
+                definition: DEFINITION_VERSIONED_TABBED,
             });
             const resolvedNode = resolver.resolveNavigatable("v1-2");
             expectPageNode(resolvedNode);
@@ -95,7 +95,7 @@ describe("resolveNavigatable", () => {
 
         it("with api definition", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_WITH_API,
+                definition: DEFINITION_WITH_API,
             });
             const resolvedNode = resolver.resolveNavigatable("api-reference");
             expectTopLevelEndpointNode(resolvedNode);
@@ -105,7 +105,7 @@ describe("resolveNavigatable", () => {
 
         it("with the 'pointsTo' option", () => {
             const resolver = new PathResolver({
-                docsDefinition: DEFINITION_WITH_POINTS_TO,
+                definition: DEFINITION_WITH_POINTS_TO,
             });
             const resolvedNode = resolver.resolveNavigatable("api-reference");
             expectEndpointNode(resolvedNode);
