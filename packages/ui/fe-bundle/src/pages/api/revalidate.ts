@@ -64,7 +64,7 @@ const handler: NextApiHandler = async (req, res) => {
         // eslint-disable-next-line no-console
         console.log("Finding paths to revalidate");
 
-        const pathsToRevalidate = resolver.getAllSlugs().map((slug) => `/${slug}`);
+        const pathsToRevalidate = resolver.getAllSlugsWithLeadingSlash();
 
         // eslint-disable-next-line no-console
         console.log(`Found ${pathsToRevalidate.length} paths to revalidate`);

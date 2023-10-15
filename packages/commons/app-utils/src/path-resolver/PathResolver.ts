@@ -1,3 +1,4 @@
+import path from "path";
 import { getFullSlugForNavigatable, joinUrlSlugs } from "../slug";
 import { buildResolutionMap } from "./build-map";
 import { buildNodeToNeighborsMap } from "./build-neighbors";
@@ -66,6 +67,20 @@ export class PathResolver {
 
     public getAllSlugs(): FullSlug[] {
         return Array.from(this.#map.keys());
+    }
+
+    public getAllSlugsWithLeadingSlash(): string[] {
+        return this.getAllSlugs().map((slug) => `/${slug}`);
+    }
+
+    public getAllSlugsWithBaseURL(baseUrl: string): string[] {
+        return this.getAllSlugs().map((slug) => {
+            let url = path.join(baseUrl, slug);
+            if (!url.startsWith("https://")) {
+                url = `https://${url}`;
+            }
+            return url;
+        });
     }
 
     public getCollisions(): Map<string, DocsNode[]> {

@@ -11,10 +11,10 @@ import { noop } from "@fern-ui/core-utils";
 import React from "react";
 import { ResolvedPath } from "../ResolvedPath";
 
-const emptyDefinition = DefinitionObjectFactory.createDocsDefinition();
-const emptyDefinitionSummary: DocsDefinitionSummary = {
-    apis: emptyDefinition.apis,
-    docsConfig: emptyDefinition.config,
+const EMPTY_DEFINITION = DefinitionObjectFactory.createDocsDefinition();
+const EMPTY_DEFINITION_SUMMARY: DocsDefinitionSummary = {
+    apis: EMPTY_DEFINITION.apis,
+    docsConfig: EMPTY_DEFINITION.config,
 };
 
 export const NavigationContext = React.createContext<NavigationContextValue>({
@@ -30,7 +30,7 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
         },
         context: {
             type: "unversioned-untabbed",
-            root: NodeFactory.createRoot(emptyDefinitionSummary),
+            root: NodeFactory.createRoot(EMPTY_DEFINITION_SUMMARY),
             navigationConfig: { items: [] },
             version: null,
             tab: null,
@@ -44,7 +44,7 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
     userIsScrolling: () => false,
     onScrollToPath: noop,
     observeDocContent: noop,
-    resolver: new PathResolver({ definition: emptyDefinitionSummary }),
+    resolver: new PathResolver({ definition: EMPTY_DEFINITION_SUMMARY }),
     registerScrolledToPathListener: () => noop,
     resolvedPath: {
         type: "custom-markdown-page",

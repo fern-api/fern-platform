@@ -50,11 +50,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params = {}, res 
         },
     });
 
-    const paths = resolver.getAllSlugs().map((slug) => `/${slug}`);
-
-    const urls = paths.map((path) => {
-        return `https://${hostWithoutTrailingSlash}${path}`;
-    });
+    const urls = resolver.getAllSlugsWithBaseURL(hostWithoutTrailingSlash);
     const sitemap = getSitemapXml(urls);
 
     res.setHeader("Content-Type", "text/xml");
