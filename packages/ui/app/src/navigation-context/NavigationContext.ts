@@ -28,6 +28,7 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
             title: "",
             urlSlug: "",
         },
+        section: null,
         context: {
             type: "unversioned-untabbed",
             root: NodeFactory.createRoot(EMPTY_DEFINITION_SUMMARY),
@@ -54,6 +55,7 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
             title: "",
             urlSlug: "",
         },
+        sectionTitle: "",
         serializedMdxContent: { compiledSource: "", frontmatter: {}, scope: {} },
     },
 });

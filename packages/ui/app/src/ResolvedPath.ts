@@ -6,6 +6,7 @@ export declare namespace ResolvedPath {
         type: "custom-markdown-page";
         fullSlug: string;
         page: FernRegistryDocsRead.PageMetadata;
+        sectionTitle: string | null;
         serializedMdxContent: SerializedMdxContent;
     }
 
