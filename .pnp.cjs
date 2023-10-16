@@ -108,7 +108,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-react", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:7.22.15"],\
             ["@babel/preset-typescript", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:7.18.6"],\
             ["@blueprintjs/eslint-plugin", "npm:2.1.2"],\
-            ["@blueprintjs/stylelint-plugin", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:2.0.8"],\
+            ["@blueprintjs/stylelint-plugin", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:4.1.2"],\
             ["@types/is-ci", "npm:3.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.9"],\
@@ -3043,6 +3043,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@blueprintjs/colors", "npm:4.1.8"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:5.0.4", {\
+          "packageLocation": "./.yarn/cache/@blueprintjs-colors-npm-5.0.4-70822c8049-af4393e985.zip/node_modules/@blueprintjs/colors/",\
+          "packageDependencies": [\
+            ["@blueprintjs/colors", "npm:5.0.4"],\
+            ["tslib", "npm:2.5.3"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["@blueprintjs/core", [\
@@ -3226,18 +3234,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@blueprintjs/stylelint-plugin", [\
-        ["npm:2.0.8", {\
-          "packageLocation": "./.yarn/cache/@blueprintjs-stylelint-plugin-npm-2.0.8-b14d9a2d9a-884f1dda61.zip/node_modules/@blueprintjs/stylelint-plugin/",\
+        ["npm:4.1.2", {\
+          "packageLocation": "./.yarn/cache/@blueprintjs-stylelint-plugin-npm-4.1.2-9553287b4d-a2c0b3ad0f.zip/node_modules/@blueprintjs/stylelint-plugin/",\
           "packageDependencies": [\
-            ["@blueprintjs/stylelint-plugin", "npm:2.0.8"]\
+            ["@blueprintjs/stylelint-plugin", "npm:4.1.2"]\
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:2.0.8", {\
-          "packageLocation": "./.yarn/__virtual__/@blueprintjs-stylelint-plugin-virtual-19fe7a0876/0/cache/@blueprintjs-stylelint-plugin-npm-2.0.8-b14d9a2d9a-884f1dda61.zip/node_modules/@blueprintjs/stylelint-plugin/",\
+        ["virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:4.1.2", {\
+          "packageLocation": "./.yarn/__virtual__/@blueprintjs-stylelint-plugin-virtual-0b8aa68098/0/cache/@blueprintjs-stylelint-plugin-npm-4.1.2-9553287b4d-a2c0b3ad0f.zip/node_modules/@blueprintjs/stylelint-plugin/",\
           "packageDependencies": [\
-            ["@blueprintjs/stylelint-plugin", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:2.0.8"],\
-            ["@blueprintjs/colors", "npm:4.1.8"],\
+            ["@blueprintjs/stylelint-plugin", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:4.1.2"],\
+            ["@blueprintjs/colors", "npm:5.0.4"],\
             ["@types/stylelint", null],\
             ["postcss", "npm:8.4.23"],\
             ["postcss-selector-parser", "npm:6.0.11"],\
@@ -9611,7 +9619,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-react", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:7.22.15"],\
             ["@babel/preset-typescript", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:7.18.6"],\
             ["@blueprintjs/eslint-plugin", "npm:2.1.2"],\
-            ["@blueprintjs/stylelint-plugin", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:2.0.8"],\
+            ["@blueprintjs/stylelint-plugin", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:4.1.2"],\
             ["@types/is-ci", "npm:3.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.9"],\
