@@ -1,6 +1,6 @@
 import { joinUrlSlugs } from "../slug";
 import type { DocsNode, FullSlug, ItemSlug } from "./types";
-import { isSectionNode, traversePreOrder } from "./util";
+import { isPlaygroundEnabledNode, isSectionNode, traversePreOrder } from "./util";
 
 export function buildResolutionMap(tree: DocsNode.Root): Map<FullSlug, DocsNode | DocsNode[]> {
     const map = new Map<FullSlug, DocsNode | DocsNode[]>();
@@ -22,6 +22,9 @@ export function buildResolutionMap(tree: DocsNode.Root): Map<FullSlug, DocsNode 
             return;
         }
         insertNodeIntoMap(node, slugs);
+        if (isPlaygroundEnabledNode(node)) {
+            insertNodeIntoMap(node, [...slugs, "playground"]);
+        }
     });
 
     if (tree.info.type === "versioned") {
@@ -34,6 +37,9 @@ export function buildResolutionMap(tree: DocsNode.Root): Map<FullSlug, DocsNode 
                 return;
             }
             insertNodeIntoMap(node, slugs);
+            if (isPlaygroundEnabledNode(node)) {
+                insertNodeIntoMap(node, [...slugs, "playground"]);
+            }
         });
     }
 

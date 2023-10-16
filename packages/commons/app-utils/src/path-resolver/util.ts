@@ -21,6 +21,11 @@ export function isNavigatableNode(node: DocsNode): node is NavigatableDocsNode {
     );
 }
 
+export function isPlaygroundEnabledNode(node: DocsNode): node is NavigatableDocsNode {
+    // TODO: add webhook
+    return node.type === "top-level-endpoint" || node.type === "endpoint";
+}
+
 export function isSectionNode(node: DocsNode | undefined): node is DocsNode.ApiSection | DocsNode.DocsSection {
     return node?.type === "api-section" || node?.type === "docs-section";
 }

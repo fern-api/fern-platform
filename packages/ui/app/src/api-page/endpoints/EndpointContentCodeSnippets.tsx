@@ -1,6 +1,7 @@
 "use client";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { type Theme } from "@fern-ui/theme";
+import classNames from "classnames";
 import { memo } from "react";
 import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";
 import type { CodeExampleClient } from "../examples/code-example";
@@ -19,6 +20,7 @@ export declare namespace EndpointContentCodeSnippets {
         availableExampleClients: CodeExampleClient[];
         selectedExampleClient: CodeExampleClient;
         onClickExampleClient: (client: CodeExampleClient) => void;
+        requestMethod: string;
         requestCurlLines: CurlLine[];
         responseJsonLines: JsonLine[];
         hoveredRequestPropertyPath: JsonPropertyPath | undefined;
@@ -36,6 +38,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     availableExampleClients,
     selectedExampleClient,
     onClickExampleClient,
+    requestMethod,
     requestCurlLines,
     responseJsonLines,
     hoveredRequestPropertyPath,
@@ -47,6 +50,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
         <div className="grid min-h-0 flex-1 grid-rows-[repeat(auto-fit,_minmax(0,_min-content))] gap-6">
             <TitledExample
                 title="Request"
+                tag={requestMethod}
                 type="primary"
                 onClick={(e) => {
                     e.stopPropagation();
@@ -58,18 +62,36 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         : selectedExampleClient.example;
                 }}
                 actions={
-                    availableExampleClients.length > 1 ? (
-                        <CodeExampleClientDropdown
-                            clients={availableExampleClients}
-                            onClickClient={(clientId) => {
-                                const client = availableExampleClients.find((c) => c.id === clientId);
-                                if (client != null) {
-                                    onClickExampleClient(client);
-                                }
-                            }}
-                            selectedClient={selectedExampleClient}
-                        />
-                    ) : undefined
+                    <>
+                        {availableExampleClients.length > 1 && (
+                            <CodeExampleClientDropdown
+                                clients={availableExampleClients}
+                                onClickClient={(clientId) => {
+                                    const client = availableExampleClients.find((c) => c.id === clientId);
+                                    if (client != null) {
+                                        onClickExampleClient(client);
+                                    }
+                                }}
+                                selectedClient={selectedExampleClient}
+                            />
+                        )}
+                        <button
+                            className={classNames(
+                                "group inline-flex w-full justify-center items-center space-x-2 rounded-lg",
+                                "hover:bg-tag-primary",
+                                "border border-gray-100/90 dark:border-white/20 hover:border-2 hover:border-border-primary hover:dark:border-border-primary",
+                                "transition",
+                                "dark:text-white hover:text-accent-primary hover:dark:text-accent-primary tracking-tight",
+                                "py-1 px-2.5",
+                                // Make sure padding remains the same on hover
+                                // This seems to be a Tailwind bug where we can't use theme(borderWidth.1) in some cases
+                                // Current workaround is to hardcode 1px
+                                "hover:py-[calc(theme(spacing.1)-1px)] hover:px-[calc(theme(spacing[2.5])-1px)]"
+                            )}
+                        >
+                            <span className="font-mono text-xs font-normal transition-colors">Playground</span>
+                        </button>
+                    </>
                 }
             >
                 {selectedExampleClient.id === "curl" ? (
@@ -92,6 +114,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
             {example.responseBody != null && (
                 <TitledExample
                     title={example.responseStatusCode >= 400 ? "Error Response" : "Response"}
+                    tag={`${example.responseStatusCode}`}
                     type={example.responseStatusCode >= 400 ? "warning" : "primary"}
                     onClick={(e) => {
                         e.stopPropagation();

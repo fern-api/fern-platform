@@ -55,7 +55,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                 />
             )}
 
-            <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
+            <div id="docs-content" className="relative flex h-full flex-col" ref={observeDocContent}>
                 <div
                     className="border-border-concealed-light dark:border-border-concealed-dark bg-background/50 dark:shadow-header sticky inset-x-0 top-0 z-20 border-b backdrop-blur-xl"
                     style={{ height: HEADER_HEIGHT }}

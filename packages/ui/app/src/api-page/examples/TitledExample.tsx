@@ -5,7 +5,8 @@ import styles from "./TitledExample.module.scss";
 
 export declare namespace TitledExample {
     export interface Props {
-        title: string;
+        title: string | JSX.Element;
+        tag?: string;
         type: "primary" | "warning";
         actions?: JSX.Element;
         className?: string;
@@ -19,6 +20,7 @@ export declare namespace TitledExample {
 
 export const TitledExample: React.FC<TitledExample.Props> = ({
     title,
+    tag,
     type,
     className,
     actions,
@@ -36,7 +38,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
     return (
         <div
             className={classNames(
-                "flex flex-col rounded-xl border border-border-default-light dark:border-border-default-dark overflow-visible basis-full",
+                "flex flex-col rounded-xl border border-gray-100/90 dark:border-white/10 overflow-visible basis-full",
                 className
             )}
             onClick={onClick}
@@ -44,24 +46,26 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
         >
             <div
                 className={classNames(
-                    "border-border-default-light rounded-t-xl dark:border-border-default-dark flex h-10 items-center justify-between border-b py-1 pl-3 pr-2",
+                    "border-gray-100/90 rounded-t-xl dark:border-white/10 flex h-10 items-center justify-between border-b px-4",
                     {
-                        "bg-gray-200/90 dark:bg-[#19181C]": type === "primary",
                         "bg-red-500/20": type === "warning",
                     }
                 )}
             >
                 <div className="flex items-center">
                     <div
-                        className={classNames("text-xs uppercase tracking-wide", {
+                        className={classNames("text-xs font-semibold uppercase tracking-wide", {
                             "text-text-primary-light dark:text-text-muted-dark": type === "primary",
                             "text-red-400": type === "warning",
                         })}
                     >
-                        {title}
+                        <span>{title}</span>
+                        {tag != null && (
+                            <span className={"ml-2 rounded bg-gray-100/90 px-1.5 py-1 dark:bg-white/10"}>{tag}</span>
+                        )}
                     </div>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-3">
                     {actions}
                     <CopyToClipboardButton content={copyToClipboardContent} />
                 </div>
@@ -77,7 +81,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                 >
                     <div
                         className={classNames(
-                            "dark:bg-background-primary-dark flex-1 overflow-hidden rounded-b-xl whitespace-pre bg-gray-100/90",
+                            "dark:bg-white/10 flex-1 overflow-hidden rounded-b-xl whitespace-pre bg-gray-100/90",
                             {
                                 "py-4": !disablePadding,
                             }

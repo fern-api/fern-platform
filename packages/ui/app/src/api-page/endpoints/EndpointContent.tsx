@@ -25,7 +25,7 @@ export declare namespace EndpointContent {
 }
 
 const GAP_6 = 24;
-const TITLED_EXAMPLE_PADDING = 43;
+const TITLED_EXAMPLE_PADDING = 40 + 3;
 const PADDING_TOP = 32;
 const PADDING_BOTTOM = 40;
 const LINE_HEIGHT = 21.5;
@@ -220,6 +220,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                             availableExampleClients={availableExampleClients}
                             selectedExampleClient={selectedExampleClient}
                             onClickExampleClient={setSelectedExampleClient}
+                            requestMethod={endpoint.method}
                             requestCurlLines={curlLines}
                             responseJsonLines={jsonLines}
                             hoveredRequestPropertyPath={hoveredRequestPropertyPath}

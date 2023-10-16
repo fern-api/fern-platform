@@ -37,9 +37,9 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                         className={classNames(
                             "group inline-flex w-full justify-center items-center space-x-2 rounded-lg",
                             "hover:bg-tag-primary",
-                            "border border-border-primary hover:border-2",
+                            "border border-gray-100/90 dark:border-white/20 hover:border-2 hover:border-border-primary hover:dark:border-border-primary",
                             "transition",
-                            "text-accent-primary tracking-tight",
+                            "dark:text-white hover:text-accent-primary hover:dark:text-accent-primary tracking-tight",
                             "py-1 pl-2.5 pr-1",
                             // Make sure padding remains the same on hover
                             // This seems to be a Tailwind bug where we can't use theme(borderWidth.1) in some cases
@@ -50,7 +50,10 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                         {({ open }) => {
                             return (
                                 <>
-                                    <FontAwesomeIcon className="h-4 w-4" icon={getIconForClient(selectedClient.id)} />
+                                    <FontAwesomeIcon
+                                        className="h-4 w-4 transition-colors"
+                                        icon={getIconForClient(selectedClient.id)}
+                                    />
                                     <span className="font-mono text-xs font-normal transition-colors">
                                         {selectedClient.name}
                                     </span>

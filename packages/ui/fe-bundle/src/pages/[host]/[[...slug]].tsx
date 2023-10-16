@@ -1,6 +1,6 @@
 import * as FernRegistryDocsReadV2 from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
 import { getSlugFromUrl, PathResolver } from "@fern-ui/app-utils";
-import { App, type ResolvedPath } from "@fern-ui/ui";
+import { App, PlaygroundApp, type ResolvedPath } from "@fern-ui/ui";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import { REGISTRY_SERVICE } from "../../service";
@@ -16,6 +16,7 @@ export declare namespace Docs {
         typographyStyleSheet?: string;
         backgroundImageStyleSheet: string | null;
         resolvedPath: ResolvedPath;
+        isPlayground: boolean;
     }
 }
 
@@ -24,6 +25,7 @@ export default function Docs({
     typographyStyleSheet = "",
     backgroundImageStyleSheet = "",
     resolvedPath,
+    isPlayground,
 }: Docs.Props): JSX.Element {
     const colorThemeStyleSheet = useColorTheme(docs.definition);
     return (
@@ -48,10 +50,18 @@ export default function Docs({
                         <link rel="icon" id="favicon" href={docs.definition.files[docs.definition.config.favicon]} />
                     )}
                 </Head>
-                <App docs={docs} resolvedPath={resolvedPath} />
+                {isPlayground && resolvedPath.type === "api-page" ? (
+                    <PlaygroundApp docs={docs} resolvedPath={resolvedPath} />
+                ) : (
+                    <App docs={docs} resolvedPath={resolvedPath} />
+                )}
             </main>
         </>
     );
+}
+
+function isPlayground(slug: string[]) {
+    return slug.length > 1 && slug[slug.length - 1] === "playground";
 }
 
 export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }) => {
@@ -104,6 +114,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
             typographyStyleSheet,
             backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
             resolvedPath,
+            isPlayground: isPlayground(slugArray ?? []),
         },
     };
 };
