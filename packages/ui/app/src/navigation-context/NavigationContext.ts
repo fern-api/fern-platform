@@ -55,6 +55,7 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
             title: "",
             urlSlug: "",
         },
+        sectionTitle: "",
         serializedMdxContent: { compiledSource: "", frontmatter: {}, scope: {} },
     },
 });

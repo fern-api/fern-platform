@@ -20,6 +20,7 @@ export async function convertNavigatableToResolvedPath({
                 type: "custom-markdown-page",
                 fullSlug,
                 page: serializedNavigatable.page,
+                sectionTitle: serializedNavigatable.section?.title ?? null,
                 serializedMdxContent: serializedNavigatable.serializedMdxContent,
             };
         case "endpoint":
