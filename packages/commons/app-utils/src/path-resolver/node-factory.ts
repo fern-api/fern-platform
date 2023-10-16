@@ -216,11 +216,13 @@ export class NodeFactory {
         slug,
         leadingSlug,
         page,
+        section,
         context,
     }: {
         slug: string;
         leadingSlug: string;
         page: FernRegistryDocsRead.PageMetadata;
+        section: FernRegistryDocsRead.DocsSection | null;
         context: NodeDocsContext;
     }): DocsNode.Page {
         return {
@@ -228,6 +230,7 @@ export class NodeFactory {
             slug,
             leadingSlug,
             page,
+            section,
             context,
         };
     }

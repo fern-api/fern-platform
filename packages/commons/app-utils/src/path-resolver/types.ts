@@ -215,6 +215,7 @@ export declare namespace DocsNode {
     export interface Page extends BaseNode, NavigatableNode {
         type: "page";
         page: FernRegistryDocsRead.PageMetadata;
+        section: FernRegistryDocsRead.DocsSection | null;
         context: NodeDocsContext;
     }
 }

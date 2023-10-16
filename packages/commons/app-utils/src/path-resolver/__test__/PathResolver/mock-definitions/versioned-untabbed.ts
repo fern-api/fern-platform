@@ -54,7 +54,7 @@ export const DEFINITION_VERSIONED_UNTABBED: DocsDefinitionSummary = {
                         items: [
                             {
                                 type: "section",
-                                title: "Introduction",
+                                title: "Welcome",
                                 urlSlug: "introduction",
                                 skipUrlSlug: false,
                                 collapsed: false,

@@ -1,3 +1,4 @@
+import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import type { DocsNode, DocsNodeType } from "../types";
 
 export function expectDocsSectionNode(node: DocsNode | undefined): asserts node is DocsNode.DocsSection {
@@ -14,6 +15,14 @@ export function expectEndpointNode(node: DocsNode | undefined): asserts node is 
 
 export function expectPageNode(node: DocsNode | undefined): asserts node is DocsNode.Page {
     expectNode(node).toBeOfType("page");
+}
+
+export function expectDocsSection(
+    section: FernRegistryDocsRead.DocsSection | null
+): asserts section is FernRegistryDocsRead.DocsSection {
+    if (section == null) {
+        throw new Error("Expected 'section' to be non-null");
+    }
 }
 
 interface NodeExpectation {

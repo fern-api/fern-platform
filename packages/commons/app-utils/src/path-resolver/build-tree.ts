@@ -81,6 +81,7 @@ export function buildDefinitionTree(definition: DocsDefinitionSummary): DocsNode
                 const children = buildNodesForNavigationItems({
                     items: navigationConfig.items,
                     parentSlugs: [],
+                    section: null,
                     context: {
                         type: "versioned-untabbed",
                         root,
@@ -115,6 +116,7 @@ export function buildDefinitionTree(definition: DocsDefinitionSummary): DocsNode
         const children = buildNodesForNavigationItems({
             items: rootNavigationConfig.items,
             parentSlugs: [],
+            section: null,
             context: {
                 type: "unversioned-untabbed",
                 root,
@@ -169,6 +171,7 @@ function buildNodeForNavigationTab({
     const children = buildNodesForNavigationItems({
         items: tab.items,
         parentSlugs: [...parentSlugs, tab.urlSlug],
+        section: null,
         context:
             context.type === "versioned"
                 ? {
@@ -193,16 +196,19 @@ function buildNodeForNavigationTab({
 function buildNodesForNavigationItems({
     items,
     parentSlugs,
+    section,
     context,
 }: {
     items: FernRegistryDocsRead.NavigationItem[];
     parentSlugs: string[];
+    section: FernRegistryDocsRead.DocsSection | null;
     context: NodeDocsContext;
 }): ChildDocsNode[] {
     return items.map((childItem) =>
         buildNodeForNavigationItem({
             item: childItem,
             parentSlugs: [...parentSlugs],
+            section,
             context,
         })
     ) as ChildDocsNode[];
@@ -211,10 +217,12 @@ function buildNodesForNavigationItems({
 function buildNodeForNavigationItem({
     item,
     parentSlugs,
+    section,
     context,
 }: {
     item: FernRegistryDocsRead.NavigationItem;
     parentSlugs: string[];
+    section: FernRegistryDocsRead.DocsSection | null;
     context: NodeDocsContext;
 }): DocsNode {
     switch (item.type) {
@@ -224,6 +232,7 @@ function buildNodeForNavigationItem({
                 slug: page.urlSlug,
                 leadingSlug: joinUrlSlugs(...parentSlugs, page.urlSlug),
                 page,
+                section,
                 context,
             });
         }
@@ -263,6 +272,7 @@ function buildNodeForDocsSection({
     const children = buildNodesForNavigationItems({
         items: section.items,
         parentSlugs: nextSectionParentSlugs(section, parentSlugs),
+        section,
         context,
     });
     addNodeChildren(sectionNode, children);
