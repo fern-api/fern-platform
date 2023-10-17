@@ -26,7 +26,7 @@ export class FdrDeployStack extends Stack {
         version: string,
         environmentType: EnvironmentType,
         environmentInfo: EnvironmentInfo,
-        props?: StackProps
+        props?: StackProps,
     ) {
         super(scope, id, props);
 
@@ -55,7 +55,7 @@ export class FdrDeployStack extends Stack {
         const certificate = Certificate.fromCertificateArn(
             this,
             "ceritificate",
-            environmentInfo.route53Info.certificateArn
+            environmentInfo.route53Info.certificateArn,
         );
 
         const snsTopic = new sns.Topic(this, "fdr-sns-topic", {
@@ -166,7 +166,7 @@ export class FdrDeployStack extends Stack {
             path: "/health",
             port: "8080",
             timeout: Duration.seconds(120),
-            interval: Duration.seconds(90),
+            interval: Duration.seconds(150),
             unhealthyThresholdCount: 5,
         });
 

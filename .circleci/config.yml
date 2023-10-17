@@ -24,7 +24,7 @@ jobs:
           name: Compile
       - persist_to_workspace:
           root: /home/circleci
-          paths: [ project ]
+          paths: [project]
 
   check:
     machine:
@@ -52,8 +52,8 @@ jobs:
       - run:
           command: yarn test:ete
           name: Test ETE
-  
-  migrate-dev2: 
+
+  migrate-dev2:
     circleci_ip_ranges: true
     docker:
       - image: cimg/node:lts
@@ -78,8 +78,8 @@ jobs:
             npm install
             VERSION="${git_version}" cdk deploy fdr-dev2 --require-approval never --progress events
           name: cdk deploy
-  
-  migrate-prod: 
+
+  migrate-prod:
     circleci_ip_ranges: true
     docker:
       - image: cimg/node:lts
@@ -159,7 +159,7 @@ workflows:
             tags:
               only: /.*/
           requires: [compile]
-      
+
       - migrate-dev2:
           requires: [check, ete-test]
           filters:
