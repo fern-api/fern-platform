@@ -3543,6 +3543,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@fern-api/fdr-sdk", [\
+        ["npm:0.0.1", {\
+          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.0.1-f68d1a5e28-447483b72b.zip/node_modules/@fern-api/fdr-sdk/",\
+          "packageDependencies": [\
+            ["@fern-api/fdr-sdk", "npm:0.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@fern-fern/registry-browser", [\
         ["npm:0.32.0-8-g775d3cc", {\
           "packageLocation": "./.yarn/cache/@fern-fern-registry-browser-npm-0.32.0-8-g775d3cc-0d4f764f00-c4b018894c.zip/node_modules/@fern-fern/registry-browser/",\
@@ -3663,6 +3672,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/ui/fe-bundle/",\
           "packageDependencies": [\
             ["@fern-ui/fe-bundle", "workspace:packages/ui/fe-bundle"],\
+            ["@fern-api/fdr-sdk", "npm:0.0.1"],\
             ["@fern-fern/registry-browser", "npm:0.32.0-8-g775d3cc"],\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
@@ -3924,6 +3934,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@blueprintjs/icons", "npm:4.9.0"],\
             ["@blueprintjs/popover2", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.8.0"],\
             ["@blueprintjs/select", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.5.1"],\
+            ["@fern-api/fdr-sdk", "npm:0.0.1"],\
             ["@fern-fern/registry-browser", "npm:0.32.0-8-g775d3cc"],\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
