@@ -1,4 +1,5 @@
-import { FullSlug, SerializedMdxContent } from "@fern-ui/app-utils";
+import type { FullSlug } from "@fern-api/fdr-sdk";
+import { SerializedMdxContent } from "@fern-ui/app-utils";
 import React from "react";
 
 export const CacheContext = React.createContext<() => CacheContextValue>(() => {

@@ -1,4 +1,4 @@
-import { NavigatableDocsNode } from "./path-resolver";
+import type { NavigatableDocsNode } from "@fern-api/fdr-sdk";
 
 /**
  * Joins the given URL slugs with a `/`. Ignores empty ones.

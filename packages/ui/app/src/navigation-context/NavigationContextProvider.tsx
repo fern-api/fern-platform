@@ -1,5 +1,6 @@
+import { FernRegistry, PathResolver } from "@fern-api/fdr-sdk";
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { getFullSlugForNavigatable, PathResolver } from "@fern-ui/app-utils";
+import { getFullSlugForNavigatable } from "@fern-ui/app-utils";
 import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
 import { useRouter } from "next/router";
@@ -27,11 +28,12 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const resolvedRoute = getRouteForResolvedPath({ resolvedSlug: resolvedPath.fullSlug, asPath: router.asPath });
     const justNavigatedTo = useRef<string | undefined>(resolvedRoute);
     const { value: hasInitialized, setTrue: markAsInitialized } = useBooleanState(false);
+    type ApiDefinition = FernRegistry.api.v1.read.ApiDefinition;
     const resolver = useMemo(
         () =>
             new PathResolver({
                 definition: {
-                    apis: docsDefinition.apis,
+                    apis: docsDefinition.apis as Record<ApiDefinition["id"], ApiDefinition>,
                     docsConfig: docsDefinition.config,
                 },
             }),

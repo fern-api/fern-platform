@@ -1,4 +1,5 @@
-import { DocsNode, getVersionAvailabilityLabel } from "@fern-ui/app-utils";
+import { type DocsNode } from "@fern-api/fdr-sdk";
+import { getVersionAvailabilityLabel } from "@fern-ui/app-utils";
 import { Menu, Transition } from "@headlessui/react";
 import classNames from "classnames";
 import Link from "next/link";

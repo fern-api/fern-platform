@@ -3571,6 +3571,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/commons/app-utils/",\
           "packageDependencies": [\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
+            ["@fern-api/fdr-sdk", "npm:0.0.1"],\
             ["@fern-fern/registry-browser", "npm:0.32.0-8-g775d3cc"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@types/jest", "npm:29.0.3"],\

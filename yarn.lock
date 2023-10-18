@@ -2005,7 +2005,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/fdr-sdk@npm:^0.0.1":
+"@fern-api/fdr-sdk@npm:0.0.1, @fern-api/fdr-sdk@npm:^0.0.1":
   version: 0.0.1
   resolution: "@fern-api/fdr-sdk@npm:0.0.1"
   checksum: 447483b72b33c7564cd7018ac7cb551eb5b4ddd2d3c1786932a782aba65f78983f0b585d359d4da5b1b1fb84c97b6e49a508051c4c3ad00008e471047983ae81
@@ -2029,6 +2029,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/app-utils@workspace:packages/commons/app-utils"
   dependencies:
+    "@fern-api/fdr-sdk": 0.0.1
     "@fern-fern/registry-browser": 0.32.0-8-g775d3cc
     "@fern-ui/core-utils": "workspace:*"
     "@types/jest": ^29.0.3

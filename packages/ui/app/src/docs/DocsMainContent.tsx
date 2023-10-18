@@ -1,4 +1,4 @@
-import { isApiNode } from "@fern-ui/app-utils";
+import { isApiNode } from "@fern-api/fdr-sdk";
 import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContextProvider";
 import { ApiPage } from "../api-page/ApiPage";
 import { CustomDocsPage } from "../custom-docs-page/CustomDocsPage";

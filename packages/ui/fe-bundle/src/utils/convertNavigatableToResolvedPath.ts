@@ -1,5 +1,5 @@
-import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { getFullSlugForNavigatable, NavigatableDocsNode, serializeNavigatableNode } from "@fern-ui/app-utils";
+import type { FernRegistry, NavigatableDocsNode } from "@fern-api/fdr-sdk";
+import { getFullSlugForNavigatable, serializeNavigatableNode } from "@fern-ui/app-utils";
 import type { ResolvedPath } from "@fern-ui/ui";
 
 export async function convertNavigatableToResolvedPath({
@@ -7,7 +7,7 @@ export async function convertNavigatableToResolvedPath({
     docsDefinition,
 }: {
     navigatable: NavigatableDocsNode;
-    docsDefinition: FernRegistryDocsRead.DocsDefinition;
+    docsDefinition: FernRegistry.docs.v1.read.DocsDefinition;
 }): Promise<ResolvedPath> {
     const fullSlug = getFullSlugForNavigatable(navigatable, { omitDefault: true });
     const serializedNavigatable = await serializeNavigatableNode({

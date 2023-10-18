@@ -1,7 +1,8 @@
+import { FernRegistry } from "@fern-api/fdr-sdk";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 
 export class DefinitionObjectFactory {
-    public static createDocsDefinition(): FernRegistryDocsRead.DocsDefinition {
+    public static createDocsDefinition(): FernRegistry.docs.v1.read.DocsDefinition {
         return {
             pages: {},
             apis: {},
