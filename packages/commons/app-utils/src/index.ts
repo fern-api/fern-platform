@@ -3,4 +3,3 @@ export * from "./fern";
 export * from "./mdx";
 export * from "./serialize-node";
 export * from "./slug";
-export { UrlSlugTree } from "./url-path-resolver/UrlSlugTree";
