@@ -8,3 +8,7 @@ bundle.c?js
 .pnp*
 .next
 ../tests/**/*
+.circleci
+.github
+.vscode
+**/fern/**
