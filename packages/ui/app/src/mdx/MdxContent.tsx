@@ -59,7 +59,7 @@ const COMPONENTS: MDXRemoteProps["components"] = {
             />
         );
     },
-    code: InlineCode,
+    code: (props) => <InlineCode fontSize="lg" {...props} />,
     table: Table,
     thead: Thead,
     tr: Tr,

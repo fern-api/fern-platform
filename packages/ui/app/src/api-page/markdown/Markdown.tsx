@@ -69,7 +69,11 @@ export const Markdown = React.memo<Markdown.Props>(function Markdown({ children,
                             />
                         );
                     }
-                    return <InlineCode {...props}>{children}</InlineCode>;
+                    return (
+                        <InlineCode fontSize="sm" {...props}>
+                            {children}
+                        </InlineCode>
+                    );
                 },
                 table: (props) => <Table {...props} />,
                 thead: (props) => <Thead {...props} />,

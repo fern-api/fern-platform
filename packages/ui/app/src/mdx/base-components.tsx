@@ -5,14 +5,25 @@ import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAncho
 import { HEADER_HEIGHT } from "../constants";
 import { useNavigationContext } from "../navigation-context";
 
-export const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({ className, ...rest }) => {
+type InlineCodeProps = {
+    fontSize: "sm" | "lg";
+};
+
+export const InlineCode: React.FC<HTMLAttributes<HTMLElement> & InlineCodeProps> = ({
+    className,
+    fontSize,
+    ...rest
+}) => {
     return (
         <code
             {...rest}
             className={classNames(
                 className,
-                "border border-border-concealed-light dark:border-border-concealed-dark rounded font-mono text-[12px] bg-background/75 !text-text-primary-light dark:!text-text-primary-dark !py-0.5 !px-1"
+                "border border-border-concealed-light dark:border-border-concealed-dark rounded font-mono bg-background/75 !text-text-primary-light dark:!text-text-primary-dark !py-0.5 !px-1"
             )}
+            style={{
+                fontSize: fontSize === "sm" ? 12 : 13,
+            }}
         />
     );
 };
