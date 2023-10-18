@@ -1,12 +1,12 @@
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import {
-    DefinitionObjectFactory,
-    DocsDefinitionSummary,
     NodeFactory,
     PathResolver,
+    type DocsDefinitionSummary,
     type NavigatableDocsNode,
     type NodeNeighbors,
-} from "@fern-ui/app-utils";
+} from "@fern-api/fdr-sdk";
+import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { DefinitionObjectFactory } from "@fern-ui/app-utils";
 import { noop } from "@fern-ui/core-utils";
 import React from "react";
 import { ResolvedPath } from "../ResolvedPath";

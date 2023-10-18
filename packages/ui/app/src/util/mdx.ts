@@ -1,4 +1,5 @@
-import { FullSlug, SerializedMdxContent } from "@fern-ui/app-utils";
+import { type FullSlug } from "@fern-api/fdr-sdk";
+import { SerializedMdxContent } from "@fern-ui/app-utils";
 
 type Results = Record<FullSlug, SerializedMdxContent | null>;
 

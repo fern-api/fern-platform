@@ -1,6 +1,5 @@
-import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import type { DocsNode, FernRegistry, NavigatableDocsNode } from "@fern-api/fdr-sdk";
 import { serializeMdxContent, type SerializedMdxContent } from "./mdx";
-import type { DocsNode, NavigatableDocsNode } from "./path-resolver";
 
 export type SerializedPageNode = DocsNode.Page & {
     serializedMdxContent: SerializedMdxContent;
@@ -18,7 +17,7 @@ export async function serializePageNode({
     docsDefinition,
 }: {
     pageNode: DocsNode.Page;
-    docsDefinition: FernRegistryDocsRead.DocsDefinition;
+    docsDefinition: FernRegistry.docs.v1.read.DocsDefinition;
 }): Promise<SerializedPageNode> {
     const pageContent = docsDefinition.pages[pageNode.page.id];
     if (pageContent == null) {
@@ -35,7 +34,7 @@ export async function serializeNavigatableNode({
     docsDefinition,
 }: {
     node: NavigatableDocsNode;
-    docsDefinition: FernRegistryDocsRead.DocsDefinition;
+    docsDefinition: FernRegistry.docs.v1.read.DocsDefinition;
 }): Promise<SerializedNavigatableNode> {
     return node.type === "page" ? await serializePageNode({ pageNode: node, docsDefinition }) : node;
 }

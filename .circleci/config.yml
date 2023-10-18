@@ -149,26 +149,36 @@ workflows:
   build:
     jobs:
       - check:
+          context:
+            - npm
           filters:
             tags:
               only: /.*/
 
       - eslint:
+          context:
+            - npm
           filters:
             tags:
               only: /.*/
 
       - organize-imports:
+          context:
+            - npm
           filters:
             tags:
               only: /.*/
 
       - compile:
+          context:
+            - npm
           filters:
             tags:
               only: /.*/
 
       - test:
+          context:
+            - npm
           filters:
             tags:
               only: /.*/

@@ -1,5 +1,6 @@
+import { FernRegistry, PathResolver } from "@fern-api/fdr-sdk";
 import * as FernRegistryDocsReadV2 from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
-import { getSlugFromUrl, PathResolver } from "@fern-ui/app-utils";
+import { getSlugFromUrl } from "@fern-ui/app-utils";
 import { App, type ResolvedPath } from "@fern-ui/ui";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
@@ -80,9 +81,10 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
     const typographyConfig = loadDocTypography(docsDefinition);
     const typographyStyleSheet = generateFontFaces(typographyConfig);
     const backgroundImageStyleSheet = loadDocsBackgroundImage(docsDefinition);
+    type ApiDefinition = FernRegistry.api.v1.read.ApiDefinition;
     const resolver = new PathResolver({
         definition: {
-            apis: docs.body.definition.apis,
+            apis: docs.body.definition.apis as Record<ApiDefinition["id"], ApiDefinition>,
             docsConfig: docs.body.definition.config,
         },
     });
@@ -100,7 +102,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
 
     const resolvedPath = await convertNavigatableToResolvedPath({
         navigatable: resolvedNavigatable,
-        docsDefinition,
+        docsDefinition: docsDefinition as FernRegistry.docs.v1.read.DocsDefinition,
     });
 
     return {

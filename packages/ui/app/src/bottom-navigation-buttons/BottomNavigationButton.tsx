@@ -1,6 +1,7 @@
 import { Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
-import { DocsNode, getFullSlugForNavigatable } from "@fern-ui/app-utils";
+import { type DocsNode } from "@fern-api/fdr-sdk";
+import { getFullSlugForNavigatable } from "@fern-ui/app-utils";
 import { assertNever } from "@fern-ui/core-utils";
 import Link from "next/link";
 import { useCallback, useMemo } from "react";

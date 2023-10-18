@@ -2005,6 +2005,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fern-api/fdr-sdk@npm:0.0.3":
+  version: 0.0.3
+  resolution: "@fern-api/fdr-sdk@npm:0.0.3"
+  dependencies:
+    "@ungap/url-search-params": 0.2.2
+    axios: 0.27.2
+    js-base64: 3.7.2
+    url-join: 4.0.1
+  checksum: 6e8f861f5e8de3cf7dce4c9f37b37ef0c4206decc951be18e0849a62a29d9b9eb133d0aa6cdc9240e44aa092e4780e00a8a6f0ac0d18cdf160989a6e91739a36
+  languageName: node
+  linkType: hard
+
 "@fern-fern/registry-browser@npm:0.32.0-8-g775d3cc":
   version: 0.32.0-8-g775d3cc
   resolution: "@fern-fern/registry-browser@npm:0.32.0-8-g775d3cc"
@@ -2022,6 +2034,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/app-utils@workspace:packages/commons/app-utils"
   dependencies:
+    "@fern-api/fdr-sdk": 0.0.3
     "@fern-fern/registry-browser": 0.32.0-8-g775d3cc
     "@fern-ui/core-utils": "workspace:*"
     "@types/jest": ^29.0.3
@@ -2115,6 +2128,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/fe-bundle@workspace:packages/ui/fe-bundle"
   dependencies:
+    "@fern-api/fdr-sdk": 0.0.3
     "@fern-fern/registry-browser": 0.32.0-8-g775d3cc
     "@fern-ui/app-utils": "workspace:*"
     "@fern-ui/core-utils": "workspace:*"
@@ -2358,6 +2372,7 @@ __metadata:
     "@blueprintjs/icons": ^4.4.0
     "@blueprintjs/popover2": ^1.8.0
     "@blueprintjs/select": ^4.4.2
+    "@fern-api/fdr-sdk": 0.0.3
     "@fern-fern/registry-browser": 0.32.0-8-g775d3cc
     "@fern-ui/app-utils": "workspace:*"
     "@fern-ui/core-utils": "workspace:*"
@@ -4535,6 +4550,16 @@ __metadata:
   version: 1.0.5
   resolution: "available-typed-arrays@npm:1.0.5"
   checksum: 20eb47b3cefd7db027b9bbb993c658abd36d4edd3fe1060e83699a03ee275b0c9b216cc076ff3f2db29073225fb70e7613987af14269ac1fe2a19803ccc97f1a
+  languageName: node
+  linkType: hard
+
+"axios@npm:0.27.2":
+  version: 0.27.2
+  resolution: "axios@npm:0.27.2"
+  dependencies:
+    follow-redirects: ^1.14.9
+    form-data: ^4.0.0
+  checksum: 38cb7540465fe8c4102850c4368053c21683af85c5fdf0ea619f9628abbcb59415d1e22ebc8a6390d2bbc9b58a9806c874f139767389c862ec9b772235f06854
   languageName: node
   linkType: hard
 
@@ -7162,6 +7187,16 @@ env-cmd@toddbluhm/env-cmd:
   version: 3.2.5
   resolution: "flatted@npm:3.2.5"
   checksum: 3c436e9695ccca29620b4be5671dd72e5dd0a7500e0856611b7ca9bd8169f177f408c3b9abfa78dfe1493ee2d873e2c119080a8a9bee4e1a186a9e60ca6c89f1
+  languageName: node
+  linkType: hard
+
+"follow-redirects@npm:^1.14.9":
+  version: 1.15.3
+  resolution: "follow-redirects@npm:1.15.3"
+  peerDependenciesMeta:
+    debug:
+      optional: true
+  checksum: 584da22ec5420c837bd096559ebfb8fe69d82512d5585004e36a3b4a6ef6d5905780e0c74508c7b72f907d1fa2b7bd339e613859e9c304d0dc96af2027fd0231
   languageName: node
   linkType: hard
 

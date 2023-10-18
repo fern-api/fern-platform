@@ -1,5 +1,6 @@
+import { type DefinitionInfo, type DocsNode } from "@fern-api/fdr-sdk";
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { DocsNode, getFullSlugForNavigatable, joinUrlSlugs, type DefinitionInfo } from "@fern-ui/app-utils";
+import { getFullSlugForNavigatable, joinUrlSlugs } from "@fern-ui/app-utils";
 import { useCallback, useMemo } from "react";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
 
