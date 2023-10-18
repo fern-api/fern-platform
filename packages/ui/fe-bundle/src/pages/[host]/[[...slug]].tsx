@@ -81,10 +81,10 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
     const typographyConfig = loadDocTypography(docsDefinition);
     const typographyStyleSheet = generateFontFaces(typographyConfig);
     const backgroundImageStyleSheet = loadDocsBackgroundImage(docsDefinition);
+    type ApiDefinition = FernRegistry.api.v1.read.ApiDefinition;
     const resolver = new PathResolver({
         definition: {
-            // apis: docs.body.definition.apis,
-            apis: {},
+            apis: docs.body.definition.apis as Record<ApiDefinition["id"], ApiDefinition>,
             docsConfig: docs.body.definition.config,
         },
     });
