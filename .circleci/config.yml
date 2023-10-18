@@ -11,17 +11,13 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn
       - run:
-          name: fern generate
+          name: Generate Fern SDKs
           command: |
             npm install -g fern-api
-            fern generate --log-level debug
+            fern generate --group local --log-level debug
       - run:
-          name: prisma generate
-          command: |
-            yarn prisma generate
-      - run:
-          command: yarn compile
-          name: Compile
+          name: Build
+          command: yarn build
       - persist_to_workspace:
           root: /home/circleci
           paths: [project]
@@ -38,7 +34,7 @@ jobs:
           command: yarn test
           name: Test
       - run:
-          command: yarn test:db
+          command: yarn test-db
           name: Test DB
 
   ete-test:
@@ -47,21 +43,22 @@ jobs:
     steps:
       - attach_workspace: { at: /home/circleci }
       - run:
-          command: yarn local:docker
           name: Dockerize Local
+          command: yarn run docker:local
       - run:
-          command: yarn test:ete
           name: Test ETE
+          command: yarn run test-ete
 
   migrate-dev2:
     circleci_ip_ranges: true
     docker:
       - image: cimg/node:lts
+    working_directory: ~/project/apps/fdr
     steps:
       - attach_workspace: { at: /home/circleci }
       - run:
-          command: yarn run dev:db:migrate
           name: prisma deploy
+          command: yarn run db:migrate:dev
 
   deploy-dev2:
     machine:
@@ -70,23 +67,23 @@ jobs:
       - attach_workspace: { at: /home/circleci }
       - aws-cli/setup
       - run:
+          name: cdk deploy
           command: |
             git_version="$(scripts/git-version.sh)"
-            yarn run dev:docker "${git_version}"
+            yarn run docker:dev "${git_version}"
             npm install -g aws-cdk
-            cd fdr-deploy
-            npm install
-            VERSION="${git_version}" cdk deploy fdr-dev2 --require-approval never --progress events
-          name: cdk deploy
+            yarn install
+            VERSION="${git_version}" yarn workspace fdr-deploy deploy:dev
 
   migrate-prod:
     circleci_ip_ranges: true
     docker:
       - image: cimg/node:lts
+    working_directory: ~/project/apps/fdr
     steps:
       - attach_workspace: { at: /home/circleci }
       - run:
-          command: yarn run prod:db:migrate
+          command: yarn run db:migrate:prod
           name: prisma deploy
 
   deploy-prod:
@@ -96,14 +93,14 @@ jobs:
       - attach_workspace: { at: /home/circleci }
       - aws-cli/setup
       - run:
+          name: cdk deploy
           command: |
             git_version="$(scripts/git-version.sh)"
-            yarn run prod:docker "${git_version}"
+            yarn run docker:prod "${git_version}"
             npm install -g aws-cdk
-            cd fdr-deploy
-            npm install
-            VERSION="${git_version}" cdk deploy fdr-prod --require-approval never --progress events
-          name: cdk deploy
+            yarn install
+            cd apps/fdr-deploy
+            VERSION="${git_version}" yarn workspace fdr-deploy deploy:prod
 
   publish-sdks:
     machine:

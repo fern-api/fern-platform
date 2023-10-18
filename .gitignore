@@ -1,21 +1,11 @@
-# node
-node_modules/
-/lib
-tsconfig.tsbuildinfo
-build/
-
-# webpack
-bundle.js
-
 # Mac
 .DS_Store
 
-# generated code
-src/api/generated
-src/__test__/generated
+# node
+node_modules/
+tsconfig.tsbuildinfo
+build/
 
+dist/
 
-src/playground
-
-hello
-/goodbye
+.turbo
