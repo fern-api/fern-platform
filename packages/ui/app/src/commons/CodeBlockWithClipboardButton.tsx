@@ -9,6 +9,7 @@ type CodeBlockWithClipboardButtonProps = {
     language: string;
     content: string;
     clipboardButtonDistanceFromEdges: "sm" | "lg";
+    fontSize: "sm" | "lg";
 };
 
 export const CodeBlockWithClipboardButton: React.FC<CodeBlockWithClipboardButtonProps> = ({
@@ -16,6 +17,7 @@ export const CodeBlockWithClipboardButton: React.FC<CodeBlockWithClipboardButton
     language,
     content,
     clipboardButtonDistanceFromEdges,
+    fontSize,
 }) => {
     const { theme } = useDocsContext();
     return (
@@ -28,7 +30,7 @@ export const CodeBlockWithClipboardButton: React.FC<CodeBlockWithClipboardButton
                 })}
                 content={content}
             />
-            <CodeBlockSkeleton theme={theme} language={language} content={content} />
+            <CodeBlockSkeleton theme={theme} language={language} content={content} fontSize={fontSize} />
         </div>
     );
 };

@@ -51,7 +51,12 @@ const COMPONENTS: MDXRemoteProps["components"] = {
             return null;
         }
         return (
-            <CodeBlockWithClipboardButton language={language} content={content} clipboardButtonDistanceFromEdges="lg" />
+            <CodeBlockWithClipboardButton
+                language={language}
+                content={content}
+                clipboardButtonDistanceFromEdges="lg"
+                fontSize="lg"
+            />
         );
     },
     code: InlineCode,

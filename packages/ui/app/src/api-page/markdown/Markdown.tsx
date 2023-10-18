@@ -65,6 +65,7 @@ export const Markdown = React.memo<Markdown.Props>(function Markdown({ children,
                                 language={language}
                                 content={content}
                                 clipboardButtonDistanceFromEdges="sm"
+                                fontSize="sm"
                             />
                         );
                     }
