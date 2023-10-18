@@ -11,21 +11,16 @@ export declare namespace DocsMainContent {
 export const DocsMainContent: React.FC<DocsMainContent.Props> = () => {
     const { activeNavigatable, resolvedPath } = useNavigationContext();
 
-    if (activeNavigatable.type === "page" && resolvedPath.type === "custom-markdown-page") {
-        return (
-            <CustomDocsPage
-                serializedMdxContent={resolvedPath.serializedMdxContent}
-                navigatable={activeNavigatable}
-                resolvedPath={resolvedPath}
-            />
-        );
-    } else if (isApiNode(activeNavigatable)) {
-        return (
-            <ApiDefinitionContextProvider apiSection={activeNavigatable.section}>
-                <ApiPage />
-            </ApiDefinitionContextProvider>
-        );
-    } else {
-        return null;
+    switch (resolvedPath.type) {
+        case "custom-markdown-page":
+            return <CustomDocsPage resolvedPath={resolvedPath} />;
+        case "api-page": {
+            const apiSection = isApiNode(activeNavigatable) ? activeNavigatable.section : resolvedPath.apiSection;
+            return (
+                <ApiDefinitionContextProvider apiSection={apiSection}>
+                    <ApiPage />
+                </ApiDefinitionContextProvider>
+            );
+        }
     }
 };

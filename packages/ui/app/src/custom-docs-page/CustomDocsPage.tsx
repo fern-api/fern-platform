@@ -1,5 +1,3 @@
-import { type DocsNode } from "@fern-api/fdr-sdk";
-import { SerializedMdxContent } from "@fern-ui/app-utils";
 import { useMemo } from "react";
 import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
 import { HEADER_HEIGHT } from "../constants";
@@ -10,20 +8,18 @@ import { TableOfContents } from "./TableOfContents";
 
 export declare namespace CustomDocsPage {
     export interface Props {
-        navigatable: DocsNode.Page;
-        serializedMdxContent: SerializedMdxContent | undefined;
         resolvedPath: ResolvedPath.CustomMarkdownPage;
     }
 }
 
-export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ serializedMdxContent, resolvedPath }) => {
+export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath }) => {
     const { resolvePage } = useDocsContext();
 
     const page = useMemo(() => resolvePage(resolvedPath.page.id), [resolvedPath.page.id, resolvePage]);
 
     const content = useMemo(() => {
-        return serializedMdxContent != null ? <MdxContent mdx={serializedMdxContent} /> : null;
-    }, [serializedMdxContent]);
+        return <MdxContent mdx={resolvedPath.serializedMdxContent} />;
+    }, [resolvedPath.serializedMdxContent]);
 
     return (
         <div className="flex space-x-16 px-6 md:px-12">
