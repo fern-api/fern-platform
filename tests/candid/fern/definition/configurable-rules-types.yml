@@ -18,7 +18,6 @@ types:
           For conveying that a type is unknown. Unknown types are considered compatible with all other types.
           For internal use only within the framework, e.g. an unknown container type is compatible with any expected container type.
           Not for external use, e.g. the framework will never allow unknown literals to be provided by a client.
-      # TODO: map?
       # map: MapType
 
   PrimitiveType:
@@ -26,7 +25,6 @@ types:
     union:
       native_primitive: NativePrimitiveType
       aliased_primitive: AliasedPrimitiveType
-      # TODO: enum?
       # enum: EnumType
 
   NativePrimitiveType:
@@ -268,7 +266,6 @@ types:
       create_task_v2: CreateTaskV2Action
       then_validate_or_else: ThenValidateOrElseAction
       route_to_work_queue: RouteToWorkQueueAction
-      # TODO: More types!
       # create_task: CreateTaskAction
       # multi: MultiAction
       # set_claim_status: SetClaimStatusAction
@@ -373,7 +370,6 @@ types:
     properties:
       work_queue_id: commons.WorkQueueId
 
-  #  TODO: we might want to list available work queue IDs
   RouteToWorkQueueAvailableAction:
     properties: {}
 

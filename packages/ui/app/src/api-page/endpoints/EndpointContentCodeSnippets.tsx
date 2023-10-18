@@ -85,6 +85,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         language={selectedExampleClient.language}
                         theme={theme}
                         usePlainStyles
+                        fontSize="sm"
                         style={{ maxHeight: requestHeight - TITLED_EXAMPLE_PADDING }}
                     />
                 )}

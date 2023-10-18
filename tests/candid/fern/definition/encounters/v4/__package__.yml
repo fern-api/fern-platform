@@ -132,7 +132,7 @@ service:
       errors:
         - EncounterExternalIdUniquenessError
         - commons.EntityNotFoundError
-        - EncounterGuarantorMissingContactInfoError # TODO: remove this error (no longer thrown)
+        - EncounterGuarantorMissingContactInfoError
         - commons.HttpRequestValidationsError
         - CashPayPayerError
 

@@ -10,6 +10,7 @@ type CodeBlockSkeletonProps = {
     language: string;
     content: string;
     usePlainStyles?: boolean;
+    fontSize: "sm" | "lg";
     style?: React.CSSProperties;
 };
 
@@ -19,6 +20,7 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
     language,
     content,
     usePlainStyles = false,
+    fontSize,
     style,
 }) => {
     return (
@@ -43,7 +45,7 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
                     paddingRight: 16,
                     paddingLeft: 16,
                     paddingBottom: 20,
-                    fontSize: 12,
+                    fontSize: fontSize === "sm" ? 12 : 13,
                     background: "unset",
                     backgroundColor: "unset",
                     fontFamily: "inherit",
