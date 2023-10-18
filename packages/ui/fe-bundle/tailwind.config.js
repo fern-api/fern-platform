@@ -40,7 +40,7 @@ module.exports = {
                 background: withOpacity("--background"),
 
                 "intent-default": "rgb(156, 163, 175)",
-                "intent-warning-dark": "rgb(251, 190, 36)",
+                "intent-warning-dark": "rgb(248, 210, 111)",
                 "intent-warning-light": "rgb(217, 119, 6)",
                 "intent-success-dark": "rgb(74, 222, 128)",
                 "intent-success-light": "rgb(22, 163, 74)",
