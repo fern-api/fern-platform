@@ -44,7 +44,7 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
                     margin: 0,
                     paddingRight: 16,
                     paddingLeft: 16,
-                    paddingBottom: 20,
+                    paddingBottom: 12,
                     fontSize: fontSize === "sm" ? 12 : 14,
                     lineHeight: fontSize === "sm" ? "20px" : "24px",
                     background: "unset",

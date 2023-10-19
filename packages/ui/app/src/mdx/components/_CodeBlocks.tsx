@@ -40,6 +40,7 @@ export const _CodeBlocks: React.FC<React.PropsWithChildren<_CodeBlocks.Props>> =
                 <CopyToClipboardButton className="ml-auto mr-4" content={codeBlockItem.content} />
             </div>
             <CodeBlockSkeleton
+                className="max-h-[350px] overflow-y-auto"
                 theme={theme}
                 language={codeBlockItem.language}
                 content={codeBlockItem.content}
