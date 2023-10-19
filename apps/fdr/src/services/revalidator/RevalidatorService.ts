@@ -71,10 +71,12 @@ export class RevalidatorServiceImpl implements RevalidatorService {
 
         const resultsArr = await Promise.all(
             domains.map(async (domain) => {
-                const urls = slugs.map((slug) => joinUrlSlugs(domain, slug));
                 return await Promise.all(
-                    urls.map(async (url) => {
-                        const resp = await this.revalidatePath(url);
+                    slugs.map(async (slug) => {
+                        const baseUrl = domain;
+                        const path = `/${slug}`;
+                        const url = joinUrlSlugs(baseUrl, slug);
+                        const resp = await this.revalidatePath({ domain, path });
                         return { ...resp, url };
                     }),
                 );
@@ -84,11 +86,11 @@ export class RevalidatorServiceImpl implements RevalidatorService {
         return this.groupResults(resultsArr.flat(1));
     }
 
-    private async revalidatePath(url: string): Promise<ResponseBody> {
+    private async revalidatePath({ domain, path }: { domain: string; path: string }): Promise<ResponseBody> {
         try {
-            const body: RequestBody = { path: url };
+            const body: RequestBody = { path };
             const response = await this.axiosInstance.post<SuccessResponseBody>(
-                `${new URL(url).origin}/api/revalidate-v2`,
+                `${new URL(domain).origin}/api/revalidate-v2`,
                 body,
             );
             return { success: response.data.success };
