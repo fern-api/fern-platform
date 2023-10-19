@@ -6,6 +6,7 @@ import { convertApiDefinitionToRead } from "../../../converters/read/convertAPID
 import { convertDbDocsConfigToRead } from "../../../converters/read/convertDocsConfigToRead";
 import { type S3FileInfo } from "../../../services/s3";
 import { getParsedUrl } from "../../../util";
+import { createObjectFromMap } from "../../../util/object";
 
 const DOCS_REGISTRATIONS: Record<DocsV1Write.DocsRegistrationId, DocsRegistrationInfo> = {};
 
@@ -180,9 +181,11 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 const results = await app.services.revalidator.revalidatePaths({
                     definition: {
                         apis: Object.fromEntries(
-                            Object.entries(apiDefinitionsById).map(([definitionId, apiDefinition]) => {
-                                return [definitionId, convertApiDefinitionToRead(apiDefinition)];
-                            }),
+                            Object.entries(createObjectFromMap(apiDefinitionsById)).map(
+                                ([definitionId, apiDefinition]) => {
+                                    return [definitionId, convertApiDefinitionToRead(apiDefinition)];
+                                },
+                            ),
                         ),
                         config: convertDbDocsConfigToRead({
                             dbShape: dbDocsDefinition.config,

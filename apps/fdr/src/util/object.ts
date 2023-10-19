@@ -21,3 +21,11 @@ function compactVal(val: unknown): unknown {
     if (isPlainObject(val)) return compact(val);
     return val;
 }
+
+export function createObjectFromMap<K extends string, V>(map: Map<K, V>): Record<K, V> {
+    const obj = {} as Record<K, V>;
+    map.forEach((val, key) => {
+        obj[key] = val;
+    });
+    return obj;
+}
