@@ -17,12 +17,16 @@ export const CodeBlockWithClipboardButton: React.FC<CodeBlockWithClipboardButton
 }) => {
     const { theme } = useDocsContext();
     return (
-        <div className="border-default relative mb-5 flex w-full rounded-t-lg border-t">
+        <div className="group/cb-container border-default relative mb-5 flex w-full rounded-t-lg border-t">
             <CopyToClipboardButton
-                className={classNames("absolute right-3 top-3 ml-auto", {
-                    "right-3 top-3": variant === "sm",
-                    "right-4 top-4": variant === "lg",
-                })}
+                className={classNames(
+                    "absolute right-3 top-3 ml-auto",
+                    "transition opacity-0 group-hover/cb-container:opacity-100",
+                    {
+                        "right-3 top-3": variant === "sm",
+                        "right-4 top-4": variant === "lg",
+                    }
+                )}
                 content={content}
             />
             <CodeBlockSkeleton
