@@ -106,13 +106,7 @@ jobs:
     machine:
       image: ubuntu-2004:current
     steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn
-      - run:
-          name: fern generate
-          command: |
-            npm install -g fern-api
+      - attach_workspace: { at: /home/circleci }
       - run:
           name: Publish FDR Fiddle SDK
           command: |
@@ -127,7 +121,7 @@ jobs:
             version_replace="s/0.0.0/${git_version}/"
             cat package.json.tmp| sed "${version_replace}" > package.json
             rm -rf pakcage.json.tmp
-            yarn workspace @fern-api/fdr-sdk publish --access public     
+            npm publish --access public     
       - run:
           name: Register definition
           command: |
