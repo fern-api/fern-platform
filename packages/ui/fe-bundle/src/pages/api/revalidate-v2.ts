@@ -31,22 +31,14 @@ interface ErrorParseResult {
 }
 
 function parseRequestBody(rawBody: unknown): ParseResult {
-    try {
-        if (typeof rawBody !== "string") {
-            return { success: false, message: "Request body missing." };
-        }
-        const parsed = JSON.parse(rawBody);
-        if (!isPlainObject(parsed)) {
-            return { success: false, message: "Request body is not a plain object." };
-        }
-        const { path } = parsed;
-        if (typeof path !== "string") {
-            return { success: false, message: 'Expected "path" in request body to be a string.' };
-        }
-        return { success: true, request: { path } };
-    } catch (e) {
-        return { success: false, message: "Cannot parse request body as JSON." };
+    if (!isPlainObject(rawBody)) {
+        return { success: false, message: "Request body is not a plain object." };
     }
+    const { path } = rawBody;
+    if (typeof path !== "string") {
+        return { success: false, message: 'Expected "path" in request body to be a string.' };
+    }
+    return { success: true, request: { path } };
 }
 
 const handler: NextApiHandler = async (req, res: NextApiResponse<ResponseBody>) => {
