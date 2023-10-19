@@ -1,4 +1,3 @@
-import * as FernRegistryDocsRead from "../../../../generated/api/resources/docs/resources/v1/resources/read";
 import { DocsDefinitionSummary } from "../../../types";
 
 export const DEFINITION_WITH_COLLIDING_SLUGS_2: DocsDefinitionSummary = {
@@ -13,7 +12,7 @@ export const DEFINITION_WITH_COLLIDING_SLUGS_2: DocsDefinitionSummary = {
         navigation: {
             versions: [
                 {
-                    version: FernRegistryDocsRead.VersionId("v2"),
+                    version: "v2",
                     urlSlug: "v2",
                     config: {
                         tabs: [
@@ -31,13 +30,13 @@ export const DEFINITION_WITH_COLLIDING_SLUGS_2: DocsDefinitionSummary = {
                                         items: [
                                             {
                                                 type: "page",
-                                                id: FernRegistryDocsRead.PageId("introduction/getting-started.mdx"),
+                                                id: "introduction/getting-started.mdx",
                                                 title: "Getting Started",
                                                 urlSlug: "getting-started",
                                             },
                                             {
                                                 type: "page",
-                                                id: FernRegistryDocsRead.PageId("introduction/authentication.mdx"),
+                                                id: "introduction/authentication.mdx",
                                                 title: "Authentication",
                                                 urlSlug: "authentication",
                                             },
@@ -49,7 +48,7 @@ export const DEFINITION_WITH_COLLIDING_SLUGS_2: DocsDefinitionSummary = {
                     },
                 },
                 {
-                    version: FernRegistryDocsRead.VersionId("v1"),
+                    version: "v1",
                     urlSlug: "v1",
                     config: {
                         items: [
@@ -62,7 +61,7 @@ export const DEFINITION_WITH_COLLIDING_SLUGS_2: DocsDefinitionSummary = {
                                 items: [
                                     {
                                         type: "page",
-                                        id: FernRegistryDocsRead.PageId("introduction/getting-started.mdx"),
+                                        id: "introduction/getting-started.mdx",
                                         title: "Getting Started",
                                         urlSlug: "getting-started",
                                     },

@@ -146,28 +146,28 @@ MAKING AN EXAMPLE REQUEST
 
 In this example, we'll create an Encounter using the V4 API.
 
-\`\`\`python created_encounter = client.encounters.v_4.create( external_id=EncounterExternalId(\\"emr-claim-id-abcd\\"),
-date_of_service=Date(\\"2023-05-23\\"), billable_status=BillableStatusType.BILLABLE, # or BillableStatusType.NOT_BILLABLE
+\`\`\`python created_encounter = client.encounters.v_4.create( external_id=EncounterExternalId(\\"emr-claim-id-abcd\\",
+date_of_service=Date(\\"2023-05-23\\", billable_status=BillableStatusType.BILLABLE, # or BillableStatusType.NOT_BILLABLE
 responsible_party=ResponsiblePartyType.INSURANCE_PAY, # or ResponsiblePartyType.SELF_PAY patient=PatientCreate(
-external_id=\\"emr-patient-id-123\\", first_name=\\"Loki\\", last_name=\\"Laufeyson\\", date_of_birth=Date(\\"1983-12-17\\"), gender=Gender.MALE,
+external_id=\\"emr-patient-id-123\\", first_name=\\"Loki\\", last_name=\\"Laufeyson\\", date_of_birth=Date(\\"1983-12-17\\", gender=Gender.MALE,
 address=StreetAddressShortZip( address_1=\\"1234 Main St\\", address_2=\\"Apt 9876\\", city=\\"Asgard\\", state=State.CA, zip_code=\\"94109\\",
 zip_plus_four_code=\\"1234\\", ), ), patient_authorized_release=True, billing_provider=BillingProvider( organization_name=\\"Acme Health
 PC\\", npi=\\"1234567890\\", tax_id=\\"123456789\\", address=StreetAddressLongZip( address_1=\\"1234 Main St\\", address_2=\\"Apt 9876\\",
 city=\\"Asgard\\", state=State.CA, zip_code=\\"94109\\", zip_plus_four_code=\\"1234\\", ), ), rendering_provider=RenderingProvider(
 first_name=\\"Doctor\\", last_name=\\"Strange\\", npi=\\"9876543210\\", ), diagnoses=[ DiagnosisCreate(code_type=DiagnosisTypeCode.ABF,
-code=\\"Z63.88\\"), DiagnosisCreate(code_type=DiagnosisTypeCode.ABF, code=\\"E66.66\\"), ],
+code=\\"Z63.88\\", DiagnosisCreate(code_type=DiagnosisTypeCode.ABF, code=\\"E66.66\\", ],
 place_of_service_code=FacilityTypeCode.TELEHEALTH, service_lines=[ ServiceLineCreate( procedure_code=\\"99212\\", modifiers=[],
-quantity=Decimal(\\"1.0\\"), units=ServiceLineUnits.UN, charge_amount_cents=1500, diagnosis_pointers=[0, 1], ), ], clinical_notes=[],
+quantity=Decimal(\\"1.0\\", units=ServiceLineUnits.UN, charge_amount_cents=1500, diagnosis_pointers=[0, 1], ), ], clinical_notes=[],
 provider_accepts_assignment=True, benefits_assigned_to_provider=True, ) \`\`\` \`\`\`typescript const createEncounterResponse = await
-client.encounters.v4.create({ externalId: CandidApi.EncounterExternalId(\\"emr-claim-id-abcd\\"), dateOfService:
-CandidApi.Date_(\\"2023-05-23\\"), billableStatus: \\"BILLABLE\\", // or \\"NOT_BILLABLE responsibleParty: \\"INSURANCE_PAY\\", // or \\"SELF_PAY\\"
-patient: { externalId: \\"emr-patient-id-123\\", firstName: \\"Loki\\", lastName: \\"Laufeyson\\", dateOfBirth: CandidApi.Date_(\\"1983-12-17\\"),
+client.encounters.v4.create({ externalId: CandidApi.EncounterExternalId(\\"emr-claim-id-abcd\\", dateOfService:
+CandidApi.Date_(\\"2023-05-23\\", billableStatus: \\"BILLABLE\\", // or \\"NOT_BILLABLE responsibleParty: \\"INSURANCE_PAY\\", // or \\"SELF_PAY\\"
+patient: { externalId: \\"emr-patient-id-123\\", firstName: \\"Loki\\", lastName: \\"Laufeyson\\", dateOfBirth: CandidApi.Date_(\\"1983-12-17\\",
 gender: \\"male\\", address: { address1: \\"1234 Main St\\", address2: \\"Apt 9876\\", city: \\"Asgard\\", state: \\"CA\\", zipCode: \\"94109\\",
 zipPlusFourCode: \\"1234\\", }, }, patientAuthorizedRelease: true, billingProvider: { organizationName: \\"Acme Health PC\\", npi:
 \\"1234567890\\", taxId: \\"123456789\\", address: { address1: \\"1234 Main St\\", address2: \\"Apt 9876\\", city: \\"Asgard\\", state: \\"CA\\", zipCode:
 \\"94109\\", zipPlusFourCode: \\"1234\\", }, }, renderingProvider: { firstName: \\"Doctor\\", lastName: \\"Strange\\", npi: \\"9876543210\\", },
 diagnoses: [ { codeType: \\"ABF\\", code: \\"Z63.88\\" }, { codeType: \\"ABF\\", code: \\"E66.66\\" }, ], placeOfServiceCode: \\"02\\", //
-telemedicine serviceLines: [ { procedureCode: \\"99212\\", modifiers: [], quantity: CandidApi.Decimal(\\"1.0\\"), units: \\"UN\\",
+telemedicine serviceLines: [ { procedureCode: \\"99212\\", modifiers: [], quantity: CandidApi.Decimal(\\"1.0\\", units: \\"UN\\",
 chargeAmountCents: 1500, diagnosisPointers: [0, 1], } ], clinicalNotes: [], providerAcceptsAssignment: true,
 benefitsAssignedToProvider: true, }); \`\`\`
 
@@ -212,15 +212,15 @@ client = CandidApiClient(
 )
 
 created_encounter = client.encounters.v_4.create(
-    external_id=EncounterExternalId(\\"emr-claim-id-abcd\\"),
-    date_of_service=Date(\\"2023-05-23\\"),
+    external_id=EncounterExternalId(\\"emr-claim-id-abcd\\",
+    date_of_service=Date(\\"2023-05-23\\",
     billable_status=BillableStatusType.BILLABLE,  # or BillableStatusType.NOT_BILLABLE
     responsible_party=ResponsiblePartyType.INSURANCE_PAY,  # or ResponsiblePartyType.SELF_PAY
     patient=PatientCreate(
         external_id=\\"emr-patient-id-123\\",
         first_name=\\"Loki\\",
         last_name=\\"Laufeyson\\",
-        date_of_birth=Date(\\"1983-12-17\\"),
+        date_of_birth=Date(\\"1983-12-17\\",
         gender=Gender.MALE,
         address=StreetAddressShortZip(
             address_1=\\"1234 Main St\\",
@@ -251,15 +251,15 @@ created_encounter = client.encounters.v_4.create(
         npi=\\"9876543210\\",
     ),
     diagnoses=[
-        DiagnosisCreate(code_type=DiagnosisTypeCode.ABF, code=\\"Z63.88\\"),
-        DiagnosisCreate(code_type=DiagnosisTypeCode.ABF, code=\\"E66.66\\"),
+        DiagnosisCreate(code_type=DiagnosisTypeCode.ABF, code=\\"Z63.88\\",
+        DiagnosisCreate(code_type=DiagnosisTypeCode.ABF, code=\\"E66.66\\",
     ],
     place_of_service_code=FacilityTypeCode.TELEHEALTH,
     service_lines=[
         ServiceLineCreate(
             procedure_code=\\"99212\\",
             modifiers=[],
-            quantity=Decimal(\\"1.0\\"),
+            quantity=Decimal(\\"1.0\\",
             units=ServiceLineUnits.UN,
             charge_amount_cents=1500,
             diagnosis_pointers=[0, 1],
@@ -282,15 +282,15 @@ const client = new CandidApiClient({
 });
 
 const createEncounterResponse = await client.encounters.v4.create({
-    externalId: CandidApi.EncounterExternalId(\\"emr-claim-id-abcd\\"),
-    dateOfService: CandidApi.Date_(\\"2023-05-23\\"),
+    externalId: CandidApi.EncounterExternalId(\\"emr-claim-id-abcd\\",
+    dateOfService: CandidApi.Date_(\\"2023-05-23\\",
     billableStatus: \\"BILLABLE\\", // or \\"NOT_BILLABLE
     responsibleParty: \\"INSURANCE_PAY\\", // or \\"SELF_PAY\\"
     patient: {
         externalId: \\"emr-patient-id-123\\",
         firstName: \\"Loki\\",
         lastName: \\"Laufeyson\\",
-        dateOfBirth: CandidApi.Date_(\\"1983-12-17\\"),
+        dateOfBirth: CandidApi.Date_(\\"1983-12-17\\",
         gender: \\"male\\",
         address: {
             address1: \\"1234 Main St\\",
@@ -329,7 +329,7 @@ const createEncounterResponse = await client.encounters.v4.create({
         {
             procedureCode: \\"99212\\",
             modifiers: [],
-            quantity: CandidApi.Decimal(\\"1.0\\"),
+            quantity: CandidApi.Decimal(\\"1.0\\",
             units: \\"UN\\",
             chargeAmountCents: 1500,
             diagnosisPointers: [0, 1],

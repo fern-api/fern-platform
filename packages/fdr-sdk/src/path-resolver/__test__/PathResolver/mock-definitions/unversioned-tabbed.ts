@@ -1,4 +1,3 @@
-import * as FernRegistryDocsRead from "../../../../generated/api/resources/docs/resources/v1/resources/read";
 import { DocsDefinitionSummary } from "../../../types";
 
 export const DEFINITION_UNVERSIONED_TABBED: DocsDefinitionSummary = {
@@ -26,13 +25,13 @@ export const DEFINITION_UNVERSIONED_TABBED: DocsDefinitionSummary = {
                             items: [
                                 {
                                     type: "page",
-                                    id: FernRegistryDocsRead.PageId("introduction/getting-started.mdx"),
+                                    id: "introduction/getting-started.mdx",
                                     title: "Getting Started",
                                     urlSlug: "getting-started",
                                 },
                                 {
                                     type: "page",
-                                    id: FernRegistryDocsRead.PageId("introduction/authentication.mdx"),
+                                    id: "introduction/authentication.mdx",
                                     title: "Authentication",
                                     urlSlug: "authentication",
                                 },
@@ -47,13 +46,13 @@ export const DEFINITION_UNVERSIONED_TABBED: DocsDefinitionSummary = {
                             items: [
                                 {
                                     type: "page",
-                                    id: FernRegistryDocsRead.PageId("advanced-concepts/streaming.mdx"),
+                                    id: "advanced-concepts/streaming.mdx",
                                     title: "Streaming",
                                     urlSlug: "streaming",
                                 },
                                 {
                                     type: "page",
-                                    id: FernRegistryDocsRead.PageId("advanced-concepts/sharding.mdx"),
+                                    id: "advanced-concepts/sharding.mdx",
                                     title: "Sharding",
                                     urlSlug: "sharding",
                                 },
@@ -75,13 +74,13 @@ export const DEFINITION_UNVERSIONED_TABBED: DocsDefinitionSummary = {
                             items: [
                                 {
                                     type: "page",
-                                    id: FernRegistryDocsRead.PageId("documents/uploading-documents.mdx"),
+                                    id: "documents/uploading-documents.mdx",
                                     title: "Uploading Documents",
                                     urlSlug: "uploading-documents",
                                 },
                                 {
                                     type: "page",
-                                    id: FernRegistryDocsRead.PageId("documents/deleting-documents.mdx"),
+                                    id: "documents/deleting-documents.mdx",
                                     title: "Deleting Documents",
                                     urlSlug: "deleting-documents",
                                 },

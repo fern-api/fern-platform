@@ -1,5 +1,5 @@
+import { FernRegistry } from "@fern-api/fdr-sdk";
 import type { DocsV2, IndexSegment } from "@prisma/client";
-import { FernRegistry } from "fdr-sdk";
 
 export function createApiDefinition({
     endpointId,

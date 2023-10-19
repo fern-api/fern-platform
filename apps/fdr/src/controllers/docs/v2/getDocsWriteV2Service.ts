@@ -1,8 +1,9 @@
-import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
-import { DocsV1Write, DocsV2Write, DocsV2WriteService, FdrAPI } from "../../../api";
+import { APIV1Db, DocsV1Write, DocsV2Write, DocsV2WriteService, FdrAPI } from "../../../api";
 import { type FdrApplication } from "../../../app";
 import { transformWriteDocsDefinitionToDb } from "../../../converters/db/convertDocsDefinitionToDb";
+import { convertApiDefinitionToRead } from "../../../converters/read/convertAPIDefinitionToRead";
+import { convertDbDocsConfigToRead } from "../../../converters/read/convertDocsConfigToRead";
 import { type S3FileInfo } from "../../../services/s3";
 import { getParsedUrl } from "../../../util";
 
@@ -124,10 +125,6 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                     orgId: docsRegistrationInfo.orgId,
                 });
 
-                const previousDocsDefinition = await app.dao
-                    .docsV2()
-                    .loadDocsForURL(getParsedUrl(docsRegistrationInfo.fernDomain));
-
                 app.logger.info(`[${docsRegistrationInfo.fernDomain}] Transforming Docs Definition to DB`);
                 const dbDocsDefinition = transformWriteDocsDefinitionToDb({
                     writeShape: req.body.docsDefinition,
@@ -146,11 +143,21 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                         : [generateNewIndexSegmentsResult.configSegmentTuple];
                 const newIndexSegments = configSegmentTuples.map(([, seg]) => seg);
 
+                const apiDefinitionsById = await (async () => {
+                    const apiIdDefinitionTuples = await Promise.all(
+                        dbDocsDefinition.referencedApis.map(
+                            async (id) => [id, await app.services.db.getApiDefinition(id)] as const,
+                        ),
+                    );
+                    return new Map(apiIdDefinitionTuples) as Map<string, APIV1Db.DbApiDefinition>;
+                })();
+
                 app.logger.info(`[${docsRegistrationInfo.fernDomain}] Generating search records for all versions`);
-                const searchRecords = await app.services.algolia.generateSearchRecords(
-                    dbDocsDefinition,
+                const searchRecords = await app.services.algolia.generateSearchRecords({
+                    docsDefinition: dbDocsDefinition,
+                    apiDefinitionsById,
                     configSegmentTuples,
-                );
+                });
 
                 app.logger.info(`[${docsRegistrationInfo.fernDomain}] Uploading search records to Algolia`);
                 await app.services.algolia.uploadSearchRecords(searchRecords);
@@ -165,43 +172,33 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
                 delete DOCS_REGISTRATIONS[req.params.docsRegistrationId];
 
-                // revalidate nextjs
-                const urls = [
+                const domains = [
                     docsRegistrationInfo.fernDomain,
                     ...docsRegistrationInfo.customDomains.map((domain) => `${domain.hostname}${domain.path}`),
-                ].map((url) => `https://${url}`);
-                await Promise.all(
-                    urls.map(async (url) => {
-                        try {
-                            app.logger.info(`[${docsRegistrationInfo.fernDomain}] Revalidating url: ${url}`);
-                            await app.services.revalidator.revalidateUrl({
-                                url,
-                                docsConfigId: previousDocsDefinition?.docsConfigInstanceId ?? undefined,
-                            });
-                            app.logger.info(`[${docsRegistrationInfo.fernDomain}] Revalidated url: ${url}`);
-                        } catch (e) {
-                            if (axios.isAxiosError(e)) {
-                                app.logger.error(
-                                    `[${docsRegistrationInfo.fernDomain}] Failed to revalidate url: ${url}. ` +
-                                        JSON.stringify(e.toJSON()),
-                                );
-                                await app.services.slack.notifyFailedToRegisterDocs({
-                                    domain: docsRegistrationInfo.fernDomain,
-                                    err: JSON.stringify(e.toJSON()),
-                                });
-                            } else {
-                                app.logger.error(
-                                    `[${docsRegistrationInfo.fernDomain}] Failed to revalidate url: ${url}. ` +
-                                        (e as Error).message,
-                                );
-                                await app.services.slack.notifyFailedToRegisterDocs({
-                                    domain: docsRegistrationInfo.fernDomain,
-                                    err: e,
-                                });
-                            }
-                        }
-                    }),
-                );
+                ];
+
+                const results = await app.services.revalidator.revalidatePaths({
+                    definition: {
+                        apis: Object.fromEntries(
+                            Object.entries(apiDefinitionsById).map(([definitionId, apiDefinition]) => {
+                                return [definitionId, convertApiDefinitionToRead(apiDefinition)];
+                            }),
+                        ),
+                        config: convertDbDocsConfigToRead({
+                            dbShape: dbDocsDefinition.config,
+                        }),
+                    },
+                    domains,
+                });
+
+                if (results.error.length === 0) {
+                    app.logger.info(`Successfully revalidated ${results.success.length} paths.`);
+                } else {
+                    await app.services.slack.notifyFailedToRevalidatePaths({
+                        domain: docsRegistrationInfo.fernDomain,
+                        paths: results,
+                    });
+                }
 
                 return res.send();
             } catch (e) {

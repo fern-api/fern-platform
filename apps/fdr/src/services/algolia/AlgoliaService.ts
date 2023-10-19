@@ -7,10 +7,11 @@ import type { AlgoliaSearchRecord, ConfigSegmentTuple } from "./types";
 export interface AlgoliaService {
     deleteIndexSegmentRecords(indexSegmentIds: string[]): Promise<void>;
 
-    generateSearchRecords(
-        docsDefinition: DocsV1Db.DocsDefinitionDb,
-        configSegmentTuples: ConfigSegmentTuple[],
-    ): Promise<AlgoliaSearchRecord[]>;
+    generateSearchRecords(params: {
+        docsDefinition: DocsV1Db.DocsDefinitionDb;
+        apiDefinitionsById: Map<string, APIV1Db.DbApiDefinition>;
+        configSegmentTuples: ConfigSegmentTuple[];
+    }): Promise<AlgoliaSearchRecord[]>;
 
     uploadSearchRecords(records: AlgoliaSearchRecord[]): Promise<void>;
 
@@ -37,19 +38,15 @@ export class AlgoliaServiceImpl implements AlgoliaService {
         await this.index.saveObjects(records).wait();
     }
 
-    public async generateSearchRecords(
-        docsDefinition: DocsV1Db.DocsDefinitionDb,
-        configSegmentTuples: ConfigSegmentTuple[],
-    ) {
-        const preloadApiDefinitions = async () => {
-            const apiIdDefinitionTuples = await Promise.all(
-                docsDefinition.referencedApis.map(
-                    async (id) => [id, await this.app.services.db.getApiDefinition(id)] as const,
-                ),
-            );
-            return new Map(apiIdDefinitionTuples) as Map<string, APIV1Db.DbApiDefinition>;
-        };
-        const apiDefinitionsById = await preloadApiDefinitions();
+    public async generateSearchRecords({
+        docsDefinition,
+        apiDefinitionsById,
+        configSegmentTuples,
+    }: {
+        docsDefinition: DocsV1Db.DocsDefinitionDb;
+        apiDefinitionsById: Map<string, APIV1Db.DbApiDefinition>;
+        configSegmentTuples: ConfigSegmentTuple[];
+    }) {
         return configSegmentTuples.flatMap(([config, indexSegment]) => {
             const generator = new AlgoliaSearchRecordGenerator({ docsDefinition, apiDefinitionsById });
             return generator.generateAlgoliaSearchRecordsForSpecificDocsVersion(config, indexSegment);

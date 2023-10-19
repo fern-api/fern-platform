@@ -16,8 +16,10 @@ groups:
           location: local-file-system
           path: ../packages/fdr-sdk/src/generated
         config:
+          noSerdeLayer: true
           outputSourceFiles: true
-          useBrandedStringAliases: true
+          neverThrowErrors: true
+          timeoutInSeconds: infinity
   fiddle:
     audiences:
       - fiddle
@@ -31,34 +33,3 @@ groups:
         config:
           wrapped-aliases: true
           enable-forward-compatible-enums: true
-  internal-write:
-    audiences:
-      - write
-    generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 0.7.2
-        output:
-          location: npm
-          url: npm.buildwithfern.com
-          package-name: "@fern-fern/registry-node"
-        config:
-          useBrandedStringAliases: true
-          neverThrowErrors: true
-          includeUtilsOnUnionMembers: true
-          includeOtherInUnionTypes: true
-          timeoutInSeconds: infinity
-  internal-read:
-    audiences:
-      - read
-    generators:
-      - name: fernapi/fern-typescript-browser-sdk
-        version: 0.7.1-4-gaf955d38
-        output:
-          location: npm
-          url: npm.buildwithfern.com
-          package-name: "@fern-fern/registry-browser"
-        config:
-          useBrandedStringAliases: true
-          neverThrowErrors: true
-          includeUtilsOnUnionMembers: true
-          noSerdeLayer: true

@@ -1,4 +1,3 @@
-import * as FernRegistryDocsRead from "../../../../generated/api/resources/docs/resources/v1/resources/read";
 import { DocsDefinitionSummary } from "../../../types";
 
 export const DEFINITION_UNVERSIONED_UNTABBED: DocsDefinitionSummary = {
@@ -21,13 +20,13 @@ export const DEFINITION_UNVERSIONED_UNTABBED: DocsDefinitionSummary = {
                     items: [
                         {
                             type: "page",
-                            id: FernRegistryDocsRead.PageId("introduction/getting-started.mdx"),
+                            id: "introduction/getting-started.mdx",
                             title: "Getting Started",
                             urlSlug: "getting-started",
                         },
                         {
                             type: "page",
-                            id: FernRegistryDocsRead.PageId("introduction/authentication.mdx"),
+                            id: "introduction/authentication.mdx",
                             title: "Authentication",
                             urlSlug: "authentication",
                         },

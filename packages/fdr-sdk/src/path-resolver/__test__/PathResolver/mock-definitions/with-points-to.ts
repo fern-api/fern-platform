@@ -1,36 +1,35 @@
 import * as FernRegistryApiRead from "../../../../generated/api/resources/api/resources/v1/resources/read";
-import * as FernRegistryDocsRead from "../../../../generated/api/resources/docs/resources/v1/resources/read";
 import { DocsDefinitionSummary } from "../../../types";
 
 const API_DEF_1: FernRegistryApiRead.ApiDefinition = {
     id: "api-1" as FernRegistryApiRead.ApiDefinition["id"],
     rootPackage: {
         endpoints: [],
-        subpackages: [FernRegistryApiRead.SubpackageId("new-sub")],
+        subpackages: ["new-sub"],
         types: [],
         webhooks: [],
     },
     subpackages: {
-        [FernRegistryApiRead.SubpackageId("new-sub")]: {
+        ["new-sub"]: {
             name: "",
-            subpackageId: FernRegistryApiRead.SubpackageId("new-sub"),
-            subpackages: [FernRegistryApiRead.SubpackageId("old-sub")],
+            subpackageId: "new-sub",
+            subpackages: ["old-sub"],
             types: [],
             urlSlug: "new-sub",
             webhooks: [],
             endpoints: [],
-            pointsTo: FernRegistryApiRead.SubpackageId("old-sub"),
+            pointsTo: "old-sub",
         },
-        [FernRegistryApiRead.SubpackageId("old-sub")]: {
+        ["old-sub"]: {
             name: "",
-            subpackageId: FernRegistryApiRead.SubpackageId("old-sub"),
+            subpackageId: "old-sub",
             subpackages: [],
             types: [],
             urlSlug: "old-sub",
             webhooks: [],
             endpoints: [
                 {
-                    id: FernRegistryApiRead.EndpointId("ep_1"),
+                    id: "ep_1",
                     method: "POST",
                     authed: false,
                     environments: [],
@@ -42,7 +41,7 @@ const API_DEF_1: FernRegistryApiRead.ApiDefinition = {
                     urlSlug: "create-agent",
                 },
                 {
-                    id: FernRegistryApiRead.EndpointId("ep_2"),
+                    id: "ep_2",
                     method: "POST",
                     authed: false,
                     environments: [],
@@ -81,13 +80,13 @@ export const DEFINITION_WITH_POINTS_TO: DocsDefinitionSummary = {
                     items: [
                         {
                             type: "page",
-                            id: FernRegistryDocsRead.PageId("introduction/getting-started.mdx"),
+                            id: "introduction/getting-started.mdx",
                             title: "Getting Started",
                             urlSlug: "getting-started",
                         },
                         {
                             type: "page",
-                            id: FernRegistryDocsRead.PageId("introduction/authentication.mdx"),
+                            id: "introduction/authentication.mdx",
                             title: "Authentication",
                             urlSlug: "authentication",
                         },

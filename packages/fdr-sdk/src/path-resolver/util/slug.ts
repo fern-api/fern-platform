@@ -4,7 +4,11 @@ import type { NavigatableDocsNode } from "../types";
  * Joins the given URL slugs with a `/`. Ignores empty ones.
  */
 export function joinUrlSlugs(...parts: string[]): string {
-    return parts.filter((part) => part.length > 0).join("/");
+    return parts
+        .map(withoutTrailingSlash)
+        .map((part, i) => (i === 0 ? part : withoutLeadingSlash(part)))
+        .filter((part) => part.length > 0)
+        .join("/");
 }
 
 type GetFullSlugForNavigatableOpts = {
@@ -21,4 +25,12 @@ export function getFullSlugForNavigatable(node: NavigatableDocsNode, opts?: GetF
     }
     parts.push(node.leadingSlug);
     return joinUrlSlugs(...parts);
+}
+
+function withoutLeadingSlash(s: string): string {
+    return s.startsWith("/") ? s.substring(1) : s;
+}
+
+function withoutTrailingSlash(s: string): string {
+    return s.endsWith("/") ? s.substring(0, s.length - 1) : s;
 }

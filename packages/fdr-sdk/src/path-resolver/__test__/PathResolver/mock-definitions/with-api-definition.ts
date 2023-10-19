@@ -1,5 +1,4 @@
 import * as FernRegistryApiRead from "../../../../generated/api/resources/api/resources/v1/resources/read";
-import * as FernRegistryDocsRead from "../../../../generated/api/resources/docs/resources/v1/resources/read";
 import { DocsDefinitionSummary } from "../../../types";
 
 const API_DEF_1: FernRegistryApiRead.ApiDefinition = {
@@ -7,7 +6,7 @@ const API_DEF_1: FernRegistryApiRead.ApiDefinition = {
     rootPackage: {
         endpoints: [
             {
-                id: FernRegistryApiRead.EndpointId("ep_1"),
+                id: "ep_1",
                 method: "POST",
                 authed: false,
                 environments: [],
@@ -19,7 +18,7 @@ const API_DEF_1: FernRegistryApiRead.ApiDefinition = {
                 urlSlug: "generate-completion",
             },
             {
-                id: FernRegistryApiRead.EndpointId("ep_2"),
+                id: "ep_2",
                 method: "DELETE",
                 authed: false,
                 environments: [],
@@ -31,21 +30,21 @@ const API_DEF_1: FernRegistryApiRead.ApiDefinition = {
                 urlSlug: "delete-completion",
             },
         ],
-        subpackages: [FernRegistryApiRead.SubpackageId("sub-1")],
+        subpackages: ["sub-1"],
         types: [],
         webhooks: [],
     },
     subpackages: {
-        [FernRegistryApiRead.SubpackageId("sub-1")]: {
+        ["sub-1"]: {
             name: "",
-            subpackageId: FernRegistryApiRead.SubpackageId("sub-1"),
+            subpackageId: "sub-1",
             subpackages: [],
             types: [],
             urlSlug: "agents",
             webhooks: [],
             endpoints: [
                 {
-                    id: FernRegistryApiRead.EndpointId("ep_1"),
+                    id: "ep_1",
                     method: "POST",
                     authed: false,
                     environments: [],
@@ -57,7 +56,7 @@ const API_DEF_1: FernRegistryApiRead.ApiDefinition = {
                     urlSlug: "create-agent",
                 },
                 {
-                    id: FernRegistryApiRead.EndpointId("ep_2"),
+                    id: "ep_2",
                     method: "POST",
                     authed: false,
                     environments: [],
@@ -101,13 +100,13 @@ export const DEFINITION_WITH_API: DocsDefinitionSummary = {
                             items: [
                                 {
                                     type: "page",
-                                    id: FernRegistryDocsRead.PageId("introduction/getting-started.mdx"),
+                                    id: "introduction/getting-started.mdx",
                                     title: "Getting Started",
                                     urlSlug: "getting-started",
                                 },
                                 {
                                     type: "page",
-                                    id: FernRegistryDocsRead.PageId("introduction/authentication.mdx"),
+                                    id: "introduction/authentication.mdx",
                                     title: "Authentication",
                                     urlSlug: "authentication",
                                 },
@@ -122,13 +121,13 @@ export const DEFINITION_WITH_API: DocsDefinitionSummary = {
                             items: [
                                 {
                                     type: "page",
-                                    id: FernRegistryDocsRead.PageId("advanced-concepts/streaming.mdx"),
+                                    id: "advanced-concepts/streaming.mdx",
                                     title: "Streaming",
                                     urlSlug: "streaming",
                                 },
                                 {
                                     type: "page",
-                                    id: FernRegistryDocsRead.PageId("advanced-concepts/sharding.mdx"),
+                                    id: "advanced-concepts/sharding.mdx",
                                     title: "Sharding",
                                     urlSlug: "sharding",
                                 },
@@ -150,13 +149,13 @@ export const DEFINITION_WITH_API: DocsDefinitionSummary = {
                             items: [
                                 {
                                     type: "page",
-                                    id: FernRegistryDocsRead.PageId("documents/uploading-documents.mdx"),
+                                    id: "documents/uploading-documents.mdx",
                                     title: "Uploading Documents",
                                     urlSlug: "uploading-documents",
                                 },
                                 {
                                     type: "page",
-                                    id: FernRegistryDocsRead.PageId("documents/deleting-documents.mdx"),
+                                    id: "documents/deleting-documents.mdx",
                                     title: "Deleting Documents",
                                     urlSlug: "deleting-documents",
                                 },

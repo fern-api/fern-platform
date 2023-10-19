@@ -1,4 +1,4 @@
-import type * as APIV1Write from "fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/register";
+import type * as APIV1Write from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/register";
 import { resolve } from "path";
 import { transformApiDefinitionForDb } from "../../../converters/db/convertAPIDefinitionToDb";
 import { SDKSnippetHolder } from "../../../converters/db/snippets/SDKSnippetHolder";

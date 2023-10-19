@@ -1,7 +1,7 @@
+import { FernRegistry, FernRegistryClient } from "@fern-api/fdr-sdk";
 import { PrismaClient } from "@prisma/client";
 import { addHours, subHours } from "date-fns";
 import express from "express";
-import { FernRegistry, FernRegistryClient, FernRegistryError } from "fdr-sdk";
 import http from "http";
 import { uniqueId } from "lodash";
 import { register } from "../../api";
@@ -17,6 +17,7 @@ import { getSnippetsService } from "../../controllers/snippets/getSnippetsServic
 import { DEFAULT_SNIPPETS_PAGE_SIZE } from "../../db/snippets/SnippetsDao";
 import { createMockFdrApplication } from "../mock";
 import { createApiDefinition, createMockDocs, createMockIndexSegment } from "./util";
+import { APIResponse } from "@fern-api/fdr-sdk/dist/generated/core";
 
 const PORT = 9999;
 
@@ -83,7 +84,7 @@ const EMPTY_REGISTER_API_DEFINITION: FernRegistry.api.v1.register.ApiDefinition 
 };
 
 const MOCK_REGISTER_API_DEFINITION: FernRegistry.api.v1.register.ApiDefinition = createApiDefinition({
-    endpointId: FernRegistry.api.v1.register.EndpointId("dummy"),
+    endpointId: "dummy",
     endpointMethod: "POST",
     endpointPath: {
         parts: [{ type: "literal", value: "dummy" }],
@@ -91,16 +92,29 @@ const MOCK_REGISTER_API_DEFINITION: FernRegistry.api.v1.register.ApiDefinition =
     },
 });
 
+function getAPIResponse<Success, Failure>(response: APIResponse<Success, Failure>): Success {
+    if (response.ok) {
+        return response.body;
+    }
+    throw new Error(`Received error from response: ${JSON.stringify(response.error)}`);
+}
+
 it("definition register", async () => {
     // register empty definition
-    const emptyDefinitionRegisterResponse = await CLIENT.api.v1.register.registerApiDefinition({
-        orgId: FernRegistry.OrgId("fern"),
-        apiId: FernRegistry.ApiId("api"),
-        definition: EMPTY_REGISTER_API_DEFINITION,
-    });
+    const emptyDefinitionRegisterResponse = getAPIResponse(
+        await CLIENT.api.v1.register.registerApiDefinition({
+            orgId: "fern",
+            apiId: "api",
+            definition: EMPTY_REGISTER_API_DEFINITION,
+        }),
+    );
+
     console.log(`Registered empty definition. Received ${emptyDefinitionRegisterResponse.apiDefinitionId}`);
     // load empty definition
-    const registeredEmptyDefinition = await CLIENT.api.v1.read.getApi(emptyDefinitionRegisterResponse.apiDefinitionId);
+    const registeredEmptyDefinition = getAPIResponse(
+        await CLIENT.api.v1.read.getApi(emptyDefinitionRegisterResponse.apiDefinitionId),
+    );
+
     // assert definitions are equal
     expect(JSON.stringify(registeredEmptyDefinition.types)).toEqual(
         JSON.stringify(EMPTY_REGISTER_API_DEFINITION.types),
@@ -111,13 +125,17 @@ it("definition register", async () => {
     expect(registeredEmptyDefinition.rootPackage).toEqual(EMPTY_REGISTER_API_DEFINITION.rootPackage);
 
     // register updated definition
-    const updatedDefinitionRegisterResponse = await CLIENT.api.v1.register.registerApiDefinition({
-        orgId: FernRegistry.OrgId("fern"),
-        apiId: FernRegistry.ApiId("api"),
-        definition: MOCK_REGISTER_API_DEFINITION,
-    });
+    const updatedDefinitionRegisterResponse = getAPIResponse(
+        await CLIENT.api.v1.register.registerApiDefinition({
+            orgId: "fern",
+            apiId: "api",
+            definition: MOCK_REGISTER_API_DEFINITION,
+        }),
+    );
     // load updated definition
-    const updatedDefinition = await CLIENT.api.v1.read.getApi(updatedDefinitionRegisterResponse.apiDefinitionId);
+    const updatedDefinition = getAPIResponse(
+        await CLIENT.api.v1.read.getApi(updatedDefinitionRegisterResponse.apiDefinitionId),
+    );
     // assert definitions equal
     expect(JSON.stringify(updatedDefinition.types)).toEqual(JSON.stringify(MOCK_REGISTER_API_DEFINITION.types));
     expect(JSON.stringify(updatedDefinition.subpackages)).toEqual(
@@ -135,7 +153,7 @@ const WRITE_DOCS_REGISTER_DEFINITION: FernRegistry.docs.v1.write.DocsDefinition 
         typography: {
             headingsFont: {
                 name: "Syne",
-                fontFile: FernRegistry.docs.v1.write.FileId(fontFileId),
+                fontFile: fontFileId,
             },
         },
     },
@@ -143,30 +161,33 @@ const WRITE_DOCS_REGISTER_DEFINITION: FernRegistry.docs.v1.write.DocsDefinition 
 
 it("docs register", async () => {
     // register docs
-    const startDocsRegisterResponse = await CLIENT.docs.v1.write.startDocsRegister({
-        orgId: FernRegistry.OrgId("fern"),
-        domain: "docs.fern.com",
-        filepaths: [
-            FernRegistry.docs.v1.write.FilePath("logo.png"),
-            FernRegistry.docs.v1.write.FilePath("guides/guide.mdx"),
-        ],
-    });
+    const startDocsRegisterResponse = getAPIResponse(
+        await CLIENT.docs.v1.write.startDocsRegister({
+            orgId: "fern",
+            domain: "docs.fern.com",
+            filepaths: ["logo.png", "guides/guide.mdx"],
+        }),
+    );
     await CLIENT.docs.v1.write.finishDocsRegister(startDocsRegisterResponse.docsRegistrationId, {
         docsDefinition: WRITE_DOCS_REGISTER_DEFINITION,
     });
     // load docs
-    const docs = await CLIENT.docs.v1.read.getDocsForDomain({
-        domain: "docs.fern.com",
-    });
+    const docs = getAPIResponse(
+        await CLIENT.docs.v1.read.getDocsForDomain({
+            domain: "docs.fern.com",
+        }),
+    );
     // assert docs have 2 file urls
     expect(Object.entries(docs.files)).toHaveLength(2);
 
     // re-register docs
-    const startDocsRegisterResponse2 = await CLIENT.docs.v1.write.startDocsRegister({
-        orgId: FernRegistry.OrgId("fern"),
-        domain: "docs.fern.com",
-        filepaths: [],
-    });
+    const startDocsRegisterResponse2 = getAPIResponse(
+        await CLIENT.docs.v1.write.startDocsRegister({
+            orgId: "fern",
+            domain: "docs.fern.com",
+            filepaths: [],
+        }),
+    );
     await CLIENT.docs.v1.write.finishDocsRegister(startDocsRegisterResponse2.docsRegistrationId, {
         docsDefinition: WRITE_DOCS_REGISTER_DEFINITION,
     });
@@ -174,24 +195,24 @@ it("docs register", async () => {
 
 it("docs register V2", async () => {
     // register docs
-    const startDocsRegisterResponse = await CLIENT.docs.v2.write.startDocsRegister({
-        orgId: FernRegistry.OrgId("acme"),
-        apiId: FernRegistry.ApiId("api"),
-        domain: "https://acme.docs.buildwithfern.com",
-        customDomains: ["https://docs.useacme.com/docs"],
-        filepaths: [
-            FernRegistry.docs.v1.write.FilePath("logo.png"),
-            FernRegistry.docs.v1.write.FilePath("guides/guide.mdx"),
-            FernRegistry.docs.v1.write.FilePath("fonts/Syne.woff2"),
-        ],
-    });
+    const startDocsRegisterResponse = getAPIResponse(
+        await CLIENT.docs.v2.write.startDocsRegister({
+            orgId: "acme",
+            apiId: "api",
+            domain: "https://acme.docs.buildwithfern.com",
+            customDomains: ["https://docs.useacme.com/docs"],
+            filepaths: ["logo.png", "guides/guide.mdx", "fonts/Syne.woff2"],
+        }),
+    );
     await CLIENT.docs.v2.write.finishDocsRegister(startDocsRegisterResponse.docsRegistrationId, {
         docsDefinition: WRITE_DOCS_REGISTER_DEFINITION,
     });
     // load docs
-    let docs = await CLIENT.docs.v2.read.getDocsForUrl({
-        url: "https://acme.docs.buildwithfern.com/my/random/slug",
-    });
+    let docs = getAPIResponse(
+        await CLIENT.docs.v2.read.getDocsForUrl({
+            url: "https://acme.docs.buildwithfern.com/my/random/slug",
+        }),
+    );
     expect(docs.baseUrl.domain).toEqual("acme.docs.buildwithfern.com");
     expect(Object.entries(docs.definition.files)).toHaveLength(3);
     expect(docs.definition.config.typography).toEqual({
@@ -201,21 +222,25 @@ it("docs register V2", async () => {
         },
     });
     // load docs again
-    docs = await CLIENT.docs.v2.read.getDocsForUrl({
-        url: "https://docs.useacme.com/docs/1/",
-    });
+    docs = getAPIResponse(
+        await CLIENT.docs.v2.read.getDocsForUrl({
+            url: "https://docs.useacme.com/docs/1/",
+        }),
+    );
     expect(docs.baseUrl.domain).toEqual("docs.useacme.com");
     expect(docs.baseUrl.basePath).toEqual("/docs");
     expect(Object.entries(docs.definition.files)).toHaveLength(3);
 
     //re-register docs
-    const startDocsRegisterResponse2 = await CLIENT.docs.v2.write.startDocsRegister({
-        orgId: FernRegistry.OrgId("acme"),
-        apiId: FernRegistry.ApiId("api"),
-        domain: "https://acme.docs.buildwithfern.com",
-        customDomains: ["https://docs.useacme.com"],
-        filepaths: [],
-    });
+    const startDocsRegisterResponse2 = getAPIResponse(
+        await CLIENT.docs.v2.write.startDocsRegister({
+            orgId: "acme",
+            apiId: "api",
+            domain: "https://acme.docs.buildwithfern.com",
+            customDomains: ["https://docs.useacme.com"],
+            filepaths: [],
+        }),
+    );
     await CLIENT.docs.v2.write.finishDocsRegister(startDocsRegisterResponse2.docsRegistrationId, {
         docsDefinition: WRITE_DOCS_REGISTER_DEFINITION,
     });
@@ -290,7 +315,7 @@ it("snippet api dao", async () => {
                 snippets: [
                     {
                         endpoint: {
-                            path: FernRegistry.EndpointPath("/users/v1"),
+                            path: "/users/v1",
                             method: FernRegistry.EndpointMethod.Get,
                         },
                         snippet: {
@@ -337,8 +362,8 @@ it("snippets dao", async () => {
     // create snippets
     await serverApp?.dao.snippets().storeSnippets({
         storeSnippetsInfo: {
-            orgId: FernRegistry.OrgId("acme"),
-            apiId: FernRegistry.ApiId("api"),
+            orgId: "acme",
+            apiId: "api",
             sdk: {
                 type: "python",
                 sdk: {
@@ -348,7 +373,7 @@ it("snippets dao", async () => {
                 snippets: [
                     {
                         endpoint: {
-                            path: FernRegistry.EndpointPath("/users/v1"),
+                            path: "/users/v1",
                             method: FernRegistry.EndpointMethod.Get,
                         },
                         snippet: {
@@ -363,8 +388,8 @@ it("snippets dao", async () => {
     // overwrite snippets for the same SDK
     await serverApp?.dao.snippets().storeSnippets({
         storeSnippetsInfo: {
-            orgId: FernRegistry.OrgId("acme"),
-            apiId: FernRegistry.ApiId("api"),
+            orgId: "acme",
+            apiId: "api",
             sdk: {
                 type: "python",
                 sdk: {
@@ -374,7 +399,7 @@ it("snippets dao", async () => {
                 snippets: [
                     {
                         endpoint: {
-                            path: FernRegistry.EndpointPath("/users/v1"),
+                            path: "/users/v1",
                             method: FernRegistry.EndpointMethod.Get,
                         },
                         snippet: {
@@ -389,10 +414,10 @@ it("snippets dao", async () => {
     // get snippets
     const response = await serverApp?.dao.snippets().loadSnippetsPage({
         loadSnippetsInfo: {
-            orgId: FernRegistry.OrgId("acme"),
-            apiId: FernRegistry.ApiId("api"),
+            orgId: "acme",
+            apiId: "api",
             endpointIdentifier: {
-                path: FernRegistry.EndpointPath("/users/v1"),
+                path: "/users/v1",
                 method: FernRegistry.EndpointMethod.Get,
             },
             sdks: undefined,
@@ -451,8 +476,8 @@ it("snippets dao", async () => {
 it("get snippets", async () => {
     // create snippets
     await CLIENT.snippetsFactory.createSnippetsForSdk({
-        orgId: FernRegistry.OrgId("acme"),
-        apiId: FernRegistry.ApiId("foo"),
+        orgId: "acme",
+        apiId: "foo",
         snippets: {
             type: "python",
             sdk: {
@@ -462,64 +487,67 @@ it("get snippets", async () => {
             snippets: [
                 {
                     endpoint: {
-                        path: FernRegistry.EndpointPath("/snippets/load"),
+                        path: "/snippets/load",
                         method: FernRegistry.EndpointMethod.Post,
                     },
                     snippet: {
-                        asyncClient: "const petstore = new AsyncPetstoreClient(\napi_key='YOUR_API_KEY',\n)",
-                        syncClient: "const petstore = new PetstoreClient(\napi_key='YOUR_API_KEY',\n)",
+                        async_client: "const petstore = new AsyncPetstoreClient(\napi_key='YOUR_API_KEY',\n)",
+                        sync_client: "const petstore = new PetstoreClient(\napi_key='YOUR_API_KEY',\n)",
                     },
                 },
             ],
         },
     });
     // get snippets
-    const snippets = await CLIENT.get({
-        apiId: FernRegistry.ApiId("foo"),
-        endpoint: {
-            path: FernRegistry.EndpointPath("/snippets/load"),
-            method: FernRegistry.EndpointMethod.Post,
-        },
-    });
+    const snippets = getAPIResponse(
+        await CLIENT.get({
+            apiId: "foo",
+            endpoint: {
+                path: "/snippets/load",
+                method: FernRegistry.EndpointMethod.Post,
+            },
+        }),
+    );
     expect(snippets.length).toEqual(1);
 
     const snippet = snippets[0] as FernRegistry.PythonSnippet;
     expect(snippet.sdk.package).toEqual("acme");
     expect(snippet.sdk.version).toEqual("0.0.2");
-    expect(snippet.asyncClient).toEqual("const petstore = new AsyncPetstoreClient(\napi_key='YOUR_API_KEY',\n)");
-    expect(snippet.syncClient).toEqual("const petstore = new PetstoreClient(\napi_key='YOUR_API_KEY',\n)");
+    expect(snippet.async_client).toEqual("const petstore = new AsyncPetstoreClient(\napi_key='YOUR_API_KEY',\n)");
+    expect(snippet.sync_client).toEqual("const petstore = new PetstoreClient(\napi_key='YOUR_API_KEY',\n)");
     // register API definition for acme org
-    const apiDefinitionResponse = await CLIENT.api.v1.register.registerApiDefinition({
-        orgId: FernRegistry.OrgId("acme"),
-        apiId: FernRegistry.ApiId("foo"),
-        definition: createApiDefinition({
-            endpointId: FernRegistry.api.v1.register.EndpointId("/snippets/load"),
-            endpointMethod: "POST",
-            endpointPath: {
-                parts: [
-                    { type: "literal", value: "/snippets" },
-                    { type: "literal", value: "/load" },
-                ],
-                pathParameters: [],
-            },
-            snippetsConfig: {
-                pythonSdk: {
-                    package: "acme",
+    const apiDefinitionResponse = getAPIResponse(
+        await CLIENT.api.v1.register.registerApiDefinition({
+            orgId: "acme",
+            apiId: "foo",
+            definition: createApiDefinition({
+                endpointId: "/snippets/load",
+                endpointMethod: "POST",
+                endpointPath: {
+                    parts: [
+                        { type: "literal", value: "/snippets" },
+                        { type: "literal", value: "/load" },
+                    ],
+                    pathParameters: [],
                 },
-            },
+                snippetsConfig: {
+                    pythonSdk: {
+                        package: "acme",
+                    },
+                },
+            }),
         }),
-    });
+    );
     // register docs
-    const startDocsRegisterResponse = await CLIENT.docs.v2.write.startDocsRegister({
-        orgId: FernRegistry.OrgId("acme"),
-        apiId: FernRegistry.ApiId("foo"),
-        domain: "https://acme.docs.buildwithfern.com",
-        customDomains: [],
-        filepaths: [
-            FernRegistry.docs.v1.write.FilePath("logo.png"),
-            FernRegistry.docs.v1.write.FilePath("guides/guide.mdx"),
-        ],
-    });
+    const startDocsRegisterResponse = getAPIResponse(
+        await CLIENT.docs.v2.write.startDocsRegister({
+            orgId: "acme",
+            apiId: "foo",
+            domain: "https://acme.docs.buildwithfern.com",
+            customDomains: [],
+            filepaths: ["logo.png", "guides/guide.mdx"],
+        }),
+    );
     await CLIENT.docs.v2.write.finishDocsRegister(startDocsRegisterResponse.docsRegistrationId, {
         docsDefinition: {
             pages: {},
@@ -536,23 +564,25 @@ it("get snippets", async () => {
                 typography: {
                     headingsFont: {
                         name: "Syne",
-                        fontFile: FernRegistry.docs.v1.write.FileId(fontFileId),
+                        fontFile: fontFileId,
                     },
                 },
             },
         },
     });
     // get docs for url
-    const docs = await CLIENT.docs.v2.read.getDocsForUrl({
-        url: "https://acme.docs.buildwithfern.com",
-    });
+    const docs = getAPIResponse(
+        await CLIENT.docs.v2.read.getDocsForUrl({
+            url: "https://acme.docs.buildwithfern.com",
+        }),
+    );
     const apiDefinition = docs.definition.apis[apiDefinitionResponse.apiDefinitionId];
     expect(apiDefinition).not.toEqual(undefined);
     expect(apiDefinition?.rootPackage.endpoints[0]?.examples[0]?.codeExamples.pythonSdk).not.toEqual(undefined);
-    expect(apiDefinition?.rootPackage.endpoints[0]?.examples[0]?.codeExamples.pythonSdk?.asyncClient).toEqual(
+    expect(apiDefinition?.rootPackage.endpoints[0]?.examples[0]?.codeExamples.pythonSdk?.async_client).toEqual(
         "const petstore = new AsyncPetstoreClient(\napi_key='YOUR_API_KEY',\n)",
     );
-    expect(apiDefinition?.rootPackage.endpoints[0]?.examples[0]?.codeExamples.pythonSdk?.syncClient).toEqual(
+    expect(apiDefinition?.rootPackage.endpoints[0]?.examples[0]?.codeExamples.pythonSdk?.sync_client).toEqual(
         "const petstore = new PetstoreClient(\napi_key='YOUR_API_KEY',\n)",
     );
 });
@@ -560,8 +590,8 @@ it("get snippets", async () => {
 it("get snippets with unregistered API", async () => {
     // create snippets
     await CLIENT.snippetsFactory.createSnippetsForSdk({
-        orgId: FernRegistry.OrgId("acme"),
-        apiId: FernRegistry.ApiId("fresh"),
+        orgId: "acme",
+        apiId: "fresh",
         snippets: {
             type: "typescript",
             sdk: {
@@ -571,7 +601,7 @@ it("get snippets with unregistered API", async () => {
             snippets: [
                 {
                     endpoint: {
-                        path: FernRegistry.EndpointPath("/users/v1"),
+                        path: "/users/v1",
                         method: FernRegistry.EndpointMethod.Get,
                     },
                     snippet: {
@@ -582,13 +612,15 @@ it("get snippets with unregistered API", async () => {
         },
     });
     // get snippets
-    const snippets = await CLIENT.get({
-        apiId: FernRegistry.ApiId("fresh"),
-        endpoint: {
-            path: FernRegistry.EndpointPath("/users/v1"),
-            method: FernRegistry.EndpointMethod.Get,
-        },
-    });
+    const snippets = getAPIResponse(
+        await CLIENT.get({
+            apiId: "fresh",
+            endpoint: {
+                path: "/users/v1",
+                method: FernRegistry.EndpointMethod.Get,
+            },
+        }),
+    );
     expect(snippets.length).toEqual(1);
 
     const snippet = snippets[0] as FernRegistry.TypeScriptSnippet;
@@ -600,8 +632,8 @@ it("get snippets with unregistered API", async () => {
 it("load snippets", async () => {
     // register API definition for acme org
     await CLIENT.api.v1.register.registerApiDefinition({
-        orgId: FernRegistry.OrgId("acme"),
-        apiId: FernRegistry.ApiId("user"),
+        orgId: "acme",
+        apiId: "user",
         definition: EMPTY_REGISTER_API_DEFINITION,
     });
     // initialize enough snippets to occupy two pages
@@ -609,7 +641,7 @@ it("load snippets", async () => {
     for (let i = 0; i < DEFAULT_SNIPPETS_PAGE_SIZE * 2; i++) {
         snippets.push({
             endpoint: {
-                path: FernRegistry.EndpointPath(`/users/v${i}`),
+                path: `/users/v${i}`,
                 method: FernRegistry.EndpointMethod.Get,
             },
             snippet: {
@@ -619,8 +651,8 @@ it("load snippets", async () => {
     }
     // create snippets
     await CLIENT.snippetsFactory.createSnippetsForSdk({
-        orgId: FernRegistry.OrgId("acme"),
-        apiId: FernRegistry.ApiId("petstore"),
+        orgId: "acme",
+        apiId: "petstore",
         snippets: {
             type: "typescript",
             sdk: {
@@ -632,14 +664,16 @@ it("load snippets", async () => {
     });
 
     // load snippets (first page)
-    const firstResponse = await CLIENT.load({
-        apiId: FernRegistry.ApiId("petstore"),
-    });
+    const firstResponse = getAPIResponse(
+        await CLIENT.load({
+            apiId: "petstore",
+        }),
+    );
     expect(firstResponse.next).toEqual(2);
     expect(Object.keys(firstResponse.snippets).length).toEqual(DEFAULT_SNIPPETS_PAGE_SIZE);
 
     for (let i = 0; i < DEFAULT_SNIPPETS_PAGE_SIZE; i++) {
-        const snippetsForEndpointMethod = firstResponse.snippets[FernRegistry.EndpointPath(`/users/v${i}`)];
+        const snippetsForEndpointMethod = firstResponse.snippets[`/users/v${i}`];
         const responseSnippets = snippetsForEndpointMethod?.GET;
         expect(responseSnippets?.length).toEqual(1);
         if (responseSnippets === undefined) {
@@ -652,21 +686,23 @@ it("load snippets", async () => {
     }
 
     // load snippets (second page)
-    const secondResponse = await CLIENT.load({
-        apiId: FernRegistry.ApiId("petstore"),
-        sdks: [
-            {
-                type: "typescript",
-                package: "acme",
-                version: "0.0.1",
-            },
-        ],
-        page: firstResponse.next,
-    });
+    const secondResponse = getAPIResponse(
+        await CLIENT.load({
+            apiId: "petstore",
+            sdks: [
+                {
+                    type: "typescript",
+                    package: "acme",
+                    version: "0.0.1",
+                },
+            ],
+            page: firstResponse.next,
+        }),
+    );
     expect(Object.keys(secondResponse.snippets).length).toEqual(DEFAULT_SNIPPETS_PAGE_SIZE);
 
     for (let i = DEFAULT_SNIPPETS_PAGE_SIZE; i < DEFAULT_SNIPPETS_PAGE_SIZE * 2; i++) {
-        const snippetsForEndpointMethod = secondResponse.snippets[FernRegistry.EndpointPath(`/users/v${i}`)];
+        const snippetsForEndpointMethod = secondResponse.snippets[`/users/v${i}`];
         const responseSnippets = snippetsForEndpointMethod?.GET;
         expect(responseSnippets?.length).toEqual(1);
         if (responseSnippets === undefined) {
@@ -683,8 +719,8 @@ it("load snippets", async () => {
 it("user not part of org", async () => {
     // create snippets
     await CLIENT.snippetsFactory.createSnippetsForSdk({
-        orgId: FernRegistry.OrgId("private"),
-        apiId: FernRegistry.ApiId("baz"),
+        orgId: "private",
+        apiId: "baz",
         snippets: {
             type: "go",
             sdk: {
@@ -694,7 +730,7 @@ it("user not part of org", async () => {
             snippets: [
                 {
                     endpoint: {
-                        path: FernRegistry.EndpointPath("/users/v1"),
+                        path: "/users/v1",
                         method: FernRegistry.EndpointMethod.Get,
                     },
                     snippet: {
@@ -705,26 +741,21 @@ it("user not part of org", async () => {
         },
     });
     // get snippets
-    let unauthorizedErrorThrown = false;
-    try {
-        await CLIENT.get({
-            orgId: FernRegistry.OrgId("private"),
-            endpoint: {
-                path: FernRegistry.EndpointPath("/users/v1"),
-                method: FernRegistry.EndpointMethod.Get,
-            },
-        });
-    } catch (err: unknown) {
-        unauthorizedErrorThrown = err instanceof FernRegistryError && err.statusCode == 401;
-    }
-    expect(unauthorizedErrorThrown).toEqual(true);
+    const response = await CLIENT.get({
+        orgId: "private",
+        endpoint: {
+            path: "/users/v1",
+            method: FernRegistry.EndpointMethod.Get,
+        },
+    });
+    expect(response.ok === false && response.error.error === "UnauthorizedError");
 });
 
 it("snippets apiId not found", async () => {
     // create snippets
     await CLIENT.snippetsFactory.createSnippetsForSdk({
-        orgId: FernRegistry.OrgId("acme"),
-        apiId: FernRegistry.ApiId("petstore"),
+        orgId: "acme",
+        apiId: "petstore",
         snippets: {
             type: "typescript",
             sdk: {
@@ -734,7 +765,7 @@ it("snippets apiId not found", async () => {
             snippets: [
                 {
                     endpoint: {
-                        path: FernRegistry.EndpointPath("/users/v1"),
+                        path: "/users/v1",
                         method: FernRegistry.EndpointMethod.Get,
                     },
                     snippet: {
@@ -744,33 +775,29 @@ it("snippets apiId not found", async () => {
             ],
         },
     });
+
     // get not found apiId
-    let notFoundErrorThrown = false;
-    try {
-        await CLIENT.get({
-            apiId: FernRegistry.ApiId("dne"),
-            endpoint: {
-                path: FernRegistry.EndpointPath("/users/v1"),
-                method: FernRegistry.EndpointMethod.Get,
-            },
-        });
-    } catch (err: unknown) {
-        notFoundErrorThrown = err instanceof FernRegistryError && err.statusCode == 404;
-    }
-    expect(notFoundErrorThrown).toEqual(true);
+    const response = await CLIENT.get({
+        apiId: "dne",
+        endpoint: {
+            path: "/users/v1",
+            method: FernRegistry.EndpointMethod.Get,
+        },
+    });
+    expect(response.ok === false && response.error.error === "OrgIdAndApiIdNotFound");
 });
 
 it("get snippets (unauthenticated)", async () => {
     // register API definition for acme org
     await CLIENT.api.v1.register.registerApiDefinition({
-        orgId: FernRegistry.OrgId("acme"),
-        apiId: FernRegistry.ApiId("user"),
+        orgId: "acme",
+        apiId: "user",
         definition: EMPTY_REGISTER_API_DEFINITION,
     });
     // create snippets
     await CLIENT.snippetsFactory.createSnippetsForSdk({
-        orgId: FernRegistry.OrgId("acme"),
-        apiId: FernRegistry.ApiId("user"),
+        orgId: "acme",
+        apiId: "user",
         snippets: {
             type: "go",
             sdk: {
@@ -780,7 +807,7 @@ it("get snippets (unauthenticated)", async () => {
             snippets: [
                 {
                     endpoint: {
-                        path: FernRegistry.EndpointPath("/users/v1"),
+                        path: "/users/v1",
                         method: FernRegistry.EndpointMethod.Get,
                     },
                     snippet: {
@@ -791,17 +818,12 @@ it("get snippets (unauthenticated)", async () => {
         },
     });
     // get snippets
-    let unauthorizedErrorThrown = false;
-    try {
-        await UNAUTHENTICATED_CLIENT.get({
-            apiId: FernRegistry.ApiId("user"),
-            endpoint: {
-                path: FernRegistry.EndpointPath("/users/v1"),
-                method: FernRegistry.EndpointMethod.Get,
-            },
-        });
-    } catch (err: unknown) {
-        unauthorizedErrorThrown = err instanceof FernRegistryError && err.statusCode == 401;
-    }
-    expect(unauthorizedErrorThrown).toEqual(true);
+    const response = await UNAUTHENTICATED_CLIENT.get({
+        apiId: "user",
+        endpoint: {
+            path: "/users/v1",
+            method: FernRegistry.EndpointMethod.Get,
+        },
+    });
+    expect(response.ok === false && response.error.error === "UnauthorizedError");
 });

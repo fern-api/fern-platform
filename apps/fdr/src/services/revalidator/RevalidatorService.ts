@@ -1,44 +1,116 @@
-import axios from "axios";
+import { FernRegistry, PathResolver, joinUrlSlugs } from "@fern-api/fdr-sdk";
+import axios, { type AxiosInstance } from "axios";
 import * as AxiosLogger from "axios-logger";
 
+export interface RevalidatePathSuccessResult {
+    success: true;
+    url: string;
+}
+
+export interface RevalidatePathErrorResult {
+    success: false;
+    url: string;
+    message: string;
+}
+
+type RevalidatePathResult = RevalidatePathSuccessResult | RevalidatePathErrorResult;
+
+export type RevalidatedPaths = {
+    success: RevalidatePathSuccessResult[];
+    error: RevalidatePathErrorResult[];
+};
+
 export interface RevalidatorService {
-    revalidateUrl({ url, docsConfigId }: { url: string; docsConfigId: string | undefined }): Promise<void>;
+    revalidatePaths(params: {
+        definition: Pick<FernRegistry.docs.v1.read.DocsDefinition, "apis" | "config">;
+        domains: string[];
+    }): Promise<RevalidatedPaths>;
 }
 
-interface RevalidateResponse {
-    revalidated: string[];
-    failures: unknown[];
+interface RequestBody {
+    path: string;
 }
 
-const AXIOS_INSTANCE = axios.create();
+type ResponseBody = SuccessResponseBody | ErrorResponseBody;
 
-// @ts-expect-error See https://github.com/hg-pyun/axios-logger/issues/131
-AXIOS_INSTANCE.interceptors.request.use(AxiosLogger.requestLogger);
+interface SuccessResponseBody {
+    success: true;
+}
+
+interface ErrorResponseBody {
+    success: false;
+    message: string;
+}
 
 export class RevalidatorServiceImpl implements RevalidatorService {
-    public async revalidateUrl({
-        url,
-        docsConfigId,
+    public readonly axiosInstance: AxiosInstance;
+
+    public constructor() {
+        this.axiosInstance = axios.create();
+        // @ts-expect-error See https://github.com/hg-pyun/axios-logger/issues/131
+        this.axiosInstance.interceptors.request.use(AxiosLogger.requestLogger);
+    }
+
+    public async revalidatePaths({
+        definition,
+        domains: domainsInShortForm,
     }: {
-        url: string;
-        docsConfigId: string | undefined;
-    }): Promise<void> {
-        const response = await AXIOS_INSTANCE.post(
-            `${new URL(url).origin}/api/revalidate`,
-            docsConfigId != null
-                ? {
-                      url,
-                      docsConfigId,
-                  }
-                : { url },
+        definition: FernRegistry.docs.v1.read.DocsDefinition;
+        domains: string[];
+    }): Promise<RevalidatedPaths> {
+        const domains = domainsInShortForm.map((domain) => `https://${domain}`);
+
+        const resolver = new PathResolver({
+            definition: {
+                apis: definition.apis,
+                docsConfig: definition.config,
+            },
+        });
+
+        const slugs = resolver.getAllSlugs();
+
+        const resultsArr = await Promise.all(
+            domains.map(async (domain) => {
+                const urls = slugs.map((slug) => joinUrlSlugs(domain, slug));
+                return await Promise.all(
+                    urls.map(async (url) => {
+                        const resp = await this.revalidatePath(url);
+                        return { ...resp, url };
+                    }),
+                );
+            }),
         );
-        const responseBody = response.data as RevalidateResponse;
-        if (responseBody.failures.length > 0) {
-            throw new Error(
-                ["Failed to revalidate paths:", ...responseBody.failures.map((val) => `- ${JSON.stringify(val)}`)].join(
-                    "\n",
-                ),
+
+        return this.groupResults(resultsArr.flat(1));
+    }
+
+    private async revalidatePath(url: string): Promise<ResponseBody> {
+        try {
+            const body: RequestBody = { path: url };
+            const response = await this.axiosInstance.post<SuccessResponseBody>(
+                `${new URL(url).origin}/api/revalidate-v2`,
+                body,
             );
+            return { success: response.data.success };
+        } catch (e) {
+            const response = axios.isAxiosError(e) ? (e.response?.data as ErrorResponseBody | undefined) : undefined;
+            const message = response?.message ?? "Unknown error.";
+            return { success: false, message };
         }
+    }
+
+    private groupResults(results: RevalidatePathResult[]) {
+        const groupedResults: RevalidatedPaths = {
+            success: [],
+            error: [],
+        };
+        results.forEach((r) => {
+            if (r.success) {
+                groupedResults.success.push(r);
+            } else {
+                groupedResults.error.push(r);
+            }
+        });
+        return groupedResults;
     }
 }
