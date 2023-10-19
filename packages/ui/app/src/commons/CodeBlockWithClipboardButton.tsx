@@ -34,7 +34,7 @@ export const CodeBlockWithClipboardButton: React.FC<CodeBlockWithClipboardButton
                 language={language}
                 content={content}
                 fontSize={variant}
-                className="border-default max-h-[350px] overflow-y-auto rounded-t-lg"
+                className="max-h-[350px] overflow-y-auto rounded-t-lg"
             />
         </div>
     );
