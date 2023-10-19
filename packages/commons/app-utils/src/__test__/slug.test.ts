@@ -14,6 +14,18 @@ describe("joinUrlSlugs", () => {
             joinUrlSlugs("", "a", "", "", "b", "", "c"),
         ];
 
-        expect(new Set(expectedSlugs)).toEqual(new Set(actualSlugs));
+        expect(new Set(actualSlugs)).toEqual(new Set(expectedSlugs));
+    });
+
+    it("correctly handles leading and trailing slashes", () => {
+        const expectedSlugs = ["abc/def", "abc/def", "/abc/def", "/abc/def"];
+        const actualSlugs = [
+            joinUrlSlugs("abc/", "def"),
+            joinUrlSlugs("abc/", "def/"),
+            joinUrlSlugs("/abc/", "def/"),
+            joinUrlSlugs("/abc/", "/def/"),
+        ];
+
+        expect(new Set(actualSlugs)).toEqual(new Set(expectedSlugs));
     });
 });
