@@ -206,7 +206,7 @@ workflows:
               ignore: /.*/
             tags:
               only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
-          context: 
+          context:
             - npm
 
   preview-customer-docs:
@@ -217,67 +217,67 @@ workflows:
           context:
             - fern-tokens
             - npm
-          filters:
-            branches:
-              only:
-                - main
+          # filters:
+          #   branches:
+          #     only:
+          #       - main
       - generate-customer-docs:
           name: preview-docs-fern
           docs_path: tests/fern
           context:
             - fern-tokens
             - npm
-          filters:
-            branches:
-              only:
-                - main
+          # filters:
+          #   branches:
+          #     only:
+          #       - main
       - generate-customer-docs:
           name: preview-docs-flatfile
           docs_path: tests/flatfile
           context:
             - fern-tokens
             - npm
-          filters:
-            branches:
-              only:
-                - main
+          # filters:
+          #   branches:
+          #     only:
+          #       - main
       - generate-customer-docs:
           name: preview-docs-mercoa
           docs_path: tests/mercoa
           context:
             - fern-tokens
             - npm
-          filters:
-            branches:
-              only:
-                - main
+          # filters:
+          #   branches:
+          #     only:
+          #       - main
       - generate-customer-docs:
           name: preview-docs-primer
           docs_path: tests/primer
           context:
             - fern-tokens
             - npm
-          filters:
-            branches:
-              only:
-                - main
+          # filters:
+          #   branches:
+          #     only:
+          #       - main
       - generate-customer-docs:
           name: preview-docs-superagent
           docs_path: tests/superagent
           context:
             - fern-tokens
             - npm
-          filters:
-            branches:
-              only:
-                - main
+          # filters:
+          #   branches:
+          #     only:
+          #       - main
       - generate-customer-docs:
           name: preview-docs-vellum
           docs_path: tests/vellum
           context:
             - fern-tokens
             - npm
-          filters:
-            branches:
-              only:
-                - main
+          # filters:
+          #   branches:
+          #     only:
+          #       - main
