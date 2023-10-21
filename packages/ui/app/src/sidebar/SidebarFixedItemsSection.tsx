@@ -17,7 +17,7 @@ export declare namespace SidebarFixedItemsSection {
 }
 
 const UnmemoizedSidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> = ({ className, hideSearchBar }) => {
-    const { navigateToPath, activeNavigatable } = useNavigationContext();
+    const { navigateToPath, activeNavigatable, getSlugWithBasePath } = useNavigationContext();
     const { theme } = useDocsContext();
     const { activeNavigationConfigContext, withVersionSlug } = useDocsSelectors();
     const { openSearchDialog } = useSearchContext();
@@ -45,13 +45,21 @@ const UnmemoizedSidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Prop
                         onClick={() => {
                             const fullSlug = withVersionSlug(tab.urlSlug, { omitDefault: true });
                             navigateToPath(fullSlug);
-                            void router.replace(`/${fullSlug}`, undefined);
+                            void router.replace(`/${getSlugWithBasePath(fullSlug)}`, undefined);
                         }}
                     />
                 ))}
             </div>
         );
-    }, [showTabs, activeNavigationConfigContext, activeNavigatable, withVersionSlug, navigateToPath, router]);
+    }, [
+        showTabs,
+        activeNavigationConfigContext,
+        activeNavigatable,
+        withVersionSlug,
+        navigateToPath,
+        router,
+        getSlugWithBasePath,
+    ]);
 
     if (!showSearchBar && !showTabs) {
         return null;

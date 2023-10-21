@@ -2,6 +2,7 @@ import { Text } from "@blueprintjs/core";
 import classNames from "classnames";
 import Link from "next/link";
 import { memo, useCallback, useEffect, useRef } from "react";
+import { useNavigationContext } from "../navigation-context";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace SidebarItem {
@@ -31,6 +32,7 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
     onClick,
     isSelected,
 }) => {
+    const { getSlugWithBasePath } = useNavigationContext();
     const renderTitle = useCallback(
         ({ isHovering }: { isHovering: boolean }) => {
             return (
@@ -76,7 +78,13 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
 
     return (
         <div className={classNames(className)} ref={ref}>
-            <Link href={`/${fullSlug}`} onClick={onClick} className="!no-underline" shallow={shallow} scroll={false}>
+            <Link
+                href={`/${getSlugWithBasePath(fullSlug)}`}
+                onClick={onClick}
+                className="!no-underline"
+                shallow={shallow}
+                scroll={false}
+            >
                 <SidebarItemLayout title={renderTitle} isSelected={isSelected} />
             </Link>
         </div>
