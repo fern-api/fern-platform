@@ -1,5 +1,6 @@
 import { CodeBlockSkeleton, type CodeBlockSkeletonProps } from "@fern-ui/ui/src/commons/CodeBlockSkeleton";
 import type { Meta, StoryFn, StoryObj } from "@storybook/react";
+import { RootStylesProvider } from "./RootProvider";
 import { PYTHON_CODE_SNIPPET_1 } from "./snippets";
 
 const meta = {
@@ -12,10 +13,12 @@ const meta = {
     argTypes: {},
     decorators: [
         (Story) => (
-            <div style={{ width: "100%", padding: 100 }}>
-                {/* Decorators in Storybook also accept a function. Replace <Story/> with Story() to enable it  */}
-                <Story />
-            </div>
+            <RootStylesProvider>
+                <div style={{ width: "100%", padding: 100 }}>
+                    {/* Decorators in Storybook also accept a function. Replace <Story/> with Story() to enable it  */}
+                    <Story />
+                </div>
+            </RootStylesProvider>
         ),
     ],
 } satisfies Meta<typeof CodeBlockSkeleton>;
