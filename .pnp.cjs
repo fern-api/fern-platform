@@ -6357,6 +6357,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@storybook/addon-links", "virtual:674b16ee01826af41d31c30eefe1a2137d1a9ed6f948ada5235c8c0790807502c50478eb31deb6f821080967f6907f929c91b283ebb0906671b1a593f2555aaf#npm:7.5.1"],\
             ["@storybook/addon-onboarding", "virtual:674b16ee01826af41d31c30eefe1a2137d1a9ed6f948ada5235c8c0790807502c50478eb31deb6f821080967f6907f929c91b283ebb0906671b1a593f2555aaf#npm:1.0.8"],\
             ["@storybook/addon-postcss", "npm:2.0.0"],\
+            ["@storybook/addon-themes", "virtual:674b16ee01826af41d31c30eefe1a2137d1a9ed6f948ada5235c8c0790807502c50478eb31deb6f821080967f6907f929c91b283ebb0906671b1a593f2555aaf#npm:7.5.1"],\
             ["@storybook/blocks", "virtual:674b16ee01826af41d31c30eefe1a2137d1a9ed6f948ada5235c8c0790807502c50478eb31deb6f821080967f6907f929c91b283ebb0906671b1a593f2555aaf#npm:7.5.1"],\
             ["@storybook/react", "virtual:674b16ee01826af41d31c30eefe1a2137d1a9ed6f948ada5235c8c0790807502c50478eb31deb6f821080967f6907f929c91b283ebb0906671b1a593f2555aaf#npm:7.5.1"],\
             ["@storybook/react-vite", "virtual:674b16ee01826af41d31c30eefe1a2137d1a9ed6f948ada5235c8c0790807502c50478eb31deb6f821080967f6907f929c91b283ebb0906671b1a593f2555aaf#npm:7.5.1"],\
@@ -8836,6 +8837,40 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["postcss", "npm:7.0.39"],\
             ["postcss-loader", "virtual:b5e539ced6f4b3131b6ee9af1a1a78d66c13001e7f137f6b56899c524b32b9192942b70a808b0900d472d7f1d27836ee93da412d24d890b4d09c9e25247c0fc3#npm:4.3.0"],\
             ["style-loader", "virtual:b5e539ced6f4b3131b6ee9af1a1a78d66c13001e7f137f6b56899c524b32b9192942b70a808b0900d472d7f1d27836ee93da412d24d890b4d09c9e25247c0fc3#npm:1.3.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@storybook/addon-themes", [\
+        ["npm:7.5.1", {\
+          "packageLocation": "./.yarn/cache/@storybook-addon-themes-npm-7.5.1-a517c37cb7-f62f439af0.zip/node_modules/@storybook/addon-themes/",\
+          "packageDependencies": [\
+            ["@storybook/addon-themes", "npm:7.5.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:674b16ee01826af41d31c30eefe1a2137d1a9ed6f948ada5235c8c0790807502c50478eb31deb6f821080967f6907f929c91b283ebb0906671b1a593f2555aaf#npm:7.5.1", {\
+          "packageLocation": "./.yarn/__virtual__/@storybook-addon-themes-virtual-4e1965f34d/0/cache/@storybook-addon-themes-npm-7.5.1-a517c37cb7-f62f439af0.zip/node_modules/@storybook/addon-themes/",\
+          "packageDependencies": [\
+            ["@storybook/addon-themes", "virtual:674b16ee01826af41d31c30eefe1a2137d1a9ed6f948ada5235c8c0790807502c50478eb31deb6f821080967f6907f929c91b283ebb0906671b1a593f2555aaf#npm:7.5.1"],\
+            ["@storybook/client-logger", "npm:7.5.1"],\
+            ["@storybook/components", "virtual:6f81602dc5f28976726c0c105edb6ca03312587cec70e67f5fb5a9a569fa8689616d6bc877e5bb4c9ce49feb266cad0a20cedfa8dad527d2cf93b5dda9a97f83#npm:7.5.1"],\
+            ["@storybook/core-events", "npm:7.5.1"],\
+            ["@storybook/manager-api", "virtual:e13c81d4219f2988796b36a343438a46b629d568d54f8f643f089b2ec364ad81257a02f128565cc7e21378c2f0d49d72ef16dabcb97a6ab9202317953f926363#npm:7.5.1"],\
+            ["@storybook/preview-api", "npm:7.5.1"],\
+            ["@storybook/theming", "virtual:6f81602dc5f28976726c0c105edb6ca03312587cec70e67f5fb5a9a569fa8689616d6bc877e5bb4c9ce49feb266cad0a20cedfa8dad527d2cf93b5dda9a97f83#npm:7.5.1"],\
+            ["@storybook/types", "npm:7.5.1"],\
+            ["@types/react", "npm:18.2.31"],\
+            ["@types/react-dom", "npm:18.2.14"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:674b16ee01826af41d31c30eefe1a2137d1a9ed6f948ada5235c8c0790807502c50478eb31deb6f821080967f6907f929c91b283ebb0906671b1a593f2555aaf#npm:18.2.0"],\
+            ["ts-dedent", "npm:2.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
+            "react"\
           ],\
           "linkType": "HARD"\
         }]\
