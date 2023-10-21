@@ -33,7 +33,7 @@ export const DummyButton: React.FC<DummyButtonProps> = ({
     backgroundColor,
     label,
     ...props
-}: DummyButtonProps) => {
+}) => {
     const mode = primary ? "storybook-button--primary" : "storybook-button--secondary";
     return (
         <button
