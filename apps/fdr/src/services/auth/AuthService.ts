@@ -41,20 +41,18 @@ export class AuthServiceImpl implements AuthService {
             config: this.app.config,
             token,
         });
-        const response = await venus.user.getMyOrganizations({
-            pageId: 1,
-        });
+        const response = await venus.organization.getOrgIdsFromToken();
         if (!response.ok) {
             this.logger.error("Failed to make request to venus", response.error);
             return {
                 type: "error",
-                err: new FdrAPI.UnavailableError("Failed to resolve user's organizations"),
+                err: new FdrAPI.UnavailableError("Failed to resolve organizations"),
             };
         }
-        this.logger.error(`User belongs to organizations: ${response.body.organizations}`);
+        this.logger.error(`User belongs to organizations: ${response.body}`);
         return {
             type: "success",
-            orgIds: new Set<string>(response.body.organizations),
+            orgIds: new Set<string>(response.body),
         };
     }
 
