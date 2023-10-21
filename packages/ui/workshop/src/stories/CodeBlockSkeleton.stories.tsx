@@ -1,9 +1,9 @@
-import { CodeBlockSkeleton } from "@fern-ui/ui/src/components";
-import type { Meta, StoryObj } from "@storybook/react";
+import { CodeBlockSkeleton, type CodeBlockSkeletonProps } from "@fern-ui/ui/src/commons/CodeBlockSkeleton";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react";
 
 const meta = {
     title: "Example/CodeBlockSkeleton",
-    component: CodeBlockSkeleton,
+    component: CodeBlockSkeleton as StoryFn,
     parameters: {
         layout: "centered",
     },
@@ -29,5 +29,5 @@ export const Primary: Story = {
         language: "js",
         content: 'console.log("Hello World!")',
         fontSize: "lg",
-    },
+    } satisfies CodeBlockSkeletonProps,
 };
