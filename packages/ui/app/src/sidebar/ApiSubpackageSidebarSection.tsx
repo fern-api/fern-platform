@@ -59,7 +59,6 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
                     docsDefinition={docsDefinition}
                     activeTabIndex={activeTabIndex}
                     closeMobileSidebar={closeMobileSidebar}
-                    pushRoute={router.push}
                 />
             }
         >
