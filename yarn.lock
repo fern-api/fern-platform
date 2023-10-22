@@ -2017,25 +2017,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/registry-browser@npm:0.32.0-8-g775d3cc":
-  version: 0.32.0-8-g775d3cc
-  resolution: "@fern-fern/registry-browser@npm:0.32.0-8-g775d3cc"
-  dependencies:
-    "@types/url-join": 4.0.1
-    "@ungap/url-search-params": 0.2.2
-    axios: 1.4.0
-    js-base64: 3.7.2
-    url-join: 4.0.1
-  checksum: c4b018894c470c36228fde7cc824f7785c444f8367d6cbd1170abd67379cbb886b16bdb19190f7f3f057a66c2090eb2afdbf0c54fb2560a368cf5a6e407615ae
-  languageName: node
-  linkType: hard
-
 "@fern-ui/app-utils@workspace:*, @fern-ui/app-utils@workspace:packages/commons/app-utils":
   version: 0.0.0-use.local
   resolution: "@fern-ui/app-utils@workspace:packages/commons/app-utils"
   dependencies:
     "@fern-api/fdr-sdk": 0.37.0-9-g620a45d
-    "@fern-fern/registry-browser": 0.32.0-8-g775d3cc
     "@fern-ui/core-utils": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/lodash-es": 4.17.9
@@ -2129,7 +2115,6 @@ __metadata:
   resolution: "@fern-ui/fe-bundle@workspace:packages/ui/fe-bundle"
   dependencies:
     "@fern-api/fdr-sdk": 0.37.0-9-g620a45d
-    "@fern-fern/registry-browser": 0.32.0-8-g775d3cc
     "@fern-ui/app-utils": "workspace:*"
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/theme": "workspace:*"
@@ -2373,7 +2358,6 @@ __metadata:
     "@blueprintjs/popover2": ^1.8.0
     "@blueprintjs/select": ^4.4.2
     "@fern-api/fdr-sdk": 0.37.0-9-g620a45d
-    "@fern-fern/registry-browser": 0.32.0-8-g775d3cc
     "@fern-ui/app-utils": "workspace:*"
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/react-commons": "workspace:*"
@@ -3813,13 +3797,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/url-join@npm:4.0.1":
-  version: 4.0.1
-  resolution: "@types/url-join@npm:4.0.1"
-  checksum: 29444b90e165b3970c8ad3fcef1e2de092e72b67e1f3aaff3016eea1697f98a01a28fb4f71f8044e3338a95bd2262327e9299be416efe5297018658760a331b4
-  languageName: node
-  linkType: hard
-
 "@types/yargs-parser@npm:*":
   version: 21.0.0
   resolution: "@types/yargs-parser@npm:21.0.0"
@@ -4560,17 +4537,6 @@ __metadata:
     follow-redirects: ^1.14.9
     form-data: ^4.0.0
   checksum: 38cb7540465fe8c4102850c4368053c21683af85c5fdf0ea619f9628abbcb59415d1e22ebc8a6390d2bbc9b58a9806c874f139767389c862ec9b772235f06854
-  languageName: node
-  linkType: hard
-
-"axios@npm:1.4.0":
-  version: 1.4.0
-  resolution: "axios@npm:1.4.0"
-  dependencies:
-    follow-redirects: ^1.15.0
-    form-data: ^4.0.0
-    proxy-from-env: ^1.1.0
-  checksum: 7fb6a4313bae7f45e89d62c70a800913c303df653f19eafec88e56cea2e3821066b8409bc68be1930ecca80e861c52aa787659df0ffec6ad4d451c7816b9386b
   languageName: node
   linkType: hard
 
@@ -7197,16 +7163,6 @@ env-cmd@toddbluhm/env-cmd:
     debug:
       optional: true
   checksum: 584da22ec5420c837bd096559ebfb8fe69d82512d5585004e36a3b4a6ef6d5905780e0c74508c7b72f907d1fa2b7bd339e613859e9c304d0dc96af2027fd0231
-  languageName: node
-  linkType: hard
-
-"follow-redirects@npm:^1.15.0":
-  version: 1.15.2
-  resolution: "follow-redirects@npm:1.15.2"
-  peerDependenciesMeta:
-    debug:
-      optional: true
-  checksum: faa66059b66358ba65c234c2f2a37fcec029dc22775f35d9ad6abac56003268baf41e55f9ee645957b32c7d9f62baf1f0b906e68267276f54ec4b4c597c2b190
   languageName: node
   linkType: hard
 
@@ -11972,13 +11928,6 @@ env-cmd@toddbluhm/env-cmd:
   version: 6.2.0
   resolution: "property-information@npm:6.2.0"
   checksum: 23afce07ba821cbe7d926e63cdd680991961c82be4bbb6c0b17c47f48894359c1be6e51cd74485fc10a9d3fd361b475388e1e39311ed2b53127718f72aab1955
-  languageName: node
-  linkType: hard
-
-"proxy-from-env@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "proxy-from-env@npm:1.1.0"
-  checksum: ed7fcc2ba0a33404958e34d95d18638249a68c430e30fcb6c478497d72739ba64ce9810a24f53a7d921d0c065e5b78e3822759800698167256b04659366ca4d4
   languageName: node
   linkType: hard
 
