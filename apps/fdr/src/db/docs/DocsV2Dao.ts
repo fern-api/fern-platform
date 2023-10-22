@@ -101,8 +101,8 @@ export class DocsV2DaoImpl implements DocsV2Dao {
             // Step 1: Load Previous Docs
             const previousDocs = await tx.docsV2.findFirst({
                 where: {
-                    domain: docsRegistrationInfo.fernDomain,
-                    path: "",
+                    domain: docsRegistrationInfo.fernUrl.hostname,
+                    path: docsRegistrationInfo.fernUrl.path,
                 },
             });
 
@@ -130,8 +130,8 @@ export class DocsV2DaoImpl implements DocsV2Dao {
             await createOrUpdateDocsDefinition({
                 tx,
                 instanceId,
-                domain: docsRegistrationInfo.fernDomain,
-                path: "",
+                domain: docsRegistrationInfo.fernUrl.hostname,
+                path: docsRegistrationInfo.fernUrl.path ?? "",
                 orgId: docsRegistrationInfo.orgId,
                 bufferDocsDefinition,
                 indexSegmentIds,
@@ -139,12 +139,12 @@ export class DocsV2DaoImpl implements DocsV2Dao {
             });
 
             // Step 5: Upsert custom domains with the docs definition + algolia index
-            for (const customDomain of docsRegistrationInfo.customDomains) {
+            for (const customUrl of docsRegistrationInfo.customUrls) {
                 await createOrUpdateDocsDefinition({
                     tx,
                     instanceId,
-                    domain: customDomain.hostname,
-                    path: customDomain.path,
+                    domain: customUrl.hostname,
+                    path: customUrl.path ?? "",
                     orgId: docsRegistrationInfo.orgId,
                     bufferDocsDefinition,
                     indexSegmentIds,

@@ -28,10 +28,10 @@ export interface AlgoliaIndexSegmentManagerService {
 
     generateIndexSegmentsForDefinition({
         dbDocsDefinition,
-        fernDomain,
+        url,
     }: {
         dbDocsDefinition: DocsV1Db.DocsDefinitionDb;
-        fernDomain: string;
+        url: string;
     }): GenerateNewIndexSegmentsResult;
 }
 
@@ -60,17 +60,17 @@ export class AlgoliaIndexSegmentManagerServiceImpl implements AlgoliaIndexSegmen
 
     public generateIndexSegmentsForDefinition({
         dbDocsDefinition,
-        fernDomain,
+        url,
     }: {
         dbDocsDefinition: DocsV1Db.DocsDefinitionDb;
-        fernDomain: string;
+        url: string;
     }): GenerateNewIndexSegmentsResult {
         const navigationConfig = dbDocsDefinition.config.navigation;
 
         if (isVersionedNavigationConfig(navigationConfig)) {
             const configSegmentTuples = navigationConfig.versions.map((v) => {
                 const indexSegment = this.generateNewIndexSegmentForUnversionedNavigationConfig({
-                    fernDomain,
+                    url,
                     version: { id: v.version, urlSlug: v.urlSlug },
                 });
                 return [v.config, indexSegment] as const;
@@ -81,7 +81,7 @@ export class AlgoliaIndexSegmentManagerServiceImpl implements AlgoliaIndexSegmen
             };
         } else {
             const indexSegment = this.generateNewIndexSegmentForUnversionedNavigationConfig({
-                fernDomain,
+                url,
             });
             return {
                 type: "unversioned",
@@ -92,12 +92,12 @@ export class AlgoliaIndexSegmentManagerServiceImpl implements AlgoliaIndexSegmen
 
     private generateNewIndexSegmentForUnversionedNavigationConfig({
         version,
-        fernDomain,
+        url,
     }: {
         version?: DocsVersion;
-        fernDomain: string;
+        url: string;
     }): IndexSegment {
-        const indexSegmentId = this.generateUniqueIdForIndexSegment({ fernDomain, version });
+        const indexSegmentId = this.generateUniqueIdForIndexSegment({ url, version });
         const searchApiKey = this.generateAndCacheApiKey(indexSegmentId);
         return version != null
             ? {
@@ -113,8 +113,8 @@ export class AlgoliaIndexSegmentManagerServiceImpl implements AlgoliaIndexSegmen
               };
     }
 
-    private generateUniqueIdForIndexSegment({ version, fernDomain }: { version?: DocsVersion; fernDomain: string }) {
-        const parts: string[] = ["seg", fernDomain];
+    private generateUniqueIdForIndexSegment({ version, url }: { version?: DocsVersion; url: string }) {
+        const parts: string[] = ["seg", url];
         if (version != null) {
             parts.push(version.id);
         }

@@ -5,37 +5,32 @@ import { transformWriteDocsDefinitionToDb } from "../../../converters/db/convert
 import { convertApiDefinitionToRead } from "../../../converters/read/convertAPIDefinitionToRead";
 import { convertDbDocsConfigToRead } from "../../../converters/read/convertDocsConfigToRead";
 import { type S3FileInfo } from "../../../services/s3";
-import { getParsedUrl } from "../../../util";
+import { ParsedBaseUrl } from "../../../util/ParsedBaseUrl";
 import { createObjectFromMap } from "../../../util/object";
 
 const DOCS_REGISTRATIONS: Record<DocsV1Write.DocsRegistrationId, DocsRegistrationInfo> = {};
 
 export interface DocsRegistrationInfo {
-    fernDomain: string;
-    customDomains: ParsedCustomDomain[];
+    fernUrl: ParsedBaseUrl;
+    customUrls: ParsedBaseUrl[];
     orgId: FdrAPI.OrgId;
     s3FileInfos: Record<DocsV1Write.FilePath, S3FileInfo>;
     isPreview: boolean;
 }
 
-function validateDocsDomain({ app, domain }: { app: FdrApplication; domain: string }): string {
-    const parsedUrl = getParsedUrl(domain);
-    if (parsedUrl.hostname.endsWith(app.config.domainSuffix)) {
-        return parsedUrl.hostname;
+function validateAndParseFernDomainUrl({ app, url }: { app: FdrApplication; url: string }): ParsedBaseUrl {
+    const baseUrl = ParsedBaseUrl.parse(url);
+    if (!baseUrl.hostname.endsWith(app.config.domainSuffix)) {
+        throw new DocsV2Write.InvalidDomainError();
     }
-    throw new DocsV2Write.InvalidDomainError();
+    return baseUrl;
 }
 
-interface ParsedCustomDomain {
-    hostname: string;
-    path: string;
-}
-
-function validateCustomDomains({ customDomains }: { customDomains: string[] }): ParsedCustomDomain[] {
-    for (let i = 0; i < customDomains.length; ++i) {
-        const one = customDomains[i];
-        for (let j = i + 1; j < customDomains.length; ++j) {
-            const two = customDomains[j];
+function validateAndParseCustomDomainUrl({ customUrls }: { customUrls: string[] }): ParsedBaseUrl[] {
+    for (let i = 0; i < customUrls.length; ++i) {
+        const one = customUrls[i];
+        for (let j = i + 1; j < customUrls.length; ++j) {
+            const two = customUrls[j];
             if (one == null || two == null) {
                 continue;
             }
@@ -45,15 +40,12 @@ function validateCustomDomains({ customDomains }: { customDomains: string[] }): 
         }
     }
 
-    const parsedDomains: ParsedCustomDomain[] = [];
-    for (const customDomain of customDomains) {
-        const parsedDomain = getParsedUrl(customDomain);
-        parsedDomains.push({
-            hostname: parsedDomain.hostname,
-            path: parsedDomain.pathname,
-        });
+    const parsedUrls: ParsedBaseUrl[] = [];
+    for (const customUrl of customUrls) {
+        const baseUrl = ParsedBaseUrl.parse(customUrl);
+        parsedUrls.push(baseUrl);
     }
-    return parsedDomains;
+    return parsedUrls;
 }
 
 export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
@@ -63,16 +55,16 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 authHeader: req.headers.authorization,
                 orgId: req.body.orgId,
             });
-            const domain = validateDocsDomain({ app, domain: req.body.domain });
-            const customDomains = validateCustomDomains({ customDomains: req.body.customDomains });
+            const fernUrl = validateAndParseFernDomainUrl({ app, url: req.body.domain });
+            const customUrls = validateAndParseCustomDomainUrl({ customUrls: req.body.customDomains });
             const docsRegistrationId = uuidv4();
             const s3FileInfos = await app.services.s3.getPresignedUploadUrls({
                 domain: req.body.domain,
                 filepaths: req.body.filepaths,
             });
             DOCS_REGISTRATIONS[docsRegistrationId] = {
-                fernDomain: domain,
-                customDomains,
+                fernUrl: fernUrl,
+                customUrls: customUrls,
                 orgId: req.body.orgId,
                 s3FileInfos,
                 isPreview: false,
@@ -92,14 +84,16 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 orgId: req.body.orgId,
             });
             const docsRegistrationId = uuidv4();
-            const fernDomain = `${req.body.orgId}-preview-${docsRegistrationId}.${app.config.domainSuffix}`;
+            const fernUrl = ParsedBaseUrl.parse(
+                `${req.body.orgId}-preview-${docsRegistrationId}.${app.config.domainSuffix}`,
+            );
             const s3FileInfos = await app.services.s3.getPresignedUploadUrls({
-                domain: fernDomain,
+                domain: fernUrl.hostname,
                 filepaths: req.body.filepaths,
             });
             DOCS_REGISTRATIONS[docsRegistrationId] = {
-                fernDomain,
-                customDomains: [],
+                fernUrl,
+                customUrls: [],
                 orgId: req.body.orgId,
                 s3FileInfos,
                 isPreview: true,
@@ -111,7 +105,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                         return [filepath, fileInfo.presignedUrl];
                     }),
                 ),
-                previewUrl: `https://${fernDomain}`,
+                previewUrl: `https://${fernUrl.getFullUrl()}`,
             });
         },
         finishDocsRegister: async (req, res) => {
@@ -120,23 +114,23 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 throw new DocsV1Write.DocsRegistrationIdNotFound();
             }
             try {
-                app.logger.info(`[${docsRegistrationInfo.fernDomain}] Called finishDocsRegister`);
+                app.logger.info(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Called finishDocsRegister`);
                 await app.services.auth.checkUserBelongsToOrg({
                     authHeader: req.headers.authorization,
                     orgId: docsRegistrationInfo.orgId,
                 });
 
-                app.logger.info(`[${docsRegistrationInfo.fernDomain}] Transforming Docs Definition to DB`);
+                app.logger.info(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Transforming Docs Definition to DB`);
                 const dbDocsDefinition = transformWriteDocsDefinitionToDb({
                     writeShape: req.body.docsDefinition,
                     files: docsRegistrationInfo.s3FileInfos,
                 });
 
-                app.logger.info(`[${docsRegistrationInfo.fernDomain}] Generating new index segments`);
+                app.logger.info(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Generating new index segments`);
                 const generateNewIndexSegmentsResult =
                     app.services.algoliaIndexSegmentManager.generateIndexSegmentsForDefinition({
                         dbDocsDefinition,
-                        fernDomain: docsRegistrationInfo.fernDomain,
+                        url: docsRegistrationInfo.fernUrl.getFullUrl(),
                     });
                 const configSegmentTuples =
                     generateNewIndexSegmentsResult.type === "versioned"
@@ -153,17 +147,19 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                     return new Map(apiIdDefinitionTuples) as Map<string, APIV1Db.DbApiDefinition>;
                 })();
 
-                app.logger.info(`[${docsRegistrationInfo.fernDomain}] Generating search records for all versions`);
+                app.logger.info(
+                    `[${docsRegistrationInfo.fernUrl.getFullUrl()}] Generating search records for all versions`,
+                );
                 const searchRecords = await app.services.algolia.generateSearchRecords({
                     docsDefinition: dbDocsDefinition,
                     apiDefinitionsById,
                     configSegmentTuples,
                 });
 
-                app.logger.info(`[${docsRegistrationInfo.fernDomain}] Uploading search records to Algolia`);
+                app.logger.info(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Uploading search records to Algolia`);
                 await app.services.algolia.uploadSearchRecords(searchRecords);
 
-                app.logger.info(`[${docsRegistrationInfo.fernDomain}] Updating db docs definitions`);
+                app.logger.info(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Updating db docs definitions`);
                 await app.dao.docsV2().storeDocsDefinition({
                     docsRegistrationInfo,
                     dbDocsDefinition,
@@ -174,8 +170,8 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 delete DOCS_REGISTRATIONS[req.params.docsRegistrationId];
 
                 const domains = [
-                    docsRegistrationInfo.fernDomain,
-                    ...docsRegistrationInfo.customDomains.map((domain) => `${domain.hostname}${domain.path}`),
+                    `${docsRegistrationInfo.fernUrl.hostname}${docsRegistrationInfo.fernUrl.path}`,
+                    ...docsRegistrationInfo.customUrls.map((customUrl) => `${customUrl.hostname}${customUrl.path}`),
                 ];
 
                 const results = await app.services.revalidator.revalidatePaths({
@@ -198,16 +194,16 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                     app.logger.info(`Successfully revalidated ${results.success.length} paths.`);
                 } else {
                     await app.services.slack.notifyFailedToRevalidatePaths({
-                        domain: docsRegistrationInfo.fernDomain,
+                        domain: docsRegistrationInfo.fernUrl.getFullUrl(),
                         paths: results,
                     });
                 }
 
                 return res.send();
             } catch (e) {
-                app.logger.error(`Error while trying to register docs for ${docsRegistrationInfo.fernDomain}`, e);
+                app.logger.error(`Error while trying to register docs for ${docsRegistrationInfo.fernUrl}`, e);
                 await app.services.slack.notifyFailedToRegisterDocs({
-                    domain: docsRegistrationInfo.fernDomain,
+                    domain: docsRegistrationInfo.fernUrl.getFullUrl(),
                     err: e,
                 });
                 throw e;
