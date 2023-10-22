@@ -8,7 +8,6 @@ import { DocsContext, DocsContextValue } from "./DocsContext";
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
-        baseUrl: FernRegistry.docs.v2.read.BaseUrl;
     }>;
 }
 
