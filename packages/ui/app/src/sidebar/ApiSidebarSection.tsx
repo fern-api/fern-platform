@@ -34,7 +34,7 @@ export const ApiSidebarSection: React.FC<ApiSidebarSection.Props> = ({
     activeTabIndex,
     resolveApi,
 }) => {
-    const { navigateToPath } = useNavigationContext();
+    const { navigateToPath, basePath } = useNavigationContext();
     const apiDefinition = useMemo(() => resolveApi(apiSection.api), [apiSection.api, resolveApi]);
 
     const resolveSubpackageById = useCallback(
@@ -54,6 +54,7 @@ export const ApiSidebarSection: React.FC<ApiSidebarSection.Props> = ({
                         closeMobileSidebar();
                     }}
                     fullSlug={fullSlug}
+                    basePath={basePath}
                     title={API_ARTIFACTS_TITLE}
                     registerScrolledToPathListener={registerScrolledToPathListener}
                     isSelected={fullSlug === selectedSlug}

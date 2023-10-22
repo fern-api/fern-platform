@@ -34,7 +34,7 @@ const UnmemoizedSidebarItems: React.FC<SidebarItems.Props> = ({
     activeTabIndex,
     resolveApi,
 }) => {
-    const { navigateToPath } = useNavigationContext();
+    const { navigateToPath, basePath } = useNavigationContext();
 
     return (
         <div className="flex flex-col">
@@ -50,6 +50,7 @@ const UnmemoizedSidebarItems: React.FC<SidebarItems.Props> = ({
                                     closeMobileSidebar();
                                 }}
                                 fullSlug={fullSlug}
+                                basePath={basePath}
                                 title={pageMetadata.title}
                                 registerScrolledToPathListener={registerScrolledToPathListener}
                                 isSelected={fullSlug === selectedSlug}

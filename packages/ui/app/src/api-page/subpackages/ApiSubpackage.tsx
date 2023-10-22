@@ -1,7 +1,6 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { HEADER_HEIGHT } from "../../constants";
-import { useNavigationContext } from "../../navigation-context";
 import { ApiPackageContents } from "../ApiPackageContents";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
@@ -21,7 +20,6 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({
     isLastInParentPackage,
     anchorIdParts,
 }) => {
-    const { getSlugWithBasePath } = useNavigationContext();
     const { resolveSubpackageById } = useApiDefinitionContext();
     const subpackage = resolveSubpackageById(subpackageId);
     const { setTargetRef } = useApiPageCenterElement({ slug });
@@ -29,11 +27,7 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({
     return (
         <>
             <ApiPageMargins>
-                <div
-                    ref={setTargetRef}
-                    data-route={`/${getSlugWithBasePath(slug)}`}
-                    style={{ scrollMarginTop: HEADER_HEIGHT }}
-                />
+                <div ref={setTargetRef} data-route={`/${slug}`} style={{ scrollMarginTop: HEADER_HEIGHT }} />
             </ApiPageMargins>
             <ApiPackageContents
                 key={subpackageId}

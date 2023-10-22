@@ -221,6 +221,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 activeNavigatableNeighbors,
                 resolvedPath,
                 getSlugWithBasePath,
+                basePath: baseUrl.basePath,
             }}
         >
             {children}

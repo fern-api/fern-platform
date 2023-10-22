@@ -32,7 +32,7 @@ export const ApiPackageSidebarSectionContents: React.FC<ApiPackageSidebarSection
     docsDefinition,
     activeTabIndex,
 }) => {
-    const { navigateToPath } = useNavigationContext();
+    const { navigateToPath, basePath } = useNavigationContext();
     return (
         <div className="flex flex-col">
             {package_.endpoints.map((endpoint, endpointIndex) => {
@@ -49,6 +49,7 @@ export const ApiPackageSidebarSectionContents: React.FC<ApiPackageSidebarSection
                         shallow={shallow}
                         registerScrolledToPathListener={registerScrolledToPathListener}
                         fullSlug={fullSlug}
+                        basePath={basePath}
                         isSelected={fullSlug === selectedSlug}
                     />
                 );
@@ -67,6 +68,7 @@ export const ApiPackageSidebarSectionContents: React.FC<ApiPackageSidebarSection
                         shallow={shallow}
                         registerScrolledToPathListener={registerScrolledToPathListener}
                         fullSlug={fullSlug}
+                        basePath={basePath}
                         isSelected={fullSlug === selectedSlug}
                     />
                 );

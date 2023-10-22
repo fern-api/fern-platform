@@ -1,8 +1,8 @@
 import { Text } from "@blueprintjs/core";
+import { joinUrlSlugs } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import Link from "next/link";
 import { memo, useCallback, useEffect, useRef } from "react";
-import { useNavigationContext } from "../navigation-context";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace SidebarItem {
@@ -11,6 +11,7 @@ export declare namespace SidebarItem {
         className?: string;
         onClick: () => void;
         fullSlug: string;
+        basePath: string | undefined;
         leftElement?: JSX.Element;
         rightElement?: JSX.Element;
         indent?: boolean;
@@ -24,6 +25,7 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
     title,
     className,
     fullSlug,
+    basePath,
     leftElement,
     rightElement,
     indent = false,
@@ -32,7 +34,6 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
     onClick,
     isSelected,
 }) => {
-    const { getSlugWithBasePath } = useNavigationContext();
     const renderTitle = useCallback(
         ({ isHovering }: { isHovering: boolean }) => {
             return (
@@ -79,7 +80,7 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
     return (
         <div className={classNames(className)} ref={ref}>
             <Link
-                href={`/${getSlugWithBasePath(fullSlug)}`}
+                href={basePath != null ? `/${joinUrlSlugs(basePath, fullSlug)}` : `/${fullSlug}`}
                 onClick={onClick}
                 className="!no-underline"
                 shallow={shallow}
