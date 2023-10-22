@@ -54,6 +54,7 @@ export const HeaderLogoSection: React.FC = () => {
             {hasMultipleVersions && (
                 <div>
                     <VersionDropdown
+                        basePath={basePath}
                         versions={definitionInfo.versions}
                         selectedVersionName={activeVersionId}
                         selectedVersionSlug={activeVersionSlug}

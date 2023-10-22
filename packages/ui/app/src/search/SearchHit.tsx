@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useCallback, useMemo } from "react";
 import { useNavigationContext } from "../navigation-context";
 import { useSearchContext } from "../search-context/useSearchContext";
+import { withBasePath } from "../util/withBasePath";
 import { EndpointRecord } from "./content/EndpointRecord";
 import { EndpointRecordV2 } from "./content/EndpointRecordV2";
 import { PageRecord } from "./content/PageRecord";
@@ -23,7 +24,7 @@ export declare namespace SearchHit {
 }
 
 export const SearchHit: React.FC<SearchHit.Props> = ({ setRef, hit, isHovered, onMouseEnter, onMouseLeave }) => {
-    const { navigateToPath, resolver } = useNavigationContext();
+    const { navigateToPath, resolver, basePath } = useNavigationContext();
     const { closeSearchDialog } = useSearchContext();
 
     const fullPath = useMemo(() => {
@@ -57,7 +58,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ setRef, hit, isHovered, o
                 "bg-accent-primary": isHovered,
             })}
             onClick={handleClick}
-            href={`/${fullPath}`}
+            href={withBasePath(basePath, fullPath)}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
         >

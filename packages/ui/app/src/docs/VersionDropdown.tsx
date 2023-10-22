@@ -6,9 +6,11 @@ import Link from "next/link";
 import { Fragment } from "react";
 import { CheckIcon } from "../commons/icons/CheckIcon";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
+import { withBasePath } from "../util/withBasePath";
 
 export declare namespace VersionDropdown {
     export interface Props {
+        basePath: string | undefined;
         versions: DocsNode.Version[];
         selectedVersionName: string | undefined;
         selectedVersionSlug: string | undefined;
@@ -17,6 +19,7 @@ export declare namespace VersionDropdown {
 }
 
 export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
+    basePath,
     versions,
     selectedVersionName,
     selectedVersionSlug,
@@ -86,7 +89,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
                                                         "rounded-b-md": idx === versions.length - 1,
                                                     }
                                                 )}
-                                                href={`/${versionSlug}`}
+                                                href={withBasePath(basePath, versionSlug)}
                                                 onClick={() => onClickVersion(versionSlug)}
                                             >
                                                 <div className="flex items-center space-x-2">

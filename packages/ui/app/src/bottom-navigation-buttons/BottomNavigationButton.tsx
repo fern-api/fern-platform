@@ -6,6 +6,7 @@ import { assertNever } from "@fern-ui/core-utils";
 import Link from "next/link";
 import { useCallback, useMemo } from "react";
 import { useNavigationContext } from "../navigation-context";
+import { withBasePath } from "../util/withBasePath";
 
 export declare namespace BottomNavigationButton {
     export interface Props {
@@ -15,7 +16,7 @@ export declare namespace BottomNavigationButton {
 }
 
 export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({ docsNode, direction }) => {
-    const { navigateToPath, resolver } = useNavigationContext();
+    const { navigateToPath, resolver, basePath } = useNavigationContext();
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
     const visitDirection = <T extends unknown>({ previous, next }: { previous: T; next: T }): T => {
         switch (direction) {
@@ -73,7 +74,7 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
         <Link
             className="!text-accent-primary/80 hover:!text-accent-primary flex cursor-pointer items-center gap-2 rounded !no-underline transition"
             onClick={onClick}
-            href={`/${fullSlug}`}
+            href={withBasePath(basePath, fullSlug)}
         >
             {visitDirection({
                 previous: iconElement,

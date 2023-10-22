@@ -1,8 +1,8 @@
 import { Text } from "@blueprintjs/core";
-import { joinUrlSlugs } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import Link from "next/link";
 import { memo, useCallback, useEffect, useRef } from "react";
+import { withBasePath } from "../util/withBasePath";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace SidebarItem {
@@ -80,7 +80,7 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
     return (
         <div className={classNames(className)} ref={ref}>
             <Link
-                href={basePath != null ? `/${joinUrlSlugs(basePath, fullSlug)}` : `/${fullSlug}`}
+                href={withBasePath(basePath, fullSlug)}
                 onClick={onClick}
                 className="!no-underline"
                 shallow={shallow}
