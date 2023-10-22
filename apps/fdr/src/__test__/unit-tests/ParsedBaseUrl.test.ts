@@ -5,6 +5,7 @@ describe("ParsedBaseUrl", () => {
         const parsedUrl = ParsedBaseUrl.parse("https://fern.docs.buildwithfern.com");
         expect(parsedUrl.hostname).toEqual("fern.docs.buildwithfern.com");
         expect(parsedUrl.path).toBeUndefined();
+        expect(parsedUrl.getFullUrl()).toEqual("fern.docs.buildwithfern.com");
     });
 
     it("buildwithfern.com/docs", () => {

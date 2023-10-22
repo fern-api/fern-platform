@@ -10,6 +10,9 @@ export class ParsedBaseUrl {
     }
 
     public getFullUrl(): string {
+        if (this.path == null) {
+            return `${this.hostname}`;
+        }
         return `${this.hostname}${this.path}`;
     }
 
