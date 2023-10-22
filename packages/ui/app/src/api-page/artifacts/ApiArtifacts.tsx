@@ -1,5 +1,5 @@
 import { H2 } from "@blueprintjs/core";
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
 import { joinUrlSlugs } from "@fern-ui/app-utils";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { API_ARTIFACTS_TITLE } from "../../config";

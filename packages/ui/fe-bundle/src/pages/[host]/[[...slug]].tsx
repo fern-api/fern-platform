@@ -1,6 +1,5 @@
 import { FernRegistry, PathResolver } from "@fern-api/fdr-sdk";
-import * as FernRegistryDocsReadV2 from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
-import { getSlugFromUrl } from "@fern-ui/app-utils";
+import * as FernRegistryDocsReadV2 from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v2/resources/read";
 import { App, type ResolvedPath } from "@fern-ui/ui";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
@@ -70,7 +69,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
 
     if (!docs.ok) {
         // eslint-disable-next-line no-console
-        console.error("Failed to fetch docs", docs.error);
+        console.error(`Failed to fetch docs for path: /${pathname}`, docs.error);
         return {
             notFound: true,
             revalidate: false,
@@ -86,14 +85,14 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         definition: {
             apis: docs.body.definition.apis as Record<ApiDefinition["id"], ApiDefinition>,
             docsConfig: docs.body.definition.config,
+            basePath: docs.body.baseUrl.basePath,
         },
     });
-    const slug = getSlugFromUrl({ pathname, basePath: docs.body.baseUrl.basePath });
-    const resolvedNavigatable = resolver.resolveNavigatable(slug);
+    const resolvedNavigatable = resolver.resolveNavigatable(pathname);
 
     if (resolvedNavigatable == null) {
         // eslint-disable-next-line no-console
-        console.error(`Cannot resolve navigatable corresponding to "${slug}"`);
+        console.error(`Cannot resolve navigatable corresponding to "${pathname}"`);
         return {
             notFound: true,
             revalidate: false,
@@ -103,6 +102,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
     const resolvedPath = await convertNavigatableToResolvedPath({
         navigatable: resolvedNavigatable,
         docsDefinition: docsDefinition as FernRegistry.docs.v1.read.DocsDefinition,
+        basePath: docs.body.baseUrl.basePath,
     });
 
     return {

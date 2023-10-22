@@ -1,5 +1,5 @@
 "use client";
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
 import { type Theme } from "@fern-ui/theme";
 import { memo } from "react";
 import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";

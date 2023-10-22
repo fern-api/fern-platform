@@ -1,7 +1,7 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
 
 const EP_1: FernRegistryApiRead.EndpointDefinition = {
-    id: FernRegistryApiRead.EndpointId("ep1"),
+    id: "ep1",
     authed: false,
     environments: [],
     errors: [],
@@ -15,7 +15,7 @@ const EP_1: FernRegistryApiRead.EndpointDefinition = {
 };
 
 const EP_2: FernRegistryApiRead.EndpointDefinition = {
-    id: FernRegistryApiRead.EndpointId("ep2"),
+    id: "ep2",
     authed: false,
     environments: [],
     errors: [],
@@ -29,7 +29,7 @@ const EP_2: FernRegistryApiRead.EndpointDefinition = {
 };
 
 export const SUBPACKAGE_EMPTY: FernRegistryApiRead.ApiDefinitionSubpackage = {
-    subpackageId: FernRegistryApiRead.SubpackageId("sub1"),
+    subpackageId: "sub1",
     endpoints: [],
     name: "",
     subpackages: [],
@@ -39,7 +39,7 @@ export const SUBPACKAGE_EMPTY: FernRegistryApiRead.ApiDefinitionSubpackage = {
 };
 
 export const SUBPACKAGE_WITH_2_ENDPOINTS: FernRegistryApiRead.ApiDefinitionSubpackage = {
-    subpackageId: FernRegistryApiRead.SubpackageId("sub2"),
+    subpackageId: "sub2",
     endpoints: [EP_1, EP_2],
     name: "",
     subpackages: [],
@@ -49,7 +49,7 @@ export const SUBPACKAGE_WITH_2_ENDPOINTS: FernRegistryApiRead.ApiDefinitionSubpa
 };
 
 export const SUBPACKAGE_WITH_NESTED_SUBPACKAGES: FernRegistryApiRead.ApiDefinitionSubpackage = {
-    subpackageId: FernRegistryApiRead.SubpackageId("sub3"),
+    subpackageId: "sub3",
     endpoints: [],
     name: "",
     subpackages: [SUBPACKAGE_EMPTY.subpackageId, SUBPACKAGE_WITH_2_ENDPOINTS.subpackageId],

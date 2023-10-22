@@ -2005,15 +2005,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/fdr-sdk@npm:0.0.3":
-  version: 0.0.3
-  resolution: "@fern-api/fdr-sdk@npm:0.0.3"
+"@fern-api/fdr-sdk@npm:0.37.0-9-g620a45d":
+  version: 0.37.0-9-g620a45d
+  resolution: "@fern-api/fdr-sdk@npm:0.37.0-9-g620a45d"
   dependencies:
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
     js-base64: 3.7.2
     url-join: 4.0.1
-  checksum: 6e8f861f5e8de3cf7dce4c9f37b37ef0c4206decc951be18e0849a62a29d9b9eb133d0aa6cdc9240e44aa092e4780e00a8a6f0ac0d18cdf160989a6e91739a36
+  checksum: 80cb750b6c7da58929c91b29565d045496774b2c6ca5edae04805cd3dccc830769f4b31a97ca798166ccb7271573ef7e622148f143b398bb77e0a15e8099bd7a
   languageName: node
   linkType: hard
 
@@ -2034,7 +2034,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/app-utils@workspace:packages/commons/app-utils"
   dependencies:
-    "@fern-api/fdr-sdk": 0.0.3
+    "@fern-api/fdr-sdk": 0.37.0-9-g620a45d
     "@fern-fern/registry-browser": 0.32.0-8-g775d3cc
     "@fern-ui/core-utils": "workspace:*"
     "@types/jest": ^29.0.3
@@ -2128,7 +2128,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/fe-bundle@workspace:packages/ui/fe-bundle"
   dependencies:
-    "@fern-api/fdr-sdk": 0.0.3
+    "@fern-api/fdr-sdk": 0.37.0-9-g620a45d
     "@fern-fern/registry-browser": 0.32.0-8-g775d3cc
     "@fern-ui/app-utils": "workspace:*"
     "@fern-ui/core-utils": "workspace:*"
@@ -2372,7 +2372,7 @@ __metadata:
     "@blueprintjs/icons": ^4.4.0
     "@blueprintjs/popover2": ^1.8.0
     "@blueprintjs/select": ^4.4.2
-    "@fern-api/fdr-sdk": 0.0.3
+    "@fern-api/fdr-sdk": 0.37.0-9-g620a45d
     "@fern-fern/registry-browser": 0.32.0-8-g775d3cc
     "@fern-ui/app-utils": "workspace:*"
     "@fern-ui/core-utils": "workspace:*"

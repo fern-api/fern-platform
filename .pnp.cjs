@@ -3544,10 +3544,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/fdr-sdk", [\
-        ["npm:0.0.3", {\
-          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.0.3-44de2f7147-6e8f861f5e.zip/node_modules/@fern-api/fdr-sdk/",\
+        ["npm:0.37.0-9-g620a45d", {\
+          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.37.0-9-g620a45d-1b2ba3a562-80cb750b6c.zip/node_modules/@fern-api/fdr-sdk/",\
           "packageDependencies": [\
-            ["@fern-api/fdr-sdk", "npm:0.0.3"],\
+            ["@fern-api/fdr-sdk", "npm:0.37.0-9-g620a45d"],\
             ["@ungap/url-search-params", "npm:0.2.2"],\
             ["axios", "npm:0.27.2"],\
             ["js-base64", "npm:3.7.2"],\
@@ -3575,7 +3575,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/commons/app-utils/",\
           "packageDependencies": [\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
-            ["@fern-api/fdr-sdk", "npm:0.0.3"],\
+            ["@fern-api/fdr-sdk", "npm:0.37.0-9-g620a45d"],\
             ["@fern-fern/registry-browser", "npm:0.32.0-8-g775d3cc"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -3677,7 +3677,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/ui/fe-bundle/",\
           "packageDependencies": [\
             ["@fern-ui/fe-bundle", "workspace:packages/ui/fe-bundle"],\
-            ["@fern-api/fdr-sdk", "npm:0.0.3"],\
+            ["@fern-api/fdr-sdk", "npm:0.37.0-9-g620a45d"],\
             ["@fern-fern/registry-browser", "npm:0.32.0-8-g775d3cc"],\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
@@ -3939,7 +3939,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@blueprintjs/icons", "npm:4.9.0"],\
             ["@blueprintjs/popover2", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.8.0"],\
             ["@blueprintjs/select", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.5.1"],\
-            ["@fern-api/fdr-sdk", "npm:0.0.3"],\
+            ["@fern-api/fdr-sdk", "npm:0.37.0-9-g620a45d"],\
             ["@fern-fern/registry-browser", "npm:0.32.0-8-g775d3cc"],\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\

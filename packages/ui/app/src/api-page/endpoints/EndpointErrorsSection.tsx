@@ -1,4 +1,4 @@
-import { FernRegistry } from "@fern-fern/registry-browser";
+import { FernRegistry } from "@fern-api/fdr-sdk";
 import { type JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { EndpointError } from "./EndpointError";
 

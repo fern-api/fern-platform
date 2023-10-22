@@ -5,11 +5,13 @@ import type { ResolvedPath } from "@fern-ui/ui";
 export async function convertNavigatableToResolvedPath({
     navigatable,
     docsDefinition,
+    basePath,
 }: {
     navigatable: NavigatableDocsNode;
     docsDefinition: FernRegistry.docs.v1.read.DocsDefinition;
+    basePath: string | undefined;
 }): Promise<ResolvedPath> {
-    const fullSlug = getFullSlugForNavigatable(navigatable, { omitDefault: true });
+    const fullSlug = getFullSlugForNavigatable(navigatable, { omitDefault: true, basePath });
     const serializedNavigatable = await serializeNavigatableNode({
         node: navigatable,
         docsDefinition,

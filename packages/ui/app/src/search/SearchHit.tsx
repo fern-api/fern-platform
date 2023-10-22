@@ -23,17 +23,17 @@ export declare namespace SearchHit {
 }
 
 export const SearchHit: React.FC<SearchHit.Props> = ({ setRef, hit, isHovered, onMouseEnter, onMouseLeave }) => {
-    const { navigateToPath, resolver } = useNavigationContext();
+    const { navigateToPath, resolver, basePath } = useNavigationContext();
     const { closeSearchDialog } = useSearchContext();
 
     const fullPath = useMemo(() => {
-        const path = getFullPathForSearchRecord(hit);
+        const path = getFullPathForSearchRecord(hit, basePath);
         const navigatable = resolver.resolveNavigatable(path);
         if (navigatable == null) {
-            return "";
+            return basePath?.slice(1) ?? "";
         }
-        return getFullSlugForNavigatable(navigatable, { omitDefault: true });
-    }, [resolver, hit]);
+        return getFullSlugForNavigatable(navigatable, { omitDefault: true, basePath });
+    }, [hit, resolver, basePath]);
 
     const handleClick = useCallback(() => {
         closeSearchDialog();

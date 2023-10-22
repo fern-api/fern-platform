@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
 import { JsonExample } from "../../examples/json-example/JsonExample";
 import { TitledExample } from "../../examples/TitledExample";
 import { useWebhookContext } from "../webhook-context/useWebhookContext";

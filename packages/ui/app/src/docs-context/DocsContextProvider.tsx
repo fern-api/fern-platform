@@ -1,6 +1,6 @@
-import { FernRegistry } from "@fern-fern/registry-browser";
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { FernRegistry } from "@fern-api/fdr-sdk";
+import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
 import { useTheme } from "@fern-ui/theme";
 import { PropsWithChildren, useCallback } from "react";
 import { DocsContext, DocsContextValue } from "./DocsContext";

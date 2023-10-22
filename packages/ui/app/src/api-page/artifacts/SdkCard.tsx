@@ -1,4 +1,4 @@
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useMemo } from "react";
 import { NodeJsLogo } from "./sdk-logos/NodeJsLogo";

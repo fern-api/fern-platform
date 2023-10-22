@@ -5,7 +5,6 @@ import {
     type NavigatableDocsNode,
     type NodeNeighbors,
 } from "@fern-api/fdr-sdk";
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { DefinitionObjectFactory } from "@fern-ui/app-utils";
 import { noop } from "@fern-ui/core-utils";
 import React from "react";
@@ -18,13 +17,14 @@ const EMPTY_DEFINITION_SUMMARY: DocsDefinitionSummary = {
 };
 
 export const NavigationContext = React.createContext<NavigationContextValue>({
+    basePath: undefined,
     hasInitialized: false,
     justNavigated: false,
     activeNavigatable: NodeFactory.createPage({
         slug: "",
         leadingSlug: "",
         page: {
-            id: FernRegistryDocsRead.PageId(""),
+            id: "",
             title: "",
             urlSlug: "",
         },
@@ -51,7 +51,7 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
         type: "custom-markdown-page",
         fullSlug: "",
         page: {
-            id: FernRegistryDocsRead.PageId(""),
+            id: "",
             title: "",
             urlSlug: "",
         },
@@ -61,6 +61,7 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
 });
 
 export interface NavigationContextValue {
+    basePath: string | undefined;
     hasInitialized: boolean;
     justNavigated: boolean;
     activeNavigatable: NavigatableDocsNode;
