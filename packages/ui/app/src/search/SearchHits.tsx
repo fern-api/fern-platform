@@ -9,6 +9,7 @@ import React, { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useS
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch-hooks-web";
 import { useNavigationContext } from "../navigation-context";
 import { useSearchContext } from "../search-context/useSearchContext";
+import { withBasePath } from "../util/withBasePath";
 import { SearchHit } from "./SearchHit";
 import type { SearchRecord } from "./types";
 import { getFullPathForSearchRecord } from "./util";
@@ -20,7 +21,7 @@ export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {
 };
 
 export const SearchHits: React.FC = () => {
-    const { resolver, navigateToPath, getSlugWithBasePath } = useNavigationContext();
+    const { resolver, navigateToPath, basePath } = useNavigationContext();
     const { closeSearchDialog } = useSearchContext();
     const { hits } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
@@ -109,7 +110,7 @@ export const SearchHits: React.FC = () => {
             closeSearchDialog();
             const fullPath = getFullPathForHit(hoveredSearchHit.record);
             navigateToPath(fullPath);
-            void router.replace(`/${getSlugWithBasePath(fullPath)}`, undefined, {
+            void router.replace(withBasePath(basePath, fullPath), undefined, {
                 shallow: true,
             });
         },

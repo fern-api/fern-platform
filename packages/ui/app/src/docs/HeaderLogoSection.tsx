@@ -3,13 +3,14 @@ import { DEFAULT_LOGO_HEIGHT } from "../config";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useNavigationContext } from "../navigation-context";
 import { useDocsSelectors } from "../selectors/useDocsSelectors";
+import { withBasePath } from "../util/withBasePath";
 import { VersionDropdown } from "./VersionDropdown";
 
 export declare namespace HeaderLogoSection {}
 
 export const HeaderLogoSection: React.FC = () => {
     const router = useRouter();
-    const { navigateToPath, getSlugWithBasePath } = useNavigationContext();
+    const { navigateToPath, basePath } = useNavigationContext();
     const { resolveFile, docsDefinition, theme } = useDocsContext();
     const { definitionInfo, activeVersionContext } = useDocsSelectors();
     const { logo, logoV2, logoHeight, logoHref } = docsDefinition.config;
@@ -58,7 +59,7 @@ export const HeaderLogoSection: React.FC = () => {
                         selectedVersionSlug={activeVersionSlug}
                         onClickVersion={(versionSlug) => {
                             navigateToPath(versionSlug);
-                            void router.replace(`/${getSlugWithBasePath(versionSlug)}`, undefined, { shallow: true });
+                            void router.replace(withBasePath(basePath, versionSlug), undefined, { shallow: true });
                         }}
                     />
                 </div>

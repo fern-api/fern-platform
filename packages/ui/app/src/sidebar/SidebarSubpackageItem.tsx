@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { memo, useCallback, useEffect, useRef } from "react";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 import { useNavigationContext } from "../navigation-context";
+import { withBasePath } from "../util/withBasePath";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace SidebarSubpackageItem {
@@ -28,12 +29,12 @@ const UnmemoizedSidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = (
     registerScrolledToPathListener,
 }) => {
     const router = useRouter();
-    const { navigateToPath } = useNavigationContext();
+    const { navigateToPath, basePath } = useNavigationContext();
 
     const handleClick = useCallback(async () => {
         navigateToPath(fullSlug);
-        void router.replace(`/${fullSlug}`, undefined, { shallow: true });
-    }, [fullSlug, navigateToPath, router]);
+        void router.replace(withBasePath(basePath, fullSlug), undefined, { shallow: true });
+    }, [fullSlug, navigateToPath, router, basePath]);
 
     const renderTitle = useCallback(
         ({ isHovering }: { isHovering: boolean }) => {

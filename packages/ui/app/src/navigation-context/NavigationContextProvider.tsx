@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { type ResolvedPath } from "../ResolvedPath";
 import { getRouteNode } from "../util/anchor";
+import { withBasePath } from "../util/withBasePath";
 import { getRouteForResolvedPath } from "./getRouteForResolvedPath";
 import { NavigationContext } from "./NavigationContext";
 import { useSlugListeners } from "./useSlugListeners";
@@ -175,7 +176,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         if (navigatable != null) {
             setActiveNavigatable(navigatable);
         }
-        void router.replace(`/${getSlugWithBasePath(fullSlug)}`, undefined, { shallow: true, scroll: false });
+        void router.replace(withBasePath(baseUrl.basePath, fullSlug), undefined, { shallow: true, scroll: false });
         scrollToPathListeners.invokeListeners(fullSlug);
     });
 
