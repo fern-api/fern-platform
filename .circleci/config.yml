@@ -209,4 +209,5 @@ workflows:
                 - main
           context:
             - fern-tokens
+            - npm
           requires: [check, ete-test]
