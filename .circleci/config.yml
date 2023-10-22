@@ -122,7 +122,8 @@ jobs:
             version_replace="s/0.0.0/${git_version}/"
             cat package.json.tmp| sed "${version_replace}" > package.json
             rm -rf pakcage.json.tmp
-            yarn publish --access public     
+            NPM_TOKEN="$YARN_NPM_AUTH_TOKEN"
+            npm publish --access public     
       - run:
           name: Register definition
           command: |
