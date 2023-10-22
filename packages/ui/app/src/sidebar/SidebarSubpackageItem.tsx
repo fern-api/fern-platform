@@ -1,7 +1,7 @@
 import { Text } from "@blueprintjs/core";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import classNames from "classnames";
-import { NextRouter, useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { memo, useCallback, useEffect, useRef } from "react";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 import { useNavigationContext } from "../navigation-context";
@@ -17,7 +17,6 @@ export declare namespace SidebarSubpackageItem {
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
         activeTabIndex: number | null;
         closeMobileSidebar: () => void;
-        pushRoute: NextRouter["push"];
     }
 }
 

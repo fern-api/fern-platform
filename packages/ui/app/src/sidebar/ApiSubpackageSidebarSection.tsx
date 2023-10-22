@@ -1,7 +1,6 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { doesSubpackageHaveEndpointsOrWebhooksRecursive, getSubpackageTitle } from "@fern-ui/app-utils";
-import { useRouter } from "next/router";
 import { useContext, useMemo } from "react";
 import { ApiPackageSidebarSectionContents } from "./ApiPackageSidebarSectionContents";
 import { SidebarContext } from "./context/SidebarContext";
@@ -33,7 +32,6 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
     activeTabIndex,
     closeMobileSidebar,
 }) => {
-    const router = useRouter();
     const hasEndpointsOrWebhooks = useMemo(
         () => doesSubpackageHaveEndpointsOrWebhooksRecursive(subpackage.subpackageId, resolveSubpackageById),
         [resolveSubpackageById, subpackage.subpackageId]
@@ -59,7 +57,6 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
                     docsDefinition={docsDefinition}
                     activeTabIndex={activeTabIndex}
                     closeMobileSidebar={closeMobileSidebar}
-                    pushRoute={router.push}
                 />
             }
         >
