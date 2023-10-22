@@ -1,6 +1,7 @@
 import { FernRegistry, PathResolver, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import axios, { type AxiosInstance } from "axios";
 import * as AxiosLogger from "axios-logger";
+import { ParsedBaseUrl } from "../../util/ParsedBaseUrl";
 
 export interface RevalidatePathSuccessResult {
     success: true;
@@ -23,7 +24,7 @@ export type RevalidatedPaths = {
 export interface RevalidatorService {
     revalidatePaths(params: {
         definition: Pick<FernRegistry.docs.v1.read.DocsDefinition, "apis" | "config">;
-        domains: string[];
+        urls: ParsedBaseUrl[];
     }): Promise<RevalidatedPaths>;
 }
 
@@ -53,13 +54,11 @@ export class RevalidatorServiceImpl implements RevalidatorService {
 
     public async revalidatePaths({
         definition,
-        domains: domainsInShortForm,
+        urls,
     }: {
         definition: FernRegistry.docs.v1.read.DocsDefinition;
-        domains: string[];
+        urls: ParsedBaseUrl[];
     }): Promise<RevalidatedPaths> {
-        const domains = domainsInShortForm.map((domain) => `https://${domain}`);
-
         const resolver = new PathResolver({
             definition: {
                 apis: definition.apis,
@@ -70,14 +69,11 @@ export class RevalidatorServiceImpl implements RevalidatorService {
         const slugs = resolver.getAllSlugs();
 
         const resultsArr = await Promise.all(
-            domains.map(async (domain) => {
+            urls.map(async (url) => {
                 return await Promise.all(
                     slugs.map(async (slug) => {
-                        const baseUrl = domain;
-                        const path = `/${slug}`;
-                        const url = joinUrlSlugs(baseUrl, slug);
-                        const resp = await this.revalidatePath({ domain, path });
-                        return { ...resp, url };
+                        const resp = await this.revalidatePath({ url, path: `/${slug}` });
+                        return { ...resp, url: joinUrlSlugs(url.getFullUrl(), slug) };
                     }),
                 );
             }),
@@ -86,11 +82,11 @@ export class RevalidatorServiceImpl implements RevalidatorService {
         return this.groupResults(resultsArr.flat(1));
     }
 
-    private async revalidatePath({ domain, path }: { domain: string; path: string }): Promise<ResponseBody> {
+    private async revalidatePath({ url, path }: { url: ParsedBaseUrl; path: string }): Promise<ResponseBody> {
         try {
             const body: RequestBody = { path };
             const response = await this.axiosInstance.post<SuccessResponseBody>(
-                `${new URL(domain).origin}/api/revalidate-v2`,
+                `${url.getFullUrl()}/api/revalidate-v2`,
                 body,
             );
             return { success: response.data.success };

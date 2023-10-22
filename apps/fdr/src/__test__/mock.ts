@@ -16,6 +16,7 @@ import {
     FailedToRevalidatePathsNotification,
     SlackService,
 } from "../services/slack/SlackService";
+import { ParsedBaseUrl } from "../util/ParsedBaseUrl";
 
 class MockAlgoliaService implements AlgoliaService {
     generateSearchApiKey(_filters: string): string {
@@ -79,7 +80,7 @@ class MockSlackService implements SlackService {
 class MockRevalidatorService implements RevalidatorService {
     async revalidatePaths(_: {
         definition: Pick<DocsDefinition, "config" | "apis">;
-        domains: string[];
+        urls: ParsedBaseUrl[];
     }): Promise<{ success: RevalidatePathSuccessResult[]; error: RevalidatePathErrorResult[] }> {
         return { success: [], error: [] };
     }

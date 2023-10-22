@@ -169,11 +169,6 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
                 delete DOCS_REGISTRATIONS[req.params.docsRegistrationId];
 
-                const domains = [
-                    `${docsRegistrationInfo.fernUrl.hostname}${docsRegistrationInfo.fernUrl.path}`,
-                    ...docsRegistrationInfo.customUrls.map((customUrl) => `${customUrl.hostname}${customUrl.path}`),
-                ];
-
                 const results = await app.services.revalidator.revalidatePaths({
                     definition: {
                         apis: Object.fromEntries(
@@ -187,7 +182,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                             dbShape: dbDocsDefinition.config,
                         }),
                     },
-                    domains,
+                    urls: [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls],
                 });
 
                 if (results.error.length === 0) {

@@ -4,6 +4,7 @@ import type * as FernRegistryDocsRead from "../generated/api/resources/docs/reso
 export interface DocsDefinitionSummary {
     docsConfig: FernRegistryDocsRead.DocsConfig;
     apis: Record<FernRegistryApiRead.ApiDefinition["id"], FernRegistryApiRead.ApiDefinition>;
+    basePath?: string;
 }
 
 /**

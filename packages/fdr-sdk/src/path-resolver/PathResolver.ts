@@ -26,7 +26,7 @@ export class PathResolver {
 
     #preprocessDefinition() {
         const tree = buildDefinitionTree(this.config.definition);
-        const map = buildResolutionMap(tree);
+        const map = buildResolutionMap(tree, this.config.definition.basePath);
         const nodeToNeighbors = buildNodeToNeighborsMap(tree);
         return { tree, map, nodeToNeighbors };
     }

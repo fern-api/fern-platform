@@ -192,3 +192,189 @@ describe("getAllSlugs", () => {
         });
     });
 });
+
+describe("getAllSlugs with base path /docs", () => {
+    describe("correctly returns all slugs", () => {
+        it("with unversioned and untabbed docs", () => {
+            const resolver = new PathResolver({
+                definition: { ...DEFINITION_UNVERSIONED_UNTABBED, basePath: "/docs" },
+            });
+            const expectedSlugs = new Set([
+                "docs",
+                "docs/introduction",
+                "docs/introduction/authentication",
+                "docs/introduction/getting-started",
+            ]);
+            const actualSlugs = new Set(resolver.getAllSlugs());
+            expect(actualSlugs).toEqual(expectedSlugs);
+        });
+
+        it("with unversioned and tabbed docs", () => {
+            const resolver = new PathResolver({
+                definition: { ...DEFINITION_UNVERSIONED_TABBED, basePath: "/docs" },
+            });
+            const expectedSlugs = new Set([
+                "docs",
+                "docs/welcome",
+                "docs/welcome/introduction",
+                "docs/welcome/introduction/authentication",
+                "docs/welcome/introduction/getting-started",
+                "docs/welcome/advanced-concepts",
+                "docs/welcome/advanced-concepts/streaming",
+                "docs/welcome/advanced-concepts/sharding",
+                "docs/help-center",
+                "docs/help-center/documents",
+                "docs/help-center/documents/uploading-documents",
+                "docs/help-center/documents/deleting-documents",
+            ]);
+            const actualSlugs = new Set(resolver.getAllSlugs());
+            expect(actualSlugs).toEqual(expectedSlugs);
+        });
+
+        it("with versioned and untabbed docs", () => {
+            const resolver = new PathResolver({
+                definition: { ...DEFINITION_VERSIONED_UNTABBED, basePath: "/docs" },
+            });
+            const expectedSlugs = new Set([
+                "docs",
+                // Default version
+                "docs/introduction",
+                "docs/introduction/getting-started",
+                "docs/introduction/authentication",
+                "docs/introduction/changelog",
+                // v2
+                "docs/v2",
+                "docs/v2/introduction",
+                "docs/v2/introduction/getting-started",
+                "docs/v2/introduction/authentication",
+                "docs/v2/introduction/changelog",
+                // v1.2
+                "docs/v1-2",
+                "docs/v1-2/introduction",
+                "docs/v1-2/introduction/getting-started",
+                "docs/v1-2/introduction/authentication",
+            ]);
+            const actualSlugs = new Set(resolver.getAllSlugs());
+            expect(actualSlugs).toEqual(expectedSlugs);
+        });
+
+        it("with versioned and tabbed docs", () => {
+            const resolver = new PathResolver({
+                definition: { ...DEFINITION_VERSIONED_TABBED, basePath: "/docs" },
+            });
+            const expectedSlugs = new Set([
+                "docs",
+                // Default version
+                "docs/welcome",
+                "docs/welcome/introduction",
+                "docs/welcome/introduction/authentication",
+                "docs/welcome/introduction/getting-started",
+                "docs/welcome/advanced-concepts",
+                "docs/welcome/advanced-concepts/streaming",
+                "docs/welcome/advanced-concepts/sharding",
+                "docs/help-center",
+                "docs/help-center/documents",
+                "docs/help-center/documents/uploading-documents",
+                "docs/help-center/documents/deleting-documents",
+                // v2
+                "docs/v2",
+                "docs/v2/welcome",
+                "docs/v2/welcome/introduction",
+                "docs/v2/welcome/introduction/authentication",
+                "docs/v2/welcome/introduction/getting-started",
+                "docs/v2/welcome/advanced-concepts",
+                "docs/v2/welcome/advanced-concepts/streaming",
+                "docs/v2/welcome/advanced-concepts/sharding",
+                "docs/v2/help-center",
+                "docs/v2/help-center/documents",
+                "docs/v2/help-center/documents/uploading-documents",
+                "docs/v2/help-center/documents/deleting-documents",
+                // v1.2
+                "docs/v1-2",
+                "docs/v1-2/welcome",
+                "docs/v1-2/welcome/introduction",
+                "docs/v1-2/welcome/introduction/getting-started",
+                "docs/v1-2/welcome/advanced-concepts",
+                "docs/v1-2/welcome/advanced-concepts/streaming",
+                "docs/v1-2/welcome/advanced-concepts/sharding",
+                "docs/v1-2/help-center",
+                "docs/v1-2/help-center/documents",
+                "docs/v1-2/help-center/documents/uploading-documents",
+                "docs/v1-2/help-center/documents/deleting-documents",
+            ]);
+            const actualSlugs = new Set(resolver.getAllSlugs());
+            expect(actualSlugs).toEqual(expectedSlugs);
+        });
+
+        it("with api definition", () => {
+            const resolver = new PathResolver({
+                definition: { ...DEFINITION_WITH_API, basePath: "/docs" },
+            });
+            const expectedSlugs = new Set([
+                "docs",
+                // Markdown
+                "docs/welcome",
+                "docs/welcome/introduction",
+                "docs/welcome/introduction/authentication",
+                "docs/welcome/introduction/getting-started",
+                "docs/welcome/advanced-concepts",
+                "docs/welcome/advanced-concepts/streaming",
+                "docs/welcome/advanced-concepts/sharding",
+                "docs/help-center",
+                "docs/help-center/documents",
+                "docs/help-center/documents/uploading-documents",
+                "docs/help-center/documents/deleting-documents",
+                // API
+                "docs/api-reference",
+                "docs/api-reference/client-api",
+                "docs/api-reference/client-api/generate-completion",
+                "docs/api-reference/client-api/delete-completion",
+                "docs/api-reference/client-api/agents",
+                "docs/api-reference/client-api/agents/create-agent",
+                "docs/api-reference/client-api/agents/update-agent",
+            ]);
+            const actualSlugs = new Set(resolver.getAllSlugs());
+            expect(actualSlugs).toEqual(expectedSlugs);
+        });
+
+        it("with skipped slugs", () => {
+            const resolver = new PathResolver({
+                definition: { ...DEFINITION_UNVERSIONED_WITH_SKIPPED_SLUGS, basePath: "/docs" },
+            });
+            const expectedSlugs = new Set([
+                "docs",
+                // Markdown
+                "docs/help-center",
+                "docs/help-center/uploading-documents",
+                "docs/help-center/deleting-documents",
+                // API
+                "docs/api-reference",
+                "docs/api-reference/generate-completion",
+                "docs/api-reference/delete-completion",
+                "docs/api-reference/agents",
+                "docs/api-reference/agents/create-agent",
+                "docs/api-reference/agents/update-agent",
+            ]);
+            const actualSlugs = new Set(resolver.getAllSlugs());
+            expect(actualSlugs).toEqual(expectedSlugs);
+        });
+
+        it("with the 'pointsTo' option", () => {
+            const resolver = new PathResolver({
+                definition: { ...DEFINITION_WITH_POINTS_TO, basePath: "/docs" },
+            });
+            const expectedSlugs = new Set([
+                "docs",
+                "docs/introduction",
+                "docs/introduction/authentication",
+                "docs/introduction/getting-started",
+                "docs/api-reference",
+                "docs/api-reference/new-sub",
+                "docs/api-reference/new-sub/create-agent",
+                "docs/api-reference/new-sub/update-agent",
+            ]);
+            const actualSlugs = new Set(resolver.getAllSlugs());
+            expect(actualSlugs).toEqual(expectedSlugs);
+        });
+    });
+});
