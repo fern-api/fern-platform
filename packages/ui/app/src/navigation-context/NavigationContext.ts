@@ -58,7 +58,6 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
         sectionTitle: "",
         serializedMdxContent: { compiledSource: "", frontmatter: {}, scope: {} },
     },
-    getSlugWithBasePath: () => "",
 });
 
 export interface NavigationContextValue {
@@ -73,5 +72,4 @@ export interface NavigationContextValue {
     resolver: PathResolver;
     registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
     resolvedPath: ResolvedPath;
-    getSlugWithBasePath: (slug: string) => string;
 }
