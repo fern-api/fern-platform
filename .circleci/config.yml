@@ -122,7 +122,7 @@ jobs:
             version_replace="s/0.0.0/${git_version}/"
             cat package.json.tmp| sed "${version_replace}" > package.json
             rm -rf pakcage.json.tmp
-            npm publish --access public     
+            yarn publish --access public     
       - run:
           name: Register definition
           command: |
