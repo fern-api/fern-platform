@@ -1,6 +1,6 @@
 import { FernRegistry, PathResolver } from "@fern-api/fdr-sdk";
 import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { getFullSlugForNavigatable, joinUrlSlugs } from "@fern-ui/app-utils";
+import { getFullSlugForNavigatable } from "@fern-ui/app-utils";
 import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
 import { useRouter } from "next/router";
@@ -50,15 +50,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             }),
         [docsDefinition]
     );
-
-    const getSlugWithBasePath = (slug: string) => {
-        const parts: string[] = [];
-        if (baseUrl.basePath != null) {
-            parts.push(baseUrl.basePath);
-        }
-        parts.push(slug);
-        return joinUrlSlugs(...parts);
-    };
 
     const resolvedNavigatable = useMemo(() => {
         const node = resolver.resolveNavigatable(resolvedPath.fullSlug);
@@ -221,7 +212,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 registerScrolledToPathListener: scrollToPathListeners.registerListener,
                 activeNavigatableNeighbors,
                 resolvedPath,
-                getSlugWithBasePath,
                 basePath: baseUrl.basePath,
             }}
         >
