@@ -20,7 +20,7 @@ export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {
 };
 
 export const SearchHits: React.FC = () => {
-    const { resolver, navigateToPath, getSlugWithBasePath } = useNavigationContext();
+    const { resolver, navigateToPath } = useNavigationContext();
     const { closeSearchDialog } = useSearchContext();
     const { hits } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
@@ -109,7 +109,7 @@ export const SearchHits: React.FC = () => {
             closeSearchDialog();
             const fullPath = getFullPathForHit(hoveredSearchHit.record);
             navigateToPath(fullPath);
-            void router.replace(`/${getSlugWithBasePath(fullPath)}`, undefined, {
+            void router.replace(`/${fullPath}`, undefined, {
                 shallow: true,
             });
         },
