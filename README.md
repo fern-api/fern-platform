@@ -7,6 +7,7 @@ This repo contains the backend code for the Fern Definition Registry (FDR) as we
 ### Pre-requisites
 
 - Make sure Node.js 18+ and Yarn are installed on your machine
+- Make sure you have fern-api installed: `npm install -g fern-api`
 
 Once you've cloned the repo to your favourite directory run `yarn` from project root. This will install the dependencies for all workspaces.
 
