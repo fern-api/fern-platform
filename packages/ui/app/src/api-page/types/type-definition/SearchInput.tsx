@@ -3,7 +3,7 @@ import { IconNames } from "@blueprintjs/icons";
 
 type SearchProps = {
     searchInput: string;
-    handleSearchInput: () => void;
+    handleSearchInput: (value: string) => void;
 };
 
 export const SearchInput = ({ searchInput, handleSearchInput }: SearchProps): JSX.Element => {
