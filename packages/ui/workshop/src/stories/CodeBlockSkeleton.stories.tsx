@@ -1,6 +1,7 @@
-import { CodeBlockSkeleton } from "@fern-ui/ui/src/commons/CodeBlockSkeleton";
-import type { Meta, StoryFn } from "@storybook/react";
+import { CodeBlockSkeleton, CodeBlockSkeletonProps } from "@fern-ui/ui/src/commons/CodeBlockSkeleton";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react";
 import { RootStylesProvider } from "./RootProvider";
+import { PYTHON_CODE_SNIPPET_1 } from "./snippets";
 
 const meta = {
     title: "Example/CodeBlockSkeleton",
