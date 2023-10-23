@@ -15,9 +15,10 @@ import {
     useTypeDefinitionContext,
 } from "../context/TypeDefinitionContext";
 import { DiscriminatedUnionVariant } from "../discriminated-union/DiscriminatedUnionVariant";
-import { EnumValue } from "../enum/EnumValue";
 import { ObjectProperty } from "../object/ObjectProperty";
 import { UndiscriminatedUnionVariant } from "../undiscriminated-union/UndiscriminatedUnionVariant";
+import { Chip } from "./Chip";
+import { EnumDefinitionDetails } from "./EnumDefinitionDetails";
 import styles from "./InternalTypeDefinition.module.scss";
 import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 
@@ -100,7 +101,8 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                 }),
                 enum: (enum_) => ({
                     elements: enum_.values.map((enumValue) => (
-                        <EnumValue key={enumValue.value} enumValue={enumValue} />
+                        <Chip key={enumValue.value} name={enumValue.value} description={enumValue.description} />
+                        // <EnumValue key={enumValue.value} enumValue={enumValue} />
                     )),
                     elementNameSingular: "enum value",
                     elementNamePlural: "enum values",
@@ -169,49 +171,62 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     return (
         <div className="mt-2 flex flex-col">
             <div className="flex flex-col items-start">
-                <div
-                    className="border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded border"
-                    style={{
-                        width: isCollapsed ? originalButtonWidth : "100%",
-                    }}
-                    ref={setButtonRef}
-                >
-                    <div
-                        {...containerCallbacks}
-                        className={classNames(
-                            "flex gap-1 items-center border-b hover:bg-tag-default-light dark:hover:bg-tag-default-dark cursor-pointer px-2 py-1 transition t-muted",
-                            {
-                                "border-transparent": isCollapsed,
-                                "border-border-default-light dark:border-border-default-dark": !isCollapsed,
-                            }
-                        )}
-                        onClick={(e) => {
-                            toggleIsCollapsed();
-                            e.stopPropagation();
-                        }}
-                    >
-                        <Icon
-                            className={classNames("transition", {
-                                "rotate-45": isCollapsed,
-                            })}
-                            icon={IconNames.CROSS}
-                        />
-                        <div
-                            className={classNames(styles.showPropertiesButton, "select-none whitespace-nowrap")}
-                            data-show-text={showText}
-                        >
-                            {isCollapsed ? showText : hideText}
-                        </div>
+                {collapsableContent.elementNameSingular === "enum value" && collapsableContent.elements.length < 7 ? (
+                    <div className="t-muted flex flex-row gap-2 overflow-x-scroll align-baseline">
+                        Allowed values:
+                        {collapsableContent.elements.map((item) => (
+                            <Chip key={item.key} name={item.props.name} description={item.props.description} />
+                        ))}
                     </div>
-                    <Collapse isOpen={!isCollapsed}>
-                        <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
-                            <TypeDefinitionDetails
-                                elements={collapsableContent.elements}
-                                separatorText={collapsableContent.separatorText}
+                ) : (
+                    <div
+                        className="border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded border"
+                        style={{
+                            width: isCollapsed ? originalButtonWidth : "100%",
+                        }}
+                        ref={setButtonRef}
+                    >
+                        <div
+                            {...containerCallbacks}
+                            className={classNames(
+                                "flex gap-1 items-center border-b hover:bg-tag-default-light dark:hover:bg-tag-default-dark cursor-pointer px-2 py-1 transition t-muted",
+                                {
+                                    "border-transparent": isCollapsed,
+                                    "border-border-default-light dark:border-border-default-dark": !isCollapsed,
+                                }
+                            )}
+                            onClick={(e) => {
+                                toggleIsCollapsed();
+                                e.stopPropagation();
+                            }}
+                        >
+                            <Icon
+                                className={classNames("transition", {
+                                    "rotate-45": isCollapsed,
+                                })}
+                                icon={IconNames.CROSS}
                             />
-                        </TypeDefinitionContext.Provider>
-                    </Collapse>
-                </div>
+                            <div
+                                className={classNames(styles.showPropertiesButton, "select-none whitespace-nowrap")}
+                                data-show-text={showText}
+                            >
+                                {isCollapsed ? showText : hideText}
+                            </div>
+                        </div>
+                        <Collapse isOpen={!isCollapsed}>
+                            <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
+                                {collapsableContent.elementNameSingular === "enum value" ? (
+                                    <EnumDefinitionDetails elements={collapsableContent.elements} />
+                                ) : (
+                                    <TypeDefinitionDetails
+                                        elements={collapsableContent.elements}
+                                        separatorText={collapsableContent.separatorText}
+                                    />
+                                )}
+                            </TypeDefinitionContext.Provider>
+                        </Collapse>
+                    </div>
+                )}
             </div>
         </div>
     );

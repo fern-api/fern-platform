@@ -3708,6 +3708,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-dom@npm:latest":
+  version: 18.2.14
+  resolution: "@types/react-dom@npm:18.2.14"
+  dependencies:
+    "@types/react": "*"
+  checksum: 890289c70d1966c168037637c09cacefe6205bdd27a33252144a6b432595a2943775ac1a1accac0beddaeb67f8fdf721e076acb1adc990b08e51c3d9fd4e780c
+  languageName: node
+  linkType: hard
+
 "@types/react-syntax-highlighter@npm:^15.5.6":
   version: 15.5.6
   resolution: "@types/react-syntax-highlighter@npm:15.5.6"
@@ -3745,6 +3754,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: f7c15f19c164a29262993ea2aae2085fa38cddd9b8359fd8fefabfced91010b515a3abe2042b2b7f2f86e6b38a25b191415aa9313a9027175e3a000883c858cc
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:latest":
+  version: 18.2.31
+  resolution: "@types/react@npm:18.2.31"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: b11be8e39174d3303e308461400889e353e422d22b01d09795b2c35b7b99d5351716503d9ec5c58e4c2c871249603fa52840d45a34fb5901dd7a26e06129c716
   languageName: node
   linkType: hard
 
@@ -7068,6 +7088,8 @@ env-cmd@toddbluhm/env-cmd:
     "@types/jest": ^29.0.3
     "@types/lodash-es": 4.17.9
     "@types/node": ^18.7.18
+    "@types/react": latest
+    "@types/react-dom": latest
     "@typescript-eslint/eslint-plugin": 6.4.1
     "@typescript-eslint/parser": 6.4.1
     chalk: ^5.0.1
@@ -7092,7 +7114,8 @@ env-cmd@toddbluhm/env-cmd:
     mrlint: ^0.0.124
     organize-imports-cli: ^0.10.0
     prettier: ^2.8.8
-    react: ^18.2.0
+    react: latest
+    react-dom: latest
     styled-jsx: ^5.1.2
     stylelint: ^14.11.0
     stylelint-config-prettier-scss: ^0.0.1
@@ -12087,7 +12110,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^18.2.0":
+"react-dom@npm:^18.2.0, react-dom@npm:latest":
   version: 18.2.0
   resolution: "react-dom@npm:18.2.0"
   dependencies:
@@ -12336,7 +12359,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"react@npm:^18.2.0":
+"react@npm:^18.2.0, react@npm:latest":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
   dependencies:
