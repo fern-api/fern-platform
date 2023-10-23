@@ -6372,6 +6372,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["postcss", "npm:8.4.23"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
+            ["sass", "npm:1.54.0"],\
             ["storybook", "npm:7.5.1"],\
             ["tailwindcss", "npm:3.3.2"],\
             ["typescript", "patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=14eedb"],\
@@ -27230,7 +27231,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["lightningcss", null],\
             ["postcss", "npm:8.4.30"],\
             ["rollup", "npm:3.29.3"],\
-            ["sass", null],\
+            ["sass", "npm:1.54.0"],\
             ["stylus", null],\
             ["sugarss", null],\
             ["terser", null]\
