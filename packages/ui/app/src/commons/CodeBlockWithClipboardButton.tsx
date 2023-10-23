@@ -4,7 +4,7 @@ import { useDocsContext } from "../docs-context/useDocsContext";
 import { CodeBlockSkeleton } from "./CodeBlockSkeleton";
 import { CopyToClipboardButton } from "./CopyToClipboardButton";
 
-type CodeBlockWithClipboardButtonProps = {
+export type CodeBlockWithClipboardButtonProps = {
     variant: "sm" | "lg";
     language: string;
     content: string;

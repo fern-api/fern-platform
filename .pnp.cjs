@@ -6352,6 +6352,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/ui/workshop/",\
           "packageDependencies": [\
             ["@fern-ui/workshop", "workspace:packages/ui/workshop"],\
+            ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
             ["@storybook/addon-essentials", "virtual:674b16ee01826af41d31c30eefe1a2137d1a9ed6f948ada5235c8c0790807502c50478eb31deb6f821080967f6907f929c91b283ebb0906671b1a593f2555aaf#npm:7.5.1"],\
             ["@storybook/addon-interactions", "virtual:674b16ee01826af41d31c30eefe1a2137d1a9ed6f948ada5235c8c0790807502c50478eb31deb6f821080967f6907f929c91b283ebb0906671b1a593f2555aaf#npm:7.5.1"],\
