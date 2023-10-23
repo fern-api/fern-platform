@@ -140,7 +140,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.8.8"],\
             ["react", "npm:18.2.0"],\
-            ["react-dom", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:18.2.0"],\
             ["styled-jsx", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:5.1.2"],\
             ["stylelint", "npm:14.14.0"],\
             ["stylelint-config-prettier-scss", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:0.0.1"],\
@@ -9689,7 +9688,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.8.8"],\
             ["react", "npm:18.2.0"],\
-            ["react-dom", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:18.2.0"],\
             ["styled-jsx", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:5.1.2"],\
             ["stylelint", "npm:14.14.0"],\
             ["stylelint-config-prettier-scss", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:0.0.1"],\
@@ -15473,21 +15471,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["react-dom", "virtual:44580d8410e4d971649da315cde171126d24493e1706e560c93a65d81b96bdf88f24e77459a8c3c6c0369c524d18da458ce73c9d13e099ef95b8c7c66d89e62a#npm:18.2.0"],\
             ["@types/react", null],\
-            ["loose-envify", "npm:1.4.0"],\
-            ["react", "npm:18.2.0"],\
-            ["scheduler", "npm:0.23.0"]\
-          ],\
-          "packagePeers": [\
-            "@types/react",\
-            "react"\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:18.2.0", {\
-          "packageLocation": "./.yarn/__virtual__/react-dom-virtual-eaee2c38ab/0/cache/react-dom-npm-18.2.0-dd675bca1c-7d323310be.zip/node_modules/react-dom/",\
-          "packageDependencies": [\
-            ["react-dom", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:18.2.0"],\
-            ["@types/react", "npm:18.2.31"],\
             ["loose-envify", "npm:1.4.0"],\
             ["react", "npm:18.2.0"],\
             ["scheduler", "npm:0.23.0"]\

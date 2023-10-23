@@ -3757,7 +3757,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:latest":
+"@types/react@npm:^18.2.0":
   version: 18.2.31
   resolution: "@types/react@npm:18.2.31"
   dependencies:
@@ -7088,7 +7088,7 @@ env-cmd@toddbluhm/env-cmd:
     "@types/jest": ^29.0.3
     "@types/lodash-es": 4.17.9
     "@types/node": ^18.7.18
-    "@types/react": latest
+    "@types/react": ^18.2.0
     "@types/react-dom": latest
     "@typescript-eslint/eslint-plugin": 6.4.1
     "@typescript-eslint/parser": 6.4.1
@@ -7115,7 +7115,6 @@ env-cmd@toddbluhm/env-cmd:
     organize-imports-cli: ^0.10.0
     prettier: ^2.8.8
     react: latest
-    react-dom: latest
     styled-jsx: ^5.1.2
     stylelint: ^14.11.0
     stylelint-config-prettier-scss: ^0.0.1
@@ -12110,7 +12109,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^18.2.0, react-dom@npm:latest":
+"react-dom@npm:^18.2.0":
   version: 18.2.0
   resolution: "react-dom@npm:18.2.0"
   dependencies:
