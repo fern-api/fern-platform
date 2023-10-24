@@ -25,7 +25,6 @@ export const SearchInput = ({ searchInput, handleSearchInput }: SearchProps): JS
 
 const styles = {
     container: {
-        // border: "1px solid lightgrey",
         borderRadius: 5,
         padding: 5,
         width: "100%",

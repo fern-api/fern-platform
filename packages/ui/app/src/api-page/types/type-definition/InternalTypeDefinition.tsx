@@ -7,6 +7,7 @@ import classNames from "classnames";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
+import { Chip } from "../../../components/common/Chip";
 import { getAnchorId } from "../../../util/anchor";
 import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
 import {
@@ -17,7 +18,6 @@ import {
 import { DiscriminatedUnionVariant } from "../discriminated-union/DiscriminatedUnionVariant";
 import { ObjectProperty } from "../object/ObjectProperty";
 import { UndiscriminatedUnionVariant } from "../undiscriminated-union/UndiscriminatedUnionVariant";
-import { Chip } from "./Chip";
 import { EnumDefinitionDetails } from "./EnumDefinitionDetails";
 import styles from "./InternalTypeDefinition.module.scss";
 import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
@@ -171,12 +171,14 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     return (
         <div className="mt-2 flex flex-col">
             <div className="flex flex-col items-start">
-                {collapsableContent.elementNameSingular === "enum value" && collapsableContent.elements.length < 7 ? (
-                    <div className="t-muted flex flex-row gap-2 overflow-x-scroll align-baseline">
-                        Allowed values:
-                        {collapsableContent.elements.map((item) => (
-                            <Chip key={item.key} name={item.props.name} description={item.props.description} />
-                        ))}
+                {collapsableContent.elementNameSingular === "enum value" && collapsableContent.elements.length < 5 ? (
+                    <div className="t-muted flex flex-row gap-2 ">
+                        <div className="shrink-0 text-sm"> Allowed values: </div>
+                        <div className="t-muted flex flex-row flex-wrap gap-2">
+                            {collapsableContent.elements.map((item) => (
+                                <Chip key={item.key} name={item.props.name} description={item.props.description} />
+                            ))}
+                        </div>
                     </div>
                 ) : (
                     <div

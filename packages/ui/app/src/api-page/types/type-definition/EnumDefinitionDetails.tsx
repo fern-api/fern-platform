@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { SearchInput } from "./SearchInput";
+import { Empty } from "../../../components/common/Empty";
+import { SearchInput } from "../../../components/common/SearchInput";
 
 export declare namespace TypeDefinitionDetails {
     export interface Props {
@@ -23,7 +24,11 @@ export const EnumDefinitionDetails = ({ elements }: TypeDefinitionDetails.Props)
     return (
         <div style={styles.container}>
             <SearchInput searchInput={searchInput} handleSearchInput={setSearchInput} />
-            <div style={styles.EnumStyles}>{filteredElements}</div>
+            {filteredElements.length > 0 ? (
+                <div style={styles.EnumStyles}>{filteredElements}</div>
+            ) : (
+                <Empty name="No results" description="No enum values found" />
+            )}
         </div>
     );
 };
