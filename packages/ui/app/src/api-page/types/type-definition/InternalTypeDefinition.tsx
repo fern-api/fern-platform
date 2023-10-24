@@ -101,11 +101,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                 }),
                 enum: (enum_) => ({
                     elements: enum_.values.map((enumValue) => (
-                        <Chip
-                            key={enumValue.value}
-                            name={enumValue.value}
-                            description={enumValue.description ?? "This is a sample description"}
-                        />
+                        <Chip key={enumValue.value} name={enumValue.value} description={enumValue.description} />
                         // <EnumValue key={enumValue.value} enumValue={enumValue} />
                     )),
                     elementNameSingular: "enum value",
