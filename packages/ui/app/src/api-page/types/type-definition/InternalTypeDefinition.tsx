@@ -18,7 +18,7 @@ import {
 import { DiscriminatedUnionVariant } from "../discriminated-union/DiscriminatedUnionVariant";
 import { ObjectProperty } from "../object/ObjectProperty";
 import { UndiscriminatedUnionVariant } from "../undiscriminated-union/UndiscriminatedUnionVariant";
-import { EnumDefinitionDetails } from "./EnumDefinitionDetails";
+import { EnumTypeDefinition } from "./EnumTypeDefinition";
 import styles from "./InternalTypeDefinition.module.scss";
 import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 
@@ -101,7 +101,11 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                 }),
                 enum: (enum_) => ({
                     elements: enum_.values.map((enumValue) => (
-                        <Chip key={enumValue.value} name={enumValue.value} description={enumValue.description} />
+                        <Chip
+                            key={enumValue.value}
+                            name={enumValue.value}
+                            description={enumValue.description ?? "This is a sample description"}
+                        />
                         // <EnumValue key={enumValue.value} enumValue={enumValue} />
                     )),
                     elementNameSingular: "enum value",
@@ -171,16 +175,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     return (
         <div className="mt-2 flex flex-col">
             <div className="flex flex-col items-start">
-                {collapsableContent.elementNameSingular === "enum value" && collapsableContent.elements.length < 5 ? (
-                    <div className="t-muted flex flex-row gap-2 ">
-                        <div className="shrink-0 text-sm"> Allowed values: </div>
-                        <div className="t-muted flex flex-row flex-wrap gap-2">
-                            {collapsableContent.elements.map((item) => (
-                                <Chip key={item.key} name={item.props.name} description={item.props.description} />
-                            ))}
-                        </div>
-                    </div>
-                ) : (
+                {collapsableContent.elementNameSingular !== "enum value" ? (
                     <div
                         className="border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded border"
                         style={{
@@ -217,17 +212,22 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                         </div>
                         <Collapse isOpen={!isCollapsed}>
                             <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
-                                {collapsableContent.elementNameSingular === "enum value" ? (
-                                    <EnumDefinitionDetails elements={collapsableContent.elements} />
-                                ) : (
-                                    <TypeDefinitionDetails
-                                        elements={collapsableContent.elements}
-                                        separatorText={collapsableContent.separatorText}
-                                    />
-                                )}
+                                <TypeDefinitionDetails
+                                    elements={collapsableContent.elements}
+                                    separatorText={collapsableContent.separatorText}
+                                />
                             </TypeDefinitionContext.Provider>
                         </Collapse>
                     </div>
+                ) : (
+                    <EnumTypeDefinition
+                        elements={collapsableContent.elements}
+                        isCollapsed={isCollapsed}
+                        originalButtonWidth={originalButtonWidth}
+                        toggleIsCollapsed={toggleIsCollapsed}
+                        collapsibleContentContextValue={collapsibleContentContextValue}
+                        showText={showText}
+                    />
                 )}
             </div>
         </div>

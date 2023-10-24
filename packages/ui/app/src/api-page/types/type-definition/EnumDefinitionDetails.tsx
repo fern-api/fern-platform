@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import { Empty } from "../../../components/common/Empty";
-import { SearchInput } from "../../../components/common/SearchInput";
 
 export declare namespace TypeDefinitionDetails {
     export interface Props {
         elements: JSX.Element[];
+        searchInput: string;
     }
 }
 
-export const EnumDefinitionDetails = ({ elements }: TypeDefinitionDetails.Props): JSX.Element => {
-    const [searchInput, setSearchInput] = useState("");
+export const EnumDefinitionDetails = ({ elements, searchInput }: TypeDefinitionDetails.Props): JSX.Element => {
     const [filteredElements, setFilteredElements] = useState<JSX.Element[]>([]);
 
     useEffect(() => {
@@ -23,7 +22,6 @@ export const EnumDefinitionDetails = ({ elements }: TypeDefinitionDetails.Props)
 
     return (
         <div style={styles.container}>
-            <SearchInput searchInput={searchInput} handleSearchInput={setSearchInput} />
             {filteredElements.length > 0 ? (
                 <div style={styles.EnumStyles}>{filteredElements}</div>
             ) : (
