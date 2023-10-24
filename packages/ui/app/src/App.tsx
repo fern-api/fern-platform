@@ -3,7 +3,7 @@ import "@blueprintjs/core/lib/css/blueprint.css";
 import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import "@blueprintjs/popover2/lib/css/blueprint-popover2.css";
 import "@blueprintjs/select/lib/css/blueprint-select.css";
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
+import * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v2/resources/read";
 import "@fontsource/ibm-plex-mono";
 import classNames from "classnames";
 import "normalize.css";
@@ -39,7 +39,11 @@ export const App: React.FC<App.Props> = ({ docs, resolvedPath }) => {
                     <Context>{children}</Context>
                 ),
                 <DocsContextProvider docsDefinition={docs.definition}>
-                    <NavigationContextProvider docsDefinition={docs.definition} resolvedPath={resolvedPath}>
+                    <NavigationContextProvider
+                        docsDefinition={docs.definition}
+                        resolvedPath={resolvedPath}
+                        basePath={docs.baseUrl.basePath}
+                    >
                         <Docs />
                     </NavigationContextProvider>
                 </DocsContextProvider>

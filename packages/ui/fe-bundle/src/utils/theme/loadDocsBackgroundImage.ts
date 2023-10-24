@@ -1,4 +1,4 @@
-import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import type * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
 
 export function loadDocsBackgroundImage(docsDefinition: FernRegistryDocsRead.DocsDefinition): string | undefined {
     const backgroundImage = docsDefinition.config.backgroundImage;

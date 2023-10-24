@@ -38,8 +38,7 @@
     "lint:fern-prod": "yarn compile && yarn env:fern-prod next lint"
   },
   "dependencies": {
-    "@fern-api/fdr-sdk": "0.0.3",
-    "@fern-fern/registry-browser": "0.32.0-8-g775d3cc",
+    "@fern-api/fdr-sdk": "0.37.0-9-g620a45d",
     "@fern-ui/app-utils": "workspace:*",
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/theme": "workspace:*",

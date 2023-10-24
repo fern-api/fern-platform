@@ -15,7 +15,7 @@ export declare namespace BottomNavigationButton {
 }
 
 export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({ docsNode, direction }) => {
-    const { navigateToPath, resolver } = useNavigationContext();
+    const { navigateToPath, resolver, basePath } = useNavigationContext();
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
     const visitDirection = <T extends unknown>({ previous, next }: { previous: T; next: T }): T => {
         switch (direction) {
@@ -39,10 +39,10 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
 
     const onClick = useCallback(() => {
         if (navigatable != null) {
-            const fullSlug = getFullSlugForNavigatable(navigatable, { omitDefault: true });
+            const fullSlug = getFullSlugForNavigatable(navigatable, { omitDefault: true, basePath });
             navigateToPath(fullSlug);
         }
-    }, [navigateToPath, navigatable]);
+    }, [navigatable, basePath, navigateToPath]);
 
     const text = useMemo(() => {
         switch (docsNode.type) {
@@ -67,7 +67,7 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
         return null;
     }
 
-    const fullSlug = getFullSlugForNavigatable(navigatable, { omitDefault: true });
+    const fullSlug = getFullSlugForNavigatable(navigatable, { omitDefault: true, basePath });
 
     return (
         <Link

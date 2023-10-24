@@ -3544,26 +3544,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/fdr-sdk", [\
-        ["npm:0.0.3", {\
-          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.0.3-44de2f7147-6e8f861f5e.zip/node_modules/@fern-api/fdr-sdk/",\
+        ["npm:0.37.0-9-g620a45d", {\
+          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.37.0-9-g620a45d-1b2ba3a562-80cb750b6c.zip/node_modules/@fern-api/fdr-sdk/",\
           "packageDependencies": [\
-            ["@fern-api/fdr-sdk", "npm:0.0.3"],\
+            ["@fern-api/fdr-sdk", "npm:0.37.0-9-g620a45d"],\
             ["@ungap/url-search-params", "npm:0.2.2"],\
             ["axios", "npm:0.27.2"],\
-            ["js-base64", "npm:3.7.2"],\
-            ["url-join", "npm:4.0.1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@fern-fern/registry-browser", [\
-        ["npm:0.32.0-8-g775d3cc", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-registry-browser-npm-0.32.0-8-g775d3cc-0d4f764f00-c4b018894c.zip/node_modules/@fern-fern/registry-browser/",\
-          "packageDependencies": [\
-            ["@fern-fern/registry-browser", "npm:0.32.0-8-g775d3cc"],\
-            ["@types/url-join", "npm:4.0.1"],\
-            ["@ungap/url-search-params", "npm:0.2.2"],\
-            ["axios", "npm:1.4.0"],\
             ["js-base64", "npm:3.7.2"],\
             ["url-join", "npm:4.0.1"]\
           ],\
@@ -3575,8 +3561,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/commons/app-utils/",\
           "packageDependencies": [\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
-            ["@fern-api/fdr-sdk", "npm:0.0.3"],\
-            ["@fern-fern/registry-browser", "npm:0.32.0-8-g775d3cc"],\
+            ["@fern-api/fdr-sdk", "npm:0.37.0-9-g620a45d"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.9"],\
@@ -3677,8 +3662,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/ui/fe-bundle/",\
           "packageDependencies": [\
             ["@fern-ui/fe-bundle", "workspace:packages/ui/fe-bundle"],\
-            ["@fern-api/fdr-sdk", "npm:0.0.3"],\
-            ["@fern-fern/registry-browser", "npm:0.32.0-8-g775d3cc"],\
+            ["@fern-api/fdr-sdk", "npm:0.37.0-9-g620a45d"],\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/theme", "workspace:packages/commons/react/theme"],\
@@ -3939,8 +3923,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@blueprintjs/icons", "npm:4.9.0"],\
             ["@blueprintjs/popover2", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.8.0"],\
             ["@blueprintjs/select", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.5.1"],\
-            ["@fern-api/fdr-sdk", "npm:0.0.3"],\
-            ["@fern-fern/registry-browser", "npm:0.32.0-8-g775d3cc"],\
+            ["@fern-api/fdr-sdk", "npm:0.37.0-9-g620a45d"],\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/react-commons", "workspace:packages/commons/react/react-commons"],\
@@ -5721,15 +5704,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["@types/url-join", [\
-        ["npm:4.0.1", {\
-          "packageLocation": "./.yarn/cache/@types-url-join-npm-4.0.1-996120d4f1-29444b90e1.zip/node_modules/@types/url-join/",\
-          "packageDependencies": [\
-            ["@types/url-join", "npm:4.0.1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["@types/yargs", [\
         ["npm:17.0.12", {\
           "packageLocation": "./.yarn/cache/@types-yargs-npm-17.0.12-6f235aa456-5b41d21d86.zip/node_modules/@types/yargs/",\
@@ -6699,16 +6673,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["axios", "npm:0.27.2"],\
             ["follow-redirects", "virtual:dbe3a48aea1dd5649e16abaf23d4ae05582d2149e16141955113766a0f84f681baf358c77ddccfc82eb23e4ccc66c6c912df62a9c01f2a83f1842bf86cc297b1#npm:1.15.3"],\
             ["form-data", "npm:4.0.0"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:1.4.0", {\
-          "packageLocation": "./.yarn/cache/axios-npm-1.4.0-4d7ce8ca3e-7fb6a4313b.zip/node_modules/axios/",\
-          "packageDependencies": [\
-            ["axios", "npm:1.4.0"],\
-            ["follow-redirects", "virtual:4d7ce8ca3e1e44d82523fba2ad95e1be18c4e9f8dec6d551377587540da3ed75bd8bd3e812280309a3b90cfdb0560f076f3552a20839f7f15665207a4fbd588a#npm:1.15.2"],\
-            ["form-data", "npm:4.0.0"],\
-            ["proxy-from-env", "npm:1.1.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -9772,31 +9736,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["follow-redirects", [\
-        ["npm:1.15.2", {\
-          "packageLocation": "./.yarn/cache/follow-redirects-npm-1.15.2-1ec1dd82be-faa66059b6.zip/node_modules/follow-redirects/",\
-          "packageDependencies": [\
-            ["follow-redirects", "npm:1.15.2"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
         ["npm:1.15.3", {\
           "packageLocation": "./.yarn/cache/follow-redirects-npm-1.15.3-ca69c47b72-584da22ec5.zip/node_modules/follow-redirects/",\
           "packageDependencies": [\
             ["follow-redirects", "npm:1.15.3"]\
           ],\
           "linkType": "SOFT"\
-        }],\
-        ["virtual:4d7ce8ca3e1e44d82523fba2ad95e1be18c4e9f8dec6d551377587540da3ed75bd8bd3e812280309a3b90cfdb0560f076f3552a20839f7f15665207a4fbd588a#npm:1.15.2", {\
-          "packageLocation": "./.yarn/__virtual__/follow-redirects-virtual-359bc4c55c/0/cache/follow-redirects-npm-1.15.2-1ec1dd82be-faa66059b6.zip/node_modules/follow-redirects/",\
-          "packageDependencies": [\
-            ["follow-redirects", "virtual:4d7ce8ca3e1e44d82523fba2ad95e1be18c4e9f8dec6d551377587540da3ed75bd8bd3e812280309a3b90cfdb0560f076f3552a20839f7f15665207a4fbd588a#npm:1.15.2"],\
-            ["@types/debug", null],\
-            ["debug", "virtual:142ba651bd70dac073ff3db3802f4ea29eff00d44224dd3049edf764b3f7df3c6422788fa486ce2f45a8f2e710e5925abafab7126fee39d5d57a83f2087201ff#npm:4.3.4"]\
-          ],\
-          "packagePeers": [\
-            "@types/debug"\
-          ],\
-          "linkType": "HARD"\
         }],\
         ["virtual:dbe3a48aea1dd5649e16abaf23d4ae05582d2149e16141955113766a0f84f681baf358c77ddccfc82eb23e4ccc66c6c912df62a9c01f2a83f1842bf86cc297b1#npm:1.15.3", {\
           "packageLocation": "./.yarn/__virtual__/follow-redirects-virtual-47af2b021c/0/cache/follow-redirects-npm-1.15.3-ca69c47b72-584da22ec5.zip/node_modules/follow-redirects/",\
@@ -15272,15 +15217,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/property-information-npm-6.2.0-d3b6a6a493-23afce07ba.zip/node_modules/property-information/",\
           "packageDependencies": [\
             ["property-information", "npm:6.2.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["proxy-from-env", [\
-        ["npm:1.1.0", {\
-          "packageLocation": "./.yarn/cache/proxy-from-env-npm-1.1.0-c13d07f26b-ed7fcc2ba0.zip/node_modules/proxy-from-env/",\
-          "packageDependencies": [\
-            ["proxy-from-env", "npm:1.1.0"]\
           ],\
           "linkType": "HARD"\
         }]\

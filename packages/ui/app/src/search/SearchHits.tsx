@@ -20,7 +20,7 @@ export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {
 };
 
 export const SearchHits: React.FC = () => {
-    const { resolver, navigateToPath } = useNavigationContext();
+    const { resolver, navigateToPath, basePath } = useNavigationContext();
     const { closeSearchDialog } = useSearchContext();
     const { hits } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
@@ -30,14 +30,14 @@ export const SearchHits: React.FC = () => {
 
     const getFullPathForHit = useCallback(
         (hit: Hit<SearchRecord>) => {
-            const path = getFullPathForSearchRecord(hit);
+            const path = getFullPathForSearchRecord(hit, basePath);
             const navigatable = resolver.resolveNavigatable(path);
             if (navigatable == null) {
-                return "";
+                return basePath?.slice(1) ?? "";
             }
-            return getFullSlugForNavigatable(navigatable, { omitDefault: true });
+            return getFullSlugForNavigatable(navigatable, { omitDefault: true, basePath });
         },
-        [resolver]
+        [basePath, resolver]
     );
 
     const refs = useRef(new Map<string, HTMLAnchorElement>());
@@ -110,7 +110,7 @@ export const SearchHits: React.FC = () => {
             const fullPath = getFullPathForHit(hoveredSearchHit.record);
             navigateToPath(fullPath);
             void router.replace(`/${fullPath}`, undefined, {
-                shallow: true,
+                shallow: false,
             });
         },
         preventDefault: true,

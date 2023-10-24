@@ -1,4 +1,4 @@
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
 import classNames from "classnames";
 import { ArrowRightIcon } from "../commons/icons/ArrowRightIcon";
 

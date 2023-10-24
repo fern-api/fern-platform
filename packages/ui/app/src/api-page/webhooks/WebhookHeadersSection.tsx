@@ -1,4 +1,4 @@
-import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import type * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";

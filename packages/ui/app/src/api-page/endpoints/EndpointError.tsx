@@ -1,4 +1,4 @@
-import { FernRegistry } from "@fern-fern/registry-browser";
+import { FernRegistry } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { useRouter } from "next/router";

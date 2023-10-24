@@ -1,5 +1,3 @@
-import { FernRegistry } from "@fern-fern/registry-browser";
-
 import { useCallback, useMemo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { getEnvConfig, type EnvironmentConfig } from "../env";
@@ -85,7 +83,7 @@ export function useSearchService(): SearchService {
             if (activeVersionContext.type !== "versioned") {
                 throw new Error("Inconsistent State: Received search info is versioned but docs are unversioned");
             }
-            const versionId = FernRegistry.docs.v1.read.VersionId(activeVersionContext.version.info.id);
+            const versionId = activeVersionContext.version.info.id;
             const { indexSegmentsByVersionId } = searchInfo.value;
             const indexSegment = indexSegmentsByVersionId[versionId];
             if (indexSegment == null) {

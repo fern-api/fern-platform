@@ -1,5 +1,5 @@
 import { FernRegistry, PathResolver } from "@fern-api/fdr-sdk";
-import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import type * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
 import { getFullSlugForNavigatable } from "@fern-ui/app-utils";
 import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
@@ -15,6 +15,7 @@ export declare namespace NavigationContextProvider {
     export type Props = PropsWithChildren<{
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
         resolvedPath: ResolvedPath;
+        basePath: string | undefined;
     }>;
 }
 
@@ -22,10 +23,15 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     docsDefinition,
     resolvedPath,
     children,
+    basePath,
 }) => {
     const router = useRouter();
     const userIsScrolling = useRef(false);
-    const resolvedRoute = getRouteForResolvedPath({ resolvedSlug: resolvedPath.fullSlug, asPath: router.asPath });
+    const resolvedRoute = getRouteForResolvedPath({
+        resolvedSlug: resolvedPath.fullSlug,
+        asPath: router.asPath,
+        basePath,
+    });
     const justNavigatedTo = useRef<string | undefined>(resolvedRoute);
     const { value: hasInitialized, setTrue: markAsInitialized } = useBooleanState(false);
     type ApiDefinition = FernRegistry.api.v1.read.ApiDefinition;
@@ -35,9 +41,10 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 definition: {
                     apis: docsDefinition.apis as Record<ApiDefinition["id"], ApiDefinition>,
                     docsConfig: docsDefinition.config,
+                    basePath,
                 },
             }),
-        [docsDefinition]
+        [basePath, docsDefinition.apis, docsDefinition.config]
     );
 
     const resolvedNavigatable = useMemo(() => {
@@ -48,7 +55,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             );
         }
         return node;
-    }, [resolver, resolvedPath]);
+    }, [resolver, resolvedPath.fullSlug]);
 
     useEffect(() => {
         setActiveNavigatable(resolvedNavigatable);
@@ -63,7 +70,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         return resolver.getNeighborsForNavigatable(activeNavigatable);
     }, [resolver, activeNavigatable]);
 
-    const selectedSlug = getFullSlugForNavigatable(activeNavigatable, { omitDefault: true });
+    const selectedSlug = getFullSlugForNavigatable(activeNavigatable, { omitDefault: true, basePath });
 
     const navigateToRoute = useRef((route: string, disableSmooth = false) => {
         if (!userIsScrolling.current) {
@@ -180,16 +187,17 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             const slugCandidate = as.substring(1, as.length);
             const previousNavigatable = resolver.resolveNavigatable(slugCandidate);
             if (previousNavigatable != null) {
-                const fullSlug = getFullSlugForNavigatable(previousNavigatable);
+                const fullSlug = getFullSlugForNavigatable(previousNavigatable, { basePath });
                 navigateToPath(fullSlug);
             }
             return true;
         });
-    }, [router, navigateToPath, docsDefinition, resolver]);
+    }, [router, navigateToPath, docsDefinition, resolver, basePath]);
 
     return (
         <NavigationContext.Provider
             value={{
+                basePath,
                 hasInitialized,
                 justNavigated: justNavigatedTo.current != null,
                 activeNavigatable,

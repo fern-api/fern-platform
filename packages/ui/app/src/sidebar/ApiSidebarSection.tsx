@@ -1,6 +1,6 @@
-import { FernRegistry } from "@fern-fern/registry-browser";
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { FernRegistry } from "@fern-api/fdr-sdk";
+import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
 import { joinUrlSlugs } from "@fern-ui/app-utils";
 import { useCallback, useMemo } from "react";
 import { resolveSubpackage } from "../api-context/ApiDefinitionContextProvider";

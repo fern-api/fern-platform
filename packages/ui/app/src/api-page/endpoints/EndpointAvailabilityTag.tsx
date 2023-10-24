@@ -1,4 +1,4 @@
-import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import type * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
 import { getEndpointAvailabilityLabel } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import React, { memo } from "react";

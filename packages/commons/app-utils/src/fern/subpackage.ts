@@ -1,4 +1,4 @@
-import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import type * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
 import { startCase } from "lodash-es";
 import { joinUrlSlugs } from "../slug";
 
