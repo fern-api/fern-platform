@@ -102,8 +102,10 @@ export class RevalidatorServiceImpl implements RevalidatorService {
                 `https://${baseUrl.getFullUrl()}/api/revalidate-v2`,
                 body,
             );
+            this.semaphore.release();
             return { success: response.data.success };
         } catch (e) {
+            this.semaphore.release();
             const response = axios.isAxiosError(e) ? (e.response?.data as ErrorResponseBody | undefined) : undefined;
             const message = response?.message ?? "Unknown error.";
             return { success: false, message };
