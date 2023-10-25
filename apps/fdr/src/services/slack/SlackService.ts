@@ -49,12 +49,12 @@ export class SlackServiceImpl implements SlackService {
 
     async notifyFailedToRevalidatePaths(request: FailedToRevalidatePathsNotification): Promise<void> {
         try {
-            let message = `Failed to revalidate ${request.paths.error.length} paths.`;
-            if (request.paths.success.length > 0) {
-                message += ` Revalidated ${request.paths.success.length} other paths successfully.`;
+            let message = `Failed to revalidate ${request.paths.failedRevalidations.length} paths.`;
+            if (request.paths.successfulRevalidations.length > 0) {
+                message += ` Revalidated ${request.paths.successfulRevalidations.length} other paths successfully.`;
             }
             message += "The following paths could not be revalidated\n";
-            message += request.paths.error.map((e) => `${e.url} : ${e.message}`).join("\n");
+            message += request.paths.failedRevalidations.map((e) => `${e.url} : ${e.message}`).join("\n");
             this.logger.error(message);
             await this.client.chat.postMessage({
                 channel: "#engineering-notifs",

@@ -168,30 +168,30 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
 
                 // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
                 delete DOCS_REGISTRATIONS[req.params.docsRegistrationId];
-
-                const results = await app.services.revalidator.revalidatePaths({
-                    definition: {
-                        apis: Object.fromEntries(
-                            Object.entries(createObjectFromMap(apiDefinitionsById)).map(
-                                ([definitionId, apiDefinition]) => {
-                                    return [definitionId, convertApiDefinitionToRead(apiDefinition)];
-                                },
+                for (const baseUrl of [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls]) {
+                    const results = await app.services.revalidator.revalidate({
+                        definition: {
+                            apis: Object.fromEntries(
+                                Object.entries(createObjectFromMap(apiDefinitionsById)).map(
+                                    ([definitionId, apiDefinition]) => {
+                                        return [definitionId, convertApiDefinitionToRead(apiDefinition)];
+                                    },
+                                ),
                             ),
-                        ),
-                        config: convertDbDocsConfigToRead({
-                            dbShape: dbDocsDefinition.config,
-                        }),
-                    },
-                    urls: [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls],
-                });
-
-                if (results.error.length === 0) {
-                    app.logger.info(`Successfully revalidated ${results.success.length} paths.`);
-                } else {
-                    await app.services.slack.notifyFailedToRevalidatePaths({
-                        domain: docsRegistrationInfo.fernUrl.getFullUrl(),
-                        paths: results,
+                            config: convertDbDocsConfigToRead({
+                                dbShape: dbDocsDefinition.config,
+                            }),
+                        },
+                        baseUrl,
                     });
+                    if (results.failedRevalidations.length === 0) {
+                        app.logger.info(`Successfully revalidated ${results.successfulRevalidations.length} paths.`);
+                    } else {
+                        await app.services.slack.notifyFailedToRevalidatePaths({
+                            domain: docsRegistrationInfo.fernUrl.getFullUrl(),
+                            paths: results,
+                        });
+                    }
                 }
 
                 return res.send();

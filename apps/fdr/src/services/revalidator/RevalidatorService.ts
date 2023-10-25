@@ -1,4 +1,4 @@
-import { FernRegistry, PathResolver, joinUrlSlugs } from "@fern-api/fdr-sdk";
+import { FernRegistry, PathResolver } from "@fern-api/fdr-sdk";
 import axios, { type AxiosInstance } from "axios";
 import * as AxiosLogger from "axios-logger";
 import { ParsedBaseUrl } from "../../util/ParsedBaseUrl";
@@ -15,17 +15,15 @@ export interface RevalidatePathErrorResult {
     message: string;
 }
 
-type RevalidatePathResult = RevalidatePathSuccessResult | RevalidatePathErrorResult;
-
 export type RevalidatedPaths = {
-    success: RevalidatePathSuccessResult[];
-    error: RevalidatePathErrorResult[];
+    successfulRevalidations: RevalidatePathSuccessResult[];
+    failedRevalidations: RevalidatePathErrorResult[];
 };
 
 export interface RevalidatorService {
-    revalidatePaths(params: {
+    revalidate(params: {
         definition: Pick<FernRegistry.docs.v1.read.DocsDefinition, "apis" | "config">;
-        urls: ParsedBaseUrl[];
+        baseUrl: ParsedBaseUrl;
     }): Promise<RevalidatedPaths>;
 }
 
@@ -54,12 +52,12 @@ export class RevalidatorServiceImpl implements RevalidatorService {
         this.axiosInstance.interceptors.request.use(AxiosLogger.requestLogger);
     }
 
-    public async revalidatePaths({
+    public async revalidate({
         definition,
-        urls,
+        baseUrl,
     }: {
         definition: FernRegistry.docs.v1.read.DocsDefinition;
-        urls: ParsedBaseUrl[];
+        baseUrl: ParsedBaseUrl;
     }): Promise<RevalidatedPaths> {
         const resolver = new PathResolver({
             definition: {
@@ -68,29 +66,39 @@ export class RevalidatorServiceImpl implements RevalidatorService {
             },
         });
 
+        const successfulRevalidations: RevalidatePathSuccessResult[] = [];
+        const failedRevalidations: RevalidatePathErrorResult[] = [];
+
         const slugs = resolver.getAllSlugs();
+        for (const slug of slugs) {
+            await this.semaphore.acquire();
+            const revalidatePathResponse = await this.revalidatePath({ baseUrl, path: `/${slug}` });
+            if (revalidatePathResponse.success) {
+                successfulRevalidations.push({
+                    success: true,
+                    url: `/${slug}`,
+                });
+            } else {
+                failedRevalidations.push({
+                    success: false,
+                    url: `/${slug}`,
+                    message: revalidatePathResponse.message,
+                });
+            }
+            this.semaphore.release();
+        }
 
-        const resultsArr = await Promise.all(
-            urls.map(async (url) => {
-                return await Promise.all(
-                    slugs.map(async (slug) => {
-                        await this.semaphore.acquire();
-                        const resp = await this.revalidatePath({ url, path: `/${slug}` });
-                        this.semaphore.release();
-                        return { ...resp, url: joinUrlSlugs(url.getFullUrl(), slug) };
-                    }),
-                );
-            }),
-        );
-
-        return this.groupResults(resultsArr.flat(1));
+        return {
+            failedRevalidations,
+            successfulRevalidations,
+        };
     }
 
-    private async revalidatePath({ url, path }: { url: ParsedBaseUrl; path: string }): Promise<ResponseBody> {
+    private async revalidatePath({ baseUrl, path }: { baseUrl: ParsedBaseUrl; path: string }): Promise<ResponseBody> {
         try {
             const body: RequestBody = { path };
             const response = await this.axiosInstance.post<SuccessResponseBody>(
-                `${url.getFullUrl()}/api/revalidate-v2`,
+                `https://${baseUrl.getFullUrl()}/api/revalidate-v2`,
                 body,
             );
             return { success: response.data.success };
@@ -99,20 +107,5 @@ export class RevalidatorServiceImpl implements RevalidatorService {
             const message = response?.message ?? "Unknown error.";
             return { success: false, message };
         }
-    }
-
-    private groupResults(results: RevalidatePathResult[]) {
-        const groupedResults: RevalidatedPaths = {
-            success: [],
-            error: [],
-        };
-        results.forEach((r) => {
-            if (r.success) {
-                groupedResults.success.push(r);
-            } else {
-                groupedResults.error.push(r);
-            }
-        });
-        return groupedResults;
     }
 }
