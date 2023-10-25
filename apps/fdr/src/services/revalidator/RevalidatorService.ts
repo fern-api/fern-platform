@@ -70,23 +70,23 @@ export class RevalidatorServiceImpl implements RevalidatorService {
         const failedRevalidations: RevalidatePathErrorResult[] = [];
 
         const slugs = resolver.getAllSlugs();
-        for (const slug of slugs) {
-            await this.semaphore.acquire();
-            const revalidatePathResponse = await this.revalidatePath({ baseUrl, path: `/${slug}` });
-            if (revalidatePathResponse.success) {
-                successfulRevalidations.push({
-                    success: true,
-                    url: `/${slug}`,
-                });
-            } else {
-                failedRevalidations.push({
-                    success: false,
-                    url: `/${slug}`,
-                    message: revalidatePathResponse.message,
-                });
-            }
-            this.semaphore.release();
-        }
+        await Promise.all(
+            slugs.map(async (slug) => {
+                const response = await this.revalidatePath({ baseUrl, path: `/${slug}` });
+                if (response.success) {
+                    successfulRevalidations.push({
+                        success: true,
+                        url: `/${slug}`,
+                    });
+                } else {
+                    failedRevalidations.push({
+                        success: false,
+                        url: `/${slug}`,
+                        message: response.message,
+                    });
+                }
+            }),
+        );
 
         return {
             failedRevalidations,
@@ -95,6 +95,7 @@ export class RevalidatorServiceImpl implements RevalidatorService {
     }
 
     private async revalidatePath({ baseUrl, path }: { baseUrl: ParsedBaseUrl; path: string }): Promise<ResponseBody> {
+        await this.semaphore.acquire();
         try {
             const body: RequestBody = { path };
             const response = await this.axiosInstance.post<SuccessResponseBody>(
