@@ -2,6 +2,7 @@ import { FernRegistry, PathResolver, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import axios, { type AxiosInstance } from "axios";
 import * as AxiosLogger from "axios-logger";
 import { ParsedBaseUrl } from "../../util/ParsedBaseUrl";
+import { Semaphore } from "./Semaphore";
 
 export interface RevalidatePathSuccessResult {
     success: true;
@@ -45,6 +46,7 @@ interface ErrorResponseBody {
 
 export class RevalidatorServiceImpl implements RevalidatorService {
     public readonly axiosInstance: AxiosInstance;
+    private readonly semaphore = new Semaphore(50);
 
     public constructor() {
         this.axiosInstance = axios.create();
@@ -72,7 +74,9 @@ export class RevalidatorServiceImpl implements RevalidatorService {
             urls.map(async (url) => {
                 return await Promise.all(
                     slugs.map(async (slug) => {
+                        await this.semaphore.acquire();
                         const resp = await this.revalidatePath({ url, path: `/${slug}` });
+                        this.semaphore.release();
                         return { ...resp, url: joinUrlSlugs(url.getFullUrl(), slug) };
                     }),
                 );
