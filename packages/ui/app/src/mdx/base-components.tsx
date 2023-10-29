@@ -4,6 +4,7 @@ import React, { AnchorHTMLAttributes, HTMLAttributes } from "react";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
 import { HEADER_HEIGHT } from "../constants";
 import { useNavigationContext } from "../navigation-context";
+import { onlyText } from "../util/onlyText";
 
 type InlineCodeProps = {
     fontSize: "sm" | "lg";
@@ -34,7 +35,7 @@ export const Table: React.FC<HTMLAttributes<HTMLTableElement>> = ({ className, .
             {...rest}
             className={classNames(
                 className,
-                "block border-separate border-spacing-y-2 overflow-x-auto table-auto mb-3"
+                "block border-separate border-spacing-0 overflow-x-auto table-auto mb-3 text-sm"
             )}
         />
     );
@@ -54,21 +55,30 @@ export const Th: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
             {...rest}
             className={classNames(
                 className,
-                "text-sm text-left truncate px-2 py-1 font-normal text-text-primary-light dark:text-text-primary-dark leading-7 border-b border-border-default-light dark:border-border-default-dark"
+                "text-left truncate px-3 py-1 font-normal text-text-primary-light dark:text-text-primary-dark leading-7 border-b border-border-default-light dark:border-border-default-dark first:pl-0 last:pr-0"
             )}
         />
     );
 };
 
-export const Td: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, ...rest }) => {
+export const Td: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, children, ...rest }) => {
+    const childrenAsString = onlyText(children);
     return (
         <td
             {...rest}
             className={classNames(
                 className,
-                "text-base border-b border-border-default-light dark:border-border-default-dark font-light px-2 py-2 !text-text-muted-light dark:!text-text-muted-dark leading-7"
+                "border-b border-border-default-light dark:border-border-default-dark font-light px-3 py-1 !text-text-muted-light dark:!text-text-muted-dark leading-7 first:pl-0 last:pr-0",
+                {
+                    // if the table has many columns, do not collapse short string content into multi-line:
+                    "whitespace-nowrap": childrenAsString.length < 100,
+                    // prevent table's auto sizing from collapsing a paragraph into a tall-skinny column of broken sentences:
+                    "min-w-sm": childrenAsString.length > 200,
+                }
             )}
-        />
+        >
+            {children}
+        </td>
     );
 };
 
