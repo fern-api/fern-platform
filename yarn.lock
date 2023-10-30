@@ -2127,7 +2127,7 @@ __metadata:
     react-dom: ^18.2.0
     stylelint: ^14.14.0
     typescript: 4.9.4
-    vite: ^4.3.9
+    vite: ^4.5.0
   languageName: unknown
   linkType: soft
 
@@ -2231,7 +2231,7 @@ __metadata:
     react: ^18.2.0
     stylelint: ^14.14.0
     typescript: 4.9.4
-    vite: ^4.3.9
+    vite: ^4.5.0
   languageName: unknown
   linkType: soft
 
@@ -2271,7 +2271,7 @@ __metadata:
     react: ^18.2.0
     stylelint: ^14.14.0
     typescript: 4.9.4
-    vite: ^4.3.9
+    vite: ^4.5.0
   languageName: unknown
   linkType: soft
 
@@ -2292,7 +2292,7 @@ __metadata:
     react: ^18.2.0
     stylelint: ^14.14.0
     typescript: 4.9.4
-    vite: ^4.3.9
+    vite: ^4.5.0
   languageName: unknown
   linkType: soft
 
@@ -2315,7 +2315,7 @@ __metadata:
     react-router-dom: ^6.4.3
     stylelint: ^14.14.0
     typescript: 4.9.4
-    vite: ^4.3.9
+    vite: ^4.5.0
   languageName: unknown
   linkType: soft
 
@@ -2370,7 +2370,7 @@ __metadata:
     sass: ^1.54.0
     stylelint: ^14.14.0
     typescript: 4.9.4
-    vite: ^4.3.9
+    vite: ^4.5.0
   languageName: unknown
   linkType: soft
 
@@ -2391,7 +2391,7 @@ __metadata:
     react-dom: ^18.2.0
     stylelint: ^14.14.0
     typescript: 4.9.4
-    vite: ^4.3.9
+    vite: ^4.5.0
   languageName: unknown
   linkType: soft
 
@@ -2412,7 +2412,7 @@ __metadata:
     react-dom: ^18.2.0
     stylelint: ^14.14.0
     typescript: 4.9.4
-    vite: ^4.3.9
+    vite: ^4.5.0
   languageName: unknown
   linkType: soft
 
@@ -2470,7 +2470,7 @@ __metadata:
     remark-gfm: ^3.0.1
     stylelint: ^14.14.0
     typescript: 4.9.4
-    vite: ^4.3.9
+    vite: ^4.5.0
   languageName: unknown
   linkType: soft
 
@@ -14580,9 +14580,9 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"vite@npm:^4.3.9":
-  version: 4.4.9
-  resolution: "vite@npm:4.4.9"
+"vite@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "vite@npm:4.5.0"
   dependencies:
     esbuild: ^0.18.10
     fsevents: ~2.3.2
@@ -14616,7 +14616,7 @@ env-cmd@toddbluhm/env-cmd:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: c511024ceae39c68c7dbf2ac4381ee655cd7bb62cf43867a14798bc835d3320b8fa7867a336143c30825c191c1fb4e9aa3348fce831ab617e96203080d3d2908
+  checksum: 06f1a4c858e4dc4c04a10466f4ccacea30c5a9f8574e5ba3deb9d03fa20e80ca6797f02dad97a988da7cdef96238dbc69c3b6a538156585c74722d996223619e
   languageName: node
   linkType: hard
 
