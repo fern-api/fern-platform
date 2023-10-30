@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "strip-ansi": "^7.0.1",
-    "ua-parser-js": "^1.0.35"
+    "ua-parser-js": "^1.0.37"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
