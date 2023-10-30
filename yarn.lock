@@ -2327,7 +2327,7 @@ __metadata:
     "@types/js-yaml": ^4.0.5
     "@types/lodash-es": 4.17.9
     "@types/node": ^18.7.18
-    "@types/yargs": ^17.0.12
+    "@types/yargs": ^17.0.29
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     chalk: ^5.0.1
     depcheck: ^1.4.3
@@ -3895,7 +3895,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/yargs@npm:^17.0.12, @types/yargs@npm:^17.0.8":
+"@types/yargs@npm:^17.0.29":
+  version: 17.0.29
+  resolution: "@types/yargs@npm:17.0.29"
+  dependencies:
+    "@types/yargs-parser": "*"
+  checksum: 8bbc0edd573a5a084cb13a9985c124490fd74e73b1ed8a3058861c13124e103b00a19770dc55c53215653a7845d7033e0695917b75153cfe9618d5b2fd3cf86e
+  languageName: node
+  linkType: hard
+
+"@types/yargs@npm:^17.0.8":
   version: 17.0.12
   resolution: "@types/yargs@npm:17.0.12"
   dependencies:
