@@ -21,7 +21,7 @@ import {
     Th,
     Thead,
     Tr,
-    Ul,
+    Ul
 } from "./base-components";
 import { Availability } from "./components/Availability";
 import { Callout } from "./components/Callout";
@@ -29,6 +29,7 @@ import { Card } from "./components/Card";
 import { Cards } from "./components/Cards";
 import { CodeBlock } from "./components/CodeBlock";
 import { CodeBlocks } from "./components/CodeBlocks";
+import { FernTable } from "./components/FernTable";
 import { MdxErrorBoundaryContent } from "./MdxErrorBoundaryContent";
 
 export declare namespace MdxContent {
@@ -77,6 +78,7 @@ const COMPONENTS: MDXRemoteProps["components"] = {
     CodeBlock,
     CodeBlocks,
     Callout,
+    FernTable,
 };
 
 export const MdxContent = React.memo<MdxContent.Props>(function MdxContent({ mdx }) {

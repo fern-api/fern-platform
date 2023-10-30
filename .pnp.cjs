@@ -114,6 +114,7 @@ const RAW_RUNTIME_STATE =
           ["@typescript-eslint/eslint-plugin", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:6.4.1"],\
           ["@typescript-eslint/parser", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:6.4.1"],\
           ["chalk", "npm:5.0.1"],\
+          ["csv-stringify", "npm:6.4.4"],\
           ["depcheck", "npm:1.4.3"],\
           ["docsify-cli", "npm:4.4.4"],\
           ["eslint", "npm:8.26.0"],\
@@ -4003,6 +4004,7 @@ const RAW_RUNTIME_STATE =
           ["@types/react-test-renderer", "npm:18.0.3"],\
           ["algoliasearch", "npm:4.18.0"],\
           ["classnames", "npm:2.3.1"],\
+          ["csv-stringify", "npm:6.4.4"],\
           ["depcheck", "npm:1.4.3"],\
           ["eslint", "npm:8.26.0"],\
           ["instantsearch.js", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.56.3"],\
@@ -7929,6 +7931,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["csv-stringify", [\
+      ["npm:6.4.4", {\
+        "packageLocation": "./.yarn/cache/csv-stringify-npm-6.4.4-190f8722f9-11b8fdafb4.zip/node_modules/csv-stringify/",\
+        "packageDependencies": [\
+          ["csv-stringify", "npm:6.4.4"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["data-urls", [\
       ["npm:3.0.2", {\
         "packageLocation": "./.yarn/cache/data-urls-npm-3.0.2-c8b2050319-033fc3dd0f.zip/node_modules/data-urls/",\
@@ -9690,6 +9701,7 @@ const RAW_RUNTIME_STATE =
           ["@typescript-eslint/eslint-plugin", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:6.4.1"],\
           ["@typescript-eslint/parser", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:6.4.1"],\
           ["chalk", "npm:5.0.1"],\
+          ["csv-stringify", "npm:6.4.4"],\
           ["depcheck", "npm:1.4.3"],\
           ["docsify-cli", "npm:4.4.4"],\
           ["eslint", "npm:8.26.0"],\

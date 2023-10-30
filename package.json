@@ -82,5 +82,8 @@
     "jsonc-parser@2.2.1": {
       "unplugged": true
     }
+  },
+  "dependencies": {
+    "csv-stringify": "^6.4.4"
   }
 }
