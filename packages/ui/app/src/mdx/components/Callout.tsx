@@ -1,6 +1,6 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { CheckIcon } from "../../commons/icons/CheckIcon";
 import { InfoIcon } from "../../commons/icons/InfoIcon";
 import { WarningIcon } from "../../commons/icons/WarningIcon";
@@ -9,9 +9,9 @@ import styles from "./Callout.module.scss";
 type Intent = "info" | "warning" | "success";
 
 export declare namespace Callout {
-    export interface Props {
+    export type Props = PropsWithChildren<{
         intent: string;
-    }
+    }>;
 }
 
 function parseIntent(type: unknown): Intent {

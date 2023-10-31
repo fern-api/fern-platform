@@ -102,12 +102,7 @@ module.exports = {
         "jest/unbound-method": ["error"],
         "object-shorthand": ["error"],
         "deprecation/deprecation": "error",
-        "import/no-internal-modules": [
-            "error",
-            {
-                forbid: ["@fern-ui/*/**"],
-            },
-        ],
+        "import/no-internal-modules": ["off"],
         eqeqeq: [
             "error",
             "always",
