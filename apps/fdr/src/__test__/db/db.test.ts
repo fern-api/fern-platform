@@ -1,4 +1,5 @@
-import { FernRegistry, FernRegistryClient } from "@fern-api/fdr-sdk";
+import { APIV1Write, DocsV1Write, FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
+import { APIResponse } from "@fern-api/fdr-sdk/src/client/generated/core";
 import { PrismaClient } from "@prisma/client";
 import { addHours, subHours } from "date-fns";
 import express from "express";
@@ -17,15 +18,14 @@ import { getSnippetsService } from "../../controllers/snippets/getSnippetsServic
 import { DEFAULT_SNIPPETS_PAGE_SIZE } from "../../db/snippets/SnippetsDao";
 import { createMockFdrApplication } from "../mock";
 import { createApiDefinition, createMockDocs, createMockIndexSegment } from "./util";
-import { APIResponse } from "@fern-api/fdr-sdk/dist/generated/core";
 
 const PORT = 9999;
 
-const UNAUTHENTICATED_CLIENT = new FernRegistryClient({
+const UNAUTHENTICATED_CLIENT = new FdrClient({
     environment: `http://localhost:${PORT}/`,
 });
 
-const CLIENT = new FernRegistryClient({
+const CLIENT = new FdrClient({
     environment: `http://localhost:${PORT}/`,
     token: "dummy",
 });
@@ -72,7 +72,7 @@ afterAll(async () => {
     }
 });
 
-const EMPTY_REGISTER_API_DEFINITION: FernRegistry.api.v1.register.ApiDefinition = {
+const EMPTY_REGISTER_API_DEFINITION: APIV1Write.ApiDefinition = {
     rootPackage: {
         endpoints: [],
         webhooks: [],
@@ -83,7 +83,7 @@ const EMPTY_REGISTER_API_DEFINITION: FernRegistry.api.v1.register.ApiDefinition 
     types: {},
 };
 
-const MOCK_REGISTER_API_DEFINITION: FernRegistry.api.v1.register.ApiDefinition = createApiDefinition({
+const MOCK_REGISTER_API_DEFINITION: APIV1Write.ApiDefinition = createApiDefinition({
     endpointId: "dummy",
     endpointMethod: "POST",
     endpointPath: {
@@ -144,7 +144,7 @@ it("definition register", async () => {
 });
 
 const fontFileId = uniqueId();
-const WRITE_DOCS_REGISTER_DEFINITION: FernRegistry.docs.v1.write.DocsDefinition = {
+const WRITE_DOCS_REGISTER_DEFINITION: DocsV1Write.DocsDefinition = {
     pages: {},
     config: {
         navigation: {
@@ -316,7 +316,7 @@ it("snippet api dao", async () => {
                     {
                         endpoint: {
                             path: "/users/v1",
-                            method: FernRegistry.EndpointMethod.Get,
+                            method: FdrAPI.EndpointMethod.Get,
                         },
                         snippet: {
                             async_client: "invalid",
@@ -374,7 +374,7 @@ it("snippets dao", async () => {
                     {
                         endpoint: {
                             path: "/users/v1",
-                            method: FernRegistry.EndpointMethod.Get,
+                            method: FdrAPI.EndpointMethod.Get,
                         },
                         snippet: {
                             async_client: "invalid",
@@ -400,7 +400,7 @@ it("snippets dao", async () => {
                     {
                         endpoint: {
                             path: "/users/v1",
-                            method: FernRegistry.EndpointMethod.Get,
+                            method: FdrAPI.EndpointMethod.Get,
                         },
                         snippet: {
                             async_client: "client = AsyncAcme(api_key='YOUR_API_KEY')",
@@ -418,7 +418,7 @@ it("snippets dao", async () => {
             apiId: "api",
             endpointIdentifier: {
                 path: "/users/v1",
-                method: FernRegistry.EndpointMethod.Get,
+                method: FdrAPI.EndpointMethod.Get,
             },
             sdks: undefined,
             page: undefined,
@@ -488,7 +488,7 @@ it("get snippets", async () => {
                 {
                     endpoint: {
                         path: "/snippets/load",
-                        method: FernRegistry.EndpointMethod.Post,
+                        method: FdrAPI.EndpointMethod.Post,
                     },
                     snippet: {
                         async_client: "const petstore = new AsyncPetstoreClient(\napi_key='YOUR_API_KEY',\n)",
@@ -504,13 +504,13 @@ it("get snippets", async () => {
             apiId: "foo",
             endpoint: {
                 path: "/snippets/load",
-                method: FernRegistry.EndpointMethod.Post,
+                method: FdrAPI.EndpointMethod.Post,
             },
         }),
     );
     expect(snippets.length).toEqual(1);
 
-    const snippet = snippets[0] as FernRegistry.PythonSnippet;
+    const snippet = snippets[0] as FdrAPI.PythonSnippet;
     expect(snippet.sdk.package).toEqual("acme");
     expect(snippet.sdk.version).toEqual("0.0.2");
     expect(snippet.async_client).toEqual("const petstore = new AsyncPetstoreClient(\napi_key='YOUR_API_KEY',\n)");
@@ -602,7 +602,7 @@ it("get snippets with unregistered API", async () => {
                 {
                     endpoint: {
                         path: "/users/v1",
-                        method: FernRegistry.EndpointMethod.Get,
+                        method: FdrAPI.EndpointMethod.Get,
                     },
                     snippet: {
                         client: "const petstore = new PetstoreClient({\napiKey: 'YOUR_API_KEY',\n});",
@@ -617,13 +617,13 @@ it("get snippets with unregistered API", async () => {
             apiId: "fresh",
             endpoint: {
                 path: "/users/v1",
-                method: FernRegistry.EndpointMethod.Get,
+                method: FdrAPI.EndpointMethod.Get,
             },
         }),
     );
     expect(snippets.length).toEqual(1);
 
-    const snippet = snippets[0] as FernRegistry.TypeScriptSnippet;
+    const snippet = snippets[0] as FdrAPI.TypeScriptSnippet;
     expect(snippet.sdk.package).toEqual("acme");
     expect(snippet.sdk.version).toEqual("0.0.1");
     expect(snippet.client).toEqual("const petstore = new PetstoreClient({\napiKey: 'YOUR_API_KEY',\n});");
@@ -637,12 +637,12 @@ it("load snippets", async () => {
         definition: EMPTY_REGISTER_API_DEFINITION,
     });
     // initialize enough snippets to occupy two pages
-    const snippets: FernRegistry.SingleTypescriptSnippetCreate[] = [];
+    const snippets: FdrAPI.SingleTypescriptSnippetCreate[] = [];
     for (let i = 0; i < DEFAULT_SNIPPETS_PAGE_SIZE * 2; i++) {
         snippets.push({
             endpoint: {
                 path: `/users/v${i}`,
-                method: FernRegistry.EndpointMethod.Get,
+                method: FdrAPI.EndpointMethod.Get,
             },
             snippet: {
                 client: `const clientV${i} = new UserClient({\napiKey: 'YOUR_API_KEY',\n});`,
@@ -679,7 +679,7 @@ it("load snippets", async () => {
         if (responseSnippets === undefined) {
             throw new Error("response snippets must not be undefined");
         }
-        const snippet = responseSnippets[0] as FernRegistry.TypeScriptSnippet;
+        const snippet = responseSnippets[0] as FdrAPI.TypeScriptSnippet;
         expect(snippet.sdk.package).toEqual("acme");
         expect(snippet.sdk.version).toEqual("0.0.1");
         expect(snippet.client).toEqual(`const clientV${i} = new UserClient({\napiKey: 'YOUR_API_KEY',\n});`);
@@ -708,7 +708,7 @@ it("load snippets", async () => {
         if (responseSnippets === undefined) {
             throw new Error("response snippets must not be undefined");
         }
-        const snippet = responseSnippets[0] as FernRegistry.TypeScriptSnippet;
+        const snippet = responseSnippets[0] as FdrAPI.TypeScriptSnippet;
         expect(snippet.sdk.package).toEqual("acme");
         expect(snippet.sdk.version).toEqual("0.0.1");
         expect(snippet.client).toEqual(`const clientV${i} = new UserClient({\napiKey: 'YOUR_API_KEY',\n});`);
@@ -731,7 +731,7 @@ it("user not part of org", async () => {
                 {
                     endpoint: {
                         path: "/users/v1",
-                        method: FernRegistry.EndpointMethod.Get,
+                        method: FdrAPI.EndpointMethod.Get,
                     },
                     snippet: {
                         client: "client := userclient.New(userclient.WithAuthToken('YOUR_AUTH_TOKEN')",
@@ -745,7 +745,7 @@ it("user not part of org", async () => {
         orgId: "private",
         endpoint: {
             path: "/users/v1",
-            method: FernRegistry.EndpointMethod.Get,
+            method: FdrAPI.EndpointMethod.Get,
         },
     });
     expect(response.ok === false && response.error.error === "UnauthorizedError");
@@ -766,7 +766,7 @@ it("snippets apiId not found", async () => {
                 {
                     endpoint: {
                         path: "/users/v1",
-                        method: FernRegistry.EndpointMethod.Get,
+                        method: FdrAPI.EndpointMethod.Get,
                     },
                     snippet: {
                         client: "const acme = new AcmeClient({\napiKey: 'YOUR_API_KEY',\n});",
@@ -781,7 +781,7 @@ it("snippets apiId not found", async () => {
         apiId: "dne",
         endpoint: {
             path: "/users/v1",
-            method: FernRegistry.EndpointMethod.Get,
+            method: FdrAPI.EndpointMethod.Get,
         },
     });
     expect(response.ok === false && response.error.error === "OrgIdAndApiIdNotFound");
@@ -808,7 +808,7 @@ it("get snippets (unauthenticated)", async () => {
                 {
                     endpoint: {
                         path: "/users/v1",
-                        method: FernRegistry.EndpointMethod.Get,
+                        method: FdrAPI.EndpointMethod.Get,
                     },
                     snippet: {
                         client: "client := userclient.New(userclient.WithAuthToken('YOUR_AUTH_TOKEN')",
@@ -822,7 +822,7 @@ it("get snippets (unauthenticated)", async () => {
         apiId: "user",
         endpoint: {
             path: "/users/v1",
-            method: FernRegistry.EndpointMethod.Get,
+            method: FdrAPI.EndpointMethod.Get,
         },
     });
     expect(response.ok === false && response.error.error === "UnauthorizedError");

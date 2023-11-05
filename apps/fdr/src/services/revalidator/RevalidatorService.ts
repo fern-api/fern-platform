@@ -1,4 +1,4 @@
-import { FernRegistry, PathResolver } from "@fern-api/fdr-sdk";
+import { DocsV1Read, PathResolver } from "@fern-api/fdr-sdk";
 import axios, { type AxiosInstance } from "axios";
 import * as AxiosLogger from "axios-logger";
 import { ParsedBaseUrl } from "../../util/ParsedBaseUrl";
@@ -22,7 +22,7 @@ export type RevalidatedPaths = {
 
 export interface RevalidatorService {
     revalidate(params: {
-        definition: Pick<FernRegistry.docs.v1.read.DocsDefinition, "apis" | "config">;
+        definition: Pick<DocsV1Read.DocsDefinition, "apis" | "config">;
         baseUrl: ParsedBaseUrl;
     }): Promise<RevalidatedPaths>;
 }
@@ -56,7 +56,7 @@ export class RevalidatorServiceImpl implements RevalidatorService {
         definition,
         baseUrl,
     }: {
-        definition: FernRegistry.docs.v1.read.DocsDefinition;
+        definition: DocsV1Read.DocsDefinition;
         baseUrl: ParsedBaseUrl;
     }): Promise<RevalidatedPaths> {
         const resolver = new PathResolver({

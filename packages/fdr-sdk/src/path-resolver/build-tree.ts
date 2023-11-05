@@ -1,5 +1,4 @@
-import type * as FernRegistryApiRead from "../generated/api/resources/api/resources/v1/resources/read";
-import type * as FernRegistryDocsRead from "../generated/api/resources/docs/resources/v1/resources/read";
+import { APIV1Read, DocsV1Read, visitReadNavigationConfig, visitUnversionedReadNavigationConfig } from "../client";
 import { NodeFactory } from "./node-factory";
 import type {
     ChildDocsNode,
@@ -9,7 +8,6 @@ import type {
     NodeDocsContext,
     ParentDocsNode,
 } from "./types";
-import { isUnversionedTabbedNavigationConfig, isVersionedNavigationConfig } from "./util/fern";
 import { joinUrlSlugs } from "./util/slug";
 
 type BuildContext =
@@ -17,13 +15,13 @@ type BuildContext =
           type: "versioned";
           root: DocsNode.Root;
           version: DocsNode.Version;
-          navigationConfig: FernRegistryDocsRead.UnversionedTabbedNavigationConfig;
+          navigationConfig: DocsV1Read.UnversionedTabbedNavigationConfig;
       }
     | {
           type: "unversioned";
           root: DocsNode.Root;
           version: null;
-          navigationConfig: FernRegistryDocsRead.UnversionedTabbedNavigationConfig;
+          navigationConfig: DocsV1Read.UnversionedTabbedNavigationConfig;
       };
 
 export function buildDefinitionTree(definition: DocsDefinitionSummary): DocsNode.Root {
@@ -31,110 +29,118 @@ export function buildDefinitionTree(definition: DocsDefinitionSummary): DocsNode
 
     const rootNavigationConfig = definition.docsConfig.navigation;
 
-    if (isVersionedNavigationConfig(rootNavigationConfig)) {
-        rootNavigationConfig.versions.forEach((version, versionIndex) => {
-            const versionNode = NodeFactory.createVersion({
-                slug: version.urlSlug,
-                info: {
-                    id: version.version,
+    visitReadNavigationConfig(rootNavigationConfig, {
+        versioned: (config) => {
+            config.versions.forEach((version, versionIndex) => {
+                const versionNode = NodeFactory.createVersion({
                     slug: version.urlSlug,
-                    index: versionIndex,
-                    availability: version.availability ?? null,
-                },
-                tabInfo: {
-                    type: "untabbed",
-                },
-            });
-            if (versionIndex === 0) {
-                root.info = {
-                    type: "versioned",
-                    definition,
-                    defaultVersionNode: versionNode,
-                    versions: [],
-                };
-            }
-            if (root.info.type === "versioned") {
-                root.info.versions.push(versionNode);
-            }
-            addNodeChild(root, versionNode);
-            const navigationConfig = version.config;
-            if (isUnversionedTabbedNavigationConfig(navigationConfig)) {
-                const tabNodes = navigationConfig.tabs.map((tab, tabIndex) => {
-                    return buildNodeForNavigationTab({
-                        tab,
-                        index: tabIndex,
-                        parentSlugs: [],
-                        context: {
-                            type: "versioned",
-                            root,
-                            version: versionNode,
-                            navigationConfig,
-                        },
-                    });
-                });
-                versionNode.tabInfo = {
-                    type: "tabbed",
-                    tabs: tabNodes,
-                };
-                addNodeChildren(versionNode, tabNodes);
-            } else {
-                const children = buildNodesForNavigationItems({
-                    items: navigationConfig.items,
-                    parentSlugs: [],
-                    section: null,
-                    context: {
-                        type: "versioned-untabbed",
-                        root,
-                        navigationConfig,
-                        version: versionNode,
-                        tab: null,
+                    info: {
+                        id: version.version,
+                        slug: version.urlSlug,
+                        index: versionIndex,
+                        availability: version.availability ?? null,
+                    },
+                    tabInfo: {
+                        type: "untabbed",
                     },
                 });
-                addNodeChildren(versionNode, children);
-            }
-        });
+                if (versionIndex === 0) {
+                    root.info = {
+                        type: "versioned",
+                        definition,
+                        defaultVersionNode: versionNode,
+                        versions: [],
+                    };
+                }
+                if (root.info.type === "versioned") {
+                    root.info.versions.push(versionNode);
+                }
+                addNodeChild(root, versionNode);
+                const navigationConfig = version.config;
 
-        return root;
-    }
-
-    if (isUnversionedTabbedNavigationConfig(rootNavigationConfig)) {
-        const tabNodes = rootNavigationConfig.tabs.map((tab, tabIndex) => {
-            return buildNodeForNavigationTab({
-                tab,
-                index: tabIndex,
-                parentSlugs: [],
-                context: {
-                    type: "unversioned",
-                    root,
-                    version: null,
-                    navigationConfig: rootNavigationConfig,
+                visitUnversionedReadNavigationConfig(navigationConfig, {
+                    tabbed: (tabbedConfig) => {
+                        const tabNodes = tabbedConfig.tabs.map((tab, tabIndex) => {
+                            return buildNodeForNavigationTab({
+                                tab,
+                                index: tabIndex,
+                                parentSlugs: [],
+                                context: {
+                                    type: "versioned",
+                                    root,
+                                    version: versionNode,
+                                    navigationConfig: tabbedConfig,
+                                },
+                            });
+                        });
+                        versionNode.tabInfo = {
+                            type: "tabbed",
+                            tabs: tabNodes,
+                        };
+                        addNodeChildren(versionNode, tabNodes);
+                    },
+                    untabbed: (untabbedConfig) => {
+                        const children = buildNodesForNavigationItems({
+                            items: untabbedConfig.items,
+                            parentSlugs: [],
+                            section: null,
+                            context: {
+                                type: "versioned-untabbed",
+                                root,
+                                navigationConfig: untabbedConfig,
+                                version: versionNode,
+                                tab: null,
+                            },
+                        });
+                        addNodeChildren(versionNode, children);
+                    },
+                });
+            });
+        },
+        unversioned: (config) => {
+            visitUnversionedReadNavigationConfig(config, {
+                tabbed: (tabbedConfig) => {
+                    const tabNodes = tabbedConfig.tabs.map((tab, tabIndex) => {
+                        return buildNodeForNavigationTab({
+                            tab,
+                            index: tabIndex,
+                            parentSlugs: [],
+                            context: {
+                                type: "unversioned",
+                                root,
+                                version: null,
+                                navigationConfig: tabbedConfig,
+                            },
+                        });
+                    });
+                    addNodeChildren(root, tabNodes);
+                },
+                untabbed: (untabbedConfig) => {
+                    const children = buildNodesForNavigationItems({
+                        items: untabbedConfig.items,
+                        parentSlugs: [],
+                        section: null,
+                        context: {
+                            type: "unversioned-untabbed",
+                            root,
+                            navigationConfig: untabbedConfig,
+                            version: null,
+                            tab: null,
+                        },
+                    });
+                    addNodeChildren(root, children);
                 },
             });
-        });
-        addNodeChildren(root, tabNodes);
-    } else {
-        const children = buildNodesForNavigationItems({
-            items: rootNavigationConfig.items,
-            parentSlugs: [],
-            section: null,
-            context: {
-                type: "unversioned-untabbed",
-                root,
-                navigationConfig: rootNavigationConfig,
-                version: null,
-                tab: null,
-            },
-        });
-        addNodeChildren(root, children);
-    }
+        },
+    });
 
     return root;
 }
 
 function resolveSubpackage(
-    apiDefinition: FernRegistryApiRead.ApiDefinition,
-    subpackageId: FernRegistryApiRead.SubpackageId,
-): FernRegistryApiRead.ApiDefinitionSubpackage {
+    apiDefinition: APIV1Read.ApiDefinition,
+    subpackageId: APIV1Read.SubpackageId,
+): APIV1Read.ApiDefinitionSubpackage {
     const subpackage = apiDefinition.subpackages[subpackageId];
     if (subpackage == null) {
         throw new Error("Subpackage does not exist");
@@ -157,7 +163,7 @@ function buildNodeForNavigationTab({
     parentSlugs,
     context,
 }: {
-    tab: FernRegistryDocsRead.NavigationTab;
+    tab: DocsV1Read.NavigationTab;
     index: number;
     parentSlugs: string[];
     context: BuildContext;
@@ -199,9 +205,9 @@ function buildNodesForNavigationItems({
     section,
     context,
 }: {
-    items: FernRegistryDocsRead.NavigationItem[];
+    items: DocsV1Read.NavigationItem[];
     parentSlugs: string[];
-    section: FernRegistryDocsRead.DocsSection | null;
+    section: DocsV1Read.DocsSection | null;
     context: NodeDocsContext;
 }): ChildDocsNode[] {
     return items.map((childItem) =>
@@ -220,9 +226,9 @@ function buildNodeForNavigationItem({
     section,
     context,
 }: {
-    item: FernRegistryDocsRead.NavigationItem;
+    item: DocsV1Read.NavigationItem;
     parentSlugs: string[];
-    section: FernRegistryDocsRead.DocsSection | null;
+    section: DocsV1Read.DocsSection | null;
     context: NodeDocsContext;
 }): DocsNode {
     switch (item.type) {
@@ -260,7 +266,7 @@ function buildNodeForDocsSection({
     parentSlugs,
     context,
 }: {
-    section: FernRegistryDocsRead.DocsSection;
+    section: DocsV1Read.DocsSection;
     parentSlugs: string[];
     context: NodeDocsContext;
 }): DocsNode.DocsSection {
@@ -284,7 +290,7 @@ function buildNodeForApiSection({
     parentSlugs,
     context,
 }: {
-    section: FernRegistryDocsRead.ApiSection;
+    section: DocsV1Read.ApiSection;
     parentSlugs: string[];
     context: NodeDocsContext;
 }): DocsNode {
@@ -337,8 +343,8 @@ function buildNodeForTopLevelEndpoint({
     parentSlugs,
     context,
 }: {
-    endpoint: FernRegistryApiRead.EndpointDefinition;
-    section: FernRegistryDocsRead.ApiSection;
+    endpoint: APIV1Read.EndpointDefinition;
+    section: DocsV1Read.ApiSection;
     parentSlugs: ItemSlug[];
     context: NodeDocsContext;
 }): DocsNode.TopLevelEndpoint {
@@ -359,9 +365,9 @@ function buildNodeForEndpoint({
     parentSlugs,
     context,
 }: {
-    endpoint: FernRegistryApiRead.EndpointDefinition;
-    section: FernRegistryDocsRead.ApiSection;
-    subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
+    endpoint: APIV1Read.EndpointDefinition;
+    section: DocsV1Read.ApiSection;
+    subpackage: APIV1Read.ApiDefinitionSubpackage;
     parentSlugs: ItemSlug[];
     context: NodeDocsContext;
 }): DocsNode.Endpoint {
@@ -382,8 +388,8 @@ function buildNodeForTopLevelWebhook({
     parentSlugs,
     context,
 }: {
-    webhook: FernRegistryApiRead.WebhookDefinition;
-    section: FernRegistryDocsRead.ApiSection;
+    webhook: APIV1Read.WebhookDefinition;
+    section: DocsV1Read.ApiSection;
     parentSlugs: ItemSlug[];
     context: NodeDocsContext;
 }): DocsNode.TopLevelWebhook {
@@ -404,9 +410,9 @@ function buildNodeForWebhook({
     parentSlugs,
     context,
 }: {
-    webhook: FernRegistryApiRead.WebhookDefinition;
-    section: FernRegistryDocsRead.ApiSection;
-    subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
+    webhook: APIV1Read.WebhookDefinition;
+    section: DocsV1Read.ApiSection;
+    subpackage: APIV1Read.ApiDefinitionSubpackage;
     parentSlugs: ItemSlug[];
     context: NodeDocsContext;
 }): DocsNode.Webhook {
@@ -428,9 +434,9 @@ function buildNodeForSubpackage({
     parentSlugs,
     context,
 }: {
-    subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
-    section: FernRegistryDocsRead.ApiSection;
-    apiDefinition: FernRegistryApiRead.ApiDefinition;
+    subpackage: APIV1Read.ApiDefinitionSubpackage;
+    section: DocsV1Read.ApiSection;
+    apiDefinition: APIV1Read.ApiDefinition;
     parentSlugs: ItemSlug[];
     context: NodeDocsContext;
 }): DocsNode.ApiSubpackage {
@@ -474,10 +480,7 @@ function buildNodeForSubpackage({
     return subpackageNode;
 }
 
-function nextSectionParentSlugs(
-    section: FernRegistryDocsRead.ApiSection | FernRegistryDocsRead.DocsSection,
-    parentSlugs: string[],
-) {
+function nextSectionParentSlugs(section: DocsV1Read.ApiSection | DocsV1Read.DocsSection, parentSlugs: string[]) {
     return section.skipUrlSlug ? [...parentSlugs] : [...parentSlugs, section.urlSlug];
 }
 

@@ -1,10 +1,10 @@
+import { visitDbNavigationConfig } from "@fern-api/fdr-sdk";
 import { addHours, addMinutes } from "date-fns";
 import NodeCache from "node-cache";
 import { v4 as uuidv4 } from "uuid";
 import { DocsV1Db } from "../../api";
 import type { FdrApplication } from "../../app";
 import type { DocsVersion } from "../../types";
-import { isVersionedNavigationConfig } from "../../util/fern/db";
 import type { ConfigSegmentTuple, IndexSegment } from "../algolia";
 
 const SECONDS_IN_ONE_HOUR = 60 * 60;
@@ -67,27 +67,30 @@ export class AlgoliaIndexSegmentManagerServiceImpl implements AlgoliaIndexSegmen
     }): GenerateNewIndexSegmentsResult {
         const navigationConfig = dbDocsDefinition.config.navigation;
 
-        if (isVersionedNavigationConfig(navigationConfig)) {
-            const configSegmentTuples = navigationConfig.versions.map((v) => {
+        return visitDbNavigationConfig<GenerateNewIndexSegmentsResult>(navigationConfig, {
+            versioned: (config) => {
+                const configSegmentTuples = config.versions.map((v) => {
+                    const indexSegment = this.generateNewIndexSegmentForUnversionedNavigationConfig({
+                        url,
+                        version: { id: v.version, urlSlug: v.urlSlug },
+                    });
+                    return [v.config, indexSegment] as const;
+                });
+                return {
+                    type: "versioned",
+                    configSegmentTuples,
+                };
+            },
+            unversioned: (config) => {
                 const indexSegment = this.generateNewIndexSegmentForUnversionedNavigationConfig({
                     url,
-                    version: { id: v.version, urlSlug: v.urlSlug },
                 });
-                return [v.config, indexSegment] as const;
-            });
-            return {
-                type: "versioned",
-                configSegmentTuples,
-            };
-        } else {
-            const indexSegment = this.generateNewIndexSegmentForUnversionedNavigationConfig({
-                url,
-            });
-            return {
-                type: "unversioned",
-                configSegmentTuple: [navigationConfig, indexSegment] as const,
-            };
-        }
+                return {
+                    type: "unversioned",
+                    configSegmentTuple: [config, indexSegment] as const,
+                };
+            },
+        });
     }
 
     private generateNewIndexSegmentForUnversionedNavigationConfig({

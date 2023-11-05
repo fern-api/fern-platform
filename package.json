@@ -32,9 +32,9 @@
     "typescript": "5.2.2"
   },
   "scripts": {
-    "build": "turbo run build",
-    "build:fdr": "turbo run build --filter=fdr",
-    "build:fdr-sdk": "turbo run build --filter=fdr-sdk",
+    "build": "turbo run build --force",
+    "build:fdr": "turbo run build --filter=fdr --force",
+    "build:fdr-sdk": "turbo run build --filter=fdr-sdk --force",
     "clean": "turbo run clean",
     "db:migrate:dev": "yarn workspace fdr db:migrate:dev",
     "db:migrate:local": "yarn workspace fdr db:migrate:local",

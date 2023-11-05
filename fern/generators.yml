@@ -14,7 +14,7 @@ groups:
         version: 0.7.2
         output:
           location: local-file-system
-          path: ../packages/fdr-sdk/src/generated
+          path: ../packages/fdr-sdk/src/client/generated
         config:
           noSerdeLayer: true
           outputSourceFiles: true

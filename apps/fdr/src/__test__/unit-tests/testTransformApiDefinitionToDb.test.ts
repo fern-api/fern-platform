@@ -1,6 +1,5 @@
+import { SDKSnippetHolder, convertAPIDefinitionToDb } from "@fern-api/fdr-sdk";
 import { APIV1Write } from "../../api";
-import { transformApiDefinitionForDb } from "../../converters/db/convertAPIDefinitionToDb";
-import { SDKSnippetHolder } from "../../converters/db/snippets/SDKSnippetHolder";
 
 const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
     snippetsBySdkId: {},
@@ -32,7 +31,7 @@ it("api register", async () => {
         },
         subpackages: {},
     };
-    const dbApiDefinition = transformApiDefinitionForDb(apiDefinition, "id", EMPTY_SNIPPET_HOLDER);
+    const dbApiDefinition = convertAPIDefinitionToDb(apiDefinition, "id", EMPTY_SNIPPET_HOLDER);
     expect(dbApiDefinition).toEqual({
         auth: undefined,
         id: "id",

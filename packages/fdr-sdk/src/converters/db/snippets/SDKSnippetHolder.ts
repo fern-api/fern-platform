@@ -1,4 +1,4 @@
-import { FdrAPI, APIV1Write, APIV1Read } from "../../../api";
+import { APIV1Read, APIV1Write, FdrAPI } from "../../../client";
 
 export interface SdkSnippetHolderArgs {
     snippetsBySdkId: Record<string, Record<FdrAPI.EndpointPath, FdrAPI.SnippetsByEndpointMethod>>;

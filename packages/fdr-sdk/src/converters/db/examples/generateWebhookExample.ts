@@ -1,5 +1,4 @@
-import { APIV1Write } from "../../../api";
-import { LOGGER } from "../../../app/FdrApplication";
+import { APIV1Write } from "../../../client";
 import { generateWebhookPayloadExample } from "./generateHttpBodyExample";
 
 export function generateWebhookExample({
@@ -21,7 +20,6 @@ export function generateWebhookExample({
             payload: generateWebhookPayloadExample(webhookDefinition.payload.type, resolveTypeById),
         };
     } catch (e) {
-        LOGGER.error(`Failed to generate example for webhook ${webhookDefinition.id}`, e);
-        throw new APIV1Write.EndpointExampleGenerationError({ endpointId: webhookDefinition.id });
+        throw new Error();
     }
 }

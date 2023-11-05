@@ -1,4 +1,4 @@
-import { DocsV1Read } from "../api";
+import { DocsV1Read } from "../../client";
 
 export const DEFAULT_DARK_MODE_ACCENT_PRIMARY: DocsV1Read.RgbColor = {
     r: 129,

@@ -1,14 +1,14 @@
 import { kebabCase, startCase } from "lodash";
 import { marked } from "marked";
-import { APIV1Db, APIV1Write, FdrAPI } from "../../api";
-import { assertNever, type WithoutQuestionMarks } from "../../util";
-import { mayContainMarkdown } from "../../util/markdown";
-import { titleCase } from "../../util/titleCase";
+import { APIV1Db, APIV1Write, FdrAPI } from "../../client";
+import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
+import { assertNever } from "../utils/assertNever";
+import { titleCase } from "../utils/titleCase";
 import { generateEndpointExampleCall } from "./examples/generateEndpointExampleCall";
 import { generateWebhookExample } from "./examples/generateWebhookExample";
 import { SDKSnippetHolder } from "./snippets/SDKSnippetHolder";
 
-export function transformApiDefinitionForDb(
+export function convertAPIDefinitionToDb(
     writeShape: APIV1Write.ApiDefinition,
     id: FdrAPI.ApiDefinitionId,
     snippets: SDKSnippetHolder,
@@ -93,8 +93,7 @@ function transformSubpackage({
         urlSlug: kebabCase(writeShape.name),
         description: writeShape.description,
         htmlDescription,
-        descriptionContainsMarkdown:
-            writeShape.description != null ? mayContainMarkdown(writeShape.description) : false,
+        descriptionContainsMarkdown: true,
         webhooks: webhooks ?? [],
     };
 }
@@ -111,8 +110,7 @@ function transformWebhook({
         urlSlug: kebabCase(writeShape.name ?? writeShape.id),
         description: writeShape.description,
         htmlDescription,
-        descriptionContainsMarkdown:
-            writeShape.description != null ? mayContainMarkdown(writeShape.description) : false,
+        descriptionContainsMarkdown: true,
         method: writeShape.method,
         id: writeShape.id,
         name: writeShape.name,
@@ -183,8 +181,7 @@ function transformEndpoint({
         description: writeShape.description,
         htmlDescription,
         authed: writeShape.auth,
-        descriptionContainsMarkdown:
-            writeShape.description != null ? mayContainMarkdown(writeShape.description) : false,
+        descriptionContainsMarkdown: true,
     };
 }
 
@@ -254,8 +251,7 @@ function transformHttpRequestToDb({
                 description: writeShape.description,
                 htmlDescription,
                 type: writeShape.type,
-                descriptionContainsMarkdown:
-                    writeShape.description != null ? mayContainMarkdown(writeShape.description) : false,
+                descriptionContainsMarkdown: true,
             };
         case "reference":
             return {
@@ -263,8 +259,7 @@ function transformHttpRequestToDb({
                 description: writeShape.description,
                 htmlDescription,
                 type: writeShape.type,
-                descriptionContainsMarkdown:
-                    writeShape.description != null ? mayContainMarkdown(writeShape.description) : false,
+                descriptionContainsMarkdown: true,
             };
         case "fileUpload":
             return {
@@ -272,8 +267,7 @@ function transformHttpRequestToDb({
                 description: writeShape.description,
                 htmlDescription,
                 type: writeShape.type,
-                descriptionContainsMarkdown:
-                    writeShape.description != null ? mayContainMarkdown(writeShape.description) : false,
+                descriptionContainsMarkdown: true,
             };
         case "json":
             return {
@@ -281,8 +275,7 @@ function transformHttpRequestToDb({
                 description: writeShape.description,
                 htmlDescription,
                 type: writeShape.type.shape,
-                descriptionContainsMarkdown:
-                    writeShape.description != null ? mayContainMarkdown(writeShape.description) : false,
+                descriptionContainsMarkdown: true,
             };
         default:
             assertNever(writeShape.type);
@@ -303,8 +296,7 @@ export function transformExampleEndpointCall({
     return {
         description: writeShape.description,
         htmlDescription,
-        descriptionContainsMarkdown:
-            writeShape.description != null ? mayContainMarkdown(writeShape.description) : false,
+        descriptionContainsMarkdown: true,
         path: writeShape.path,
         pathParameters: writeShape.pathParameters,
         queryParameters: writeShape.queryParameters,
@@ -361,8 +353,7 @@ function transformTypeDefinition({
         htmlDescription,
         name: writeShape.name,
         shape: transformShape({ writeShape: writeShape.shape }),
-        descriptionContainsMarkdown:
-            writeShape.description != null ? mayContainMarkdown(writeShape.description) : false,
+        descriptionContainsMarkdown: true,
     };
 }
 
@@ -417,8 +408,7 @@ function transformProperty({
         htmlDescription,
         key: writeShape.key,
         valueType: writeShape.valueType,
-        descriptionContainsMarkdown:
-            writeShape.description != null ? mayContainMarkdown(writeShape.description) : false,
+        descriptionContainsMarkdown: true,
     };
 }
 
@@ -432,8 +422,7 @@ function transformEnumValue({
         description: writeShape.description,
         htmlDescription,
         value: writeShape.value,
-        descriptionContainsMarkdown:
-            writeShape.description != null ? mayContainMarkdown(writeShape.description) : false,
+        descriptionContainsMarkdown: true,
     };
 }
 
@@ -446,8 +435,7 @@ function transformDiscriminatedVariant({
     return {
         description: writeShape.description,
         htmlDescription,
-        descriptionContainsMarkdown:
-            writeShape.description != null ? mayContainMarkdown(writeShape.description) : false,
+        descriptionContainsMarkdown: true,
         discriminantValue: writeShape.discriminantValue,
         additionalProperties: {
             extends: writeShape.additionalProperties.extends,
@@ -469,8 +457,7 @@ function transformUnDiscriminatedVariant({
         htmlDescription,
         type: writeShape.type,
         displayName: writeShape.typeName != null ? startCase(writeShape.typeName) : undefined,
-        descriptionContainsMarkdown:
-            writeShape.description != null ? mayContainMarkdown(writeShape.description) : false,
+        descriptionContainsMarkdown: true,
     };
 }
 

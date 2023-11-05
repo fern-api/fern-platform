@@ -1,5 +1,5 @@
-import { APIV1Write } from "../../../api";
-import { assertNever } from "../../../util";
+import { APIV1Write } from "../../../client";
+import { assertNever } from "../../utils/assertNever";
 
 export function generateWebhookPayloadExample(
     shape: APIV1Write.WebhookPayloadShape,

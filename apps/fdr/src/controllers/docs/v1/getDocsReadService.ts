@@ -1,11 +1,9 @@
+import { convertDbAPIDefinitionToRead, convertDbDocsConfigToRead, visitDbNavigationConfig } from "@fern-api/fdr-sdk";
 import type { IndexSegment } from "@prisma/client";
 import { LoadDocsDefinitionByUrlResponse } from "../.../../../../db";
 import { APIV1Db, APIV1Read, DocsV1Db, DocsV1Read, DocsV1ReadService } from "../../../api";
 import type { FdrApplication } from "../../../app";
-import { convertApiDefinitionToRead } from "../../../converters/read/convertAPIDefinitionToRead";
-import { convertDbDocsConfigToRead } from "../../../converters/read/convertDocsConfigToRead";
 import { readBuffer } from "../../../util";
-import { isVersionedNavigationConfig } from "../../../util/fern/db";
 
 export function getDocsReadService(app: FdrApplication): DocsV1ReadService {
     return new DocsV1ReadService({
@@ -151,49 +149,53 @@ function getSearchInfoFromDocs({
     if (indexSegmentIds == null) {
         return { type: "legacyMultiAlgoliaIndex", algoliaIndex };
     }
-    const areDocsVersioned = isVersionedNavigationConfig(docsDbDefinition.config.navigation);
-    if (areDocsVersioned) {
-        const indexSegmentsByVersionId = activeIndexSegments.reduce<Record<string, DocsV1Read.IndexSegment>>(
-            (acc, indexSegment) => {
-                const searchApiKey = app.services.algoliaIndexSegmentManager.getOrGenerateSearchApiKeyForIndexSegment(
-                    indexSegment.id,
-                );
-                // Since the docs are versioned, all referenced index segments will have a version
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                acc[indexSegment.version!] = {
-                    id: indexSegment.id,
-                    searchApiKey,
-                };
-                return acc;
-            },
-            {},
-        );
-        return {
-            type: "singleAlgoliaIndex",
-            value: {
-                type: "versioned",
-                indexSegmentsByVersionId,
-            },
-        };
-    } else {
-        // If indexSegmentIds is an array, it must have at least 1 element
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const indexSegment = activeIndexSegments[0]!;
-        const searchApiKey = app.services.algoliaIndexSegmentManager.getOrGenerateSearchApiKeyForIndexSegment(
-            indexSegment.id,
-        );
-
-        return {
-            type: "singleAlgoliaIndex",
-            value: {
-                type: "unversioned",
-                indexSegment: {
-                    id: indexSegment.id,
-                    searchApiKey,
+    return visitDbNavigationConfig<DocsV1Read.SearchInfo>(docsDbDefinition.config.navigation, {
+        versioned: () => {
+            const indexSegmentsByVersionId = activeIndexSegments.reduce<Record<string, DocsV1Read.IndexSegment>>(
+                (acc, indexSegment) => {
+                    const searchApiKey =
+                        app.services.algoliaIndexSegmentManager.getOrGenerateSearchApiKeyForIndexSegment(
+                            indexSegment.id,
+                        );
+                    // Since the docs are versioned, all referenced index segments will have a version
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    acc[indexSegment.version!] = {
+                        id: indexSegment.id,
+                        searchApiKey,
+                    };
+                    return acc;
                 },
-            },
-        };
-    }
+                {},
+            );
+            return {
+                type: "singleAlgoliaIndex",
+                value: {
+                    type: "versioned",
+                    indexSegmentsByVersionId,
+                },
+            };
+        },
+        unversioned: () => {
+            const indexSegment = activeIndexSegments[0];
+            if (indexSegment == null) {
+                throw new Error("index segment is null");
+            }
+            const searchApiKey = app.services.algoliaIndexSegmentManager.getOrGenerateSearchApiKeyForIndexSegment(
+                indexSegment.id,
+            );
+
+            return {
+                type: "singleAlgoliaIndex",
+                value: {
+                    type: "unversioned",
+                    indexSegment: {
+                        id: indexSegment.id,
+                        searchApiKey,
+                    },
+                },
+            };
+        },
+    });
 }
 
 export function migrateDocsDbDefinition(dbValue: unknown): DocsV1Db.DocsDefinitionDb {
@@ -206,5 +208,5 @@ export function migrateDocsDbDefinition(dbValue: unknown): DocsV1Db.DocsDefiniti
 
 export function convertDbApiDefinitionToRead(buffer: Buffer): APIV1Read.ApiDefinition {
     const apiDefinitionJson = readBuffer(buffer) as APIV1Db.DbApiDefinition;
-    return convertApiDefinitionToRead(apiDefinitionJson);
+    return convertDbAPIDefinitionToRead(apiDefinitionJson);
 }

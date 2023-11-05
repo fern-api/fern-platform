@@ -1,4 +1,4 @@
-import type * as FernRegistryDocsRead from "../../generated/api/resources/docs/resources/v1/resources/read";
+import { DocsV1Read } from "../../client";
 import type { DocsNode, DocsNodeType } from "../types";
 
 export function expectDocsSectionNode(node: DocsNode | undefined): asserts node is DocsNode.DocsSection {
@@ -17,9 +17,7 @@ export function expectPageNode(node: DocsNode | undefined): asserts node is Docs
     expectNode(node).toBeOfType("page");
 }
 
-export function expectDocsSection(
-    section: FernRegistryDocsRead.DocsSection | null,
-): asserts section is FernRegistryDocsRead.DocsSection {
+export function expectDocsSection(section: DocsV1Read.DocsSection | null): asserts section is DocsV1Read.DocsSection {
     if (section == null) {
         throw new Error("Expected 'section' to be non-null");
     }

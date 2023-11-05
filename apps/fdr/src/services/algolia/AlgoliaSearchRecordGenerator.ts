@@ -1,8 +1,8 @@
+import { visitUnversionedDbNavigationConfig } from "@fern-api/fdr-sdk";
 import { v4 as uuid } from "uuid";
 import { APIV1Db, APIV1Read, DocsV1Db } from "../../api";
 import { LOGGER } from "../../app/FdrApplication";
 import { convertMarkdownToText, truncateToBytes } from "../../util";
-import { isUnversionedTabbedNavigationConfig } from "../../util/fern/db";
 import { compact } from "../../util/object";
 import type { AlgoliaSearchRecord, IndexSegment } from "./types";
 
@@ -69,10 +69,15 @@ export class AlgoliaSearchRecordGenerator {
     private generateAlgoliaSearchRecordsForUnversionedNavigationConfig(
         config: DocsV1Db.UnversionedNavigationConfig,
         context: NavigationContext,
-    ) {
-        return isUnversionedTabbedNavigationConfig(config)
-            ? this.generateAlgoliaSearchRecordsForUnversionedTabbedNavigationConfig(config, context)
-            : this.generateAlgoliaSearchRecordsForUnversionedUntabbedNavigationConfig(config, context);
+    ): AlgoliaSearchRecord[] {
+        return visitUnversionedDbNavigationConfig(config, {
+            tabbed: (tabbedConfig) => {
+                return this.generateAlgoliaSearchRecordsForUnversionedTabbedNavigationConfig(tabbedConfig, context);
+            },
+            untabbed: (untabbedConfig) => {
+                return this.generateAlgoliaSearchRecordsForUnversionedUntabbedNavigationConfig(untabbedConfig, context);
+            },
+        });
     }
 
     private generateAlgoliaSearchRecordsForUnversionedUntabbedNavigationConfig(

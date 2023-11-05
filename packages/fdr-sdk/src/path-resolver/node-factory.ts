@@ -1,5 +1,4 @@
-import type * as FernRegistryApiRead from "../generated/api/resources/api/resources/v1/resources/read";
-import type * as FernRegistryDocsRead from "../generated/api/resources/docs/resources/v1/resources/read";
+import { APIV1Read, DocsV1Read } from "../client";
 import { DocsDefinitionSummary, DocsNode, NodeDocsContext, TabInfo, VersionInfo } from "./types";
 
 export class NodeFactory {
@@ -41,7 +40,7 @@ export class NodeFactory {
         slug: string;
         version?: DocsNode.Version | null;
         index: number;
-        items: FernRegistryDocsRead.NavigationItem[];
+        items: DocsV1Read.NavigationItem[];
     }): DocsNode.Tab {
         return {
             type: "tab",
@@ -60,7 +59,7 @@ export class NodeFactory {
         context,
     }: {
         slug: string;
-        section: FernRegistryDocsRead.DocsSection;
+        section: DocsV1Read.DocsSection;
         context: NodeDocsContext;
     }): DocsNode.DocsSection {
         return {
@@ -79,7 +78,7 @@ export class NodeFactory {
         context,
     }: {
         slug: string;
-        section: FernRegistryDocsRead.ApiSection;
+        section: DocsV1Read.ApiSection;
         context: NodeDocsContext;
     }): DocsNode.ApiSection {
         return {
@@ -99,8 +98,8 @@ export class NodeFactory {
         context,
     }: {
         slug: string;
-        section: FernRegistryDocsRead.ApiSection;
-        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
+        section: DocsV1Read.ApiSection;
+        subpackage: APIV1Read.ApiDefinitionSubpackage;
         context: NodeDocsContext;
     }): DocsNode.ApiSubpackage {
         return {
@@ -123,8 +122,8 @@ export class NodeFactory {
     }: {
         slug: string;
         leadingSlug: string;
-        endpoint: FernRegistryApiRead.EndpointDefinition;
-        section: FernRegistryDocsRead.ApiSection;
+        endpoint: APIV1Read.EndpointDefinition;
+        section: DocsV1Read.ApiSection;
         context: NodeDocsContext;
     }): DocsNode.TopLevelEndpoint {
         return {
@@ -147,9 +146,9 @@ export class NodeFactory {
     }: {
         slug: string;
         leadingSlug: string;
-        endpoint: FernRegistryApiRead.EndpointDefinition;
-        section: FernRegistryDocsRead.ApiSection;
-        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
+        endpoint: APIV1Read.EndpointDefinition;
+        section: DocsV1Read.ApiSection;
+        subpackage: APIV1Read.ApiDefinitionSubpackage;
         context: NodeDocsContext;
     }): DocsNode.Endpoint {
         return {
@@ -172,8 +171,8 @@ export class NodeFactory {
     }: {
         slug: string;
         leadingSlug: string;
-        webhook: FernRegistryApiRead.WebhookDefinition;
-        section: FernRegistryDocsRead.ApiSection;
+        webhook: APIV1Read.WebhookDefinition;
+        section: DocsV1Read.ApiSection;
         context: NodeDocsContext;
     }): DocsNode.TopLevelWebhook {
         return {
@@ -196,9 +195,9 @@ export class NodeFactory {
     }: {
         slug: string;
         leadingSlug: string;
-        webhook: FernRegistryApiRead.WebhookDefinition;
-        section: FernRegistryDocsRead.ApiSection;
-        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
+        webhook: APIV1Read.WebhookDefinition;
+        section: DocsV1Read.ApiSection;
+        subpackage: APIV1Read.ApiDefinitionSubpackage;
         context: NodeDocsContext;
     }): DocsNode.Webhook {
         return {
@@ -221,8 +220,8 @@ export class NodeFactory {
     }: {
         slug: string;
         leadingSlug: string;
-        page: FernRegistryDocsRead.PageMetadata;
-        section: FernRegistryDocsRead.DocsSection | null;
+        page: DocsV1Read.PageMetadata;
+        section: DocsV1Read.DocsSection | null;
         context: NodeDocsContext;
     }): DocsNode.Page {
         return {

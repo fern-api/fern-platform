@@ -1,12 +1,7 @@
 import { kebabCase } from "lodash";
-import { DocsV1Db, DocsV1Read } from "../../api";
-import { type WithoutQuestionMarks } from "../../util";
-import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../../util/colors";
-import {
-    isUnversionedNavigationConfig as isUnversionedDbConfig,
-    isUnversionedUntabbedNavigationConfig as isUnversionedUntabbedDbConfig,
-    isVersionedNavigationConfig as isVersionedDbConfig,
-} from "../../util/fern/db";
+import { DocsV1Db, DocsV1Read, visitDbNavigationConfig, visitUnversionedDbNavigationConfig } from "../../client";
+import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
+import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
 
 export function convertDbDocsConfigToRead({
     dbShape,
@@ -31,12 +26,14 @@ export function convertDbDocsConfigToRead({
 }
 
 export function transformNavigationConfigToRead(dbShape: DocsV1Db.NavigationConfig): DocsV1Read.NavigationConfig {
-    if (isUnversionedDbConfig(dbShape)) {
-        return transformUnversionedNavigationConfigForDb(dbShape);
-    } else if (isVersionedDbConfig(dbShape)) {
-        return transformVersionedNavigationConfigToRead(dbShape);
-    }
-    throw new Error("navigationConfig is neither unversioned nor versioned");
+    return visitDbNavigationConfig<DocsV1Read.NavigationConfig>(dbShape, {
+        unversioned: (config) => {
+            return transformUnversionedNavigationConfigForDb(config);
+        },
+        versioned: (config) => {
+            return transformVersionedNavigationConfigToRead(config);
+        },
+    });
 }
 
 function transformVersionedNavigationConfigToRead(
@@ -57,13 +54,18 @@ function transformVersionedNavigationConfigToRead(
 function transformUnversionedNavigationConfigForDb(
     config: DocsV1Db.UnversionedNavigationConfig,
 ): DocsV1Read.UnversionedNavigationConfig {
-    return isUnversionedUntabbedDbConfig(config)
-        ? {
-              items: config.items.map(transformNavigationItemForDb),
-          }
-        : {
-              tabs: config.tabs.map(transformNavigationTabForDb),
-          };
+    return visitUnversionedDbNavigationConfig<DocsV1Read.UnversionedNavigationConfig>(config, {
+        tabbed: (config) => {
+            return {
+                tabs: config.tabs.map(transformNavigationTabForDb),
+            };
+        },
+        untabbed: (config) => {
+            return {
+                items: config.items.map(transformNavigationItemForDb),
+            };
+        },
+    });
 }
 
 export function transformNavigationTabForDb(dbShape: DocsV1Db.NavigationTab): DocsV1Read.NavigationTab {

@@ -1,9 +1,7 @@
+import { convertDbAPIDefinitionToRead, convertDbDocsConfigToRead, convertDocsDefinitionToDb } from "@fern-api/fdr-sdk";
 import { v4 as uuidv4 } from "uuid";
 import { APIV1Db, DocsV1Write, DocsV2Write, DocsV2WriteService, FdrAPI } from "../../../api";
 import { type FdrApplication } from "../../../app";
-import { transformWriteDocsDefinitionToDb } from "../../../converters/db/convertDocsDefinitionToDb";
-import { convertApiDefinitionToRead } from "../../../converters/read/convertAPIDefinitionToRead";
-import { convertDbDocsConfigToRead } from "../../../converters/read/convertDocsConfigToRead";
 import { type S3FileInfo } from "../../../services/s3";
 import { ParsedBaseUrl } from "../../../util/ParsedBaseUrl";
 import { createObjectFromMap } from "../../../util/object";
@@ -121,7 +119,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 });
 
                 app.logger.info(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Transforming Docs Definition to DB`);
-                const dbDocsDefinition = transformWriteDocsDefinitionToDb({
+                const dbDocsDefinition = convertDocsDefinitionToDb({
                     writeShape: req.body.docsDefinition,
                     files: docsRegistrationInfo.s3FileInfos,
                 });
@@ -174,7 +172,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                             apis: Object.fromEntries(
                                 Object.entries(createObjectFromMap(apiDefinitionsById)).map(
                                     ([definitionId, apiDefinition]) => {
-                                        return [definitionId, convertApiDefinitionToRead(apiDefinition)];
+                                        return [definitionId, convertDbAPIDefinitionToRead(apiDefinition)];
                                     },
                                 ),
                             ),

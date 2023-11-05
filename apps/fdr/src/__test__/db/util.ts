@@ -1,4 +1,4 @@
-import { FernRegistry } from "@fern-api/fdr-sdk";
+import { APIV1Write } from "@fern-api/fdr-sdk";
 import type { DocsV2, IndexSegment } from "@prisma/client";
 
 export function createApiDefinition({
@@ -7,11 +7,11 @@ export function createApiDefinition({
     endpointMethod,
     snippetsConfig,
 }: {
-    endpointId: FernRegistry.api.v1.register.EndpointId;
-    endpointPath: FernRegistry.api.v1.register.EndpointPath;
-    endpointMethod: FernRegistry.api.v1.register.HttpMethod;
-    snippetsConfig?: FernRegistry.api.v1.register.SnippetsConfig;
-}): FernRegistry.api.v1.register.ApiDefinition {
+    endpointId: APIV1Write.EndpointId;
+    endpointPath: APIV1Write.EndpointPath;
+    endpointMethod: APIV1Write.HttpMethod;
+    snippetsConfig?: APIV1Write.SnippetsConfig;
+}): APIV1Write.ApiDefinition {
     return {
         rootPackage: {
             endpoints: [

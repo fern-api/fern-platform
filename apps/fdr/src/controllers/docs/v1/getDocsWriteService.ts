@@ -1,8 +1,8 @@
+import { convertDocsDefinitionToDb } from "@fern-api/fdr-sdk";
 import { v4 as uuidv4 } from "uuid";
 import { DocsV1Write, DocsV1WriteService, FdrAPI } from "../../../api";
 import type { FdrApplication } from "../../../app";
 import { LOGGER } from "../../../app/FdrApplication";
-import { transformWriteDocsDefinitionToDb } from "../../../converters/db/convertDocsDefinitionToDb";
 import { type S3FileInfo } from "../../../services/s3";
 import { writeBuffer } from "../../../util";
 
@@ -49,7 +49,7 @@ export function getDocsWriteService(app: FdrApplication): DocsV1WriteService {
                 authHeader: req.headers.authorization,
                 orgId: docsRegistrationInfo.orgId,
             });
-            const dbDocsDefinition = transformWriteDocsDefinitionToDb({
+            const dbDocsDefinition = convertDocsDefinitionToDb({
                 writeShape: req.body.docsDefinition,
                 files: docsRegistrationInfo.s3FileInfos,
             });

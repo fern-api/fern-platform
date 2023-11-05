@@ -1,7 +1,5 @@
-import type * as APIV1Write from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/register";
+import { APIV1Write, SDKSnippetHolder, convertAPIDefinitionToDb } from "@fern-api/fdr-sdk";
 import { resolve } from "path";
-import { transformApiDefinitionForDb } from "../../../converters/db/convertAPIDefinitionToDb";
-import { SDKSnippetHolder } from "../../../converters/db/snippets/SDKSnippetHolder";
 
 const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
     snippetsBySdkId: {},
@@ -43,7 +41,7 @@ describe("transformApiDefinitionToDb", () => {
             `${JSON.stringify(fixture)}`,
             async () => {
                 const apiDef = loadFdrApiDefinition(fixture);
-                const dbApiDefinition = transformApiDefinitionForDb(apiDef, "id", EMPTY_SNIPPET_HOLDER);
+                const dbApiDefinition = convertAPIDefinitionToDb(apiDef, "id", EMPTY_SNIPPET_HOLDER);
                 expect(dbApiDefinition).toMatchSnapshot();
             },
             90_000,

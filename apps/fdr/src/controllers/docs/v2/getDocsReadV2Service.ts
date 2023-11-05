@@ -1,8 +1,7 @@
+import { convertDbAPIDefinitionsToRead, convertDbDocsConfigToRead } from "@fern-api/fdr-sdk";
 import NodeCache from "node-cache";
 import { DocsV2Read, DocsV2ReadService } from "../../../api";
 import type { FdrApplication } from "../../../app";
-import { convertApiDefinitionsToRead } from "../../../converters/read/convertAPIDefinitionToRead";
-import { convertDbDocsConfigToRead } from "../../../converters/read/convertDocsConfigToRead";
 import { getParsedUrl } from "../../../util";
 import { getDocsDefinition, getDocsForDomain } from "../v1/getDocsReadService";
 
@@ -63,11 +62,11 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
                 const apiDefinitions = await app.dao.apis().loadAPIDefinitions(loadDocsConfigResponse.referencedApis);
                 docsConfig = {
                     docsConfig: convertDbDocsConfigToRead({ dbShape: loadDocsConfigResponse.docsConfig }),
-                    apis: convertApiDefinitionsToRead(apiDefinitions),
+                    apis: convertDbAPIDefinitionsToRead(apiDefinitions),
                 };
                 DOCS_CONFIG_ID_CACHE.set(req.params.docsConfigId, {
                     docsConfig: convertDbDocsConfigToRead({ dbShape: loadDocsConfigResponse.docsConfig }),
-                    apis: convertApiDefinitionsToRead(apiDefinitions),
+                    apis: convertDbAPIDefinitionsToRead(apiDefinitions),
                 });
             }
             return res.send(docsConfig);

@@ -1,20 +1,24 @@
 import { kebabCase } from "lodash";
-import { DocsV1Db, DocsV1Read, DocsV1Write, FdrAPI } from "../../api";
-import { type S3FileInfo } from "../../services/s3";
-import { assertNever, type WithoutQuestionMarks } from "../../util";
-import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../../util/colors";
 import {
-    isUnversionedNavigationConfig as isUnversionedDbConfig,
-    isUnversionedUntabbedNavigationConfig as isUnversionedUntabbedDbConfig,
-    isVersionedNavigationConfig as isVersionedDbConfig,
-} from "../../util/fern/db";
-import {
-    isUnversionedUntabbedNavigationConfig as isUnversionedUntabbedWriteConfig,
-    isUnversionedNavigationConfig as isUnversionedWriteConfig,
-    isVersionedNavigationConfig as isVersionedWriteConfig,
-} from "../../util/fern/write";
+    DocsV1Db,
+    DocsV1Read,
+    DocsV1Write,
+    FdrAPI,
+    visitDbNavigationConfig,
+    visitUnversionedDbNavigationConfig,
+    visitUnversionedWriteNavigationConfig,
+    visitWriteNavigationConfig,
+} from "../../client";
+import { type WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
+import { assertNever } from "../utils/assertNever";
+import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
 
-export function transformWriteDocsDefinitionToDb({
+export interface S3FileInfo {
+    presignedUrl: DocsV1Write.FileS3UploadUrl;
+    key: string;
+}
+
+export function convertDocsDefinitionToDb({
     writeShape,
     files,
 }: {
@@ -79,12 +83,14 @@ export function transformWriteDocsDefinitionToDb({
 }
 
 export function transformNavigationConfigForDb(writeShape: DocsV1Write.NavigationConfig): DocsV1Db.NavigationConfig {
-    if (isUnversionedWriteConfig(writeShape)) {
-        return transformUnversionedNavigationConfigForDb(writeShape);
-    } else if (isVersionedWriteConfig(writeShape)) {
-        return transformVersionedNavigationConfigForDb(writeShape);
-    }
-    throw new Error("navigationConfig is neither unversioned nor versioned");
+    return visitWriteNavigationConfig<DocsV1Db.NavigationConfig>(writeShape, {
+        unversioned: (config) => {
+            return transformUnversionedNavigationConfigForDb(config);
+        },
+        versioned: (config) => {
+            return transformVersionedNavigationConfigForDb(config);
+        },
+    });
 }
 
 function transformVersionedNavigationConfigForDb(
@@ -103,15 +109,20 @@ function transformVersionedNavigationConfigForDb(
 }
 
 function transformUnversionedNavigationConfigForDb(
-    config: DocsV1Write.UnversionedNavigationConfig,
+    writeShape: DocsV1Write.UnversionedNavigationConfig,
 ): DocsV1Db.UnversionedNavigationConfig {
-    return isUnversionedUntabbedWriteConfig(config)
-        ? {
-              items: config.items.map(transformNavigationItemForDb),
-          }
-        : {
-              tabs: config.tabs.map(transformNavigationTabForDb),
-          };
+    return visitUnversionedWriteNavigationConfig<DocsV1Db.UnversionedNavigationConfig>(writeShape, {
+        untabbed: (config) => {
+            return {
+                items: config.items.map(transformNavigationItemForDb),
+            };
+        },
+        tabbed: (config) => {
+            return {
+                tabs: config.tabs.map(transformNavigationTabForDb),
+            };
+        },
+    });
 }
 
 export function transformNavigationTabForDb(writeShape: DocsV1Write.NavigationTab): DocsV1Db.NavigationTab {
@@ -153,22 +164,29 @@ export function transformNavigationItemForDb(writeShape: DocsV1Write.NavigationI
 }
 
 export function getReferencedApiDefinitionIds(navigationConfig: DocsV1Db.NavigationConfig): FdrAPI.ApiDefinitionId[] {
-    if (isUnversionedDbConfig(navigationConfig)) {
-        return getReferencedApiDefinitionIdsForUnversionedReadConfig(navigationConfig);
-    } else if (isVersionedDbConfig(navigationConfig)) {
-        return navigationConfig.versions.flatMap((version) =>
-            getReferencedApiDefinitionIdsForUnversionedReadConfig(version.config),
-        );
-    }
-    throw new Error("navigationConfig is neither unversioned nor versioned");
+    return visitDbNavigationConfig(navigationConfig, {
+        unversioned: (config) => {
+            return getReferencedApiDefinitionIdsForUnversionedReadConfig(config);
+        },
+        versioned: (config) => {
+            return config.versions.flatMap((version) =>
+                getReferencedApiDefinitionIdsForUnversionedReadConfig(version.config),
+            );
+        },
+    });
 }
 
 function getReferencedApiDefinitionIdsForUnversionedReadConfig(
     config: DocsV1Db.UnversionedNavigationConfig,
 ): FdrAPI.ApiDefinitionId[] {
-    return isUnversionedUntabbedDbConfig(config)
-        ? config.items.flatMap(getReferencedApiDefinitionIdFromItem)
-        : config.tabs.flatMap((tab) => tab.items.flatMap(getReferencedApiDefinitionIdFromItem));
+    return visitUnversionedDbNavigationConfig<FdrAPI.ApiDefinitionId[]>(config, {
+        untabbed: (config) => {
+            return config.items.flatMap(getReferencedApiDefinitionIdFromItem);
+        },
+        tabbed: (config) => {
+            return config.tabs.flatMap((tab) => tab.items.flatMap(getReferencedApiDefinitionIdFromItem));
+        },
+    });
 }
 
 function getReferencedApiDefinitionIdFromItem(item: DocsV1Db.NavigationItem): FdrAPI.ApiDefinitionId[] {

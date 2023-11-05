@@ -1,6 +1,5 @@
-import { SDKSnippetHolder } from "../../converters/db/snippets/SDKSnippetHolder";
+import { SDKSnippetHolder, transformExampleEndpointCall } from "@fern-api/fdr-sdk";
 import { APIV1Write } from "../../api";
-import { transformExampleEndpointCall } from "../../converters/db/convertAPIDefinitionToDb";
 
 const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
     snippetsBySdkId: {},
@@ -74,7 +73,7 @@ describe("transformEndpointEndpointCall", () => {
                 nodeAxios: "",
             },
             description: undefined,
-            descriptionContainsMarkdown: false,
+            descriptionContainsMarkdown: true,
             htmlDescription: undefined,
             headers: {
                 header: true,

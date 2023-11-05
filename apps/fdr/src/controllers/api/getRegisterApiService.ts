@@ -1,9 +1,8 @@
+import { SDKSnippetHolder, convertAPIDefinitionToDb } from "@fern-api/fdr-sdk";
 import { v4 as uuidv4 } from "uuid";
-import { APIV1WriteService, APIV1Write } from "../../api";
+import { APIV1Write, APIV1WriteService } from "../../api";
 import type { FdrApplication } from "../../app";
-import { transformApiDefinitionForDb } from "../../converters/db/convertAPIDefinitionToDb";
 import { writeBuffer } from "../../util";
-import { SDKSnippetHolder } from "../../converters/db/snippets/SDKSnippetHolder";
 
 const REGISTER_API_DEFINITION_META = {
     service: "APIV1WriteService",
@@ -28,7 +27,7 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
                 packageToSdkId,
                 snippetsConfiguration,
             });
-            const transformedApiDefinition = transformApiDefinitionForDb(
+            const transformedApiDefinition = convertAPIDefinitionToDb(
                 req.body.definition,
                 apiDefinitionId,
                 snippetHolder,

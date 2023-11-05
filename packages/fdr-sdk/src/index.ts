@@ -1,2 +1,3 @@
-export * from "./generated";
+export * from "./client";
+export * from "./converters";
 export * from "./path-resolver";

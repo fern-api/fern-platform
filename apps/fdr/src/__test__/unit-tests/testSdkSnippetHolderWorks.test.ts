@@ -1,4 +1,4 @@
-import { SDKSnippetHolder } from "../../converters/db/snippets/SDKSnippetHolder";
+import { SDKSnippetHolder } from "@fern-api/fdr-sdk";
 
 describe("SDK Snippet Holder", () => {
     it("Test SDK Snippet Retrieval", () => {

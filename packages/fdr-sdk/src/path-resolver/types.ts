@@ -1,9 +1,8 @@
-import type * as FernRegistryApiRead from "../generated/api/resources/api/resources/v1/resources/read";
-import type * as FernRegistryDocsRead from "../generated/api/resources/docs/resources/v1/resources/read";
+import { APIV1Read, DocsV1Read } from "../client";
 
 export interface DocsDefinitionSummary {
-    docsConfig: FernRegistryDocsRead.DocsConfig;
-    apis: Record<FernRegistryApiRead.ApiDefinition["id"], FernRegistryApiRead.ApiDefinition>;
+    docsConfig: DocsV1Read.DocsConfig;
+    apis: Record<APIV1Read.ApiDefinition["id"], APIV1Read.ApiDefinition>;
     basePath?: string;
 }
 
@@ -62,7 +61,7 @@ export type ParentDocsNode = Exclude<DocsNode, NavigatableDocsNode>;
 export interface NodeDocsContextUnversionedUntabbed {
     type: "unversioned-untabbed";
     root: DocsNode.Root;
-    navigationConfig: FernRegistryDocsRead.UnversionedUntabbedNavigationConfig;
+    navigationConfig: DocsV1Read.UnversionedUntabbedNavigationConfig;
     version: null;
     tab: null;
 }
@@ -70,7 +69,7 @@ export interface NodeDocsContextUnversionedUntabbed {
 export interface NodeDocsContextUnversionedTabbed {
     type: "unversioned-tabbed";
     root: DocsNode.Root;
-    navigationConfig: FernRegistryDocsRead.UnversionedTabbedNavigationConfig;
+    navigationConfig: DocsV1Read.UnversionedTabbedNavigationConfig;
     version: null;
     tab: DocsNode.Tab;
 }
@@ -78,7 +77,7 @@ export interface NodeDocsContextUnversionedTabbed {
 export interface NodeDocsContextVersionedUntabbed {
     type: "versioned-untabbed";
     root: DocsNode.Root;
-    navigationConfig: FernRegistryDocsRead.UnversionedUntabbedNavigationConfig;
+    navigationConfig: DocsV1Read.UnversionedUntabbedNavigationConfig;
     version: DocsNode.Version;
     tab: null;
 }
@@ -86,7 +85,7 @@ export interface NodeDocsContextVersionedUntabbed {
 export interface NodeDocsContextVersionedTabbed {
     type: "versioned-tabbed";
     root: DocsNode.Root;
-    navigationConfig: FernRegistryDocsRead.UnversionedTabbedNavigationConfig;
+    navigationConfig: DocsV1Read.UnversionedTabbedNavigationConfig;
     version: DocsNode.Version;
     tab: DocsNode.Tab;
 }
@@ -101,7 +100,7 @@ export interface VersionInfo {
     id: string;
     slug: ItemSlug;
     index: number;
-    availability: FernRegistryDocsRead.VersionAvailability | null;
+    availability: DocsV1Read.VersionAvailability | null;
 }
 
 export declare namespace DefinitionInfo {
@@ -153,14 +152,14 @@ export declare namespace DocsNode {
         type: "tab";
         version: Version | null;
         index: number;
-        items: FernRegistryDocsRead.NavigationItem[];
+        items: DocsV1Read.NavigationItem[];
         children: Record<FullSlug, ChildDocsNode>;
         childrenOrdering: ItemSlug[];
     }
 
     export interface DocsSection extends BaseNode {
         type: "docs-section";
-        section: FernRegistryDocsRead.DocsSection;
+        section: DocsV1Read.DocsSection;
         children: Record<FullSlug, ChildDocsNode>;
         childrenOrdering: ItemSlug[];
         context: NodeDocsContext;
@@ -168,7 +167,7 @@ export declare namespace DocsNode {
 
     export interface ApiSection extends BaseNode {
         type: "api-section";
-        section: FernRegistryDocsRead.ApiSection;
+        section: DocsV1Read.ApiSection;
         children: Record<FullSlug, ChildDocsNode>;
         childrenOrdering: ItemSlug[];
         context: NodeDocsContext;
@@ -176,8 +175,8 @@ export declare namespace DocsNode {
 
     export interface ApiSubpackage extends BaseNode {
         type: "api-subpackage";
-        section: FernRegistryDocsRead.ApiSection;
-        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
+        section: DocsV1Read.ApiSection;
+        subpackage: APIV1Read.ApiDefinitionSubpackage;
         children: Record<FullSlug, ChildDocsNode>;
         childrenOrdering: ItemSlug[];
         context: NodeDocsContext;
@@ -185,38 +184,38 @@ export declare namespace DocsNode {
 
     export interface TopLevelEndpoint extends BaseNode, NavigatableNode {
         type: "top-level-endpoint";
-        endpoint: FernRegistryApiRead.EndpointDefinition;
-        section: FernRegistryDocsRead.ApiSection;
+        endpoint: APIV1Read.EndpointDefinition;
+        section: DocsV1Read.ApiSection;
         context: NodeDocsContext;
     }
 
     export interface Endpoint extends BaseNode, NavigatableNode {
         type: "endpoint";
-        endpoint: FernRegistryApiRead.EndpointDefinition;
-        section: FernRegistryDocsRead.ApiSection;
-        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
+        endpoint: APIV1Read.EndpointDefinition;
+        section: DocsV1Read.ApiSection;
+        subpackage: APIV1Read.ApiDefinitionSubpackage;
         context: NodeDocsContext;
     }
 
     export interface TopLevelWebhook extends BaseNode, NavigatableNode {
         type: "top-level-webhook";
-        webhook: FernRegistryApiRead.WebhookDefinition;
-        section: FernRegistryDocsRead.ApiSection;
+        webhook: APIV1Read.WebhookDefinition;
+        section: DocsV1Read.ApiSection;
         context: NodeDocsContext;
     }
 
     export interface Webhook extends BaseNode, NavigatableNode {
         type: "webhook";
-        webhook: FernRegistryApiRead.WebhookDefinition;
-        section: FernRegistryDocsRead.ApiSection;
-        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
+        webhook: APIV1Read.WebhookDefinition;
+        section: DocsV1Read.ApiSection;
+        subpackage: APIV1Read.ApiDefinitionSubpackage;
         context: NodeDocsContext;
     }
 
     export interface Page extends BaseNode, NavigatableNode {
         type: "page";
-        page: FernRegistryDocsRead.PageMetadata;
-        section: FernRegistryDocsRead.DocsSection | null;
+        page: DocsV1Read.PageMetadata;
+        section: DocsV1Read.DocsSection | null;
         context: NodeDocsContext;
     }
 }

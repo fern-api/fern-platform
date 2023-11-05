@@ -7,5 +7,5 @@ module.exports = {
         ecmaVersion: "latest",
         tsconfigRootDir: __dirname,
     },
-    ignorePatterns: ["src/generated"],
+    ignorePatterns: ["src/client/generated"],
 };

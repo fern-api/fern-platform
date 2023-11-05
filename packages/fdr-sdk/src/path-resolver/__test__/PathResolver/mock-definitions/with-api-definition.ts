@@ -1,8 +1,8 @@
-import * as FernRegistryApiRead from "../../../../generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "../../../../client";
 import { DocsDefinitionSummary } from "../../../types";
 
-const API_DEF_1: FernRegistryApiRead.ApiDefinition = {
-    id: "api-1" as FernRegistryApiRead.ApiDefinition["id"],
+const API_DEF_1: APIV1Read.ApiDefinition = {
+    id: "api-1" as APIV1Read.ApiDefinition["id"],
     rootPackage: {
         endpoints: [
             {

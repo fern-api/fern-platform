@@ -1,12 +1,14 @@
 import { resolve } from "path";
 
+import {
+    SDKSnippetHolder,
+    convertAPIDefinitionToDb,
+    convertDocsDefinitionToDb,
+    visitDbNavigationConfig,
+} from "@fern-api/fdr-sdk";
 import type { APIV1Write, DocsV1Write } from "../../../api";
-import { transformApiDefinitionForDb } from "../../../converters/db/convertAPIDefinitionToDb";
-import { transformWriteDocsDefinitionToDb } from "../../../converters/db/convertDocsDefinitionToDb";
 import type { AlgoliaSearchRecord } from "../../../services/algolia";
 import { AlgoliaSearchRecordGenerator } from "../../../services/algolia/AlgoliaSearchRecordGenerator";
-import { isVersionedNavigationConfig } from "../../../util/fern/db";
-import { SDKSnippetHolder } from "../../../converters/db/snippets/SDKSnippetHolder";
 
 const FIXTURES_DIR = resolve(__dirname, "fixtures");
 const FIXTURES: Fixture[] = [
@@ -57,7 +59,7 @@ describe("generateAlgoliaSearchRecordsForDocs", () => {
         (only ? it.only : it)(
             `${JSON.stringify(fixture)}`,
             async () => {
-                const docsDefinition = transformWriteDocsDefinitionToDb({
+                const docsDefinition = convertDocsDefinitionToDb({
                     writeShape: loadDocsDefinition(fixture),
                     files: {},
                 });
@@ -65,7 +67,7 @@ describe("generateAlgoliaSearchRecordsForDocs", () => {
                 const preloadApiDefinitions = () => {
                     const apiIdDefinitionTuples = docsDefinition.referencedApis.map((id) => {
                         const apiDef = loadApiDefinition(fixture, id);
-                        return [id, transformApiDefinitionForDb(apiDef, id, EMPTY_SNIPPET_HOLDER)] as const;
+                        return [id, convertAPIDefinitionToDb(apiDef, id, EMPTY_SNIPPET_HOLDER)] as const;
                     });
 
                     return new Map(apiIdDefinitionTuples);
@@ -76,27 +78,30 @@ describe("generateAlgoliaSearchRecordsForDocs", () => {
                 const navigationConfig = docsDefinition.config.navigation;
                 const generator = new AlgoliaSearchRecordGenerator({ docsDefinition, apiDefinitionsById });
 
-                if (isVersionedNavigationConfig(navigationConfig)) {
-                    navigationConfig.versions.forEach((v) => {
-                        const indexSegmentRecords = generator.generateAlgoliaSearchRecordsForSpecificDocsVersion(
-                            v.config,
-                            {
-                                type: "versioned",
-                                id: `${v.version}-constant`,
-                                searchApiKey: "api_key",
-                                version: { id: v.version, urlSlug: v.urlSlug },
-                            },
-                        );
-                        recordsWithoutIds.push(...indexSegmentRecords.map(filterSearchRecord));
-                    });
-                } else {
-                    const records = generator.generateAlgoliaSearchRecordsForSpecificDocsVersion(navigationConfig, {
-                        type: "unversioned",
-                        id: "constant",
-                        searchApiKey: "api_key",
-                    });
-                    recordsWithoutIds.push(...records.map(filterSearchRecord));
-                }
+                visitDbNavigationConfig(navigationConfig, {
+                    versioned: (config) => {
+                        config.versions.forEach((v) => {
+                            const indexSegmentRecords = generator.generateAlgoliaSearchRecordsForSpecificDocsVersion(
+                                v.config,
+                                {
+                                    type: "versioned",
+                                    id: `${v.version}-constant`,
+                                    searchApiKey: "api_key",
+                                    version: { id: v.version, urlSlug: v.urlSlug },
+                                },
+                            );
+                            recordsWithoutIds.push(...indexSegmentRecords.map(filterSearchRecord));
+                        });
+                    },
+                    unversioned: (config) => {
+                        const records = generator.generateAlgoliaSearchRecordsForSpecificDocsVersion(config, {
+                            type: "unversioned",
+                            id: "constant",
+                            searchApiKey: "api_key",
+                        });
+                        recordsWithoutIds.push(...records.map(filterSearchRecord));
+                    },
+                });
 
                 expect(recordsWithoutIds).toMatchSnapshot();
             },

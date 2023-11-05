@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-base-to-string */
-import { APIV1Write } from "../../../api";
-import { LOGGER } from "../../../app/FdrApplication";
-import { assertNever } from "../../../util";
+import { APIV1Write } from "../../../client";
+import { assertNever } from "../../utils/assertNever";
 import {
     generateExampleFromTypeReference,
     generateExampleFromTypeShape,
@@ -84,8 +83,7 @@ export function generateEndpointExampleCall(
             ...exampleEndpointCall,
         };
     } catch (e) {
-        LOGGER.error(`Failed to generate example for endpoint ${endpointDefinition.id}`, e);
-        throw new APIV1Write.EndpointExampleGenerationError({ endpointId: endpointDefinition.id });
+        throw new Error();
     }
 }
 
