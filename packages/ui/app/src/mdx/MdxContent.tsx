@@ -1,4 +1,4 @@
-import { MDXRemote, MDXRemoteProps, MDXRemoteSerializeResult } from "@fern-ui/app-utils";
+import { MDXRemote, type MDXRemoteProps, type MDXRemoteSerializeResult } from "@fern-ui/app-utils";
 import React, { useCallback } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { CodeBlockWithClipboardButton } from "../commons/CodeBlockWithClipboardButton";

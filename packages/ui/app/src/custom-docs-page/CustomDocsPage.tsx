@@ -1,5 +1,5 @@
 import { type DocsNode } from "@fern-api/fdr-sdk";
-import { SerializedMdxContent } from "@fern-ui/app-utils";
+import { type SerializedMdxContent } from "@fern-ui/app-utils";
 import { useMemo } from "react";
 import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
 import { HEADER_HEIGHT } from "../constants";
