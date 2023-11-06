@@ -103,4 +103,5 @@ types:
 
   LiteralType:
     union:
+      booleanLiteral: boolean
       stringLiteral: string

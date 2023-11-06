@@ -224,7 +224,7 @@ export function generateExampleFromTypeShape(
     }
 }
 
-export function generateExampleFromLiteral(reference: APIV1Write.LiteralType): string {
+export function generateExampleFromLiteral(reference: APIV1Write.LiteralType): boolean | string {
     return reference.value;
 }
 
