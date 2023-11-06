@@ -3,8 +3,8 @@ orbs:
   node: circleci/node@5.0.1
 jobs:
   check:
-    docker:
-      - image: cimg/node:lts
+    machine:
+      image: ubuntu-2004:current
     resource_class: large
     steps:
       - checkout
@@ -30,8 +30,8 @@ jobs:
           command: git --no-pager diff --exit-code
 
   organize-imports:
-    docker:
-      - image: cimg/node:lts
+    machine:
+      image: ubuntu-2004:current
     resource_class: large
     steps:
       - checkout
@@ -50,8 +50,8 @@ jobs:
           command: git --no-pager diff --exit-code
 
   eslint:
-    docker:
-      - image: cimg/node:lts
+    machine:
+      image: ubuntu-2004:current
     resource_class: large
     steps:
       - checkout
@@ -66,8 +66,8 @@ jobs:
           command: yarn lint:eslint
 
   compile:
-    docker:
-      - image: cimg/node:lts
+    machine:
+      image: ubuntu-2004:current
     resource_class: large
     steps:
       - checkout
@@ -93,8 +93,8 @@ jobs:
           command: git --no-pager diff --exit-code
 
   check-docs-release-is-allowed:
-    docker:
-      - image: cimg/node:lts
+    machine:
+      image: ubuntu-2004:current
     steps:
       - checkout
       - node/install-packages:
@@ -104,8 +104,8 @@ jobs:
           command: yarn check-docs-release-blockers
 
   deploy-docs-prod:
-    docker:
-      - image: cimg/node:lts
+    machine:
+      image: ubuntu-2004:current
     resource_class: large
     steps:
       - checkout
@@ -123,8 +123,8 @@ jobs:
           command: vercel deploy --prebuilt --prod --token=${VERCEL_TOKEN}
 
   generate-customer-docs:
-    docker:
-      - image: cimg/node:lts
+    machine:
+      image: ubuntu-2004:current
     parameters:
       docs_path:
         type: string
@@ -206,7 +206,7 @@ workflows:
               ignore: /.*/
             tags:
               only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
-          context: 
+          context:
             - npm
 
   preview-customer-docs:
