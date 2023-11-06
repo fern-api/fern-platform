@@ -62,7 +62,7 @@
     "jest": "^29.4.0",
     "jest-environment-jsdom": "^29.7.0",
     "jsonc-parser": "~2.2.1",
-    "lint-staged": "^13.0.3",
+    "lint-staged": "^15.0.2",
     "lodash-es": "^4.17.21",
     "mrlint": "^0.0.124",
     "organize-imports-cli": "^0.10.0",
