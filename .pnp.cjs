@@ -4265,7 +4265,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.7.18"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-syntax-highlighter", "npm:15.5.6"],\
-            ["@types/react-test-renderer", "npm:18.0.3"],\
+            ["@types/react-test-renderer", "npm:18.0.5"],\
             ["algoliasearch", "npm:4.18.0"],\
             ["classnames", "npm:2.3.1"],\
             ["depcheck", "npm:1.4.3"],\
@@ -5941,10 +5941,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/react-test-renderer", [\
-        ["npm:18.0.3", {\
-          "packageLocation": "./.yarn/cache/@types-react-test-renderer-npm-18.0.3-6663fa05ca-6834c7c998.zip/node_modules/@types/react-test-renderer/",\
+        ["npm:18.0.5", {\
+          "packageLocation": "./.yarn/cache/@types-react-test-renderer-npm-18.0.5-39d5b224e1-c0932fa6c9.zip/node_modules/@types/react-test-renderer/",\
           "packageDependencies": [\
-            ["@types/react-test-renderer", "npm:18.0.3"],\
+            ["@types/react-test-renderer", "npm:18.0.5"],\
             ["@types/react", "npm:18.0.20"]\
           ],\
           "linkType": "HARD"\
