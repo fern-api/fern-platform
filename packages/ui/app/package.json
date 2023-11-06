@@ -42,7 +42,7 @@
     "@fontsource/ibm-plex-mono": "^4.5.13",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/react-fontawesome": "0.2.0",
-    "@headlessui/react": "^1.7.15",
+    "@headlessui/react": "^1.7.17",
     "@react-hook/size": "^2.1.2",
     "algoliasearch": "^4.18.0",
     "classnames": "^2.3.1",
