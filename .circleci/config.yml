@@ -123,8 +123,8 @@ jobs:
           command: vercel deploy --prebuilt --prod --token=${VERCEL_TOKEN}
 
   generate-customer-docs:
-    machine:
-      image: ubuntu-2004:current
+    docker:
+      - image: cimg/node:lts
     parameters:
       docs_path:
         type: string
