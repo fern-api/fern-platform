@@ -39,6 +39,12 @@ module.exports = {
                 "accent-highlight": "rgba(var(--accent-primary), 10%)",
                 background: withOpacity("--background"),
 
+                "method-get": "#A7F3D0",
+                "method-post": "#70ABEC",
+                "method-delete": "#F87F71",
+                "method-put": "#FDBA74",
+                "method-patch": "#FDBA74",
+
                 "intent-default": "rgb(156, 163, 175)",
                 "intent-warning-dark": "rgb(248, 210, 111)",
                 "intent-warning-light": "rgb(217, 119, 6)",

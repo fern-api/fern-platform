@@ -1,6 +1,7 @@
 import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
 import { getEndpointTitleAsString, isSubpackage, joinUrlSlugs } from "@fern-ui/app-utils";
+import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { useNavigationContext } from "../navigation-context";
 import { ApiSubpackages } from "./ApiSubpackages";
 import { SidebarItem } from "./SidebarItem";
@@ -45,6 +46,7 @@ export const ApiPackageSidebarSectionContents: React.FC<ApiPackageSidebarSection
                             closeMobileSidebar();
                         }}
                         title={getEndpointTitleAsString(endpoint)}
+                        rightElement={<HttpMethodTag className="ml-2" method={endpoint.method} small />}
                         indent={isSubpackage(package_)}
                         shallow={shallow}
                         registerScrolledToPathListener={registerScrolledToPathListener}
