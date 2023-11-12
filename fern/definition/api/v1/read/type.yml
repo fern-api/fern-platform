@@ -35,11 +35,13 @@ types:
     properties:
       extends: list<TypeId>
       properties: list<ObjectProperty>
+    
+  PropertyKey: string
 
   ObjectProperty:
     extends: commons.WithDescription
     properties:
-      key: string
+      key: PropertyKey
       valueType: TypeReference
 
   PrimitiveType:

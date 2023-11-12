@@ -2,6 +2,7 @@
 import { APIV1Write } from "../../../client";
 import { assertNever } from "../../utils/assertNever";
 import {
+    ResolveTypeById,
     generateExampleFromTypeReference,
     generateExampleFromTypeShape,
     generateHttpRequestBodyExample,
@@ -10,81 +11,205 @@ import {
 
 const MAX_OPTIONAL_EXAMPLES_FOR_QUERY_PARAMS = 2;
 
-/**
- * If `error` is provided, generates an example for an unsuccessful request with the specified error type.
- * Otherwise generates an example for a successful request.
- */
-export function generateEndpointExampleCall(
-    endpointDefinition: APIV1Write.EndpointDefinition,
-    apiDefinition: APIV1Write.ApiDefinition,
-    error?: APIV1Write.ErrorDeclarationV2,
-): APIV1Write.ExampleEndpointCall {
-    try {
-        const resolveTypeById = (typeId: APIV1Write.TypeId): APIV1Write.TypeDefinition => {
-            const typeDefinition = apiDefinition.types[typeId];
-            if (typeDefinition == null) {
-                throw new Error(`Failed to find ${typeId}`);
-            }
-            return typeDefinition;
-        };
-        const exampleQueryParameters: Record<string, unknown> = {};
-        let optionalCount = 0;
-        for (const queryParameter of endpointDefinition.queryParameters) {
-            const value = generateExampleFromTypeReference(
-                queryParameter.type,
-                resolveTypeById,
-                optionalCount >= MAX_OPTIONAL_EXAMPLES_FOR_QUERY_PARAMS,
-                new Set(),
-                0,
-            );
-            if (queryParameter.type.type === "optional") {
-                optionalCount += 1;
-            }
-            exampleQueryParameters[queryParameter.key] = value;
-        }
-        const exampleEndpointCall: Omit<APIV1Write.ExampleEndpointCall, "path"> = {
-            pathParameters: endpointDefinition.path.pathParameters.reduce((acc, pathParameter) => {
-                const isString = isTypeReferenceString({
-                    typeReference: pathParameter.type,
-                    types: apiDefinition.types,
-                });
-                return {
-                    ...acc,
-                    [pathParameter.key]: isString
-                        ? `:${pathParameter.key}`
-                        : generateExampleFromTypeReference(pathParameter.type, resolveTypeById, false, new Set(), 0),
-                };
-            }, {}),
-            queryParameters: exampleQueryParameters,
-            headers: endpointDefinition.headers.reduce((acc, header) => {
-                const value = generateExampleFromTypeReference(header.type, resolveTypeById, false, new Set(), 0);
-                if (value == null) {
-                    return acc;
-                }
-                return {
-                    ...acc,
-                    [header.key]: value,
-                };
-            }, {}),
-            requestBody:
-                endpointDefinition.request != null
-                    ? generateHttpRequestBodyExample(endpointDefinition.request.type, resolveTypeById)
-                    : undefined,
-            responseStatusCode: error == null ? 200 : error.statusCode,
-            responseBody:
-                endpointDefinition.response != null && error == null
-                    ? generateHttpResponseBodyExample(endpointDefinition.response.type, resolveTypeById)
-                    : error?.type != null
-                    ? generateExampleFromTypeShape(error.type, resolveTypeById, false, new Set(), 0)
-                    : undefined,
-        };
+export function generateEndpointErrorExample({
+    endpointDefinition,
+    apiDefinition,
+    errorDeclaration,
+}: {
+    endpointDefinition: APIV1Write.EndpointDefinition;
+    apiDefinition: APIV1Write.ApiDefinition;
+    errorDeclaration: APIV1Write.ErrorDeclarationV2;
+}) {
+    const resolveTypeById = getResolveByTypeId(apiDefinition);
+    return {
+        ...generateBaseEndpointExample({ endpointDefinition, apiDefinition, resolveTypeById }),
+        responseStatusCode: errorDeclaration.statusCode,
+        responseBody:
+            errorDeclaration.type != null
+                ? generateExampleFromTypeShape(errorDeclaration.type, resolveTypeById, false, new Set(), 0)
+                : undefined,
+    };
+}
+
+export function generateEndpointNonStreamResponseExample({
+    endpointDefinition,
+    apiDefinition,
+    nonStreamResponse,
+}: {
+    endpointDefinition: APIV1Write.EndpointDefinition;
+    apiDefinition: APIV1Write.ApiDefinition;
+    nonStreamResponse: APIV1Write.NonStreamResponse;
+}): APIV1Write.ExampleEndpointCall {
+    const resolveTypeById = getResolveByTypeId(apiDefinition);
+    return {
+        ...generateBaseEndpointExample({ endpointDefinition, apiDefinition, resolveTypeById }),
+        responseStatusCode: 200,
+        responseBody: generateHttpResponseBodyExample(nonStreamResponse.shape, resolveTypeById),
+        responseBodyV3: {
+            type: "json",
+            value: generateHttpResponseBodyExample(nonStreamResponse.shape, resolveTypeById),
+        },
+    };
+}
+
+export function generateEndpointStreamResponseExample({
+    endpointDefinition,
+    apiDefinition,
+    streamResponse,
+}: {
+    endpointDefinition: APIV1Write.EndpointDefinition;
+    apiDefinition: APIV1Write.ApiDefinition;
+    streamResponse: APIV1Write.StreamResponse;
+}): APIV1Write.ExampleEndpointCall {
+    const resolveTypeById = getResolveByTypeId(apiDefinition);
+
+    const responseChunkExample = generateHttpResponseBodyExample(streamResponse.shape, resolveTypeById);
+    return {
+        ...generateBaseEndpointExample({ endpointDefinition, apiDefinition, resolveTypeById }),
+        responseStatusCode: 200,
+        responseBodyV3: {
+            type: "stream",
+            value: responseChunkExample != null ? [responseChunkExample, responseChunkExample] : [],
+        },
+    };
+}
+
+export function generateEndpointSuccessExample({
+    endpointDefinition,
+    apiDefinition,
+}: {
+    endpointDefinition: APIV1Write.EndpointDefinition;
+    apiDefinition: APIV1Write.ApiDefinition;
+}): APIV1Write.ExampleEndpointCall {
+    const resolveTypeById = getResolveByTypeId(apiDefinition);
+    return {
+        ...generateBaseEndpointExample({ endpointDefinition, apiDefinition, resolveTypeById }),
+        responseStatusCode: 200,
+        responseBody:
+            endpointDefinition.response != null
+                ? generateHttpResponseBodyExample(endpointDefinition.response.type, resolveTypeById)
+                : undefined,
+        responseBodyV3:
+            endpointDefinition.response != null
+                ? {
+                      type: "json",
+                      value: generateHttpResponseBodyExample(endpointDefinition.response.type, resolveTypeById),
+                  }
+                : undefined,
+    };
+}
+
+function generateBaseEndpointExample({
+    endpointDefinition,
+    apiDefinition,
+    resolveTypeById,
+}: {
+    endpointDefinition: APIV1Write.EndpointDefinition;
+    apiDefinition: APIV1Write.ApiDefinition;
+    resolveTypeById: ResolveTypeById;
+}): Omit<APIV1Write.ExampleEndpointCall, "responseBody" | "responseStatusCode"> {
+    const pathParameters = generatePathParameterExamples({
+        pathParameters: endpointDefinition.path.pathParameters,
+        apiDefinition,
+        resolveTypeById,
+    });
+    const path = generatePath(endpointDefinition.path, pathParameters);
+    const queryParameters = generateQueryParameterExamples({
+        resolveTypeById,
+        queryParameters: endpointDefinition.queryParameters,
+    });
+    const headers = generateHeaderExamples({
+        headers: endpointDefinition.headers,
+        resolveTypeById,
+    });
+    const requestBody =
+        endpointDefinition.request != null
+            ? generateHttpRequestBodyExample(endpointDefinition.request.type, resolveTypeById)
+            : undefined;
+    return {
+        path,
+        pathParameters,
+        queryParameters,
+        headers,
+        requestBody,
+    };
+}
+
+function generatePathParameterExamples({
+    pathParameters,
+    apiDefinition,
+    resolveTypeById,
+}: {
+    pathParameters: APIV1Write.PathParameter[];
+    apiDefinition: APIV1Write.ApiDefinition;
+    resolveTypeById: ResolveTypeById;
+}): Record<string, unknown> {
+    return pathParameters.reduce((acc, pathParameter) => {
+        const isString = isTypeReferenceString({
+            typeReference: pathParameter.type,
+            types: apiDefinition.types,
+        });
         return {
-            path: generatePath(endpointDefinition.path, exampleEndpointCall.pathParameters),
-            ...exampleEndpointCall,
+            ...acc,
+            [pathParameter.key]: isString
+                ? `:${pathParameter.key}`
+                : generateExampleFromTypeReference(pathParameter.type, resolveTypeById, false, new Set(), 0),
         };
-    } catch (e) {
-        throw new Error();
+    }, {});
+}
+
+function generateQueryParameterExamples({
+    queryParameters,
+    resolveTypeById,
+}: {
+    queryParameters: APIV1Write.QueryParameter[];
+    resolveTypeById: ResolveTypeById;
+}): Record<string, unknown> {
+    const exampleQueryParameters: Record<string, unknown> = {};
+    let optionalCount = 0;
+    for (const queryParameter of queryParameters) {
+        const value = generateExampleFromTypeReference(
+            queryParameter.type,
+            resolveTypeById,
+            optionalCount >= MAX_OPTIONAL_EXAMPLES_FOR_QUERY_PARAMS,
+            new Set(),
+            0,
+        );
+        if (queryParameter.type.type === "optional") {
+            optionalCount += 1;
+        }
+        exampleQueryParameters[queryParameter.key] = value;
     }
+    return exampleQueryParameters;
+}
+
+function generateHeaderExamples({
+    headers,
+    resolveTypeById,
+}: {
+    headers: APIV1Write.Header[];
+    resolveTypeById: ResolveTypeById;
+}): Record<string, unknown> {
+    return headers.reduce((acc, header) => {
+        const value = generateExampleFromTypeReference(header.type, resolveTypeById, false, new Set(), 0);
+        if (value == null) {
+            return acc;
+        }
+        return {
+            ...acc,
+            [header.key]: value,
+        };
+    }, {});
+}
+
+function getResolveByTypeId(apiDefinition: APIV1Write.ApiDefinition): ResolveTypeById {
+    return (typeId: APIV1Write.TypeId): APIV1Write.TypeDefinition => {
+        const typeDefinition = apiDefinition.types[typeId];
+        if (typeDefinition == null) {
+            throw new Error(`Failed to find ${typeId}`);
+        }
+        return typeDefinition;
+    };
 }
 
 function generatePath(path: APIV1Write.EndpointPath, pathParameters: Record<string, unknown>): string {

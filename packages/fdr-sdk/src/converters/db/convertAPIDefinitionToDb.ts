@@ -1,10 +1,15 @@
 import { kebabCase, startCase } from "lodash";
 import { marked } from "marked";
-import { APIV1Db, APIV1Write, FdrAPI } from "../../client";
+import { APIV1Db, APIV1Read, APIV1Write, FdrAPI } from "../../client";
 import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import { assertNever } from "../utils/assertNever";
 import { titleCase } from "../utils/titleCase";
-import { generateEndpointExampleCall } from "./examples/generateEndpointExampleCall";
+import {
+    generateEndpointErrorExample,
+    generateEndpointNonStreamResponseExample,
+    generateEndpointStreamResponseExample,
+    generateEndpointSuccessExample,
+} from "./examples/generateEndpointExampleCall";
 import { generateWebhookExample } from "./examples/generateWebhookExample";
 import { SDKSnippetHolder } from "./snippets/SDKSnippetHolder";
 
@@ -149,7 +154,15 @@ function transformEndpoint({
         queryParameters: writeShape.queryParameters,
         headers: writeShape.headers,
         request: writeShape.request != null ? transformHttpRequestToDb({ writeShape: writeShape.request }) : undefined,
-        response: writeShape.response,
+        response:
+            writeShape.response != null
+                ? convertResponseToDb({
+                      writeShape: writeShape.response,
+                      apiDefinition,
+                      sdkSnippetHolder: snippets,
+                      endpointDefinition: writeShape,
+                  })
+                : undefined,
         errors: writeShape.errors ?? [],
         errorsV2:
             writeShape.errorsV2 != null
@@ -185,6 +198,95 @@ function transformEndpoint({
     };
 }
 
+function convertResponseToDb({
+    writeShape,
+    apiDefinition,
+    endpointDefinition,
+    sdkSnippetHolder,
+}: {
+    writeShape: APIV1Write.HttpResponse;
+    apiDefinition: APIV1Write.ApiDefinition;
+    endpointDefinition: APIV1Write.EndpointDefinition;
+    sdkSnippetHolder: SDKSnippetHolder;
+}): APIV1Read.HttpResponse {
+    const writeShapeType = writeShape.type;
+    switch (writeShapeType.type) {
+        case "fileDownload":
+        case "object":
+        case "reference":
+        case "streamingText":
+            return {
+                ...writeShape,
+                type: writeShapeType,
+            };
+        case "streamCondition":
+            return {
+                ...writeShape,
+                type: {
+                    type: "streamCondition",
+                    ...convertStreamConditionToDb({
+                        writeShape: writeShapeType,
+                        apiDefinition,
+                        endpointDefinition,
+                        sdkSnippetHolder,
+                    }),
+                },
+            };
+    }
+}
+
+function convertStreamConditionToDb({
+    writeShape,
+    apiDefinition,
+    endpointDefinition,
+    sdkSnippetHolder,
+}: {
+    writeShape: APIV1Write.StreamConditionResponse;
+    apiDefinition: APIV1Write.ApiDefinition;
+    endpointDefinition: APIV1Write.EndpointDefinition;
+    sdkSnippetHolder: SDKSnippetHolder;
+}): APIV1Read.StreamConditionResponse {
+    const nonStreamExamples =
+        writeShape.response.examples ??
+        generateEndpointNonStreamResponseExample({
+            apiDefinition,
+            nonStreamResponse: writeShape.response,
+            endpointDefinition,
+        });
+
+    const streamExamples =
+        writeShape.response.examples ??
+        generateEndpointStreamResponseExample({
+            apiDefinition,
+            streamResponse: writeShape.response,
+            endpointDefinition,
+        });
+
+    return {
+        ...writeShape,
+        response: {
+            ...writeShape.response,
+            examples: nonStreamExamples.map((example) => {
+                return transformExampleEndpointCall({
+                    writeShape: example,
+                    endpointDefinition,
+                    snippets: sdkSnippetHolder,
+                });
+            }),
+        },
+        streamResponse: {
+            ...writeShape.streamResponse,
+            examples: streamExamples.map((example) => {
+                return transformExampleEndpointCall({
+                    writeShape: example,
+                    endpointDefinition,
+                    snippets: sdkSnippetHolder,
+                });
+            }),
+        },
+    };
+}
+
 function getExampleEndpointCalls({
     writeShape,
     apiDefinition,
@@ -193,7 +295,7 @@ function getExampleEndpointCalls({
     writeShape: APIV1Write.EndpointDefinition;
     apiDefinition: APIV1Write.ApiDefinition;
     snippets: SDKSnippetHolder;
-}) {
+}): WithoutQuestionMarks<FdrAPI.api.v1.read.ExampleEndpointCall>[] {
     const examples: APIV1Write.ExampleEndpointCall[] = [];
 
     const { successExamples: registeredSuccessExamples, errorExamples: registeredErrorExamples } =
@@ -202,7 +304,10 @@ function getExampleEndpointCalls({
     if (registeredSuccessExamples.length > 0) {
         examples.push(...registeredSuccessExamples);
     } else {
-        const generatedSuccessExample = generateEndpointExampleCall(writeShape, apiDefinition);
+        const generatedSuccessExample = generateEndpointSuccessExample({
+            endpointDefinition: writeShape,
+            apiDefinition,
+        });
         examples.push(generatedSuccessExample);
     }
 
@@ -210,8 +315,12 @@ function getExampleEndpointCalls({
     const errorsMissingAnExample = (writeShape.errorsV2 ?? []).filter(
         (e) => !registeredErrorExampleStatusCodes.has(e.statusCode),
     );
-    const generatedErrorExamples = errorsMissingAnExample.map((e) =>
-        generateEndpointExampleCall(writeShape, apiDefinition, e),
+    const generatedErrorExamples = errorsMissingAnExample.map((errorDeclaration) =>
+        generateEndpointErrorExample({
+            endpointDefinition: writeShape,
+            apiDefinition,
+            errorDeclaration,
+        }),
     );
 
     examples.push(...registeredErrorExamples, ...generatedErrorExamples);
@@ -308,8 +417,20 @@ export function transformExampleEndpointCall({
             endpointDefinition: endpointDefinition,
             snippets: snippets,
         }),
-        requestBodyV2: undefined,
-        responseBodyV2: undefined,
+        requestBodyV3:
+            writeShape.requestBodyV3 ?? writeShape.requestBody != null
+                ? {
+                      type: "json",
+                      value: writeShape.requestBody,
+                  }
+                : undefined,
+        responseBodyV3:
+            writeShape.responseBodyV3 ?? writeShape.responseBody != null
+                ? {
+                      type: "json",
+                      value: writeShape.responseBody,
+                  }
+                : undefined,
     };
 }
 

@@ -96,6 +96,11 @@ types:
     extends: commons.WithDescription
     properties:
       type: HttpResponseBodyShape
+  
+  JsonBodyShape: 
+    union:
+      object: type.ObjectType
+      reference: type.TypeReference
 
   HttpResponseBodyShape:
     union:
@@ -103,6 +108,30 @@ types:
       reference: type.TypeReference
       fileDownload: {}
       streamingText: {}
+      streamCondition: 
+        type: StreamConditionResponse
+        docs: | 
+          A response that can either be streaming or REST
+
+  StreamConditionResponse: 
+    properties: 
+      response: NonStreamResponse
+      streamResponse: StreamResponse
+      streamCondition: StreamCondition
+  
+  NonStreamResponse: 
+    properties: 
+      shape: JsonBodyShape
+      examples: list<ExampleEndpointCall>
+  
+  StreamResponse:   
+    properties: 
+      shape: JsonBodyShape
+      examples: list<ExampleEndpointCall>
+  
+  StreamCondition:
+    union:
+      booleanRequestProperty: type.PropertyKey
 
   ErrorDeclaration:
     extends: commons.WithDescription
@@ -127,10 +156,10 @@ types:
       queryParameters: map<string, unknown>
       headers: map<string, unknown>
       requestBody: unknown
-      requestBodyV2: optional<ExampleEndpointRequest>
+      requestBodyV3: optional<ExampleEndpointRequest>
       responseStatusCode: integer
       responseBody: unknown
-      responseBodyV2: optional<ExampleEndpointResponse>
+      responseBodyV3: optional<ExampleEndpointResponse>
       codeExamples: CodeExamples
 
   CodeExamples:
@@ -139,7 +168,7 @@ types:
       pythonSdk: optional<PythonSnippet>
 
   ExampleEndpointRequest:
-    properties:
+    union:
       json: unknown
       form: map<string, FormValue>
 
@@ -149,9 +178,10 @@ types:
       filename: string
 
   ExampleEndpointResponse:
-    properties:
+    union:
       json: unknown
       filename: string
+      stream: list<unknown>
     
   PythonSnippet: 
     properties: 

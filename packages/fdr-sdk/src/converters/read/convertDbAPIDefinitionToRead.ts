@@ -89,7 +89,7 @@ function transformEndpoint({
                       };
                   })
                 : undefined),
-        examples: dbShape.examples,
+        examples: dbShape.examples.map((example) => convertExampleEndpointCall({ dbShape: example })),
         description: dbShape.description,
         htmlDescription: dbShape.htmlDescription,
         authed: dbShape.authed ?? false,
@@ -130,4 +130,38 @@ function transformHttpRequest({
         default:
             assertNever(dbShape.type);
     }
+}
+
+export function convertExampleEndpointCall({
+    dbShape,
+}: {
+    dbShape: APIV1Read.ExampleEndpointCall;
+}): WithoutQuestionMarks<APIV1Read.ExampleEndpointCall> {
+    return {
+        description: dbShape.description,
+        htmlDescription: dbShape.htmlDescription,
+        descriptionContainsMarkdown: true,
+        path: dbShape.path,
+        pathParameters: dbShape.pathParameters,
+        queryParameters: dbShape.queryParameters,
+        headers: dbShape.headers,
+        requestBody: dbShape.requestBody,
+        responseStatusCode: dbShape.responseStatusCode,
+        responseBody: dbShape.responseBody,
+        codeExamples: dbShape.codeExamples,
+        requestBodyV3:
+            dbShape.requestBodyV3 ?? dbShape.requestBody != null
+                ? {
+                      type: "json",
+                      value: dbShape.requestBody,
+                  }
+                : undefined,
+        responseBodyV3:
+            dbShape.responseBodyV3 ?? dbShape.responseBody != null
+                ? {
+                      type: "json",
+                      value: dbShape.responseBody,
+                  }
+                : undefined,
+    };
 }

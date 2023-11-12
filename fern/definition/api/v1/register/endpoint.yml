@@ -96,9 +96,9 @@ types:
   JsonRequestBody: 
     properties: 
       contentType: string
-      shape: JsonRequestBodyShape
+      shape: JsonBodyShape
   
-  JsonRequestBodyShape: 
+  JsonBodyShape: 
     union: 
       object: type.ObjectType
       reference: type.TypeReference
@@ -127,9 +127,32 @@ types:
       reference: type.TypeReference
       fileDownload: {}
       streamingText: {}
+      streamCondition: 
+        type: StreamConditionResponse
+        docs: | 
+          A response that can either be streaming or REST
+
+  StreamConditionResponse: 
+    properties: 
+      response: NonStreamResponse
+      streamResponse: StreamResponse
+      streamCondition: StreamCondition
+  
+  NonStreamResponse: 
+    properties: 
+      shape: JsonBodyShape
+      examples: list<ExampleEndpointCall>
+  
+  StreamResponse:   
+    properties: 
+      shape: JsonBodyShape
+      examples: list<ExampleEndpointCall>
+  
+  StreamCondition:
+    union:
+      booleanRequestProperty: type.PropertyKey
 
   # examples
-
   ExampleEndpointCall:
     extends: commons.WithDescription
     properties:
@@ -137,14 +160,18 @@ types:
       pathParameters: map<PathParameterKey, unknown>
       queryParameters: map<string, unknown>
       headers: map<string, unknown>
-      requestBody: unknown
-      requestBodyV2: optional<ExampleEndpointRequest>
+      requestBody: 
+        type: unknown
+        availability: deprecated
+      requestBodyV3: optional<ExampleEndpointRequest>
       responseStatusCode: integer
-      responseBody: unknown
-      responseBodyV2: optional<ExampleEndpointResponse>
+      responseBody: 
+        type: unknown
+        availability: deprecated
+      responseBodyV3: optional<ExampleEndpointResponse>
 
   ExampleEndpointRequest:
-    properties:
+    union:
       json: unknown
       form: map<string, FormValue>
 
@@ -154,6 +181,7 @@ types:
       filename: string
 
   ExampleEndpointResponse:
-    properties:
+    union:
       json: unknown
       filename: string
+      stream: list<unknown>
