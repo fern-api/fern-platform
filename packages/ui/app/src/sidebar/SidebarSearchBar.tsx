@@ -26,14 +26,12 @@ export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = memo(function 
         >
             <div className="flex items-center space-x-3">
                 <SearchIcon className="text-intent-default h-5 w-5" />
-                <div className="text-text-disabled-light group-hover:text-intent-default dark:text-text-disabled-dark">
-                    Search...
-                </div>
+                <div className="group-hover:text-intent-default text-[rgb(107,114,128)]">Search...</div>
             </div>
 
             <PlatformSpecificContent>
                 {(platform) => (
-                    <div className="text-text-disabled-light group-hover:text-intent-default dark:text-text-disabled-dark ml-auto text-start text-xs tracking-wide">
+                    <div className="group-hover:text-intent-default ml-auto text-start text-xs tracking-wide text-[rgb(107,114,128)]">
                         {visitDiscriminatedUnion({ platform }, "platform")._visit({
                             mac: () => "CMD+K",
                             windows: () => "CTRL+K",
