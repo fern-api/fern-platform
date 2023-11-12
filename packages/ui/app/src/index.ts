@@ -1,2 +1,2 @@
+export { type ResolvedPath } from "@fern-ui/app-utils";
 export { App } from "./App";
-export { type ResolvedPath } from "./ResolvedPath";

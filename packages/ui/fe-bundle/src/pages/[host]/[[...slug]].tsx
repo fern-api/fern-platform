@@ -1,13 +1,12 @@
 import { FernRegistry, PathResolver } from "@fern-api/fdr-sdk";
 import * as FernRegistryDocsReadV2 from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v2/resources/read";
+import { convertNavigatableToResolvedPath, loadDocsBackgroundImage } from "@fern-ui/app-utils";
 import { App, type ResolvedPath } from "@fern-ui/ui";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
+import { generateFontFaces, loadDocTypography } from "../../../../../commons/app-utils/src/theme/loadDocsTypography";
 import { REGISTRY_SERVICE } from "../../service";
 import { buildUrl } from "../../utils/buildUrl";
-import { convertNavigatableToResolvedPath } from "../../utils/convertNavigatableToResolvedPath";
-import { loadDocsBackgroundImage } from "../../utils/theme/loadDocsBackgroundImage";
-import { generateFontFaces, loadDocTypography } from "../../utils/theme/loadDocsTypography";
 import { useColorTheme } from "../../utils/theme/useColorTheme";
 
 export declare namespace Docs {

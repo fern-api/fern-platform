@@ -1,0 +1,33 @@
+{
+  "name": "local-preview-bundle",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@fern-api/fdr-sdk": "0.37.0-9-g620a45d",
+    "@fern-ui/app-utils": "workspace:*",
+    "@fern-ui/theme": "workspace:*",
+    "@fern-ui/ui": "workspace:*",
+    "next": "^13.4.4",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.9",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.2",
+    "postcss": "^8",
+    "sass": "^1.54.0",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5"
+  }
+}
