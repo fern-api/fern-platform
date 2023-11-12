@@ -89,7 +89,7 @@ export function getCurlLines(
                 parts.push({
                     type: "param",
                     paramKey: "--header",
-                    value: `Authorization <${tokenName}>`,
+                    value: `Authorization: Bearer <${tokenName}>`,
                 });
             },
             header: ({ headerWireValue, nameOverride = headerWireValue }) => {
