@@ -56,12 +56,9 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
             )}
 
             <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
-                <div
-                    className="border-border-concealed-light dark:border-border-concealed-dark bg-background/50 dark:shadow-header sticky inset-x-0 top-0 z-20 border-b backdrop-blur-xl"
-                    style={{ height: HEADER_HEIGHT }}
-                >
+                <div className="sticky inset-x-0 top-0 z-20">
                     <Header
-                        className="max-w-8xl mx-auto"
+                        className="m-3 mb-0 h-12 rounded-xl border border-[rgb(215,207,193)] bg-[rgb(250,250,250)]"
                         docsDefinition={docsDefinition}
                         openSearchDialog={openSearchDialog}
                         isMobileSidebarOpen={isMobileSidebarOpen}
@@ -72,7 +69,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                 </div>
 
                 <div
-                    className="max-w-8xl relative mx-auto flex min-h-0 w-full flex-1"
+                    className="relative flex min-h-0 w-full flex-1"
                     style={{
                         opacity: hasInitialized ? undefined : 0,
                     }}
@@ -101,7 +98,11 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                         </div>
                     )}
 
-                    <div className={classNames("relative flex w-full min-w-0 flex-1 flex-col")}>
+                    <div
+                        className={classNames(
+                            "relative flex w-full min-w-0 flex-1 flex-col bg-white mt-4 border-l border-t border-[rgb(215,207,193)] rounded-tl-xl min-h-[calc(100vh-76px)]"
+                        )}
+                    >
                         <DocsMainContent />
                     </div>
                 </div>

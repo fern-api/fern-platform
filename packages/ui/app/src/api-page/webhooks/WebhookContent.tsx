@@ -86,9 +86,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                                 {getSubpackageTitle(package_)}
                             </div>
                         )}
-                        <div className="typography-font-heading text-text-primary-light dark:text-text-primary-dark text-3xl font-bold">
-                            {webhook.name}
-                        </div>
+                        <h1 className="my-0 text-6xl">{webhook.name}</h1>
                     </div>
                     <ApiPageDescription description={webhook.description} isMarkdown={true} />
                     {webhook.headers.length > 0 && (

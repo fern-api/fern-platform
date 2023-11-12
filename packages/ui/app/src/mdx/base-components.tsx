@@ -20,7 +20,7 @@ export const InlineCode: React.FC<HTMLAttributes<HTMLElement> & InlineCodeProps>
             {...rest}
             className={classNames(
                 className,
-                "border border-border-concealed-light dark:border-border-concealed-dark rounded font-mono bg-background/75 !text-text-primary-light dark:!text-text-primary-dark !py-0.5 !px-1"
+                "border border-border-concealed-light dark:border-border-concealed-dark rounded font-mono bg-background/75 !py-0.5 !px-1"
             )}
             style={{
                 fontSize: fontSize === "sm" ? 12 : 14,
@@ -102,10 +102,7 @@ export const H1: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h1
             id={slug}
-            className={classNames(
-                className,
-                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-2xl font-semibold mt-10 mb-3"
-            )}
+            className={classNames(className, "relative group/anchor-container text-2xl mt-10 mb-3")}
             style={{
                 scrollMarginTop: HEADER_HEIGHT,
             }}
@@ -124,10 +121,7 @@ export const H2: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h2
             id={slug}
-            className={classNames(
-                className,
-                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-xl font-semibold mt-10 mb-3"
-            )}
+            className={classNames(className, "relative group/anchor-container text-xl mt-10 mb-3")}
             style={{
                 scrollMarginTop: HEADER_HEIGHT,
             }}
@@ -146,10 +140,7 @@ export const H3: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h3
             id={slug}
-            className={classNames(
-                className,
-                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
-            )}
+            className={classNames(className, "relative group/anchor-container text-lg mt-10 mb-3")}
             style={{
                 scrollMarginTop: HEADER_HEIGHT,
             }}
@@ -168,10 +159,7 @@ export const H4: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h4
             id={slug}
-            className={classNames(
-                className,
-                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
-            )}
+            className={classNames(className, "relative group/anchor-container text-lg mt-10 mb-3")}
             style={{
                 scrollMarginTop: HEADER_HEIGHT,
             }}
@@ -190,10 +178,7 @@ export const H5: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h5
             id={slug}
-            className={classNames(
-                className,
-                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
-            )}
+            className={classNames(className, "relative group/anchor-container text-lg mt-10 mb-3")}
             style={{
                 scrollMarginTop: HEADER_HEIGHT,
             }}
@@ -212,10 +197,7 @@ export const H6: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h6
             id={slug}
-            className={classNames(
-                className,
-                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
-            )}
+            className={classNames(className, "relative group/anchor-container text-lg mt-10 mb-3")}
             style={{
                 scrollMarginTop: HEADER_HEIGHT,
             }}

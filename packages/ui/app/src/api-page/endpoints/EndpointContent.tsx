@@ -5,6 +5,7 @@ import { useInView } from "react-intersection-observer";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { HEADER_HEIGHT } from "../../constants";
 import { useDocsContext } from "../../docs-context/useDocsContext";
+import { useCohereChatStream } from "../../util/useCohereChatStream";
 import { useViewportContext } from "../../viewport-context/useViewportContext";
 import { type CodeExampleClient } from "../examples/code-example";
 import { getCurlLines } from "../examples/curl-example/curlUtils";
@@ -167,10 +168,13 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     const exampleHeight = requestHeight + responseHeight + GAP_6 + 70;
 
+    const [enableStream, _toggleStream] = useCohereChatStream();
+
     return (
         <div
             className={classNames("pb-20 pl-6 md:pl-12 pr-4", {
                 "border-border-default-light dark:border-border-default-dark border-b": !hideBottomSeparator,
+                hidden: (route.endsWith("/chat-stream") && !enableStream) || (route.endsWith("/chat") && enableStream),
             })}
             onClick={() => setSelectedErrorIndex(null)}
             ref={containerRef}

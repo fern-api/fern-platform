@@ -34,9 +34,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ serializedMdxCo
                     </div>
                 )}
 
-                <div className="text-text-primary-light dark:text-text-primary-dark mb-8 text-3xl font-bold">
-                    {resolvedPath.page.title}
-                </div>
+                <h1 className="mt-0 text-6xl">{resolvedPath.page.title}</h1>
                 {content}
                 <BottomNavigationButtons />
                 <div className="h-20" />

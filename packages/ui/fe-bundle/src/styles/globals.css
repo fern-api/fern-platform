@@ -27,5 +27,8 @@
     h5,
     h6 {
         scroll-margin-top: 100px;
+        font-variation-settings: "cuts" 300, "move" 300;
+        font-weight: 400;
+        color: rgb(56, 66, 72);
     }
 }

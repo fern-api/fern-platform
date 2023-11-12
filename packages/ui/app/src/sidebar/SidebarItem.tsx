@@ -2,6 +2,7 @@ import { Text } from "@blueprintjs/core";
 import classNames from "classnames";
 import Link from "next/link";
 import { memo, useCallback, useEffect, useRef } from "react";
+import { useCohereChatStream } from "../util/useCohereChatStream";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace SidebarItem {
@@ -46,7 +47,7 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
                         className={classNames(
                             "flex flex-1 py-2 px-3 border rounded-lg items-center justify-between select-none min-w-0",
                             {
-                                "text-accent-primary border-border-primary bg-tag-primary": isSelected,
+                                "text-accent-primary border-[rgb(215,207,193)] bg-white": isSelected,
                                 "border-transparent": !isSelected,
                                 "bg-tag-default-light dark:bg-tag-default-dark text-text-primary-light dark:text-text-primary-dark":
                                     !isSelected && isHovering,
@@ -63,7 +64,7 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
                 </div>
             );
         },
-        [isSelected, leftElement, rightElement, title, indent]
+        [indent, isSelected, leftElement, title, rightElement]
     );
 
     const ref = useRef<HTMLDivElement>(null);
@@ -74,6 +75,13 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
         });
     }, [fullSlug, registerScrolledToPathListener]);
 
+    const [enableStream, _toggleStream] = useCohereChatStream();
+    if (fullSlug.endsWith("/chat-stream") && !enableStream) {
+        return null;
+    }
+    if (fullSlug.endsWith("/chat") && enableStream) {
+        return null;
+    }
     return (
         <div className={classNames(className)} ref={ref}>
             <Link href={`/${fullSlug}`} onClick={onClick} className="!no-underline" shallow={shallow} scroll={false}>

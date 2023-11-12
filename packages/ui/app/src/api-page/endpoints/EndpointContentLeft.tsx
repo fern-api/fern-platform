@@ -1,10 +1,13 @@
 import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
 import { ApiSection } from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
 import { getEndpointTitleAsString, getSubpackageTitle, isSubpackage } from "@fern-ui/app-utils";
+import classNames from "classnames";
+import Link from "next/link";
 import { memo } from "react";
+import { useCohereChatStream } from "../../util/useCohereChatStream";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
-import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
+import { AnimateChatStreamText } from "./AnimateChatStreamText";
 import { EndpointErrorsSection } from "./EndpointErrorsSection";
 import { EndpointRequestSection } from "./EndpointRequestSection";
 import { EndpointResponseSection } from "./EndpointResponseSection";
@@ -44,6 +47,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     setSelectedErrorIndex,
     route,
 }) => {
+    const [, toggleStream] = useCohereChatStream();
     return (
         <>
             <div className="pb-2 pt-8">
@@ -52,20 +56,38 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                         {getSubpackageTitle(package_)}
                     </div>
                 )}
-                <div>
-                    <span className="typography-font-heading text-text-primary-light dark:text-text-primary-dark text-3xl font-bold">
-                        {getEndpointTitleAsString(endpoint)}
-                    </span>
-                    {endpoint.availability != null && (
+                {route.endsWith("/chat") || route.endsWith("/chat-stream") ? (
+                    <div className="flex items-baseline">
+                        <h1 className={classNames("my-0 text-6xl")}>
+                            <AnimateChatStreamText />
+                        </h1>
+                        <div className="ml-2">
+                            <Link
+                                href={
+                                    route.endsWith("/chat")
+                                        ? route + "-stream"
+                                        : route.slice(0, route.length - "-stream".length)
+                                }
+                                onClick={toggleStream}
+                                replace={true}
+                            >
+                                {route.endsWith("/chat") ? "(enable stream)" : "x"}
+                            </Link>
+                        </div>
+                    </div>
+                ) : (
+                    <h1 className="my-0 text-6xl">{getEndpointTitleAsString(endpoint)}</h1>
+                )}
+                {/* {endpoint.availability != null && (
                         <span className="relative">
                             <EndpointAvailabilityTag
                                 className="absolute -top-1.5 left-2.5 inline-block"
                                 availability={endpoint.availability}
                             />
                         </span>
-                    )}
-                </div>
+                    )} */}
             </div>
+
             <EndpointUrlWithOverflow endpoint={endpoint} />
             <ApiPageDescription className="mt-3" description={endpoint.description} isMarkdown={true} />
             <div className="mt-8 flex">

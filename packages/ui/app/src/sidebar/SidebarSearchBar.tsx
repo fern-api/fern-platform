@@ -19,13 +19,10 @@ export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = memo(function 
     return (
         <button
             onClick={onClick}
-            className={classNames(
-                "dark:border-border-default-dark border-border-default-light group flex items-center rounded-lg border px-2.5 py-2",
-                {
-                    "bg-background-primary-dark hover:bg-background-hover-dark": theme === "dark",
-                    "bg-background-primary-light hover:bg-background-hover-light": theme === "light",
-                }
-            )}
+            className={classNames("border-[rgb(215,207,193)] group flex items-center rounded-lg border px-2.5 py-2", {
+                "bg-background-primary-dark hover:bg-background-hover-dark": theme === "dark",
+                "bg-background-primary-light hover:bg-background-hover-light": theme === "light",
+            })}
         >
             <div className="flex items-center space-x-3">
                 <SearchIcon className="text-intent-default h-5 w-5" />
