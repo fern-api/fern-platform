@@ -84,7 +84,6 @@ export function generateFontFaces(generationConfiguration: GenerationFontConfigs
                 @font-face {
                     font-family: '${fontConfig.fontName}';
                     src: url('${fontConfig.fontUrl.toString()}') format('${fontConfig.fontExtension}');
-                    font-weight: 700;
                     font-style: normal;
                 }
     
@@ -108,7 +107,6 @@ export function generateFontFaces(generationConfiguration: GenerationFontConfigs
                 @font-face {
                     font-family: '${fontConfig.fontName}';
                     src: url('${fontConfig.fontUrl.toString()}') format('${fontConfig.fontExtension}');
-                    font-weight: 400;
                     font-style: normal;
                 }
     
@@ -128,7 +126,6 @@ export function generateFontFaces(generationConfiguration: GenerationFontConfigs
                 @font-face {
                     font-family: '${fontConfig.fontName}';
                     src: url('${fontConfig.fontUrl.toString()}') format('${fontConfig.fontExtension}');
-                    font-weight: 400;
                     font-style: normal;
                 }
     

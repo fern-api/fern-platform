@@ -1,3 +1,4 @@
+import { Tooltip2 } from "@blueprintjs/popover2";
 import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
 import { ApiSection } from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
 import { getEndpointTitleAsString, getSubpackageTitle, isSubpackage } from "@fern-ui/app-utils";
@@ -71,7 +72,11 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                 onClick={toggleStream}
                                 replace={true}
                             >
-                                {route.endsWith("/chat") ? "(enable stream)" : "x"}
+                                {route.endsWith("/chat") ? (
+                                    "(enable stream)"
+                                ) : (
+                                    <Tooltip2 content="Disable stream">{"(x)"}</Tooltip2>
+                                )}
                             </Link>
                         </div>
                     </div>

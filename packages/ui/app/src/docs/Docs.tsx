@@ -100,7 +100,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
 
                     <div
                         className={classNames(
-                            "relative flex w-full min-w-0 flex-1 flex-col bg-white mt-4 border-l border-t border-[rgb(215,207,193)] rounded-tl-xl min-h-[calc(100vh-76px)]"
+                            "relative flex w-full min-w-0 flex-1 flex-col bg-white mt-4 border-l border-t border-[rgb(215,207,193)] md:rounded-tl-xl min-h-[calc(100vh-76px)]"
                         )}
                     >
                         <DocsMainContent />

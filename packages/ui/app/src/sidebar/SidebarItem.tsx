@@ -2,6 +2,7 @@ import { Text } from "@blueprintjs/core";
 import classNames from "classnames";
 import Link from "next/link";
 import { memo, useCallback, useEffect, useRef } from "react";
+import { AnimateChatStreamText } from "../api-page/endpoints/AnimateChatStreamText";
 import { useCohereChatStream } from "../util/useCohereChatStream";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
@@ -57,14 +58,20 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
                     >
                         <div className="flex min-w-0 items-center gap-2">
                             {leftElement}
-                            <Text ellipsize>{title}</Text>
+                            <Text ellipsize>
+                                {fullSlug.endsWith("/chat-stream") || fullSlug.endsWith("/chat") ? (
+                                    <AnimateChatStreamText />
+                                ) : (
+                                    title
+                                )}
+                            </Text>
                         </div>
                         {rightElement}
                     </div>
                 </div>
             );
         },
-        [indent, isSelected, leftElement, title, rightElement]
+        [indent, isSelected, leftElement, fullSlug, title, rightElement]
     );
 
     const ref = useRef<HTMLDivElement>(null);
@@ -76,14 +83,15 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
     }, [fullSlug, registerScrolledToPathListener]);
 
     const [enableStream, _toggleStream] = useCohereChatStream();
-    if (fullSlug.endsWith("/chat-stream") && !enableStream) {
-        return null;
-    }
-    if (fullSlug.endsWith("/chat") && enableStream) {
-        return null;
-    }
     return (
-        <div className={classNames(className)} ref={ref}>
+        <div
+            className={classNames(className, {
+                hidden:
+                    (fullSlug.endsWith("/chat-stream") && !enableStream) ||
+                    (fullSlug.endsWith("/chat") && enableStream),
+            })}
+            ref={ref}
+        >
             <Link href={`/${fullSlug}`} onClick={onClick} className="!no-underline" shallow={shallow} scroll={false}>
                 <SidebarItemLayout title={renderTitle} isSelected={isSelected} />
             </Link>
