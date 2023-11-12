@@ -4,6 +4,7 @@ import classNames from "classnames";
 import React, { PropsWithChildren, useCallback, useMemo } from "react";
 // import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { divideEndpointPathToParts, type EndpointPathPart } from "@fern-ui/app-utils";
+import { HttpMethodTag } from "../../commons/HttpMethodTag";
 import styles from "./EndpointUrl.module.scss";
 // import { getEndpointEnvironmentUrl } from "./getEndpointEnvironmentUrl";
 
@@ -65,9 +66,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
 
     return (
         <div ref={ref} className={classNames("flex h-8 overflow-x-hidden items-center", className)}>
-            <div className="t-muted bg-tag-default-light dark:bg-tag-default-dark flex shrink-0 items-center justify-center rounded-lg px-2 py-1 text-xs font-normal uppercase">
-                {endpoint.method}
-            </div>
+            <HttpMethodTag method={endpoint.method} />
             <div
                 className={classNames("ml-3 flex shrink grow items-center space-x-1 overflow-x-hidden", {
                     [styles.urlOverflowContainer ?? ""]: urlStyle === "overflow",
