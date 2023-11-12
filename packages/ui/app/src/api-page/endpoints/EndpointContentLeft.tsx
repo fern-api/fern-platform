@@ -71,6 +71,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                 }
                                 onClick={toggleStream}
                                 replace={true}
+                                className="text-[#FF7759]"
                             >
                                 {route.endsWith("/chat") ? (
                                     "(enable stream)"

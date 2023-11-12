@@ -40,6 +40,7 @@ export const SidebarDocsSection: React.FC<SidebarDocsSection.Props> = ({
                 docsDefinition={docsDefinition}
                 activeTabIndex={activeTabIndex}
                 resolveApi={resolveApi}
+                nested={true}
             />
         </SidebarGroup>
     );
