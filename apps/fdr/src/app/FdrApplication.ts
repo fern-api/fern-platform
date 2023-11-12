@@ -29,7 +29,7 @@ export interface FdrServices {
 }
 
 export const LOGGER = winston.createLogger({
-    level: "debug",
+    level: "info",
     format: winston.format.json(),
     transports: [
         new winston.transports.Console({
@@ -47,7 +47,15 @@ export class FdrApplication {
         public readonly config: FdrConfig,
         services?: Partial<FdrServices>,
     ) {
-        this.logger.level = config.logLevel;
+        this.logger = winston.createLogger({
+            level: config.logLevel,
+            format: winston.format.json(),
+            transports: [
+                new winston.transports.Console({
+                    format: winston.format.simple(),
+                }),
+            ],
+        });
         const prisma = new PrismaClient({
             log: ["info", "warn", "error"],
         });
