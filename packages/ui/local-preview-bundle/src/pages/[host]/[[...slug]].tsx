@@ -106,7 +106,7 @@ export const getServerSideProps: GetServerSideProps<Docs.Props> = async ({
 
     const resolvedPath = await convertNavigatableToResolvedPath({
         navigatable: resolvedNavigatable,
-        docsDefinition: docsDefinition as FernRegistry.docs.v1.read.DocsDefinition,
+        docsDefinition: docsDefinition,
         basePath: undefined,
     });
 
