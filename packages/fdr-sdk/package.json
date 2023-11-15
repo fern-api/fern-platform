@@ -12,7 +12,8 @@
     "axios": "0.27.2",
     "js-base64": "3.7.2",
     "url-join": "4.0.1",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "marked": "^5.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.9",
@@ -21,6 +22,7 @@
     "@types/jest": "^28.1.6",
     "@types/url-join": "4.0.1",
     "@types/lodash": "^4.14.194",
+    "@types/marked": "^5.0.0",
     "eslint": "^8.51.0",
     "eslint-config-custom": "*",
     "jest": "^28.1.3",
