@@ -12,6 +12,7 @@ import {
 } from "../services/algolia-index-segment-manager";
 import { AuthServiceImpl, type AuthService } from "../services/auth";
 import { DatabaseServiceImpl, type DatabaseService } from "../services/db";
+import { DocsDefinitionCache, DocsDefinitionCacheImpl } from "../services/docs-cache/DocsDefinitionCache";
 import { RevalidatorService, RevalidatorServiceImpl } from "../services/revalidator/RevalidatorService";
 import { S3ServiceImpl, type S3Service } from "../services/s3";
 import { SlackService, SlackServiceImpl } from "../services/slack/SlackService";
@@ -41,6 +42,7 @@ export const LOGGER = winston.createLogger({
 export class FdrApplication {
     public readonly services: FdrServices;
     public readonly dao: FdrDao;
+    public readonly docsDefinitionCache: DocsDefinitionCache;
     public readonly logger = LOGGER;
 
     public constructor(
@@ -72,5 +74,6 @@ export class FdrApplication {
             revalidator: services?.revalidator ?? new RevalidatorServiceImpl(),
         };
         this.dao = new FdrDao(prisma);
+        this.docsDefinitionCache = new DocsDefinitionCacheImpl(this, this.dao);
     }
 }

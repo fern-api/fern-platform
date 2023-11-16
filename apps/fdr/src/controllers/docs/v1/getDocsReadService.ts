@@ -57,6 +57,7 @@ export async function getDocsForDomain({
                       indexSegmentIds: docsV2.indexSegmentIds as string[],
                       path: docsV2.path,
                       domain: docsV2.domain,
+                      updatedTime: docsV2.updatedTime,
                   }
                 : null,
     });

@@ -19,6 +19,7 @@ export interface LoadDocsDefinitionByUrlResponse {
     docsDefinition: DocsV1Db.DocsDefinitionDb;
     indexSegmentIds: string[];
     docsConfigInstanceId: string | null;
+    updatedTime: Date;
 }
 
 export interface LoadDocsConfigResponse {
@@ -68,6 +69,7 @@ export class DocsV2DaoImpl implements DocsV2Dao {
             indexSegmentIds: docsDomain.indexSegmentIds as IndexSegmentIds,
             path: docsDomain.path,
             domain: docsDomain.domain,
+            updatedTime: docsDomain.updatedTime,
         };
     }
 

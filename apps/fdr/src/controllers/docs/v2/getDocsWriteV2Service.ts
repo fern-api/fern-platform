@@ -112,19 +112,19 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 throw new DocsV1Write.DocsRegistrationIdNotFound();
             }
             try {
-                app.logger.info(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Called finishDocsRegister`);
+                app.logger.debug(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Called finishDocsRegister`);
                 await app.services.auth.checkUserBelongsToOrg({
                     authHeader: req.headers.authorization,
                     orgId: docsRegistrationInfo.orgId,
                 });
 
-                app.logger.info(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Transforming Docs Definition to DB`);
+                app.logger.debug(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Transforming Docs Definition to DB`);
                 const dbDocsDefinition = convertDocsDefinitionToDb({
                     writeShape: req.body.docsDefinition,
                     files: docsRegistrationInfo.s3FileInfos,
                 });
 
-                app.logger.info(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Generating new index segments`);
+                app.logger.debug(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Generating new index segments`);
                 const generateNewIndexSegmentsResult =
                     app.services.algoliaIndexSegmentManager.generateIndexSegmentsForDefinition({
                         dbDocsDefinition,
@@ -145,7 +145,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                     return new Map(apiIdDefinitionTuples) as Map<string, APIV1Db.DbApiDefinition>;
                 })();
 
-                app.logger.info(
+                app.logger.debug(
                     `[${docsRegistrationInfo.fernUrl.getFullUrl()}] Generating search records for all versions`,
                 );
                 const searchRecords = await app.services.algolia.generateSearchRecords({
@@ -154,11 +154,11 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                     configSegmentTuples,
                 });
 
-                app.logger.info(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Uploading search records to Algolia`);
+                app.logger.debug(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Uploading search records to Algolia`);
                 await app.services.algolia.uploadSearchRecords(searchRecords);
 
-                app.logger.info(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Updating db docs definitions`);
-                await app.dao.docsV2().storeDocsDefinition({
+                app.logger.debug(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Updating db docs definitions`);
+                await app.docsDefinitionCache.storeDocsForUrl({
                     docsRegistrationInfo,
                     dbDocsDefinition,
                     indexSegments: newIndexSegments,

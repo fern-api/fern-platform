@@ -16,15 +16,19 @@ export class ParsedBaseUrl {
         return `${this.hostname}${this.path}`;
     }
 
+    public toURL(): URL {
+        return new URL(this.getFullUrl());
+    }
+
     public static parse(url: string): ParsedBaseUrl {
-        let domain = url;
-        if (!HAS_HTTPS_REGEX.test(domain)) {
-            domain = "https://" + domain;
+        let urlWithHttpsPrefix = url;
+        if (!HAS_HTTPS_REGEX.test(url)) {
+            urlWithHttpsPrefix = "https://" + url;
         }
-        const parsedUrl = new URL(domain);
+        const parsedURL = new URL(urlWithHttpsPrefix);
         return new ParsedBaseUrl({
-            hostname: parsedUrl.hostname,
-            path: parsedUrl.pathname === "/" ? undefined : parsedUrl.pathname,
+            hostname: parsedURL.hostname,
+            path: parsedURL.pathname === "/" ? undefined : parsedURL.pathname,
         });
     }
 }
