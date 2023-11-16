@@ -17,7 +17,7 @@ export class ParsedBaseUrl {
     }
 
     public toURL(): URL {
-        return new URL(this.getFullUrl());
+        return new URL(`https://${this.getFullUrl()}`);
     }
 
     public static parse(url: string): ParsedBaseUrl {
