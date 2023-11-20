@@ -35,9 +35,7 @@
     "start:fern-dev": "yarn compile && yarn env:fern-dev next start",
     "start:fern-prod": "yarn compile && yarn env:fern-prod next start",
     "lint:fern-dev": "yarn compile && yarn env:fern-dev next lint",
-    "lint:fern-prod": "yarn compile && yarn env:fern-prod next lint",
-    "analyze:fern-dev": "ANALYZE=true yarn build:fern-dev",
-    "analyze:fern-prod": "ANALYZE=true yarn build:fern-prod"
+    "lint:fern-prod": "yarn compile && yarn env:fern-prod next lint"
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "0.37.0-9-g620a45d",
