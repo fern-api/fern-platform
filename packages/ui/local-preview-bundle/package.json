@@ -38,7 +38,8 @@
     "@fern-ui/ui": "workspace:*",
     "next": "^13.4.4",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "styled-jsx": "^5.1.2"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^14.0.3",

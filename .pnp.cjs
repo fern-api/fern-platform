@@ -12228,6 +12228,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
             ["sass", "npm:1.54.0"],\
+            ["styled-jsx", "virtual:58a3b7573f2825b76876c13cde8ec96a2998fdd764a2129bb55ac092fcbaaca508be96e5434708c9ec5f214113c25c96701fa0416e0e1d5a3c47467bad6b9cb6#npm:5.1.2"],\
             ["stylelint", "npm:14.14.0"],\
             ["tailwindcss", "npm:3.3.2"],\
             ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"]\
@@ -16559,6 +16560,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/__virtual__/styled-jsx-virtual-b3266f9d38/0/cache/styled-jsx-npm-5.1.1-2557a209ba-523a33b386.zip/node_modules/styled-jsx/",\
           "packageDependencies": [\
             ["styled-jsx", "virtual:15389e9f0da09b70bd9b262eeba49d7c08c9ea3b40b1c3329097956f20a7a8e1499085bfbd79e4b46ab99575f6afd69bd060777f0931e4e223c5deb6678aa4b3#npm:5.1.1"],\
+            ["@babel/core", null],\
+            ["@types/babel-plugin-macros", null],\
+            ["@types/babel__core", null],\
+            ["@types/react", "npm:18.0.20"],\
+            ["babel-plugin-macros", null],\
+            ["client-only", "npm:0.0.1"],\
+            ["react", "npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@babel/core",\
+            "@types/babel-plugin-macros",\
+            "@types/babel__core",\
+            "@types/react",\
+            "babel-plugin-macros",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["virtual:58a3b7573f2825b76876c13cde8ec96a2998fdd764a2129bb55ac092fcbaaca508be96e5434708c9ec5f214113c25c96701fa0416e0e1d5a3c47467bad6b9cb6#npm:5.1.2", {\
+          "packageLocation": "./.yarn/__virtual__/styled-jsx-virtual-ec8c62dd2a/0/cache/styled-jsx-npm-5.1.2-313b7de26f-f49d64219f.zip/node_modules/styled-jsx/",\
+          "packageDependencies": [\
+            ["styled-jsx", "virtual:58a3b7573f2825b76876c13cde8ec96a2998fdd764a2129bb55ac092fcbaaca508be96e5434708c9ec5f214113c25c96701fa0416e0e1d5a3c47467bad6b9cb6#npm:5.1.2"],\
             ["@babel/core", null],\
             ["@types/babel-plugin-macros", null],\
             ["@types/babel__core", null],\
