@@ -1,5 +1,5 @@
-import { MDXRemote, type MDXRemoteProps, type MDXRemoteSerializeResult } from "@fern-ui/app-utils";
-import React, { useCallback } from "react";
+import { MDXRemote, MDXRemoteProps, MDXRemoteSerializeResult } from "@fern-ui/app-utils";
+import React, { HTMLAttributes, useCallback } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { CodeBlockWithClipboardButton } from "../commons/CodeBlockWithClipboardButton";
 import { parseCodeBlockLanguageFromClassName } from "../commons/util";
@@ -38,7 +38,7 @@ export declare namespace MdxContent {
 }
 
 const COMPONENTS: MDXRemoteProps["components"] = {
-    pre: ({ children }) => {
+    pre: ({ children }: HTMLAttributes<HTMLPreElement>) => {
         type PreElemChildren = {
             props?: {
                 className?: string;
@@ -52,7 +52,7 @@ const COMPONENTS: MDXRemoteProps["components"] = {
         }
         return <CodeBlockWithClipboardButton language={language} variant="lg" content={content} />;
     },
-    code: (props) => <InlineCode fontSize="lg" {...props} />,
+    code: (props: HTMLAttributes<HTMLElement>) => <InlineCode fontSize="lg" {...props} />,
     table: Table,
     thead: Thead,
     tr: Tr,
@@ -64,7 +64,7 @@ const COMPONENTS: MDXRemoteProps["components"] = {
     h4: H4,
     h5: H5,
     h6: H6,
-    p: (props) => <P variant="markdown" {...props} />,
+    p: (props: HTMLAttributes<HTMLParagraphElement>) => <P variant="markdown" {...props} />,
     P,
     ol: Ol,
     ul: Ul,
