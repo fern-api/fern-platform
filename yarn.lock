@@ -2259,7 +2259,7 @@ __metadata:
     jest: ^29.4.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.8.8
-    strip-ansi: ^7.0.1
+    strip-ansi: ^7.1.0
     typescript: 4.9.4
     ua-parser-js: ^1.0.35
   languageName: unknown
@@ -12590,6 +12590,15 @@ env-cmd@toddbluhm/env-cmd:
   dependencies:
     ansi-regex: "npm:^6.0.1"
   checksum: 257f78fa433520e7f9897722731d78599cb3fce29ff26a20a5e12ba4957463b50a01136f37c43707f4951817a75e90820174853d6ccc240997adc5df8f966039
+  languageName: node
+  linkType: hard
+
+"strip-ansi@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "strip-ansi@npm:7.1.0"
+  dependencies:
+    ansi-regex: ^6.0.1
+  checksum: 859c73fcf27869c22a4e4d8c6acfe690064659e84bef9458aa6d13719d09ca88dcfd40cbf31fd0be63518ea1a643fe070b4827d353e09533a5b0b9fd4553d64d
   languageName: node
   linkType: hard
 
