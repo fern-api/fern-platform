@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "analyze": "ANALYZE=true next build"
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "0.37.0-9-g620a45d",
@@ -18,6 +19,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^14.0.3",
     "@tailwindcss/typography": "^0.5.9",
     "@types/node": "^18.7.18",
     "@types/react": "^18.0.20",

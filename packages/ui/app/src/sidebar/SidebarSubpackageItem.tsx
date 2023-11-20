@@ -1,4 +1,3 @@
-import { Text } from "@blueprintjs/core";
 import * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
 import classNames from "classnames";
 import { NextRouter, useRouter } from "next/router";
@@ -59,7 +58,7 @@ const UnmemoizedSidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = (
                             />
                         </div>
 
-                        <Text ellipsize>{title}</Text>
+                        <span className="truncate">{title}</span>
                     </div>
                 </div>
             );

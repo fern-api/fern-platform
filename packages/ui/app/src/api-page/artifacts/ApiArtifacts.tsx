@@ -1,4 +1,4 @@
-import { H2 } from "@blueprintjs/core";
+import { H2 } from "@blueprintjs/core/lib/esm/components/html/html";
 import * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
 import { joinUrlSlugs } from "@fern-ui/app-utils";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";

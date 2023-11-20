@@ -6,8 +6,9 @@ import {
     generateFontFaces,
     loadDocsBackgroundImage,
     loadDocTypography,
+    type ResolvedPath,
 } from "@fern-ui/app-utils";
-import { App, type ResolvedPath } from "@fern-ui/ui";
+import { App } from "@fern-ui/ui";
 import { GetServerSideProps, GetServerSidePropsResult } from "next";
 import Head from "next/head";
 import { useColorTheme } from "../../utils/theme/useColorTheme";
@@ -106,7 +107,7 @@ export const getServerSideProps: GetServerSideProps<Docs.Props> = async ({
 
     const resolvedPath = await convertNavigatableToResolvedPath({
         navigatable: resolvedNavigatable,
-        docsDefinition: docsDefinition,
+        docsDefinition,
         basePath: undefined,
     });
 

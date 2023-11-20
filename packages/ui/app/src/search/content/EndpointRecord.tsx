@@ -1,6 +1,6 @@
-import { Icon } from "@blueprintjs/core";
 import classNames from "classnames";
 import { Snippet } from "react-instantsearch-hooks-web";
+import { BlueprintIcon } from "../../commons/BlueprintIcon";
 import type { SearchRecord } from "../types";
 
 export declare namespace EndpointRecord {
@@ -19,7 +19,7 @@ export const EndpointRecord: React.FC<EndpointRecord.Props> = ({ hit, isHovered 
                     "border-white bg-white": isHovered,
                 })}
             >
-                <Icon
+                <BlueprintIcon
                     className={classNames({
                         "!text-text-muted-light dark:!text-text-muted-dark": !isHovered,
                         "!text-accent-primary": isHovered,

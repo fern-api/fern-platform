@@ -35,7 +35,9 @@
     "start:fern-dev": "yarn compile && yarn env:fern-dev next start",
     "start:fern-prod": "yarn compile && yarn env:fern-prod next start",
     "lint:fern-dev": "yarn compile && yarn env:fern-dev next lint",
-    "lint:fern-prod": "yarn compile && yarn env:fern-prod next lint"
+    "lint:fern-prod": "yarn compile && yarn env:fern-prod next lint",
+    "analyze:fern-dev": "ANALYZE=true yarn build:fern-dev",
+    "analyze:fern-prod": "ANALYZE=true yarn build:fern-prod"
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "0.37.0-9-g620a45d",
@@ -55,6 +57,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^14.0.3",
     "@tailwindcss/typography": "^0.5.9",
     "@types/jest": "^29.0.3",
     "@types/node": "^18.7.18",

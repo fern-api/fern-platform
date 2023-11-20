@@ -1,4 +1,3 @@
-import { Text } from "@blueprintjs/core";
 import classNames from "classnames";
 import Link from "next/link";
 import { memo, useCallback, useEffect, useRef } from "react";
@@ -56,7 +55,7 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
                     >
                         <div className="flex min-w-0 items-center gap-2">
                             {leftElement}
-                            <Text ellipsize>{title}</Text>
+                            <span className="truncate">{title}</span>
                         </div>
                         {rightElement}
                     </div>

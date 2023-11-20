@@ -1,4 +1,3 @@
-import { Text } from "@blueprintjs/core";
 import { marked } from "marked";
 import { CSSProperties, useMemo } from "react";
 import { getSlugFromText } from "../mdx/base-components";
@@ -20,7 +19,7 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ma
             {headings.length > 0 && (
                 <div className="flex flex-col space-y-3">
                     {headings.map((heading, index) => (
-                        <Text
+                        <span
                             key={index}
                             className="t-muted hover:dark:text-text-primary-dark hover:text-text-primary-light cursor-pointer transition"
                             style={{ marginLeft: 8 * (heading.depth - minDepth) }}
@@ -31,7 +30,7 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ma
                             >
                                 {heading.text}
                             </a>
-                        </Text>
+                        </span>
                     ))}
                 </div>
             )}
