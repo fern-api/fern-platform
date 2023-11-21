@@ -1,5 +1,6 @@
 import { MDXRemote, MDXRemoteProps, MDXRemoteSerializeResult } from "@fern-ui/app-utils";
-import React, { HTMLAttributes } from "react";
+import React, { HTMLAttributes, useCallback } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { CodeBlockWithClipboardButton } from "../commons/CodeBlockWithClipboardButton";
 import { parseCodeBlockLanguageFromClassName } from "../commons/util";
 import {
@@ -28,6 +29,7 @@ import { Card } from "./components/Card";
 import { Cards } from "./components/Cards";
 import { CodeBlock } from "./components/CodeBlock";
 import { CodeBlocks } from "./components/CodeBlocks";
+import { MdxErrorBoundaryContent } from "./MdxErrorBoundaryContent";
 
 export declare namespace MdxContent {
     export interface Props {
@@ -78,15 +80,13 @@ const COMPONENTS: MDXRemoteProps["components"] = {
 };
 
 export const MdxContent = React.memo<MdxContent.Props>(function MdxContent({ mdx }) {
-    // const fallbackRender = useCallback(({ error }: { error: unknown }) => {
-    //     return <MdxErrorBoundaryContent error={error} />;
-    // }, []);
+    const fallbackRender = useCallback(({ error }: { error: unknown }) => {
+        return <MdxErrorBoundaryContent error={error} />;
+    }, []);
 
-    return <MDXRemote {...mdx} components={COMPONENTS}></MDXRemote>;
-
-    // return (
-    //     // <ErrorBoundary fallbackRender={fallbackRender}>
-    //         <MDXRemote {...mdx} components={COMPONENTS}></MDXRemote>
-    //     {/* </ErrorBoundary> */}
-    // );
+    return (
+        <ErrorBoundary fallbackRender={fallbackRender}>
+            <MDXRemote {...mdx} components={COMPONENTS}></MDXRemote>
+        </ErrorBoundary>
+    );
 });
