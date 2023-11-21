@@ -1,11 +1,11 @@
 import { useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
-import { useContext } from "react";
+import { ReactElement, useContext } from "react";
 import { SidebarDepthContext } from "./context/SidebarDepthContext";
 
 export declare namespace SidebarItemLayout {
     export interface Props {
-        title: JSX.Element | string | ((args: { isHovering: boolean }) => JSX.Element | string);
+        title: ReactElement | string | ((args: { isHovering: boolean }) => ReactElement | string);
         className?: string;
         isSelected?: boolean;
     }

@@ -5,7 +5,7 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { BlueprintIcon } from "../../../commons/BlueprintIcon";
 import { getAnchorId } from "../../../util/anchor";
@@ -32,7 +32,7 @@ export declare namespace InternalTypeDefinitionError {
 }
 
 interface CollapsibleContent {
-    elements: JSX.Element[];
+    elements: ReactElement[];
     elementNameSingular: string;
     elementNamePlural: string;
     separatorText?: string;

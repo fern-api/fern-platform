@@ -1,14 +1,14 @@
 import * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
 import classNames from "classnames";
 import { NextRouter, useRouter } from "next/router";
-import { memo, useCallback, useEffect, useRef } from "react";
+import { memo, ReactElement, useCallback, useEffect, useRef } from "react";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 import { useNavigationContext } from "../navigation-context";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace SidebarSubpackageItem {
     export interface Props {
-        title: JSX.Element | string;
+        title: ReactElement | string;
         isChildSelected: boolean;
         className?: string;
         fullSlug: string;

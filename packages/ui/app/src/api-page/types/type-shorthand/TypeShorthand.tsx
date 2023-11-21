@@ -1,5 +1,6 @@
 import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { ReactElement } from "react";
 import { ReferencedTypePreviewPart } from "./ReferencedTypePreviewPart";
 
 export declare namespace TypeShorthand {
@@ -16,7 +17,7 @@ export const TypeShorthand: React.FC<TypeShorthand.Props> = ({ type, plural, wit
 
     return (
         <>
-            {visitDiscriminatedUnion(type, "type")._visit<JSX.Element | string>({
+            {visitDiscriminatedUnion(type, "type")._visit<ReactElement | string>({
                 id: ({ value: typeId }) => (
                     <ReferencedTypePreviewPart typeId={typeId} plural={plural} withArticle={withArticle} />
                 ),

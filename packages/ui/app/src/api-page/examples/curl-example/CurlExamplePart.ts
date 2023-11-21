@@ -1,14 +1,16 @@
+import { ReactElement } from "react";
+
 export type CurlExamplePart = CurlExamplePart.Jsx | CurlExamplePart.Line;
 
 export declare namespace CurlExamplePart {
     export interface Jsx {
         type: "jsx";
-        jsx: JSX.Element;
+        jsx: ReactElement;
     }
 
     export interface Line {
         type: "line";
-        value: string | JSX.Element;
+        value: string | ReactElement;
         excludeTrailingBackslash?: boolean;
         excludeIndent?: boolean;
     }

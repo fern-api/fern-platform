@@ -28,19 +28,14 @@
     "depcheck": "depcheck",
     "env:fern-dev": "env-cmd -r .env-cmdrc.cjs -e fern-dev",
     "env:fern-prod": "env-cmd -r .env-cmdrc.cjs -e fern-prod",
-    "env:fern-preview": "env-cmd -r .env-cmdrc.cjs -e fern-preview",
     "dev:fern-dev": "yarn compile && yarn env:fern-dev next dev",
     "dev:fern-prod": "yarn compile && yarn env:fern-prod next dev",
-    "dev:fern-preview": "yarn compile && yarn env:fern-preview next dev",
     "build:fern-dev": "yarn compile && yarn env:fern-dev next build",
     "build:fern-prod": "yarn compile && yarn env:fern-prod next build",
-    "build:fern-preview": "yarn compile && yarn env:fern-preview next build",
     "start:fern-dev": "yarn compile && yarn env:fern-dev next start",
     "start:fern-prod": "yarn compile && yarn env:fern-prod next start",
-    "start:fern-preview": "yarn compile && yarn env:fern-preview next start",
     "lint:fern-dev": "yarn compile && yarn env:fern-dev next lint",
-    "lint:fern-prod": "yarn compile && yarn env:fern-prod next lint",
-    "lint:fern-preview": "yarn compile && yarn env:fern-preview next lint"
+    "lint:fern-prod": "yarn compile && yarn env:fern-prod next lint"
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "0.37.0-9-g620a45d",

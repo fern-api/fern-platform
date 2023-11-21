@@ -6,6 +6,7 @@
     "url": "https://github.com/fern-api/fern-ui.git",
     "directory": "packages/ui/local-preview-bundle"
   },
+  "private": true,
   "files": [
     "lib"
   ],
@@ -27,7 +28,8 @@
     "depcheck": "depcheck",
     "dev": "yarn compile && next dev",
     "build": "yarn compile && next build",
-    "start": "next start"
+    "start": "yarn compile && next start",
+    "lint": "yarn compile && next lint"
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "0.37.0-9-g620a45d",

@@ -1,6 +1,6 @@
 import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import React from "react";
+import React, { ReactElement } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { TypeShorthand } from "./TypeShorthand";
 
@@ -26,7 +26,7 @@ export const ReferencedTypePreviewPart: React.FC<ReferencedTypePreviewPart.Props
 
     return (
         <>
-            {visitDiscriminatedUnion(shape, "type")._visit<JSX.Element | string>({
+            {visitDiscriminatedUnion(shape, "type")._visit<ReactElement | string>({
                 alias: (typeReference) => (
                     <TypeShorthand type={typeReference.value} plural={plural} withArticle={withArticle} />
                 ),

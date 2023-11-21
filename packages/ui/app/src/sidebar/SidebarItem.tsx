@@ -1,16 +1,16 @@
 import classNames from "classnames";
 import Link from "next/link";
-import { memo, useCallback, useEffect, useRef } from "react";
+import { memo, ReactElement, useCallback, useEffect, useRef } from "react";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace SidebarItem {
     export interface Props {
-        title: JSX.Element | string;
+        title: ReactElement | string;
         className?: string;
         onClick: () => void;
         fullSlug: string;
-        leftElement?: JSX.Element;
-        rightElement?: JSX.Element;
+        leftElement?: ReactElement;
+        rightElement?: ReactElement;
         indent?: boolean;
         shallow?: boolean;
         registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
