@@ -2179,7 +2179,7 @@ __metadata:
     "@fern-api/fdr-sdk": 0.37.0-9-g620a45d
     "@fern-ui/core-utils": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/lodash-es": 4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
     eslint: ^8.26.0
@@ -2388,7 +2388,7 @@ __metadata:
     "@blueprintjs/core": ^4.11.5
     "@fern-ui/core-utils": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/lodash-es": 4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
     depcheck: ^1.4.3
@@ -2455,7 +2455,7 @@ __metadata:
   dependencies:
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.5
-    "@types/lodash-es": 4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/yargs": ^17.0.12
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
@@ -2485,7 +2485,7 @@ __metadata:
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/react-commons": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/lodash-es": 4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
     classnames: ^2.3.1
@@ -2567,7 +2567,7 @@ __metadata:
     "@react-hook/size": ^2.1.2
     "@testing-library/react": ^14.0.0
     "@types/jest": ^29.0.3
-    "@types/lodash-es": 4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/marked": ^5.0.0
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
