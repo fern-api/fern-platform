@@ -15,9 +15,11 @@ export type SerializedNavigatableNode =
 export async function serializePageNode({
     pageNode,
     docsDefinition,
+    isPreview,
 }: {
     pageNode: DocsNode.Page;
     docsDefinition: FernRegistry.docs.v1.read.DocsDefinition;
+    isPreview?: boolean;
 }): Promise<SerializedPageNode> {
     const pageContent = docsDefinition.pages[pageNode.page.id];
     if (pageContent == null) {
@@ -25,16 +27,18 @@ export async function serializePageNode({
     }
     return {
         ...pageNode,
-        serializedMdxContent: await serializeMdxContent(pageContent.markdown),
+        serializedMdxContent: await serializeMdxContent(pageContent.markdown, isPreview),
     };
 }
 
 export async function serializeNavigatableNode({
     node,
     docsDefinition,
+    isPreview,
 }: {
     node: NavigatableDocsNode;
     docsDefinition: FernRegistry.docs.v1.read.DocsDefinition;
+    isPreview?: boolean;
 }): Promise<SerializedNavigatableNode> {
-    return node.type === "page" ? await serializePageNode({ pageNode: node, docsDefinition }) : node;
+    return node.type === "page" ? await serializePageNode({ pageNode: node, docsDefinition, isPreview }) : node;
 }

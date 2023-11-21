@@ -14,6 +14,6 @@ module.exports = {
         NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX: process.env.ALGOLIA_SEARCH_INDEX,
     },
     "fern-preview": {
-        NEXT_PUBLIC_FDR_ORIGIN: "https://localhost:3000",
+        NEXT_PUBLIC_FDR_ORIGIN: "http://localhost:3000",
     },
 };

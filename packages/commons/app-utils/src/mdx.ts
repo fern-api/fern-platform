@@ -9,12 +9,17 @@ export type SerializedMdxContent = MDXRemoteSerializeResult<Record<string, unkno
 /**
  * Should only be invoked server-side.
  */
-export async function serializeMdxContent(content: string): Promise<SerializedMdxContent> {
+export async function serializeMdxContent(content: string, isPreview: boolean = false): Promise<SerializedMdxContent> {
     return await serialize(content, {
         scope: {},
         mdxOptions: {
             remarkPlugins: REMARK_PLUGINS,
             format: "detect",
+            /**
+             * development=true is required to render MdxRemote from the client-side.
+             * https://github.com/hashicorp/next-mdx-remote/issues/350
+             */
+            development: isPreview,
         },
         parseFrontmatter: false,
     });

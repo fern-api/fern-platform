@@ -2338,6 +2338,49 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-ui/local-preview-bundle@workspace:packages/ui/local-preview-bundle":
+  version: 0.0.0-use.local
+  resolution: "@fern-ui/local-preview-bundle@workspace:packages/ui/local-preview-bundle"
+  dependencies:
+    "@fern-api/fdr-sdk": 0.37.0-9-g620a45d
+    "@fern-ui/app-utils": "workspace:*"
+    "@fern-ui/core-utils": "workspace:*"
+    "@fern-ui/theme": "workspace:*"
+    "@fern-ui/ui": "workspace:*"
+    "@fortawesome/fontawesome-svg-core": ^6.4.2
+    "@fortawesome/free-brands-svg-icons": ^6.4.2
+    "@fortawesome/free-solid-svg-icons": ^6.4.2
+    "@fortawesome/pro-duotone-svg-icons": ^6.4.2
+    "@fortawesome/pro-light-svg-icons": ^6.4.2
+    "@fortawesome/pro-regular-svg-icons": ^6.4.2
+    "@fortawesome/pro-solid-svg-icons": ^6.4.2
+    "@next/bundle-analyzer": ^14.0.3
+    "@tailwindcss/typography": ^0.5.9
+    "@types/jest": ^29.0.3
+    "@types/lodash-es": ^4.17.12
+    "@types/node": ^18.7.18
+    "@types/react": ^18.0.20
+    "@types/react-dom": ^18.0.6
+    autoprefixer: ^10.4.13
+    depcheck: ^1.4.3
+    env-cmd: toddbluhm/env-cmd
+    eslint: ^8.26.0
+    jest: ^29.4.0
+    lodash-es: ^4.17.21
+    next: ^13.4.4
+    organize-imports-cli: ^0.10.0
+    postcss: ^8.4.21
+    prettier: ^2.8.8
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    sass: ^1.54.0
+    styled-jsx: ^5.1.2
+    stylelint: ^14.14.0
+    tailwindcss: ^3.3.2
+    typescript: 4.9.4
+  languageName: unknown
+  linkType: soft
+
 "@fern-ui/react-commons@workspace:*, @fern-ui/react-commons@workspace:packages/commons/react/react-commons":
   version: 0.0.0-use.local
   resolution: "@fern-ui/react-commons@workspace:packages/commons/react/react-commons"
@@ -3751,6 +3794,15 @@ __metadata:
   dependencies:
     "@types/lodash": "*"
   checksum: a2c7ab8da13892f89ab86b61dd9a0125c767b9db7b9bdaac7fd8508c9fa884bbb19a9760dbdc1e7e698e3322b7a8ba03daa80832371da32a8bd42da0920be838
+  languageName: node
+  linkType: hard
+
+"@types/lodash-es@npm:^4.17.12":
+  version: 4.17.12
+  resolution: "@types/lodash-es@npm:4.17.12"
+  dependencies:
+    "@types/lodash": "*"
+  checksum: 990a99e2243bebe9505cb5ad19fbc172beb4a8e00f9075c99fc06c46c2801ffdb40bc2867271cf580d5f48994fc9fb076ec92cd60a20e621603bf22114e5b077
   languageName: node
   linkType: hard
 

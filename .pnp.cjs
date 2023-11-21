@@ -74,6 +74,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       {\
         "name": "@fern-ui/fe-bundle",\
         "reference": "workspace:packages/ui/fe-bundle"\
+      },\
+      {\
+        "name": "@fern-ui/local-preview-bundle",\
+        "reference": "workspace:packages/ui/local-preview-bundle"\
       }\
     ],\
     "enableTopLevelFallback": true,\
@@ -86,6 +90,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-ui/fe-bundle", ["workspace:packages/ui/fe-bundle"]],\
       ["@fern-ui/fonts", ["workspace:packages/commons/react/fonts"]],\
       ["@fern-ui/loadable", ["workspace:packages/commons/loadable"]],\
+      ["@fern-ui/local-preview-bundle", ["workspace:packages/ui/local-preview-bundle"]],\
       ["@fern-ui/react-commons", ["workspace:packages/commons/react/react-commons"]],\
       ["@fern-ui/react-query-utils", ["workspace:packages/commons/react/react-query-utils"]],\
       ["@fern-ui/routing-utils", ["workspace:packages/commons/react/routing-utils"]],\
@@ -4060,6 +4065,51 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
+      ["@fern-ui/local-preview-bundle", [\
+        ["workspace:packages/ui/local-preview-bundle", {\
+          "packageLocation": "./packages/ui/local-preview-bundle/",\
+          "packageDependencies": [\
+            ["@fern-ui/local-preview-bundle", "workspace:packages/ui/local-preview-bundle"],\
+            ["@fern-api/fdr-sdk", "npm:0.37.0-9-g620a45d"],\
+            ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
+            ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
+            ["@fern-ui/theme", "workspace:packages/commons/react/theme"],\
+            ["@fern-ui/ui", "workspace:packages/ui/app"],\
+            ["@fortawesome/fontawesome-svg-core", "npm:6.4.2"],\
+            ["@fortawesome/free-brands-svg-icons", "npm:6.4.2"],\
+            ["@fortawesome/free-solid-svg-icons", "npm:6.4.2"],\
+            ["@fortawesome/pro-duotone-svg-icons", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-duotone-svg-icons%2F-%2F6.4.2%2Fpro-duotone-svg-icons-6.4.2.tgz"],\
+            ["@fortawesome/pro-light-svg-icons", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-light-svg-icons%2F-%2F6.4.2%2Fpro-light-svg-icons-6.4.2.tgz"],\
+            ["@fortawesome/pro-regular-svg-icons", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-regular-svg-icons%2F-%2F6.4.2%2Fpro-regular-svg-icons-6.4.2.tgz"],\
+            ["@fortawesome/pro-solid-svg-icons", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-solid-svg-icons%2F-%2F6.4.2%2Fpro-solid-svg-icons-6.4.2.tgz"],\
+            ["@next/bundle-analyzer", "npm:14.0.3"],\
+            ["@tailwindcss/typography", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:0.5.9"],\
+            ["@types/jest", "npm:29.0.3"],\
+            ["@types/lodash-es", "npm:4.17.12"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["@types/react", "npm:18.0.20"],\
+            ["@types/react-dom", "npm:18.0.6"],\
+            ["autoprefixer", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:10.4.13"],\
+            ["depcheck", "npm:1.4.3"],\
+            ["env-cmd", "https://github.com/toddbluhm/env-cmd.git#commit=8f35b71651f6a78710308ff38ab30896ea72ee8b"],\
+            ["eslint", "npm:8.26.0"],\
+            ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.5.0"],\
+            ["lodash-es", "npm:4.17.21"],\
+            ["next", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:13.4.4"],\
+            ["organize-imports-cli", "npm:0.10.0"],\
+            ["postcss", "npm:8.4.23"],\
+            ["prettier", "npm:2.8.8"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
+            ["sass", "npm:1.54.0"],\
+            ["styled-jsx", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:5.1.2"],\
+            ["stylelint", "npm:14.14.0"],\
+            ["tailwindcss", "npm:3.3.2"],\
+            ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
       ["@fern-ui/react-commons", [\
         ["workspace:packages/commons/react/react-commons", {\
           "packageLocation": "./packages/commons/react/react-commons/",\
@@ -5790,6 +5840,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/lodash-es", [\
+        ["npm:4.17.12", {\
+          "packageLocation": "./.yarn/cache/@types-lodash-es-npm-4.17.12-87dce3f795-990a99e224.zip/node_modules/@types/lodash-es/",\
+          "packageDependencies": [\
+            ["@types/lodash-es", "npm:4.17.12"],\
+            ["@types/lodash", "npm:4.14.182"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["npm:4.17.9", {\
           "packageLocation": "./.yarn/cache/@types-lodash-es-npm-4.17.9-256f3fab3d-a2c7ab8da1.zip/node_modules/@types/lodash-es/",\
           "packageDependencies": [\
@@ -16547,6 +16605,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/babel-plugin-macros", null],\
             ["@types/babel__core", null],\
             ["@types/react", null],\
+            ["babel-plugin-macros", null],\
+            ["client-only", "npm:0.0.1"],\
+            ["react", "npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@babel/core",\
+            "@types/babel-plugin-macros",\
+            "@types/babel__core",\
+            "@types/react",\
+            "babel-plugin-macros",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:5.1.2", {\
+          "packageLocation": "./.yarn/__virtual__/styled-jsx-virtual-7d80554b8a/0/cache/styled-jsx-npm-5.1.2-313b7de26f-f49d64219f.zip/node_modules/styled-jsx/",\
+          "packageDependencies": [\
+            ["styled-jsx", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:5.1.2"],\
+            ["@babel/core", null],\
+            ["@types/babel-plugin-macros", null],\
+            ["@types/babel__core", null],\
+            ["@types/react", "npm:18.0.20"],\
             ["babel-plugin-macros", null],\
             ["client-only", "npm:0.0.1"],\
             ["react", "npm:18.2.0"]\
