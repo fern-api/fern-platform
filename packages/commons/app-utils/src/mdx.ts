@@ -19,7 +19,7 @@ export async function serializeMdxContent(content: string, isPreview: boolean = 
              * development=true is required to render MdxRemote from the client-side.
              * https://github.com/hashicorp/next-mdx-remote/issues/350
              */
-            development: isPreview,
+            development: isPreview && false,
         },
         parseFrontmatter: false,
     });
