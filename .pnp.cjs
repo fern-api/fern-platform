@@ -74,10 +74,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       {\
         "name": "@fern-ui/fe-bundle",\
         "reference": "workspace:packages/ui/fe-bundle"\
-      },\
-      {\
-        "name": "local-preview-bundle",\
-        "reference": "workspace:packages/ui/local-preview-bundle"\
       }\
     ],\
     "enableTopLevelFallback": true,\
@@ -98,8 +94,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-ui/theme", ["workspace:packages/commons/react/theme"]],\
       ["@fern-ui/toaster", ["workspace:packages/commons/react/toaster"]],\
       ["@fern-ui/ui", ["workspace:packages/ui/app"]],\
-      ["fern-ui", ["workspace:."]],\
-      ["local-preview-bundle", ["workspace:packages/ui/local-preview-bundle"]]\
+      ["fern-ui", ["workspace:."]]\
     ],\
     "fallbackPool": [\
     ],\
@@ -12202,40 +12197,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["local-preview-bundle", [\
-        ["workspace:packages/ui/local-preview-bundle", {\
-          "packageLocation": "./packages/ui/local-preview-bundle/",\
-          "packageDependencies": [\
-            ["local-preview-bundle", "workspace:packages/ui/local-preview-bundle"],\
-            ["@fern-api/fdr-sdk", "npm:0.37.0-9-g620a45d"],\
-            ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
-            ["@fern-ui/theme", "workspace:packages/commons/react/theme"],\
-            ["@fern-ui/ui", "workspace:packages/ui/app"],\
-            ["@next/bundle-analyzer", "npm:14.0.3"],\
-            ["@tailwindcss/typography", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:0.5.9"],\
-            ["@types/jest", "npm:29.0.3"],\
-            ["@types/node", "npm:18.7.18"],\
-            ["@types/react", "npm:18.0.20"],\
-            ["@types/react-dom", "npm:18.0.6"],\
-            ["autoprefixer", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:10.4.13"],\
-            ["depcheck", "npm:1.4.3"],\
-            ["eslint", "npm:8.26.0"],\
-            ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.5.0"],\
-            ["next", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:13.4.4"],\
-            ["organize-imports-cli", "npm:0.10.0"],\
-            ["postcss", "npm:8.4.23"],\
-            ["prettier", "npm:2.8.8"],\
-            ["react", "npm:18.2.0"],\
-            ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
-            ["sass", "npm:1.54.0"],\
-            ["styled-jsx", "virtual:58a3b7573f2825b76876c13cde8ec96a2998fdd764a2129bb55ac092fcbaaca508be96e5434708c9ec5f214113c25c96701fa0416e0e1d5a3c47467bad6b9cb6#npm:5.1.2"],\
-            ["stylelint", "npm:14.14.0"],\
-            ["tailwindcss", "npm:3.3.2"],\
-            ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
       ["locate-path", [\
         ["npm:5.0.0", {\
           "packageLocation": "./.yarn/cache/locate-path-npm-5.0.0-46580c43e4-83e51725e6.zip/node_modules/locate-path/",\
@@ -16560,28 +16521,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/__virtual__/styled-jsx-virtual-b3266f9d38/0/cache/styled-jsx-npm-5.1.1-2557a209ba-523a33b386.zip/node_modules/styled-jsx/",\
           "packageDependencies": [\
             ["styled-jsx", "virtual:15389e9f0da09b70bd9b262eeba49d7c08c9ea3b40b1c3329097956f20a7a8e1499085bfbd79e4b46ab99575f6afd69bd060777f0931e4e223c5deb6678aa4b3#npm:5.1.1"],\
-            ["@babel/core", null],\
-            ["@types/babel-plugin-macros", null],\
-            ["@types/babel__core", null],\
-            ["@types/react", "npm:18.0.20"],\
-            ["babel-plugin-macros", null],\
-            ["client-only", "npm:0.0.1"],\
-            ["react", "npm:18.2.0"]\
-          ],\
-          "packagePeers": [\
-            "@babel/core",\
-            "@types/babel-plugin-macros",\
-            "@types/babel__core",\
-            "@types/react",\
-            "babel-plugin-macros",\
-            "react"\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["virtual:58a3b7573f2825b76876c13cde8ec96a2998fdd764a2129bb55ac092fcbaaca508be96e5434708c9ec5f214113c25c96701fa0416e0e1d5a3c47467bad6b9cb6#npm:5.1.2", {\
-          "packageLocation": "./.yarn/__virtual__/styled-jsx-virtual-ec8c62dd2a/0/cache/styled-jsx-npm-5.1.2-313b7de26f-f49d64219f.zip/node_modules/styled-jsx/",\
-          "packageDependencies": [\
-            ["styled-jsx", "virtual:58a3b7573f2825b76876c13cde8ec96a2998fdd764a2129bb55ac092fcbaaca508be96e5434708c9ec5f214113c25c96701fa0416e0e1d5a3c47467bad6b9cb6#npm:5.1.2"],\
             ["@babel/core", null],\
             ["@types/babel-plugin-macros", null],\
             ["@types/babel__core", null],\

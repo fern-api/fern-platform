@@ -9192,38 +9192,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"local-preview-bundle@workspace:packages/ui/local-preview-bundle":
-  version: 0.0.0-use.local
-  resolution: "local-preview-bundle@workspace:packages/ui/local-preview-bundle"
-  dependencies:
-    "@fern-api/fdr-sdk": 0.37.0-9-g620a45d
-    "@fern-ui/app-utils": "workspace:*"
-    "@fern-ui/theme": "workspace:*"
-    "@fern-ui/ui": "workspace:*"
-    "@next/bundle-analyzer": ^14.0.3
-    "@tailwindcss/typography": ^0.5.9
-    "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
-    "@types/react-dom": ^18.0.6
-    autoprefixer: ^10.4.13
-    depcheck: ^1.4.3
-    eslint: ^8.26.0
-    jest: ^29.4.0
-    next: ^13.4.4
-    organize-imports-cli: ^0.10.0
-    postcss: ^8.4.21
-    prettier: ^2.8.8
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    sass: ^1.54.0
-    styled-jsx: ^5.1.2
-    stylelint: ^14.14.0
-    tailwindcss: ^3.3.2
-    typescript: 4.9.4
-  languageName: unknown
-  linkType: soft
-
 "locate-path@npm:^5.0.0":
   version: 5.0.0
   resolution: "locate-path@npm:5.0.0"

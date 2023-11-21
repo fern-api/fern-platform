@@ -10,6 +10,7 @@ import {
 import { App } from "@fern-ui/ui";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
+import { ReactElement } from "react";
 import { REGISTRY_SERVICE } from "../../service";
 import { buildUrl } from "../../utils/buildUrl";
 import { useColorTheme } from "../../utils/theme/useColorTheme";
@@ -28,7 +29,7 @@ export default function Docs({
     typographyStyleSheet = "",
     backgroundImageStyleSheet = "",
     resolvedPath,
-}: Docs.Props): JSX.Element {
+}: Docs.Props): ReactElement {
     const colorThemeStyleSheet = useColorTheme(docs.definition);
     return (
         <>
