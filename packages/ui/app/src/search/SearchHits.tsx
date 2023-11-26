@@ -1,4 +1,4 @@
-import { Spinner, SpinnerSize } from "@blueprintjs/core/lib/esm/components/spinner/spinner";
+import { Spinner, SpinnerSize } from "@blueprintjs/core";
 import { getFullSlugForNavigatable } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useKeyboardPress } from "@fern-ui/react-commons";

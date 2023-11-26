@@ -1,4 +1,4 @@
-import { Collapse } from "@blueprintjs/core/lib/esm/components/collapse/collapse";
+import { Collapse } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
