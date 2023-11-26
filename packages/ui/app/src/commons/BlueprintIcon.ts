@@ -1,8 +1,6 @@
 import dynamic from "next/dynamic";
 
-export const BlueprintIcon = dynamic(
-    () => import("@blueprintjs/core/lib/esm/components/icon/icon").then(({ Icon }) => Icon),
-    {
-        ssr: false,
-    }
-);
+// TODO: delete blueprint icons to reduce bundle size
+export const BlueprintIcon = dynamic(() => import("@blueprintjs/core").then(({ Icon }) => Icon), {
+    ssr: false,
+});

@@ -2,11 +2,7 @@ import { IconNames } from "@blueprintjs/icons";
 import dynamic from "next/dynamic";
 import React, { useMemo } from "react";
 
-const NonIdealState = dynamic(() =>
-    import("@blueprintjs/core/lib/esm/components/non-ideal-state/nonIdealState").then(
-        ({ NonIdealState }) => NonIdealState
-    )
-);
+const NonIdealState = dynamic(() => import("@blueprintjs/core").then(({ NonIdealState }) => NonIdealState));
 
 export declare namespace MdxErrorBoundaryContent {
     export interface Props {
