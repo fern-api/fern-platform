@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-import { Environments, EnvironmentType } from "@fern-fern/fern-cloud-sdk/api/";
+import { Environments, EnvironmentType } from "@fern-fern/fern-cloud-sdk/api/index";
 import * as cdk from "aws-cdk-lib";
 import axios from "axios";
-import { DocsFeStack } from "../lib/docs-fe-stack";
+import { DocsFeStack } from "./docs-fe-stack";
 
 void main();
 
