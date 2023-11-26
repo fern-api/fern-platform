@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { DocsV1Db } from "../../api";
 import { DocsRegistrationInfo } from "../../controllers/docs/v2/getDocsWriteV2Service";
 import type { IndexSegment } from "../../services/algolia";
-import { WithoutQuestionMarks, readBuffer, writeBuffer } from "../../util";
+import { readBuffer, writeBuffer } from "../../util";
 import { IndexSegmentIds, PrismaTransaction, ReferencedAPIDefinitionIds } from "../types";
 
 export interface StoreDocsDefinitionResponse {
@@ -28,6 +28,8 @@ export interface LoadDocsConfigResponse {
 }
 
 export interface DocsV2Dao {
+    loadDocsForHostname({ hostname }: { hostname: string }): Promise<LoadDocsDefinitionByUrlResponse[]>;
+
     loadDocsForURL(url: URL): Promise<LoadDocsDefinitionByUrlResponse | undefined>;
 
     loadDocsConfigByInstanceId(docsConfigInstanceId: string): Promise<LoadDocsConfigResponse | undefined>;
@@ -46,31 +48,38 @@ export interface DocsV2Dao {
 export class DocsV2DaoImpl implements DocsV2Dao {
     constructor(private readonly prisma: PrismaClient) {}
 
-    public async loadDocsForURL(url: URL): Promise<WithoutQuestionMarks<LoadDocsDefinitionByUrlResponse> | undefined> {
-        const possibleDocs = await this.prisma.docsV2.findMany({
-            where: {
-                domain: url.hostname,
-            },
-            orderBy: {
-                updatedTime: "desc",
-            },
-        });
+    public async loadDocsForURL(url: URL): Promise<LoadDocsDefinitionByUrlResponse | undefined> {
+        const possibleDocs = await this.loadDocsForHostname({ hostname: url.hostname });
         const docsDomain = possibleDocs.find((registeredDocs) => {
             return url.pathname.startsWith(registeredDocs.path);
         });
         if (docsDomain == null) {
             return undefined;
         }
-        return {
-            algoliaIndex: docsDomain.algoliaIndex ?? undefined,
-            orgId: docsDomain.orgID,
-            docsDefinition: migrateDocsDbDefinition(readBuffer(docsDomain.docsDefinition)),
-            docsConfigInstanceId: docsDomain.docsConfigInstanceId,
-            indexSegmentIds: docsDomain.indexSegmentIds as IndexSegmentIds,
-            path: docsDomain.path,
-            domain: docsDomain.domain,
-            updatedTime: docsDomain.updatedTime,
-        };
+        return docsDomain;
+    }
+
+    public async loadDocsForHostname({ hostname }: { hostname: string }): Promise<LoadDocsDefinitionByUrlResponse[]> {
+        const possibleDocs = await this.prisma.docsV2.findMany({
+            where: {
+                domain: hostname,
+            },
+            orderBy: {
+                updatedTime: "desc",
+            },
+        });
+        return possibleDocs.map((docs) => {
+            return {
+                algoliaIndex: docs.algoliaIndex ?? undefined,
+                orgId: docs.orgID,
+                docsDefinition: migrateDocsDbDefinition(readBuffer(docs.docsDefinition)),
+                docsConfigInstanceId: docs.docsConfigInstanceId,
+                indexSegmentIds: docs.indexSegmentIds as IndexSegmentIds,
+                path: docs.path,
+                domain: docs.domain,
+                updatedTime: docs.updatedTime,
+            };
+        });
     }
 
     public async loadDocsConfigByInstanceId(docsConfigInstanceId: string): Promise<LoadDocsConfigResponse | undefined> {
