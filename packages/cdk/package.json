@@ -7,9 +7,9 @@
     "directory": "packages/cdk"
   },
   "private": true,
-  "source": "bin/cdk.ts",
-  "module": "bin/cdk.ts",
-  "main": "bin/cdk.ts",
+  "source": "src/cdk.ts",
+  "module": "src/cdk.ts",
+  "main": "src/cdk.ts",
   "dependencies": {
     "@fern-fern/fern-cloud-sdk": "^0.0.257",
     "aws-cdk-lib": "^2.110.1",
