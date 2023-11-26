@@ -2235,7 +2235,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-ui/cdk@workspace:packages/cdk":
+"@fern-ui/cdk@workspace:*, @fern-ui/cdk@workspace:packages/cdk":
   version: 0.0.0-use.local
   resolution: "@fern-ui/cdk@workspace:packages/cdk"
   dependencies:
@@ -2278,6 +2278,7 @@ __metadata:
   resolution: "@fern-ui/compile-root@workspace:packages/_root"
   dependencies:
     "@fern-ui/app-utils": "workspace:*"
+    "@fern-ui/cdk": "workspace:*"
     "@fern-ui/common-components": "workspace:*"
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/fonts": "workspace:*"

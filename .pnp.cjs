@@ -4012,6 +4012,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-ui/compile-root", "workspace:packages/_root"],\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
+            ["@fern-ui/cdk", "workspace:packages/cdk"],\
             ["@fern-ui/common-components", "workspace:packages/commons/react/common-components"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/fonts", "workspace:packages/commons/react/fonts"],\

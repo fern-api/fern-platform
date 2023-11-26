@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@fern-ui/app-utils": "workspace:*",
+    "@fern-ui/cdk": "workspace:*",
     "@fern-ui/common-components": "workspace:*",
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/fonts": "workspace:*",
