@@ -3950,7 +3950,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.5.9"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.18.13"],\
-            ["@types/react", "npm:18.0.20"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
             ["jest", "virtual:bcd55ef18af2de5c61a0e7e421459a5298122a73e58d78d0d17e7844bafe08261ee360689337ea7f273d858b0bea9e1ae69c5bf08a019e466a6e255cefe36bc1#npm:29.7.0"],\
@@ -5342,11 +5341,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@mdx-js/react", "virtual:768b38baf4a727fec4c9bf2e5007f3b449130b8d1ef5d0fb32646ea61382b8ccc1afd5c7f375b3111c9a46316596e43bcef9c03285b77cee52880d48aca23cf7#npm:2.3.0"],\
             ["@types/mdx", "npm:2.0.5"],\
-            ["@types/react", "npm:18.0.20"],\
+            ["@types/react", "npm:18.2.13"],\
             ["react", null]\
           ],\
           "packagePeers": [\
-            "@types/react",\
             "react"\
           ],\
           "linkType": "HARD"\
@@ -6260,6 +6258,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-react-npm-18.0.20-064ea90ef1-f67f5b16ef.zip/node_modules/@types/react/",\
           "packageDependencies": [\
             ["@types/react", "npm:18.0.20"],\
+            ["@types/prop-types", "npm:15.7.5"],\
+            ["@types/scheduler", "npm:0.16.2"],\
+            ["csstype", "npm:3.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:18.2.13", {\
+          "packageLocation": "./.yarn/cache/@types-react-npm-18.2.13-f7110efddb-f7c15f19c1.zip/node_modules/@types/react/",\
+          "packageDependencies": [\
+            ["@types/react", "npm:18.2.13"],\
             ["@types/prop-types", "npm:15.7.5"],\
             ["@types/scheduler", "npm:0.16.2"],\
             ["csstype", "npm:3.1.0"]\
@@ -14824,7 +14832,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["next-mdx-remote", "virtual:b977a69fb19c4d0f85f8b91df4d5bbb0d247e9cfda57636e95b33f40dfc5a05b68c27a163035a0eb7204d129d5e24e42811c10b0902ee38cf8cf4debee72619b#npm:4.4.1"],\
             ["@mdx-js/mdx", "npm:2.3.0"],\
             ["@mdx-js/react", "virtual:768b38baf4a727fec4c9bf2e5007f3b449130b8d1ef5d0fb32646ea61382b8ccc1afd5c7f375b3111c9a46316596e43bcef9c03285b77cee52880d48aca23cf7#npm:2.3.0"],\
-            ["@types/react", "npm:18.0.20"],\
+            ["@types/react", null],\
             ["@types/react-dom", null],\
             ["react", null],\
             ["react-dom", null],\
