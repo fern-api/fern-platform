@@ -23,6 +23,7 @@ export class DocsFeStack extends Stack {
                 },
             ],
             versioned: true,
+            publicReadAccess: true,
         });
 
         const local_preview_bundle_dist_zip = path.resolve(`../ui/local-preview-bundle/dist/${id}.zip`);
