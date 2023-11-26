@@ -2190,7 +2190,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.8.8
     remark-gfm: ^3.0.1
-    typescript: ~5.2.2
+    typescript: 4.9.4
   languageName: unknown
   linkType: soft
 
@@ -2213,7 +2213,7 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     stylelint: ^14.14.0
-    typescript: ~5.2.2
+    typescript: 4.9.4
     vite: ^4.3.9
   languageName: unknown
   linkType: soft
@@ -2242,7 +2242,7 @@ __metadata:
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.8.8
-    typescript: ~5.2.2
+    typescript: 4.9.4
   languageName: unknown
   linkType: soft
 
@@ -2259,7 +2259,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.8.8
     strip-ansi: ^7.0.1
-    typescript: ~5.2.2
+    typescript: 4.9.4
     ua-parser-js: ^1.0.35
   languageName: unknown
   linkType: soft
@@ -2300,7 +2300,7 @@ __metadata:
     sass: ^1.54.0
     stylelint: ^14.14.0
     tailwindcss: ^3.3.2
-    typescript: ~5.2.2
+    typescript: 4.9.4
   languageName: unknown
   linkType: soft
 
@@ -2318,7 +2318,7 @@ __metadata:
     prettier: ^2.8.8
     react: ^18.2.0
     stylelint: ^14.14.0
-    typescript: ~5.2.2
+    typescript: 4.9.4
     vite: ^4.3.9
   languageName: unknown
   linkType: soft
@@ -2335,7 +2335,7 @@ __metadata:
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.8.8
-    typescript: ~5.2.2
+    typescript: 4.9.4
   languageName: unknown
   linkType: soft
 
@@ -2377,7 +2377,7 @@ __metadata:
     styled-jsx: ^5.1.2
     stylelint: ^14.14.0
     tailwindcss: ^3.3.2
-    typescript: ~5.2.2
+    typescript: 4.9.4
   languageName: unknown
   linkType: soft
 
@@ -2400,7 +2400,7 @@ __metadata:
     prettier: ^2.8.8
     react: ^18.2.0
     stylelint: ^14.14.0
-    typescript: ~5.2.2
+    typescript: 4.9.4
     vite: ^4.3.9
   languageName: unknown
   linkType: soft
@@ -2421,7 +2421,7 @@ __metadata:
     prettier: ^2.8.8
     react: ^18.2.0
     stylelint: ^14.14.0
-    typescript: ~5.2.2
+    typescript: 4.9.4
     vite: ^4.3.9
   languageName: unknown
   linkType: soft
@@ -2444,7 +2444,7 @@ __metadata:
     react-dom: ^18.2.0
     react-router-dom: ^6.4.3
     stylelint: ^14.14.0
-    typescript: ~5.2.2
+    typescript: 4.9.4
     vite: ^4.3.9
   languageName: unknown
   linkType: soft
@@ -2470,7 +2470,7 @@ __metadata:
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.8.8
-    typescript: ~5.2.2
+    typescript: 4.9.4
     yargs: ^17.4.1
   bin:
     fern-scripts: ./dist/bundle.cjs
@@ -2499,7 +2499,7 @@ __metadata:
     react-draggable: ^4.4.5
     sass: ^1.54.0
     stylelint: ^14.14.0
-    typescript: ~5.2.2
+    typescript: 4.9.4
     vite: ^4.3.9
   languageName: unknown
   linkType: soft
@@ -2520,7 +2520,7 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     stylelint: ^14.14.0
-    typescript: ~5.2.2
+    typescript: 4.9.4
     vite: ^4.3.9
   languageName: unknown
   linkType: soft
@@ -2541,7 +2541,7 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     stylelint: ^14.14.0
-    typescript: ~5.2.2
+    typescript: 4.9.4
     vite: ^4.3.9
   languageName: unknown
   linkType: soft
@@ -2599,7 +2599,7 @@ __metadata:
     rehype-raw: ^6.1.1
     remark-gfm: ^3.0.1
     stylelint: ^14.14.0
-    typescript: ~5.2.2
+    typescript: 4.9.4
     vite: ^4.3.9
   languageName: unknown
   linkType: soft
@@ -14090,16 +14090,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"typescript@npm:~5.2.2":
-  version: 5.2.2
-  resolution: "typescript@npm:5.2.2"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 7912821dac4d962d315c36800fe387cdc0a6298dba7ec171b350b4a6e988b51d7b8f051317786db1094bd7431d526b648aba7da8236607febb26cf5b871d2d3c
-  languageName: node
-  linkType: hard
-
 "typescript@patch:typescript@4.9.4#~builtin<compat/typescript>":
   version: 4.9.4
   resolution: "typescript@patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"
@@ -14107,16 +14097,6 @@ env-cmd@toddbluhm/env-cmd:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 2160f7ad975c59b2f5816817d3916be1d156c5688a7517602b3b640c5015e740f4ba933996ac85371d68f7bbdd41602150fb8b68334122ac637fdb5418085e7a
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@~5.2.2#~builtin<compat/typescript>":
-  version: 5.2.2
-  resolution: "typescript@patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=14eedb"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 07106822b4305de3f22835cbba949a2b35451cad50888759b6818421290ff95d522b38ef7919e70fb381c5fe9c1c643d7dea22c8b31652a717ddbd57b7f4d554
   languageName: node
   linkType: hard
 
