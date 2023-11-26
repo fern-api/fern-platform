@@ -128,6 +128,7 @@ jobs:
     resource_class: large
     steps:
       - checkout
+      - run: yarn install
       - run:
           name: Build local preview bundle
           command: yarn workspace @fern-ui/local-preview-bundle run build
@@ -141,6 +142,7 @@ jobs:
     resource_class: large
     steps:
       - checkout
+      - run: yarn install
       - run:
           name: Build local preview bundle
           command: yarn workspace @fern-ui/local-preview-bundle run build
@@ -154,6 +156,7 @@ jobs:
     resource_class: large
     steps:
       - checkout
+      - run: yarn install
       - run:
           name: Build local preview bundle
           command: yarn workspace @fern-ui/local-preview-bundle run build
@@ -239,12 +242,6 @@ workflows:
             - fe-algolia-prod
 
       - synth-local-preview-dev2:
-          requires:
-            - check
-            - organize-imports
-            - compile
-            - eslint
-            - test
           context:
             - aws
             - github
@@ -257,6 +254,11 @@ workflows:
             tags:
               ignore: /.*/
           requires:
+            - check
+            - organize-imports
+            - compile
+            - eslint
+            - test
             - synth-local-preview-dev2
           context:
             - aws
