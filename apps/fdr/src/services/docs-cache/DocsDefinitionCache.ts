@@ -1,3 +1,4 @@
+import moment from "moment";
 import { DocsV1Db, DocsV2Read } from "../../api";
 import { FdrApplication } from "../../app";
 import { getDocsDefinition, getDocsForDomain } from "../../controllers/docs/v1/getDocsReadService";
@@ -42,7 +43,8 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
 
     public async getDocsForUrl({ url }: { url: URL }): Promise<DocsV2Read.LoadDocsForUrlResponse> {
         const cachedResponse = this.getDocsForUrlFromCache({ url });
-        if (cachedResponse != null) {
+        // Return the cached response if it exists and is within 6 days of updated time
+        if (cachedResponse != null && moment(cachedResponse.updatedTime).diff(new Date(), "days") < 6) {
             return cachedResponse.response;
         }
         const dbResponse = await this.getDocsForUrlFromDatabase({ url });
