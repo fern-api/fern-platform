@@ -1,10 +1,10 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { SeparatedElements } from "../../../commons/SeparatedElements";
 import { TypeComponentSeparator } from "../TypeComponentSeparator";
 
 export declare namespace TypeDefinitionDetails {
     export interface Props {
-        elements: JSX.Element[];
+        elements: ReactElement[];
         separatorText: string | undefined;
     }
 }

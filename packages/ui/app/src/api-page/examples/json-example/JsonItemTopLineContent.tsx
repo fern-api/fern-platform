@@ -1,5 +1,5 @@
 import { size } from "lodash-es";
-import { useMemo } from "react";
+import { ReactElement, useMemo } from "react";
 import { JsonExampleString } from "./JsonExampleString";
 import { visitJsonItem } from "./visitJsonItem";
 
@@ -15,7 +15,7 @@ export const JsonItemTopLineContent: React.FC<JsonItemTopLineContent.Props> = ({
     isNonLastItemInCollection,
 }) => {
     const { content, isEndOfElement } = useMemo(
-        (): { content: JSX.Element; isEndOfElement: boolean } =>
+        (): { content: ReactElement; isEndOfElement: boolean } =>
             visitJsonItem(value, {
                 object: (object) =>
                     size(object) > 0

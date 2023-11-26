@@ -2,7 +2,7 @@ import { FernRegistry } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import { memo, MouseEventHandler, useEffect } from "react";
+import { memo, MouseEventHandler, ReactElement, useEffect } from "react";
 import { getAnchorId } from "../../util/anchor";
 import { toTitleCase } from "../../util/string";
 import { type JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
@@ -78,7 +78,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                 <div className="w-full pb-3">
                     <div className="t-muted mt-3 w-full text-start text-sm font-light leading-7">
                         This error returns{" "}
-                        {visitDiscriminatedUnion(error.type, "type")._visit<string | JSX.Element>({
+                        {visitDiscriminatedUnion(error.type, "type")._visit<string | ReactElement>({
                             alias: (type) => (
                                 <>
                                     <TypeShorthand type={type.value} plural={false} withArticle />.

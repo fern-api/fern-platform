@@ -1,5 +1,5 @@
 import type * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
-import { type SerializedMdxContent } from "@fern-ui/app-utils";
+import { type SerializedMdxContent } from "./mdx";
 
 export declare namespace ResolvedPath {
     interface CustomMarkdownPage {

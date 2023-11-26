@@ -1,6 +1,6 @@
 import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
-import { useCallback } from "react";
+import { ReactElement, useCallback } from "react";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import {
     TypeDefinitionContext,
@@ -59,7 +59,7 @@ function getIconInfoForTypeReference(typeRef: FernRegistryApiRead.TypeReference)
     }
 }
 
-function getIconForTypeReference(typeRef: FernRegistryApiRead.TypeReference): JSX.Element | null {
+function getIconForTypeReference(typeRef: FernRegistryApiRead.TypeReference): ReactElement | null {
     const info = getIconInfoForTypeReference(typeRef);
     if (info == null) {
         return null;

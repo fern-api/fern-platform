@@ -1,8 +1,13 @@
 import classNames from "classnames";
+import dynamic from "next/dynamic";
 import React from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
-import { CodeBlockSkeleton } from "./CodeBlockSkeleton";
 import { CopyToClipboardButton } from "./CopyToClipboardButton";
+
+const CodeBlockSkeleton = dynamic(
+    () => import("./CodeBlockSkeleton").then(({ CodeBlockSkeleton }) => CodeBlockSkeleton),
+    { ssr: false }
+);
 
 type CodeBlockWithClipboardButtonProps = {
     variant: "sm" | "lg";

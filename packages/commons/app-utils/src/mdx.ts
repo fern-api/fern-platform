@@ -15,6 +15,11 @@ export async function serializeMdxContent(content: string): Promise<SerializedMd
         mdxOptions: {
             remarkPlugins: REMARK_PLUGINS,
             format: "detect",
+            /**
+             * development=true is required to render MdxRemote from the client-side.
+             * https://github.com/hashicorp/next-mdx-remote/issues/350
+             */
+            development: process.env.NODE_ENV !== "production",
         },
         parseFrontmatter: false,
     });

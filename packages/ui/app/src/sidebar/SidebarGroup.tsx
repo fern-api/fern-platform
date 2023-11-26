@@ -1,10 +1,10 @@
 import classNames from "classnames";
-import { PropsWithChildren, useContext, useMemo } from "react";
+import { PropsWithChildren, ReactElement, useContext, useMemo } from "react";
 import { SidebarDepthContext, SidebarDepthContextValue } from "./context/SidebarDepthContext";
 
 export declare namespace SidebarGroup {
     export type Props = PropsWithChildren<{
-        title: JSX.Element | string;
+        title: ReactElement | string;
         includeTopMargin?: boolean;
     }>;
 }

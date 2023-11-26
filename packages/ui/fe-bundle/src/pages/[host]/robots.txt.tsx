@@ -14,8 +14,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params = {}, res 
     }
     const hostWithoutTrailingSlash = host.endsWith("/") ? host.slice(0, -1) : host;
 
-    res.write(`User-Agent: *
-Sitemap: ${hostWithoutTrailingSlash}/sitemap.xml`);
+    res.write(`User-Agent: *\nSitemap: ${hostWithoutTrailingSlash}/sitemap.xml`);
     res.end();
 
     return {

@@ -1,17 +1,16 @@
-import { Text } from "@blueprintjs/core";
 import classNames from "classnames";
 import Link from "next/link";
-import { memo, useCallback, useEffect, useRef } from "react";
+import { memo, ReactElement, useCallback, useEffect, useRef } from "react";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace SidebarItem {
     export interface Props {
-        title: JSX.Element | string;
+        title: ReactElement | string;
         className?: string;
         onClick: () => void;
         fullSlug: string;
-        leftElement?: JSX.Element;
-        rightElement?: JSX.Element;
+        leftElement?: ReactElement;
+        rightElement?: ReactElement;
         indent?: boolean;
         shallow?: boolean;
         registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
@@ -56,7 +55,7 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
                     >
                         <div className="flex min-w-0 items-center gap-2">
                             {leftElement}
-                            <Text ellipsize>{title}</Text>
+                            <span className="truncate">{title}</span>
                         </div>
                         {rightElement}
                     </div>

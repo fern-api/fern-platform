@@ -1,12 +1,12 @@
 import { isFailed, isLoaded, Loadable } from "@fern-ui/loadable";
-import React from "react";
+import React, { ReactElement } from "react";
 
 export declare namespace LoadableElement {
     export interface Props<T> {
         value: Loadable<T>;
-        children: (loadedValue: T) => JSX.Element | string | null;
-        fallback?: JSX.Element;
-        errorElement?: JSX.Element | string;
+        children: (loadedValue: T) => ReactElement | string | null;
+        fallback?: ReactElement;
+        errorElement?: ReactElement | string;
     }
 }
 
@@ -15,7 +15,7 @@ export function LoadableElement<T>({
     children,
     fallback = <React.Fragment />,
     errorElement = fallback,
-}: LoadableElement.Props<T>): JSX.Element {
+}: LoadableElement.Props<T>): ReactElement {
     if (isFailed(value)) {
         return <>{errorElement}</>;
     }

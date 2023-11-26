@@ -1,9 +1,10 @@
 import { NonIdealState, Pre } from "@blueprintjs/core";
+import { ReactElement } from "react";
 import styles from "./MissingRoute.module.scss";
 
 export declare namespace MissingRoute {
     export interface Props {
-        header: JSX.Element | undefined;
+        header: ReactElement | undefined;
     }
 }
 

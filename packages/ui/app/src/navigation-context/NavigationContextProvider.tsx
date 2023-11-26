@@ -1,11 +1,10 @@
 import { FernRegistry, PathResolver } from "@fern-api/fdr-sdk";
 import type * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
-import { getFullSlugForNavigatable } from "@fern-ui/app-utils";
+import { getFullSlugForNavigatable, type ResolvedPath } from "@fern-ui/app-utils";
 import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { type ResolvedPath } from "../ResolvedPath";
 import { getRouteNode } from "../util/anchor";
 import { getRouteForResolvedPath } from "./getRouteForResolvedPath";
 import { NavigationContext } from "./NavigationContext";

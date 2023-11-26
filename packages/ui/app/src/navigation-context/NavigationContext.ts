@@ -5,10 +5,9 @@ import {
     type NavigatableDocsNode,
     type NodeNeighbors,
 } from "@fern-api/fdr-sdk";
-import { DefinitionObjectFactory } from "@fern-ui/app-utils";
+import { DefinitionObjectFactory, type ResolvedPath } from "@fern-ui/app-utils";
 import { noop } from "@fern-ui/core-utils";
 import React from "react";
-import { ResolvedPath } from "../ResolvedPath";
 
 const EMPTY_DEFINITION = DefinitionObjectFactory.createDocsDefinition();
 const EMPTY_DEFINITION_SUMMARY: DocsDefinitionSummary = {

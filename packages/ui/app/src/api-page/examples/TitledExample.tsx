@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { MouseEventHandler, MutableRefObject, useState } from "react";
+import { MouseEventHandler, MutableRefObject, ReactElement, useState } from "react";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
 import styles from "./TitledExample.module.scss";
 
@@ -7,9 +7,9 @@ export declare namespace TitledExample {
     export interface Props {
         title: string;
         type: "primary" | "warning";
-        actions?: JSX.Element;
+        actions?: ReactElement;
         className?: string;
-        children: JSX.Element | ((parent: HTMLElement | undefined) => JSX.Element);
+        children: ReactElement | ((parent: HTMLElement | undefined) => ReactElement);
         copyToClipboardText?: () => string; // use provider to lazily compute clipboard text
         onClick?: MouseEventHandler<HTMLDivElement>;
         containerRef?: MutableRefObject<HTMLDivElement | null>;
