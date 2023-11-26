@@ -1,0 +1,6 @@
+{
+  "extends": "../../shared/tsconfig.shared.json",
+  "compilerOptions": { "module": "CommonJS", "composite": true, "outDir": "lib", "rootDir": "src" },
+  "include": ["./src"],
+  "exclude": ["cdk.out"]
+}
