@@ -8,7 +8,6 @@ import * as fs from "fs";
 import path from "path";
 
 const LOCAL_PREVIEW_BUNDLE_OUT_DIR = path.resolve("../ui/local-preview-bundle/out");
-const LOCAL_PREVIEW_BUNDLE_DIST_ZIP = path.resolve("../ui/local-preview-bundle/dist/local-preview-bundle.zip");
 
 export class DocsFeStack extends Stack {
     constructor(scope: Construct, id: string, environmentType: EnvironmentType, props?: StackProps) {
@@ -26,12 +25,14 @@ export class DocsFeStack extends Stack {
             versioned: true,
         });
 
-        void zipFolder(LOCAL_PREVIEW_BUNDLE_OUT_DIR, LOCAL_PREVIEW_BUNDLE_DIST_ZIP);
+        const local_preview_bundle_dist_zip = path.resolve(`../ui/local-preview-bundle/dist/${id}.zip`);
 
-        new BucketDeployment(this, "deploy-local-preview-bundle", {
-            sources: [Source.asset(LOCAL_PREVIEW_BUNDLE_DIST_ZIP)],
-            destinationBucket: bucket,
-            extract: false,
+        void zipFolder(LOCAL_PREVIEW_BUNDLE_OUT_DIR, local_preview_bundle_dist_zip).then(() => {
+            new BucketDeployment(this, "deploy-local-preview-bundle", {
+                sources: [Source.asset(local_preview_bundle_dist_zip)],
+                destinationBucket: bucket,
+                extract: false,
+            });
         });
     }
 }
@@ -44,14 +45,21 @@ function mkdir(dir: string) {
 
 async function zipFolder(sourceFolder: string, zipFilePath: string) {
     mkdir(path.dirname(zipFilePath));
-    const output = fs.createWriteStream(zipFilePath);
-    const archive = archiver("zip", { zlib: { level: 9 } });
 
-    archive.on("error", (err: unknown) => {
-        throw err;
+    return new Promise<void>((resolve, reject) => {
+        const output = fs.createWriteStream(zipFilePath);
+        const archive = archiver("zip");
+
+        archive.on("error", (err: unknown) => {
+            reject(err);
+        });
+
+        output.on("close", function () {
+            resolve();
+        });
+
+        archive.pipe(output);
+        archive.directory(sourceFolder, false);
+        void archive.finalize();
     });
-
-    archive.pipe(output);
-    archive.directory(sourceFolder, false);
-    void archive.finalize();
 }
