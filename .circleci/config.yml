@@ -128,12 +128,16 @@ jobs:
       - image: cimg/node:18.18.2
     resource_class: large
     steps:
+      - attach_workspace: { at: /home/circleci }
       - checkout
       - aws-cli/setup
       - run: yarn install
       - run:
           name: Build local preview bundle
           command: yarn workspace @fern-ui/local-preview-bundle run build
+      - run:
+          name: Install CDK
+          command: npm install -g aws-cdk
       - run:
           name: Synthesize local preview bundle
           command: yarn workspace @fern-ui/cdk run synth:dev2
@@ -143,12 +147,16 @@ jobs:
       - image: cimg/node:18.18.2
     resource_class: large
     steps:
+      - attach_workspace: { at: /home/circleci }
       - checkout
       - aws-cli/setup
       - run: yarn install
       - run:
           name: Build local preview bundle
           command: yarn workspace @fern-ui/local-preview-bundle run build
+      - run:
+          name: Install CDK
+          command: npm install -g aws-cdk
       - run:
           name: Deploy local preview bundle
           command: yarn workspace @fern-ui/cdk run deploy:dev2
@@ -158,12 +166,16 @@ jobs:
       - image: cimg/node:18.18.2
     resource_class: large
     steps:
+      - attach_workspace: { at: /home/circleci }
       - checkout
       - aws-cli/setup
       - run: yarn install
       - run:
           name: Build local preview bundle
           command: yarn workspace @fern-ui/local-preview-bundle run build
+      - run:
+          name: Install CDK
+          command: npm install -g aws-cdk
       - run:
           name: Deploy local preview bundle
           command: yarn workspace @fern-ui/cdk run deploy:prod
