@@ -122,7 +122,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/is-ci", "npm:3.0.0"],\
             ["@types/jest", "npm:29.5.9"],\
             ["@types/lodash-es", "npm:4.17.9"],\
-            ["@types/node", "npm:20.6.3"],\
+            ["@types/node", "npm:18.18.13"],\
             ["@typescript-eslint/eslint-plugin", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:6.4.1"],\
             ["@typescript-eslint/parser", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:6.4.1"],\
             ["chalk", "npm:5.0.1"],\
@@ -3899,7 +3899,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@types/jest", "npm:29.5.9"],\
             ["@types/lodash-es", "npm:4.17.12"],\
-            ["@types/node", "npm:20.6.3"],\
+            ["@types/node", "npm:18.18.13"],\
             ["@types/react", "npm:18.0.20"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
@@ -3923,7 +3923,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@blueprintjs/icons", "npm:4.9.0"],\
             ["@fern-ui/loadable", "workspace:packages/commons/loadable"],\
             ["@types/jest", "npm:29.5.9"],\
-            ["@types/node", "npm:20.6.3"],\
+            ["@types/node", "npm:18.18.13"],\
             ["@types/react", "npm:18.0.20"],\
             ["classnames", "npm:2.3.1"],\
             ["depcheck", "npm:1.4.3"],\
@@ -3959,7 +3959,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/toaster", "workspace:packages/commons/react/toaster"],\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
             ["@types/jest", "npm:29.5.9"],\
-            ["@types/node", "npm:20.6.3"],\
+            ["@types/node", "npm:18.18.13"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
             ["jest", "virtual:bcd55ef18af2de5c61a0e7e421459a5298122a73e58d78d0d17e7844bafe08261ee360689337ea7f273d858b0bea9e1ae69c5bf08a019e466a6e255cefe36bc1#npm:29.7.0"],\
@@ -3976,7 +3976,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@types/jest", "npm:29.5.9"],\
-            ["@types/node", "npm:20.6.3"],\
+            ["@types/node", "npm:18.18.13"],\
             ["@types/ua-parser-js", "npm:0.7.36"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
@@ -4010,7 +4010,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@next/bundle-analyzer", "npm:14.0.3"],\
             ["@tailwindcss/typography", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:0.5.9"],\
             ["@types/jest", "npm:29.5.9"],\
-            ["@types/node", "npm:20.6.3"],\
+            ["@types/node", "npm:18.18.13"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", "npm:18.0.6"],\
             ["autoprefixer", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:10.4.13"],\
@@ -4038,7 +4038,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-ui/fonts", "workspace:packages/commons/react/fonts"],\
             ["@types/jest", "npm:29.5.9"],\
-            ["@types/node", "npm:20.6.3"],\
+            ["@types/node", "npm:18.18.13"],\
             ["@types/react", "npm:18.0.20"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
@@ -4060,7 +4060,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/loadable", "workspace:packages/commons/loadable"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@types/jest", "npm:29.5.9"],\
-            ["@types/node", "npm:20.6.3"],\
+            ["@types/node", "npm:18.18.13"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
             ["jest", "virtual:bcd55ef18af2de5c61a0e7e421459a5298122a73e58d78d0d17e7844bafe08261ee360689337ea7f273d858b0bea9e1ae69c5bf08a019e466a6e255cefe36bc1#npm:29.7.0"],\
@@ -4092,7 +4092,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@tailwindcss/typography", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:0.5.9"],\
             ["@types/jest", "npm:29.5.9"],\
             ["@types/lodash-es", "npm:4.17.12"],\
-            ["@types/node", "npm:20.6.3"],\
+            ["@types/node", "npm:18.18.13"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", "npm:18.0.6"],\
             ["autoprefixer", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:10.4.13"],\
@@ -4124,7 +4124,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@types/jest", "npm:29.5.9"],\
             ["@types/lodash-es", "npm:4.17.12"],\
-            ["@types/node", "npm:20.6.3"],\
+            ["@types/node", "npm:18.18.13"],\
             ["@types/react", "npm:18.0.20"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
@@ -4149,7 +4149,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/loadable", "workspace:packages/commons/loadable"],\
             ["@tanstack/react-query", "virtual:6dbbc48b184e3d76e3a6377ce1908e7a4b19dce02ea8e90ac0fa087250851185c62eedc3df043bd12c0e6ad065c0fcab31ac2a6bbaae8bc9152138fcd3f0f772#npm:4.29.7"],\
             ["@types/jest", "npm:29.5.9"],\
-            ["@types/node", "npm:20.6.3"],\
+            ["@types/node", "npm:18.18.13"],\
             ["@types/react", "npm:18.0.20"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
@@ -4171,7 +4171,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/routing-utils", "workspace:packages/commons/react/routing-utils"],\
             ["@blueprintjs/core", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:4.11.5"],\
             ["@types/jest", "npm:29.5.9"],\
-            ["@types/node", "npm:20.6.3"],\
+            ["@types/node", "npm:18.18.13"],\
             ["@types/react", "npm:18.0.20"],\
             ["classnames", "npm:2.3.1"],\
             ["depcheck", "npm:1.4.3"],\
@@ -4197,7 +4197,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.5.9"],\
             ["@types/js-yaml", "npm:4.0.5"],\
             ["@types/lodash-es", "npm:4.17.12"],\
-            ["@types/node", "npm:20.6.3"],\
+            ["@types/node", "npm:18.18.13"],\
             ["@types/yargs", "npm:17.0.12"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:2db085a410602eca0a152058979ec27a6ff405389e9bfff65a5c274ee8e258565c3aa901da9b432be4e8578c42e23397178058afee24c24be1773f7dd3ff138f#npm:3.0.0-rc.14"],\
             ["chalk", "npm:5.0.1"],\
@@ -4227,7 +4227,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/react-commons", "workspace:packages/commons/react/react-commons"],\
             ["@types/jest", "npm:29.5.9"],\
             ["@types/lodash-es", "npm:4.17.12"],\
-            ["@types/node", "npm:20.6.3"],\
+            ["@types/node", "npm:18.18.13"],\
             ["@types/react", "npm:18.0.20"],\
             ["classnames", "npm:2.3.1"],\
             ["depcheck", "npm:1.4.3"],\
@@ -4252,7 +4252,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-ui/theme", "workspace:packages/commons/react/theme"],\
             ["@types/jest", "npm:29.5.9"],\
-            ["@types/node", "npm:20.6.3"],\
+            ["@types/node", "npm:18.18.13"],\
             ["@types/react", "npm:18.0.20"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
@@ -4276,7 +4276,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/toaster", "workspace:packages/commons/react/toaster"],\
             ["@blueprintjs/core", "virtual:44580d8410e4d971649da315cde171126d24493e1706e560c93a65d81b96bdf88f24e77459a8c3c6c0369c524d18da458ce73c9d13e099ef95b8c7c66d89e62a#npm:4.11.5"],\
             ["@types/jest", "npm:29.5.9"],\
-            ["@types/node", "npm:20.6.3"],\
+            ["@types/node", "npm:18.18.13"],\
             ["classnames", "npm:2.3.1"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
@@ -4316,7 +4316,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.5.9"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/marked", "npm:5.0.0"],\
-            ["@types/node", "npm:20.6.3"],\
+            ["@types/node", "npm:18.18.13"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-syntax-highlighter", "npm:15.5.6"],\
             ["@types/react-test-renderer", "npm:18.0.6"],\
@@ -6106,17 +6106,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/node", [\
+        ["npm:18.18.13", {\
+          "packageLocation": "./.yarn/cache/@types-node-npm-18.18.13-0af68a09ab-e36d7a0ea6.zip/node_modules/@types/node/",\
+          "packageDependencies": [\
+            ["@types/node", "npm:18.18.13"],\
+            ["undici-types", "npm:5.26.5"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["npm:18.7.18", {\
           "packageLocation": "./.yarn/cache/@types-node-npm-18.7.18-5bcc3f839f-8aec61f0f9.zip/node_modules/@types/node/",\
           "packageDependencies": [\
             ["@types/node", "npm:18.7.18"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:20.6.3", {\
-          "packageLocation": "./.yarn/cache/@types-node-npm-20.6.3-7542470c42-444a6f1f41.zip/node_modules/@types/node/",\
-          "packageDependencies": [\
-            ["@types/node", "npm:20.6.3"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -9976,7 +9977,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/is-ci", "npm:3.0.0"],\
             ["@types/jest", "npm:29.5.9"],\
             ["@types/lodash-es", "npm:4.17.9"],\
-            ["@types/node", "npm:20.6.3"],\
+            ["@types/node", "npm:18.18.13"],\
             ["@typescript-eslint/eslint-plugin", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:6.4.1"],\
             ["@typescript-eslint/parser", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:6.4.1"],\
             ["chalk", "npm:5.0.1"],\
@@ -17939,7 +17940,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@tsconfig/node12", "npm:1.0.9"],\
             ["@tsconfig/node14", "npm:1.0.1"],\
             ["@tsconfig/node16", "npm:1.0.2"],\
-            ["@types/node", "npm:20.6.3"],\
+            ["@types/node", "npm:18.18.13"],\
             ["@types/swc__core", null],\
             ["@types/swc__wasm", null],\
             ["@types/typescript", null],\
@@ -18157,6 +18158,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["has-bigints", "npm:1.0.2"],\
             ["has-symbols", "npm:1.0.3"],\
             ["which-boxed-primitive", "npm:1.0.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["undici-types", [\
+        ["npm:5.26.5", {\
+          "packageLocation": "./.yarn/cache/undici-types-npm-5.26.5-de4f7c7bb9-3192ef6f3f.zip/node_modules/undici-types/",\
+          "packageDependencies": [\
+            ["undici-types", "npm:5.26.5"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -18569,7 +18579,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["vite", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:4.4.9"],\
             ["@types/less", null],\
             ["@types/lightningcss", null],\
-            ["@types/node", "npm:20.6.3"],\
+            ["@types/node", "npm:18.18.13"],\
             ["@types/sass", null],\
             ["@types/stylus", null],\
             ["@types/sugarss", null],\
@@ -18608,7 +18618,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["vite", "virtual:83226786336e3ec1d65bc4d7ab2fe8e410a92ae0faa428c376517262a7687f8c564f714ddc7188c47ae46ee441f6c920894158bd24f5245f2836019a45954fca#npm:4.4.9"],\
             ["@types/less", null],\
             ["@types/lightningcss", null],\
-            ["@types/node", "npm:20.6.3"],\
+            ["@types/node", "npm:18.18.13"],\
             ["@types/sass", null],\
             ["@types/stylus", null],\
             ["@types/sugarss", null],\
