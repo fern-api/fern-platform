@@ -6,10 +6,6 @@ import { DocsFeStack } from "./docs-fe-stack";
 
 void main();
 
-// yarn workspace @fern-ui/cdk run cdk synth local-preview-bundle-dev2
-// yarn workspace @fern-ui/cdk run cdk bootstrap
-// yarn workspace @fern-ui/cdk run cdk deploy local-preview-bundle-dev2
-
 async function main() {
     const environments = await getEnvironments();
     const app = new cdk.App();
