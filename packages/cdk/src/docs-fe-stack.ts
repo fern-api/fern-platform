@@ -24,6 +24,12 @@ export class DocsFeStack extends Stack {
             ],
             versioned: true,
             publicReadAccess: true,
+            blockPublicAccess: {
+                blockPublicAcls: false,
+                blockPublicPolicy: false,
+                ignorePublicAcls: false,
+                restrictPublicBuckets: false,
+            },
         });
 
         const local_preview_bundle_dist_zip = path.resolve(`../ui/local-preview-bundle/dist/${id}.zip`);
