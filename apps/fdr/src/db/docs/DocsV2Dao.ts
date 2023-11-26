@@ -97,68 +97,71 @@ export class DocsV2DaoImpl implements DocsV2Dao {
         dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V2;
         indexSegments: IndexSegment[];
     }): Promise<StoreDocsDefinitionResponse> {
-        return await this.prisma.$transaction(async (tx) => {
-            const bufferDocsDefinition = writeBuffer(dbDocsDefinition);
+        return await this.prisma.$transaction(
+            async (tx) => {
+                const bufferDocsDefinition = writeBuffer(dbDocsDefinition);
 
-            // Step 1: Load Previous Docs
-            const previousDocs = await tx.docsV2.findFirst({
-                where: {
-                    domain: docsRegistrationInfo.fernUrl.hostname,
-                    path: docsRegistrationInfo.fernUrl.path,
-                },
-            });
+                // Step 1: Load Previous Docs
+                const previousDocs = await tx.docsV2.findFirst({
+                    where: {
+                        domain: docsRegistrationInfo.fernUrl.hostname,
+                        path: docsRegistrationInfo.fernUrl.path,
+                    },
+                });
 
-            // Step 2: Create new index segments associated with docs
-            const indexSegmentIds = indexSegments.map((s) => s.id);
+                // Step 2: Create new index segments associated with docs
+                const indexSegmentIds = indexSegments.map((s) => s.id);
 
-            await tx.indexSegment.createMany({
-                data: indexSegments.map((seg) => ({
-                    id: seg.id,
-                    version: seg.type === "versioned" ? seg.version.id : null,
-                })),
-            });
+                await tx.indexSegment.createMany({
+                    data: indexSegments.map((seg) => ({
+                        id: seg.id,
+                        version: seg.type === "versioned" ? seg.version.id : null,
+                    })),
+                });
 
-            // Step 3: Store Docs Config Instance
-            const instanceId = generateDocsDefinitionInstanceId();
-            await tx.docsConfigInstances.create({
-                data: {
-                    docsConfig: writeBuffer(dbDocsDefinition.config),
-                    docsConfigInstanceId: instanceId,
-                    referencedApiDefinitionIds: dbDocsDefinition.referencedApis,
-                },
-            });
+                // Step 3: Store Docs Config Instance
+                const instanceId = generateDocsDefinitionInstanceId();
+                await tx.docsConfigInstances.create({
+                    data: {
+                        docsConfig: writeBuffer(dbDocsDefinition.config),
+                        docsConfigInstanceId: instanceId,
+                        referencedApiDefinitionIds: dbDocsDefinition.referencedApis,
+                    },
+                });
 
-            // Step 4: Upsert the fern docs domain url with the docs definition + algolia index
-            await createOrUpdateDocsDefinition({
-                tx,
-                instanceId,
-                domain: docsRegistrationInfo.fernUrl.hostname,
-                path: docsRegistrationInfo.fernUrl.path ?? "",
-                orgId: docsRegistrationInfo.orgId,
-                bufferDocsDefinition,
-                indexSegmentIds,
-                isPreview: docsRegistrationInfo.isPreview,
-            });
-
-            // Step 5: Upsert custom domains with the docs definition + algolia index
-            for (const customUrl of docsRegistrationInfo.customUrls) {
+                // Step 4: Upsert the fern docs domain url with the docs definition + algolia index
                 await createOrUpdateDocsDefinition({
                     tx,
                     instanceId,
-                    domain: customUrl.hostname,
-                    path: customUrl.path ?? "",
+                    domain: docsRegistrationInfo.fernUrl.hostname,
+                    path: docsRegistrationInfo.fernUrl.path ?? "",
                     orgId: docsRegistrationInfo.orgId,
                     bufferDocsDefinition,
                     indexSegmentIds,
                     isPreview: docsRegistrationInfo.isPreview,
                 });
-            }
 
-            return {
-                algoliaIndex: previousDocs?.algoliaIndex,
-                docsDefinitionId: instanceId,
-            };
-        });
+                // Step 5: Upsert custom domains with the docs definition + algolia index
+                for (const customUrl of docsRegistrationInfo.customUrls) {
+                    await createOrUpdateDocsDefinition({
+                        tx,
+                        instanceId,
+                        domain: customUrl.hostname,
+                        path: customUrl.path ?? "",
+                        orgId: docsRegistrationInfo.orgId,
+                        bufferDocsDefinition,
+                        indexSegmentIds,
+                        isPreview: docsRegistrationInfo.isPreview,
+                    });
+                }
+
+                return {
+                    algoliaIndex: previousDocs?.algoliaIndex,
+                    docsDefinitionId: instanceId,
+                };
+            },
+            { timeout: 10000 },
+        );
     }
 }
 
