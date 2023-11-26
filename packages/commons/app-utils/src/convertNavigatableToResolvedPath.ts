@@ -7,18 +7,15 @@ export async function convertNavigatableToResolvedPath({
     navigatable,
     docsDefinition,
     basePath,
-    isPreview,
 }: {
     navigatable: NavigatableDocsNode;
     docsDefinition: FernRegistry.docs.v1.read.DocsDefinition;
     basePath: string | undefined;
-    isPreview?: boolean;
 }): Promise<ResolvedPath> {
     const fullSlug = getFullSlugForNavigatable(navigatable, { omitDefault: true, basePath });
     const serializedNavigatable = await serializeNavigatableNode({
         node: navigatable,
         docsDefinition,
-        isPreview,
     });
     switch (serializedNavigatable.type) {
         case "page":

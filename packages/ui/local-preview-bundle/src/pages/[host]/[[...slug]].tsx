@@ -121,7 +121,6 @@ async function getInitialProps(slugArray: string[]): Promise<Docs.Props> {
         navigatable: resolvedNavigatable,
         docsDefinition: docsDefinition as FernRegistry.docs.v1.read.DocsDefinition,
         basePath: docs.body.baseUrl.basePath,
-        isPreview: true,
     });
 
     return {

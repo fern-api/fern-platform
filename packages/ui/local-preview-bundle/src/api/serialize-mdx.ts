@@ -109,7 +109,7 @@ const handler: NextApiHandler = async (req, res: NextApiResponse<Response>) => {
                 if (content == null) {
                     return { fullSlug, serializedMdxContent: null };
                 }
-                const serializedMdxContent = await serializeMdxContent(content.markdown, true);
+                const serializedMdxContent = await serializeMdxContent(content.markdown);
                 return { fullSlug, serializedMdxContent };
             })
         );
