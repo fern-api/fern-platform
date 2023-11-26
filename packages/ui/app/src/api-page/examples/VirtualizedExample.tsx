@@ -1,10 +1,10 @@
-import { useEffect, useRef } from "react";
+import { ReactElement, useEffect, useRef } from "react";
 import { Virtuoso, VirtuosoHandle } from "react-virtuoso";
 
 export declare namespace VirtualizedExample {
     export interface Props<T> {
         data: T[];
-        itemContent: (i: number, item: T) => JSX.Element;
+        itemContent: (i: number, item: T) => ReactElement;
         scrollToRow?: number;
         height: number;
     }
@@ -18,7 +18,7 @@ export function VirtualizedExample<T>({
     itemContent,
     scrollToRow,
     height,
-}: VirtualizedExample.Props<T>): JSX.Element {
+}: VirtualizedExample.Props<T>): ReactElement {
     const virtuosoRef = useRef<VirtuosoHandle>(null);
 
     useEffect(() => {

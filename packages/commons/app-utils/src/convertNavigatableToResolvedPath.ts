@@ -1,6 +1,7 @@
 import type { FernRegistry, NavigatableDocsNode } from "@fern-api/fdr-sdk";
-import { getFullSlugForNavigatable, serializeNavigatableNode } from "@fern-ui/app-utils";
-import type { ResolvedPath } from "@fern-ui/ui";
+import type { ResolvedPath } from "./ResolvedPath";
+import { serializeNavigatableNode } from "./serialize-node";
+import { getFullSlugForNavigatable } from "./slug";
 
 export async function convertNavigatableToResolvedPath({
     navigatable,

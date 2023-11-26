@@ -1,8 +1,8 @@
 "use client";
 import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
 import { type Theme } from "@fern-ui/theme";
+import dynamic from "next/dynamic";
 import { memo } from "react";
-import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";
 import type { CodeExampleClient } from "../examples/code-example";
 import { CurlExample } from "../examples/curl-example/CurlExample";
 import { CurlLine, curlLinesToString } from "../examples/curl-example/curlUtils";
@@ -11,6 +11,11 @@ import { JsonExampleVirtualized } from "../examples/json-example/JsonExample";
 import { JsonLine } from "../examples/json-example/jsonLineUtils";
 import { TitledExample } from "../examples/TitledExample";
 import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
+
+const CodeBlockSkeleton = dynamic(
+    () => import("../../commons/CodeBlockSkeleton").then(({ CodeBlockSkeleton }) => CodeBlockSkeleton),
+    { ssr: false }
+);
 
 export declare namespace EndpointContentCodeSnippets {
     export interface Props {

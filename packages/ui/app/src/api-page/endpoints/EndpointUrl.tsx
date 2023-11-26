@@ -1,7 +1,7 @@
 import type * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
-import React, { PropsWithChildren, useCallback, useMemo } from "react";
+import React, { PropsWithChildren, ReactElement, useCallback, useMemo } from "react";
 // import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { divideEndpointPathToParts, type EndpointPathPart } from "@fern-ui/app-utils";
 import { HttpMethodTag } from "../../commons/HttpMethodTag";
@@ -24,7 +24,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
     const endpointPathParts = useMemo(() => divideEndpointPathToParts(endpoint), [endpoint]);
 
     const renderPathParts = useCallback((parts: EndpointPathPart[]) => {
-        const elements: (JSX.Element | null)[] = [];
+        const elements: (ReactElement | null)[] = [];
         // Temporarily hiding base url
         // if (apiDefinition.hasMultipleBaseUrls === true) {
         //     const url = getEndpointEnvironmentUrl(endpoint);

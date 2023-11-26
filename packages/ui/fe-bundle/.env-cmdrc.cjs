@@ -13,4 +13,7 @@ module.exports = {
         NEXT_PUBLIC_ALGOLIA_API_KEY: process.env.ALGOLIA_API_KEY,
         NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX: process.env.ALGOLIA_SEARCH_INDEX,
     },
+    "fern-preview": {
+        NEXT_PUBLIC_FDR_ORIGIN: "http://localhost:3000",
+    },
 };

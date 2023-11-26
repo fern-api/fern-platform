@@ -1,9 +1,10 @@
+import { ReactElement } from "react";
 import { Route, Routes } from "react-router-dom";
 import { MissingRoute } from "./MissingRoute";
 
 export declare namespace RoutesWith404 {
     export type Props = React.PropsWithChildren<{
-        header?: JSX.Element;
+        header?: ReactElement;
     }>;
 }
 

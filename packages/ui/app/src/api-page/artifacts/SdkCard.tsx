@@ -1,6 +1,6 @@
 import * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { useMemo } from "react";
+import { ReactElement, useMemo } from "react";
 import { NodeJsLogo } from "./sdk-logos/NodeJsLogo";
 import { SdkCardLayout } from "./SdkCardLayout";
 
@@ -11,7 +11,7 @@ export declare namespace SdkCard {
 }
 
 interface SdkRenderInfo {
-    icon: JSX.Element;
+    icon: ReactElement;
     title: string;
     githubRepo: FernRegistryDocsRead.GitHubRepo;
     packageName: string;

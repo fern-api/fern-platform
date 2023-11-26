@@ -1,4 +1,3 @@
-import { Text } from "@blueprintjs/core";
 import { type NavigationTab } from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
 import classNames from "classnames";
 import { memo, type MouseEventHandler } from "react";
@@ -44,9 +43,7 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, isS
                         />
                     </div>
                 </div>
-                <Text ellipsize className="font-medium">
-                    {tab.title}
-                </Text>
+                <span className="truncate font-medium">{tab.title}</span>
             </div>
         </button>
     );

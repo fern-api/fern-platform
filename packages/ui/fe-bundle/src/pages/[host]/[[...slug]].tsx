@@ -1,13 +1,18 @@
 import { FernRegistry, PathResolver } from "@fern-api/fdr-sdk";
 import * as FernRegistryDocsReadV2 from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v2/resources/read";
-import { App, type ResolvedPath } from "@fern-ui/ui";
+import {
+    convertNavigatableToResolvedPath,
+    generateFontFaces,
+    loadDocsBackgroundImage,
+    loadDocTypography,
+    type ResolvedPath,
+} from "@fern-ui/app-utils";
+import { App } from "@fern-ui/ui";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
+import { ReactElement } from "react";
 import { REGISTRY_SERVICE } from "../../service";
 import { buildUrl } from "../../utils/buildUrl";
-import { convertNavigatableToResolvedPath } from "../../utils/convertNavigatableToResolvedPath";
-import { loadDocsBackgroundImage } from "../../utils/theme/loadDocsBackgroundImage";
-import { generateFontFaces, loadDocTypography } from "../../utils/theme/loadDocsTypography";
 import { useColorTheme } from "../../utils/theme/useColorTheme";
 
 export declare namespace Docs {
@@ -24,7 +29,7 @@ export default function Docs({
     typographyStyleSheet = "",
     backgroundImageStyleSheet = "",
     resolvedPath,
-}: Docs.Props): JSX.Element {
+}: Docs.Props): ReactElement {
     const colorThemeStyleSheet = useColorTheme(docs.definition);
     return (
         <>

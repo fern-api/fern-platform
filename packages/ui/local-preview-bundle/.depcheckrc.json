@@ -1,0 +1,12 @@
+{
+  "ignores": [
+    "@types/jest",
+    "@types/node",
+    "@types/react",
+    "@types/react-dom",
+    "autoprefixer",
+    "postcss",
+    "styled-jsx"
+  ],
+  "ignore-patterns": ["lib"]
+}

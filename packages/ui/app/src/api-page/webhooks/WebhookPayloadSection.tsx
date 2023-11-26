@@ -1,5 +1,6 @@
 import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { ReactElement } from "react";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { TypeDefinition } from "../types/type-definition/TypeDefinition";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
@@ -24,7 +25,7 @@ export const WebhookPayloadSection: React.FC<WebhookPayloadSection.Props> = ({
         <div className="flex flex-col">
             <div className="t-muted border-border-default-light dark:border-border-default-dark border-b pb-5 text-sm leading-6">
                 {"The payload of this webhook request is "}
-                {visitDiscriminatedUnion(payload.type, "type")._visit<JSX.Element | string>({
+                {visitDiscriminatedUnion(payload.type, "type")._visit<ReactElement | string>({
                     object: () => "an object",
                     reference: (type) => <TypeShorthand type={type.value} plural={false} withArticle />,
                     _other: () => "unknown",
