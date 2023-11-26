@@ -4,7 +4,6 @@ import { getDocsDefinition, getDocsForDomain } from "../../controllers/docs/v1/g
 import { DocsRegistrationInfo } from "../../controllers/docs/v2/getDocsWriteV2Service";
 import { FdrDao } from "../../db";
 import type { IndexSegment } from "../../services/algolia";
-import { Cache } from "./Cache";
 
 const DOCS_DOMAIN_REGX = /^([^.\s]+)/;
 
@@ -33,20 +32,13 @@ interface CachedDocsResponse {
     response: DocsV2Read.LoadDocsForUrlResponse;
 }
 
-const SECONDS_IN_DAY = 86400;
-
 export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
-    private cache: Cache<Hostnme, Cache<Path, CachedDocsResponse>>;
+    private cache: Record<Hostnme, Record<Path, CachedDocsResponse>> = {};
 
     constructor(
         private readonly app: FdrApplication,
         private readonly dao: FdrDao,
-    ) {
-        this.cache = new Cache({
-            stdTTL: SECONDS_IN_DAY * 4,
-            maxKeys: 100,
-        });
-    }
+    ) {}
 
     public async getDocsForUrl({ url }: { url: URL }): Promise<DocsV2Read.LoadDocsForUrlResponse> {
         const cachedResponse = this.getDocsForUrlFromCache({ url });
@@ -84,15 +76,16 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
     }
 
     private cacheResponse({ url, cachedResponse }: { url: URL; cachedResponse: CachedDocsResponse }): void {
-        const cacheForHost =
-            this.cache.get(url.hostname) ??
-            new Cache<Path, CachedDocsResponse>({ stdTTL: SECONDS_IN_DAY * 4, maxKeys: 100 });
-        cacheForHost.set(url.pathname, cachedResponse);
-        this.cache.set(url.hostname, cacheForHost);
+        const cacheForHost = this.cache[url.hostname];
+        if (cacheForHost == null) {
+            this.cache[url.hostname] = { [url.pathname]: cachedResponse };
+        } else {
+            cacheForHost[url.pathname] = cachedResponse;
+        }
     }
 
     private getDocsForUrlFromCache({ url }: { url: URL }): CachedDocsResponse | undefined {
-        const responsesForHost = this.cache.get(url.hostname)?.entries() ?? {};
+        const responsesForHost = this.cache[url.hostname] ?? {};
         const cachedResponses = Object.entries(responsesForHost)
             .filter(([path]) => {
                 return url.pathname.startsWith(path);
