@@ -2251,6 +2251,7 @@ __metadata:
     "@types/archiver": ^6.0.2
     "@types/node": ^18.7.18
     archiver: ^6.0.1
+    aws-cdk: ^2.110.1
     aws-cdk-lib: ^2.110.1
     axios: ^1.6.2
     constructs: ^10.3.0
@@ -5255,6 +5256,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"aws-cdk@npm:^2.110.1":
+  version: 2.110.1
+  resolution: "aws-cdk@npm:2.110.1"
+  dependencies:
+    fsevents: 2.3.2
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    cdk: bin/cdk
+  checksum: 77480ca9c3321043517f069349aeddce08acb682b0eab0ddc352a0af63e23ca145e87c1e7fe250dcf0edc19ec97b84b9ac067c833a283fb85e6543c2e8fcf8bb
+  languageName: node
+  linkType: hard
+
 "axios@npm:0.27.2":
   version: 0.27.2
   resolution: "axios@npm:0.27.2"
@@ -7939,7 +7954,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"fsevents@npm:^2.3.2, fsevents@npm:~2.3.2":
+"fsevents@npm:2.3.2, fsevents@npm:^2.3.2, fsevents@npm:~2.3.2":
   version: 2.3.2
   resolution: "fsevents@npm:2.3.2"
   dependencies:
@@ -7949,7 +7964,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"fsevents@patch:fsevents@^2.3.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@npm%3A~2.3.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
+"fsevents@patch:fsevents@2.3.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@^2.3.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@npm%3A~2.3.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
   version: 2.3.2
   resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"
   dependencies:

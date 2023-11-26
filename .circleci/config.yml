@@ -135,9 +135,6 @@ jobs:
           name: Build local preview bundle
           command: yarn workspace @fern-ui/local-preview-bundle run build
       - run:
-          name: Install CDK
-          command: npm install --prefix=$HOME/.local -g aws-cdk
-      - run:
           name: Synthesize local preview bundle
           command: yarn workspace @fern-ui/cdk run synth:dev2
 
@@ -153,9 +150,6 @@ jobs:
           name: Build local preview bundle
           command: yarn workspace @fern-ui/local-preview-bundle run build
       - run:
-          name: Install CDK
-          command: npm install --prefix=$HOME/.local -g aws-cdk
-      - run:
           name: Deploy local preview bundle
           command: yarn workspace @fern-ui/cdk run deploy:dev2
 
@@ -170,9 +164,6 @@ jobs:
       - run:
           name: Build local preview bundle
           command: yarn workspace @fern-ui/local-preview-bundle run build
-      - run:
-          name: Install CDK
-          command: npm install --prefix=$HOME/.local -g aws-cdk
       - run:
           name: Deploy local preview bundle
           command: yarn workspace @fern-ui/cdk run deploy:prod

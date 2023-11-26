@@ -3983,6 +3983,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/archiver", "npm:6.0.2"],\
             ["@types/node", "npm:18.18.13"],\
             ["archiver", "npm:6.0.1"],\
+            ["aws-cdk", "npm:2.110.1"],\
             ["aws-cdk-lib", "virtual:bb2f39858d94c0a602215c896a8a865f2d83fd9190ebbbdd82d93c5fa1df532fd9bb165587d845653431a57bfbe30296825591585a4b7acf2cc3a82331004f56#npm:2.110.1"],\
             ["axios", "npm:1.6.2"],\
             ["constructs", "npm:10.3.0"],\
@@ -7594,6 +7595,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/available-typed-arrays-npm-1.0.5-88f321e4d3-20eb47b3ce.zip/node_modules/available-typed-arrays/",\
           "packageDependencies": [\
             ["available-typed-arrays", "npm:1.0.5"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["aws-cdk", [\
+        ["npm:2.110.1", {\
+          "packageLocation": "./.yarn/unplugged/aws-cdk-npm-2.110.1-3a6bdbfc49/node_modules/aws-cdk/",\
+          "packageDependencies": [\
+            ["aws-cdk", "npm:2.110.1"],\
+            ["fsevents", "patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"]\
           ],\
           "linkType": "HARD"\
         }]\
