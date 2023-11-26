@@ -6,6 +6,10 @@ import { DocsFeStack } from "./docs-fe-stack";
 
 void main();
 
+// yarn workspace @fern-ui/cdk run cdk synth local-preview-bundle-dev2
+// yarn workspace @fern-ui/cdk run cdk bootstrap
+// yarn workspace @fern-ui/cdk run cdk deploy local-preview-bundle-dev2
+
 async function main() {
     const environments = await getEnvironments();
     const app = new cdk.App();
@@ -16,12 +20,12 @@ async function main() {
         switch (environmentType) {
             case EnvironmentType.Dev2:
             case EnvironmentType.Prod:
-                new DocsFeStack(app, `fdr-${environmentType.toLowerCase()}`, environmentType, {
+                new DocsFeStack(app, `local-preview-bundle-${environmentType.toLowerCase()}`, environmentType, {
                     env: { account: "985111089818", region: "us-east-1" },
                 });
                 break;
             default:
-                return;
+                continue;
         }
     }
 }

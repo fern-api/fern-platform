@@ -7,16 +7,29 @@
     "directory": "packages/cdk"
   },
   "private": true,
+  "files": [
+    "lib"
+  ],
+  "type": "commonjs",
   "source": "src/cdk.ts",
-  "module": "src/cdk.ts",
-  "main": "src/cdk.ts",
+  "main": "lib/cdk.js",
+  "types": "lib/cdk.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "cdk": "cdk",
+    "deploy:dev2": "cdk deploy local-preview-bundle-dev2 --require-approval never --progress events",
+    "deploy:prod": "cdk deploy local-preview-bundle-prod --require-approval never --progress events",
+    "synth:dev2": "cdk synth local-preview-bundle-dev2"
+  },
   "dependencies": {
     "@fern-fern/fern-cloud-sdk": "^0.0.257",
+    "archiver": "^6.0.1",
     "aws-cdk-lib": "^2.110.1",
     "axios": "^1.6.2",
     "constructs": "^10.3.0"
   },
   "devDependencies": {
+    "@types/archiver": "^6.0.2",
     "@types/node": "^18.7.18",
     "prettier": "^2.8.8",
     "typescript": "4.9.4"
