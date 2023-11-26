@@ -2368,7 +2368,7 @@ __metadata:
     lodash-es: ^4.17.21
     next: ^13.4.4
     organize-imports-cli: ^0.10.0
-    postcss: ^8.4.21
+    postcss: ^8.4.31
     prettier: ^2.8.8
     react: ^18.2.0
     react-dom: ^18.2.0
