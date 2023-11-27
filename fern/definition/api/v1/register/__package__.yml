@@ -39,6 +39,7 @@ types:
       types: map<type.TypeId, type.TypeDefinition>
       subpackages: map<SubpackageId, ApiDefinitionSubpackage>
       auth: optional<ApiAuth>
+      globalHeaders: optional<list<endpoint.Header>>
       snippetsConfiguration: optional<SnippetsConfig>
   
   SnippetsConfig:

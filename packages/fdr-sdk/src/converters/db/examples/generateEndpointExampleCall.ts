@@ -119,7 +119,7 @@ function generateBaseEndpointExample({
         queryParameters: endpointDefinition.queryParameters,
     });
     const headers = generateHeaderExamples({
-        headers: endpointDefinition.headers,
+        headers: [...(apiDefinition.globalHeaders ?? []), ...endpointDefinition.headers],
         resolveTypeById,
     });
     const requestBody =
