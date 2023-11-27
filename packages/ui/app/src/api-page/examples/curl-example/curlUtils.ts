@@ -1,6 +1,6 @@
 import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
 import { getEndpointEnvironmentUrl } from "@fern-ui/app-utils";
-import { assertNeverNoThrow, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { assertNever, assertNeverNoThrow, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { noop } from "lodash-es";
 import { JsonLine, jsonLineToString } from "../json-example/jsonLineUtils";
 
@@ -103,16 +103,23 @@ export function getCurlLines(
         });
     }
 
-    for (const header of endpoint.headers) {
-        const value = example.headers[header.key];
+    for (const [headerKey, value] of Object.entries(example.headers)) {
         if (value != null) {
             parts.push({
                 type: "param",
                 paramKey: "--header",
                 // eslint-disable-next-line @typescript-eslint/no-base-to-string
-                value: `${header.key}: ${value}`,
+                value: `${headerKey}: ${value}`,
             });
         }
+    }
+
+    if (endpoint.response != null && endpoint.response != null && isJsonResponse(endpoint.response)) {
+        parts.push({
+            type: "param",
+            paramKey: "--header",
+            value: "Accept: application/json",
+        });
     }
 
     if (endpoint.request != null) {
@@ -164,6 +171,21 @@ export function getCurlLines(
     }
 
     return parts;
+}
+
+function isJsonResponse(httpResponse: FernRegistryApiRead.HttpResponse): boolean {
+    switch (httpResponse.type.type) {
+        case "fileDownload":
+            return false;
+        case "streamingText":
+            return false;
+        case "object":
+            return true;
+        case "reference":
+            return true;
+        default:
+            assertNever(httpResponse.type);
+    }
 }
 
 const CURL_PREFIX = "curl ";
