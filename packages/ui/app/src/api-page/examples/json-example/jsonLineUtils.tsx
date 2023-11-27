@@ -41,6 +41,7 @@ interface JsonLineObjectEmpty {
     depth: number;
     type: "objectEmpty";
     key?: string;
+    comma: boolean;
 }
 interface JsonLineObjectStart {
     path: string[];
@@ -59,6 +60,7 @@ interface JsonLineListEmpty {
     depth: number;
     type: "listEmpty";
     key?: string;
+    comma: boolean;
 }
 interface JsonLineListStart {
     path: string[];
@@ -135,7 +137,7 @@ export function flattenJsonToLines(
         object: (o): JsonLine[] => {
             const entries = Object.entries(o);
             if (entries.length === 0) {
-                return [{ depth, type: "objectEmpty", key, path }];
+                return [{ depth, type: "objectEmpty", comma: !isLast, key, path }];
             }
             return [
                 { depth, type: "objectStart", key, path },
@@ -147,7 +149,7 @@ export function flattenJsonToLines(
         },
         list: (list): JsonLine[] => {
             if (list.length === 0) {
-                return [{ depth, type: "listEmpty", key, path }];
+                return [{ depth, type: "listEmpty", comma: !isLast, key, path }];
             }
             return [
                 { depth, type: "listStart", key, path },
@@ -218,6 +220,7 @@ export function renderJsonLine(line: JsonLine, tabWidth = TAB_WIDTH): ReactNode 
                 {" ".repeat(tabWidth * line.depth)}
                 {renderKey(line.key)}
                 {renderJsonLineValue(line)}
+                {line.comma ? renderComma() : null}
             </>
         ),
         objectStart: (line) => (
@@ -239,6 +242,7 @@ export function renderJsonLine(line: JsonLine, tabWidth = TAB_WIDTH): ReactNode 
                 {" ".repeat(tabWidth * line.depth)}
                 {renderKey(line.key)}
                 {renderJsonLineValue(line)}
+                {line.comma ? renderComma() : null}
             </>
         ),
         listStart: (line) => (
