@@ -94,7 +94,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
             })
             .sort(
                 ([, cachedResponseA], [, cachedResponseB]) =>
-                    cachedResponseA.updatedTime.getTime() - cachedResponseB.updatedTime.getTime(),
+                    cachedResponseB.updatedTime.getTime() - cachedResponseA.updatedTime.getTime(),
             )
             .map(([, cachedResponse]) => cachedResponse);
         return cachedResponses[0];
