@@ -1,4 +1,3 @@
-import type * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import React, { PropsWithChildren, ReactElement, useCallback, useMemo } from "react";
@@ -6,12 +5,13 @@ import React, { PropsWithChildren, ReactElement, useCallback, useMemo } from "re
 import { divideEndpointPathToParts, type EndpointPathPart } from "@fern-ui/app-utils";
 import { HttpMethodTag } from "../../commons/HttpMethodTag";
 import styles from "./EndpointUrl.module.scss";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 // import { getEndpointEnvironmentUrl } from "./getEndpointEnvironmentUrl";
 
 export declare namespace EndpointUrl {
     export type Props = React.PropsWithChildren<{
         urlStyle: "default" | "overflow";
-        endpoint: FernRegistryApiRead.EndpointDefinition;
+        endpoint: APIV1Read.EndpointDefinition;
         className?: string;
     }>;
 }

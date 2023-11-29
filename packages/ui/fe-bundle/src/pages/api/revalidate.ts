@@ -1,4 +1,4 @@
-import { FernRegistry, PathResolver } from "@fern-api/fdr-sdk";
+import { PathResolver } from "@fern-api/fdr-sdk";
 import { NextApiHandler, NextApiResponse } from "next";
 import { REGISTRY_SERVICE } from "../../service";
 
@@ -38,7 +38,7 @@ const handler: NextApiHandler = async (req, res) => {
             return res.status(500).send("Failed to load docs for: " + url);
         }
 
-        type ApiDefinition = FernRegistry.api.v1.read.ApiDefinition;
+        type ApiDefinition = FdrAPI.api.v1.read.ApiDefinition;
         const resolver = new PathResolver({
             definition: {
                 apis: docs.body.definition.apis as Record<ApiDefinition["id"], ApiDefinition>,

@@ -1,4 +1,4 @@
-import * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { forwardRef, memo, PropsWithChildren } from "react";
@@ -14,7 +14,7 @@ import { ThemeButton } from "./ThemeButton";
 export declare namespace Header {
     export interface Props {
         className?: string;
-        docsDefinition: FernRegistryDocsRead.DocsDefinition;
+        docsDefinition: DocsV1Read.DocsDefinition;
         openSearchDialog: () => void;
         isMobileSidebarOpen: boolean;
         openMobileSidebar: () => void;

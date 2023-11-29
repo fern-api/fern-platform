@@ -1,4 +1,4 @@
-import type * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { useCallback, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
@@ -23,7 +23,7 @@ interface DescriptionInfo {
 
 export declare namespace ObjectProperty {
     export interface Props {
-        property: FernRegistryApiRead.ObjectProperty;
+        property: APIV1Read.ObjectProperty;
         anchorIdParts: string[];
         route: string;
         applyErrorStyles: boolean;

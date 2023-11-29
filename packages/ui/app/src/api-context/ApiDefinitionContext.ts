@@ -1,5 +1,4 @@
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
-import * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
+import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import React from "react";
 
 export const ApiDefinitionContext = React.createContext<() => ApiDefinitionContextValue>(() => {
@@ -7,11 +6,9 @@ export const ApiDefinitionContext = React.createContext<() => ApiDefinitionConte
 });
 
 export interface ApiDefinitionContextValue {
-    apiDefinition: FernRegistryApiRead.ApiDefinition;
-    apiSection: FernRegistryDocsRead.ApiSection;
+    apiDefinition: APIV1Read.ApiDefinition;
+    apiSection: DocsV1Read.ApiSection;
     apiSlug: string;
-    resolveTypeById: (typeId: FernRegistryApiRead.TypeId) => FernRegistryApiRead.TypeDefinition;
-    resolveSubpackageById: (
-        subpackageId: FernRegistryApiRead.SubpackageId
-    ) => FernRegistryApiRead.ApiDefinitionSubpackage;
+    resolveTypeById: (typeId: APIV1Read.TypeId) => APIV1Read.TypeDefinition;
+    resolveSubpackageById: (subpackageId: APIV1Read.SubpackageId) => APIV1Read.ApiDefinitionSubpackage;
 }

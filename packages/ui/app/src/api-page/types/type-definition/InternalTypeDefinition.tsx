@@ -1,6 +1,6 @@
 import { Collapse } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
@@ -24,7 +24,7 @@ import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 
 export declare namespace InternalTypeDefinition {
     export interface Props {
-        typeShape: FernRegistryApiRead.TypeShape;
+        typeShape: APIV1Read.TypeShape;
         isCollapsible: boolean;
         anchorIdParts: string[];
         route: string;

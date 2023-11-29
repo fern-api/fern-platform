@@ -1,5 +1,4 @@
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
-import * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
+import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import { doesSubpackageHaveEndpointsOrWebhooksRecursive, getSubpackageTitle } from "@fern-ui/app-utils";
 import { useRouter } from "next/router";
 import { useContext, useMemo } from "react";
@@ -10,14 +9,12 @@ import { SidebarSubpackageItem } from "./SidebarSubpackageItem";
 
 export declare namespace ApiSubpackageSidebarSection {
     export interface Props {
-        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
+        subpackage: APIV1Read.ApiDefinitionSubpackage;
         slug: string;
         selectedSlug: string | undefined;
-        resolveSubpackageById: (
-            subpackageId: FernRegistryApiRead.SubpackageId
-        ) => FernRegistryApiRead.ApiDefinitionSubpackage;
+        resolveSubpackageById: (subpackageId: APIV1Read.SubpackageId) => APIV1Read.ApiDefinitionSubpackage;
         registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
-        docsDefinition: FernRegistryDocsRead.DocsDefinition;
+        docsDefinition: DocsV1Read.DocsDefinition;
         activeTabIndex: number | null;
         closeMobileSidebar: () => void;
     }

@@ -1,11 +1,11 @@
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
 import { TypeDefinitionContextProvider } from "../context/TypeDefinitionContextProvider";
 import { InternalTypeReferenceDefinitions } from "./InternalTypeReferenceDefinitions";
 
 export declare namespace TypeReferenceDefinitions {
     export interface Props {
-        type: FernRegistryApiRead.TypeReference;
+        type: APIV1Read.TypeReference;
         applyErrorStyles: boolean;
         isCollapsible: boolean;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;

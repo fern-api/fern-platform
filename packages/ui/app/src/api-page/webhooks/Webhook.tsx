@@ -1,13 +1,13 @@
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { WebhookContextProvider } from "./webhook-context/WebhookContextProvider";
 import { WebhookContent } from "./WebhookContent";
 
 export declare namespace Webhook {
     export interface Props {
-        webhook: FernRegistryApiRead.WebhookDefinition;
+        webhook: APIV1Read.WebhookDefinition;
         isLastInApi: boolean;
-        package: FernRegistryApiRead.ApiDefinitionPackage;
+        package: APIV1Read.ApiDefinitionPackage;
         fullSlug: string;
         anchorIdParts: string[];
     }

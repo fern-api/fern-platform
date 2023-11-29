@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import React, { ReactElement } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
@@ -6,7 +6,7 @@ import { TypeShorthand } from "./TypeShorthand";
 
 export declare namespace ReferencedTypePreviewPart {
     export interface Props {
-        typeId: FernRegistryApiRead.TypeId;
+        typeId: APIV1Read.TypeId;
         plural: boolean;
         withArticle?: boolean;
     }

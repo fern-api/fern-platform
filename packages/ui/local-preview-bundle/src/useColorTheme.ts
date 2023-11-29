@@ -1,9 +1,8 @@
-import * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
 import { useTheme } from "@fern-ui/theme";
 
 interface ColorConfig {
-    dark: FernRegistryDocsRead.RgbColor;
-    light: FernRegistryDocsRead.RgbColor;
+    dark: DocsV1Read.RgbColor;
+    light: DocsV1Read.RgbColor;
 }
 
 const DEFAULT_COLORS: {
@@ -41,7 +40,7 @@ const CSS_VARIABLES = {
     BACKGROUND: "--background",
 } as const;
 
-export function useColorTheme(docsDefinition: FernRegistryDocsRead.DocsDefinition): string {
+export function useColorTheme(docsDefinition: DocsV1Read.DocsDefinition): string {
     const colorsV3 = docsDefinition.config.colorsV3;
     const { theme } = useTheme(colorsV3.type);
 

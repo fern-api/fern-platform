@@ -1,5 +1,5 @@
 import { H2 } from "@blueprintjs/core";
-import * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { joinUrlSlugs } from "@fern-ui/app-utils";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { API_ARTIFACTS_TITLE } from "../../config";
@@ -16,7 +16,7 @@ import { SdkCardLayout } from "./SdkCardLayout";
 
 export declare namespace ApiArtifacts {
     export interface Props {
-        apiArtifacts: FernRegistryDocsRead.ApiArtifacts;
+        apiArtifacts: DocsV1Read.ApiArtifacts;
     }
 }
 

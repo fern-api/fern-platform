@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { HEADER_HEIGHT } from "../../constants";
 import { ApiPackageContents } from "../ApiPackageContents";
@@ -7,7 +7,7 @@ import { useApiPageCenterElement } from "../useApiPageCenterElement";
 
 export declare namespace ApiSubpackage {
     export interface Props {
-        subpackageId: FernRegistryApiRead.SubpackageId;
+        subpackageId: APIV1Read.SubpackageId;
         slug: string;
         isLastInParentPackage: boolean;
         anchorIdParts: string[];

@@ -1,5 +1,4 @@
-import { type DefinitionInfo, type DocsNode } from "@fern-api/fdr-sdk";
-import type * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
+import { DocsV1Read, type DefinitionInfo, type DocsNode } from "@fern-api/fdr-sdk";
 import { getFullSlugForNavigatable, joinUrlSlugs } from "@fern-ui/app-utils";
 import { useCallback, useMemo } from "react";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
@@ -34,12 +33,12 @@ export type ActiveVersionContext = ActiveVersionContextUnversioned | ActiveVersi
 
 interface ActiveNavigationConfigContextUntabbed {
     type: "untabbed";
-    config: FernRegistryDocsRead.UnversionedUntabbedNavigationConfig;
+    config: DocsV1Read.UnversionedUntabbedNavigationConfig;
 }
 
 interface ActiveNavigationConfigContextTabbed {
     type: "tabbed";
-    config: FernRegistryDocsRead.UnversionedTabbedNavigationConfig;
+    config: DocsV1Read.UnversionedTabbedNavigationConfig;
 }
 
 export type ActiveNavigationConfigContext = ActiveNavigationConfigContextUntabbed | ActiveNavigationConfigContextTabbed;

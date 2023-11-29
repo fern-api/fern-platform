@@ -1,4 +1,4 @@
-import type * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 
 function getFontExtension(url: URL): string {
     const ext = url.pathname.split(".").pop();
@@ -14,7 +14,7 @@ export interface GenerationFontConfig {
     fontType: FontType;
     fontName: string;
     fontExtension: string;
-    fontUrl: FernRegistryDocsRead.Url;
+    fontUrl: DocsV1Read.Url;
 }
 
 export interface GenerationFontConfigs {
@@ -24,7 +24,7 @@ export interface GenerationFontConfigs {
 }
 
 export function getFontConfig(
-    docsDefinition: FernRegistryDocsRead.DocsDefinition,
+    docsDefinition: DocsV1Read.DocsDefinition,
     fontType: FontType
 ): GenerationFontConfig | undefined {
     const typographyFontType = docsDefinition.config.typography?.[fontType];
@@ -48,7 +48,7 @@ export function getFontConfig(
     return fontConfig;
 }
 
-export function loadDocTypography(docsDefinition: FernRegistryDocsRead.DocsDefinition): GenerationFontConfigs {
+export function loadDocTypography(docsDefinition: DocsV1Read.DocsDefinition): GenerationFontConfigs {
     const generationConfiguration: Record<keyof GenerationFontConfigs, GenerationFontConfig | undefined> = {
         headingsFont: undefined,
         bodyFont: undefined,

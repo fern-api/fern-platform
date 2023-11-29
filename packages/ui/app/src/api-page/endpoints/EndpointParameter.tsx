@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { HEADER_HEIGHT } from "../../constants";
@@ -12,7 +12,7 @@ export declare namespace EndpointParameter {
         name: string;
         description?: string;
         descriptionContainsMarkdown: boolean;
-        type: FernRegistryApiRead.TypeReference;
+        type: APIV1Read.TypeReference;
         anchorIdParts: string[];
         route: string;
     }

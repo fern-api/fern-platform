@@ -1,9 +1,9 @@
-import type * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 
 export declare namespace HeaderSecondaryLink {
     export interface Props {
-        navbarLink: FernRegistryDocsRead.NavbarLink.Secondary;
+        navbarLink: DocsV1Read.NavbarLink.Secondary;
     }
 }
 

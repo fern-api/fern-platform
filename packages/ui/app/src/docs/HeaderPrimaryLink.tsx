@@ -1,10 +1,10 @@
-import * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { ArrowRightIcon } from "../commons/icons/ArrowRightIcon";
 
 export declare namespace HeaderPrimaryLink {
     export interface Props {
-        navbarLink: FernRegistryDocsRead.NavbarLink.Primary;
+        navbarLink: DocsV1Read.NavbarLink.Primary;
     }
 }
 

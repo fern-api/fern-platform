@@ -1,4 +1,4 @@
-import { FernRegistry, FernRegistryClient, PathResolver } from "@fern-api/fdr-sdk";
+import { FernRegistryClient, PathResolver } from "@fern-api/fdr-sdk";
 import * as FernRegistryDocsReadV2 from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v2/resources/read";
 import {
     convertNavigatableToResolvedPath,
@@ -101,7 +101,7 @@ async function getInitialProps(slugArray: string[]): Promise<Docs.Props> {
     const typographyConfig = loadDocTypography(docsDefinition);
     const typographyStyleSheet = generateFontFaces(typographyConfig);
     const backgroundImageStyleSheet = loadDocsBackgroundImage(docsDefinition);
-    type ApiDefinition = FernRegistry.api.v1.read.ApiDefinition;
+    type ApiDefinition = FdrAPI.api.v1.read.ApiDefinition;
     const resolver = new PathResolver({
         definition: {
             apis: docs.body.definition.apis as Record<ApiDefinition["id"], ApiDefinition>,
@@ -119,7 +119,7 @@ async function getInitialProps(slugArray: string[]): Promise<Docs.Props> {
 
     const resolvedPath = await convertNavigatableToResolvedPath({
         navigatable: resolvedNavigatable,
-        docsDefinition: docsDefinition as FernRegistry.docs.v1.read.DocsDefinition,
+        docsDefinition: docsDefinition as FdrAPI.docs.v1.read.DocsDefinition,
         basePath: docs.body.baseUrl.basePath,
     });
 

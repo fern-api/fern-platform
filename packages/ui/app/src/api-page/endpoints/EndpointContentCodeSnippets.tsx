@@ -1,5 +1,5 @@
 "use client";
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { type Theme } from "@fern-ui/theme";
 import dynamic from "next/dynamic";
 import { memo } from "react";
@@ -20,7 +20,7 @@ const CodeBlockSkeleton = dynamic(
 export declare namespace EndpointContentCodeSnippets {
     export interface Props {
         theme?: Theme;
-        example: FernRegistryApiRead.ExampleEndpointCall;
+        example: APIV1Read.ExampleEndpointCall;
         availableExampleClients: CodeExampleClient[];
         selectedExampleClient: CodeExampleClient;
         onClickExampleClient: (client: CodeExampleClient) => void;

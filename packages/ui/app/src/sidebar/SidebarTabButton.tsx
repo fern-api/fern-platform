@@ -1,11 +1,11 @@
-import { type NavigationTab } from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { memo, type MouseEventHandler } from "react";
 import { FontAwesomeIcon } from "../commons/FontAwesomeIcon";
 
 export declare namespace SidebarTabButton {
     export interface Props {
-        tab: NavigationTab;
+        tab: DocsV1Read.NavigationTab;
         isSelected: boolean;
         onClick: MouseEventHandler<HTMLButtonElement>;
     }

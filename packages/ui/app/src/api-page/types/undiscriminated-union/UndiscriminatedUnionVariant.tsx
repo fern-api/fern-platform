@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { ReactElement, useCallback } from "react";
 import { ApiPageDescription } from "../../ApiPageDescription";
@@ -15,7 +15,7 @@ type IconInfo = {
     size: number;
 };
 
-function getIconInfoForPrimitiveType(type: FernRegistryApiRead.PrimitiveType): IconInfo {
+function getIconInfoForPrimitiveType(type: APIV1Read.PrimitiveType): IconInfo {
     switch (type.type) {
         case "integer":
         case "long":
@@ -40,7 +40,7 @@ function getIconInfoForPrimitiveType(type: FernRegistryApiRead.PrimitiveType): I
     }
 }
 
-function getIconInfoForTypeReference(typeRef: FernRegistryApiRead.TypeReference): IconInfo | null {
+function getIconInfoForTypeReference(typeRef: APIV1Read.TypeReference): IconInfo | null {
     switch (typeRef.type) {
         case "id":
             return null;
@@ -59,7 +59,7 @@ function getIconInfoForTypeReference(typeRef: FernRegistryApiRead.TypeReference)
     }
 }
 
-function getIconForTypeReference(typeRef: FernRegistryApiRead.TypeReference): ReactElement | null {
+function getIconForTypeReference(typeRef: APIV1Read.TypeReference): ReactElement | null {
     const info = getIconInfoForTypeReference(typeRef);
     if (info == null) {
         return null;
@@ -77,7 +77,7 @@ function getIconForTypeReference(typeRef: FernRegistryApiRead.TypeReference): Re
 
 export declare namespace UndiscriminatedUnionVariant {
     export interface Props {
-        unionVariant: FernRegistryApiRead.UndiscriminatedUnionVariant;
+        unionVariant: APIV1Read.UndiscriminatedUnionVariant;
         anchorIdParts: string[];
         applyErrorStyles: boolean;
         route: string;

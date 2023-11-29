@@ -1,6 +1,6 @@
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 
-const EP_1: FernRegistryApiRead.EndpointDefinition = {
+const EP_1: APIV1Read.EndpointDefinition = {
     id: "ep1",
     authed: false,
     environments: [],
@@ -14,7 +14,7 @@ const EP_1: FernRegistryApiRead.EndpointDefinition = {
     availability: "Beta",
 };
 
-const EP_2: FernRegistryApiRead.EndpointDefinition = {
+const EP_2: APIV1Read.EndpointDefinition = {
     id: "ep2",
     authed: false,
     environments: [],
@@ -28,7 +28,7 @@ const EP_2: FernRegistryApiRead.EndpointDefinition = {
     availability: "Beta",
 };
 
-export const SUBPACKAGE_EMPTY: FernRegistryApiRead.ApiDefinitionSubpackage = {
+export const SUBPACKAGE_EMPTY: APIV1Read.ApiDefinitionSubpackage = {
     subpackageId: "sub1",
     endpoints: [],
     name: "",
@@ -38,7 +38,7 @@ export const SUBPACKAGE_EMPTY: FernRegistryApiRead.ApiDefinitionSubpackage = {
     webhooks: [],
 };
 
-export const SUBPACKAGE_WITH_2_ENDPOINTS: FernRegistryApiRead.ApiDefinitionSubpackage = {
+export const SUBPACKAGE_WITH_2_ENDPOINTS: APIV1Read.ApiDefinitionSubpackage = {
     subpackageId: "sub2",
     endpoints: [EP_1, EP_2],
     name: "",
@@ -48,7 +48,7 @@ export const SUBPACKAGE_WITH_2_ENDPOINTS: FernRegistryApiRead.ApiDefinitionSubpa
     webhooks: [],
 };
 
-export const SUBPACKAGE_WITH_NESTED_SUBPACKAGES: FernRegistryApiRead.ApiDefinitionSubpackage = {
+export const SUBPACKAGE_WITH_NESTED_SUBPACKAGES: APIV1Read.ApiDefinitionSubpackage = {
     subpackageId: "sub3",
     endpoints: [],
     name: "",
@@ -58,8 +58,8 @@ export const SUBPACKAGE_WITH_NESTED_SUBPACKAGES: FernRegistryApiRead.ApiDefiniti
     webhooks: [],
 };
 
-export const DEFINITION: FernRegistryApiRead.ApiDefinition = {
-    id: "definition" as FernRegistryApiRead.ApiDefinition["id"],
+export const DEFINITION: APIV1Read.ApiDefinition = {
+    id: "definition" as APIV1Read.ApiDefinition["id"],
     rootPackage: {
         endpoints: [],
         subpackages: [],

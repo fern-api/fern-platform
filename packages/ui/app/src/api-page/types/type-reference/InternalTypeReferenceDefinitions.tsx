@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import React, { ReactElement } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
@@ -9,7 +9,7 @@ import { MapTypeContextProvider } from "./MapTypeContextProvider";
 
 export declare namespace InternalTypeReferenceDefinitions {
     export interface Props {
-        type: FernRegistryApiRead.TypeReference;
+        type: APIV1Read.TypeReference;
         applyErrorStyles: boolean;
         isCollapsible: boolean;
         className?: string;

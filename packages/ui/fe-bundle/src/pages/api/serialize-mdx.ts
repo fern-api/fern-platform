@@ -1,4 +1,4 @@
-import { FernRegistry, PathResolver, type FullSlug } from "@fern-api/fdr-sdk";
+import { PathResolver, type FullSlug } from "@fern-api/fdr-sdk";
 import { SerializedMdxContent, serializeMdxContent } from "@fern-ui/app-utils";
 import { isPlainObject } from "@fern-ui/core-utils";
 import { NextApiHandler, NextApiResponse } from "next";
@@ -88,7 +88,7 @@ const handler: NextApiHandler = async (req, res: NextApiResponse<Response>) => {
 
         const docsDefinition = docs.body.definition;
 
-        type ApiDefinition = FernRegistry.api.v1.read.ApiDefinition;
+        type ApiDefinition = FdrAPI.api.v1.read.ApiDefinition;
         const resolver = new PathResolver({
             definition: {
                 apis: docsDefinition.apis as Record<ApiDefinition["id"], ApiDefinition>,

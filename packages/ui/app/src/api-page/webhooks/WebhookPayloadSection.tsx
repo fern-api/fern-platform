@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ReactElement } from "react";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
@@ -8,7 +8,7 @@ import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
 
 export declare namespace WebhookPayloadSection {
     export interface Props {
-        payload: FernRegistryApiRead.WebhookPayload;
+        payload: APIV1Read.WebhookPayload;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: string[];
         route: string;

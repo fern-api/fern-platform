@@ -2197,15 +2197,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/fdr-sdk@npm:0.37.0-9-g620a45d":
-  version: 0.37.0-9-g620a45d
-  resolution: "@fern-api/fdr-sdk@npm:0.37.0-9-g620a45d"
+"@fern-api/fdr-sdk@npm:0.43.1-1-geffa6f8":
+  version: 0.43.1-1-geffa6f8
+  resolution: "@fern-api/fdr-sdk@npm:0.43.1-1-geffa6f8"
   dependencies:
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
     js-base64: 3.7.2
+    lodash: ^4.17.21
+    marked: ^5.1.0
     url-join: 4.0.1
-  checksum: 80cb750b6c7da58929c91b29565d045496774b2c6ca5edae04805cd3dccc830769f4b31a97ca798166ccb7271573ef7e622148f143b398bb77e0a15e8099bd7a
+  checksum: 9b44d2a698cf79285d9f8f19d9a451a8b15c8c1c6229b8896e231f2eefca7a55b6267fd2bb55b8a828d11a0a2dd8a5ea16ad607cb8441d149b478b0cf2791ed7
   languageName: node
   linkType: hard
 
@@ -2226,7 +2228,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/app-utils@workspace:packages/commons/app-utils"
   dependencies:
-    "@fern-api/fdr-sdk": 0.37.0-9-g620a45d
+    "@fern-api/fdr-sdk": 0.43.1-1-geffa6f8
     "@fern-ui/core-utils": "workspace:*"
     "@types/jest": ^29.5.5
     "@types/lodash-es": ^4.17.12
@@ -2335,7 +2337,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/fe-bundle@workspace:packages/ui/fe-bundle"
   dependencies:
-    "@fern-api/fdr-sdk": 0.37.0-9-g620a45d
+    "@fern-api/fdr-sdk": 0.43.1-1-geffa6f8
     "@fern-ui/app-utils": "workspace:*"
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/theme": "workspace:*"
@@ -2410,7 +2412,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/local-preview-bundle@workspace:packages/ui/local-preview-bundle"
   dependencies:
-    "@fern-api/fdr-sdk": 0.37.0-9-g620a45d
+    "@fern-api/fdr-sdk": 0.43.1-1-geffa6f8
     "@fern-ui/app-utils": "workspace:*"
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/theme": "workspace:*"
@@ -2621,7 +2623,7 @@ __metadata:
     "@blueprintjs/icons": ^4.4.0
     "@blueprintjs/popover2": ^1.8.0
     "@blueprintjs/select": ^4.4.2
-    "@fern-api/fdr-sdk": 0.37.0-9-g620a45d
+    "@fern-api/fdr-sdk": 0.43.1-1-geffa6f8
     "@fern-ui/app-utils": "workspace:*"
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/react-commons": "workspace:*"
@@ -10845,7 +10847,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"marked@npm:^5.0.4":
+"marked@npm:^5.0.4, marked@npm:^5.1.0":
   version: 5.1.2
   resolution: "marked@npm:5.1.2"
   bin:
