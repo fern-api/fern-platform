@@ -2,10 +2,10 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import React, { PropsWithChildren, ReactElement, useCallback, useMemo } from "react";
 // import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { divideEndpointPathToParts, type EndpointPathPart } from "@fern-ui/app-utils";
 import { HttpMethodTag } from "../../commons/HttpMethodTag";
 import styles from "./EndpointUrl.module.scss";
-import { APIV1Read } from "@fern-api/fdr-sdk";
 // import { getEndpointEnvironmentUrl } from "./getEndpointEnvironmentUrl";
 
 export declare namespace EndpointUrl {
