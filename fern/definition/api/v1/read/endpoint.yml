@@ -166,6 +166,7 @@ types:
     properties:
       nodeAxios: optional<string>
       pythonSdk: optional<PythonSnippet>
+      typescriptSdk: optional<TypescriptSnippet>
 
   ExampleEndpointRequest:
     union:
@@ -187,3 +188,8 @@ types:
     properties: 
       async_client: string
       sync_client: string
+  
+  TypescriptSnippet: 
+    properties: 
+      client: string
+

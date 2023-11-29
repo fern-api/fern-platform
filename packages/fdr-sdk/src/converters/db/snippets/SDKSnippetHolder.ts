@@ -44,4 +44,31 @@ export class SDKSnippetHolder {
             sync_client: snippetsForEndpoint[0]?.sync_client,
         };
     }
+
+    public getTypeScriptCodeSnippetForEndpoint({
+        endpointPath,
+        endpointMethod,
+    }: {
+        endpointPath: string;
+        endpointMethod: FdrAPI.EndpointMethod;
+    }): APIV1Read.TypescriptSnippet | undefined {
+        if (this.snippetsConfiguration.typescriptSdk == null) {
+            return undefined;
+        }
+        const sdkId = this.packageToSdkId[this.snippetsConfiguration.typescriptSdk.package];
+        if (sdkId == null) {
+            return undefined;
+        }
+        const snippetsForEndpoint = this.snippetsBySdkId[sdkId]?.[endpointPath]?.[endpointMethod];
+        // if no snippets for this endpoint or multiple snippets just return undefined
+        if (snippetsForEndpoint == null || snippetsForEndpoint.length > 1) {
+            return undefined;
+        }
+        if (snippetsForEndpoint[0]?.type !== "typescript") {
+            return undefined;
+        }
+        return {
+            client: snippetsForEndpoint[0]?.client,
+        };
+    }
 }

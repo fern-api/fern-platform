@@ -445,9 +445,14 @@ function transformCodeExamples({
         endpointMethod: endpointDefinition.method,
         endpointPath: getEndpointPathAsString(endpointDefinition),
     });
+    const maybeTypescriptSnippet = snippets.getTypeScriptCodeSnippetForEndpoint({
+        endpointMethod: endpointDefinition.method,
+        endpointPath: getEndpointPathAsString(endpointDefinition),
+    });
     return {
         nodeAxios: "",
         pythonSdk: maybePythonSnippet,
+        typescriptSdk: maybeTypescriptSnippet,
     };
 }
 
