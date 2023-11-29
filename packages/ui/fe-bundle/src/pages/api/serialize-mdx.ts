@@ -1,4 +1,4 @@
-import { PathResolver, type FullSlug } from "@fern-api/fdr-sdk";
+import { FdrAPI, PathResolver, type FullSlug } from "@fern-api/fdr-sdk";
 import { SerializedMdxContent, serializeMdxContent } from "@fern-ui/app-utils";
 import { isPlainObject } from "@fern-ui/core-utils";
 import { NextApiHandler, NextApiResponse } from "next";

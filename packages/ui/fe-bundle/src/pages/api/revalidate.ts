@@ -1,4 +1,4 @@
-import { PathResolver } from "@fern-api/fdr-sdk";
+import { FdrAPI, PathResolver } from "@fern-api/fdr-sdk";
 import { NextApiHandler, NextApiResponse } from "next";
 import { REGISTRY_SERVICE } from "../../service";
 

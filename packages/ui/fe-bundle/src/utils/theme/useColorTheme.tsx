@@ -1,3 +1,4 @@
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { useTheme } from "@fern-ui/theme";
 
 interface ColorConfig {
