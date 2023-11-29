@@ -61,7 +61,7 @@ function getAvailableExampleClients(example: APIV1Read.ExampleEndpointCall): Cod
         clients.push({
             id: "typescript",
             name: "TypeScript",
-            language: "TypeScript",
+            language: "typescript",
             example: typescriptSdk.client,
         });
     }
