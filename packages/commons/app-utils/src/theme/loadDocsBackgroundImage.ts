@@ -1,6 +1,6 @@
-import type * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 
-export function loadDocsBackgroundImage(docsDefinition: FernRegistryDocsRead.DocsDefinition): string | undefined {
+export function loadDocsBackgroundImage(docsDefinition: DocsV1Read.DocsDefinition): string | undefined {
     const backgroundImage = docsDefinition.config.backgroundImage;
     if (backgroundImage == null) {
         return undefined;

@@ -1,5 +1,4 @@
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
-import * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
+import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import { getEndpointTitleAsString, isSubpackage, joinUrlSlugs } from "@fern-ui/app-utils";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { useNavigationContext } from "../navigation-context";
@@ -8,16 +7,14 @@ import { SidebarItem } from "./SidebarItem";
 
 export declare namespace ApiPackageSidebarSectionContents {
     export interface Props {
-        package: FernRegistryApiRead.ApiDefinitionPackage;
+        package: APIV1Read.ApiDefinitionPackage;
         slug: string;
         shallow?: boolean;
         registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
         closeMobileSidebar: () => void;
         selectedSlug: string | undefined;
-        resolveSubpackageById: (
-            subpackageId: FernRegistryApiRead.SubpackageId
-        ) => FernRegistryApiRead.ApiDefinitionSubpackage;
-        docsDefinition: FernRegistryDocsRead.DocsDefinition;
+        resolveSubpackageById: (subpackageId: APIV1Read.SubpackageId) => APIV1Read.ApiDefinitionSubpackage;
+        docsDefinition: DocsV1Read.DocsDefinition;
         activeTabIndex: number | null;
     }
 }

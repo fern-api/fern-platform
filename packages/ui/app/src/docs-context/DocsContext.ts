@@ -1,6 +1,4 @@
-import { FernRegistry } from "@fern-api/fdr-sdk";
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
-import * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
+import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { Theme } from "@fern-ui/theme";
 import React from "react";
 
@@ -9,11 +7,11 @@ export const DocsContext = React.createContext<() => DocsContextValue>(() => {
 });
 
 export interface DocsContextValue {
-    docsDefinition: FernRegistryDocsRead.DocsDefinition;
+    docsDefinition: DocsV1Read.DocsDefinition;
 
-    resolveApi: (apiId: FernRegistry.ApiDefinitionId) => FernRegistryApiRead.ApiDefinition;
-    resolvePage: (pageId: FernRegistryDocsRead.PageId) => FernRegistryDocsRead.PageContent;
-    resolveFile: (fileId: FernRegistryDocsRead.FileId) => FernRegistryDocsRead.Url;
+    resolveApi: (apiId: FdrAPI.ApiDefinitionId) => APIV1Read.ApiDefinition;
+    resolvePage: (pageId: DocsV1Read.PageId) => DocsV1Read.PageContent;
+    resolveFile: (fileId: DocsV1Read.FileId) => DocsV1Read.Url;
 
     theme: Theme | undefined;
     setTheme: (theme: Theme) => void;

@@ -1,12 +1,12 @@
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContent } from "./EndpointContent";
 
 export declare namespace Endpoint {
     export interface Props {
-        endpoint: FernRegistryApiRead.EndpointDefinition;
+        endpoint: APIV1Read.EndpointDefinition;
         isLastInApi: boolean;
-        package: FernRegistryApiRead.ApiDefinitionPackage;
+        package: APIV1Read.ApiDefinitionPackage;
         fullSlug: string;
         anchorIdParts: string[];
     }

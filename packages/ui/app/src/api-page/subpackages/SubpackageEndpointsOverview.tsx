@@ -1,4 +1,4 @@
-import type * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { joinUrlSlugs } from "@fern-ui/app-utils";
 import { useCallback } from "react";
 import { useNavigationContext } from "../../navigation-context";
@@ -7,7 +7,7 @@ import { EndpointDescriptor } from "./EndpointDescriptor";
 export declare namespace SubpackageEndpointsOverview {
     export interface Props {
         slug: string;
-        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
+        subpackage: APIV1Read.ApiDefinitionSubpackage;
     }
 }
 
@@ -15,7 +15,7 @@ export const SubpackageEndpointsOverview: React.FC<SubpackageEndpointsOverview.P
     const { navigateToPath } = useNavigationContext();
 
     const handleEndpointClick = useCallback(
-        (endpointDef: FernRegistryApiRead.EndpointDefinition) => {
+        (endpointDef: APIV1Read.EndpointDefinition) => {
             const endpointSlug = joinUrlSlugs(slug, endpointDef.urlSlug);
             navigateToPath(endpointSlug);
         },

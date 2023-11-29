@@ -1,6 +1,6 @@
-import type * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import type { Hit as AlgoliaHit } from "instantsearch.js";
 
-export type SearchRecord = AlgoliaHit<FernRegistryDocsRead.AlgoliaRecord & Record<string, unknown>>;
-export type EndpointSearchRecordV2 = AlgoliaHit<FernRegistryDocsRead.AlgoliaEndpointRecordV2 & Record<string, unknown>>;
-export type PageSearchRecordV2 = AlgoliaHit<FernRegistryDocsRead.AlgoliaPageRecordV2 & Record<string, unknown>>;
+export type SearchRecord = AlgoliaHit<DocsV1Read.AlgoliaRecord & Record<string, unknown>>;
+export type EndpointSearchRecordV2 = AlgoliaHit<DocsV1Read.AlgoliaEndpointRecordV2 & Record<string, unknown>>;
+export type PageSearchRecordV2 = AlgoliaHit<DocsV1Read.AlgoliaPageRecordV2 & Record<string, unknown>>;

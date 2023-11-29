@@ -1,11 +1,11 @@
-import type * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { getEndpointAvailabilityLabel } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import React, { memo } from "react";
 
 export declare namespace EndpointAvailabilityTag {
     export type Props = React.PropsWithChildren<{
-        availability: FernRegistryApiRead.Availability;
+        availability: APIV1Read.Availability;
         className?: string;
     }>;
 }

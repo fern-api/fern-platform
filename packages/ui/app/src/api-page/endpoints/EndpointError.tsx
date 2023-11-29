@@ -1,4 +1,4 @@
-import { FernRegistry } from "@fern-api/fdr-sdk";
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { useRouter } from "next/router";
@@ -14,7 +14,7 @@ import { getErrorNameForStatus } from "../utils/getErrorNameForStatus";
 
 export declare namespace EndpointError {
     export interface Props {
-        error: FernRegistry.api.v1.read.ErrorDeclarationV2;
+        error: FdrAPI.api.v1.read.ErrorDeclarationV2;
         isFirst: boolean;
         isLast: boolean;
         isSelected: boolean;

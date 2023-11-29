@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { getEndpointEnvironmentUrl } from "@fern-ui/app-utils";
 import { assertNever, assertNeverNoThrow, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { noop } from "lodash-es";
@@ -32,9 +32,9 @@ export interface CurlLineJson {
 export type CurlLine = CurlLineParam | CurlLineJson;
 
 export function getCurlLines(
-    apiDefinition: FernRegistryApiRead.ApiDefinition,
-    endpoint: FernRegistryApiRead.EndpointDefinition,
-    example: FernRegistryApiRead.ExampleEndpointCall,
+    apiDefinition: APIV1Read.ApiDefinition,
+    endpoint: APIV1Read.EndpointDefinition,
+    example: APIV1Read.ExampleEndpointCall,
     jsonLines: JsonLine[]
 ): CurlLine[] {
     const parts: CurlLine[] = [];
@@ -173,7 +173,7 @@ export function getCurlLines(
     return parts;
 }
 
-function isJsonResponse(httpResponse: FernRegistryApiRead.HttpResponse): boolean {
+function isJsonResponse(httpResponse: APIV1Read.HttpResponse): boolean {
     switch (httpResponse.type.type) {
         case "fileDownload":
             return false;
@@ -183,6 +183,8 @@ function isJsonResponse(httpResponse: FernRegistryApiRead.HttpResponse): boolean
             return true;
         case "reference":
             return true;
+        case "streamCondition":
+            return false;
         default:
             assertNever(httpResponse.type);
     }

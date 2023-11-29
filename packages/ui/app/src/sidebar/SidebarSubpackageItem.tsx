@@ -1,4 +1,4 @@
-import * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { NextRouter, useRouter } from "next/router";
 import { memo, ReactElement, useCallback, useEffect, useRef } from "react";
@@ -13,7 +13,7 @@ export declare namespace SidebarSubpackageItem {
         className?: string;
         fullSlug: string;
         registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
-        docsDefinition: FernRegistryDocsRead.DocsDefinition;
+        docsDefinition: DocsV1Read.DocsDefinition;
         activeTabIndex: number | null;
         closeMobileSidebar: () => void;
         pushRoute: NextRouter["push"];

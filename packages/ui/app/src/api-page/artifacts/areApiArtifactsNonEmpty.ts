@@ -1,5 +1,5 @@
-import * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 
-export function areApiArtifactsNonEmpty(apiArtifacts: FernRegistryDocsRead.ApiArtifacts): boolean {
+export function areApiArtifactsNonEmpty(apiArtifacts: DocsV1Read.ApiArtifacts): boolean {
     return apiArtifacts.sdks.length > 0 || apiArtifacts.postman != null;
 }

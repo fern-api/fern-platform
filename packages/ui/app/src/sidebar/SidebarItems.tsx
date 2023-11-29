@@ -1,6 +1,4 @@
-import { FernRegistry } from "@fern-api/fdr-sdk";
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
-import * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
+import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { joinUrlSlugs } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { memo } from "react";
@@ -12,15 +10,15 @@ import { SidebarItem } from "./SidebarItem";
 export declare namespace SidebarItems {
     export interface Props {
         slug: string;
-        navigationItems: FernRegistryDocsRead.NavigationItem[];
+        navigationItems: DocsV1Read.NavigationItem[];
 
         selectedSlug: string | undefined;
         registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
         closeMobileSidebar: () => void;
 
-        docsDefinition: FernRegistryDocsRead.DocsDefinition;
+        docsDefinition: DocsV1Read.DocsDefinition;
         activeTabIndex: number | null;
-        resolveApi: (apiId: FernRegistry.ApiDefinitionId) => FernRegistryApiRead.ApiDefinition;
+        resolveApi: (apiId: FdrAPI.ApiDefinitionId) => APIV1Read.ApiDefinition;
     }
 }
 

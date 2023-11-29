@@ -1,5 +1,4 @@
-import { FernRegistry, PathResolver } from "@fern-api/fdr-sdk";
-import * as FernRegistryDocsReadV2 from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v2/resources/read";
+import { APIV1Read, DocsV1Read, DocsV2Read, PathResolver } from "@fern-api/fdr-sdk";
 import {
     convertNavigatableToResolvedPath,
     generateFontFaces,
@@ -17,7 +16,7 @@ import { useColorTheme } from "../../utils/theme/useColorTheme";
 
 export declare namespace Docs {
     export interface Props {
-        docs: FernRegistryDocsReadV2.LoadDocsForUrlResponse;
+        docs: DocsV2Read.LoadDocsForUrlResponse;
         typographyStyleSheet?: string;
         backgroundImageStyleSheet: string | null;
         resolvedPath: ResolvedPath;
@@ -85,7 +84,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
     const typographyConfig = loadDocTypography(docsDefinition);
     const typographyStyleSheet = generateFontFaces(typographyConfig);
     const backgroundImageStyleSheet = loadDocsBackgroundImage(docsDefinition);
-    type ApiDefinition = FernRegistry.api.v1.read.ApiDefinition;
+    type ApiDefinition = APIV1Read.ApiDefinition;
     const resolver = new PathResolver({
         definition: {
             apis: docs.body.definition.apis as Record<ApiDefinition["id"], ApiDefinition>,
@@ -106,7 +105,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
 
     const resolvedPath = await convertNavigatableToResolvedPath({
         navigatable: resolvedNavigatable,
-        docsDefinition: docsDefinition as FernRegistry.docs.v1.read.DocsDefinition,
+        docsDefinition: docsDefinition as DocsV1Read.DocsDefinition,
         basePath: docs.body.baseUrl.basePath,
     });
 

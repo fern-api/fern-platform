@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import React, { useCallback, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
@@ -15,8 +15,8 @@ import { EndpointContentLeft } from "./EndpointContentLeft";
 
 export declare namespace EndpointContent {
     export interface Props {
-        endpoint: FernRegistryApiRead.EndpointDefinition;
-        package: FernRegistryApiRead.ApiDefinitionPackage;
+        endpoint: APIV1Read.EndpointDefinition;
+        package: APIV1Read.ApiDefinitionPackage;
         anchorIdParts: string[];
         hideBottomSeparator?: boolean;
         setContainerRef: (ref: HTMLElement | null) => void;
@@ -37,9 +37,9 @@ const DEFAULT_CLIENT: CodeExampleClient = {
     name: "cURL",
 };
 
-function getAvailableExampleClients(example: FernRegistryApiRead.ExampleEndpointCall): CodeExampleClient[] {
+function getAvailableExampleClients(example: APIV1Read.ExampleEndpointCall): CodeExampleClient[] {
     const clients: CodeExampleClient[] = [DEFAULT_CLIENT];
-    const { pythonSdk } = example.codeExamples;
+    const { pythonSdk, typescriptSdk } = example.codeExamples;
     if (pythonSdk != null) {
         clients.push(
             {
@@ -55,6 +55,15 @@ function getAvailableExampleClients(example: FernRegistryApiRead.ExampleEndpoint
                 example: pythonSdk.async_client,
             }
         );
+    }
+
+    if (typescriptSdk != null) {
+        clients.push({
+            id: "typescript",
+            name: "TypeScript",
+            language: "TypeScript",
+            example: typescriptSdk.client,
+        });
     }
 
     return clients;

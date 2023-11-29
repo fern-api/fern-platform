@@ -1,5 +1,4 @@
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
-import { ApiSection } from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
+import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import { getEndpointTitleAsString, getSubpackageTitle, isSubpackage } from "@fern-ui/app-utils";
 import { memo } from "react";
 import { ApiPageDescription } from "../ApiPageDescription";
@@ -19,13 +18,13 @@ export interface HoveringProps {
 
 export declare namespace EndpointContentLeft {
     export interface Props {
-        endpoint: FernRegistryApiRead.EndpointDefinition;
-        package: FernRegistryApiRead.ApiDefinitionPackage;
+        endpoint: APIV1Read.EndpointDefinition;
+        package: APIV1Read.ApiDefinitionPackage;
         anchorIdParts: string[];
-        apiSection: ApiSection;
+        apiSection: DocsV1Read.ApiSection;
         onHoverRequestProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
         onHoverResponseProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
-        errors: FernRegistryApiRead.ErrorDeclarationV2[];
+        errors: APIV1Read.ErrorDeclarationV2[];
         selectedErrorIndex: number | null;
         setSelectedErrorIndex: (idx: number | null) => void;
         route: string;

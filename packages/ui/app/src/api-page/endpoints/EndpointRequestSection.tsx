@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ReactElement } from "react";
 import { ApiPageDescription } from "../ApiPageDescription";
@@ -9,7 +9,7 @@ import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
 
 export declare namespace EndpointRequestSection {
     export interface Props {
-        httpRequest: FernRegistryApiRead.HttpRequest;
+        httpRequest: APIV1Read.HttpRequest;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: string[];
         route: string;

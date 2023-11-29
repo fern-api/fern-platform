@@ -1,4 +1,4 @@
-import { FernRegistry, PathResolver } from "@fern-api/fdr-sdk";
+import { FdrAPI, PathResolver } from "@fern-api/fdr-sdk";
 import { GetServerSideProps } from "next";
 import { REGISTRY_SERVICE } from "../../service";
 
@@ -43,7 +43,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params = {}, res 
         };
     }
 
-    type ApiDefinition = FernRegistry.api.v1.read.ApiDefinition;
+    type ApiDefinition = FdrAPI.api.v1.read.ApiDefinition;
     const resolver = new PathResolver({
         definition: {
             apis: docs.body.definition.apis as Record<ApiDefinition["id"], ApiDefinition>,

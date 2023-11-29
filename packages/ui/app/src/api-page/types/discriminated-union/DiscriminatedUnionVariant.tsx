@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { startCase } from "lodash-es";
 import { useCallback, useMemo } from "react";
@@ -14,7 +14,7 @@ import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinitio
 export declare namespace DiscriminatedUnionVariant {
     export interface Props {
         discriminant: string;
-        unionVariant: FernRegistryApiRead.DiscriminatedUnionVariant;
+        unionVariant: APIV1Read.DiscriminatedUnionVariant;
         anchorIdParts: string[];
         route: string;
     }
@@ -28,7 +28,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
 }) => {
     const { isRootTypeDefinition } = useTypeDefinitionContext();
 
-    const shape = useMemo((): FernRegistryApiRead.TypeShape => {
+    const shape = useMemo((): APIV1Read.TypeShape => {
         return {
             ...unionVariant.additionalProperties,
             type: "object",

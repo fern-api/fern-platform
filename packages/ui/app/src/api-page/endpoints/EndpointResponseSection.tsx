@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ReactElement } from "react";
 import { ApiPageDescription } from "../ApiPageDescription";
@@ -9,7 +9,7 @@ import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
 
 export declare namespace EndpointResponseSection {
     export interface Props {
-        httpResponse: FernRegistryApiRead.HttpResponse;
+        httpResponse: APIV1Read.HttpResponse;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: string[];
         route: string;
@@ -36,6 +36,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                     ),
                     fileDownload: () => "returns a file",
                     streamingText: () => "sends text responses over a long-lived HTTP connection",
+                    streamCondition: () => "returns a stream",
                     _other: () => "unknown",
                 })}
                 .
@@ -62,6 +63,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                 ),
                 fileDownload: () => null,
                 streamingText: () => null,
+                streamCondition: () => null,
                 _other: () => null,
             })}
         </div>

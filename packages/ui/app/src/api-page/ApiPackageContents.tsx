@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { doesSubpackageHaveEndpointsOrWebhooksRecursive, joinUrlSlugs } from "@fern-ui/app-utils";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { Endpoint } from "./endpoints/Endpoint";
@@ -7,7 +7,7 @@ import { Webhook } from "./webhooks/Webhook";
 
 export declare namespace ApiPackageContents {
     export interface Props {
-        package: FernRegistryApiRead.ApiDefinitionPackage;
+        package: APIV1Read.ApiDefinitionPackage;
         slug: string;
         isLastInParentPackage: boolean;
         anchorIdParts: string[];

@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { getSubpackageTitle, isSubpackage } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { snakeCase } from "lodash-es";
@@ -16,8 +16,8 @@ import { WebhookSection } from "./WebhookSection";
 
 export declare namespace WebhookContent {
     export interface Props {
-        webhook: FernRegistryApiRead.WebhookDefinition;
-        package: FernRegistryApiRead.ApiDefinitionPackage;
+        webhook: APIV1Read.WebhookDefinition;
+        package: APIV1Read.ApiDefinitionPackage;
         hideBottomSeparator?: boolean;
         setContainerRef: (ref: HTMLElement | null) => void;
         anchorIdParts: string[];
@@ -44,10 +44,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
     const computeAnchor = useCallback(
         (
             attributeType: "headers" | "payload" | "response",
-            attribute?:
-                | FernRegistryApiRead.ObjectProperty
-                | FernRegistryApiRead.PathParameter
-                | FernRegistryApiRead.QueryParameter
+            attribute?: APIV1Read.ObjectProperty | APIV1Read.PathParameter | APIV1Read.QueryParameter
         ) => {
             let anchor = "";
             if (isSubpackage(package_)) {

@@ -1,11 +1,11 @@
-import * as FernRegistryApiRead from "@fern-api/fdr-sdk/dist/generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ReactElement } from "react";
 import { ReferencedTypePreviewPart } from "./ReferencedTypePreviewPart";
 
 export declare namespace TypeShorthand {
     export interface Props {
-        type: FernRegistryApiRead.TypeReference;
+        type: APIV1Read.TypeReference;
         plural: boolean;
         withArticle?: boolean;
     }
@@ -69,6 +69,7 @@ export const TypeShorthand: React.FC<TypeShorthand.Props> = ({ type, plural, wit
                 literal: (literal) =>
                     visitDiscriminatedUnion(literal.value, "type")._visit({
                         stringLiteral: (value) => `"${value.value}"`,
+                        booleanLiteral: (value) => `${value.value}`,
                         _other: () => "<unknown>",
                     }),
                 unknown: () => "any",

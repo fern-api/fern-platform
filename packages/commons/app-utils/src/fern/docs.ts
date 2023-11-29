@@ -1,48 +1,48 @@
-import type * as FernRegistryDocsRead from "@fern-api/fdr-sdk/dist/generated/api/resources/docs/resources/v1/resources/read";
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 
 export function isVersionedNavigationConfig(
-    navigationConfig: FernRegistryDocsRead.NavigationConfig
-): navigationConfig is FernRegistryDocsRead.VersionedNavigationConfig {
-    return Array.isArray((navigationConfig as FernRegistryDocsRead.VersionedNavigationConfig).versions);
+    navigationConfig: DocsV1Read.NavigationConfig
+): navigationConfig is DocsV1Read.VersionedNavigationConfig {
+    return Array.isArray((navigationConfig as DocsV1Read.VersionedNavigationConfig).versions);
 }
 
 export function isUnversionedNavigationConfig(
-    navigationConfig: FernRegistryDocsRead.NavigationConfig
-): navigationConfig is FernRegistryDocsRead.UnversionedNavigationConfig {
+    navigationConfig: DocsV1Read.NavigationConfig
+): navigationConfig is DocsV1Read.UnversionedNavigationConfig {
     return (
         isUnversionedTabbedNavigationConfig(navigationConfig) || isUnversionedUntabbedNavigationConfig(navigationConfig)
     );
 }
 
 export function isUnversionedTabbedNavigationConfig(
-    navigationConfig: FernRegistryDocsRead.NavigationConfig
-): navigationConfig is FernRegistryDocsRead.UnversionedTabbedNavigationConfig {
-    return Array.isArray((navigationConfig as FernRegistryDocsRead.UnversionedTabbedNavigationConfig).tabs);
+    navigationConfig: DocsV1Read.NavigationConfig
+): navigationConfig is DocsV1Read.UnversionedTabbedNavigationConfig {
+    return Array.isArray((navigationConfig as DocsV1Read.UnversionedTabbedNavigationConfig).tabs);
 }
 
 export function isUnversionedUntabbedNavigationConfig(
-    navigationConfig: FernRegistryDocsRead.NavigationConfig
-): navigationConfig is FernRegistryDocsRead.UnversionedUntabbedNavigationConfig {
-    return Array.isArray((navigationConfig as FernRegistryDocsRead.UnversionedUntabbedNavigationConfig).items);
+    navigationConfig: DocsV1Read.NavigationConfig
+): navigationConfig is DocsV1Read.UnversionedUntabbedNavigationConfig {
+    return Array.isArray((navigationConfig as DocsV1Read.UnversionedUntabbedNavigationConfig).items);
 }
 
 export function assertIsVersionedNavigationConfig(
-    config: FernRegistryDocsRead.NavigationConfig
-): asserts config is FernRegistryDocsRead.VersionedNavigationConfig {
+    config: DocsV1Read.NavigationConfig
+): asserts config is DocsV1Read.VersionedNavigationConfig {
     if (!isVersionedNavigationConfig(config)) {
         throw new Error("Invalid navigation config. Expected versioned.");
     }
 }
 
 export function assertIsUnversionedNavigationConfig(
-    config: FernRegistryDocsRead.NavigationConfig
-): asserts config is FernRegistryDocsRead.UnversionedNavigationConfig {
+    config: DocsV1Read.NavigationConfig
+): asserts config is DocsV1Read.UnversionedNavigationConfig {
     if (!isUnversionedNavigationConfig(config)) {
         throw new Error("Invalid navigation config. Expected unversioned.");
     }
 }
 
-export function getVersionAvailabilityLabel(availability: FernRegistryDocsRead.VersionAvailability): string {
+export function getVersionAvailabilityLabel(availability: DocsV1Read.VersionAvailability): string {
     switch (availability) {
         case "Beta":
             return "beta";
