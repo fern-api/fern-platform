@@ -57,7 +57,7 @@ function getAvailableExampleClients(example: APIV1Read.ExampleEndpointCall): Cod
         );
     }
 
-    if (typescriptSdk != null) {
+    if (typescriptSdk != null && typescriptSdk.client != null) {
         clients.push({
             id: "typescript",
             name: "TypeScript",
