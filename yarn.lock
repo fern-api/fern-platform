@@ -2370,7 +2370,7 @@ __metadata:
     sass: ^1.54.0
     stylelint: ^14.14.0
     tailwindcss: ^3.3.2
-    tinycolor: ^0.0.1
+    tinycolor2: ^1.6.0
     typescript: 4.9.4
   languageName: unknown
   linkType: soft
@@ -2449,7 +2449,7 @@ __metadata:
     styled-jsx: ^5.1.2
     stylelint: ^14.14.0
     tailwindcss: ^3.3.2
-    tinycolor: ^0.0.1
+    tinycolor2: ^1.6.0
     typescript: 4.9.4
   languageName: unknown
   linkType: soft
@@ -14695,10 +14695,10 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"tinycolor@npm:^0.0.1":
-  version: 0.0.1
-  resolution: "tinycolor@npm:0.0.1"
-  checksum: 4a9f2d4c2c5d6a4e74f89451d798b54059dd1231a16e57a74d906ca1fb0e78800c7847e22b9ec9cbafe4f66a0c7d0f40d5ba0808b3fa61e97dbf56478a3e1bf1
+"tinycolor2@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "tinycolor2@npm:1.6.0"
+  checksum: 6df4d07fceeedc0a878d7bac47e2cd47c1ceeb1078340a9eb8a295bc0651e17c750f73d47b3028d829f30b85c15e0572c0fd4142083e4c21a30a597e47f47230
   languageName: node
   linkType: hard
 

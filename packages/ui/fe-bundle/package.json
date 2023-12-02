@@ -53,7 +53,7 @@
     "next": "^13.4.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "tinycolor": "^0.0.1"
+    "tinycolor2": "^1.6.0"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^14.0.3",

@@ -4110,7 +4110,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["sass", "npm:1.54.0"],\
             ["stylelint", "npm:14.14.0"],\
             ["tailwindcss", "npm:3.3.2"],\
-            ["tinycolor", "npm:0.0.1"],\
+            ["tinycolor2", "npm:1.6.0"],\
             ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"]\
           ],\
           "linkType": "SOFT"\
@@ -4195,7 +4195,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["styled-jsx", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:5.1.2"],\
             ["stylelint", "npm:14.14.0"],\
             ["tailwindcss", "npm:3.3.2"],\
-            ["tinycolor", "npm:0.0.1"],\
+            ["tinycolor2", "npm:1.6.0"],\
             ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"]\
           ],\
           "linkType": "SOFT"\
@@ -18773,11 +18773,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["tinycolor", [\
-        ["npm:0.0.1", {\
-          "packageLocation": "./.yarn/cache/tinycolor-npm-0.0.1-f8cee68c73-4a9f2d4c2c.zip/node_modules/tinycolor/",\
+      ["tinycolor2", [\
+        ["npm:1.6.0", {\
+          "packageLocation": "./.yarn/cache/tinycolor2-npm-1.6.0-8df41252c6-6df4d07fce.zip/node_modules/tinycolor2/",\
           "packageDependencies": [\
-            ["tinycolor", "npm:0.0.1"]\
+            ["tinycolor2", "npm:1.6.0"]\
           ],\
           "linkType": "HARD"\
         }]\
