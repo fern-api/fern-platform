@@ -24,7 +24,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
     return (
         <div data-route={anchorRoute} className="flex flex-col" style={{ scrollMarginTop: HEADER_HEIGHT }}>
             <div className="group/anchor-container relative mb-3 flex items-center">
-                <AbsolutelyPositionedAnchor route={anchorRoute} verticalPosition="center" />
+                <AbsolutelyPositionedAnchor href={anchorRoute} verticalPosition="center" />
                 <div className="text-text-primary-light dark:text-text-primary-dark text-xl font-extrabold">
                     {title}
                 </div>

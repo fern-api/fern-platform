@@ -91,7 +91,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                     {webhook.headers.length > 0 && (
                         <div className="mt-8 flex">
                             <div className="flex flex-1 flex-col gap-12">
-                                <WebhookSection title="Headers" route={`${route}#${computeAnchor("headers")}`}>
+                                <WebhookSection title="Headers" href={`${route}#${computeAnchor("headers")}`}>
                                     <WebhookHeadersSection
                                         webhook={webhook}
                                         anchorIdParts={anchorIdParts}
@@ -104,7 +104,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
 
                     <div className="mt-8 flex">
                         <div className="flex flex-1 flex-col gap-12">
-                            <WebhookSection title="Payload" route={`${route}#${computeAnchor("payload")}`}>
+                            <WebhookSection title="Payload" href={`${route}#${computeAnchor("payload")}`}>
                                 <WebhookPayloadSection
                                     payload={webhook.payload}
                                     onHoverProperty={onHoverPayloadProperty}
@@ -117,7 +117,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
 
                     <div className="mt-8 flex">
                         <div className="flex flex-1 flex-col gap-12">
-                            <WebhookSection title="Response" route={`${route}#${computeAnchor("response")}`}>
+                            <WebhookSection title="Response" href={`${route}#${computeAnchor("response")}`}>
                                 <WebhookResponseSection />
                             </WebhookSection>
                         </div>

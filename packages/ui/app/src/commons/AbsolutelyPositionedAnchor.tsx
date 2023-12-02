@@ -1,10 +1,11 @@
 import classNames from "classnames";
+import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
 import { LinkIcon } from "./icons/LinkIcon";
 
 export declare namespace AbsolutelyPositionedAnchor {
     export interface Props {
-        route: string;
+        href: Url;
         verticalPosition: "center" | "default";
     }
 }
@@ -12,7 +13,7 @@ export declare namespace AbsolutelyPositionedAnchor {
 /**
  * Can only be used with a parent div that has `position` set to `"relative"`.
  */
-export const AbsolutelyPositionedAnchor: React.FC<AbsolutelyPositionedAnchor.Props> = ({ verticalPosition, route }) => {
+export const AbsolutelyPositionedAnchor: React.FC<AbsolutelyPositionedAnchor.Props> = ({ verticalPosition, href }) => {
     return (
         <div
             className={classNames(
@@ -26,7 +27,7 @@ export const AbsolutelyPositionedAnchor: React.FC<AbsolutelyPositionedAnchor.Pro
             {/* <button onClick={onClick}>
                 <LinkIcon className="t-muted hover:text-text-primary-light hover:dark:text-text-primary-dark h-3.5 w-3.5 transition" />
             </button> */}
-            <Link href={route} shallow={true} scroll={false} replace={true}>
+            <Link href={href} shallow={true} scroll={false} replace={true}>
                 <LinkIcon className="t-muted hover:text-text-primary-light hover:dark:text-text-primary-dark h-3.5 w-3.5 transition" />
             </Link>
         </div>
