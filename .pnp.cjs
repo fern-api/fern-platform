@@ -4095,6 +4095,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.18.13"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", "npm:18.0.6"],\
+            ["@types/tinycolor", "npm:1.1.27"],\
             ["autoprefixer", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:10.4.13"],\
             ["depcheck", "npm:1.4.3"],\
             ["env-cmd", "https://github.com/toddbluhm/env-cmd.git#commit=8f35b71651f6a78710308ff38ab30896ea72ee8b"],\
@@ -4109,6 +4110,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["sass", "npm:1.54.0"],\
             ["stylelint", "npm:14.14.0"],\
             ["tailwindcss", "npm:3.3.2"],\
+            ["tinycolor", "npm:0.0.1"],\
             ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"]\
           ],\
           "linkType": "SOFT"\
@@ -4177,6 +4179,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.18.13"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", "npm:18.0.6"],\
+            ["@types/tinycolor", "npm:1.1.27"],\
             ["autoprefixer", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:10.4.13"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
@@ -4192,6 +4195,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["styled-jsx", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:5.1.2"],\
             ["stylelint", "npm:14.14.0"],\
             ["tailwindcss", "npm:3.3.2"],\
+            ["tinycolor", "npm:0.0.1"],\
             ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"]\
           ],\
           "linkType": "SOFT"\
@@ -6455,6 +6459,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-strip-json-comments-npm-0.0.30-4d685379c3-829ddd3896.zip/node_modules/@types/strip-json-comments/",\
           "packageDependencies": [\
             ["@types/strip-json-comments", "npm:0.0.30"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/tinycolor", [\
+        ["npm:1.1.27", {\
+          "packageLocation": "./.yarn/cache/@types-tinycolor-npm-1.1.27-6f6dfe8e9b-a4d04a9a88.zip/node_modules/@types/tinycolor/",\
+          "packageDependencies": [\
+            ["@types/tinycolor", "npm:1.1.27"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -18756,6 +18769,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/through-npm-2.3.8-df5f72a16e-a38c3e0598.zip/node_modules/through/",\
           "packageDependencies": [\
             ["through", "npm:2.3.8"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["tinycolor", [\
+        ["npm:0.0.1", {\
+          "packageLocation": "./.yarn/cache/tinycolor-npm-0.0.1-f8cee68c73-4a9f2d4c2c.zip/node_modules/tinycolor/",\
+          "packageDependencies": [\
+            ["tinycolor", "npm:0.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\

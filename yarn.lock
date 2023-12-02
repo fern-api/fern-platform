@@ -2355,6 +2355,7 @@ __metadata:
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
     "@types/react-dom": ^18.0.6
+    "@types/tinycolor": ^1.1.27
     autoprefixer: ^10.4.13
     depcheck: ^1.4.3
     env-cmd: toddbluhm/env-cmd
@@ -2369,6 +2370,7 @@ __metadata:
     sass: ^1.54.0
     stylelint: ^14.14.0
     tailwindcss: ^3.3.2
+    tinycolor: ^0.0.1
     typescript: 4.9.4
   languageName: unknown
   linkType: soft
@@ -2431,6 +2433,7 @@ __metadata:
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
     "@types/react-dom": ^18.0.6
+    "@types/tinycolor": ^1.1.27
     autoprefixer: ^10.4.13
     depcheck: ^1.4.3
     eslint: ^8.26.0
@@ -2446,6 +2449,7 @@ __metadata:
     styled-jsx: ^5.1.2
     stylelint: ^14.14.0
     tailwindcss: ^3.3.2
+    tinycolor: ^0.0.1
     typescript: 4.9.4
   languageName: unknown
   linkType: soft
@@ -4340,6 +4344,13 @@ __metadata:
   version: 0.0.30
   resolution: "@types/strip-json-comments@npm:0.0.30"
   checksum: 829ddd389645073f347c5b1924a8c34b8813af29756576e511c46f40e218193cf93ccbade62661d47fc70f707e98f410331729b8c20edfcb2e807d51df1ad4b7
+  languageName: node
+  linkType: hard
+
+"@types/tinycolor@npm:^1.1.27":
+  version: 1.1.27
+  resolution: "@types/tinycolor@npm:1.1.27"
+  checksum: a4d04a9a88ea5ae7b6eafc0c438445a7f4921bbad97b3efdbfc6b84a091cb93ddc8e93a425e7210deccded8cc89b083a5a6c53dc6d9a124811aa19e636a6028c
   languageName: node
   linkType: hard
 
@@ -14681,6 +14692,13 @@ env-cmd@toddbluhm/env-cmd:
   version: 2.3.8
   resolution: "through@npm:2.3.8"
   checksum: a38c3e059853c494af95d50c072b83f8b676a9ba2818dcc5b108ef252230735c54e0185437618596c790bbba8fcdaef5b290405981ffa09dce67b1f1bf190cbd
+  languageName: node
+  linkType: hard
+
+"tinycolor@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "tinycolor@npm:0.0.1"
+  checksum: 4a9f2d4c2c5d6a4e74f89451d798b54059dd1231a16e57a74d906ca1fb0e78800c7847e22b9ec9cbafe4f66a0c7d0f40d5ba0808b3fa61e97dbf56478a3e1bf1
   languageName: node
   linkType: hard
 

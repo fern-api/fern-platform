@@ -52,7 +52,8 @@
     "@fortawesome/pro-solid-svg-icons": "^6.4.2",
     "next": "^13.4.4",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "tinycolor": "^0.0.1"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^14.0.3",
@@ -61,6 +62,7 @@
     "@types/node": "^18.7.18",
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.0.6",
+    "@types/tinycolor": "^1.1.27",
     "autoprefixer": "^10.4.13",
     "depcheck": "^1.4.3",
     "env-cmd": "toddbluhm/env-cmd",

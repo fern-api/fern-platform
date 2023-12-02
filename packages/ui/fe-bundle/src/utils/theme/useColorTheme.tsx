@@ -1,5 +1,6 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { DEFAULT_THEME, useTheme } from "@fern-ui/theme";
+import tinycolor from "tinycolor2";
 
 interface ColorConfig {
     dark: DocsV1Read.RgbColor;
@@ -53,7 +54,11 @@ export function useColorTheme(docsDefinition: DocsV1Read.DocsDefinition): string
     const background = colorsV3.type !== "darkAndLight" ? colorsV3.background : colorsV3[theme].background;
     const backgroundColor = background.type === "solid" ? background : DEFAULT_COLORS.background[theme];
     const accentPrimaryInverted =
-        colorsV3.type !== "darkAndLight" ? colorsV3.accentPrimary : colorsV3[invertedTheme].accentPrimary;
+        colorsV3.type !== "darkAndLight"
+            ? tinycolor(colorsV3.accentPrimary).isDark()
+                ? tinycolor("black").toRgb()
+                : tinycolor("white").toRgb()
+            : colorsV3[invertedTheme].accentPrimary;
     const backgroundInverted =
         colorsV3.type !== "darkAndLight" ? colorsV3.background : colorsV3[invertedTheme].background;
     const backgroundColorInverted =
