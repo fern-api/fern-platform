@@ -1,6 +1,6 @@
 import { Url } from "next/dist/shared/lib/router/router";
 import { resolveHref } from "next/dist/shared/lib/router/utils/resolve-href";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { HEADER_HEIGHT } from "../../constants";
 import { Markdown } from "../markdown/Markdown";
@@ -16,7 +16,7 @@ export declare namespace WebhookSection {
 export const WebhookSection: React.FC<WebhookSection.Props> = ({ title, description, href, children }) => {
     return (
         <div
-            data-route={resolveHref(Router, href)}
+            data-route={resolveHref(useRouter(), href)}
             className="flex flex-col"
             style={{
                 scrollMarginTop: HEADER_HEIGHT,
