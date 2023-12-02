@@ -16,7 +16,7 @@ export const EndpointRecord: React.FC<EndpointRecord.Props> = ({ hit, isHovered 
             <div
                 className={classNames("flex flex-col items-center justify-center rounded-md border p-1", {
                     "border-border-default-light dark:border-border-default-dark": !isHovered,
-                    "border-white bg-white": isHovered,
+                    "border-white bg-white text-black": isHovered,
                 })}
             >
                 <BlueprintIcon

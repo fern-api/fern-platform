@@ -26,7 +26,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                             "flex font-mono shrink-0 items-center justify-center rounded-lg px-2 py-0.5 text-xs uppercase",
                             {
                                 "bg-tag-default-light dark:bg-tag-default-dark": !isHovered,
-                                "bg-white": isHovered,
+                                "bg-tag-default-dark dark:bg-tag-default-light": isHovered,
                             },
                             {
                                 "t-muted": !isHovered,
@@ -48,7 +48,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                                                 "items-center justify-center mx-0.5 rounded px-1 py-0.5 text-xs",
                                                 {
                                                     "bg-tag-default-light dark:bg-tag-default-dark": !isHovered,
-                                                    "bg-white": isHovered,
+                                                    "bg-tag-default-dark dark:bg-tag-default-light": isHovered,
                                                 },
                                                 {
                                                     "t-muted": !isHovered,
