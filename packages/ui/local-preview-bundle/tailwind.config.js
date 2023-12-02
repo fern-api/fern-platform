@@ -36,8 +36,11 @@ module.exports = {
             return {
                 ...colors,
                 "accent-primary": withOpacity("--accent-primary"),
+                "accent-primary-inverted": withOpacity("--accent-primary-inverted"),
                 "accent-highlight": "rgba(var(--accent-primary), 10%)",
+                "accent-highlight-inverted": "rgba(var(--accent-primary-inverted), 10%)",
                 background: withOpacity("--background"),
+                "background-inverted": withOpacity("--background-inverted"),
 
                 "intent-default": "rgb(156, 163, 175)",
                 "intent-warning-dark": "rgb(248, 210, 111)",
@@ -65,6 +68,7 @@ module.exports = {
                 "border-concealed-dark": "rgba(156, 163, 175, 0.15)",
                 "border-concealed-light": "rgba(72, 72, 72, 0.10)",
                 "border-primary": "rgba(var(--accent-primary), 0.30)",
+                "border-primary-inverted": "rgba(var(--accent-primary-inverted), 0.30)",
                 "border-warning-dark": "rgba(251, 191, 36, 0.30)",
                 "border-warning-light": "rgba(217, 119, 6, 0.30)",
                 "border-success-dark": "rgba(74, 222, 128, 0.30)",
@@ -82,6 +86,7 @@ module.exports = {
                 "tag-default-dark": "rgba(255, 255, 255, 15%)",
                 "tag-default-light": "rgba(3, 7, 18, 5%)",
                 "tag-primary": "rgba(var(--accent-primary), 15%)",
+                "tag-primary-inverted": "rgba(var(--accent-primary-inverted), 15%)",
                 "tag-warning-dark": "rgba(251, 190, 36, 0.15)",
                 "tag-warning-light": "rgba(217, 119, 6, 0.10)",
                 "tag-success-dark": "rgba(74, 222, 128, 0.15)",
