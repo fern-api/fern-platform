@@ -56,8 +56,8 @@ export function useColorTheme(docsDefinition: DocsV1Read.DocsDefinition): string
     const accentPrimaryInverted =
         colorsV3.type !== "darkAndLight"
             ? tinycolor(colorsV3.accentPrimary).isDark()
-                ? tinycolor("black").toRgb()
-                : tinycolor("white").toRgb()
+                ? tinycolor("white").toRgb()
+                : tinycolor("black").toRgb()
             : colorsV3[invertedTheme].accentPrimary;
     const backgroundInverted =
         colorsV3.type !== "darkAndLight" ? colorsV3.background : colorsV3[invertedTheme].background;
