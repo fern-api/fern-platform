@@ -13,6 +13,6 @@ export interface DocsContextValue {
     resolvePage: (pageId: DocsV1Read.PageId) => DocsV1Read.PageContent;
     resolveFile: (fileId: DocsV1Read.FileId) => DocsV1Read.Url;
 
-    theme: Theme | undefined;
+    theme: Theme;
     setTheme: (theme: Theme) => void;
 }
