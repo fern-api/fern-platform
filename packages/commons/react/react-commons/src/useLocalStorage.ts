@@ -27,8 +27,19 @@ export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T)
 
         if (!isServer) {
             setStoredValue(initialize());
+
+            // add event listener for changes in other tabs/components
+            const storageEventHandler = (evt: StorageEvent) => {
+                if (evt.key === key) {
+                    setStoredValue(initialize());
+                }
+            };
+            window.addEventListener("storage", storageEventHandler);
+            return () => {
+                window.removeEventListener("storage", storageEventHandler);
+            };
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        return undefined;
     });
 
     const setValue = useCallback(
