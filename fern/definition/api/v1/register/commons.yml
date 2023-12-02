@@ -4,3 +4,13 @@ types:
   WithDescription:
     properties:
       description: optional<string>
+  
+  WithAvailability: 
+    properties: 
+      availability: optional<Availability>
+
+  Availability: 
+    enum: 
+      - GenerallyAvailable
+      - Deprecated
+      - Beta

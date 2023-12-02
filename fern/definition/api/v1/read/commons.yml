@@ -8,3 +8,13 @@ types:
       descriptionContainsMarkdown: 
         type: optional<boolean>
         docs: If false, description is just text
+  
+  WithAvailability: 
+    properties: 
+      availability: optional<Availability>
+  
+  Availability: 
+    enum: 
+      - GenerallyAvailable
+      - Deprecated
+      - Beta

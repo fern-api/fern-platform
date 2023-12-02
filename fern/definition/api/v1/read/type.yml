@@ -7,7 +7,9 @@ types:
   TypeId: string
 
   TypeDefinition:
-    extends: commons.WithDescription
+    extends: 
+       - commons.WithDescription
+       - commons.WithAvailability
     properties:
       name: string
       shape: TypeShape
@@ -39,7 +41,9 @@ types:
   PropertyKey: string
 
   ObjectProperty:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithAvailability
     properties:
       key: PropertyKey
       valueType: TypeReference
@@ -87,7 +91,9 @@ types:
       variants: list<UndiscriminatedUnionVariant>
 
   UndiscriminatedUnionVariant:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithAvailability
     properties:
       displayName: optional<string>
       type: TypeReference
@@ -98,7 +104,9 @@ types:
       variants: list<DiscriminatedUnionVariant>
 
   DiscriminatedUnionVariant:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithAvailability
     properties:
       discriminantValue: string
       additionalProperties: ObjectType

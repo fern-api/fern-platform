@@ -476,6 +476,7 @@ function transformTypeDefinition({
     const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
+        availability: writeShape.availability,
         htmlDescription,
         name: writeShape.name,
         shape: transformShape({ writeShape: writeShape.shape }),
@@ -531,6 +532,7 @@ function transformProperty({
     const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
+        availability: writeShape.availability,
         htmlDescription,
         key: writeShape.key,
         valueType: writeShape.valueType,
@@ -560,6 +562,7 @@ function transformDiscriminatedVariant({
     const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
+        availability: writeShape.availability,
         htmlDescription,
         descriptionContainsMarkdown: true,
         discriminantValue: writeShape.discriminantValue,
@@ -580,6 +583,7 @@ function transformUnDiscriminatedVariant({
     const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
+        availability: writeShape.availability,
         htmlDescription,
         type: writeShape.type,
         displayName: writeShape.typeName != null ? startCase(writeShape.typeName) : undefined,

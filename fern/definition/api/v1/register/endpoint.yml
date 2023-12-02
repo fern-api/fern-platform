@@ -9,17 +9,12 @@ types:
 
   EndpointId: string
 
-  Availability: 
-    enum: 
-      - GenerallyAvailable
-      - Deprecated
-      - Beta
-
   EndpointDefinition:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithAvailability
     properties:
       auth: optional<boolean>
-      availability: optional<Availability>
       defaultEnvironment: optional<EnvironmentId>
       environments: optional<list<Environment>>
       method: HttpMethod
@@ -58,7 +53,9 @@ types:
       pathParameter: PathParameterKey
 
   PathParameter:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithAvailability
     properties:
       key: PathParameterKey
       type: type.TypeReference
@@ -66,13 +63,17 @@ types:
   PathParameterKey: string
 
   QueryParameter:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithAvailability
     properties:
       key: string
       type: type.TypeReference
 
   Header:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithAvailability
     properties:
       key: string
       type: type.TypeReference
@@ -109,13 +110,17 @@ types:
       type: HttpResponseBodyShape
 
   ErrorDeclaration:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithAvailability
     properties:
       type: optional<type.TypeReference>
       statusCode: integer
   
   ErrorDeclarationV2: 
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithAvailability
     properties: 
       type: optional<type.TypeShape>
       statusCode: integer
