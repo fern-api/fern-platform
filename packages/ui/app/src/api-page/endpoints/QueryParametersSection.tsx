@@ -25,6 +25,7 @@ export const QueryParametersSection: React.FC<QueryParametersSection.Props> = ({
                 descriptionContainsMarkdown: queryParameter.descriptionContainsMarkdown ?? false,
                 anchorIdParts: [...anchorIdParts, queryParameter.key],
                 route,
+                availability: queryParameter.availability,
             })
         );
     }, [queryParameters, anchorIdParts, route]);

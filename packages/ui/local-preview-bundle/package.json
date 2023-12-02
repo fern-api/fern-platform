@@ -32,7 +32,7 @@
     "lint": "yarn compile && next lint"
   },
   "dependencies": {
-    "@fern-api/fdr-sdk": "0.43.1-1-geffa6f8",
+    "@fern-api/fdr-sdk": "0.44.0-1-geb2e930",
     "@fern-ui/app-utils": "workspace:*",
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/theme": "workspace:*",

@@ -5,6 +5,7 @@ import { getAnchorId } from "../../util/anchor";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
+import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 
 export declare namespace EndpointParameter {
     export interface Props {
@@ -14,6 +15,7 @@ export declare namespace EndpointParameter {
         type: APIV1Read.TypeReference;
         anchorIdParts: string[];
         route: string;
+        availability?: APIV1Read.Availability;
     }
 }
 
@@ -23,6 +25,7 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
     anchorIdParts,
     route,
     type,
+    availability,
 }) => {
     const anchorId = getAnchorId(anchorIdParts);
     const anchorRoute = `${route}#${anchorId}`;
@@ -34,6 +37,7 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
                 <div className="t-muted text-xs">
                     <TypeShorthand type={type} plural={false} />
                 </div>
+                {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
             </div>
             <ApiPageDescription isMarkdown={true} description={description} />
             <TypeReferenceDefinitions

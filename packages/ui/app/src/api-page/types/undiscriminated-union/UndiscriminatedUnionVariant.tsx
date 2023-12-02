@@ -2,6 +2,7 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { ReactElement, useCallback } from "react";
 import { ApiPageDescription } from "../../ApiPageDescription";
+import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
@@ -115,6 +116,9 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
                     <span className="t-muted text-xs">
                         <TypeShorthand type={unionVariant.type} plural={false} />
                     </span>
+                    {unionVariant.availability != null && (
+                        <EndpointAvailabilityTag availability={unionVariant.availability} minimal={true} />
+                    )}
                 </div>
                 <ApiPageDescription className="mt-2" description={unionVariant.description} isMarkdown />
                 <TypeDefinitionContext.Provider value={newContextValue}>

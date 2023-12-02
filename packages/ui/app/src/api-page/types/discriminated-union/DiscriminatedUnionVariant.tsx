@@ -4,6 +4,7 @@ import { startCase } from "lodash-es";
 import { useCallback, useMemo } from "react";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { ApiPageDescription } from "../../ApiPageDescription";
+import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
@@ -73,6 +74,9 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
             <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">
                 {startCase(unionVariant.discriminantValue)}
             </MonospaceText>
+            {unionVariant.availability != null && (
+                <EndpointAvailabilityTag availability={unionVariant.availability} minimal={true} />
+            )}
             <div className="flex flex-col">
                 <ApiPageDescription description={unionVariant.description} isMarkdown={true} />
                 <TypeDefinitionContext.Provider value={newContextValue}>

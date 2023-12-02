@@ -3925,10 +3925,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/fdr-sdk", [\
-        ["npm:0.43.1-1-geffa6f8", {\
-          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.43.1-1-geffa6f8-21691d4764-9b44d2a698.zip/node_modules/@fern-api/fdr-sdk/",\
+        ["npm:0.44.0-1-geb2e930", {\
+          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.44.0-1-geb2e930-a7c9e098e5-2d0b70a66e.zip/node_modules/@fern-api/fdr-sdk/",\
           "packageDependencies": [\
-            ["@fern-api/fdr-sdk", "npm:0.43.1-1-geffa6f8"],\
+            ["@fern-api/fdr-sdk", "npm:0.44.0-1-geb2e930"],\
             ["@ungap/url-search-params", "npm:0.2.2"],\
             ["axios", "npm:0.27.2"],\
             ["js-base64", "npm:3.7.2"],\
@@ -3958,7 +3958,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/commons/app-utils/",\
           "packageDependencies": [\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
-            ["@fern-api/fdr-sdk", "npm:0.43.1-1-geffa6f8"],\
+            ["@fern-api/fdr-sdk", "npm:0.44.0-1-geb2e930"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@types/jest", "npm:29.5.9"],\
             ["@types/lodash-es", "npm:4.17.12"],\
@@ -4077,7 +4077,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/ui/fe-bundle/",\
           "packageDependencies": [\
             ["@fern-ui/fe-bundle", "workspace:packages/ui/fe-bundle"],\
-            ["@fern-api/fdr-sdk", "npm:0.43.1-1-geffa6f8"],\
+            ["@fern-api/fdr-sdk", "npm:0.44.0-1-geb2e930"],\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/theme", "workspace:packages/commons/react/theme"],\
@@ -4160,7 +4160,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/ui/local-preview-bundle/",\
           "packageDependencies": [\
             ["@fern-ui/local-preview-bundle", "workspace:packages/ui/local-preview-bundle"],\
-            ["@fern-api/fdr-sdk", "npm:0.43.1-1-geffa6f8"],\
+            ["@fern-api/fdr-sdk", "npm:0.44.0-1-geb2e930"],\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/theme", "workspace:packages/commons/react/theme"],\
@@ -4387,7 +4387,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@blueprintjs/icons", "npm:4.9.0"],\
             ["@blueprintjs/popover2", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.8.0"],\
             ["@blueprintjs/select", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.5.1"],\
-            ["@fern-api/fdr-sdk", "npm:0.43.1-1-geffa6f8"],\
+            ["@fern-api/fdr-sdk", "npm:0.44.0-1-geb2e930"],\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/react-commons", "workspace:packages/commons/react/react-commons"],\

@@ -6,6 +6,7 @@ import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositione
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { getAnchorId } from "../../../util/anchor";
 import { ApiPageDescription } from "../../ApiPageDescription";
+import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
 import {
     TypeDefinitionContext,
@@ -109,7 +110,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
             <div className="flex items-baseline gap-2">
                 <div className="group/anchor-container relative">
                     <AbsolutelyPositionedAnchor verticalPosition="center" href={anchorRoute} />
-                    <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName}>
+                    <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName} className="flex">
                         <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">
                             {property.key}
                         </MonospaceText>
@@ -118,6 +119,9 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
                 <div className="t-muted text-xs">
                     <TypeShorthand type={property.valueType} plural={false} />
                 </div>
+                {property.availability != null && (
+                    <EndpointAvailabilityTag availability={property.availability} minimal={true} />
+                )}
             </div>
             <div className="flex flex-col">
                 <ApiPageDescription className="mt-3" isMarkdown={true} description={descriptionInfo?.description} />
