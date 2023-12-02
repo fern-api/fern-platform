@@ -2355,7 +2355,6 @@ __metadata:
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
     "@types/react-dom": ^18.0.6
-    "@types/tinycolor": ^1.1.27
     autoprefixer: ^10.4.13
     depcheck: ^1.4.3
     env-cmd: toddbluhm/env-cmd
@@ -2433,7 +2432,6 @@ __metadata:
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
     "@types/react-dom": ^18.0.6
-    "@types/tinycolor": ^1.1.27
     autoprefixer: ^10.4.13
     depcheck: ^1.4.3
     eslint: ^8.26.0
@@ -4344,13 +4342,6 @@ __metadata:
   version: 0.0.30
   resolution: "@types/strip-json-comments@npm:0.0.30"
   checksum: 829ddd389645073f347c5b1924a8c34b8813af29756576e511c46f40e218193cf93ccbade62661d47fc70f707e98f410331729b8c20edfcb2e807d51df1ad4b7
-  languageName: node
-  linkType: hard
-
-"@types/tinycolor@npm:^1.1.27":
-  version: 1.1.27
-  resolution: "@types/tinycolor@npm:1.1.27"
-  checksum: a4d04a9a88ea5ae7b6eafc0c438445a7f4921bbad97b3efdbfc6b84a091cb93ddc8e93a425e7210deccded8cc89b083a5a6c53dc6d9a124811aa19e636a6028c
   languageName: node
   linkType: hard
 
