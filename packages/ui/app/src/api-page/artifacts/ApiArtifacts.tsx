@@ -3,7 +3,6 @@ import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { joinUrlSlugs } from "@fern-ui/app-utils";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { API_ARTIFACTS_TITLE } from "../../config";
-import { HEADER_HEIGHT } from "../../constants";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { DotNetLogo } from "./sdk-logos/DotNetLogo";
@@ -28,7 +27,7 @@ export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiArtifacts }) => 
 
     return (
         <ApiPageMargins>
-            <div ref={setTargetRef} data-route={`/${slug}`} style={{ scrollMarginTop: HEADER_HEIGHT }}>
+            <div ref={setTargetRef} data-route={`/${slug}`} className="scroll-mt-16">
                 <H2 className="pt-20">{API_ARTIFACTS_TITLE}</H2>
                 <div className="t-muted mt-5 text-lg">
                     Official open-source client libraries for your favorite platforms.

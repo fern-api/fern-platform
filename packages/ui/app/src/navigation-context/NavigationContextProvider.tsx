@@ -73,6 +73,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const navigateToRoute = useRef((route: string, disableSmooth = false) => {
         if (!userIsScrolling.current) {
             const node = getRouteNode(route);
+            console.log(node);
             node?.scrollIntoView({
                 behavior: route.includes("#") && !disableSmooth ? "smooth" : "auto",
             });
@@ -165,19 +166,20 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         scrollToPathListeners.invokeListeners(fullSlug);
     });
 
+    const timeout = useRef<NodeJS.Timeout>();
+
     const navigateToPath = useEventCallback((fullSlug: string) => {
         justNavigated.current = true;
         const navigatable = resolver.resolveNavigatable(fullSlug);
+        navigateToRoute.current(`/${fullSlug}`);
         if (navigatable != null) {
             setActiveNavigatable(navigatable);
         }
         // navigateToPathListeners.invokeListeners(slug);
-        const timeout = setTimeout(() => {
+        timeout.current != null && clearTimeout(timeout.current);
+        timeout.current = setTimeout(() => {
             justNavigated.current = false;
         }, 500);
-        return () => {
-            clearTimeout(timeout);
-        };
     });
 
     useEffect(() => {
