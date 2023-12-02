@@ -290,7 +290,13 @@ export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className
     );
 
     return (
-        <Link className={classNamesCombined} href={href ?? "#"} target={isExternalUrl ? "_blank" : undefined} {...rest}>
+        <Link
+            className={classNamesCombined}
+            href={href ?? "#"}
+            target={isExternalUrl ? "_blank" : undefined}
+            rel={isExternalUrl ? "noopener noreferrer" : undefined}
+            {...rest}
+        >
             {children}
         </Link>
     );
