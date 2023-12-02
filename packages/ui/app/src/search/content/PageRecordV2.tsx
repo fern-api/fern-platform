@@ -17,7 +17,7 @@ export const PageRecordV2: React.FC<PageRecordV2.Props> = ({ hit, isHovered }) =
                 <span
                     className={classNames("line-clamp-1 text-xs text-start", {
                         "text-text-primary-light dark:text-text-primary-dark": !isHovered,
-                        "text-white": isHovered,
+                        "text-white dark:text-black": isHovered,
                     })}
                 >
                     {hit.title}
@@ -25,7 +25,7 @@ export const PageRecordV2: React.FC<PageRecordV2.Props> = ({ hit, isHovered }) =
                 <div
                     className={classNames("text-xs tracking-wide", {
                         "t-muted": !isHovered,
-                        "text-white": isHovered,
+                        "text-white dark:text-black": isHovered,
                     })}
                 >
                     Page
@@ -34,7 +34,7 @@ export const PageRecordV2: React.FC<PageRecordV2.Props> = ({ hit, isHovered }) =
             <div className="flex items-center justify-between">
                 <span
                     className={classNames("line-clamp-1 text-start text-xs", {
-                        "text-white": isHovered,
+                        "text-white dark:text-black": isHovered,
                         "t-muted": !isHovered,
                     })}
                 >
@@ -43,7 +43,7 @@ export const PageRecordV2: React.FC<PageRecordV2.Props> = ({ hit, isHovered }) =
 
                 <ArrowUTurnRightIcon
                     className={classNames("h-3 w-3 rotate-180", {
-                        "text-white": isHovered,
+                        "text-white dark:text-black": isHovered,
                         "t-muted": !isHovered,
                     })}
                 />

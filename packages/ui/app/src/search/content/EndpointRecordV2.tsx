@@ -18,7 +18,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                 <div
                     className={classNames("line-clamp-1 flex space-x-1 items-center text-xs text-start", {
                         "t-muted": !isHovered,
-                        "text-white": isHovered,
+                        "text-white dark:text-black": isHovered,
                     })}
                 >
                     <div
@@ -68,7 +68,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                 <div
                     className={classNames("text-xs tracking-wide", {
                         "t-muted": !isHovered,
-                        "text-white": isHovered,
+                        "text-white dark:text-black": isHovered,
                     })}
                 >
                     Endpoint
@@ -77,7 +77,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
             <div className="flex items-center justify-between">
                 <span
                     className={classNames("line-clamp-1 text-start text-xs", {
-                        "text-white": isHovered,
+                        "text-white dark:text-black": isHovered,
                         "t-muted": !isHovered,
                     })}
                 >
@@ -86,7 +86,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
 
                 <ArrowUTurnRightIcon
                     className={classNames("h-3 w-3 rotate-180", {
-                        "text-white": isHovered,
+                        "text-white dark:text-black": isHovered,
                         "t-muted": !isHovered,
                     })}
                 />
