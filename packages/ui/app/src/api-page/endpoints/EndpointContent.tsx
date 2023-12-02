@@ -1,4 +1,5 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import { useLocalStorage } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import React, { useCallback, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
@@ -100,7 +101,10 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         [setHoveredResponsePropertyPath]
     );
 
-    const [selectedExampleClient, setSelectedExampleClient] = useState<CodeExampleClient>(DEFAULT_CLIENT);
+    const [selectedExampleClient, setSelectedExampleClient] = useLocalStorage<CodeExampleClient>(
+        "fern-client",
+        DEFAULT_CLIENT
+    );
     const [selectedErrorIndex, setSelectedErrorIndex] = useState<number | null>(null);
 
     const errors = useMemo(() => {
