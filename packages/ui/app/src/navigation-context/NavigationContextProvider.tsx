@@ -73,7 +73,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const navigateToRoute = useRef((route: string, disableSmooth = false) => {
         if (!userIsScrolling.current) {
             const node = getRouteNode(route);
-            console.log(node);
             node?.scrollIntoView({
                 behavior: route.includes("#") && !disableSmooth ? "smooth" : "auto",
             });
