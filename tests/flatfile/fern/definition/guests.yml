@@ -20,6 +20,7 @@ service:
           spaceId:
             docs: ID of space to return
             type: commons.SpaceId
+            availability: deprecated
           email:
             docs: Email of guest to return
             type: optional<string>
@@ -132,6 +133,7 @@ types:
       fromName:
         type: optional<string>
         docs: The name of the person or company sending the invitation
+        availability: in-development
       message:
         type: optional<string>
         docs: Message to send with the invite
