@@ -33,7 +33,7 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
             className="group/anchor-container relative flex flex-col gap-2 py-3"
             style={{ scrollMarginTop: HEADER_HEIGHT }}
         >
-            <AbsolutelyPositionedAnchor verticalPosition="default" route={anchorRoute} />
+            <AbsolutelyPositionedAnchor verticalPosition="default" href={anchorRoute} />
             <div className="flex items-baseline gap-1">
                 <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">{name}</MonospaceText>
                 <div className="t-muted text-xs">

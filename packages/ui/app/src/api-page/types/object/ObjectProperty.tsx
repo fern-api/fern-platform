@@ -110,7 +110,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
         >
             <div className="flex items-baseline gap-2">
                 <div className="group/anchor-container relative">
-                    <AbsolutelyPositionedAnchor verticalPosition="center" route={anchorRoute} />
+                    <AbsolutelyPositionedAnchor verticalPosition="center" href={anchorRoute} />
                     <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName}>
                         <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">
                             {property.key}
