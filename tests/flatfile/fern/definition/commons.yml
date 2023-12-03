@@ -177,6 +177,7 @@ types:
       - weekly
       - daily
       - hourly
+    availability: deprecated
 
   SortDirection:
     docs: Sort direction - asc (ascending) or desc (descending)

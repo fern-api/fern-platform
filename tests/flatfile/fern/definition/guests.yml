@@ -24,6 +24,11 @@ service:
           email:
             docs: Email of guest to return
             type: optional<string>
+        headers:
+          x-fern-agent-id:
+            docs: Agent ID
+            type: optional<commons.AgentId>
+            availability: in-development
       response: ListGuestsResponse
 
     create:
