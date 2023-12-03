@@ -25,6 +25,7 @@ export const PathParametersSection: React.FC<PathParametersSection.Props> = ({
                 descriptionContainsMarkdown: pathParameter.descriptionContainsMarkdown ?? false,
                 anchorIdParts: [...anchorIdParts, pathParameter.key],
                 route,
+                availability: undefined, // path parameters cannot have availability
             })
         );
     }, [pathParameters, anchorIdParts, route]);
