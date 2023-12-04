@@ -9,6 +9,7 @@ import {
     FailedToDeleteIndexSegment,
     FailedToRegisterDocsNotification,
     FailedToRevalidatePathsNotification,
+    GeneratingDocsNotification,
     SlackService,
 } from "../services/slack/SlackService";
 import { ParsedBaseUrl } from "../util/ParsedBaseUrl";
@@ -70,6 +71,10 @@ class MockSlackService implements SlackService {
     async notifyFailedToDeleteIndexSegment(_request: FailedToDeleteIndexSegment): Promise<void> {
         return;
     }
+
+    async notifyGeneratedDocs(_request: GeneratingDocsNotification): Promise<void> {
+        return;
+    }
 }
 
 class MockRevalidatorService implements RevalidatorService {
@@ -99,6 +104,7 @@ export function createMockFdrConfig(): FdrConfig {
         algoliaSearchApiKey: "",
         slackToken: "",
         logLevel: "debug",
+        enableCustomerNotifications: false,
     };
 }
 

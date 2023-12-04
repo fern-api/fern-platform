@@ -60,6 +60,11 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 domain: req.body.domain,
                 filepaths: req.body.filepaths,
             });
+
+            await app.services.slack.notifyGeneratedDocs({
+                orgId: req.body.orgId,
+                urls: [fernUrl.toURL().toString(), ...customUrls.map((url) => url.toURL().toString())],
+            });
             DOCS_REGISTRATIONS[docsRegistrationId] = {
                 fernUrl: fernUrl,
                 customUrls: customUrls,

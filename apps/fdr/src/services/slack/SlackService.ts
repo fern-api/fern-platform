@@ -1,6 +1,6 @@
 import { WebClient } from "@slack/web-api";
 import winston from "winston";
-import type { FdrApplication } from "../../app";
+import type { FdrApplication, FdrConfig } from "../../app";
 import { RevalidatedPaths } from "../revalidator/RevalidatorService";
 
 export interface FailedToRegisterDocsNotification {
@@ -18,7 +18,13 @@ export interface FailedToDeleteIndexSegment {
     err: unknown;
 }
 
+export interface GeneratingDocsNotification {
+    orgId: string;
+    urls: string[];
+}
+
 export interface SlackService {
+    notifyGeneratedDocs(request: GeneratingDocsNotification): Promise<void>;
     notifyFailedToRegisterDocs(request: FailedToRegisterDocsNotification): Promise<void>;
     notifyFailedToRevalidatePaths(request: FailedToRevalidatePathsNotification): Promise<void>;
     notifyFailedToDeleteIndexSegment(request: FailedToDeleteIndexSegment): Promise<void>;
@@ -28,11 +34,26 @@ export interface SlackService {
 export class SlackServiceImpl implements SlackService {
     private client: WebClient;
     private logger: winston.Logger;
+    private config: FdrConfig;
 
     constructor(app: FdrApplication) {
-        const { config } = app;
-        this.client = new WebClient(config.slackToken);
+        this.config = app.config;
+        this.client = new WebClient(this.config.slackToken);
         this.logger = app.logger;
+    }
+
+    async notifyGeneratedDocs(request: GeneratingDocsNotification): Promise<void> {
+        if (this.config.enableCustomerNotifications) {
+            try {
+                await this.client.chat.postMessage({
+                    channel: "#customer-notifs",
+                    text: `:herb: ${request.orgId} is generating docs for urls [${request.urls.join(", ")}]`,
+                    blocks: [],
+                });
+            } catch (err) {
+                this.logger.debug("Failed to send slack message: ", err);
+            }
+        }
     }
 
     async notify(message: string, err: unknown): Promise<void> {

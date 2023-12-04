@@ -108,6 +108,7 @@ export class FdrDeployStack extends Stack {
                     ALGOLIA_SEARCH_API_KEY: getEnvironmentVariableOrThrow("ALGOLIA_SEARCH_API_KEY"),
                     SLACK_TOKEN: getEnvironmentVariableOrThrow("FERNIE_SLACK_APP_TOKEN"),
                     LOG_LEVEL: getLogLevel(environmentType),
+                    ENABLE_CUSTOMER_NOTIFICATIONS: (environmentType === "PROD").toString(),
                 },
                 containerName: CONTAINER_NAME,
                 containerPort: 8080,
