@@ -1,4 +1,5 @@
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
+import { HEADER_HEIGHT } from "../../constants";
 import { getAnchorId } from "../../util/anchor";
 import { Markdown } from "../markdown/Markdown";
 
@@ -21,7 +22,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
     const anchorId = getAnchorId(anchorIdParts);
     const anchorRoute = `${route}#${anchorId}`;
     return (
-        <div data-route={anchorRoute} className="flex scroll-mt-16 flex-col">
+        <div data-route={anchorRoute} className="flex flex-col" style={{ scrollMarginTop: HEADER_HEIGHT }}>
             <div className="group/anchor-container relative mb-3 flex items-center">
                 <AbsolutelyPositionedAnchor href={anchorRoute} verticalPosition="center" />
                 <div className="text-text-primary-light dark:text-text-primary-dark text-xl font-extrabold">

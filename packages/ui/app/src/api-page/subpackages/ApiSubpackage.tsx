@@ -1,5 +1,6 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
+import { HEADER_HEIGHT } from "../../constants";
 import { ApiPackageContents } from "../ApiPackageContents";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
@@ -25,7 +26,7 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({
     return (
         <>
             <ApiPageMargins>
-                <div ref={setTargetRef} data-route={`/${slug}`} className="scroll-mt-16" />
+                <div ref={setTargetRef} data-route={`/${slug}`} style={{ scrollMarginTop: HEADER_HEIGHT }} />
             </ApiPageMargins>
             <ApiPackageContents
                 key={subpackageId}
