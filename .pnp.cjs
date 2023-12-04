@@ -4412,7 +4412,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.26.0"],\
             ["instantsearch.js", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.56.3"],\
             ["jest", "virtual:bcd55ef18af2de5c61a0e7e421459a5298122a73e58d78d0d17e7844bafe08261ee360689337ea7f273d858b0bea9e1ae69c5bf08a019e466a6e255cefe36bc1#npm:29.7.0"],\
-            ["jotai", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.6.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["lru-cache", "npm:10.0.1"],\
             ["marked", "npm:5.1.2"],\
@@ -13407,28 +13406,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/jiti-npm-1.18.2-112a8d9b37-46c41cd82d.zip/node_modules/jiti/",\
           "packageDependencies": [\
             ["jiti", "npm:1.18.2"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["jotai", [\
-        ["npm:2.6.0", {\
-          "packageLocation": "./.yarn/cache/jotai-npm-2.6.0-dc8e6aef45-6e9ee39770.zip/node_modules/jotai/",\
-          "packageDependencies": [\
-            ["jotai", "npm:2.6.0"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
-        ["virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.6.0", {\
-          "packageLocation": "./.yarn/__virtual__/jotai-virtual-cc67c173a4/0/cache/jotai-npm-2.6.0-dc8e6aef45-6e9ee39770.zip/node_modules/jotai/",\
-          "packageDependencies": [\
-            ["jotai", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.6.0"],\
-            ["@types/react", "npm:18.0.20"],\
-            ["react", "npm:18.2.0"]\
-          ],\
-          "packagePeers": [\
-            "@types/react",\
-            "react"\
           ],\
           "linkType": "HARD"\
         }]\

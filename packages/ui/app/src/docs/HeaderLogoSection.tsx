@@ -14,6 +14,10 @@ export const HeaderLogoSection: React.FC = () => {
     const { definitionInfo, activeVersionContext } = useDocsSelectors();
     const { logo, logoV2, logoHeight, logoHref } = docsDefinition.config;
 
+    if (theme == null) {
+        return null;
+    }
+
     const logoForTheme = logoV2 != null ? logoV2[theme] : logo;
     const hasMultipleVersions = definitionInfo.type === "versioned";
     const activeVersionId =
