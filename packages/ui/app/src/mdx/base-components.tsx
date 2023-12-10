@@ -2,6 +2,7 @@ import classNames from "classnames";
 import Link from "next/link";
 import React, { AnchorHTMLAttributes, HTMLAttributes } from "react";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
+import { useNavigationContext } from "../navigation-context";
 import { onlyText } from "../util/onlyText";
 
 type InlineCodeProps = {
@@ -93,6 +94,16 @@ const flatten = (
         : React.Children.toArray((child as React.ReactElement).props.children).reduce(flatten, text);
 };
 
+/**
+ * By default, next will use /host/current/slug in SSG.
+ * Because of our custom routing (PathResolver) implementation, we need to override the pathname to be /basePath/current/slug.
+ * @returns /basepath/current/slug
+ */
+function useCurrentPathname(): string {
+    const { basePath, resolvedPath } = useNavigationContext();
+    return basePath != null ? `/${basePath}/${resolvedPath.fullSlug}` : `/${resolvedPath.fullSlug}`;
+}
+
 export const H1: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ...rest }) => {
     const children = React.Children.toArray(rest.children);
     const text = children.reduce(flatten, "");
@@ -106,7 +117,10 @@ export const H1: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             )}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor href={{ hash: slug }} verticalPosition="center" />
+            <AbsolutelyPositionedAnchor
+                href={{ hash: slug, pathname: useCurrentPathname() }}
+                verticalPosition="center"
+            />
             <span>{children}</span>
         </h1>
     );
@@ -125,7 +139,10 @@ export const H2: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             )}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor href={{ hash: slug }} verticalPosition="center" />
+            <AbsolutelyPositionedAnchor
+                href={{ hash: slug, pathname: useCurrentPathname() }}
+                verticalPosition="center"
+            />
             {children}
         </h2>
     );
@@ -144,7 +161,10 @@ export const H3: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             )}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor href={{ hash: slug }} verticalPosition="center" />
+            <AbsolutelyPositionedAnchor
+                href={{ hash: slug, pathname: useCurrentPathname() }}
+                verticalPosition="center"
+            />
             {children}
         </h3>
     );
@@ -163,7 +183,10 @@ export const H4: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             )}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor href={{ hash: slug }} verticalPosition="center" />
+            <AbsolutelyPositionedAnchor
+                href={{ hash: slug, pathname: useCurrentPathname() }}
+                verticalPosition="center"
+            />
             {children}
         </h4>
     );
@@ -182,7 +205,10 @@ export const H5: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             )}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor href={{ hash: slug }} verticalPosition="center" />
+            <AbsolutelyPositionedAnchor
+                href={{ hash: slug, pathname: useCurrentPathname() }}
+                verticalPosition="center"
+            />
             {children}
         </h5>
     );
@@ -201,7 +227,10 @@ export const H6: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             )}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor href={{ hash: slug }} verticalPosition="center" />
+            <AbsolutelyPositionedAnchor
+                href={{ hash: slug, pathname: useCurrentPathname() }}
+                verticalPosition="center"
+            />
             {children}
         </h6>
     );
