@@ -5,12 +5,12 @@ import { useEffect, useMemo } from "react";
 import { type Theme } from "./theme";
 
 interface UseThemeReturnType {
-    theme: Theme;
+    theme: Theme | undefined;
     setTheme: (theme: Theme) => void;
 }
 
 export function useTheme(colorConfigType: "dark" | "light" | "darkAndLight"): UseThemeReturnType {
-    const { setTheme, theme, resolvedTheme } = _useTheme();
+    const { setTheme, resolvedTheme } = _useTheme();
 
     useEffect(() => {
         if (colorConfigType !== "darkAndLight") {
@@ -18,11 +18,11 @@ export function useTheme(colorConfigType: "dark" | "light" | "darkAndLight"): Us
         }
     }, [colorConfigType, setTheme]);
 
-    return useMemo(() => {
+    return useMemo((): UseThemeReturnType => {
         if (colorConfigType !== "darkAndLight") {
             return { theme: colorConfigType, setTheme };
         }
 
-        return { theme: theme ?? resolvedTheme ?? "dark", setTheme } as UseThemeReturnType;
-    }, [colorConfigType, resolvedTheme, setTheme, theme]);
+        return { theme: resolvedTheme as Theme | undefined, setTheme };
+    }, [colorConfigType, resolvedTheme, setTheme]);
 }

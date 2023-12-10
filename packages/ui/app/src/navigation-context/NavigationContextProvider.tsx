@@ -111,7 +111,13 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     }, [navigateToRoute, router.events]);
 
     const setUserIsScrollingFalse = useRef(
-        debounce(() => (userIsScrolling.current = false), 100, { leading: false, trailing: true })
+        debounce(
+            () => {
+                userIsScrolling.current = false;
+            },
+            150,
+            { leading: false, trailing: true }
+        )
     );
 
     const resizeObserver = useRef<ResizeObserver>();
@@ -138,6 +144,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             userIsScrolling.current = true;
             setUserIsScrollingFalse.current();
             justNavigatedTo.current = undefined;
+            console.log("scrolling");
         };
         window.addEventListener("wheel", handleScroll);
         window.addEventListener("touchmove", handleScroll);

@@ -3,7 +3,7 @@ import { ReactElement } from "react";
 
 export default function Document(): ReactElement {
     return (
-        <Html lang="en">
+        <Html lang="en" suppressHydrationWarning>
             <Head />
             <body className="overscroll-y-none">
                 <Main />
