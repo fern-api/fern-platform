@@ -144,7 +144,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             userIsScrolling.current = true;
             setUserIsScrollingFalse.current();
             justNavigatedTo.current = undefined;
-            console.log("scrolling");
         };
         window.addEventListener("wheel", handleScroll);
         window.addEventListener("touchmove", handleScroll);
