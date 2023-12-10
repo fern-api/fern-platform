@@ -72,7 +72,7 @@ function getAvailableExampleClients(example: APIV1Read.ExampleEndpointCall): Cod
     return clients;
 }
 
-const fernClientAtom = atomWithStorage<CodeExampleClient>("fern-client", DEFAULT_CLIENT);
+const fernClientIdAtom = atomWithStorage<CodeExampleClient["id"]>("fern-client-id", DEFAULT_CLIENT.id);
 
 export const EndpointContent: React.FC<EndpointContent.Props> = ({
     endpoint,
@@ -106,18 +106,8 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         [setHoveredResponsePropertyPath]
     );
 
-    const [storedSelectedExampleClient, setSelectedExampleClient] = useAtom(fernClientAtom);
+    const [storedSelectedExampleClientId, setSelectedExampleClientId] = useAtom(fernClientIdAtom);
     const [selectedErrorIndex, setSelectedErrorIndex] = useState<number | null>(null);
-
-    const selectedExampleClient = storedSelectedExampleClient ?? DEFAULT_CLIENT;
-
-    const setSelectedExampleClientAndScrollToTop = useCallback(
-        (nextClient: CodeExampleClient) => {
-            setSelectedExampleClient(nextClient);
-            navigateToPath(route.substring(1));
-        },
-        [navigateToPath, route, setSelectedExampleClient]
-    );
 
     const errors = useMemo(() => {
         return [...(endpoint.errorsV2 ?? [])]
@@ -137,6 +127,17 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     const availableExampleClients = useMemo(
         () => (example != null ? getAvailableExampleClients(example) : []),
         [example]
+    );
+
+    const selectedExampleClient =
+        availableExampleClients.find((client) => client.id === storedSelectedExampleClientId) ?? DEFAULT_CLIENT;
+
+    const setSelectedExampleClientAndScrollToTop = useCallback(
+        (nextClient: CodeExampleClient) => {
+            setSelectedExampleClientId(nextClient.id);
+            navigateToPath(route.substring(1));
+        },
+        [navigateToPath, route, setSelectedExampleClientId]
     );
 
     const curlLines = useMemo(
