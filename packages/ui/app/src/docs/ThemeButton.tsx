@@ -1,5 +1,5 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { useTheme } from "@fern-ui/theme";
+import { Theme, useTheme } from "@fern-ui/theme";
 import classNames from "classnames";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
@@ -34,7 +34,7 @@ export const Core: React.FC<ThemeButton.Props> = ({ className }) => {
                 setTheme(theme === "dark" ? "light" : "dark");
             }}
         >
-            {visitDiscriminatedUnion({ theme }, "theme")._visit({
+            {visitDiscriminatedUnion({ theme: theme as Theme }, "theme")._visit({
                 dark: () => (
                     <MoonIcon className="text-intent-default group-hover:text-text-primary-dark h-4 w-4 transition" />
                 ),
