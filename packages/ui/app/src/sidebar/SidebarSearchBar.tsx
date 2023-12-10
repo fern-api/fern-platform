@@ -1,7 +1,7 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { type Theme } from "@fern-ui/theme";
 import classNames from "classnames";
-import { memo, type MouseEventHandler } from "react";
+import { memo, useEffect, useState, type MouseEventHandler } from "react";
 import { SearchIcon } from "../commons/icons/SearchIcon";
 import { PlatformSpecificContent } from "../commons/PlatformSpecificContent";
 
@@ -16,6 +16,16 @@ export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = memo(function 
     theme,
     onClick,
 }) {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted) {
+        return null;
+    }
+
     return (
         <button
             onClick={onClick}
