@@ -2652,6 +2652,7 @@ __metadata:
     eslint: ^8.26.0
     instantsearch.js: ^4.56.3
     jest: ^29.7.0
+    jotai: ^2.6.0
     lodash-es: ^4.17.21
     lru-cache: ^10.0.1
     marked: ^5.0.4
@@ -10258,6 +10259,21 @@ env-cmd@toddbluhm/env-cmd:
   bin:
     jiti: bin/jiti.js
   checksum: 46c41cd82d01c6efdee3fc0ae9b3e86ed37457192d6366f19157d863d64961b07982ab04e9d5879576a1af99cc4d132b0b73b336094f86a5ce9fb1029ec2d29f
+  languageName: node
+  linkType: hard
+
+"jotai@npm:^2.6.0":
+  version: 2.6.0
+  resolution: "jotai@npm:2.6.0"
+  peerDependencies:
+    "@types/react": ">=17.0.0"
+    react: ">=17.0.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    react:
+      optional: true
+  checksum: 6e9ee397707cb012c57c7a616eaea7f401a1a3d66c0f36428e1eb33c03cc91788aa6c566daf473387bd86486a7215322efff2a29b446f8a9a59bc33648b7148f
   languageName: node
   linkType: hard
 
