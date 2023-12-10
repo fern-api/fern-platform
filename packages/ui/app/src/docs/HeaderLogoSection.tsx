@@ -15,6 +15,16 @@ export const HeaderLogoSection: React.FC = () => {
     const { definitionInfo, activeVersionContext } = useDocsSelectors();
     const { logo, logoV2, logoHeight, logoHref } = docsDefinition.config;
 
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted || theme == null) {
+        return null;
+    }
+
     const logoForTheme = logoV2 != null ? logoV2[theme] : logo;
     const hasMultipleVersions = definitionInfo.type === "versioned";
     const activeVersionId =
@@ -33,16 +43,6 @@ export const HeaderLogoSection: React.FC = () => {
             }}
         />
     ) : null;
-
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    if (!mounted) {
-        return null;
-    }
 
     return (
         <div className="relative flex h-full items-center space-x-3 py-1">
