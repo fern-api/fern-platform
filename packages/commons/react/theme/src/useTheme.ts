@@ -1,3 +1,5 @@
+"use client";
+
 import { useTheme as _useTheme } from "next-themes";
 import { useEffect, useMemo } from "react";
 import { type Theme } from "./theme";

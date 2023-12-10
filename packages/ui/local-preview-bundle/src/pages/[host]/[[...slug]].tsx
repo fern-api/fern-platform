@@ -6,12 +6,11 @@ import {
     loadDocTypography,
     type ResolvedPath,
 } from "@fern-ui/app-utils";
-import { App } from "@fern-ui/ui";
+import { App, useColorTheme } from "@fern-ui/ui";
 import { compact } from "lodash-es";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { ReactElement, useEffect, useState } from "react";
-import { useColorTheme } from "../../useColorTheme";
 
 export declare namespace Docs {
     export interface Props {
