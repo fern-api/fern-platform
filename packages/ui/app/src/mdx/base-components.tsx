@@ -2,7 +2,6 @@ import classNames from "classnames";
 import Link from "next/link";
 import React, { AnchorHTMLAttributes, HTMLAttributes } from "react";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
-import { onlyText } from "../util/onlyText";
 
 type InlineCodeProps = {
     fontSize: "sm" | "lg";
@@ -18,11 +17,12 @@ export const InlineCode: React.FC<HTMLAttributes<HTMLElement> & InlineCodeProps>
             {...rest}
             className={classNames(
                 className,
-                "border border-border-concealed-light dark:border-border-concealed-dark rounded font-mono bg-background/75 !text-text-primary-light dark:!text-text-primary-dark !py-0.5 !px-1"
+                "border border-border-concealed-light dark:border-border-concealed-dark rounded font-mono bg-background/75 !text-text-primary-light dark:!text-text-primary-dark !py-0.5 !px-1",
+                {
+                    "text-xs": fontSize === "sm",
+                    "text-base": fontSize === "lg",
+                }
             )}
-            style={{
-                fontSize: fontSize === "sm" ? 12 : 14,
-            }}
         />
     );
 };
@@ -33,7 +33,7 @@ export const Table: React.FC<HTMLAttributes<HTMLTableElement>> = ({ className, .
             {...rest}
             className={classNames(
                 className,
-                "block border-separate border-spacing-0 overflow-x-auto table-auto mb-3 text-sm"
+                "block border-separate border-spacing-0 overflow-x-hidden table-auto mb-3 text-sm"
             )}
         />
     );
@@ -60,7 +60,7 @@ export const Th: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
 };
 
 export const Td: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, children, ...rest }) => {
-    const childrenAsString = onlyText(children);
+    // const childrenAsString = onlyText(children);
     return (
         <td
             {...rest}
@@ -69,9 +69,9 @@ export const Td: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
                 "border-b border-border-default-light dark:border-border-default-dark font-light px-3 py-1 !text-text-muted-light dark:!text-text-muted-dark leading-7 first:pl-0 last:pr-0",
                 {
                     // if the table has many columns, do not collapse short string content into multi-line:
-                    "whitespace-nowrap": childrenAsString.length < 100,
+                    // "whitespace-nowrap": childrenAsString.length < 100,
                     // prevent table's auto sizing from collapsing a paragraph into a tall-skinny column of broken sentences:
-                    "min-w-sm": childrenAsString.length > 200,
+                    // "min-w-sm": childrenAsString.length > 200,
                 }
             )}
         >

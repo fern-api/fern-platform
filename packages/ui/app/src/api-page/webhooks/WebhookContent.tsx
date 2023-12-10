@@ -66,7 +66,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
 
     return (
         <ApiPageMargins
-            className={classNames("pb-20 ml-6 pr-12", {
+            className={classNames("pb-20 px-12", {
                 "border-border-default-light dark:border-border-default-dark border-b": !hideBottomSeparator,
             })}
         >

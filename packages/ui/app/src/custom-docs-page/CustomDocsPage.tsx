@@ -25,7 +25,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ serializedMdxCo
     }, [serializedMdxContent]);
 
     return (
-        <div className="flex space-x-16 px-6 md:px-12">
+        <div className="flex justify-between space-x-16 px-6 md:px-12">
             <div className="w-full min-w-0 max-w-3xl pt-12">
                 {resolvedPath.sectionTitle != null && (
                     <div className="text-accent-primary mb-4 text-xs font-semibold uppercase tracking-wider">

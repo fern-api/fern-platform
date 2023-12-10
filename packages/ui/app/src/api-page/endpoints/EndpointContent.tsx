@@ -195,7 +195,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     return (
         <div
-            className={classNames("pb-20 ml-6 pr-12 scroll-mt-16", {
+            className={classNames("pb-20 px-12 scroll-mt-16", {
                 "border-border-default-light dark:border-border-default-dark border-b": !hideBottomSeparator,
             })}
             onClick={() => setSelectedErrorIndex(null)}

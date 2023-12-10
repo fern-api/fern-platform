@@ -26,7 +26,7 @@ export const ApiPage: React.FC<ApiPage.Props> = () => {
                 anchorIdParts={[]}
             />
 
-            <div className="ml-6 pr-12">
+            <div className="px-12">
                 <BottomNavigationButtons />
             </div>
         </div>
