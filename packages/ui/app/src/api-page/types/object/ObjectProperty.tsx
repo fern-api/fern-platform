@@ -4,7 +4,6 @@ import { useCallback, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
-import { HEADER_HEIGHT } from "../../../constants";
 import { getAnchorId } from "../../../util/anchor";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
@@ -104,10 +103,9 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
     return (
         <div
             data-route={anchorRoute}
-            className={classNames("flex relative flex-col py-3", {
+            className={classNames("flex relative flex-col py-3 scroll-mt-16", {
                 "px-3": !contextValue.isRootTypeDefinition,
             })}
-            style={{ scrollMarginTop: HEADER_HEIGHT }}
         >
             <div className="flex items-baseline gap-2">
                 <div className="group/anchor-container relative">
