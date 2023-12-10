@@ -45,7 +45,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
 }) => {
     return (
         <>
-            <div className="pb-2 pt-8">
+            <div className="pb-2 pt-12">
                 {isSubpackage(package_) && (
                     <div className="text-accent-primary mb-4 text-xs font-semibold uppercase tracking-wider">
                         {getSubpackageTitle(package_)}

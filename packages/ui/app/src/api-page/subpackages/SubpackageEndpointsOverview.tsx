@@ -23,7 +23,7 @@ export const SubpackageEndpointsOverview: React.FC<SubpackageEndpointsOverview.P
     );
 
     return (
-        <div className="border-border-default-light dark:border-border-default-dark flex flex-col overflow-hidden rounded-xl border">
+        <div className="border-border-default-light dark:border-border-default-dark flex flex-col overflow-hidden rounded-lg border">
             <div className="border-border-default-light dark:border-border-default-dark flex h-10 items-center justify-between border-b bg-white/10 px-3 py-1">
                 <div className="text-xs uppercase tracking-wide text-neutral-300">Endpoints</div>
             </div>

@@ -60,7 +60,7 @@ const UnmemoizedSidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Prop
     return (
         <div
             className={classNames(
-                "flex flex-col px-2 md:px-4 md:pt-8",
+                "flex flex-col pl-12 pr-6 pt-12",
                 {
                     "backdrop-blur-sm": tabs == null,
                     "backdrop-blur-xl": tabs != null,

@@ -66,7 +66,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
 
     return (
         <ApiPageMargins
-            className={classNames("pb-20 pl-6 md:pl-12 pr-4", {
+            className={classNames("pb-20 ml-6 pr-12", {
                 "border-border-default-light dark:border-border-default-dark border-b": !hideBottomSeparator,
             })}
         >
@@ -126,7 +126,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                     className={classNames(
                         "flex-1 sticky self-start top-0 min-w-sm max-w-lg ml-auto",
                         // the py-10 is the same as the 40px below
-                        "pb-10 pt-8",
+                        "pb-10 pt-12",
                         // the 4rem is the same as the h-10 as the Header
                         "max-h-[calc(100vh-4rem)]",
                         // hide on mobile,

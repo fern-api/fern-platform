@@ -9,7 +9,6 @@ import { SearchService } from "../services/useSearchService";
 import { HeaderLogoSection } from "./HeaderLogoSection";
 import { HeaderPrimaryLink } from "./HeaderPrimaryLink";
 import { HeaderSecondaryLink } from "./HeaderSecondaryLink";
-import { ThemeButton } from "./ThemeButton";
 
 export declare namespace Header {
     export interface Props {
@@ -35,7 +34,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     },
     ref
 ) {
-    const { navbarLinks, colorsV3 } = docsDefinition.config;
+    const { navbarLinks } = docsDefinition.config;
 
     const navbarLinksSection = (
         <div className="hidden items-center space-x-5 md:flex md:space-x-8">
@@ -52,7 +51,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     return (
         <div
             className={classNames(
-                "flex justify-between items-center shrink-0 pl-[calc(theme(spacing.4)+theme(spacing[1.5]))] pr-4",
+                "flex justify-between items-center shrink-0 px-8",
                 // this matches with the calc() in the EndpointContent examples section
                 "h-full",
                 className
@@ -64,12 +63,12 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
             <div className="ml-auto flex items-center space-x-4">
                 {navbarLinksSection}
 
-                {colorsV3.type === "darkAndLight" && (
+                {/* {colorsV3.type === "darkAndLight" && (
                     <>
                         <div className="dark:bg-border-default-dark bg-border-default-light hidden w-px self-stretch md:flex" />
                         <ThemeButton className="hidden md:flex" />
                     </>
-                )}
+                )} */}
 
                 {searchService.isAvailable && (
                     <button

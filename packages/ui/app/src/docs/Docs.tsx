@@ -1,7 +1,7 @@
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand } from "@fern-ui/react-commons";
 import classNames from "classnames";
-import { memo, useMemo } from "react";
+import { memo } from "react";
 import { HEADER_HEIGHT } from "../constants";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
@@ -10,14 +10,13 @@ import { useSearchContext } from "../search-context/useSearchContext";
 import { SearchDialog } from "../search/SearchDialog";
 import { useSearchService } from "../services/useSearchService";
 import { Sidebar } from "../sidebar/Sidebar";
-import { BgImageGradient } from "./BgImageGradient";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
 
 export const Docs: React.FC = memo(function UnmemoizedDocs() {
     const { observeDocContent, hasInitialized, activeNavigatable } = useNavigationContext();
     const docsContext = useDocsContext();
-    const { docsDefinition, theme } = docsContext;
+    const { docsDefinition } = docsContext;
     const searchContext = useSearchContext();
     const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = searchContext;
     const searchService = useSearchService();
@@ -25,27 +24,12 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
 
     const { isMobileSidebarOpen, openMobileSidebar, closeMobileSidebar } = useMobileSidebarContext();
 
-    const hasSpecifiedBackgroundImage = !!docsDefinition.config.backgroundImage;
-
-    const { colorsV3 } = docsDefinition.config;
-
-    const backgroundType = useMemo(() => {
-        if (theme == null) {
-            return null;
-        }
-        if (colorsV3.type === "darkAndLight") {
-            return colorsV3[theme].background.type;
-        } else {
-            return colorsV3.background.type;
-        }
-    }, [colorsV3, theme]);
-
     return (
         <>
-            <BgImageGradient
+            {/* <BgImageGradient
                 backgroundType={backgroundType}
                 hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage}
-            />
+            /> */}
             {searchService.isAvailable && (
                 <SearchDialog
                     isOpen={isSearchDialogOpen}
@@ -55,13 +39,17 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                 />
             )}
 
-            <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
+            <div
+                id="docs-content"
+                className="relative flex min-h-0 flex-1 flex-col bg-[#fcfcfd]"
+                ref={observeDocContent}
+            >
                 <div
-                    className="border-border-concealed-light dark:border-border-concealed-dark bg-background/50 dark:shadow-header sticky inset-x-0 top-0 z-20 border-b backdrop-blur-xl"
+                    className="dark:shadow-header sticky inset-x-0 top-0 z-20 border-b border-[#CBD5E0] bg-white"
                     style={{ height: HEADER_HEIGHT }}
                 >
                     <Header
-                        className="max-w-8xl mx-auto"
+                        // className="max-w-8xl mx-auto"
                         docsDefinition={docsDefinition}
                         openSearchDialog={openSearchDialog}
                         isMobileSidebarOpen={isMobileSidebarOpen}
@@ -72,12 +60,12 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                 </div>
 
                 <div
-                    className="max-w-8xl relative mx-auto flex min-h-0 w-full flex-1"
+                    className="relative mx-auto flex min-h-0 w-full flex-1"
                     style={{
                         opacity: hasInitialized ? undefined : 0,
                     }}
                 >
-                    <div className="hidden w-72 md:flex">
+                    <div className="hidden w-80 md:flex">
                         <div
                             className="sticky w-full overflow-auto overflow-x-hidden"
                             style={{

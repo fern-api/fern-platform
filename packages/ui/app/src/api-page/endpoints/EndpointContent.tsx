@@ -195,7 +195,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     return (
         <div
-            className={classNames("pb-20 pl-6 md:pl-12 pr-4 scroll-mt-16", {
+            className={classNames("pb-20 ml-6 pr-12 scroll-mt-16", {
                 "border-border-default-light dark:border-border-default-dark border-b": !hideBottomSeparator,
             })}
             onClick={() => setSelectedErrorIndex(null)}
@@ -229,7 +229,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                 <div
                     className={classNames(
                         "lg:flex-1 lg:sticky lg:self-start lg:min-w-sm lg:max-w-lg lg:ml-auto",
-                        "pb-10 pt-8",
+                        "pb-10 pt-12",
                         // the 4rem is the same as the h-10 as the Header
                         "max-h-[150vh] lg:max-h-[calc(100vh-4rem)]",
                         "flex",
