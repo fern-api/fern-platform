@@ -78,7 +78,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                             route={route}
                         />
                     )}
-                    {endpoint.headers != null && (
+                    {endpoint.headers.length > 0 && (
                         <EndpointSection title="Headers" anchorIdParts={[...anchorIdParts, "headers"]} route={route}>
                             <div className="flex flex-col">
                                 {endpoint.headers.map((header, index) => (
