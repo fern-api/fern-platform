@@ -22,7 +22,7 @@ export const BgImageGradient = memo<BgImageGradient.Props>(function Core({
                 hasSpecifiedBackgroundImage
                     ? {
                           backgroundImage: "var(--docs-background-image)",
-                          backgroundSize: "cover",
+                          backgroundSize: "1300px",
                       }
                     : {}
             }

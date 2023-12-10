@@ -24,9 +24,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
         <div data-route={anchorRoute} className="flex scroll-mt-16 flex-col">
             <div className="group/anchor-container relative mb-3 flex items-center">
                 <AbsolutelyPositionedAnchor href={anchorRoute} verticalPosition="center" />
-                <div className="text-text-primary-light dark:text-text-primary-dark text-xl font-extrabold">
-                    {title}
-                </div>
+                <div className="text-text-primary-light dark:text-text-primary-dark text-xl font-semibold">{title}</div>
             </div>
             {description != null && (
                 <div className="mb-2">
