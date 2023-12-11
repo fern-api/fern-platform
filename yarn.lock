@@ -2271,7 +2271,7 @@ __metadata:
     "@fern-ui/loadable": "workspace:*"
     "@types/jest": ^29.5.5
     "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
+    "@types/react": ^18.2.43
     classnames: ^2.3.1
     depcheck: ^1.4.3
     eslint: ^8.26.0
@@ -2353,7 +2353,7 @@ __metadata:
     "@tailwindcss/typography": ^0.5.9
     "@types/jest": ^29.5.5
     "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
+    "@types/react": ^18.2.43
     "@types/react-dom": ^18.0.6
     autoprefixer: ^10.4.13
     depcheck: ^1.4.3
@@ -2379,7 +2379,7 @@ __metadata:
   dependencies:
     "@types/jest": ^29.5.5
     "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
+    "@types/react": ^18.2.43
     depcheck: ^1.4.3
     eslint: ^8.26.0
     jest: ^29.7.0
@@ -2429,7 +2429,7 @@ __metadata:
     "@types/jest": ^29.5.5
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
+    "@types/react": ^18.2.43
     "@types/react-dom": ^18.0.6
     autoprefixer: ^10.4.13
     depcheck: ^1.4.3
@@ -2459,7 +2459,7 @@ __metadata:
     "@types/jest": ^29.5.5
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
+    "@types/react": ^18.2.43
     depcheck: ^1.4.3
     eslint: ^8.26.0
     immer: ^9.0.15
@@ -2482,7 +2482,7 @@ __metadata:
     "@tanstack/react-query": ^4.29.7
     "@types/jest": ^29.5.5
     "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
+    "@types/react": ^18.2.43
     depcheck: ^1.4.3
     eslint: ^8.26.0
     jest: ^29.7.0
@@ -2502,7 +2502,7 @@ __metadata:
     "@blueprintjs/core": ^4.11.5
     "@types/jest": ^29.5.5
     "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
+    "@types/react": ^18.2.43
     classnames: ^2.3.1
     depcheck: ^1.4.3
     eslint: ^8.26.0
@@ -2556,7 +2556,7 @@ __metadata:
     "@types/jest": ^29.5.5
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
+    "@types/react": ^18.2.43
     classnames: ^2.3.1
     depcheck: ^1.4.3
     eslint: ^8.26.0
@@ -2579,7 +2579,7 @@ __metadata:
   dependencies:
     "@types/jest": ^29.5.5
     "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
+    "@types/react": ^18.2.43
     depcheck: ^1.4.3
     eslint: ^8.26.0
     jest: ^29.7.0
@@ -2639,7 +2639,7 @@ __metadata:
     "@types/lodash-es": ^4.17.12
     "@types/marked": ^5.0.0
     "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
+    "@types/react": ^18.2.43
     "@types/react-syntax-highlighter": ^15.5.6
     "@types/react-test-renderer": ^18.0.6
     "@types/tinycolor2": ^1.4.6
@@ -4264,7 +4264,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.0.20":
+"@types/react@npm:*":
   version: 18.0.20
   resolution: "@types/react@npm:18.0.20"
   dependencies:
@@ -4283,6 +4283,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: f7c15f19c164a29262993ea2aae2085fa38cddd9b8359fd8fefabfced91010b515a3abe2042b2b7f2f86e6b38a25b191415aa9313a9027175e3a000883c858cc
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^18.2.43":
+  version: 18.2.43
+  resolution: "@types/react@npm:18.2.43"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: e7e4da18c7b14e4b8b1ea630d1d8224835698f2bb2485766455bfb9dea93b8ee6cc549a9fe1cb10c984e62685db44fcfb61e8fac913b008cd30a92087f25b9df
   languageName: node
   linkType: hard
 
