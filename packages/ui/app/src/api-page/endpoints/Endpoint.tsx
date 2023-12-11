@@ -23,6 +23,9 @@ export const Endpoint: React.FC<Endpoint.Props> = ({
     const { setTargetRef } = useApiPageCenterElement({ slug: fullSlug });
     const route = `/${fullSlug}`;
 
+    // TODO: this is a temporary fix to only SSG the content that is requested by the requested route.
+    // - webcrawlers will accurately determine the canonical URL (right now every page "returns" the same full-length content)
+    // - this allows us to render the static page before hydrating, preventing layout-shift caused by the navigation context.
     if (useShouldHideFromSsg(fullSlug)) {
         return null;
     }

@@ -24,6 +24,7 @@ export const Webhook: React.FC<Webhook.Props> = ({
     const { setTargetRef } = useApiPageCenterElement({ slug: fullSlug });
     const route = `/${fullSlug}`;
 
+    // TODO: merge this with the Endpoint component
     if (useShouldHideFromSsg(fullSlug)) {
         return null;
     }

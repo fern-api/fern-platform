@@ -69,5 +69,5 @@ export interface NavigationContextValue {
     observeDocContent: (element: HTMLDivElement) => void;
     resolver: PathResolver;
     registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
-    resolvedPath: ResolvedPath;
+    resolvedPath: ResolvedPath; // the initial path that was hard-navigated
 }
