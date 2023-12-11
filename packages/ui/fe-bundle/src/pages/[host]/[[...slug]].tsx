@@ -98,7 +98,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         console.error(`Cannot resolve navigatable corresponding to "${pathname}"`);
         return {
             notFound: true,
-            revalidate: 60,
+            revalidate: 60 * 60, // 1 hour
         };
     }
 

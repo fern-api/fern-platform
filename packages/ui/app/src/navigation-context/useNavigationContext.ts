@@ -1,5 +1,4 @@
-import { useBooleanState } from "@fern-ui/react-commons";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { NavigationContext, type NavigationContextValue } from "./NavigationContext";
 
 export function useNavigationContext(): NavigationContextValue {
@@ -7,10 +6,6 @@ export function useNavigationContext(): NavigationContextValue {
 }
 
 export function useShouldHideFromSsg(slug: string): boolean {
-    const { resolvedPath } = useNavigationContext();
-    const isMounted = useBooleanState(false);
-    useEffect(() => {
-        isMounted.setTrue();
-    }, [isMounted]);
-    return resolvedPath.fullSlug !== slug && !isMounted.value;
+    const { resolvedPath, hydrated } = useNavigationContext();
+    return resolvedPath.fullSlug !== slug && !hydrated;
 }

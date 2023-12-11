@@ -56,6 +56,7 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
         sectionTitle: "",
         serializedMdxContent: { compiledSource: "", frontmatter: {}, scope: {} },
     },
+    hydrated: false,
 });
 
 export interface NavigationContextValue {
@@ -70,4 +71,5 @@ export interface NavigationContextValue {
     resolver: PathResolver;
     registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
     resolvedPath: ResolvedPath; // the initial path that was hard-navigated
+    hydrated: boolean;
 }
