@@ -25,7 +25,7 @@ export interface S3Service {
 export class S3ServiceImpl implements S3Service {
     private client: S3Client;
     private presignedDownloadUrlCache: NodeCache = new NodeCache({
-        stdTTL: 86_400,
+        stdTTL: 3600,
         maxKeys: 1_000,
     });
 

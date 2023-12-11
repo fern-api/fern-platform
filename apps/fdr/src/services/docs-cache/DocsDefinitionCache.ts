@@ -1,4 +1,3 @@
-import moment from "moment";
 import { DocsV1Db, DocsV2Read } from "../../api";
 import { FdrApplication } from "../../app";
 import { getDocsDefinition, getDocsForDomain } from "../../controllers/docs/v1/getDocsReadService";
@@ -43,9 +42,20 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
 
     public async getDocsForUrl({ url }: { url: URL }): Promise<DocsV2Read.LoadDocsForUrlResponse> {
         const cachedResponse = this.getDocsForUrlFromCache({ url });
-        // Return the cached response if it exists and is within 6 days of updated time
-        if (cachedResponse != null && moment(cachedResponse.updatedTime).diff(new Date(), "days") < 6) {
-            return cachedResponse.response;
+        if (cachedResponse != null) {
+            const updatedFileEntries = await Promise.all(
+                Object.entries(cachedResponse.response.definition.files).map(async ([key]) => {
+                    return [key, await this.app.services.s3.getPresignedDownloadUrl({ key })];
+                }),
+            );
+            // we always pull updated s3 URLs
+            return {
+                ...cachedResponse.response,
+                definition: {
+                    ...cachedResponse.response.definition,
+                    files: Object.fromEntries(updatedFileEntries),
+                },
+            };
         }
         const dbResponse = await this.getDocsForUrlFromDatabase({ url });
         this.cacheResponse({ url, cachedResponse: dbResponse });
