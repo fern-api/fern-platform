@@ -9,11 +9,11 @@ export function getDocsReadService(app: FdrApplication): DocsV1ReadService {
     return new DocsV1ReadService({
         getDocsForDomainLegacy: async (req, res) => {
             const definition = await getDocsForDomain({ app, domain: req.params.domain });
-            return res.send(definition);
+            return res.send(definition.response);
         },
         getDocsForDomain: async (req, res) => {
             const definition = await getDocsForDomain({ app, domain: req.body.domain });
-            return res.send(definition);
+            return res.send(definition.response);
         },
     });
 }
@@ -24,7 +24,7 @@ export async function getDocsForDomain({
 }: {
     app: FdrApplication;
     domain: string;
-}): Promise<DocsV1Read.DocsDefinition> {
+}): Promise<{ response: DocsV1Read.DocsDefinition; dbFiles?: Record<DocsV1Read.FileId, DocsV1Db.DbFileInfo> }> {
     const [docs, docsV2] = await Promise.all([
         app.services.db.prisma.docs.findFirst({
             where: {
@@ -44,23 +44,26 @@ export async function getDocsForDomain({
     const docsDefinitionJson = readBuffer(docs.docsDefinition);
     const docsDbDefinition = migrateDocsDbDefinition(docsDefinitionJson);
 
-    return getDocsDefinition({
-        app,
-        docsDbDefinition,
-        docsV2:
-            docsV2 != null
-                ? {
-                      algoliaIndex: docsV2.algoliaIndex ?? undefined,
-                      orgId: docsV2.orgID,
-                      docsDefinition: migrateDocsDbDefinition(readBuffer(docsV2.docsDefinition)),
-                      docsConfigInstanceId: docsV2.docsConfigInstanceId,
-                      indexSegmentIds: docsV2.indexSegmentIds as string[],
-                      path: docsV2.path,
-                      domain: docsV2.domain,
-                      updatedTime: docsV2.updatedTime,
-                  }
-                : null,
-    });
+    return {
+        response: await getDocsDefinition({
+            app,
+            docsDbDefinition,
+            docsV2:
+                docsV2 != null
+                    ? {
+                          algoliaIndex: docsV2.algoliaIndex ?? undefined,
+                          orgId: docsV2.orgID,
+                          docsDefinition: migrateDocsDbDefinition(readBuffer(docsV2.docsDefinition)),
+                          docsConfigInstanceId: docsV2.docsConfigInstanceId,
+                          indexSegmentIds: docsV2.indexSegmentIds as string[],
+                          path: docsV2.path,
+                          domain: docsV2.domain,
+                          updatedTime: docsV2.updatedTime,
+                      }
+                    : null,
+        }),
+        dbFiles: docsDbDefinition.files,
+    };
 }
 
 export async function getDocsDefinition({

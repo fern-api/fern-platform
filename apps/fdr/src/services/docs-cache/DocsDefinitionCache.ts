@@ -1,4 +1,4 @@
-import { DocsV1Db, DocsV2Read } from "../../api";
+import { DocsV1Db, DocsV1Read, DocsV2Read } from "../../api";
 import { FdrApplication } from "../../app";
 import { getDocsDefinition, getDocsForDomain } from "../../controllers/docs/v1/getDocsReadService";
 import { DocsRegistrationInfo } from "../../controllers/docs/v2/getDocsWriteV2Service";
@@ -30,6 +30,7 @@ type Path = string;
 interface CachedDocsResponse {
     updatedTime: Date;
     response: DocsV2Read.LoadDocsForUrlResponse;
+    dbFiles: Record<DocsV1Read.FileId, DocsV1Db.DbFileInfo>;
 }
 
 export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
@@ -44,8 +45,8 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
         const cachedResponse = this.getDocsForUrlFromCache({ url });
         if (cachedResponse != null) {
             const updatedFileEntries = await Promise.all(
-                Object.entries(cachedResponse.response.definition.files).map(async ([key]) => {
-                    return [key, await this.app.services.s3.getPresignedDownloadUrl({ key })];
+                Object.entries(cachedResponse.dbFiles).map(async ([fileId, dbFileInfo]) => {
+                    return [fileId, await this.app.services.s3.getPresignedDownloadUrl({ key: dbFileInfo.s3Key })];
                 }),
             );
             // we always pull updated s3 URLs
@@ -120,6 +121,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
             });
             return {
                 updatedTime: dbDocs.updatedTime,
+                dbFiles: dbDocs.docsDefinition.files,
                 response: {
                     baseUrl: {
                         domain: dbDocs.domain,
@@ -136,16 +138,17 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
             if (v1Domain == null) {
                 throw new DocsV2Read.DomainNotRegisteredError();
             }
-            const definition = await getDocsForDomain({ app: this.app, domain: v1Domain });
+            const v1Docs = await getDocsForDomain({ app: this.app, domain: v1Domain });
             return {
                 updatedTime: new Date(),
+                dbFiles: v1Docs.dbFiles ?? {},
                 response: {
                     baseUrl: {
                         domain: url.hostname,
                         basePath: undefined,
                     },
-                    definition,
-                    lightModeEnabled: definition.config.colorsV3.type != "dark",
+                    definition: v1Docs.response,
+                    lightModeEnabled: v1Docs.response.config.colorsV3.type != "dark",
                 },
             };
         }
