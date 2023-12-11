@@ -17,7 +17,6 @@ const EMPTY_DEFINITION_SUMMARY: DocsDefinitionSummary = {
 
 export const NavigationContext = React.createContext<NavigationContextValue>({
     basePath: undefined,
-    hasInitialized: false,
     justNavigated: false,
     activeNavigatable: NodeFactory.createPage({
         slug: "",
@@ -61,7 +60,6 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
 
 export interface NavigationContextValue {
     basePath: string | undefined;
-    hasInitialized: boolean;
     justNavigated: boolean;
     activeNavigatable: NavigatableDocsNode;
     activeNavigatableNeighbors: NodeNeighbors;

@@ -1,4 +1,5 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import { useShouldHideFromSsg } from "../../navigation-context/useNavigationContext";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContent } from "./EndpointContent";
 
@@ -21,6 +22,10 @@ export const Endpoint: React.FC<Endpoint.Props> = ({
 }) => {
     const { setTargetRef } = useApiPageCenterElement({ slug: fullSlug });
     const route = `/${fullSlug}`;
+
+    if (useShouldHideFromSsg(fullSlug)) {
+        return null;
+    }
 
     return (
         <EndpointContent
