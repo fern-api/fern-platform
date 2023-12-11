@@ -3,8 +3,10 @@ import { getEndpointTitleAsString, getSubpackageTitle, isSubpackage } from "@fer
 import { memo } from "react";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
+import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 import { EndpointErrorsSection } from "./EndpointErrorsSection";
+import { EndpointParameter } from "./EndpointParameter";
 import { EndpointRequestSection } from "./EndpointRequestSection";
 import { EndpointResponseSection } from "./EndpointResponseSection";
 import { EndpointSection } from "./EndpointSection";
@@ -75,6 +77,26 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                             anchorIdParts={[...anchorIdParts, "path"]}
                             route={route}
                         />
+                    )}
+                    {endpoint.headers.length > 0 && (
+                        <EndpointSection title="Headers" anchorIdParts={[...anchorIdParts, "headers"]} route={route}>
+                            <div className="flex flex-col">
+                                {endpoint.headers.map((header, index) => (
+                                    <div className="flex flex-col" key={index}>
+                                        <TypeComponentSeparator />
+                                        <EndpointParameter
+                                            name={header.key}
+                                            type={header.type}
+                                            anchorIdParts={[...anchorIdParts, "headers", header.key]}
+                                            route={route}
+                                            description={header.description}
+                                            descriptionContainsMarkdown={header.descriptionContainsMarkdown ?? false}
+                                            availability={header.availability}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </EndpointSection>
                     )}
                     {endpoint.queryParameters.length > 0 && (
                         <QueryParametersSection

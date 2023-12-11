@@ -1,4 +1,4 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
+import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { useRouter } from "next/router";
@@ -11,6 +11,7 @@ import { InternalTypeDefinitionError } from "../types/type-definition/InternalTy
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
 import { getErrorNameForStatus } from "../utils/getErrorNameForStatus";
+import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 
 export declare namespace EndpointError {
     export interface Props {
@@ -23,6 +24,7 @@ export declare namespace EndpointError {
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: string[];
         route: string;
+        availability: APIV1Read.Availability | undefined;
     }
 }
 
@@ -36,6 +38,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
     select,
     anchorIdParts,
     route,
+    availability,
 }) {
     const router = useRouter();
     const anchorIdSoFar = getAnchorId(anchorIdParts);
@@ -72,6 +75,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                 <div className="t-muted text-xs">
                     {error.name != null ? toTitleCase(error.name) : getErrorNameForStatus(error.statusCode)}
                 </div>
+                {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
             </div>
 
             {isSelected && error.type != null && (

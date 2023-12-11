@@ -1,5 +1,5 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { DEFAULT_THEME, useTheme } from "@fern-ui/theme";
+import { useTheme } from "@fern-ui/theme";
 import tinycolor from "tinycolor2";
 
 interface ColorConfig {
@@ -47,8 +47,12 @@ const CSS_VARIABLES = {
 
 export function useColorTheme(docsDefinition: DocsV1Read.DocsDefinition): string {
     const colorsV3 = docsDefinition.config.colorsV3;
-    const { theme = DEFAULT_THEME } = useTheme(colorsV3.type);
+    const { theme } = useTheme(colorsV3.type);
     const invertedTheme = theme === "dark" ? "light" : "dark";
+
+    if (theme == null) {
+        return "";
+    }
 
     const accentPrimary = colorsV3.type !== "darkAndLight" ? colorsV3.accentPrimary : colorsV3[theme].accentPrimary;
     const background = colorsV3.type !== "darkAndLight" ? colorsV3.background : colorsV3[theme].background;

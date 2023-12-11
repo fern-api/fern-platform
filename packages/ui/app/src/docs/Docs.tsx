@@ -15,7 +15,7 @@ import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
 
 export const Docs: React.FC = memo(function UnmemoizedDocs() {
-    const { observeDocContent, hasInitialized, activeNavigatable } = useNavigationContext();
+    const { observeDocContent, activeNavigatable } = useNavigationContext();
     const docsContext = useDocsContext();
     const { docsDefinition, theme } = docsContext;
     const searchContext = useSearchContext();
@@ -71,12 +71,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                     />
                 </div>
 
-                <div
-                    className="relative mx-auto flex min-h-0 w-full flex-1"
-                    style={{
-                        opacity: hasInitialized ? undefined : 0,
-                    }}
-                >
+                <div className="relative mx-auto flex min-h-0 w-full flex-1">
                     <div className="hidden w-80 md:flex">
                         <div
                             className="sticky w-full overflow-auto overflow-x-hidden"

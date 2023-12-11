@@ -1,6 +1,6 @@
 import { DocsV1Read, FdrAPI, PathResolver } from "@fern-api/fdr-sdk";
 import { getFullSlugForNavigatable, type ResolvedPath } from "@fern-ui/app-utils";
-import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
+import { useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -31,7 +31,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         basePath,
     });
     const justNavigatedTo = useRef<string | undefined>(resolvedRoute);
-    const { value: hasInitialized, setTrue: markAsInitialized } = useBooleanState(false);
     type ApiDefinition = FdrAPI.api.v1.read.ApiDefinition;
     const resolver = useMemo(
         () =>
@@ -86,7 +85,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             navigateToRoute.current(resolvedRoute);
         };
         handleInit();
-        markAsInitialized();
         window.addEventListener("DOMContentLoaded", handleInit);
         return () => {
             window.removeEventListener("DOMContentLoaded", handleInit);
@@ -111,7 +109,13 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     }, [navigateToRoute, router.events]);
 
     const setUserIsScrollingFalse = useRef(
-        debounce(() => (userIsScrolling.current = false), 100, { leading: false, trailing: true })
+        debounce(
+            () => {
+                userIsScrolling.current = false;
+            },
+            150,
+            { leading: false, trailing: true }
+        )
     );
 
     const resizeObserver = useRef<ResizeObserver>();
@@ -197,7 +201,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         <NavigationContext.Provider
             value={{
                 basePath,
-                hasInitialized,
                 justNavigated: justNavigatedTo.current != null,
                 activeNavigatable,
                 navigateToPath,

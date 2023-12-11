@@ -42,6 +42,7 @@ export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
                         onHoverProperty={onHoverProperty}
                         anchorIdParts={[...anchorIdParts, `${idx}`]}
                         route={route}
+                        availability={error.availability}
                     />
                 );
             })}

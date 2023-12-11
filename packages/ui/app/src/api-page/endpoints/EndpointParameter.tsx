@@ -10,12 +10,12 @@ import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 export declare namespace EndpointParameter {
     export interface Props {
         name: string;
-        description?: string;
+        description: string | undefined;
         descriptionContainsMarkdown: boolean;
         type: APIV1Read.TypeReference;
         anchorIdParts: string[];
         route: string;
-        availability?: APIV1Read.Availability;
+        availability: APIV1Read.Availability | undefined;
     }
 }
 

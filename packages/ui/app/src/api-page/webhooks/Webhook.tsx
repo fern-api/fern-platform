@@ -1,4 +1,5 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import { useShouldHideFromSsg } from "../../navigation-context/useNavigationContext";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { WebhookContextProvider } from "./webhook-context/WebhookContextProvider";
 import { WebhookContent } from "./WebhookContent";
@@ -22,6 +23,11 @@ export const Webhook: React.FC<Webhook.Props> = ({
 }) => {
     const { setTargetRef } = useApiPageCenterElement({ slug: fullSlug });
     const route = `/${fullSlug}`;
+
+    // TODO: merge this with the Endpoint component
+    if (useShouldHideFromSsg(fullSlug)) {
+        return null;
+    }
 
     return (
         <WebhookContextProvider>
