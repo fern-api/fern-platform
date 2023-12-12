@@ -1,6 +1,6 @@
 import { DocsV1Read, FdrAPI, PathResolver } from "@fern-api/fdr-sdk";
 import { getFullSlugForNavigatable, type ResolvedPath } from "@fern-ui/app-utils";
-import { useEventCallback } from "@fern-ui/react-commons";
+import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -53,13 +53,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         }
         return node;
     }, [resolver, resolvedPath.fullSlug]);
-
-    useEffect(() => {
-        setActiveNavigatable(resolvedNavigatable);
-        if (resolvedNavigatable?.type === "page") {
-            window.scrollTo({ top: 0 });
-        }
-    }, [resolvedNavigatable]);
 
     const [activeNavigatable, setActiveNavigatable] = useState(resolvedNavigatable);
 
@@ -177,6 +170,10 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         navigateToRoute.current(`/${fullSlug}`);
         if (navigatable != null) {
             setActiveNavigatable(navigatable);
+
+            if (navigatable.type === "page") {
+                window.scrollTo({ top: 0 });
+            }
         }
         // navigateToPathListeners.invokeListeners(slug);
         timeout.current != null && clearTimeout(timeout.current);
@@ -197,6 +194,12 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         });
     }, [router, navigateToPath, docsDefinition, resolver, basePath]);
 
+    const hydrated = useBooleanState(false);
+    useEffect(() => {
+        hydrated.setTrue();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
         <NavigationContext.Provider
             value={{
@@ -211,6 +214,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 registerScrolledToPathListener: scrollToPathListeners.registerListener,
                 activeNavigatableNeighbors,
                 resolvedPath,
+                hydrated: hydrated.value,
             }}
         >
             {children}

@@ -75,7 +75,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         console.error(`Failed to fetch docs for path: /${pathname}`, docs.error);
         return {
             notFound: true,
-            revalidate: false,
+            revalidate: 60,
         };
     }
 
@@ -98,7 +98,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         console.error(`Cannot resolve navigatable corresponding to "${pathname}"`);
         return {
             notFound: true,
-            revalidate: false,
+            revalidate: 60 * 60, // 1 hour
         };
     }
 
@@ -115,6 +115,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
             backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
             resolvedPath,
         },
+        revalidate: 60 * 60 * 24 * 6, // 6 days
     };
 };
 
