@@ -13,6 +13,7 @@ export declare namespace EndpointResponseSection {
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: string[];
         route: string;
+        defaultExpandAll?: boolean;
     }
 }
 
@@ -21,6 +22,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
     onHoverProperty,
     anchorIdParts,
     route,
+    defaultExpandAll = false,
 }) => {
     return (
         <div className="flex flex-col">
@@ -49,6 +51,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                         onHoverProperty={onHoverProperty}
                         anchorIdParts={anchorIdParts}
                         route={route}
+                        defaultExpandAll={defaultExpandAll}
                     />
                 ),
                 reference: (type) => (
@@ -59,6 +62,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                         anchorIdParts={anchorIdParts}
                         applyErrorStyles={false}
                         route={route}
+                        defaultExpandAll={defaultExpandAll}
                     />
                 ),
                 fileDownload: () => null,

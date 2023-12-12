@@ -15,6 +15,7 @@ export declare namespace EndpointErrorsSection {
         selectedErrorIndex: number | null;
         anchorIdParts: string[];
         route: string;
+        defaultExpandAll?: boolean;
     }
 }
 
@@ -26,6 +27,7 @@ export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
     selectError,
     anchorIdParts,
     route,
+    defaultExpandAll = false,
 }) => {
     return (
         <div className="border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded-md border">
@@ -43,6 +45,7 @@ export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
                         anchorIdParts={[...anchorIdParts, `${idx}`]}
                         route={route}
                         availability={error.availability}
+                        defaultExpandAll={defaultExpandAll}
                     />
                 );
             })}

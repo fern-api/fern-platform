@@ -82,6 +82,7 @@ export declare namespace UndiscriminatedUnionVariant {
         anchorIdParts: string[];
         applyErrorStyles: boolean;
         route: string;
+        defaultExpandAll?: boolean;
     }
 }
 
@@ -90,6 +91,7 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
     anchorIdParts,
     applyErrorStyles,
     route,
+    defaultExpandAll = false,
 }) => {
     const { isRootTypeDefinition } = useTypeDefinitionContext();
     const contextValue = useTypeDefinitionContext();
@@ -128,6 +130,7 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
                         isCollapsible
                         applyErrorStyles={applyErrorStyles}
                         route={route}
+                        defaultExpandAll={defaultExpandAll}
                     />
                 </TypeDefinitionContext.Provider>
             </div>

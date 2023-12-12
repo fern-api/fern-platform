@@ -13,6 +13,7 @@ export declare namespace EndpointRequestSection {
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: string[];
         route: string;
+        defaultExpandAll?: boolean;
     }
 }
 
@@ -21,6 +22,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
     onHoverProperty,
     anchorIdParts,
     route,
+    defaultExpandAll = false,
 }) => {
     return (
         <div className="flex flex-col">
@@ -43,6 +45,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                         onHoverProperty={onHoverProperty}
                         anchorIdParts={anchorIdParts}
                         route={route}
+                        defaultExpandAll={defaultExpandAll}
                     />
                 ),
                 reference: (type) => (
@@ -53,6 +56,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                         anchorIdParts={anchorIdParts}
                         applyErrorStyles={false}
                         route={route}
+                        defaultExpandAll={defaultExpandAll}
                     />
                 ),
                 fileUpload: () => null,
