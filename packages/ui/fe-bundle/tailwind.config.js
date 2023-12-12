@@ -129,6 +129,9 @@ module.exports = {
                     "@apply text-intent-danger-light dark:text-intent-danger-dark": {},
                 },
                 // Background
+                ".bg-tag-default": {
+                    "@apply bg-tag-default-light dark:bg-tag-default-dark": {},
+                },
                 ".bg-tag-success": {
                     "@apply bg-tag-success-light dark:bg-tag-success-dark": {},
                 },
