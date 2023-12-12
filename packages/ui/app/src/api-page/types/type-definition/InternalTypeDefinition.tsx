@@ -115,7 +115,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                 }),
                 _other: () => undefined,
             }),
-        [typeShape, resolveTypeById, anchorIdParts, route]
+        [typeShape, resolveTypeById, anchorIdParts, route, defaultExpandAll]
     );
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);
