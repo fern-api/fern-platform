@@ -1,14 +1,14 @@
 import { Collapse, Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import classNames from "classnames";
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { Chip } from "../../../components/common/Chip";
 import { SearchInput } from "../../../components/common/SearchInput";
 import { TypeDefinitionContext, TypeDefinitionContextValue } from "../context/TypeDefinitionContext";
 import { EnumDefinitionDetails } from "./EnumDefinitionDetails";
 
 type EnumTypeDefinitionProps = {
-    elements: JSX.Element[];
+    elements: ReactElement[];
     isCollapsed: boolean;
     originalButtonWidth: number | undefined;
     toggleIsCollapsed: () => void;
@@ -25,7 +25,7 @@ export const EnumTypeDefinition = ({
     toggleIsCollapsed,
     collapsibleContentContextValue,
     showText,
-}: EnumTypeDefinitionProps): JSX.Element => {
+}: EnumTypeDefinitionProps): ReactElement => {
     const [searchInput, setSearchInput] = useState("");
 
     return (

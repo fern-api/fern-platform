@@ -1,6 +1,7 @@
 import { Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import classNames from "classnames";
+import { ReactElement } from "react";
 
 type SearchProps = {
     searchInput: string;
@@ -14,13 +15,12 @@ export const SearchInput = ({
     handleSearchInput,
     border = true,
     clear = true,
-}: SearchProps): JSX.Element => {
+}: SearchProps): ReactElement => {
     return (
         <div
-            className={classNames("border-default rounded", {
+            className={classNames("border-default rounded-md w-full flex gap-2 p-1.5", {
                 border,
             })}
-            style={styles.container}
         >
             <Icon icon={IconNames.SEARCH} className="t-muted" />
             <input
@@ -37,15 +37,4 @@ export const SearchInput = ({
             />
         </div>
     );
-};
-
-const styles = {
-    container: {
-        borderRadius: 5,
-        padding: 5,
-        width: "100%",
-        display: "flex",
-        flexDirection: "row",
-        gap: 8,
-    } as const,
 };

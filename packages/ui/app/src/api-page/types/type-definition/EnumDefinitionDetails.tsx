@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { Empty } from "../../../components/common/Empty";
 
 export declare namespace TypeDefinitionDetails {
     export interface Props {
-        elements: JSX.Element[];
+        elements: ReactElement[];
         searchInput: string;
     }
 }
 
-export const EnumDefinitionDetails = ({ elements, searchInput }: TypeDefinitionDetails.Props): JSX.Element => {
-    const [filteredElements, setFilteredElements] = useState<JSX.Element[]>([]);
+export const EnumDefinitionDetails = ({ elements, searchInput }: TypeDefinitionDetails.Props): ReactElement => {
+    const [filteredElements, setFilteredElements] = useState<ReactElement[]>([]);
 
     useEffect(() => {
         const temp = elements.filter(
@@ -20,30 +20,14 @@ export const EnumDefinitionDetails = ({ elements, searchInput }: TypeDefinitionD
         setFilteredElements(temp);
     }, [elements, searchInput]);
 
+    // use 140px to decapitate overflowing enum values and indicate scrollability
     return (
-        <div style={styles.container}>
+        <div className="max-h-[140px] gap-2 overflow-y-auto p-2">
             {filteredElements.length > 0 ? (
-                <div style={styles.EnumStyles}>{filteredElements}</div>
+                <div className="flex flex-wrap gap-2">{filteredElements}</div>
             ) : (
                 <Empty name="No results" description="No enum values found" />
             )}
         </div>
     );
-};
-
-const styles = {
-    EnumStyles: {
-        maxHeight: "120px",
-        overflowY: "scroll",
-        display: "flex",
-        flexDirection: "row",
-        flexWrap: "wrap",
-        gap: 8,
-    } as const,
-    container: {
-        padding: 8,
-        gap: 8,
-        display: "flex",
-        flexDirection: "column",
-    } as const,
 };
