@@ -28,6 +28,7 @@ export declare namespace InternalTypeDefinitionError {
         isCollapsible: boolean;
         anchorIdParts: string[];
         route: string;
+        defaultExpandAll?: boolean;
     }
 }
 
@@ -43,6 +44,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
     isCollapsible,
     anchorIdParts,
     route,
+    defaultExpandAll = false,
 }) => {
     const { resolveTypeById } = useApiDefinitionContext();
     const router = useRouter();
@@ -112,9 +114,15 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
     );
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);
-    const { value: isCollapsed, toggleValue: toggleIsCollapsed } = useBooleanState(
-        !router.asPath.startsWith(`${route}#${anchorIdSoFar}-`)
-    );
+    const {
+        value: isCollapsed,
+        toggleValue: toggleIsCollapsed,
+        setValue: setCollapsed,
+    } = useBooleanState(!router.asPath.startsWith(`${route}#${anchorIdSoFar}-`));
+
+    useEffect(() => {
+        setCollapsed(!defaultExpandAll);
+    }, [defaultExpandAll, setCollapsed]);
 
     const { isHovering, ...containerCallbacks } = useIsHovering();
 

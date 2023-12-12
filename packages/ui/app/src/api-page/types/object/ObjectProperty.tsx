@@ -27,6 +27,7 @@ export declare namespace ObjectProperty {
         anchorIdParts: string[];
         route: string;
         applyErrorStyles: boolean;
+        defaultExpandAll?: boolean;
     }
 }
 
@@ -35,6 +36,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
     route,
     property,
     applyErrorStyles,
+    defaultExpandAll,
 }) => {
     const anchorId = getAnchorId(anchorIdParts);
     const { resolveTypeById } = useApiDefinitionContext();
@@ -132,6 +134,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
                         applyErrorStyles={applyErrorStyles}
                         anchorIdParts={anchorIdParts}
                         route={route}
+                        defaultExpandAll={defaultExpandAll}
                     />
                 </TypeDefinitionContext.Provider>
             </div>

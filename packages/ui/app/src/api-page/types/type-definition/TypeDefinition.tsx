@@ -11,6 +11,7 @@ export declare namespace TypeDefinition {
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: string[];
         route: string;
+        defaultExpandAll?: boolean;
     }
 }
 
@@ -20,6 +21,7 @@ export const TypeDefinition: React.FC<TypeDefinition.Props> = ({
     onHoverProperty,
     anchorIdParts,
     route,
+    defaultExpandAll = false,
 }) => {
     return (
         <TypeDefinitionContextProvider onHoverProperty={onHoverProperty}>
@@ -28,6 +30,7 @@ export const TypeDefinition: React.FC<TypeDefinition.Props> = ({
                 isCollapsible={isCollapsible}
                 anchorIdParts={anchorIdParts}
                 route={route}
+                defaultExpandAll={defaultExpandAll}
             />
         </TypeDefinitionContextProvider>
     );

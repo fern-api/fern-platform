@@ -12,6 +12,7 @@ export declare namespace TypeReferenceDefinitions {
         anchorIdParts: string[];
         className?: string;
         route: string;
+        defaultExpandAll?: boolean;
     }
 }
 
@@ -23,6 +24,7 @@ export const TypeReferenceDefinitions: React.FC<TypeReferenceDefinitions.Props> 
     anchorIdParts,
     className,
     route,
+    defaultExpandAll = false,
 }) => {
     return (
         <TypeDefinitionContextProvider onHoverProperty={onHoverProperty}>
@@ -33,6 +35,7 @@ export const TypeReferenceDefinitions: React.FC<TypeReferenceDefinitions.Props> 
                 className={className}
                 anchorIdParts={anchorIdParts}
                 route={route}
+                defaultExpandAll={defaultExpandAll}
             />
         </TypeDefinitionContextProvider>
     );

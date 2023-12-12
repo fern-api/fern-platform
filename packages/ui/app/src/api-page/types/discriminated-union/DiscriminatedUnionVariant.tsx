@@ -18,6 +18,7 @@ export declare namespace DiscriminatedUnionVariant {
         unionVariant: APIV1Read.DiscriminatedUnionVariant;
         anchorIdParts: string[];
         route: string;
+        defaultExpandAll?: boolean;
     }
 }
 
@@ -26,6 +27,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
     unionVariant,
     anchorIdParts,
     route,
+    defaultExpandAll = false,
 }) => {
     const { isRootTypeDefinition } = useTypeDefinitionContext();
 
@@ -85,6 +87,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                         isCollapsible={true}
                         anchorIdParts={anchorIdParts}
                         route={route}
+                        defaultExpandAll={defaultExpandAll}
                     />
                 </TypeDefinitionContext.Provider>
             </div>

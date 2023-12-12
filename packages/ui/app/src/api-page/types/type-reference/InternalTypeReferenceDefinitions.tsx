@@ -15,6 +15,7 @@ export declare namespace InternalTypeReferenceDefinitions {
         className?: string;
         anchorIdParts: string[];
         route: string;
+        defaultExpandAll?: boolean;
     }
 }
 
@@ -25,6 +26,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
     className,
     anchorIdParts,
     route,
+    defaultExpandAll = false,
 }) => {
     const { resolveTypeById } = useApiDefinitionContext();
 
@@ -40,6 +42,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                         className={className}
                         anchorIdParts={anchorIdParts}
                         route={route}
+                        defaultExpandAll={defaultExpandAll}
                     />
                 );
             }
@@ -50,6 +53,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     isCollapsible={isCollapsible}
                     anchorIdParts={anchorIdParts}
                     route={route}
+                    defaultExpandAll={defaultExpandAll}
                 />
             ) : (
                 <InternalTypeDefinition
@@ -58,6 +62,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     isCollapsible={isCollapsible}
                     anchorIdParts={anchorIdParts}
                     route={route}
+                    defaultExpandAll={defaultExpandAll}
                 />
             );
         },
@@ -71,6 +76,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     className={className}
                     anchorIdParts={anchorIdParts}
                     route={route}
+                    defaultExpandAll={defaultExpandAll}
                 />
             </ListTypeContextProvider>
         ),
@@ -83,6 +89,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     className={className}
                     anchorIdParts={anchorIdParts}
                     route={route}
+                    defaultExpandAll={defaultExpandAll}
                 />
             </ListTypeContextProvider>
         ),
@@ -94,6 +101,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 className={className}
                 anchorIdParts={anchorIdParts}
                 route={route}
+                defaultExpandAll={defaultExpandAll}
             />
         ),
         map: ({ keyType, valueType }) => (
@@ -105,6 +113,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     className={className}
                     anchorIdParts={anchorIdParts}
                     route={route}
+                    defaultExpandAll={defaultExpandAll}
                 />
                 <InternalTypeReferenceDefinitions
                     type={valueType}
@@ -113,6 +122,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     className={className}
                     anchorIdParts={anchorIdParts}
                     route={route}
+                    defaultExpandAll={defaultExpandAll}
                 />
             </MapTypeContextProvider>
         ),

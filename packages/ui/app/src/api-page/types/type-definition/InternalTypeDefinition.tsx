@@ -29,6 +29,7 @@ export declare namespace InternalTypeDefinition {
         isCollapsible: boolean;
         anchorIdParts: string[];
         route: string;
+        defaultExpandAll?: boolean;
     }
 }
 
@@ -44,6 +45,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     isCollapsible,
     anchorIdParts,
     route,
+    defaultExpandAll = false,
 }) => {
     const { resolveTypeById } = useApiDefinitionContext();
     const router = useRouter();
@@ -60,6 +62,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                             anchorIdParts={[...anchorIdParts, property.key]}
                             applyErrorStyles={false}
                             route={route}
+                            defaultExpandAll={defaultExpandAll}
                         />
                     )),
                     elementNameSingular: "property",
@@ -80,6 +83,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                                 anchorIdParts={anchorIdParts}
                                 applyErrorStyles={false}
                                 route={route}
+                                defaultExpandAll={defaultExpandAll}
                             />
                         )),
                     elementNameSingular: "variant",
@@ -94,6 +98,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                             unionVariant={variant}
                             anchorIdParts={anchorIdParts}
                             route={route}
+                            defaultExpandAll={defaultExpandAll}
                         />
                     )),
                     elementNameSingular: "variant",
@@ -110,13 +115,19 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                 }),
                 _other: () => undefined,
             }),
-        [typeShape, resolveTypeById, anchorIdParts, route]
+        [typeShape, resolveTypeById, anchorIdParts, route, defaultExpandAll]
     );
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);
-    const { value: isCollapsed, toggleValue: toggleIsCollapsed } = useBooleanState(
-        !router.asPath.startsWith(`${route}#${anchorIdSoFar}-`)
-    );
+    const {
+        value: isCollapsed,
+        toggleValue: toggleIsCollapsed,
+        setValue: setCollapsed,
+    } = useBooleanState(!router.asPath.startsWith(`${route}#${anchorIdSoFar}-`) || !defaultExpandAll);
+
+    useEffect(() => {
+        setCollapsed(!defaultExpandAll);
+    }, [defaultExpandAll, setCollapsed]);
 
     const { isHovering, ...containerCallbacks } = useIsHovering();
 
