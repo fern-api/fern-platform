@@ -34,7 +34,7 @@ export const Table: React.FC<HTMLAttributes<HTMLTableElement>> = ({ className, .
             {...rest}
             className={classNames(
                 className,
-                "block border-separate border-spacing-0 overflow-x-hidden table-auto mb-3 text-sm"
+                "block border-separate border-spacing-0 overflow-x-hidden table-auto mb-3 text-sm bg-white shadow-xl border-[#E2E8F0] border rounded-lg w-fit"
             )}
         />
     );
@@ -45,7 +45,7 @@ export const Thead: React.FC<HTMLAttributes<HTMLTableSectionElement>> = ({ class
 };
 
 export const Tr: React.FC<HTMLAttributes<HTMLTableRowElement>> = ({ className, ...rest }) => {
-    return <tr {...rest} className={classNames(className)} />;
+    return <tr {...rest} className={classNames("group", className)} />;
 };
 
 export const Th: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, ...rest }) => {
@@ -54,7 +54,7 @@ export const Th: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
             {...rest}
             className={classNames(
                 className,
-                "text-left truncate px-3 py-1 font-normal text-text-primary-light dark:text-text-primary-dark leading-7 border-b border-border-default-light dark:border-border-default-dark first:pl-0 last:pr-0"
+                "text-left truncate px-3 py-1 font-normal text-text-primary-light dark:text-text-primary-dark leading-7 border-b border-border-default-light dark:border-border-default-dark first:pl-2 last:pr-2"
             )}
         />
     );
@@ -67,7 +67,7 @@ export const Td: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
             {...rest}
             className={classNames(
                 className,
-                "border-b border-border-default-light dark:border-border-default-dark font-light px-3 py-1 !text-text-muted-light dark:!text-text-muted-dark leading-7 first:pl-0 last:pr-0",
+                "border-b border-border-default-light dark:border-border-default-dark font-light px-3 py-1 !text-text-muted-light dark:!text-text-muted-dark leading-7 first:pl-2 last:pr-2 group-last:border-none",
                 {
                     // if the table has many columns, do not collapse short string content into multi-line:
                     // "whitespace-nowrap": childrenAsString.length < 100,
@@ -286,6 +286,18 @@ export const Li: React.FC<HTMLAttributes<HTMLLIElement>> = ({ className, ...rest
             className={classNames(
                 className,
                 "text-base font-light !text-text-muted-light dark:!text-text-muted-dark leading-7"
+            )}
+        />
+    );
+};
+
+export const BlockQuote: React.FC<HTMLAttributes<HTMLElement>> = ({ className, ...rest }) => {
+    return (
+        <blockquote
+            {...rest}
+            className={classNames(
+                className,
+                "border-l-4 border-accent-primary dark:border-accent-primary-dark pl-3 mb-3 bg-accent-primary/5"
             )}
         />
     );

@@ -5,6 +5,7 @@ import { CodeBlockWithClipboardButton } from "../commons/CodeBlockWithClipboardB
 import { parseCodeBlockLanguageFromClassName } from "../commons/util";
 import {
     A,
+    BlockQuote,
     H1,
     H2,
     H3,
@@ -29,6 +30,7 @@ import { Card } from "./components/Card";
 import { Cards } from "./components/Cards";
 import { CodeBlock } from "./components/CodeBlock";
 import { CodeBlocks } from "./components/CodeBlocks";
+import { FinchProviderMatrix } from "./components/FinchProviderMatrix";
 import { MdxErrorBoundaryContent } from "./MdxErrorBoundaryContent";
 
 export declare namespace MdxContent {
@@ -71,12 +73,14 @@ const COMPONENTS: MDXRemoteProps["components"] = {
     li: Li,
     a: A,
     strong: Strong,
+    blockquote: BlockQuote,
     Availability,
     Cards,
     Card,
     CodeBlock,
     CodeBlocks,
     Callout,
+    FinchProviderMatrix,
 };
 
 export const MdxContent = React.memo<MdxContent.Props>(function MdxContent({ mdx }) {
