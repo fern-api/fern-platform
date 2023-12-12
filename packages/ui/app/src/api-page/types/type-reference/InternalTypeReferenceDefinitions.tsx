@@ -2,6 +2,7 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import React, { ReactElement } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
+import { FinchProviderMatrix } from "../../../mdx/components/FinchProviderMatrix";
 import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
 import { InternalTypeDefinitionError } from "../type-definition/InternalTypeDefinitionError";
 import { ListTypeContextProvider } from "./ListTypeContextProvider";
@@ -15,6 +16,7 @@ export declare namespace InternalTypeReferenceDefinitions {
         className?: string;
         anchorIdParts: string[];
         route: string;
+        finchProperties?: FinchProviderMatrix.Property[];
     }
 }
 
@@ -25,6 +27,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
     className,
     anchorIdParts,
     route,
+    finchProperties,
 }) => {
     const { resolveTypeById } = useApiDefinitionContext();
 
@@ -58,6 +61,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     isCollapsible={isCollapsible}
                     anchorIdParts={anchorIdParts}
                     route={route}
+                    finchProperties={finchProperties}
                 />
             );
         },
@@ -71,6 +75,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     className={className}
                     anchorIdParts={anchorIdParts}
                     route={route}
+                    finchProperties={finchProperties}
                 />
             </ListTypeContextProvider>
         ),
@@ -83,6 +88,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     className={className}
                     anchorIdParts={anchorIdParts}
                     route={route}
+                    finchProperties={finchProperties}
                 />
             </ListTypeContextProvider>
         ),
@@ -94,6 +100,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 className={className}
                 anchorIdParts={anchorIdParts}
                 route={route}
+                finchProperties={finchProperties}
             />
         ),
         map: ({ keyType, valueType }) => (
@@ -105,6 +112,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     className={className}
                     anchorIdParts={anchorIdParts}
                     route={route}
+                    finchProperties={finchProperties}
                 />
                 <InternalTypeReferenceDefinitions
                     type={valueType}
@@ -113,6 +121,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     className={className}
                     anchorIdParts={anchorIdParts}
                     route={route}
+                    finchProperties={finchProperties}
                 />
             </MapTypeContextProvider>
         ),

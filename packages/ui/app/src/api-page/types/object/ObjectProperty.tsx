@@ -1,9 +1,16 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
+import { useAtom } from "jotai";
 import { useCallback, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
+import {
+    finchHideUnsupportedAtom,
+    finchProviderAccessTypeAtom,
+    finchProviderIdAtom,
+    FinchProviderMatrix,
+} from "../../../mdx/components/FinchProviderMatrix";
 import { getAnchorId } from "../../../util/anchor";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
@@ -27,6 +34,7 @@ export declare namespace ObjectProperty {
         anchorIdParts: string[];
         route: string;
         applyErrorStyles: boolean;
+        finchProperties?: FinchProviderMatrix.Property[];
     }
 }
 
@@ -35,7 +43,11 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
     route,
     property,
     applyErrorStyles,
+    finchProperties,
 }) => {
+    const [finchProviderId] = useAtom(finchProviderIdAtom);
+    const [finchProviderAccessType] = useAtom(finchProviderAccessTypeAtom);
+    const [finchHideUnsupported] = useAtom(finchHideUnsupportedAtom);
     const anchorId = getAnchorId(anchorIdParts);
     const { resolveTypeById } = useApiDefinitionContext();
 
@@ -100,18 +112,59 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
 
     const anchorRoute = `${route}#${anchorId}`;
 
+    const finchProperty = finchProperties?.find((p) => p.key === property.key);
+
+    let supported: boolean | undefined = undefined;
+    if (finchProperty != null && finchProviderId != null && finchProviderAccessType != null) {
+        supported = false;
+        if (finchProperty.integrations?.[finchProviderId]?.includes(finchProviderAccessType)) {
+            supported = true;
+        }
+    }
+
+    const childProperties = useMemo(() => {
+        return finchProperties
+            ?.filter((p) => p.key.startsWith(`${property.key}.`) || p.key.startsWith(`${property.key}[].`))
+            .map((p) => ({ ...p, key: p.key.replace(`${property.key}.`, "").replace(`${property.key}[].`, "") }));
+    }, [finchProperties, property.key]);
+
+    supported =
+        supported ??
+        (finchProviderId != null &&
+        finchProviderAccessType != null &&
+        childProperties != null &&
+        childProperties.length > 0
+            ? childProperties.some((p) => {
+                  return p.integrations?.[finchProviderId]?.includes(finchProviderAccessType);
+              })
+            : undefined);
+
+    if (finchHideUnsupported && supported === false) {
+        return null;
+    }
     return (
         <div
             data-route={anchorRoute}
-            className={classNames("flex relative flex-col py-3 scroll-mt-16", {
+            className={classNames("relative py-3 scroll-mt-16", {
                 "px-3": !contextValue.isRootTypeDefinition,
             })}
         >
+            <div className="float-right text-xs">
+                {supported == null ? null : supported ? (
+                    <span className="text-accent-primary">Supported</span>
+                ) : (
+                    <span className="text-black/40">Not supported</span>
+                )}
+            </div>
             <div className="flex items-baseline gap-2">
                 <div className="group/anchor-container relative">
                     <AbsolutelyPositionedAnchor verticalPosition="center" href={anchorRoute} />
                     <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName} className="flex">
-                        <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">
+                        <MonospaceText
+                            className={classNames("text-text-primary-light dark:text-text-primary-dark", {
+                                "line-through": supported === false,
+                            })}
+                        >
                             {property.key}
                         </MonospaceText>
                     </div>
@@ -132,6 +185,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
                         applyErrorStyles={applyErrorStyles}
                         anchorIdParts={anchorIdParts}
                         route={route}
+                        finchProperties={childProperties}
                     />
                 </TypeDefinitionContext.Provider>
             </div>

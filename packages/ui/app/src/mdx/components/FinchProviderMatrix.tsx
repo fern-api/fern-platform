@@ -1,8 +1,9 @@
+import { atomWithStorage } from "jotai/utils";
 import { Fragment, useMemo } from "react";
 import { InlineCode } from "../base-components";
 
 type ProviderStatus = "automated" | "assisted" | "upon_request" | "n/a";
-type AccessType = "api" | "credentials";
+export type AccessType = "api" | "credentials";
 type BenefitOperation =
     | "read_company_benefits"
     | "create_company_benefits"
@@ -16,8 +17,10 @@ export declare namespace FinchProviderMatrix {
         organization: ProviderStatus;
         payroll: ProviderStatus;
         deductions: ProviderStatus;
+        iconPath?: string;
+        supportedAccessTypes: AccessType[];
     }
-    interface Property {
+    export interface Property {
         key: string;
         integrations?: Record<string, AccessType[]>;
     }
@@ -44,6 +47,13 @@ export declare namespace FinchProviderMatrix {
         data: Data;
     }
 }
+
+export const finchProviderIdAtom = atomWithStorage<string | undefined>("finch-provider-id", undefined);
+export const finchProviderAccessTypeAtom = atomWithStorage<AccessType | undefined>(
+    "finch-provider-access-type",
+    undefined
+);
+export const finchHideUnsupportedAtom = atomWithStorage<boolean>("finch-hide-unsupported", false);
 
 export const FinchProviderMatrix: React.FC<FinchProviderMatrix.Props> = ({ data }) => {
     const integrationKeys = useMemo(() => Object.keys(data.integrations), [data]);

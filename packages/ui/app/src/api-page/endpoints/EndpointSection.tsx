@@ -8,6 +8,7 @@ export declare namespace EndpointSection {
         description?: string;
         anchorIdParts: string[];
         route: string;
+        floatRightElement?: React.ReactNode;
     }>;
 }
 
@@ -17,11 +18,15 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
     anchorIdParts,
     route,
     children,
+    floatRightElement,
 }) => {
     const anchorId = getAnchorId(anchorIdParts);
     const anchorRoute = `${route}#${anchorId}`;
     return (
-        <div data-route={anchorRoute} className="flex scroll-mt-16 flex-col">
+        <div data-route={anchorRoute} className="scroll-mt-16">
+            {floatRightElement != null && (
+                <div className="sticky top-20 z-10 float-right w-fit">{floatRightElement}</div>
+            )}
             <div className="group/anchor-container relative mb-3 flex items-center">
                 <AbsolutelyPositionedAnchor href={anchorRoute} verticalPosition="center" />
                 <div className="text-text-primary-light dark:text-text-primary-dark text-xl font-semibold">{title}</div>
@@ -31,7 +36,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
                     <Markdown>{description}</Markdown>
                 </div>
             )}
-            <div className="flex flex-col">{children}</div>
+            <div>{children}</div>
         </div>
     );
 };

@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import React, { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { BlueprintIcon } from "../../../commons/BlueprintIcon";
+import { FinchProviderMatrix } from "../../../mdx/components/FinchProviderMatrix";
 import { getAnchorId } from "../../../util/anchor";
 import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
 import {
@@ -28,6 +29,7 @@ export declare namespace InternalTypeDefinition {
         isCollapsible: boolean;
         anchorIdParts: string[];
         route: string;
+        finchProperties?: FinchProviderMatrix.Property[];
     }
 }
 
@@ -43,6 +45,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     isCollapsible,
     anchorIdParts,
     route,
+    finchProperties,
 }) => {
     const { resolveTypeById } = useApiDefinitionContext();
     const router = useRouter();
@@ -59,6 +62,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                             anchorIdParts={[...anchorIdParts, property.key]}
                             applyErrorStyles={false}
                             route={route}
+                            finchProperties={finchProperties}
                         />
                     )),
                     elementNameSingular: "property",
@@ -108,7 +112,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                 }),
                 _other: () => undefined,
             }),
-        [typeShape, resolveTypeById, anchorIdParts, route]
+        [typeShape, resolveTypeById, anchorIdParts, route, finchProperties]
     );
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);

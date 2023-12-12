@@ -202,7 +202,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
             ref={containerRef}
         >
             <div
-                className="flex min-w-0 flex-1 scroll-mt-16 flex-col justify-between lg:flex-row lg:space-x-[4vw]"
+                className="mx-auto flex min-w-0 max-w-7xl flex-1 scroll-mt-16 flex-col justify-between lg:flex-row lg:space-x-[4vw]"
                 ref={setContainerRef}
                 data-route={route}
             >

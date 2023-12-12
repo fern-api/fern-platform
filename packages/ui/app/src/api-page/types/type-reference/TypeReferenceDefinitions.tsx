@@ -1,4 +1,5 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import { FinchProviderMatrix } from "../../../mdx/components/FinchProviderMatrix";
 import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
 import { TypeDefinitionContextProvider } from "../context/TypeDefinitionContextProvider";
 import { InternalTypeReferenceDefinitions } from "./InternalTypeReferenceDefinitions";
@@ -12,6 +13,7 @@ export declare namespace TypeReferenceDefinitions {
         anchorIdParts: string[];
         className?: string;
         route: string;
+        finchProperties?: FinchProviderMatrix.Property[];
     }
 }
 
@@ -23,6 +25,7 @@ export const TypeReferenceDefinitions: React.FC<TypeReferenceDefinitions.Props> 
     anchorIdParts,
     className,
     route,
+    finchProperties,
 }) => {
     return (
         <TypeDefinitionContextProvider onHoverProperty={onHoverProperty}>
@@ -33,6 +36,7 @@ export const TypeReferenceDefinitions: React.FC<TypeReferenceDefinitions.Props> 
                 className={className}
                 anchorIdParts={anchorIdParts}
                 route={route}
+                finchProperties={finchProperties}
             />
         </TypeDefinitionContextProvider>
     );

@@ -1,5 +1,6 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import React from "react";
+import { FinchProviderMatrix } from "../../../mdx/components/FinchProviderMatrix";
 import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
 import { TypeDefinitionContextProvider } from "../context/TypeDefinitionContextProvider";
 import { InternalTypeDefinition } from "./InternalTypeDefinition";
@@ -11,6 +12,7 @@ export declare namespace TypeDefinition {
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: string[];
         route: string;
+        finchProperties?: FinchProviderMatrix.Property[];
     }
 }
 

@@ -1,9 +1,21 @@
 import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import { getEndpointTitleAsString, getSubpackageTitle, isSubpackage } from "@fern-ui/app-utils";
-import { memo } from "react";
+import { Switch, Tab } from "@headlessui/react";
+import classNames from "classnames";
+import { useAtom } from "jotai";
+import Image from "next/image";
+import { memo, useEffect } from "react";
+import { Menu, MenuItem } from "../../docs/Menu";
+import {
+    finchHideUnsupportedAtom,
+    finchProviderAccessTypeAtom,
+    finchProviderIdAtom,
+} from "../../mdx/components/FinchProviderMatrix";
+import { useNavigationContext } from "../../navigation-context";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
+import { FinchData } from "../utils/finchData";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 import { EndpointErrorsSection } from "./EndpointErrorsSection";
 import { EndpointParameter } from "./EndpointParameter";
@@ -45,6 +57,104 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     setSelectedErrorIndex,
     route,
 }) => {
+    const { navigateToPath } = useNavigationContext();
+    const [finchProviderId, setFinchProviderId] = useAtom(finchProviderIdAtom);
+    const [finchProviderAccessType, setFinchProviderAccessType] = useAtom(finchProviderAccessTypeAtom);
+    const [finchHideUnsupported, setFinchHideUnsupported] = useAtom(finchHideUnsupportedAtom);
+    const selectedFinchProvider = finchProviderId != null ? FinchData.integrations[finchProviderId] : undefined;
+    useEffect(() => {
+        if (selectedFinchProvider != null) {
+            setFinchProviderAccessType((prev) => {
+                if (prev == null) {
+                    return selectedFinchProvider.supportedAccessTypes[0];
+                } else {
+                    if (selectedFinchProvider.supportedAccessTypes.indexOf(prev) > -1) {
+                        return prev;
+                    } else {
+                        return selectedFinchProvider.supportedAccessTypes[0];
+                    }
+                }
+            });
+        }
+    }, [finchProviderAccessType, selectedFinchProvider, setFinchProviderAccessType]);
+    const provider = (
+        <div className="flex space-x-2">
+            <div className="my-auto flex items-center space-x-2">
+                <span className="text-xs text-black/60">Hide unsupported</span>
+                <Switch
+                    checked={finchHideUnsupported}
+                    onChange={(next) => {
+                        setFinchHideUnsupported(next);
+                        navigateToPath(route.substring(1));
+                    }}
+                    className={`${finchHideUnsupported ? "bg-accent-primary" : "bg-accent-primary/50"}
+          relative inline-flex h-[20px] w-[36px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white/75`}
+                >
+                    <span className="sr-only">Use setting</span>
+                    <span
+                        aria-hidden="true"
+                        className={`${finchHideUnsupported ? "translate-x-4" : "translate-x-0"}
+            pointer-events-none inline-block h-[16px] w-[16px] rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
+                    />
+                </Switch>
+            </div>
+            <Menu
+                text={selectedFinchProvider?.name ?? "Select provider..."}
+                icon={
+                    selectedFinchProvider?.iconPath != null ? (
+                        <Image
+                            src={selectedFinchProvider.iconPath}
+                            alt={selectedFinchProvider.name}
+                            width={16}
+                            height={16}
+                        />
+                    ) : undefined
+                }
+                menuClassName="w-52"
+                align="right"
+            >
+                {Object.entries(FinchData.integrations).map(([key, integration]) => (
+                    <MenuItem key={key} onClick={() => setFinchProviderId(key)}>
+                        {integration.iconPath != null ? (
+                            <Image src={integration.iconPath} alt={integration.name} width={16} height={16} />
+                        ) : (
+                            <span style={{ width: 16 }} />
+                        )}
+                        <span>{integration.name}</span>
+                    </MenuItem>
+                ))}
+            </Menu>
+            {selectedFinchProvider != null && (
+                <Tab.Group
+                    onChange={(index) => setFinchProviderAccessType(selectedFinchProvider.supportedAccessTypes[index])}
+                    selectedIndex={
+                        finchProviderAccessType != null
+                            ? selectedFinchProvider.supportedAccessTypes.indexOf(finchProviderAccessType)
+                            : -1
+                    }
+                >
+                    <Tab.List className="flex space-x-1">
+                        {selectedFinchProvider.supportedAccessTypes.map((accessType) => (
+                            <Tab
+                                key={accessType}
+                                className={({ selected }) =>
+                                    classNames(
+                                        "w-full rounded-lg py-1 px-2 font-mono text-xs leading-5 border",
+                                        "ring-white/60 ring-offset-2 ring-offset-blue-400 transition",
+                                        selected
+                                            ? "bg-white text-accent-primary shadow border border-accent-primary"
+                                            : "text-accent-primary border-border-primary hover:bg-tag-primary hover:border-2 hover:py-[calc(theme(spacing.1)-1px)] hover:px-[calc(theme(spacing[2])-1px)]"
+                                    )
+                                }
+                            >
+                                {accessType === "api" ? "API" : "Credentials"}
+                            </Tab>
+                        ))}
+                    </Tab.List>
+                </Tab.Group>
+            )}
+        </div>
+    );
     return (
         <>
             <div className="pb-2 pt-12">
@@ -116,12 +226,30 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                         </EndpointSection>
                     )}
                     {endpoint.response != null && (
-                        <EndpointSection title="Response" anchorIdParts={[...anchorIdParts, "response"]} route={route}>
+                        <EndpointSection
+                            title="Response"
+                            anchorIdParts={[...anchorIdParts, "response"]}
+                            route={route}
+                            floatRightElement={
+                                isSubpackage(package_) && ["organization", "payroll"].includes(package_.urlSlug)
+                                    ? provider
+                                    : undefined
+                            }
+                        >
                             <EndpointResponseSection
                                 httpResponse={endpoint.response}
                                 onHoverProperty={onHoverResponseProperty}
                                 anchorIdParts={[...anchorIdParts, "response"]}
                                 route={route}
+                                finchProperties={
+                                    isSubpackage(package_)
+                                        ? package_.urlSlug === "organization"
+                                            ? FinchData.organization.objects[endpoint.urlSlug]
+                                            : package_.urlSlug === "payroll"
+                                            ? FinchData.payroll.objects[endpoint.urlSlug]
+                                            : undefined
+                                        : undefined
+                                }
                             />
                         </EndpointSection>
                     )}

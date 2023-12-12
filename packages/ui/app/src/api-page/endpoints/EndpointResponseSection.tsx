@@ -1,6 +1,7 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ReactElement } from "react";
+import { FinchProviderMatrix } from "../../mdx/components/FinchProviderMatrix";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { TypeDefinition } from "../types/type-definition/TypeDefinition";
@@ -13,6 +14,7 @@ export declare namespace EndpointResponseSection {
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: string[];
         route: string;
+        finchProperties?: FinchProviderMatrix.Property[];
     }
 }
 
@@ -21,9 +23,10 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
     onHoverProperty,
     anchorIdParts,
     route,
+    finchProperties,
 }) => {
     return (
-        <div className="flex flex-col">
+        <>
             <ApiPageDescription description={httpResponse.description} isMarkdown={true} />
             <div className="t-muted border-border-default-light dark:border-border-default-dark border-b pb-5 leading-6">
                 {"This endpoint "}
@@ -49,6 +52,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                         onHoverProperty={onHoverProperty}
                         anchorIdParts={anchorIdParts}
                         route={route}
+                        finchProperties={finchProperties}
                     />
                 ),
                 reference: (type) => (
@@ -59,6 +63,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                         anchorIdParts={anchorIdParts}
                         applyErrorStyles={false}
                         route={route}
+                        finchProperties={finchProperties}
                     />
                 ),
                 fileDownload: () => null,
@@ -66,6 +71,6 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                 streamCondition: () => null,
                 _other: () => null,
             })}
-        </div>
+        </>
     );
 };
