@@ -1,11 +1,12 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import { ApiSection } from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import { getEndpointTitleAsString, getSubpackageTitle, isSubpackage } from "@fern-ui/app-utils";
 import { memo } from "react";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
+import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 import { EndpointErrorsSection } from "./EndpointErrorsSection";
+import { EndpointParameter } from "./EndpointParameter";
 import { EndpointRequestSection } from "./EndpointRequestSection";
 import { EndpointResponseSection } from "./EndpointResponseSection";
 import { EndpointSection } from "./EndpointSection";
@@ -19,13 +20,13 @@ export interface HoveringProps {
 
 export declare namespace EndpointContentLeft {
     export interface Props {
-        endpoint: FernRegistryApiRead.EndpointDefinition;
-        package: FernRegistryApiRead.ApiDefinitionPackage;
+        endpoint: APIV1Read.EndpointDefinition;
+        package: APIV1Read.ApiDefinitionPackage;
         anchorIdParts: string[];
-        apiSection: ApiSection;
+        apiSection: DocsV1Read.ApiSection;
         onHoverRequestProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
         onHoverResponseProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
-        errors: FernRegistryApiRead.ErrorDeclarationV2[];
+        errors: APIV1Read.ErrorDeclarationV2[];
         selectedErrorIndex: number | null;
         setSelectedErrorIndex: (idx: number | null) => void;
         route: string;
@@ -76,6 +77,26 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                             anchorIdParts={[...anchorIdParts, "path"]}
                             route={route}
                         />
+                    )}
+                    {endpoint.headers.length > 0 && (
+                        <EndpointSection title="Headers" anchorIdParts={[...anchorIdParts, "headers"]} route={route}>
+                            <div className="flex flex-col">
+                                {endpoint.headers.map((header, index) => (
+                                    <div className="flex flex-col" key={index}>
+                                        <TypeComponentSeparator />
+                                        <EndpointParameter
+                                            name={header.key}
+                                            type={header.type}
+                                            anchorIdParts={[...anchorIdParts, "headers", header.key]}
+                                            route={route}
+                                            description={header.description}
+                                            descriptionContainsMarkdown={header.descriptionContainsMarkdown ?? false}
+                                            availability={header.availability}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </EndpointSection>
                     )}
                     {endpoint.queryParameters.length > 0 && (
                         <QueryParametersSection

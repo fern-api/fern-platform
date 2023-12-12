@@ -1,19 +1,21 @@
-import { FernRegistry, PathResolver } from "@fern-api/fdr-sdk";
-import * as FernRegistryDocsReadV2 from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
-import { getSlugFromUrl } from "@fern-ui/app-utils";
-import { App, type ResolvedPath } from "@fern-ui/ui";
+import { APIV1Read, DocsV1Read, DocsV2Read, PathResolver } from "@fern-api/fdr-sdk";
+import {
+    convertNavigatableToResolvedPath,
+    generateFontFaces,
+    loadDocsBackgroundImage,
+    loadDocTypography,
+    type ResolvedPath,
+} from "@fern-ui/app-utils";
+import { App, useColorTheme } from "@fern-ui/ui";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
+import { ReactElement } from "react";
 import { REGISTRY_SERVICE } from "../../service";
 import { buildUrl } from "../../utils/buildUrl";
-import { convertNavigatableToResolvedPath } from "../../utils/convertNavigatableToResolvedPath";
-import { loadDocsBackgroundImage } from "../../utils/theme/loadDocsBackgroundImage";
-import { generateFontFaces, loadDocTypography } from "../../utils/theme/loadDocsTypography";
-import { useColorTheme } from "../../utils/theme/useColorTheme";
 
 export declare namespace Docs {
     export interface Props {
-        docs: FernRegistryDocsReadV2.LoadDocsForUrlResponse;
+        docs: DocsV2Read.LoadDocsForUrlResponse;
         typographyStyleSheet?: string;
         backgroundImageStyleSheet: string | null;
         resolvedPath: ResolvedPath;
@@ -25,7 +27,7 @@ export default function Docs({
     typographyStyleSheet = "",
     backgroundImageStyleSheet = "",
     resolvedPath,
-}: Docs.Props): JSX.Element {
+}: Docs.Props): ReactElement {
     const colorThemeStyleSheet = useColorTheme(docs.definition);
     return (
         <>
@@ -70,10 +72,10 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
 
     if (!docs.ok) {
         // eslint-disable-next-line no-console
-        console.error("Failed to fetch docs", docs.error);
+        console.error(`Failed to fetch docs for path: /${pathname}`, docs.error);
         return {
             notFound: true,
-            revalidate: false,
+            revalidate: 60,
         };
     }
 
@@ -81,28 +83,29 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
     const typographyConfig = loadDocTypography(docsDefinition);
     const typographyStyleSheet = generateFontFaces(typographyConfig);
     const backgroundImageStyleSheet = loadDocsBackgroundImage(docsDefinition);
-    type ApiDefinition = FernRegistry.api.v1.read.ApiDefinition;
+    type ApiDefinition = APIV1Read.ApiDefinition;
     const resolver = new PathResolver({
         definition: {
             apis: docs.body.definition.apis as Record<ApiDefinition["id"], ApiDefinition>,
             docsConfig: docs.body.definition.config,
+            basePath: docs.body.baseUrl.basePath,
         },
     });
-    const slug = getSlugFromUrl({ pathname, basePath: docs.body.baseUrl.basePath });
-    const resolvedNavigatable = resolver.resolveNavigatable(slug);
+    const resolvedNavigatable = resolver.resolveNavigatable(pathname);
 
     if (resolvedNavigatable == null) {
         // eslint-disable-next-line no-console
-        console.error(`Cannot resolve navigatable corresponding to "${slug}"`);
+        console.error(`Cannot resolve navigatable corresponding to "${pathname}"`);
         return {
             notFound: true,
-            revalidate: false,
+            revalidate: 60 * 60, // 1 hour
         };
     }
 
     const resolvedPath = await convertNavigatableToResolvedPath({
         navigatable: resolvedNavigatable,
-        docsDefinition: docsDefinition as FernRegistry.docs.v1.read.DocsDefinition,
+        docsDefinition: docsDefinition as DocsV1Read.DocsDefinition,
+        basePath: docs.body.baseUrl.basePath,
     });
 
     return {
@@ -112,6 +115,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
             backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
             resolvedPath,
         },
+        revalidate: 60 * 60 * 24 * 6, // 6 days
     };
 };
 

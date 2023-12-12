@@ -1,13 +1,14 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
+import { useShouldHideFromSsg } from "../../navigation-context/useNavigationContext";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { WebhookContextProvider } from "./webhook-context/WebhookContextProvider";
 import { WebhookContent } from "./WebhookContent";
 
 export declare namespace Webhook {
     export interface Props {
-        webhook: FernRegistryApiRead.WebhookDefinition;
+        webhook: APIV1Read.WebhookDefinition;
         isLastInApi: boolean;
-        package: FernRegistryApiRead.ApiDefinitionPackage;
+        package: APIV1Read.ApiDefinitionPackage;
         fullSlug: string;
         anchorIdParts: string[];
     }
@@ -22,6 +23,11 @@ export const Webhook: React.FC<Webhook.Props> = ({
 }) => {
     const { setTargetRef } = useApiPageCenterElement({ slug: fullSlug });
     const route = `/${fullSlug}`;
+
+    // TODO: merge this with the Endpoint component
+    if (useShouldHideFromSsg(fullSlug)) {
+        return null;
+    }
 
     return (
         <WebhookContextProvider>

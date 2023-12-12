@@ -1,9 +1,9 @@
-import { Icon } from "@blueprintjs/core";
 import { Dialog } from "@headlessui/react";
 import algolia from "algoliasearch/lite";
 import classNames from "classnames";
 import { useEffect, useMemo, useState } from "react";
 import { InstantSearch, SearchBox } from "react-instantsearch-hooks-web";
+import { BlueprintIcon } from "../commons/BlueprintIcon";
 import { type SearchCredentials, type SearchService } from "../services/useSearchService";
 import styles from "./SearchDialog.module.scss";
 import { SearchHits } from "./SearchHits";
@@ -45,7 +45,7 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
                     <InstantSearch searchClient={searchClient} indexName={searchService.index}>
                         <div className="bg-background-primary-light dark:bg-background-primary-dark z-10 mx-3 mb-8 mt-10 flex w-full max-w-2xl flex-col overflow-hidden rounded-md text-left align-middle shadow-2xl">
                             <div className={classNames(styles.searchBox, "flex items-center space-x-3 px-5")}>
-                                <Icon className="t-muted" icon="search" size={14} />
+                                <BlueprintIcon className="t-muted" icon="search" size={14} />
                                 <SearchBox
                                     inputMode="text"
                                     autoFocus

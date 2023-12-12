@@ -5,11 +5,9 @@ import {
     type NavigatableDocsNode,
     type NodeNeighbors,
 } from "@fern-api/fdr-sdk";
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { DefinitionObjectFactory } from "@fern-ui/app-utils";
+import { DefinitionObjectFactory, type ResolvedPath } from "@fern-ui/app-utils";
 import { noop } from "@fern-ui/core-utils";
 import React from "react";
-import { ResolvedPath } from "../ResolvedPath";
 
 const EMPTY_DEFINITION = DefinitionObjectFactory.createDocsDefinition();
 const EMPTY_DEFINITION_SUMMARY: DocsDefinitionSummary = {
@@ -18,13 +16,13 @@ const EMPTY_DEFINITION_SUMMARY: DocsDefinitionSummary = {
 };
 
 export const NavigationContext = React.createContext<NavigationContextValue>({
-    hasInitialized: false,
+    basePath: undefined,
     justNavigated: false,
     activeNavigatable: NodeFactory.createPage({
         slug: "",
         leadingSlug: "",
         page: {
-            id: FernRegistryDocsRead.PageId(""),
+            id: "",
             title: "",
             urlSlug: "",
         },
@@ -51,17 +49,18 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
         type: "custom-markdown-page",
         fullSlug: "",
         page: {
-            id: FernRegistryDocsRead.PageId(""),
+            id: "",
             title: "",
             urlSlug: "",
         },
         sectionTitle: "",
         serializedMdxContent: { compiledSource: "", frontmatter: {}, scope: {} },
     },
+    hydrated: false,
 });
 
 export interface NavigationContextValue {
-    hasInitialized: boolean;
+    basePath: string | undefined;
     justNavigated: boolean;
     activeNavigatable: NavigatableDocsNode;
     activeNavigatableNeighbors: NodeNeighbors;
@@ -71,5 +70,6 @@ export interface NavigationContextValue {
     observeDocContent: (element: HTMLDivElement) => void;
     resolver: PathResolver;
     registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
-    resolvedPath: ResolvedPath;
+    resolvedPath: ResolvedPath; // the initial path that was hard-navigated
+    hydrated: boolean;
 }

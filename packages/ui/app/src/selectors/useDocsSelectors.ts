@@ -1,5 +1,4 @@
-import { type DefinitionInfo, type DocsNode } from "@fern-api/fdr-sdk";
-import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { DocsV1Read, type DefinitionInfo, type DocsNode } from "@fern-api/fdr-sdk";
 import { getFullSlugForNavigatable, joinUrlSlugs } from "@fern-ui/app-utils";
 import { useCallback, useMemo } from "react";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
@@ -34,18 +33,20 @@ export type ActiveVersionContext = ActiveVersionContextUnversioned | ActiveVersi
 
 interface ActiveNavigationConfigContextUntabbed {
     type: "untabbed";
-    config: FernRegistryDocsRead.UnversionedUntabbedNavigationConfig;
+    config: DocsV1Read.UnversionedUntabbedNavigationConfig;
 }
 
 interface ActiveNavigationConfigContextTabbed {
     type: "tabbed";
-    config: FernRegistryDocsRead.UnversionedTabbedNavigationConfig;
+    config: DocsV1Read.UnversionedTabbedNavigationConfig;
 }
 
 export type ActiveNavigationConfigContext = ActiveNavigationConfigContextUntabbed | ActiveNavigationConfigContextTabbed;
 
 export function useDocsSelectors(): DocsSelectors {
-    const { activeNavigatable } = useNavigationContext();
+    const { basePath, activeNavigatable } = useNavigationContext();
+
+    const prefix = basePath != null && basePath.trim().length > 1 ? basePath.trim().slice(1) + "/" : "";
 
     const definitionInfo = useMemo(() => activeNavigatable.context.root.info, [activeNavigatable]);
 
@@ -71,10 +72,7 @@ export function useDocsSelectors(): DocsSelectors {
         }
     }, [activeNavigatable]);
 
-    const selectedSlug = useMemo(
-        () => getFullSlugForNavigatable(activeNavigatable, { omitDefault: true }),
-        [activeNavigatable]
-    );
+    const selectedSlug = getFullSlugForNavigatable(activeNavigatable, { omitDefault: true, basePath });
 
     const withTabSlug = useCallback(
         (slug: string) => {
@@ -100,8 +98,8 @@ export function useDocsSelectors(): DocsSelectors {
     );
 
     const withVersionAndTabSlugs = useCallback(
-        (slug: string, opts?: WithVersionSlugOpts) => withVersionSlug(withTabSlug(slug), opts),
-        [withVersionSlug, withTabSlug]
+        (slug: string, opts?: WithVersionSlugOpts) => prefix + withVersionSlug(withTabSlug(slug), opts),
+        [prefix, withVersionSlug, withTabSlug]
     );
 
     return {
@@ -110,7 +108,7 @@ export function useDocsSelectors(): DocsSelectors {
         activeNavigationConfigContext,
         selectedSlug,
         withVersionAndTabSlugs,
-        withVersionSlug,
-        withTabSlug,
+        withVersionSlug: useCallback((slug: string) => prefix + withVersionSlug(slug), [prefix, withVersionSlug]),
+        withTabSlug: useCallback((slug: string) => prefix + withTabSlug(slug), [prefix, withTabSlug]),
     };
 }

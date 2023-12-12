@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    .prose a,
+    .prose a:hover {
+        @apply transition;
+        @apply pb-[2px];
+        @apply text-white hover:text-accent-primary;
+        @apply no-underline border-b border-b-border-default-light dark:border-b-border-default-dark hover:border-b-accent-primary;
+    }
+
+    .prose a {
+        text-decoration: none;
+    }
+
+    ::selection {
+        @apply bg-accent-primary/20;
+    }
+
+    /* provides comfortable padding above anchor links, to avoid intersecting with header */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        scroll-margin-top: 100px;
+    }
+}

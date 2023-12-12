@@ -1,10 +1,10 @@
-import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { startCase } from "lodash-es";
 import { joinUrlSlugs } from "../slug";
 
 export function doesSubpackageHaveEndpointsOrWebhooksRecursive(
-    subpackageId: FernRegistryApiRead.SubpackageId,
-    resolveSubpackage: (subpackageId: FernRegistryApiRead.SubpackageId) => FernRegistryApiRead.ApiDefinitionSubpackage
+    subpackageId: APIV1Read.SubpackageId,
+    resolveSubpackage: (subpackageId: APIV1Read.SubpackageId) => APIV1Read.ApiDefinitionSubpackage
 ): boolean {
     const subpackage = resolveSubpackage(subpackageId);
     if (subpackage.endpoints.length > 0 || subpackage.webhooks.length > 0) {
@@ -15,7 +15,7 @@ export function doesSubpackageHaveEndpointsOrWebhooksRecursive(
 
 const SPLIT_VERSION_REGEX = / V (\d+)$/;
 
-export function getSubpackageTitle(subpackage: FernRegistryApiRead.ApiDefinitionSubpackage): string {
+export function getSubpackageTitle(subpackage: APIV1Read.ApiDefinitionSubpackage): string {
     let s = startCase(subpackage.name);
 
     const splitVersionMatch = s.match(SPLIT_VERSION_REGEX);
@@ -29,9 +29,9 @@ export function getSubpackageTitle(subpackage: FernRegistryApiRead.ApiDefinition
 }
 
 export function getSlugForFirstNavigatableEndpointOrWebhook(
-    subpackage: FernRegistryApiRead.ApiDefinitionSubpackage,
+    subpackage: APIV1Read.ApiDefinitionSubpackage,
     slugs: string[],
-    apiDefinition: FernRegistryApiRead.ApiDefinition
+    apiDefinition: APIV1Read.ApiDefinition
 ): string | undefined {
     const firstNavigatable = subpackage.endpoints[0] ?? subpackage.webhooks[0];
     if (firstNavigatable != null) {

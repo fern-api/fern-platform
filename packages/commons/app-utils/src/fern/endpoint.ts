@@ -1,4 +1,4 @@
-import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 
 export type EndpointPathPart =
@@ -11,7 +11,7 @@ export type EndpointPathPart =
           name: string;
       };
 
-export function getEndpointAvailabilityLabel(availability: FernRegistryApiRead.Availability): string {
+export function getEndpointAvailabilityLabel(availability: APIV1Read.Availability): string {
     switch (availability) {
         case "Beta":
             return "Beta";
@@ -24,7 +24,7 @@ export function getEndpointAvailabilityLabel(availability: FernRegistryApiRead.A
     }
 }
 
-export function divideEndpointPathToParts(endpoint: FernRegistryApiRead.EndpointDefinition): EndpointPathPart[] {
+export function divideEndpointPathToParts(endpoint: APIV1Read.EndpointDefinition): EndpointPathPart[] {
     const parts: EndpointPathPart[] = [];
     endpoint.path.parts.forEach((part) => {
         if (part.type === "literal") {
@@ -43,7 +43,7 @@ export function divideEndpointPathToParts(endpoint: FernRegistryApiRead.Endpoint
     return parts;
 }
 
-export function getEndpointEnvironmentUrl(endpoint: FernRegistryApiRead.EndpointDefinition): string | undefined {
+export function getEndpointEnvironmentUrl(endpoint: APIV1Read.EndpointDefinition): string | undefined {
     if (endpoint.defaultEnvironment != null) {
         const defaultEnvironment = endpoint.environments.find((env) => env.id === endpoint.defaultEnvironment);
         if (defaultEnvironment != null) {
@@ -53,11 +53,11 @@ export function getEndpointEnvironmentUrl(endpoint: FernRegistryApiRead.Endpoint
     return endpoint.environments[0]?.baseUrl;
 }
 
-export function getEndpointTitleAsString(endpoint: FernRegistryApiRead.EndpointDefinition): string {
+export function getEndpointTitleAsString(endpoint: APIV1Read.EndpointDefinition): string {
     return endpoint.name ?? getEndpointPathAsString(endpoint);
 }
 
-export function getEndpointPathAsString(endpoint: FernRegistryApiRead.EndpointDefinition): string {
+export function getEndpointPathAsString(endpoint: APIV1Read.EndpointDefinition): string {
     return (
         endpoint.method +
         " " +
@@ -73,6 +73,6 @@ export function getEndpointPathAsString(endpoint: FernRegistryApiRead.EndpointDe
     );
 }
 
-export function getPathParameterAsString(pathParameterKey: FernRegistryApiRead.PathParameterKey): string {
+export function getPathParameterAsString(pathParameterKey: APIV1Read.PathParameterKey): string {
     return `:${pathParameterKey}`;
 }

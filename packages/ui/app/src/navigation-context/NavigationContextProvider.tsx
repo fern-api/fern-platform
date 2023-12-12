@@ -1,11 +1,9 @@
-import { FernRegistry, PathResolver } from "@fern-api/fdr-sdk";
-import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { getFullSlugForNavigatable } from "@fern-ui/app-utils";
+import { DocsV1Read, FdrAPI, PathResolver } from "@fern-api/fdr-sdk";
+import { getFullSlugForNavigatable, type ResolvedPath } from "@fern-ui/app-utils";
 import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { type ResolvedPath } from "../ResolvedPath";
 import { getRouteNode } from "../util/anchor";
 import { getRouteForResolvedPath } from "./getRouteForResolvedPath";
 import { NavigationContext } from "./NavigationContext";
@@ -13,8 +11,9 @@ import { useSlugListeners } from "./useSlugListeners";
 
 export declare namespace NavigationContextProvider {
     export type Props = PropsWithChildren<{
-        docsDefinition: FernRegistryDocsRead.DocsDefinition;
+        docsDefinition: DocsV1Read.DocsDefinition;
         resolvedPath: ResolvedPath;
+        basePath: string | undefined;
     }>;
 }
 
@@ -22,22 +21,27 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     docsDefinition,
     resolvedPath,
     children,
+    basePath,
 }) => {
     const router = useRouter();
     const userIsScrolling = useRef(false);
-    const resolvedRoute = getRouteForResolvedPath({ resolvedSlug: resolvedPath.fullSlug, asPath: router.asPath });
+    const resolvedRoute = getRouteForResolvedPath({
+        resolvedSlug: resolvedPath.fullSlug,
+        asPath: router.asPath,
+        basePath,
+    });
     const justNavigatedTo = useRef<string | undefined>(resolvedRoute);
-    const { value: hasInitialized, setTrue: markAsInitialized } = useBooleanState(false);
-    type ApiDefinition = FernRegistry.api.v1.read.ApiDefinition;
+    type ApiDefinition = FdrAPI.api.v1.read.ApiDefinition;
     const resolver = useMemo(
         () =>
             new PathResolver({
                 definition: {
                     apis: docsDefinition.apis as Record<ApiDefinition["id"], ApiDefinition>,
                     docsConfig: docsDefinition.config,
+                    basePath,
                 },
             }),
-        [docsDefinition]
+        [basePath, docsDefinition.apis, docsDefinition.config]
     );
 
     const resolvedNavigatable = useMemo(() => {
@@ -48,14 +52,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             );
         }
         return node;
-    }, [resolver, resolvedPath]);
-
-    useEffect(() => {
-        setActiveNavigatable(resolvedNavigatable);
-        if (resolvedNavigatable?.type === "page") {
-            window.scrollTo({ top: 0 });
-        }
-    }, [resolvedNavigatable]);
+    }, [resolver, resolvedPath.fullSlug]);
 
     const [activeNavigatable, setActiveNavigatable] = useState(resolvedNavigatable);
 
@@ -63,7 +60,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         return resolver.getNeighborsForNavigatable(activeNavigatable);
     }, [resolver, activeNavigatable]);
 
-    const selectedSlug = getFullSlugForNavigatable(activeNavigatable, { omitDefault: true });
+    const selectedSlug = getFullSlugForNavigatable(activeNavigatable, { omitDefault: true, basePath });
 
     const navigateToRoute = useRef((route: string, disableSmooth = false) => {
         if (!userIsScrolling.current) {
@@ -81,7 +78,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             navigateToRoute.current(resolvedRoute);
         };
         handleInit();
-        markAsInitialized();
         window.addEventListener("DOMContentLoaded", handleInit);
         return () => {
             window.removeEventListener("DOMContentLoaded", handleInit);
@@ -106,7 +102,13 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     }, [navigateToRoute, router.events]);
 
     const setUserIsScrollingFalse = useRef(
-        debounce(() => (userIsScrolling.current = false), 100, { leading: false, trailing: true })
+        debounce(
+            () => {
+                userIsScrolling.current = false;
+            },
+            150,
+            { leading: false, trailing: true }
+        )
     );
 
     const resizeObserver = useRef<ResizeObserver>();
@@ -160,19 +162,24 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         scrollToPathListeners.invokeListeners(fullSlug);
     });
 
+    const timeout = useRef<NodeJS.Timeout>();
+
     const navigateToPath = useEventCallback((fullSlug: string) => {
         justNavigated.current = true;
         const navigatable = resolver.resolveNavigatable(fullSlug);
+        navigateToRoute.current(`/${fullSlug}`);
         if (navigatable != null) {
             setActiveNavigatable(navigatable);
+
+            if (navigatable.type === "page") {
+                window.scrollTo({ top: 0 });
+            }
         }
         // navigateToPathListeners.invokeListeners(slug);
-        const timeout = setTimeout(() => {
+        timeout.current != null && clearTimeout(timeout.current);
+        timeout.current = setTimeout(() => {
             justNavigated.current = false;
         }, 500);
-        return () => {
-            clearTimeout(timeout);
-        };
     });
 
     useEffect(() => {
@@ -180,17 +187,23 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             const slugCandidate = as.substring(1, as.length);
             const previousNavigatable = resolver.resolveNavigatable(slugCandidate);
             if (previousNavigatable != null) {
-                const fullSlug = getFullSlugForNavigatable(previousNavigatable);
+                const fullSlug = getFullSlugForNavigatable(previousNavigatable, { basePath });
                 navigateToPath(fullSlug);
             }
             return true;
         });
-    }, [router, navigateToPath, docsDefinition, resolver]);
+    }, [router, navigateToPath, docsDefinition, resolver, basePath]);
+
+    const hydrated = useBooleanState(false);
+    useEffect(() => {
+        hydrated.setTrue();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <NavigationContext.Provider
             value={{
-                hasInitialized,
+                basePath,
                 justNavigated: justNavigatedTo.current != null,
                 activeNavigatable,
                 navigateToPath,
@@ -201,6 +214,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 registerScrolledToPathListener: scrollToPathListeners.registerListener,
                 activeNavigatableNeighbors,
                 resolvedPath,
+                hydrated: hydrated.value,
             }}
         >
             {children}

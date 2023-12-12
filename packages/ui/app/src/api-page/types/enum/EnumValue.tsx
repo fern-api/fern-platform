@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { ApiPageDescription } from "../../ApiPageDescription";
@@ -6,7 +6,7 @@ import { useTypeDefinitionContext } from "../context/TypeDefinitionContext";
 
 export declare namespace EnumValue {
     export interface Props {
-        enumValue: FernRegistryApiRead.EnumValue;
+        enumValue: APIV1Read.EnumValue;
     }
 }
 

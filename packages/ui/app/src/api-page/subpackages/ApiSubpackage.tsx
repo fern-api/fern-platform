@@ -1,13 +1,12 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
-import { HEADER_HEIGHT } from "../../constants";
 import { ApiPackageContents } from "../ApiPackageContents";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 
 export declare namespace ApiSubpackage {
     export interface Props {
-        subpackageId: FernRegistryApiRead.SubpackageId;
+        subpackageId: APIV1Read.SubpackageId;
         slug: string;
         isLastInParentPackage: boolean;
         anchorIdParts: string[];
@@ -26,7 +25,7 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({
     return (
         <>
             <ApiPageMargins>
-                <div ref={setTargetRef} data-route={`/${slug}`} style={{ scrollMarginTop: HEADER_HEIGHT }} />
+                <div ref={setTargetRef} data-route={`/${slug}`} className="scroll-mt-16" />
             </ApiPageMargins>
             <ApiPackageContents
                 key={subpackageId}

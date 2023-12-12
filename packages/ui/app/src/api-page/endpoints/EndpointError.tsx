@@ -1,8 +1,8 @@
-import { FernRegistry } from "@fern-fern/registry-browser";
+import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import { memo, MouseEventHandler, useEffect } from "react";
+import { memo, MouseEventHandler, ReactElement, useEffect } from "react";
 import { getAnchorId } from "../../util/anchor";
 import { toTitleCase } from "../../util/string";
 import { type JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
@@ -11,10 +11,11 @@ import { InternalTypeDefinitionError } from "../types/type-definition/InternalTy
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
 import { getErrorNameForStatus } from "../utils/getErrorNameForStatus";
+import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 
 export declare namespace EndpointError {
     export interface Props {
-        error: FernRegistry.api.v1.read.ErrorDeclarationV2;
+        error: FdrAPI.api.v1.read.ErrorDeclarationV2;
         isFirst: boolean;
         isLast: boolean;
         isSelected: boolean;
@@ -23,6 +24,7 @@ export declare namespace EndpointError {
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: string[];
         route: string;
+        availability: APIV1Read.Availability | undefined;
     }
 }
 
@@ -36,6 +38,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
     select,
     anchorIdParts,
     route,
+    availability,
 }) {
     const router = useRouter();
     const anchorIdSoFar = getAnchorId(anchorIdParts);
@@ -72,13 +75,14 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                 <div className="t-muted text-xs">
                     {error.name != null ? toTitleCase(error.name) : getErrorNameForStatus(error.statusCode)}
                 </div>
+                {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
             </div>
 
             {isSelected && error.type != null && (
                 <div className="w-full pb-3">
                     <div className="t-muted mt-3 w-full text-start text-sm font-light leading-7">
                         This error returns{" "}
-                        {visitDiscriminatedUnion(error.type, "type")._visit<string | JSX.Element>({
+                        {visitDiscriminatedUnion(error.type, "type")._visit<string | ReactElement>({
                             alias: (type) => (
                                 <>
                                     <TypeShorthand type={type.value} plural={false} withArticle />.

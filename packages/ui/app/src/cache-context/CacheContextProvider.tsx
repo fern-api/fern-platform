@@ -1,5 +1,5 @@
 import type { FullSlug } from "@fern-api/fdr-sdk";
-import { SerializedMdxContent } from "@fern-ui/app-utils";
+import { type SerializedMdxContent } from "@fern-ui/app-utils";
 import { LRUCache } from "lru-cache";
 import { PropsWithChildren, useCallback, useRef } from "react";
 import { CacheContext, CacheContextValue } from "./CacheContext";

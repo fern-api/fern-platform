@@ -1,6 +1,7 @@
 import { Icon } from "@blueprintjs/core";
 import { IconName } from "@blueprintjs/icons";
 import classNames from "classnames";
+import { ReactElement } from "react";
 import { TwoColumnTableCell } from "./TwoColumnTableCell";
 import styles from "./TwoColumnTableRow.module.scss";
 
@@ -8,8 +9,8 @@ export declare namespace TwoColumnTableRow {
     export type Props = React.PropsWithChildren<{
         verticallyCenterLabel?: boolean;
         labelClassName?: string;
-        icon?: IconName | JSX.Element;
-        label: JSX.Element | string;
+        icon?: IconName | ReactElement;
+        label: ReactElement | string;
     }>;
 }
 

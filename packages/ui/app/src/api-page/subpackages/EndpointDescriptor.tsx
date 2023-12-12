@@ -1,4 +1,4 @@
-import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { getPathParameterAsString } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { MouseEventHandler } from "react";
@@ -7,7 +7,7 @@ import { MonospaceText } from "../../commons/monospace/MonospaceText";
 
 export declare namespace EndpointDescriptor {
     export interface Props {
-        endpointDefinition: FernRegistryApiRead.EndpointDefinition;
+        endpointDefinition: APIV1Read.EndpointDefinition;
         onClick: MouseEventHandler<HTMLButtonElement>;
     }
 }

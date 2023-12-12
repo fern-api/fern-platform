@@ -1,10 +1,13 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
+import { useAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 import React, { useCallback, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { HEADER_HEIGHT } from "../../constants";
 import { useDocsContext } from "../../docs-context/useDocsContext";
+import { useNavigationContext } from "../../navigation-context";
 import { useViewportContext } from "../../viewport-context/useViewportContext";
 import { type CodeExampleClient } from "../examples/code-example";
 import { getCurlLines } from "../examples/curl-example/curlUtils";
@@ -15,8 +18,8 @@ import { EndpointContentLeft } from "./EndpointContentLeft";
 
 export declare namespace EndpointContent {
     export interface Props {
-        endpoint: FernRegistryApiRead.EndpointDefinition;
-        package: FernRegistryApiRead.ApiDefinitionPackage;
+        endpoint: APIV1Read.EndpointDefinition;
+        package: APIV1Read.ApiDefinitionPackage;
         anchorIdParts: string[];
         hideBottomSeparator?: boolean;
         setContainerRef: (ref: HTMLElement | null) => void;
@@ -37,9 +40,9 @@ const DEFAULT_CLIENT: CodeExampleClient = {
     name: "cURL",
 };
 
-function getAvailableExampleClients(example: FernRegistryApiRead.ExampleEndpointCall): CodeExampleClient[] {
+function getAvailableExampleClients(example: APIV1Read.ExampleEndpointCall): CodeExampleClient[] {
     const clients: CodeExampleClient[] = [DEFAULT_CLIENT];
-    const { pythonSdk } = example.codeExamples;
+    const { pythonSdk, typescriptSdk } = example.codeExamples;
     if (pythonSdk != null) {
         clients.push(
             {
@@ -57,8 +60,19 @@ function getAvailableExampleClients(example: FernRegistryApiRead.ExampleEndpoint
         );
     }
 
+    if (typescriptSdk != null && typescriptSdk.client != null) {
+        clients.push({
+            id: "typescript",
+            name: "TypeScript",
+            language: "typescript",
+            example: typescriptSdk.client,
+        });
+    }
+
     return clients;
 }
+
+const fernClientIdAtom = atomWithStorage<CodeExampleClient["id"]>("fern-client-id", DEFAULT_CLIENT.id);
 
 export const EndpointContent: React.FC<EndpointContent.Props> = ({
     endpoint,
@@ -69,6 +83,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     route,
 }) => {
     const { layoutBreakpoint, viewportSize } = useViewportContext();
+    const { navigateToPath } = useNavigationContext();
     const [isInViewport, setIsInViewport] = useState(false);
     const { ref: containerRef } = useInView({
         onChange: setIsInViewport,
@@ -91,7 +106,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         [setHoveredResponsePropertyPath]
     );
 
-    const [selectedExampleClient, setSelectedExampleClient] = useState<CodeExampleClient>(DEFAULT_CLIENT);
+    const [storedSelectedExampleClientId, setSelectedExampleClientId] = useAtom(fernClientIdAtom);
     const [selectedErrorIndex, setSelectedErrorIndex] = useState<number | null>(null);
 
     const errors = useMemo(() => {
@@ -112,6 +127,17 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     const availableExampleClients = useMemo(
         () => (example != null ? getAvailableExampleClients(example) : []),
         [example]
+    );
+
+    const selectedExampleClient =
+        availableExampleClients.find((client) => client.id === storedSelectedExampleClientId) ?? DEFAULT_CLIENT;
+
+    const setSelectedExampleClientAndScrollToTop = useCallback(
+        (nextClient: CodeExampleClient) => {
+            setSelectedExampleClientId(nextClient.id);
+            navigateToPath(route.substring(1));
+        },
+        [navigateToPath, route, setSelectedExampleClientId]
     );
 
     const curlLines = useMemo(
@@ -169,17 +195,16 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     return (
         <div
-            className={classNames("pb-20 pl-6 md:pl-12 pr-4", {
+            className={classNames("pb-20 pl-6 md:pl-12 pr-4 scroll-mt-16", {
                 "border-border-default-light dark:border-border-default-dark border-b": !hideBottomSeparator,
             })}
             onClick={() => setSelectedErrorIndex(null)}
             ref={containerRef}
         >
             <div
-                className="flex min-w-0 flex-1 flex-col justify-between lg:flex-row lg:space-x-[4vw]"
+                className="flex min-w-0 flex-1 scroll-mt-16 flex-col justify-between lg:flex-row lg:space-x-[4vw]"
                 ref={setContainerRef}
                 data-route={route}
-                style={{ scrollMarginTop: HEADER_HEIGHT }}
             >
                 <div
                     className="flex min-w-0 max-w-2xl flex-1 flex-col"
@@ -219,7 +244,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                             example={example}
                             availableExampleClients={availableExampleClients}
                             selectedExampleClient={selectedExampleClient}
-                            onClickExampleClient={setSelectedExampleClient}
+                            onClickExampleClient={setSelectedExampleClientAndScrollToTop}
                             requestCurlLines={curlLines}
                             responseJsonLines={jsonLines}
                             hoveredRequestPropertyPath={hoveredRequestPropertyPath}

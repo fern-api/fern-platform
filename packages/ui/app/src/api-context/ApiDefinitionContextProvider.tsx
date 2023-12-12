@@ -1,12 +1,11 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import React, { useCallback } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { ApiDefinitionContext, ApiDefinitionContextValue } from "./ApiDefinitionContext";
 
 export declare namespace ApiDefinitionContextProvider {
     export type Props = React.PropsWithChildren<{
-        apiSection: FernRegistryDocsRead.ApiSection;
+        apiSection: DocsV1Read.ApiSection;
     }>;
 }
 
@@ -19,14 +18,14 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
     const apiSlug = apiSection.skipUrlSlug ? "" : apiSection.urlSlug;
 
     const resolveSubpackageById = useCallback(
-        (subpackageId: FernRegistryApiRead.SubpackageId): FernRegistryApiRead.ApiDefinitionSubpackage => {
+        (subpackageId: APIV1Read.SubpackageId): APIV1Read.ApiDefinitionSubpackage => {
             return resolveSubpackage(apiDefinition, subpackageId);
         },
         [apiDefinition]
     );
 
     const resolveTypeById = useCallback(
-        (typeId: FernRegistryApiRead.TypeId): FernRegistryApiRead.TypeDefinition => {
+        (typeId: APIV1Read.TypeId): APIV1Read.TypeDefinition => {
             const type = apiDefinition.types[typeId];
             if (type == null) {
                 throw new Error("Type does not exist");
@@ -51,9 +50,9 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
 };
 
 export function resolveSubpackage(
-    apiDefinition: FernRegistryApiRead.ApiDefinition,
-    subpackageId: FernRegistryApiRead.SubpackageId
-): FernRegistryApiRead.ApiDefinitionSubpackage {
+    apiDefinition: APIV1Read.ApiDefinition,
+    subpackageId: APIV1Read.SubpackageId
+): APIV1Read.ApiDefinitionSubpackage {
     const subpackage = apiDefinition.subpackages[subpackageId];
     if (subpackage == null) {
         throw new Error("Subpackage does not exist");

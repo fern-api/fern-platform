@@ -1,12 +1,13 @@
-import { Collapse, Icon } from "@blueprintjs/core";
+import { Collapse } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
+import { BlueprintIcon } from "../../../commons/BlueprintIcon";
 import { Chip } from "../../../components/common/Chip";
 import { getAnchorId } from "../../../util/anchor";
 import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
@@ -24,7 +25,7 @@ import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 
 export declare namespace InternalTypeDefinition {
     export interface Props {
-        typeShape: FernRegistryApiRead.TypeShape;
+        typeShape: APIV1Read.TypeShape;
         isCollapsible: boolean;
         anchorIdParts: string[];
         route: string;
@@ -32,7 +33,7 @@ export declare namespace InternalTypeDefinition {
 }
 
 interface CollapsibleContent {
-    elements: JSX.Element[];
+    elements: ReactElement[];
     elementNameSingular: string;
     elementNamePlural: string;
     separatorText?: string;
@@ -193,7 +194,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                                 e.stopPropagation();
                             }}
                         >
-                            <Icon
+                            <BlueprintIcon
                                 className={classNames("transition", {
                                     "rotate-45": isCollapsed,
                                 })}

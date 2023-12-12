@@ -19,7 +19,7 @@ export const Card: React.FC<Card.Props> = ({ title, icon, iconPosition = "top", 
     const isUrlOnThisPage = typeof href === "string" && href.startsWith("#");
 
     const className = classNames(
-        "border-border-default-light dark:border-border-default-dark bg-background-tertiary-light dark:bg-background-tertiary-dark flex items-start rounded-lg border p-4 !no-underline hover:transition",
+        "border-border-default-light dark:border-border-default-dark bg-background-tertiary-light dark:bg-background-tertiary-dark flex items-start rounded-lg border p-4 !no-underline hover:transition mb-4",
         "grow basis-1/4",
         {
             "space-y-3 flex-col": iconPosition === "top",

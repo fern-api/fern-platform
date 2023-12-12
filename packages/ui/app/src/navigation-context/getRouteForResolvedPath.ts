@@ -1,14 +1,16 @@
 export function getRouteForResolvedPath({
     resolvedSlug,
     asPath,
+    basePath = "",
 }: {
     resolvedSlug: string;
     /** Includes hash. */
     asPath: string;
+    basePath?: string;
 }): string {
     const [, hash] = asPath.split("#");
     if (typeof hash !== "string" || hash.length === 0) {
-        return `/${resolvedSlug}`;
+        return `${basePath}/${resolvedSlug}`;
     }
-    return `/${resolvedSlug}#${hash}`;
+    return `${basePath}/${resolvedSlug}#${hash}`;
 }

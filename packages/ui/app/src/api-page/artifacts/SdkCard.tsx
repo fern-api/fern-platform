@@ -1,19 +1,19 @@
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { useMemo } from "react";
+import { ReactElement, useMemo } from "react";
 import { NodeJsLogo } from "./sdk-logos/NodeJsLogo";
 import { SdkCardLayout } from "./SdkCardLayout";
 
 export declare namespace SdkCard {
     export interface Props {
-        sdk: FernRegistryDocsRead.PublishedSdk;
+        sdk: DocsV1Read.PublishedSdk;
     }
 }
 
 interface SdkRenderInfo {
-    icon: JSX.Element;
+    icon: ReactElement;
     title: string;
-    githubRepo: FernRegistryDocsRead.GitHubRepo;
+    githubRepo: DocsV1Read.GitHubRepo;
     packageName: string;
     version: string;
 }

@@ -1,2 +1,2 @@
 export { App } from "./App";
-export { type ResolvedPath } from "./ResolvedPath";
+export { useColorTheme } from "./hooks/useColorTheme";

@@ -13,6 +13,8 @@ function getIconForClient(clientId: CodeExampleClientId) {
         case "python":
         case "python-async":
             return "fa-brands fa-python";
+        case "typescript":
+            return "fa-brands fa-js";
     }
 }
 

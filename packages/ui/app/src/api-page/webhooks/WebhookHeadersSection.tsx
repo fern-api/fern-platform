@@ -1,4 +1,4 @@
-import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
@@ -7,7 +7,7 @@ import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 
 export declare namespace WebhookHeadersSection {
     export interface Props {
-        webhook: FernRegistryApiRead.WebhookDefinition;
+        webhook: APIV1Read.WebhookDefinition;
         anchorIdParts: string[];
         route: string;
     }

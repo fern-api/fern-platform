@@ -1,8 +1,7 @@
-import { FernRegistry } from "@fern-api/fdr-sdk";
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { FdrAPI } from "@fern-api/fdr-sdk";
 
 export class DefinitionObjectFactory {
-    public static createDocsDefinition(): FernRegistry.docs.v1.read.DocsDefinition {
+    public static createDocsDefinition(): FdrAPI.docs.v1.read.DocsDefinition {
         return {
             pages: {},
             apis: {},
@@ -21,7 +20,7 @@ export class DefinitionObjectFactory {
                 value: {
                     type: "unversioned",
                     indexSegment: {
-                        id: FernRegistryDocsRead.IndexSegmentId(""),
+                        id: "",
                         searchApiKey: "",
                     },
                 },

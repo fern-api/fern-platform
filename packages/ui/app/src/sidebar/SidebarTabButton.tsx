@@ -1,12 +1,11 @@
-import { Text } from "@blueprintjs/core";
-import { type NavigationTab } from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { memo, type MouseEventHandler } from "react";
 import { FontAwesomeIcon } from "../commons/FontAwesomeIcon";
 
 export declare namespace SidebarTabButton {
     export interface Props {
-        tab: NavigationTab;
+        tab: DocsV1Read.NavigationTab;
         isSelected: boolean;
         onClick: MouseEventHandler<HTMLButtonElement>;
     }
@@ -44,9 +43,7 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, isS
                         />
                     </div>
                 </div>
-                <Text ellipsize className="font-medium">
-                    {tab.title}
-                </Text>
+                <span className="truncate font-medium">{tab.title}</span>
             </div>
         </button>
     );

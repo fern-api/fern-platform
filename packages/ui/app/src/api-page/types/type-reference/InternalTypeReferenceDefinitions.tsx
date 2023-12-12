@@ -1,6 +1,6 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import React from "react";
+import React, { ReactElement } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
 import { InternalTypeDefinitionError } from "../type-definition/InternalTypeDefinitionError";
@@ -9,7 +9,7 @@ import { MapTypeContextProvider } from "./MapTypeContextProvider";
 
 export declare namespace InternalTypeReferenceDefinitions {
     export interface Props {
-        type: FernRegistryApiRead.TypeReference;
+        type: APIV1Read.TypeReference;
         applyErrorStyles: boolean;
         isCollapsible: boolean;
         className?: string;
@@ -28,7 +28,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
 }) => {
     const { resolveTypeById } = useApiDefinitionContext();
 
-    return visitDiscriminatedUnion(type, "type")._visit<JSX.Element | null>({
+    return visitDiscriminatedUnion(type, "type")._visit<ReactElement | null>({
         id: ({ value: typeId }) => {
             const typeShape = resolveTypeById(typeId).shape;
             if (typeShape.type === "alias") {

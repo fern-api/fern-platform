@@ -3,13 +3,20 @@ export interface CodeExampleClientCurl {
     name: string;
 }
 
-export interface CodeExampleClientSdk {
+export interface PythonCodeExample {
     id: "python" | "python-async";
     name: string;
     language: string;
     example: string;
 }
 
-export type CodeExampleClient = CodeExampleClientCurl | CodeExampleClientSdk;
+export interface TypescriptCodeExample {
+    id: "typescript";
+    name: string;
+    language: string;
+    example: string;
+}
+
+export type CodeExampleClient = CodeExampleClientCurl | PythonCodeExample | TypescriptCodeExample;
 
 export type CodeExampleClientId = CodeExampleClient["id"];

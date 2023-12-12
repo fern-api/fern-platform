@@ -1,7 +1,8 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
-import { useCallback } from "react";
+import { ReactElement, useCallback } from "react";
 import { ApiPageDescription } from "../../ApiPageDescription";
+import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
@@ -15,7 +16,7 @@ type IconInfo = {
     size: number;
 };
 
-function getIconInfoForPrimitiveType(type: FernRegistryApiRead.PrimitiveType): IconInfo {
+function getIconInfoForPrimitiveType(type: APIV1Read.PrimitiveType): IconInfo {
     switch (type.type) {
         case "integer":
         case "long":
@@ -40,7 +41,7 @@ function getIconInfoForPrimitiveType(type: FernRegistryApiRead.PrimitiveType): I
     }
 }
 
-function getIconInfoForTypeReference(typeRef: FernRegistryApiRead.TypeReference): IconInfo | null {
+function getIconInfoForTypeReference(typeRef: APIV1Read.TypeReference): IconInfo | null {
     switch (typeRef.type) {
         case "id":
             return null;
@@ -59,7 +60,7 @@ function getIconInfoForTypeReference(typeRef: FernRegistryApiRead.TypeReference)
     }
 }
 
-function getIconForTypeReference(typeRef: FernRegistryApiRead.TypeReference): JSX.Element | null {
+function getIconForTypeReference(typeRef: APIV1Read.TypeReference): ReactElement | null {
     const info = getIconInfoForTypeReference(typeRef);
     if (info == null) {
         return null;
@@ -77,7 +78,7 @@ function getIconForTypeReference(typeRef: FernRegistryApiRead.TypeReference): JS
 
 export declare namespace UndiscriminatedUnionVariant {
     export interface Props {
-        unionVariant: FernRegistryApiRead.UndiscriminatedUnionVariant;
+        unionVariant: APIV1Read.UndiscriminatedUnionVariant;
         anchorIdParts: string[];
         applyErrorStyles: boolean;
         route: string;
@@ -115,6 +116,9 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
                     <span className="t-muted text-xs">
                         <TypeShorthand type={unionVariant.type} plural={false} />
                     </span>
+                    {unionVariant.availability != null && (
+                        <EndpointAvailabilityTag availability={unionVariant.availability} minimal={true} />
+                    )}
                 </div>
                 <ApiPageDescription className="mt-2" description={unionVariant.description} isMarkdown />
                 <TypeDefinitionContext.Provider value={newContextValue}>

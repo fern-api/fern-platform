@@ -1,6 +1,4 @@
-import { FernRegistry } from "@fern-fern/registry-browser";
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { NonClickableSidebarGroupTitle } from "./NonClickableSidebarGroupTitle";
 import { SidebarGroup } from "./SidebarGroup";
 import { SidebarItems } from "./SidebarItems";
@@ -8,14 +6,14 @@ import { SidebarItems } from "./SidebarItems";
 export declare namespace SidebarDocsSection {
     export interface Props {
         slug: string;
-        section: FernRegistryDocsRead.DocsSection;
+        section: DocsV1Read.DocsSection;
 
         selectedSlug: string | undefined;
         registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
         closeMobileSidebar: () => void;
-        docsDefinition: FernRegistryDocsRead.DocsDefinition;
+        docsDefinition: DocsV1Read.DocsDefinition;
         activeTabIndex: number | null;
-        resolveApi: (apiId: FernRegistry.ApiDefinitionId) => FernRegistryApiRead.ApiDefinition;
+        resolveApi: (apiId: FdrAPI.ApiDefinitionId) => APIV1Read.ApiDefinition;
     }
 }
 

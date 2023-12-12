@@ -1,4 +1,4 @@
-import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { EndpointAvailabilityTag } from "../../api-page/endpoints/EndpointAvailabilityTag";
 
 export declare namespace Availability {
@@ -7,7 +7,7 @@ export declare namespace Availability {
     }
 }
 
-function parseAvailability(type: unknown): FernRegistryApiRead.Availability {
+function parseAvailability(type: unknown): APIV1Read.Availability {
     if (typeof type !== "string") {
         return "GenerallyAvailable";
     } else if (type === "GenerallyAvailable" || type.toLowerCase() === "ga") {

@@ -2,8 +2,8 @@ import classNames from "classnames";
 import Link from "next/link";
 import React, { AnchorHTMLAttributes, HTMLAttributes } from "react";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
-import { HEADER_HEIGHT } from "../constants";
 import { useNavigationContext } from "../navigation-context";
+import { onlyText } from "../util/onlyText";
 
 type InlineCodeProps = {
     fontSize: "sm" | "lg";
@@ -34,7 +34,7 @@ export const Table: React.FC<HTMLAttributes<HTMLTableElement>> = ({ className, .
             {...rest}
             className={classNames(
                 className,
-                "block border-separate border-spacing-y-2 overflow-x-auto table-auto mb-3"
+                "block border-separate border-spacing-0 overflow-x-auto table-auto mb-3 text-sm"
             )}
         />
     );
@@ -54,21 +54,30 @@ export const Th: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
             {...rest}
             className={classNames(
                 className,
-                "text-sm text-left truncate px-2 py-1 font-normal text-text-primary-light dark:text-text-primary-dark leading-7 border-b border-border-default-light dark:border-border-default-dark"
+                "text-left truncate px-3 py-1 font-normal text-text-primary-light dark:text-text-primary-dark leading-7 border-b border-border-default-light dark:border-border-default-dark first:pl-0 last:pr-0"
             )}
         />
     );
 };
 
-export const Td: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, ...rest }) => {
+export const Td: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, children, ...rest }) => {
+    const childrenAsString = onlyText(children);
     return (
         <td
             {...rest}
             className={classNames(
                 className,
-                "text-base border-b border-border-default-light dark:border-border-default-dark font-light px-2 py-2 !text-text-muted-light dark:!text-text-muted-dark leading-7"
+                "border-b border-border-default-light dark:border-border-default-dark font-light px-3 py-1 !text-text-muted-light dark:!text-text-muted-dark leading-7 first:pl-0 last:pr-0",
+                {
+                    // if the table has many columns, do not collapse short string content into multi-line:
+                    "whitespace-nowrap": childrenAsString.length < 100,
+                    // prevent table's auto sizing from collapsing a paragraph into a tall-skinny column of broken sentences:
+                    "min-w-sm": childrenAsString.length > 200,
+                }
             )}
-        />
+        >
+            {children}
+        </td>
     );
 };
 
@@ -85,6 +94,16 @@ const flatten = (
         : React.Children.toArray((child as React.ReactElement).props.children).reduce(flatten, text);
 };
 
+/**
+ * By default, next will use /host/current/slug in SSG.
+ * Because of our custom routing (PathResolver) implementation, we need to override the pathname to be /basePath/current/slug.
+ * @returns /basepath/current/slug
+ */
+function useCurrentPathname(): string {
+    const { basePath, resolvedPath } = useNavigationContext();
+    return basePath != null ? `/${basePath}/${resolvedPath.fullSlug}` : `/${resolvedPath.fullSlug}`;
+}
+
 export const H1: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ...rest }) => {
     const children = React.Children.toArray(rest.children);
     const text = children.reduce(flatten, "");
@@ -94,14 +113,14 @@ export const H1: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(
                 className,
-                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-2xl font-semibold mt-10 mb-3"
+                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-2xl font-semibold mt-10 mb-3 scroll-mt-16"
             )}
-            style={{
-                scrollMarginTop: HEADER_HEIGHT,
-            }}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor route={slug} verticalPosition="center" />
+            <AbsolutelyPositionedAnchor
+                href={{ hash: slug, pathname: useCurrentPathname() }}
+                verticalPosition="center"
+            />
             <span>{children}</span>
         </h1>
     );
@@ -116,14 +135,14 @@ export const H2: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(
                 className,
-                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-xl font-semibold mt-10 mb-3"
+                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-xl font-semibold mt-10 mb-3 scroll-mt-16"
             )}
-            style={{
-                scrollMarginTop: HEADER_HEIGHT,
-            }}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor route={slug} verticalPosition="center" />
+            <AbsolutelyPositionedAnchor
+                href={{ hash: slug, pathname: useCurrentPathname() }}
+                verticalPosition="center"
+            />
             {children}
         </h2>
     );
@@ -138,14 +157,14 @@ export const H3: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(
                 className,
-                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
+                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3 scroll-mt-16"
             )}
-            style={{
-                scrollMarginTop: HEADER_HEIGHT,
-            }}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor route={slug} verticalPosition="center" />
+            <AbsolutelyPositionedAnchor
+                href={{ hash: slug, pathname: useCurrentPathname() }}
+                verticalPosition="center"
+            />
             {children}
         </h3>
     );
@@ -160,14 +179,14 @@ export const H4: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(
                 className,
-                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
+                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3 scroll-mt-16"
             )}
-            style={{
-                scrollMarginTop: HEADER_HEIGHT,
-            }}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor route={slug} verticalPosition="center" />
+            <AbsolutelyPositionedAnchor
+                href={{ hash: slug, pathname: useCurrentPathname() }}
+                verticalPosition="center"
+            />
             {children}
         </h4>
     );
@@ -182,14 +201,14 @@ export const H5: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(
                 className,
-                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
+                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3 scroll-mt-16"
             )}
-            style={{
-                scrollMarginTop: HEADER_HEIGHT,
-            }}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor route={slug} verticalPosition="center" />
+            <AbsolutelyPositionedAnchor
+                href={{ hash: slug, pathname: useCurrentPathname() }}
+                verticalPosition="center"
+            />
             {children}
         </h5>
     );
@@ -204,14 +223,14 @@ export const H6: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(
                 className,
-                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3"
+                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3 scroll-mt-16"
             )}
-            style={{
-                scrollMarginTop: HEADER_HEIGHT,
-            }}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor route={slug} verticalPosition="center" />
+            <AbsolutelyPositionedAnchor
+                href={{ hash: slug, pathname: useCurrentPathname() }}
+                verticalPosition="center"
+            />
             {children}
         </h6>
     );
@@ -273,28 +292,23 @@ export const Li: React.FC<HTMLAttributes<HTMLLIElement>> = ({ className, ...rest
 };
 
 export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, children, href, ...rest }) => {
-    const { navigateToPath } = useNavigationContext();
-
-    const isInternalUrl = typeof href === "string" && href.startsWith("/");
+    const isExternalUrl = href != null && href.includes("http");
 
     const classNamesCombined = classNames(
         className,
         "!text-text-primary-light dark:!text-text-primary-dark hover:!text-accent-primary hover:dark:!text-accent-primary !no-underline !border-b hover:!border-b-2 !border-b-accent-primary hover:border-b-accent-primary hover:no-underline font-medium"
     );
 
-    if (isInternalUrl) {
-        const slug = href.slice(1, href.length);
-        return (
-            <Link className={classNamesCombined} href={href} onClick={() => navigateToPath(slug)} {...rest}>
-                {children}
-            </Link>
-        );
-    }
-
     return (
-        <a {...rest} href={href} className={classNamesCombined} target="_blank" rel="noopener noreferrer">
+        <Link
+            className={classNamesCombined}
+            href={href ?? "#"}
+            target={isExternalUrl ? "_blank" : undefined}
+            rel={isExternalUrl ? "noopener noreferrer" : undefined}
+            {...rest}
+        >
             {children}
-        </a>
+        </Link>
     );
 };
 

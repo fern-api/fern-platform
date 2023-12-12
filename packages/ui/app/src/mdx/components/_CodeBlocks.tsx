@@ -1,9 +1,14 @@
 import classNames from "classnames";
+import dynamic from "next/dynamic";
 import { useState } from "react";
-import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
 import { useDocsContext } from "../../docs-context/useDocsContext";
 import type { CodeBlockItem } from "./common/types";
+
+const CodeBlockSkeleton = dynamic(
+    () => import("../../commons/CodeBlockSkeleton").then(({ CodeBlockSkeleton }) => CodeBlockSkeleton),
+    { ssr: false }
+);
 
 export declare namespace _CodeBlocks {
     export interface Props {

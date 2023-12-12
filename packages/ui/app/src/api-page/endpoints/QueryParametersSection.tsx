@@ -1,11 +1,11 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { useMemo } from "react";
 import { EndpointParameter } from "./EndpointParameter";
 import { EndpointParametersSection } from "./EndpointParametersSection";
 
 export declare namespace QueryParametersSection {
     export interface Props {
-        queryParameters: FernRegistryApiRead.QueryParameter[];
+        queryParameters: APIV1Read.QueryParameter[];
         anchorIdParts: string[];
         route: string;
     }
@@ -25,6 +25,7 @@ export const QueryParametersSection: React.FC<QueryParametersSection.Props> = ({
                 descriptionContainsMarkdown: queryParameter.descriptionContainsMarkdown ?? false,
                 anchorIdParts: [...anchorIdParts, queryParameter.key],
                 route,
+                availability: queryParameter.availability,
             })
         );
     }, [queryParameters, anchorIdParts, route]);

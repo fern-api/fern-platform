@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { isFunction } from "lodash-es";
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import React, { ReactElement, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { getRelevationDimensionForOrientation } from "./getRelevationDimensionForOrientation";
 import styles from "./Pane.module.scss";
 import { ResizeEvent, ResizeHandle, ResizeHandlePosition } from "./ResizeHandle";
@@ -19,7 +19,7 @@ export declare namespace Pane {
         resizeHandleLineColor?: string;
         sizeToCollapse?: Size;
         startCollapsed?: boolean;
-        children: JSX.Element | ((args: ChildRendererArgs) => JSX.Element);
+        children: ReactElement | ((args: ChildRendererArgs) => ReactElement);
     }
 
     export interface ChildRendererArgs {

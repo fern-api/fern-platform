@@ -1,7 +1,5 @@
-import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 
-export function isSubpackage(
-    package_: FernRegistryApiRead.ApiDefinitionPackage
-): package_ is FernRegistryApiRead.ApiDefinitionSubpackage {
-    return typeof (package_ as FernRegistryApiRead.ApiDefinitionSubpackage).subpackageId === "string";
+export function isSubpackage(package_: APIV1Read.ApiDefinitionPackage): package_ is APIV1Read.ApiDefinitionSubpackage {
+    return typeof (package_ as APIV1Read.ApiDefinitionSubpackage).subpackageId === "string";
 }

@@ -12,3 +12,4 @@ bundle.c?js
 .github
 .vscode
 **/fern/**
+out

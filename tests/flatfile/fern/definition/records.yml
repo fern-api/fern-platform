@@ -122,6 +122,7 @@ service:
     findAndReplaceDeprecated:
       path: /replace
       method: PUT
+      availability: deprecated
       docs: >-
         Searches for the given searchValue in a field and replaces all instances
         of that value with replaceValue

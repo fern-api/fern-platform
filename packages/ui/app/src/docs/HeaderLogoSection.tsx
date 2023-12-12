@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { DEFAULT_LOGO_HEIGHT } from "../config";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useNavigationContext } from "../navigation-context";
@@ -14,7 +15,13 @@ export const HeaderLogoSection: React.FC = () => {
     const { definitionInfo, activeVersionContext } = useDocsSelectors();
     const { logo, logoV2, logoHeight, logoHref } = docsDefinition.config;
 
-    if (theme == null) {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted || theme == null) {
         return null;
     }
 
@@ -36,10 +43,6 @@ export const HeaderLogoSection: React.FC = () => {
             }}
         />
     ) : null;
-
-    if (!hasLogo) {
-        return null;
-    }
 
     return (
         <div className="relative flex h-full items-center space-x-3 py-1">

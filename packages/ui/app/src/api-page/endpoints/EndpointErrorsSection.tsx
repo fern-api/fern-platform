@@ -1,17 +1,17 @@
-import { FernRegistry } from "@fern-fern/registry-browser";
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { type JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { EndpointError } from "./EndpointError";
 
 export declare namespace EndpointErrorsSection {
     export interface Props {
-        errors: FernRegistry.api.v1.read.ErrorDeclarationV2[];
+        errors: FdrAPI.api.v1.read.ErrorDeclarationV2[];
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         onClickError: (
-            e: FernRegistry.api.v1.read.ErrorDeclarationV2,
+            e: FdrAPI.api.v1.read.ErrorDeclarationV2,
             index: number,
             event: React.MouseEvent<HTMLButtonElement>
         ) => void;
-        selectError: (e: FernRegistry.api.v1.read.ErrorDeclarationV2, index: number) => void;
+        selectError: (e: FdrAPI.api.v1.read.ErrorDeclarationV2, index: number) => void;
         selectedErrorIndex: number | null;
         anchorIdParts: string[];
         route: string;
@@ -42,6 +42,7 @@ export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
                         onHoverProperty={onHoverProperty}
                         anchorIdParts={[...anchorIdParts, `${idx}`]}
                         route={route}
+                        availability={error.availability}
                     />
                 );
             })}

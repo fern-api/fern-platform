@@ -1,11 +1,11 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { useMemo } from "react";
 import { EndpointParameter } from "./EndpointParameter";
 import { EndpointParametersSection } from "./EndpointParametersSection";
 
 export declare namespace PathParametersSection {
     export interface Props {
-        pathParameters: FernRegistryApiRead.PathParameter[];
+        pathParameters: APIV1Read.PathParameter[];
         anchorIdParts: string[];
         route: string;
     }
@@ -25,6 +25,7 @@ export const PathParametersSection: React.FC<PathParametersSection.Props> = ({
                 descriptionContainsMarkdown: pathParameter.descriptionContainsMarkdown ?? false,
                 anchorIdParts: [...anchorIdParts, pathParameter.key],
                 route,
+                availability: undefined, // path parameters cannot have availability
             })
         );
     }, [pathParameters, anchorIdParts, route]);

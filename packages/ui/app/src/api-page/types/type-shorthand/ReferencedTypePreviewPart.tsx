@@ -1,12 +1,12 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import React from "react";
+import React, { ReactElement } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { TypeShorthand } from "./TypeShorthand";
 
 export declare namespace ReferencedTypePreviewPart {
     export interface Props {
-        typeId: FernRegistryApiRead.TypeId;
+        typeId: APIV1Read.TypeId;
         plural: boolean;
         withArticle?: boolean;
     }
@@ -26,7 +26,7 @@ export const ReferencedTypePreviewPart: React.FC<ReferencedTypePreviewPart.Props
 
     return (
         <>
-            {visitDiscriminatedUnion(shape, "type")._visit<JSX.Element | string>({
+            {visitDiscriminatedUnion(shape, "type")._visit<ReactElement | string>({
                 alias: (typeReference) => (
                     <TypeShorthand type={typeReference.value} plural={plural} withArticle={withArticle} />
                 ),

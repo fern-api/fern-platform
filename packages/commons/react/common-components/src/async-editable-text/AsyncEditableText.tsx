@@ -1,7 +1,7 @@
 import { Classes, EditableText, EditableTextProps } from "@blueprintjs/core";
 import { getLoadableValue, isLoaded, Loadable } from "@fern-ui/loadable";
 import classNames from "classnames";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import styles from "./AsyncEditableText.module.scss";
 
 export declare namespace AsyncEditableText {
@@ -10,7 +10,7 @@ export declare namespace AsyncEditableText {
         onConfirm: (value: string) => void | Promise<void>;
         allowEmpty?: boolean;
         fill?: boolean;
-        fallback?: JSX.Element;
+        fallback?: ReactElement;
     }
 }
 

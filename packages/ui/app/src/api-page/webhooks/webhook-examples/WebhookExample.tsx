@@ -1,11 +1,11 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { JsonExample } from "../../examples/json-example/JsonExample";
 import { TitledExample } from "../../examples/TitledExample";
 import { useWebhookContext } from "../webhook-context/useWebhookContext";
 
 export declare namespace WebhookExample {
     export interface Props {
-        example: FernRegistryApiRead.ExampleWebhookPayload;
+        example: APIV1Read.ExampleWebhookPayload;
     }
 }
 

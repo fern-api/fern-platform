@@ -1,12 +1,12 @@
 import classNames from "classnames";
-import { useMemo } from "react";
+import { ReactElement, useMemo } from "react";
 
 export declare namespace SdkCardLayout {
     export interface Props {
-        icon: JSX.Element;
-        title: JSX.Element | string;
-        subtitle?: JSX.Element | string;
-        rightElement?: JSX.Element;
+        icon: ReactElement;
+        title: ReactElement | string;
+        subtitle?: ReactElement | string;
+        rightElement?: ReactElement;
         href?: string;
     }
 }

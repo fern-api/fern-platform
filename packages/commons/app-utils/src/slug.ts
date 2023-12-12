@@ -20,11 +20,13 @@ export function splitFullSlugIntoParts(fullSlug: string): string[] {
 
 type GetFullSlugForNavigatableOpts = {
     omitDefault?: boolean;
+    basePath: string | undefined;
 };
 
-export function getFullSlugForNavigatable(node: NavigatableDocsNode, opts?: GetFullSlugForNavigatableOpts): string {
-    const { omitDefault = false } = opts ?? {};
-    const parts: string[] = [];
+export function getFullSlugForNavigatable(node: NavigatableDocsNode, opts: GetFullSlugForNavigatableOpts): string {
+    const { omitDefault = false, basePath } = opts ?? {};
+    const basePathSlug = basePath != null && basePath.trim().length > 1 ? basePath.trim().slice(1) : undefined;
+    const parts: string[] = basePathSlug != null ? [basePathSlug] : [];
     if (node.context.type === "versioned-tabbed" || node.context.type === "versioned-untabbed") {
         if (node.context.version.info.index !== 0 || !omitDefault) {
             parts.push(node.context.version.info.slug);

@@ -1,10 +1,10 @@
-import { Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import { type DocsNode } from "@fern-api/fdr-sdk";
 import { getFullSlugForNavigatable } from "@fern-ui/app-utils";
 import { assertNever } from "@fern-ui/core-utils";
 import Link from "next/link";
 import { useCallback, useMemo } from "react";
+import { BlueprintIcon } from "../commons/BlueprintIcon";
 import { useNavigationContext } from "../navigation-context";
 
 export declare namespace BottomNavigationButton {
@@ -15,7 +15,7 @@ export declare namespace BottomNavigationButton {
 }
 
 export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({ docsNode, direction }) => {
-    const { navigateToPath, resolver } = useNavigationContext();
+    const { navigateToPath, resolver, basePath } = useNavigationContext();
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
     const visitDirection = <T extends unknown>({ previous, next }: { previous: T; next: T }): T => {
         switch (direction) {
@@ -35,14 +35,14 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
         next: IconNames.CHEVRON_RIGHT,
     });
 
-    const iconElement = <Icon icon={iconName} />;
+    const iconElement = <BlueprintIcon icon={iconName} />;
 
     const onClick = useCallback(() => {
         if (navigatable != null) {
-            const fullSlug = getFullSlugForNavigatable(navigatable, { omitDefault: true });
+            const fullSlug = getFullSlugForNavigatable(navigatable, { omitDefault: true, basePath });
             navigateToPath(fullSlug);
         }
-    }, [navigateToPath, navigatable]);
+    }, [navigatable, basePath, navigateToPath]);
 
     const text = useMemo(() => {
         switch (docsNode.type) {
@@ -67,7 +67,7 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
         return null;
     }
 
-    const fullSlug = getFullSlugForNavigatable(navigatable, { omitDefault: true });
+    const fullSlug = getFullSlugForNavigatable(navigatable, { omitDefault: true, basePath });
 
     return (
         <Link

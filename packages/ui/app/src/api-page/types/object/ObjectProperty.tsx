@@ -1,12 +1,12 @@
-import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { useCallback, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
-import { HEADER_HEIGHT } from "../../../constants";
 import { getAnchorId } from "../../../util/anchor";
 import { ApiPageDescription } from "../../ApiPageDescription";
+import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
 import {
     TypeDefinitionContext,
@@ -23,7 +23,7 @@ interface DescriptionInfo {
 
 export declare namespace ObjectProperty {
     export interface Props {
-        property: FernRegistryApiRead.ObjectProperty;
+        property: APIV1Read.ObjectProperty;
         anchorIdParts: string[];
         route: string;
         applyErrorStyles: boolean;
@@ -103,15 +103,14 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
     return (
         <div
             data-route={anchorRoute}
-            className={classNames("flex relative flex-col py-3", {
+            className={classNames("flex relative flex-col py-3 scroll-mt-16", {
                 "px-3": !contextValue.isRootTypeDefinition,
             })}
-            style={{ scrollMarginTop: HEADER_HEIGHT }}
         >
             <div className="flex items-baseline gap-2">
                 <div className="group/anchor-container relative">
-                    <AbsolutelyPositionedAnchor verticalPosition="center" route={anchorRoute} />
-                    <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName}>
+                    <AbsolutelyPositionedAnchor verticalPosition="center" href={anchorRoute} />
+                    <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName} className="flex">
                         <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">
                             {property.key}
                         </MonospaceText>
@@ -120,6 +119,9 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
                 <div className="t-muted text-xs">
                     <TypeShorthand type={property.valueType} plural={false} />
                 </div>
+                {property.availability != null && (
+                    <EndpointAvailabilityTag availability={property.availability} minimal={true} />
+                )}
             </div>
             <div className="flex flex-col">
                 <ApiPageDescription className="mt-3" isMarkdown={true} description={descriptionInfo?.description} />

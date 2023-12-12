@@ -1,10 +1,11 @@
 version: 2.1
 orbs:
   node: circleci/node@5.0.1
+  aws-cli: circleci/aws-cli@3.1.1
 jobs:
   check:
-    docker:
-      - image: cimg/node:lts
+    machine:
+      image: ubuntu-2004:current
     resource_class: large
     steps:
       - checkout
@@ -30,8 +31,8 @@ jobs:
           command: git --no-pager diff --exit-code
 
   organize-imports:
-    docker:
-      - image: cimg/node:lts
+    machine:
+      image: ubuntu-2004:current
     resource_class: large
     steps:
       - checkout
@@ -50,8 +51,8 @@ jobs:
           command: git --no-pager diff --exit-code
 
   eslint:
-    docker:
-      - image: cimg/node:lts
+    machine:
+      image: ubuntu-2004:current
     resource_class: large
     steps:
       - checkout
@@ -66,8 +67,8 @@ jobs:
           command: yarn lint:eslint
 
   compile:
-    docker:
-      - image: cimg/node:lts
+    machine:
+      image: ubuntu-2004:current
     resource_class: large
     steps:
       - checkout
@@ -93,8 +94,8 @@ jobs:
           command: git --no-pager diff --exit-code
 
   check-docs-release-is-allowed:
-    docker:
-      - image: cimg/node:lts
+    machine:
+      image: ubuntu-2004:current
     steps:
       - checkout
       - node/install-packages:
@@ -122,6 +123,51 @@ jobs:
           name: Deploy
           command: vercel deploy --prebuilt --prod --token=${VERCEL_TOKEN}
 
+  dryrun-deploy-local-preview-dev2:
+    docker:
+      - image: cimg/node:18.18.2
+    resource_class: large
+    steps:
+      - checkout
+      - aws-cli/setup
+      - run: yarn install
+      - run:
+          name: Build local preview bundle
+          command: yarn workspace @fern-ui/local-preview-bundle run build
+      - run:
+          name: Synthesize local preview bundle
+          command: yarn workspace @fern-ui/cdk run synth:dev2
+
+  deploy-local-preview-dev2:
+    docker:
+      - image: cimg/node:18.18.2
+    resource_class: large
+    steps:
+      - checkout
+      - aws-cli/setup
+      - run: yarn install
+      - run:
+          name: Build local preview bundle
+          command: yarn workspace @fern-ui/local-preview-bundle run build
+      - run:
+          name: Deploy local preview bundle
+          command: yarn workspace @fern-ui/cdk run deploy:dev2
+
+  deploy-local-preview-prod:
+    docker:
+      - image: cimg/node:18.18.2
+    resource_class: large
+    steps:
+      - checkout
+      - aws-cli/setup
+      - run: yarn install
+      - run:
+          name: Build local preview bundle
+          command: yarn workspace @fern-ui/local-preview-bundle run build
+      - run:
+          name: Deploy local preview bundle
+          command: yarn workspace @fern-ui/cdk run deploy:prod
+
   generate-customer-docs:
     docker:
       - image: cimg/node:lts
@@ -145,7 +191,6 @@ jobs:
             echo "Generated docs for customer!"
 
 workflows:
-  version: 2
   build:
     jobs:
       - check:
@@ -200,13 +245,49 @@ workflows:
             - vercel-prod
             - fe-algolia-prod
 
+      - dryrun-deploy-local-preview-dev2:
+          context:
+            - aws
+            - github
+
+      - deploy-local-preview-dev2:
+          filters:
+            branches:
+              only:
+                - main
+            tags:
+              ignore: /.*/
+          requires:
+            - check
+            - organize-imports
+            - compile
+            - eslint
+            - test
+            - dryrun-deploy-local-preview-dev2
+          context:
+            - aws
+            - github
+
+      - deploy-local-preview-prod:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
+          requires:
+            - dryrun-deploy-local-preview-dev2
+            - deploy-docs-prod
+          context:
+            - aws
+            - github
+
       - check-docs-release-is-allowed:
           filters:
             branches:
               ignore: /.*/
             tags:
               only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
-          context: 
+          context:
             - npm
 
   preview-customer-docs:

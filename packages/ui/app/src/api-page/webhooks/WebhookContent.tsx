@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { getSubpackageTitle, isSubpackage } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { snakeCase } from "lodash-es";
@@ -16,8 +16,8 @@ import { WebhookSection } from "./WebhookSection";
 
 export declare namespace WebhookContent {
     export interface Props {
-        webhook: FernRegistryApiRead.WebhookDefinition;
-        package: FernRegistryApiRead.ApiDefinitionPackage;
+        webhook: APIV1Read.WebhookDefinition;
+        package: APIV1Read.ApiDefinitionPackage;
         hideBottomSeparator?: boolean;
         setContainerRef: (ref: HTMLElement | null) => void;
         anchorIdParts: string[];
@@ -44,10 +44,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
     const computeAnchor = useCallback(
         (
             attributeType: "headers" | "payload" | "response",
-            attribute?:
-                | FernRegistryApiRead.ObjectProperty
-                | FernRegistryApiRead.PathParameter
-                | FernRegistryApiRead.QueryParameter
+            attribute?: APIV1Read.ObjectProperty | APIV1Read.PathParameter | APIV1Read.QueryParameter
         ) => {
             let anchor = "";
             if (isSubpackage(package_)) {
@@ -74,10 +71,9 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
             })}
         >
             <div
-                className="flex min-w-0 flex-1 flex-col lg:flex-row lg:space-x-[4vw]"
+                className="flex min-w-0 flex-1 scroll-mt-16 flex-col lg:flex-row lg:space-x-[4vw]"
                 ref={setContainerRef}
                 data-route={route}
-                style={{ scrollMarginTop: HEADER_HEIGHT }}
             >
                 <div className="flex min-w-0 max-w-2xl flex-1 flex-col">
                     <div className="py-8">
@@ -94,7 +90,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                     {webhook.headers.length > 0 && (
                         <div className="mt-8 flex">
                             <div className="flex flex-1 flex-col gap-12">
-                                <WebhookSection title="Headers" route={`${route}#${computeAnchor("headers")}`}>
+                                <WebhookSection title="Headers" href={`${route}#${computeAnchor("headers")}`}>
                                     <WebhookHeadersSection
                                         webhook={webhook}
                                         anchorIdParts={anchorIdParts}
@@ -107,7 +103,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
 
                     <div className="mt-8 flex">
                         <div className="flex flex-1 flex-col gap-12">
-                            <WebhookSection title="Payload" route={`${route}#${computeAnchor("payload")}`}>
+                            <WebhookSection title="Payload" href={`${route}#${computeAnchor("payload")}`}>
                                 <WebhookPayloadSection
                                     payload={webhook.payload}
                                     onHoverProperty={onHoverPayloadProperty}
@@ -120,7 +116,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
 
                     <div className="mt-8 flex">
                         <div className="flex flex-1 flex-col gap-12">
-                            <WebhookSection title="Response" route={`${route}#${computeAnchor("response")}`}>
+                            <WebhookSection title="Response" href={`${route}#${computeAnchor("response")}`}>
                                 <WebhookResponseSection />
                             </WebhookSection>
                         </div>

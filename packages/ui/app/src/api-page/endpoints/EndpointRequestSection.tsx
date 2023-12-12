@@ -1,5 +1,6 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { ReactElement } from "react";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { TypeDefinition } from "../types/type-definition/TypeDefinition";
@@ -8,7 +9,7 @@ import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
 
 export declare namespace EndpointRequestSection {
     export interface Props {
-        httpRequest: FernRegistryApiRead.HttpRequest;
+        httpRequest: APIV1Read.HttpRequest;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: string[];
         route: string;
@@ -26,7 +27,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
             <ApiPageDescription className="mt-3" description={httpRequest.description} isMarkdown={true} />
             <div className="t-muted border-border-default-light dark:border-border-default-dark border-b pb-5 text-sm leading-6">
                 {"This endpoint expects "}
-                {visitDiscriminatedUnion(httpRequest.type, "type")._visit<JSX.Element | string>({
+                {visitDiscriminatedUnion(httpRequest.type, "type")._visit<ReactElement | string>({
                     object: () => "an object",
                     reference: (type) => <TypeShorthand type={type.value} plural={false} withArticle />,
                     fileUpload: () => "a file",

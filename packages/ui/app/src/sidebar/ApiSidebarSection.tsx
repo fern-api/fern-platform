@@ -1,6 +1,4 @@
-import { FernRegistry } from "@fern-fern/registry-browser";
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { joinUrlSlugs } from "@fern-ui/app-utils";
 import { useCallback, useMemo } from "react";
 import { resolveSubpackage } from "../api-context/ApiDefinitionContextProvider";
@@ -14,13 +12,13 @@ import { SidebarItem } from "./SidebarItem";
 export declare namespace ApiSidebarSection {
     export interface Props {
         slug: string;
-        apiSection: FernRegistryDocsRead.ApiSection;
+        apiSection: DocsV1Read.ApiSection;
         selectedSlug: string | undefined;
         registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
         closeMobileSidebar: () => void;
-        docsDefinition: FernRegistryDocsRead.DocsDefinition;
+        docsDefinition: DocsV1Read.DocsDefinition;
         activeTabIndex: number | null;
-        resolveApi: (apiId: FernRegistry.ApiDefinitionId) => FernRegistryApiRead.ApiDefinition;
+        resolveApi: (apiId: FdrAPI.ApiDefinitionId) => APIV1Read.ApiDefinition;
     }
 }
 
@@ -38,7 +36,7 @@ export const ApiSidebarSection: React.FC<ApiSidebarSection.Props> = ({
     const apiDefinition = useMemo(() => resolveApi(apiSection.api), [apiSection.api, resolveApi]);
 
     const resolveSubpackageById = useCallback(
-        (subpackageId: FernRegistryApiRead.SubpackageId): FernRegistryApiRead.ApiDefinitionSubpackage => {
+        (subpackageId: APIV1Read.SubpackageId): APIV1Read.ApiDefinitionSubpackage => {
             return resolveSubpackage(apiDefinition, subpackageId);
         },
         [apiDefinition]

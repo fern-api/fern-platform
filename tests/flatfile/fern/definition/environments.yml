@@ -9,6 +9,7 @@ imports:
 service:
   auth: true
   base-path: /environments
+  availability: deprecated
   endpoints:
     list:
       path: ""
