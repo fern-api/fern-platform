@@ -53,7 +53,7 @@ export const Menu: FC<Menu.Props> = ({ text, icon, menuClassName, align = "left"
                 </HeadlessMenu.Button>
                 {clearSelection != null && (
                     <button
-                        className="hover:bg-tag-primary border-border-primary text-accent-primary -ml-px inline-flex w-fit items-center justify-center rounded-lg rounded-l-none border px-1.5 py-1 tracking-tight transition hover:border-2 hover:px-[calc(theme(spacing[1.5])-1px)]"
+                        className="hover:bg-tag-primary border-border-primary text-accent-primary -ml-px inline-flex w-fit items-center justify-center rounded-lg rounded-l-none border px-2 py-1 tracking-tight transition hover:border-2 hover:px-[calc(theme(spacing[2])-1px)]"
                         onClick={clearSelection}
                     >
                         <FontAwesomeIcon icon="close" />
