@@ -14,6 +14,7 @@ export declare namespace TypeReferenceDefinitions {
         className?: string;
         route: string;
         finchProperties?: FinchProviderMatrix.Property[];
+        defaultExpandAll?: boolean;
     }
 }
 
@@ -26,6 +27,7 @@ export const TypeReferenceDefinitions: React.FC<TypeReferenceDefinitions.Props> 
     className,
     route,
     finchProperties,
+    defaultExpandAll = false,
 }) => {
     return (
         <TypeDefinitionContextProvider onHoverProperty={onHoverProperty}>
@@ -37,6 +39,7 @@ export const TypeReferenceDefinitions: React.FC<TypeReferenceDefinitions.Props> 
                 anchorIdParts={anchorIdParts}
                 route={route}
                 finchProperties={finchProperties}
+                defaultExpandAll={defaultExpandAll}
             />
         </TypeDefinitionContextProvider>
     );

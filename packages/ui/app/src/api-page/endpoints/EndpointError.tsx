@@ -25,6 +25,7 @@ export declare namespace EndpointError {
         anchorIdParts: string[];
         route: string;
         availability: APIV1Read.Availability | undefined;
+        defaultExpandAll?: boolean;
     }
 }
 
@@ -39,6 +40,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
     anchorIdParts,
     route,
     availability,
+    defaultExpandAll = false,
 }) {
     const router = useRouter();
     const anchorIdSoFar = getAnchorId(anchorIdParts);
@@ -104,6 +106,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                                 onHoverProperty={onHoverProperty}
                                 anchorIdParts={anchorIdParts}
                                 route={route}
+                                defaultExpandAll={defaultExpandAll}
                             />
                         </div>
                     ) : error.type.type === "object" ? (
@@ -114,6 +117,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                                     typeShape={error.type}
                                     anchorIdParts={anchorIdParts}
                                     route={route}
+                                    defaultExpandAll={defaultExpandAll}
                                 />
                             </TypeDefinitionContextProvider>
                         </div>

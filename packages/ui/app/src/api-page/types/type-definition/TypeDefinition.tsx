@@ -13,6 +13,7 @@ export declare namespace TypeDefinition {
         anchorIdParts: string[];
         route: string;
         finchProperties?: FinchProviderMatrix.Property[];
+        defaultExpandAll?: boolean;
     }
 }
 
@@ -22,6 +23,7 @@ export const TypeDefinition: React.FC<TypeDefinition.Props> = ({
     onHoverProperty,
     anchorIdParts,
     route,
+    defaultExpandAll = false,
 }) => {
     return (
         <TypeDefinitionContextProvider onHoverProperty={onHoverProperty}>
@@ -30,6 +32,7 @@ export const TypeDefinition: React.FC<TypeDefinition.Props> = ({
                 isCollapsible={isCollapsible}
                 anchorIdParts={anchorIdParts}
                 route={route}
+                defaultExpandAll={defaultExpandAll}
             />
         </TypeDefinitionContextProvider>
     );

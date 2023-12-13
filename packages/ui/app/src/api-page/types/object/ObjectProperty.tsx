@@ -35,6 +35,7 @@ export declare namespace ObjectProperty {
         route: string;
         applyErrorStyles: boolean;
         finchProperties?: FinchProviderMatrix.Property[];
+        defaultExpandAll?: boolean;
     }
 }
 
@@ -44,6 +45,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
     property,
     applyErrorStyles,
     finchProperties,
+    defaultExpandAll,
 }) => {
     const [finchProviderId] = useAtom(finchProviderIdAtom);
     const [finchProviderAccessType] = useAtom(finchProviderAccessTypeAtom);
@@ -186,6 +188,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
                         anchorIdParts={anchorIdParts}
                         route={route}
                         finchProperties={childProperties}
+                        defaultExpandAll={defaultExpandAll}
                     />
                 </TypeDefinitionContext.Provider>
             </div>

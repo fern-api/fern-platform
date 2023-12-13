@@ -15,6 +15,7 @@ export declare namespace EndpointResponseSection {
         anchorIdParts: string[];
         route: string;
         finchProperties?: FinchProviderMatrix.Property[];
+        defaultExpandAll?: boolean;
     }
 }
 
@@ -24,6 +25,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
     anchorIdParts,
     route,
     finchProperties,
+    defaultExpandAll = false,
 }) => {
     return (
         <>
@@ -53,6 +55,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                         anchorIdParts={anchorIdParts}
                         route={route}
                         finchProperties={finchProperties}
+                        defaultExpandAll={defaultExpandAll}
                     />
                 ),
                 reference: (type) => (
@@ -64,6 +67,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                         applyErrorStyles={false}
                         route={route}
                         finchProperties={finchProperties}
+                        defaultExpandAll={defaultExpandAll}
                     />
                 ),
                 fileDownload: () => null,

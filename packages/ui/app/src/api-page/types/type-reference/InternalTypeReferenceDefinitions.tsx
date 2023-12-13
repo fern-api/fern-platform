@@ -17,6 +17,7 @@ export declare namespace InternalTypeReferenceDefinitions {
         anchorIdParts: string[];
         route: string;
         finchProperties?: FinchProviderMatrix.Property[];
+        defaultExpandAll?: boolean;
     }
 }
 
@@ -28,6 +29,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
     anchorIdParts,
     route,
     finchProperties,
+    defaultExpandAll = false,
 }) => {
     const { resolveTypeById } = useApiDefinitionContext();
 
@@ -43,6 +45,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                         className={className}
                         anchorIdParts={anchorIdParts}
                         route={route}
+                        defaultExpandAll={defaultExpandAll}
                     />
                 );
             }
@@ -53,6 +56,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     isCollapsible={isCollapsible}
                     anchorIdParts={anchorIdParts}
                     route={route}
+                    defaultExpandAll={defaultExpandAll}
                 />
             ) : (
                 <InternalTypeDefinition
@@ -62,6 +66,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     anchorIdParts={anchorIdParts}
                     route={route}
                     finchProperties={finchProperties}
+                    defaultExpandAll={defaultExpandAll}
                 />
             );
         },
@@ -76,6 +81,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     anchorIdParts={anchorIdParts}
                     route={route}
                     finchProperties={finchProperties}
+                    defaultExpandAll={defaultExpandAll}
                 />
             </ListTypeContextProvider>
         ),
@@ -89,6 +95,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     anchorIdParts={anchorIdParts}
                     route={route}
                     finchProperties={finchProperties}
+                    defaultExpandAll={defaultExpandAll}
                 />
             </ListTypeContextProvider>
         ),
@@ -101,6 +108,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 anchorIdParts={anchorIdParts}
                 route={route}
                 finchProperties={finchProperties}
+                defaultExpandAll={defaultExpandAll}
             />
         ),
         map: ({ keyType, valueType }) => (
@@ -113,6 +121,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     anchorIdParts={anchorIdParts}
                     route={route}
                     finchProperties={finchProperties}
+                    defaultExpandAll={defaultExpandAll}
                 />
                 <InternalTypeReferenceDefinitions
                     type={valueType}
@@ -122,6 +131,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     anchorIdParts={anchorIdParts}
                     route={route}
                     finchProperties={finchProperties}
+                    defaultExpandAll={defaultExpandAll}
                 />
             </MapTypeContextProvider>
         ),

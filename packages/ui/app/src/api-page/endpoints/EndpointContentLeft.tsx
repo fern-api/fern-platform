@@ -1,8 +1,10 @@
 import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import { getEndpointTitleAsString, getSubpackageTitle, isSubpackage } from "@fern-ui/app-utils";
+import { useBooleanState } from "@fern-ui/react-commons";
 import { Tab } from "@headlessui/react";
 import classNames from "classnames";
 import { useAtom } from "jotai";
+import { noop } from "lodash-es";
 import Image from "next/image";
 import { memo, useEffect } from "react";
 import { Menu, MenuItem } from "../../docs/Menu";
@@ -149,6 +151,9 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
             )}
         </div>
     );
+    const requestExpandAll = useBooleanState(false);
+    const responseExpandAll = useBooleanState(false);
+    const errorExpandAll = useBooleanState(false);
     return (
         <>
             <div className="pb-2 pt-12">
@@ -183,7 +188,14 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                         />
                     )}
                     {endpoint.headers.length > 0 && (
-                        <EndpointSection title="Headers" anchorIdParts={[...anchorIdParts, "headers"]} route={route}>
+                        <EndpointSection
+                            title="Headers"
+                            anchorIdParts={[...anchorIdParts, "headers"]}
+                            route={route}
+                            showExpandCollapse={false}
+                            expandAll={noop}
+                            collapseAll={noop}
+                        >
                             <div className="flex flex-col">
                                 {endpoint.headers.map((header, index) => (
                                     <div className="flex flex-col" key={index}>
@@ -210,12 +222,20 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                         />
                     )}
                     {endpoint.request != null && (
-                        <EndpointSection title="Request" anchorIdParts={[...anchorIdParts, "request"]} route={route}>
+                        <EndpointSection
+                            title="Request"
+                            anchorIdParts={[...anchorIdParts, "request"]}
+                            route={route}
+                            expandAll={requestExpandAll.setTrue}
+                            collapseAll={requestExpandAll.setFalse}
+                            showExpandCollapse={true}
+                        >
                             <EndpointRequestSection
                                 httpRequest={endpoint.request}
                                 onHoverProperty={onHoverRequestProperty}
                                 anchorIdParts={[...anchorIdParts, "request"]}
                                 route={route}
+                                defaultExpandAll={requestExpandAll.value}
                             />
                         </EndpointSection>
                     )}
@@ -229,6 +249,9 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     ? provider
                                     : undefined
                             }
+                            expandAll={responseExpandAll.setTrue}
+                            collapseAll={responseExpandAll.setFalse}
+                            showExpandCollapse={true}
                         >
                             <EndpointResponseSection
                                 httpResponse={endpoint.response}
@@ -244,11 +267,19 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                             : undefined
                                         : undefined
                                 }
+                                defaultExpandAll={responseExpandAll.value}
                             />
                         </EndpointSection>
                     )}
                     {apiSection.showErrors && errors.length > 0 && (
-                        <EndpointSection title="Errors" anchorIdParts={[...anchorIdParts, "errors"]} route={route}>
+                        <EndpointSection
+                            title="Errors"
+                            anchorIdParts={[...anchorIdParts, "errors"]}
+                            route={route}
+                            expandAll={errorExpandAll.setTrue}
+                            collapseAll={errorExpandAll.setFalse}
+                            showExpandCollapse={true}
+                        >
                             <EndpointErrorsSection
                                 errors={errors}
                                 onClickError={(_, idx, event) => {
@@ -260,6 +291,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                 selectedErrorIndex={selectedErrorIndex}
                                 anchorIdParts={[...anchorIdParts, "errors"]}
                                 route={route}
+                                defaultExpandAll={errorExpandAll.value}
                             />
                         </EndpointSection>
                     )}
