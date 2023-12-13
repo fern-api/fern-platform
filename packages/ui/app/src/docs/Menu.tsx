@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Menu as HeadlessMenu, Transition } from "@headlessui/react";
 import classNames from "classnames";
 import Link, { LinkProps } from "next/link";
@@ -11,13 +12,14 @@ export declare namespace Menu {
         menuClassName?: string;
         icon?: ReactNode;
         align?: "left" | "right";
+        clearSelection?: () => void;
     }
 }
 
-export const Menu: FC<Menu.Props> = ({ text, icon, menuClassName, align = "left", children }) => {
+export const Menu: FC<Menu.Props> = ({ text, icon, menuClassName, align = "left", clearSelection, children }) => {
     return (
         <HeadlessMenu as="div" className="relative inline-block text-left">
-            <div className="my-auto">
+            <div className="my-auto flex">
                 <HeadlessMenu.Button
                     className={classNames(
                         "group inline-flex w-full justify-center items-center space-x-2 rounded-lg",
@@ -29,7 +31,10 @@ export const Menu: FC<Menu.Props> = ({ text, icon, menuClassName, align = "left"
                         // Make sure padding remains the same on hover
                         // This seems to be a Tailwind bug where we can't use theme(borderWidth.1) in some cases
                         // Current workaround is to hardcode 1px
-                        "hover:py-[calc(theme(spacing.1)-1px)] hover:pr-[calc(theme(spacing[1])-1px)] hover:pl-[calc(theme(spacing[2.5])-1px)]"
+                        "hover:py-[calc(theme(spacing.1)-1px)] hover:pr-[calc(theme(spacing[1])-1px)] hover:pl-[calc(theme(spacing[2.5])-1px)]",
+                        {
+                            "rounded-r-none": clearSelection != null,
+                        }
                     )}
                 >
                     {({ open }) => {
@@ -46,6 +51,14 @@ export const Menu: FC<Menu.Props> = ({ text, icon, menuClassName, align = "left"
                         );
                     }}
                 </HeadlessMenu.Button>
+                {clearSelection != null && (
+                    <button
+                        className="hover:bg-tag-primary border-border-primary text-accent-primary -ml-px inline-flex w-fit items-center justify-center rounded-lg rounded-l-none border px-1.5 py-1 tracking-tight transition hover:border-2 hover:px-[calc(theme(spacing[1.5])-1px)]"
+                        onClick={clearSelection}
+                    >
+                        <FontAwesomeIcon icon="close" />
+                    </button>
+                )}
             </div>
             <Transition
                 as={Fragment}

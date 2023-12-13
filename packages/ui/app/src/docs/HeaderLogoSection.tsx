@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { DEFAULT_LOGO_HEIGHT } from "../config";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useNavigationContext } from "../navigation-context";
@@ -15,17 +14,17 @@ export const HeaderLogoSection: React.FC = () => {
     const { definitionInfo, activeVersionContext } = useDocsSelectors();
     const { logo, logoV2, logoHeight, logoHref } = docsDefinition.config;
 
-    const [mounted, setMounted] = useState(false);
+    // const [mounted, setMounted] = useState(false);
 
-    useEffect(() => {
-        setMounted(true);
-    }, []);
+    // useEffect(() => {
+    //     setMounted(true);
+    // }, []);
 
-    if (!mounted || theme == null) {
-        return null;
-    }
+    // if (!mounted || theme == null) {
+    //     return null;
+    // }
 
-    const logoForTheme = logoV2 != null ? logoV2[theme] : logo;
+    const logoForTheme = logoV2 != null ? logoV2[theme ?? "light"] : logo;
     const hasMultipleVersions = definitionInfo.type === "versioned";
     const activeVersionId =
         activeVersionContext.type === "versioned" ? activeVersionContext.version.info.id : undefined;

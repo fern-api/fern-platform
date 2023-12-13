@@ -108,6 +108,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                 }
                 menuClassName="w-52"
                 align="right"
+                clearSelection={finchProviderId != null ? () => setFinchProviderId(undefined) : undefined}
             >
                 {Object.entries(FinchData.integrations).map(([key, integration]) => (
                     <MenuItem key={key} onClick={() => setFinchProviderId(key)}>
