@@ -32,7 +32,7 @@ export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = memo(function 
                 {(platform) => (
                     <div className="text-text-disabled-light group-hover:text-intent-default dark:text-text-disabled-dark ml-auto text-start text-xs tracking-wide">
                         {visitDiscriminatedUnion({ platform }, "platform")._visit({
-                            mac: () => "CMD+K",
+                            mac: () => "⌘K",
                             windows: () => "CTRL+K",
                             other: () => null,
                             _other: () => null,
