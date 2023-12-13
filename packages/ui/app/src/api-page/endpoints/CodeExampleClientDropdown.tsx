@@ -75,7 +75,7 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                 >
-                    <Menu.Items className="border-border-primary bg-background dark:bg-background-dark absolute right-0 z-10 mt-2 origin-top-right divide-y divide-gray-100 rounded-md border shadow-lg">
+                    <Menu.Items className="border-border-primary dark:border-border-primary-dark bg-background dark:bg-background-dark absolute right-0 z-10 mt-2 origin-top-right divide-y divide-gray-100 rounded-md border shadow-lg">
                         <div>
                             {clients.map((v, idx) => {
                                 const { id: clientId, name: clientName } = v;

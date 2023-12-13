@@ -3,7 +3,7 @@ import { ThemeProvider as NextThemeProvider } from "next-themes";
 import { PropsWithChildren, ReactElement } from "react";
 
 interface ThemeProviderProps {
-    theme: DocsV1Read.ColorsConfigV3["type"];
+    theme: DocsV1Read.ColorsConfigV3["type"] | undefined;
 }
 
 export function ThemeProvider({ theme, children }: PropsWithChildren<ThemeProviderProps>): ReactElement {

@@ -19,7 +19,7 @@ export const InlineCode: React.FC<HTMLAttributes<HTMLElement> & InlineCodeProps>
             {...rest}
             className={classNames(
                 className,
-                "border border-border-concealed-light dark:border-border-concealed-dark rounded font-mono bg-background/75 dark:bg-background-dark/75 !text-text-primary-light dark:!text-text-primary-dark !py-0.5 !px-1"
+                "border border-border-concealed-light dark:border-border-concealed-dark rounded font-mono bg-background/75 dark:bg-background-dark/75 text-text-primary-light dark:text-text-primary-dark py-0.5 px-1"
             )}
             style={{
                 fontSize: fontSize === "sm" ? 12 : 14,
@@ -67,7 +67,7 @@ export const Td: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
             {...rest}
             className={classNames(
                 className,
-                "border-b border-border-default-light dark:border-border-default-dark font-light px-3 py-1 !text-text-muted-light dark:!text-text-muted-dark leading-7 first:pl-0 last:pr-0",
+                "border-b border-border-default-light dark:border-border-default-dark font-light px-3 py-1 text-text-muted-light dark:text-text-muted-dark leading-7 first:pl-0 last:pr-0",
                 {
                     // if the table has many columns, do not collapse short string content into multi-line:
                     "whitespace-nowrap": childrenAsString.length < 100,
@@ -113,7 +113,7 @@ export const H1: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(
                 className,
-                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-2xl font-semibold mt-10 mb-3 scroll-mt-16"
+                "relative group/anchor-container text-text-primary-light dark:text-text-primary-dark text-2xl font-semibold mt-10 mb-3 scroll-mt-16"
             )}
             {...rest}
         >
@@ -135,7 +135,7 @@ export const H2: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(
                 className,
-                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-xl font-semibold mt-10 mb-3 scroll-mt-16"
+                "relative group/anchor-container text-text-primary-light dark:text-text-primary-dark text-xl font-semibold mt-10 mb-3 scroll-mt-16"
             )}
             {...rest}
         >
@@ -157,7 +157,7 @@ export const H3: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(
                 className,
-                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3 scroll-mt-16"
+                "relative group/anchor-container text-text-primary-light dark:text-text-primary-dark text-lg font-semibold mt-10 mb-3 scroll-mt-16"
             )}
             {...rest}
         >
@@ -179,7 +179,7 @@ export const H4: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(
                 className,
-                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3 scroll-mt-16"
+                "relative group/anchor-container text-text-primary-light dark:text-text-primary-dark text-lg font-semibold mt-10 mb-3 scroll-mt-16"
             )}
             {...rest}
         >
@@ -201,7 +201,7 @@ export const H5: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(
                 className,
-                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3 scroll-mt-16"
+                "relative group/anchor-container text-text-primary-light dark:text-text-primary-dark text-lg font-semibold mt-10 mb-3 scroll-mt-16"
             )}
             {...rest}
         >
@@ -223,7 +223,7 @@ export const H6: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(
                 className,
-                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3 scroll-mt-16"
+                "relative group/anchor-container text-text-primary-light dark:text-text-primary-dark text-lg font-semibold mt-10 mb-3 scroll-mt-16"
             )}
             {...rest}
         >
@@ -258,7 +258,7 @@ export const Strong: React.FC<HTMLAttributes<unknown>> = ({ className, ...rest }
     return (
         <strong
             {...rest}
-            className={classNames(className, "!text-text-primary-light dark:!text-text-primary-dark font-semibold")}
+            className={classNames(className, "text-text-primary-light dark:text-text-primary-dark font-semibold")}
         />
     );
 };
@@ -285,7 +285,7 @@ export const Li: React.FC<HTMLAttributes<HTMLLIElement>> = ({ className, ...rest
             {...rest}
             className={classNames(
                 className,
-                "text-base font-light !text-text-muted-light dark:!text-text-muted-dark leading-7"
+                "text-base font-light text-text-muted-light dark:text-text-muted-dark leading-7"
             )}
         />
     );
@@ -296,7 +296,7 @@ export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className
 
     const classNamesCombined = classNames(
         className,
-        "!text-text-primary-light dark:!text-text-primary-dark hover:!text-accent-primary hover:dark:!text-accent-primary !no-underline !border-b hover:!border-b-2 !border-b-accent-primary hover:border-b-accent-primary hover:no-underline font-medium"
+        "text-text-primary-light dark:text-text-primary-dark hover:text-accent-primary hover:dark:text-accent-primary-dark underline underline-offset-4 hover:decoration-2 font-medium"
     );
 
     return (

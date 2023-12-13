@@ -1,3 +1,4 @@
+import { ThemeProvider } from "@fern-ui/ui";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -9,6 +10,7 @@ import { AppProps } from "next/app";
 import { ReactElement } from "react";
 import "tailwindcss/tailwind.css";
 import "../styles/globals.css";
+import { Docs } from "./[host]/[[...slug]]";
 
 function setupFontAwesomeIcons(): void {
     // See https://github.com/FortAwesome/Font-Awesome/issues/19348#issuecomment-1262137893
@@ -20,6 +22,11 @@ function setupFontAwesomeIcons(): void {
 
 setupFontAwesomeIcons();
 
-export default function App({ Component, pageProps }: AppProps): ReactElement {
-    return <Component {...pageProps} />;
+export default function App({ Component, pageProps }: AppProps<Partial<Docs.Props>>): ReactElement {
+    const theme = pageProps.docs?.definition.config.colorsV3.type;
+    return (
+        <ThemeProvider theme={theme}>
+            <Component {...pageProps} />
+        </ThemeProvider>
+    );
 }

@@ -8,8 +8,8 @@ import { Docs } from "./[host]/[[...slug]]";
 
 setupFontAwesomeIcons();
 
-export default function App({ Component, pageProps }: AppProps<Docs.Props>): ReactElement {
-    const theme = pageProps.docs.definition.config.colorsV3.type;
+export default function App({ Component, pageProps }: AppProps<Partial<Docs.Props>>): ReactElement {
+    const theme = pageProps.docs?.definition.config.colorsV3.type;
     return (
         <ThemeProvider theme={theme}>
             <Component {...pageProps} />
