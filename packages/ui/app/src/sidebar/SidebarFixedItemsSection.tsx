@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import { memo, useMemo } from "react";
-import { useDocsContext } from "../docs-context/useDocsContext";
 import { useNavigationContext } from "../navigation-context";
 import { useSearchContext } from "../search-context/useSearchContext";
 import { useDocsSelectors } from "../selectors/useDocsSelectors";
@@ -18,7 +17,6 @@ export declare namespace SidebarFixedItemsSection {
 
 const UnmemoizedSidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> = ({ className, hideSearchBar }) => {
     const { navigateToPath, activeNavigatable } = useNavigationContext();
-    const { theme } = useDocsContext();
     const { activeNavigationConfigContext, withVersionSlug } = useDocsSelectors();
     const { openSearchDialog } = useSearchContext();
     const searchService = useSearchService();
@@ -28,8 +26,8 @@ const UnmemoizedSidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Prop
     const router = useRouter();
 
     const searchBar = useMemo(() => {
-        return showSearchBar ? <SidebarSearchBar theme={theme} onClick={openSearchDialog} /> : null;
-    }, [theme, showSearchBar, openSearchDialog]);
+        return showSearchBar ? <SidebarSearchBar onClick={openSearchDialog} /> : null;
+    }, [showSearchBar, openSearchDialog]);
 
     const tabs = useMemo(() => {
         if (!showTabs) {

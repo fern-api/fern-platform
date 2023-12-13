@@ -19,7 +19,7 @@ export const InlineCode: React.FC<HTMLAttributes<HTMLElement> & InlineCodeProps>
             {...rest}
             className={classNames(
                 className,
-                "border border-border-concealed-light dark:border-border-concealed-dark rounded font-mono bg-background/75 !text-text-primary-light dark:!text-text-primary-dark !py-0.5 !px-1"
+                "border border-border-concealed-light dark:border-border-concealed-dark rounded font-mono bg-background/75 dark:bg-background-dark/75 !text-text-primary-light dark:!text-text-primary-dark !py-0.5 !px-1"
             )}
             style={{
                 fontSize: fontSize === "sm" ? 12 : 14,

@@ -16,13 +16,13 @@ export const PageRecord: React.FC<PageRecord.Props> = ({ hit, isHovered }) => {
             <div
                 className={classNames("flex flex-col items-center justify-center rounded-md border p-1", {
                     "border-border-default-light dark:border-border-default-dark": !isHovered,
-                    "border-white bg-white text-black": isHovered,
+                    "border-white dark:border-black bg-white dark:bg-black text-black": isHovered,
                 })}
             >
                 <BlueprintIcon
                     className={classNames({
                         "!text-text-muted-light dark:!text-text-muted-dark": !isHovered,
-                        "!text-accent-primary": isHovered,
+                        "!text-accent-primary dark:text-accent-primary-dark": isHovered,
                     })}
                     size={14}
                     icon="document"

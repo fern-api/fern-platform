@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import dynamic from "next/dynamic";
 import React from "react";
-import { useDocsContext } from "../docs-context/useDocsContext";
 import { CopyToClipboardButton } from "./CopyToClipboardButton";
 
 const CodeBlockSkeleton = dynamic(
@@ -20,7 +19,6 @@ export const CodeBlockWithClipboardButton: React.FC<CodeBlockWithClipboardButton
     language,
     content,
 }) => {
-    const { theme } = useDocsContext();
     return (
         <div className="group/cb-container border-default relative mb-5 flex w-full rounded-t-lg border-t">
             <CopyToClipboardButton
@@ -35,7 +33,6 @@ export const CodeBlockWithClipboardButton: React.FC<CodeBlockWithClipboardButton
                 content={content}
             />
             <CodeBlockSkeleton
-                theme={theme}
                 language={language}
                 content={content}
                 fontSize={variant}

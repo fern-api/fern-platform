@@ -22,11 +22,11 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({ c
             data-testid={testId}
         >
             {wasJustCopied ? (
-                <div className="bg-tag-primary flex h-4 w-4 items-center justify-center rounded-sm">
-                    <CheckIcon className="text-accent-primary h-4 w-4" />
+                <div className="bg-tag-primary dark:bg-tag-primary-dark flex h-4 w-4 items-center justify-center rounded-sm">
+                    <CheckIcon className="text-accent-primary dark:text-accent-primary-dark h-4 w-4" />
                 </div>
             ) : (
-                <CopyIcon className="text-intent-default hover:text-accent-primary h-4 w-4 transition-colors" />
+                <CopyIcon className="text-intent-default hover:text-accent-primary hover:dark:text-accent-primary-dark h-4 w-4 transition-colors" />
             )}
         </button>
     );

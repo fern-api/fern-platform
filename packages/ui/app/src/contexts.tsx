@@ -1,4 +1,3 @@
-import { ThemeProviderWithLayout } from "@fern-ui/theme";
 import { createStore, Provider as JotaiProvider } from "jotai";
 import { PropsWithChildren, ReactElement } from "react";
 import { CacheContextProvider } from "./cache-context/CacheContextProvider";
@@ -15,6 +14,5 @@ export const CONTEXTS = [
     ),
     ({ children }: PropsWithChildren): ReactElement => <ViewportContextProvider>{children}</ViewportContextProvider>,
     ({ children }: PropsWithChildren): ReactElement => <SearchContextProvider>{children}</SearchContextProvider>,
-    ({ children }: PropsWithChildren): ReactElement => <ThemeProviderWithLayout>{children}</ThemeProviderWithLayout>,
     ({ children }: PropsWithChildren): ReactElement => <CacheContextProvider>{children}</CacheContextProvider>,
 ];

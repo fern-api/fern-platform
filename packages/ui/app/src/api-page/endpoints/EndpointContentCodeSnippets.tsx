@@ -1,6 +1,5 @@
 "use client";
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { type Theme } from "@fern-ui/theme";
 import { memo } from "react";
 import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";
 import type { CodeExampleClient } from "../examples/code-example";
@@ -14,7 +13,6 @@ import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
 
 export declare namespace EndpointContentCodeSnippets {
     export interface Props {
-        theme?: Theme;
         example: APIV1Read.ExampleEndpointCall;
         availableExampleClients: CodeExampleClient[];
         selectedExampleClient: CodeExampleClient;
@@ -31,7 +29,6 @@ export declare namespace EndpointContentCodeSnippets {
 const TITLED_EXAMPLE_PADDING = 43;
 
 const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippets.Props> = ({
-    theme,
     example,
     availableExampleClients,
     selectedExampleClient,
@@ -83,7 +80,6 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         className="rounded-b-x w-0 min-w-full overflow-y-auto pt-1.5"
                         content={selectedExampleClient.example}
                         language={selectedExampleClient.language}
-                        theme={theme}
                         usePlainStyles
                         fontSize="sm"
                         style={{ maxHeight: requestHeight - TITLED_EXAMPLE_PADDING }}

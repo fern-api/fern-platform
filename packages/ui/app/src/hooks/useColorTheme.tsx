@@ -1,5 +1,4 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { useTheme } from "@fern-ui/theme";
 import tinycolor from "tinycolor2";
 
 interface ColorConfig {
@@ -41,39 +40,37 @@ const CSS_VARIABLES = {
     ACCENT_PRIMARY: "--accent-primary",
     BACKGROUND: "--background",
     // inverted colors are useful for rendering nested components where dark/light mode is inverted
-    ACCENT_PRIMARY_INVERTED: "--accent-primary-inverted",
-    BACKGROUND_INVERTED: "--background-inverted",
+    ACCENT_PRIMARY_DARK: "--accent-primary-dark",
+    BACKGROUND_DARK: "--background-dark",
 } as const;
 
 export function useColorTheme(docsDefinition: DocsV1Read.DocsDefinition): string {
     const colorsV3 = docsDefinition.config.colorsV3;
-    const { theme } = useTheme(colorsV3.type);
-    const invertedTheme = theme === "dark" ? "light" : "dark";
+    // const { theme } = useTheme(colorsV3.type);
+    // const invertedTheme = theme === "dark" ? "light" : "dark";
 
-    if (theme == null) {
-        return "";
-    }
+    // if (theme == null) {
+    //     return "";
+    // }
 
-    const accentPrimary = colorsV3.type !== "darkAndLight" ? colorsV3.accentPrimary : colorsV3[theme].accentPrimary;
-    const background = colorsV3.type !== "darkAndLight" ? colorsV3.background : colorsV3[theme].background;
-    const backgroundColor = background.type === "solid" ? background : DEFAULT_COLORS.background[theme];
-    const accentPrimaryInverted =
+    const accentPrimary = colorsV3.type !== "darkAndLight" ? colorsV3.accentPrimary : colorsV3["light"].accentPrimary;
+    const background = colorsV3.type !== "darkAndLight" ? colorsV3.background : colorsV3["light"].background;
+    const backgroundColor = background.type === "solid" ? background : DEFAULT_COLORS.background["light"];
+    const accentPrimaryDark =
         colorsV3.type !== "darkAndLight"
             ? tinycolor(colorsV3.accentPrimary).isDark()
                 ? tinycolor("white").toRgb()
                 : tinycolor("black").toRgb()
-            : colorsV3[invertedTheme].accentPrimary;
-    const backgroundInverted =
-        colorsV3.type !== "darkAndLight" ? colorsV3.background : colorsV3[invertedTheme].background;
-    const backgroundColorInverted =
-        backgroundInverted.type === "solid" ? backgroundInverted : DEFAULT_COLORS.background[invertedTheme];
+            : colorsV3["dark"].accentPrimary;
+    const backgroundDark = colorsV3.type !== "darkAndLight" ? colorsV3.background : colorsV3["dark"].background;
+    const backgroundColorDark = backgroundDark.type === "solid" ? backgroundDark : DEFAULT_COLORS.background["dark"];
 
     return `
         :root {
             ${CSS_VARIABLES.ACCENT_PRIMARY}: ${accentPrimary.r}, ${accentPrimary.g}, ${accentPrimary.b};
             ${CSS_VARIABLES.BACKGROUND}: ${backgroundColor.r}, ${backgroundColor.g}, ${backgroundColor.b};
-            ${CSS_VARIABLES.ACCENT_PRIMARY_INVERTED}: ${accentPrimaryInverted.r}, ${accentPrimaryInverted.g}, ${accentPrimaryInverted.b};
-            ${CSS_VARIABLES.BACKGROUND_INVERTED}: ${backgroundColorInverted.r}, ${backgroundColorInverted.g}, ${backgroundColorInverted.b};
+            ${CSS_VARIABLES.ACCENT_PRIMARY_DARK}: ${accentPrimaryDark.r}, ${accentPrimaryDark.g}, ${accentPrimaryDark.b};
+            ${CSS_VARIABLES.BACKGROUND_DARK}: ${backgroundColorDark.r}, ${backgroundColorDark.g}, ${backgroundColorDark.b};
         }
     `;
 }

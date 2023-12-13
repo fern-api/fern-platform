@@ -1,26 +1,22 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { type Theme } from "@fern-ui/theme";
+import { useMounted } from "@fern-ui/react-commons";
 import classNames from "classnames";
-import { memo, useEffect, useState, type MouseEventHandler } from "react";
+import { useTheme } from "next-themes";
+import { memo, type MouseEventHandler } from "react";
 import { SearchIcon } from "../commons/icons/SearchIcon";
 import { PlatformSpecificContent } from "../commons/PlatformSpecificContent";
 
 export declare namespace SidebarSearchBar {
     export interface Props {
-        theme: Theme | undefined;
         onClick: MouseEventHandler<HTMLButtonElement>;
     }
 }
 
 export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = memo(function UnmemoizedSidebarSearchBar({
-    theme,
     onClick,
 }) {
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
+    const { resolvedTheme: theme } = useTheme();
+    const mounted = useMounted();
 
     if (!mounted) {
         return null;

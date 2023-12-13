@@ -30,16 +30,18 @@ module.exports = {
             },
             boxShadow: {
                 header: "0px 4px 24px 0px rgba(var(--accent-primary), 10%)",
+                "header-dark": "0px 4px 24px 0px rgba(var(--accent-primary-dark), 10%)",
             },
         },
         colors: ({ colors }) => {
             return {
                 ...colors,
                 "accent-primary": withOpacity("--accent-primary"),
-                "accent-primary-inverted": withOpacity("--accent-primary-inverted"),
+                "accent-primary-dark": withOpacity("--accent-primary-dark"),
                 "accent-highlight": "rgba(var(--accent-primary), 10%)",
-                "accent-highlight-inverted": "rgba(var(--accent-primary-inverted), 10%)",
+                "accent-highlight-dark": "rgba(var(--accent-primary-dark), 10%)",
                 background: withOpacity("--background"),
+                "background-dark": withOpacity("--background-dark"),
 
                 "method-get": "#49A68C",
                 "method-post": "#487FAB",
@@ -67,9 +69,6 @@ module.exports = {
                 "background-tertiary-dark": "rgb(31, 41, 55)",
                 "background-tertiary-light": "rgb(243, 244, 246)",
 
-                "background-dark": "rgb(17, 20, 24)",
-                "background-light": "rgb(249, 250, 251)",
-
                 "background-hover-dark": "rgba(151, 90, 90, 0.05)",
                 "background-hover-light": "rgba(3, 7, 18, 0.05)",
 
@@ -78,7 +77,7 @@ module.exports = {
                 "border-concealed-dark": "rgba(156, 163, 175, 0.15)",
                 "border-concealed-light": "rgba(72, 72, 72, 0.10)",
                 "border-primary": "rgba(var(--accent-primary), 0.30)",
-                "border-primary-inverted": "rgba(var(--accent-primary-inverted), 0.30)",
+                "border-primary-dark": "rgba(var(--accent-primary-dark), 0.30)",
                 "border-warning-dark": "rgba(251, 191, 36, 0.30)",
                 "border-warning-light": "rgba(217, 119, 6, 0.30)",
                 "border-success-dark": "rgba(74, 222, 128, 0.30)",
@@ -96,7 +95,7 @@ module.exports = {
                 "tag-default-dark": "rgba(255, 255, 255, 15%)",
                 "tag-default-light": "rgba(3, 7, 18, 5%)",
                 "tag-primary": "rgba(var(--accent-primary), 15%)",
-                "tag-primary-inverted": "rgba(var(--accent-primary-inverted), 15%)",
+                "tag-primary-dark": "rgba(var(--accent-primary-dark), 15%)",
                 "tag-warning-dark": "rgba(251, 190, 36, 0.15)",
                 "tag-warning-light": "rgba(217, 119, 6, 0.10)",
                 "tag-success-dark": "rgba(74, 222, 128, 0.15)",

@@ -1,5 +1,4 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { useTheme } from "@fern-ui/theme";
 import { PropsWithChildren, useCallback } from "react";
 import { DocsContext, DocsContextValue } from "./DocsContext";
 
@@ -43,18 +42,14 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
         [docsDefinition.files]
     );
 
-    const { theme, setTheme } = useTheme(docsDefinition.config.colorsV3.type);
-
     const contextValue = useCallback(
         (): DocsContextValue => ({
             docsDefinition,
             resolveApi,
             resolvePage,
             resolveFile,
-            theme,
-            setTheme,
         }),
-        [docsDefinition, resolveApi, resolveFile, resolvePage, theme, setTheme]
+        [docsDefinition, resolveApi, resolveFile, resolvePage]
     );
 
     return <DocsContext.Provider value={contextValue}>{children}</DocsContext.Provider>;
