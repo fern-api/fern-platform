@@ -36,13 +36,17 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
             {floatRightElement != null && (
                 <div className="sticky top-20 z-10 float-right w-fit">{floatRightElement}</div>
             )}
-            <div className="group/anchor-container relative mb-3 flex items-baseline gap-4 pb-3">
-                <AbsolutelyPositionedAnchor href={anchorRoute} verticalPosition="center" />
-                <div className="text-text-primary-light dark:text-text-primary-dark text-xl font-semibold">{title}</div>
+            <div className="group/anchor-container relative mb-3 flex flex-wrap items-baseline gap-x-4 gap-y-1 pb-3">
+                <div className="flex items-baseline">
+                    <AbsolutelyPositionedAnchor href={anchorRoute} verticalPosition="center" />
+                    <div className="text-text-primary-light dark:text-text-primary-dark text-xl font-semibold">
+                        {title}
+                    </div>
+                </div>
                 {showExpandCollapse && (
                     <div className="t-muted invisible flex gap-2 text-xs group-hover/anchor-container:visible">
                         <button
-                            className="hover:underline"
+                            className="whitespace-nowrap hover:underline"
                             onClick={() => {
                                 navigateToPath(anchorRoute.substring(1));
                                 handleExpandAll();
@@ -52,7 +56,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
                             Expand all
                         </button>
                         <button
-                            className="hover:underline"
+                            className="whitespace-nowrap hover:underline"
                             onClick={() => {
                                 navigateToPath(anchorRoute.substring(1));
                                 handleCollapseAll();
