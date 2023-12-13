@@ -1,28 +1,27 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
-import { ArrowRightIcon } from "../commons/icons/ArrowRightIcon";
 
 export declare namespace HeaderPrimaryLink {
     export interface Props {
         navbarLink: DocsV1Read.NavbarLink.Primary;
+        fill?: boolean;
     }
 }
 
-export const HeaderPrimaryLink: React.FC<HeaderPrimaryLink.Props> = ({ navbarLink }) => {
+export const HeaderPrimaryLink: React.FC<HeaderPrimaryLink.Props> = ({ navbarLink, fill = false }) => {
     return (
         <a
             className={classNames(
-                "group pl-4 pr-3 py-1.5 border border-border-primary hover:border-2 flex space-x-1.5 items-center !no-underline !text-accent-primary transition rounded-lg hover:bg-tag-primary",
-                "hover:py-[calc(theme(spacing.1.5)-1px)] hover:pr-[calc(theme(spacing.3)-1px)] hover:pl-[calc(theme(spacing.4)-1px)]"
+                "group p-2.5 border-2 border-black flex space-x-1.5 items-center !no-underline text-black transition rounded-lg hover:bg-accent-primary hover:text-white hover:border-accent-primary text-base font-medium antialiased",
+                {
+                    "text-white bg-black": fill,
+                }
             )}
             href={navbarLink.url}
             target="_blank"
             rel="noreferrer noopener"
         >
             <span className="whitespace-nowrap">{navbarLink.text}</span>
-            <div className="flex h-5 w-5 items-center">
-                <ArrowRightIcon className="h-5 w-5 transition group-hover:translate-x-0.5" />
-            </div>
         </a>
     );
 };
