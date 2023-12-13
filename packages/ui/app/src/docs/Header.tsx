@@ -68,7 +68,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
         >
             <HeaderLogoSection />
 
-            <div className="ml-8 hidden gap-5 md:flex">
+            <div className="mx-8 hidden gap-5 md:flex">
                 <HeadlessMenu as="div" className="relative inline-block text-left">
                     <>
                         <div className="my-auto">
