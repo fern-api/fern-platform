@@ -1,6 +1,6 @@
+import { Icon } from "@blueprintjs/core";
 import classNames from "classnames";
 import { Snippet } from "react-instantsearch-hooks-web";
-import { BlueprintIcon } from "../../commons/BlueprintIcon";
 import type { SearchRecord } from "../types";
 
 export declare namespace PageRecord {
@@ -19,7 +19,7 @@ export const PageRecord: React.FC<PageRecord.Props> = ({ hit, isHovered }) => {
                     "border-white dark:border-black bg-white dark:bg-black text-black": isHovered,
                 })}
             >
-                <BlueprintIcon
+                <Icon
                     className={classNames({
                         "!text-text-muted-light dark:!text-text-muted-dark": !isHovered,
                         "!text-accent-primary dark:text-accent-primary-dark": isHovered,

@@ -1,5 +1,5 @@
+import { Icon } from "@blueprintjs/core";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
-import { BlueprintIcon } from "../../commons/BlueprintIcon";
 import { useNavigationContext } from "../../navigation-context";
 import { getAnchorId } from "../../util/anchor";
 import { Markdown } from "../markdown/Markdown";
@@ -45,7 +45,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
                                 handleExpandAll();
                             }}
                         >
-                            <BlueprintIcon icon="plus" size={14} className="mr-0.5" />
+                            <Icon icon="plus" size={14} className="mr-0.5" />
                             Expand all
                         </button>
                         <button
@@ -55,7 +55,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
                                 handleCollapseAll();
                             }}
                         >
-                            <BlueprintIcon icon="minus" size={14} className="mr-0.5" />
+                            <Icon icon="minus" size={14} className="mr-0.5" />
                             Collapse all
                         </button>
                     </div>

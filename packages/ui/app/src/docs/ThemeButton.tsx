@@ -1,7 +1,6 @@
 import { useMounted } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { useTheme } from "next-themes";
-import dynamic from "next/dynamic";
 import { MoonIcon } from "../commons/icons/MoonIcon";
 import { SunIcon } from "../commons/icons/SunIcon";
 
@@ -11,7 +10,7 @@ export declare namespace ThemeButton {
     }
 }
 
-export const Core: React.FC<ThemeButton.Props> = ({ className }) => {
+export const ThemeButton: React.FC<ThemeButton.Props> = ({ className }) => {
     const { resolvedTheme, setTheme } = useTheme();
     const mounted = useMounted();
 
@@ -28,7 +27,3 @@ export const Core: React.FC<ThemeButton.Props> = ({ className }) => {
         </button>
     );
 };
-
-export const ThemeButton = dynamic(() => Promise.resolve(Core), {
-    ssr: false,
-});
