@@ -36,7 +36,7 @@ const UnmemoizedSidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Prop
             return null;
         }
         return (
-            <div className="mt-3 flex flex-col">
+            <div className={classNames("flex flex-col", { "mt-3": searchBar != null })}>
                 {activeNavigationConfigContext.config.tabs.map((tab, idx) => (
                     <SidebarTabButton
                         key={idx}
@@ -51,7 +51,15 @@ const UnmemoizedSidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Prop
                 ))}
             </div>
         );
-    }, [showTabs, activeNavigationConfigContext, activeNavigatable, withVersionSlug, navigateToPath, router]);
+    }, [
+        showTabs,
+        searchBar,
+        activeNavigationConfigContext.config,
+        activeNavigatable.context.tab?.index,
+        withVersionSlug,
+        navigateToPath,
+        router,
+    ]);
 
     if (!showSearchBar && !showTabs) {
         return null;
@@ -60,7 +68,7 @@ const UnmemoizedSidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Prop
     return (
         <div
             className={classNames(
-                "flex flex-col pl-12 pr-6 pt-12",
+                "flex flex-col pl-6 xl:pl-12 pr-6 md:pt-12 pt-6",
                 {
                     "backdrop-blur-sm": tabs == null,
                     "backdrop-blur-xl": tabs != null,

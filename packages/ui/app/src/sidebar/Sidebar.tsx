@@ -62,7 +62,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                 <SidebarFixedItemsSection className="sticky top-0 z-10" hideSearchBar={hideSearchBar} />
                 <div
                     className={classNames(
-                        "flex flex-1 flex-col overflow-y-auto overflow-x-hidden pb-12 px-6 md:pl-12",
+                        "flex flex-1 flex-col overflow-y-auto overflow-x-hidden pb-12 px-6 xl:pl-12",
                         styles.scrollingContainer
                     )}
                 >

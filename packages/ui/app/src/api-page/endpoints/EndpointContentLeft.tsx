@@ -1,17 +1,12 @@
 import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import { getEndpointTitleAsString, getSubpackageTitle, isSubpackage } from "@fern-ui/app-utils";
-import { Switch, Tab } from "@headlessui/react";
+import { Tab } from "@headlessui/react";
 import classNames from "classnames";
 import { useAtom } from "jotai";
 import Image from "next/image";
 import { memo, useEffect } from "react";
 import { Menu, MenuItem } from "../../docs/Menu";
-import {
-    finchHideUnsupportedAtom,
-    finchProviderAccessTypeAtom,
-    finchProviderIdAtom,
-} from "../../mdx/components/FinchProviderMatrix";
-import { useNavigationContext } from "../../navigation-context";
+import { finchProviderAccessTypeAtom, finchProviderIdAtom } from "../../mdx/components/FinchProviderMatrix";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
@@ -57,10 +52,9 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     setSelectedErrorIndex,
     route,
 }) => {
-    const { navigateToPath } = useNavigationContext();
     const [finchProviderId, setFinchProviderId] = useAtom(finchProviderIdAtom);
     const [finchProviderAccessType, setFinchProviderAccessType] = useAtom(finchProviderAccessTypeAtom);
-    const [finchHideUnsupported, setFinchHideUnsupported] = useAtom(finchHideUnsupportedAtom);
+    // const [finchHideUnsupported, setFinchHideUnsupported] = useAtom(finchHideUnsupportedAtom);
     const selectedFinchProvider = finchProviderId != null ? FinchData.integrations[finchProviderId] : undefined;
     useEffect(() => {
         if (selectedFinchProvider != null) {
@@ -79,7 +73,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     }, [finchProviderAccessType, selectedFinchProvider, setFinchProviderAccessType]);
     const provider = (
         <div className="flex space-x-2">
-            <div className="my-auto flex items-center space-x-2">
+            {/* <div className="my-auto flex items-center space-x-2">
                 <span className="text-xs text-black/60">Hide unsupported</span>
                 <Switch
                     checked={finchHideUnsupported}
@@ -97,7 +91,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
             pointer-events-none inline-block h-[16px] w-[16px] rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
                     />
                 </Switch>
-            </div>
+            </div> */}
             <Menu
                 text={selectedFinchProvider?.name ?? "Select provider..."}
                 icon={

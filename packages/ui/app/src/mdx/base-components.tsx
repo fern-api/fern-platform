@@ -34,7 +34,7 @@ export const Table: React.FC<HTMLAttributes<HTMLTableElement>> = ({ className, .
             {...rest}
             className={classNames(
                 className,
-                "block border-separate border-spacing-0 overflow-x-hidden table-auto mb-3 text-sm bg-white shadow-xl border-[#E2E8F0] border rounded-lg w-fit"
+                "block border-separate border-spacing-0 overflow-x-auto table-auto mb-3 text-sm bg-white shadow-xl border-[#E2E8F0] border rounded-lg w-fit max-w-full"
             )}
         />
     );
