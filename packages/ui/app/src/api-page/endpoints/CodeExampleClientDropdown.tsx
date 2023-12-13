@@ -38,8 +38,8 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                     <Menu.Button
                         className={classNames(
                             "group inline-flex w-full justify-center items-center space-x-2 rounded-lg",
-                            "hover:bg-tag-primary",
-                            "border border-border-primary hover:border-2",
+                            "hover:bg-tag-primary dark:hover:bg-tag-primary-dark",
+                            "border border-border-primary dark:border-border-primary-dark hover:border-2",
                             "transition",
                             "text-accent-primary dark:text-accent-primary-dark tracking-tight",
                             "py-1 pl-2.5 pr-1",
