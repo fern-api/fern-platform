@@ -23,7 +23,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
     const anchorId = getAnchorId(anchorIdParts);
     const anchorRoute = `${route}#${anchorId}`;
     return (
-        <div data-route={anchorRoute} className="scroll-mt-16">
+        <div data-route={anchorRoute} className="scroll-mt-20">
             {floatRightElement != null && (
                 <div className="sticky top-20 z-10 float-right w-fit">{floatRightElement}</div>
             )}

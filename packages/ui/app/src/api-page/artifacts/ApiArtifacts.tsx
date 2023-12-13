@@ -27,7 +27,7 @@ export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiArtifacts }) => 
 
     return (
         <ApiPageMargins>
-            <div ref={setTargetRef} data-route={`/${slug}`} className="scroll-mt-16">
+            <div ref={setTargetRef} data-route={`/${slug}`} className="scroll-mt-20">
                 <H2 className="pt-20">{API_ARTIFACTS_TITLE}</H2>
                 <div className="t-muted mt-5 text-lg">
                     Official open-source client libraries for your favorite platforms.

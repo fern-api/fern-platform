@@ -71,7 +71,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
             })}
         >
             <div
-                className="mx-auto flex min-w-0 max-w-7xl flex-1 scroll-mt-16 flex-col lg:flex-row lg:space-x-[4vw]"
+                className="mx-auto flex min-w-0 max-w-7xl flex-1 scroll-mt-20 flex-col lg:flex-row lg:space-x-[4vw]"
                 ref={setContainerRef}
                 data-route={route}
             >

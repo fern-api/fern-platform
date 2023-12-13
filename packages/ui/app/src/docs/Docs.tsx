@@ -72,7 +72,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                 </div>
 
                 <div className="relative mx-auto flex min-h-0 w-full flex-1">
-                    <div className="hidden w-80 md:flex xl:w-96">
+                    <div className="hidden w-80 md:flex lg:w-96">
                         <div
                             className="sticky w-full overflow-auto overflow-x-hidden"
                             style={{

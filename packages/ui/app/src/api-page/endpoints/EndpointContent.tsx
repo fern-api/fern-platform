@@ -195,14 +195,14 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     return (
         <div
-            className={classNames("pb-20 px-6 lg:px-12 scroll-mt-16", {
+            className={classNames("pb-20 px-6 lg:px-12 scroll-mt-20", {
                 "border-border-default-light dark:border-border-default-dark border-b": !hideBottomSeparator,
             })}
             onClick={() => setSelectedErrorIndex(null)}
             ref={containerRef}
         >
             <div
-                className="mx-auto flex min-w-0 max-w-7xl flex-1 scroll-mt-16 flex-col justify-between lg:flex-row lg:space-x-[4vw]"
+                className="mx-auto flex min-w-0 max-w-7xl flex-1 scroll-mt-20 flex-col justify-between xl:flex-row xl:space-x-[4vw]"
                 ref={setContainerRef}
                 data-route={route}
             >
@@ -228,13 +228,13 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
                 <div
                     className={classNames(
-                        "lg:flex-1 lg:sticky lg:self-start lg:min-w-sm lg:max-w-lg lg:ml-auto",
+                        "xl:flex-1 xl:sticky xl:self-start xl:min-w-sm xl:max-w-lg xl:ml-auto max-w-2xl",
                         "pb-10 pt-12",
                         // the 4rem is the same as the h-10 as the Header
-                        "max-h-[150vh] lg:max-h-[calc(100vh-4rem)]",
+                        "max-h-[150vh] xl:max-h-[calc(100vh-4rem)]",
                         "flex",
                         // header offset
-                        "mt-10 lg:mt-0 lg:top-16"
+                        "mt-10 xl:mt-0 xl:top-16"
                     )}
                     style={{ height: `${exampleHeight}px` }}
                 >
