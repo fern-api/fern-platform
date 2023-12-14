@@ -34,20 +34,22 @@ export const App: React.FC<App.Props> = ({ docs, resolvedPath }) => {
 
     return (
         <div className={classNames(styles.app, "flex flex-1 h-screen")}>
-            {CONTEXTS.reduceRight(
-                (children, Context) => (
-                    <Context>{children}</Context>
-                ),
-                <DocsContextProvider docsDefinition={docs.definition}>
-                    <NavigationContextProvider
-                        docsDefinition={docs.definition}
-                        resolvedPath={resolvedPath}
-                        basePath={docs.baseUrl.basePath}
-                    >
-                        <Docs />
-                    </NavigationContextProvider>
-                </DocsContextProvider>
-            )}
+            <div className="w-full">
+                {CONTEXTS.reduceRight(
+                    (children, Context) => (
+                        <Context>{children}</Context>
+                    ),
+                    <DocsContextProvider docsDefinition={docs.definition}>
+                        <NavigationContextProvider
+                            docsDefinition={docs.definition}
+                            resolvedPath={resolvedPath}
+                            basePath={docs.baseUrl.basePath}
+                        >
+                            <Docs />
+                        </NavigationContextProvider>
+                    </DocsContextProvider>
+                )}
+            </div>
         </div>
     );
 };

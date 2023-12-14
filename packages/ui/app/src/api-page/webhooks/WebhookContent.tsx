@@ -78,7 +78,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                 <div className="flex min-w-0 max-w-2xl flex-1 flex-col">
                     <div className="py-8">
                         {isSubpackage(package_) && (
-                            <div className="text-accent-primary mb-4 text-xs font-semibold uppercase tracking-wider">
+                            <div className="text-accent-primary dark:text-accent-primary-dark mb-4 text-xs font-semibold uppercase tracking-wider">
                                 {getSubpackageTitle(package_)}
                             </div>
                         )}

@@ -60,10 +60,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/commons/react/split-view"\
       },\
       {\
-        "name": "@fern-ui/theme",\
-        "reference": "workspace:packages/commons/react/theme"\
-      },\
-      {\
         "name": "@fern-ui/toaster",\
         "reference": "workspace:packages/commons/react/toaster"\
       },\
@@ -101,7 +97,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-ui/routing-utils", ["workspace:packages/commons/react/routing-utils"]],\
       ["@fern-ui/scripts", ["workspace:packages/scripts"]],\
       ["@fern-ui/split-view", ["workspace:packages/commons/react/split-view"]],\
-      ["@fern-ui/theme", ["workspace:packages/commons/react/theme"]],\
       ["@fern-ui/toaster", ["workspace:packages/commons/react/toaster"]],\
       ["@fern-ui/ui", ["workspace:packages/ui/app"]],\
       ["fern-ui", ["workspace:."]]\
@@ -4037,7 +4032,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/routing-utils", "workspace:packages/commons/react/routing-utils"],\
             ["@fern-ui/scripts", "workspace:packages/scripts"],\
             ["@fern-ui/split-view", "workspace:packages/commons/react/split-view"],\
-            ["@fern-ui/theme", "workspace:packages/commons/react/theme"],\
             ["@fern-ui/toaster", "workspace:packages/commons/react/toaster"],\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
             ["@types/jest", "npm:29.5.9"],\
@@ -4080,7 +4074,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fdr-sdk", "npm:0.44.0-1-geb2e930"],\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-ui/theme", "workspace:packages/commons/react/theme"],\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
             ["@fortawesome/fontawesome-svg-core", "npm:6.4.2"],\
             ["@fortawesome/free-brands-svg-icons", "npm:6.4.2"],\
@@ -4161,7 +4154,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fdr-sdk", "npm:0.44.0-1-geb2e930"],\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-ui/theme", "workspace:packages/commons/react/theme"],\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
             ["@fortawesome/fontawesome-svg-core", "npm:6.4.2"],\
             ["@fortawesome/free-brands-svg-icons", "npm:6.4.2"],\
@@ -4328,29 +4320,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
-      ["@fern-ui/theme", [\
-        ["workspace:packages/commons/react/theme", {\
-          "packageLocation": "./packages/commons/react/theme/",\
-          "packageDependencies": [\
-            ["@fern-ui/theme", "workspace:packages/commons/react/theme"],\
-            ["@types/jest", "npm:29.5.9"],\
-            ["@types/node", "npm:18.18.13"],\
-            ["@types/react", "npm:18.0.20"],\
-            ["depcheck", "npm:1.4.3"],\
-            ["eslint", "npm:8.26.0"],\
-            ["jest", "virtual:bcd55ef18af2de5c61a0e7e421459a5298122a73e58d78d0d17e7844bafe08261ee360689337ea7f273d858b0bea9e1ae69c5bf08a019e466a6e255cefe36bc1#npm:29.7.0"],\
-            ["next-themes", "virtual:4322a8a136348bbb136d1f88eebbc41216beec947ef8a39469f9d77c016635da0304970758ec90660f040f497d822088d01b0c0d50cd05fd35d392ab6aa5a98b#npm:0.2.1"],\
-            ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.8.8"],\
-            ["react", "npm:18.2.0"],\
-            ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
-            ["stylelint", "npm:14.14.0"],\
-            ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"],\
-            ["vite", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:4.4.9"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
       ["@fern-ui/toaster", [\
         ["workspace:packages/commons/react/toaster", {\
           "packageLocation": "./packages/commons/react/toaster/",\
@@ -4388,7 +4357,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/react-commons", "workspace:packages/commons/react/react-commons"],\
             ["@fern-ui/routing-utils", "workspace:packages/commons/react/routing-utils"],\
-            ["@fern-ui/theme", "workspace:packages/commons/react/theme"],\
             ["@fontsource/ibm-plex-mono", "npm:4.5.13"],\
             ["@fortawesome/fontawesome-svg-core", "npm:6.4.2"],\
             ["@fortawesome/react-fontawesome", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:0.2.0"],\
@@ -4414,6 +4382,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["lru-cache", "npm:10.0.1"],\
             ["marked", "npm:5.1.2"],\
             ["next", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:13.4.4"],\
+            ["next-themes", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:0.2.1"],\
             ["normalize.css", "npm:8.0.1"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["posthog-js", "npm:1.81.1"],\
@@ -15398,14 +15367,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:4322a8a136348bbb136d1f88eebbc41216beec947ef8a39469f9d77c016635da0304970758ec90660f040f497d822088d01b0c0d50cd05fd35d392ab6aa5a98b#npm:0.2.1", {\
-          "packageLocation": "./.yarn/__virtual__/next-themes-virtual-57e5a9b774/0/cache/next-themes-npm-0.2.1-16a440cf6e-ebc248b956.zip/node_modules/next-themes/",\
+        ["virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:0.2.1", {\
+          "packageLocation": "./.yarn/__virtual__/next-themes-virtual-9155f92514/0/cache/next-themes-npm-0.2.1-16a440cf6e-ebc248b956.zip/node_modules/next-themes/",\
           "packageDependencies": [\
-            ["next-themes", "virtual:4322a8a136348bbb136d1f88eebbc41216beec947ef8a39469f9d77c016635da0304970758ec90660f040f497d822088d01b0c0d50cd05fd35d392ab6aa5a98b#npm:0.2.1"],\
+            ["next-themes", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:0.2.1"],\
             ["@types/next", null],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", null],\
-            ["next", null],\
+            ["next", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:13.4.4"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"]\
           ],\

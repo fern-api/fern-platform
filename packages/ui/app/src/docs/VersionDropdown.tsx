@@ -29,10 +29,10 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
                     <Menu.Button
                         className={classNames(
                             "group inline-flex w-full justify-center space-x-1 rounded-lg",
-                            "hover:bg-tag-primary",
-                            "border border-border-primary hover:border-2",
+                            "hover:bg-tag-primary hover:dark:bg-tag-primary-dark",
+                            "border border-border-primary dark:border-border-primary-dark hover:border-2",
                             "transition",
-                            "text-accent-primary tracking-tight",
+                            "text-accent-primary dark:text-accent-primary-dark tracking-tight",
                             "py-1 pl-2.5 pr-1",
                             // Make sure padding remains the same on hover
                             // This seems to be a Tailwind bug where we can't use theme(borderWidth.1) in some cases
@@ -65,7 +65,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                 >
-                    <Menu.Items className="border-border-primary bg-background absolute left-0 mt-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md border shadow-lg">
+                    <Menu.Items className="border-border-primary dark:border-border-primary-dark bg-background dark:bg-background-dark absolute left-0 mt-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md border shadow-lg">
                         <div>
                             {versions.map((v, idx) => {
                                 const { id: versionName, slug: versionSlug, availability } = v.info;
@@ -76,11 +76,11 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
                                                 className={classNames(
                                                     "flex w-full justify-between !no-underline items-center p-2",
                                                     {
-                                                        "bg-tag-primary": active,
-                                                        "!text-accent-primary":
+                                                        "bg-tag-primary dark:bg-tag-primary-dark": active,
+                                                        "text-accent-primary dark:text-accent-primary-dark":
                                                             versionSlug === selectedVersionSlug ||
                                                             (active && versionSlug !== selectedVersionSlug),
-                                                        "!text-text-muted-light dark:!text-text-muted-dark":
+                                                        "text-text-muted-light dark:text-text-muted-dark":
                                                             !active && versionSlug !== selectedVersionSlug,
                                                         "rounded-t-md": idx === 0,
                                                         "rounded-b-md": idx === versions.length - 1,
@@ -102,7 +102,8 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
                                                                         versionSlug !== selectedVersionSlug && !active,
                                                                 },
                                                                 {
-                                                                    "border-accent-primary/75": active,
+                                                                    "border-accent-primary/75 dark:border-accent-primary-dark/75":
+                                                                        active,
                                                                 }
                                                             )}
                                                         >

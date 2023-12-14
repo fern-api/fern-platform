@@ -6,7 +6,6 @@ import React, { useCallback, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { HEADER_HEIGHT } from "../../constants";
-import { useDocsContext } from "../../docs-context/useDocsContext";
 import { useNavigationContext } from "../../navigation-context";
 import { useViewportContext } from "../../viewport-context/useViewportContext";
 import { type CodeExampleClient } from "../examples/code-example";
@@ -89,7 +88,6 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         onChange: setIsInViewport,
         rootMargin: "100%",
     });
-    const { theme } = useDocsContext();
     const { apiSection, apiDefinition } = useApiDefinitionContext();
     const [hoveredRequestPropertyPath, setHoveredRequestPropertyPath] = useState<JsonPropertyPath | undefined>();
     const [hoveredResponsePropertyPath, setHoveredResponsePropertyPath] = useState<JsonPropertyPath | undefined>();
@@ -240,7 +238,6 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                 >
                     {isInViewport && example != null && (
                         <EndpointContentCodeSnippets
-                            theme={theme}
                             example={example}
                             availableExampleClients={availableExampleClients}
                             selectedExampleClient={selectedExampleClient}

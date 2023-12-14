@@ -7,7 +7,7 @@ exports[`CopyToClipboardButton renders correctly 1`] = `
   disabled={true}
 >
   <svg
-    className="text-intent-default hover:text-accent-primary h-4 w-4 transition-colors"
+    className="text-intent-default hover:text-accent-primary hover:dark:text-accent-primary-dark h-4 w-4 transition-colors"
     fill="currentColor"
     viewBox="0 0 20 20"
     xmlns="http://www.w3.org/2000/svg"

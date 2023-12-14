@@ -1,3 +1,4 @@
+import { useTheme } from "next-themes";
 import { useCallback, useMemo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 
@@ -6,14 +7,16 @@ type ColorSelectors = {
 };
 
 export function useColorSelectors(): ColorSelectors {
-    const { docsDefinition, theme } = useDocsContext();
+    const { docsDefinition } = useDocsContext();
+    const { resolvedTheme: theme } = useTheme();
     const { colorsV3: colors } = docsDefinition.config;
 
     const accentPrimary = useMemo(() => {
-        if (theme == null) {
-            return undefined;
-        }
-        return colors.type === "darkAndLight" ? colors[theme].accentPrimary : colors.accentPrimary;
+        return colors.type === "darkAndLight"
+            ? theme === "dark" || theme === "light"
+                ? colors[theme].accentPrimary
+                : undefined
+            : colors.accentPrimary;
     }, [theme, colors]);
 
     const getAccentPrimary = useCallback(

@@ -1,6 +1,7 @@
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand } from "@fern-ui/react-commons";
 import classNames from "classnames";
+import { useTheme } from "next-themes";
 import { memo, useMemo } from "react";
 import { HEADER_HEIGHT } from "../constants";
 import { useDocsContext } from "../docs-context/useDocsContext";
@@ -17,10 +18,11 @@ import { Header } from "./Header";
 export const Docs: React.FC = memo(function UnmemoizedDocs() {
     const { observeDocContent, activeNavigatable } = useNavigationContext();
     const docsContext = useDocsContext();
-    const { docsDefinition, theme } = docsContext;
+    const { docsDefinition } = docsContext;
     const searchContext = useSearchContext();
     const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = searchContext;
     const searchService = useSearchService();
+    const { resolvedTheme: theme } = useTheme();
     useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
 
     const { isMobileSidebarOpen, openMobileSidebar, closeMobileSidebar } = useMobileSidebarContext();
@@ -30,11 +32,11 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
     const { colorsV3 } = docsDefinition.config;
 
     const backgroundType = useMemo(() => {
-        if (theme == null) {
-            return null;
-        }
         if (colorsV3.type === "darkAndLight") {
-            return colorsV3[theme].background.type;
+            if (theme === "dark" || theme === "light") {
+                return colorsV3[theme].background.type;
+            }
+            return null;
         } else {
             return colorsV3.background.type;
         }
@@ -57,7 +59,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
 
             <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
                 <div
-                    className="border-border-concealed-light dark:border-border-concealed-dark bg-background/50 dark:shadow-header sticky inset-x-0 top-0 z-20 border-b backdrop-blur-xl"
+                    className="border-border-concealed-light dark:border-border-concealed-dark bg-background/50 dark:bg-background-dark/50 dark:shadow-header-dark sticky inset-x-0 top-0 z-20 border-b backdrop-blur-xl"
                     style={{ height: HEADER_HEIGHT }}
                 >
                     <Header
@@ -86,7 +88,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                     </div>
                     {isMobileSidebarOpen && (
                         <div
-                            className="bg-background fixed inset-x-0 bottom-0 z-10 flex overflow-auto overflow-x-hidden md:hidden"
+                            className="bg-background dark:bg-background-dark fixed inset-x-0 bottom-0 z-10 flex overflow-auto overflow-x-hidden md:hidden"
                             style={{
                                 maxHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
                                 top: HEADER_HEIGHT,

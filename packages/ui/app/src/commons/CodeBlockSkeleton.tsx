@@ -1,12 +1,11 @@
-import { type Theme } from "@fern-ui/theme";
 import classNames from "classnames";
+import { useTheme } from "next-themes";
 import React from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import * as prism from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 type CodeBlockSkeletonProps = {
     className?: string;
-    theme?: Theme;
     language: string;
     content: string;
     usePlainStyles?: boolean;
@@ -16,13 +15,13 @@ type CodeBlockSkeletonProps = {
 
 export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
     className,
-    theme,
     language,
     content,
     usePlainStyles = false,
     fontSize,
     style,
 }) => {
+    const { resolvedTheme: theme } = useTheme();
     return (
         <div
             className={classNames(

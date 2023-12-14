@@ -12,10 +12,5 @@
   },
   "include": ["./src"],
   "exclude": ["node_modules"],
-  "references": [
-    { "path": "../../commons/app-utils" },
-    { "path": "../../commons/core-utils" },
-    { "path": "../../commons/react/theme" },
-    { "path": "../app" }
-  ]
+  "references": [{ "path": "../../commons/app-utils" }, { "path": "../../commons/core-utils" }, { "path": "../app" }]
 }
