@@ -39,9 +39,11 @@ const DEFAULT_COLORS: {
 const CSS_VARIABLES = {
     ACCENT_PRIMARY: "--accent-primary",
     BACKGROUND: "--background",
-    // inverted colors are useful for rendering nested components where dark/light mode is inverted
     ACCENT_PRIMARY_DARK: "--accent-primary-dark",
     BACKGROUND_DARK: "--background-dark",
+    // contrast colors are useful for rendering text on top of where accent is the background color
+    ACCENT_PRIMARY_CONTRAST: "--accent-primary-contrast",
+    ACCENT_PRIMARY_DARK_CONTRAST: "--accent-primary-dark-contrast",
 } as const;
 
 export function useColorTheme(docsDefinition: DocsV1Read.DocsDefinition): string {
@@ -57,11 +59,13 @@ export function useColorTheme(docsDefinition: DocsV1Read.DocsDefinition): string
     const background = colorsV3.type !== "darkAndLight" ? colorsV3.background : colorsV3["light"].background;
     const backgroundColor = background.type === "solid" ? background : DEFAULT_COLORS.background["light"];
     const accentPrimaryDark =
-        colorsV3.type !== "darkAndLight"
-            ? tinycolor(colorsV3.accentPrimary).isDark()
-                ? tinycolor("white").toRgb()
-                : tinycolor("black").toRgb()
-            : colorsV3["dark"].accentPrimary;
+        colorsV3.type !== "darkAndLight" ? colorsV3.accentPrimary : colorsV3["dark"].accentPrimary;
+    const accentPrimaryContrast = tinycolor(accentPrimary).isDark()
+        ? tinycolor("white").toRgb()
+        : tinycolor("black").toRgb();
+    const accentPrimaryDarkContrast = tinycolor(accentPrimaryDark).isDark()
+        ? tinycolor("white").toRgb()
+        : tinycolor("black").toRgb();
     const backgroundDark = colorsV3.type !== "darkAndLight" ? colorsV3.background : colorsV3["dark"].background;
     const backgroundColorDark = backgroundDark.type === "solid" ? backgroundDark : DEFAULT_COLORS.background["dark"];
 
@@ -71,6 +75,8 @@ export function useColorTheme(docsDefinition: DocsV1Read.DocsDefinition): string
             ${CSS_VARIABLES.BACKGROUND}: ${backgroundColor.r}, ${backgroundColor.g}, ${backgroundColor.b};
             ${CSS_VARIABLES.ACCENT_PRIMARY_DARK}: ${accentPrimaryDark.r}, ${accentPrimaryDark.g}, ${accentPrimaryDark.b};
             ${CSS_VARIABLES.BACKGROUND_DARK}: ${backgroundColorDark.r}, ${backgroundColorDark.g}, ${backgroundColorDark.b};
+            ${CSS_VARIABLES.ACCENT_PRIMARY_CONTRAST}: ${accentPrimaryContrast.r}, ${accentPrimaryContrast.g}, ${accentPrimaryContrast.b};
+            ${CSS_VARIABLES.ACCENT_PRIMARY_DARK_CONTRAST}: ${accentPrimaryDarkContrast.r}, ${accentPrimaryDarkContrast.g}, ${accentPrimaryDarkContrast.b};
         }
     `;
 }

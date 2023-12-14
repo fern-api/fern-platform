@@ -38,6 +38,8 @@ module.exports = {
                 ...colors,
                 "accent-primary": withOpacity("--accent-primary"),
                 "accent-primary-dark": withOpacity("--accent-primary-dark"),
+                "accent-primary-contrast": withOpacity("--accent-primary-contrast"),
+                "accent-primary-dark-contrast": withOpacity("--accent-primary-dark-contrast"),
                 "accent-highlight": "rgba(var(--accent-primary), 10%)",
                 "accent-highlight-dark": "rgba(var(--accent-primary-dark), 10%)",
                 background: withOpacity("--background"),

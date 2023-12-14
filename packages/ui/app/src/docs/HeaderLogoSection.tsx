@@ -14,7 +14,8 @@ export const HeaderLogoSection: React.FC = () => {
     const { navigateToPath } = useNavigationContext();
     const { resolveFile, docsDefinition } = useDocsContext();
     const { definitionInfo, activeVersionContext } = useDocsSelectors();
-    const { logo, logoV2, logoHeight = DEFAULT_LOGO_HEIGHT, logoHref } = docsDefinition.config;
+    const { logo, logoV2, logoHeight, logoHref } = docsDefinition.config;
+    const logoImageHeight = logoHeight ?? DEFAULT_LOGO_HEIGHT;
 
     const hasMultipleVersions = definitionInfo.type === "versioned";
     const activeVersionId =
@@ -27,7 +28,7 @@ export const HeaderLogoSection: React.FC = () => {
     const renderLogoContent = () => {
         if (logoV2 == null) {
             if (logo != null) {
-                return <img src={resolveFile(logo)} className={imageClassName} style={{ height: logoHeight }} />;
+                return <img src={resolveFile(logo)} className={imageClassName} style={{ height: logoImageHeight }} />;
             }
             return null;
         } else {
@@ -37,14 +38,14 @@ export const HeaderLogoSection: React.FC = () => {
                         <img
                             src={resolveFile(logoV2["light"])}
                             className={classNames(imageClassName, "block dark:hidden")}
-                            style={{ height: logoHeight }}
+                            style={{ height: logoImageHeight }}
                         />
                     )}
                     {logoV2["dark"] != null && (
                         <img
                             src={resolveFile(logoV2["dark"])}
                             className={classNames(imageClassName, "hidden dark:block")}
-                            style={{ height: logoHeight }}
+                            style={{ height: logoImageHeight }}
                         />
                     )}
                 </>
