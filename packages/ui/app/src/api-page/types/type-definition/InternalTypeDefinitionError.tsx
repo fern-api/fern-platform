@@ -127,7 +127,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
     }, [defaultExpandAll, matchesAnchorLink, setCollapsed]);
 
     useEffect(() => {
-        setCollapsed(!matchesAnchorLink);
+        setCollapsed(!matchesAnchorLink && !defaultExpandAll);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
