@@ -121,15 +121,16 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);
     const matchesAnchorLink = router.asPath.startsWith(`${route}#${anchorIdSoFar}-`);
+    const onlyOneProperty = collapsableContent?.elements.length === 1;
     const {
         value: isCollapsed,
         toggleValue: toggleIsCollapsed,
         setValue: setCollapsed,
-    } = useBooleanState(!defaultExpandAll);
+    } = useBooleanState(!defaultExpandAll && !onlyOneProperty);
 
     useEffect(() => {
-        setCollapsed(!matchesAnchorLink && !defaultExpandAll);
-    }, [defaultExpandAll, matchesAnchorLink, setCollapsed]);
+        setCollapsed(!matchesAnchorLink && !defaultExpandAll && !onlyOneProperty);
+    }, [defaultExpandAll, matchesAnchorLink, onlyOneProperty, setCollapsed]);
 
     const { isHovering, ...containerCallbacks } = useIsHovering();
 
@@ -177,33 +178,35 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                             }
                         )}
                     >
-                        <div
-                            {...containerCallbacks}
-                            className={classNames(
-                                "flex gap-1 items-center border-b hover:bg-tag-default-light dark:hover:bg-tag-default-dark cursor-pointer px-2 py-1 transition t-muted",
-                                {
-                                    "border-transparent": isCollapsed,
-                                    "border-border-default-light dark:border-border-default-dark": !isCollapsed,
-                                }
-                            )}
-                            onClick={(e) => {
-                                toggleIsCollapsed();
-                                e.stopPropagation();
-                            }}
-                        >
-                            <Icon
-                                className={classNames("transition", {
-                                    "rotate-45": isCollapsed,
-                                })}
-                                icon={IconNames.CROSS}
-                            />
+                        {collapsableContent.elements.length > 1 && (
                             <div
-                                className={classNames(styles.showPropertiesButton, "select-none whitespace-nowrap")}
-                                data-show-text={showText}
+                                {...containerCallbacks}
+                                className={classNames(
+                                    "flex gap-1 items-center border-b hover:bg-tag-default-light dark:hover:bg-tag-default-dark cursor-pointer px-2 py-1 transition t-muted",
+                                    {
+                                        "border-transparent": isCollapsed,
+                                        "border-border-default-light dark:border-border-default-dark": !isCollapsed,
+                                    }
+                                )}
+                                onClick={(e) => {
+                                    toggleIsCollapsed();
+                                    e.stopPropagation();
+                                }}
                             >
-                                {isCollapsed ? showText : hideText}
+                                <Icon
+                                    className={classNames("transition", {
+                                        "rotate-45": isCollapsed,
+                                    })}
+                                    icon={IconNames.CROSS}
+                                />
+                                <div
+                                    className={classNames(styles.showPropertiesButton, "select-none whitespace-nowrap")}
+                                    data-show-text={showText}
+                                >
+                                    {isCollapsed ? showText : hideText}
+                                </div>
                             </div>
-                        </div>
+                        )}
                         <Collapse
                             isOpen={!isCollapsed}
                             transitionDuration={!hydrated ? 0 : 200}
