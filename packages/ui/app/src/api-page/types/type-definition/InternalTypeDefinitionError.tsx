@@ -2,12 +2,12 @@ import { Collapse, Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { useBooleanState, useIsHovering, useMounted } from "@fern-ui/react-commons";
-import { usePrevious } from "@uidotdev/usehooks";
+import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
+import { useNavigationContext } from "../../../navigation-context";
 import { getAnchorId } from "../../../util/anchor";
 import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
 import {
@@ -46,8 +46,8 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
     route,
     defaultExpandAll = false,
 }) => {
+    const { hydrated } = useNavigationContext();
     const { resolveTypeById } = useApiDefinitionContext();
-    const justMounted = !usePrevious(useMounted());
     const router = useRouter();
 
     const collapsableContent = useMemo(
@@ -195,7 +195,11 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                             {isCollapsed ? showText : hideText}
                         </div>
                     </div>
-                    <Collapse isOpen={!isCollapsed} transitionDuration={justMounted ? 0 : 200}>
+                    <Collapse
+                        isOpen={!isCollapsed}
+                        transitionDuration={!hydrated ? 0 : 200}
+                        className={classNames({ "w-0": isCollapsed })}
+                    >
                         <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
                             <TypeDefinitionDetails
                                 elements={collapsableContent.elements}

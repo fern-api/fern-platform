@@ -1,11 +1,10 @@
 import { Collapse, Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
-import { useMounted } from "@fern-ui/react-commons";
-import { usePrevious } from "@uidotdev/usehooks";
 import classNames from "classnames";
 import React, { ReactElement, useState } from "react";
 import { Chip } from "../../../components/common/Chip";
 import { SearchInput } from "../../../components/common/SearchInput";
+import { useNavigationContext } from "../../../navigation-context";
 import { TypeDefinitionContext, TypeDefinitionContextValue } from "../context/TypeDefinitionContext";
 import { EnumDefinitionDetails } from "./EnumDefinitionDetails";
 
@@ -26,8 +25,8 @@ export const EnumTypeDefinition = ({
     collapsibleContentContextValue,
     showText,
 }: EnumTypeDefinitionProps): ReactElement => {
+    const { hydrated } = useNavigationContext();
     const [searchInput, setSearchInput] = useState("");
-    const justMounted = !usePrevious(useMounted());
 
     return (
         <>
@@ -95,7 +94,12 @@ export const EnumTypeDefinition = ({
                             )}
                         </div>
                     </div>
-                    <Collapse isOpen={!isCollapsed} keepChildrenMounted transitionDuration={justMounted ? 0 : 200}>
+                    <Collapse
+                        isOpen={!isCollapsed}
+                        keepChildrenMounted
+                        transitionDuration={!hydrated ? 0 : 200}
+                        className={classNames({ "w-0": isCollapsed })}
+                    >
                         <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
                             <EnumDefinitionDetails elements={elements} searchInput={searchInput} />
                         </TypeDefinitionContext.Provider>
