@@ -20,10 +20,12 @@
         @apply border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded border;
     }
 
-    .internalTypeDefinitionContainer[data-expanded="true"]:not(.enumContainer) {
+    .internalTypeDefinitionContainer:not(.enumContainer) {
         @apply -mr-3;
+    }
 
-        > div > .internalTypeDefinitionContent {
+    .internalTypeDefinitionContainer[data-expanded="true"]:not(.enumContainer) {
+        > .internalTypeDefinitionContent {
             @apply border-r-0 rounded-r-none;
         }
     }

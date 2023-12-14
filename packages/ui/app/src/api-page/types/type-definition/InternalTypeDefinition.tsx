@@ -133,7 +133,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     }, [defaultExpandAll, onlyOneProperty, setCollapsed]);
 
     useEffect(() => {
-        setCollapsed(!matchesAnchorLink);
+        setCollapsed(!matchesAnchorLink && !defaultExpandAll && !onlyOneProperty);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -178,64 +178,62 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
             )}
             data-expanded={!isCollapsed}
         >
-            <div className="flex flex-col items-start">
-                {collapsableContent.elementNameSingular !== "enum value" ? (
-                    <div
-                        className={classNames(styles.internalTypeDefinitionContent, {
-                            "w-full": !isCollapsed,
-                            "w-fit": isCollapsed,
-                            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                            [styles.expanded!]: !isCollapsed,
-                        })}
-                    >
-                        {collapsableContent.elements.length > 1 && (
+            {collapsableContent.elementNameSingular !== "enum value" ? (
+                <div
+                    className={classNames(styles.internalTypeDefinitionContent, {
+                        "w-full": !isCollapsed,
+                        "w-fit": isCollapsed,
+                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                        [styles.expanded!]: !isCollapsed,
+                    })}
+                >
+                    {collapsableContent.elements.length > 1 && (
+                        <div
+                            {...containerCallbacks}
+                            className={classNames(
+                                "flex gap-1 items-center border-b hover:bg-tag-default-light dark:hover:bg-tag-default-dark cursor-pointer px-2 py-1 transition t-muted",
+                                {
+                                    "border-transparent": isCollapsed,
+                                    "border-border-default-light dark:border-border-default-dark": !isCollapsed,
+                                }
+                            )}
+                            onClick={(e) => {
+                                toggleIsCollapsed();
+                                e.stopPropagation();
+                            }}
+                        >
+                            <Icon
+                                className={classNames("transition", {
+                                    "rotate-45": isCollapsed,
+                                })}
+                                icon={IconNames.CROSS}
+                            />
                             <div
-                                {...containerCallbacks}
-                                className={classNames(
-                                    "flex gap-1 items-center border-b hover:bg-tag-default-light dark:hover:bg-tag-default-dark cursor-pointer px-2 py-1 transition t-muted",
-                                    {
-                                        "border-transparent": isCollapsed,
-                                        "border-border-default-light dark:border-border-default-dark": !isCollapsed,
-                                    }
-                                )}
-                                onClick={(e) => {
-                                    toggleIsCollapsed();
-                                    e.stopPropagation();
-                                }}
+                                className={classNames(styles.showPropertiesButton, "select-none whitespace-nowrap")}
+                                data-show-text={showText}
                             >
-                                <Icon
-                                    className={classNames("transition", {
-                                        "rotate-45": isCollapsed,
-                                    })}
-                                    icon={IconNames.CROSS}
-                                />
-                                <div
-                                    className={classNames(styles.showPropertiesButton, "select-none whitespace-nowrap")}
-                                    data-show-text={showText}
-                                >
-                                    {isCollapsed ? showText : hideText}
-                                </div>
+                                {isCollapsed ? showText : hideText}
                             </div>
-                        )}
-                        <Collapse isOpen={!isCollapsed} transitionDuration={!hydrated ? 0 : 200}>
-                            <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
-                                <TypeDefinitionDetails
-                                    elements={collapsableContent.elements}
-                                    separatorText={collapsableContent.separatorText}
-                                />
-                            </TypeDefinitionContext.Provider>
-                        </Collapse>
-                    </div>
-                ) : (
-                    <EnumTypeDefinition
-                        elements={collapsableContent.elements}
-                        isCollapsed={isCollapsed}
-                        toggleIsCollapsed={toggleIsCollapsed}
-                        collapsibleContentContextValue={collapsibleContentContextValue}
-                        showText={showText}
-                    />
-                )}
-            </div>
+                        </div>
+                    )}
+                    <Collapse isOpen={!isCollapsed} transitionDuration={!hydrated ? 0 : 200}>
+                        <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
+                            <TypeDefinitionDetails
+                                elements={collapsableContent.elements}
+                                separatorText={collapsableContent.separatorText}
+                            />
+                        </TypeDefinitionContext.Provider>
+                    </Collapse>
+                </div>
+            ) : (
+                <EnumTypeDefinition
+                    elements={collapsableContent.elements}
+                    isCollapsed={isCollapsed}
+                    toggleIsCollapsed={toggleIsCollapsed}
+                    collapsibleContentContextValue={collapsibleContentContextValue}
+                    showText={showText}
+                />
+            )}
         </div>
     );
 };
