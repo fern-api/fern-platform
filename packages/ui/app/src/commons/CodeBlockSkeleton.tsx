@@ -21,8 +21,7 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
     fontSize,
     style,
 }) => {
-    const { resolvedTheme: theme, ...rest } = useTheme();
-    console.log(theme, rest);
+    const { resolvedTheme: theme } = useTheme();
     return (
         <div
             className={classNames(
