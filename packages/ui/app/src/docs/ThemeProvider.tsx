@@ -11,6 +11,7 @@ export function ThemeProvider({ theme, children }: PropsWithChildren<ThemeProvid
         <NextThemeProvider
             enableSystem={theme === "darkAndLight"}
             forcedTheme={theme !== "darkAndLight" ? theme : undefined}
+            themes={theme === "darkAndLight" || theme == null ? ["dark", "light"] : [theme]}
             enableColorScheme={true}
             attribute="class"
         >

@@ -4371,6 +4371,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react-syntax-highlighter", "npm:15.5.6"],\
             ["@types/react-test-renderer", "npm:18.0.6"],\
             ["@types/tinycolor2", "npm:1.4.6"],\
+            ["@uidotdev/usehooks", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.4.1"],\
             ["algoliasearch", "npm:4.18.0"],\
             ["classnames", "npm:2.3.1"],\
             ["depcheck", "npm:1.4.3"],\
@@ -6864,6 +6865,32 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/visitor-keys", "npm:6.4.1"],\
             ["@typescript-eslint/types", "npm:6.4.1"],\
             ["eslint-visitor-keys", "npm:3.4.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@uidotdev/usehooks", [\
+        ["npm:2.4.1", {\
+          "packageLocation": "./.yarn/cache/@uidotdev-usehooks-npm-2.4.1-c11868da60-d381ce7d48.zip/node_modules/@uidotdev/usehooks/",\
+          "packageDependencies": [\
+            ["@uidotdev/usehooks", "npm:2.4.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.4.1", {\
+          "packageLocation": "./.yarn/__virtual__/@uidotdev-usehooks-virtual-ffd25447ad/0/cache/@uidotdev-usehooks-npm-2.4.1-c11868da60-d381ce7d48.zip/node_modules/@uidotdev/usehooks/",\
+          "packageDependencies": [\
+            ["@uidotdev/usehooks", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.4.1"],\
+            ["@types/react", "npm:18.0.20"],\
+            ["@types/react-dom", null],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
+            "react"\
           ],\
           "linkType": "HARD"\
         }]\

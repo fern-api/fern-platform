@@ -1,19 +1,9 @@
 @import "~@blueprintjs/core/lib/scss/variables";
 
-@font-face {
-    font-family: "Berkeley Mono";
-    src: local("Berkeley Mono"), url("./fonts/BerkeleyMono-Regular.woff2") format("woff2");
-}
-
 .app {
     :global {
         p {
             @apply text-text-muted-light dark:text-text-muted-dark;
-        }
-
-        code,
-        pre {
-            font-family: "Berkeley Mono";
         }
     }
 }

@@ -19,7 +19,7 @@ export const InlineCode: React.FC<HTMLAttributes<HTMLElement> & InlineCodeProps>
             {...rest}
             className={classNames(
                 className,
-                "border border-border-concealed-light dark:border-border-concealed-dark rounded font-mono bg-background/75 dark:bg-background-dark/75 text-text-primary-light dark:text-text-primary-dark py-0.5 px-1"
+                "typography-font-code border border-border-concealed-light dark:border-border-concealed-dark rounded font-mono bg-background/75 dark:bg-background-dark/75 text-text-primary-light dark:text-text-primary-dark py-0.5 px-1"
             )}
             style={{
                 fontSize: fontSize === "sm" ? 12 : 14,
@@ -34,7 +34,7 @@ export const Table: React.FC<HTMLAttributes<HTMLTableElement>> = ({ className, .
             {...rest}
             className={classNames(
                 className,
-                "block border-separate border-spacing-0 overflow-x-auto table-auto mb-3 text-sm"
+                "block border-separate border-spacing-0 overflow-x-auto table-auto mb-3 text-sm max-w-full"
             )}
         />
     );
@@ -100,8 +100,8 @@ const flatten = (
  * @returns /basepath/current/slug
  */
 function useCurrentPathname(): string {
-    const { basePath, resolvedPath } = useNavigationContext();
-    return basePath != null ? `/${basePath}/${resolvedPath.fullSlug}` : `/${resolvedPath.fullSlug}`;
+    const { resolvedPath } = useNavigationContext();
+    return `/${resolvedPath.fullSlug}`;
 }
 
 export const H1: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ...rest }) => {

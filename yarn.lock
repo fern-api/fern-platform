@@ -2618,6 +2618,7 @@ __metadata:
     "@types/react-syntax-highlighter": ^15.5.6
     "@types/react-test-renderer": ^18.0.6
     "@types/tinycolor2": ^1.4.6
+    "@uidotdev/usehooks": ^2.4.1
     algoliasearch: ^4.18.0
     classnames: ^2.3.1
     depcheck: ^1.4.3
@@ -4616,6 +4617,16 @@ __metadata:
     "@typescript-eslint/types": 6.4.1
     eslint-visitor-keys: ^3.4.1
   checksum: bd9cd56fc793e1d880c24193f939c4992b2653f330baece41cd461d1fb48edb2c53696987cba0e29074bbb452dd181fd009db92dd19060fdcc417ad76768f18a
+  languageName: node
+  linkType: hard
+
+"@uidotdev/usehooks@npm:^2.4.1":
+  version: 2.4.1
+  resolution: "@uidotdev/usehooks@npm:2.4.1"
+  peerDependencies:
+    react: ">=18.0.0"
+    react-dom: ">=18.0.0"
+  checksum: d381ce7d4853abe53127b70b0734935d1cfba97bfd2314e67aa42d4f35cd5b955712c6e968f435d8818bd51bea9cf7688b60eeb0db19bae2a6666a37ceee8b5f
   languageName: node
   linkType: hard
 

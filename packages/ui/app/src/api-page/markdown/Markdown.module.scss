@@ -2,7 +2,6 @@
 
 .container {
     code {
-        font-family: "Berkeley Mono";
         @apply px-2 py-1 rounded before:content-none after:content-none;
     }
 
