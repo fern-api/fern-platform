@@ -75,112 +75,100 @@ export function loadDocTypography(docsDefinition: DocsV1Read.DocsDefinition): Ge
 
 export function generateFontFaces(generationConfiguration: GenerationFontConfigs): string {
     const fontFaces: string[] = [];
+    let codeFontFaceSet = false;
 
     for (const fontType in generationConfiguration) {
         const fontConfig = generationConfiguration[fontType as keyof GenerationFontConfigs];
         if (fontConfig != null) {
             if (fontConfig.fontType === "headingsFont") {
                 const fontFace = `
-                @font-face {
-                    font-family: '${fontConfig.fontName}';
-                    src: url('${fontConfig.fontUrl.toString()}') format('${fontConfig.fontExtension}');
-                    font-weight: 700;
-                    font-style: normal;
-                }
-    
-                h1, h2, h3, h4, h5, h6 {
-                    font-family: '${fontConfig.fontName}', sans-serif;
-                }
-    
-                :root {
-                  --typography-heading-font-family: '${fontConfig.fontName}', sans-serif;
-                }
-    
-                .typography-font-heading {
-                  font-family: var(--typography-heading-font-family);
-                }
-              `;
+@font-face {
+    font-family: '${fontConfig.fontName}';
+    src: url('${fontConfig.fontUrl.toString()}') format('${fontConfig.fontExtension}');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: '${fontConfig.fontName}', sans-serif;
+}
+
+:root {
+    --typography-heading-font-family: '${fontConfig.fontName}', sans-serif;
+}
+
+.typography-font-heading {
+    font-family: var(--typography-heading-font-family);
+}
+`;
                 fontFaces.push(fontFace);
             }
 
             if (fontConfig.fontType === "bodyFont") {
                 const fontFace = `
-                @font-face {
-                    font-family: '${fontConfig.fontName}';
-                    src: url('${fontConfig.fontUrl.toString()}') format('${fontConfig.fontExtension}');
-                    font-weight: 400;
-                    font-style: normal;
-                }
-    
-                :root {
-                  --typography-body-font-family: '${fontConfig.fontName}', sans-serif;
-                }
-    
-                html, body {
-                  font-family: var(--typography-body-font-family);
-                }
-              `;
+@font-face {
+    font-family: '${fontConfig.fontName}';
+    src: url('${fontConfig.fontUrl.toString()}') format('${fontConfig.fontExtension}');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --typography-body-font-family: '${fontConfig.fontName}', sans-serif;
+}
+
+html, body {
+    font-family: var(--typography-body-font-family);
+}
+`;
                 fontFaces.push(fontFace);
             }
 
             if (fontConfig.fontType === "codeFont") {
+                codeFontFaceSet = true;
                 const fontFace = `
-                @font-face {
-                    font-family: '${fontConfig.fontName}';
-                    src: url('${fontConfig.fontUrl.toString()}') format('${fontConfig.fontExtension}');
-                    font-weight: 400;
-                    font-style: normal;
-                }
-    
-                code, pre {
-                    font-family: '${fontConfig.fontName}', monospace;
-                }
-    
-                :root {
-                  --typography-code-font-family: '${fontConfig.fontName}', sans-serif;
-                }
-    
-                .typography-font-code {
-                  font-family: var(--typography-code-font-family), Monospace;
-                }
-              `;
+@font-face {
+    font-family: '${fontConfig.fontName}';
+    src: url('${fontConfig.fontUrl.toString()}') format('${fontConfig.fontExtension}');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --typography-code-font-family: '${fontConfig.fontName}', monospace;
+}
+
+code, pre, .typography-font-code {
+    font-family: var(--typography-code-font-family), monospace;
+}
+`;
                 fontFaces.push(fontFace);
             }
         }
     }
 
-    const codeBlockFontFace = (() => {
-        const parts: string[] = [];
-        const { codeFont } = generationConfiguration;
-        if (codeFont?.fontType === "codeFont") {
-            const { fontUrl, fontName, fontExtension } = codeFont;
-            parts.push(`
-                @font-face {
-                    font-family: '${fontName}';
-                    src: url('${fontUrl.toString()}') format('${fontExtension}');
-                    font-weight: 400;
-                    font-style: normal;
-                }
-            `);
-        }
-        let fontFamiliesAsString = 'Menlo, Monaco, Consolas, "Andale Mono", "Ubuntu Mono", "Courier New", monospace';
-        if (codeFont != null) {
-            fontFamiliesAsString = `'${codeFont.fontName}', ` + fontFamiliesAsString;
-        }
-        parts.push(`
-                :root {
-                  --typography-code-block-font-family: ${fontFamiliesAsString};
-                }
-        `);
-        parts.push(`
-                .typography-font-code-block {
-                    font-family: var(--typography-code-block-font-family);
-                }
-        `);
-        return parts.join("\n");
-    })();
+    if (!codeFontFaceSet) {
+        const codeBlockFontFace = `
+@font-face {
+    font-family: "Berkeley Mono";
+    src: local("Berkeley Mono"), url("./fonts/BerkeleyMono-Regular.woff2") format("woff2");
+    font-style: normal;
+    font-display: swap;
+}
 
-    fontFaces.push(codeBlockFontFace);
+:root {
+    --typography-code-font-family: "Berkeley Mono", Menlo, Monaco, monospace;
+}
+
+code, pre, .typography-font-code {
+    font-family: var(--typography-code-font-family), monospace;
+}
+`;
+        fontFaces.push(codeBlockFontFace);
+    }
 
     return fontFaces.join("\n");
 }

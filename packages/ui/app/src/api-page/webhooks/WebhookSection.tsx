@@ -13,8 +13,9 @@ export declare namespace WebhookSection {
 }
 
 export const WebhookSection: React.FC<WebhookSection.Props> = ({ title, description, href, children }) => {
+    const resolvedHref = resolveHref(useRouter(), href);
     return (
-        <div data-route={resolveHref(useRouter(), href)} className="flex scroll-mt-16 flex-col">
+        <div data-route={resolvedHref} id={resolvedHref.split("#")[1]} className="flex scroll-mt-16 flex-col">
             <div className="group/anchor-container relative mb-3 flex items-center">
                 <AbsolutelyPositionedAnchor href={href} verticalPosition="center" />
                 <div className="text-text-primary-light dark:text-text-primary-dark text-xl font-extrabold">

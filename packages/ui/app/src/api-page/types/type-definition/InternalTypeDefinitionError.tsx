@@ -2,7 +2,8 @@ import { Collapse, Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
+import { useBooleanState, useIsHovering, useMounted } from "@fern-ui/react-commons";
+import { usePrevious } from "@uidotdev/usehooks";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
@@ -46,6 +47,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
     defaultExpandAll = false,
 }) => {
     const { resolveTypeById } = useApiDefinitionContext();
+    const justMounted = !usePrevious(useMounted());
     const router = useRouter();
 
     const collapsableContent = useMemo(
@@ -113,15 +115,16 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
     );
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);
+    const matchesAnchorLink = router.asPath.startsWith(`${route}#${anchorIdSoFar}-`);
     const {
         value: isCollapsed,
         toggleValue: toggleIsCollapsed,
         setValue: setCollapsed,
-    } = useBooleanState(!router.asPath.startsWith(`${route}#${anchorIdSoFar}-`));
+    } = useBooleanState(!defaultExpandAll);
 
     useEffect(() => {
-        setCollapsed(!defaultExpandAll);
-    }, [defaultExpandAll, setCollapsed]);
+        setCollapsed(!matchesAnchorLink && !defaultExpandAll);
+    }, [defaultExpandAll, matchesAnchorLink, setCollapsed]);
 
     const { isHovering, ...containerCallbacks } = useIsHovering();
 
@@ -192,7 +195,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                             {isCollapsed ? showText : hideText}
                         </div>
                     </div>
-                    <Collapse isOpen={!isCollapsed}>
+                    <Collapse isOpen={!isCollapsed} transitionDuration={justMounted ? 0 : 200}>
                         <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
                             <TypeDefinitionDetails
                                 elements={collapsableContent.elements}

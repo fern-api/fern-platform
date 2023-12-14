@@ -105,6 +105,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
     return (
         <div
             data-route={anchorRoute}
+            id={anchorId}
             className={classNames("flex relative flex-col py-3 scroll-mt-16", {
                 "px-3": !contextValue.isRootTypeDefinition,
             })}

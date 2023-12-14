@@ -2,7 +2,7 @@ import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { useTheme } from "next-themes";
-import { memo, useMemo } from "react";
+import { memo, useEffect, useMemo } from "react";
 import { HEADER_HEIGHT } from "../constants";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
@@ -22,8 +22,16 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
     const searchContext = useSearchContext();
     const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = searchContext;
     const searchService = useSearchService();
-    const { resolvedTheme: theme } = useTheme();
+    const { resolvedTheme: theme, themes, setTheme } = useTheme();
     useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
+
+    useEffect(() => {
+        // this is a hack to ensure that the theme is always set to a valid value, even if localStorage is corrupted
+        if (theme != null && !themes.includes(theme)) {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            setTheme(themes.length === 1 ? themes[0]! : "system");
+        }
+    }, [setTheme, theme, themes]);
 
     const { isMobileSidebarOpen, openMobileSidebar, closeMobileSidebar } = useMobileSidebarContext();
 

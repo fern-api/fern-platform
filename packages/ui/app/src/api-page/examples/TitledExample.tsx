@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { MouseEventHandler, MutableRefObject, ReactElement, useState } from "react";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
-import styles from "./TitledExample.module.scss";
 
 export declare namespace TitledExample {
     export interface Props {
@@ -69,7 +68,6 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
             <div className="flex min-h-0 flex-1">
                 <div
                     className={classNames(
-                        styles.code,
                         className,
                         "flex flex-1 leading-relaxed text-xs min-w-0",
                         "typography-font-code"

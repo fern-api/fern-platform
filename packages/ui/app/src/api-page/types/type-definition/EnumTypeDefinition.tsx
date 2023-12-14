@@ -1,5 +1,7 @@
 import { Collapse, Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
+import { useMounted } from "@fern-ui/react-commons";
+import { usePrevious } from "@uidotdev/usehooks";
 import classNames from "classnames";
 import React, { ReactElement, useState } from "react";
 import { Chip } from "../../../components/common/Chip";
@@ -25,6 +27,7 @@ export const EnumTypeDefinition = ({
     showText,
 }: EnumTypeDefinitionProps): ReactElement => {
     const [searchInput, setSearchInput] = useState("");
+    const justMounted = !usePrevious(useMounted());
 
     return (
         <>
@@ -92,7 +95,7 @@ export const EnumTypeDefinition = ({
                             )}
                         </div>
                     </div>
-                    <Collapse isOpen={!isCollapsed} keepChildrenMounted>
+                    <Collapse isOpen={!isCollapsed} keepChildrenMounted transitionDuration={justMounted ? 0 : 200}>
                         <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
                             <EnumDefinitionDetails elements={elements} searchInput={searchInput} />
                         </TypeDefinitionContext.Provider>
