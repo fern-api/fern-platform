@@ -12,3 +12,19 @@
         visibility: hidden;
     }
 }
+
+.internalTypeDefinitionContainer {
+    @apply mt-2 flex flex-col;
+
+    .internalTypeDefinitionContent {
+        @apply border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded border;
+    }
+
+    .internalTypeDefinitionContainer[data-expanded="true"]:not(.enumContainer) {
+        @apply -mr-3;
+
+        > div > .internalTypeDefinitionContent {
+            @apply border-r-0 rounded-r-none;
+        }
+    }
+}

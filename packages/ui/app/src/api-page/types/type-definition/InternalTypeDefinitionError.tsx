@@ -123,8 +123,13 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
     } = useBooleanState(!defaultExpandAll);
 
     useEffect(() => {
-        setCollapsed(!matchesAnchorLink && !defaultExpandAll);
+        setCollapsed(!defaultExpandAll);
     }, [defaultExpandAll, matchesAnchorLink, setCollapsed]);
+
+    useEffect(() => {
+        setCollapsed(!matchesAnchorLink);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const { isHovering, ...containerCallbacks } = useIsHovering();
 

@@ -129,8 +129,13 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     } = useBooleanState(!defaultExpandAll && !onlyOneProperty);
 
     useEffect(() => {
-        setCollapsed(!matchesAnchorLink && !defaultExpandAll && !onlyOneProperty);
-    }, [defaultExpandAll, matchesAnchorLink, onlyOneProperty, setCollapsed]);
+        setCollapsed(!defaultExpandAll && !onlyOneProperty);
+    }, [defaultExpandAll, onlyOneProperty, setCollapsed]);
+
+    useEffect(() => {
+        setCollapsed(!matchesAnchorLink);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const { isHovering, ...containerCallbacks } = useIsHovering();
 
@@ -166,17 +171,22 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
             : `Hide ${collapsableContent.elements.length} ${collapsableContent.elementNamePlural}`;
 
     return (
-        <div className="mt-2 flex flex-col">
+        <div
+            className={classNames(
+                styles.internalTypeDefinitionContainer,
+                collapsableContent.elementNameSingular === "enum value" ? styles.enumContainer : undefined
+            )}
+            data-expanded={!isCollapsed}
+        >
             <div className="flex flex-col items-start">
                 {collapsableContent.elementNameSingular !== "enum value" ? (
                     <div
-                        className={classNames(
-                            "border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded border",
-                            {
-                                "w-full": !isCollapsed,
-                                "w-fit": isCollapsed,
-                            }
-                        )}
+                        className={classNames(styles.internalTypeDefinitionContent, {
+                            "w-full": !isCollapsed,
+                            "w-fit": isCollapsed,
+                            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                            [styles.expanded!]: !isCollapsed,
+                        })}
                     >
                         {collapsableContent.elements.length > 1 && (
                             <div
