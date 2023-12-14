@@ -18,7 +18,7 @@ export const SearchInput = ({
 }: SearchProps): ReactElement => {
     return (
         <div
-            className={classNames("border-default rounded-md w-full flex gap-2 p-1.5", {
+            className={classNames("border-default rounded-md w-full flex gap-2 p-1.5 items-center", {
                 border,
             })}
         >

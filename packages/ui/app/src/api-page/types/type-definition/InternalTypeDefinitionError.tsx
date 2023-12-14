@@ -5,7 +5,7 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import React, { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { getAnchorId } from "../../../util/anchor";
 import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
@@ -125,24 +125,6 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
 
     const { isHovering, ...containerCallbacks } = useIsHovering();
 
-    // we need to set a pixel width for the button for the transition to work
-    const [originalButtonWidth, setOriginalButtonWidth] = useState<number>();
-    const [buttonRef, setButtonRef] = useState<HTMLDivElement | null>(null);
-    useEffect(() => {
-        if (originalButtonWidth != null || buttonRef == null) {
-            return;
-        }
-
-        // in case we're being expanded right now, wait for animation to finish
-        const timeout = setTimeout(() => {
-            setOriginalButtonWidth(buttonRef.getBoundingClientRect().width);
-        }, 500);
-
-        return () => {
-            clearTimeout(timeout);
-        };
-    }, [buttonRef, originalButtonWidth]);
-
     const contextValue = useTypeDefinitionContext();
     const collapsibleContentContextValue = useCallback(
         (): TypeDefinitionContextValue => ({
@@ -178,11 +160,10 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
         <div className="mt-2 flex flex-col">
             <div className="flex flex-col items-start">
                 <div
-                    className="border-default flex flex-col overflow-visible rounded border"
-                    style={{
-                        width: isCollapsed ? originalButtonWidth : "100%",
-                    }}
-                    ref={setButtonRef}
+                    className={classNames("border-default flex flex-col overflow-visible rounded border", {
+                        "w-full": !isCollapsed,
+                        "w-fit": isCollapsed,
+                    })}
                 >
                     <div
                         {...containerCallbacks}

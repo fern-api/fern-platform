@@ -10,7 +10,6 @@ import { EnumDefinitionDetails } from "./EnumDefinitionDetails";
 type EnumTypeDefinitionProps = {
     elements: ReactElement[];
     isCollapsed: boolean;
-    originalButtonWidth: number | undefined;
     toggleIsCollapsed: () => void;
     collapsibleContentContextValue: () => TypeDefinitionContextValue;
     showText: string;
@@ -21,7 +20,6 @@ export type Ref = React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
 export const EnumTypeDefinition = ({
     elements,
     isCollapsed,
-    originalButtonWidth,
     toggleIsCollapsed,
     collapsibleContentContextValue,
     showText,
@@ -41,10 +39,13 @@ export const EnumTypeDefinition = ({
                 </div>
             ) : (
                 <div
-                    className="border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded border"
-                    style={{
-                        width: isCollapsed ? originalButtonWidth : "100%",
-                    }}
+                    className={classNames(
+                        "border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded border",
+                        {
+                            "w-full": !isCollapsed,
+                            "w-fit": isCollapsed,
+                        }
+                    )}
                     // ref={ref}
                 >
                     <div
@@ -69,23 +70,18 @@ export const EnumTypeDefinition = ({
                             />
                         )}
 
-                        <div
-                            className="select-none whitespace-nowrap"
-                            style={{ width: "100%" }}
-                            data-show-text={showText}
-                        >
+                        <div className="w-full select-none whitespace-nowrap" data-show-text={showText}>
                             {isCollapsed ? (
                                 showText
                             ) : (
                                 <div className="flex flex-row items-center justify-between">
-                                    <div style={{ width: "95%" }}>
-                                        <SearchInput
-                                            searchInput={searchInput}
-                                            handleSearchInput={setSearchInput}
-                                            border={false}
-                                            clear={false}
-                                        />
-                                    </div>
+                                    <SearchInput
+                                        searchInput={searchInput}
+                                        handleSearchInput={setSearchInput}
+                                        border={false}
+                                        clear={false}
+                                    />
+
                                     <Icon
                                         className={classNames("transition", {
                                             "rotate-45": isCollapsed,
@@ -96,7 +92,7 @@ export const EnumTypeDefinition = ({
                             )}
                         </div>
                     </div>
-                    <Collapse isOpen={!isCollapsed}>
+                    <Collapse isOpen={!isCollapsed} keepChildrenMounted>
                         <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
                             <EnumDefinitionDetails elements={elements} searchInput={searchInput} />
                         </TypeDefinitionContext.Provider>
