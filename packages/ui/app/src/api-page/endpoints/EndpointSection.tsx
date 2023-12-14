@@ -1,4 +1,5 @@
 import { Icon } from "@blueprintjs/core";
+import { useRef } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { useNavigationContext } from "../../navigation-context";
 import { getAnchorId } from "../../util/anchor";
@@ -26,11 +27,12 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
     expandAll: handleExpandAll,
     collapseAll: handleCollapseAll,
 }) => {
+    const ref = useRef<HTMLDivElement>(null);
     const { navigateToPath } = useNavigationContext();
     const anchorId = getAnchorId(anchorIdParts);
     const anchorRoute = `${route}#${anchorId}`;
     return (
-        <div data-route={anchorRoute} id={anchorId} className="flex scroll-mt-16 flex-col">
+        <div ref={ref} data-route={anchorRoute} id={anchorId} className="flex scroll-mt-16 flex-col">
             <div className="group/anchor-container relative flex items-baseline gap-4 pb-3">
                 <AbsolutelyPositionedAnchor href={anchorRoute} verticalPosition="center" />
                 <div className="text-text-primary-light dark:text-text-primary-dark text-xl font-extrabold">
@@ -41,7 +43,6 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
                         <button
                             className="hover:underline"
                             onClick={() => {
-                                navigateToPath(anchorRoute.substring(1));
                                 handleExpandAll();
                             }}
                         >
@@ -51,7 +52,6 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
                         <button
                             className="hover:underline"
                             onClick={() => {
-                                navigateToPath(anchorRoute.substring(1));
                                 handleCollapseAll();
                             }}
                         >
