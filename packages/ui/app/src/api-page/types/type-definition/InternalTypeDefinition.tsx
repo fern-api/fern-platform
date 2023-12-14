@@ -207,7 +207,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                         <Collapse
                             isOpen={!isCollapsed}
                             transitionDuration={!hydrated ? 0 : 200}
-                            className={classNames("transition", { "w-0": isCollapsed, "w-full": !isCollapsed })}
+                            className={classNames({ "w-0": isCollapsed })}
                         >
                             <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
                                 <TypeDefinitionDetails

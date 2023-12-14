@@ -198,7 +198,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                     <Collapse
                         isOpen={!isCollapsed}
                         transitionDuration={!hydrated ? 0 : 200}
-                        className={classNames("transition", { "w-0": isCollapsed, "w-full": !isCollapsed })}
+                        className={classNames({ "w-0": isCollapsed })}
                     >
                         <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
                             <TypeDefinitionDetails
