@@ -1,7 +1,8 @@
 import { Collapse, Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
+import { useBooleanState } from "@fern-ui/react-commons";
 import classNames from "classnames";
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { Chip } from "../../../components/common/Chip";
 import { SearchInput } from "../../../components/common/SearchInput";
 import { useNavigationContext } from "../../../navigation-context";
@@ -27,6 +28,13 @@ export const EnumTypeDefinition = ({
 }: EnumTypeDefinitionProps): ReactElement => {
     const { hydrated } = useNavigationContext();
     const [searchInput, setSearchInput] = useState("");
+    const shouldAutoFocus = useBooleanState(false);
+
+    useEffect(() => {
+        if (isCollapsed) {
+            shouldAutoFocus.setFalse();
+        }
+    }, [isCollapsed, shouldAutoFocus]);
 
     return (
         <>
@@ -61,6 +69,7 @@ export const EnumTypeDefinition = ({
                         onClick={(e) => {
                             e.stopPropagation();
                             toggleIsCollapsed();
+                            shouldAutoFocus.setTrue();
                         }}
                     >
                         {isCollapsed && (
@@ -82,6 +91,7 @@ export const EnumTypeDefinition = ({
                                         handleSearchInput={setSearchInput}
                                         border={false}
                                         clear={false}
+                                        autofocus={shouldAutoFocus.value}
                                     />
 
                                     <Icon
