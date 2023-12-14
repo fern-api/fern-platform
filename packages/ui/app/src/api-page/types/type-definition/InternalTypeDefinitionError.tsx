@@ -195,11 +195,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                             {isCollapsed ? showText : hideText}
                         </div>
                     </div>
-                    <Collapse
-                        isOpen={!isCollapsed}
-                        transitionDuration={!hydrated ? 0 : 200}
-                        className={classNames({ "w-0": isCollapsed })}
-                    >
+                    <Collapse isOpen={!isCollapsed} transitionDuration={!hydrated ? 0 : 200}>
                         <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
                             <TypeDefinitionDetails
                                 elements={collapsableContent.elements}
