@@ -74,13 +74,13 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
                                         {({ active }) => (
                                             <Link
                                                 className={classNames(
-                                                    "flex w-full justify-between !no-underline items-center p-2",
+                                                    "flex w-full justify-between no-underline hover:no-underline items-center p-2",
                                                     {
                                                         "bg-tag-primary dark:bg-tag-primary-dark": active,
-                                                        "text-accent-primary dark:text-accent-primary-dark":
+                                                        "text-accent-primary dark:text-accent-primary-dark hover:text-accent-primary dark:hover:text-accent-primary-dark":
                                                             versionSlug === selectedVersionSlug ||
                                                             (active && versionSlug !== selectedVersionSlug),
-                                                        "text-text-muted-light dark:text-text-muted-dark":
+                                                        "text-text-muted-light dark:text-text-muted-dark hover:text-text-muted-light dark:hover:text-text-muted-dark":
                                                             !active && versionSlug !== selectedVersionSlug,
                                                         "rounded-t-md": idx === 0,
                                                         "rounded-b-md": idx === versions.length - 1,

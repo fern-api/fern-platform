@@ -106,14 +106,14 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
         <div
             data-route={anchorRoute}
             id={anchorId}
-            className={classNames("flex relative flex-col py-3 scroll-mt-16", {
+            className={classNames("flex relative flex-col py-3 scroll-mt-20", {
                 "px-3": !contextValue.isRootTypeDefinition,
             })}
         >
             <div className="flex items-baseline gap-2">
-                <div className="group/anchor-container relative">
-                    <AbsolutelyPositionedAnchor verticalPosition="center" href={anchorRoute} />
-                    <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName} className="flex">
+                <div className="group/anchor-container relative flex items-center">
+                    <AbsolutelyPositionedAnchor href={anchorRoute} smallGap />
+                    <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName}>
                         <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">
                             {property.key}
                         </MonospaceText>
