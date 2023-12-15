@@ -75,7 +75,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
             <EndpointUrlWithOverflow endpoint={endpoint} />
             <ApiPageDescription className="mt-3" description={endpoint.description} isMarkdown={true} />
             <div className="mt-8 flex">
-                <div className="flex flex-1 flex-col gap-12">
+                <div className="flex max-w-full flex-1 flex-col  gap-12">
                     {endpoint.path.pathParameters.length > 0 && (
                         <PathParametersSection
                             pathParameters={endpoint.path.pathParameters}
