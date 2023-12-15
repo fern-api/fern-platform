@@ -76,15 +76,13 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                 data-route={route}
             >
                 <div className="flex min-w-0 max-w-2xl flex-1 flex-col">
-                    <div className="py-8">
+                    <div className="space-y-2.5 py-8">
                         {isSubpackage(package_) && (
-                            <div className="text-accent-primary dark:text-accent-primary-dark mb-4 text-xs font-semibold uppercase tracking-wider">
+                            <div className="text-accent-primary dark:text-accent-primary-dark text-xs font-semibold uppercase tracking-wider">
                                 {getSubpackageTitle(package_)}
                             </div>
                         )}
-                        <div className="typography-font-heading text-text-primary-light dark:text-text-primary-dark text-3xl font-bold">
-                            {webhook.name}
-                        </div>
+                        <h2 className="inline-block text-2xl sm:text-3xl">{webhook.name}</h2>
                     </div>
                     <ApiPageDescription description={webhook.description} isMarkdown={true} />
                     {webhook.headers.length > 0 && (

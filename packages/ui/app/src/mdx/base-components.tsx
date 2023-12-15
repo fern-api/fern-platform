@@ -19,11 +19,12 @@ export const InlineCode: React.FC<HTMLAttributes<HTMLElement> & InlineCodeProps>
             {...rest}
             className={classNames(
                 className,
-                "typography-font-code border border-border-concealed-light dark:border-border-concealed-dark rounded font-mono bg-background/75 dark:bg-background-dark/75 text-text-primary-light dark:text-text-primary-dark py-0.5 px-1"
+                "typography-font-code border border-border-concealed-light dark:border-border-concealed-dark rounded bg-background/75 dark:bg-background-dark/75 text-text-primary-light dark:text-text-primary-dark py-0.5 px-1",
+                {
+                    "text-xs": fontSize === "sm",
+                    "text-sm": fontSize === "lg",
+                }
             )}
-            style={{
-                fontSize: fontSize === "sm" ? 12 : 14,
-            }}
         />
     );
 };
@@ -111,10 +112,7 @@ export const H1: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h1
             id={slug}
-            className={classNames(
-                className,
-                "flex items-center relative group/anchor-container text-text-primary-light dark:text-text-primary-dark text-[2.25em] font-extrabold mt-10 mb-3 scroll-mt-20"
-            )}
+            className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
             {...rest}
         >
             <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
@@ -130,10 +128,7 @@ export const H2: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h2
             id={slug}
-            className={classNames(
-                className,
-                "flex items-center relative group/anchor-container text-text-primary-light dark:text-text-primary-dark text-[1.5em] font-bold mt-10 mb-3 scroll-mt-20"
-            )}
+            className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
             {...rest}
         >
             <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
@@ -149,10 +144,7 @@ export const H3: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h3
             id={slug}
-            className={classNames(
-                className,
-                "flex items-center relative group/anchor-container text-text-primary-light dark:text-text-primary-dark text-[1.25em] font-semibold mt-10 mb-3 scroll-mt-20"
-            )}
+            className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
             {...rest}
         >
             <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
@@ -168,10 +160,7 @@ export const H4: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h4
             id={slug}
-            className={classNames(
-                className,
-                "flex items-center relative group/anchor-container text-text-primary-light dark:text-text-primary-dark text-[1.125em] font-semibold mt-10 mb-3 scroll-mt-20"
-            )}
+            className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
             {...rest}
         >
             <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
@@ -187,10 +176,7 @@ export const H5: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h5
             id={slug}
-            className={classNames(
-                className,
-                "flex items-center relative group/anchor-container text-text-primary-light dark:text-text-primary-dark font-semibold mt-10 mb-3 scroll-mt-20"
-            )}
+            className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
             {...rest}
         >
             <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
@@ -206,10 +192,7 @@ export const H6: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h6
             id={slug}
-            className={classNames(
-                className,
-                "flex items-center relative group/anchor-container text-text-primary-light dark:text-text-primary-dark font-semibold mt-10 mb-3 scroll-mt-20"
-            )}
+            className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
             {...rest}
         >
             <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />

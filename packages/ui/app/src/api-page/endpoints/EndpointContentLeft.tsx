@@ -52,16 +52,14 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     const errorExpandAll = useBooleanState(false);
     return (
         <>
-            <div className="pb-2 pt-8">
+            <div className="space-y-2.5 pb-2 pt-8">
                 {isSubpackage(package_) && (
-                    <div className="text-accent-primary dark:text-accent-primary-dark mb-4 text-xs font-semibold uppercase tracking-wider">
+                    <div className="text-accent-primary dark:text-accent-primary-dark text-xs font-semibold uppercase tracking-wider">
                         {getSubpackageTitle(package_)}
                     </div>
                 )}
                 <div>
-                    <span className="typography-font-heading text-text-primary-light dark:text-text-primary-dark text-3xl font-bold">
-                        {getEndpointTitleAsString(endpoint)}
-                    </span>
+                    <h2 className="mt-0 inline-block text-2xl sm:text-3xl">{getEndpointTitleAsString(endpoint)}</h2>
                     {endpoint.availability != null && (
                         <span className="relative">
                             <EndpointAvailabilityTag

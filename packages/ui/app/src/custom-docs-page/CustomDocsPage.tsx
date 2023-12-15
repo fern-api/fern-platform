@@ -27,15 +27,17 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ serializedMdxCo
     return (
         <div className="flex space-x-16 px-6 md:px-12">
             <div className="w-full min-w-0 max-w-3xl pt-8">
-                {resolvedPath.sectionTitle != null && (
-                    <div className="text-accent-primary dark:text-accent-primary-dark mb-4 text-xs font-semibold uppercase tracking-wider">
-                        {resolvedPath.sectionTitle}
-                    </div>
-                )}
+                <header className="mb-8">
+                    <div className="space-y-2.5">
+                        {resolvedPath.sectionTitle != null && (
+                            <div className="text-accent-primary dark:text-accent-primary-dark text-xs font-semibold uppercase tracking-wider">
+                                {resolvedPath.sectionTitle}
+                            </div>
+                        )}
 
-                <div className="text-text-primary-light dark:text-text-primary-dark mb-8 text-3xl font-bold">
-                    {resolvedPath.page.title}
-                </div>
+                        <h1 className="inline-block text-2xl sm:text-3xl">{resolvedPath.page.title}</h1>
+                    </div>
+                </header>
                 {content}
                 <BottomNavigationButtons />
                 <div className="h-20" />

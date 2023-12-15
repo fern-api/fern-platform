@@ -14,6 +14,32 @@
     h4,
     h5,
     h6 {
-        @apply scroll-mt-20;
+        @apply scroll-mt-20 text-text-primary-light dark:text-text-primary-dark tracking-tight mt-8;
+
+        font-family: var(--typography-heading-font-family), var(--typography-font-family), sans-serif;
+    }
+
+    h1 {
+        @apply text-[2.25em] font-extrabold;
+    }
+
+    h2 {
+        @apply text-[1.5em] font-bold;
+    }
+
+    h3 {
+        @apply text-[1.25em] font-semibold;
+    }
+
+    h4 {
+        @apply text-[1.125em] font-semibold;
+    }
+
+    h5 {
+        @apply text-[1em] font-semibold;
+    }
+
+    h6 {
+        @apply text-[0.875em] font-semibold;
     }
 }

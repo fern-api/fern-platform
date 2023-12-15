@@ -85,21 +85,14 @@ export function generateFontFaces(generationConfiguration: GenerationFontConfigs
 @font-face {
     font-family: '${fontConfig.fontName}';
     src: url('${fontConfig.fontUrl.toString()}') format('${fontConfig.fontExtension}');
-    font-weight: 700;
+    font-weight: 100 900;
     font-style: normal;
     font-display: swap;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: '${fontConfig.fontName}', sans-serif;
+    ascent-override: 100%;
 }
 
 :root {
     --typography-heading-font-family: '${fontConfig.fontName}', sans-serif;
-}
-
-.typography-font-heading {
-    font-family: var(--typography-heading-font-family);
 }
 `;
                 fontFaces.push(fontFace);
@@ -110,9 +103,10 @@ h1, h2, h3, h4, h5, h6 {
 @font-face {
     font-family: '${fontConfig.fontName}';
     src: url('${fontConfig.fontUrl.toString()}') format('${fontConfig.fontExtension}');
-    font-weight: 400;
+    font-weight: 100 900;
     font-style: normal;
     font-display: swap;
+    ascent-override: 100%;
 }
 
 :root {
@@ -132,9 +126,10 @@ html, body {
 @font-face {
     font-family: '${fontConfig.fontName}';
     src: url('${fontConfig.fontUrl.toString()}') format('${fontConfig.fontExtension}');
-    font-weight: 400;
+    font-weight: 100 900;
     font-style: normal;
     font-display: swap;
+    ascent-override: 100%;
 }
 
 :root {
@@ -157,6 +152,7 @@ code, pre, .typography-font-code {
     src: local("Berkeley Mono"), url("./fonts/BerkeleyMono-Regular.woff2") format("woff2");
     font-style: normal;
     font-display: swap;
+    ascent-override: 100%;
 }
 
 :root {
