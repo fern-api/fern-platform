@@ -30,9 +30,9 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
     const anchorId = getAnchorId(anchorIdParts);
     const anchorRoute = `${route}#${anchorId}`;
     return (
-        <div ref={ref} data-route={anchorRoute} id={anchorId} className="flex scroll-mt-16 flex-col">
+        <div ref={ref} data-route={anchorRoute} id={anchorId} className="flex scroll-mt-20 flex-col">
             <div className="group/anchor-container relative flex items-baseline gap-4 pb-3">
-                <AbsolutelyPositionedAnchor href={anchorRoute} verticalPosition="center" />
+                <AbsolutelyPositionedAnchor href={anchorRoute} />
                 <div className="text-text-primary-light dark:text-text-primary-dark text-xl font-extrabold">
                     {title}
                 </div>

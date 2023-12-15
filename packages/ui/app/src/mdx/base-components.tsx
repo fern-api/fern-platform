@@ -99,7 +99,7 @@ const flatten = (
  * Because of our custom routing (PathResolver) implementation, we need to override the pathname to be /basePath/current/slug.
  * @returns /basepath/current/slug
  */
-function useCurrentPathname(): string {
+export function useCurrentPathname(): string {
     const { resolvedPath } = useNavigationContext();
     return `/${resolvedPath.fullSlug}`;
 }
@@ -113,14 +113,11 @@ export const H1: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(
                 className,
-                "relative group/anchor-container text-text-primary-light dark:text-text-primary-dark text-2xl font-semibold mt-10 mb-3 scroll-mt-16"
+                "flex items-center relative group/anchor-container text-text-primary-light dark:text-text-primary-dark text-[2.25em] font-extrabold mt-10 mb-3 scroll-mt-20"
             )}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor
-                href={{ hash: slug, pathname: useCurrentPathname() }}
-                verticalPosition="center"
-            />
+            <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
             <span>{children}</span>
         </h1>
     );
@@ -135,15 +132,12 @@ export const H2: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(
                 className,
-                "relative group/anchor-container text-text-primary-light dark:text-text-primary-dark text-xl font-semibold mt-10 mb-3 scroll-mt-16"
+                "flex items-center relative group/anchor-container text-text-primary-light dark:text-text-primary-dark text-[1.5em] font-bold mt-10 mb-3 scroll-mt-20"
             )}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor
-                href={{ hash: slug, pathname: useCurrentPathname() }}
-                verticalPosition="center"
-            />
-            {children}
+            <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
+            <span>{children}</span>
         </h2>
     );
 };
@@ -157,15 +151,12 @@ export const H3: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(
                 className,
-                "relative group/anchor-container text-text-primary-light dark:text-text-primary-dark text-lg font-semibold mt-10 mb-3 scroll-mt-16"
+                "flex items-center relative group/anchor-container text-text-primary-light dark:text-text-primary-dark text-[1.25em] font-semibold mt-10 mb-3 scroll-mt-20"
             )}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor
-                href={{ hash: slug, pathname: useCurrentPathname() }}
-                verticalPosition="center"
-            />
-            {children}
+            <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
+            <span>{children}</span>
         </h3>
     );
 };
@@ -179,15 +170,12 @@ export const H4: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(
                 className,
-                "relative group/anchor-container text-text-primary-light dark:text-text-primary-dark text-lg font-semibold mt-10 mb-3 scroll-mt-16"
+                "flex items-center relative group/anchor-container text-text-primary-light dark:text-text-primary-dark text-[1.125em] font-semibold mt-10 mb-3 scroll-mt-20"
             )}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor
-                href={{ hash: slug, pathname: useCurrentPathname() }}
-                verticalPosition="center"
-            />
-            {children}
+            <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
+            <span>{children}</span>
         </h4>
     );
 };
@@ -201,15 +189,12 @@ export const H5: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(
                 className,
-                "relative group/anchor-container text-text-primary-light dark:text-text-primary-dark text-lg font-semibold mt-10 mb-3 scroll-mt-16"
+                "flex items-center relative group/anchor-container text-text-primary-light dark:text-text-primary-dark font-semibold mt-10 mb-3 scroll-mt-20"
             )}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor
-                href={{ hash: slug, pathname: useCurrentPathname() }}
-                verticalPosition="center"
-            />
-            {children}
+            <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
+            <span>{children}</span>
         </h5>
     );
 };
@@ -223,14 +208,11 @@ export const H6: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(
                 className,
-                "relative group/anchor-container text-text-primary-light dark:text-text-primary-dark text-lg font-semibold mt-10 mb-3 scroll-mt-16"
+                "flex items-center relative group/anchor-container text-text-primary-light dark:text-text-primary-dark font-semibold mt-10 mb-3 scroll-mt-20"
             )}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor
-                href={{ hash: slug, pathname: useCurrentPathname() }}
-                verticalPosition="center"
-            />
+            <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
             {children}
         </h6>
     );
@@ -296,7 +278,7 @@ export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className
 
     const classNamesCombined = classNames(
         className,
-        "text-text-primary-light dark:text-text-primary-dark hover:text-accent-primary hover:dark:text-accent-primary-dark underline underline-offset-4 hover:decoration-2 font-medium"
+        "text-text-primary-light dark:text-text-primary-dark hover:text-accent-primary hover:dark:text-accent-primary-dark underline underline-offset-4 decoration-1 hover:decoration-2 font-medium decoration-accent-primary dark:decoration-accent-primary-dark"
     );
 
     return (

@@ -14,6 +14,6 @@
     h4,
     h5,
     h6 {
-        scroll-margin-top: 100px;
+        @apply scroll-mt-20;
     }
 }

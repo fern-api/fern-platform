@@ -3,18 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-    .prose a,
-    .prose a:hover {
-        @apply transition;
-        @apply pb-[2px];
-        @apply text-white hover:text-accent-primary dark:hover:text-accent-primary-dark;
-        @apply no-underline border-b border-b-border-default-light dark:border-b-border-default-dark hover:border-b-accent-primary dark:hover:border-b-accent-primary-dark;
-    }
-
-    .prose a {
-        text-decoration: none;
-    }
-
     ::selection {
         @apply bg-accent-primary/20 dark:bg-accent-primary-dark/20;
     }
@@ -26,6 +14,6 @@
     h4,
     h5,
     h6 {
-        scroll-margin-top: 100px;
+        @apply scroll-mt-20;
     }
 }
