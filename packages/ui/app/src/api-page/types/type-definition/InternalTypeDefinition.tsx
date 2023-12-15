@@ -180,12 +180,16 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
         >
             {collapsableContent.elementNameSingular !== "enum value" ? (
                 <div
-                    className={classNames(styles.internalTypeDefinitionContent, {
-                        "w-full": !isCollapsed,
-                        "w-fit": isCollapsed,
-                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                        [styles.expanded!]: !isCollapsed,
-                    })}
+                    className={classNames(
+                        styles.internalTypeDefinitionContent,
+                        "border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded border",
+                        {
+                            "w-full": !isCollapsed,
+                            "w-fit": isCollapsed,
+                            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                            [styles.expanded!]: !isCollapsed,
+                        }
+                    )}
                 >
                     {collapsableContent.elements.length > 1 && (
                         <div

@@ -17,12 +17,7 @@ export const ApiPageDescription: React.FC<ApiPageDescription.Props> = ({ classNa
         return <Markdown className={className}>{description}</Markdown>;
     }
     return (
-        <div
-            className={classNames(
-                "text-sm font-normal !text-text-muted-light dark:!text-text-muted-dark leading-6",
-                className
-            )}
-        >
+        <div className={classNames("text-sm !text-text-muted-light dark:!text-text-muted-dark leading-6", className)}>
             {description}
         </div>
     );

@@ -7,6 +7,11 @@
         @apply bg-accent-primary/20 dark:bg-accent-primary-dark/20;
     }
 
+    html,
+    body {
+        @apply text-text-primary-light dark:text-text-primary-dark;
+    }
+
     /* provides comfortable padding above anchor links, to avoid intersecting with header */
     h1,
     h2,
@@ -14,7 +19,7 @@
     h4,
     h5,
     h6 {
-        @apply scroll-mt-20 text-text-primary-light dark:text-text-primary-dark tracking-tight mt-8;
+        @apply scroll-mt-20 tracking-tight mt-8;
 
         font-family: var(--typography-heading-font-family), var(--typography-font-family), sans-serif;
     }

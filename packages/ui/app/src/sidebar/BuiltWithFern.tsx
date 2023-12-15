@@ -26,7 +26,7 @@ export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className }) => {
                 <FernLogo fill={isHovering ? undefined : "rgb(82, 82, 82)"} />
             </div>
             <div
-                className={classNames("whitespace-nowrap text-xs transition font-light", {
+                className={classNames("whitespace-nowrap text-xs transition", {
                     "t-muted": isHovering,
                     "text-intent-default dark:text-text-disabled-dark": !isHovering,
                 })}

@@ -19,7 +19,7 @@ export const EndpointAvailabilityTag = memo<EndpointAvailabilityTag.Props>(funct
     return (
         <span
             className={classNames(
-                "rounded text-xs font-normal",
+                "rounded text-xs",
                 {
                     "border px-1.5 py-0.5": !minimal,
                     "bg-tag-default-light dark:bg-tag-default-dark t-muted": false,
