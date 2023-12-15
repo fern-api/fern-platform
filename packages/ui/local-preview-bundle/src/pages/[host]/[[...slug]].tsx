@@ -68,6 +68,10 @@ function Docs({
                     `}
                 </style>
                 <Head>
+                    <meta
+                        name="viewport"
+                        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+                    />
                     {docs.definition.config.title != null && <title>{docs.definition.config.title}</title>}
                     {docs.definition.config.favicon != null && (
                         <link rel="icon" id="favicon" href={docs.definition.files[docs.definition.config.favicon]} />

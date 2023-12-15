@@ -1,7 +1,6 @@
 import { Icon } from "@blueprintjs/core";
 import { useRef } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
-import { useNavigationContext } from "../../navigation-context";
 import { getAnchorId } from "../../util/anchor";
 import { Markdown } from "../markdown/Markdown";
 
@@ -28,7 +27,6 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
     collapseAll: handleCollapseAll,
 }) => {
     const ref = useRef<HTMLDivElement>(null);
-    const { navigateToPath } = useNavigationContext();
     const anchorId = getAnchorId(anchorIdParts);
     const anchorRoute = `${route}#${anchorId}`;
     return (
