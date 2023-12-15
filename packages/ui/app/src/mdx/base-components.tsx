@@ -19,7 +19,7 @@ export const InlineCode: React.FC<HTMLAttributes<HTMLElement> & InlineCodeProps>
             {...rest}
             className={classNames(
                 className,
-                "typography-font-code border border-border-concealed-light dark:border-border-concealed-dark rounded bg-background/75 dark:bg-background-dark/75 text-text-primary-light dark:text-text-primary-dark py-0.5 px-1",
+                "typography-font-code border border-border-concealed-light dark:border-border-concealed-dark rounded bg-background/75 dark:bg-background-dark/75 py-0.5 px-1",
                 {
                     "text-xs": fontSize === "sm",
                     "text-sm": fontSize === "lg",
@@ -55,7 +55,7 @@ export const Th: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
             {...rest}
             className={classNames(
                 className,
-                "text-left truncate px-3 py-1 font-normal text-text-primary-light dark:text-text-primary-dark leading-7 border-b border-border-default-light dark:border-border-default-dark first:pl-0 last:pr-0"
+                "text-left truncate px-3 py-1 leading-7 border-b border-border-default-light dark:border-border-default-dark first:pl-0 last:pr-0"
             )}
         />
     );
@@ -68,7 +68,7 @@ export const Td: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
             {...rest}
             className={classNames(
                 className,
-                "border-b border-border-default-light dark:border-border-default-dark font-light px-3 py-1 text-text-muted-light dark:text-text-muted-dark leading-7 first:pl-0 last:pr-0",
+                "border-b border-border-default-light dark:border-border-default-dark px-3 py-1 leading-7 first:pl-0 last:pr-0",
                 {
                     // if the table has many columns, do not collapse short string content into multi-line:
                     "whitespace-nowrap": childrenAsString.length < 100,
@@ -210,9 +210,8 @@ export const P: React.FC<{ variant: "api" | "markdown" } & HTMLAttributes<HTMLPa
         <p
             {...rest}
             className={classNames(className, {
-                "text-sm font-normal text-text-muted-light dark:text-text-muted-dark leading-6": variant === "api",
-                "text-base font-light text-text-muted-light dark:text-text-muted-dark leading-7":
-                    variant === "markdown",
+                "text-sm leading-6": variant === "api",
+                "text-base leading-7": variant === "markdown",
                 "mb-3": variant === "markdown",
             })}
         />
@@ -220,12 +219,7 @@ export const P: React.FC<{ variant: "api" | "markdown" } & HTMLAttributes<HTMLPa
 };
 
 export const Strong: React.FC<HTMLAttributes<unknown>> = ({ className, ...rest }) => {
-    return (
-        <strong
-            {...rest}
-            className={classNames(className, "text-text-primary-light dark:text-text-primary-dark font-semibold")}
-        />
-    );
+    return <strong {...rest} className={classNames(className, "font-semibold")} />;
 };
 
 export const Ol: React.FC<HTMLAttributes<HTMLOListElement>> = ({ className, ...rest }) => {
@@ -245,15 +239,7 @@ export const Ul: React.FC<HTMLAttributes<HTMLUListElement>> = ({ className, ...r
 };
 
 export const Li: React.FC<HTMLAttributes<HTMLLIElement>> = ({ className, ...rest }) => {
-    return (
-        <li
-            {...rest}
-            className={classNames(
-                className,
-                "text-base font-light text-text-muted-light dark:text-text-muted-dark leading-7"
-            )}
-        />
-    );
+    return <li {...rest} className={classNames(className, "text-base leading-7")} />;
 };
 
 export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, children, href, ...rest }) => {

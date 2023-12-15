@@ -82,7 +82,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
 
             {isSelected && error.type != null && (
                 <div className="w-full pb-3">
-                    <div className="t-muted mt-3 w-full text-start text-sm font-light leading-7">
+                    <div className="t-muted mt-3 w-full text-start text-sm leading-7">
                         This error returns{" "}
                         {visitDiscriminatedUnion(error.type, "type")._visit<string | ReactElement>({
                             alias: (type) => (

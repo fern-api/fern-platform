@@ -53,9 +53,7 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                             return (
                                 <>
                                     <FontAwesomeIcon className="h-4 w-4" icon={getIconForClient(selectedClient.id)} />
-                                    <span className="font-mono text-xs font-normal transition-colors">
-                                        {selectedClient.name}
-                                    </span>
+                                    <span className="font-mono text-xs transition-colors">{selectedClient.name}</span>
                                     <ChevronDownIcon
                                         className={classNames("h-5 w-5 transition", {
                                             "rotate-180": open,
@@ -105,9 +103,7 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                                                     />
 
                                                     <div className="flex items-center whitespace-nowrap">
-                                                        <span className="font-mono text-xs font-normal">
-                                                            {clientName}
-                                                        </span>
+                                                        <span className="font-mono text-xs">{clientName}</span>
                                                     </div>
                                                 </div>
 

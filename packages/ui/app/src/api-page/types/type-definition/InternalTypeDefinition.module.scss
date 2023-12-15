@@ -16,10 +16,6 @@
 .internalTypeDefinitionContainer {
     @apply mt-2 flex flex-col;
 
-    .internalTypeDefinitionContent {
-        @apply border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded border;
-    }
-
     .internalTypeDefinitionContainer:not(.enumContainer) {
         @apply -mr-3;
     }

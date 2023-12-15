@@ -43,9 +43,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
                         {({ open }) => {
                             return (
                                 <>
-                                    <span className="font-mono text-sm font-normal transition-colors">
-                                        {selectedVersionName}
-                                    </span>
+                                    <span className="font-mono text-sm transition-colors">{selectedVersionName}</span>
                                     <ChevronDownIcon
                                         className={classNames("h-5 w-5 transition", {
                                             "rotate-180": open,
@@ -90,11 +88,11 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
                                                 onClick={() => onClickVersion(versionSlug)}
                                             >
                                                 <div className="flex items-center space-x-2">
-                                                    <span className="font-mono text-sm font-normal">{versionName}</span>
+                                                    <span className="font-mono text-sm">{versionName}</span>
                                                     {availability != null && (
                                                         <span
                                                             className={classNames(
-                                                                "rounded px-1 py-0.5 text-[11px] font-normal border",
+                                                                "rounded px-1 py-0.5 text-[11px] border",
                                                                 {
                                                                     "bg-accent-highlight border-transparent":
                                                                         versionSlug === selectedVersionSlug && !active,

@@ -36,11 +36,11 @@ export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ inte
                 "flex space-x-3 px-4 pt-4 pb-1 border rounded-lg",
                 visitDiscriminatedUnion({ intent }, "intent")._visit({
                     info: () =>
-                        "bg-tag-default-light dark:bg-tag-default-dark border-border-default-light dark:border-border-default-dark",
+                        "bg-tag-default-light/5 dark:bg-tag-default-dark/5 border-border-default-light dark:border-border-default-dark",
                     warning: () =>
-                        "bg-tag-warning-light dark:bg-tag-warning-dark border-border-warning-light dark:border-border-warning-dark",
+                        "bg-tag-warning-light/5 dark:bg-tag-warning-dark/5 border-border-warning-light dark:border-border-warning-dark",
                     success: () =>
-                        "bg-tag-success-light dark:bg-tag-success-dark border-border-success-light dark:border-border-success-dark",
+                        "bg-tag-success-light/5 dark:bg-tag-success-dark/5 border-border-success-light dark:border-border-success-dark",
                     _other: () => "",
                 })
             )}
@@ -60,7 +60,7 @@ export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ inte
 
             <div
                 className={classNames(
-                    "text-sm leading-5 tracking-wide font-light",
+                    "text-sm leading-5 tracking-wide",
                     visitDiscriminatedUnion({ intent }, "intent")._visit({
                         info: () => "text-text-muted-light dark:text-text-muted-dark",
                         warning: () => "text-intent-warning-light dark:text-intent-warning-dark",

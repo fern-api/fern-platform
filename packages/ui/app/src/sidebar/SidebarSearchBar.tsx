@@ -17,20 +17,20 @@ export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = memo(function 
         <button
             onClick={onClick}
             className={classNames(
-                "dark:border-border-default-dark border-border-default-light group flex items-center rounded-lg border px-2.5 py-2",
+                "dark:border-white/20 border-black/20 group flex items-center rounded-lg border px-2.5 py-2",
                 "bg-background-primary-light hover:bg-background-hover-light dark:bg-background-primary-dark dark:hover:bg-background-hover-dark"
             )}
         >
             <div className="flex items-center space-x-3">
                 <SearchIcon className="text-intent-default h-5 w-5" />
-                <div className="text-text-disabled-light group-hover:text-intent-default dark:text-text-disabled-dark">
+                <div className="text-black/50 group-hover:text-black/50 dark:text-white/50 dark:group-hover:text-white/50">
                     Search...
                 </div>
             </div>
 
             <PlatformSpecificContent>
                 {(platform) => (
-                    <div className="text-text-disabled-light group-hover:text-intent-default dark:text-text-disabled-dark ml-auto text-start text-xs tracking-wide">
+                    <div className="ml-auto text-start text-xs tracking-wide text-black/50 group-hover:text-black/50 dark:text-white/50 dark:group-hover:text-white/50">
                         {visitDiscriminatedUnion({ platform }, "platform")._visit({
                             mac: () => "⌘K",
                             windows: () => "CTRL+K",
