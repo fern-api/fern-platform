@@ -4311,7 +4311,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.8.8"],\
             ["react", "npm:18.2.0"],\
-            ["react-draggable", "virtual:83226786336e3ec1d65bc4d7ab2fe8e410a92ae0faa428c376517262a7687f8c564f714ddc7188c47ae46ee441f6c920894158bd24f5245f2836019a45954fca#npm:4.4.5"],\
+            ["react-draggable", "virtual:83226786336e3ec1d65bc4d7ab2fe8e410a92ae0faa428c376517262a7687f8c564f714ddc7188c47ae46ee441f6c920894158bd24f5245f2836019a45954fca#npm:4.4.6"],\
             ["sass", "npm:1.54.0"],\
             ["stylelint", "npm:14.14.0"],\
             ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"],\
@@ -16602,17 +16602,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["react-draggable", [\
-        ["npm:4.4.5", {\
-          "packageLocation": "./.yarn/cache/react-draggable-npm-4.4.5-f5c4c58302-21c3775db0.zip/node_modules/react-draggable/",\
+        ["npm:4.4.6", {\
+          "packageLocation": "./.yarn/cache/react-draggable-npm-4.4.6-4867b50158-9b15aac592.zip/node_modules/react-draggable/",\
           "packageDependencies": [\
-            ["react-draggable", "npm:4.4.5"]\
+            ["react-draggable", "npm:4.4.6"]\
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:83226786336e3ec1d65bc4d7ab2fe8e410a92ae0faa428c376517262a7687f8c564f714ddc7188c47ae46ee441f6c920894158bd24f5245f2836019a45954fca#npm:4.4.5", {\
-          "packageLocation": "./.yarn/__virtual__/react-draggable-virtual-f152313148/0/cache/react-draggable-npm-4.4.5-f5c4c58302-21c3775db0.zip/node_modules/react-draggable/",\
+        ["virtual:83226786336e3ec1d65bc4d7ab2fe8e410a92ae0faa428c376517262a7687f8c564f714ddc7188c47ae46ee441f6c920894158bd24f5245f2836019a45954fca#npm:4.4.6", {\
+          "packageLocation": "./.yarn/__virtual__/react-draggable-virtual-af244b1451/0/cache/react-draggable-npm-4.4.6-4867b50158-9b15aac592.zip/node_modules/react-draggable/",\
           "packageDependencies": [\
-            ["react-draggable", "virtual:83226786336e3ec1d65bc4d7ab2fe8e410a92ae0faa428c376517262a7687f8c564f714ddc7188c47ae46ee441f6c920894158bd24f5245f2836019a45954fca#npm:4.4.5"],\
+            ["react-draggable", "virtual:83226786336e3ec1d65bc4d7ab2fe8e410a92ae0faa428c376517262a7687f8c564f714ddc7188c47ae46ee441f6c920894158bd24f5245f2836019a45954fca#npm:4.4.6"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", null],\
             ["clsx", "npm:1.2.1"],\
