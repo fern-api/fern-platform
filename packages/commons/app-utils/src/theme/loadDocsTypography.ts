@@ -92,7 +92,7 @@ export function generateFontFaces(generationConfiguration: GenerationFontConfigs
 }
 
 :root {
-    --typography-heading-font-family: '${fontConfig.fontName}', sans-serif;
+    --typography-heading-font-family: '${fontConfig.fontName}';
 }
 `;
                 fontFaces.push(fontFace);
@@ -110,11 +110,7 @@ export function generateFontFaces(generationConfiguration: GenerationFontConfigs
 }
 
 :root {
-    --typography-body-font-family: '${fontConfig.fontName}', sans-serif;
-}
-
-html, body {
-    font-family: var(--typography-body-font-family);
+    --typography-body-font-family: '${fontConfig.fontName}';
 }
 `;
                 fontFaces.push(fontFace);
@@ -133,11 +129,7 @@ html, body {
 }
 
 :root {
-    --typography-code-font-family: '${fontConfig.fontName}', monospace;
-}
-
-code, pre, .typography-font-code {
-    font-family: var(--typography-code-font-family), monospace;
+    --typography-code-font-family: '${fontConfig.fontName}';
 }
 `;
                 fontFaces.push(fontFace);
@@ -156,11 +148,7 @@ code, pre, .typography-font-code {
 }
 
 :root {
-    --typography-code-font-family: "Berkeley Mono", Menlo, Monaco, monospace;
-}
-
-code, pre, .typography-font-code {
-    font-family: var(--typography-code-font-family), monospace;
+    --typography-code-font-family: "Berkeley Mono";
 }
 `;
         fontFaces.push(codeBlockFontFace);
