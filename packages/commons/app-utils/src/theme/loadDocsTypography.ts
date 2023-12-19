@@ -73,9 +73,16 @@ export function loadDocTypography(docsDefinition: DocsV1Read.DocsDefinition): Ge
     return generationConfiguration;
 }
 
+const BODY_FONT_FALLBACK =
+    "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif";
+
+const MONO_FONT_FALLBACK = "Menlo, Monaco, monospace";
+
 export function generateFontFaces(generationConfiguration: GenerationFontConfigs): string {
     const fontFaces: string[] = [];
     let codeFontFaceSet = false;
+    let headingFontFaceSet = false;
+    let bodyFontFace: string | undefined;
 
     for (const fontType in generationConfiguration) {
         const fontConfig = generationConfiguration[fontType as keyof GenerationFontConfigs];
@@ -92,10 +99,11 @@ export function generateFontFaces(generationConfiguration: GenerationFontConfigs
 }
 
 :root {
-    --typography-heading-font-family: '${fontConfig.fontName}';
+    --typography-heading-font-family: '${fontConfig.fontName}', ${BODY_FONT_FALLBACK};
 }
 `;
                 fontFaces.push(fontFace);
+                headingFontFaceSet = true;
             }
 
             if (fontConfig.fontType === "bodyFont") {
@@ -110,14 +118,14 @@ export function generateFontFaces(generationConfiguration: GenerationFontConfigs
 }
 
 :root {
-    --typography-body-font-family: '${fontConfig.fontName}';
+    --typography-body-font-family: '${fontConfig.fontName}', ${BODY_FONT_FALLBACK};
 }
 `;
                 fontFaces.push(fontFace);
+                bodyFontFace = fontConfig.fontName;
             }
 
             if (fontConfig.fontType === "codeFont") {
-                codeFontFaceSet = true;
                 const fontFace = `
 @font-face {
     font-family: '${fontConfig.fontName}';
@@ -129,10 +137,11 @@ export function generateFontFaces(generationConfiguration: GenerationFontConfigs
 }
 
 :root {
-    --typography-code-font-family: '${fontConfig.fontName}';
+    --typography-code-font-family: '${fontConfig.fontName}', ${MONO_FONT_FALLBACK};
 }
 `;
                 fontFaces.push(fontFace);
+                codeFontFaceSet = true;
             }
         }
     }
@@ -148,10 +157,37 @@ export function generateFontFaces(generationConfiguration: GenerationFontConfigs
 }
 
 :root {
-    --typography-code-font-family: "Berkeley Mono";
+    --typography-code-font-family: "Berkeley Mono", ${MONO_FONT_FALLBACK};
 }
 `;
         fontFaces.push(codeBlockFontFace);
+    }
+
+    if (!headingFontFaceSet) {
+        if (bodyFontFace == null) {
+            const headingFontFace = `
+:root {
+    --typography-heading-font-family: ${BODY_FONT_FALLBACK};
+}
+`;
+            fontFaces.push(headingFontFace);
+        } else {
+            const headingFontFace = `
+:root {
+    --typography-heading-font-family: ${bodyFontFace}, ${BODY_FONT_FALLBACK};
+}
+`;
+            fontFaces.push(headingFontFace);
+        }
+    }
+
+    if (!bodyFontFace) {
+        const bodyFontFace = `
+:root {
+    --typography-body-font-family: ${BODY_FONT_FALLBACK};
+}
+`;
+        fontFaces.push(bodyFontFace);
     }
 
     return fontFaces.join("\n");

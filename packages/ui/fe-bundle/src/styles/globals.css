@@ -10,13 +10,13 @@
     html,
     body {
         @apply text-text-primary-light dark:text-text-primary-dark;
-        font-family: var(--typography-body-font-family), sans-serif !important;
+        font-family: var(--typography-body-font-family);
     }
 
     code,
     pre,
     .typography-font-code {
-        font-family: var(--typography-code-font-family), Menlo, Monaco, monospace;
+        font-family: var(--typography-code-font-family);
     }
 
     /* provides comfortable padding above anchor links, to avoid intersecting with header */
@@ -27,7 +27,7 @@
     h5,
     h6 {
         @apply scroll-mt-20 tracking-tight mt-8;
-        font-family: var(--typography-heading-font-family), sans-serif;
+        font-family: var(--typography-heading-font-family);
     }
 
     h1 {
