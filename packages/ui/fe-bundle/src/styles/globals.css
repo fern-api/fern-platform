@@ -21,7 +21,7 @@
     h6 {
         @apply scroll-mt-20 tracking-tight mt-8;
 
-        font-family: var(--typography-heading-font-family), var(--typography-font-family), sans-serif;
+        font-family: var(--typography-heading-font-family), sans-serif;
     }
 
     h1 {

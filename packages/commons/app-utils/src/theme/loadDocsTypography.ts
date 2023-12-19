@@ -92,7 +92,7 @@ export function generateFontFaces(generationConfiguration: GenerationFontConfigs
 }
 
 :root {
-    --typography-heading-font-family: '${fontConfig.fontName}', sans-serif;
+    --typography-heading-font-family: '${fontConfig.fontName}';
 }
 `;
                 fontFaces.push(fontFace);
@@ -110,7 +110,7 @@ export function generateFontFaces(generationConfiguration: GenerationFontConfigs
 }
 
 :root {
-    --typography-body-font-family: '${fontConfig.fontName}', sans-serif;
+    --typography-body-font-family: '${fontConfig.fontName}';
 }
 
 html, body {
