@@ -10,7 +10,7 @@
     html,
     body {
         @apply text-text-primary-light dark:text-text-primary-dark;
-        font-family: var(--typography-body-font-family);
+        font-family: var(--typography-body-font-family) !important;
     }
 
     code,
