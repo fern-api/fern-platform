@@ -173,6 +173,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     return (
         <div
             className={classNames(
+                "text-sm",
                 styles.internalTypeDefinitionContainer,
                 collapsableContent.elementNameSingular === "enum value" ? styles.enumContainer : undefined
             )}
