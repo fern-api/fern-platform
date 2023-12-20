@@ -3,13 +3,25 @@
 @tailwind utilities;
 
 @layer base {
+    html {
+        box-sizing: border-box;
+    }
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: inherit;
+    }
+
     ::selection {
         @apply bg-accent-primary/20 dark:bg-accent-primary-dark/20;
     }
 
     html,
     body {
+        @apply text-text-primary-light dark:text-text-primary-dark;
         font-family: var(--typography-body-font-family) !important;
+        font-size: 16px !important;
     }
 
     code,

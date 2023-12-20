@@ -37,7 +37,9 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
         >
             <AbsolutelyPositionedAnchor href={anchorRoute} />
             <div className="flex items-baseline gap-1">
-                <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">{name}</MonospaceText>
+                <MonospaceText className="text-text-primary-light dark:text-text-primary-dark text-sm">
+                    {name}
+                </MonospaceText>
                 <div className="t-muted text-xs">
                     <TypeShorthand type={type} plural={false} />
                 </div>

@@ -43,7 +43,7 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
                     )}
                     <div
                         className={classNames(
-                            "flex flex-1 py-2 px-3 border rounded-lg items-center justify-between select-none min-w-0",
+                            "text-sm flex flex-1 py-2 px-3 border rounded-lg items-center justify-between select-none min-w-0",
                             {
                                 "text-accent-primary dark:text-accent-primary-dark border-border-primary dark:border-border-primary-dark bg-tag-primary dark:bg-tag-primary-dark":
                                     isSelected,

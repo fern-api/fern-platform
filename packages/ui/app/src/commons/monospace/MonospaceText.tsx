@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import React, { PropsWithChildren } from "react";
-import styles from "./MonospaceText.module.scss";
 
 export declare namespace MonospaceText {
     export type Props = PropsWithChildren<{
@@ -9,5 +8,5 @@ export declare namespace MonospaceText {
 }
 
 export const MonospaceText: React.FC<MonospaceText.Props> = ({ className, children }) => {
-    return <div className={classNames(className, styles.container, "typography-font-code")}>{children}</div>;
+    return <div className={classNames(className, "typography-font-code")}>{children}</div>;
 };

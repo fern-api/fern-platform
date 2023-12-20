@@ -32,10 +32,10 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
     return (
         <div ref={ref} data-route={anchorRoute} id={anchorId} className="flex scroll-mt-20 flex-col">
             <div className="group/anchor-container relative flex items-baseline gap-4 pb-3">
-                <h2 className="relative mt-0 flex items-center">
+                <h3 className="relative mt-0 flex items-center">
                     <AbsolutelyPositionedAnchor href={anchorRoute} />
                     <span>{title}</span>
-                </h2>
+                </h3>
                 {showExpandCollapse && (
                     <div className="t-muted invisible flex gap-2 text-xs group-hover/anchor-container:visible">
                         <button

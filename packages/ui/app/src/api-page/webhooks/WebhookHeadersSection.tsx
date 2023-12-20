@@ -21,7 +21,7 @@ export const WebhookHeadersSection: React.FC<WebhookHeadersSection.Props> = ({ w
                     <TypeComponentSeparator />
                     <div className="group/anchor-container relative flex flex-col gap-2 py-3">
                         <div className="flex items-baseline gap-1">
-                            <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">
+                            <MonospaceText className="text-text-primary-light dark:text-text-primary-dark text-sm">
                                 {header.key}
                             </MonospaceText>
                             <div className="t-muted text-xs">

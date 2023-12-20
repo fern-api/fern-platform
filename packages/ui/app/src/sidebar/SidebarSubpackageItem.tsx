@@ -40,7 +40,7 @@ const UnmemoizedSidebarSubpackageItem: React.FC<SidebarSubpackageItem.Props> = (
             return (
                 <div
                     className={classNames(
-                        "flex flex-1 py-2 px-3 rounded-lg justify-start items-center select-none min-w-0",
+                        "text-sm flex flex-1 py-2 px-3 rounded-lg justify-start items-center select-none min-w-0",
                         {
                             "bg-tag-default-light dark:bg-tag-default-dark text-text-primary-light dark:text-text-primary-dark":
                                 isHovering,
