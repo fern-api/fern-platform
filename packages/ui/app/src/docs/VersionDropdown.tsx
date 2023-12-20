@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Fragment } from "react";
 import { CheckIcon } from "../commons/icons/CheckIcon";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
+import { useNavigationContext } from "../navigation-context";
 
 export declare namespace VersionDropdown {
     export interface Props {
@@ -22,6 +23,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
     selectedVersionSlug,
     onClickVersion,
 }) => {
+    const { basePath } = useNavigationContext();
     return (
         <div className="flex w-32">
             <Menu as="div" className="relative inline-block text-left">
@@ -66,7 +68,11 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
                     <Menu.Items className="border-border-primary dark:border-border-primary-dark bg-background dark:bg-background-dark absolute left-0 mt-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md border shadow-lg">
                         <div>
                             {versions.map((v, idx) => {
-                                const { id: versionName, slug: versionSlug, availability } = v.info;
+                                const { id: versionName, availability } = v.info;
+                                const versionSlug =
+                                    basePath != null && basePath.trim().length > 1
+                                        ? `${basePath.trim()}/${v.slug}`
+                                        : `/${v.slug}`;
                                 return (
                                     <Menu.Item key={idx}>
                                         {({ active }) => (
@@ -76,15 +82,15 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
                                                     {
                                                         "bg-tag-primary dark:bg-tag-primary-dark": active,
                                                         "text-accent-primary dark:text-accent-primary-dark hover:text-accent-primary dark:hover:text-accent-primary-dark":
-                                                            versionSlug === selectedVersionSlug ||
-                                                            (active && versionSlug !== selectedVersionSlug),
+                                                            v.slug === selectedVersionSlug ||
+                                                            (active && v.slug !== selectedVersionSlug),
                                                         "text-text-muted-light dark:text-text-muted-dark hover:text-text-muted-light dark:hover:text-text-muted-dark":
-                                                            !active && versionSlug !== selectedVersionSlug,
+                                                            !active && v.slug !== selectedVersionSlug,
                                                         "rounded-t-md": idx === 0,
                                                         "rounded-b-md": idx === versions.length - 1,
                                                     }
                                                 )}
-                                                href={`/${versionSlug}`}
+                                                href={versionSlug}
                                                 onClick={() => onClickVersion(versionSlug)}
                                             >
                                                 <div className="flex items-center space-x-2">
@@ -95,9 +101,9 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
                                                                 "rounded px-1 py-0.5 text-[11px] border",
                                                                 {
                                                                     "bg-accent-highlight border-transparent":
-                                                                        versionSlug === selectedVersionSlug && !active,
+                                                                        v.slug === selectedVersionSlug && !active,
                                                                     "bg-tag-default-light dark:bg-tag-default-dark border-transparent":
-                                                                        versionSlug !== selectedVersionSlug && !active,
+                                                                        v.slug !== selectedVersionSlug && !active,
                                                                 },
                                                                 {
                                                                     "border-accent-primary/75 dark:border-accent-primary-dark/75":
@@ -111,8 +117,8 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
                                                 </div>
                                                 <CheckIcon
                                                     className={classNames("h-3 w-3", {
-                                                        visible: versionSlug === selectedVersionSlug,
-                                                        invisible: versionSlug !== selectedVersionSlug,
+                                                        visible: v.slug === selectedVersionSlug,
+                                                        invisible: v.slug !== selectedVersionSlug,
                                                     })}
                                                 />
                                             </Link>
