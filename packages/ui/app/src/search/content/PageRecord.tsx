@@ -41,7 +41,7 @@ export const PageRecord: React.FC<PageRecord.Props> = ({ hit, isHovered }) => {
                         hit={hit}
                     />
                     <div
-                        className={classNames("text-xs uppercase tracking-widest", {
+                        className={classNames("text-sm uppercase tracking-widest", {
                             "text-text-disabled-light dark:text-text-disabled-dark": !isHovered,
                             "text-white dark:text-black": isHovered,
                         })}

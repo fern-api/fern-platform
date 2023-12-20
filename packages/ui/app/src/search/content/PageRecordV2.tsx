@@ -15,7 +15,7 @@ export const PageRecordV2: React.FC<PageRecordV2.Props> = ({ hit, isHovered }) =
         <div className="flex w-full flex-col space-y-1.5">
             <div className="flex justify-between">
                 <span
-                    className={classNames("line-clamp-1 text-xs text-start", {
+                    className={classNames("line-clamp-1 text-sm text-start", {
                         "text-text-primary-light dark:text-text-primary-dark": !isHovered,
                         "text-white dark:text-black": isHovered,
                     })}
@@ -23,7 +23,7 @@ export const PageRecordV2: React.FC<PageRecordV2.Props> = ({ hit, isHovered }) =
                     {hit.title}
                 </span>
                 <div
-                    className={classNames("text-xs tracking-wide", {
+                    className={classNames("text-sm tracking-wide", {
                         "t-muted": !isHovered,
                         "text-white dark:text-black": isHovered,
                     })}
