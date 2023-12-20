@@ -78,7 +78,7 @@ const BODY_FONT_FALLBACK =
 
 const MONO_FONT_FALLBACK = "Menlo, Monaco, monospace";
 
-export function generateFontFaces(generationConfiguration: GenerationFontConfigs): string {
+export function generateFontFaces(generationConfiguration: GenerationFontConfigs, basePath?: string): string {
     const fontFaces: string[] = [];
     let codeFontFaceSet = false;
     let headingFontFaceSet = false;
@@ -150,7 +150,9 @@ export function generateFontFaces(generationConfiguration: GenerationFontConfigs
         const codeBlockFontFace = `
 @font-face {
     font-family: "Berkeley Mono";
-    src: local("Berkeley Mono"), url("./fonts/BerkeleyMono-Regular.woff2") format("woff2");
+    src: local("Berkeley Mono"), url("${
+        basePath != null ? `/${basePath}` : ""
+    }/fonts/BerkeleyMono-Regular.woff2") format("woff2");
     font-style: normal;
     font-display: swap;
     ascent-override: 100%;
