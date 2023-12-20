@@ -11,7 +11,6 @@ export declare namespace EndpointErrorsSection {
             index: number,
             event: React.MouseEvent<HTMLButtonElement>
         ) => void;
-        selectError: (e: FdrAPI.api.v1.read.ErrorDeclarationV2, index: number) => void;
         selectedErrorIndex: number | null;
         anchorIdParts: string[];
         route: string;
@@ -24,7 +23,6 @@ export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
     selectedErrorIndex,
     onHoverProperty,
     onClickError,
-    selectError,
     anchorIdParts,
     route,
     defaultExpandAll = false,
@@ -40,7 +38,6 @@ export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
                         isLast={idx === errors.length - 1}
                         isSelected={idx === selectedErrorIndex}
                         onClick={(event) => onClickError(error, idx, event)}
-                        select={() => selectError(error, idx)}
                         onHoverProperty={onHoverProperty}
                         anchorIdParts={[...anchorIdParts, `${idx}`]}
                         route={route}

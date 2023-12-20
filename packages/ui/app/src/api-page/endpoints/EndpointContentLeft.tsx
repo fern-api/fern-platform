@@ -166,7 +166,6 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     event.stopPropagation();
                                     setSelectedErrorIndex(idx);
                                 }}
-                                selectError={(_, idx) => setSelectedErrorIndex(idx)}
                                 onHoverProperty={onHoverResponseProperty}
                                 selectedErrorIndex={selectedErrorIndex}
                                 anchorIdParts={[...anchorIdParts, "errors"]}
