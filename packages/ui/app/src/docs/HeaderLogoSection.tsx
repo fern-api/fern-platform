@@ -69,8 +69,8 @@ export const HeaderLogoSection: React.FC = () => {
                         selectedVersionName={activeVersionId}
                         selectedVersionSlug={activeVersionSlug}
                         onClickVersion={(versionSlug) => {
-                            navigateToPath(versionSlug);
-                            void router.replace(`/${versionSlug}`, undefined, { shallow: true });
+                            navigateToPath(versionSlug.slice(1));
+                            void router.push(versionSlug, undefined, { shallow: true });
                         }}
                     />
                 </div>

@@ -151,7 +151,7 @@ export function generateFontFaces(generationConfiguration: GenerationFontConfigs
 @font-face {
     font-family: "Berkeley Mono";
     src: local("Berkeley Mono"), url("${
-        basePath != null ? `/${basePath}` : ""
+        basePath != null && basePath.trim().length > 1 ? basePath : ""
     }/fonts/BerkeleyMono-Regular.woff2") format("woff2");
     font-style: normal;
     font-display: swap;
