@@ -158,7 +158,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                             route={route}
                             expandAll={errorExpandAll.setTrue}
                             collapseAll={errorExpandAll.setFalse}
-                            showExpandCollapse={true}
+                            showExpandCollapse={false}
                         >
                             <EndpointErrorsSection
                                 errors={errors}

@@ -2,11 +2,13 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
-import React, { useCallback, useMemo, useState } from "react";
+import { useRouter } from "next/router";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { HEADER_HEIGHT } from "../../constants";
 import { useNavigationContext } from "../../navigation-context";
+import { getAnchorId } from "../../util/anchor";
 import { useViewportContext } from "../../viewport-context/useViewportContext";
 import { type CodeExampleClient } from "../examples/code-example";
 import { getCurlLines } from "../examples/curl-example/curlUtils";
@@ -81,6 +83,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     anchorIdParts,
     route,
 }) => {
+    const router = useRouter();
     const { layoutBreakpoint, viewportSize } = useViewportContext();
     const { navigateToPath } = useNavigationContext();
     const [isInViewport, setIsInViewport] = useState(false);
@@ -106,6 +109,16 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     const [storedSelectedExampleClientId, setSelectedExampleClientId] = useAtom(fernClientIdAtom);
     const [selectedErrorIndex, setSelectedErrorIndex] = useState<number | null>(null);
+
+    useEffect(() => {
+        const currentAnchor = router.asPath.split("#")[1];
+        const errorAnchor = getAnchorId([...anchorIdParts, "errors"]);
+        if (currentAnchor != null && currentAnchor.startsWith(`${errorAnchor}-`)) {
+            const idx = Number(currentAnchor.substring(errorAnchor.length + 1).split("-")[0]);
+            setSelectedErrorIndex(idx);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const errors = useMemo(() => {
         return [...(endpoint.errorsV2 ?? [])]

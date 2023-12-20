@@ -2,7 +2,7 @@ import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import { memo, MouseEventHandler, ReactElement, useEffect } from "react";
+import { memo, MouseEventHandler, ReactElement } from "react";
 import { getAnchorId } from "../../util/anchor";
 import { toTitleCase } from "../../util/string";
 import { type JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
@@ -45,11 +45,11 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
     const router = useRouter();
     const anchorIdSoFar = getAnchorId(anchorIdParts);
 
-    useEffect(() => {
-        if (router.asPath.startsWith(`${route}#${anchorIdSoFar}-`)) {
-            select();
-        }
-    }, [anchorIdSoFar, select, router.asPath, route]);
+    // useEffect(() => {
+    //     if (router.asPath.startsWith(`${route}#${anchorIdSoFar}-`)) {
+    //         select();
+    //     }
+    // }, [anchorIdSoFar, select, router.asPath, route]);
 
     return (
         <button
