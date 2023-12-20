@@ -124,7 +124,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
 
     useEffect(() => {
         setCollapsed(!defaultExpandAll);
-    }, [defaultExpandAll, matchesAnchorLink, setCollapsed]);
+    }, [defaultExpandAll, setCollapsed]);
 
     useEffect(() => {
         setCollapsed(!matchesAnchorLink && !defaultExpandAll);
@@ -176,7 +176,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                     <div
                         {...containerCallbacks}
                         className={classNames(
-                            "flex gap-1 items-center rounded border-b hover:bg-tag-default-light dark:hover:bg-tag-default-dark cursor-pointer px-2 py-1 transition t-muted",
+                            "text-sm flex gap-1 items-center rounded border-b hover:bg-tag-default-light dark:hover:bg-tag-default-dark cursor-pointer px-2 py-1 transition t-muted",
                             {
                                 "border-transparent": isCollapsed,
                                 "border-concealed": !isCollapsed,
