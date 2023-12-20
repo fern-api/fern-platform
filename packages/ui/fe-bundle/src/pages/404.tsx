@@ -6,7 +6,7 @@ import { buildUrl } from "../utils/buildUrl";
 
 export declare namespace NotFoundPage {
     export interface Props {
-        basePath: string | undefined;
+        basePath: string | null;
     }
 }
 
@@ -29,7 +29,7 @@ export const getStaticProps: GetStaticProps<NotFoundPage.Props> = async ({ param
     });
     const basePath = docs.ok ? docs.body.baseUrl.basePath : undefined;
     return {
-        props: { basePath },
+        props: { basePath: basePath ?? null },
         revalidate: 60,
     };
 };
