@@ -30,10 +30,16 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
     const anchorId = getAnchorId(anchorIdParts);
     const anchorRoute = `${route}#${anchorId}`;
     return (
-        <div data-route={anchorRoute} className="group/anchor-container relative flex scroll-mt-16 flex-col gap-2 py-3">
-            <AbsolutelyPositionedAnchor verticalPosition="default" href={anchorRoute} />
+        <div
+            data-route={anchorRoute}
+            id={anchorId}
+            className="group/anchor-container relative flex scroll-mt-20 flex-col gap-2 py-3"
+        >
+            <AbsolutelyPositionedAnchor href={anchorRoute} />
             <div className="flex items-baseline gap-1">
-                <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">{name}</MonospaceText>
+                <MonospaceText className="text-text-primary-light dark:text-text-primary-dark text-sm">
+                    {name}
+                </MonospaceText>
                 <div className="t-muted text-xs">
                     <TypeShorthand type={type} plural={false} />
                 </div>

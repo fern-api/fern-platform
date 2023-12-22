@@ -1,9 +1,7 @@
 import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
-import { useRouter } from "next/router";
-import { memo, MouseEventHandler, ReactElement, useEffect } from "react";
-import { getAnchorId } from "../../util/anchor";
+import { memo, MouseEventHandler, ReactElement } from "react";
 import { toTitleCase } from "../../util/string";
 import { type JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { TypeDefinitionContextProvider } from "../types/context/TypeDefinitionContextProvider";
@@ -20,7 +18,6 @@ export declare namespace EndpointError {
         isLast: boolean;
         isSelected: boolean;
         onClick: MouseEventHandler<HTMLButtonElement>;
-        select: () => void;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: string[];
         route: string;
@@ -36,21 +33,11 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
     isSelected,
     onHoverProperty,
     onClick,
-    select,
     anchorIdParts,
     route,
     availability,
     defaultExpandAll = false,
 }) {
-    const router = useRouter();
-    const anchorIdSoFar = getAnchorId(anchorIdParts);
-
-    useEffect(() => {
-        if (router.asPath.startsWith(`${route}#${anchorIdSoFar}-`)) {
-            select();
-        }
-    }, [anchorIdSoFar, select, router.asPath, route]);
-
     return (
         <button
             className={classNames(
@@ -82,7 +69,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
 
             {isSelected && error.type != null && (
                 <div className="w-full pb-3">
-                    <div className="t-muted mt-3 w-full text-start text-sm font-light leading-7">
+                    <div className="t-muted mt-3 w-full text-start text-sm leading-7">
                         This error returns{" "}
                         {visitDiscriminatedUnion(error.type, "type")._visit<string | ReactElement>({
                             alias: (type) => (

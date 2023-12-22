@@ -52,16 +52,14 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     const errorExpandAll = useBooleanState(false);
     return (
         <>
-            <div className="pb-2 pt-8">
+            <div className="space-y-2.5 pb-2 pt-8">
                 {isSubpackage(package_) && (
-                    <div className="text-accent-primary mb-4 text-xs font-semibold uppercase tracking-wider">
+                    <div className="text-accent-primary dark:text-accent-primary-dark text-xs font-semibold uppercase tracking-wider">
                         {getSubpackageTitle(package_)}
                     </div>
                 )}
                 <div>
-                    <span className="typography-font-heading text-text-primary-light dark:text-text-primary-dark text-3xl font-bold">
-                        {getEndpointTitleAsString(endpoint)}
-                    </span>
+                    <h2 className="mt-0 inline-block text-2xl sm:text-3xl">{getEndpointTitleAsString(endpoint)}</h2>
                     {endpoint.availability != null && (
                         <span className="relative">
                             <EndpointAvailabilityTag
@@ -75,7 +73,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
             <EndpointUrlWithOverflow endpoint={endpoint} />
             <ApiPageDescription className="mt-3" description={endpoint.description} isMarkdown={true} />
             <div className="mt-8 flex">
-                <div className="flex flex-1 flex-col gap-12">
+                <div className="flex max-w-full flex-1 flex-col  gap-12">
                     {endpoint.path.pathParameters.length > 0 && (
                         <PathParametersSection
                             pathParameters={endpoint.path.pathParameters}
@@ -160,7 +158,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                             route={route}
                             expandAll={errorExpandAll.setTrue}
                             collapseAll={errorExpandAll.setFalse}
-                            showExpandCollapse={true}
+                            showExpandCollapse={false}
                         >
                             <EndpointErrorsSection
                                 errors={errors}
@@ -168,7 +166,6 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     event.stopPropagation();
                                     setSelectedErrorIndex(idx);
                                 }}
-                                selectError={(_, idx) => setSelectedErrorIndex(idx)}
                                 onHoverProperty={onHoverResponseProperty}
                                 selectedErrorIndex={selectedErrorIndex}
                                 anchorIdParts={[...anchorIdParts, "errors"]}

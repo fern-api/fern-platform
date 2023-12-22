@@ -8,6 +8,7 @@ type SearchProps = {
     handleSearchInput: (value: string) => void;
     border?: boolean; //This is used to display a rounded border
     clear?: boolean; //This will show/hide the default search input clear (X) button
+    autofocus?: boolean;
 };
 
 export const SearchInput = ({
@@ -15,16 +16,17 @@ export const SearchInput = ({
     handleSearchInput,
     border = true,
     clear = true,
+    autofocus = false,
 }: SearchProps): ReactElement => {
     return (
         <div
-            className={classNames("border-default rounded-md w-full flex gap-2 p-1.5", {
+            className={classNames("border-default rounded-md w-full flex gap-2 p-1.5 items-center", {
                 border,
             })}
         >
             <Icon icon={IconNames.SEARCH} className="t-muted" />
             <input
-                autoFocus
+                autoFocus={autofocus}
                 type={clear ? "search" : "text"}
                 placeholder="Search..."
                 value={searchInput}

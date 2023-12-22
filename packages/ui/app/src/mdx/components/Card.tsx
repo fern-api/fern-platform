@@ -19,7 +19,7 @@ export const Card: React.FC<Card.Props> = ({ title, icon, iconPosition = "top", 
     const isUrlOnThisPage = typeof href === "string" && href.startsWith("#");
 
     const className = classNames(
-        "border-border-default-light dark:border-border-default-dark bg-background-tertiary-light dark:bg-background-tertiary-dark flex items-start rounded-lg border p-4 !no-underline hover:transition mb-4",
+        "text-sm border-black/20 dark:border-white/20 bg-white/70 dark:bg-white/5 flex items-start rounded-lg border p-4 !no-underline hover:transition mb-4",
         "grow basis-1/4",
         {
             "space-y-3 flex-col": iconPosition === "top",
@@ -34,7 +34,7 @@ export const Card: React.FC<Card.Props> = ({ title, icon, iconPosition = "top", 
         <>
             <FontAwesomeIcon className="text-intent-default dark:text-intent-default h-5 w-5" icon={icon} />
             <div>
-                <div className="text-text-primary-light dark:text-text-primary-dark font-normal">{title}</div>
+                <div className="text-text-primary-light dark:text-text-primary-dark">{title}</div>
                 {children != null && <div className="t-muted mt-1">{children}</div>}
             </div>
         </>

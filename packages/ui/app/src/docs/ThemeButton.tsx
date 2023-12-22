@@ -1,11 +1,8 @@
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { Theme, useTheme } from "@fern-ui/theme";
+import { useMounted } from "@fern-ui/react-commons";
 import classNames from "classnames";
-import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 import { MoonIcon } from "../commons/icons/MoonIcon";
 import { SunIcon } from "../commons/icons/SunIcon";
-import { useDocsContext } from "../docs-context/useDocsContext";
 
 export declare namespace ThemeButton {
     export interface Props {
@@ -13,40 +10,20 @@ export declare namespace ThemeButton {
     }
 }
 
-export const Core: React.FC<ThemeButton.Props> = ({ className }) => {
-    const { docsDefinition } = useDocsContext();
-    const { theme, setTheme } = useTheme(docsDefinition.config.colorsV3.type);
+export const ThemeButton: React.FC<ThemeButton.Props> = ({ className }) => {
+    const { resolvedTheme, setTheme } = useTheme();
+    const mounted = useMounted();
 
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    if (!mounted) {
-        return null;
-    }
+    const IconToUse = mounted && resolvedTheme === "dark" ? MoonIcon : SunIcon;
 
     return (
         <button
             className={classNames("group flex w-9 items-center justify-center self-stretch", className)}
             onClick={() => {
-                setTheme(theme === "dark" ? "light" : "dark");
+                setTheme(resolvedTheme === "dark" ? "light" : "dark");
             }}
         >
-            {visitDiscriminatedUnion({ theme: theme as Theme }, "theme")._visit({
-                dark: () => (
-                    <MoonIcon className="text-intent-default group-hover:text-text-primary-dark h-4 w-4 transition" />
-                ),
-                light: () => (
-                    <SunIcon className="text-intent-default group-hover:text-text-primary-light h-4 w-4 transition" />
-                ),
-                _other: () => null,
-            })}
+            <IconToUse className="text-intent-default group-hover:text-text-primary-light group-hover:dark:text-text-primary-dark h-4 w-4 transition" />
         </button>
     );
 };
-
-export const ThemeButton = dynamic(() => Promise.resolve(Core), {
-    ssr: false,
-});

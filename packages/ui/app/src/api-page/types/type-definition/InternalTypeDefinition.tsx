@@ -1,14 +1,14 @@
-import { Collapse } from "@blueprintjs/core";
+import { Collapse, Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import React, { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
-import { BlueprintIcon } from "../../../commons/BlueprintIcon";
 import { Chip } from "../../../components/common/Chip";
+import { useNavigationContext } from "../../../navigation-context";
 import { getAnchorId } from "../../../util/anchor";
 import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
 import {
@@ -47,6 +47,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     route,
     defaultExpandAll = false,
 }) => {
+    const { hydrated } = useNavigationContext();
     const { resolveTypeById } = useApiDefinitionContext();
     const router = useRouter();
 
@@ -80,7 +81,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                             <UndiscriminatedUnionVariant
                                 key={variantIdx}
                                 unionVariant={variant}
-                                anchorIdParts={anchorIdParts}
+                                anchorIdParts={[...anchorIdParts, variant.displayName ?? variantIdx.toString()]}
                                 applyErrorStyles={false}
                                 route={route}
                                 defaultExpandAll={defaultExpandAll}
@@ -96,7 +97,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                             key={variant.discriminantValue}
                             discriminant={union.discriminant}
                             unionVariant={variant}
-                            anchorIdParts={anchorIdParts}
+                            anchorIdParts={[...anchorIdParts, variant.discriminantValue]}
                             route={route}
                             defaultExpandAll={defaultExpandAll}
                         />
@@ -119,35 +120,24 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     );
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);
+    const matchesAnchorLink = router.asPath.startsWith(`${route}#${anchorIdSoFar}-`);
+    const onlyOneProperty = collapsableContent?.elements.length === 1;
     const {
         value: isCollapsed,
         toggleValue: toggleIsCollapsed,
         setValue: setCollapsed,
-    } = useBooleanState(!router.asPath.startsWith(`${route}#${anchorIdSoFar}-`) || !defaultExpandAll);
+    } = useBooleanState(!defaultExpandAll && !onlyOneProperty);
 
     useEffect(() => {
-        setCollapsed(!defaultExpandAll);
-    }, [defaultExpandAll, setCollapsed]);
+        setCollapsed(!defaultExpandAll && !onlyOneProperty);
+    }, [defaultExpandAll, onlyOneProperty, setCollapsed]);
+
+    useEffect(() => {
+        setCollapsed(!matchesAnchorLink && !defaultExpandAll && !onlyOneProperty);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const { isHovering, ...containerCallbacks } = useIsHovering();
-
-    // we need to set a pixel width for the button for the transition to work
-    const [originalButtonWidth, setOriginalButtonWidth] = useState<number>();
-    const [buttonRef, setButtonRef] = useState<HTMLDivElement | null>(null);
-    useEffect(() => {
-        if (originalButtonWidth != null || buttonRef == null) {
-            return;
-        }
-
-        // in case we're being expanded right now, wait for animation to finish
-        const timeout = setTimeout(() => {
-            setOriginalButtonWidth(buttonRef.getBoundingClientRect().width);
-        }, 500);
-
-        return () => {
-            clearTimeout(timeout);
-        };
-    }, [buttonRef, originalButtonWidth]);
 
     const contextValue = useTypeDefinitionContext();
     const collapsibleContentContextValue = useCallback(
@@ -181,16 +171,28 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
             : `Hide ${collapsableContent.elements.length} ${collapsableContent.elementNamePlural}`;
 
     return (
-        <div className="mt-2 flex flex-col">
-            <div className="flex flex-col items-start">
-                {collapsableContent.elementNameSingular !== "enum value" ? (
-                    <div
-                        className="border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded border"
-                        style={{
-                            width: isCollapsed ? originalButtonWidth : "100%",
-                        }}
-                        ref={setButtonRef}
-                    >
+        <div
+            className={classNames(
+                "text-sm",
+                styles.internalTypeDefinitionContainer,
+                collapsableContent.elementNameSingular === "enum value" ? styles.enumContainer : undefined
+            )}
+            data-expanded={!isCollapsed}
+        >
+            {collapsableContent.elementNameSingular !== "enum value" ? (
+                <div
+                    className={classNames(
+                        styles.internalTypeDefinitionContent,
+                        "border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded border",
+                        {
+                            "w-full": !isCollapsed,
+                            "w-fit": isCollapsed,
+                            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                            [styles.expanded!]: !isCollapsed,
+                        }
+                    )}
+                >
+                    {collapsableContent.elements.length > 1 && (
                         <div
                             {...containerCallbacks}
                             className={classNames(
@@ -205,7 +207,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                                 e.stopPropagation();
                             }}
                         >
-                            <BlueprintIcon
+                            <Icon
                                 className={classNames("transition", {
                                     "rotate-45": isCollapsed,
                                 })}
@@ -218,26 +220,25 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                                 {isCollapsed ? showText : hideText}
                             </div>
                         </div>
-                        <Collapse isOpen={!isCollapsed}>
-                            <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
-                                <TypeDefinitionDetails
-                                    elements={collapsableContent.elements}
-                                    separatorText={collapsableContent.separatorText}
-                                />
-                            </TypeDefinitionContext.Provider>
-                        </Collapse>
-                    </div>
-                ) : (
-                    <EnumTypeDefinition
-                        elements={collapsableContent.elements}
-                        isCollapsed={isCollapsed}
-                        originalButtonWidth={originalButtonWidth}
-                        toggleIsCollapsed={toggleIsCollapsed}
-                        collapsibleContentContextValue={collapsibleContentContextValue}
-                        showText={showText}
-                    />
-                )}
-            </div>
+                    )}
+                    <Collapse isOpen={!isCollapsed} transitionDuration={!hydrated ? 0 : 200}>
+                        <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
+                            <TypeDefinitionDetails
+                                elements={collapsableContent.elements}
+                                separatorText={collapsableContent.separatorText}
+                            />
+                        </TypeDefinitionContext.Provider>
+                    </Collapse>
+                </div>
+            ) : (
+                <EnumTypeDefinition
+                    elements={collapsableContent.elements}
+                    isCollapsed={isCollapsed}
+                    toggleIsCollapsed={toggleIsCollapsed}
+                    collapsibleContentContextValue={collapsibleContentContextValue}
+                    showText={showText}
+                />
+            )}
         </div>
     );
 };

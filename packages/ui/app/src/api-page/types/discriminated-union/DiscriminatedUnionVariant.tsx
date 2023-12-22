@@ -73,7 +73,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                 "px-3": !isRootTypeDefinition,
             })}
         >
-            <MonospaceText className="text-text-primary-light dark:text-text-primary-dark">
+            <MonospaceText className="text-text-primary-light dark:text-text-primary-dark text-sm">
                 {startCase(unionVariant.discriminantValue)}
             </MonospaceText>
             {unionVariant.availability != null && (

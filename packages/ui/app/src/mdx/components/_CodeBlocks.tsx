@@ -2,7 +2,6 @@ import classNames from "classnames";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
-import { useDocsContext } from "../../docs-context/useDocsContext";
 import type { CodeBlockItem } from "./common/types";
 
 const CodeBlockSkeleton = dynamic(
@@ -17,7 +16,6 @@ export declare namespace _CodeBlocks {
 }
 
 export const _CodeBlocks: React.FC<React.PropsWithChildren<_CodeBlocks.Props>> = ({ items }) => {
-    const { theme } = useDocsContext();
     const [selectedTabIndex, setSelectedTabIndex] = useState(0);
     const codeBlockItem = items[selectedTabIndex];
     if (codeBlockItem == null) {
@@ -46,7 +44,6 @@ export const _CodeBlocks: React.FC<React.PropsWithChildren<_CodeBlocks.Props>> =
             </div>
             <CodeBlockSkeleton
                 className="max-h-[350px] overflow-y-auto"
-                theme={theme}
                 language={codeBlockItem.language}
                 content={codeBlockItem.content}
                 fontSize="lg"

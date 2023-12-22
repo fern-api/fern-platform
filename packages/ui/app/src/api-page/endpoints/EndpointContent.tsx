@@ -2,12 +2,13 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
-import React, { useCallback, useMemo, useState } from "react";
+import { useRouter } from "next/router";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { HEADER_HEIGHT } from "../../constants";
-import { useDocsContext } from "../../docs-context/useDocsContext";
 import { useNavigationContext } from "../../navigation-context";
+import { getAnchorId } from "../../util/anchor";
 import { useViewportContext } from "../../viewport-context/useViewportContext";
 import { type CodeExampleClient } from "../examples/code-example";
 import { getCurlLines } from "../examples/curl-example/curlUtils";
@@ -82,6 +83,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     anchorIdParts,
     route,
 }) => {
+    const router = useRouter();
     const { layoutBreakpoint, viewportSize } = useViewportContext();
     const { navigateToPath } = useNavigationContext();
     const [isInViewport, setIsInViewport] = useState(false);
@@ -89,7 +91,6 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         onChange: setIsInViewport,
         rootMargin: "100%",
     });
-    const { theme } = useDocsContext();
     const { apiSection, apiDefinition } = useApiDefinitionContext();
     const [hoveredRequestPropertyPath, setHoveredRequestPropertyPath] = useState<JsonPropertyPath | undefined>();
     const [hoveredResponsePropertyPath, setHoveredResponsePropertyPath] = useState<JsonPropertyPath | undefined>();
@@ -108,6 +109,16 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     const [storedSelectedExampleClientId, setSelectedExampleClientId] = useAtom(fernClientIdAtom);
     const [selectedErrorIndex, setSelectedErrorIndex] = useState<number | null>(null);
+
+    useEffect(() => {
+        const currentAnchor = router.asPath.split("#")[1];
+        const errorAnchor = getAnchorId([...anchorIdParts, "errors"]);
+        if (currentAnchor != null && currentAnchor.startsWith(`${errorAnchor}-`)) {
+            const idx = Number(currentAnchor.substring(errorAnchor.length + 1).split("-")[0]);
+            setSelectedErrorIndex(idx);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const errors = useMemo(() => {
         return [...(endpoint.errorsV2 ?? [])]
@@ -195,14 +206,14 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     return (
         <div
-            className={classNames("pb-20 pl-6 md:pl-12 pr-4 scroll-mt-16", {
+            className={classNames("pb-20 pl-6 md:pl-12 pr-4 scroll-mt-20", {
                 "border-border-default-light dark:border-border-default-dark border-b": !hideBottomSeparator,
             })}
             onClick={() => setSelectedErrorIndex(null)}
             ref={containerRef}
         >
             <div
-                className="flex min-w-0 flex-1 scroll-mt-16 flex-col justify-between lg:flex-row lg:space-x-[4vw]"
+                className="flex min-w-0 flex-1 scroll-mt-20 flex-col justify-between lg:flex-row lg:space-x-[4vw]"
                 ref={setContainerRef}
                 data-route={route}
             >
@@ -240,7 +251,6 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                 >
                     {isInViewport && example != null && (
                         <EndpointContentCodeSnippets
-                            theme={theme}
                             example={example}
                             availableExampleClients={availableExampleClients}
                             selectedExampleClient={selectedExampleClient}

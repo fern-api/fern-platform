@@ -1,13 +1,13 @@
-import { Collapse } from "@blueprintjs/core";
+import { Collapse, Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import React, { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
-import { BlueprintIcon } from "../../../commons/BlueprintIcon";
+import { useNavigationContext } from "../../../navigation-context";
 import { getAnchorId } from "../../../util/anchor";
 import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
 import {
@@ -46,6 +46,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
     route,
     defaultExpandAll = false,
 }) => {
+    const { hydrated } = useNavigationContext();
     const { resolveTypeById } = useApiDefinitionContext();
     const router = useRouter();
 
@@ -114,35 +115,23 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
     );
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);
+    const matchesAnchorLink = router.asPath.startsWith(`${route}#${anchorIdSoFar}-`);
     const {
         value: isCollapsed,
         toggleValue: toggleIsCollapsed,
         setValue: setCollapsed,
-    } = useBooleanState(!router.asPath.startsWith(`${route}#${anchorIdSoFar}-`));
+    } = useBooleanState(!defaultExpandAll);
 
     useEffect(() => {
         setCollapsed(!defaultExpandAll);
     }, [defaultExpandAll, setCollapsed]);
 
-    const { isHovering, ...containerCallbacks } = useIsHovering();
-
-    // we need to set a pixel width for the button for the transition to work
-    const [originalButtonWidth, setOriginalButtonWidth] = useState<number>();
-    const [buttonRef, setButtonRef] = useState<HTMLDivElement | null>(null);
     useEffect(() => {
-        if (originalButtonWidth != null || buttonRef == null) {
-            return;
-        }
+        setCollapsed(!matchesAnchorLink && !defaultExpandAll);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-        // in case we're being expanded right now, wait for animation to finish
-        const timeout = setTimeout(() => {
-            setOriginalButtonWidth(buttonRef.getBoundingClientRect().width);
-        }, 500);
-
-        return () => {
-            clearTimeout(timeout);
-        };
-    }, [buttonRef, originalButtonWidth]);
+    const { isHovering, ...containerCallbacks } = useIsHovering();
 
     const contextValue = useTypeDefinitionContext();
     const collapsibleContentContextValue = useCallback(
@@ -179,16 +168,15 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
         <div className="mt-2 flex flex-col">
             <div className="flex flex-col items-start">
                 <div
-                    className="border-default flex flex-col overflow-visible rounded border"
-                    style={{
-                        width: isCollapsed ? originalButtonWidth : "100%",
-                    }}
-                    ref={setButtonRef}
+                    className={classNames("border-default flex flex-col overflow-visible rounded border", {
+                        "w-full": !isCollapsed,
+                        "w-fit": isCollapsed,
+                    })}
                 >
                     <div
                         {...containerCallbacks}
                         className={classNames(
-                            "flex gap-1 items-center rounded border-b hover:bg-tag-default-light dark:hover:bg-tag-default-dark cursor-pointer px-2 py-1 transition t-muted",
+                            "text-sm flex gap-1 items-center rounded border-b hover:bg-tag-default-light dark:hover:bg-tag-default-dark cursor-pointer px-2 py-1 transition t-muted",
                             {
                                 "border-transparent": isCollapsed,
                                 "border-concealed": !isCollapsed,
@@ -199,7 +187,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                             e.stopPropagation();
                         }}
                     >
-                        <BlueprintIcon
+                        <Icon
                             className={classNames("transition", {
                                 "rotate-45": isCollapsed,
                             })}
@@ -212,7 +200,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                             {isCollapsed ? showText : hideText}
                         </div>
                     </div>
-                    <Collapse isOpen={!isCollapsed}>
+                    <Collapse isOpen={!isCollapsed} transitionDuration={!hydrated ? 0 : 200}>
                         <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
                             <TypeDefinitionDetails
                                 elements={collapsableContent.elements}

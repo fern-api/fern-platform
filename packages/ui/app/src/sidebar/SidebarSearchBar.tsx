@@ -1,54 +1,38 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { type Theme } from "@fern-ui/theme";
 import classNames from "classnames";
-import { memo, useEffect, useState, type MouseEventHandler } from "react";
+import { memo, type MouseEventHandler } from "react";
 import { SearchIcon } from "../commons/icons/SearchIcon";
 import { PlatformSpecificContent } from "../commons/PlatformSpecificContent";
 
 export declare namespace SidebarSearchBar {
     export interface Props {
-        theme: Theme | undefined;
         onClick: MouseEventHandler<HTMLButtonElement>;
     }
 }
 
 export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = memo(function UnmemoizedSidebarSearchBar({
-    theme,
     onClick,
 }) {
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    if (!mounted) {
-        return null;
-    }
-
     return (
         <button
             onClick={onClick}
             className={classNames(
-                "dark:border-border-default-dark border-border-default-light group flex items-center rounded-lg border px-2.5 py-2",
-                {
-                    "bg-background-primary-dark hover:bg-background-hover-dark": theme === "dark",
-                    "bg-background-primary-light hover:bg-background-hover-light": theme === "light",
-                }
+                "text-sm dark:border-white/20 border-black/20 group flex items-center rounded-lg border px-2.5 py-2",
+                "bg-background-primary-light hover:bg-background-hover-light dark:bg-background-primary-dark dark:hover:bg-background-hover-dark"
             )}
         >
             <div className="flex items-center space-x-3">
                 <SearchIcon className="text-intent-default h-5 w-5" />
-                <div className="text-text-disabled-light group-hover:text-intent-default dark:text-text-disabled-dark">
+                <div className="text-black/50 group-hover:text-black/50 dark:text-white/50 dark:group-hover:text-white/50">
                     Search...
                 </div>
             </div>
 
             <PlatformSpecificContent>
                 {(platform) => (
-                    <div className="text-text-disabled-light group-hover:text-intent-default dark:text-text-disabled-dark ml-auto text-start text-xs tracking-wide">
+                    <div className="ml-auto text-start text-xs tracking-wide text-black/50 group-hover:text-black/50 dark:text-white/50 dark:group-hover:text-white/50">
                         {visitDiscriminatedUnion({ platform }, "platform")._visit({
-                            mac: () => "CMD+K",
+                            mac: () => "⌘K",
                             windows: () => "CTRL+K",
                             other: () => null,
                             _other: () => null,

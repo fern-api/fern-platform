@@ -1,5 +1,6 @@
+import classNames from "classnames";
+import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { DEFAULT_LOGO_HEIGHT } from "../config";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useNavigationContext } from "../navigation-context";
@@ -11,47 +12,55 @@ export declare namespace HeaderLogoSection {}
 export const HeaderLogoSection: React.FC = () => {
     const router = useRouter();
     const { navigateToPath } = useNavigationContext();
-    const { resolveFile, docsDefinition, theme } = useDocsContext();
+    const { resolveFile, docsDefinition } = useDocsContext();
     const { definitionInfo, activeVersionContext } = useDocsSelectors();
     const { logo, logoV2, logoHeight, logoHref } = docsDefinition.config;
+    const logoImageHeight = logoHeight ?? DEFAULT_LOGO_HEIGHT;
 
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    if (!mounted || theme == null) {
-        return null;
-    }
-
-    const logoForTheme = logoV2 != null ? logoV2[theme] : logo;
     const hasMultipleVersions = definitionInfo.type === "versioned";
     const activeVersionId =
         activeVersionContext.type === "versioned" ? activeVersionContext.version.info.id : undefined;
     const activeVersionSlug =
         activeVersionContext.type === "versioned" ? activeVersionContext.version.info.slug : undefined;
-    const hasLogo = logoForTheme != null;
-    const hasLogoHref = logoHref != null;
 
-    const logoContent = hasLogo ? (
-        <img
-            src={resolveFile(logoForTheme)}
-            className="max-h-full object-contain"
-            style={{
-                height: logoHeight ?? DEFAULT_LOGO_HEIGHT,
-            }}
-        />
-    ) : null;
+    const imageClassName = "max-h-full object-contain";
+
+    const renderLogoContent = () => {
+        if (logoV2 == null) {
+            if (logo != null) {
+                return <img src={resolveFile(logo)} className={imageClassName} style={{ height: logoImageHeight }} />;
+            }
+            return null;
+        } else {
+            return (
+                <>
+                    {logoV2["light"] != null && (
+                        <img
+                            src={resolveFile(logoV2["light"])}
+                            className={classNames(imageClassName, "block dark:hidden")}
+                            style={{ height: logoImageHeight }}
+                        />
+                    )}
+                    {logoV2["dark"] != null && (
+                        <img
+                            src={resolveFile(logoV2["dark"])}
+                            className={classNames(imageClassName, "hidden dark:block")}
+                            style={{ height: logoImageHeight }}
+                        />
+                    )}
+                </>
+            );
+        }
+    };
 
     return (
         <div className="relative flex h-full items-center space-x-3 py-1">
-            {hasLogoHref ? (
-                <a href={logoHref} className="flex items-center">
-                    {logoContent}
-                </a>
+            {logoHref != null ? (
+                <Link href={logoHref} className="flex items-center">
+                    {renderLogoContent()}
+                </Link>
             ) : (
-                <div className="flex items-center">{logoContent}</div>
+                <div className="flex items-center">{renderLogoContent()}</div>
             )}
             {hasMultipleVersions && (
                 <div>
@@ -60,8 +69,8 @@ export const HeaderLogoSection: React.FC = () => {
                         selectedVersionName={activeVersionId}
                         selectedVersionSlug={activeVersionSlug}
                         onClickVersion={(versionSlug) => {
-                            navigateToPath(versionSlug);
-                            void router.replace(`/${versionSlug}`, undefined, { shallow: true });
+                            navigateToPath(versionSlug.slice(1));
+                            void router.push(versionSlug, undefined, { shallow: true });
                         }}
                     />
                 </div>

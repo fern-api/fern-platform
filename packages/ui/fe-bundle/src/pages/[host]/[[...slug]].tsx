@@ -46,6 +46,10 @@ export default function Docs({
                     `}
                 </style>
                 <Head>
+                    <meta
+                        name="viewport"
+                        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+                    />
                     {docs.definition.config.title != null && <title>{docs.definition.config.title}</title>}
                     {docs.definition.config.favicon != null && (
                         <link rel="icon" id="favicon" href={docs.definition.files[docs.definition.config.favicon]} />
@@ -81,7 +85,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
 
     const docsDefinition = docs.body.definition;
     const typographyConfig = loadDocTypography(docsDefinition);
-    const typographyStyleSheet = generateFontFaces(typographyConfig);
+    const typographyStyleSheet = generateFontFaces(typographyConfig, docs.body.baseUrl.basePath);
     const backgroundImageStyleSheet = loadDocsBackgroundImage(docsDefinition);
     type ApiDefinition = APIV1Read.ApiDefinition;
     const resolver = new PathResolver({

@@ -1,10 +1,10 @@
+import { Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import { type DocsNode } from "@fern-api/fdr-sdk";
 import { getFullSlugForNavigatable } from "@fern-ui/app-utils";
 import { assertNever } from "@fern-ui/core-utils";
 import Link from "next/link";
 import { useCallback, useMemo } from "react";
-import { BlueprintIcon } from "../commons/BlueprintIcon";
 import { useNavigationContext } from "../navigation-context";
 
 export declare namespace BottomNavigationButton {
@@ -35,7 +35,7 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
         next: IconNames.CHEVRON_RIGHT,
     });
 
-    const iconElement = <BlueprintIcon icon={iconName} />;
+    const iconElement = <Icon icon={iconName} />;
 
     const onClick = useCallback(() => {
         if (navigatable != null) {
@@ -71,7 +71,7 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
 
     return (
         <Link
-            className="!text-accent-primary/80 hover:!text-accent-primary flex cursor-pointer items-center gap-2 rounded !no-underline transition"
+            className="text-accent-primary/80 dark:text-accent-primary-dark/80 hover:text-accent-primary hover:dark:text-accent-primary-dark flex cursor-pointer items-center gap-2 rounded text-sm !no-underline transition"
             onClick={onClick}
             href={`/${fullSlug}`}
         >

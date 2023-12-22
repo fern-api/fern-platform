@@ -1,16 +1,17 @@
 import { Collapse, Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
+import { useBooleanState } from "@fern-ui/react-commons";
 import classNames from "classnames";
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { Chip } from "../../../components/common/Chip";
 import { SearchInput } from "../../../components/common/SearchInput";
+import { useNavigationContext } from "../../../navigation-context";
 import { TypeDefinitionContext, TypeDefinitionContextValue } from "../context/TypeDefinitionContext";
 import { EnumDefinitionDetails } from "./EnumDefinitionDetails";
 
 type EnumTypeDefinitionProps = {
     elements: ReactElement[];
     isCollapsed: boolean;
-    originalButtonWidth: number | undefined;
     toggleIsCollapsed: () => void;
     collapsibleContentContextValue: () => TypeDefinitionContextValue;
     showText: string;
@@ -21,12 +22,19 @@ export type Ref = React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
 export const EnumTypeDefinition = ({
     elements,
     isCollapsed,
-    originalButtonWidth,
     toggleIsCollapsed,
     collapsibleContentContextValue,
     showText,
 }: EnumTypeDefinitionProps): ReactElement => {
+    const { hydrated } = useNavigationContext();
     const [searchInput, setSearchInput] = useState("");
+    const shouldAutoFocus = useBooleanState(false);
+
+    useEffect(() => {
+        if (isCollapsed) {
+            shouldAutoFocus.setFalse();
+        }
+    }, [isCollapsed, shouldAutoFocus]);
 
     return (
         <>
@@ -41,10 +49,13 @@ export const EnumTypeDefinition = ({
                 </div>
             ) : (
                 <div
-                    className="border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded border"
-                    style={{
-                        width: isCollapsed ? originalButtonWidth : "100%",
-                    }}
+                    className={classNames(
+                        "border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded border",
+                        {
+                            "w-full": !isCollapsed,
+                            "w-fit": isCollapsed,
+                        }
+                    )}
                     // ref={ref}
                 >
                     <div
@@ -58,6 +69,7 @@ export const EnumTypeDefinition = ({
                         onClick={(e) => {
                             e.stopPropagation();
                             toggleIsCollapsed();
+                            shouldAutoFocus.setTrue();
                         }}
                     >
                         {isCollapsed && (
@@ -69,23 +81,19 @@ export const EnumTypeDefinition = ({
                             />
                         )}
 
-                        <div
-                            className="select-none whitespace-nowrap"
-                            style={{ width: "100%" }}
-                            data-show-text={showText}
-                        >
+                        <div className="w-full select-none whitespace-nowrap" data-show-text={showText}>
                             {isCollapsed ? (
                                 showText
                             ) : (
                                 <div className="flex flex-row items-center justify-between">
-                                    <div style={{ width: "95%" }}>
-                                        <SearchInput
-                                            searchInput={searchInput}
-                                            handleSearchInput={setSearchInput}
-                                            border={false}
-                                            clear={false}
-                                        />
-                                    </div>
+                                    <SearchInput
+                                        searchInput={searchInput}
+                                        handleSearchInput={setSearchInput}
+                                        border={false}
+                                        clear={false}
+                                        autofocus={shouldAutoFocus.value}
+                                    />
+
                                     <Icon
                                         className={classNames("transition", {
                                             "rotate-45": isCollapsed,
@@ -96,7 +104,12 @@ export const EnumTypeDefinition = ({
                             )}
                         </div>
                     </div>
-                    <Collapse isOpen={!isCollapsed}>
+                    <Collapse
+                        isOpen={!isCollapsed}
+                        keepChildrenMounted
+                        transitionDuration={!hydrated ? 0 : 200}
+                        className={classNames({ "w-0": isCollapsed })}
+                    >
                         <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
                             <EnumDefinitionDetails elements={elements} searchInput={searchInput} />
                         </TypeDefinitionContext.Provider>

@@ -73,114 +73,124 @@ export function loadDocTypography(docsDefinition: DocsV1Read.DocsDefinition): Ge
     return generationConfiguration;
 }
 
-export function generateFontFaces(generationConfiguration: GenerationFontConfigs): string {
+const BODY_FONT_FALLBACK =
+    "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif";
+
+const MONO_FONT_FALLBACK = "Menlo, Monaco, monospace";
+
+export function generateFontFaces(generationConfiguration: GenerationFontConfigs, basePath?: string): string {
     const fontFaces: string[] = [];
+    let codeFontFaceSet = false;
+    let headingFontFaceSet = false;
+    let bodyFontFace: string | undefined;
 
     for (const fontType in generationConfiguration) {
         const fontConfig = generationConfiguration[fontType as keyof GenerationFontConfigs];
         if (fontConfig != null) {
             if (fontConfig.fontType === "headingsFont") {
                 const fontFace = `
-                @font-face {
-                    font-family: '${fontConfig.fontName}';
-                    src: url('${fontConfig.fontUrl.toString()}') format('${fontConfig.fontExtension}');
-                    font-weight: 700;
-                    font-style: normal;
-                }
-    
-                h1, h2, h3, h4, h5, h6 {
-                    font-family: '${fontConfig.fontName}', sans-serif;
-                }
-    
-                :root {
-                  --typography-heading-font-family: '${fontConfig.fontName}', sans-serif;
-                }
-    
-                .typography-font-heading {
-                  font-family: var(--typography-heading-font-family);
-                }
-              `;
+@font-face {
+    font-family: '${fontConfig.fontName}';
+    src: url('${fontConfig.fontUrl.toString()}') format('${fontConfig.fontExtension}');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+    ascent-override: 100%;
+}
+
+:root {
+    --typography-heading-font-family: '${fontConfig.fontName}', ${BODY_FONT_FALLBACK};
+}
+`;
                 fontFaces.push(fontFace);
+                headingFontFaceSet = true;
             }
 
             if (fontConfig.fontType === "bodyFont") {
                 const fontFace = `
-                @font-face {
-                    font-family: '${fontConfig.fontName}';
-                    src: url('${fontConfig.fontUrl.toString()}') format('${fontConfig.fontExtension}');
-                    font-weight: 400;
-                    font-style: normal;
-                }
-    
-                :root {
-                  --typography-body-font-family: '${fontConfig.fontName}', sans-serif;
-                }
-    
-                html, body {
-                  font-family: var(--typography-body-font-family);
-                }
-              `;
+@font-face {
+    font-family: '${fontConfig.fontName}';
+    src: url('${fontConfig.fontUrl.toString()}') format('${fontConfig.fontExtension}');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+    ascent-override: 100%;
+}
+
+:root {
+    --typography-body-font-family: '${fontConfig.fontName}', ${BODY_FONT_FALLBACK};
+}
+`;
                 fontFaces.push(fontFace);
+                bodyFontFace = fontConfig.fontName;
             }
 
             if (fontConfig.fontType === "codeFont") {
                 const fontFace = `
-                @font-face {
-                    font-family: '${fontConfig.fontName}';
-                    src: url('${fontConfig.fontUrl.toString()}') format('${fontConfig.fontExtension}');
-                    font-weight: 400;
-                    font-style: normal;
-                }
-    
-                code, pre {
-                    font-family: '${fontConfig.fontName}', monospace;
-                }
-    
-                :root {
-                  --typography-code-font-family: '${fontConfig.fontName}', sans-serif;
-                }
-    
-                .typography-font-code {
-                  font-family: var(--typography-code-font-family), Monospace;
-                }
-              `;
+@font-face {
+    font-family: '${fontConfig.fontName}';
+    src: url('${fontConfig.fontUrl.toString()}') format('${fontConfig.fontExtension}');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+    ascent-override: 100%;
+}
+
+:root {
+    --typography-code-font-family: '${fontConfig.fontName}', ${MONO_FONT_FALLBACK};
+}
+`;
                 fontFaces.push(fontFace);
+                codeFontFaceSet = true;
             }
         }
     }
 
-    const codeBlockFontFace = (() => {
-        const parts: string[] = [];
-        const { codeFont } = generationConfiguration;
-        if (codeFont?.fontType === "codeFont") {
-            const { fontUrl, fontName, fontExtension } = codeFont;
-            parts.push(`
-                @font-face {
-                    font-family: '${fontName}';
-                    src: url('${fontUrl.toString()}') format('${fontExtension}');
-                    font-weight: 400;
-                    font-style: normal;
-                }
-            `);
-        }
-        let fontFamiliesAsString = 'Menlo, Monaco, Consolas, "Andale Mono", "Ubuntu Mono", "Courier New", monospace';
-        if (codeFont != null) {
-            fontFamiliesAsString = `'${codeFont.fontName}', ` + fontFamiliesAsString;
-        }
-        parts.push(`
-                :root {
-                  --typography-code-block-font-family: ${fontFamiliesAsString};
-                }
-        `);
-        parts.push(`
-                .typography-font-code-block {
-                    font-family: var(--typography-code-block-font-family);
-                }
-        `);
-        return parts.join("\n");
-    })();
+    if (!codeFontFaceSet) {
+        const codeBlockFontFace = `
+@font-face {
+    font-family: "Berkeley Mono";
+    src: local("Berkeley Mono"), url("${
+        basePath != null && basePath.trim().length > 1 ? basePath : ""
+    }/fonts/BerkeleyMono-Regular.woff2") format("woff2");
+    font-style: normal;
+    font-display: swap;
+    ascent-override: 100%;
+}
 
-    fontFaces.push(codeBlockFontFace);
+:root {
+    --typography-code-font-family: "Berkeley Mono", ${MONO_FONT_FALLBACK};
+}
+`;
+        fontFaces.push(codeBlockFontFace);
+    }
+
+    if (!headingFontFaceSet) {
+        if (bodyFontFace == null) {
+            const headingFontFace = `
+:root {
+    --typography-heading-font-family: ${BODY_FONT_FALLBACK};
+}
+`;
+            fontFaces.push(headingFontFace);
+        } else {
+            const headingFontFace = `
+:root {
+    --typography-heading-font-family: ${bodyFontFace}, ${BODY_FONT_FALLBACK};
+}
+`;
+            fontFaces.push(headingFontFace);
+        }
+    }
+
+    if (!bodyFontFace) {
+        const bodyFontFace = `
+:root {
+    --typography-body-font-family: ${BODY_FONT_FALLBACK};
+}
+`;
+        fontFaces.push(bodyFontFace);
+    }
 
     return fontFaces.join("\n");
 }

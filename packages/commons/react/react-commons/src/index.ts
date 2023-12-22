@@ -11,6 +11,7 @@ export { useIsHovering } from "./useIsHovering";
 export { useKeyboardCommand } from "./useKeyboardCommand";
 export { useKeyboardPress } from "./useKeyboardPress";
 export { useLocalTextState, type LocalTextState } from "./useLocalTextState";
+export { useMounted } from "./useMounted";
 export { useNumericState } from "./useNumericState";
 export { useTimeout } from "./useTimeout";
 export { useWhyDidYouUpdate } from "./useWhyDidYouUpdate";

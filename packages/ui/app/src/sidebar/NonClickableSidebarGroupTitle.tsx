@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace NonClickableSidebarGroupTitle {
@@ -11,14 +10,9 @@ export const NonClickableSidebarGroupTitle: React.FC<NonClickableSidebarGroupTit
     return (
         <SidebarItemLayout
             title={
-                <div
-                    className={classNames(
-                        "font-extrabold tracking-wide leading-4 py-2 px-3 text-xs",
-                        "text-text-primary-light dark:text-text-primary-dark"
-                    )}
-                >
+                <h6 className="text-text-primary-light dark:text-text-primary-dark mt-0 px-3 py-2 leading-4 tracking-wide">
                     {title}
-                </div>
+                </h6>
             }
         />
     );

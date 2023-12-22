@@ -6,11 +6,9 @@ import "@blueprintjs/select/lib/css/blueprint-select.css";
 import { DocsV2Read } from "@fern-api/fdr-sdk";
 import type { ResolvedPath } from "@fern-ui/app-utils";
 import "@fontsource/ibm-plex-mono";
-import classNames from "classnames";
 import "normalize.css";
 import { useEffect } from "react";
 import { initializePosthog } from "./analytics/posthog";
-import styles from "./App.module.scss";
 import { CONTEXTS } from "./contexts";
 import { DocsContextProvider } from "./docs-context/DocsContextProvider";
 import { Docs } from "./docs/Docs";
@@ -33,21 +31,23 @@ export const App: React.FC<App.Props> = ({ docs, resolvedPath }) => {
     }, []);
 
     return (
-        <div className={classNames(styles.app, "flex flex-1 h-screen")}>
-            {CONTEXTS.reduceRight(
-                (children, Context) => (
-                    <Context>{children}</Context>
-                ),
-                <DocsContextProvider docsDefinition={docs.definition}>
-                    <NavigationContextProvider
-                        docsDefinition={docs.definition}
-                        resolvedPath={resolvedPath}
-                        basePath={docs.baseUrl.basePath}
-                    >
-                        <Docs />
-                    </NavigationContextProvider>
-                </DocsContextProvider>
-            )}
+        <div className="flex h-screen flex-1">
+            <div className="w-full">
+                {CONTEXTS.reduceRight(
+                    (children, Context) => (
+                        <Context>{children}</Context>
+                    ),
+                    <DocsContextProvider docsDefinition={docs.definition}>
+                        <NavigationContextProvider
+                            docsDefinition={docs.definition}
+                            resolvedPath={resolvedPath}
+                            basePath={docs.baseUrl.basePath}
+                        >
+                            <Docs />
+                        </NavigationContextProvider>
+                    </DocsContextProvider>
+                )}
+            </div>
         </div>
     );
 };

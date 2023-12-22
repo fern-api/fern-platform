@@ -44,7 +44,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                 visitDiscriminatedUnion(p, "type")._visit({
                     literal: (literal) => {
                         return (
-                            <div key={`part-${i}`} className="t-muted whitespace-nowrap font-mono text-xs font-normal">
+                            <div key={`part-${i}`} className="t-muted whitespace-nowrap font-mono text-xs">
                                 {literal.value}
                             </div>
                         );
@@ -52,7 +52,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                     pathParameter: (pathParameter) => (
                         <div
                             key={`part-${i}`}
-                            className="bg-accent-highlight text-accent-primary flex items-center justify-center whitespace-nowrap rounded px-1 font-mono text-xs font-normal"
+                            className="bg-accent-highlight dark:bg-accent-highlight-dark text-accent-primary dark:text-accent-primary-dark flex items-center justify-center whitespace-nowrap rounded px-1 font-mono text-xs"
                         >
                             :{pathParameter.name}
                         </div>

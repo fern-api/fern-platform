@@ -16,21 +16,21 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
         <div className="flex w-full flex-col space-y-1.5">
             <div className="flex justify-between">
                 <div
-                    className={classNames("line-clamp-1 flex space-x-1 items-center text-xs text-start", {
+                    className={classNames("line-clamp-1 flex space-x-1 items-center text-sm text-start", {
                         "t-muted": !isHovered,
                         "text-white dark:text-black": isHovered,
                     })}
                 >
                     <div
                         className={classNames(
-                            "flex font-mono shrink-0 items-center justify-center rounded-lg px-2 py-0.5 text-xs uppercase",
+                            "flex font-mono shrink-0 items-center justify-center rounded-lg px-2 py-0.5 text-sm uppercase",
                             {
                                 "bg-tag-default-light dark:bg-tag-default-dark": !isHovered,
                                 "bg-tag-default-dark dark:bg-tag-default-light": isHovered,
                             },
                             {
                                 "t-muted": !isHovered,
-                                "text-accent-primary-inverted": isHovered,
+                                "text-accent-primary-inverted dark:text-accent-primary-dark-inverted": isHovered,
                             }
                         )}
                     >
@@ -45,14 +45,15 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                                     pathParameter: (part) => (
                                         <span
                                             className={classNames(
-                                                "items-center justify-center mx-0.5 rounded px-1 py-0.5 text-xs",
+                                                "items-center justify-center mx-0.5 rounded px-1 py-0.5 text-sm",
                                                 {
                                                     "bg-tag-default-light dark:bg-tag-default-dark": !isHovered,
                                                     "bg-tag-default-dark dark:bg-tag-default-light": isHovered,
                                                 },
                                                 {
                                                     "t-muted": !isHovered,
-                                                    "text-accent-primary-inverted": isHovered,
+                                                    "text-accent-primary-inverted dark:text-accent-primary-dark-inverted":
+                                                        isHovered,
                                                 }
                                             )}
                                             key={idx}
@@ -66,7 +67,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                     </div>
                 </div>
                 <div
-                    className={classNames("text-xs tracking-wide", {
+                    className={classNames("text-sm tracking-wide", {
                         "t-muted": !isHovered,
                         "text-white dark:text-black": isHovered,
                     })}

@@ -15,10 +15,10 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, isS
     return (
         <button
             className={classNames(
-                "flex flex-1 py-2 px-3 group/tab-button transition rounded-lg justify-start items-center select-none min-w-0",
+                "text-sm flex flex-1 py-2 px-3 group/tab-button transition rounded-lg justify-start items-center select-none min-w-0",
                 {
-                    "text-accent-primary": isSelected,
-                    "t-muted hover:text-accent-primary": !isSelected,
+                    "text-accent-primary dark:text-accent-primary-dark": isSelected,
+                    "t-muted hover:text-accent-primary hover:dark:text-accent-primary-dark": !isSelected,
                 }
             )}
             onClick={onClick}
@@ -27,18 +27,22 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, isS
                 <div className="min-w-fit">
                     <div
                         className={classNames(
-                            "flex h-6 w-6 items-center border justify-center rounded-md group-hover/tab-button:bg-tag-primary group-hover/tab-button:border-border-primary",
+                            "flex h-6 w-6 items-center border justify-center rounded-md group-hover/tab-button:bg-tag-primary group-hover/tab-button:border-border-primary group-hover/tab-button:dark:bg-tag-primary-dark group-hover/tab-button:dark:border-border-primary-dark",
                             {
-                                "bg-tag-primary border-border-primary": isSelected,
+                                "bg-tag-primary border-border-primary dark:bg-tag-primary-dark dark:border-border-primary-dark":
+                                    isSelected,
                                 "bg-tag-default-light/5 dark:bg-tag-default-dark/5 border-transparent": !isSelected,
                             }
                         )}
                     >
                         <FontAwesomeIcon
-                            className={classNames("h-3.5 w-3.5 group-hover/tab-button:text-accent-primary", {
-                                "text-accent-primary": isSelected,
-                                "t-muted": !isSelected,
-                            })}
+                            className={classNames(
+                                "h-3.5 w-3.5 group-hover/tab-button:text-accent-primary group-hover/tab-button:dark:text-accent-primary-dark",
+                                {
+                                    "text-accent-primary dark:text-accent-primary-dark": isSelected,
+                                    "t-muted": !isSelected,
+                                }
+                            )}
                             icon={tab.icon}
                         />
                     </div>

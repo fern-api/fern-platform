@@ -71,25 +71,23 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
             })}
         >
             <div
-                className="flex min-w-0 flex-1 scroll-mt-16 flex-col lg:flex-row lg:space-x-[4vw]"
+                className="flex min-w-0 flex-1 scroll-mt-20 flex-col lg:flex-row lg:space-x-[4vw]"
                 ref={setContainerRef}
                 data-route={route}
             >
                 <div className="flex min-w-0 max-w-2xl flex-1 flex-col">
-                    <div className="py-8">
+                    <div className="space-y-2.5 py-8">
                         {isSubpackage(package_) && (
-                            <div className="text-accent-primary mb-4 text-xs font-semibold uppercase tracking-wider">
+                            <div className="text-accent-primary dark:text-accent-primary-dark text-xs font-semibold uppercase tracking-wider">
                                 {getSubpackageTitle(package_)}
                             </div>
                         )}
-                        <div className="typography-font-heading text-text-primary-light dark:text-text-primary-dark text-3xl font-bold">
-                            {webhook.name}
-                        </div>
+                        <h2 className="inline-block text-2xl sm:text-3xl">{webhook.name}</h2>
                     </div>
                     <ApiPageDescription description={webhook.description} isMarkdown={true} />
                     {webhook.headers.length > 0 && (
                         <div className="mt-8 flex">
-                            <div className="flex flex-1 flex-col gap-12">
+                            <div className="flex max-w-full flex-1 flex-col gap-12">
                                 <WebhookSection title="Headers" href={`${route}#${computeAnchor("headers")}`}>
                                     <WebhookHeadersSection
                                         webhook={webhook}
@@ -102,7 +100,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                     )}
 
                     <div className="mt-8 flex">
-                        <div className="flex flex-1 flex-col gap-12">
+                        <div className="flex max-w-full flex-1 flex-col gap-12">
                             <WebhookSection title="Payload" href={`${route}#${computeAnchor("payload")}`}>
                                 <WebhookPayloadSection
                                     payload={webhook.payload}
@@ -115,7 +113,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                     </div>
 
                     <div className="mt-8 flex">
-                        <div className="flex flex-1 flex-col gap-12">
+                        <div className="flex max-w-full flex-1 flex-col gap-12">
                             <WebhookSection title="Response" href={`${route}#${computeAnchor("response")}`}>
                                 <WebhookResponseSection />
                             </WebhookSection>

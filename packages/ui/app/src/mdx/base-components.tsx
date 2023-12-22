@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import Link from "next/link";
-import React, { AnchorHTMLAttributes, HTMLAttributes } from "react";
+import { useRouter } from "next/router";
+import React, { AnchorHTMLAttributes, HTMLAttributes, useCallback } from "react";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
 import { useNavigationContext } from "../navigation-context";
 import { onlyText } from "../util/onlyText";
@@ -19,11 +20,12 @@ export const InlineCode: React.FC<HTMLAttributes<HTMLElement> & InlineCodeProps>
             {...rest}
             className={classNames(
                 className,
-                "border border-border-concealed-light dark:border-border-concealed-dark rounded font-mono bg-background/75 !text-text-primary-light dark:!text-text-primary-dark !py-0.5 !px-1"
+                "typography-font-code border border-border-concealed-light dark:border-border-concealed-dark rounded bg-background/75 dark:bg-background-dark/75 py-0.5 px-1",
+                {
+                    "text-xs": fontSize === "sm",
+                    "text-sm": fontSize === "lg",
+                }
             )}
-            style={{
-                fontSize: fontSize === "sm" ? 12 : 14,
-            }}
         />
     );
 };
@@ -34,7 +36,7 @@ export const Table: React.FC<HTMLAttributes<HTMLTableElement>> = ({ className, .
             {...rest}
             className={classNames(
                 className,
-                "block border-separate border-spacing-0 overflow-x-auto table-auto mb-3 text-sm"
+                "block border-separate border-spacing-0 overflow-x-auto table-auto mb-3 text-sm max-w-full"
             )}
         />
     );
@@ -54,7 +56,7 @@ export const Th: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
             {...rest}
             className={classNames(
                 className,
-                "text-left truncate px-3 py-1 font-normal text-text-primary-light dark:text-text-primary-dark leading-7 border-b border-border-default-light dark:border-border-default-dark first:pl-0 last:pr-0"
+                "text-left truncate px-3 py-1 leading-7 border-b border-border-default-light dark:border-border-default-dark first:pl-0 last:pr-0"
             )}
         />
     );
@@ -67,7 +69,7 @@ export const Td: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
             {...rest}
             className={classNames(
                 className,
-                "border-b border-border-default-light dark:border-border-default-dark font-light px-3 py-1 !text-text-muted-light dark:!text-text-muted-dark leading-7 first:pl-0 last:pr-0",
+                "border-b border-border-default-light dark:border-border-default-dark px-3 py-1 leading-7 first:pl-0 last:pr-0",
                 {
                     // if the table has many columns, do not collapse short string content into multi-line:
                     "whitespace-nowrap": childrenAsString.length < 100,
@@ -99,9 +101,9 @@ const flatten = (
  * Because of our custom routing (PathResolver) implementation, we need to override the pathname to be /basePath/current/slug.
  * @returns /basepath/current/slug
  */
-function useCurrentPathname(): string {
-    const { basePath, resolvedPath } = useNavigationContext();
-    return basePath != null ? `/${basePath}/${resolvedPath.fullSlug}` : `/${resolvedPath.fullSlug}`;
+export function useCurrentPathname(): string {
+    const { resolvedPath } = useNavigationContext();
+    return `/${resolvedPath.fullSlug}`;
 }
 
 export const H1: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ...rest }) => {
@@ -111,16 +113,10 @@ export const H1: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h1
             id={slug}
-            className={classNames(
-                className,
-                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-2xl font-semibold mt-10 mb-3 scroll-mt-16"
-            )}
+            className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor
-                href={{ hash: slug, pathname: useCurrentPathname() }}
-                verticalPosition="center"
-            />
+            <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
             <span>{children}</span>
         </h1>
     );
@@ -133,17 +129,11 @@ export const H2: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h2
             id={slug}
-            className={classNames(
-                className,
-                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-xl font-semibold mt-10 mb-3 scroll-mt-16"
-            )}
+            className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor
-                href={{ hash: slug, pathname: useCurrentPathname() }}
-                verticalPosition="center"
-            />
-            {children}
+            <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
+            <span>{children}</span>
         </h2>
     );
 };
@@ -155,17 +145,11 @@ export const H3: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h3
             id={slug}
-            className={classNames(
-                className,
-                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3 scroll-mt-16"
-            )}
+            className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor
-                href={{ hash: slug, pathname: useCurrentPathname() }}
-                verticalPosition="center"
-            />
-            {children}
+            <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
+            <span>{children}</span>
         </h3>
     );
 };
@@ -177,17 +161,11 @@ export const H4: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h4
             id={slug}
-            className={classNames(
-                className,
-                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3 scroll-mt-16"
-            )}
+            className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor
-                href={{ hash: slug, pathname: useCurrentPathname() }}
-                verticalPosition="center"
-            />
-            {children}
+            <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
+            <span>{children}</span>
         </h4>
     );
 };
@@ -199,17 +177,11 @@ export const H5: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h5
             id={slug}
-            className={classNames(
-                className,
-                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3 scroll-mt-16"
-            )}
+            className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor
-                href={{ hash: slug, pathname: useCurrentPathname() }}
-                verticalPosition="center"
-            />
-            {children}
+            <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
+            <span>{children}</span>
         </h5>
     );
 };
@@ -221,16 +193,10 @@ export const H6: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     return (
         <h6
             id={slug}
-            className={classNames(
-                className,
-                "relative group/anchor-container !text-text-primary-light dark:!text-text-primary-dark text-lg font-semibold mt-10 mb-3 scroll-mt-16"
-            )}
+            className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
             {...rest}
         >
-            <AbsolutelyPositionedAnchor
-                href={{ hash: slug, pathname: useCurrentPathname() }}
-                verticalPosition="center"
-            />
+            <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
             {children}
         </h6>
     );
@@ -245,9 +211,8 @@ export const P: React.FC<{ variant: "api" | "markdown" } & HTMLAttributes<HTMLPa
         <p
             {...rest}
             className={classNames(className, {
-                "text-sm font-normal text-text-muted-light dark:text-text-muted-dark leading-6": variant === "api",
-                "text-base font-light text-text-muted-light dark:text-text-muted-dark leading-7":
-                    variant === "markdown",
+                "text-sm leading-6": variant === "api",
+                "text-base leading-7": variant === "markdown",
                 "mb-3": variant === "markdown",
             })}
         />
@@ -255,12 +220,7 @@ export const P: React.FC<{ variant: "api" | "markdown" } & HTMLAttributes<HTMLPa
 };
 
 export const Strong: React.FC<HTMLAttributes<unknown>> = ({ className, ...rest }) => {
-    return (
-        <strong
-            {...rest}
-            className={classNames(className, "!text-text-primary-light dark:!text-text-primary-dark font-semibold")}
-        />
-    );
+    return <strong {...rest} className={classNames(className, "font-semibold")} />;
 };
 
 export const Ol: React.FC<HTMLAttributes<HTMLOListElement>> = ({ className, ...rest }) => {
@@ -280,24 +240,26 @@ export const Ul: React.FC<HTMLAttributes<HTMLUListElement>> = ({ className, ...r
 };
 
 export const Li: React.FC<HTMLAttributes<HTMLLIElement>> = ({ className, ...rest }) => {
-    return (
-        <li
-            {...rest}
-            className={classNames(
-                className,
-                "text-base font-light !text-text-muted-light dark:!text-text-muted-dark leading-7"
-            )}
-        />
-    );
+    return <li {...rest} className={classNames(className, "text-base leading-7")} />;
 };
 
 export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, children, href, ...rest }) => {
+    const router = useRouter();
+    const { navigateToPath } = useNavigationContext();
     const isExternalUrl = href != null && href.includes("http");
 
     const classNamesCombined = classNames(
         className,
-        "!text-text-primary-light dark:!text-text-primary-dark hover:!text-accent-primary hover:dark:!text-accent-primary !no-underline !border-b hover:!border-b-2 !border-b-accent-primary hover:border-b-accent-primary hover:no-underline font-medium"
+        "text-text-primary-light dark:text-text-primary-dark hover:text-accent-primary hover:dark:text-accent-primary-dark underline underline-offset-4 decoration-1 hover:decoration-2 font-medium decoration-accent-primary dark:decoration-accent-primary-dark"
     );
+
+    const handleClick = useCallback(() => {
+        // this is a hack to enable hyperlinking between markdown page and api page
+        if (!isExternalUrl && href != null && href.startsWith("/")) {
+            navigateToPath(href.substring(1));
+            void router.push(`${href}`, undefined, { shallow: true });
+        }
+    }, [href, isExternalUrl, navigateToPath, router]);
 
     return (
         <Link
@@ -306,6 +268,7 @@ export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className
             target={isExternalUrl ? "_blank" : undefined}
             rel={isExternalUrl ? "noopener noreferrer" : undefined}
             {...rest}
+            onClick={handleClick}
         >
             {children}
         </Link>
