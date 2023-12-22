@@ -4,6 +4,7 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { memo } from "react";
 import { useNavigationContext } from "../navigation-context";
 import { ApiSidebarSection } from "./ApiSidebarSection";
+import { CollapsingSidebarDocsSection } from "./CollapsingSidebarDocsSection";
 import { SidebarDocsSection } from "./SidebarDocsSection";
 import { SidebarItem } from "./SidebarItem";
 
@@ -19,6 +20,9 @@ export declare namespace SidebarItems {
         docsDefinition: DocsV1Read.DocsDefinition;
         activeTabIndex: number | null;
         resolveApi: (apiId: FdrAPI.ApiDefinitionId) => APIV1Read.ApiDefinition;
+
+        nested?: boolean;
+        indent?: boolean;
     }
 }
 
@@ -31,6 +35,8 @@ const UnmemoizedSidebarItems: React.FC<SidebarItems.Props> = ({
     docsDefinition,
     activeTabIndex,
     resolveApi,
+    nested = false,
+    indent = false,
 }) => {
     const { navigateToPath } = useNavigationContext();
 
@@ -51,22 +57,36 @@ const UnmemoizedSidebarItems: React.FC<SidebarItems.Props> = ({
                                 title={pageMetadata.title}
                                 registerScrolledToPathListener={registerScrolledToPathListener}
                                 isSelected={fullSlug === selectedSlug}
+                                indent={indent}
                             />
                         );
                     },
-                    section: (section) => (
-                        <SidebarDocsSection
-                            key={section.urlSlug}
-                            slug={joinUrlSlugs(slug, section.urlSlug)}
-                            section={section}
-                            selectedSlug={selectedSlug}
-                            registerScrolledToPathListener={registerScrolledToPathListener}
-                            closeMobileSidebar={closeMobileSidebar}
-                            docsDefinition={docsDefinition}
-                            activeTabIndex={activeTabIndex}
-                            resolveApi={resolveApi}
-                        />
-                    ),
+                    section: (section) =>
+                        nested ? (
+                            <CollapsingSidebarDocsSection
+                                key={section.urlSlug}
+                                slug={joinUrlSlugs(slug, section.urlSlug)}
+                                section={section}
+                                selectedSlug={selectedSlug}
+                                registerScrolledToPathListener={registerScrolledToPathListener}
+                                closeMobileSidebar={closeMobileSidebar}
+                                docsDefinition={docsDefinition}
+                                activeTabIndex={activeTabIndex}
+                                resolveApi={resolveApi}
+                            />
+                        ) : (
+                            <SidebarDocsSection
+                                key={section.urlSlug}
+                                slug={joinUrlSlugs(slug, section.urlSlug)}
+                                section={section}
+                                selectedSlug={selectedSlug}
+                                registerScrolledToPathListener={registerScrolledToPathListener}
+                                closeMobileSidebar={closeMobileSidebar}
+                                docsDefinition={docsDefinition}
+                                activeTabIndex={activeTabIndex}
+                                resolveApi={resolveApi}
+                            />
+                        ),
                     api: (apiSection) => {
                         return (
                             <ApiSidebarSection

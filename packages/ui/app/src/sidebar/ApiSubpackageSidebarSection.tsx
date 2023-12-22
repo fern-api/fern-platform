@@ -1,6 +1,5 @@
 import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import { doesSubpackageHaveEndpointsOrWebhooksRecursive, getSubpackageTitle } from "@fern-ui/app-utils";
-import { useRouter } from "next/router";
 import { useContext, useMemo } from "react";
 import { ApiPackageSidebarSectionContents } from "./ApiPackageSidebarSectionContents";
 import { SidebarContext } from "./context/SidebarContext";
@@ -30,7 +29,6 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
     activeTabIndex,
     closeMobileSidebar,
 }) => {
-    const router = useRouter();
     const hasEndpointsOrWebhooks = useMemo(
         () => doesSubpackageHaveEndpointsOrWebhooksRecursive(subpackage.subpackageId, resolveSubpackageById),
         [resolveSubpackageById, subpackage.subpackageId]
@@ -50,13 +48,9 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
             title={
                 <SidebarSubpackageItem
                     title={getSubpackageTitle(subpackage)}
-                    isChildSelected={isChildSelected}
+                    collapsed={!isChildSelected}
                     fullSlug={slug}
                     registerScrolledToPathListener={registerScrolledToPathListener}
-                    docsDefinition={docsDefinition}
-                    activeTabIndex={activeTabIndex}
-                    closeMobileSidebar={closeMobileSidebar}
-                    pushRoute={router.push}
                 />
             }
         >

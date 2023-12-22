@@ -73,7 +73,6 @@ export function useSearchService(): SearchService {
                     throw new Error('Missing environment variable "NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX"');
                 }
                 const { indexSegment } = searchInfo.value;
-
                 return {
                     isAvailable: true,
                     loadCredentials: createSearchApiKeyLoader(envConfig, indexSegment.id),
