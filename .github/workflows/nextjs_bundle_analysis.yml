@@ -1,7 +1,7 @@
 # Copyright (c) HashiCorp, Inc.
 # SPDX-License-Identifier: MPL-2.0
 
-name: 'Next.js Bundle Analysis'
+name: "Next.js Bundle Analysis"
 
 on:
   pull_request:
@@ -13,7 +13,7 @@ on:
 defaults:
   run:
     # change this if your nextjs app does not live at the root of the repo
-    working-directory: ./
+    working-directory: ./packages/ui/fe-bundle/
 
 permissions:
   contents: read # for checkout repository
@@ -57,7 +57,7 @@ jobs:
 
       - name: Build next.js app
         # change this if your site requires a custom build command
-        run: ./node_modules/.bin/next build
+        run: yarn workspace @fern-ui/fe-bundle run build:fern-prod
 
       # Here's the first place where next-bundle-analysis' own script is used
       # This step pulls the raw bundle stats for the current bundle
@@ -110,7 +110,7 @@ jobs:
         id: fc
         with:
           issue-number: ${{ github.event.number }}
-          body-includes: '<!-- __NEXTJS_BUNDLE -->'
+          body-includes: "<!-- __NEXTJS_BUNDLE -->"
 
       - name: Create Comment
         uses: peter-evans/create-or-update-comment@v2
