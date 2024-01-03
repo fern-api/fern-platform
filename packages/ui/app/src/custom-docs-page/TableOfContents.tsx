@@ -1,3 +1,4 @@
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { marked } from "marked";
 import { CSSProperties, useMemo } from "react";
 import { getSlugFromText } from "../mdx/base-components";
@@ -17,7 +18,7 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ma
     return (
         <div className={className} style={style}>
             {headings.length > 0 && (
-                <div className="flex flex-col space-y-3">
+                <div className="flex flex-col space-y-3 text-sm">
                     {headings.map((heading, index) => (
                         <span
                             key={index}
@@ -25,10 +26,10 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ma
                             style={{ marginLeft: 8 * (heading.depth - minDepth) }}
                         >
                             <a
-                                href={`#${getSlugFromText(heading.text)}`}
+                                href={`#${getSlugFromText(tokenToSimpleString(heading))}`}
                                 style={{ textDecoration: "none", color: "inherit" }}
                             >
-                                {heading.text}
+                                {tokenToSimpleString(heading)}
                             </a>
                         </span>
                     ))}
@@ -40,4 +41,30 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ma
 
 function isHeading(token: marked.Token): token is marked.Tokens.Heading {
     return token.type === "heading";
+}
+
+function tokenToSimpleString(token: marked.Token): string {
+    return visitDiscriminatedUnion(token, "type")._visit({
+        space: () => "",
+        code: (value) => value.text,
+        heading: (value) => value.tokens.map(tokenToSimpleString).join(""),
+        table: () => "",
+        hr: () => "",
+        blockquote: (value) => value.tokens.map(tokenToSimpleString).join(""),
+        list: (value) => value.items.map(tokenToSimpleString).join(""),
+        list_item: (value) => value.tokens.map(tokenToSimpleString).join(""),
+        paragraph: (value) => value.tokens.map(tokenToSimpleString).join(""),
+        html: (value) => value.text,
+        text: (value) => value.raw,
+        def: (value) => value.title,
+        escape: (value) => value.text,
+        image: (value) => value.text,
+        link: (value) => value.text,
+        strong: (value) => value.text,
+        em: (value) => value.text,
+        codespan: (value) => value.text,
+        br: () => "",
+        del: (value) => value.text,
+        _other: () => "",
+    });
 }
