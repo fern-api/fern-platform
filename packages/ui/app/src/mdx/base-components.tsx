@@ -6,25 +6,13 @@ import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAncho
 import { useNavigationContext } from "../navigation-context";
 import { onlyText } from "../util/onlyText";
 
-type InlineCodeProps = {
-    fontSize: "sm" | "lg";
-};
-
-export const InlineCode: React.FC<HTMLAttributes<HTMLElement> & InlineCodeProps> = ({
-    className,
-    fontSize,
-    ...rest
-}) => {
+export const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({ className, ...rest }) => {
     return (
         <code
             {...rest}
             className={classNames(
                 className,
-                "typography-font-code border border-border-concealed-light dark:border-border-concealed-dark rounded bg-background/75 dark:bg-background-dark/75 py-0.5 px-1",
-                {
-                    "text-xs": fontSize === "sm",
-                    "text-sm": fontSize === "lg",
-                }
+                "inline-code typography-font-code border border-border-concealed-light dark:border-border-concealed-dark rounded bg-background/75 dark:bg-background-dark/75 py-0.5 px-1"
             )}
         />
     );

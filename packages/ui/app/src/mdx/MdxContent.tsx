@@ -52,7 +52,7 @@ const COMPONENTS: MDXRemoteProps["components"] = {
         }
         return <CodeBlockWithClipboardButton language={language} variant="lg" content={content} />;
     },
-    code: (props: HTMLAttributes<HTMLElement>) => <InlineCode fontSize="sm" {...props} />,
+    code: (props: HTMLAttributes<HTMLElement>) => <InlineCode {...props} />,
     table: Table,
     thead: Thead,
     tr: Tr,
