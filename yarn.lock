@@ -7390,15 +7390,15 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"eslint-plugin-tailwindcss@npm:^3.12.0":
-  version: 3.12.0
-  resolution: "eslint-plugin-tailwindcss@npm:3.12.0"
+"eslint-plugin-tailwindcss@npm:^3.13.1":
+  version: 3.13.1
+  resolution: "eslint-plugin-tailwindcss@npm:3.13.1"
   dependencies:
     fast-glob: ^3.2.5
     postcss: ^8.4.4
   peerDependencies:
     tailwindcss: ^3.3.2
-  checksum: 8a0391e87d2b676e02da3ce0e6483492a081022fbf7add65470326733bb0cdd6e5e15bf1bbc67e7026a18b1be0276446a801f8415bde4feb54ff0af6fe8c506f
+  checksum: 6be67bffca319174695b1374d8970c58a36bf1f12e5f3a5c2b613996a96e3f0d849745762af7d860adfc6bd01f9fa5789d433b8e443a870f82fd43c42046c206
   languageName: node
   linkType: hard
 
@@ -7827,7 +7827,7 @@ env-cmd@toddbluhm/env-cmd:
     eslint-plugin-jest: ^27.0.4
     eslint-plugin-react: ^7.31.10
     eslint-plugin-react-hooks: ^4.6.0
-    eslint-plugin-tailwindcss: ^3.12.0
+    eslint-plugin-tailwindcss: ^3.13.1
     execa: ^5.1.1
     husky: ^8.0.1
     immer: ^9.0.15

@@ -129,7 +129,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:27.0.4"],\
             ["eslint-plugin-react", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:7.31.10"],\
             ["eslint-plugin-react-hooks", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:4.6.0"],\
-            ["eslint-plugin-tailwindcss", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:3.12.0"],\
+            ["eslint-plugin-tailwindcss", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:3.13.1"],\
             ["execa", "npm:5.1.1"],\
             ["husky", "npm:8.0.1"],\
             ["immer", "npm:9.0.15"],\
@@ -10204,17 +10204,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["eslint-plugin-tailwindcss", [\
-        ["npm:3.12.0", {\
-          "packageLocation": "./.yarn/cache/eslint-plugin-tailwindcss-npm-3.12.0-a0690dfdad-8a0391e87d.zip/node_modules/eslint-plugin-tailwindcss/",\
+        ["npm:3.13.1", {\
+          "packageLocation": "./.yarn/cache/eslint-plugin-tailwindcss-npm-3.13.1-bdf76120af-6be67bffca.zip/node_modules/eslint-plugin-tailwindcss/",\
           "packageDependencies": [\
-            ["eslint-plugin-tailwindcss", "npm:3.12.0"]\
+            ["eslint-plugin-tailwindcss", "npm:3.13.1"]\
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:3.12.0", {\
-          "packageLocation": "./.yarn/__virtual__/eslint-plugin-tailwindcss-virtual-2736ac5da3/0/cache/eslint-plugin-tailwindcss-npm-3.12.0-a0690dfdad-8a0391e87d.zip/node_modules/eslint-plugin-tailwindcss/",\
+        ["virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:3.13.1", {\
+          "packageLocation": "./.yarn/__virtual__/eslint-plugin-tailwindcss-virtual-4e8f57c498/0/cache/eslint-plugin-tailwindcss-npm-3.13.1-bdf76120af-6be67bffca.zip/node_modules/eslint-plugin-tailwindcss/",\
           "packageDependencies": [\
-            ["eslint-plugin-tailwindcss", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:3.12.0"],\
+            ["eslint-plugin-tailwindcss", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:3.13.1"],\
             ["@types/tailwindcss", null],\
             ["fast-glob", "npm:3.2.12"],\
             ["postcss", "npm:8.4.31"],\
@@ -10647,7 +10647,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:27.0.4"],\
             ["eslint-plugin-react", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:7.31.10"],\
             ["eslint-plugin-react-hooks", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:4.6.0"],\
-            ["eslint-plugin-tailwindcss", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:3.12.0"],\
+            ["eslint-plugin-tailwindcss", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:3.13.1"],\
             ["execa", "npm:5.1.1"],\
             ["husky", "npm:8.0.1"],\
             ["immer", "npm:9.0.15"],\
