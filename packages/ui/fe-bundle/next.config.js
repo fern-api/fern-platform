@@ -28,6 +28,10 @@ const nextConfig = {
             source: "/:path*",
             destination: "/:host/:path*",
         },
+        {
+            source: "/fern/_next/:path*",
+            destination: "/_next/:path*",
+        },
     ],
 };
 
