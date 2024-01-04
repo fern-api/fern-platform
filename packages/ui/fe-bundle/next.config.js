@@ -5,6 +5,7 @@ const nextConfig = {
     experimental: {
         scrollRestoration: true,
     },
+    assetPrefix: "/fern",
     rewrites: async () => [
         {
             has: [
