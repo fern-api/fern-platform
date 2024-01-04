@@ -236,11 +236,6 @@ export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className
     const { navigateToPath } = useNavigationContext();
     const isExternalUrl = href != null && href.includes("http");
 
-    const classNamesCombined = classNames(
-        className,
-        "text-text-primary-light dark:text-text-primary-dark hover:text-accent-primary hover:dark:text-accent-primary-dark underline underline-offset-4 decoration-1 hover:decoration-2 font-medium decoration-accent-primary dark:decoration-accent-primary-dark"
-    );
-
     const handleClick = useCallback(() => {
         // this is a hack to enable hyperlinking between markdown page and api page
         if (!isExternalUrl && href != null && href.startsWith("/")) {
@@ -251,7 +246,7 @@ export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className
 
     return (
         <Link
-            className={classNamesCombined}
+            className={classNames(className, "link")}
             href={href ?? "#"}
             target={isExternalUrl ? "_blank" : undefined}
             rel={isExternalUrl ? "noopener noreferrer" : undefined}

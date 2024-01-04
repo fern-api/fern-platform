@@ -1,6 +1,7 @@
 "use client";
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { memo } from "react";
+import { ApiPlaygroundModal } from "../../api-playground/ApiPlaygroundModal";
 import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";
 import type { CodeExampleClient } from "../examples/code-example";
 import { CurlExample } from "../examples/curl-example/CurlExample";
@@ -55,18 +56,21 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         : selectedExampleClient.example;
                 }}
                 actions={
-                    availableExampleClients.length > 1 ? (
-                        <CodeExampleClientDropdown
-                            clients={availableExampleClients}
-                            onClickClient={(clientId) => {
-                                const client = availableExampleClients.find((c) => c.id === clientId);
-                                if (client != null) {
-                                    onClickExampleClient(client);
-                                }
-                            }}
-                            selectedClient={selectedExampleClient}
-                        />
-                    ) : undefined
+                    <>
+                        <ApiPlaygroundModal />
+                        {availableExampleClients.length > 1 ? (
+                            <CodeExampleClientDropdown
+                                clients={availableExampleClients}
+                                onClickClient={(clientId) => {
+                                    const client = availableExampleClients.find((c) => c.id === clientId);
+                                    if (client != null) {
+                                        onClickExampleClient(client);
+                                    }
+                                }}
+                                selectedClient={selectedExampleClient}
+                            />
+                        ) : undefined}
+                    </>
                 }
             >
                 {selectedExampleClient.id === "curl" ? (
