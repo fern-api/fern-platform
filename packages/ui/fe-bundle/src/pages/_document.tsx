@@ -5,7 +5,7 @@ export default function Document(): ReactElement {
     return (
         <Html lang="en" suppressHydrationWarning>
             <Head />
-            <body className="overscroll-y-none antialiased">
+            <body className="antialiased">
                 <Main />
                 <NextScript />
             </body>
