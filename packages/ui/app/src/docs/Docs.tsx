@@ -71,7 +71,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                     style={{ height: HEADER_HEIGHT }}
                 >
                     <BgImageGradient
-                        className="opacity-50"
+                        className="h-screen opacity-50"
                         backgroundType={backgroundType}
                         hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage}
                     />
