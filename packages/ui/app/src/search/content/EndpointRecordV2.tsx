@@ -30,7 +30,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                             },
                             {
                                 "t-muted": !isHovered,
-                                "text-accent-primary-inverted dark:text-accent-primary-dark-inverted": isHovered,
+                                "text-accent-primary-contrast dark:text-accent-primary-dark-contrast": isHovered,
                             }
                         )}
                     >
@@ -52,7 +52,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                                                 },
                                                 {
                                                     "t-muted": !isHovered,
-                                                    "text-accent-primary-inverted dark:text-accent-primary-dark-inverted":
+                                                    "text-accent-primary-contrast dark:text-accent-primary-dark-contrast":
                                                         isHovered,
                                                 }
                                             )}
