@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useNavigationContext } from "../navigation-context";
@@ -25,7 +25,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
 
     const contextValue = useCallback((): SidebarContextValue => ({ expandAllSections }), [expandAllSections]);
 
-    const sidebarItems = useMemo(() => {
+    const renderSidebarItems = () => {
         const navigationItems =
             activeNavigationConfigContext.type === "tabbed"
                 ? activeNavigatable.context.tab?.items
@@ -43,18 +43,10 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                 docsDefinition={docsDefinition}
                 activeTabIndex={activeNavigatable.context.tab?.index ?? null}
                 resolveApi={resolveApi}
+                level={0}
             />
         );
-    }, [
-        activeNavigationConfigContext,
-        activeNavigatable,
-        closeMobileSidebar,
-        docsDefinition,
-        registerScrolledToPathListener,
-        resolveApi,
-        selectedSlug,
-        withVersionAndTabSlugs,
-    ]);
+    };
 
     return (
         <SidebarContext.Provider value={contextValue}>
@@ -62,12 +54,12 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expand
                 <SidebarFixedItemsSection className="sticky top-0 z-10" hideSearchBar={hideSearchBar} />
                 <div
                     className={classNames(
-                        "flex flex-1 flex-col overflow-y-auto overflow-x-hidden pb-6",
+                        "flex flex-1 flex-col overflow-y-auto overflow-x-hidden pb-12",
                         hideSearchBar ? "px-2.5" : "px-4",
                         styles.scrollingContainer
                     )}
                 >
-                    {sidebarItems}
+                    {renderSidebarItems()}
                     <BuiltWithFern />
                 </div>
             </div>
