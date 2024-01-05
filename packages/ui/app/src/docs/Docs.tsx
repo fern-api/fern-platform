@@ -67,14 +67,16 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
 
             <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
                 <div
-                    className="border-border-concealed-light dark:border-border-concealed-dark dark:shadow-header-dark fixed inset-x-0 top-0 z-20 overflow-hidden border-b backdrop-blur"
+                    className="border-border-concealed-light dark:border-border-concealed-dark dark:shadow-header-dark fixed inset-x-0 top-0 z-20 overflow-visible border-b backdrop-blur"
                     style={{ height: HEADER_HEIGHT }}
                 >
-                    <BgImageGradient
-                        className="h-screen opacity-60 dark:opacity-50"
-                        backgroundType={backgroundType}
-                        hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage}
-                    />
+                    <div className="absolute h-full w-full overflow-hidden" style={{ clip: "rect(0, auto, auto, 0)" }}>
+                        <BgImageGradient
+                            className="h-screen opacity-60 dark:opacity-50"
+                            backgroundType={backgroundType}
+                            hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage}
+                        />
+                    </div>
                     <Header
                         className="max-w-8xl mx-auto"
                         docsDefinition={docsDefinition}
