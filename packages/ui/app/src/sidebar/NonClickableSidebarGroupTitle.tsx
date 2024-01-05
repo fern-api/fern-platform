@@ -10,7 +10,7 @@ export const NonClickableSidebarGroupTitle: React.FC<NonClickableSidebarGroupTit
     return (
         <SidebarItemLayout
             title={
-                <h6 className="text-text-primary-light dark:text-text-primary-dark mt-0 px-3 py-2 leading-4 tracking-wide">
+                <h6 className="text-text-primary-light dark:text-text-primary-dark mt-0 px-3 py-2 leading-4">
                     {title}
                 </h6>
             }
