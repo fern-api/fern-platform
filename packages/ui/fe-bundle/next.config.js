@@ -5,29 +5,38 @@ const nextConfig = {
     experimental: {
         scrollRestoration: true,
     },
-    rewrites: async () => [
-        {
-            has: [
-                {
-                    type: "header",
-                    key: "x-fern-host",
-                    value: "(?<host>.*)",
-                },
-            ],
-            source: "/:path*",
-            destination: "/:host/:path*",
-        },
-        {
-            has: [
-                {
-                    type: "host",
-                    value: "(?<host>.*)",
-                },
-            ],
-            source: "/:path*",
-            destination: "/:host/:path*",
-        },
-    ],
+    assetPrefix: "/fern",
+    rewrites: async () => ({
+        beforeFiles: [
+            {
+                source: "/fern/_next/:path*",
+                destination: "/_next/:path*",
+            },
+        ],
+        afterFiles: [
+            {
+                has: [
+                    {
+                        type: "header",
+                        key: "x-fern-host",
+                        value: "(?<host>.*)",
+                    },
+                ],
+                source: "/:path*",
+                destination: "/:host/:path*",
+            },
+            {
+                has: [
+                    {
+                        type: "host",
+                        value: "(?<host>.*)",
+                    },
+                ],
+                source: "/:path*",
+                destination: "/:host/:path*",
+            },
+        ],
+    }),
 };
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({

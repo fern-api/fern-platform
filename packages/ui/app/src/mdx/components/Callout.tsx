@@ -33,7 +33,7 @@ export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ inte
     return (
         <div
             className={classNames(
-                "flex space-x-3 px-4 pt-4 pb-1 border rounded-lg",
+                "flex space-x-3 p-4 pb-0 mb-4 border rounded-lg", // pb-0 to compensate for the ::after margin
                 visitDiscriminatedUnion({ intent }, "intent")._visit({
                     info: () =>
                         "bg-tag-default-light/5 dark:bg-tag-default-dark/5 border-border-default-light dark:border-border-default-dark",
@@ -60,7 +60,7 @@ export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ inte
 
             <div
                 className={classNames(
-                    "text-sm leading-5 tracking-wide",
+                    "text-sm leading-5 w-full after:block after:mt-4", // ::after margin ensures that bottom padding overlaps with botttom margins of internal content
                     visitDiscriminatedUnion({ intent }, "intent")._visit({
                         info: () => "text-text-muted-light dark:text-text-muted-dark",
                         warning: () => "text-intent-warning-light dark:text-intent-warning-dark",

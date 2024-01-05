@@ -86,8 +86,8 @@ module.exports = {
 
                 "text-primary-dark": "rgb(255, 255, 255)",
                 "text-primary-light": "rgb(3,7,18)",
-                "text-muted-light": "rgb(107, 114, 128)",
-                "text-muted-dark": "rgb(169, 175, 181)",
+                "text-muted-light": "rgb(0, 0, 0, 0.5)",
+                "text-muted-dark": "rgb(255, 255, 255, 0.5)",
                 "text-disabled-light": "rgb(209, 213, 219)",
                 "text-disabled-dark": "rgb(107, 114, 128)",
 

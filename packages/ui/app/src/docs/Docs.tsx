@@ -67,9 +67,16 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
 
             <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
                 <div
-                    className="border-border-concealed-light dark:border-border-concealed-dark bg-background/50 dark:bg-background-dark/50 dark:shadow-header-dark sticky inset-x-0 top-0 z-20 border-b backdrop-blur-xl"
+                    className="border-border-concealed-light dark:border-border-concealed-dark dark:shadow-header-dark fixed inset-x-0 top-0 z-20 overflow-visible border-b backdrop-blur"
                     style={{ height: HEADER_HEIGHT }}
                 >
+                    <div className="absolute h-full w-full overflow-hidden" style={{ clip: "rect(0, auto, auto, 0)" }}>
+                        <BgImageGradient
+                            className="h-screen opacity-60 dark:opacity-50"
+                            backgroundType={backgroundType}
+                            hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage}
+                        />
+                    </div>
                     <Header
                         className="max-w-8xl mx-auto"
                         docsDefinition={docsDefinition}
@@ -82,7 +89,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                 </div>
 
                 <div className="max-w-8xl relative mx-auto flex min-h-0 w-full flex-1">
-                    <div className="hidden w-72 md:flex">
+                    <div className="hidden w-72 md:flex" style={{ paddingTop: HEADER_HEIGHT }}>
                         <div
                             className="sticky w-full overflow-auto overflow-x-hidden"
                             style={{
@@ -106,7 +113,10 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                         </div>
                     )}
 
-                    <div className={classNames("relative flex w-full min-w-0 flex-1 flex-col")}>
+                    <div
+                        className={classNames("relative flex w-full min-w-0 flex-1 flex-col")}
+                        style={{ paddingTop: HEADER_HEIGHT }}
+                    >
                         <DocsMainContent />
                     </div>
                 </div>
