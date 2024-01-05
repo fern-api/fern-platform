@@ -61,7 +61,7 @@ const UnmemoizedSidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Prop
                 "flex flex-col px-2 md:px-4 md:pt-8",
                 {
                     "backdrop-blur-sm": tabs == null,
-                    "backdrop-blur-xl": tabs != null,
+                    "backdrop-blur-lg": tabs != null,
                 },
                 {
                     "border-b border-border-concealed-light dark:border-border-concealed-dark": tabs != null,

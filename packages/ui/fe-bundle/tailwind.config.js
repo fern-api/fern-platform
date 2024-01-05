@@ -86,12 +86,12 @@ module.exports = {
 
                 "text-primary-dark": "rgb(255, 255, 255)",
                 "text-primary-light": "rgb(3,7,18)",
-                "text-muted-light": "rgb(107, 114, 128)",
-                "text-muted-dark": "rgb(169, 175, 181)",
+                "text-muted-light": "rgb(0, 0, 0, 0.52)",
+                "text-muted-dark": "rgb(255, 255, 255, 0.68)",
                 "text-disabled-light": "rgb(209, 213, 219)",
                 "text-disabled-dark": "rgb(107, 114, 128)",
 
-                "tag-default-dark": "rgba(255, 255, 255, 15%)",
+                "tag-default-dark": "rgba(255, 255, 255, 10%)",
                 "tag-default-light": "rgba(3, 7, 18, 5%)",
                 "tag-primary": "rgba(var(--accent-primary), 15%)",
                 "tag-primary-dark": "rgba(var(--accent-primary-dark), 15%)",

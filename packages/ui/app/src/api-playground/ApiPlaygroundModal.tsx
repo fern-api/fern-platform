@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { ReactElement, useState } from "react";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
-import { FernModal } from "../components/common/FernModal";
+import { FernModal } from "../components/FernModal";
 
 export function ApiPlaygroundModal(): ReactElement {
     const [isOpen, setIsOpen] = useState(false);

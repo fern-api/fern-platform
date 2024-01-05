@@ -1,6 +1,7 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { joinUrlSlugs } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import classNames from "classnames";
 import { memo } from "react";
 import { useNavigationContext } from "../navigation-context";
 import { ApiSidebarSection } from "./ApiSidebarSection";
@@ -19,6 +20,8 @@ export declare namespace SidebarItems {
         docsDefinition: DocsV1Read.DocsDefinition;
         activeTabIndex: number | null;
         resolveApi: (apiId: FdrAPI.ApiDefinitionId) => APIV1Read.ApiDefinition;
+
+        level: number;
     }
 }
 
@@ -31,12 +34,13 @@ const UnmemoizedSidebarItems: React.FC<SidebarItems.Props> = ({
     docsDefinition,
     activeTabIndex,
     resolveApi,
+    level,
 }) => {
     const { navigateToPath } = useNavigationContext();
 
     return (
-        <div className="flex flex-col">
-            {navigationItems.map((navigationItem) =>
+        <ul className="list-none">
+            {navigationItems.map((navigationItem, idx) =>
                 visitDiscriminatedUnion(navigationItem, "type")._visit({
                     page: (pageMetadata) => {
                         const fullSlug = joinUrlSlugs(slug, pageMetadata.urlSlug);
@@ -51,6 +55,9 @@ const UnmemoizedSidebarItems: React.FC<SidebarItems.Props> = ({
                                 title={pageMetadata.title}
                                 registerScrolledToPathListener={registerScrolledToPathListener}
                                 isSelected={fullSlug === selectedSlug}
+                                className={classNames({
+                                    "mt-6": level === 0 && !isPrevItemSidebarItem(navigationItems, idx),
+                                })}
                             />
                         );
                     },
@@ -65,28 +72,35 @@ const UnmemoizedSidebarItems: React.FC<SidebarItems.Props> = ({
                             docsDefinition={docsDefinition}
                             activeTabIndex={activeTabIndex}
                             resolveApi={resolveApi}
+                            level={level}
                         />
                     ),
-                    api: (apiSection) => {
-                        return (
-                            <ApiSidebarSection
-                                key={apiSection.urlSlug}
-                                slug={joinUrlSlugs(slug, apiSection.urlSlug)}
-                                apiSection={apiSection}
-                                selectedSlug={selectedSlug}
-                                registerScrolledToPathListener={registerScrolledToPathListener}
-                                closeMobileSidebar={closeMobileSidebar}
-                                docsDefinition={docsDefinition}
-                                activeTabIndex={activeTabIndex}
-                                resolveApi={resolveApi}
-                            />
-                        );
-                    },
+                    api: (apiSection) => (
+                        <ApiSidebarSection
+                            key={apiSection.urlSlug}
+                            slug={joinUrlSlugs(slug, apiSection.urlSlug)}
+                            apiSection={apiSection}
+                            selectedSlug={selectedSlug}
+                            registerScrolledToPathListener={registerScrolledToPathListener}
+                            closeMobileSidebar={closeMobileSidebar}
+                            docsDefinition={docsDefinition}
+                            activeTabIndex={activeTabIndex}
+                            resolveApi={resolveApi}
+                        />
+                    ),
                     _other: () => null,
                 })
             )}
-        </div>
+        </ul>
     );
 };
+
+function isPrevItemSidebarItem(navigationItems: DocsV1Read.NavigationItem[], idx: number): boolean {
+    if (idx === 0) {
+        return false;
+    }
+    const prevItem = navigationItems[idx - 1];
+    return prevItem != null && prevItem.type === "page";
+}
 
 export const SidebarItems = memo(UnmemoizedSidebarItems);

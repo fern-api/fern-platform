@@ -43,7 +43,7 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
                     )}
                     <div
                         className={classNames(
-                            "text-sm flex flex-1 py-2 px-3 border rounded-lg items-center justify-between select-none min-w-0",
+                            "text-sm flex flex-1 py-2 px-3 border rounded-lg items-center justify-between select-none min-w-0 transition-colors",
                             {
                                 "text-accent-primary dark:text-accent-primary-dark border-border-primary dark:border-border-primary-dark bg-tag-primary dark:bg-tag-primary-dark":
                                     isSelected,
@@ -66,7 +66,7 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
         [isSelected, leftElement, rightElement, title, indent]
     );
 
-    const ref = useRef<HTMLDivElement>(null);
+    const ref = useRef<HTMLLIElement>(null);
 
     useEffect(() => {
         return registerScrolledToPathListener(fullSlug, () => {
@@ -75,11 +75,11 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
     }, [fullSlug, registerScrolledToPathListener]);
 
     return (
-        <div className={classNames(className)} ref={ref}>
+        <li className={classNames(className)} ref={ref}>
             <Link href={`/${fullSlug}`} onClick={onClick} className="!no-underline" shallow={shallow} scroll={false}>
                 <SidebarItemLayout title={renderTitle} isSelected={isSelected} />
             </Link>
-        </div>
+        </li>
     );
 };
 

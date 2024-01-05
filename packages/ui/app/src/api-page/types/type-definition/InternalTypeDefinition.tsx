@@ -7,7 +7,7 @@ import classNames from "classnames";
 import { useRouter } from "next/router";
 import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
-import { Chip } from "../../../components/common/Chip";
+import { Chip } from "../../../components/Chip";
 import { useNavigationContext } from "../../../navigation-context";
 import { getAnchorId } from "../../../util/anchor";
 import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
