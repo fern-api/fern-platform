@@ -4,7 +4,6 @@ import {
     BADLY_FORMATTED_CODE_BLOCK_LANGUAGE,
     BADLY_FORMATTED_CODE_BLOCK_TITLE,
     DEFAULT_CODE_BLOCK_CONTENT,
-    DEFAULT_CODE_BLOCK_TAB_TITLE,
 } from "../../../config";
 import type { CodeBlockItem } from "./types";
 
@@ -77,9 +76,10 @@ export function transformCodeBlockChildrenToCodeBlockItem(title: string | undefi
     if (!isExpectedCodeBlockChildren(children)) {
         return fallbackItemForBadlyFormattedCodeBlock;
     }
+    const language = parseCodeBlockLanguageFromClassName(children?.props?.children?.props?.className);
     return {
-        language: parseCodeBlockLanguageFromClassName(children?.props?.children?.props?.className),
-        title: title ?? DEFAULT_CODE_BLOCK_TAB_TITLE,
+        language,
+        title: title ?? language,
         content: children?.props?.children?.props?.children ?? DEFAULT_CODE_BLOCK_CONTENT,
     };
 }
