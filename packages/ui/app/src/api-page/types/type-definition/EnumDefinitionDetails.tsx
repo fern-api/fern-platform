@@ -1,5 +1,5 @@
 import { ReactElement, useEffect, useState } from "react";
-import { Empty } from "../../../components/common/Empty";
+import { Empty } from "../../../components/Empty";
 
 export declare namespace TypeDefinitionDetails {
     export interface Props {
