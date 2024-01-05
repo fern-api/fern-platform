@@ -78,7 +78,7 @@ export const FernMenu: FC<FernMenu.Props> = ({
             >
                 <HeadlessMenu.Items
                     className={classNames(
-                        "z-10 bg-background dark:bg-background-dark absolute mt-2 origin-top-right divide-y divide-border-border-primary dark:divide-border-primary-dark border-border-border-primary dark:border-border-primary-dark rounded-md border shadow-lg flex flex-col",
+                        "z-10 bg-background dark:bg-background-dark absolute mt-2 origin-top-right divide-y divide-border-primary dark:divide-border-primary-dark border-border-primary dark:border-border-primary-dark rounded-md border shadow-lg flex flex-col",
                         {
                             "left-0": align === "left",
                             "right-0": align === "right",

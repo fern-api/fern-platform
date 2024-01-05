@@ -29,10 +29,8 @@ module.exports = {
                 header: "0px 4px 24px 0px rgba(var(--accent-primary), 10%)",
                 "header-dark": "0px 4px 24px 0px rgba(var(--accent-primary-dark), 10%)",
             },
-        },
-        colors: ({ colors }) => {
-            return {
-                ...colors,
+
+            colors: {
                 "accent-primary": withOpacity("--accent-primary"),
                 "accent-primary-dark": withOpacity("--accent-primary-dark"),
                 "accent-primary-contrast": withOpacity("--accent-primary-contrast"),
@@ -101,7 +99,7 @@ module.exports = {
                 "tag-success-light": "rgba(22, 163, 74, 0.15)",
                 "tag-danger-light": "rgba(220, 38, 38, 0.10)",
                 "tag-danger-dark": "rgba(248, 113, 113, 0.15)",
-            };
+            },
         },
     },
     plugins: [
