@@ -66,7 +66,7 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
         [isSelected, leftElement, rightElement, title, indent]
     );
 
-    const ref = useRef<HTMLDivElement>(null);
+    const ref = useRef<HTMLLIElement>(null);
 
     useEffect(() => {
         return registerScrolledToPathListener(fullSlug, () => {
@@ -75,11 +75,11 @@ const UnmemoizedSidebarItem: React.FC<SidebarItem.Props> = ({
     }, [fullSlug, registerScrolledToPathListener]);
 
     return (
-        <div className={classNames(className)} ref={ref}>
+        <li className={classNames(className)} ref={ref}>
             <Link href={`/${fullSlug}`} onClick={onClick} className="!no-underline" shallow={shallow} scroll={false}>
                 <SidebarItemLayout title={renderTitle} isSelected={isSelected} />
             </Link>
-        </div>
+        </li>
     );
 };
 
