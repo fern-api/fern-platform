@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 import { ReactElement, useState } from "react";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
@@ -42,20 +43,16 @@ export function ApiPlaygroundModal(): ReactElement {
 
                     <div className="flex items-center">
                         <a className="link text-sm">Sign in to use your API keys</a>
-                        <button className="dark:text-dark inline-flex justify-center rounded-md bg-black/20 px-4 py-2 text-sm font-medium text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 dark:bg-white/20">
-                            Send request
+                        <button className="dark:text-dark bg-accent-primary dark:bg-accent-primary-dark hover:bg-accent-primary/90 dark:hover:bg-accent-primary-dark/90 text-accent-primary-contrast dark:accent-primary-dark-contrast group inline-flex justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors  hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+                            <span className="whitespace-nowrap">Send request</span>
+                            <div className="flex h-5 w-5 items-center">
+                                <FontAwesomeIcon
+                                    icon="paper-plane"
+                                    className="h-5 w-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                                />
+                            </div>
                         </button>
                     </div>
-                </div>
-
-                <div className="mt-4">
-                    <button
-                        type="button"
-                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                        onClick={closeModal}
-                    >
-                        Got it, thanks!
-                    </button>
                 </div>
             </FernModal>
         </>
