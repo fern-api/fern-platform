@@ -5,11 +5,11 @@ const nextConfig = {
     experimental: {
         scrollRestoration: true,
     },
-    assetPrefix: "/fern",
+    assetPrefix: "/_fern",
     rewrites: async () => ({
         beforeFiles: [
             {
-                source: "/fern/_next/:path*",
+                source: "/_fern/_next/:path*",
                 destination: "/_next/:path*",
             },
         ],
