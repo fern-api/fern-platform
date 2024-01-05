@@ -24,15 +24,15 @@
   "dependencies": {
     "@fern-fern/fern-cloud-sdk": "^0.0.257",
     "archiver": "^6.0.1",
-    "aws-cdk-lib": "^2.110.1",
-    "axios": "^1.6.2",
+    "aws-cdk-lib": "^2.118.0",
+    "axios": "^1.6.5",
     "constructs": "^10.3.0"
   },
   "devDependencies": {
     "@types/archiver": "^6.0.2",
     "@types/node": "^18.7.18",
-    "aws-cdk": "^2.110.1",
+    "aws-cdk": "^2.118.0",
     "prettier": "^2.8.8",
-    "typescript": "4.9.4"
+    "typescript": "4.9.5"
   }
 }
