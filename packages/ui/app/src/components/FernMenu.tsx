@@ -60,7 +60,7 @@ export const FernMenu: FC<FernMenu.Props> = ({
                 </HeadlessMenu.Button>
                 {clearSelection != null && (
                     <button
-                        className="hover:bg-tag-primary border-border-primary text-accent-primary -ml-px inline-flex w-fit items-center justify-center rounded-lg rounded-l-none border px-2 py-1 tracking-tight transition hover:border-2 hover:px-[calc(theme(spacing[2])-1px)]"
+                        className="hover:bg-tag-primary border-border-primary dark:border-border-primary-dark text-accent-primary dark:text-accent-primary-dark -ml-px inline-flex w-fit items-center justify-center rounded-lg rounded-l-none border px-2 py-1 tracking-tight transition hover:border-2 hover:px-[calc(theme(spacing[2])-1px)]"
                         onClick={clearSelection}
                     >
                         <FontAwesomeIcon icon="close" />
@@ -78,9 +78,8 @@ export const FernMenu: FC<FernMenu.Props> = ({
             >
                 <HeadlessMenu.Items
                     className={classNames(
-                        "border-border-primary bg-background absolute mt-2 origin-top-right divide-y divide-gray-100 rounded-md border shadow-lg",
+                        "z-10 bg-background dark:bg-background-dark absolute mt-2 origin-top-right divide-y divide-border-border-primary dark:divide-border-primary-dark border-border-border-primary dark:border-border-primary-dark rounded-md border shadow-lg flex flex-col",
                         {
-                            "w-32": menuClassName == null || !menuClassName.includes("w-"),
                             "left-0": align === "left",
                             "right-0": align === "right",
                         },
@@ -108,7 +107,7 @@ export const FernMenuItem: FC<FernMenuItem.Props> = ({ href, onClick, selected =
         <HeadlessMenu.Item>
             {({ active }) => {
                 const className = classNames(
-                    "flex w-full justify-between !no-underline items-center p-2 first:rounded-t-md last:rounded-b-md",
+                    "flex justify-between !no-underline items-center p-2 first:rounded-t-md last:rounded-b-md",
                     {
                         "bg-tag-primary": active,
                         "!text-accent-primary": selected || (active && !selected),
