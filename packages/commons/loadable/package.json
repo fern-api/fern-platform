@@ -30,7 +30,7 @@
     "@fern-ui/core-utils": "workspace:*"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.5",
+    "@types/jest": "^29.5.11",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.3",
     "eslint": "^8.26.0",
