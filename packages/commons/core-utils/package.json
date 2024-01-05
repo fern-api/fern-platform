@@ -28,14 +28,14 @@
   },
   "dependencies": {
     "strip-ansi": "^7.1.0",
-    "ua-parser-js": "^1.0.35"
+    "ua-parser-js": "^1.0.37"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",
     "@types/node": "^18.7.18",
     "@types/ua-parser-js": "^0.7.36",
-    "depcheck": "^1.4.3",
-    "eslint": "^8.26.0",
+    "depcheck": "^1.4.7",
+    "eslint": "^8.56.0",
     "jest": "^29.7.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.8.8",
