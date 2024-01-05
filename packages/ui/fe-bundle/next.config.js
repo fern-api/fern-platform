@@ -5,7 +5,7 @@ const nextConfig = {
     experimental: {
         scrollRestoration: true,
     },
-    assetPrefix: process.env.CDN_URI != null ? new URL("/_fern", process.env.CDN_URI).href : "/_fern",
+    assetPrefix: new URL("/_fern", process.env.CDN_URI).href,
     rewrites: async () => ({
         beforeFiles: [
             {
