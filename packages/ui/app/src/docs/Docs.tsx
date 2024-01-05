@@ -70,7 +70,10 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                     className="border-border-concealed-light dark:border-border-concealed-dark dark:shadow-header-dark fixed inset-x-0 top-0 z-20 overflow-visible border-b backdrop-blur"
                     style={{ height: HEADER_HEIGHT }}
                 >
-                    <div className="absolute h-full w-full overflow-hidden" style={{ clip: "rect(0, auto, auto, 0)" }}>
+                    <div
+                        className="pointer-events-none absolute -z-10 h-full w-full overflow-hidden"
+                        style={{ clip: "rect(0, auto, auto, 0)" }}
+                    >
                         <BgImageGradient
                             className="h-screen opacity-60 dark:opacity-50"
                             backgroundType={backgroundType}
