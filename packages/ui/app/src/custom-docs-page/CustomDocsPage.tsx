@@ -2,7 +2,6 @@ import { type DocsNode } from "@fern-api/fdr-sdk";
 import { type ResolvedPath, type SerializedMdxContent } from "@fern-ui/app-utils";
 import { useMemo } from "react";
 import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
-import { HEADER_HEIGHT } from "../constants";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { MdxContent } from "../mdx/MdxContent";
 import { TableOfContents } from "./TableOfContents";
@@ -44,12 +43,8 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ serializedMdxCo
             </div>
             <div className="hidden w-64 xl:flex">
                 <TableOfContents
-                    className="sticky w-full overflow-auto overflow-x-hidden py-8"
+                    className="sticky top-16 max-h-[calc(100vh-64px)] w-full overflow-auto overflow-x-hidden py-8"
                     markdown={page.markdown}
-                    style={{
-                        maxHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
-                        top: HEADER_HEIGHT,
-                    }}
                 />
             </div>
         </div>

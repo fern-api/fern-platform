@@ -91,7 +91,7 @@ module.exports = {
                 "text-disabled-light": "rgb(209, 213, 219)",
                 "text-disabled-dark": "rgb(107, 114, 128)",
 
-                "tag-default-dark": "rgba(255, 255, 255, 15%)",
+                "tag-default-dark": "rgba(255, 255, 255, 10%)",
                 "tag-default-light": "rgba(3, 7, 18, 5%)",
                 "tag-primary": "rgba(var(--accent-primary), 15%)",
                 "tag-primary-dark": "rgba(var(--accent-primary-dark), 15%)",

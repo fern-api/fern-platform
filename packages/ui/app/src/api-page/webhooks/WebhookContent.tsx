@@ -3,7 +3,6 @@ import { getSubpackageTitle, isSubpackage } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { snakeCase } from "lodash-es";
 import React, { useCallback } from "react";
-import { HEADER_HEIGHT } from "../../constants";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
@@ -71,7 +70,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
             })}
         >
             <div
-                className="flex min-w-0 flex-1 scroll-mt-20 flex-col lg:flex-row lg:space-x-[4vw]"
+                className="flex min-w-0 flex-1 scroll-mt-16 flex-col lg:flex-row lg:space-x-[4vw]"
                 ref={setContainerRef}
                 data-route={route}
             >
@@ -122,7 +121,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                 </div>
                 <div
                     className={classNames(
-                        "flex-1 sticky self-start top-0 min-w-sm max-w-lg ml-auto",
+                        "flex-1 sticky self-start top-16 min-w-sm max-w-lg ml-auto",
                         // the py-10 is the same as the 40px below
                         "pb-10 pt-8",
                         // the 4rem is the same as the h-10 as the Header
@@ -130,7 +129,6 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                         // hide on mobile,
                         "hidden lg:flex"
                     )}
-                    style={{ top: HEADER_HEIGHT }}
                 >
                     {webhookExample}
                 </div>
