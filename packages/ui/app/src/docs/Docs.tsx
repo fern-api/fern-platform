@@ -26,7 +26,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
 
     useEffect(() => {
         // this is a hack to ensure that the theme is always set to a valid value, even if localStorage is corrupted
-        if (theme != null && !themes.includes(theme)) {
+        if (theme == null || !themes.includes(theme)) {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             setTheme(themes.length === 1 ? themes[0]! : "system");
         }
