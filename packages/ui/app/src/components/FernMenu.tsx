@@ -107,7 +107,7 @@ export const FernMenuItem: FC<FernMenuItem.Props> = ({ href, onClick, selected =
         <HeadlessMenu.Item>
             {({ active }) => {
                 const className = classNames(
-                    "flex justify-between !no-underline items-center p-2 first:rounded-t-md last:rounded-b-md",
+                    "flex justify-between !no-underline items-center p-2 first:rounded-t-md last:rounded-b-md gap-2",
                     {
                         "bg-tag-primary": active,
                         "!text-accent-primary": selected || (active && !selected),

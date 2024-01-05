@@ -32,6 +32,7 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
             <FernMenu
                 text={selectedClient.name}
                 icon={<FontAwesomeIcon className="h-4 w-4" icon={getIconForClient(selectedClient.id)} />}
+                align="right"
             >
                 {clients.map(({ id: clientId, name: clientName }) => (
                     <FernMenuItem
