@@ -14,7 +14,7 @@
     }
 
     ::selection {
-        @apply bg-accent-primary/20 dark:bg-accent-primary-dark/20;
+        @apply bg-accent-highlight/20 dark:bg-accent-highlight-dark/20;
     }
 
     html,

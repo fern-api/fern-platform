@@ -16,7 +16,7 @@ export const FernModal: FC<PropsWithChildren<FernModalProps>> = ({
 }): ReactElement => {
     return (
         <Transition appear show={isOpen} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={() => onClose()}>
+            <Dialog as="div" className="relative z-20" onClose={() => onClose()}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -26,11 +26,11 @@ export const FernModal: FC<PropsWithChildren<FernModalProps>> = ({
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <div className="fixed inset-0 bg-black/50" />
+                    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" />
                 </Transition.Child>
 
                 <div className="fixed inset-0 overflow-y-auto">
-                    <div className="flex min-h-full items-center justify-center p-4">
+                    <div className="p-sm flex min-h-full items-center justify-center">
                         <Transition.Child
                             as={Fragment}
                             enter="ease-out duration-300"
