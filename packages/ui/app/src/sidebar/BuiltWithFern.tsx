@@ -18,7 +18,7 @@ export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className }) => {
 
     return (
         <div
-            className={classNames("flex cursor-pointer items-center space-x-2 pl-3 py-3", className)}
+            className={classNames("flex cursor-pointer items-center space-x-2 pl-3 py-3 mt-4", className)}
             onClick={onClick}
             {...containerCallbacks}
         >

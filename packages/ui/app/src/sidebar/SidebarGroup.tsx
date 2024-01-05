@@ -19,7 +19,7 @@ export const SidebarGroup: React.FC<SidebarGroup.Props> = ({ title, includeTopMa
     return (
         <div
             className={classNames("flex flex-col", {
-                "mt-4": includeTopMargin,
+                "mt-6": includeTopMargin,
             })}
         >
             {title}

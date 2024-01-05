@@ -14,6 +14,7 @@ export declare namespace SidebarDocsSection {
         docsDefinition: DocsV1Read.DocsDefinition;
         activeTabIndex: number | null;
         resolveApi: (apiId: FdrAPI.ApiDefinitionId) => APIV1Read.ApiDefinition;
+        level: number;
     }
 }
 
@@ -26,6 +27,7 @@ export const SidebarDocsSection: React.FC<SidebarDocsSection.Props> = ({
     docsDefinition,
     activeTabIndex,
     resolveApi,
+    level,
 }) => {
     return (
         <SidebarGroup title={<NonClickableSidebarGroupTitle title={section.title} />} includeTopMargin>
@@ -38,6 +40,7 @@ export const SidebarDocsSection: React.FC<SidebarDocsSection.Props> = ({
                 docsDefinition={docsDefinition}
                 activeTabIndex={activeTabIndex}
                 resolveApi={resolveApi}
+                level={level + 1}
             />
         </SidebarGroup>
     );
