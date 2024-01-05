@@ -70,4 +70,10 @@
     h6 {
         @apply text-[0.875rem] font-semibold;
     }
+
+    .clipped-background {
+        @apply pointer-events-none absolute -z-10 h-full w-full overflow-hidden;
+
+        clip-path: inset(0);
+    }
 }

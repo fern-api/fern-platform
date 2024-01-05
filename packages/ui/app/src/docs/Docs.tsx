@@ -11,7 +11,6 @@ import { SearchDialog } from "../search/SearchDialog";
 import { useSearchService } from "../services/useSearchService";
 import { Sidebar } from "../sidebar/Sidebar";
 import { BgImageGradient } from "./BgImageGradient";
-import * as styles from "./Docs.module.scss";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
 
@@ -67,12 +66,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
 
             <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
                 <div className="border-border-concealed-light dark:border-border-concealed-dark dark:shadow-header-dark fixed inset-x-0 top-0 z-20 h-16 overflow-visible border-b backdrop-blur">
-                    <div
-                        className={classNames(
-                            "pointer-events-none absolute -z-10 h-full w-full overflow-hidden",
-                            styles.clippedBackground
-                        )}
-                    >
+                    <div className="clipped-background">
                         <BgImageGradient
                             className="h-screen opacity-60 dark:opacity-50"
                             backgroundType={backgroundType}
