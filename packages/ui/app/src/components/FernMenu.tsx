@@ -31,9 +31,9 @@ export const FernMenu: FC<FernMenu.Props> = ({
                     className={classNames(
                         "group inline-flex w-full justify-center items-center space-x-2 rounded-lg",
                         "hover:bg-tag-primary",
-                        "border border-border-primary hover:border-2",
+                        "border border-border-primary dark:border-border-primary-dark hover:border-2",
                         "transition",
-                        "text-accent-primary tracking-tight",
+                        "text-accent-primary dark:text-accent-primary-dark tracking-tight",
                         "py-1 pl-2.5 pr-1",
                         // Make sure padding remains the same on hover
                         // This seems to be a Tailwind bug where we can't use theme(borderWidth.1) in some cases
@@ -110,7 +110,7 @@ export const FernMenuItem: FC<FernMenuItem.Props> = ({ href, onClick, selected =
                     "flex justify-between !no-underline items-center p-2 first:rounded-t-md last:rounded-b-md gap-2",
                     {
                         "bg-tag-primary": active,
-                        "!text-accent-primary": selected || (active && !selected),
+                        "!text-accent-primary dark:!text-accent-primary-dark": selected || (active && !selected),
                         "!text-text-muted-light dark:!text-text-muted-dark": !active && !selected,
                     }
                 );
