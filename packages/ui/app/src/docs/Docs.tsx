@@ -3,7 +3,6 @@ import { useKeyboardCommand } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { useTheme } from "next-themes";
 import { memo, useEffect, useMemo } from "react";
-import { HEADER_HEIGHT } from "../constants";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
@@ -66,10 +65,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
             )}
 
             <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
-                <div
-                    className="border-border-concealed-light dark:border-border-concealed-dark dark:shadow-header-dark fixed inset-x-0 top-0 z-20 overflow-visible border-b backdrop-blur"
-                    style={{ height: HEADER_HEIGHT }}
-                >
+                <div className="border-border-concealed-light dark:border-border-concealed-dark dark:shadow-header-dark fixed inset-x-0 top-0 z-20 h-16 overflow-visible border-b backdrop-blur">
                     <div
                         className="pointer-events-none absolute -z-10 h-full w-full overflow-hidden"
                         style={{ clip: "rect(0, auto, auto, 0)" }}
@@ -92,34 +88,21 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                 </div>
 
                 <div className="max-w-8xl relative mx-auto flex min-h-0 w-full flex-1">
-                    <div className="hidden w-72 md:flex" style={{ paddingTop: HEADER_HEIGHT }}>
+                    <div className="hidden w-72 pt-16 md:flex">
                         <div
-                            className="sticky w-full overflow-auto overflow-x-hidden"
-                            style={{
-                                maxHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
-                                top: HEADER_HEIGHT,
-                            }}
+                            className="sticky top-16 max-h-[calc(100vh-64px)] w-full overflow-auto overflow-x-hidden"
                             id="sidebar-container"
                         >
                             <Sidebar />
                         </div>
                     </div>
                     {isMobileSidebarOpen && (
-                        <div
-                            className="bg-background dark:bg-background-dark fixed inset-x-0 bottom-0 z-10 flex overflow-auto overflow-x-hidden md:hidden"
-                            style={{
-                                maxHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
-                                top: HEADER_HEIGHT,
-                            }}
-                        >
+                        <div className="bg-background dark:bg-background-dark fixed inset-x-0 bottom-0 top-16 z-10 flex max-h-[calc(100vh-64px)] overflow-auto overflow-x-hidden md:hidden">
                             <Sidebar hideSearchBar />
                         </div>
                     )}
 
-                    <div
-                        className={classNames("relative flex w-full min-w-0 flex-1 flex-col")}
-                        style={{ paddingTop: HEADER_HEIGHT }}
-                    >
+                    <div className={classNames("relative flex w-full min-w-0 flex-1 flex-col pt-16")}>
                         <DocsMainContent />
                     </div>
                 </div>

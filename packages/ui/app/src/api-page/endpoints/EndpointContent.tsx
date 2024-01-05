@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
-import { HEADER_HEIGHT } from "../../constants";
 import { useNavigationContext } from "../../navigation-context";
 import { getAnchorId } from "../../util/anchor";
 import { useViewportContext } from "../../viewport-context/useViewportContext";
@@ -176,7 +175,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         }
         const maxRequestContainerHeight = selectedExampleClientLineCount * LINE_HEIGHT + CONTENT_PADDING;
         const maxResponseContainerHeight = jsonLines.length * LINE_HEIGHT + CONTENT_PADDING;
-        const containerHeight = viewportSize.height - HEADER_HEIGHT - PADDING_TOP - PADDING_BOTTOM;
+        const containerHeight = viewportSize.height - 64 - PADDING_TOP - PADDING_BOTTOM;
         const halfContainerHeight = (containerHeight - GAP_6) / 2;
         if (example?.responseBody == null) {
             return [Math.min(maxRequestContainerHeight, containerHeight), 0];
@@ -213,7 +212,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
             ref={containerRef}
         >
             <div
-                className="flex min-w-0 flex-1 scroll-mt-20 flex-col justify-between lg:flex-row lg:space-x-[4vw]"
+                className="flex min-w-0 flex-1 scroll-mt-16 flex-col justify-between lg:flex-row lg:space-x-[4vw]"
                 ref={setContainerRef}
                 data-route={route}
             >
