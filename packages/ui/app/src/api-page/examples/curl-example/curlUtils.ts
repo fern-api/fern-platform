@@ -61,7 +61,7 @@ export function getCurlLines(
             parts.push({
                 type: "param",
                 paramKey: "--url-query",
-                // eslint-disable-next-line @typescript-eslint/no-base-to-string
+                 
                 value: `${queryParam.key}=${value}`,
             });
         }

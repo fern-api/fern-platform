@@ -7,22 +7,13 @@ import { useTypedQuery } from "./useTypedQuery";
 export function useNullableQuery<
     TQueryFnData = unknown,
     TError = unknown,
-    TQueryKey extends TypedQueryKey<TQueryFnData> = TypedQueryKey<TQueryFnData>
+    TQueryKey extends TypedQueryKey<TQueryFnData> = TypedQueryKey<TQueryFnData>,
 >(
     queryKey: TQueryKey | undefined,
     queryFn: QueryFunction<TQueryFnData, TQueryKey>,
-    options?: Omit<UseQueryOptions<TQueryFnData, TError, TQueryFnData, TQueryKey>, "queryKey" | "queryFn">
+    options?: Omit<UseQueryOptions<TQueryFnData, TError, TQueryFnData, TQueryKey>, "queryKey" | "queryFn">,
 ): Loadable<TQueryFnData, TError> {
-    const {
-        enabled: isEnabledProp = true,
-        refetchInterval,
-        // eslint-disable-next-line deprecation/deprecation
-        onSettled,
-        // eslint-disable-next-line deprecation/deprecation
-        onSuccess,
-        isDataEqual,
-        select,
-    } = options ?? {};
+    const { enabled: isEnabledProp = true, refetchInterval, onSettled, onSuccess, isDataEqual, select } = options ?? {};
 
     const result = useTypedQuery<TQueryFnData | NullableQueryResult, TError>(
         queryKey ?? createNullableQueryKey(),
@@ -55,7 +46,7 @@ export function useNullableQuery<
                           }
                           return refetchInterval(
                               data,
-                              query as unknown as Query<TQueryFnData, TError, TQueryFnData, TQueryKey>
+                              query as unknown as Query<TQueryFnData, TError, TQueryFnData, TQueryKey>,
                           );
                       }
                     : refetchInterval,
@@ -95,7 +86,7 @@ export function useNullableQuery<
                           return select(data);
                       }
                     : undefined,
-        }
+        },
     );
 
     return useMemo(() => {

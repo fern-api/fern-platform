@@ -44,7 +44,7 @@
     "@fortawesome/pro-regular-svg-icons": "^6.5.1",
     "@fortawesome/pro-solid-svg-icons": "^6.5.1",
     "lodash-es": "^4.17.21",
-    "next": "^13.5.6",
+    "next": "^14.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "styled-jsx": "^5.1.2"
@@ -54,7 +54,7 @@
     "@tailwindcss/typography": "^0.5.10",
     "@types/jest": "^29.5.11",
     "@types/lodash-es": "^4.17.12",
-    "@types/node": "^18.7.18",
+    "@types/node": "^18.19.4",
     "@types/react": "^18.2.46",
     "@types/react-dom": "^18.2.18",
     "autoprefixer": "^10.4.16",
@@ -63,10 +63,10 @@
     "jest": "^29.7.0",
     "organize-imports-cli": "^0.10.0",
     "postcss": "^8.4.33",
-    "prettier": "^2.8.8",
+    "prettier": "^3.1.1",
     "sass": "^1.69.7",
     "stylelint": "^16.1.0",
     "tailwindcss": "^3.4.1",
-    "typescript": "4.9.5"
+    "typescript": "5.3.3"
   }
 }
