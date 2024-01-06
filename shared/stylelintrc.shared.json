@@ -1,8 +1,9 @@
 {
-  "plugins": ["@blueprintjs/stylelint-plugin"],
-  "extends": ["stylelint-config-standard-scss", "stylelint-config-prettier-scss"],
+  "extends": [
+    "stylelint-config-standard-scss",
+    "stylelint-config-prettier-scss"
+  ],
   "rules": {
-    "@blueprintjs/no-prefix-literal": true,
     "selector-class-pattern": [
       "^([a-z][A-Z]*)+$",
       {
@@ -12,13 +13,18 @@
     "selector-pseudo-class-no-unknown": [
       true,
       {
-        "ignorePseudoClasses": ["global", "export"]
+        "ignorePseudoClasses": [
+          "global",
+          "export"
+        ]
       }
     ],
     "property-no-unknown": [
       true,
       {
-        "ignoreSelectors": [":export"]
+        "ignoreSelectors": [
+          ":export"
+        ]
       }
     ],
     "font-family-no-missing-generic-family-keyword": null,
