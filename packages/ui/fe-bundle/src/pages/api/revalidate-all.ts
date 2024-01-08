@@ -11,7 +11,7 @@ const handler: NextApiHandler = async (req, res: NextApiResponse<void>) => {
 
         // when we call res.revalidate() nextjs uses
         // req.headers.host to make the network request
-        const xFernHost = req.headers["x-fern-host"] ?? process.env.NEXT_PUBLIC_DOCS_DOMAIN;
+        const xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? req.headers["x-fern-host"];
         if (typeof xFernHost === "string") {
             req.headers.host = xFernHost;
             res.setHeader("host", xFernHost);

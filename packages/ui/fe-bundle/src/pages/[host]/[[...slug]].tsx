@@ -7,6 +7,7 @@ import {
     type ResolvedPath,
 } from "@fern-ui/app-utils";
 import { App, useColorTheme } from "@fern-ui/ui";
+import { compact } from "lodash-es";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import { ReactElement } from "react";
@@ -62,16 +63,16 @@ export default function Docs({
 }
 
 export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }) => {
-    const host = params.host as string | undefined;
-    const slugArray = params.slug as string[] | undefined;
+    const xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? params.host;
+    const slugArray = compact(params.slug);
 
-    if (host == null) {
-        throw new Error("host is not defined");
+    if (xFernHost == null || Array.isArray(xFernHost)) {
+        return { notFound: true };
     }
 
     const pathname = slugArray != null ? slugArray.join("/") : "";
     const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
-        url: process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? buildUrl({ host, pathname }),
+        url: buildUrl({ host: xFernHost, pathname }),
     });
 
     if (!docs.ok) {
