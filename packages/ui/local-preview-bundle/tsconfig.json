@@ -10,7 +10,7 @@
     "jsx": "preserve",
     "plugins": [{ "name": "next" }]
   },
-  "include": ["./src"],
+  "include": ["./src/**/*"],
   "exclude": ["node_modules"],
   "references": [{ "path": "../../commons/app-utils" }, { "path": "../../commons/core-utils" }, { "path": "../app" }]
 }

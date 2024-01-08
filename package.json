@@ -40,7 +40,6 @@
     "@babel/preset-react": "^7.22.15",
     "@babel/preset-typescript": "^7.18.6",
     "@blueprintjs/eslint-plugin": "^2.1.2",
-    "@blueprintjs/stylelint-plugin": "^4.1.6",
     "@types/is-ci": "^3.0.0",
     "@types/jest": "^29.5.11",
     "@types/lodash-es": "4.17.9",
@@ -50,7 +49,7 @@
     "@yarnpkg/sdks": "^3.1.0",
     "chalk": "^5.3.0",
     "depcheck": "^1.4.3",
-    "eslint": "^8.23.1",
+    "eslint": "^8.56.0",
     "eslint-plugin-deprecation": "^1.3.2",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jest": "^27.0.4",
@@ -66,17 +65,19 @@
     "jsonc-parser": "~2.2.1",
     "lint-staged": "^13.0.3",
     "lodash-es": "^4.17.21",
-    "mrlint": "^0.0.124",
+    "mrlint": "^0.0.132",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.8.8",
     "react": "^18.2.0",
     "styled-jsx": "^5.1.2",
-    "stylelint": "^14.11.0",
-    "stylelint-config-prettier-scss": "^0.0.1",
-    "stylelint-config-standard-scss": "^5.0.0",
-    "tailwindcss": "^3.3.2",
+    "stylelint": "^16.1.0",
+    "stylelint-config-recommended": "^14.0.0",
+    "stylelint-config-standard-scss": "^13.0.0",
+    "stylelint-config-tailwindcss": "^0.0.7",
+    "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.1",
-    "typescript": "4.9.4"
+    "typescript": "4.9.4",
+    "typescript-plugin-css-modules": "^5.0.2"
   },
   "resolutions": {
     "postcss": "8.4.31"
@@ -86,5 +87,8 @@
     "jsonc-parser@2.2.1": {
       "unplugged": true
     }
+  },
+  "dependencies": {
+    "stylelint-scss": "^6.0.0"
   }
 }
