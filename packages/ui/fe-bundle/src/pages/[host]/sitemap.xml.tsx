@@ -1,5 +1,5 @@
 import { FdrAPI, PathResolver } from "@fern-api/fdr-sdk";
-import { GetServerSideProps, GetStaticPaths } from "next";
+import { GetServerSideProps } from "next";
 import { REGISTRY_SERVICE } from "../../service";
 
 function SiteMap(): void {
@@ -22,7 +22,7 @@ function getSitemapXml(urls: string[]): string {
     </urlset>`;
 }
 
-export const getStaticProps: GetServerSideProps = async ({ params = {}, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ params = {}, res }) => {
     const host = params.host as string | undefined;
 
     if (host == null) {
@@ -62,8 +62,4 @@ export const getStaticProps: GetServerSideProps = async ({ params = {}, res }) =
     return {
         props: {},
     };
-};
-
-export const getStaticPaths: GetStaticPaths = () => {
-    return { paths: ["/sitemap.xml"], fallback: false };
 };
