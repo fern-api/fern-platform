@@ -13,7 +13,7 @@ export declare namespace SidebarDocsSection {
         closeMobileSidebar: () => void;
         docsDefinition: DocsV1Read.DocsDefinition;
         activeTabIndex: number | null;
-        resolveApi: (apiId: FdrAPI.ApiDefinitionId) => APIV1Read.ApiDefinition;
+        resolveApi: (apiId: FdrAPI.ApiDefinitionId) => APIV1Read.ApiDefinition | undefined;
         level: number;
     }
 }

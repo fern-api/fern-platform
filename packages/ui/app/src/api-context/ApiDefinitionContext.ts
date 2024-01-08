@@ -6,9 +6,9 @@ export const ApiDefinitionContext = React.createContext<() => ApiDefinitionConte
 });
 
 export interface ApiDefinitionContextValue {
-    apiDefinition: APIV1Read.ApiDefinition;
+    apiDefinition: APIV1Read.ApiDefinition | undefined;
     apiSection: DocsV1Read.ApiSection;
     apiSlug: string;
-    resolveTypeById: (typeId: APIV1Read.TypeId) => APIV1Read.TypeDefinition;
-    resolveSubpackageById: (subpackageId: APIV1Read.SubpackageId) => APIV1Read.ApiDefinitionSubpackage;
+    resolveTypeById: (typeId: APIV1Read.TypeId) => APIV1Read.TypeDefinition | undefined;
+    resolveSubpackageById: (subpackageId: APIV1Read.SubpackageId) => APIV1Read.ApiDefinitionSubpackage | undefined;
 }

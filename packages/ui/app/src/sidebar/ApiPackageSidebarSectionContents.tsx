@@ -7,13 +7,13 @@ import { SidebarItem } from "./SidebarItem";
 
 export declare namespace ApiPackageSidebarSectionContents {
     export interface Props {
-        package: APIV1Read.ApiDefinitionPackage;
+        package: APIV1Read.ApiDefinitionPackage | undefined;
         slug: string;
         shallow?: boolean;
         registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
         closeMobileSidebar: () => void;
         selectedSlug: string | undefined;
-        resolveSubpackageById: (subpackageId: APIV1Read.SubpackageId) => APIV1Read.ApiDefinitionSubpackage;
+        resolveSubpackageById: (subpackageId: APIV1Read.SubpackageId) => APIV1Read.ApiDefinitionSubpackage | undefined;
         docsDefinition: DocsV1Read.DocsDefinition;
         activeTabIndex: number | null;
     }
@@ -33,7 +33,7 @@ export const ApiPackageSidebarSectionContents: React.FC<ApiPackageSidebarSection
     const { navigateToPath } = useNavigationContext();
     return (
         <div className="flex flex-col">
-            {package_.endpoints.map((endpoint, endpointIndex) => {
+            {package_?.endpoints.map((endpoint, endpointIndex) => {
                 const fullSlug = joinUrlSlugs(slug, endpoint.urlSlug);
                 return (
                     <SidebarItem
@@ -52,7 +52,7 @@ export const ApiPackageSidebarSectionContents: React.FC<ApiPackageSidebarSection
                     />
                 );
             })}
-            {package_.webhooks.map((webhook, webhookIndex) => {
+            {package_?.webhooks.map((webhook, webhookIndex) => {
                 const fullSlug = joinUrlSlugs(slug, webhook.urlSlug);
                 return (
                     <SidebarItem

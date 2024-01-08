@@ -18,17 +18,18 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
     const apiSlug = apiSection.skipUrlSlug ? "" : apiSection.urlSlug;
 
     const resolveSubpackageById = useCallback(
-        (subpackageId: APIV1Read.SubpackageId): APIV1Read.ApiDefinitionSubpackage => {
+        (subpackageId: APIV1Read.SubpackageId): APIV1Read.ApiDefinitionSubpackage | undefined => {
             return resolveSubpackage(apiDefinition, subpackageId);
         },
         [apiDefinition]
     );
 
     const resolveTypeById = useCallback(
-        (typeId: APIV1Read.TypeId): APIV1Read.TypeDefinition => {
-            const type = apiDefinition.types[typeId];
+        (typeId: APIV1Read.TypeId): APIV1Read.TypeDefinition | undefined => {
+            const type = apiDefinition?.types[typeId];
             if (type == null) {
-                throw new Error("Type does not exist");
+                // eslint-disable-next-line no-console
+                console.error("Type does not exist", typeId, "in apiDefinitionId", apiDefinition?.id);
             }
             return type;
         },
@@ -50,21 +51,25 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
 };
 
 export function resolveSubpackage(
-    apiDefinition: APIV1Read.ApiDefinition,
+    apiDefinition: APIV1Read.ApiDefinition | undefined,
     subpackageId: APIV1Read.SubpackageId
-): APIV1Read.ApiDefinitionSubpackage {
-    const subpackage = apiDefinition.subpackages[subpackageId];
+): APIV1Read.ApiDefinitionSubpackage | undefined {
+    const subpackage = apiDefinition?.subpackages[subpackageId];
     if (subpackage == null) {
-        throw new Error("Subpackage does not exist");
+        // eslint-disable-next-line no-console
+        console.error("Subpackage does not exist", subpackageId);
     }
-    if (subpackage.pointsTo != null) {
+    if (subpackage?.pointsTo != null) {
         const resolvedSubpackage = resolveSubpackage(apiDefinition, subpackage.pointsTo);
-        return {
-            ...resolvedSubpackage,
-            name: subpackage.name,
-            urlSlug: subpackage.urlSlug,
-        };
+        if (resolvedSubpackage != null) {
+            return {
+                ...resolvedSubpackage,
+                name: subpackage.name,
+                urlSlug: subpackage.urlSlug,
+            };
+        }
     } else {
         return subpackage;
     }
+    return undefined;
 }

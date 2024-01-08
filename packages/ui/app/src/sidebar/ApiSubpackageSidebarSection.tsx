@@ -12,7 +12,7 @@ export declare namespace ApiSubpackageSidebarSection {
         subpackage: APIV1Read.ApiDefinitionSubpackage;
         slug: string;
         selectedSlug: string | undefined;
-        resolveSubpackageById: (subpackageId: APIV1Read.SubpackageId) => APIV1Read.ApiDefinitionSubpackage;
+        resolveSubpackageById: (subpackageId: APIV1Read.SubpackageId) => APIV1Read.ApiDefinitionSubpackage | undefined;
         registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
         docsDefinition: DocsV1Read.DocsDefinition;
         activeTabIndex: number | null;

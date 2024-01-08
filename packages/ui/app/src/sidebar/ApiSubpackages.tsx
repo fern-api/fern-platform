@@ -1,13 +1,14 @@
 import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import { joinUrlSlugs } from "@fern-ui/app-utils";
+import { Fragment } from "react";
 import { ApiSubpackageSidebarSection } from "./ApiSubpackageSidebarSection";
 
 export declare namespace ApiSubpackages {
     export interface Props {
-        package: APIV1Read.ApiDefinitionPackage;
+        package: APIV1Read.ApiDefinitionPackage | undefined;
         slug: string;
         selectedSlug: string | undefined;
-        resolveSubpackageById: (subpackageId: APIV1Read.SubpackageId) => APIV1Read.ApiDefinitionSubpackage;
+        resolveSubpackageById: (subpackageId: APIV1Read.SubpackageId) => APIV1Read.ApiDefinitionSubpackage | undefined;
         registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
         docsDefinition: DocsV1Read.DocsDefinition;
         activeTabIndex: number | null;
@@ -27,8 +28,14 @@ export const ApiSubpackages: React.FC<ApiSubpackages.Props> = ({
 }) => {
     return (
         <>
-            {package_.subpackages.map((subpackageId) => {
+            {package_?.subpackages.map((subpackageId) => {
                 const subpackage = resolveSubpackageById(subpackageId);
+                if (subpackage == null) {
+                    // TODO: return a placeholder
+                    // eslint-disable-next-line no-console
+                    console.error("Subpackage does not exist", subpackageId);
+                    return <Fragment key={subpackageId} />;
+                }
                 return (
                     <ApiSubpackageSidebarSection
                         key={subpackageId}

@@ -18,7 +18,7 @@ export declare namespace ApiSidebarSection {
         closeMobileSidebar: () => void;
         docsDefinition: DocsV1Read.DocsDefinition;
         activeTabIndex: number | null;
-        resolveApi: (apiId: FdrAPI.ApiDefinitionId) => APIV1Read.ApiDefinition;
+        resolveApi: (apiId: FdrAPI.ApiDefinitionId) => APIV1Read.ApiDefinition | undefined;
     }
 }
 
@@ -36,7 +36,7 @@ export const ApiSidebarSection: React.FC<ApiSidebarSection.Props> = ({
     const apiDefinition = useMemo(() => resolveApi(apiSection.api), [apiSection.api, resolveApi]);
 
     const resolveSubpackageById = useCallback(
-        (subpackageId: APIV1Read.SubpackageId): APIV1Read.ApiDefinitionSubpackage => {
+        (subpackageId: APIV1Read.SubpackageId): APIV1Read.ApiDefinitionSubpackage | undefined => {
             return resolveSubpackage(apiDefinition, subpackageId);
         },
         [apiDefinition]
@@ -58,7 +58,7 @@ export const ApiSidebarSection: React.FC<ApiSidebarSection.Props> = ({
                 />
             )}
             <ApiPackageSidebarSectionContents
-                package={apiDefinition.rootPackage}
+                package={apiDefinition?.rootPackage}
                 slug={slug}
                 // shallow={selectedSlug?.includes(slug) ?? false}
                 selectedSlug={selectedSlug}
