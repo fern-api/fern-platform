@@ -22,25 +22,22 @@ function getSitemapXml(urls: string[]): string {
     </urlset>`;
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params = {}, res }) => {
-    const host = params.host as string | undefined;
+export const getServerSideProps: GetServerSideProps = async ({ params = {}, req, res }) => {
+    const xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? req.headers["x-fern-host"] ?? params.host;
 
-    if (host == null) {
-        throw new Error("host is not defined");
+    if (xFernHost == null || Array.isArray(xFernHost)) {
+        return { notFound: true };
     }
-    const hostWithoutTrailingSlash = host.endsWith("/") ? host.slice(0, -1) : host;
+    const hostWithoutTrailingSlash = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
 
     const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
-        url: process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? hostWithoutTrailingSlash,
+        url: hostWithoutTrailingSlash,
     });
 
     if (!docs.ok) {
         // eslint-disable-next-line no-console
         console.error("Failed to fetch docs", docs.error);
-        return {
-            notFound: true,
-            revalidate: false,
-        };
+        return { notFound: true };
     }
 
     type ApiDefinition = FdrAPI.api.v1.read.ApiDefinition;
@@ -59,7 +56,5 @@ export const getServerSideProps: GetServerSideProps = async ({ params = {}, res 
     res.write(sitemap);
     res.end();
 
-    return {
-        props: {},
-    };
+    return { props: {} };
 };
