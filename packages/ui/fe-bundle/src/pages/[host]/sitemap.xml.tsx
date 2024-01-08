@@ -22,7 +22,7 @@ function getSitemapXml(urls: string[]): string {
     </urlset>`;
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params = {}, res }) => {
+export const getStaticProps: GetServerSideProps = async ({ params = {}, res }) => {
     const host = params.host as string | undefined;
 
     if (host == null) {

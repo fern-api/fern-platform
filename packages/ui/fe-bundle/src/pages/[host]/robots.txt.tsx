@@ -6,7 +6,7 @@ function RobotsTXT(): void {
 
 export default RobotsTXT;
 
-export const getServerSideProps: GetServerSideProps = async ({ params = {}, res }) => {
+export const getStaticProps: GetServerSideProps = async ({ params = {}, res }) => {
     const host = params.host as string | undefined;
 
     if (host == null) {
