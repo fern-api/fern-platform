@@ -321,6 +321,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/runtime", "npm:7.22.5"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:1.2.2", {\
+          "packageLocation": "./.yarn/cache/@algolia-ui-components-highlight-vdom-npm-1.2.2-3fddcd582f-9b438b9138.zip/node_modules/@algolia/ui-components-highlight-vdom/",\
+          "packageDependencies": [\
+            ["@algolia/ui-components-highlight-vdom", "npm:1.2.2"],\
+            ["@algolia/ui-components-shared", "npm:1.2.2"],\
+            ["@babel/runtime", "npm:7.22.5"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["@algolia/ui-components-shared", [\
@@ -328,6 +337,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@algolia-ui-components-shared-npm-1.2.1-e6da93c375-e0e7c06fbf.zip/node_modules/@algolia/ui-components-shared/",\
           "packageDependencies": [\
             ["@algolia/ui-components-shared", "npm:1.2.1"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:1.2.2", {\
+          "packageLocation": "./.yarn/cache/@algolia-ui-components-shared-npm-1.2.2-72d59799b4-ee9bd8eaa4.zip/node_modules/@algolia/ui-components-shared/",\
+          "packageDependencies": [\
+            ["@algolia/ui-components-shared", "npm:1.2.2"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -4383,7 +4399,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["classnames", "npm:2.3.1"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
-            ["instantsearch.js", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.56.3"],\
+            ["instantsearch.js", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.63.0"],\
             ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.7.0"],\
             ["jotai", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.6.0"],\
             ["lodash-es", "npm:4.17.21"],\
@@ -7049,10 +7065,31 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:400db660562562e93c5be735905dc8a4ce1943bf30a2941e1d29e289aa353f435d40316b423d09f61e82e501bff7f4cc89c110575dbc5fa3a3f96d6382d76013#npm:3.13.3", {\
-          "packageLocation": "./.yarn/__virtual__/algoliasearch-helper-virtual-8d350c889d/0/cache/algoliasearch-helper-npm-3.13.3-54bbd606ea-a59bcf0ee7.zip/node_modules/algoliasearch-helper/",\
+        ["npm:3.16.1", {\
+          "packageLocation": "./.yarn/cache/algoliasearch-helper-npm-3.16.1-f1873018da-3aee78b786.zip/node_modules/algoliasearch-helper/",\
           "packageDependencies": [\
-            ["algoliasearch-helper", "virtual:400db660562562e93c5be735905dc8a4ce1943bf30a2941e1d29e289aa353f435d40316b423d09f61e82e501bff7f4cc89c110575dbc5fa3a3f96d6382d76013#npm:3.13.3"],\
+            ["algoliasearch-helper", "npm:3.16.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:0729f0c3d7ca22b13ae4f01ef12e81afd6ef57fb0cff0d9d2e5ec046bf321bf4df56c319258674b67cad7736ecc0207c98c9e1f5a30830418a6a0c125cae9fdc#npm:3.13.3", {\
+          "packageLocation": "./.yarn/__virtual__/algoliasearch-helper-virtual-be385c7ec8/0/cache/algoliasearch-helper-npm-3.13.3-54bbd606ea-a59bcf0ee7.zip/node_modules/algoliasearch-helper/",\
+          "packageDependencies": [\
+            ["algoliasearch-helper", "virtual:0729f0c3d7ca22b13ae4f01ef12e81afd6ef57fb0cff0d9d2e5ec046bf321bf4df56c319258674b67cad7736ecc0207c98c9e1f5a30830418a6a0c125cae9fdc#npm:3.13.3"],\
+            ["@algolia/events", "npm:4.0.1"],\
+            ["@types/algoliasearch", null],\
+            ["algoliasearch", "npm:4.18.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/algoliasearch",\
+            "algoliasearch"\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["virtual:21a2e3680570c71b08c897a9d3ae450f377a4597e81becdf8a7d9e8f344ec36d44e94a7f421343666b87687dae4c59a8552d982a3f58c9fda9d82a00143061be#npm:3.16.1", {\
+          "packageLocation": "./.yarn/__virtual__/algoliasearch-helper-virtual-c544408539/0/cache/algoliasearch-helper-npm-3.16.1-f1873018da-3aee78b786.zip/node_modules/algoliasearch-helper/",\
+          "packageDependencies": [\
+            ["algoliasearch-helper", "virtual:21a2e3680570c71b08c897a9d3ae450f377a4597e81becdf8a7d9e8f344ec36d44e94a7f421343666b87687dae4c59a8552d982a3f58c9fda9d82a00143061be#npm:3.16.1"],\
             ["@algolia/events", "npm:4.0.1"],\
             ["@types/algoliasearch", null],\
             ["algoliasearch", "npm:4.18.0"]\
@@ -11401,10 +11438,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.56.3", {\
-          "packageLocation": "./.yarn/__virtual__/instantsearch.js-virtual-400db66056/0/cache/instantsearch.js-npm-4.56.3-0b2ee8bb4d-6320263ae4.zip/node_modules/instantsearch.js/",\
+        ["npm:4.63.0", {\
+          "packageLocation": "./.yarn/cache/instantsearch.js-npm-4.63.0-8a4e9fc543-bc617863db.zip/node_modules/instantsearch.js/",\
           "packageDependencies": [\
-            ["instantsearch.js", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.56.3"],\
+            ["instantsearch.js", "npm:4.63.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:5d9c561d1a0bffbe2e9941188cd2a8387053f118e03873d8e5829a4fb7104f12e5b6e5496036320bcceb074976bfdd704931bda92769aab8fc59ea2e8d7533d3#npm:4.56.3", {\
+          "packageLocation": "./.yarn/__virtual__/instantsearch.js-virtual-0729f0c3d7/0/cache/instantsearch.js-npm-4.56.3-0b2ee8bb4d-6320263ae4.zip/node_modules/instantsearch.js/",\
+          "packageDependencies": [\
+            ["instantsearch.js", "virtual:5d9c561d1a0bffbe2e9941188cd2a8387053f118e03873d8e5829a4fb7104f12e5b6e5496036320bcceb074976bfdd704931bda92769aab8fc59ea2e8d7533d3#npm:4.56.3"],\
             ["@algolia/events", "npm:4.0.1"],\
             ["@algolia/ui-components-highlight-vdom", "npm:1.2.1"],\
             ["@algolia/ui-components-shared", "npm:1.2.1"],\
@@ -11414,12 +11458,38 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/hogan.js", "npm:3.0.1"],\
             ["@types/qs", "npm:6.9.7"],\
             ["algoliasearch", "npm:4.18.0"],\
-            ["algoliasearch-helper", "virtual:400db660562562e93c5be735905dc8a4ce1943bf30a2941e1d29e289aa353f435d40316b423d09f61e82e501bff7f4cc89c110575dbc5fa3a3f96d6382d76013#npm:3.13.3"],\
+            ["algoliasearch-helper", "virtual:0729f0c3d7ca22b13ae4f01ef12e81afd6ef57fb0cff0d9d2e5ec046bf321bf4df56c319258674b67cad7736ecc0207c98c9e1f5a30830418a6a0c125cae9fdc#npm:3.13.3"],\
             ["hogan.js", "npm:3.0.2"],\
             ["htm", "npm:3.1.1"],\
             ["preact", "npm:10.15.1"],\
             ["qs", "npm:6.9.7"],\
             ["search-insights", "npm:2.6.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/algoliasearch",\
+            "algoliasearch"\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.63.0", {\
+          "packageLocation": "./.yarn/__virtual__/instantsearch.js-virtual-21a2e36805/0/cache/instantsearch.js-npm-4.63.0-8a4e9fc543-bc617863db.zip/node_modules/instantsearch.js/",\
+          "packageDependencies": [\
+            ["instantsearch.js", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.63.0"],\
+            ["@algolia/events", "npm:4.0.1"],\
+            ["@algolia/ui-components-highlight-vdom", "npm:1.2.2"],\
+            ["@algolia/ui-components-shared", "npm:1.2.2"],\
+            ["@types/algoliasearch", null],\
+            ["@types/dom-speech-recognition", "npm:0.0.1"],\
+            ["@types/google.maps", "npm:3.53.4"],\
+            ["@types/hogan.js", "npm:3.0.1"],\
+            ["@types/qs", "npm:6.9.7"],\
+            ["algoliasearch", "npm:4.18.0"],\
+            ["algoliasearch-helper", "virtual:21a2e3680570c71b08c897a9d3ae450f377a4597e81becdf8a7d9e8f344ec36d44e94a7f421343666b87687dae4c59a8552d982a3f58c9fda9d82a00143061be#npm:3.16.1"],\
+            ["hogan.js", "npm:3.0.2"],\
+            ["htm", "npm:3.1.1"],\
+            ["preact", "npm:10.15.1"],\
+            ["qs", "npm:6.9.7"],\
+            ["search-insights", "npm:2.13.0"]\
           ],\
           "packagePeers": [\
             "@types/algoliasearch",\
@@ -15879,8 +15949,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/algoliasearch", null],\
             ["@types/react", "npm:18.0.20"],\
             ["algoliasearch", "npm:4.18.0"],\
-            ["algoliasearch-helper", "virtual:400db660562562e93c5be735905dc8a4ce1943bf30a2941e1d29e289aa353f435d40316b423d09f61e82e501bff7f4cc89c110575dbc5fa3a3f96d6382d76013#npm:3.13.3"],\
-            ["instantsearch.js", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.56.3"],\
+            ["algoliasearch-helper", "virtual:0729f0c3d7ca22b13ae4f01ef12e81afd6ef57fb0cff0d9d2e5ec046bf321bf4df56c319258674b67cad7736ecc0207c98c9e1f5a30830418a6a0c125cae9fdc#npm:3.13.3"],\
+            ["instantsearch.js", "virtual:5d9c561d1a0bffbe2e9941188cd2a8387053f118e03873d8e5829a4fb7104f12e5b6e5496036320bcceb074976bfdd704931bda92769aab8fc59ea2e8d7533d3#npm:4.56.3"],\
             ["react", "npm:18.2.0"],\
             ["use-sync-external-store", "virtual:110ade66589088dc8ce5df9c14ee2fe3038adbc7aee2fbe1602aacb7232f357d131410f0525095e37adbf8759b59fc851d4ceb1043694ea1017efbaca9f4a5fb#npm:1.2.0"]\
           ],\
@@ -15910,7 +15980,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", null],\
             ["algoliasearch", "npm:4.18.0"],\
-            ["instantsearch.js", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.56.3"],\
+            ["instantsearch.js", "virtual:5d9c561d1a0bffbe2e9941188cd2a8387053f118e03873d8e5829a4fb7104f12e5b6e5496036320bcceb074976bfdd704931bda92769aab8fc59ea2e8d7533d3#npm:4.56.3"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
             ["react-instantsearch-hooks", "virtual:5d9c561d1a0bffbe2e9941188cd2a8387053f118e03873d8e5829a4fb7104f12e5b6e5496036320bcceb074976bfdd704931bda92769aab8fc59ea2e8d7533d3#npm:6.45.0"]\
@@ -16878,6 +16948,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["search-insights", [\
+        ["npm:2.13.0", {\
+          "packageLocation": "./.yarn/cache/search-insights-npm-2.13.0-16c0fe932b-6d553606c8.zip/node_modules/search-insights/",\
+          "packageDependencies": [\
+            ["search-insights", "npm:2.13.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["npm:2.6.0", {\
           "packageLocation": "./.yarn/cache/search-insights-npm-2.6.0-e2b8d7615d-cb1d34b1b2.zip/node_modules/search-insights/",\
           "packageDependencies": [\
