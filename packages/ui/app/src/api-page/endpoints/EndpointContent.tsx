@@ -250,6 +250,8 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                 >
                     {isInViewport && example != null && (
                         <EndpointContentCodeSnippets
+                            endpoint={endpoint}
+                            package={package_}
                             example={example}
                             availableExampleClients={availableExampleClients}
                             selectedExampleClient={selectedExampleClient}

@@ -14,6 +14,8 @@ import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
 
 export declare namespace EndpointContentCodeSnippets {
     export interface Props {
+        endpoint: APIV1Read.EndpointDefinition;
+        package: APIV1Read.ApiDefinitionPackage;
         example: APIV1Read.ExampleEndpointCall;
         availableExampleClients: CodeExampleClient[];
         selectedExampleClient: CodeExampleClient;
@@ -30,6 +32,8 @@ export declare namespace EndpointContentCodeSnippets {
 const TITLED_EXAMPLE_PADDING = 43;
 
 const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippets.Props> = ({
+    endpoint,
+    package: package_,
     example,
     availableExampleClients,
     selectedExampleClient,
@@ -57,7 +61,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 }}
                 actions={
                     <>
-                        <ApiPlaygroundModal />
+                        <ApiPlaygroundModal endpoint={endpoint} package={package_} />
                         {availableExampleClients.length > 1 ? (
                             <CodeExampleClientDropdown
                                 clients={availableExampleClients}

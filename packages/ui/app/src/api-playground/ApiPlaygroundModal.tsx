@@ -1,11 +1,19 @@
+import { APIV1Read } from "@fern-api/fdr-sdk";
+import { getSubpackageTitle, isSubpackage } from "@fern-ui/app-utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
-import { ReactElement, useState } from "react";
+import { FC, ReactElement, useState } from "react";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 import { FernModal } from "../components/FernModal";
 
-export function ApiPlaygroundModal(): ReactElement {
+interface ApiPlaygroundModalProps {
+    endpoint: APIV1Read.EndpointDefinition;
+    package: APIV1Read.ApiDefinitionPackage;
+}
+
+export const ApiPlaygroundModal: FC<ApiPlaygroundModalProps> = ({ endpoint, package: package_ }): ReactElement => {
+    console.log(endpoint);
     const [isOpen, setIsOpen] = useState(false);
 
     function closeModal() {
@@ -33,11 +41,13 @@ export function ApiPlaygroundModal(): ReactElement {
             >
                 <div className="flex items-stretch justify-between gap-4 p-6">
                     <div className="-m-2 flex cursor-pointer items-center gap-4 rounded p-2 hover:bg-black/10 hover:dark:bg-white/10">
-                        <div>
-                            <div className="text-accent-primary dark:text-accent-primary-dark text-xs">
-                                Cloudflare Images
-                            </div>
-                            <div className="text-lg">Upload an image</div>
+                        <div className="flex flex-col justify-center">
+                            {isSubpackage(package_) && (
+                                <div className="text-accent-primary dark:text-accent-primary-dark text-xs">
+                                    {getSubpackageTitle(package_)}
+                                </div>
+                            )}
+                            <div className="text-lg">{endpoint.name}</div>
                         </div>
                         <ChevronDownIcon
                             className={classNames("h-5 w-5 transition", {
@@ -61,20 +71,38 @@ export function ApiPlaygroundModal(): ReactElement {
                 </div>
 
                 <div className="flex items-baseline px-6 py-1.5">
-                    <HttpMethodTag className="mr-2" method={"POST"} />
+                    <HttpMethodTag className="mr-2" method={endpoint.method} />
                     <span className="text-sm">
-                        https://api.cloudflare.com/client/v4/accounts/account_identifier/images/v2
+                        <span className="t-muted">{endpoint.environments[0]?.baseUrl}</span>
+                        {endpoint.path.parts.map((part) => (
+                            <span className={classNames({ underline: part.type === "pathParameter" })}>
+                                {part.value}
+                            </span>
+                        ))}
                     </span>
                 </div>
 
                 <div className="divide-border-default-light dark:divide-border-default-dark flex h-[500px] items-stretch divide-x">
-                    <div className="border-border-default-light dark:border-border-default-dark w-[50%] border-r"></div>
-                    <div className="divide-border-default-light dark:divide-border-default-dark flex-col divide-y">
-                        <div>Request</div>
-                        <div>Response</div>
+                    <div className="flex-1">
+                        <div className="w-full px-6 py-2 uppercase text-xs t-muted border-b border-border-default-light dark:border-border-default-dark">
+                            Request
+                        </div>
+                        <div className="px-6 py-4">Endpoint content</div>
+                    </div>
+                    <div className="divide-border-default-light dark:divide-border-default-dark flex-col divide-y flex-1 flex">
+                        <div className="flex-1">
+                            <div className="w-full px-4 py-2 uppercase text-xs t-muted border-b border-border-default-light dark:border-border-default-dark">
+                                Request Preview
+                            </div>
+                        </div>
+                        <div className="flex-1">
+                            <div className="w-full px-4 py-2 uppercase text-xs t-muted border-b border-border-default-light dark:border-border-default-dark">
+                                Response
+                            </div>
+                        </div>
                     </div>
                 </div>
             </FernModal>
         </>
     );
-}
+};
