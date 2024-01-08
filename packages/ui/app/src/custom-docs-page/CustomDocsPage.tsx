@@ -44,7 +44,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ serializedMdxCo
             <div className="hidden w-64 xl:flex">
                 <TableOfContents
                     className="sticky top-16 max-h-[calc(100vh-64px)] w-full overflow-auto overflow-x-hidden py-8"
-                    markdown={page.markdown}
+                    markdown={page?.markdown ?? ""}
                 />
             </div>
         </div>

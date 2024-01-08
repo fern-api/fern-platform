@@ -19,10 +19,14 @@ export const ReferencedTypePreviewPart: React.FC<ReferencedTypePreviewPart.Props
 }) => {
     const { resolveTypeById } = useApiDefinitionContext();
 
-    const shape = resolveTypeById(typeId).shape;
+    const shape = resolveTypeById(typeId)?.shape;
 
     const maybeWithArticle = (article: string, stringWithoutArticle: string) =>
         withArticle ? `${article} ${stringWithoutArticle}` : stringWithoutArticle;
+
+    if (shape == null) {
+        return <>{"<unknown>"}</>;
+    }
 
     return (
         <>

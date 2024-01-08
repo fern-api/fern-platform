@@ -32,8 +32,6 @@ export const ApiSubpackages: React.FC<ApiSubpackages.Props> = ({
                 const subpackage = resolveSubpackageById(subpackageId);
                 if (subpackage == null) {
                     // TODO: return a placeholder
-                    // eslint-disable-next-line no-console
-                    console.error("Subpackage does not exist", subpackageId);
                     return <Fragment key={subpackageId} />;
                 }
                 return (
