@@ -1,5 +1,5 @@
 import { FdrAPI, PathResolver } from "@fern-api/fdr-sdk";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, GetStaticPaths } from "next";
 import { REGISTRY_SERVICE } from "../../service";
 
 function SiteMap(): void {
@@ -62,4 +62,8 @@ export const getStaticProps: GetServerSideProps = async ({ params = {}, res }) =
     return {
         props: {},
     };
+};
+
+export const getStaticPaths: GetStaticPaths = () => {
+    return { paths: ["/sitemap.xml"], fallback: false };
 };

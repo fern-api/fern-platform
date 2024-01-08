@@ -1,4 +1,4 @@
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, GetStaticPaths } from "next";
 
 function RobotsTXT(): void {
     // getServerSideProps will do the heavy lifting
@@ -20,4 +20,8 @@ export const getStaticProps: GetServerSideProps = async ({ params = {}, res }) =
     return {
         props: {},
     };
+};
+
+export const getStaticPaths: GetStaticPaths = () => {
+    return { paths: ["/robots.txt"], fallback: false };
 };
