@@ -152,7 +152,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     const curlLines = useMemo(
         () =>
-            example != null
+            example != null && apiDefinition != null
                 ? getCurlLines(apiDefinition, endpoint, example, flattenJsonToLines(example.requestBody))
                 : [],
         [apiDefinition, endpoint, example]

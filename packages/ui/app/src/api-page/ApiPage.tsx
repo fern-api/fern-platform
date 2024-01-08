@@ -14,6 +14,10 @@ export const ApiPage: React.FC<ApiPage.Props> = () => {
     const { withVersionAndTabSlugs } = useDocsSelectors();
     const slug = withVersionAndTabSlugs(apiSlug, { omitDefault: true });
 
+    if (apiDefinition == null) {
+        return null;
+    }
+
     return (
         <div className="min-h-0 pb-36">
             {apiSection.artifacts != null && areApiArtifactsNonEmpty(apiSection.artifacts) && (
