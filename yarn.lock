@@ -2378,7 +2378,7 @@ __metadata:
     "@types/jest": ^29.5.11
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
-    "@types/react-dom": ^18.0.6
+    "@types/react-dom": ^18.2.18
     autoprefixer: ^10.4.13
     depcheck: ^1.4.3
     env-cmd: toddbluhm/env-cmd
@@ -2453,7 +2453,7 @@ __metadata:
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
-    "@types/react-dom": ^18.0.6
+    "@types/react-dom": ^18.2.18
     autoprefixer: ^10.4.13
     depcheck: ^1.4.3
     eslint: ^8.26.0
@@ -3995,12 +3995,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.0.6":
-  version: 18.0.6
-  resolution: "@types/react-dom@npm:18.0.6"
+"@types/react-dom@npm:^18.2.18":
+  version: 18.2.18
+  resolution: "@types/react-dom@npm:18.2.18"
   dependencies:
     "@types/react": "*"
-  checksum: db571047af1a567631758700b9f7d143e566df939cfe5fbf7535347cc0c726a1cdbb5e3f8566d076e54cf708b6c1166689de194a9ba09ee35efc9e1d45911685
+  checksum: 8e3da404c980e2b2a76da3852f812ea6d8b9d0e7f5923fbaf3bfbbbfa1d59116ff91c129de8f68e9b7668a67ae34484fe9df74d5a7518cf8591ec07a0c4dad57
   languageName: node
   linkType: hard
 
