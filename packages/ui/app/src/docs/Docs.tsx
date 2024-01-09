@@ -93,9 +93,12 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
 
                 <div className="max-w-8xl relative mx-auto flex min-h-0 w-full flex-1">
                     <div
-                        className={classNames("z-20 fixed inset-0 top-16 md:sticky md:h-[calc(100vh-64px)] md:w-72", {
-                            "hidden md:block": !isMobileSidebarOpen,
-                        })}
+                        className={classNames(
+                            "z-20 fixed inset-0 top-16 md:mt-16 md:sticky md:h-[calc(100vh-64px)] md:w-72",
+                            {
+                                "hidden md:block": !isMobileSidebarOpen,
+                            }
+                        )}
                     >
                         {renderBackground("md:hidden backdrop-blur-md")}
                         <Sidebar />
