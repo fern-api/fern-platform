@@ -1,6 +1,8 @@
 import { FdrAPI, PathResolver } from "@fern-api/fdr-sdk";
 import { NextApiHandler, NextApiResponse } from "next";
 import { REGISTRY_SERVICE } from "../../service";
+import { buildUrl } from "../../utils/buildUrl";
+import { toValidPathname } from "./sitemap";
 
 const handler: NextApiHandler = async (req, res: NextApiResponse<void>) => {
     try {
@@ -22,7 +24,10 @@ const handler: NextApiHandler = async (req, res: NextApiResponse<void>) => {
         const hostWithoutTrailingSlash = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
 
         const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
-            url: hostWithoutTrailingSlash,
+            url: buildUrl({
+                host: hostWithoutTrailingSlash,
+                pathname: toValidPathname(req.query.basePath),
+            }),
         });
 
         if (!docs.ok) {
@@ -35,6 +40,7 @@ const handler: NextApiHandler = async (req, res: NextApiResponse<void>) => {
             definition: {
                 apis: docs.body.definition.apis as Record<ApiDefinition["id"], ApiDefinition>,
                 docsConfig: docs.body.definition.config,
+                basePath: docs.body.baseUrl.basePath,
             },
         });
 
