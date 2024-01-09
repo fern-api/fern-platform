@@ -96,7 +96,7 @@ const UnmemoizedSidebarLink: FC<PropsWithChildren<SidebarLinkProps>> = ({
                         "text-inherit hover:text-inherit relative inline-flex flex-1 content-between items-center px-4 md:px-3 no-underline hover:no-underline py-3 md:py-2 rounded-lg ring-border-primary dark:ring-border-primary-dark",
                         {
                             "font-semibold bg-tag-primary dark:bg-tag-primary-dark ring-1 md:ring-0": selected,
-                            "md:hover:bg-tag-default-light md:hover:dark:bg-tag-default-dark ring-0": !selected,
+                            "md:hover:bg-tag-primary/10 md:hover:dark:bg-tag-primary-dark/10 ring-0": !selected,
                         },
                         {
                             "ml-[38px] md:ml-6": toggleExpand == null && !expanded && depth > 0,
