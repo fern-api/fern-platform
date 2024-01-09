@@ -7,16 +7,19 @@ import { PlatformSpecificContent } from "../commons/PlatformSpecificContent";
 export declare namespace SidebarSearchBar {
     export interface Props {
         onClick: MouseEventHandler<HTMLButtonElement>;
+        className?: string;
     }
 }
 
 export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = memo(function UnmemoizedSidebarSearchBar({
     onClick,
+    className,
 }) {
     return (
         <button
             onClick={onClick}
             className={classNames(
+                className,
                 "text-sm dark:border-white/20 border-black/20 group flex items-center rounded-lg border px-2.5 py-2",
                 "bg-background-primary-light hover:bg-background-hover-light dark:bg-background-primary-dark dark:hover:bg-background-hover-dark"
             )}

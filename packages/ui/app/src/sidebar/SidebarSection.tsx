@@ -58,9 +58,7 @@ const ExpandableSidebarSection: React.FC<ExpandableSidebarSectionProps> = ({
 
     return (
         <SidebarLink
-            className={classNames(className, {
-                "border-border-default-light dark:border-border-default-dark border-b md:border-none": expanded,
-            })}
+            className={className}
             slug={slug}
             depth={Math.max(depth - 1, 0)}
             registerScrolledToPathListener={registerScrolledToPathListener}
@@ -105,12 +103,7 @@ export const SidebarSection: React.FC<SidebarSectionProps> = ({
     }
 
     return (
-        <ul
-            className={classNames(className, {
-                "list-none divide-border-default-light dark:divide-border-default-dark divide-y md:divide-y-0":
-                    !topLevel,
-            })}
-        >
+        <ul className={classNames(className, "list-none")}>
             {navigationItems.map((navigationItem, idx) =>
                 visitDiscriminatedUnion(navigationItem, "type")._visit({
                     page: (pageMetadata) => {
@@ -144,7 +137,6 @@ export const SidebarSection: React.FC<SidebarSectionProps> = ({
                                         title={section.title}
                                     />
                                     <SidebarSection
-                                        className="bg-tag-default-light/5 dark:bg-tag-default-dark/5 overflow-hidden rounded-lg shadow-2xl dark:shadow-white/20 md:overflow-visible md:rounded-none md:bg-transparent md:shadow-none dark:md:bg-transparent"
                                         slug={sectionSlug}
                                         navigationItems={section.items}
                                         selectedSlug={selectedSlug}
@@ -190,7 +182,6 @@ export const SidebarSection: React.FC<SidebarSectionProps> = ({
                                     title={apiSection.title}
                                 />
                                 <ApiSidebarSection
-                                    className="bg-tag-default-light/5 dark:bg-tag-default-dark/5 overflow-hidden rounded-lg shadow-2xl dark:shadow-white/20 md:overflow-visible md:rounded-none md:bg-transparent md:shadow-none dark:md:bg-transparent"
                                     slug={apiSectionSlug}
                                     apiSection={apiSection}
                                     selectedSlug={selectedSlug}

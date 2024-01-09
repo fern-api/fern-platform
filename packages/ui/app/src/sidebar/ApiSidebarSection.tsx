@@ -97,12 +97,7 @@ const InnerApiSidebarSection: React.FC<InnerApiSidebarSectionProps> = ({
         );
     };
     return (
-        <ul
-            className={classNames(
-                className,
-                "list-none divide-border-default-light dark:divide-border-default-dark divide-y md:divide-y-0"
-            )}
-        >
+        <ul className={classNames(className, "list-none")}>
             {renderArtifacts()}
             {apiDefinitionPackage.endpoints.map((endpoint) => {
                 const fullSlug = joinUrlSlugs(slug, endpoint.urlSlug);
@@ -191,9 +186,7 @@ const ExpandableApiSidebarSection: React.FC<ExpandableApiSidebarSectionProps> = 
 
     return (
         <SidebarLink
-            className={classNames(className, {
-                "border-border-default-light dark:border-border-default-dark border-b md:border-none": expanded,
-            })}
+            className={className}
             slug={slug}
             depth={Math.max(depth - 1, 0)}
             registerScrolledToPathListener={registerScrolledToPathListener}

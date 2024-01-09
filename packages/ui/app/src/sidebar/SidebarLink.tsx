@@ -45,18 +45,9 @@ const UnmemoizedSidebarLink: FC<PropsWithChildren<SidebarLinkProps>> = ({
     return (
         <li ref={ref}>
             <div
-                className={classNames(
-                    className,
-                    "items-stretch relative flex min-h-[44px] md:min-h-[36px]",
-                    "after:content-[''] after:bg-accent-primary after:dark:bg-accent-primary-dark after:absolute after:-left-2 after:top-1.5 after:bottom-1.5 after:w-0.5 after:rounded-[1px] after:transition-opacity",
-                    {
-                        "after:opacity-0": !showIndicator,
-                        "after:opacity-50 group-hover/sidebar:after:opacity-100 text-accent-primary dark:text-accent-primary-dark":
-                            showIndicator,
-                        "hover:text-accent-primary hover:dark:text-accent-primary-dark t-muted": !selected,
-                        "bg-tag-primary dark:bg-tag-primary-dark md:bg-transparent md:dark:bg-transparent": selected,
-                    }
-                )}
+                className={classNames(className, "items-stretch relative flex min-h-[44px] md:min-h-[36px]", {
+                    "hover:text-accent-primary hover:dark:text-accent-primary-dark t-muted": !selected,
+                })}
             >
                 {range(0, depth).map((i) => (
                     <div
@@ -81,7 +72,7 @@ const UnmemoizedSidebarLink: FC<PropsWithChildren<SidebarLinkProps>> = ({
                                 "md:hover:bg-tag-primary/10 md:hover:dark:bg-tag-primary-dark/10 md:opacity-60 group-hover/sidebar:opacity-100 transition-opacity":
                                     toggleExpand != null,
                                 "md:rounded-l-none": depth > 0,
-                                "relative md:after:content-none after:content-[''] after:absolute after:inset-1 after:rounded-lg after:bg-tag-primary after:dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark md:text-inherit":
+                                "md:bg-tag-primary md:dark:bg-tag-primary-dark relative md:after:content-none after:content-[''] after:absolute after:inset-1 after:rounded-lg after:bg-tag-primary after:dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark md:text-inherit after:pointer-events-none":
                                     showIndicator,
                             }
                         )}
@@ -101,15 +92,14 @@ const UnmemoizedSidebarLink: FC<PropsWithChildren<SidebarLinkProps>> = ({
                 <Link
                     href={`/${slug}`}
                     className={classNames(
-                        "relative inline-flex flex-1 content-between items-center px-4 md:px-3 text-inherit no-underline hover:text-inherit hover:no-underline py-3 md:py-2 rounded-none md:rounded-lg",
+                        "relative inline-flex flex-1 content-between items-center px-4 md:px-3 text-inherit no-underline hover:text-inherit hover:no-underline py-3 md:py-2 rounded-lg ring-border-primary dark:ring-border-primary-dark",
                         {
-                            "font-semibold text-accent-primary dark:text-accent-primary-dark md:bg-tag-primary md:dark:bg-tag-primary-dark":
+                            "font-semibold text-accent-primary dark:text-accent-primary-dark bg-tag-primary dark:bg-tag-primary-dark ring-1 md:ring-0":
                                 selected,
-                            "md:hover:bg-tag-default-light md:hover:dark:bg-tag-default-dark": !selected,
+                            "md:hover:bg-tag-default-light md:hover:dark:bg-tag-default-dark ring-0": !selected,
                         },
                         {
-                            "ml-[44px] md:ml-6": toggleExpand == null && !expanded && depth > 0,
-                            "pl-0": toggleExpand != null || depth > 0,
+                            "ml-[38px] md:ml-6": toggleExpand == null && !expanded && depth > 0,
                         }
                     )}
                     onClick={onClick}

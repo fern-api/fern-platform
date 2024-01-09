@@ -10,21 +10,20 @@ import { SidebarTabButton } from "./SidebarTabButton";
 export declare namespace SidebarFixedItemsSection {
     export interface Props {
         className?: string;
-        hideSearchBar: boolean;
     }
 }
 
-export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> = ({ className, hideSearchBar }) => {
+export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> = ({ className }) => {
     const { activeNavigatable } = useNavigationContext();
     const { activeNavigationConfigContext, withVersionSlug } = useDocsSelectors();
     const { openSearchDialog } = useSearchContext();
     const searchService = useSearchService();
 
-    const showSearchBar = !hideSearchBar && searchService.isAvailable;
+    const showSearchBar = searchService.isAvailable;
     const showTabs = activeNavigationConfigContext.type === "tabbed";
 
     const searchBar = useMemo(() => {
-        return showSearchBar ? <SidebarSearchBar onClick={openSearchDialog} /> : null;
+        return showSearchBar ? <SidebarSearchBar onClick={openSearchDialog} className="hidden md:flex" /> : null;
     }, [showSearchBar, openSearchDialog]);
 
     const tabs = useMemo(() => {
@@ -52,11 +51,7 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
     return (
         <div
             className={classNames(
-                "flex flex-col px-4 md:pt-8",
-                {
-                    "backdrop-blur-sm": tabs == null,
-                    "backdrop-blur-lg": tabs != null,
-                },
+                "flex flex-col px-4 md:pt-8 md:backdrop-blur",
                 {
                     "border-b border-border-concealed-light dark:border-border-concealed-dark": tabs != null,
                 },

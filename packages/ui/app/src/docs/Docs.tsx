@@ -2,7 +2,7 @@ import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { useTheme } from "next-themes";
-import { memo, useEffect, useMemo } from "react";
+import { memo, useCallback, useEffect, useMemo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
@@ -49,6 +49,19 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
         }
     }, [colorsV3, theme]);
 
+    const renderBackground = useCallback(
+        (className?: string) => (
+            <div className={classNames(className, "clipped-background")}>
+                <BgImageGradient
+                    className="h-screen opacity-60 dark:opacity-50"
+                    backgroundType={backgroundType}
+                    hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage}
+                />
+            </div>
+        ),
+        [backgroundType, hasSpecifiedBackgroundImage]
+    );
+
     return (
         <>
             <BgImageGradient
@@ -65,14 +78,8 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
             )}
 
             <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
-                <div className="border-border-concealed-light dark:border-border-concealed-dark dark:shadow-header-dark fixed inset-x-0 top-0 z-20 h-16 overflow-visible border-b backdrop-blur">
-                    <div className="clipped-background">
-                        <BgImageGradient
-                            className="h-screen opacity-60 dark:opacity-50"
-                            backgroundType={backgroundType}
-                            hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage}
-                        />
-                    </div>
+                <div className="border-border-concealed-light dark:border-border-concealed-dark dark:shadow-header-dark fixed inset-x-0 top-0 z-30 h-16 overflow-visible border-b backdrop-blur-md md:backdrop-blur">
+                    {renderBackground()}
                     <Header
                         className="max-w-8xl mx-auto"
                         docsDefinition={docsDefinition}
@@ -85,23 +92,18 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                 </div>
 
                 <div className="max-w-8xl relative mx-auto flex min-h-0 w-full flex-1">
-                    <div className="hidden w-72 pt-16 md:flex">
-                        <div
-                            className="sticky top-16 max-h-[calc(100vh-64px)] w-full overflow-auto overflow-x-hidden"
-                            id="sidebar-container"
-                        >
-                            <Sidebar />
-                        </div>
+                    <div
+                        className={classNames("z-20 fixed inset-0 top-16 md:sticky md:h-[calc(100vh-64px)] md:w-72", {
+                            "hidden md:block": !isMobileSidebarOpen,
+                        })}
+                    >
+                        {renderBackground("md:hidden backdrop-blur-md")}
+                        <Sidebar />
                     </div>
-                    {isMobileSidebarOpen && (
-                        <div className="bg-background dark:bg-background-dark fixed inset-x-0 bottom-0 top-16 z-10 flex max-h-[calc(100vh-64px)] overflow-auto overflow-x-hidden md:hidden">
-                            <Sidebar hideSearchBar />
-                        </div>
-                    )}
 
-                    <div className={classNames("relative flex w-full min-w-0 flex-1 flex-col pt-16")}>
+                    <main className={classNames("relative flex w-full min-w-0 flex-1 flex-col pt-16")}>
                         <DocsMainContent />
-                    </div>
+                    </main>
                 </div>
             </div>
         </>
