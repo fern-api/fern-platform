@@ -4,8 +4,9 @@ import { joinUrlSlugs } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import classNames from "classnames";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { ApiSidebarSection } from "./ApiSidebarSection";
+import { useCollapseSidebar } from "./CollapseSidebarContext";
 import { SidebarHeading } from "./SidebarHeading";
 import { SidebarLink } from "./SidebarLink";
 
@@ -48,12 +49,24 @@ const ExpandableSidebarSection: React.FC<ExpandableSidebarSectionProps> = ({
         value: expanded,
         setTrue: setExpanded,
         toggleValue: toggleExpand,
+        setValue: setExpandedValue,
     } = useBooleanState(selectedSlug?.startsWith(slug) ?? false);
+
+    const { value: collapseAll } = useCollapseSidebar();
+
+    const mounted = useRef(false);
+
+    useEffect(() => {
+        if (mounted.current) {
+            setExpandedValue(!collapseAll);
+        }
+    }, [setExpandedValue, collapseAll]);
 
     useEffect(() => {
         if (selectedSlug?.startsWith(slug)) {
             setExpanded();
         }
+        mounted.current = true;
     }, [selectedSlug, setExpanded, slug]);
 
     return (

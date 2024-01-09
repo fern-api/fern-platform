@@ -8,11 +8,12 @@ import {
 } from "@fern-ui/app-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import classNames from "classnames";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { resolveSubpackage } from "../api-context/ApiDefinitionContextProvider";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { API_ARTIFACTS_TITLE } from "../config";
+import { useCollapseSidebar } from "./CollapseSidebarContext";
 import { SidebarLink } from "./SidebarLink";
 
 export interface ApiSidebarSectionProps {
@@ -174,12 +175,24 @@ const ExpandableApiSidebarSection: React.FC<ExpandableApiSidebarSectionProps> = 
         value: expanded,
         setTrue: setExpanded,
         toggleValue: toggleExpand,
+        setValue: setExpandedValue,
     } = useBooleanState(selectedSlug?.startsWith(slug) ?? false);
+
+    const { value: collapseAll } = useCollapseSidebar();
+
+    const mounted = useRef(false);
+
+    useEffect(() => {
+        if (mounted.current) {
+            setExpandedValue(!collapseAll);
+        }
+    }, [setExpandedValue, collapseAll]);
 
     useEffect(() => {
         if (selectedSlug?.startsWith(slug)) {
             setExpanded();
         }
+        mounted.current = true;
     }, [selectedSlug, setExpanded, slug]);
 
     return (
