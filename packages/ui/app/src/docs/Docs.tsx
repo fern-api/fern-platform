@@ -94,10 +94,11 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                 <div className="max-w-8xl relative mx-auto flex min-h-0 w-full flex-1">
                     <div
                         className={classNames(
-                            "z-20 fixed inset-0 top-16 md:mt-16 md:sticky md:h-[calc(100vh-64px)] md:w-72 transition-opacity md:transition-none",
+                            "z-20 fixed inset-0 top-16 md:mt-16 md:sticky md:h-[calc(100vh-64px)] md:w-72",
                             {
                                 "opacity-0 md:opacity-100 pointer-events-none md:pointer-events-auto":
                                     !isMobileSidebarOpen,
+                                "transition-opacity md:transition-none": isMobileSidebarOpen,
                             }
                         )}
                     >
