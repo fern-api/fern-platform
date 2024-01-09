@@ -3,6 +3,7 @@ import { range } from "lodash-es";
 import Link from "next/link";
 import { FC, memo, PropsWithChildren, ReactNode, useEffect, useRef } from "react";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
+import { useCollapseSidebar } from "./CollapseSidebarContext";
 
 interface SidebarLinkProps {
     className?: string;
@@ -38,12 +39,14 @@ const UnmemoizedSidebarLink: FC<PropsWithChildren<SidebarLinkProps>> = ({
 
     useEffect(() => {
         return registerScrolledToPathListener(slug, () => {
-            ref.current?.scrollIntoView({ block: "center" });
+            ref.current?.scrollIntoView({ block: "nearest", inline: "nearest" });
         });
     }, [slug, registerScrolledToPathListener]);
 
+    const { setValue: setIsCollapsed } = useCollapseSidebar();
+
     return (
-        <li ref={ref}>
+        <li ref={ref} className="scroll-my-20">
             <div
                 className={classNames(className, "items-stretch relative flex min-h-[44px] md:min-h-[36px]", {
                     "hover:text-accent-primary hover:dark:text-accent-primary-dark t-muted": !selected,
@@ -78,6 +81,10 @@ const UnmemoizedSidebarLink: FC<PropsWithChildren<SidebarLinkProps>> = ({
                             }
                         )}
                         onClick={toggleExpand}
+                        onDoubleClick={(e) => {
+                            setIsCollapsed(expanded);
+                            e.stopPropagation();
+                        }}
                     >
                         <ChevronDownIcon
                             className={classNames("h-6 w-6 md:h-5 w-5 transition-transform", {

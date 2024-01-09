@@ -63,7 +63,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const selectedSlug = getFullSlugForNavigatable(activeNavigatable, { omitDefault: true, basePath });
 
     const navigateToRoute = useRef((route: string, disableSmooth = false) => {
-        console.log(userIsScrolling.current);
         if (!userIsScrolling.current) {
             const node = getRouteNode(route);
             node?.scrollIntoView({
