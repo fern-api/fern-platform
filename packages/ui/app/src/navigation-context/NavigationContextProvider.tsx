@@ -62,12 +62,14 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     const selectedSlug = getFullSlugForNavigatable(activeNavigatable, { omitDefault: true, basePath });
 
-    const navigateToRoute = useRef((route: string, disableSmooth = false) => {
+    const navigateToRoute = useRef((route: string, disableSmooth = false, ignoreScroll = false) => {
         if (!userIsScrolling.current) {
-            const node = getRouteNode(route);
-            node?.scrollIntoView({
-                behavior: route.includes("#") && !disableSmooth ? "smooth" : "auto",
-            });
+            if (!ignoreScroll) {
+                const node = getRouteNode(route);
+                node?.scrollIntoView({
+                    behavior: route.includes("#") && !disableSmooth ? "smooth" : "auto",
+                });
+            }
             justNavigatedTo.current = route;
         }
     });
@@ -148,10 +150,10 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     const timeout = useRef<NodeJS.Timeout>();
 
-    const navigateToPath = useEventCallback((fullSlug: string) => {
+    const navigateToPath = useEventCallback((fullSlug: string, ignoreScroll?: boolean) => {
         justNavigated.current = true;
         const navigatable = resolver.resolveNavigatable(fullSlug);
-        navigateToRoute.current(`/${fullSlug}`);
+        navigateToRoute.current(`/${fullSlug}`, undefined, ignoreScroll);
         if (navigatable != null) {
             setActiveNavigatable(navigatable);
 
@@ -168,7 +170,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     useEffect(() => {
         const handleRouteChangeStart = (route: string) => {
-            navigateToPath(route.substring(1));
+            navigateToPath(route.substring(1), true);
         };
         router.events.on("routeChangeStart", handleRouteChangeStart);
         router.events.on("hashChangeStart", handleRouteChangeStart);
