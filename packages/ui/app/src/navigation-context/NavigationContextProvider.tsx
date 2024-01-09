@@ -62,16 +62,15 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     const selectedSlug = getFullSlugForNavigatable(activeNavigatable, { omitDefault: true, basePath });
 
-    const navigateToRoute = useRef((route: string, disableSmooth = false, ignoreScroll = false) => {
+    const navigateToRoute = useRef((route: string, disableSmooth = false) => {
+        console.log(userIsScrolling.current);
         if (!userIsScrolling.current) {
-            if (!ignoreScroll) {
-                const node = getRouteNode(route);
-                node?.scrollIntoView({
-                    behavior: route.includes("#") && !disableSmooth ? "smooth" : "auto",
-                });
-            }
-            justNavigatedTo.current = route;
+            const node = getRouteNode(route);
+            node?.scrollIntoView({
+                behavior: route.includes("#") && !disableSmooth ? "smooth" : "auto",
+            });
         }
+        justNavigatedTo.current = route;
     });
 
     // on mount, scroll directly to routed element
@@ -92,7 +91,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             () => {
                 userIsScrolling.current = false;
             },
-            150,
+            300,
             { leading: false, trailing: true }
         )
     );
@@ -150,10 +149,10 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     const timeout = useRef<NodeJS.Timeout>();
 
-    const navigateToPath = useEventCallback((fullSlug: string, ignoreScroll?: boolean) => {
+    const navigateToPath = useEventCallback((fullSlug: string) => {
         justNavigated.current = true;
         const navigatable = resolver.resolveNavigatable(fullSlug);
-        navigateToRoute.current(`/${fullSlug}`, undefined, ignoreScroll);
+        navigateToRoute.current(`/${fullSlug}`, undefined);
         if (navigatable != null) {
             setActiveNavigatable(navigatable);
 
@@ -170,7 +169,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     useEffect(() => {
         const handleRouteChangeStart = (route: string) => {
-            navigateToPath(route.substring(1), true);
+            navigateToPath(route.substring(1));
         };
         router.events.on("routeChangeStart", handleRouteChangeStart);
         router.events.on("hashChangeStart", handleRouteChangeStart);
