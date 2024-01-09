@@ -29,7 +29,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false }) => {
 
     return (
         <nav className="group/sidebar w-full min-w-0" aria-label="secondary">
-            <SidebarFixedItemsSection className="sticky top-0 z-10" hideSearchBar={hideSearchBar} />
+            <SidebarFixedItemsSection className="md:sticky md:top-0 md:z-10" hideSearchBar={hideSearchBar} />
             <div
                 className={classNames(
                     "flex flex-1 flex-col overflow-y-auto overflow-x-hidden pb-12",
