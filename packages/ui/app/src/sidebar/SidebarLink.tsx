@@ -68,7 +68,7 @@ const UnmemoizedSidebarLink: FC<PropsWithChildren<SidebarLinkProps>> = ({
                 {(toggleExpand != null || expanded) && (
                     <button
                         className={classNames(
-                            "flex w-[44px] md:w-6 justify-center items-center transition-colors rounded-none md:rounded-lg",
+                            "flex w-[44px] md:w-6 justify-center items-center transition-colors rounded-none md:rounded-lg transition-transform md:translate-x-0.5 group-hover/sidebar:translate-x-0",
                             {
                                 "md:hover:bg-tag-primary/10 md:hover:dark:bg-tag-primary-dark/10 md:opacity-60 group-hover/sidebar:opacity-100 transition-opacity":
                                     toggleExpand != null,
@@ -80,13 +80,10 @@ const UnmemoizedSidebarLink: FC<PropsWithChildren<SidebarLinkProps>> = ({
                         onClick={toggleExpand}
                     >
                         <ChevronDownIcon
-                            className={classNames(
-                                "h-6 w-6 md:h-5 w-5 transition-transform md:translate-x-0.5 group-hover/sidebar:translate-x-0",
-                                {
-                                    "-rotate-90": !expanded,
-                                    "rotate-0": expanded,
-                                }
-                            )}
+                            className={classNames("h-6 w-6 md:h-5 w-5 transition-transform", {
+                                "-rotate-90": !expanded,
+                                "rotate-0": expanded,
+                            })}
                         />
                     </button>
                 )}
