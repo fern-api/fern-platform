@@ -50,7 +50,8 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     );
 
     return (
-        <div
+        <nav
+            aria-label="primary"
             className={classNames(
                 "flex justify-between items-center shrink-0 pl-[calc(theme(spacing.4)+theme(spacing[1.5]))] pr-4",
                 // this matches with the calc() in the EndpointContent examples section
@@ -61,7 +62,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
         >
             <HeaderLogoSection />
 
-            <div className="ml-auto flex items-center space-x-4">
+            <div className="ml-auto flex items-center space-x-0 md:space-x-4">
                 {navbarLinksSection}
 
                 {colorsV3.type === "darkAndLight" && (
@@ -74,20 +75,20 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                 {searchService.isAvailable && (
                     <button
                         onClick={openSearchDialog}
-                        className="text-intent-default dark:hover:text-text-primary-dark hover:text-text-primary-light flex transition md:hidden"
+                        className="text-intent-default dark:hover:text-text-primary-dark hover:text-text-primary-light flex h-[44px] w-[44px] items-center justify-center transition md:hidden"
                     >
-                        <SearchIcon className="h-4 w-4" />
+                        <SearchIcon className="h-5 w-5" />
                     </button>
                 )}
 
                 <button
                     onClick={isMobileSidebarOpen ? closeMobileSidebar : openMobileSidebar}
-                    className="text-intent-default dark:hover:text-text-primary-dark hover:text-text-primary-light flex transition md:hidden"
+                    className="text-intent-default dark:hover:text-text-primary-dark hover:text-text-primary-light flex h-[44px] w-[44px] items-center justify-center transition md:hidden"
                 >
-                    {isMobileSidebarOpen ? <XIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
+                    {isMobileSidebarOpen ? <XIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
                 </button>
             </div>
-        </div>
+        </nav>
     );
 });
 

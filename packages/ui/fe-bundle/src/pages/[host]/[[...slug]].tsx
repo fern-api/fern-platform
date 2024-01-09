@@ -32,32 +32,30 @@ export default function Docs({
     const colorThemeStyleSheet = useColorTheme(docs.definition);
     return (
         <>
-            <main>
-                {/* 
+            {/* 
                     We concatenate all global styles into a single instance,
                     as styled JSX will only create one instance of global styles
                     for each component.
                 */}
-                {/* eslint-disable-next-line react/no-unknown-property */}
-                <style jsx global>
-                    {`
-                        ${colorThemeStyleSheet}
-                        ${typographyStyleSheet}
+            {/* eslint-disable-next-line react/no-unknown-property */}
+            <style jsx global>
+                {`
+                    ${colorThemeStyleSheet}
+                    ${typographyStyleSheet}
                         ${backgroundImageStyleSheet}
-                    `}
-                </style>
-                <Head>
-                    <meta
-                        name="viewport"
-                        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-                    />
-                    {docs.definition.config.title != null && <title>{docs.definition.config.title}</title>}
-                    {docs.definition.config.favicon != null && (
-                        <link rel="icon" id="favicon" href={docs.definition.files[docs.definition.config.favicon]} />
-                    )}
-                </Head>
-                <App docs={docs} resolvedPath={resolvedPath} />
-            </main>
+                `}
+            </style>
+            <Head>
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+                />
+                {docs.definition.config.title != null && <title>{docs.definition.config.title}</title>}
+                {docs.definition.config.favicon != null && (
+                    <link rel="icon" id="favicon" href={docs.definition.files[docs.definition.config.favicon]} />
+                )}
+            </Head>
+            <App docs={docs} resolvedPath={resolvedPath} />
         </>
     );
 }

@@ -85,22 +85,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    useEffect(() => {
-        const handleRouteChangeStart = (route: string) => {
-            navigateToRoute.current(route);
-        };
-        router.events.on("routeChangeStart", handleRouteChangeStart);
-        router.events.on("hashChangeStart", handleRouteChangeStart);
-        router.events.on("routeChangeComplete", handleRouteChangeStart);
-        router.events.on("hashChangeComplete", handleRouteChangeStart);
-        return () => {
-            router.events.off("routeChangeStart", handleRouteChangeStart);
-            router.events.off("hashChangeStart", handleRouteChangeStart);
-            router.events.off("routeChangeComplete", handleRouteChangeStart);
-            router.events.off("hashChangeComplete", handleRouteChangeStart);
-        };
-    }, [navigateToRoute, router.events]);
-
     const setUserIsScrollingFalse = useRef(
         debounce(
             () => {
@@ -181,6 +165,22 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             justNavigated.current = false;
         }, 500);
     });
+
+    useEffect(() => {
+        const handleRouteChangeStart = (route: string) => {
+            navigateToPath(route.substring(1));
+        };
+        router.events.on("routeChangeStart", handleRouteChangeStart);
+        router.events.on("hashChangeStart", handleRouteChangeStart);
+        router.events.on("routeChangeComplete", handleRouteChangeStart);
+        router.events.on("hashChangeComplete", handleRouteChangeStart);
+        return () => {
+            router.events.off("routeChangeStart", handleRouteChangeStart);
+            router.events.off("hashChangeStart", handleRouteChangeStart);
+            router.events.off("routeChangeComplete", handleRouteChangeStart);
+            router.events.off("hashChangeComplete", handleRouteChangeStart);
+        };
+    }, [navigateToPath, router.events]);
 
     useEffect(() => {
         router.beforePopState(({ as }) => {
