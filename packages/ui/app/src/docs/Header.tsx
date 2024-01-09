@@ -77,7 +77,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                         onClick={openSearchDialog}
                         className="text-intent-default dark:hover:text-text-primary-dark hover:text-text-primary-light flex h-[44px] w-[44px] items-center justify-center transition md:hidden"
                     >
-                        <SearchIcon className="h-4 w-4" />
+                        <SearchIcon className="h-5 w-5" />
                     </button>
                 )}
 
@@ -85,7 +85,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                     onClick={isMobileSidebarOpen ? closeMobileSidebar : openMobileSidebar}
                     className="text-intent-default dark:hover:text-text-primary-dark hover:text-text-primary-light flex h-[44px] w-[44px] items-center justify-center transition md:hidden"
                 >
-                    {isMobileSidebarOpen ? <XIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
+                    {isMobileSidebarOpen ? <XIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
                 </button>
             </div>
         </nav>
