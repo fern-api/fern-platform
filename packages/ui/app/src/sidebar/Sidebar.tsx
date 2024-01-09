@@ -23,7 +23,7 @@ export const Sidebar: React.FC<Sidebar.Props> = () => {
 
     return (
         <nav
-            className="group/sidebar smooth-scroll relative h-full w-full overflow-x-hidden overflow-y-scroll overscroll-contain px-4 pb-12 md:overflow-y-auto"
+            className="group/sidebar smooth-scroll hide-scrollbar relative h-full w-full overflow-x-hidden overflow-y-scroll overscroll-contain px-4 pb-12 md:overflow-y-auto"
             aria-label="secondary"
         >
             <SidebarFixedItemsSection className="-mx-4 md:sticky md:top-0 md:z-20" />
