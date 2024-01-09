@@ -47,6 +47,7 @@ const UnmemoizedSidebarLink: FC<PropsWithChildren<SidebarLinkProps>> = ({
             <div
                 className={classNames(className, "items-stretch relative flex min-h-[44px] md:min-h-[36px]", {
                     "hover:text-accent-primary hover:dark:text-accent-primary-dark t-muted": !selected,
+                    "text-accent-primary dark:text-accent-primary-dark": selected,
                 })}
             >
                 {range(0, depth).map((i) => (
@@ -92,10 +93,9 @@ const UnmemoizedSidebarLink: FC<PropsWithChildren<SidebarLinkProps>> = ({
                 <Link
                     href={`/${slug}`}
                     className={classNames(
-                        "relative inline-flex flex-1 content-between items-center px-4 md:px-3 text-inherit no-underline hover:text-inherit hover:no-underline py-3 md:py-2 rounded-lg ring-border-primary dark:ring-border-primary-dark",
+                        "text-inherit hover:text-inherit relative inline-flex flex-1 content-between items-center px-4 md:px-3 no-underline hover:no-underline py-3 md:py-2 rounded-lg ring-border-primary dark:ring-border-primary-dark",
                         {
-                            "font-semibold text-accent-primary dark:text-accent-primary-dark bg-tag-primary dark:bg-tag-primary-dark ring-1 md:ring-0":
-                                selected,
+                            "font-semibold bg-tag-primary dark:bg-tag-primary-dark ring-1 md:ring-0": selected,
                             "md:hover:bg-tag-default-light md:hover:dark:bg-tag-default-dark ring-0": !selected,
                         },
                         {
