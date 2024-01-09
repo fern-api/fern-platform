@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import { useRouter } from "next/router";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useNavigationContext } from "../navigation-context";
@@ -16,10 +15,9 @@ export declare namespace Sidebar {
 }
 
 export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false }) => {
-    const router = useRouter();
     const { docsDefinition, resolveApi } = useDocsContext();
     const { activeNavigatable, registerScrolledToPathListener } = useNavigationContext();
-    const { activeNavigationConfigContext, withVersionAndTabSlugs } = useDocsSelectors();
+    const { activeNavigationConfigContext, withVersionAndTabSlugs, selectedSlug } = useDocsSelectors();
     const { closeMobileSidebar } = useMobileSidebarContext();
 
     const navigationItems =
@@ -41,7 +39,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false }) => {
                     <SidebarSection
                         navigationItems={navigationItems}
                         slug={withVersionAndTabSlugs("", { omitDefault: true })}
-                        selectedSlug={router.asPath.slice(1)}
+                        selectedSlug={selectedSlug}
                         registerScrolledToPathListener={registerScrolledToPathListener}
                         closeMobileSidebar={closeMobileSidebar}
                         docsDefinition={docsDefinition}

@@ -144,7 +144,7 @@ export const SidebarSection: React.FC<SidebarSectionProps> = ({
                                         title={section.title}
                                     />
                                     <SidebarSection
-                                        className="bg-tag-default-light/5 dark:bg-tag-default-dark/5 overflow-hidden rounded-lg md:overflow-visible md:rounded-none md:bg-transparent dark:md:bg-transparent"
+                                        className="bg-tag-default-light/5 dark:bg-tag-default-dark/5 overflow-hidden rounded-lg shadow-2xl dark:shadow-white/20 md:overflow-visible md:rounded-none md:bg-transparent md:shadow-none dark:md:bg-transparent"
                                         slug={sectionSlug}
                                         navigationItems={section.items}
                                         selectedSlug={selectedSlug}
@@ -190,7 +190,7 @@ export const SidebarSection: React.FC<SidebarSectionProps> = ({
                                     title={apiSection.title}
                                 />
                                 <ApiSidebarSection
-                                    className="bg-tag-default-light/5 dark:bg-tag-default-dark/5 overflow-hidden rounded-lg md:overflow-visible md:rounded-none md:bg-transparent dark:md:bg-transparent"
+                                    className="bg-tag-default-light/5 dark:bg-tag-default-dark/5 overflow-hidden rounded-lg shadow-2xl dark:shadow-white/20 md:overflow-visible md:rounded-none md:bg-transparent md:shadow-none dark:md:bg-transparent"
                                     slug={apiSectionSlug}
                                     apiSection={apiSection}
                                     selectedSlug={selectedSlug}

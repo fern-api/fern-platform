@@ -38,7 +38,7 @@ const UnmemoizedSidebarLink: FC<PropsWithChildren<SidebarLinkProps>> = ({
 
     useEffect(() => {
         return registerScrolledToPathListener(slug, () => {
-            ref.current?.scrollIntoView({ block: "nearest" });
+            ref.current?.scrollIntoView({ block: "center" });
         });
     }, [slug, registerScrolledToPathListener]);
 
@@ -51,7 +51,8 @@ const UnmemoizedSidebarLink: FC<PropsWithChildren<SidebarLinkProps>> = ({
                     "after:content-[''] after:bg-accent-primary after:dark:bg-accent-primary-dark after:absolute after:-left-2 after:top-1.5 after:bottom-1.5 after:w-0.5 after:rounded-[1px] after:transition-opacity",
                     {
                         "after:opacity-0": !showIndicator,
-                        "after:opacity-50 group-hover/sidebar:after:opacity-100 text-primary": showIndicator,
+                        "after:opacity-50 group-hover/sidebar:after:opacity-100 text-accent-primary dark:text-accent-primary-dark":
+                            showIndicator,
                         "hover:text-accent-primary hover:dark:text-accent-primary-dark t-muted": !selected,
                         "bg-tag-primary dark:bg-tag-primary-dark md:bg-transparent md:dark:bg-transparent": selected,
                     }
@@ -102,7 +103,7 @@ const UnmemoizedSidebarLink: FC<PropsWithChildren<SidebarLinkProps>> = ({
                     className={classNames(
                         "relative inline-flex flex-1 content-between items-center px-4 md:px-3 text-inherit no-underline hover:text-inherit hover:no-underline py-3 md:py-2 rounded-none md:rounded-lg",
                         {
-                            "font-semibold !text-accent-primary dark:text-accent-primary-dark md:bg-tag-primary md:dark:bg-tag-primary-dark":
+                            "font-semibold text-accent-primary dark:text-accent-primary-dark md:bg-tag-primary md:dark:bg-tag-primary-dark":
                                 selected,
                             "md:hover:bg-tag-default-light md:hover:dark:bg-tag-default-dark": !selected,
                         },
