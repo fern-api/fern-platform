@@ -13,7 +13,6 @@ import { resolveSubpackage } from "../api-context/ApiDefinitionContextProvider";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { API_ARTIFACTS_TITLE } from "../config";
-import { useNavigationContext } from "../navigation-context";
 import { SidebarLink } from "./SidebarLink";
 
 export interface ApiSidebarSectionProps {
@@ -171,7 +170,6 @@ const ExpandableApiSidebarSection: React.FC<ExpandableApiSidebarSectionProps> = 
     resolveSubpackageById,
     artifacts,
 }) => {
-    const { userIsScrolling } = useNavigationContext();
     const {
         value: expanded,
         setTrue: setExpanded,
@@ -190,13 +188,18 @@ const ExpandableApiSidebarSection: React.FC<ExpandableApiSidebarSectionProps> = 
             slug={slug}
             depth={Math.max(depth - 1, 0)}
             registerScrolledToPathListener={registerScrolledToPathListener}
-            onClick={closeMobileSidebar}
+            onClick={() => {
+                if (!expanded) {
+                    setExpanded();
+                }
+                closeMobileSidebar();
+            }}
             title={title}
             expanded={expanded}
             toggleExpand={toggleExpand}
             showIndicator={selectedSlug?.startsWith(slug) && !expanded}
         >
-            <Collapse isOpen={expanded} transitionDuration={userIsScrolling() ? 0 : 200}>
+            <Collapse isOpen={expanded} transitionDuration={0} keepChildrenMounted={true}>
                 <InnerApiSidebarSection
                     slug={slug}
                     selectedSlug={selectedSlug}

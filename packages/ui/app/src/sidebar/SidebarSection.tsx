@@ -62,13 +62,18 @@ const ExpandableSidebarSection: React.FC<ExpandableSidebarSectionProps> = ({
             slug={slug}
             depth={Math.max(depth - 1, 0)}
             registerScrolledToPathListener={registerScrolledToPathListener}
-            onClick={closeMobileSidebar}
+            onClick={() => {
+                if (!expanded) {
+                    setExpanded();
+                }
+                closeMobileSidebar();
+            }}
             title={title}
             expanded={expanded}
             toggleExpand={toggleExpand}
             showIndicator={selectedSlug?.startsWith(slug) && !expanded}
         >
-            <Collapse isOpen={expanded}>
+            <Collapse isOpen={expanded} transitionDuration={0} keepChildrenMounted={true}>
                 <SidebarSection
                     slug={slug}
                     navigationItems={navigationItems}
