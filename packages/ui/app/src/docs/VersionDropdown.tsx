@@ -9,7 +9,6 @@ export declare namespace VersionDropdown {
         versions: DocsNode.Version[];
         selectedVersionName: string | undefined;
         selectedVersionSlug: string | undefined;
-        onClickVersion: (versionSlug: string) => void;
     }
 }
 
@@ -22,7 +21,6 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
     versions,
     selectedVersionName,
     selectedVersionSlug,
-    onClickVersion,
 }) => {
     const { basePath } = useNavigationContext();
     return (
@@ -33,7 +31,6 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
                         key={versionName}
                         selected={slug === selectedVersionSlug}
                         href={createSlugHref(basePath, slug)}
-                        onClick={() => onClickVersion(slug)}
                     >
                         {(active) => (
                             <>

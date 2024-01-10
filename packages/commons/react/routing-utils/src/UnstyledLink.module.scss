@@ -12,7 +12,7 @@
     &:hover {
         text-decoration: none;
 
-        &.hoverState {
+        &.hover-state {
             color: $black;
         }
     }
@@ -28,7 +28,7 @@
         }
 
         &:hover {
-            &.hoverState {
+            &.hover-state {
                 color: $gray3;
             }
         }

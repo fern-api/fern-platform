@@ -5,6 +5,7 @@ import React, { AnchorHTMLAttributes, HTMLAttributes, useCallback } from "react"
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
 import { useNavigationContext } from "../navigation-context";
 import { onlyText } from "../util/onlyText";
+import styles from "./base-components.module.scss";
 
 export const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({ className, ...rest }) => {
     return (
@@ -236,6 +237,8 @@ export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className
     const { navigateToPath } = useNavigationContext();
     const isExternalUrl = href != null && href.includes("http");
 
+    const classNamesCombined = classNames(className, styles.mdxAnchor);
+
     const handleClick = useCallback(() => {
         // this is a hack to enable hyperlinking between markdown page and api page
         if (!isExternalUrl && href != null && href.startsWith("/")) {
@@ -246,7 +249,7 @@ export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className
 
     return (
         <Link
-            className={classNames(className, "link")}
+            className={classNamesCombined}
             href={href ?? "#"}
             target={isExternalUrl ? "_blank" : undefined}
             rel={isExternalUrl ? "noopener noreferrer" : undefined}

@@ -4,9 +4,12 @@ import { joinUrlSlugs } from "../slug";
 
 export function doesSubpackageHaveEndpointsOrWebhooksRecursive(
     subpackageId: APIV1Read.SubpackageId,
-    resolveSubpackage: (subpackageId: APIV1Read.SubpackageId) => APIV1Read.ApiDefinitionSubpackage
+    resolveSubpackage: (subpackageId: APIV1Read.SubpackageId) => APIV1Read.ApiDefinitionSubpackage | undefined
 ): boolean {
     const subpackage = resolveSubpackage(subpackageId);
+    if (subpackage == null) {
+        return false;
+    }
     if (subpackage.endpoints.length > 0 || subpackage.webhooks.length > 0) {
         return true;
     }

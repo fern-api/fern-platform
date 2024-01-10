@@ -4,6 +4,7 @@ const nextConfig = {
     productionBrowserSourceMaps: true,
     experimental: {
         scrollRestoration: true,
+        typedRoutes: true,
     },
     assetPrefix: process.env.CDN_URI != null ? new URL("/_fern", process.env.CDN_URI).href : "/_fern",
     rewrites: async () => ({
@@ -11,6 +12,14 @@ const nextConfig = {
             {
                 source: "/_fern/_next/:path*",
                 destination: "/_next/:path*",
+            },
+            {
+                source: `/_fern/images/:query*`,
+                destination: "/_next/image/:query*",
+            },
+            {
+                source: `/_fern/api/:path*`,
+                destination: "/api/:path*",
             },
         ],
         afterFiles: [
@@ -37,6 +46,20 @@ const nextConfig = {
             },
         ],
     }),
+    webpack: (config) => {
+        // camelCase style names from css modules
+        config.module.rules
+            .find(({ oneOf }) => !!oneOf)
+            .oneOf.filter(({ use }) => JSON.stringify(use)?.includes("css-loader"))
+            .reduce((acc, { use }) => acc.concat(use), [])
+            .forEach(({ options }) => {
+                if (options.modules) {
+                    options.modules.exportLocalsConvention = "camelCase";
+                }
+            });
+
+        return config;
+    },
 };
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({

@@ -7,6 +7,16 @@ navigation:
     contents:
       - page: Introduction
         path: ./mdx/intro.mdx
+      - section: Nested 1
+        contents:
+          - section: Nested 2
+            contents:
+              - page: Nested 3
+                path: ./mdx/intro.mdx
+          - page: Nested 4
+            path: ./mdx/intro.mdx
+          - page: Nested 5
+            path: ./mdx/intro.mdx
   - api: API Reference
     audiences:
       - public
