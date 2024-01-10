@@ -27,13 +27,14 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({
             <ApiPageMargins>
                 <div ref={setTargetRef} data-route={`/${slug}`} className="scroll-mt-16" />
             </ApiPageMargins>
-            <ApiPackageContents
-                key={subpackageId}
-                package={subpackage}
-                slug={slug}
-                isLastInParentPackage={isLastInParentPackage}
-                anchorIdParts={[...anchorIdParts, subpackage.name]}
-            />
+            {subpackage != null && (
+                <ApiPackageContents
+                    package={subpackage}
+                    slug={slug}
+                    isLastInParentPackage={isLastInParentPackage}
+                    anchorIdParts={anchorIdParts}
+                />
+            )}
         </>
     );
 };

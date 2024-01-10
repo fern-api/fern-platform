@@ -23,7 +23,7 @@ module.exports = {
                 xl: "36rem",
             },
             maxWidth: {
-                "8xl": "88rem",
+                "8xl": "90rem",
             },
             boxShadow: {
                 header: "0px 4px 24px 0px rgba(var(--accent-primary), 10%)",

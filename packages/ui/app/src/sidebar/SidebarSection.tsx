@@ -2,26 +2,23 @@ import { Collapse } from "@blueprintjs/core";
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { joinUrlSlugs } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { useBooleanState } from "@fern-ui/react-commons";
 import classNames from "classnames";
-import { useEffect, useRef } from "react";
+import { memo, useCallback } from "react";
 import { ApiSidebarSection } from "./ApiSidebarSection";
 import { useCollapseSidebar } from "./CollapseSidebarContext";
 import { SidebarHeading } from "./SidebarHeading";
-import { SidebarLink } from "./SidebarLink";
+import { SidebarSlugLink } from "./SidebarLink";
 
 export interface SidebarSectionProps {
     className?: string;
     slug: string;
     navigationItems: DocsV1Read.NavigationItem[];
 
-    selectedSlug: string | undefined;
     registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
-    closeMobileSidebar: () => void;
 
     docsDefinition: DocsV1Read.DocsDefinition;
     activeTabIndex: number | null;
-    resolveApi: (apiId: FdrAPI.ApiDefinitionId) => APIV1Read.ApiDefinition;
+    resolveApi: (apiId: FdrAPI.ApiDefinitionId) => APIV1Read.ApiDefinition | undefined;
 
     topLevel?: boolean;
     nested?: boolean;
@@ -32,90 +29,65 @@ interface ExpandableSidebarSectionProps extends SidebarSectionProps {
     title: string;
 }
 
-const ExpandableSidebarSection: React.FC<ExpandableSidebarSectionProps> = ({
+const UnmemoizedExpandableSidebarSection: React.FC<ExpandableSidebarSectionProps> = ({
     className,
     title,
     slug,
     navigationItems,
-    selectedSlug,
     registerScrolledToPathListener,
-    closeMobileSidebar,
     docsDefinition,
     activeTabIndex,
     resolveApi,
     depth,
 }) => {
-    const {
-        value: expanded,
-        setTrue: setExpanded,
-        toggleValue: toggleExpand,
-        setValue: setExpandedValue,
-    } = useBooleanState(selectedSlug?.startsWith(slug) ?? false);
-
-    const { value: collapseAll } = useCollapseSidebar();
-
-    const mounted = useRef(false);
-
-    useEffect(() => {
-        if (mounted.current) {
-            setExpandedValue(!collapseAll);
-        }
-    }, [setExpandedValue, collapseAll]);
-
-    useEffect(() => {
-        if (selectedSlug?.startsWith(slug)) {
-            setExpanded();
-        }
-        mounted.current = true;
-    }, [selectedSlug, setExpanded, slug]);
+    const { checkExpanded, toggleExpanded, selectedSlug } = useCollapseSidebar();
+    const expanded = checkExpanded(slug);
 
     return (
-        <SidebarLink
+        <SidebarSlugLink
             className={className}
-            slug={slug}
             depth={Math.max(depth - 1, 0)}
             registerScrolledToPathListener={registerScrolledToPathListener}
-            onClick={() => {
+            onClick={useCallback(() => {
                 if (!expanded) {
-                    setExpanded();
+                    toggleExpanded(slug);
                 }
-                closeMobileSidebar();
-            }}
+            }, [expanded, slug, toggleExpanded])}
             title={title}
             expanded={expanded}
-            toggleExpand={toggleExpand}
+            toggleExpand={useCallback(() => toggleExpanded(slug), [slug, toggleExpanded])}
             showIndicator={selectedSlug?.startsWith(slug) && !expanded}
         >
             <Collapse isOpen={expanded} transitionDuration={0} keepChildrenMounted={true}>
                 <SidebarSection
                     slug={slug}
                     navigationItems={navigationItems}
-                    selectedSlug={selectedSlug}
                     registerScrolledToPathListener={registerScrolledToPathListener}
-                    closeMobileSidebar={closeMobileSidebar}
                     docsDefinition={docsDefinition}
                     activeTabIndex={activeTabIndex}
                     resolveApi={resolveApi}
                     depth={depth + 1}
                 />
             </Collapse>
-        </SidebarLink>
+        </SidebarSlugLink>
     );
 };
 
-export const SidebarSection: React.FC<SidebarSectionProps> = ({
+const ExpandableSidebarSection = memo(UnmemoizedExpandableSidebarSection);
+
+const UnmemoizedSidebarSection: React.FC<SidebarSectionProps> = ({
     className,
     slug,
     navigationItems,
-    selectedSlug,
     registerScrolledToPathListener,
-    closeMobileSidebar,
     docsDefinition,
     activeTabIndex,
     resolveApi,
     topLevel = false,
     depth,
 }) => {
+    const { selectedSlug } = useCollapseSidebar();
+
     if (navigationItems.length === 0) {
         return null;
     }
@@ -128,7 +100,7 @@ export const SidebarSection: React.FC<SidebarSectionProps> = ({
                         const pageSlug = joinUrlSlugs(slug, pageMetadata.urlSlug);
                         const selected = selectedSlug === pageSlug;
                         return (
-                            <SidebarLink
+                            <SidebarSlugLink
                                 key={pageSlug}
                                 className={classNames({
                                     "mt-6": topLevel && !isPrevItemSidebarItem(navigationItems, idx),
@@ -136,7 +108,6 @@ export const SidebarSection: React.FC<SidebarSectionProps> = ({
                                 slug={pageSlug}
                                 depth={Math.max(depth - 1, 0)}
                                 registerScrolledToPathListener={registerScrolledToPathListener}
-                                onClick={closeMobileSidebar}
                                 title={pageMetadata.title}
                                 selected={selected}
                             />
@@ -157,9 +128,7 @@ export const SidebarSection: React.FC<SidebarSectionProps> = ({
                                     <SidebarSection
                                         slug={sectionSlug}
                                         navigationItems={section.items}
-                                        selectedSlug={selectedSlug}
                                         registerScrolledToPathListener={registerScrolledToPathListener}
-                                        closeMobileSidebar={closeMobileSidebar}
                                         docsDefinition={docsDefinition}
                                         activeTabIndex={activeTabIndex}
                                         resolveApi={resolveApi}
@@ -177,9 +146,7 @@ export const SidebarSection: React.FC<SidebarSectionProps> = ({
                                     title={section.title}
                                     slug={sectionSlug}
                                     navigationItems={section.items}
-                                    selectedSlug={selectedSlug}
                                     registerScrolledToPathListener={registerScrolledToPathListener}
-                                    closeMobileSidebar={closeMobileSidebar}
                                     docsDefinition={docsDefinition}
                                     activeTabIndex={activeTabIndex}
                                     resolveApi={resolveApi}
@@ -202,9 +169,7 @@ export const SidebarSection: React.FC<SidebarSectionProps> = ({
                                 <ApiSidebarSection
                                     slug={apiSectionSlug}
                                     apiSection={apiSection}
-                                    selectedSlug={selectedSlug}
                                     registerScrolledToPathListener={registerScrolledToPathListener}
-                                    closeMobileSidebar={closeMobileSidebar}
                                     resolveApi={resolveApi}
                                     depth={depth + 1}
                                 />
@@ -217,6 +182,8 @@ export const SidebarSection: React.FC<SidebarSectionProps> = ({
         </ul>
     );
 };
+
+export const SidebarSection = memo(UnmemoizedSidebarSection);
 
 function isPrevItemSidebarItem(navigationItems: DocsV1Read.NavigationItem[], idx: number): boolean {
     if (idx === 0) {

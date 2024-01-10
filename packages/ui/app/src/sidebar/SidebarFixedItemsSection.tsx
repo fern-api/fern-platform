@@ -23,7 +23,7 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
     const showTabs = activeNavigationConfigContext.type === "tabbed";
 
     const searchBar = useMemo(() => {
-        return showSearchBar ? <SidebarSearchBar onClick={openSearchDialog} className="hidden md:flex" /> : null;
+        return showSearchBar ? <SidebarSearchBar onClick={openSearchDialog} className="hidden lg:flex" /> : null;
     }, [showSearchBar, openSearchDialog]);
 
     const tabs = useMemo(() => {
@@ -51,12 +51,12 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
     return (
         <div
             className={classNames(
-                "flex flex-col px-4 md:pt-8 md:backdrop-blur",
+                "flex flex-col px-4 lg:pt-8 lg:backdrop-blur",
                 {
                     "border-b border-border-concealed-light dark:border-border-concealed-dark": tabs != null,
                 },
                 {
-                    "py-4 md:pb-2": tabs != null,
+                    "py-4 lg:pb-2": tabs != null,
                 },
                 className
             )}
