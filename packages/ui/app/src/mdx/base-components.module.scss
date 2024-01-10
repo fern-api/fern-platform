@@ -2,10 +2,6 @@
     @apply text-text-primary-light hover:text-accent-primary hover:dark:text-accent-primary-dark underline underline-offset-4 decoration-1 hover:decoration-2 decoration-accent-primary;
     @apply font-semibold;
 
-    :global(.dark) & {
-        @apply text-text-primary-dark hover:text-accent-primary-dark decoration-accent-primary-dark;
-    }
-
     h1 &,
     h2 &,
     h3 &,
@@ -13,5 +9,9 @@
     h5 &,
     h6 & {
         font-weight: inherit;
+    }
+
+    :global(.dark) & {
+        @apply text-text-primary-dark hover:text-accent-primary-dark decoration-accent-primary-dark;
     }
 }
