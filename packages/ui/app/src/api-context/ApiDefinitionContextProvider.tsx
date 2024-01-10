@@ -19,9 +19,6 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
 
     const resolveSubpackageById = useCallback(
         (subpackageId: APIV1Read.SubpackageId): APIV1Read.ApiDefinitionSubpackage | undefined => {
-            if (apiDefinition == null) {
-                return undefined;
-            }
             return resolveSubpackage(apiDefinition, subpackageId);
         },
         [apiDefinition]
@@ -32,7 +29,7 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
             const type = apiDefinition?.types[typeId];
             if (type == null) {
                 // eslint-disable-next-line no-console
-                console.error("Type does not exist");
+                console.error("Type does not exist", typeId, "in apiDefinitionId", apiDefinition?.id);
             }
             return type;
         },
@@ -55,26 +52,25 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
 };
 
 export function resolveSubpackage(
-    apiDefinition: APIV1Read.ApiDefinition,
+    apiDefinition: APIV1Read.ApiDefinition | undefined,
     subpackageId: APIV1Read.SubpackageId
 ): APIV1Read.ApiDefinitionSubpackage | undefined {
-    const subpackage = apiDefinition.subpackages[subpackageId];
+    const subpackage = apiDefinition?.subpackages[subpackageId];
     if (subpackage == null) {
         // eslint-disable-next-line no-console
-        console.error("Subpackage does not exist", subpackageId, apiDefinition);
+        console.error("Subpackage does not exist", subpackageId);
     }
     if (subpackage?.pointsTo != null) {
         const resolvedSubpackage = resolveSubpackage(apiDefinition, subpackage.pointsTo);
-        if (resolvedSubpackage) {
+        if (resolvedSubpackage != null) {
             return {
                 ...resolvedSubpackage,
                 name: subpackage.name,
                 urlSlug: subpackage.urlSlug,
             };
-        } else {
-            return undefined;
         }
     } else {
         return subpackage;
     }
+    return undefined;
 }

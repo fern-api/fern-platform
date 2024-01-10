@@ -25,7 +25,7 @@ export const ReferencedTypePreviewPart: React.FC<ReferencedTypePreviewPart.Props
         withArticle ? `${article} ${stringWithoutArticle}` : stringWithoutArticle;
 
     if (shape == null) {
-        return null;
+        return <>{"<unknown>"}</>;
     }
 
     return (
