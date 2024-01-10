@@ -69,14 +69,34 @@ export function useColorTheme(docsDefinition: DocsV1Read.DocsDefinition): string
     const backgroundDark = colorsV3.type !== "darkAndLight" ? colorsV3.background : colorsV3["dark"].background;
     const backgroundColorDark = backgroundDark.type === "solid" ? backgroundDark : DEFAULT_COLORS.background["dark"];
 
+    const themeBackgroundColor = background.type === "solid" ? background : tinycolor(accentPrimary);
+    const themeBackgroundColorDark = backgroundDark.type === "solid" ? backgroundDark : tinycolor(accentPrimary);
+
     return `
         :root {
             ${CSS_VARIABLES.ACCENT_PRIMARY}: ${accentPrimary.r}, ${accentPrimary.g}, ${accentPrimary.b};
             ${CSS_VARIABLES.BACKGROUND}: ${backgroundColor.r}, ${backgroundColor.g}, ${backgroundColor.b};
-            ${CSS_VARIABLES.ACCENT_PRIMARY_DARK}: ${accentPrimaryDark.r}, ${accentPrimaryDark.g}, ${accentPrimaryDark.b};
-            ${CSS_VARIABLES.BACKGROUND_DARK}: ${backgroundColorDark.r}, ${backgroundColorDark.g}, ${backgroundColorDark.b};
-            ${CSS_VARIABLES.ACCENT_PRIMARY_CONTRAST}: ${accentPrimaryContrast.r}, ${accentPrimaryContrast.g}, ${accentPrimaryContrast.b};
-            ${CSS_VARIABLES.ACCENT_PRIMARY_DARK_CONTRAST}: ${accentPrimaryDarkContrast.r}, ${accentPrimaryDarkContrast.g}, ${accentPrimaryDarkContrast.b};
+            ${CSS_VARIABLES.ACCENT_PRIMARY_DARK}: ${accentPrimaryDark.r}, ${accentPrimaryDark.g}, ${
+        accentPrimaryDark.b
+    };
+            ${CSS_VARIABLES.BACKGROUND_DARK}: ${backgroundColorDark.r}, ${backgroundColorDark.g}, ${
+        backgroundColorDark.b
+    };
+            ${CSS_VARIABLES.ACCENT_PRIMARY_CONTRAST}: ${accentPrimaryContrast.r}, ${accentPrimaryContrast.g}, ${
+        accentPrimaryContrast.b
+    };
+            ${CSS_VARIABLES.ACCENT_PRIMARY_DARK_CONTRAST}: ${accentPrimaryDarkContrast.r}, ${
+        accentPrimaryDarkContrast.g
+    }, ${accentPrimaryDarkContrast.b};
+        }
+
+
+        html {
+            background-color: #${tinycolor(themeBackgroundColor).toHex()};
+        }
+
+        html.dark {
+            background-color: #${tinycolor(themeBackgroundColorDark).toHex()};
         }
     `;
 }

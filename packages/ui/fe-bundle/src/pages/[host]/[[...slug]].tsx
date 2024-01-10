@@ -42,7 +42,7 @@ export default function Docs({
                 {`
                     ${colorThemeStyleSheet}
                     ${typographyStyleSheet}
-                        ${backgroundImageStyleSheet}
+                    ${backgroundImageStyleSheet}
                 `}
             </style>
             <Head>
