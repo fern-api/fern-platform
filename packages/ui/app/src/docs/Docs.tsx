@@ -94,7 +94,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                 <div className="max-w-8xl relative mx-auto flex min-h-0 w-full min-w-0 flex-1">
                     {isMobileSidebarOpen && (
                         <div
-                            className="fixed inset-0 z-20 bg-white/30 dark:bg-black/30 sm:block sm:bg-black/30 lg:hidden"
+                            className="fixed inset-0 z-20 bg-white/30 sm:block sm:bg-black/30 lg:hidden dark:bg-black/30"
                             onClick={closeMobileSidebar}
                         />
                     )}
