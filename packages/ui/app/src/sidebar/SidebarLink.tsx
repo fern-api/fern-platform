@@ -173,10 +173,10 @@ export const SidebarSlugLink: FC<PropsWithChildren<SidebarSlugLinkProps>> = ({
     const { expandAll, collapseAll } = useCollapseSidebar();
 
     useEffect(() => {
-        if (isMobileSidebarOpen) {
+        if (isMobileSidebarOpen && props.selected) {
             ref.current?.scrollIntoView({ block: "nearest", inline: "nearest" });
         }
-    }, [isMobileSidebarOpen]);
+    }, [isMobileSidebarOpen, props.selected]);
 
     return (
         <SidebarLink
