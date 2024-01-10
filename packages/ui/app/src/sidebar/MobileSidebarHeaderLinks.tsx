@@ -57,7 +57,7 @@ export function MobileSidebarHeaderLinks(): ReactElement | null {
                         )
                     }
                     linkClassName={classNames({
-                        "my-2 transition ring-1 hover:ring-2 ring-border-primary dark:ring-border-primary-dark hover:bg-tag-primary dark:hover:bg-tag-primary-dark !text-accent-primary !dark:text-accent-primary":
+                        "my-2 transition ring-inset ring-1 hover:ring-2 ring-border-primary dark:ring-border-primary-dark hover:bg-tag-primary dark:hover:bg-tag-primary-dark !text-accent-primary !dark:text-accent-primary":
                             navbarLink.type === "primary",
                     })}
                 />

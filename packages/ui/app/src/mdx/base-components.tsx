@@ -5,6 +5,7 @@ import React, { AnchorHTMLAttributes, HTMLAttributes, useCallback } from "react"
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
 import { useNavigationContext } from "../navigation-context";
 import { onlyText } from "../util/onlyText";
+import styles from "./base-components.module.scss";
 
 export const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({ className, ...rest }) => {
     return (
@@ -236,10 +237,7 @@ export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className
     const { navigateToPath } = useNavigationContext();
     const isExternalUrl = href != null && href.includes("http");
 
-    const classNamesCombined = classNames(
-        className,
-        "text-text-primary-light dark:text-text-primary-dark hover:text-accent-primary hover:dark:text-accent-primary-dark underline underline-offset-4 decoration-1 hover:decoration-2 font-medium decoration-accent-primary dark:decoration-accent-primary-dark"
-    );
+    const classNamesCombined = classNames(className, styles.mdxAnchor);
 
     const handleClick = useCallback(() => {
         // this is a hack to enable hyperlinking between markdown page and api page

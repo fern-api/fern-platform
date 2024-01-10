@@ -78,7 +78,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
             )}
 
             <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
-                <div className="border-border-concealed-light dark:border-border-concealed-dark dark:shadow-header-dark fixed inset-x-0 top-0 z-30 h-16 overflow-visible border-b backdrop-blur-md lg:backdrop-blur">
+                <div className="border-border-concealed-light dark:border-border-concealed-dark dark:shadow-header-dark fixed inset-x-0 top-0 z-30 h-16 overflow-visible border-b backdrop-blur-lg lg:backdrop-blur">
                     {renderBackground()}
                     <Header
                         className="max-w-8xl mx-auto"
@@ -91,18 +91,25 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                     />
                 </div>
 
-                <div className="max-w-8xl relative mx-auto flex min-h-0 w-full flex-1">
+                <div className="max-w-8xl relative mx-auto flex min-h-0 w-full min-w-0 flex-1">
+                    {isMobileSidebarOpen && (
+                        <div
+                            className="fixed inset-0 z-20 bg-white/30 dark:bg-black/30 sm:block sm:bg-black/30 lg:hidden"
+                            onClick={closeMobileSidebar}
+                        />
+                    )}
                     <div
                         className={classNames(
-                            "z-20 fixed inset-0 top-16 lg:mt-16 lg:sticky lg:h-[calc(100vh-64px)] lg:w-72",
+                            "z-20 fixed inset-0 top-16 lg:mt-16 lg:sticky lg:h-[calc(100vh-64px)] lg:w-72 sm:max-w-[20rem] sm:border-r lg:border-none border-border-concealed-light dark:border-border-concealed-dark",
+                            "transition-all lg:transition-none sm:-translate-x-full sm:translate-y-0 lg:transition-none lg:translate-x-0 lg:translate-y-0",
                             {
-                                "opacity-0 lg:opacity-100 pointer-events-none lg:pointer-events-auto":
+                                "opacity-0 sm:opacity-100 sm:block pointer-events-none lg:pointer-events-auto sm:-translate-x-full":
                                     !isMobileSidebarOpen,
-                                "transition-opacity lg:transition-none": isMobileSidebarOpen,
+                                "sm:translate-x-0 opacity-100": isMobileSidebarOpen,
                             }
                         )}
                     >
-                        {renderBackground("lg:hidden backdrop-blur-md")}
+                        {renderBackground("lg:hidden backdrop-blur-lg")}
                         <Sidebar />
                     </div>
 

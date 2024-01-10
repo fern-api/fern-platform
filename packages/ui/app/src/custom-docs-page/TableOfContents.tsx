@@ -14,23 +14,40 @@ export declare namespace TableOfContents {
 }
 
 interface HeadingListItem {
-    heading: marked.Tokens.Heading;
+    heading: marked.Tokens.Heading | undefined;
     children: HeadingListItem[];
 }
 
 export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, markdown, style }) => {
     const renderList = (headings: HeadingListItem[], indent?: boolean) => {
+        if (headings.length === 0) {
+            return null;
+        }
         return (
-            <ul className={classNames("list-none", { "ml-4": indent, "-my-2": !indent })} style={style}>
+            <ul
+                className={classNames("list-none", {
+                    "pl-4": indent,
+                    [className ?? ""]: !indent,
+                    "pt-3 pb-4 border-b border-border-default-light dark:border-border-default-dark": !indent,
+                })}
+                style={style}
+            >
                 {headings.map(({ heading, children }, index) => {
+                    const text = heading != null ? tokenToSimpleString(heading) : "";
+                    if (text.length === 0 && children.length === 0) {
+                        // don't render empty headings
+                        return null;
+                    }
                     return (
                         <li key={index}>
-                            <a
-                                className="t-muted hover:dark:text-text-primary-dark hover:text-text-primary-light block hyphens-auto break-words py-2 text-sm leading-5 no-underline transition hover:no-underline"
-                                href={`#${getSlugFromText(tokenToSimpleString(heading))}`}
-                            >
-                                {tokenToSimpleString(heading)}
-                            </a>
+                            {text.length > 0 && (
+                                <a
+                                    className="t-muted hover:dark:text-text-primary-dark hover:text-text-primary-light block hyphens-auto break-words py-1.5 text-sm leading-5 no-underline transition hover:no-underline"
+                                    href={`#${getSlugFromText(text)}`}
+                                >
+                                    {text}
+                                </a>
+                            )}
                             {children.length > 0 && renderList(children, true)}
                         </li>
                     );
@@ -44,39 +61,44 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ma
 
     const listItems = useMemo(() => makeTree(headings, minDepth), [headings, minDepth]);
 
-    return <div className={className}>{renderList(listItems)}</div>;
+    return (
+        <>
+            {listItems.length > 0 && <h6 className="m-0">On this page</h6>}
+            {renderList(listItems)}
+        </>
+    );
 };
 
 const makeTree = (headings: marked.Tokens.Heading[], depth: number = 1): HeadingListItem[] => {
     const tree: HeadingListItem[] = [];
 
-    const tokens = [...headings];
-    while (tokens.length > 0) {
-        const firstToken = tokens[0]!;
+    while (headings.length > 0) {
+        const firstToken = headings[0]!;
 
-        // Stop if next heading is at higher level
+        // if the next heading is at a higher level
         if (firstToken.depth < depth) {
             break;
         }
 
-        // Remove first token from list
-        const token = tokens.shift()!;
-
-        // Find children of current token
-        const children = makeTree(tokens, token.depth + 1);
-
-        // Add token and its children to the tree
-        tree.push({
-            heading: token,
-            children,
-        });
+        if (firstToken.depth === depth) {
+            const token = headings.shift();
+            tree.push({
+                heading: token != null && tokenToSimpleString(token).length > 0 ? token : undefined,
+                children: makeTree(headings, depth + 1),
+            });
+        } else {
+            tree.push({
+                heading: undefined,
+                children: makeTree(headings, depth + 1),
+            });
+        }
     }
 
     return tree;
 };
 
 function isHeading(token: marked.Token): token is marked.Tokens.Heading {
-    return token.type === "heading";
+    return token.type === "heading" && tokenToSimpleString(token).length > 0;
 }
 
 function tokenToSimpleString(token: marked.Token): string {

@@ -53,7 +53,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
         <nav
             aria-label="primary"
             className={classNames(
-                "flex justify-between items-center shrink-0 px-6 lg:px-8",
+                "flex justify-between items-center shrink-0 px-6 sm:px-8",
                 // this matches with the calc() in the EndpointContent examples section
                 "h-full",
                 className
@@ -83,7 +83,13 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
 
                 <button
                     onClick={isMobileSidebarOpen ? closeMobileSidebar : openMobileSidebar}
-                    className="text-intent-default dark:hover:text-text-primary-dark hover:text-text-primary-light flex h-[44px] w-[44px] items-center justify-center transition lg:hidden"
+                    className={classNames(
+                        "text-intent-default dark:hover:text-text-primary-dark hover:text-text-primary-light flex h-[44px] w-[44px] items-center justify-center transition lg:hidden rounded-lg",
+                        {
+                            "text-accent-primary dark:text-accent-primary-dark bg-tag-primary dark:bg-tag-primary-dark ring-inset ring-1 ring-border-primary dark:ring-border-primary-dark":
+                                isMobileSidebarOpen,
+                        }
+                    )}
                 >
                     {isMobileSidebarOpen ? <XIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
                 </button>
