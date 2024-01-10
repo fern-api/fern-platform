@@ -70,9 +70,6 @@ export const CollapseSidebarProvider: FC<PropsWithChildren> = ({ children }) => 
             return;
         } else {
             setExpanded((expanded) => {
-                if (typeof expanded === "boolean") {
-                    return true;
-                }
                 if (expanded.some((s) => s.startsWith(slug))) {
                     return expanded.filter((s) => !s.startsWith(slug));
                 }
