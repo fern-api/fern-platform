@@ -26,7 +26,7 @@ const CollapseSidebarContext = createContext<CollapseSidebarContextValue>({
 export const useCollapseSidebar = () => useContext(CollapseSidebarContext);
 
 export const CollapseSidebarProvider: FC<PropsWithChildren> = ({ children }) => {
-    const [expanded, setExpanded] = useState<string[]>([]);
+    const [expanded, setExpanded] = useState<string[]>(() => [selectedSlug]);
     const [collapsed, setCollapsed] = useState<string[]>([]);
     const [inverted, setInverted] = useState(false); // if true, expanded means collapsed and vice versa
     const { selectedSlug } = useDocsSelectors();
@@ -47,7 +47,7 @@ export const CollapseSidebarProvider: FC<PropsWithChildren> = ({ children }) => 
         setInverted(false);
         setExpanded([selectedSlug]);
         setCollapsed([]);
-    }, [selectedSlug, setExpanded]);
+    }, [selectedSlug]);
 
     const checkExpanded = useCallback(
         (expandableSlug: string) => {
