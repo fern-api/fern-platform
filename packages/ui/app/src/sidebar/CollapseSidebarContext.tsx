@@ -1,5 +1,5 @@
 import { noop } from "lodash-es";
-import { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useState } from "react";
+import { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { useDocsSelectors } from "../selectors/useDocsSelectors";
 
 interface CollapseSidebarContextValue {
@@ -26,46 +26,56 @@ const CollapseSidebarContext = createContext<CollapseSidebarContextValue>({
 export const useCollapseSidebar = () => useContext(CollapseSidebarContext);
 
 export const CollapseSidebarProvider: FC<PropsWithChildren> = ({ children }) => {
-    const [expanded, setExpanded] = useState<true | string[]>([]);
-    const [inverted, setInverted] = useState(false); // if true, expanded means collapsed and vice versa
+    const [expanded, setExpanded] = useState<string[]>([]);
+    const [collapsed, setCollapsed] = useState<string[]>([]);
+    const inverted = useRef(false); // if true, expanded means collapsed and vice versa
     const { selectedSlug } = useDocsSelectors();
 
     const expandAll = useCallback(() => {
-        setExpanded(true);
-        setInverted(false);
+        inverted.current = true;
+        setExpanded([]);
+        setCollapsed([]);
     }, []);
 
     const collapseAll = useCallback(() => {
+        inverted.current = false;
         setExpanded([]);
-        setInverted(false);
+        setCollapsed([]);
     }, []);
 
     useEffect(() => {
+        inverted.current = false;
         setExpanded([selectedSlug]);
-        setInverted(false);
+        setCollapsed([]);
     }, [selectedSlug, setExpanded]);
 
     const checkExpanded = useCallback(
         (expandableSlug: string) => {
-            if (typeof expanded === "boolean") {
-                return expanded !== inverted;
-            }
-            return expanded.some((slug) => slug.startsWith(expandableSlug)) !== inverted;
+            return inverted.current
+                ? !collapsed.includes(expandableSlug)
+                : expanded.some((slug) => slug.startsWith(expandableSlug));
         },
-        [expanded, inverted]
+        [collapsed, expanded]
     );
 
     const toggleExpanded = useCallback((slug: string) => {
-        setExpanded((expanded) => {
-            if (typeof expanded === "boolean") {
-                setInverted(expanded);
-                return [slug];
-            }
-            if (expanded.some((s) => s.startsWith(slug))) {
-                return expanded.filter((s) => !s.startsWith(slug));
-            }
-            return [...expanded, slug];
-        });
+        if (inverted.current) {
+            setCollapsed((collapsed) => {
+                inverted.current = true;
+                if (collapsed.some((s) => s === slug)) {
+                    return collapsed.filter((s) => s !== slug);
+                }
+                return [...collapsed, slug];
+            });
+            return;
+        } else {
+            setExpanded((expanded) => {
+                if (expanded.some((s) => s.startsWith(slug))) {
+                    return expanded.filter((s) => !s.startsWith(slug));
+                }
+                return [...expanded, slug];
+            });
+        }
     }, []);
 
     return (
