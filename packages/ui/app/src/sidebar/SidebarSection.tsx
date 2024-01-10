@@ -1,9 +1,9 @@
-import { Collapse } from "@blueprintjs/core";
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { joinUrlSlugs } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { Transition } from "@headlessui/react";
 import classNames from "classnames";
-import { memo, useCallback } from "react";
+import { useCallback } from "react";
 import { ApiSidebarSection } from "./ApiSidebarSection";
 import { useCollapseSidebar } from "./CollapseSidebarContext";
 import { SidebarHeading } from "./SidebarHeading";
@@ -29,7 +29,7 @@ interface ExpandableSidebarSectionProps extends SidebarSectionProps {
     title: string;
 }
 
-const UnmemoizedExpandableSidebarSection: React.FC<ExpandableSidebarSectionProps> = ({
+const ExpandableSidebarSection: React.FC<ExpandableSidebarSectionProps> = ({
     className,
     title,
     slug,
@@ -58,7 +58,7 @@ const UnmemoizedExpandableSidebarSection: React.FC<ExpandableSidebarSectionProps
             toggleExpand={useCallback(() => toggleExpanded(slug), [slug, toggleExpanded])}
             showIndicator={selectedSlug?.startsWith(slug) && !expanded}
         >
-            <Collapse isOpen={expanded} transitionDuration={0} keepChildrenMounted={true}>
+            <Transition show={expanded} unmount={false}>
                 <SidebarSection
                     slug={slug}
                     navigationItems={navigationItems}
@@ -68,14 +68,12 @@ const UnmemoizedExpandableSidebarSection: React.FC<ExpandableSidebarSectionProps
                     resolveApi={resolveApi}
                     depth={depth + 1}
                 />
-            </Collapse>
+            </Transition>
         </SidebarSlugLink>
     );
 };
 
-const ExpandableSidebarSection = memo(UnmemoizedExpandableSidebarSection);
-
-const UnmemoizedSidebarSection: React.FC<SidebarSectionProps> = ({
+export const SidebarSection: React.FC<SidebarSectionProps> = ({
     className,
     slug,
     navigationItems,
@@ -182,8 +180,6 @@ const UnmemoizedSidebarSection: React.FC<SidebarSectionProps> = ({
         </ul>
     );
 };
-
-export const SidebarSection = memo(UnmemoizedSidebarSection);
 
 function isPrevItemSidebarItem(navigationItems: DocsV1Read.NavigationItem[], idx: number): boolean {
     if (idx === 0) {

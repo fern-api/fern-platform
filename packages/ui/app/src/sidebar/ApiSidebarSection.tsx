@@ -1,4 +1,3 @@
-import { Collapse } from "@blueprintjs/core";
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import {
     doesSubpackageHaveEndpointsOrWebhooksRecursive,
@@ -6,6 +5,7 @@ import {
     getSubpackageTitle,
     joinUrlSlugs,
 } from "@fern-ui/app-utils";
+import { Transition } from "@headlessui/react";
 import classNames from "classnames";
 import { useCallback, useMemo } from "react";
 import { resolveSubpackage } from "../api-context/ApiDefinitionContextProvider";
@@ -82,15 +82,13 @@ const InnerApiSidebarSection: React.FC<InnerApiSidebarSectionProps> = ({
         }
         const clientLibrariesSlug = joinUrlSlugs(slug, "client-libraries");
         return (
-            <li>
-                <SidebarSlugLink
-                    slug={clientLibrariesSlug}
-                    title={API_ARTIFACTS_TITLE}
-                    registerScrolledToPathListener={registerScrolledToPathListener}
-                    selected={clientLibrariesSlug === selectedSlug}
-                    depth={Math.max(0, depth - 1)}
-                />
-            </li>
+            <SidebarSlugLink
+                slug={clientLibrariesSlug}
+                title={API_ARTIFACTS_TITLE}
+                registerScrolledToPathListener={registerScrolledToPathListener}
+                selected={clientLibrariesSlug === selectedSlug}
+                depth={Math.max(0, depth - 1)}
+            />
         );
     };
     return (
@@ -183,7 +181,7 @@ const ExpandableApiSidebarSection: React.FC<ExpandableApiSidebarSectionProps> = 
             toggleExpand={useCallback(() => toggleExpanded(slug), [slug, toggleExpanded])}
             showIndicator={selectedSlug?.startsWith(slug) && !expanded}
         >
-            <Collapse isOpen={expanded} transitionDuration={0} keepChildrenMounted={true}>
+            <Transition show={expanded} unmount={false}>
                 <InnerApiSidebarSection
                     slug={slug}
                     registerScrolledToPathListener={registerScrolledToPathListener}
@@ -193,7 +191,7 @@ const ExpandableApiSidebarSection: React.FC<ExpandableApiSidebarSectionProps> = 
                     resolveSubpackageById={resolveSubpackageById}
                     artifacts={artifacts}
                 />
-            </Collapse>
+            </Transition>
         </SidebarSlugLink>
     );
 };

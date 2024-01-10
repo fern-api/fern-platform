@@ -129,13 +129,16 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
                                     showIndicator,
                             }
                         )}
-                        onClick={toggleExpand}
-                        onDoubleClick={() => {
-                            if (expanded) {
+                        onClick={(e) => {
+                            e.detail === 1 && toggleExpand?.();
+                        }}
+                        onDoubleClick={(e) => {
+                            if (!expanded) {
                                 collapseAll?.();
                             } else {
                                 expandAll?.();
                             }
+                            e.stopPropagation();
                         }}
                     >
                         <ChevronDownIcon
