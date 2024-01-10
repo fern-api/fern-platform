@@ -1,4 +1,4 @@
-import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { APIV1Read, DocsV1Read, FdrAPI, isApiNode } from "@fern-api/fdr-sdk";
 import {
     doesSubpackageHaveEndpointsOrWebhooksRecursive,
     getEndpointTitleAsString,
@@ -12,6 +12,7 @@ import { resolveSubpackage } from "../api-context/ApiDefinitionContextProvider";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { API_ARTIFACTS_TITLE } from "../config";
+import { useNavigationContext } from "../navigation-context";
 import { useCollapseSidebar } from "./CollapseSidebarContext";
 import { SidebarSlugLink } from "./SidebarLink";
 
@@ -55,11 +56,12 @@ export const ApiSidebarSection: React.FC<ApiSidebarSectionProps> = ({
             artifacts={apiSection.artifacts}
             resolveApi={resolveApi}
             depth={depth}
+            apiSection={apiSection}
         />
     );
 };
 
-interface InnerApiSidebarSectionProps extends Omit<ApiSidebarSectionProps, "apiSection"> {
+interface InnerApiSidebarSectionProps extends ApiSidebarSectionProps {
     apiDefinitionPackage: APIV1Read.ApiDefinitionPackage;
     resolveSubpackageById: (subpackageId: APIV1Read.SubpackageId) => APIV1Read.ApiDefinitionSubpackage | undefined;
     artifacts?: DocsV1Read.ApiArtifacts;
@@ -74,8 +76,11 @@ const InnerApiSidebarSection: React.FC<InnerApiSidebarSectionProps> = ({
     artifacts,
     resolveApi,
     depth,
+    apiSection,
 }) => {
     const { selectedSlug } = useCollapseSidebar();
+    const { activeNavigatable } = useNavigationContext();
+    const shallow = isApiNode(activeNavigatable) && activeNavigatable.section.api === apiSection.api;
     const renderArtifacts = () => {
         if (artifacts == null || !areApiArtifactsNonEmpty(artifacts)) {
             return null;
@@ -100,6 +105,7 @@ const InnerApiSidebarSection: React.FC<InnerApiSidebarSectionProps> = ({
                     <SidebarSlugLink
                         key={endpoint.id}
                         slug={fullSlug}
+                        shallow={shallow}
                         title={getEndpointTitleAsString(endpoint)}
                         registerScrolledToPathListener={registerScrolledToPathListener}
                         selected={fullSlug === selectedSlug}
@@ -114,6 +120,7 @@ const InnerApiSidebarSection: React.FC<InnerApiSidebarSectionProps> = ({
                     <SidebarSlugLink
                         key={webhook.id}
                         slug={fullSlug}
+                        shallow={shallow}
                         title={webhook.name ?? "/" + webhook.path.join("/")}
                         registerScrolledToPathListener={registerScrolledToPathListener}
                         selected={fullSlug === selectedSlug}
@@ -140,6 +147,7 @@ const InnerApiSidebarSection: React.FC<InnerApiSidebarSectionProps> = ({
                         registerScrolledToPathListener={registerScrolledToPathListener}
                         resolveApi={resolveApi}
                         depth={depth}
+                        apiSection={apiSection}
                     />
                 );
             })}
@@ -162,6 +170,7 @@ const ExpandableApiSidebarSection: React.FC<ExpandableApiSidebarSectionProps> = 
     apiDefinitionPackage,
     resolveSubpackageById,
     artifacts,
+    apiSection,
 }) => {
     const { checkExpanded, toggleExpanded, selectedSlug } = useCollapseSidebar();
     const expanded = checkExpanded(slug);
@@ -190,6 +199,7 @@ const ExpandableApiSidebarSection: React.FC<ExpandableApiSidebarSectionProps> = 
                     apiDefinitionPackage={apiDefinitionPackage}
                     resolveSubpackageById={resolveSubpackageById}
                     artifacts={artifacts}
+                    apiSection={apiSection}
                 />
             </Transition>
         </SidebarSlugLink>

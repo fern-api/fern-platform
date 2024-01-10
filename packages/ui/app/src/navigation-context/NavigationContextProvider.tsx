@@ -27,8 +27,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const userIsScrolling = useRef(false);
     const resolvedRoute = getRouteForResolvedPath({
         resolvedSlug: resolvedPath.fullSlug,
-        asPath: router.asPath,
-        basePath,
+        asPath: router.asPath, // do not include basepath because it is already included
     });
     const justNavigatedTo = useRef<string | undefined>(resolvedRoute);
     type ApiDefinition = FdrAPI.api.v1.read.ApiDefinition;
