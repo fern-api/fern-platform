@@ -7,8 +7,8 @@ declare module "*.module.scss" {
 }
 
 // CSS
-declare module "*.css";
-declare module "*.scss";
+declare module "*.css" {}
+declare module "*.scss" {}
 
 // images
 declare module "*.png" {

@@ -65,7 +65,7 @@
     "jsonc-parser": "~2.2.1",
     "lint-staged": "^13.0.3",
     "lodash-es": "^4.17.21",
-    "mrlint": "^0.0.132",
+    "mrlint": "^0.0.133",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.8.8",
     "react": "^18.2.0",
