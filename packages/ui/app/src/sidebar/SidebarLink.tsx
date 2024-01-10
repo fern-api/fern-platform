@@ -60,7 +60,7 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
             linkClassNameProp,
             "text-inherit text-left hover:text-inherit relative inline-flex flex-1 content-between items-center px-4 lg:px-3 no-underline hover:no-underline py-3 lg:py-2 rounded-lg ring-border-primary dark:ring-border-primary-dark",
             {
-                "font-semibold bg-tag-primary dark:bg-tag-primary-dark ring-1 lg:ring-0": selected,
+                "bg-tag-primary dark:bg-tag-primary-dark ring-1 lg:ring-0": selected,
                 "lg:hover:bg-tag-primary/10 lg:hover:dark:bg-tag-primary-dark/10 ring-0": !selected,
             },
             {
