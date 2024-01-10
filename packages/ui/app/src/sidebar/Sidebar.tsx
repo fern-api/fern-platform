@@ -1,68 +1,48 @@
-import classNames from "classnames";
-import { useCallback } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
-import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useNavigationContext } from "../navigation-context";
 import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { BuiltWithFern } from "./BuiltWithFern";
-import { SidebarContext, SidebarContextValue } from "./context/SidebarContext";
-import styles from "./Sidebar.module.scss";
+import { CollapseSidebarProvider } from "./CollapseSidebarContext";
+import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
-import { SidebarItems } from "./SidebarItems";
+import { SidebarSection } from "./SidebarSection";
 
 export declare namespace Sidebar {
-    export interface Props {
-        hideSearchBar?: boolean;
-        expandAllSections?: boolean;
-    }
+    export interface Props {}
 }
 
-export const Sidebar: React.FC<Sidebar.Props> = ({ hideSearchBar = false, expandAllSections = false }) => {
+export const Sidebar: React.FC<Sidebar.Props> = () => {
     const { docsDefinition, resolveApi } = useDocsContext();
     const { activeNavigatable, registerScrolledToPathListener } = useNavigationContext();
-    const { activeNavigationConfigContext, selectedSlug, withVersionAndTabSlugs } = useDocsSelectors();
-    const { closeMobileSidebar } = useMobileSidebarContext();
+    const { activeNavigationConfigContext, withVersionAndTabSlugs } = useDocsSelectors();
 
-    const contextValue = useCallback((): SidebarContextValue => ({ expandAllSections }), [expandAllSections]);
-
-    const renderSidebarItems = () => {
-        const navigationItems =
-            activeNavigationConfigContext.type === "tabbed"
-                ? activeNavigatable.context.tab?.items
-                : activeNavigationConfigContext.config.items;
-        if (navigationItems == null) {
-            return null;
-        }
-        return (
-            <SidebarItems
-                navigationItems={navigationItems}
-                slug={withVersionAndTabSlugs("", { omitDefault: true })}
-                selectedSlug={selectedSlug}
-                registerScrolledToPathListener={registerScrolledToPathListener}
-                closeMobileSidebar={closeMobileSidebar}
-                docsDefinition={docsDefinition}
-                activeTabIndex={activeNavigatable.context.tab?.index ?? null}
-                resolveApi={resolveApi}
-                level={0}
-            />
-        );
-    };
+    const navigationItems =
+        activeNavigationConfigContext.type === "tabbed"
+            ? activeNavigatable.context.tab?.items
+            : activeNavigationConfigContext.config.items;
 
     return (
-        <SidebarContext.Provider value={contextValue}>
-            <div className="w-full min-w-0">
-                <SidebarFixedItemsSection className="sticky top-0 z-10" hideSearchBar={hideSearchBar} />
-                <div
-                    className={classNames(
-                        "flex flex-1 flex-col overflow-y-auto overflow-x-hidden pb-12",
-                        hideSearchBar ? "px-2.5" : "px-4",
-                        styles.scrollingContainer
-                    )}
-                >
-                    {renderSidebarItems()}
-                    <BuiltWithFern />
-                </div>
-            </div>
-        </SidebarContext.Provider>
+        <nav
+            className="group/sidebar smooth-scroll hide-scrollbar relative h-full w-full overflow-x-hidden overflow-y-scroll overscroll-contain px-4 pb-12 lg:overflow-y-auto"
+            aria-label="secondary"
+        >
+            <MobileSidebarHeaderLinks />
+            <SidebarFixedItemsSection className="-mx-4 lg:sticky lg:top-0 lg:z-20" />
+            {navigationItems != null && (
+                <CollapseSidebarProvider>
+                    <SidebarSection
+                        navigationItems={navigationItems}
+                        slug={withVersionAndTabSlugs("", { omitDefault: true })}
+                        registerScrolledToPathListener={registerScrolledToPathListener}
+                        docsDefinition={docsDefinition}
+                        activeTabIndex={activeNavigatable.context.tab?.index ?? null}
+                        resolveApi={resolveApi}
+                        depth={0}
+                        topLevel={true}
+                    />
+                </CollapseSidebarProvider>
+            )}
+            <BuiltWithFern />
+        </nav>
     );
 };

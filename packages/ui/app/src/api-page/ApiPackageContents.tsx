@@ -49,6 +49,9 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                     return null;
                 }
                 const subpackage = resolveSubpackageById(subpackageId);
+                if (subpackage == null) {
+                    return null;
+                }
                 return (
                     <ApiSubpackage
                         key={subpackageId}

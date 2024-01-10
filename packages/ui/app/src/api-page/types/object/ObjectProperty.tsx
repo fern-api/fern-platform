@@ -89,7 +89,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
         }
         if (property.valueType.type === "id") {
             const typeDef = resolveTypeById(property.valueType.value);
-            if (typeDef.description == null) {
+            if (typeDef?.description == null) {
                 return undefined;
             }
             return {

@@ -5,7 +5,15 @@
 @layer base {
     html {
         box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+
+        /* background-color: var(--accent-primary); */
     }
+
+    /* 
+    html.dark {
+        background-color: var(--accent-primary-dark);
+    } */
 
     *,
     *::before,
@@ -75,5 +83,9 @@
         @apply pointer-events-none absolute -z-10 h-full w-full overflow-hidden;
 
         clip-path: inset(0);
+    }
+
+    .hide-scrollbar:not(:hover)::-webkit-scrollbar {
+        display: none;
     }
 }

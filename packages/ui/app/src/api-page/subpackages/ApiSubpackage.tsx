@@ -22,18 +22,22 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({
     const { resolveSubpackageById } = useApiDefinitionContext();
     const subpackage = resolveSubpackageById(subpackageId);
     const { setTargetRef } = useApiPageCenterElement({ slug });
+    if (subpackage == null) {
+        return null;
+    }
     return (
         <>
             <ApiPageMargins>
                 <div ref={setTargetRef} data-route={`/${slug}`} className="scroll-mt-16" />
             </ApiPageMargins>
-            <ApiPackageContents
-                key={subpackageId}
-                package={subpackage}
-                slug={slug}
-                isLastInParentPackage={isLastInParentPackage}
-                anchorIdParts={[...anchorIdParts, subpackage.name]}
-            />
+            {subpackage != null && (
+                <ApiPackageContents
+                    package={subpackage}
+                    slug={slug}
+                    isLastInParentPackage={isLastInParentPackage}
+                    anchorIdParts={anchorIdParts}
+                />
+            )}
         </>
     );
 };
