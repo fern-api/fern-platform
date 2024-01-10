@@ -6,15 +6,16 @@ function RobotsTXT(): void {
 
 export default RobotsTXT;
 
-export const getServerSideProps: GetServerSideProps = async ({ params = {}, res }) => {
-    const host = params.host as string | undefined;
+export const getServerSideProps: GetServerSideProps = async ({ params = {}, req, res }) => {
+    const xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? req.headers["x-fern-host"] ?? params.host;
 
-    if (host == null) {
-        throw new Error("host is not defined");
+    if (xFernHost == null || Array.isArray(xFernHost)) {
+        return { notFound: true };
     }
-    const hostWithoutTrailingSlash = host.endsWith("/") ? host.slice(0, -1) : host;
 
-    res.write(`User-Agent: *\nSitemap: ${hostWithoutTrailingSlash}/sitemap.xml`);
+    const hostname = new URL(`https://${xFernHost}`).hostname; // strip basepath
+
+    res.write(`User-Agent: *\nSitemap: https://${hostname}/sitemap.xml`);
     res.end();
 
     return {

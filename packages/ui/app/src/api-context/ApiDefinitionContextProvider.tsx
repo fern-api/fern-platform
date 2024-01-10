@@ -1,7 +1,7 @@
 import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import React, { useCallback } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
-import { ApiDefinitionContext, ApiDefinitionContextValue } from "./ApiDefinitionContext";
+import { ApiDefinitionContext } from "./ApiDefinitionContext";
 
 export declare namespace ApiDefinitionContextProvider {
     export type Props = React.PropsWithChildren<{
@@ -36,18 +36,19 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
         [apiDefinition]
     );
 
-    const contextValue = useCallback(
-        (): ApiDefinitionContextValue => ({
-            apiDefinition,
-            apiSection,
-            apiSlug,
-            resolveTypeById,
-            resolveSubpackageById,
-        }),
-        [apiDefinition, apiSlug, apiSection, resolveSubpackageById, resolveTypeById]
+    return (
+        <ApiDefinitionContext.Provider
+            value={{
+                apiDefinition,
+                apiSection,
+                apiSlug,
+                resolveTypeById,
+                resolveSubpackageById,
+            }}
+        >
+            {children}
+        </ApiDefinitionContext.Provider>
     );
-
-    return <ApiDefinitionContext.Provider value={contextValue}>{children}</ApiDefinitionContext.Provider>;
 };
 
 export function resolveSubpackage(

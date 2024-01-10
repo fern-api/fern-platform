@@ -1,9 +1,10 @@
-import { DocsV1Read, FdrAPI, PathResolver } from "@fern-api/fdr-sdk";
+import { FdrAPI, PathResolver } from "@fern-api/fdr-sdk";
 import { getFullSlugForNavigatable, type ResolvedPath } from "@fern-ui/app-utils";
 import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useDocsContext } from "../docs-context/useDocsContext";
 import { getRouteNode } from "../util/anchor";
 import { getRouteForResolvedPath } from "./getRouteForResolvedPath";
 import { NavigationContext } from "./NavigationContext";
@@ -11,18 +12,17 @@ import { useSlugListeners } from "./useSlugListeners";
 
 export declare namespace NavigationContextProvider {
     export type Props = PropsWithChildren<{
-        docsDefinition: DocsV1Read.DocsDefinition;
         resolvedPath: ResolvedPath;
         basePath: string | undefined;
     }>;
 }
 
 export const NavigationContextProvider: React.FC<NavigationContextProvider.Props> = ({
-    docsDefinition,
     resolvedPath,
     children,
     basePath,
 }) => {
+    const { docsDefinition } = useDocsContext();
     const router = useRouter();
     const userIsScrolling = useRef(false);
     const resolvedRoute = getRouteForResolvedPath({
@@ -68,8 +68,8 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             node?.scrollIntoView({
                 behavior: route.includes("#") && !disableSmooth ? "smooth" : "auto",
             });
-            justNavigatedTo.current = route;
         }
+        justNavigatedTo.current = route;
     });
 
     // on mount, scroll directly to routed element
@@ -85,28 +85,12 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    useEffect(() => {
-        const handleRouteChangeStart = (route: string) => {
-            navigateToRoute.current(route);
-        };
-        router.events.on("routeChangeStart", handleRouteChangeStart);
-        router.events.on("hashChangeStart", handleRouteChangeStart);
-        router.events.on("routeChangeComplete", handleRouteChangeStart);
-        router.events.on("hashChangeComplete", handleRouteChangeStart);
-        return () => {
-            router.events.off("routeChangeStart", handleRouteChangeStart);
-            router.events.off("hashChangeStart", handleRouteChangeStart);
-            router.events.off("routeChangeComplete", handleRouteChangeStart);
-            router.events.off("hashChangeComplete", handleRouteChangeStart);
-        };
-    }, [navigateToRoute, router.events]);
-
     const setUserIsScrollingFalse = useRef(
         debounce(
             () => {
                 userIsScrolling.current = false;
             },
-            150,
+            300,
             { leading: false, trailing: true }
         )
     );
@@ -167,7 +151,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const navigateToPath = useEventCallback((fullSlug: string) => {
         justNavigated.current = true;
         const navigatable = resolver.resolveNavigatable(fullSlug);
-        navigateToRoute.current(`/${fullSlug}`);
+        navigateToRoute.current(`/${fullSlug}`, undefined);
         if (navigatable != null) {
             setActiveNavigatable(navigatable);
 
@@ -181,6 +165,22 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             justNavigated.current = false;
         }, 500);
     });
+
+    useEffect(() => {
+        const handleRouteChangeStart = (route: string) => {
+            navigateToPath(route.substring(1));
+        };
+        router.events.on("routeChangeStart", handleRouteChangeStart);
+        router.events.on("hashChangeStart", handleRouteChangeStart);
+        router.events.on("routeChangeComplete", handleRouteChangeStart);
+        router.events.on("hashChangeComplete", handleRouteChangeStart);
+        return () => {
+            router.events.off("routeChangeStart", handleRouteChangeStart);
+            router.events.off("hashChangeStart", handleRouteChangeStart);
+            router.events.off("routeChangeComplete", handleRouteChangeStart);
+            router.events.off("hashChangeComplete", handleRouteChangeStart);
+        };
+    }, [navigateToPath, router.events]);
 
     useEffect(() => {
         router.beforePopState(({ as }) => {

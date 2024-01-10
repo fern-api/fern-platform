@@ -1,5 +1,6 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
+import { memo } from "react";
 export declare namespace HttpMethodTag {
     export interface Props {
         method: FdrAPI.api.v1.read.HttpMethod;
@@ -8,7 +9,7 @@ export declare namespace HttpMethodTag {
     }
 }
 
-export const HttpMethodTag: React.FC<HttpMethodTag.Props> = ({ method, small = false, className }) => {
+const UnmemoizedHttpMethodTag: React.FC<HttpMethodTag.Props> = ({ method, small = false, className }) => {
     return (
         <span
             className={classNames(className, "py-1 px-1.5 uppercase font-mono flex items-center", {
@@ -34,3 +35,5 @@ export const HttpMethodTag: React.FC<HttpMethodTag.Props> = ({ method, small = f
         </span>
     );
 };
+
+export const HttpMethodTag = memo(UnmemoizedHttpMethodTag);

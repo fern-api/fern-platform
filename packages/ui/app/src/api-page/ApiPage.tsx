@@ -20,15 +20,18 @@ export const ApiPage: React.FC<ApiPage.Props> = () => {
 
     return (
         <div className="min-h-0 pb-36">
-            {apiSection.artifacts != null && areApiArtifactsNonEmpty(apiSection.artifacts) && (
+            {apiSection?.artifacts != null && areApiArtifactsNonEmpty(apiSection.artifacts) && (
                 <ApiArtifacts apiArtifacts={apiSection.artifacts} />
             )}
-            <ApiPackageContents
-                package={apiDefinition.rootPackage}
-                slug={slug}
-                isLastInParentPackage={false}
-                anchorIdParts={[]}
-            />
+
+            {apiDefinition != null && (
+                <ApiPackageContents
+                    package={apiDefinition.rootPackage}
+                    slug={slug}
+                    isLastInParentPackage={false}
+                    anchorIdParts={[]}
+                />
+            )}
 
             <div className="pl-6 pr-4 md:pl-12">
                 <BottomNavigationButtons />

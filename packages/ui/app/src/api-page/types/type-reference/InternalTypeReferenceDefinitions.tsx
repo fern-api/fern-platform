@@ -34,9 +34,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
         id: ({ value: typeId }) => {
             const typeShape = resolveTypeById(typeId)?.shape;
             if (typeShape == null) {
-                // eslint-disable-next-line no-console
-                console.error("Type does not exist", typeId);
-                return null;
+                return null; // TODO: should this be a placeholder?
             }
             if (typeShape.type === "alias") {
                 return (

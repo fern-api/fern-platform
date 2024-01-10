@@ -1,6 +1,7 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { PropsWithChildren, useCallback } from "react";
-import { DocsContext, DocsContextValue } from "./DocsContext";
+import { DocsContext } from "./DocsContext";
 
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
@@ -8,13 +9,18 @@ export declare namespace DocsContextProvider {
     }>;
 }
 
-export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsDefinition, children }) => {
+export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
+    docsDefinition: unmemoizedDocsDefinition,
+    children,
+}) => {
+    const docsDefinition = useDeepCompareMemoize(unmemoizedDocsDefinition);
+
     const resolveApi = useCallback(
         (apiId: FdrAPI.ApiDefinitionId): APIV1Read.ApiDefinition | undefined => {
             const api = docsDefinition.apis[apiId];
             if (api == null) {
                 // eslint-disable-next-line no-console
-                console.error("API does not exist: " + apiId);
+                console.error("API does not exist", apiId);
             }
             return api;
         },
@@ -26,7 +32,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
             const page = docsDefinition.pages[pageId];
             if (page == null) {
                 // eslint-disable-next-line no-console
-                console.error("Page does not exist: " + pageId);
+                console.error("Page does not exist", pageId);
             }
             return page;
         },
@@ -38,22 +44,23 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
             const file = docsDefinition.files[fileId];
             if (file == null) {
                 // eslint-disable-next-line no-console
-                console.error("File does not exist: " + fileId);
+                console.error("File does not exist", fileId);
             }
             return file;
         },
         [docsDefinition.files]
     );
 
-    const contextValue = useCallback(
-        (): DocsContextValue => ({
-            docsDefinition,
-            resolveApi,
-            resolvePage,
-            resolveFile,
-        }),
-        [docsDefinition, resolveApi, resolveFile, resolvePage]
+    return (
+        <DocsContext.Provider
+            value={{
+                docsDefinition,
+                resolveApi,
+                resolvePage,
+                resolveFile,
+            }}
+        >
+            {children}
+        </DocsContext.Provider>
     );
-
-    return <DocsContext.Provider value={contextValue}>{children}</DocsContext.Provider>;
 };

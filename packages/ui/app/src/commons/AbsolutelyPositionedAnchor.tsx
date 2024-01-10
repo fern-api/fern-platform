@@ -14,7 +14,7 @@ export declare namespace AbsolutelyPositionedAnchor {
  */
 export const AbsolutelyPositionedAnchor: React.FC<AbsolutelyPositionedAnchor.Props> = ({ href, smallGap = false }) => {
     return (
-        <div className="absolute">
+        <div className="absolute hidden md:block">
             <Link
                 href={href}
                 shallow={true}

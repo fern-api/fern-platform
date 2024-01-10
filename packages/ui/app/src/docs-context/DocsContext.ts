@@ -1,8 +1,12 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import React from "react";
 
-export const DocsContext = React.createContext<() => DocsContextValue>(() => {
-    throw new Error("DocsContextValueProvider is not present in this tree.");
+export const DocsContext = React.createContext<DocsContextValue>({
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    docsDefinition: undefined!,
+    resolveApi: () => undefined,
+    resolvePage: () => undefined,
+    resolveFile: () => undefined,
 });
 
 export interface DocsContextValue {

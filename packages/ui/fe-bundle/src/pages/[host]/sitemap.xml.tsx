@@ -1,6 +1,4 @@
-import { FdrAPI, PathResolver } from "@fern-api/fdr-sdk";
 import { GetServerSideProps } from "next";
-import { REGISTRY_SERVICE } from "../../service";
 
 function SiteMap(): void {
     // getServerSideProps will do the heavy lifting
@@ -22,44 +20,35 @@ function getSitemapXml(urls: string[]): string {
     </urlset>`;
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params = {}, res }) => {
-    const host = params.host as string | undefined;
+export const getServerSideProps: GetServerSideProps = async ({ params = {}, req, res }) => {
+    const xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? req.headers["x-fern-host"] ?? params.host;
 
-    if (host == null) {
-        throw new Error("host is not defined");
+    if (xFernHost == null || Array.isArray(xFernHost)) {
+        return { notFound: true };
     }
-    const hostWithoutTrailingSlash = host.endsWith("/") ? host.slice(0, -1) : host;
+    const hostWithoutTrailingSlash = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
 
-    const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
-        url: process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? hostWithoutTrailingSlash,
+    const hostnameAndProtocol =
+        params.host === "localhost" ? "http://localhost:3000" : `https://${hostWithoutTrailingSlash}`;
+
+    const sitemapResponse = await fetch(`${hostnameAndProtocol}/api/sitemap`, {
+        headers: { "x-fern-host": xFernHost },
     });
 
-    if (!docs.ok) {
+    if (sitemapResponse.status !== 200) {
         // eslint-disable-next-line no-console
-        console.error("Failed to fetch docs", docs.error);
-        return {
-            notFound: true,
-            revalidate: false,
-        };
+        console.error("Failed to fetch docs", sitemapResponse.status, sitemapResponse.statusText);
+        return { notFound: true };
     }
 
-    type ApiDefinition = FdrAPI.api.v1.read.ApiDefinition;
-    const resolver = new PathResolver({
-        definition: {
-            apis: docs.body.definition.apis as Record<ApiDefinition["id"], ApiDefinition>,
-            docsConfig: docs.body.definition.config,
-        },
-    });
+    const urls: string[] = await sitemapResponse.json();
 
-    const urls = resolver.getAllSlugsWithBaseURL(hostWithoutTrailingSlash);
-    const sitemap = getSitemapXml(urls);
+    const sitemap = getSitemapXml(urls.map((url) => `https://${hostWithoutTrailingSlash}${url}`));
 
     res.setHeader("Content-Type", "text/xml");
     // we send the XML to the browser
     res.write(sitemap);
     res.end();
 
-    return {
-        props: {},
-    };
+    return { props: {} };
 };

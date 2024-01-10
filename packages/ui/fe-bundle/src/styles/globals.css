@@ -5,6 +5,7 @@
 @layer base {
     html {
         box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
     }
 
     *,
@@ -75,5 +76,9 @@
         @apply pointer-events-none absolute -z-10 h-full w-full overflow-hidden;
 
         clip-path: inset(0);
+    }
+
+    .hide-scrollbar:not(:hover)::-webkit-scrollbar {
+        display: none;
     }
 }
