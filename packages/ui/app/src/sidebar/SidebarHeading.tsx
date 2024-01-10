@@ -21,7 +21,7 @@ export const SidebarHeading: FC<SidebarHeadingProps> = ({
     expanded = false,
     rightElement,
 }) => (
-    <div className={classNames(className, "flex min-h-[44px] md:min-h-[36px]")}>
+    <div className={classNames(className, "flex min-h-[44px] lg:min-h-[36px]")}>
         {range(0, depth).map((i) => (
             <div
                 key={i}
@@ -51,14 +51,14 @@ export const SidebarHeading: FC<SidebarHeadingProps> = ({
         {toggleExpand == null && depth > 0 && <div className={"w-6"} />}
         <span
             className={classNames(
-                "inline-flex flex-1 content-between items-center px-4 md:px-3 text-inherit no-underline hover:text-inherit hover:no-underline",
+                "inline-flex flex-1 content-between items-center px-4 lg:px-3 text-inherit no-underline hover:text-inherit hover:no-underline",
                 {
                     pointer: toggleExpand != null,
                 }
             )}
             onClick={toggleExpand}
         >
-            <h6 className="m-0 flex-1 text-base leading-5 md:text-sm md:leading-4">{title}</h6>
+            <h6 className="m-0 flex-1 text-base leading-5 lg:text-sm lg:leading-4">{title}</h6>
             {rightElement}
         </span>
     </div>

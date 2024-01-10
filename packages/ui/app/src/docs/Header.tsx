@@ -38,7 +38,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     const { navbarLinks, colorsV3 } = docsDefinition.config;
 
     const navbarLinksSection = (
-        <div className="hidden items-center space-x-5 md:flex md:space-x-8">
+        <div className="hidden items-center space-x-5 lg:flex lg:space-x-8">
             {navbarLinks.map((navbarLink, idx) =>
                 visitDiscriminatedUnion(navbarLink, "type")._visit({
                     primary: (navbarLink) => <HeaderPrimaryLink key={idx} navbarLink={navbarLink} />,
@@ -53,7 +53,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
         <nav
             aria-label="primary"
             className={classNames(
-                "flex justify-between items-center shrink-0 pl-[calc(theme(spacing.4)+theme(spacing[1.5]))] pr-4",
+                "flex justify-between items-center shrink-0 px-6 lg:px-8",
                 // this matches with the calc() in the EndpointContent examples section
                 "h-full",
                 className
@@ -62,20 +62,20 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
         >
             <HeaderLogoSection />
 
-            <div className="ml-auto flex items-center space-x-0 md:space-x-4">
+            <div className="-mr-2 ml-auto flex items-center space-x-0 md:mr-0 lg:space-x-4">
                 {navbarLinksSection}
 
                 {colorsV3.type === "darkAndLight" && (
                     <>
-                        <div className="dark:bg-border-default-dark bg-border-default-light hidden w-px self-stretch md:flex" />
-                        <ThemeButton className="hidden md:flex" />
+                        <div className="dark:bg-border-default-dark bg-border-default-light hidden w-px self-stretch lg:flex" />
+                        <ThemeButton className="hidden lg:flex" />
                     </>
                 )}
 
                 {searchService.isAvailable && (
                     <button
                         onClick={openSearchDialog}
-                        className="text-intent-default dark:hover:text-text-primary-dark hover:text-text-primary-light flex h-[44px] w-[44px] items-center justify-center transition md:hidden"
+                        className="text-intent-default dark:hover:text-text-primary-dark hover:text-text-primary-light flex h-[44px] w-[44px] items-center justify-center transition lg:hidden"
                     >
                         <SearchIcon className="h-5 w-5" />
                     </button>
@@ -83,7 +83,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
 
                 <button
                     onClick={isMobileSidebarOpen ? closeMobileSidebar : openMobileSidebar}
-                    className="text-intent-default dark:hover:text-text-primary-dark hover:text-text-primary-light flex h-[44px] w-[44px] items-center justify-center transition md:hidden"
+                    className="text-intent-default dark:hover:text-text-primary-dark hover:text-text-primary-light flex h-[44px] w-[44px] items-center justify-center transition lg:hidden"
                 >
                     {isMobileSidebarOpen ? <XIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
                 </button>

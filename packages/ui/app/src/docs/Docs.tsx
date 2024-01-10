@@ -78,7 +78,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
             )}
 
             <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
-                <div className="border-border-concealed-light dark:border-border-concealed-dark dark:shadow-header-dark fixed inset-x-0 top-0 z-30 h-16 overflow-visible border-b backdrop-blur-md md:backdrop-blur">
+                <div className="border-border-concealed-light dark:border-border-concealed-dark dark:shadow-header-dark fixed inset-x-0 top-0 z-30 h-16 overflow-visible border-b backdrop-blur-md lg:backdrop-blur">
                     {renderBackground()}
                     <Header
                         className="max-w-8xl mx-auto"
@@ -94,15 +94,15 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                 <div className="max-w-8xl relative mx-auto flex min-h-0 w-full flex-1">
                     <div
                         className={classNames(
-                            "z-20 fixed inset-0 top-16 md:mt-16 md:sticky md:h-[calc(100vh-64px)] md:w-72",
+                            "z-20 fixed inset-0 top-16 lg:mt-16 lg:sticky lg:h-[calc(100vh-64px)] lg:w-72",
                             {
-                                "opacity-0 md:opacity-100 pointer-events-none md:pointer-events-auto":
+                                "opacity-0 lg:opacity-100 pointer-events-none lg:pointer-events-auto":
                                     !isMobileSidebarOpen,
-                                "transition-opacity md:transition-none": isMobileSidebarOpen,
+                                "transition-opacity lg:transition-none": isMobileSidebarOpen,
                             }
                         )}
                     >
-                        {renderBackground("md:hidden backdrop-blur-md")}
+                        {renderBackground("lg:hidden backdrop-blur-md")}
                         <Sidebar />
                     </div>
 

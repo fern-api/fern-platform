@@ -17,8 +17,8 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, sel
         <li>
             <Link
                 className={classNames(
-                    "no-underline hover:no-underline min-h-[44px] md:min-h-[36px]",
-                    "text-base md:text-sm flex flex-1 py-2 px-3 group/tab-button transition rounded-lg justify-start items-center select-none min-w-0",
+                    "no-underline hover:no-underline min-h-[44px] lg:min-h-[36px]",
+                    "text-base lg:text-sm flex flex-1 py-2 px-3 group/tab-button transition rounded-lg justify-start items-center select-none min-w-0",
                     {
                         "text-accent-primary dark:text-accent-primary-dark": selected,
                         "t-muted hover:text-accent-primary hover:dark:text-accent-primary-dark": !selected,
@@ -26,7 +26,7 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, sel
                 )}
                 href={`/${slug}`}
             >
-                <div className="flex min-w-0 items-center justify-start space-x-3">
+                <div className="flex min-w-0 items-center justify-start space-x-4 lg:space-x-3">
                     <div className="min-w-fit">
                         <div
                             className={classNames(

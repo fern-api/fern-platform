@@ -1,6 +1,7 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { PropsWithChildren, useCallback } from "react";
-import { DocsContext, DocsContextValue } from "./DocsContext";
+import { DocsContext } from "./DocsContext";
 
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
@@ -8,12 +9,18 @@ export declare namespace DocsContextProvider {
     }>;
 }
 
-export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsDefinition, children }) => {
+export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
+    docsDefinition: unmemoizedDocsDefinition,
+    children,
+}) => {
+    const docsDefinition = useDeepCompareMemoize(unmemoizedDocsDefinition);
+
     const resolveApi = useCallback(
-        (apiId: FdrAPI.ApiDefinitionId): APIV1Read.ApiDefinition => {
+        (apiId: FdrAPI.ApiDefinitionId): APIV1Read.ApiDefinition | undefined => {
             const api = docsDefinition.apis[apiId];
             if (api == null) {
-                throw new Error("API does not exist: " + apiId);
+                // eslint-disable-next-line no-console
+                console.error("API does not exist", apiId);
             }
             return api;
         },
@@ -21,10 +28,11 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
     );
 
     const resolvePage = useCallback(
-        (pageId: DocsV1Read.PageId): DocsV1Read.PageContent => {
+        (pageId: DocsV1Read.PageId): DocsV1Read.PageContent | undefined => {
             const page = docsDefinition.pages[pageId];
             if (page == null) {
-                throw new Error("Page does not exist: " + pageId);
+                // eslint-disable-next-line no-console
+                console.error("Page does not exist", pageId);
             }
             return page;
         },
@@ -32,25 +40,27 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
     );
 
     const resolveFile = useCallback(
-        (fileId: DocsV1Read.FileId): DocsV1Read.Url => {
+        (fileId: DocsV1Read.FileId): DocsV1Read.Url | undefined => {
             const file = docsDefinition.files[fileId];
             if (file == null) {
-                throw new Error("File does not exist: " + fileId);
+                // eslint-disable-next-line no-console
+                console.error("File does not exist", fileId);
             }
             return file;
         },
         [docsDefinition.files]
     );
 
-    const contextValue = useCallback(
-        (): DocsContextValue => ({
-            docsDefinition,
-            resolveApi,
-            resolvePage,
-            resolveFile,
-        }),
-        [docsDefinition, resolveApi, resolveFile, resolvePage]
+    return (
+        <DocsContext.Provider
+            value={{
+                docsDefinition,
+                resolveApi,
+                resolvePage,
+                resolveFile,
+            }}
+        >
+            {children}
+        </DocsContext.Provider>
     );
-
-    return <DocsContext.Provider value={contextValue}>{children}</DocsContext.Provider>;
 };

@@ -152,7 +152,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     const curlLines = useMemo(
         () =>
-            example != null
+            example != null && apiDefinition != null
                 ? getCurlLines(apiDefinition, endpoint, example, flattenJsonToLines(example.requestBody))
                 : [],
         [apiDefinition, endpoint, example]
@@ -222,18 +222,20 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                         minHeight: layoutBreakpoint === "lg" ? `${exampleHeight}px` : undefined,
                     }}
                 >
-                    <EndpointContentLeft
-                        endpoint={endpoint}
-                        package={package_}
-                        anchorIdParts={anchorIdParts}
-                        apiSection={apiSection}
-                        onHoverRequestProperty={onHoverRequestProperty}
-                        onHoverResponseProperty={onHoverResponseProperty}
-                        errors={errors}
-                        selectedErrorIndex={selectedErrorIndex}
-                        setSelectedErrorIndex={setSelectedErrorIndex}
-                        route={route}
-                    />
+                    {apiSection && (
+                        <EndpointContentLeft
+                            endpoint={endpoint}
+                            package={package_}
+                            anchorIdParts={anchorIdParts}
+                            apiSection={apiSection}
+                            onHoverRequestProperty={onHoverRequestProperty}
+                            onHoverResponseProperty={onHoverResponseProperty}
+                            errors={errors}
+                            selectedErrorIndex={selectedErrorIndex}
+                            setSelectedErrorIndex={setSelectedErrorIndex}
+                            route={route}
+                        />
+                    )}
                 </div>
 
                 <div

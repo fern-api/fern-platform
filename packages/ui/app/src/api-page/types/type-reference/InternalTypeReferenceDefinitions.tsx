@@ -32,7 +32,10 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
 
     return visitDiscriminatedUnion(type, "type")._visit<ReactElement | null>({
         id: ({ value: typeId }) => {
-            const typeShape = resolveTypeById(typeId).shape;
+            const typeShape = resolveTypeById(typeId)?.shape;
+            if (typeShape == null) {
+                return null; // TODO: should this be a placeholder?
+            }
             if (typeShape.type === "alias") {
                 return (
                     <InternalTypeReferenceDefinitions
