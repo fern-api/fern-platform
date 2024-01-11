@@ -36,7 +36,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
 
     const shape = useMemo((): APIV1Read.TypeShape => {
         return {
-            ...unionVariant.additionalProperties,
+            extends: [],
             type: "object",
             properties: [
                 {
