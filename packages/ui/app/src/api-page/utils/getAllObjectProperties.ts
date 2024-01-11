@@ -1,21 +1,27 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import { sortBy } from "lodash-es";
 
 export function getAllObjectProperties(
     object: APIV1Read.ObjectType,
     resolveTypeById: (typeId: APIV1Read.TypeId) => APIV1Read.TypeDefinition | undefined
 ): APIV1Read.ObjectProperty[] {
-    return [
-        ...object.properties,
-        ...object.extends.flatMap((typeId) => {
-            const type = resolveTypeByIdRecursive(typeId, resolveTypeById);
-            if (type?.shape.type !== "object") {
-                // eslint-disable-next-line no-console
-                console.error("Object extends non-object", typeId);
-                return [];
-            }
-            return getAllObjectProperties(type.shape, resolveTypeById);
-        }),
-    ];
+    const extendedProperties = object.extends.flatMap((typeId) => {
+        const type = resolveTypeByIdRecursive(typeId, resolveTypeById);
+        if (type?.shape.type !== "object") {
+            // eslint-disable-next-line no-console
+            console.error("Object extends non-object", typeId);
+            return [];
+        }
+        return getAllObjectProperties(type.shape, resolveTypeById);
+    });
+    if (extendedProperties.length === 0) {
+        return object.properties;
+    }
+    const propertyKeys = new Set(object.properties.map((property) => property.key));
+    const filteredExtendedProperties = extendedProperties.filter(
+        (extendedProperty) => !propertyKeys.has(extendedProperty.key)
+    );
+    return sortBy([...object.properties, ...filteredExtendedProperties], (property) => property.key);
 }
 
 function resolveTypeByIdRecursive(
