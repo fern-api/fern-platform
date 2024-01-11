@@ -2,9 +2,11 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { startCase } from "lodash-es";
 import { useCallback, useMemo } from "react";
+import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
+import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
@@ -30,6 +32,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
     defaultExpandAll = false,
 }) => {
     const { isRootTypeDefinition } = useTypeDefinitionContext();
+    const { resolveTypeById } = useApiDefinitionContext();
 
     const shape = useMemo((): APIV1Read.TypeShape => {
         return {
@@ -46,10 +49,10 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                         },
                     },
                 },
-                ...unionVariant.additionalProperties.properties,
+                ...getAllObjectProperties(unionVariant.additionalProperties, resolveTypeById),
             ],
         };
-    }, [discriminant, unionVariant.additionalProperties, unionVariant.discriminantValue]);
+    }, [discriminant, resolveTypeById, unionVariant.additionalProperties, unionVariant.discriminantValue]);
 
     const contextValue = useTypeDefinitionContext();
     const newContextValue = useCallback(
