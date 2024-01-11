@@ -29,7 +29,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@blueprintjs/core": "^4.11.5",
+    "@blueprintjs/core": "^5.8.1",
     "@fern-ui/core-utils": "workspace:*",
     "immer": "^9.0.15",
     "lodash-es": "^4.17.21",

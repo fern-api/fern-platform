@@ -1,0 +1,10 @@
+.form-input {
+    @apply block w-full rounded-lg border bg-transparent p-2.5 text-sm;
+    @apply border-border-default-light;
+    @apply focus:border-accent-primary focus:ring-accent-primary focus:ring-1;
+
+    :global(.dark) & {
+        @apply border-border-default-dark;
+        @apply focus:border-accent-primary-dark focus:ring-accent-primary-dark;
+    }
+}

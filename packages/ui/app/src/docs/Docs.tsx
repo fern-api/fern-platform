@@ -22,6 +22,9 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
     const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = searchContext;
     const searchService = useSearchService();
     const { resolvedTheme: theme, themes, setTheme } = useTheme();
+    useEffect(() => {
+        document.body.className = theme === "dark" ? "antialiased bp5-dark" : "antialiased";
+    });
     useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
 
     useEffect(() => {

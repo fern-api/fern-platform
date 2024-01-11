@@ -43,10 +43,6 @@
         @apply text-[0.875em];
     }
 
-    a.link {
-        @apply font-medium  text-text-primary-light dark:text-text-primary-dark hover:text-accent-primary hover:dark:text-accent-primary-dark underline underline-offset-4 decoration-1 hover:decoration-2 decoration-accent-primary dark:decoration-accent-primary-dark;
-    }
-
     /* provides comfortable padding above anchor links, to avoid intersecting with header */
     h1,
     h2,
@@ -91,5 +87,10 @@
 
     .hide-scrollbar:not(:hover)::-webkit-scrollbar {
         display: none;
+    }
+
+    .bp5-dark a,
+    .bp5-dark a:hover {
+        color: unset;
     }
 }
