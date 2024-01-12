@@ -89,6 +89,7 @@
     }
   },
   "dependencies": {
+    "eslint-config-next": "^14.0.4",
     "stylelint-scss": "^6.0.0"
   }
 }
