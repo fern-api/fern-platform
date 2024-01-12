@@ -269,6 +269,7 @@ const ApiPlaygroundUniscriminatedUnion: FC<ApiPlaygroundUniscriminatedUnionProps
                 value={internalSelectedVariant.toString()}
                 onValueChange={setSelectedVariant}
                 small={true}
+                fill={true}
             />
             {selectedVariant != null && (
                 <ApiPlaygroundTypeReference typeReference={selectedVariant.type} onChange={onChange} value={value} />
@@ -306,6 +307,7 @@ const ApiPlaygroundEnumSelector: FC<ApiPlaygroundEnumSelectorProps> = ({ enumVal
                     value={typeof value === "string" ? value : undefined}
                     onValueChange={onChange}
                     small={true}
+                    fill={true}
                 />
             </div>
         );
@@ -942,7 +944,7 @@ const ApiPlaygroundEndpointContent: FC<ApiPlaygroundEndpointContentProps> = ({
     const showFullDescription = useBooleanState(false);
 
     return (
-        <div className="flex w-full flex-1 flex-col gap-y-4 overflow-y-auto overflow-x-hidden px-6 py-4">
+        <div className="flex w-full flex-1 flex-col gap-y-4 overflow-y-auto overflow-x-hidden px-6 py-4 pb-10">
             {endpoint.description != null && endpoint.description.length > 0 && (
                 <section className="border-border-default-light dark:border-border-default-dark border-b pb-4">
                     <div
