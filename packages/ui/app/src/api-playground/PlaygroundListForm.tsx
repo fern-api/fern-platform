@@ -1,7 +1,7 @@
 import { Button } from "@blueprintjs/core";
 import { Cross, Plus } from "@blueprintjs/icons";
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { FC, useCallback, useEffect } from "react";
+import { FC, useCallback } from "react";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType } from "./utils";
@@ -14,11 +14,6 @@ interface PlaygroundListFormProps {
 
 export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemType, onChange, value }) => {
     const { resolveTypeById } = useApiDefinitionContext();
-    useEffect(() => {
-        if (!Array.isArray(value) && value != null) {
-            onChange([]);
-        }
-    }, [onChange, value]);
     const appendItem = useCallback(() => {
         onChange((oldValue: unknown) => {
             const oldArray = Array.isArray(oldValue) ? oldValue : [];

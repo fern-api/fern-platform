@@ -1,7 +1,7 @@
 import { SegmentedControl } from "@blueprintjs/core";
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { startCase } from "lodash-es";
-import { FC, useCallback, useEffect } from "react";
+import { FC, useCallback } from "react";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { getAllObjectProperties } from "../api-page/utils/getAllObjectProperties";
 import { PlaygroundObjectPropertyForm } from "./PlaygroundObjectPropertyForm";
@@ -46,14 +46,6 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
         },
         [discriminatedUnion.discriminant, discriminatedUnion.variants, onChange, resolveTypeById]
     );
-
-    useEffect(() => {
-        if (selectedVariant == null && discriminatedUnion.variants.length > 0) {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            const firstVariant = discriminatedUnion.variants[0]!;
-            setSelectedVariant(firstVariant.discriminantValue);
-        }
-    }, [discriminatedUnion.variants, selectedVariant, setSelectedVariant]);
 
     const handleChangeProperty = useCallback(
         (key: string, newValue: unknown) => {

@@ -2,7 +2,7 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import { isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isEmpty } from "lodash-es";
 import { getAllObjectProperties } from "../api-page/utils/getAllObjectProperties";
-import { ApiPlaygroundFormState } from "./types";
+import { PlaygroundRequestFormState } from "./types";
 
 export function unknownToString(value: unknown): string {
     if (typeof value === "string") {
@@ -35,7 +35,7 @@ export function buildQueryParams(queryParameters: Record<string, unknown>): stri
     return queryParams.size > 0 ? "?" + queryParams.toString() : "";
 }
 
-export function buildUrl(endpoint: APIV1Read.EndpointDefinition, formState: ApiPlaygroundFormState): string {
+export function buildUrl(endpoint: APIV1Read.EndpointDefinition, formState: PlaygroundRequestFormState): string {
     return (
         endpoint.environments[0]?.baseUrl +
         endpoint.path.parts
@@ -63,7 +63,7 @@ export function indentAfter(str: string, indent: number, afterLine?: number): st
         .join("\n");
 }
 
-export function stringifyFetch(endpoint: APIV1Read.EndpointDefinition, formState: ApiPlaygroundFormState): string {
+export function stringifyFetch(endpoint: APIV1Read.EndpointDefinition, formState: PlaygroundRequestFormState): string {
     return `// ${endpoint.name} (${endpoint.method} ${endpoint.path.parts
         .map((part) => (part.type === "literal" ? part.value : `:${part.value}`))
         .join("")})
@@ -95,7 +95,7 @@ console.log(body);`;
 
 export function stringifyPythonRequests(
     endpoint: APIV1Read.EndpointDefinition,
-    formState: ApiPlaygroundFormState
+    formState: PlaygroundRequestFormState
 ): string {
     return `import requests
 
@@ -138,7 +138,7 @@ export function redactAuthorizationHeader(headers: Record<string, string>): Reco
     );
 }
 
-export function stringifyCurl(endpoint: APIV1Read.EndpointDefinition, formState: ApiPlaygroundFormState): string {
+export function stringifyCurl(endpoint: APIV1Read.EndpointDefinition, formState: PlaygroundRequestFormState): string {
     const headers: Record<string, string> = {};
     if (endpoint.authed && formState.headers["Authorization"] != null) {
         headers["Authorization"] = formState.headers["Authorization"] as string;

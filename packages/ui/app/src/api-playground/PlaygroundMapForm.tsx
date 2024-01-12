@@ -14,32 +14,30 @@ interface PlaygroundMapFormProps {
     value: unknown;
 }
 
+function toKeyValuePairs(value: unknown): Array<{ key: unknown; value: unknown }> {
+    if (isPlainObject(value)) {
+        return Object.entries(value).map(([key, value]) => ({ key, value }));
+    }
+    return [];
+}
+
+function fromKeyValuePairs(keyValuePairs: Array<{ key: unknown; value: unknown }>): unknown {
+    return keyValuePairs.reduce<Record<string, unknown>>((acc, item) => {
+        const key = unknownToString(item.key);
+        acc[key] = item.value;
+        return acc;
+    }, {});
+}
+
 export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ keyType, valueType, onChange, value }) => {
     const { resolveTypeById } = useApiDefinitionContext();
 
-    useEffect(() => {
-        if (!isPlainObject(value)) {
-            onChange({});
-        }
-    }, [onChange, value]);
-
-    const [internalState, setInternalState] = useState<Array<{ key: unknown; value: unknown }>>(() => {
-        if (isPlainObject(value)) {
-            return Object.entries(value).map(([key, value]) => ({ key, value }));
-        }
-        return [];
-    });
+    const [internalState, setInternalState] = useState<Array<{ key: unknown; value: unknown }>>(() =>
+        toKeyValuePairs(value)
+    );
 
     useEffect(() => {
-        onChange(
-            internalState.reduce<Record<string, unknown>>((acc, item) => {
-                const key = unknownToString(item.key);
-                if (key != null) {
-                    acc[key] = item.value;
-                }
-                return acc;
-            }, {})
-        );
+        onChange(fromKeyValuePairs(internalState));
     }, [internalState, onChange]);
 
     const handleAppendItem = useCallback(() => {

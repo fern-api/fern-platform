@@ -41,7 +41,6 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
         [internalSelectedVariant, onChange, resolveTypeById, undiscriminatedUnion.variants]
     );
 
-    // const variantTypeReference = undiscriminatedUnion.variants[selectedVariant]?.type;
     return (
         <div className="w-full">
             <SegmentedControl
