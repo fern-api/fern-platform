@@ -47,15 +47,28 @@ const nextConfig = {
     }),
     webpack: (config) => {
         // camelCase style names from css modules
-        config.module.rules
-            .find(({ oneOf }) => !!oneOf)
-            .oneOf.filter(({ use }) => JSON.stringify(use)?.includes("css-loader"))
-            .reduce((acc, { use }) => acc.concat(use), [])
-            .forEach(({ options }) => {
-                if (options.modules) {
-                    options.modules.exportLocalsConvention = "camelCase";
+        // see: https://stackoverflow.com/questions/74038400/convert-css-module-kebab-case-class-names-to-camelcase-in-next-js
+        const rules = config.module.rules
+            .find((rule) => typeof rule.oneOf === "object")
+            .oneOf.filter((rule) => Array.isArray(rule.use));
+        rules.forEach((rule) => {
+            rule.use.forEach((moduleLoader) => {
+                if (
+                    moduleLoader.loader !== undefined &&
+                    moduleLoader.loader.includes("css-loader") &&
+                    typeof moduleLoader.options.modules === "object"
+                ) {
+                    moduleLoader.options = {
+                        ...moduleLoader.options,
+                        modules: {
+                            ...moduleLoader.options.modules,
+                            // This is where we allow camelCase class names
+                            exportLocalsConvention: "camelCase",
+                        },
+                    };
                 }
             });
+        });
 
         return config;
     },
