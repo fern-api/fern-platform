@@ -4,7 +4,6 @@ const nextConfig = {
     productionBrowserSourceMaps: true,
     experimental: {
         scrollRestoration: true,
-        typedRoutes: true,
     },
     assetPrefix: process.env.CDN_URI != null ? new URL("/_fern", process.env.CDN_URI).href : "/_fern",
     rewrites: async () => ({
