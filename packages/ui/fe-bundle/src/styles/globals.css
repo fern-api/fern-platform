@@ -121,4 +121,13 @@
     .light .bp5-segmented-control {
         @apply bg-tag-primary !important;
     }
+
+    // clamp text to 3 lines
+    .description-mask {
+        @apply overflow-hidden max-h-[4rem];
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        text-overflow: -o-ellipsis-lastline;
+    }
 }

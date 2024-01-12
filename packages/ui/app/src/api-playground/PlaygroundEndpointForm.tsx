@@ -8,7 +8,6 @@ import { Dispatch, FC, SetStateAction, useCallback, useEffect, useRef, useState 
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { Markdown } from "../api-page/markdown/Markdown";
 import { getAllObjectProperties } from "../api-page/utils/getAllObjectProperties";
-import styles from "./PlaygroundEndpointForm.module.scss";
 import { PlaygroundObjectPropertyForm } from "./PlaygroundObjectPropertyForm";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { PlaygroundRequestFormState } from "./types";
@@ -113,7 +112,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointForm> = ({ endpoint, f
                 >
                     <div
                         className={classNames("text-sm", {
-                            [styles.descriptionMask]: !showFullDescription,
+                            ["description-mask"]: !showFullDescription,
                         })}
                         ref={descriptionRef}
                     >
