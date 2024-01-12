@@ -11,7 +11,6 @@
     { "path": "../commons/react/fonts" },
     { "path": "../commons/react/react-commons" },
     { "path": "../commons/react/react-query-utils" },
-    { "path": "../commons/react/routing-utils" },
     { "path": "../commons/react/split-view" },
     { "path": "../commons/react/toaster" },
     { "path": "../scripts" },

@@ -35,7 +35,6 @@
     "@fern-ui/loadable": "workspace:*",
     "@fern-ui/react-commons": "workspace:*",
     "@fern-ui/react-query-utils": "workspace:*",
-    "@fern-ui/routing-utils": "workspace:*",
     "@fern-ui/scripts": "workspace:*",
     "@fern-ui/split-view": "workspace:*",
     "@fern-ui/toaster": "workspace:*",
