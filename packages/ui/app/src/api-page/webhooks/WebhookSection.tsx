@@ -1,5 +1,5 @@
+import { resolveHref } from "next/dist/client/resolve-href";
 import { Url } from "next/dist/shared/lib/router/router";
-import { resolveHref } from "next/dist/shared/lib/router/utils/resolve-href";
 import { useRouter } from "next/router";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { Markdown } from "../markdown/Markdown";
