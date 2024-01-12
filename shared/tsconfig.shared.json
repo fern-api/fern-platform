@@ -1,5 +1,4 @@
 {
-  "include": ["**/*.scss"],
   "compilerOptions": {
     "module": "esnext",
     "target": "esnext",
