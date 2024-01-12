@@ -1,14 +1,16 @@
-import { EditableTextProps } from "@blueprintjs/core";
 import { assertNever } from "@fern-ui/core-utils";
 import produce from "immer";
 import { useCallback, useReducer } from "react";
 
-export type LocalTextState = Required<
-    Pick<
-        EditableTextProps,
-        "value" | "onChange" | "isEditing" | "onEdit" | "onCancel" | "onConfirm" | "selectAllOnFocus"
-    >
->;
+export interface LocalTextState {
+    value: string;
+    onChange(value: string): void;
+    isEditing: boolean;
+    onEdit(): void;
+    onCancel(): void;
+    onConfirm(value: string): void;
+    selectAllOnFocus: boolean;
+}
 
 export declare namespace useLocalTextState {
     export interface Args {

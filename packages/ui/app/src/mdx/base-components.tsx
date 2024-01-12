@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { AnchorHTMLAttributes, HTMLAttributes, useCallback } from "react";
+import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode, useCallback } from "react";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
 import { useNavigationContext } from "../navigation-context";
 import { onlyText } from "../util/onlyText";
@@ -77,7 +77,7 @@ export const Td: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
  */
 const flatten = (
     text: string,
-    child: string | number | React.ReactElement | React.ReactFragment | React.ReactPortal
+    child: ReactNode
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): any => {
     return typeof child === "string"
