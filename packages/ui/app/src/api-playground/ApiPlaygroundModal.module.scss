@@ -8,3 +8,11 @@
         @apply focus:border-accent-primary-dark focus:ring-accent-primary-dark;
     }
 }
+
+.description-mask {
+    @apply overflow-hidden max-h-[4rem];
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    text-overflow: -o-ellipsis-lastline;
+}

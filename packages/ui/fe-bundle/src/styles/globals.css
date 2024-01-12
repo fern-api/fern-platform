@@ -93,4 +93,24 @@
     .bp5-dark a:hover {
         color: unset;
     }
+
+    .bp5-dark .bp5-control .bp5-control-indicator {
+        @apply ring-1 ring-accent-primary-dark !important;
+    }
+
+    .bp5-control.bp5-switch input:checked ~ .bp5-control-indicator {
+        @apply bg-accent-primary-light !important;
+    }
+
+    .bp5-dark .bp5-control.bp5-switch input:checked ~ .bp5-control-indicator {
+        @apply bg-accent-primary-dark !important;
+    }
+
+    .bp5-input:focus {
+        @apply ring-1 ring-accent-primary-light !important;
+    }
+
+    .bp5-dark .bp5-input:focus {
+        @apply ring-1 ring-accent-primary-dark !important;
+    }
 }

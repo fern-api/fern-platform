@@ -2809,6 +2809,7 @@ __metadata:
     "@types/tinycolor2": ^1.4.6
     algoliasearch: ^4.18.0
     classnames: ^2.5.1
+    curl-generator: ^0.3.1
     depcheck: ^1.4.3
     eslint: ^8.56.0
     instantsearch.js: ^4.56.3
@@ -6364,6 +6365,15 @@ __metadata:
   version: 3.1.0
   resolution: "csstype@npm:3.1.0"
   checksum: 644e986cefab86525f0b674a06889cfdbb1f117e5b7d1ce0fc55b0423ecc58807a1ea42ecc75c4f18999d14fc42d1d255f84662a45003a52bb5840e977eb2ffd
+  languageName: node
+  linkType: hard
+
+"curl-generator@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "curl-generator@npm:0.3.1"
+  dependencies:
+    ms: ^2.0.0
+  checksum: 6ee94c1c952a0f6dbae1381ae226d4f5514e5da2bb95ed1b398181197862ddc2eaef0dd5648dbcaf39f7bbe51f7d8392ddadab54623e02dabe13f47e40e4b8ea
   languageName: node
   linkType: hard
 

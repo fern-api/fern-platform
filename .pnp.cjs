@@ -4672,6 +4672,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/tinycolor2", "npm:1.4.6"],\
             ["algoliasearch", "npm:4.18.0"],\
             ["classnames", "npm:2.5.1"],\
+            ["curl-generator", "npm:0.3.1"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.56.0"],\
             ["instantsearch.js", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.63.0"],\
@@ -9067,6 +9068,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/csstype-npm-3.1.0-0e405212e2-644e986cef.zip/node_modules/csstype/",\
           "packageDependencies": [\
             ["csstype", "npm:3.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["curl-generator", [\
+        ["npm:0.3.1", {\
+          "packageLocation": "./.yarn/cache/curl-generator-npm-0.3.1-6568764dab-6ee94c1c95.zip/node_modules/curl-generator/",\
+          "packageDependencies": [\
+            ["curl-generator", "npm:0.3.1"],\
+            ["ms", "npm:2.1.3"]\
           ],\
           "linkType": "HARD"\
         }]\
