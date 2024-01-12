@@ -17,6 +17,7 @@
       }
     ],
     "font-family-no-missing-generic-family-keyword": null,
-    "color-function-notation": null
+    "color-function-notation": null,
+    "selector-class-pattern": null
   }
 }
