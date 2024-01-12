@@ -31,14 +31,10 @@ export const FernMenu: FC<FernMenu.Props> = ({
                     className={classNames(
                         "group inline-flex w-full justify-center items-center space-x-2 rounded-lg",
                         "hover:bg-tag-primary",
-                        "border border-border-primary dark:border-border-primary-dark hover:border-2",
-                        "transition",
+                        "ring-1 ring-border-primary dark:ring-border-primary-dark hover:ring-2",
+                        "transition-shadow",
                         "text-accent-primary dark:text-accent-primary-dark tracking-tight",
                         "py-1 pl-2.5 pr-1",
-                        // Make sure padding remains the same on hover
-                        // This seems to be a Tailwind bug where we can't use theme(borderWidth.1) in some cases
-                        // Current workaround is to hardcode 1px
-                        "hover:py-[calc(theme(spacing.1)-1px)] hover:pr-[calc(theme(spacing[1])-1px)] hover:pl-[calc(theme(spacing[2.5])-1px)]",
                         {
                             "rounded-r-none": clearSelection != null,
                         }
