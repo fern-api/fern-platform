@@ -1,5 +1,5 @@
 .mdx-anchor {
-    @apply text-text-primary-light hover:text-accent-primary hover:dark:text-accent-primary-dark underline underline-offset-4 decoration-1 hover:decoration-2 decoration-accent-primary;
+    @apply text-text-primary-light hover:text-accent-primary underline underline-offset-4 decoration-1 hover:decoration-2 decoration-accent-primary;
     @apply font-semibold;
 
     h1 &,

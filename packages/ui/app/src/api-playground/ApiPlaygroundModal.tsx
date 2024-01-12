@@ -205,6 +205,7 @@ const ApiPlaygroundDiscriminatedUnion: FC<ApiPlaygroundDiscriminatedUnionProps> 
                 value={selectedVariant}
                 onValueChange={setSelectedVariant}
                 small={true}
+                fill={true}
             />
             {variantObject != null && (
                 <ul className="border-border-default-light dark:border-border-default-dark mt-2 w-full list-none space-y-4 border-l pl-4">
@@ -775,6 +776,9 @@ const ApiPlaygroundObjectProperty: FC<ApiPlaygroundObjectPropertyProps> = ({ pro
         [onChange, property.key]
     );
 
+    const expandable = isExpandable(property.valueType, resolveTypeById, value);
+    const { value: expanded, setTrue: setExpanded, toggleValue: toggleExpanded } = useBooleanState(!expandable);
+
     const handleChangeOptional = useCallback<ChangeEventHandler<HTMLInputElement>>(
         (e) => {
             if (property.valueType.type === "optional") {
@@ -782,23 +786,17 @@ const ApiPlaygroundObjectProperty: FC<ApiPlaygroundObjectPropertyProps> = ({ pro
                     property.key,
                     e.target.checked ? getDefaultValueForType(property.valueType.itemType, resolveTypeById) : undefined
                 );
+                setExpanded();
             }
         },
-        [onChange, property.key, property.valueType, resolveTypeById]
+        [onChange, property.key, property.valueType, resolveTypeById, setExpanded]
     );
 
-    const expandable = isExpandable(property.valueType, resolveTypeById, value);
-    const expanded = useBooleanState(!expandable);
-
-    useEffect(
-        () => {
-            if (!expandable) {
-                expanded.setTrue();
-            }
-        },
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        [expandable, expanded.setTrue]
-    );
+    useEffect(() => {
+        if (!expandable) {
+            setExpanded();
+        }
+    }, [expandable, setExpanded]);
 
     return (
         <li className="flex flex-col gap-1">
@@ -812,7 +810,14 @@ const ApiPlaygroundObjectProperty: FC<ApiPlaygroundObjectPropertyProps> = ({ pro
                     minimal={true}
                 >
                     <label className="inline-flex w-full flex-wrap items-baseline gap-2">
-                        <span className="font-mono text-sm">{property.key}</span>
+                        <span
+                            className={classNames("font-mono text-sm", {
+                                "underline decoration-dotted underline-offset-4 decoration-accent-primary dark:decoration-accent-primary-dark":
+                                    property.description != null && property.description.length > 0,
+                            })}
+                        >
+                            {property.key}
+                        </span>
 
                         <span className="t-muted text-xs">
                             <TypeShorthand type={property.valueType} plural={false} />
@@ -824,15 +829,15 @@ const ApiPlaygroundObjectProperty: FC<ApiPlaygroundObjectPropertyProps> = ({ pro
                     </label>
                 </Tooltip>
 
-                {expandable && (
+                {expandable && (property.valueType.type === "optional" ? value != null : true) && (
                     <div className="flex flex-1 items-center gap-2">
                         <div className="bg-border-default-light dark:bg-border-default-dark h-px w-full" />
                         <Button
-                            icon={expanded.value ? <ChevronDown /> : <ChevronUp />}
+                            icon={expanded ? <ChevronDown /> : <ChevronUp />}
                             minimal={true}
                             small={true}
                             className="-mx-1"
-                            onClick={expanded.toggleValue}
+                            onClick={toggleExpanded}
                         />
                     </div>
                 )}
@@ -841,7 +846,7 @@ const ApiPlaygroundObjectProperty: FC<ApiPlaygroundObjectPropertyProps> = ({ pro
                     <Switch checked={value != null} onChange={handleChangeOptional} className="-mr-2 mb-0" />
                 )}
             </div>
-            {value != null && (!expandable || expanded.value) && (
+            {value != null && (!expandable || expanded) && (
                 <ApiPlaygroundTypeReference
                     typeReference={
                         property.valueType.type === "optional" ? property.valueType.itemType : property.valueType
@@ -1233,7 +1238,7 @@ export const ApiPlaygroundModal: FC<ApiPlaygroundModalProps> = ({ endpoint, pack
                         />
                     </div>
                     <div className="divide-border-default-light dark:divide-border-default-dark shrink-1 flex min-w-0 flex-1 flex-col divide-y">
-                        <div className="flex flex-1 flex-col">
+                        <div className="shrink-1 flex min-h-0 flex-1 flex-col">
                             <div className="border-border-default-light dark:border-border-default-dark flex w-full items-center justify-between border-b px-4 py-2">
                                 <span className="t-muted text-xs uppercase">Request Preview</span>
                                 <div className="flex items-center gap-2 text-xs">
@@ -1243,17 +1248,15 @@ export const ApiPlaygroundModal: FC<ApiPlaygroundModalProps> = ({ endpoint, pack
                                 </div>
                             </div>
                             <div className="flex-1 overflow-auto p-4">
-                                <pre>
-                                    <code className="font-mono text-xs">
-                                        {requestType === "curl"
-                                            ? stringifyCurl(endpoint, playgroundState)
-                                            : requestType === "javascript"
-                                            ? stringifyFetch(endpoint, playgroundState)
-                                            : requestType === "python"
-                                            ? stringifyPythonRequests(endpoint, playgroundState)
-                                            : null}
-                                    </code>
-                                </pre>
+                                <code className="whitespace-pre-wrap font-mono text-xs">
+                                    {requestType === "curl"
+                                        ? stringifyCurl(endpoint, playgroundState)
+                                        : requestType === "javascript"
+                                        ? stringifyFetch(endpoint, playgroundState)
+                                        : requestType === "python"
+                                        ? stringifyPythonRequests(endpoint, playgroundState)
+                                        : null}
+                                </code>
                             </div>
                         </div>
                         <div className="flex-1">
