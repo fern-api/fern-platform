@@ -45,21 +45,6 @@ const nextConfig = {
             },
         ],
     }),
-    webpack: (config) => {
-        // camelCase style names from css modules
-        // see: https://stackoverflow.com/questions/74038400/convert-css-module-kebab-case-class-names-to-camelcase-in-next-js
-        config.module.rules.push({
-            test: /\.css$/,
-            loader: "css-loader",
-            options: {
-                modules: {
-                    exportLocalsConvention: "camelCase",
-                },
-            },
-        });
-
-        return config;
-    },
 };
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({

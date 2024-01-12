@@ -1,4 +1,4 @@
-.show-properties-button {
+.showPropertiesButton {
     display: flex;
     flex-direction: column;
     min-width: 0;
@@ -11,15 +11,15 @@
     }
 }
 
-.internal-type-definition-container {
+.internalTypeDefinitionContainer {
     @apply mt-2 flex flex-col;
 
-    .internal-type-definition-container:not(.enum-container) {
+    .internalTypeDefinitionContainer:not(.enumContainer) {
         @apply -mr-3;
     }
 
-    .internal-type-definition-container[data-expanded="true"]:not(.enum-container) {
-        > .internal-type-definition-content {
+    .internalTypeDefinitionContainer[data-expanded="true"]:not(.enumContainer) {
+        > .internalTypeDefinitionContent {
             @apply border-r-0 rounded-r-none;
         }
     }

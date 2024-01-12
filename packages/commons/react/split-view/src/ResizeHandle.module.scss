@@ -2,7 +2,7 @@
 
 $handle-size: 6px;
 
-.resize-handle {
+.resizeHandle {
     position: absolute;
     display: flex;
     z-index: 9999;
@@ -23,7 +23,7 @@ $handle-size: 6px;
         top: 0;
         padding-bottom: $handle-size;
 
-        &.center-on-border {
+        &.centerOnBorder {
             top: -$handle-size;
             padding-top: math.div($handle-size, 2);
             padding-bottom: math.div($handle-size, 2);
@@ -34,7 +34,7 @@ $handle-size: 6px;
         bottom: 0;
         padding-top: $handle-size;
 
-        &.center-on-border {
+        &.centerOnBorder {
             bottom: -$handle-size;
             padding-top: math.div($handle-size, 2);
             padding-bottom: math.div($handle-size, 2);
@@ -47,7 +47,7 @@ $handle-size: 6px;
         bottom: 0;
         width: $handle-size * 2;
 
-        &.is-hovering {
+        &.isHovering {
             cursor: col-resize;
         }
     }
@@ -56,7 +56,7 @@ $handle-size: 6px;
         left: 0;
         padding-right: $handle-size;
 
-        &.center-on-border {
+        &.centerOnBorder {
             left: -$handle-size;
             padding-left: math.div($handle-size, 2);
             padding-right: math.div($handle-size, 2);
@@ -67,35 +67,35 @@ $handle-size: 6px;
         right: 0;
         padding-left: $handle-size;
 
-        &.center-on-border {
+        &.centerOnBorder {
             right: -$handle-size;
             padding-left: math.div($handle-size, 2);
             padding-right: math.div($handle-size, 2);
         }
     }
 
-    .resize-handle-inner {
+    .resizeHandleInner {
         display: flex;
         justify-content: center;
         flex: 1;
         background-color: transparent;
     }
 
-    .resize-handle-line {
+    .resizeHandleLine {
         width: 1px;
     }
 
-    .resize-handle-inner,
-    .resize-handle-line {
+    .resizeHandleInner,
+    .resizeHandleLine {
         transition: background-color 0.25s;
     }
 
-    &.is-dragging,
-    &.is-hovering {
-        .resize-handle-inner {
+    &.isDragging,
+    &.isHovering {
+        .resizeHandleInner {
             background-color: $blue4;
 
-            .resize-handle-line {
+            .resizeHandleLine {
                 // use !important to override css-in-html
                 background-color: transparent !important;
             }
