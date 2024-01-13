@@ -386,7 +386,7 @@ export const ApiPlaygroundModal: FC<ApiPlaygroundModalProps> = ({
                                 {visitLoadable(response, {
                                     loading: () => <span>Loading...</span>,
                                     loaded: (response) => (
-                                        <div className="flex-1 overflow-auto">
+                                        <div className="typography-font-code flex-1 overflow-auto">
                                             <FernSyntaxHighlighter
                                                 language={"json"}
                                                 customStyle={{ height: "100%", paddingLeft: 0 }}
