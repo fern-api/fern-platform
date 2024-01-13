@@ -2813,6 +2813,7 @@ __metadata:
     "@fern-api/fdr-sdk": 0.44.0-1-geb2e930
     "@fern-ui/app-utils": "workspace:*"
     "@fern-ui/core-utils": "workspace:*"
+    "@fern-ui/loadable": "workspace:*"
     "@fern-ui/react-commons": "workspace:*"
     "@fontsource/ibm-plex-mono": ^4.5.13
     "@fortawesome/fontawesome-svg-core": ^6.4.2

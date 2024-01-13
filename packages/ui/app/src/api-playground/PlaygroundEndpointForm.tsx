@@ -1,5 +1,5 @@
 import { InputGroup } from "@blueprintjs/core";
-import { Key } from "@blueprintjs/icons";
+import { Key, Person } from "@blueprintjs/icons";
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
@@ -10,8 +10,8 @@ import { Markdown } from "../api-page/markdown/Markdown";
 import { getAllObjectProperties } from "../api-page/utils/getAllObjectProperties";
 import { PlaygroundObjectPropertyForm } from "./PlaygroundObjectPropertyForm";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
-import { PlaygroundRequestFormState } from "./types";
-import { castToRecord, unknownToString } from "./utils";
+import { PlaygroundRequestFormAuth, PlaygroundRequestFormState } from "./types";
+import { castToRecord } from "./utils";
 
 interface PlaygroundEndpointForm {
     endpoint: APIV1Read.EndpointDefinition;
@@ -20,7 +20,17 @@ interface PlaygroundEndpointForm {
 }
 
 export const PlaygroundEndpointForm: FC<PlaygroundEndpointForm> = ({ endpoint, formState, setFormState }) => {
-    const { resolveTypeById } = useApiDefinitionContext();
+    const { resolveTypeById, apiDefinition } = useApiDefinitionContext();
+    const setAuthorization = useCallback(
+        (newAuthValue: PlaygroundRequestFormAuth) => {
+            setFormState((state) => ({
+                ...state,
+                auth: newAuthValue,
+            }));
+        },
+        [setFormState]
+    );
+
     const setHeader = useCallback(
         (key: string, value: unknown) => {
             setFormState((state) => ({
@@ -128,28 +138,126 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointForm> = ({ endpoint, f
                 </section>
             )}
 
-            {endpoint.authed && (
+            {endpoint.authed && apiDefinition?.auth != null && (
                 <section>
                     <h3 className="m-0">Authorization</h3>
                     <ul className="my-4 w-full list-none space-y-4">
-                        <li className="flex flex-col gap-1">
-                            <div className="shrink-1 flex min-w-0 flex-1 items-center justify-between gap-2">
-                                <label className="inline-flex w-full flex-wrap items-baseline gap-2">
-                                    <span className="font-mono text-sm">{"Authorization"}</span>
+                        {visitDiscriminatedUnion(apiDefinition.auth, "type")._visit({
+                            bearerAuth: (bearerAuth) => (
+                                <li className="flex flex-col gap-1">
+                                    <div className="shrink-1 flex min-w-0 flex-1 items-center justify-between gap-2">
+                                        <label className="inline-flex w-full flex-wrap items-baseline gap-2">
+                                            <span className="font-mono text-sm">
+                                                {bearerAuth.tokenName ?? "Bearer token"}
+                                            </span>
 
-                                    <span className="t-muted text-xs">{"string"}</span>
-                                </label>
-                            </div>
-                            <InputGroup
-                                fill={true}
-                                type="password"
-                                onValueChange={(newValue) => setHeader("Authorization", `Bearer ${newValue}`)}
-                                value={unknownToString(formState.headers["Authorization"]).replace(/^Bearer /, "")}
-                                leftIcon={<Key />}
-                                autoComplete="off"
-                                data-1p-ignore="true"
-                            />
-                        </li>
+                                            <span className="t-muted text-xs">{"string"}</span>
+                                        </label>
+                                    </div>
+                                    <InputGroup
+                                        fill={true}
+                                        type="password"
+                                        onValueChange={(newValue) =>
+                                            setAuthorization({ type: "bearerAuth", token: newValue })
+                                        }
+                                        value={formState.auth?.type === "bearerAuth" ? formState.auth.token : ""}
+                                        leftIcon={<Key />}
+                                        autoComplete="off"
+                                        data-1p-ignore="true"
+                                    />
+                                </li>
+                            ),
+                            basicAuth: (basicAuth) => (
+                                <>
+                                    <li className="flex flex-col gap-1">
+                                        <div className="shrink-1 flex min-w-0 flex-1 items-center justify-between gap-2">
+                                            <label className="inline-flex w-full flex-wrap items-baseline gap-2">
+                                                <span className="font-mono text-sm">
+                                                    {basicAuth.usernameName ?? "Username"}
+                                                </span>
+
+                                                <span className="t-muted text-xs">{"string"}</span>
+                                            </label>
+                                        </div>
+                                        <InputGroup
+                                            fill={true}
+                                            onValueChange={(newValue) =>
+                                                setAuthorization({
+                                                    type: "basicAuth",
+                                                    username: newValue,
+                                                    password:
+                                                        formState.auth?.type === "basicAuth"
+                                                            ? formState.auth.password
+                                                            : "",
+                                                })
+                                            }
+                                            value={formState.auth?.type === "basicAuth" ? formState.auth.username : ""}
+                                            leftIcon={<Person />}
+                                        />
+                                    </li>
+
+                                    <li className="flex flex-col gap-1">
+                                        <div className="shrink-1 flex min-w-0 flex-1 items-center justify-between gap-2">
+                                            <label className="inline-flex w-full flex-wrap items-baseline gap-2">
+                                                <span className="font-mono text-sm">
+                                                    {basicAuth.passwordName ?? "Password"}
+                                                </span>
+
+                                                <span className="t-muted text-xs">{"string"}</span>
+                                            </label>
+                                        </div>
+                                        <InputGroup
+                                            fill={true}
+                                            type="password"
+                                            onValueChange={(newValue) =>
+                                                setAuthorization({
+                                                    type: "basicAuth",
+                                                    username:
+                                                        formState.auth?.type === "basicAuth"
+                                                            ? formState.auth.username
+                                                            : "",
+                                                    password: newValue,
+                                                })
+                                            }
+                                            value={formState.auth?.type === "basicAuth" ? formState.auth.password : ""}
+                                            leftIcon={<Key />}
+                                        />
+                                    </li>
+                                </>
+                            ),
+                            header: (header) => (
+                                <li className="flex flex-col gap-1">
+                                    <div className="shrink-1 flex min-w-0 flex-1 items-center justify-between gap-2">
+                                        <label className="inline-flex w-full flex-wrap items-baseline gap-2">
+                                            <span className="font-mono text-sm">
+                                                {header.nameOverride ?? header.headerWireValue}
+                                            </span>
+
+                                            <span className="t-muted text-xs">{"string"}</span>
+                                        </label>
+                                    </div>
+                                    <InputGroup
+                                        fill={true}
+                                        type="password"
+                                        onValueChange={(newValue) =>
+                                            setAuthorization({
+                                                type: "header",
+                                                headers: { [header.headerWireValue]: newValue },
+                                            })
+                                        }
+                                        value={
+                                            formState.auth?.type === "header"
+                                                ? formState.auth.headers[header.headerWireValue]
+                                                : ""
+                                        }
+                                        leftIcon={<Key />}
+                                        autoComplete="off"
+                                        data-1p-ignore="true"
+                                    />
+                                </li>
+                            ),
+                            _other: () => null,
+                        })}
                     </ul>
                 </section>
             )}
@@ -230,14 +338,29 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointForm> = ({ endpoint, f
                     {visitDiscriminatedUnion(endpoint.request.type, "type")._visit({
                         object: (object) => (
                             <ul className="my-4 w-full list-none space-y-6">
-                                {getAllObjectProperties(object, resolveTypeById).map((property) => (
-                                    <PlaygroundObjectPropertyForm
-                                        key={property.key}
-                                        property={property}
-                                        onChange={setBodyByKey}
-                                        value={castToRecord(formState.body)[property.key]}
-                                    />
-                                ))}
+                                {getAllObjectProperties(object, resolveTypeById)
+                                    .filter((property) => !isOptionalTypeReference(property.valueType, resolveTypeById))
+                                    .map((property) => (
+                                        <PlaygroundObjectPropertyForm
+                                            key={property.key}
+                                            property={property}
+                                            onChange={setBodyByKey}
+                                            value={castToRecord(formState.body)[property.key]}
+                                            expandByDefault={false}
+                                        />
+                                    ))}
+
+                                {getAllObjectProperties(object, resolveTypeById)
+                                    .filter((property) => isOptionalTypeReference(property.valueType, resolveTypeById))
+                                    .map((property) => (
+                                        <PlaygroundObjectPropertyForm
+                                            key={property.key}
+                                            property={property}
+                                            onChange={setBodyByKey}
+                                            value={castToRecord(formState.body)[property.key]}
+                                            expandByDefault={false}
+                                        />
+                                    ))}
                             </ul>
                         ),
                         reference: (reference) => (
@@ -256,3 +379,33 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointForm> = ({ endpoint, f
         </div>
     );
 };
+
+function isOptionalTypeReference(
+    typeReference: APIV1Read.TypeReference,
+    resolveTypeById: (typeId: string) => APIV1Read.TypeDefinition | undefined
+): boolean {
+    return visitDiscriminatedUnion(typeReference, "type")._visit({
+        map: () => false,
+        id: (id) => {
+            const typeDefinition = resolveTypeById(id.value);
+            if (typeDefinition == null) {
+                return false;
+            }
+            return visitDiscriminatedUnion(typeDefinition.shape, "type")._visit({
+                object: () => false,
+                alias: (alias) => isOptionalTypeReference(alias.value, resolveTypeById),
+                enum: () => false,
+                undiscriminatedUnion: () => false,
+                discriminatedUnion: () => false,
+                _other: () => false,
+            });
+        },
+        primitive: () => false,
+        optional: () => true,
+        list: () => false,
+        set: () => false,
+        literal: () => false,
+        unknown: () => false,
+        _other: () => false,
+    });
+}

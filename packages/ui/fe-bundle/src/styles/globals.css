@@ -122,9 +122,8 @@
         @apply bg-tag-primary !important;
     }
 
-    // clamp text to 3 lines
     .description-mask {
-        @apply overflow-hidden max-h-[4rem];
+        @apply overflow-hidden;
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;

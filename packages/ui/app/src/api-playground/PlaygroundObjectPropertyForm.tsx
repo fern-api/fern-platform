@@ -3,6 +3,7 @@ import { ChevronDown, ChevronUp } from "@blueprintjs/icons";
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { useBooleanState } from "@fern-ui/react-commons";
 import classNames from "classnames";
+import { isUndefined } from "lodash-es";
 import { ChangeEventHandler, FC, useCallback, useEffect } from "react";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { EndpointAvailabilityTag } from "../api-page/endpoints/EndpointAvailabilityTag";
@@ -21,7 +22,7 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
     property,
     onChange,
     value,
-    expandByDefault = false,
+    expandByDefault = true,
 }) => {
     const { resolveTypeById } = useApiDefinitionContext();
 
@@ -89,7 +90,7 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                     </label>
                 </Tooltip>
 
-                {expandable && (property.valueType.type === "optional" ? value != null : true) && (
+                {expandable && (property.valueType.type === "optional" ? !isUndefined(value) : true) && (
                     <div className="flex flex-1 items-center gap-2">
                         <div className="bg-border-default-light dark:bg-border-default-dark h-px w-full" />
                         <Button
@@ -103,10 +104,10 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                 )}
 
                 {property.valueType.type === "optional" && (
-                    <Switch checked={value != null} onChange={handleChangeOptional} className="-mr-2 mb-0" />
+                    <Switch checked={!isUndefined(value)} onChange={handleChangeOptional} className="-mr-2 mb-0" />
                 )}
             </div>
-            <Collapse isOpen={value != null && (!expandable || expanded)}>
+            <Collapse isOpen={!isUndefined(value) && (!expandable || expanded)}>
                 <PlaygroundTypeReferenceForm
                     typeReference={
                         property.valueType.type === "optional" ? property.valueType.itemType : property.valueType
@@ -114,6 +115,9 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                     onChange={handleChange}
                     value={value}
                 />
+            </Collapse>
+            <Collapse isOpen={expandable && !expanded}>
+                <code className="t-muted font-mono text-xs">Value: {JSON.stringify(value)}</code>
             </Collapse>
         </li>
     );

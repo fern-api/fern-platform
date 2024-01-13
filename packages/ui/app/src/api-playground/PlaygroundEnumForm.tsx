@@ -45,9 +45,10 @@ export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({ enumValues, on
     return (
         <Select<APIV1Read.EnumValue>
             items={enumValues}
-            itemRenderer={({ value, description }, { handleClick, handleFocus, modifiers }) =>
+            itemRenderer={({ value, description }, { ref, handleClick, handleFocus, modifiers }) =>
                 modifiers.matchesPredicate && (
                     <MenuItem
+                        ref={ref}
                         active={modifiers.active}
                         disabled={modifiers.disabled}
                         key={value}

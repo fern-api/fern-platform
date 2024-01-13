@@ -1,6 +1,6 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { isEmpty } from "lodash-es";
+import { isEmpty, noop } from "lodash-es";
 import { getAllObjectProperties } from "../api-page/utils/getAllObjectProperties";
 import { PlaygroundRequestFormState } from "./types";
 
@@ -63,24 +63,18 @@ export function indentAfter(str: string, indent: number, afterLine?: number): st
         .join("\n");
 }
 
-export function stringifyFetch(endpoint: APIV1Read.EndpointDefinition, formState: PlaygroundRequestFormState): string {
+export function stringifyFetch(
+    auth: APIV1Read.ApiAuth | undefined,
+    endpoint: APIV1Read.EndpointDefinition,
+    formState: PlaygroundRequestFormState
+): string {
+    const headers = buildRedactedHeaders(auth, endpoint, formState);
     return `// ${endpoint.name} (${endpoint.method} ${endpoint.path.parts
         .map((part) => (part.type === "literal" ? part.value : `:${part.value}`))
         .join("")})
 const response = fetch("${buildUrl(endpoint, formState)}", {
     method: "${endpoint.method}",
-    headers: ${JSON.stringify(
-        redactAuthorizationHeader(
-            Object.entries(formState.headers).reduce<Record<string, string>>((acc, [key, value]) => {
-                if (typeof value === "string") {
-                    acc[key] = value;
-                }
-                return acc;
-            }, {})
-        ),
-        undefined,
-        2
-    )},${
+    headers: ${JSON.stringify(headers, undefined, 2)},${
         endpoint.request?.contentType === "application/json" &&
         !isEmpty(formState.body) &&
         endpoint.request.type.type !== "fileUpload"
@@ -94,9 +88,11 @@ console.log(body);`;
 }
 
 export function stringifyPythonRequests(
+    auth: APIV1Read.ApiAuth | undefined,
     endpoint: APIV1Read.EndpointDefinition,
     formState: PlaygroundRequestFormState
 ): string {
+    const headers = buildRedactedHeaders(auth, endpoint, formState);
     return `import requests
 
 # ${endpoint.name} (${endpoint.method} ${endpoint.path.parts
@@ -104,18 +100,7 @@ export function stringifyPythonRequests(
         .join("")})
 response = requests.${endpoint.method.toLowerCase()}(
     "${buildUrl(endpoint, formState)}",
-    headers=${JSON.stringify(
-        redactAuthorizationHeader(
-            Object.entries(formState.headers).reduce<Record<string, string>>((acc, [key, value]) => {
-                if (typeof value === "string") {
-                    acc[key] = value;
-                }
-                return acc;
-            }, {})
-        ),
-        undefined,
-        2
-    )},${
+    headers=${JSON.stringify(headers, undefined, 2)},${
         endpoint.request?.contentType === "application/json" &&
         !isEmpty(formState.body) &&
         endpoint.request.type.type !== "fileUpload"
@@ -127,33 +112,101 @@ response = requests.${endpoint.method.toLowerCase()}(
 print(response.json())`;
 }
 
-export function redactAuthorizationHeader(headers: Record<string, string>): Record<string, string> {
-    return Object.fromEntries(
-        Object.entries(headers).map(([key, value]) => {
-            if (key.toLowerCase() === "authorization") {
-                return [key, value];
-            }
-            return [key, value];
-        })
-    );
-}
-
-export function stringifyCurl(endpoint: APIV1Read.EndpointDefinition, formState: PlaygroundRequestFormState): string {
+function buildRedactedHeaders(
+    auth: APIV1Read.ApiAuth | undefined,
+    endpoint: APIV1Read.EndpointDefinition,
+    formState: PlaygroundRequestFormState
+): Record<string, string> {
     const headers: Record<string, string> = {};
-    if (endpoint.authed && formState.headers["Authorization"] != null) {
-        headers["Authorization"] = formState.headers["Authorization"] as string;
-    }
+    endpoint.headers.forEach((header) => {
+        if (formState.headers[header.key] != null) {
+            headers[header.key] = unknownToString(formState.headers[header.key]);
+        }
+    });
+
     if (endpoint.request?.contentType != null) {
         headers["Content-Type"] = endpoint.request.contentType;
     }
-    Object.entries(formState.headers).forEach(([key, value]) => {
-        if (typeof value === "string") {
-            headers[key] = value;
+
+    if (auth != null && endpoint.authed && formState.auth != null) {
+        visitDiscriminatedUnion(formState.auth, "type")._visit({
+            bearerAuth: (bearerAuth) => {
+                if (auth.type === "bearerAuth") {
+                    headers["Authorization"] = `Bearer ${"*".repeat(bearerAuth.token.length)}`;
+                }
+            },
+            header: (header) => {
+                if (auth.type === "header") {
+                    const value = header.headers[auth.headerWireValue];
+                    if (value != null) {
+                        headers[auth.headerWireValue] = "*".repeat(value.length);
+                    }
+                }
+            },
+            basicAuth: (basicAuth) => {
+                if (auth.type === "basicAuth") {
+                    headers["Authorization"] = `Basic ${btoa(
+                        `${basicAuth.username}:${"*".repeat(basicAuth.password.length)}`
+                    )}`;
+                }
+            },
+            _other: noop,
+        });
+    }
+
+    return headers;
+}
+
+export function buildUnredactedHeaders(
+    auth: APIV1Read.ApiAuth | undefined,
+    endpoint: APIV1Read.EndpointDefinition,
+    formState: PlaygroundRequestFormState
+): Record<string, string> {
+    const headers: Record<string, string> = {};
+    endpoint.headers.forEach((header) => {
+        if (formState.headers[header.key] != null) {
+            headers[header.key] = unknownToString(formState.headers[header.key]);
         }
     });
-    return `curl -X ${endpoint.method} "${buildUrl(endpoint, formState)}"${Object.entries(
-        redactAuthorizationHeader(headers)
-    )
+
+    if (endpoint.request?.contentType != null) {
+        headers["Content-Type"] = endpoint.request.contentType;
+    }
+
+    if (auth != null && endpoint.authed && formState.auth != null) {
+        visitDiscriminatedUnion(formState.auth, "type")._visit({
+            bearerAuth: (bearerAuth) => {
+                if (auth.type === "bearerAuth") {
+                    headers["Authorization"] = `Bearer ${bearerAuth.token}`;
+                }
+            },
+            header: (header) => {
+                if (auth.type === "header") {
+                    const value = header.headers[auth.headerWireValue];
+                    if (value != null) {
+                        headers[auth.headerWireValue] = value;
+                    }
+                }
+            },
+            basicAuth: (basicAuth) => {
+                if (auth.type === "basicAuth") {
+                    headers["Authorization"] = `Basic ${btoa(`${basicAuth.username}:${basicAuth.password}`)}`;
+                }
+            },
+            _other: noop,
+        });
+    }
+
+    return headers;
+}
+
+export function stringifyCurl(
+    auth: APIV1Read.ApiAuth | undefined,
+    endpoint: APIV1Read.EndpointDefinition,
+    formState: PlaygroundRequestFormState
+): string {
+    const headers = buildRedactedHeaders(auth, endpoint, formState);
+    return `curl -X ${endpoint.method} "${buildUrl(endpoint, formState)}"${Object.entries(headers)
         .map(([key, value]) => ` \\\n     -H "${key}: ${value}"`)
         .join(" \\\n     ")}${
         endpoint.request?.contentType === "application/json" &&
@@ -328,7 +381,7 @@ export function getDefaultValueForType(
         id: (id) => {
             const typeDefinition = resolveTypeById(id.value);
             if (typeDefinition == null) {
-                return null;
+                return undefined;
             }
             return visitDiscriminatedUnion(typeDefinition.shape, "type")._visit({
                 object: (object) => getDefaultValueForObject(object, resolveTypeById),
@@ -336,7 +389,7 @@ export function getDefaultValueForType(
                     const variant = discriminatedUnion.variants[0];
 
                     if (variant == null) {
-                        return null;
+                        return undefined;
                     }
 
                     const variantProperties = getAllObjectProperties(variant.additionalProperties, resolveTypeById);
@@ -354,13 +407,14 @@ export function getDefaultValueForType(
                 undiscriminatedUnion: (undiscriminatedUnion) => {
                     const variant = undiscriminatedUnion.variants[0];
                     if (variant == null) {
-                        return null;
+                        return undefined;
                     }
                     return getDefaultValueForType(variant.type, resolveTypeById);
                 },
                 alias: (alias) => getDefaultValueForType(alias.value, resolveTypeById),
-                enum: (value) => value.values[0]?.value,
-                _other: () => null,
+                // if enum.length === 1, select it, otherwise, we don't presume to select an incorrect enum.
+                enum: (value) => (value.values.length === 1 ? value.values[0]?.value : null),
+                _other: () => undefined,
             });
         },
         primitive: (primitive) =>
@@ -374,15 +428,15 @@ export function getDefaultValueForType(
                 uuid: () => "",
                 base64: () => "",
                 date: () => new Date().toISOString(),
-                _other: () => null,
+                _other: () => undefined,
             }),
         optional: () => undefined,
         list: () => [],
         set: () => [],
         map: () => ({}),
         literal: (literal) => literal.value.value,
-        unknown: () => null,
-        _other: () => null,
+        unknown: () => undefined,
+        _other: () => undefined,
     });
 }
 

@@ -53,7 +53,7 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                 const oldObject = castToRecord(oldValue);
                 return {
                     ...oldObject,
-                    [key]: newValue,
+                    [key]: typeof newValue === "function" ? newValue(oldObject[key]) : newValue,
                 };
             });
         },
