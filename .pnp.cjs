@@ -4132,7 +4132,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.18.13"],\
             ["archiver", "npm:6.0.1"],\
             ["aws-cdk", "npm:2.118.0"],\
-            ["aws-cdk-lib", "virtual:bb2f39858d94c0a602215c896a8a865f2d83fd9190ebbbdd82d93c5fa1df532fd9bb165587d845653431a57bfbe30296825591585a4b7acf2cc3a82331004f56#npm:2.118.0"],\
+            ["aws-cdk-lib", "virtual:bb2f39858d94c0a602215c896a8a865f2d83fd9190ebbbdd82d93c5fa1df532fd9bb165587d845653431a57bfbe30296825591585a4b7acf2cc3a82331004f56#npm:2.121.1"],\
             ["axios", "npm:1.6.5"],\
             ["constructs", "npm:10.3.0"],\
             ["prettier", "npm:2.8.8"],\
@@ -7646,17 +7646,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["aws-cdk-lib", [\
-        ["npm:2.118.0", {\
-          "packageLocation": "./.yarn/cache/aws-cdk-lib-npm-2.118.0-8d396ac880-9760bef6f4.zip/node_modules/aws-cdk-lib/",\
+        ["npm:2.121.1", {\
+          "packageLocation": "./.yarn/cache/aws-cdk-lib-npm-2.121.1-cc515735cf-11a7be25e6.zip/node_modules/aws-cdk-lib/",\
           "packageDependencies": [\
-            ["aws-cdk-lib", "npm:2.118.0"]\
+            ["aws-cdk-lib", "npm:2.121.1"]\
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:bb2f39858d94c0a602215c896a8a865f2d83fd9190ebbbdd82d93c5fa1df532fd9bb165587d845653431a57bfbe30296825591585a4b7acf2cc3a82331004f56#npm:2.118.0", {\
-          "packageLocation": "./.yarn/__virtual__/aws-cdk-lib-virtual-27919f5f3f/0/cache/aws-cdk-lib-npm-2.118.0-8d396ac880-9760bef6f4.zip/node_modules/aws-cdk-lib/",\
+        ["virtual:bb2f39858d94c0a602215c896a8a865f2d83fd9190ebbbdd82d93c5fa1df532fd9bb165587d845653431a57bfbe30296825591585a4b7acf2cc3a82331004f56#npm:2.121.1", {\
+          "packageLocation": "./.yarn/__virtual__/aws-cdk-lib-virtual-ea1202f214/0/cache/aws-cdk-lib-npm-2.121.1-cc515735cf-11a7be25e6.zip/node_modules/aws-cdk-lib/",\
           "packageDependencies": [\
-            ["aws-cdk-lib", "virtual:bb2f39858d94c0a602215c896a8a865f2d83fd9190ebbbdd82d93c5fa1df532fd9bb165587d845653431a57bfbe30296825591585a4b7acf2cc3a82331004f56#npm:2.118.0"],\
+            ["aws-cdk-lib", "virtual:bb2f39858d94c0a602215c896a8a865f2d83fd9190ebbbdd82d93c5fa1df532fd9bb165587d845653431a57bfbe30296825591585a4b7acf2cc3a82331004f56#npm:2.121.1"],\
             ["@aws-cdk/asset-awscli-v1", "npm:2.2.201"],\
             ["@aws-cdk/asset-kubectl-v20", "npm:2.1.2"],\
             ["@aws-cdk/asset-node-proxy-agent-v6", "npm:2.0.1"],\

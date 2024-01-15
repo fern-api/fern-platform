@@ -2423,7 +2423,7 @@ __metadata:
     "@types/node": ^18.7.18
     archiver: ^6.0.1
     aws-cdk: ^2.118.0
-    aws-cdk-lib: ^2.118.0
+    aws-cdk-lib: ^2.121.1
     axios: ^1.6.5
     constructs: ^10.3.0
     prettier: ^2.8.8
@@ -5251,9 +5251,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aws-cdk-lib@npm:^2.118.0":
-  version: 2.118.0
-  resolution: "aws-cdk-lib@npm:2.118.0"
+"aws-cdk-lib@npm:^2.121.1":
+  version: 2.121.1
+  resolution: "aws-cdk-lib@npm:2.121.1"
   dependencies:
     "@aws-cdk/asset-awscli-v1": ^2.2.201
     "@aws-cdk/asset-kubectl-v20": ^2.1.2
@@ -5270,7 +5270,7 @@ __metadata:
     yaml: 1.10.2
   peerDependencies:
     constructs: ^10.0.0
-  checksum: 9760bef6f4c90ed231a944416bf83fa5f351e678117dcce801df081eb16f10f480e481dba4556f7ba3c9f522762934d8f5b9e44e3620807a27295e2d157dae04
+  checksum: 11a7be25e603a4ccd4e7f5dd95c5f8b6290bdab4377011e900cc65493c9c084ab62ba873f35d4310db91ebd1ea3dbd3edf42048f6514beb196b1445ee33508fa
   languageName: node
   linkType: hard
 
