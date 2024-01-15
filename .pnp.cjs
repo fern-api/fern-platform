@@ -108,7 +108,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-react", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:7.22.15"],\
             ["@babel/preset-typescript", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:7.18.6"],\
             ["@blueprintjs/eslint-plugin", "npm:2.1.2"],\
-            ["@types/is-ci", "npm:3.0.0"],\
+            ["@types/is-ci", "npm:3.0.4"],\
             ["@types/jest", "npm:29.5.11"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.18.13"],\
@@ -5988,10 +5988,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/is-ci", [\
-        ["npm:3.0.0", {\
-          "packageLocation": "./.yarn/cache/@types-is-ci-npm-3.0.0-7dabaf4b67-7c1f1f16c1.zip/node_modules/@types/is-ci/",\
+        ["npm:3.0.4", {\
+          "packageLocation": "./.yarn/cache/@types-is-ci-npm-3.0.4-d9f7893cdd-5cb58dd3b6.zip/node_modules/@types/is-ci/",\
           "packageDependencies": [\
-            ["@types/is-ci", "npm:3.0.0"],\
+            ["@types/is-ci", "npm:3.0.4"],\
             ["ci-info", "npm:3.3.2"]\
           ],\
           "linkType": "HARD"\
@@ -10933,7 +10933,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-react", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:7.22.15"],\
             ["@babel/preset-typescript", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:7.18.6"],\
             ["@blueprintjs/eslint-plugin", "npm:2.1.2"],\
-            ["@types/is-ci", "npm:3.0.0"],\
+            ["@types/is-ci", "npm:3.0.4"],\
             ["@types/jest", "npm:29.5.11"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.18.13"],\
