@@ -2045,7 +2045,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@blueprintjs/icons@npm:^4.4.0, @blueprintjs/icons@npm:^4.9.0":
+"@blueprintjs/icons@npm:^4.9.0":
   version: 4.9.0
   resolution: "@blueprintjs/icons@npm:4.9.0"
   dependencies:
@@ -2053,6 +2053,24 @@ __metadata:
     classnames: ^2.3.1
     tslib: ~2.3.1
   checksum: 43d9f1b315d91b262d0191fd9ce109d5ee093dd2f836492501aa030883b896b4917f75cd494562f79d690a8ef483f8d106d661568c5982db2b24e16762151792
+  languageName: node
+  linkType: hard
+
+"@blueprintjs/icons@npm:^5.7.0":
+  version: 5.7.0
+  resolution: "@blueprintjs/icons@npm:5.7.0"
+  dependencies:
+    change-case: ^4.1.2
+    classnames: ^2.3.1
+    tslib: ~2.6.2
+  peerDependencies:
+    "@types/react": ^16.14.41 || 17 || 18
+    react: ^16.8 || 17 || 18
+    react-dom: ^16.8 || 17 || 18
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: d8a938a168d64b9df44d55f60dc57df55d48edd6e36d6ef6c5755a56cfe50f8e18bd69c5c6078c1f0c27a78cfa737e4ab6250cfad05ca640a53a73481a30ee2d
   languageName: node
   linkType: hard
 
@@ -2436,7 +2454,7 @@ __metadata:
   resolution: "@fern-ui/common-components@workspace:packages/commons/react/common-components"
   dependencies:
     "@blueprintjs/core": ^4.11.5
-    "@blueprintjs/icons": ^4.4.0
+    "@blueprintjs/icons": ^5.7.0
     "@fern-ui/loadable": "workspace:*"
     "@types/jest": ^29.5.11
     "@types/node": ^18.7.18
@@ -2743,7 +2761,7 @@ __metadata:
   resolution: "@fern-ui/ui@workspace:packages/ui/app"
   dependencies:
     "@blueprintjs/core": ^4.11.5
-    "@blueprintjs/icons": ^4.4.0
+    "@blueprintjs/icons": ^5.7.0
     "@blueprintjs/popover2": ^1.8.0
     "@blueprintjs/select": ^4.4.2
     "@fern-api/fdr-sdk": 0.44.0-1-geb2e930
@@ -15214,7 +15232,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.3.0":
+"tslib@npm:^2.3.0, tslib@npm:~2.6.2":
   version: 2.6.2
   resolution: "tslib@npm:2.6.2"
   checksum: 329ea56123005922f39642318e3d1f0f8265d1e7fcb92c633e0809521da75eeaca28d2cf96d7248229deb40e5c19adf408259f4b9640afd20d13aecc1430f3ad

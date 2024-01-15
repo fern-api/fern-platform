@@ -3627,6 +3627,33 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["tslib", "npm:2.3.1"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:5.7.0", {\
+          "packageLocation": "./.yarn/cache/@blueprintjs-icons-npm-5.7.0-a4d3151607-d8a938a168.zip/node_modules/@blueprintjs/icons/",\
+          "packageDependencies": [\
+            ["@blueprintjs/icons", "npm:5.7.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:5.7.0", {\
+          "packageLocation": "./.yarn/__virtual__/@blueprintjs-icons-virtual-b563ae3c95/0/cache/@blueprintjs-icons-npm-5.7.0-a4d3151607-d8a938a168.zip/node_modules/@blueprintjs/icons/",\
+          "packageDependencies": [\
+            ["@blueprintjs/icons", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:5.7.0"],\
+            ["@types/react", "npm:18.0.20"],\
+            ["@types/react-dom", null],\
+            ["change-case", "npm:4.1.2"],\
+            ["classnames", "npm:2.3.1"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
+            ["tslib", "npm:2.6.2"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["@blueprintjs/popover2", [\
@@ -4147,7 +4174,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-ui/common-components", "workspace:packages/commons/react/common-components"],\
             ["@blueprintjs/core", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:4.11.5"],\
-            ["@blueprintjs/icons", "npm:4.9.0"],\
+            ["@blueprintjs/icons", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:5.7.0"],\
             ["@fern-ui/loadable", "workspace:packages/commons/loadable"],\
             ["@types/jest", "npm:29.5.11"],\
             ["@types/node", "npm:18.18.13"],\
@@ -4476,7 +4503,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
             ["@blueprintjs/core", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:4.11.5"],\
-            ["@blueprintjs/icons", "npm:4.9.0"],\
+            ["@blueprintjs/icons", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:5.7.0"],\
             ["@blueprintjs/popover2", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.8.0"],\
             ["@blueprintjs/select", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.5.1"],\
             ["@fern-api/fdr-sdk", "npm:0.44.0-1-geb2e930"],\
