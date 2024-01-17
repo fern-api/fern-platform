@@ -72,11 +72,11 @@ function getAvailableExampleClients(example: APIV1Read.ExampleEndpointCall): Cod
 
 const fernClientIdAtom = atomWithStorage<CodeExampleClient["id"]>("fern-client-id", DEFAULT_CLIENT.id);
 
-const ERROR_ANCHOR_PREFIX = "response.errors.";
+const ERROR_ANCHOR_PREFIX = "response.error.";
 
 function maybeGetStatusCodeFromAnchor(anchor: string | undefined): number | undefined {
     if (anchor != null && anchor.startsWith(ERROR_ANCHOR_PREFIX)) {
-        // error anchor format is response.errors.{statusCode}.property.a.b.c
+        // error anchor format is response.error.{statusCode}.property.a.b.c
         // get {statusCode} from the anchor
         const statusCodeString = anchor.split(".")[2];
         if (statusCodeString != null) {
