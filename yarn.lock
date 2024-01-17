@@ -3942,12 +3942,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/is-ci@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@types/is-ci@npm:3.0.0"
+"@types/is-ci@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "@types/is-ci@npm:3.0.4"
   dependencies:
     ci-info: ^3.1.0
-  checksum: 7c1f1f16c1fa2134de7400d82766c83fa76057261ba890628af77a09382ebb92d945bb077b98cfcf3d40ab1469c9ffbd2278112867edbe57aa655f53547eb139
+  checksum: 5cb58dd3b64830bf2ce577017f554139cd35e3250a3feb3c2d5e5a2cb261cca909cf68faab6f31dde0c054719c7b360dd0f46d3a83a05b1e78453a9872d056c5
   languageName: node
   linkType: hard
 
@@ -8028,7 +8028,7 @@ env-cmd@toddbluhm/env-cmd:
     "@babel/preset-react": ^7.22.15
     "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/eslint-plugin": ^2.1.2
-    "@types/is-ci": ^3.0.0
+    "@types/is-ci": ^3.0.4
     "@types/jest": ^29.5.11
     "@types/lodash-es": 4.17.12
     "@types/node": ^18.7.18
