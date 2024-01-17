@@ -103,9 +103,9 @@ export const PlaygroundTypeShapeForm: FC<PlaygroundTypeShapeFormProps> = ({
                 <>
                     <div
                         onClick={showPanel}
-                        className="group flex h-full min-h-8 min-w-0 shrink cursor-pointer items-center"
+                        className="group flex h-full min-h-8 w-full min-w-0 shrink cursor-pointer items-center justify-end"
                     >
-                        <span className="inline-flex flex-1 shrink items-baseline gap-2 overflow-hidden">
+                        <span className="inline-flex flex-1 shrink items-baseline justify-end gap-2 overflow-hidden">
                             <span className="group-hover:bg-tag-default-light dark:group-hover:bg-tag-default-dark -mx-0.5 min-w-0 shrink truncate whitespace-nowrap rounded px-0.5 font-mono text-xs">
                                 {JSON.stringify(value)}
                             </span>

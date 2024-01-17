@@ -264,6 +264,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                             hoveredResponsePropertyPath={hoveredResponsePropertyPath}
                             requestHeight={requestHeight}
                             responseHeight={responseHeight}
+                            slug={route.substring(1)}
                         />
                     )}
                 </div>

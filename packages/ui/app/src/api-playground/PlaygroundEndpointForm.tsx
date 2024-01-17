@@ -1,12 +1,14 @@
 import { Button, InputGroup } from "@blueprintjs/core";
-import { Cross, GlobeNetwork, Person } from "@blueprintjs/icons";
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { ArrowTopRight, Cross, GlobeNetwork, Person } from "@blueprintjs/icons";
+import { APIV1Read, isApiNode } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import classNames from "classnames";
+import Link from "next/link";
 import { Dispatch, FC, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 import { Markdown } from "../api-page/markdown/Markdown";
 import { getAllObjectProperties } from "../api-page/utils/getAllObjectProperties";
+import { useNavigationContext } from "../navigation-context";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundObjectPropertyForm } from "./PlaygroundObjectPropertyForm";
@@ -16,6 +18,8 @@ import { PlaygroundRequestFormAuth, PlaygroundRequestFormState } from "./types";
 import { castToRecord } from "./utils";
 
 interface PlaygroundEndpointFormProps {
+    slug: string | undefined;
+    apiId: string | undefined;
     endpoint: APIV1Read.EndpointDefinition;
     formState: PlaygroundRequestFormState | undefined;
     setFormState: Dispatch<SetStateAction<PlaygroundRequestFormState>>;
@@ -29,7 +33,10 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
     setFormState,
     openSecretsModal,
     secrets,
+    slug,
+    apiId,
 }) => {
+    const { activeNavigatable } = useNavigationContext();
     const { resolveTypeById, apiDefinition } = useApiPlaygroundContext();
     const setAuthorization = useCallback(
         (newAuthValue: PlaygroundRequestFormAuth) => {
@@ -416,6 +423,17 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                         _other: () => null,
                     })}
                 </section>
+            )}
+
+            {slug != null && (
+                <Link
+                    href={`/${slug}`}
+                    shallow={isApiNode(activeNavigatable) && activeNavigatable.section.api === apiId}
+                    className="t-muted hover:text-accent-primary hover:dark:text-accent-primary-dark inline-flex items-center gap-2 text-sm font-semibold underline decoration-1 underline-offset-4 hover:decoration-2"
+                >
+                    <span>View in API Reference</span>
+                    <ArrowTopRight />
+                </Link>
             )}
         </div>
     );

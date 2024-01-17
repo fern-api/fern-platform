@@ -1,6 +1,6 @@
 import { Button, InputGroup } from "@blueprintjs/core";
 import { Cross, Search } from "@blueprintjs/icons";
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { APIV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import { getSubpackageTitle, isSubpackage } from "@fern-ui/app-utils";
 import { useBooleanState, useKeyboardPress } from "@fern-ui/react-commons";
 import { Transition } from "@headlessui/react";
@@ -26,6 +26,7 @@ interface PackageAndApiId {
     apiId: string;
     package: APIV1Read.ApiDefinitionPackage;
     parents: APIV1Read.ApiDefinitionPackage[];
+    slug: string;
 }
 
 export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProps> = ({
@@ -35,7 +36,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
     placeholderText,
     buttonClassName,
 }) => {
-    const { navigateToEndpoint } = useApiPlaygroundContext();
+    const { setSelectionStateAndOpen } = useApiPlaygroundContext();
     const { value: showDropdown, toggleValue: toggleDropdown, setFalse: closeDropdown } = useBooleanState(false);
     const { resolveApi } = useDocsContext();
     const { activeNavigationConfigContext } = useDocsSelectors();
@@ -66,7 +67,8 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
 
             const flattenSubpackages = (
                 subpackageId: APIV1Read.SubpackageId,
-                parents: APIV1Read.ApiDefinitionPackage[]
+                parents: APIV1Read.ApiDefinitionPackage[],
+                slug: string
             ): PackageAndApiId[] => {
                 const subpackage = resolveSubpackage(apiDefinition, subpackageId);
 
@@ -74,18 +76,22 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                     return [];
                 }
 
+                const parentSlug = joinUrlSlugs(slug, subpackage.urlSlug);
+
                 return [
-                    { apiId: item.api, package: subpackage, parents },
+                    { apiId: item.api, package: subpackage, parents, slug: parentSlug },
                     ...subpackage.subpackages.flatMap((subpackageId) =>
-                        flattenSubpackages(subpackageId, [...parents, subpackage])
+                        flattenSubpackages(subpackageId, [...parents, subpackage], parentSlug)
                     ),
                 ];
             };
 
+            const parentSlug = joinUrlSlugs(item.urlSlug);
+
             return [
-                { apiId: item.api, package: apiDefinition.rootPackage, parents: [] },
+                { apiId: item.api, package: apiDefinition.rootPackage, parents: [], slug: parentSlug },
                 ...apiDefinition.rootPackage.subpackages.flatMap((subpackageId) =>
-                    flattenSubpackages(subpackageId, [apiDefinition.rootPackage])
+                    flattenSubpackages(subpackageId, [apiDefinition.rootPackage], parentSlug)
                 ),
             ];
         });
@@ -97,7 +103,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
             return packages;
         }
 
-        return packages.flatMap(({ package: package_, apiId, parents }) => {
+        return packages.flatMap(({ package: package_, apiId, parents, slug }) => {
             const endpoints = package_.endpoints.filter(
                 (endpoint) =>
                     endpoint.name?.toLowerCase().includes(filterValueCleaned.toLowerCase()) ||
@@ -117,6 +123,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                         endpoints,
                     },
                     parents,
+                    slug,
                 },
             ];
         });
@@ -189,7 +196,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                 <div
                     ref={dropdownRef}
                     className={classNames(
-                        "bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark absolute z-10 flex max-h-60 min-h-4 min-w-fit flex-col rounded border shadow-xl",
+                        "bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark absolute z-10 flex max-h-96 min-h-4 min-w-fit flex-col rounded border shadow-xl min-w-full",
                         {
                             "origin-top-left left-0 top-full mt-2": popoverPlacement === "bottom-start",
                             "origin-top -translate-x-[50%] left-[50%] top-full mt-2": popoverPlacement === "bottom",
@@ -200,28 +207,30 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                         }
                     )}
                 >
-                    <div
-                        className={classNames("relative z-10 px-1 pt-1", {
-                            "pb-1": filteredPackages.length === 0,
-                            "pb-0": filteredPackages.length > 0,
-                        })}
-                    >
-                        <InputGroup
-                            fill={true}
-                            leftIcon={<Search />}
-                            data-1p-ignore="true"
-                            autoFocus={true}
-                            value={filterValue}
-                            onValueChange={setFilterValue}
-                            rightElement={
-                                filterValue.length > 0 && (
-                                    <Button icon={<Cross />} minimal={true} onClick={() => setFilterValue("")} />
-                                )
-                            }
-                        />
-                    </div>
+                    {popoverPlacement.startsWith("bottom") && (
+                        <div
+                            className={classNames("relative z-10 px-1 pt-1", {
+                                "pb-1": filteredPackages.length === 0,
+                                "pb-0": filteredPackages.length > 0,
+                            })}
+                        >
+                            <InputGroup
+                                fill={true}
+                                leftIcon={<Search />}
+                                data-1p-ignore="true"
+                                autoFocus={true}
+                                value={filterValue}
+                                onValueChange={setFilterValue}
+                                rightElement={
+                                    filterValue.length > 0 && (
+                                        <Button icon={<Cross />} minimal={true} onClick={() => setFilterValue("")} />
+                                    )
+                                }
+                            />
+                        </div>
+                    )}
                     <ul className="scroll-contain list-none overflow-y-auto">
-                        {filteredPackages.map(({ package: packageItem, apiId, parents }, idx) =>
+                        {filteredPackages.map(({ package: packageItem, apiId, parents, slug }, idx) =>
                             isSubpackage(packageItem) && packageItem.endpoints.length > 0 ? (
                                 <li key={idx}>
                                     {isSubpackage(packageItem) && (
@@ -258,10 +267,11 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                                                         }
                                                     )}
                                                     onClick={() => {
-                                                        navigateToEndpoint({
+                                                        setSelectionStateAndOpen({
                                                             apiId,
                                                             endpoint: endpointItem,
                                                             package: packageItem,
+                                                            slug: joinUrlSlugs(slug, endpointItem.urlSlug),
                                                         });
                                                         closeDropdown();
                                                     }}
@@ -279,6 +289,28 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                             ) : null
                         )}
                     </ul>
+                    {popoverPlacement.startsWith("top") && (
+                        <div
+                            className={classNames("relative z-10 px-1 pb-1", {
+                                "pt-1": filteredPackages.length === 0,
+                                "pt-0": filteredPackages.length > 0,
+                            })}
+                        >
+                            <InputGroup
+                                fill={true}
+                                leftIcon={<Search />}
+                                data-1p-ignore="true"
+                                autoFocus={true}
+                                value={filterValue}
+                                onValueChange={setFilterValue}
+                                rightElement={
+                                    filterValue.length > 0 && (
+                                        <Button icon={<Cross />} minimal={true} onClick={() => setFilterValue("")} />
+                                    )
+                                }
+                            />
+                        </div>
+                    )}
                 </div>
             </Transition>
         </div>

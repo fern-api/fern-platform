@@ -27,6 +27,7 @@ export declare namespace EndpointContentCodeSnippets {
         hoveredResponsePropertyPath: JsonPropertyPath | undefined;
         requestHeight: number;
         responseHeight: number;
+        slug: string;
     }
 }
 
@@ -45,6 +46,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     hoveredResponsePropertyPath,
     requestHeight,
     responseHeight,
+    slug,
 }) => {
     const { apiSection } = useApiDefinitionContext();
     return (
@@ -63,8 +65,13 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 }}
                 actions={
                     <>
-                        {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
-                        <ApiPlaygroundButton endpoint={endpoint} package={package_} apiId={apiSection!.api} />
+                        <ApiPlaygroundButton
+                            endpoint={endpoint}
+                            package={package_}
+                            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                            apiId={apiSection!.api}
+                            slug={slug}
+                        />
                         {availableExampleClients.length > 1 ? (
                             <CodeExampleClientDropdown
                                 clients={availableExampleClients}

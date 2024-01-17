@@ -2,11 +2,11 @@ import { Play } from "@blueprintjs/icons";
 import { FC, useCallback } from "react";
 import { ApiPlaygroundSelectionState, useApiPlaygroundContext } from "./ApiPlaygroundContext";
 
-export const ApiPlaygroundButton: FC<ApiPlaygroundSelectionState> = ({ apiId, endpoint, package: _package }) => {
+export const ApiPlaygroundButton: FC<ApiPlaygroundSelectionState> = ({ apiId, endpoint, package: _package, slug }) => {
     const { setSelectionStateAndOpen } = useApiPlaygroundContext();
     const handleClick = useCallback(() => {
-        setSelectionStateAndOpen({ apiId, endpoint, package: _package });
-    }, [setSelectionStateAndOpen, apiId, endpoint, _package]);
+        setSelectionStateAndOpen({ apiId, endpoint, package: _package, slug });
+    }, [setSelectionStateAndOpen, apiId, endpoint, _package, slug]);
     return (
         <button
             type="button"

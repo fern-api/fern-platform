@@ -28,6 +28,7 @@ export interface ApiPlaygroundSelectionState {
     apiId: DocsV1Read.ApiSection["api"];
     endpoint: APIV1Read.EndpointDefinition;
     package: APIV1Read.ApiDefinitionPackage;
+    slug: string;
 }
 
 const EMPTY_FORM_STATE: PlaygroundRequestFormState = {
@@ -43,7 +44,6 @@ interface ApiPlaygroundContextValue {
     resolveTypeById: (typeId: APIV1Read.TypeId) => APIV1Read.TypeDefinition | undefined;
     selectionState: ApiPlaygroundSelectionState | undefined;
     setSelectionStateAndOpen: (state: ApiPlaygroundSelectionState) => void;
-    navigateToEndpoint: (state: Omit<ApiPlaygroundSelectionState, "apiSection">) => void;
     isOpen: boolean;
     expandApiPlayground: () => void;
     collapseApiPlayground: () => void;
@@ -54,7 +54,6 @@ const ApiPlaygroundContext = createContext<ApiPlaygroundContextValue>({
     resolveTypeById: () => undefined,
     selectionState: undefined,
     setSelectionStateAndOpen: noop,
-    navigateToEndpoint: noop,
     isOpen: false,
     expandApiPlayground: noop,
     collapseApiPlayground: noop,
@@ -242,17 +241,16 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren> = ({ children }
                 isOpen: isPlaygroundOpen,
                 expandApiPlayground,
                 collapseApiPlayground,
-                navigateToEndpoint: setSelectionStateAndOpen,
             }}
         >
             {children}
             <Transition show={isPlaygroundOpen} as={Fragment}>
                 <Transition.Child
                     as={Fragment}
-                    enter="ease-out transition-opacity transition-transform"
+                    enter="ease-out transition-all duration-300"
                     enterFrom="opacity-0 translate-y-full"
                     enterTo="opacity-100 translate-y-0"
-                    leave="ease-in transition-opacity transition-transform"
+                    leave="ease-in transition-all duration-200"
                     leaveFrom="opacity-100 translate-y-0"
                     leaveTo="opacity-0 translate-y-full"
                 >
@@ -274,6 +272,8 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren> = ({ children }
                             resetWithoutExample={resetWithoutExample}
                             openSecretsModal={openSecretsModal}
                             secrets={globalFormSecrets}
+                            slug={selectionState?.slug}
+                            apiId={selectionState?.apiId}
                         />
                     </div>
                 </Transition.Child>

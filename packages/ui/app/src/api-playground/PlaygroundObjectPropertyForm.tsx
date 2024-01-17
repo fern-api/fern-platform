@@ -76,7 +76,7 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                         className={classNames(
                             "divide-border-default-light dark:divide-border-default-dark flex min-h-12 flex-row items-stretch divide-x px-4",
                             {
-                                "divide-x-0": expanded,
+                                "divide-x-0": expanded && expandable,
                             }
                         )}
                     >

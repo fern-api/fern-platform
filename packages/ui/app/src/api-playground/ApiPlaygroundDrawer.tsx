@@ -18,6 +18,8 @@ interface ApiPlaygroundDrawerProps {
     resetWithoutExample: () => void;
     openSecretsModal: () => void;
     secrets: SecretBearer[];
+    slug: string | undefined;
+    apiId: string | undefined;
 }
 
 export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
@@ -29,6 +31,8 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
     resetWithoutExample,
     openSecretsModal,
     secrets,
+    slug,
+    apiId,
 }): ReactElement => {
     const { collapseApiPlayground } = useApiPlaygroundContext();
 
@@ -68,6 +72,8 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
                     resetWithoutExample={resetWithoutExample}
                     openSecretsModal={openSecretsModal}
                     secrets={secrets}
+                    slug={slug}
+                    apiId={apiId}
                 />
             ) : (
                 <div className="flex flex-1 items-center justify-center">

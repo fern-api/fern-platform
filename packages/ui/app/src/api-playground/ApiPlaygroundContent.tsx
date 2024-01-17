@@ -25,6 +25,8 @@ interface ResponsePayload {
 
 interface ApiPlayroundContentProps {
     endpoint: APIV1Read.EndpointDefinition;
+    slug: string | undefined;
+    apiId: string | undefined;
     package: APIV1Read.ApiDefinitionPackage | undefined;
     formState: PlaygroundRequestFormState;
     setFormState: Dispatch<SetStateAction<PlaygroundRequestFormState>>;
@@ -45,6 +47,8 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
     resetWithoutExample,
     openSecretsModal,
     secrets,
+    slug,
+    apiId,
 }) => {
     const { apiDefinition } = useApiPlaygroundContext();
 
@@ -108,6 +112,8 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                     setFormState={setFormState}
                     openSecretsModal={openSecretsModal}
                     secrets={secrets}
+                    slug={slug}
+                    apiId={apiId}
                 />
             </div>
             <div className="divide-border-default-light dark:divide-border-default-dark xl:flex-2 flex min-w-0 flex-1 shrink flex-col divide-y xl:flex-row xl:divide-x xl:divide-y-0">

@@ -4645,7 +4645,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fontsource/ibm-plex-mono", "npm:4.5.13"],\
             ["@fortawesome/fontawesome-svg-core", "npm:6.4.2"],\
             ["@fortawesome/react-fontawesome", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:0.2.0"],\
-            ["@headlessui/react", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.7.17"],\
+            ["@headlessui/react", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.7.18"],\
             ["@react-hook/size", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.1.2"],\
             ["@testing-library/react", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:14.0.0"],\
             ["@types/jest", "npm:29.5.11"],\
@@ -4817,17 +4817,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@headlessui/react", [\
-        ["npm:1.7.17", {\
-          "packageLocation": "./.yarn/cache/@headlessui-react-npm-1.7.17-c3f120aed0-0cdb67747e.zip/node_modules/@headlessui/react/",\
+        ["npm:1.7.18", {\
+          "packageLocation": "./.yarn/cache/@headlessui-react-npm-1.7.18-91486d4b37-7463167b4c.zip/node_modules/@headlessui/react/",\
           "packageDependencies": [\
-            ["@headlessui/react", "npm:1.7.17"]\
+            ["@headlessui/react", "npm:1.7.18"]\
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.7.17", {\
-          "packageLocation": "./.yarn/__virtual__/@headlessui-react-virtual-9f40207272/0/cache/@headlessui-react-npm-1.7.17-c3f120aed0-0cdb67747e.zip/node_modules/@headlessui/react/",\
+        ["virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.7.18", {\
+          "packageLocation": "./.yarn/__virtual__/@headlessui-react-virtual-7e9ad826c3/0/cache/@headlessui-react-npm-1.7.18-91486d4b37-7463167b4c.zip/node_modules/@headlessui/react/",\
           "packageDependencies": [\
-            ["@headlessui/react", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.7.17"],\
+            ["@headlessui/react", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.7.18"],\
+            ["@tanstack/react-virtual", "virtual:7e9ad826c3466cab296fd14f08935adb3b7b77e13a8240d439d8d93281c8443f9919436f251e519cf895183aff1d26c12046b4cbb3109be97c22470e7a981c57#npm:3.0.1"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", "npm:18.2.18"],\
             ["client-only", "npm:0.0.1"],\
@@ -5787,6 +5788,42 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             "react-dom",\
             "react-native",\
             "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@tanstack/react-virtual", [\
+        ["npm:3.0.1", {\
+          "packageLocation": "./.yarn/cache/@tanstack-react-virtual-npm-3.0.1-4ec4d04e6c-11534a2310.zip/node_modules/@tanstack/react-virtual/",\
+          "packageDependencies": [\
+            ["@tanstack/react-virtual", "npm:3.0.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:7e9ad826c3466cab296fd14f08935adb3b7b77e13a8240d439d8d93281c8443f9919436f251e519cf895183aff1d26c12046b4cbb3109be97c22470e7a981c57#npm:3.0.1", {\
+          "packageLocation": "./.yarn/__virtual__/@tanstack-react-virtual-virtual-685831da85/0/cache/@tanstack-react-virtual-npm-3.0.1-4ec4d04e6c-11534a2310.zip/node_modules/@tanstack/react-virtual/",\
+          "packageDependencies": [\
+            ["@tanstack/react-virtual", "virtual:7e9ad826c3466cab296fd14f08935adb3b7b77e13a8240d439d8d93281c8443f9919436f251e519cf895183aff1d26c12046b4cbb3109be97c22470e7a981c57#npm:3.0.1"],\
+            ["@tanstack/virtual-core", "npm:3.0.0"],\
+            ["@types/react", "npm:18.0.20"],\
+            ["@types/react-dom", "npm:18.2.18"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@tanstack/virtual-core", [\
+        ["npm:3.0.0", {\
+          "packageLocation": "./.yarn/cache/@tanstack-virtual-core-npm-3.0.0-f5ce10d614-7283d50fc7.zip/node_modules/@tanstack/virtual-core/",\
+          "packageDependencies": [\
+            ["@tanstack/virtual-core", "npm:3.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
