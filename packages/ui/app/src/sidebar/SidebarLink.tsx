@@ -39,8 +39,6 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
     children,
     closeMobileSidebar,
     elementRef,
-    collapseAll,
-    expandAll,
 }: PropsWithChildren<
     Omit<SidebarSlugLinkProps, "registerScrolledToPathListener" | "slug"> & {
         // Link props
@@ -131,14 +129,6 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
                         )}
                         onClick={(e) => {
                             e.detail === 1 && toggleExpand?.();
-                        }}
-                        onDoubleClick={(e) => {
-                            if (!expanded) {
-                                collapseAll?.();
-                            } else {
-                                expandAll?.();
-                            }
-                            e.stopPropagation();
                         }}
                     >
                         <ChevronDownIcon
