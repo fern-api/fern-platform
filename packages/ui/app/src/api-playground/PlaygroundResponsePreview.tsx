@@ -11,7 +11,7 @@ export const PlaygroundResponsePreview: FC<PlaygroundResponsePreviewProps> = ({ 
     const { resolvedTheme: theme } = useTheme();
     const responseJson = JSON.stringify(responseBody, null, 2);
     return (
-        <div className="group relative flex-1">
+        <div className="group relative h-full flex-1">
             <CopyToClipboardButton
                 className="absolute right-2 top-2 z-10 opacity-0 transition-opacity group-hover:opacity-100"
                 content={responseJson}
