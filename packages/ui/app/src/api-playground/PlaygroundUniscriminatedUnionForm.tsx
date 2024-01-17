@@ -116,6 +116,7 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
                         typeReference={selectedVariant.type}
                         onChange={onChange}
                         value={value}
+                        resolveTypeById={resolveTypeById}
                     />
                 </div>
             )}
