@@ -115,14 +115,13 @@ export const SidebarSection: React.FC<SidebarSectionProps> = ({
                         const sectionSlug = joinUrlSlugs(slug, section.urlSlug);
                         if (depth === 0) {
                             return (
-                                <li key={sectionSlug}>
-                                    <SidebarHeading
-                                        className={classNames({
-                                            "mt-6": topLevel && !isPrevItemSidebarItem(navigationItems, idx),
-                                        })}
-                                        depth={depth}
-                                        title={section.title}
-                                    />
+                                <li
+                                    key={sectionSlug}
+                                    className={classNames({
+                                        "mt-6": topLevel && idx > 0,
+                                    })}
+                                >
+                                    <SidebarHeading depth={depth} title={section.title} />
                                     <SidebarSection
                                         slug={sectionSlug}
                                         navigationItems={section.items}
@@ -156,14 +155,13 @@ export const SidebarSection: React.FC<SidebarSectionProps> = ({
                     api: (apiSection) => {
                         const apiSectionSlug = joinUrlSlugs(slug, apiSection.urlSlug);
                         return (
-                            <li key={apiSectionSlug}>
-                                <SidebarHeading
-                                    className={classNames({
-                                        "mt-6": topLevel && !isPrevItemSidebarItem(navigationItems, idx),
-                                    })}
-                                    depth={depth}
-                                    title={apiSection.title}
-                                />
+                            <li
+                                key={apiSectionSlug}
+                                className={classNames({
+                                    "mt-6": topLevel && idx > 0,
+                                })}
+                            >
+                                <SidebarHeading depth={depth} title={apiSection.title} />
                                 <ApiSidebarSection
                                     slug={apiSectionSlug}
                                     apiSection={apiSection}
