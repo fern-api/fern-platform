@@ -30,7 +30,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
     const anchorId = getAnchorId(anchorIdParts);
     const anchorRoute = `${route}#${anchorId}`;
     return (
-        <div ref={ref} data-route={anchorRoute} id={anchorId} className="flex scroll-mt-20 flex-col">
+        <div ref={ref} data-route={anchorRoute.toLowerCase()} id={anchorId} className="flex scroll-mt-20 flex-col">
             <div className="group/anchor-container relative flex items-baseline gap-4 pb-3">
                 <h3 className="relative mt-0 flex items-center">
                     <AbsolutelyPositionedAnchor href={anchorRoute} />

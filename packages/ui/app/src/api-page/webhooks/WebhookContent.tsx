@@ -72,7 +72,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
             <div
                 className="flex min-w-0 flex-1 scroll-mt-16 flex-col lg:flex-row lg:space-x-[4vw]"
                 ref={setContainerRef}
-                data-route={route}
+                data-route={route.toLowerCase()}
             >
                 <div className="flex min-w-0 max-w-2xl flex-1 flex-col">
                     <div className="space-y-2.5 py-8">

@@ -31,7 +31,7 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
     const anchorRoute = `${route}#${anchorId}`;
     return (
         <div
-            data-route={anchorRoute}
+            data-route={anchorRoute.toLowerCase()}
             id={anchorId}
             className="group/anchor-container relative flex scroll-mt-20 flex-col gap-2 py-3"
         >

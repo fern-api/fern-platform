@@ -11,7 +11,7 @@ export declare namespace EndpointErrorsSection {
             index: number,
             event: React.MouseEvent<HTMLButtonElement>
         ) => void;
-        selectedErrorIndex: number | null;
+        selectedErrorStatusCode: number | undefined;
         anchorIdParts: string[];
         route: string;
         defaultExpandAll?: boolean;
@@ -20,7 +20,7 @@ export declare namespace EndpointErrorsSection {
 
 export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
     errors,
-    selectedErrorIndex,
+    selectedErrorStatusCode,
     onHoverProperty,
     onClickError,
     anchorIdParts,
@@ -32,14 +32,14 @@ export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
             {errors.map((error, idx) => {
                 return (
                     <EndpointError
-                        key={idx}
+                        key={error.statusCode}
                         error={error}
                         isFirst={idx === 0}
                         isLast={idx === errors.length - 1}
-                        isSelected={idx === selectedErrorIndex}
+                        isSelected={error.statusCode === selectedErrorStatusCode}
                         onClick={(event) => onClickError(error, idx, event)}
                         onHoverProperty={onHoverProperty}
-                        anchorIdParts={[...anchorIdParts, `${idx}`]}
+                        anchorIdParts={[...anchorIdParts, `${error.statusCode}`]}
                         route={route}
                         availability={error.availability}
                         defaultExpandAll={defaultExpandAll}

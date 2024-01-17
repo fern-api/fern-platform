@@ -46,7 +46,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
     route,
     defaultExpandAll = false,
 }) => {
-    const { hydrated } = useNavigationContext();
+    const { hydrated, justNavigated } = useNavigationContext();
     const { resolveTypeById } = useApiDefinitionContext();
     const router = useRouter();
 
@@ -115,7 +115,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
     );
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);
-    const matchesAnchorLink = router.asPath.startsWith(`${route}#${anchorIdSoFar}-`);
+    const matchesAnchorLink = router.asPath.startsWith(`${route}#${anchorIdSoFar}.`);
     const {
         value: isCollapsed,
         toggleValue: toggleIsCollapsed,
@@ -200,7 +200,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                             {isCollapsed ? showText : hideText}
                         </div>
                     </div>
-                    <Collapse isOpen={!isCollapsed} transitionDuration={!hydrated ? 0 : 200}>
+                    <Collapse isOpen={!isCollapsed} transitionDuration={!hydrated || justNavigated ? 0 : 200}>
                         <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
                             <TypeDefinitionDetails
                                 elements={collapsableContent.elements}
