@@ -82,7 +82,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     {endpoint.headers.length > 0 && (
                         <EndpointSection
                             title="Headers"
-                            anchorIdParts={["request", "headers"]}
+                            anchorIdParts={["request", "header"]}
                             route={route}
                             showExpandCollapse={false}
                             expandAll={noop}
@@ -95,7 +95,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                         <EndpointParameter
                                             name={header.key}
                                             type={header.type}
-                                            anchorIdParts={["request", "headers", header.key]}
+                                            anchorIdParts={["request", "header", header.key]}
                                             route={route}
                                             description={header.description}
                                             descriptionContainsMarkdown={header.descriptionContainsMarkdown ?? false}
@@ -152,7 +152,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     {apiSection.showErrors && errors.length > 0 && (
                         <EndpointSection
                             title="Errors"
-                            anchorIdParts={["response", "errors"]}
+                            anchorIdParts={["response", "error"]}
                             route={route}
                             expandAll={errorExpandAll.setTrue}
                             collapseAll={errorExpandAll.setFalse}
@@ -166,7 +166,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                 }}
                                 onHoverProperty={onHoverResponseProperty}
                                 selectedErrorStatusCode={selectedErrorStatusCode}
-                                anchorIdParts={["response", "errors"]}
+                                anchorIdParts={["response", "error"]}
                                 route={route}
                                 defaultExpandAll={errorExpandAll.value}
                             />
