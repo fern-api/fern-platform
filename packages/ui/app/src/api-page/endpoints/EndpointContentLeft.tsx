@@ -24,13 +24,12 @@ export declare namespace EndpointContentLeft {
     export interface Props {
         endpoint: APIV1Read.EndpointDefinition;
         package: APIV1Read.ApiDefinitionPackage;
-        anchorIdParts: string[];
         apiSection: DocsV1Read.ApiSection;
         onHoverRequestProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
         onHoverResponseProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
         errors: APIV1Read.ErrorDeclarationV2[];
-        selectedErrorIndex: number | null;
-        setSelectedErrorIndex: (idx: number | null) => void;
+        selectedErrorStatusCode: number | undefined;
+        setSelectedErrorStatusCode: (idx: number | undefined) => void;
         route: string;
     }
 }
@@ -38,13 +37,12 @@ export declare namespace EndpointContentLeft {
 const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     endpoint,
     package: package_,
-    anchorIdParts,
     apiSection,
     onHoverRequestProperty,
     onHoverResponseProperty,
     errors,
-    selectedErrorIndex,
-    setSelectedErrorIndex,
+    selectedErrorStatusCode,
+    setSelectedErrorStatusCode,
     route,
 }) => {
     const requestExpandAll = useBooleanState(false);
@@ -77,14 +75,14 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     {endpoint.path.pathParameters.length > 0 && (
                         <PathParametersSection
                             pathParameters={endpoint.path.pathParameters}
-                            anchorIdParts={[...anchorIdParts, "path"]}
+                            anchorIdParts={["request", "path"]}
                             route={route}
                         />
                     )}
                     {endpoint.headers.length > 0 && (
                         <EndpointSection
                             title="Headers"
-                            anchorIdParts={[...anchorIdParts, "headers"]}
+                            anchorIdParts={["request", "headers"]}
                             route={route}
                             showExpandCollapse={false}
                             expandAll={noop}
@@ -97,7 +95,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                         <EndpointParameter
                                             name={header.key}
                                             type={header.type}
-                                            anchorIdParts={[...anchorIdParts, "headers", header.key]}
+                                            anchorIdParts={["request", "headers", header.key]}
                                             route={route}
                                             description={header.description}
                                             descriptionContainsMarkdown={header.descriptionContainsMarkdown ?? false}
@@ -111,14 +109,14 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     {endpoint.queryParameters.length > 0 && (
                         <QueryParametersSection
                             queryParameters={endpoint.queryParameters}
-                            anchorIdParts={[...anchorIdParts, "query"]}
+                            anchorIdParts={["request", "query"]}
                             route={route}
                         />
                     )}
                     {endpoint.request != null && (
                         <EndpointSection
                             title="Request"
-                            anchorIdParts={[...anchorIdParts, "request"]}
+                            anchorIdParts={["request", "body"]}
                             route={route}
                             expandAll={requestExpandAll.setTrue}
                             collapseAll={requestExpandAll.setFalse}
@@ -127,7 +125,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                             <EndpointRequestSection
                                 httpRequest={endpoint.request}
                                 onHoverProperty={onHoverRequestProperty}
-                                anchorIdParts={[...anchorIdParts, "request"]}
+                                anchorIdParts={["request", "body"]}
                                 route={route}
                                 defaultExpandAll={requestExpandAll.value}
                             />
@@ -136,7 +134,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     {endpoint.response != null && (
                         <EndpointSection
                             title="Response"
-                            anchorIdParts={[...anchorIdParts, "response"]}
+                            anchorIdParts={["response", "body"]}
                             route={route}
                             expandAll={responseExpandAll.setTrue}
                             collapseAll={responseExpandAll.setFalse}
@@ -145,7 +143,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                             <EndpointResponseSection
                                 httpResponse={endpoint.response}
                                 onHoverProperty={onHoverResponseProperty}
-                                anchorIdParts={[...anchorIdParts, "response"]}
+                                anchorIdParts={["response", "body"]}
                                 route={route}
                                 defaultExpandAll={responseExpandAll.value}
                             />
@@ -154,7 +152,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     {apiSection.showErrors && errors.length > 0 && (
                         <EndpointSection
                             title="Errors"
-                            anchorIdParts={[...anchorIdParts, "errors"]}
+                            anchorIdParts={["response", "errors"]}
                             route={route}
                             expandAll={errorExpandAll.setTrue}
                             collapseAll={errorExpandAll.setFalse}
@@ -162,13 +160,13 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                         >
                             <EndpointErrorsSection
                                 errors={errors}
-                                onClickError={(_, idx, event) => {
+                                onClickError={(error, _, event) => {
                                     event.stopPropagation();
-                                    setSelectedErrorIndex(idx);
+                                    setSelectedErrorStatusCode(error.statusCode);
                                 }}
                                 onHoverProperty={onHoverResponseProperty}
-                                selectedErrorIndex={selectedErrorIndex}
-                                anchorIdParts={[...anchorIdParts, "errors"]}
+                                selectedErrorStatusCode={selectedErrorStatusCode}
+                                anchorIdParts={["response", "errors"]}
                                 route={route}
                                 defaultExpandAll={errorExpandAll.value}
                             />

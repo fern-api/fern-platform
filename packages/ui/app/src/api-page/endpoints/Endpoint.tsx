@@ -13,13 +13,7 @@ export declare namespace Endpoint {
     }
 }
 
-export const Endpoint: React.FC<Endpoint.Props> = ({
-    endpoint,
-    fullSlug,
-    package: package_,
-    isLastInApi,
-    anchorIdParts,
-}) => {
+export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint, fullSlug, package: package_, isLastInApi }) => {
     const { setTargetRef } = useApiPageCenterElement({ slug: fullSlug });
     const route = `/${fullSlug}`;
 
@@ -36,7 +30,6 @@ export const Endpoint: React.FC<Endpoint.Props> = ({
             setContainerRef={setTargetRef}
             package={package_}
             hideBottomSeparator={isLastInApi}
-            anchorIdParts={[...anchorIdParts, endpoint.id]}
             route={route}
         />
     );

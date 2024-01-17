@@ -1,7 +1,5 @@
-import { snakeCase } from "lodash-es";
-
 export function getAnchorId(anchorIdParts: string[]): string {
-    return anchorIdParts.map((anchorId) => snakeCase(anchorId)).join("-");
+    return anchorIdParts.map((anchorId) => anchorId).join(".");
 }
 
 export function getAnchorSelector(anchorId: string): string {

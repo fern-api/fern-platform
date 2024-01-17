@@ -26,7 +26,7 @@ export const EnumTypeDefinition = ({
     collapsibleContentContextValue,
     showText,
 }: EnumTypeDefinitionProps): ReactElement => {
-    const { hydrated } = useNavigationContext();
+    const { hydrated, justNavigated } = useNavigationContext();
     const [searchInput, setSearchInput] = useState("");
     const shouldAutoFocus = useBooleanState(false);
 
@@ -107,7 +107,7 @@ export const EnumTypeDefinition = ({
                     <Collapse
                         isOpen={!isCollapsed}
                         keepChildrenMounted
-                        transitionDuration={!hydrated ? 0 : 200}
+                        transitionDuration={!hydrated || justNavigated ? 0 : 200}
                         className={classNames({ "w-0": isCollapsed })}
                     >
                         <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>

@@ -47,7 +47,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     route,
     defaultExpandAll = false,
 }) => {
-    const { hydrated } = useNavigationContext();
+    const { hydrated, justNavigated } = useNavigationContext();
     const { resolveTypeById } = useApiDefinitionContext();
     const router = useRouter();
 
@@ -120,20 +120,19 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     );
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);
-    const matchesAnchorLink = router.asPath.startsWith(`${route}#${anchorIdSoFar}-`);
-    const onlyOneProperty = collapsableContent?.elements.length === 1;
+    const matchesAnchorLink = router.asPath.startsWith(`${route}#${anchorIdSoFar}.`);
     const {
         value: isCollapsed,
         toggleValue: toggleIsCollapsed,
         setValue: setCollapsed,
-    } = useBooleanState(!defaultExpandAll && !onlyOneProperty);
+    } = useBooleanState(!defaultExpandAll);
 
     useEffect(() => {
-        setCollapsed(!defaultExpandAll && !onlyOneProperty);
-    }, [defaultExpandAll, onlyOneProperty, setCollapsed]);
+        setCollapsed(!defaultExpandAll);
+    }, [defaultExpandAll, setCollapsed]);
 
     useEffect(() => {
-        setCollapsed(!matchesAnchorLink && !defaultExpandAll && !onlyOneProperty);
+        setCollapsed(!matchesAnchorLink && !defaultExpandAll);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -192,7 +191,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                         }
                     )}
                 >
-                    {collapsableContent.elements.length > 1 && (
+                    {collapsableContent.elements.length > 0 && (
                         <div
                             {...containerCallbacks}
                             className={classNames(
@@ -221,7 +220,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                             </div>
                         </div>
                     )}
-                    <Collapse isOpen={!isCollapsed} transitionDuration={!hydrated ? 0 : 200}>
+                    <Collapse isOpen={!isCollapsed} transitionDuration={!hydrated || justNavigated ? 0 : 200}>
                         <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
                             <TypeDefinitionDetails
                                 elements={collapsableContent.elements}
