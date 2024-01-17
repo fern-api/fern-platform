@@ -130,11 +130,13 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                             )}
 
                             {property.valueType.type === "optional" && (
-                                <Checkbox
-                                    checked={!isUndefined(value)}
-                                    onChange={handleChangeOptional}
-                                    className="-my-2 -mr-2"
-                                />
+                                <span className="inline-flex items-center">
+                                    <Checkbox
+                                        checked={!isUndefined(value)}
+                                        onChange={handleChangeOptional}
+                                        className="-my-2 -mr-2"
+                                    />
+                                </span>
                             )}
                         </div>
                     </div>
