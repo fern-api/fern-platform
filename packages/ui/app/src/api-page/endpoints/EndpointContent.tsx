@@ -226,7 +226,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
             <div
                 className="flex min-w-0 flex-1 scroll-mt-16 flex-col justify-between lg:flex-row lg:space-x-[4vw]"
                 ref={setContainerRef}
-                data-route={route}
+                data-route={route.toLowerCase()}
             >
                 <div
                     className="flex min-w-0 max-w-2xl flex-1 flex-col"
