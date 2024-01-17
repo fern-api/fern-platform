@@ -2,6 +2,7 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
+import { sortBy } from "lodash-es";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
@@ -14,6 +15,7 @@ import { JsonPropertyPath } from "../examples/json-example/contexts/JsonProperty
 import { flattenJsonToLines } from "../examples/json-example/jsonLineUtils";
 import { EndpointContentCodeSnippets } from "./EndpointContentCodeSnippets";
 import { EndpointContentLeft } from "./EndpointContentLeft";
+import { convertNameToAnchorPart } from "./EndpointErrorsSection";
 
 export declare namespace EndpointContent {
     export interface Props {
@@ -74,15 +76,17 @@ const fernClientIdAtom = atomWithStorage<CodeExampleClient["id"]>("fern-client-i
 
 const ERROR_ANCHOR_PREFIX = "response.error.";
 
-function maybeGetStatusCodeFromAnchor(anchor: string | undefined): number | undefined {
+function maybeGetErrorStatusCodeOrNameFromAnchor(anchor: string | undefined): number | string | undefined {
     if (anchor != null && anchor.startsWith(ERROR_ANCHOR_PREFIX)) {
         // error anchor format is response.error.{statusCode}.property.a.b.c
         // get {statusCode} from the anchor
-        const statusCodeString = anchor.split(".")[2];
-        if (statusCodeString != null) {
-            const statusCode = parseInt(statusCodeString, 10);
+        const statusCodeOrErrorName = anchor.split(".")[2];
+        if (statusCodeOrErrorName != null) {
+            const statusCode = parseInt(statusCodeOrErrorName, 10);
             if (!isNaN(statusCode)) {
                 return statusCode;
+            } else {
+                return statusCodeOrErrorName;
             }
         }
     }
@@ -121,23 +125,31 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     );
 
     const [storedSelectedExampleClientId, setSelectedExampleClientId] = useAtom(fernClientIdAtom);
-    const [selectedErrorStatusCode, setSelectedErrorStatusCode] = useState<number | undefined>();
+    const [selectedError, setSelectedError] = useState<APIV1Read.ErrorDeclarationV2 | undefined>();
 
     useEffect(() => {
-        const statusCode = maybeGetStatusCodeFromAnchor(router.asPath.split("#")[1]);
-        if (statusCode != null) {
-            setSelectedErrorStatusCode(statusCode);
+        const statusCodeOrName = maybeGetErrorStatusCodeOrNameFromAnchor(router.asPath.split("#")[1]);
+        if (statusCodeOrName != null) {
+            const error = endpoint.errorsV2?.find((e) =>
+                typeof statusCodeOrName === "number"
+                    ? e.statusCode === statusCodeOrName
+                    : convertNameToAnchorPart(e.name) === statusCodeOrName
+            );
+            if (error != null) {
+                setSelectedError(error);
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const errors = useMemo(() => {
-        return [...(endpoint.errorsV2 ?? [])]
-            .sort((e1, e2) => (e1.name != null && e2.name != null ? e1.name.localeCompare(e2.name) : 0))
-            .sort((e1, e2) => e1.statusCode - e2.statusCode);
+        return sortBy(
+            endpoint.errorsV2 ?? [],
+            (e) => e.statusCode,
+            (e) => e.name
+        );
     }, [endpoint.errorsV2]);
 
-    const selectedError = errors.find((error) => error.statusCode === selectedErrorStatusCode);
     const example = useMemo(() => {
         if (selectedError == null) {
             // Look for success example
@@ -220,7 +232,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
             className={classNames("pb-20 pl-6 md:pl-12 pr-4 scroll-mt-20", {
                 "border-border-default-light dark:border-border-default-dark border-b": !hideBottomSeparator,
             })}
-            onClick={() => setSelectedErrorStatusCode(undefined)}
+            onClick={() => setSelectedError(undefined)}
             ref={containerRef}
         >
             <div
@@ -242,8 +254,8 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                             onHoverRequestProperty={onHoverRequestProperty}
                             onHoverResponseProperty={onHoverResponseProperty}
                             errors={errors}
-                            selectedErrorStatusCode={selectedErrorStatusCode}
-                            setSelectedErrorStatusCode={setSelectedErrorStatusCode}
+                            selectedError={selectedError}
+                            setSelectedError={setSelectedError}
                             route={route}
                         />
                     )}
