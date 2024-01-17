@@ -34,6 +34,7 @@ interface ApiPlayroundContentProps {
     resetWithoutExample: () => void;
     openSecretsModal: () => void;
     secrets: SecretBearer[];
+    resolveTypeById: (typeId: APIV1Read.TypeId) => APIV1Read.TypeDefinition | undefined;
 }
 
 const requestTypeAtom = atomWithStorage<"curl" | "javascript" | "python">("api-playground-atom-alpha", "curl");
@@ -49,6 +50,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
     secrets,
     slug,
     apiId,
+    resolveTypeById,
 }) => {
     const { apiDefinition } = useApiPlaygroundContext();
 
@@ -114,6 +116,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                     secrets={secrets}
                     slug={slug}
                     apiId={apiId}
+                    resolveTypeById={resolveTypeById}
                 />
             </div>
             <div className="divide-border-default-light dark:divide-border-default-dark xl:flex-2 flex min-w-0 flex-1 shrink flex-col divide-y xl:flex-row xl:divide-x xl:divide-y-0">

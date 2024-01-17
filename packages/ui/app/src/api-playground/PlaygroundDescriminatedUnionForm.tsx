@@ -136,6 +136,7 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                             property={property}
                             onChange={handleChangeProperty}
                             value={castToRecord(value)[property.key]}
+                            resolveTypeById={resolveTypeById}
                         />
                     ))}
                 </ul>

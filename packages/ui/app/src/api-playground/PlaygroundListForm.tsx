@@ -2,7 +2,6 @@ import { Button } from "@blueprintjs/core";
 import { Cross, Plus } from "@blueprintjs/icons";
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { FC, useCallback } from "react";
-import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType } from "./utils";
 
@@ -10,10 +9,10 @@ interface PlaygroundListFormProps {
     itemType: APIV1Read.TypeReference;
     onChange: (value: unknown) => void;
     value: unknown;
+    resolveTypeById: (typeId: APIV1Read.TypeId) => APIV1Read.TypeDefinition | undefined;
 }
 
-export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemType, onChange, value }) => {
-    const { resolveTypeById } = useApiPlaygroundContext();
+export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemType, onChange, value, resolveTypeById }) => {
     const appendItem = useCallback(() => {
         onChange((oldValue: unknown) => {
             const oldArray = Array.isArray(oldValue) ? oldValue : [];
@@ -61,6 +60,7 @@ export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemType, onCh
                                         handleChangeItem(idx, typeof newItem === "function" ? newItem(item) : newItem)
                                     }
                                     renderAsPanel={true}
+                                    resolveTypeById={resolveTypeById}
                                 />
                                 <Button
                                     icon={<Cross />}

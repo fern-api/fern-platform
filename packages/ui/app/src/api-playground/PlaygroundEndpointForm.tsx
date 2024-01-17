@@ -25,6 +25,7 @@ interface PlaygroundEndpointFormProps {
     setFormState: Dispatch<SetStateAction<PlaygroundRequestFormState>>;
     openSecretsModal: () => void;
     secrets: SecretBearer[];
+    resolveTypeById: (typeId: APIV1Read.TypeId) => APIV1Read.TypeDefinition | undefined;
 }
 
 export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
@@ -35,9 +36,10 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
     secrets,
     slug,
     apiId,
+    resolveTypeById,
 }) => {
     const { activeNavigatable } = useNavigationContext();
-    const { resolveTypeById, apiDefinition } = useApiPlaygroundContext();
+    const { apiDefinition } = useApiPlaygroundContext();
     const setAuthorization = useCallback(
         (newAuthValue: PlaygroundRequestFormAuth) => {
             setFormState((state) => ({
@@ -328,6 +330,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                 }}
                                 onChange={setHeader}
                                 value={formState?.headers[header.key]}
+                                resolveTypeById={resolveTypeById}
                             />
                         ))}
                     </ul>
@@ -351,6 +354,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                 }}
                                 onChange={setPathParameter}
                                 value={formState?.pathParameters[pathParameter.key]}
+                                resolveTypeById={resolveTypeById}
                             />
                         ))}
                     </ul>
@@ -374,6 +378,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                 }}
                                 onChange={setQueryParameter}
                                 value={formState?.queryParameters[queryParameter.key]}
+                                resolveTypeById={resolveTypeById}
                             />
                         ))}
                     </ul>
@@ -396,6 +401,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                             onChange={setBodyByKey}
                                             value={castToRecord(formState?.body)[property.key]}
                                             expandByDefault={false}
+                                            resolveTypeById={resolveTypeById}
                                         />
                                     ))}
 
@@ -408,6 +414,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                             onChange={setBodyByKey}
                                             value={castToRecord(formState?.body)[property.key]}
                                             expandByDefault={false}
+                                            resolveTypeById={resolveTypeById}
                                         />
                                     ))}
                             </ul>
@@ -417,6 +424,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                 typeReference={reference.value}
                                 onChange={setBody}
                                 value={formState?.body}
+                                resolveTypeById={resolveTypeById}
                             />
                         ),
                         fileUpload: () => <span>fileUpload</span>,

@@ -3,7 +3,6 @@ import { Cross, Plus } from "@blueprintjs/icons";
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { isPlainObject } from "@fern-ui/core-utils";
 import { FC, useCallback, useEffect, useState } from "react";
-import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType, unknownToString } from "./utils";
 
@@ -12,6 +11,7 @@ interface PlaygroundMapFormProps {
     valueType: APIV1Read.TypeReference;
     onChange: (value: unknown) => void;
     value: unknown;
+    resolveTypeById: (typeId: APIV1Read.TypeId) => APIV1Read.TypeDefinition | undefined;
 }
 
 function toKeyValuePairs(value: unknown): Array<{ key: unknown; value: unknown }> {
@@ -29,9 +29,13 @@ function fromKeyValuePairs(keyValuePairs: Array<{ key: unknown; value: unknown }
     }, {});
 }
 
-export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ keyType, valueType, onChange, value }) => {
-    const { resolveTypeById } = useApiPlaygroundContext();
-
+export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({
+    keyType,
+    valueType,
+    onChange,
+    value,
+    resolveTypeById,
+}) => {
     const [internalState, setInternalState] = useState<Array<{ key: unknown; value: unknown }>>(() =>
         toKeyValuePairs(value)
     );
@@ -75,19 +79,33 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ keyType, valueTy
     return (
         <div>
             {internalState.length > 0 && (
-                <ul className="border-border-default-light dark:border-border-default-dark w-full list-none space-y-4 border-l pl-4">
+                <ul className="divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark max-w-full list-none divide-y divide-dashed border-t border-dashed">
                     {internalState.map((item, idx) => (
-                        <li key={idx} className="flex gap-4">
-                            <PlaygroundTypeReferenceForm
-                                typeReference={keyType}
-                                value={item.key}
-                                onChange={(newKey) => handleChangeKey(idx, newKey)}
-                            />
-                            <PlaygroundTypeReferenceForm
-                                typeReference={valueType}
-                                value={item.value}
-                                onChange={(newValue) => handleChangeValue(idx, newValue)}
-                            />
+                        <li key={idx} className="flex min-h-12 flex-row items-center gap-1 py-2">
+                            <div className="flex min-w-0 shrink items-center justify-between gap-2">
+                                <label className="inline-flex flex-wrap items-baseline">
+                                    <span className="t-muted bg-tag-default-light dark:bg-tag-default-dark rounded p-1 text-xs uppercase">
+                                        {idx + 1}
+                                    </span>
+                                </label>
+                            </div>
+
+                            <div className="min-w-0 flex-1 shrink">
+                                <PlaygroundTypeReferenceForm
+                                    typeReference={keyType}
+                                    value={item.key}
+                                    onChange={(newKey) => handleChangeKey(idx, newKey)}
+                                    resolveTypeById={resolveTypeById}
+                                />
+                            </div>
+                            <div className="min-w-0 flex-1 shrink">
+                                <PlaygroundTypeReferenceForm
+                                    typeReference={valueType}
+                                    value={item.value}
+                                    onChange={(newValue) => handleChangeValue(idx, newValue)}
+                                    resolveTypeById={resolveTypeById}
+                                />
+                            </div>
                             <div>
                                 <Button icon={<Cross />} onClick={() => handleRemoveItem(idx)} minimal={true} />
                             </div>

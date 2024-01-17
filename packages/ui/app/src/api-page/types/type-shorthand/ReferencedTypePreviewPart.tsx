@@ -39,6 +39,21 @@ export const TypeShapeShorthand: React.FC<TypeShapeShorthandProps> = ({ shape, p
     );
 };
 
+export function renderReferencedTypePreviewPart(
+    typeId: APIV1Read.TypeId,
+    plural: boolean,
+    withArticle: boolean,
+    resolveTypeById: (id: string) => APIV1Read.TypeDefinition | undefined
+): ReactElement {
+    const shape = resolveTypeById(typeId)?.shape;
+
+    if (shape == null) {
+        return <>{"<unknown>"}</>;
+    }
+
+    return <TypeShapeShorthand shape={shape} plural={plural} withArticle={withArticle} />;
+}
+
 export const ReferencedTypePreviewPart: React.FC<ReferencedTypePreviewPart.Props> = ({
     typeId,
     plural,
@@ -48,12 +63,5 @@ export const ReferencedTypePreviewPart: React.FC<ReferencedTypePreviewPart.Props
     const { resolveTypeById: contextResolveTypeById } = useApiDefinitionContext();
 
     const resolveTypeById = resolveTypeByIdParent ?? contextResolveTypeById;
-
-    const shape = resolveTypeById(typeId)?.shape;
-
-    if (shape == null) {
-        return <>{"<unknown>"}</>;
-    }
-
-    return <TypeShapeShorthand shape={shape} plural={plural} withArticle={withArticle} />;
+    return renderReferencedTypePreviewPart(typeId, plural, withArticle, resolveTypeById);
 };

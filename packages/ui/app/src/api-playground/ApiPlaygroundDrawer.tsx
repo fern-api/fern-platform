@@ -20,6 +20,7 @@ interface ApiPlaygroundDrawerProps {
     secrets: SecretBearer[];
     slug: string | undefined;
     apiId: string | undefined;
+    resolveTypeById: (typeId: APIV1Read.TypeId) => APIV1Read.TypeDefinition | undefined;
 }
 
 export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
@@ -33,6 +34,7 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
     secrets,
     slug,
     apiId,
+    resolveTypeById,
 }): ReactElement => {
     const { collapseApiPlayground } = useApiPlaygroundContext();
 
@@ -74,6 +76,7 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
                     secrets={secrets}
                     slug={slug}
                     apiId={apiId}
+                    resolveTypeById={resolveTypeById}
                 />
             ) : (
                 <div className="flex flex-1 items-center justify-center">

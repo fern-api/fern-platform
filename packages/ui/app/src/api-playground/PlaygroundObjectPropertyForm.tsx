@@ -6,8 +6,7 @@ import classNames from "classnames";
 import { isUndefined } from "lodash-es";
 import { ChangeEventHandler, FC, useCallback, useEffect, useState } from "react";
 import { EndpointAvailabilityTag } from "../api-page/endpoints/EndpointAvailabilityTag";
-import { TypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
-import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
+import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType, isExpandable } from "./utils";
 
@@ -16,6 +15,7 @@ interface PlaygroundObjectPropertyFormProps {
     onChange: (key: string, value: unknown) => void;
     value: unknown;
     expandByDefault?: boolean;
+    resolveTypeById: (typeId: APIV1Read.TypeId) => APIV1Read.TypeDefinition | undefined;
 }
 
 export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps> = ({
@@ -23,9 +23,8 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
     onChange,
     value,
     expandByDefault = true,
+    resolveTypeById,
 }) => {
-    const { resolveTypeById } = useApiPlaygroundContext();
-
     const handleChange = useCallback(
         (newValue: unknown) => {
             onChange(property.key, newValue);
@@ -102,20 +101,13 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                                     onFocus={handleFocus}
                                     onBlur={handleBlur}
                                     renderAsPanel={true}
+                                    resolveTypeById={resolveTypeById}
                                 />
                             )}
 
                             {((property.valueType.type === "optional" && isUndefined(value)) || expandable) && (
                                 <span className="t-muted whitespace-nowrap text-xs">
-                                    <TypeShorthand
-                                        type={
-                                            property.valueType.type !== "optional"
-                                                ? property.valueType
-                                                : property.valueType.itemType
-                                        }
-                                        plural={false}
-                                        resolveTypeById={resolveTypeById}
-                                    />
+                                    {renderTypeShorthand(property.valueType, false, false, resolveTypeById)}
                                 </span>
                             )}
 
@@ -134,7 +126,7 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                                     <Checkbox
                                         checked={!isUndefined(value)}
                                         onChange={handleChangeOptional}
-                                        className="-my-2 -mr-2"
+                                        className="!-my-2 !-mr-2"
                                     />
                                 </span>
                             )}
@@ -153,6 +145,7 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                                 onFocus={handleFocus}
                                 onBlur={handleBlur}
                                 renderAsPanel={true}
+                                resolveTypeById={resolveTypeById}
                             />
                         </div>
                     )}

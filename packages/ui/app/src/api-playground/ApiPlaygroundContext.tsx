@@ -274,6 +274,7 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren> = ({ children }
                             secrets={globalFormSecrets}
                             slug={selectionState?.slug}
                             apiId={selectionState?.apiId}
+                            resolveTypeById={resolveTypeById}
                         />
                     </div>
                 </Transition.Child>

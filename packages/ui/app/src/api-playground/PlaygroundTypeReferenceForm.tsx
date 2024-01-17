@@ -8,7 +8,6 @@ import { Transition } from "@headlessui/react";
 import { FC, useCallback } from "react";
 import { TypeShapeShorthand } from "../api-page/types/type-shorthand/ReferencedTypePreviewPart";
 import { getAllObjectProperties } from "../api-page/utils/getAllObjectProperties";
-import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 import { PlaygroundDiscriminatedUnionForm } from "./PlaygroundDescriminatedUnionForm";
 import { PlaygroundEnumForm } from "./PlaygroundEnumForm";
 import { PlaygroundListForm } from "./PlaygroundListForm";
@@ -24,6 +23,7 @@ interface PlaygroundTypeReferenceFormProps {
     onFocus?: () => void;
     onBlur?: () => void;
     renderAsPanel?: boolean;
+    resolveTypeById: (typeId: APIV1Read.TypeId) => APIV1Read.TypeDefinition | undefined;
 }
 
 interface PlaygroundTypeShapeFormProps {
@@ -34,6 +34,7 @@ interface PlaygroundTypeShapeFormProps {
     onBlur?: () => void;
     renderAsPanel?: boolean;
     onChangeObject: (key: string, value: unknown | ((oldValue: unknown) => unknown)) => void;
+    resolveTypeById: (typeId: APIV1Read.TypeId) => APIV1Read.TypeDefinition | undefined;
 }
 
 export const PlaygroundTypeShapeForm: FC<PlaygroundTypeShapeFormProps> = ({
@@ -44,8 +45,8 @@ export const PlaygroundTypeShapeForm: FC<PlaygroundTypeShapeFormProps> = ({
     onFocus: handleFocus,
     renderAsPanel = false,
     onChangeObject,
+    resolveTypeById,
 }) => {
-    const { resolveTypeById } = useApiPlaygroundContext();
     const form = visitDiscriminatedUnion(typeShape, "type")._visit({
         object: (object) => (
             <ul
@@ -59,6 +60,7 @@ export const PlaygroundTypeShapeForm: FC<PlaygroundTypeShapeFormProps> = ({
                         property={property}
                         onChange={onChangeObject}
                         value={castToRecord(value)[property.key]}
+                        resolveTypeById={resolveTypeById}
                     />
                 ))}
             </ul>
@@ -71,6 +73,7 @@ export const PlaygroundTypeShapeForm: FC<PlaygroundTypeShapeFormProps> = ({
                 onBlur={handleBlur}
                 onFocus={handleFocus}
                 renderAsPanel={renderAsPanel}
+                resolveTypeById={resolveTypeById}
             />
         ),
         enum: ({ values }) => <PlaygroundEnumForm enumValues={values} onChange={onChange} value={value} />,
@@ -146,9 +149,8 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
     onBlur: handleBlur,
     onFocus: handleFocus,
     renderAsPanel = false,
+    resolveTypeById,
 }) => {
-    const { resolveTypeById } = useApiPlaygroundContext();
-
     const onChangeObject = useCallback(
         (key: string, value: unknown | ((oldValue: unknown) => unknown)) => {
             onChange((oldValue: unknown) => {
@@ -178,6 +180,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     onFocus={handleFocus}
                     renderAsPanel={renderAsPanel}
                     onChangeObject={onChangeObject}
+                    resolveTypeById={resolveTypeById}
                 />
             );
         },
@@ -189,7 +192,9 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                             fill={true}
                             value={typeof value === "string" ? value : ""}
                             onValueChange={onChange}
-                            rightElement={<span className="t-muted mx-2 text-xs">{"string"}</span>}
+                            rightElement={
+                                <span className="t-muted mx-2 flex h-[30px] items-center text-xs">{"string"}</span>
+                            }
                             onFocus={handleFocus}
                             onBlur={handleBlur}
                         />
@@ -208,7 +213,9 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                             minorStepSize={null}
                             value={typeof value === "number" ? value : undefined}
                             onValueChange={onChange}
-                            rightElement={<span className="t-muted mx-2 text-xs">{"integer"}</span>}
+                            rightElement={
+                                <span className="t-muted mx-2 flex h-[30px] items-center text-xs">{"integer"}</span>
+                            }
                             onFocus={handleFocus}
                             onBlur={handleBlur}
                         />
@@ -218,7 +225,9 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                             fill={true}
                             value={typeof value === "number" ? value : undefined}
                             onValueChange={onChange}
-                            rightElement={<span className="t-muted mx-2 text-xs">{"double"}</span>}
+                            rightElement={
+                                <span className="t-muted mx-2 flex h-[30px] items-center text-xs">{"double"}</span>
+                            }
                             onFocus={handleFocus}
                             onBlur={handleBlur}
                         />
@@ -229,7 +238,9 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                             minorStepSize={null}
                             value={typeof value === "number" ? value : undefined}
                             onValueChange={onChange}
-                            rightElement={<span className="t-muted mx-2 text-xs">{"long"}</span>}
+                            rightElement={
+                                <span className="t-muted mx-2 flex h-[30px] items-center text-xs">{"long"}</span>
+                            }
                             onFocus={handleFocus}
                             onBlur={handleBlur}
                         />
@@ -253,7 +264,9 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                             value={typeof value === "string" ? value : ""}
                             onValueChange={onChange}
                             placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-                            rightElement={<span className="t-muted mx-2 text-xs">{"uuid"}</span>}
+                            rightElement={
+                                <span className="t-muted mx-2 flex h-[30px] items-center text-xs">{"uuid"}</span>
+                            }
                             onFocus={handleFocus}
                             onBlur={handleBlur}
                         />
@@ -284,10 +297,30 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
             </div>
         ),
         optional: () => null, // should be handled by the parent
-        list: (list) => <PlaygroundListForm itemType={list.itemType} onChange={onChange} value={value} />,
-        set: (set) => <PlaygroundListForm itemType={set.itemType} onChange={onChange} value={value} />,
+        list: (list) => (
+            <PlaygroundListForm
+                itemType={list.itemType}
+                onChange={onChange}
+                value={value}
+                resolveTypeById={resolveTypeById}
+            />
+        ),
+        set: (set) => (
+            <PlaygroundListForm
+                itemType={set.itemType}
+                onChange={onChange}
+                value={value}
+                resolveTypeById={resolveTypeById}
+            />
+        ),
         map: (map) => (
-            <PlaygroundMapForm keyType={map.keyType} valueType={map.valueType} onChange={onChange} value={value} />
+            <PlaygroundMapForm
+                keyType={map.keyType}
+                valueType={map.valueType}
+                onChange={onChange}
+                value={value}
+                resolveTypeById={resolveTypeById}
+            />
         ),
         literal: (literal) => (
             <div>
