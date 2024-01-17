@@ -3,7 +3,7 @@ import { Cross, Plus } from "@blueprintjs/icons";
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { isPlainObject } from "@fern-ui/core-utils";
 import { FC, useCallback, useEffect, useState } from "react";
-import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
+import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType, unknownToString } from "./utils";
 
@@ -30,7 +30,7 @@ function fromKeyValuePairs(keyValuePairs: Array<{ key: unknown; value: unknown }
 }
 
 export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ keyType, valueType, onChange, value }) => {
-    const { resolveTypeById } = useApiDefinitionContext();
+    const { resolveTypeById } = useApiPlaygroundContext();
 
     const [internalState, setInternalState] = useState<Array<{ key: unknown; value: unknown }>>(() =>
         toKeyValuePairs(value)

@@ -8,10 +8,16 @@ export declare namespace TypeShorthand {
         type: APIV1Read.TypeReference;
         plural: boolean;
         withArticle?: boolean;
+        resolveTypeById?: (id: string) => APIV1Read.TypeDefinition | undefined;
     }
 }
 
-export const TypeShorthand: React.FC<TypeShorthand.Props> = ({ type, plural, withArticle = false }) => {
+export const TypeShorthand: React.FC<TypeShorthand.Props> = ({
+    type,
+    plural,
+    withArticle = false,
+    resolveTypeById,
+}) => {
     const maybeWithArticle = (article: string, stringWithoutArticle: string) =>
         withArticle ? `${article} ${stringWithoutArticle}` : stringWithoutArticle;
 
@@ -19,7 +25,12 @@ export const TypeShorthand: React.FC<TypeShorthand.Props> = ({ type, plural, wit
         <>
             {visitDiscriminatedUnion(type, "type")._visit<ReactElement | string>({
                 id: ({ value: typeId }) => (
-                    <ReferencedTypePreviewPart typeId={typeId} plural={plural} withArticle={withArticle} />
+                    <ReferencedTypePreviewPart
+                        typeId={typeId}
+                        plural={plural}
+                        withArticle={withArticle}
+                        resolveTypeById={resolveTypeById}
+                    />
                 ),
                 primitive: ({ value: primitive }) => {
                     return visitDiscriminatedUnion(primitive, "type")._visit({
@@ -37,14 +48,15 @@ export const TypeShorthand: React.FC<TypeShorthand.Props> = ({ type, plural, wit
                 },
                 optional: ({ itemType }) => (
                     <>
-                        {maybeWithArticle("an", "optional")} <TypeShorthand type={itemType} plural={plural} />
+                        {maybeWithArticle("an", "optional")}{" "}
+                        <TypeShorthand type={itemType} plural={plural} resolveTypeById={resolveTypeById} />
                     </>
                 ),
                 list: ({ itemType }) => {
                     return (
                         <>
                             {plural ? "lists of" : maybeWithArticle("a", "list of")}{" "}
-                            <TypeShorthand type={itemType} plural />
+                            <TypeShorthand type={itemType} plural resolveTypeById={resolveTypeById} />
                         </>
                     );
                 },
@@ -52,7 +64,7 @@ export const TypeShorthand: React.FC<TypeShorthand.Props> = ({ type, plural, wit
                     return (
                         <>
                             {plural ? "sets of" : maybeWithArticle("a", "set of")}{" "}
-                            <TypeShorthand type={itemType} plural />
+                            <TypeShorthand type={itemType} plural resolveTypeById={resolveTypeById} />
                         </>
                     );
                 },
@@ -60,9 +72,9 @@ export const TypeShorthand: React.FC<TypeShorthand.Props> = ({ type, plural, wit
                     return (
                         <>
                             {plural ? "maps from " : maybeWithArticle("a", "map from ")}
-                            <TypeShorthand type={keyType} plural />
+                            <TypeShorthand type={keyType} plural resolveTypeById={resolveTypeById} />
                             {" to "}
-                            <TypeShorthand type={valueType} plural />
+                            <TypeShorthand type={valueType} plural resolveTypeById={resolveTypeById} />
                         </>
                     );
                 },

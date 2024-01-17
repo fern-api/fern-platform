@@ -9,24 +9,19 @@ export declare namespace ReferencedTypePreviewPart {
         typeId: APIV1Read.TypeId;
         plural: boolean;
         withArticle?: boolean;
+        resolveTypeById?: (id: string) => APIV1Read.TypeDefinition | undefined;
     }
 }
 
-export const ReferencedTypePreviewPart: React.FC<ReferencedTypePreviewPart.Props> = ({
-    typeId,
-    plural,
-    withArticle = false,
-}) => {
-    const { resolveTypeById } = useApiDefinitionContext();
+interface TypeShapeShorthandProps {
+    shape: APIV1Read.TypeShape;
+    plural: boolean;
+    withArticle?: boolean;
+}
 
-    const shape = resolveTypeById(typeId)?.shape;
-
+export const TypeShapeShorthand: React.FC<TypeShapeShorthandProps> = ({ shape, plural, withArticle }) => {
     const maybeWithArticle = (article: string, stringWithoutArticle: string) =>
         withArticle ? `${article} ${stringWithoutArticle}` : stringWithoutArticle;
-
-    if (shape == null) {
-        return <>{"<unknown>"}</>;
-    }
 
     return (
         <>
@@ -42,4 +37,23 @@ export const ReferencedTypePreviewPart: React.FC<ReferencedTypePreviewPart.Props
             })}
         </>
     );
+};
+
+export const ReferencedTypePreviewPart: React.FC<ReferencedTypePreviewPart.Props> = ({
+    typeId,
+    plural,
+    withArticle = false,
+    resolveTypeById: resolveTypeByIdParent,
+}) => {
+    const { resolveTypeById: contextResolveTypeById } = useApiDefinitionContext();
+
+    const resolveTypeById = resolveTypeByIdParent ?? contextResolveTypeById;
+
+    const shape = resolveTypeById(typeId)?.shape;
+
+    if (shape == null) {
+        return <>{"<unknown>"}</>;
+    }
+
+    return <TypeShapeShorthand shape={shape} plural={plural} withArticle={withArticle} />;
 };

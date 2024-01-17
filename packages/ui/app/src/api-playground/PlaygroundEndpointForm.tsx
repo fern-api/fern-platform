@@ -1,26 +1,36 @@
-import { InputGroup } from "@blueprintjs/core";
-import { Key, Person } from "@blueprintjs/icons";
+import { Button, InputGroup } from "@blueprintjs/core";
+import { Cross, GlobeNetwork, Person } from "@blueprintjs/icons";
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { Dispatch, FC, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
-import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { Markdown } from "../api-page/markdown/Markdown";
 import { getAllObjectProperties } from "../api-page/utils/getAllObjectProperties";
+import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
+import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundObjectPropertyForm } from "./PlaygroundObjectPropertyForm";
+import { SecretBearer, SecretSpan } from "./PlaygroundSecretsModal";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { PlaygroundRequestFormAuth, PlaygroundRequestFormState } from "./types";
 import { castToRecord } from "./utils";
 
-interface PlaygroundEndpointForm {
+interface PlaygroundEndpointFormProps {
     endpoint: APIV1Read.EndpointDefinition;
-    formState: PlaygroundRequestFormState;
+    formState: PlaygroundRequestFormState | undefined;
     setFormState: Dispatch<SetStateAction<PlaygroundRequestFormState>>;
+    openSecretsModal: () => void;
+    secrets: SecretBearer[];
 }
 
-export const PlaygroundEndpointForm: FC<PlaygroundEndpointForm> = ({ endpoint, formState, setFormState }) => {
-    const { resolveTypeById, apiDefinition } = useApiDefinitionContext();
+export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
+    endpoint,
+    formState,
+    setFormState,
+    openSecretsModal,
+    secrets,
+}) => {
+    const { resolveTypeById, apiDefinition } = useApiPlaygroundContext();
     const setAuthorization = useCallback(
         (newAuthValue: PlaygroundRequestFormAuth) => {
             setFormState((state) => ({
@@ -114,7 +124,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointForm> = ({ endpoint, f
     }, [showFullDescription]);
 
     return (
-        <div className="flex w-full flex-1 flex-col gap-y-4 overflow-y-auto overflow-x-hidden px-6 py-4 pb-10">
+        <div className="flex min-h-0 flex-1 shrink flex-col gap-y-4 overflow-y-auto overflow-x-hidden p-4 pb-10">
             {endpoint.description != null && endpoint.description.length > 0 && (
                 <section
                     className="border-border-default-light dark:border-border-default-dark border-b pb-4"
@@ -140,120 +150,152 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointForm> = ({ endpoint, f
 
             {endpoint.authed && apiDefinition?.auth != null && (
                 <section>
-                    <h3 className="m-0">Authorization</h3>
-                    <ul className="my-4 w-full list-none space-y-4">
+                    <h6 className="t-muted m-0 mb-2">Authorization</h6>
+                    <ul className="divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark -mx-4 mb-4 list-none divide-y border-y">
                         {visitDiscriminatedUnion(apiDefinition.auth, "type")._visit({
                             bearerAuth: (bearerAuth) => (
-                                <li className="flex flex-col gap-1">
-                                    <div className="shrink-1 flex min-w-0 flex-1 items-center justify-between gap-2">
-                                        <label className="inline-flex w-full flex-wrap items-baseline gap-2">
+                                <li className="divide-border-default-light dark:divide-border-default-dark flex min-h-12 flex-row items-stretch divide-x px-4">
+                                    <div className="flex min-w-0 flex-1 shrink items-center justify-between gap-2 pr-2">
+                                        <label className="inline-flex flex-wrap items-baseline gap-2">
                                             <span className="font-mono text-sm">
                                                 {bearerAuth.tokenName ?? "Bearer token"}
                                             </span>
-
-                                            <span className="t-muted text-xs">{"string"}</span>
                                         </label>
                                     </div>
-                                    <InputGroup
-                                        fill={true}
-                                        type="password"
-                                        onValueChange={(newValue) =>
-                                            setAuthorization({ type: "bearerAuth", token: newValue })
-                                        }
-                                        value={formState.auth?.type === "bearerAuth" ? formState.auth.token : ""}
-                                        leftIcon={<Key />}
-                                        autoComplete="off"
-                                        data-1p-ignore="true"
-                                    />
+                                    <div className="flex min-w-0 max-w-full flex-1 shrink items-center justify-end gap-2 pl-2">
+                                        {formState?.auth?.type === "bearerAuth" &&
+                                        secrets.some(
+                                            (secret) =>
+                                                formState?.auth?.type === "bearerAuth" &&
+                                                formState.auth.token === secret.token
+                                        ) ? (
+                                            <span className="inline-flex items-center gap-1">
+                                                <SecretSpan secret={formState.auth.token} className="text-sm" />
+                                                <Button
+                                                    icon={<Cross />}
+                                                    minimal={true}
+                                                    small={true}
+                                                    onClick={() => {
+                                                        setAuthorization({
+                                                            type: "bearerAuth",
+                                                            token: "",
+                                                        });
+                                                    }}
+                                                    className="-mr-2"
+                                                />
+                                            </span>
+                                        ) : (
+                                            <PasswordInputGroup
+                                                fill={true}
+                                                onValueChange={(newValue) =>
+                                                    setAuthorization({ type: "bearerAuth", token: newValue })
+                                                }
+                                                value={
+                                                    formState?.auth?.type === "bearerAuth" ? formState.auth.token : ""
+                                                }
+                                                autoComplete="off"
+                                                data-1p-ignore="true"
+                                                rightElement={
+                                                    <Button
+                                                        onClick={openSecretsModal}
+                                                        icon={<GlobeNetwork />}
+                                                        minimal={true}
+                                                    />
+                                                }
+                                            />
+                                        )}
+                                    </div>
                                 </li>
                             ),
                             basicAuth: (basicAuth) => (
                                 <>
-                                    <li className="flex flex-col gap-1">
-                                        <div className="shrink-1 flex min-w-0 flex-1 items-center justify-between gap-2">
-                                            <label className="inline-flex w-full flex-wrap items-baseline gap-2">
+                                    <li className="divide-border-default-light dark:divide-border-default-dark flex min-h-12 flex-row items-stretch divide-x px-4">
+                                        <div className="flex min-w-0 flex-1 shrink items-center justify-between gap-2 pr-2">
+                                            <label className="inline-flex flex-wrap items-baseline gap-2">
                                                 <span className="font-mono text-sm">
                                                     {basicAuth.usernameName ?? "Username"}
                                                 </span>
-
-                                                <span className="t-muted text-xs">{"string"}</span>
                                             </label>
                                         </div>
-                                        <InputGroup
-                                            fill={true}
-                                            onValueChange={(newValue) =>
-                                                setAuthorization({
-                                                    type: "basicAuth",
-                                                    username: newValue,
-                                                    password:
-                                                        formState.auth?.type === "basicAuth"
-                                                            ? formState.auth.password
-                                                            : "",
-                                                })
-                                            }
-                                            value={formState.auth?.type === "basicAuth" ? formState.auth.username : ""}
-                                            leftIcon={<Person />}
-                                        />
+                                        <div className="flex min-w-0 max-w-full flex-1 shrink items-center justify-end gap-2 pl-2">
+                                            <InputGroup
+                                                fill={true}
+                                                onValueChange={(newValue) =>
+                                                    setAuthorization({
+                                                        type: "basicAuth",
+                                                        username: newValue,
+                                                        password:
+                                                            formState?.auth?.type === "basicAuth"
+                                                                ? formState.auth.password
+                                                                : "",
+                                                    })
+                                                }
+                                                value={
+                                                    formState?.auth?.type === "basicAuth" ? formState.auth.username : ""
+                                                }
+                                                leftIcon={<Person />}
+                                                rightElement={<span className="t-muted text-xs">{"string"}</span>}
+                                            />
+                                        </div>
                                     </li>
 
-                                    <li className="flex flex-col gap-1">
-                                        <div className="shrink-1 flex min-w-0 flex-1 items-center justify-between gap-2">
-                                            <label className="inline-flex w-full flex-wrap items-baseline gap-2">
+                                    <li className="divide-border-default-light dark:divide-border-default-dark flex min-h-12 flex-row items-stretch divide-x px-4">
+                                        <div className="flex min-w-0 flex-1 shrink items-center justify-between gap-2 pr-2">
+                                            <label className="inline-flex flex-wrap items-baseline gap-2">
                                                 <span className="font-mono text-sm">
                                                     {basicAuth.passwordName ?? "Password"}
                                                 </span>
-
-                                                <span className="t-muted text-xs">{"string"}</span>
                                             </label>
                                         </div>
-                                        <InputGroup
-                                            fill={true}
-                                            type="password"
-                                            onValueChange={(newValue) =>
-                                                setAuthorization({
-                                                    type: "basicAuth",
-                                                    username:
-                                                        formState.auth?.type === "basicAuth"
-                                                            ? formState.auth.username
-                                                            : "",
-                                                    password: newValue,
-                                                })
-                                            }
-                                            value={formState.auth?.type === "basicAuth" ? formState.auth.password : ""}
-                                            leftIcon={<Key />}
-                                        />
+
+                                        <div className="flex min-w-0 flex-1 shrink justify-between gap-2 pl-2">
+                                            <PasswordInputGroup
+                                                fill={true}
+                                                onValueChange={(newValue) =>
+                                                    setAuthorization({
+                                                        type: "basicAuth",
+                                                        username:
+                                                            formState?.auth?.type === "basicAuth"
+                                                                ? formState.auth.username
+                                                                : "",
+                                                        password: newValue,
+                                                    })
+                                                }
+                                                value={
+                                                    formState?.auth?.type === "basicAuth" ? formState.auth.password : ""
+                                                }
+                                            />
+                                        </div>
                                     </li>
                                 </>
                             ),
                             header: (header) => (
-                                <li className="flex flex-col gap-1">
-                                    <div className="shrink-1 flex min-w-0 flex-1 items-center justify-between gap-2">
-                                        <label className="inline-flex w-full flex-wrap items-baseline gap-2">
+                                <li className="divide-border-default-light dark:divide-border-default-dark flex min-h-12 flex-row items-stretch divide-x px-4">
+                                    <div className="flex min-w-0 flex-1 shrink items-center justify-between gap-2">
+                                        <label className="inline-flex flex-wrap items-baseline gap-2">
                                             <span className="font-mono text-sm">
                                                 {header.nameOverride ?? header.headerWireValue}
                                             </span>
-
-                                            <span className="t-muted text-xs">{"string"}</span>
                                         </label>
                                     </div>
-                                    <InputGroup
-                                        fill={true}
-                                        type="password"
-                                        onValueChange={(newValue) =>
-                                            setAuthorization({
-                                                type: "header",
-                                                headers: { [header.headerWireValue]: newValue },
-                                            })
-                                        }
-                                        value={
-                                            formState.auth?.type === "header"
-                                                ? formState.auth.headers[header.headerWireValue]
-                                                : ""
-                                        }
-                                        leftIcon={<Key />}
-                                        autoComplete="off"
-                                        data-1p-ignore="true"
-                                    />
+                                    <div className="flex min-w-0 flex-1 shrink justify-between gap-2 pl-2">
+                                        <PasswordInputGroup
+                                            fill={true}
+                                            onValueChange={(newValue) =>
+                                                setAuthorization({
+                                                    type: "header",
+                                                    headers: { [header.headerWireValue]: newValue },
+                                                })
+                                            }
+                                            value={
+                                                formState?.auth?.type === "header"
+                                                    ? formState.auth.headers[header.headerWireValue]
+                                                    : ""
+                                            }
+                                            autoComplete="off"
+                                            data-1p-ignore="true"
+                                        />
+                                    </div>
                                 </li>
                             ),
                             _other: () => null,
@@ -264,8 +306,8 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointForm> = ({ endpoint, f
 
             {endpoint.headers.length > 0 && (
                 <section>
-                    <h3 className="m-0">Headers</h3>
-                    <ul className="my-4 w-full list-none space-y-4">
+                    <h6 className="t-muted m-0 mb-2">Headers</h6>
+                    <ul className="divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark -mx-4 mb-4 list-none divide-y border-y">
                         {endpoint.headers.map((header) => (
                             <PlaygroundObjectPropertyForm
                                 key={header.key}
@@ -278,7 +320,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointForm> = ({ endpoint, f
                                     availability: header.availability,
                                 }}
                                 onChange={setHeader}
-                                value={formState.headers[header.key]}
+                                value={formState?.headers[header.key]}
                             />
                         ))}
                     </ul>
@@ -287,8 +329,8 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointForm> = ({ endpoint, f
 
             {endpoint.path.pathParameters.length > 0 && (
                 <section>
-                    <h3 className="m-0">Path parameters</h3>
-                    <ul className="my-4 w-full list-none space-y-4">
+                    <h6 className="t-muted m-0 mb-2">Path parameters</h6>
+                    <ul className="divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark -mx-4 mb-4 list-none divide-y border-y">
                         {endpoint.path.pathParameters.map((pathParameter) => (
                             <PlaygroundObjectPropertyForm
                                 key={pathParameter.key}
@@ -301,7 +343,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointForm> = ({ endpoint, f
                                     availability: pathParameter.availability,
                                 }}
                                 onChange={setPathParameter}
-                                value={formState.pathParameters[pathParameter.key]}
+                                value={formState?.pathParameters[pathParameter.key]}
                             />
                         ))}
                     </ul>
@@ -310,8 +352,8 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointForm> = ({ endpoint, f
 
             {endpoint.queryParameters.length > 0 && (
                 <section>
-                    <h3 className="m-0">Query parameters</h3>
-                    <ul className="my-4 w-full list-none space-y-4">
+                    <h6 className="t-muted m-0 mb-2">Query parameters</h6>
+                    <ul className="divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark -mx-4 mb-4 list-none divide-y border-y">
                         {endpoint.queryParameters.map((queryParameter) => (
                             <PlaygroundObjectPropertyForm
                                 key={queryParameter.key}
@@ -324,7 +366,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointForm> = ({ endpoint, f
                                     availability: queryParameter.availability,
                                 }}
                                 onChange={setQueryParameter}
-                                value={formState.queryParameters[queryParameter.key]}
+                                value={formState?.queryParameters[queryParameter.key]}
                             />
                         ))}
                     </ul>
@@ -333,11 +375,11 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointForm> = ({ endpoint, f
 
             {endpoint.request != null && (
                 <section>
-                    <h3 className="m-0">Body</h3>
+                    <h6 className="t-muted m-0 mb-2">Body</h6>
 
                     {visitDiscriminatedUnion(endpoint.request.type, "type")._visit({
                         object: (object) => (
-                            <ul className="my-4 w-full list-none space-y-6">
+                            <ul className="divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark -mx-4 mb-4 list-none divide-y border-y">
                                 {getAllObjectProperties(object, resolveTypeById)
                                     .filter((property) => !isOptionalTypeReference(property.valueType, resolveTypeById))
                                     .map((property) => (
@@ -345,7 +387,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointForm> = ({ endpoint, f
                                             key={property.key}
                                             property={property}
                                             onChange={setBodyByKey}
-                                            value={castToRecord(formState.body)[property.key]}
+                                            value={castToRecord(formState?.body)[property.key]}
                                             expandByDefault={false}
                                         />
                                     ))}
@@ -357,7 +399,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointForm> = ({ endpoint, f
                                             key={property.key}
                                             property={property}
                                             onChange={setBodyByKey}
-                                            value={castToRecord(formState.body)[property.key]}
+                                            value={castToRecord(formState?.body)[property.key]}
                                             expandByDefault={false}
                                         />
                                     ))}
@@ -366,9 +408,8 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointForm> = ({ endpoint, f
                         reference: (reference) => (
                             <PlaygroundTypeReferenceForm
                                 typeReference={reference.value}
-                                doNotNest
                                 onChange={setBody}
-                                value={formState.body}
+                                value={formState?.body}
                             />
                         ),
                         fileUpload: () => <span>fileUpload</span>,

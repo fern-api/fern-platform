@@ -23,7 +23,7 @@ export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({ enumValues, on
         return null;
     }
 
-    if (enumValues.length < 5) {
+    if (enumValues.length < 3) {
         return (
             <div className="w-full">
                 <SegmentedControl

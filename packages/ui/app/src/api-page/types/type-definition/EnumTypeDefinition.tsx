@@ -38,7 +38,7 @@ export const EnumTypeDefinition = ({
 
     return (
         <>
-            {elements.length < 5 ? (
+            {elements.length < 4 ? (
                 <div className="t-muted flex flex-row gap-2 ">
                     <div className="shrink-0 text-sm"> Allowed values: </div>
                     <div className="t-muted flex flex-row flex-wrap gap-2">

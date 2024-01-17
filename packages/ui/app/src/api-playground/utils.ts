@@ -27,7 +27,10 @@ export function castToRecord(value: unknown): Record<string, unknown> {
     return value;
 }
 
-export function buildQueryParams(queryParameters: Record<string, unknown>): string {
+export function buildQueryParams(queryParameters: Record<string, unknown> | undefined): string {
+    if (queryParameters == null) {
+        return "";
+    }
     const queryParams = new URLSearchParams();
     Object.entries(queryParameters).forEach(([key, value]) => {
         queryParams.set(key, unknownToString(value));
@@ -35,19 +38,25 @@ export function buildQueryParams(queryParameters: Record<string, unknown>): stri
     return queryParams.size > 0 ? "?" + queryParams.toString() : "";
 }
 
-export function buildUrl(endpoint: APIV1Read.EndpointDefinition, formState: PlaygroundRequestFormState): string {
+export function buildUrl(
+    endpoint: APIV1Read.EndpointDefinition | undefined,
+    formState: PlaygroundRequestFormState | undefined
+): string {
+    if (endpoint == null) {
+        return "";
+    }
     return (
         endpoint.environments[0]?.baseUrl +
         endpoint.path.parts
             .map((part) => {
                 if (part.type === "pathParameter") {
-                    const stateValue = unknownToString(formState.pathParameters[part.value]);
+                    const stateValue = unknownToString(formState?.pathParameters[part.value]);
                     return stateValue.length > 0 ? encodeURI(stateValue) : ":" + part.value;
                 }
                 return part.value;
             })
             .join("") +
-        buildQueryParams(formState.queryParameters)
+        buildQueryParams(formState?.queryParameters)
     );
 }
 
@@ -65,20 +74,26 @@ export function indentAfter(str: string, indent: number, afterLine?: number): st
 
 export function stringifyFetch(
     auth: APIV1Read.ApiAuth | undefined,
-    endpoint: APIV1Read.EndpointDefinition,
-    formState: PlaygroundRequestFormState
+    endpoint: APIV1Read.EndpointDefinition | undefined,
+    formState: PlaygroundRequestFormState,
+    redacted = true
 ): string {
-    const headers = buildRedactedHeaders(auth, endpoint, formState);
+    if (endpoint == null) {
+        return "";
+    }
+    const headers = redacted
+        ? buildRedactedHeaders(auth, endpoint, formState)
+        : buildUnredactedHeaders(auth, endpoint, formState);
     return `// ${endpoint.name} (${endpoint.method} ${endpoint.path.parts
         .map((part) => (part.type === "literal" ? part.value : `:${part.value}`))
         .join("")})
 const response = fetch("${buildUrl(endpoint, formState)}", {
-    method: "${endpoint.method}",
-    headers: ${JSON.stringify(headers, undefined, 2)},${
+  method: "${endpoint.method}",
+  headers: ${indentAfter(JSON.stringify(headers, undefined, 2), 2, 0)},${
         endpoint.request?.contentType === "application/json" &&
         !isEmpty(formState.body) &&
         endpoint.request.type.type !== "fileUpload"
-            ? `\n    body: JSON.stringify(${indentAfter(JSON.stringify(formState.body, undefined, 2), 4, 0)}),`
+            ? `\n  body: JSON.stringify(${indentAfter(JSON.stringify(formState.body, undefined, 2), 2, 0)}),`
             : ""
     }
 });
@@ -89,27 +104,43 @@ console.log(body);`;
 
 export function stringifyPythonRequests(
     auth: APIV1Read.ApiAuth | undefined,
-    endpoint: APIV1Read.EndpointDefinition,
-    formState: PlaygroundRequestFormState
+    endpoint: APIV1Read.EndpointDefinition | undefined,
+    formState: PlaygroundRequestFormState,
+    redacted = true
 ): string {
-    const headers = buildRedactedHeaders(auth, endpoint, formState);
+    if (endpoint == null) {
+        return "";
+    }
+    const headers = redacted
+        ? buildRedactedHeaders(auth, endpoint, formState)
+        : buildUnredactedHeaders(auth, endpoint, formState);
     return `import requests
 
 # ${endpoint.name} (${endpoint.method} ${endpoint.path.parts
         .map((part) => (part.type === "literal" ? part.value : `:${part.value}`))
         .join("")})
 response = requests.${endpoint.method.toLowerCase()}(
-    "${buildUrl(endpoint, formState)}",
-    headers=${JSON.stringify(headers, undefined, 2)},${
+  "${buildUrl(endpoint, formState)}",
+  headers=${indentAfter(JSON.stringify(headers, undefined, 2), 2, 0)},${
         endpoint.request?.contentType === "application/json" &&
         !isEmpty(formState.body) &&
         endpoint.request.type.type !== "fileUpload"
-            ? `\n    json=${indentAfter(JSON.stringify(formState.body, undefined, 2), 4, 0)},`
+            ? `\n  json=${indentAfter(JSON.stringify(formState.body, undefined, 2), 2, 0)},`
             : ""
     }
 )
 
 print(response.json())`;
+}
+
+export function obfuscateSecret(secret: string): string {
+    if (secret.trimEnd().length === 0) {
+        return secret;
+    }
+    if (secret.length < 28) {
+        return secret.slice(0, 1) + "*".repeat(25) + secret.slice(-2);
+    }
+    return secret.slice(0, 12) + "...." + secret.slice(-12);
 }
 
 function buildRedactedHeaders(
@@ -132,21 +163,21 @@ function buildRedactedHeaders(
         visitDiscriminatedUnion(formState.auth, "type")._visit({
             bearerAuth: (bearerAuth) => {
                 if (auth.type === "bearerAuth") {
-                    headers["Authorization"] = `Bearer ${"*".repeat(bearerAuth.token.length)}`;
+                    headers["Authorization"] = `Bearer ${obfuscateSecret(bearerAuth.token)}`;
                 }
             },
             header: (header) => {
                 if (auth.type === "header") {
                     const value = header.headers[auth.headerWireValue];
                     if (value != null) {
-                        headers[auth.headerWireValue] = "*".repeat(value.length);
+                        headers[auth.headerWireValue] = obfuscateSecret(value);
                     }
                 }
             },
             basicAuth: (basicAuth) => {
                 if (auth.type === "basicAuth") {
                     headers["Authorization"] = `Basic ${btoa(
-                        `${basicAuth.username}:${"*".repeat(basicAuth.password.length)}`
+                        `${basicAuth.username}:${obfuscateSecret(basicAuth.password)}`
                     )}`;
                 }
             },
@@ -159,12 +190,15 @@ function buildRedactedHeaders(
 
 export function buildUnredactedHeaders(
     auth: APIV1Read.ApiAuth | undefined,
-    endpoint: APIV1Read.EndpointDefinition,
-    formState: PlaygroundRequestFormState
+    endpoint: APIV1Read.EndpointDefinition | undefined,
+    formState: PlaygroundRequestFormState | undefined
 ): Record<string, string> {
     const headers: Record<string, string> = {};
+    if (endpoint == null) {
+        return headers;
+    }
     endpoint.headers.forEach((header) => {
-        if (formState.headers[header.key] != null) {
+        if (formState?.headers[header.key] != null) {
             headers[header.key] = unknownToString(formState.headers[header.key]);
         }
     });
@@ -173,8 +207,8 @@ export function buildUnredactedHeaders(
         headers["Content-Type"] = endpoint.request.contentType;
     }
 
-    if (auth != null && endpoint.authed && formState.auth != null) {
-        visitDiscriminatedUnion(formState.auth, "type")._visit({
+    if (auth != null && endpoint.authed && formState?.auth != null) {
+        visitDiscriminatedUnion(formState?.auth, "type")._visit({
             bearerAuth: (bearerAuth) => {
                 if (auth.type === "bearerAuth") {
                     headers["Authorization"] = `Bearer ${bearerAuth.token}`;
@@ -202,17 +236,27 @@ export function buildUnredactedHeaders(
 
 export function stringifyCurl(
     auth: APIV1Read.ApiAuth | undefined,
-    endpoint: APIV1Read.EndpointDefinition,
-    formState: PlaygroundRequestFormState
+    endpoint: APIV1Read.EndpointDefinition | undefined,
+    formState: PlaygroundRequestFormState,
+    redacted = true
 ): string {
-    const headers = buildRedactedHeaders(auth, endpoint, formState);
+    if (endpoint == null) {
+        return "";
+    }
+    const headers = redacted
+        ? buildRedactedHeaders(auth, endpoint, formState)
+        : buildUnredactedHeaders(auth, endpoint, formState);
     return `curl -X ${endpoint.method} "${buildUrl(endpoint, formState)}"${Object.entries(headers)
         .map(([key, value]) => ` \\\n     -H "${key}: ${value}"`)
-        .join(" \\\n     ")}${
+        .join("")}${
         endpoint.request?.contentType === "application/json" &&
         !isEmpty(formState.body) &&
         endpoint.request.type.type !== "fileUpload"
-            ? ` \\\n     -d '${JSON.stringify(formState.body, undefined, 2)}'`
+            ? ` \\\n     -d '${
+                  redacted
+                      ? JSON.stringify(formState.body, undefined, 2)
+                      : JSON.stringify(JSON.stringify(formState.body))
+              }'`
             : ""
     }
 `;
@@ -347,12 +391,17 @@ export function matchesTypeReference(
 }
 
 export function getDefaultValueForTypes(
-    types: Array<{
-        key: string;
-        type: APIV1Read.TypeReference;
-    }>,
+    types:
+        | Array<{
+              key: string;
+              type: APIV1Read.TypeReference;
+          }>
+        | undefined,
     resolveTypeById: (typeId: string) => APIV1Read.TypeDefinition | undefined
 ): Record<string, unknown> {
+    if (types == null) {
+        return {};
+    }
     return types.reduce<Record<string, unknown>>((acc, { key, type }) => {
         acc[key] = getDefaultValueForType(type, resolveTypeById);
         return acc;
@@ -452,9 +501,9 @@ export function isExpandable(
                 return false;
             }
             return visitDiscriminatedUnion(typeShape, "type")._visit<boolean>({
-                object: () => true,
-                discriminatedUnion: () => true,
-                undiscriminatedUnion: () => true,
+                object: () => false,
+                discriminatedUnion: () => false,
+                undiscriminatedUnion: () => false,
                 alias: (alias) => isExpandable(alias.value, resolveTypeById, currentValue),
                 enum: () => false,
                 _other: () => false,
@@ -462,9 +511,9 @@ export function isExpandable(
         },
         primitive: () => false,
         optional: (optional) => isExpandable(optional.itemType, resolveTypeById, currentValue),
-        list: () => Array.isArray(currentValue) && currentValue.length > 1,
-        set: () => Array.isArray(currentValue) && currentValue.length > 1,
-        map: () => isPlainObject(currentValue) && Object.keys(currentValue).length > 1,
+        list: () => Array.isArray(currentValue) && currentValue.length > 0,
+        set: () => Array.isArray(currentValue) && currentValue.length > 0,
+        map: () => isPlainObject(currentValue) && Object.keys(currentValue).length > 0,
         literal: () => false,
         unknown: () => false,
         _other: () => false,

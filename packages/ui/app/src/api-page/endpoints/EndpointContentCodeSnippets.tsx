@@ -1,7 +1,8 @@
 "use client";
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { memo } from "react";
-import { ApiPlaygroundModal } from "../../api-playground/ApiPlaygroundModal";
+import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
+import { ApiPlaygroundButton } from "../../api-playground/ApiPlaygroundButton";
 import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";
 import type { CodeExampleClient } from "../examples/code-example";
 import { CurlExample } from "../examples/curl-example/CurlExample";
@@ -45,6 +46,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     requestHeight,
     responseHeight,
 }) => {
+    const { apiSection } = useApiDefinitionContext();
     return (
         <div className="grid min-h-0 flex-1 grid-rows-[repeat(auto-fit,_minmax(0,_min-content))] gap-6">
             <TitledExample
@@ -61,7 +63,8 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 }}
                 actions={
                     <>
-                        <ApiPlaygroundModal endpoint={endpoint} package={package_} />
+                        {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
+                        <ApiPlaygroundButton endpoint={endpoint} package={package_} apiId={apiSection!.api} />
                         {availableExampleClients.length > 1 ? (
                             <CodeExampleClientDropdown
                                 clients={availableExampleClients}

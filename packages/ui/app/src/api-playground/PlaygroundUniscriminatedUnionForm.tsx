@@ -1,7 +1,11 @@
-import { SegmentedControl } from "@blueprintjs/core";
+import { Button, MenuItem, SegmentedControl, Tooltip } from "@blueprintjs/core";
+import { CaretDown } from "@blueprintjs/icons";
+import { Select } from "@blueprintjs/select";
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import { isEqual } from "instantsearch.js/es/lib/utils";
 import { FC, useCallback, useState } from "react";
-import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
+import { InfoIcon } from "../commons/icons/InfoIcon";
+import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType, matchesTypeReference } from "./utils";
 
@@ -16,7 +20,7 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
     onChange,
     value,
 }) => {
-    const { resolveTypeById } = useApiDefinitionContext();
+    const { resolveTypeById } = useApiPlaygroundContext();
 
     const [internalSelectedVariant, setInternalSelectedVariant] = useState<number>(() => {
         return Math.max(
@@ -43,18 +47,77 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
 
     return (
         <div className="w-full">
-            <SegmentedControl
-                options={undiscriminatedUnion.variants.map((variant, idx) => ({
-                    label: variant.displayName,
-                    value: idx.toString(),
-                }))}
-                value={internalSelectedVariant.toString()}
-                onValueChange={setSelectedVariant}
-                small={true}
-                fill={true}
-            />
+            {undiscriminatedUnion.variants.length < 4 ? (
+                <SegmentedControl
+                    options={undiscriminatedUnion.variants.map((variant, idx) => ({
+                        label: variant.displayName,
+                        value: idx.toString(),
+                    }))}
+                    value={internalSelectedVariant.toString()}
+                    onValueChange={setSelectedVariant}
+                    small={true}
+                    fill={true}
+                />
+            ) : (
+                <Select<APIV1Read.UndiscriminatedUnionVariant>
+                    items={undiscriminatedUnion.variants}
+                    itemRenderer={(variant, { ref, handleClick, handleFocus, modifiers, index }) =>
+                        modifiers.matchesPredicate && (
+                            <MenuItem
+                                ref={ref}
+                                active={modifiers.active}
+                                disabled={modifiers.disabled}
+                                key={index}
+                                text={<span className="font-mono text-sm">{variant.displayName}</span>}
+                                onClick={handleClick}
+                                onFocus={handleFocus}
+                                roleStructure="listoption"
+                                labelElement={
+                                    <Tooltip
+                                        content={variant.description}
+                                        compact={true}
+                                        popoverClassName="max-w-xs text-xs"
+                                    >
+                                        <InfoIcon />
+                                    </Tooltip>
+                                }
+                            />
+                        )
+                    }
+                    itemPredicate={(query, variant) =>
+                        variant.displayName?.toLowerCase().includes(query.toLowerCase()) ?? false
+                    }
+                    onItemSelect={(variant) =>
+                        setSelectedVariant(
+                            undiscriminatedUnion.variants.findIndex((v) => isEqual(v, variant)).toString(10)
+                        )
+                    }
+                    activeItem={selectedVariant}
+                    popoverProps={{ minimal: true, matchTargetWidth: true }}
+                    fill={true}
+                >
+                    <Button
+                        text={
+                            selectedVariant != null ? (
+                                <span className="font-mono">{selectedVariant.displayName}</span>
+                            ) : (
+                                <span className="t-muted">Select a variant...</span>
+                            )
+                        }
+                        alignText="left"
+                        rightIcon={<CaretDown />}
+                        fill={true}
+                    />
+                </Select>
+            )}
             {selectedVariant != null && (
-                <PlaygroundTypeReferenceForm typeReference={selectedVariant.type} onChange={onChange} value={value} />
+                <div className="mt-2">
+                    <PlaygroundTypeReferenceForm
+                        typeReference={selectedVariant.type}
+                        onChange={onChange}
+                        value={value}
+                    />
+                </div>
             )}
         </div>
     );

@@ -2,7 +2,7 @@ import { Button } from "@blueprintjs/core";
 import { Cross, Plus } from "@blueprintjs/icons";
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { FC, useCallback } from "react";
-import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
+import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType } from "./utils";
 
@@ -13,7 +13,7 @@ interface PlaygroundListFormProps {
 }
 
 export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemType, onChange, value }) => {
-    const { resolveTypeById } = useApiDefinitionContext();
+    const { resolveTypeById } = useApiPlaygroundContext();
     const appendItem = useCallback(() => {
         onChange((oldValue: unknown) => {
             const oldArray = Array.isArray(oldValue) ? oldValue : [];
@@ -40,39 +40,39 @@ export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemType, onCh
         [onChange]
     );
     return (
-        <div className="w-full">
+        <>
             {valueAsList.length > 0 && (
-                <ul className="border-border-default-light dark:border-border-default-dark w-full list-none space-y-4 border-l pl-4">
+                <ul className="divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark max-w-full list-none divide-y divide-dashed border-t border-dashed">
                     {valueAsList.map((item, idx) => (
-                        <li key={idx}>
-                            <div className="flex items-center justify-between gap-2">
+                        <li key={idx} className="flex min-h-12 flex-row items-center gap-1 py-2">
+                            <div className="flex min-w-0 shrink items-center justify-between gap-2">
                                 <label className="inline-flex flex-wrap items-baseline">
-                                    <span className="t-muted text-xs uppercase">{`Item ${idx + 1}`}</span>
+                                    <span className="t-muted bg-tag-default-light dark:bg-tag-default-dark rounded p-1 text-xs uppercase">
+                                        {idx + 1}
+                                    </span>
                                 </label>
-
-                                <div className="flex flex-1 items-center gap-2">
-                                    <div className="bg-border-default-light dark:bg-border-default-dark h-px w-full" />
-                                    <Button
-                                        icon={<Cross />}
-                                        onClick={() => handleRemoveItem(idx)}
-                                        minimal={true}
-                                        small={true}
-                                        className="-mx-1"
-                                    />
-                                </div>
                             </div>
-                            <div className="flex-1">
+
+                            <div className="flex min-w-0 flex-1 shrink items-center gap-2">
                                 <PlaygroundTypeReferenceForm
                                     typeReference={itemType}
                                     value={item}
                                     onChange={(newItem) =>
                                         handleChangeItem(idx, typeof newItem === "function" ? newItem(item) : newItem)
                                     }
+                                    renderAsPanel={true}
+                                />
+                                <Button
+                                    icon={<Cross />}
+                                    onClick={() => handleRemoveItem(idx)}
+                                    minimal={true}
+                                    small={true}
+                                    className="-mx-1"
                                 />
                             </div>
                         </li>
                     ))}
-                    <li>
+                    <li className="py-2">
                         <Button icon={<Plus />} text="Add new item" onClick={appendItem} outlined={true} fill={true} />
                     </li>
                 </ul>
@@ -80,6 +80,6 @@ export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemType, onCh
             {valueAsList.length === 0 && (
                 <Button icon={<Plus />} text="Add new item" onClick={appendItem} outlined={true} fill={true} />
             )}
-        </div>
+        </>
     );
 };
