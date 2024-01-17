@@ -28,8 +28,8 @@ export declare namespace EndpointContentLeft {
         onHoverRequestProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
         onHoverResponseProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
         errors: APIV1Read.ErrorDeclarationV2[];
-        selectedErrorStatusCode: number | undefined;
-        setSelectedErrorStatusCode: (idx: number | undefined) => void;
+        selectedError: APIV1Read.ErrorDeclarationV2 | undefined;
+        setSelectedError: (idx: APIV1Read.ErrorDeclarationV2 | undefined) => void;
         route: string;
     }
 }
@@ -41,8 +41,8 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     onHoverRequestProperty,
     onHoverResponseProperty,
     errors,
-    selectedErrorStatusCode,
-    setSelectedErrorStatusCode,
+    selectedError,
+    setSelectedError,
     route,
 }) => {
     const requestExpandAll = useBooleanState(false);
@@ -162,10 +162,10 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                 errors={errors}
                                 onClickError={(error, _, event) => {
                                     event.stopPropagation();
-                                    setSelectedErrorStatusCode(error.statusCode);
+                                    setSelectedError(error);
                                 }}
                                 onHoverProperty={onHoverResponseProperty}
-                                selectedErrorStatusCode={selectedErrorStatusCode}
+                                selectedError={selectedError}
                                 anchorIdParts={["response", "error"]}
                                 route={route}
                                 defaultExpandAll={errorExpandAll.value}
