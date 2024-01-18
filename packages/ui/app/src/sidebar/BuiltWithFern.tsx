@@ -1,6 +1,7 @@
 import { useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
-import { useCallback } from "react";
+import Link from "next/link";
+import { useDocsContext } from "../docs-context/useDocsContext";
 import { FernLogo } from "./FernLogo";
 
 export declare namespace BuiltWithFern {
@@ -10,16 +11,19 @@ export declare namespace BuiltWithFern {
 }
 
 export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className }) => {
-    const onClick = useCallback(() => {
-        window.open("https://buildwithfern.com", "_blank", "noopener noreferrer");
-    }, []);
-
     const { isHovering, ...containerCallbacks } = useIsHovering();
 
+    const { domain } = useDocsContext();
+
+    // TODO: move this to venus
+    if (domain.toLowerCase().includes("polytomic")) {
+        return null;
+    }
+
     return (
-        <div
-            className={classNames("flex cursor-pointer items-center space-x-2 pl-3 py-3 mt-4", className)}
-            onClick={onClick}
+        <Link
+            href="https://buildwithfern.com"
+            className={classNames("flex cursor-pointer items-center space-x-2 pl-3 py-3 mt-4 !no-underline", className)}
             {...containerCallbacks}
         >
             <div className="h-4 w-4">
@@ -33,6 +37,6 @@ export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className }) => {
             >
                 Built with Fern
             </div>
-        </div>
+        </Link>
     );
 };

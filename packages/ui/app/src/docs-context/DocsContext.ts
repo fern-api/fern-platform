@@ -2,6 +2,7 @@ import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import React from "react";
 
 export const DocsContext = React.createContext<DocsContextValue>({
+    domain: "app.buildwithfern.com",
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     docsDefinition: undefined!,
     resolveApi: () => undefined,
@@ -10,6 +11,7 @@ export const DocsContext = React.createContext<DocsContextValue>({
 });
 
 export interface DocsContextValue {
+    domain: string;
     docsDefinition: DocsV1Read.DocsDefinition;
 
     resolveApi: (apiId: FdrAPI.ApiDefinitionId) => APIV1Read.ApiDefinition | undefined;
