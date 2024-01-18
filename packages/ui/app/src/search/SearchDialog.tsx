@@ -22,13 +22,10 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
     const [credentials, setSearchCredentials] = useState<SearchCredentials | undefined>(undefined);
 
     useEffect(() => {
-        if (isOpen && searchService.isAvailable) {
-            void (async () => {
-                const credentials = await searchService.loadCredentials();
-                setSearchCredentials(credentials);
-            })();
+        if (searchService.isAvailable) {
+            void searchService.loadCredentials().then(setSearchCredentials);
         }
-    }, [isOpen, searchService]);
+    }, [searchService]);
 
     const searchClient = useMemo(() => {
         if (credentials?.appId == null) {
@@ -62,7 +59,7 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
                                         resetIcon: "hidden",
                                         submit: "hidden",
                                         submitIcon: "hidden",
-                                        input: "w-full text-base t-muted placeholder:text-text-muted-light placeholder:dark:text-text-muted-dark bg-transparent py-5",
+                                        input: "w-full text-base t-muted placeholder:text-text-muted-light placeholder:dark:text-text-muted-dark bg-transparent py-5 focus:outline-none",
                                     }}
                                 />
                             </div>
