@@ -37,7 +37,7 @@ export const App: React.FC<App.Props> = ({ docs, resolvedPath }) => {
                     (children, Context) => (
                         <Context>{children}</Context>
                     ),
-                    <DocsContextProvider docsDefinition={docs.definition}>
+                    <DocsContextProvider docsDefinition={docs.definition} domain={docs.baseUrl.domain}>
                         <NavigationContextProvider resolvedPath={resolvedPath} basePath={docs.baseUrl.basePath}>
                             <Docs />
                         </NavigationContextProvider>
