@@ -10,7 +10,7 @@ import { ResolvedApiDefinitionPackage, ResolvedNavigationItemApiSection } from "
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { SidebarSlugLink } from "./SidebarLink";
 
-export interface ApiSidebarSectionProps {
+export interface SidebarApiSectionProps {
     className?: string;
     apiSection: ResolvedNavigationItemApiSection;
     slug: string[];
@@ -18,7 +18,7 @@ export interface ApiSidebarSectionProps {
     depth: number;
 }
 
-export const ApiSidebarSection: React.FC<ApiSidebarSectionProps> = ({
+export const SidebarApiSection: React.FC<SidebarApiSectionProps> = ({
     className,
     slug,
     registerScrolledToPathListener,
@@ -26,7 +26,7 @@ export const ApiSidebarSection: React.FC<ApiSidebarSectionProps> = ({
     depth,
 }) => {
     return (
-        <InnerApiSidebarSection
+        <InnerSidebarApiSection
             className={className}
             apiDefinitionPackage={apiSection}
             slug={slug}
@@ -38,12 +38,12 @@ export const ApiSidebarSection: React.FC<ApiSidebarSectionProps> = ({
     );
 };
 
-interface InnerApiSidebarSectionProps extends ApiSidebarSectionProps {
+interface InnerSidebarApiSectionProps extends SidebarApiSectionProps {
     apiDefinitionPackage: ResolvedApiDefinitionPackage;
     artifacts?: DocsV1Read.ApiArtifacts;
 }
 
-const InnerApiSidebarSection: FC<InnerApiSidebarSectionProps> = ({
+const InnerSidebarApiSection: FC<InnerSidebarApiSectionProps> = ({
     className,
     apiDefinitionPackage,
     slug,
@@ -112,7 +112,7 @@ const InnerApiSidebarSection: FC<InnerApiSidebarSectionProps> = ({
             })}
             {apiDefinitionPackage.subpackages.map((subpackage) => {
                 return (
-                    <ExpandableApiSidebarSection
+                    <ExpandableSidebarApiSection
                         key={subpackage.id}
                         title={subpackage.title}
                         slug={subpackage.slug}
@@ -127,12 +127,12 @@ const InnerApiSidebarSection: FC<InnerApiSidebarSectionProps> = ({
     );
 };
 
-interface ExpandableApiSidebarSectionProps extends InnerApiSidebarSectionProps {
+interface ExpandableSidebarApiSectionProps extends InnerSidebarApiSectionProps {
     className?: string;
     title: string;
 }
 
-const ExpandableApiSidebarSection: React.FC<ExpandableApiSidebarSectionProps> = ({
+const ExpandableSidebarApiSection: React.FC<ExpandableSidebarApiSectionProps> = ({
     className,
     title,
     slug,
@@ -160,7 +160,7 @@ const ExpandableApiSidebarSection: React.FC<ExpandableApiSidebarSectionProps> = 
             toggleExpand={useCallback(() => toggleExpanded(slug), [slug, toggleExpanded])}
             showIndicator={selectedSlug != null && checkSlugStartsWith(selectedSlug, slug) && !expanded}
         >
-            <InnerApiSidebarSection
+            <InnerSidebarApiSection
                 className={classNames({ hidden: !expanded })}
                 slug={slug}
                 registerScrolledToPathListener={registerScrolledToPathListener}

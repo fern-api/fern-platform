@@ -4,8 +4,8 @@ import classNames from "classnames";
 import { isEqual } from "lodash-es";
 import { FC, Fragment, useCallback } from "react";
 import { ResolvedNavigationItem } from "../util/resolver";
-import { ApiSidebarSection } from "./ApiSidebarSection";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
+import { SidebarApiSection } from "./SidebarApiSection";
 import { SidebarHeading } from "./SidebarHeading";
 import { SidebarSlugLink } from "./SidebarLink";
 
@@ -163,7 +163,7 @@ export const SidebarSection: FC<SidebarSectionProps> = ({
                                     depth={depth}
                                     title={apiSection.title}
                                 />
-                                <ApiSidebarSection
+                                <SidebarApiSection
                                     slug={apiSection.slug}
                                     apiSection={apiSection}
                                     registerScrolledToPathListener={registerScrolledToPathListener}
