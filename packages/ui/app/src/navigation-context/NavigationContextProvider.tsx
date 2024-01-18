@@ -62,10 +62,10 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const selectedSlug = getFullSlugForNavigatable(activeNavigatable, { omitDefault: true, basePath });
 
     const navigateToRoute = useRef((route: string, _disableSmooth = false) => {
-        const [basePath, _anchor] = route.split("#");
-        if (!userIsScrolling.current && basePath != null) {
-            // fallback to "basePath" if anchor is not detected (otherwise API reference will scroll to top)
-            const node = getRouteNode(route) ?? getRouteNode(basePath);
+        const [routeWithoutAnchor, _anchor] = route.split("#");
+        if (!userIsScrolling.current && routeWithoutAnchor != null) {
+            // fallback to "routeWithoutAnchor" if anchor is not detected (otherwise API reference will scroll to top)
+            const node = getRouteNode(route) ?? getRouteNode(routeWithoutAnchor);
             node?.scrollIntoView({
                 behavior: "auto",
             });
