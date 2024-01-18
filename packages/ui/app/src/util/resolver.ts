@@ -80,8 +80,36 @@ export function resolveNavigationItems(
     return resolvedNavigationItems;
 }
 
+const SPECIAL_TOKENS = [
+    "API",
+    "APIs",
+    "SDK",
+    "SDKs",
+    "AI",
+    "OCR",
+    "REST",
+    "SOAP",
+    "JSON",
+    "XML",
+    "HTTP",
+    "HTTPS",
+    "URI",
+    "URL",
+    "CRUD",
+    "JWT",
+    "OAuth",
+    "OAuth1",
+    "OAuth1.0",
+    "OAuth2",
+    "OAuth2.0",
+    "SAML",
+    "RESTful",
+];
+
 function formatSubpackageTitle(name: string) {
-    const titleCased = title(startCase(name), { special: ["API", "SDK", "AI"] });
+    const titleCased = title(startCase(name), {
+        special: SPECIAL_TOKENS,
+    });
 
     // regex match "V 2", "V 4", etc. and replace it with "V2", "V4", etc.
     const versionedTitle = titleCased.replace(/V\s(\d)/g, "V$1");
