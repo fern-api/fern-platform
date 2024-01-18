@@ -147,7 +147,24 @@ export const SearchHits: React.FC = () => {
                 )}
             >
                 {visitDiscriminatedUnion({ progress }, "progress")._visit<React.ReactNode>({
-                    pending: () => <Spinner size={SpinnerSize.SMALL} />,
+                    pending: () =>
+                        hits.length > 0 ? (
+                            hits.map((hit) => (
+                                <SearchHit
+                                    setRef={(elem) => {
+                                        if (elem != null) {
+                                            refs.current.set(hit.objectID, elem);
+                                        }
+                                    }}
+                                    key={hit.objectID}
+                                    hit={hit}
+                                    isHovered={hoveredSearchHitId === hit.objectID}
+                                    onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
+                                />
+                            ))
+                        ) : (
+                            <Spinner size={SpinnerSize.SMALL} />
+                        ),
                     error: () => "An unexpected error has occurred while loading the results.",
                     success: () =>
                         hits.length > 0
