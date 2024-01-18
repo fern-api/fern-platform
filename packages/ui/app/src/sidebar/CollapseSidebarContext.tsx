@@ -1,90 +1,64 @@
 import { noop } from "lodash-es";
-import { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useState } from "react";
+import { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useDocsSelectors } from "../selectors/useDocsSelectors";
 
 interface CollapseSidebarContextValue {
-    expanded: true | string[]; // true = expand all, string[] = expand only these slugs
-    expandAll: () => void;
-    collapseAll: () => void;
-    setExpanded: (slugs: string[]) => void;
-    toggleExpanded: (slug: string) => void;
-    selectedSlug: string | undefined;
-    checkExpanded: (expandableSlug: string) => boolean;
+    expanded: string[][]; // true = expand all, string[] = expand only these slugs
+    setExpanded: (slugs: string[][]) => void;
+    toggleExpanded: (slug: string[]) => void;
+    selectedSlug: string[] | undefined;
+    checkExpanded: (expandableSlug: string[]) => boolean;
 }
 
 const CollapseSidebarContext = createContext<CollapseSidebarContextValue>({
     expanded: [],
-    expandAll: noop,
-    collapseAll: noop,
     setExpanded: noop,
     toggleExpanded: noop,
     selectedSlug: undefined,
     checkExpanded: () => false,
 });
 
+export function checkSlugStartsWith(slug: string[], startsWith: string[]): boolean {
+    if (slug.length < startsWith.length) {
+        return false;
+    }
+    for (let i = 0; i < startsWith.length; i++) {
+        if (slug[i] !== startsWith[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useCollapseSidebar = () => useContext(CollapseSidebarContext);
 
 export const CollapseSidebarProvider: FC<PropsWithChildren> = ({ children }) => {
-    const { selectedSlug } = useDocsSelectors();
-    const [expanded, setExpanded] = useState<string[]>(() => [selectedSlug]);
-    const [collapsed, setCollapsed] = useState<string[]>([]);
-    const [inverted, setInverted] = useState(false); // if true, expanded means collapsed and vice versa
+    const { selectedSlug: selectedSlugString } = useDocsSelectors();
 
-    const expandAll = useCallback(() => {
-        setInverted(true);
-        setExpanded([]);
-        setCollapsed([]);
-    }, []);
-
-    const collapseAll = useCallback(() => {
-        setInverted(false);
-        setExpanded([]);
-        setCollapsed([]);
-    }, []);
+    const selectedSlug = useMemo(() => selectedSlugString.split("/"), [selectedSlugString]);
+    const [expanded, setExpanded] = useState<string[][]>(() => [selectedSlug]);
 
     useEffect(() => {
-        setInverted(false);
         setExpanded([selectedSlug]);
-        setCollapsed([]);
     }, [selectedSlug]);
 
     const checkExpanded = useCallback(
-        (expandableSlug: string) => {
-            return inverted
-                ? !collapsed.includes(expandableSlug)
-                : expanded.some((slug) => slug.startsWith(expandableSlug));
-        },
-        [collapsed, expanded, inverted]
+        (expandableSlug: string[]) => expanded.some((slug) => checkSlugStartsWith(slug, expandableSlug)),
+        [expanded]
     );
 
-    const toggleExpanded = useCallback(
-        (slug: string) => {
-            if (inverted) {
-                setInverted(true);
-                setCollapsed((collapsed) => {
-                    if (collapsed.some((s) => s === slug)) {
-                        return collapsed.filter((s) => s !== slug);
-                    }
-                    return [...collapsed, slug];
-                });
-                return;
-            } else {
-                setExpanded((expanded) => {
-                    if (expanded.some((s) => s.startsWith(slug))) {
-                        return expanded.filter((s) => !s.startsWith(slug));
-                    }
-                    return [...expanded, slug];
-                });
+    const toggleExpanded = useCallback((slug: string[]) => {
+        setExpanded((expanded) => {
+            if (expanded.some((s) => checkSlugStartsWith(s, slug))) {
+                return expanded.filter((s) => !checkSlugStartsWith(s, slug));
             }
-        },
-        [inverted]
-    );
+            return [...expanded, slug];
+        });
+    }, []);
 
     return (
-        <CollapseSidebarContext.Provider
-            value={{ expanded, selectedSlug, expandAll, collapseAll, setExpanded, checkExpanded, toggleExpanded }}
-        >
+        <CollapseSidebarContext.Provider value={{ expanded, selectedSlug, setExpanded, checkExpanded, toggleExpanded }}>
             {children}
         </CollapseSidebarContext.Provider>
     );

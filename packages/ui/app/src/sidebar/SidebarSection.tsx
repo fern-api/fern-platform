@@ -1,18 +1,18 @@
-import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { joinUrlSlugs } from "@fern-ui/app-utils";
+import { APIV1Read, DocsV1Read, FdrAPI, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { Transition } from "@headlessui/react";
 import classNames from "classnames";
-import { useCallback } from "react";
+import { isEqual } from "lodash-es";
+import { FC, Fragment, useCallback } from "react";
+import { ResolvedNavigationItem } from "../util/resolver";
 import { ApiSidebarSection } from "./ApiSidebarSection";
-import { useCollapseSidebar } from "./CollapseSidebarContext";
+import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { SidebarHeading } from "./SidebarHeading";
 import { SidebarSlugLink } from "./SidebarLink";
 
 export interface SidebarSectionProps {
     className?: string;
-    slug: string;
-    navigationItems: DocsV1Read.NavigationItem[];
+    navigationItems: ResolvedNavigationItem[];
+    slug: string[];
 
     registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
 
@@ -56,26 +56,24 @@ const ExpandableSidebarSection: React.FC<ExpandableSidebarSectionProps> = ({
             title={title}
             expanded={expanded}
             toggleExpand={useCallback(() => toggleExpanded(slug), [slug, toggleExpanded])}
-            showIndicator={selectedSlug?.startsWith(slug) && !expanded}
+            showIndicator={selectedSlug != null && checkSlugStartsWith(selectedSlug, slug) && !expanded}
         >
-            <Transition show={expanded} unmount={false}>
-                <SidebarSection
-                    slug={slug}
-                    navigationItems={navigationItems}
-                    registerScrolledToPathListener={registerScrolledToPathListener}
-                    docsDefinition={docsDefinition}
-                    activeTabIndex={activeTabIndex}
-                    resolveApi={resolveApi}
-                    depth={depth + 1}
-                />
-            </Transition>
+            <SidebarSection
+                className={classNames({ hidden: !expanded })}
+                slug={slug}
+                navigationItems={navigationItems}
+                registerScrolledToPathListener={registerScrolledToPathListener}
+                docsDefinition={docsDefinition}
+                activeTabIndex={activeTabIndex}
+                resolveApi={resolveApi}
+                depth={depth + 1}
+            />
         </SidebarSlugLink>
     );
 };
 
-export const SidebarSection: React.FC<SidebarSectionProps> = ({
+export const SidebarSection: FC<SidebarSectionProps> = ({
     className,
-    slug,
     navigationItems,
     registerScrolledToPathListener,
     docsDefinition,
@@ -94,37 +92,39 @@ export const SidebarSection: React.FC<SidebarSectionProps> = ({
         <ul className={classNames(className, "list-none")}>
             {navigationItems.map((navigationItem, idx) =>
                 visitDiscriminatedUnion(navigationItem, "type")._visit({
-                    page: (pageMetadata) => {
-                        const pageSlug = joinUrlSlugs(slug, pageMetadata.urlSlug);
-                        const selected = selectedSlug === pageSlug;
-                        return (
-                            <SidebarSlugLink
-                                key={pageSlug}
-                                className={classNames({
-                                    "mt-6": topLevel && !isPrevItemSidebarItem(navigationItems, idx),
-                                })}
-                                slug={pageSlug}
-                                depth={Math.max(depth - 1, 0)}
-                                registerScrolledToPathListener={registerScrolledToPathListener}
-                                title={pageMetadata.title}
-                                selected={selected}
-                            />
-                        );
-                    },
+                    pageGroup: ({ pages }) => (
+                        <Fragment key={idx}>
+                            {pages.map((page, pageIdx) => {
+                                return (
+                                    <SidebarSlugLink
+                                        key={page.id}
+                                        className={classNames({
+                                            "mt-6": topLevel && pageIdx === 0,
+                                        })}
+                                        slug={page.slug}
+                                        depth={Math.max(depth - 1, 0)}
+                                        registerScrolledToPathListener={registerScrolledToPathListener}
+                                        title={page.title}
+                                        selected={isEqual(selectedSlug, page.slug)}
+                                    />
+                                );
+                            })}
+                        </Fragment>
+                    ),
                     section: (section) => {
-                        const sectionSlug = joinUrlSlugs(slug, section.urlSlug);
+                        const sectionSlug = joinUrlSlugs(...section.slug);
                         if (depth === 0) {
                             return (
                                 <li key={sectionSlug}>
                                     <SidebarHeading
                                         className={classNames({
-                                            "mt-6": topLevel && !isPrevItemSidebarItem(navigationItems, idx),
+                                            "mt-6": topLevel,
                                         })}
                                         depth={depth}
                                         title={section.title}
                                     />
                                     <SidebarSection
-                                        slug={sectionSlug}
+                                        slug={section.slug}
                                         navigationItems={section.items}
                                         registerScrolledToPathListener={registerScrolledToPathListener}
                                         docsDefinition={docsDefinition}
@@ -139,10 +139,10 @@ export const SidebarSection: React.FC<SidebarSectionProps> = ({
                                 <ExpandableSidebarSection
                                     key={sectionSlug}
                                     className={classNames({
-                                        "mt-6": topLevel && !isPrevItemSidebarItem(navigationItems, idx),
+                                        "mt-6": topLevel,
                                     })}
                                     title={section.title}
-                                    slug={sectionSlug}
+                                    slug={section.slug}
                                     navigationItems={section.items}
                                     registerScrolledToPathListener={registerScrolledToPathListener}
                                     docsDefinition={docsDefinition}
@@ -153,22 +153,20 @@ export const SidebarSection: React.FC<SidebarSectionProps> = ({
                             );
                         }
                     },
-                    api: (apiSection) => {
-                        const apiSectionSlug = joinUrlSlugs(slug, apiSection.urlSlug);
+                    apiSection: (apiSection) => {
                         return (
-                            <li key={apiSectionSlug}>
+                            <li key={apiSection.api}>
                                 <SidebarHeading
                                     className={classNames({
-                                        "mt-6": topLevel && !isPrevItemSidebarItem(navigationItems, idx),
+                                        "mt-6": topLevel,
                                     })}
                                     depth={depth}
                                     title={apiSection.title}
                                 />
                                 <ApiSidebarSection
-                                    slug={apiSectionSlug}
+                                    slug={apiSection.slug}
                                     apiSection={apiSection}
                                     registerScrolledToPathListener={registerScrolledToPathListener}
-                                    resolveApi={resolveApi}
                                     depth={depth + 1}
                                 />
                             </li>
@@ -180,11 +178,3 @@ export const SidebarSection: React.FC<SidebarSectionProps> = ({
         </ul>
     );
 };
-
-function isPrevItemSidebarItem(navigationItems: DocsV1Read.NavigationItem[], idx: number): boolean {
-    if (idx === 0) {
-        return false;
-    }
-    const prevItem = navigationItems[idx - 1];
-    return prevItem != null && prevItem.type === "page";
-}

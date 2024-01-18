@@ -42,6 +42,7 @@
     "@fortawesome/react-fontawesome": "0.2.0",
     "@headlessui/react": "^1.7.17",
     "@react-hook/size": "^2.1.2",
+    "@types/title": "^3.4.3",
     "algoliasearch": "^4.22.1",
     "classnames": "^2.5.1",
     "instantsearch.js": "^4.63.0",
@@ -63,7 +64,8 @@
     "react-virtuoso": "^4.6.0",
     "rehype-raw": "^6.1.1",
     "remark-gfm": "^3.0.1",
-    "tinycolor2": "^1.6.0"
+    "tinycolor2": "^1.6.0",
+    "title": "^3.5.3"
   },
   "devDependencies": {
     "@testing-library/react": "^14.0.0",
