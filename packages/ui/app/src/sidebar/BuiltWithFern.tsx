@@ -15,6 +15,7 @@ export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className }) => {
 
     const { domain } = useDocsContext();
 
+    // TODO: move this to venus
     if (domain.toLowerCase().includes("polytomic")) {
         return null;
     }
