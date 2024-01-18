@@ -2,7 +2,7 @@ import { APIV1Read, DocsV1Read, FdrAPI, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { isEqual } from "lodash-es";
-import { forwardRef, Fragment, useCallback } from "react";
+import { FC, Fragment, useCallback } from "react";
 import { ResolvedNavigationItem } from "../util/resolver";
 import { ApiSidebarSection } from "./ApiSidebarSection";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
@@ -72,19 +72,16 @@ const ExpandableSidebarSection: React.FC<ExpandableSidebarSectionProps> = ({
     );
 };
 
-export const SidebarSection = forwardRef<HTMLUListElement, SidebarSectionProps>(function SidebarSection(
-    {
-        className,
-        navigationItems,
-        registerScrolledToPathListener,
-        docsDefinition,
-        activeTabIndex,
-        resolveApi,
-        topLevel = false,
-        depth,
-    },
-    ref
-) {
+export const SidebarSection: FC<SidebarSectionProps> = ({
+    className,
+    navigationItems,
+    registerScrolledToPathListener,
+    docsDefinition,
+    activeTabIndex,
+    resolveApi,
+    topLevel = false,
+    depth,
+}) => {
     const { selectedSlug } = useCollapseSidebar();
 
     if (navigationItems.length === 0) {
@@ -92,7 +89,7 @@ export const SidebarSection = forwardRef<HTMLUListElement, SidebarSectionProps>(
     }
 
     return (
-        <ul className={classNames(className, "list-none")} ref={ref}>
+        <ul className={classNames(className, "list-none")}>
             {navigationItems.map((navigationItem, idx) =>
                 visitDiscriminatedUnion(navigationItem, "type")._visit({
                     pageGroup: ({ pages }) => (
@@ -180,4 +177,4 @@ export const SidebarSection = forwardRef<HTMLUListElement, SidebarSectionProps>(
             )}
         </ul>
     );
-});
+};

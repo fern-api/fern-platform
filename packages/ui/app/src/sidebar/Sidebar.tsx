@@ -18,10 +18,13 @@ export const Sidebar: React.FC<Sidebar.Props> = () => {
     const { activeNavigatable, registerScrolledToPathListener } = useNavigationContext();
     const { activeNavigationConfigContext, withVersionAndTabSlugs } = useDocsSelectors();
 
-    const currentSlug = useMemo(() => {
-        const slug = withVersionAndTabSlugs("", { omitDefault: true });
-        return slug.length > 0 ? [slug] : [];
-    }, [withVersionAndTabSlugs]);
+    const currentSlug = useMemo(
+        () =>
+            withVersionAndTabSlugs("", { omitDefault: true })
+                .split("/")
+                .filter((s) => s.length > 0),
+        [withVersionAndTabSlugs]
+    );
 
     const navigationItems = useMemo(() => {
         const unresolvedNavigationItems =
