@@ -1,6 +1,8 @@
+import { useMemo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useNavigationContext } from "../navigation-context";
 import { useDocsSelectors } from "../selectors/useDocsSelectors";
+import { resolveNavigationItems } from "../util/resolver";
 import { BuiltWithFern } from "./BuiltWithFern";
 import { CollapseSidebarProvider } from "./CollapseSidebarContext";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
@@ -16,10 +18,24 @@ export const Sidebar: React.FC<Sidebar.Props> = () => {
     const { activeNavigatable, registerScrolledToPathListener } = useNavigationContext();
     const { activeNavigationConfigContext, withVersionAndTabSlugs } = useDocsSelectors();
 
-    const navigationItems =
-        activeNavigationConfigContext.type === "tabbed"
-            ? activeNavigatable.context.tab?.items
-            : activeNavigationConfigContext.config.items;
+    const currentSlug = useMemo(() => {
+        const slug = withVersionAndTabSlugs("", { omitDefault: true });
+        return slug.length > 0 ? [slug] : [];
+    }, [withVersionAndTabSlugs]);
+
+    const navigationItems = useMemo(() => {
+        const unresolvedNavigationItems =
+            activeNavigationConfigContext.type === "tabbed"
+                ? activeNavigatable.context.tab?.items
+                : activeNavigationConfigContext.config.items;
+        return resolveNavigationItems(unresolvedNavigationItems ?? [], docsDefinition, currentSlug);
+    }, [
+        activeNavigatable.context.tab?.items,
+        activeNavigationConfigContext.config,
+        activeNavigationConfigContext.type,
+        currentSlug,
+        docsDefinition,
+    ]);
 
     return (
         <nav
@@ -28,20 +44,18 @@ export const Sidebar: React.FC<Sidebar.Props> = () => {
         >
             <MobileSidebarHeaderLinks />
             <SidebarFixedItemsSection className="-mx-4 lg:sticky lg:top-0 lg:z-20" />
-            {navigationItems != null && (
-                <CollapseSidebarProvider>
-                    <SidebarSection
-                        navigationItems={navigationItems}
-                        slug={withVersionAndTabSlugs("", { omitDefault: true })}
-                        registerScrolledToPathListener={registerScrolledToPathListener}
-                        docsDefinition={docsDefinition}
-                        activeTabIndex={activeNavigatable.context.tab?.index ?? null}
-                        resolveApi={resolveApi}
-                        depth={0}
-                        topLevel={true}
-                    />
-                </CollapseSidebarProvider>
-            )}
+            <CollapseSidebarProvider>
+                <SidebarSection
+                    navigationItems={navigationItems}
+                    slug={currentSlug}
+                    registerScrolledToPathListener={registerScrolledToPathListener}
+                    docsDefinition={docsDefinition}
+                    activeTabIndex={activeNavigatable.context.tab?.index ?? null}
+                    resolveApi={resolveApi}
+                    depth={0}
+                    topLevel={true}
+                />
+            </CollapseSidebarProvider>
             <BuiltWithFern />
         </nav>
     );

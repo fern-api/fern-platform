@@ -58,7 +58,7 @@ export const SidebarHeading: FC<SidebarHeadingProps> = ({
             )}
             onClick={toggleExpand}
         >
-            <h6 className="m-0 flex-1 text-base leading-5 lg:text-sm lg:leading-4">{title}</h6>
+            <h6 className="m-0 flex-1 text-base leading-6 lg:text-sm lg:leading-5">{title}</h6>
             {rightElement}
         </span>
     </div>

@@ -1,27 +1,20 @@
-import { APIV1Read, DocsV1Read, FdrAPI, isApiNode } from "@fern-api/fdr-sdk";
-import {
-    doesSubpackageHaveEndpointsOrWebhooksRecursive,
-    getEndpointTitleAsString,
-    getSubpackageTitle,
-    joinUrlSlugs,
-} from "@fern-ui/app-utils";
-import { Transition } from "@headlessui/react";
+import { DocsV1Read, isApiNode } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
-import { useCallback, useMemo } from "react";
-import { resolveSubpackage } from "../api-context/ApiDefinitionContextProvider";
+import { isEqual } from "lodash-es";
+import { forwardRef, useCallback } from "react";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { API_ARTIFACTS_TITLE } from "../config";
 import { useNavigationContext } from "../navigation-context";
-import { useCollapseSidebar } from "./CollapseSidebarContext";
+import { ResolvedApiDefinitionPackage, ResolvedNavigationItemApiSection } from "../util/resolver";
+import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { SidebarSlugLink } from "./SidebarLink";
 
 export interface ApiSidebarSectionProps {
     className?: string;
-    apiSection: DocsV1Read.ApiSection;
-    slug: string;
+    apiSection: ResolvedNavigationItemApiSection;
+    slug: string[];
     registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
-    resolveApi: (apiId: FdrAPI.ApiDefinitionId) => APIV1Read.ApiDefinition | undefined;
     depth: number;
 }
 
@@ -30,31 +23,15 @@ export const ApiSidebarSection: React.FC<ApiSidebarSectionProps> = ({
     slug,
     registerScrolledToPathListener,
     apiSection,
-    resolveApi,
     depth,
 }) => {
-    const apiDefinition = useMemo(() => resolveApi(apiSection.api), [apiSection.api, resolveApi]);
-    const resolveSubpackageById = useCallback(
-        (subpackageId: APIV1Read.SubpackageId): APIV1Read.ApiDefinitionSubpackage | undefined => {
-            if (apiDefinition == null) {
-                return undefined;
-            }
-            return resolveSubpackage(apiDefinition, subpackageId);
-        },
-        [apiDefinition]
-    );
-    if (apiDefinition == null) {
-        return null;
-    }
     return (
         <InnerApiSidebarSection
             className={className}
-            apiDefinitionPackage={apiDefinition.rootPackage}
-            resolveSubpackageById={resolveSubpackageById}
+            apiDefinitionPackage={apiSection}
             slug={slug}
             registerScrolledToPathListener={registerScrolledToPathListener}
             artifacts={apiSection.artifacts}
-            resolveApi={resolveApi}
             depth={depth}
             apiSection={apiSection}
         />
@@ -62,98 +39,90 @@ export const ApiSidebarSection: React.FC<ApiSidebarSectionProps> = ({
 };
 
 interface InnerApiSidebarSectionProps extends ApiSidebarSectionProps {
-    apiDefinitionPackage: APIV1Read.ApiDefinitionPackage;
-    resolveSubpackageById: (subpackageId: APIV1Read.SubpackageId) => APIV1Read.ApiDefinitionSubpackage | undefined;
+    apiDefinitionPackage: ResolvedApiDefinitionPackage;
     artifacts?: DocsV1Read.ApiArtifacts;
 }
 
-const InnerApiSidebarSection: React.FC<InnerApiSidebarSectionProps> = ({
-    className,
-    apiDefinitionPackage,
-    resolveSubpackageById,
-    slug,
-    registerScrolledToPathListener,
-    artifacts,
-    resolveApi,
-    depth,
-    apiSection,
-}) => {
-    const { selectedSlug } = useCollapseSidebar();
-    const { activeNavigatable } = useNavigationContext();
-    const shallow = isApiNode(activeNavigatable) && activeNavigatable.section.api === apiSection.api;
-    const renderArtifacts = () => {
-        if (artifacts == null || !areApiArtifactsNonEmpty(artifacts)) {
+const InnerApiSidebarSection = forwardRef<HTMLUListElement, InnerApiSidebarSectionProps>(
+    function InnerApiSidebarSection(
+        { className, apiDefinitionPackage, slug, registerScrolledToPathListener, artifacts, depth, apiSection },
+        ref
+    ) {
+        const { selectedSlug } = useCollapseSidebar();
+        const { activeNavigatable } = useNavigationContext();
+        const shallow = isApiNode(activeNavigatable) && activeNavigatable.section.api === apiSection.api;
+        const renderArtifacts = () => {
+            if (artifacts == null || !areApiArtifactsNonEmpty(artifacts)) {
+                return null;
+            }
+            const clientLibrariesSlug = [...slug, "client-libraries"];
+            return (
+                <SidebarSlugLink
+                    slug={clientLibrariesSlug}
+                    title={API_ARTIFACTS_TITLE}
+                    registerScrolledToPathListener={registerScrolledToPathListener}
+                    selected={isEqual(clientLibrariesSlug, selectedSlug)}
+                    depth={Math.max(0, depth - 1)}
+                />
+            );
+        };
+
+        if (
+            apiDefinitionPackage.endpoints.length === 0 &&
+            apiDefinitionPackage.webhooks.length === 0 &&
+            apiDefinitionPackage.subpackages.length === 0 &&
+            (artifacts == null || areApiArtifactsNonEmpty(artifacts))
+        ) {
             return null;
         }
-        const clientLibrariesSlug = joinUrlSlugs(slug, "client-libraries");
+
         return (
-            <SidebarSlugLink
-                slug={clientLibrariesSlug}
-                title={API_ARTIFACTS_TITLE}
-                registerScrolledToPathListener={registerScrolledToPathListener}
-                selected={clientLibrariesSlug === selectedSlug}
-                depth={Math.max(0, depth - 1)}
-            />
+            <ul className={classNames(className, "list-none")} ref={ref}>
+                {renderArtifacts()}
+                {apiDefinitionPackage.endpoints.map((endpoint) => {
+                    return (
+                        <SidebarSlugLink
+                            key={endpoint.id}
+                            slug={endpoint.slug}
+                            shallow={shallow}
+                            title={endpoint.title}
+                            registerScrolledToPathListener={registerScrolledToPathListener}
+                            selected={isEqual(endpoint.slug, selectedSlug)}
+                            depth={Math.max(0, depth - 1)}
+                            rightElement={<HttpMethodTag className="ml-2 font-normal" method={endpoint.method} small />}
+                        />
+                    );
+                })}
+                {apiDefinitionPackage.webhooks.map((webhook) => {
+                    return (
+                        <SidebarSlugLink
+                            key={webhook.id}
+                            slug={webhook.slug}
+                            shallow={shallow}
+                            title={webhook.name ?? "/" + webhook.path.join("/")}
+                            registerScrolledToPathListener={registerScrolledToPathListener}
+                            selected={isEqual(webhook.slug, selectedSlug)}
+                            depth={Math.max(0, depth - 1)}
+                        />
+                    );
+                })}
+                {apiDefinitionPackage.subpackages.map((subpackage) => {
+                    return (
+                        <ExpandableApiSidebarSection
+                            key={subpackage.id}
+                            title={subpackage.title}
+                            slug={subpackage.slug}
+                            apiDefinitionPackage={subpackage}
+                            registerScrolledToPathListener={registerScrolledToPathListener}
+                            depth={depth}
+                            apiSection={apiSection}
+                        />
+                    );
+                })}
+            </ul>
         );
-    };
-    return (
-        <ul className={classNames(className, "list-none")}>
-            {renderArtifacts()}
-            {apiDefinitionPackage.endpoints.map((endpoint) => {
-                const fullSlug = joinUrlSlugs(slug, endpoint.urlSlug);
-                return (
-                    <SidebarSlugLink
-                        key={endpoint.id}
-                        slug={fullSlug}
-                        shallow={shallow}
-                        title={getEndpointTitleAsString(endpoint)}
-                        registerScrolledToPathListener={registerScrolledToPathListener}
-                        selected={fullSlug === selectedSlug}
-                        depth={Math.max(0, depth - 1)}
-                        rightElement={<HttpMethodTag className="ml-2 font-normal" method={endpoint.method} small />}
-                    />
-                );
-            })}
-            {apiDefinitionPackage.webhooks.map((webhook) => {
-                const fullSlug = joinUrlSlugs(slug, webhook.urlSlug);
-                return (
-                    <SidebarSlugLink
-                        key={webhook.id}
-                        slug={fullSlug}
-                        shallow={shallow}
-                        title={webhook.name ?? "/" + webhook.path.join("/")}
-                        registerScrolledToPathListener={registerScrolledToPathListener}
-                        selected={fullSlug === selectedSlug}
-                        depth={Math.max(0, depth - 1)}
-                    />
-                );
-            })}
-            {apiDefinitionPackage.subpackages.map((subpackageId) => {
-                const subpackage = resolveSubpackageById(subpackageId);
-                if (
-                    subpackage == null ||
-                    !doesSubpackageHaveEndpointsOrWebhooksRecursive(subpackageId, resolveSubpackageById)
-                ) {
-                    return null;
-                }
-                const subpackageSlug = joinUrlSlugs(slug, subpackage.urlSlug);
-                return (
-                    <ExpandableApiSidebarSection
-                        key={subpackageId}
-                        title={getSubpackageTitle(subpackage)}
-                        slug={subpackageSlug}
-                        apiDefinitionPackage={subpackage}
-                        resolveSubpackageById={resolveSubpackageById}
-                        registerScrolledToPathListener={registerScrolledToPathListener}
-                        resolveApi={resolveApi}
-                        depth={depth}
-                        apiSection={apiSection}
-                    />
-                );
-            })}
-        </ul>
-    );
-};
+    }
+);
 
 interface ExpandableApiSidebarSectionProps extends InnerApiSidebarSectionProps {
     className?: string;
@@ -165,10 +134,8 @@ const ExpandableApiSidebarSection: React.FC<ExpandableApiSidebarSectionProps> = 
     title,
     slug,
     registerScrolledToPathListener,
-    resolveApi,
     depth,
     apiDefinitionPackage,
-    resolveSubpackageById,
     artifacts,
     apiSection,
 }) => {
@@ -188,20 +155,17 @@ const ExpandableApiSidebarSection: React.FC<ExpandableApiSidebarSectionProps> = 
             title={title}
             expanded={expanded}
             toggleExpand={useCallback(() => toggleExpanded(slug), [slug, toggleExpanded])}
-            showIndicator={selectedSlug?.startsWith(slug) && !expanded}
+            showIndicator={selectedSlug != null && checkSlugStartsWith(selectedSlug, slug) && !expanded}
         >
-            <Transition show={expanded} unmount={false}>
-                <InnerApiSidebarSection
-                    slug={slug}
-                    registerScrolledToPathListener={registerScrolledToPathListener}
-                    resolveApi={resolveApi}
-                    depth={depth + 1}
-                    apiDefinitionPackage={apiDefinitionPackage}
-                    resolveSubpackageById={resolveSubpackageById}
-                    artifacts={artifacts}
-                    apiSection={apiSection}
-                />
-            </Transition>
+            <InnerApiSidebarSection
+                className={classNames({ hidden: !expanded })}
+                slug={slug}
+                registerScrolledToPathListener={registerScrolledToPathListener}
+                depth={depth + 1}
+                apiDefinitionPackage={apiDefinitionPackage}
+                artifacts={artifacts}
+                apiSection={apiSection}
+            />
         </SidebarSlugLink>
     );
 };
