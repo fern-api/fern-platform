@@ -3,6 +3,7 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import Link from "next/link";
 import { useCallback, useMemo } from "react";
+import { useDocsContext } from "../docs-context/useDocsContext";
 import { useNavigationContext } from "../navigation-context";
 import { useSearchContext } from "../search-context/useSearchContext";
 import { EndpointRecord } from "./content/EndpointRecord";
@@ -23,17 +24,18 @@ export declare namespace SearchHit {
 }
 
 export const SearchHit: React.FC<SearchHit.Props> = ({ setRef, hit, isHovered, onMouseEnter, onMouseLeave }) => {
-    const { navigateToPath, resolver, basePath } = useNavigationContext();
+    const { pathResolver } = useDocsContext();
+    const { navigateToPath, basePath } = useNavigationContext();
     const { closeSearchDialog } = useSearchContext();
 
     const fullPath = useMemo(() => {
         const path = getFullPathForSearchRecord(hit, basePath);
-        const navigatable = resolver.resolveNavigatable(path);
+        const navigatable = pathResolver.resolveNavigatable(path);
         if (navigatable == null) {
             return basePath?.slice(1) ?? "";
         }
         return getFullSlugForNavigatable(navigatable, { omitDefault: true, basePath });
-    }, [hit, resolver, basePath]);
+    }, [hit, pathResolver, basePath]);
 
     const handleClick = useCallback(() => {
         closeSearchDialog();

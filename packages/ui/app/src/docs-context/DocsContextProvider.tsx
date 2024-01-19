@@ -1,17 +1,17 @@
-import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { APIV1Read, DocsV1Read, DocsV2Read, FdrAPI, PathResolver } from "@fern-api/fdr-sdk";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
-import { PropsWithChildren, useCallback } from "react";
+import { PropsWithChildren, useCallback, useMemo } from "react";
 import { DocsContext } from "./DocsContext";
 
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
         docsDefinition: DocsV1Read.DocsDefinition;
-        domain: string;
+        baseUrl: DocsV2Read.BaseUrl;
     }>;
 }
 
 export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
-    domain,
+    baseUrl,
     docsDefinition: unmemoizedDocsDefinition,
     children,
 }) => {
@@ -53,11 +53,25 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
         [docsDefinition.files]
     );
 
+    const pathResolver = useMemo(
+        () =>
+            new PathResolver({
+                definition: {
+                    apis: docsDefinition.apis,
+                    docsConfig: docsDefinition.config,
+                    basePath: baseUrl.basePath,
+                },
+            }),
+        [baseUrl.basePath, docsDefinition.apis, docsDefinition.config]
+    );
+
     return (
         <DocsContext.Provider
             value={{
-                domain,
+                domain: baseUrl.domain,
+                basePath: baseUrl.basePath,
                 docsDefinition,
+                pathResolver,
                 resolveApi,
                 resolvePage,
                 resolveFile,
