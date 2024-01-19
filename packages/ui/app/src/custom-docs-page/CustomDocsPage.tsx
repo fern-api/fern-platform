@@ -42,7 +42,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ serializedMdxCo
     return (
         <div className="flex justify-between px-6 sm:px-8 lg:pl-12 lg:pr-20 xl:pr-0">
             <div className="w-full min-w-0 lg:pr-6">
-                <article className="mx-auto w-full max-w-[70ch] leading-7 lg:ml-0 xl:mx-auto">
+                <article className="prose dark:prose-invert mx-auto w-full max-w-[70ch] lg:ml-0 xl:mx-auto">
                     <CustomDocsPageHeader resolvedPath={resolvedPath} />
                     {content}
                     <BottomNavigationButtons />
