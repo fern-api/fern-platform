@@ -1,16 +1,14 @@
 import { Collapse, Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { ResolvedTypeShape } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
-import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { Chip } from "../../../components/Chip";
 import { useNavigationContext } from "../../../navigation-context";
 import { getAnchorId } from "../../../util/anchor";
-import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
@@ -25,7 +23,7 @@ import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 
 export declare namespace InternalTypeDefinition {
     export interface Props {
-        typeShape: APIV1Read.TypeShape;
+        typeShape: ResolvedTypeShape;
         isCollapsible: boolean;
         anchorIdParts: string[];
         route: string;
@@ -48,15 +46,13 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     defaultExpandAll = false,
 }) => {
     const { hydrated, justNavigated } = useNavigationContext();
-    const { resolveTypeById } = useApiDefinitionContext();
     const router = useRouter();
 
     const collapsableContent = useMemo(
         () =>
             visitDiscriminatedUnion(typeShape, "type")._visit<CollapsibleContent | undefined>({
-                alias: () => undefined,
                 object: (object) => ({
-                    elements: getAllObjectProperties(object, resolveTypeById).map((property) => (
+                    elements: object.properties.map((property) => (
                         <ObjectProperty
                             key={property.key}
                             property={property}
@@ -70,23 +66,16 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                     elementNamePlural: "properties",
                 }),
                 undiscriminatedUnion: (union) => ({
-                    elements: union.variants
-                        .sort((v1, v2) => {
-                            if (v1.type.type === "id") {
-                                return v2.type.type === "id" ? 0 : -1;
-                            }
-                            return v2.type.type !== "id" ? 0 : 1;
-                        })
-                        .map((variant, variantIdx) => (
-                            <UndiscriminatedUnionVariant
-                                key={variantIdx}
-                                unionVariant={variant}
-                                anchorIdParts={[...anchorIdParts, variant.displayName ?? variantIdx.toString()]}
-                                applyErrorStyles={false}
-                                route={route}
-                                defaultExpandAll={defaultExpandAll}
-                            />
-                        )),
+                    elements: union.variants.map((variant, variantIdx) => (
+                        <UndiscriminatedUnionVariant
+                            key={variantIdx}
+                            unionVariant={variant}
+                            anchorIdParts={[...anchorIdParts, variant.displayName ?? variantIdx.toString()]}
+                            applyErrorStyles={false}
+                            route={route}
+                            defaultExpandAll={defaultExpandAll}
+                        />
+                    )),
                     elementNameSingular: "variant",
                     elementNamePlural: "variants",
                     separatorText: "OR",
@@ -116,7 +105,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                 }),
                 _other: () => undefined,
             }),
-        [typeShape, resolveTypeById, anchorIdParts, route, defaultExpandAll]
+        [typeShape, anchorIdParts, route, defaultExpandAll]
     );
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);

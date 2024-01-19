@@ -1,11 +1,11 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { ResolvedTypeReference } from "@fern-ui/app-utils";
 import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
 import { TypeDefinitionContextProvider } from "../context/TypeDefinitionContextProvider";
 import { InternalTypeReferenceDefinitions } from "./InternalTypeReferenceDefinitions";
 
 export declare namespace TypeReferenceDefinitions {
     export interface Props {
-        type: APIV1Read.TypeReference;
+        shape: ResolvedTypeReference;
         applyErrorStyles: boolean;
         isCollapsible: boolean;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
@@ -17,7 +17,7 @@ export declare namespace TypeReferenceDefinitions {
 }
 
 export const TypeReferenceDefinitions: React.FC<TypeReferenceDefinitions.Props> = ({
-    type,
+    shape,
     isCollapsible,
     applyErrorStyles,
     onHoverProperty,
@@ -29,7 +29,7 @@ export const TypeReferenceDefinitions: React.FC<TypeReferenceDefinitions.Props> 
     return (
         <TypeDefinitionContextProvider onHoverProperty={onHoverProperty}>
             <InternalTypeReferenceDefinitions
-                type={type}
+                shape={shape}
                 isCollapsible={isCollapsible}
                 applyErrorStyles={applyErrorStyles}
                 className={className}

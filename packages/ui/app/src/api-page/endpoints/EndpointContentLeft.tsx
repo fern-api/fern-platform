@@ -1,20 +1,18 @@
 import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
-import { getEndpointTitleAsString, getSubpackageTitle, isSubpackage } from "@fern-ui/app-utils";
+import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
-import { noop } from "lodash-es";
+import { camelCase, sortBy, upperFirst } from "lodash-es";
 import { memo } from "react";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
-import { EndpointErrorsSection } from "./EndpointErrorsSection";
+import { EndpointError } from "./EndpointError";
 import { EndpointParameter } from "./EndpointParameter";
 import { EndpointRequestSection } from "./EndpointRequestSection";
 import { EndpointResponseSection } from "./EndpointResponseSection";
 import { EndpointSection } from "./EndpointSection";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
-import { PathParametersSection } from "./PathParametersSection";
-import { QueryParametersSection } from "./QueryParametersSection";
 
 export interface HoveringProps {
     isHovering: boolean;
@@ -22,12 +20,11 @@ export interface HoveringProps {
 
 export declare namespace EndpointContentLeft {
     export interface Props {
-        endpoint: APIV1Read.EndpointDefinition;
-        package: APIV1Read.ApiDefinitionPackage;
+        endpoint: ResolvedEndpointDefinition;
+        subpackageTitle: string | undefined;
         apiSection: DocsV1Read.ApiSection;
         onHoverRequestProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
         onHoverResponseProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
-        errors: APIV1Read.ErrorDeclarationV2[];
         selectedError: APIV1Read.ErrorDeclarationV2 | undefined;
         setSelectedError: (idx: APIV1Read.ErrorDeclarationV2 | undefined) => void;
         route: string;
@@ -36,11 +33,10 @@ export declare namespace EndpointContentLeft {
 
 const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     endpoint,
-    package: package_,
+    subpackageTitle,
     apiSection,
     onHoverRequestProperty,
     onHoverResponseProperty,
-    errors,
     selectedError,
     setSelectedError,
     route,
@@ -51,13 +47,13 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     return (
         <>
             <div className="space-y-2.5 pb-2 pt-8">
-                {isSubpackage(package_) && (
+                {subpackageTitle != null && (
                     <div className="text-accent-primary dark:text-accent-primary-dark text-xs font-semibold uppercase tracking-wider">
-                        {getSubpackageTitle(package_)}
+                        {subpackageTitle}
                     </div>
                 )}
                 <div>
-                    <h2 className="mt-0 inline-block text-2xl sm:text-3xl">{getEndpointTitleAsString(endpoint)}</h2>
+                    <h2 className="mt-0 inline-block text-2xl sm:text-3xl">{endpoint.title}</h2>
                     {endpoint.availability != null && (
                         <span className="relative">
                             <EndpointAvailabilityTag
@@ -69,37 +65,47 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                 </div>
             </div>
             <EndpointUrlWithOverflow endpoint={endpoint} />
-            <ApiPageDescription className="mt-3" description={endpoint.description} isMarkdown={true} />
+            <ApiPageDescription
+                className="mt-3 text-sm leading-6"
+                description={endpoint.description}
+                isMarkdown={true}
+            />
             <div className="mt-8 flex">
                 <div className="flex max-w-full flex-1 flex-col  gap-12">
-                    {endpoint.path.pathParameters.length > 0 && (
-                        <PathParametersSection
-                            pathParameters={endpoint.path.pathParameters}
-                            anchorIdParts={["request", "path"]}
-                            route={route}
-                        />
-                    )}
-                    {endpoint.headers.length > 0 && (
-                        <EndpointSection
-                            title="Headers"
-                            anchorIdParts={["request", "header"]}
-                            route={route}
-                            showExpandCollapse={false}
-                            expandAll={noop}
-                            collapseAll={noop}
-                        >
+                    {endpoint.pathParameters.length > 0 && (
+                        <EndpointSection title="Path parameters" anchorIdParts={["request", "path"]} route={route}>
                             <div className="flex flex-col">
-                                {endpoint.headers.map((header, index) => (
-                                    <div className="flex flex-col" key={index}>
+                                {endpoint.pathParameters.map((parameter) => (
+                                    <div className="flex flex-col" key={parameter.key}>
                                         <TypeComponentSeparator />
                                         <EndpointParameter
-                                            name={header.key}
-                                            type={header.type}
-                                            anchorIdParts={["request", "header", header.key]}
+                                            name={parameter.key}
+                                            shape={parameter.shape}
+                                            anchorIdParts={["request", "path", parameter.key]}
                                             route={route}
-                                            description={header.description}
-                                            descriptionContainsMarkdown={header.descriptionContainsMarkdown ?? false}
-                                            availability={header.availability}
+                                            description={parameter.description}
+                                            descriptionContainsMarkdown={parameter.descriptionContainsMarkdown ?? true}
+                                            availability={parameter.availability}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </EndpointSection>
+                    )}
+                    {endpoint.headers.length > 0 && (
+                        <EndpointSection title="Headers" anchorIdParts={["request", "header"]} route={route}>
+                            <div className="flex flex-col">
+                                {endpoint.headers.map((parameter) => (
+                                    <div className="flex flex-col" key={parameter.key}>
+                                        <TypeComponentSeparator />
+                                        <EndpointParameter
+                                            name={parameter.key}
+                                            shape={parameter.shape}
+                                            anchorIdParts={["request", "header", parameter.key]}
+                                            route={route}
+                                            description={parameter.description}
+                                            descriptionContainsMarkdown={parameter.descriptionContainsMarkdown ?? false}
+                                            availability={parameter.availability}
                                         />
                                     </div>
                                 ))}
@@ -107,23 +113,36 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                         </EndpointSection>
                     )}
                     {endpoint.queryParameters.length > 0 && (
-                        <QueryParametersSection
-                            queryParameters={endpoint.queryParameters}
-                            anchorIdParts={["request", "query"]}
-                            route={route}
-                        />
+                        <EndpointSection title="Query parameters" anchorIdParts={["request", "query"]} route={route}>
+                            <div className="flex flex-col">
+                                {endpoint.queryParameters.map((parameter) => (
+                                    <div className="flex flex-col" key={parameter.key}>
+                                        <TypeComponentSeparator />
+                                        <EndpointParameter
+                                            name={parameter.key}
+                                            shape={parameter.shape}
+                                            anchorIdParts={["request", "query", parameter.key]}
+                                            route={route}
+                                            description={parameter.description}
+                                            descriptionContainsMarkdown={parameter.descriptionContainsMarkdown ?? false}
+                                            availability={parameter.availability}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </EndpointSection>
                     )}
-                    {endpoint.request != null && (
+                    {endpoint.requestBody != null && (
                         <EndpointSection
                             title="Request"
-                            anchorIdParts={["request", "body"]}
+                            anchorIdParts={["request"]}
                             route={route}
                             expandAll={requestExpandAll.setTrue}
                             collapseAll={requestExpandAll.setFalse}
                             showExpandCollapse={true}
                         >
                             <EndpointRequestSection
-                                httpRequest={endpoint.request}
+                                requestBody={endpoint.requestBody}
                                 onHoverProperty={onHoverRequestProperty}
                                 anchorIdParts={["request", "body"]}
                                 route={route}
@@ -131,17 +150,17 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                             />
                         </EndpointSection>
                     )}
-                    {endpoint.response != null && (
+                    {endpoint.responseBody != null && (
                         <EndpointSection
                             title="Response"
-                            anchorIdParts={["response", "body"]}
+                            anchorIdParts={["response"]}
                             route={route}
                             expandAll={responseExpandAll.setTrue}
                             collapseAll={responseExpandAll.setFalse}
                             showExpandCollapse={true}
                         >
                             <EndpointResponseSection
-                                httpResponse={endpoint.response}
+                                responseBody={endpoint.responseBody}
                                 onHoverProperty={onHoverResponseProperty}
                                 anchorIdParts={["response", "body"]}
                                 route={route}
@@ -149,7 +168,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                             />
                         </EndpointSection>
                     )}
-                    {apiSection.showErrors && errors.length > 0 && (
+                    {apiSection.showErrors && endpoint.errors.length > 0 && (
                         <EndpointSection
                             title="Errors"
                             anchorIdParts={["response", "error"]}
@@ -158,18 +177,36 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                             collapseAll={errorExpandAll.setFalse}
                             showExpandCollapse={false}
                         >
-                            <EndpointErrorsSection
-                                errors={errors}
-                                onClickError={(error, _, event) => {
-                                    event.stopPropagation();
-                                    setSelectedError(error);
-                                }}
-                                onHoverProperty={onHoverResponseProperty}
-                                selectedError={selectedError}
-                                anchorIdParts={["response", "error"]}
-                                route={route}
-                                defaultExpandAll={errorExpandAll.value}
-                            />
+                            <div className="border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded-md border">
+                                {sortBy(
+                                    endpoint.errors,
+                                    (e) => e.statusCode,
+                                    (e) => e.name
+                                ).map((error, idx) => {
+                                    return (
+                                        <EndpointError
+                                            key={error.name ?? error.statusCode}
+                                            error={error}
+                                            isFirst={idx === 0}
+                                            isLast={idx === endpoint.errors.length - 1}
+                                            isSelected={selectedError != null && isErrorEqual(error, selectedError)}
+                                            onClick={(event) => {
+                                                event.stopPropagation();
+                                                setSelectedError(error);
+                                            }}
+                                            onHoverProperty={onHoverResponseProperty}
+                                            anchorIdParts={[
+                                                "response",
+                                                "error",
+                                                `${convertNameToAnchorPart(error.name) ?? error.statusCode}`,
+                                            ]}
+                                            route={route}
+                                            availability={error.availability}
+                                            defaultExpandAll={errorExpandAll.value}
+                                        />
+                                    );
+                                })}
+                            </div>
                         </EndpointSection>
                     )}
                 </div>
@@ -179,3 +216,17 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
 };
 
 export const EndpointContentLeft = memo(UnmemoizedEndpointContentLeft);
+
+function isErrorEqual(a: APIV1Read.ErrorDeclarationV2, b: APIV1Read.ErrorDeclarationV2): boolean {
+    return (
+        a.statusCode === b.statusCode &&
+        (a.name != null && b.name != null ? a.name === b.name : a.name == null && b.name == null)
+    );
+}
+
+export function convertNameToAnchorPart(name: string | undefined): string | undefined {
+    if (name == null) {
+        return undefined;
+    }
+    return upperFirst(camelCase(name));
+}

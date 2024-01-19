@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import { Markdown } from "../api-page/markdown/Markdown";
 
 export declare namespace ApiPageDescription {
@@ -16,9 +15,5 @@ export const ApiPageDescription: React.FC<ApiPageDescription.Props> = ({ classNa
     if (isMarkdown) {
         return <Markdown className={className}>{description}</Markdown>;
     }
-    return (
-        <div className={classNames("text-sm !text-text-muted-light dark:!text-text-muted-dark leading-6", className)}>
-            {description}
-        </div>
-    );
+    return <div className={className}>{description}</div>;
 };

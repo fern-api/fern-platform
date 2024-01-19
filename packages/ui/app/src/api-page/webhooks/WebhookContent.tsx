@@ -1,35 +1,32 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
-import { getSubpackageTitle, isSubpackage } from "@fern-ui/app-utils";
+import { ResolvedWebhookDefinition } from "@fern-ui/app-utils";
 import classNames from "classnames";
-import { snakeCase } from "lodash-es";
 import React, { useCallback } from "react";
 import { ApiPageDescription } from "../ApiPageDescription";
+import { EndpointParameter } from "../endpoints/EndpointParameter";
+import { EndpointSection } from "../endpoints/EndpointSection";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
+import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { useWebhookContext } from "./webhook-context/useWebhookContext";
 import { WebhookExample } from "./webhook-examples/WebhookExample";
-import { WebhookHeadersSection } from "./WebhookHeadersSection";
 import { WebhookPayloadSection } from "./WebhookPayloadSection";
 import { WebhookResponseSection } from "./WebhookResponseSection";
-import { WebhookSection } from "./WebhookSection";
 
 export declare namespace WebhookContent {
     export interface Props {
-        webhook: APIV1Read.WebhookDefinition;
-        package: APIV1Read.ApiDefinitionPackage;
+        webhook: ResolvedWebhookDefinition;
+        subpackageTitle: string | undefined;
         hideBottomSeparator?: boolean;
         setContainerRef: (ref: HTMLElement | null) => void;
-        anchorIdParts: string[];
         route: string;
     }
 }
 
 export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookContent({
     webhook,
-    package: package_,
+    subpackageTitle,
     hideBottomSeparator = false,
     setContainerRef,
-    anchorIdParts,
     route,
 }) {
     const { setHoveredPayloadPropertyPath } = useWebhookContext();
@@ -38,25 +35,6 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
             setHoveredPayloadPropertyPath(isHovering ? jsonPropertyPath : undefined);
         },
         [setHoveredPayloadPropertyPath]
-    );
-
-    const computeAnchor = useCallback(
-        (
-            attributeType: "headers" | "payload" | "response",
-            attribute?: APIV1Read.ObjectProperty | APIV1Read.PathParameter | APIV1Read.QueryParameter
-        ) => {
-            let anchor = "";
-            if (isSubpackage(package_)) {
-                anchor += snakeCase(package_.urlSlug) + "_";
-            }
-            anchor += snakeCase(webhook.id);
-            anchor += "-" + attributeType;
-            if (attribute?.key != null) {
-                anchor += "-" + snakeCase(attribute.key);
-            }
-            return anchor;
-        },
-        [package_, webhook]
     );
 
     const example = webhook.examples[0]; // TODO: Need a way to show all the examples
@@ -76,46 +54,63 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
             >
                 <div className="flex min-w-0 max-w-2xl flex-1 flex-col">
                     <div className="space-y-2.5 py-8">
-                        {isSubpackage(package_) && (
+                        {subpackageTitle != null && (
                             <div className="text-accent-primary dark:text-accent-primary-dark text-xs font-semibold uppercase tracking-wider">
-                                {getSubpackageTitle(package_)}
+                                {subpackageTitle}
                             </div>
                         )}
                         <h2 className="inline-block text-2xl sm:text-3xl">{webhook.name}</h2>
                     </div>
-                    <ApiPageDescription description={webhook.description} isMarkdown={true} />
+                    <ApiPageDescription
+                        description={webhook.description}
+                        isMarkdown={true}
+                        className="text-sm leading-6"
+                    />
                     {webhook.headers.length > 0 && (
                         <div className="mt-8 flex">
                             <div className="flex max-w-full flex-1 flex-col gap-12">
-                                <WebhookSection title="Headers" href={`${route}#${computeAnchor("headers")}`}>
-                                    <WebhookHeadersSection
-                                        webhook={webhook}
-                                        anchorIdParts={anchorIdParts}
-                                        route={route}
-                                    />
-                                </WebhookSection>
+                                <EndpointSection title="Headers" anchorIdParts={["payload", "header"]} route={route}>
+                                    <div className="flex flex-col">
+                                        {webhook.headers.map((parameter) => (
+                                            <div className="flex flex-col" key={parameter.key}>
+                                                <TypeComponentSeparator />
+                                                <EndpointParameter
+                                                    name={parameter.key}
+                                                    shape={parameter.shape}
+                                                    anchorIdParts={["payload", "header", parameter.key]}
+                                                    route={route}
+                                                    description={parameter.description}
+                                                    descriptionContainsMarkdown={
+                                                        parameter.descriptionContainsMarkdown ?? false
+                                                    }
+                                                    availability={parameter.availability}
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </EndpointSection>
                             </div>
                         </div>
                     )}
 
                     <div className="mt-8 flex">
                         <div className="flex max-w-full flex-1 flex-col gap-12">
-                            <WebhookSection title="Payload" href={`${route}#${computeAnchor("payload")}`}>
+                            <EndpointSection title="Payload" anchorIdParts={["payload"]} route={route}>
                                 <WebhookPayloadSection
                                     payload={webhook.payload}
                                     onHoverProperty={onHoverPayloadProperty}
-                                    anchorIdParts={anchorIdParts}
+                                    anchorIdParts={["payload", "body"]}
                                     route={route}
                                 />
-                            </WebhookSection>
+                            </EndpointSection>
                         </div>
                     </div>
 
                     <div className="mt-8 flex">
                         <div className="flex max-w-full flex-1 flex-col gap-12">
-                            <WebhookSection title="Response" href={`${route}#${computeAnchor("response")}`}>
+                            <EndpointSection title="Response" anchorIdParts={["response"]} route={route}>
                                 <WebhookResponseSection />
-                            </WebhookSection>
+                            </EndpointSection>
                         </div>
                     </div>
                 </div>

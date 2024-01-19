@@ -1,4 +1,5 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { ResolvedTypeReference, ResolvedUndiscriminatedUnionShapeVariant } from "@fern-ui/app-utils";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { ReactElement, useCallback } from "react";
 import { ApiPageDescription } from "../../ApiPageDescription";
@@ -9,58 +10,40 @@ import {
     useTypeDefinitionContext,
 } from "../context/TypeDefinitionContext";
 import { InternalTypeReferenceDefinitions } from "../type-reference/InternalTypeReferenceDefinitions";
-import { TypeShorthand } from "../type-shorthand/TypeShorthand";
+import { renderTypeShorthand } from "../type-shorthand/TypeShorthand";
 
 type IconInfo = {
     content: string;
     size: number;
 };
 
-function getIconInfoForPrimitiveType(type: APIV1Read.PrimitiveType): IconInfo {
-    switch (type.type) {
-        case "integer":
-        case "long":
-        case "double":
-            return type.type === "double"
-                ? {
-                      content: "1.2",
-                      size: 6,
-                  }
-                : {
-                      content: "123",
-                      size: 6,
-                  };
-        case "boolean":
-            return { content: "true", size: 6 };
-        case "uuid":
-        case "date":
-        case "datetime":
-        case "base64":
-        case "string":
-            return { content: "abc", size: 6 };
-    }
+function getIconInfoForTypeReference(typeRef: ResolvedTypeReference): IconInfo | null {
+    return visitDiscriminatedUnion(typeRef, "type")._visit<IconInfo | null>({
+        string: () => ({ content: "abc", size: 6 }),
+        boolean: () => ({ content: "true", size: 6 }),
+        integer: () => ({ content: "123", size: 6 }),
+        double: () => ({ content: "1.2", size: 6 }),
+        long: () => ({ content: "123", size: 6 }),
+        datetime: () => ({ content: "abc", size: 6 }),
+        uuid: () => ({ content: "abc", size: 6 }),
+        base64: () => ({ content: "abc", size: 6 }),
+        date: () => ({ content: "abc", size: 6 }),
+        object: () => null,
+        undiscriminatedUnion: () => null,
+        discriminatedUnion: () => null,
+        enum: () => null,
+        optional: (optional) => getIconInfoForTypeReference(optional.shape),
+        list: (list) => getIconInfoForTypeReference(list.shape),
+        set: (set) => getIconInfoForTypeReference(set.shape),
+        map: () => ({ content: "{}", size: 9 }),
+        booleanLiteral: () => ({ content: "!", size: 6 }),
+        stringLiteral: () => ({ content: "!", size: 6 }),
+        unknown: () => ({ content: "{}", size: 6 }),
+        _other: () => null,
+    });
 }
 
-function getIconInfoForTypeReference(typeRef: APIV1Read.TypeReference): IconInfo | null {
-    switch (typeRef.type) {
-        case "id":
-            return null;
-        case "primitive":
-            return getIconInfoForPrimitiveType(typeRef.value);
-        case "map":
-            return { content: "{}", size: 9 };
-        case "literal":
-            return { content: "!", size: 9 };
-        case "list":
-        case "set":
-        case "optional":
-            return getIconInfoForTypeReference(typeRef.itemType);
-        case "unknown":
-            return { content: "{}", size: 9 };
-    }
-}
-
-function getIconForTypeReference(typeRef: APIV1Read.TypeReference): ReactElement | null {
+function getIconForTypeReference(typeRef: ResolvedTypeReference): ReactElement | null {
     const info = getIconInfoForTypeReference(typeRef);
     if (info == null) {
         return null;
@@ -78,7 +61,7 @@ function getIconForTypeReference(typeRef: APIV1Read.TypeReference): ReactElement
 
 export declare namespace UndiscriminatedUnionVariant {
     export interface Props {
-        unionVariant: APIV1Read.UndiscriminatedUnionVariant;
+        unionVariant: ResolvedUndiscriminatedUnionShapeVariant;
         anchorIdParts: string[];
         applyErrorStyles: boolean;
         route: string;
@@ -109,23 +92,21 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
                 "px-3": !isRootTypeDefinition,
             })}
         >
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-2">
                 <div className="t-muted flex items-center space-x-2.5">
-                    {getIconForTypeReference(unionVariant.type)}
+                    {getIconForTypeReference(unionVariant.shape)}
                     {unionVariant.displayName == null ? null : (
                         <span className="t-primary text-sm">{unionVariant.displayName}</span>
                     )}
-                    <span className="t-muted text-xs">
-                        <TypeShorthand type={unionVariant.type} plural={false} />
-                    </span>
+                    <span className="t-muted text-xs">{renderTypeShorthand(unionVariant.shape)}</span>
                     {unionVariant.availability != null && (
                         <EndpointAvailabilityTag availability={unionVariant.availability} minimal={true} />
                     )}
                 </div>
-                <ApiPageDescription className="mt-2" description={unionVariant.description} isMarkdown />
+                <ApiPageDescription isMarkdown={true} description={unionVariant.description} className="text-sm" />
                 <TypeDefinitionContext.Provider value={newContextValue}>
                     <InternalTypeReferenceDefinitions
-                        type={unionVariant.type}
+                        shape={unionVariant.shape}
                         anchorIdParts={anchorIdParts}
                         isCollapsible
                         applyErrorStyles={applyErrorStyles}

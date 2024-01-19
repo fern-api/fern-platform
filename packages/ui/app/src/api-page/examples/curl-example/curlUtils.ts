@@ -1,6 +1,6 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { getEndpointEnvironmentUrl } from "@fern-ui/app-utils";
-import { assertNever, assertNeverNoThrow, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { getEndpointEnvironmentUrl, ResolvedEndpointDefinition, ResolvedResponseBody } from "@fern-ui/app-utils";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { noop } from "lodash-es";
 import { JsonLine, jsonLineToString } from "../json-example/jsonLineUtils";
 
@@ -33,7 +33,7 @@ export type CurlLine = CurlLineParam | CurlLineJson;
 
 export function getCurlLines(
     apiDefinition: APIV1Read.ApiDefinition,
-    endpoint: APIV1Read.EndpointDefinition,
+    endpoint: ResolvedEndpointDefinition,
     example: APIV1Read.ExampleEndpointCall,
     jsonLines: JsonLine[]
 ): CurlLine[] {
@@ -67,7 +67,7 @@ export function getCurlLines(
         }
     }
 
-    const requestContentType = endpoint.request != null ? endpoint.request.contentType : undefined;
+    const requestContentType = endpoint.requestBody != null ? endpoint.requestBody.contentType : undefined;
     if (requestContentType != null) {
         parts.push({
             type: "param",
@@ -114,7 +114,7 @@ export function getCurlLines(
         }
     }
 
-    if (endpoint.response != null && endpoint.response != null && isJsonResponse(endpoint.response)) {
+    if (endpoint.responseBody != null && isJsonResponse(endpoint.responseBody)) {
         parts.push({
             type: "param",
             paramKey: "--header",
@@ -122,8 +122,8 @@ export function getCurlLines(
         });
     }
 
-    if (endpoint.request != null) {
-        switch (endpoint.request.type.type) {
+    if (endpoint.requestBody != null) {
+        switch (endpoint.requestBody.shape.type) {
             case "fileUpload":
                 parts.push({
                     type: "param",
@@ -131,8 +131,7 @@ export function getCurlLines(
                     value: "@file",
                 });
                 break;
-            case "object":
-            case "reference": {
+            default: {
                 if (jsonLines.length === 1 && jsonLines[0] != null) {
                     parts.push({
                         type: "param",
@@ -165,28 +164,20 @@ export function getCurlLines(
                 }
                 break;
             }
-            default:
-                assertNeverNoThrow(endpoint.request.type);
         }
     }
 
     return parts;
 }
 
-function isJsonResponse(httpResponse: APIV1Read.HttpResponse): boolean {
-    switch (httpResponse.type.type) {
+function isJsonResponse(httpResponse: ResolvedResponseBody): boolean {
+    switch (httpResponse.shape.type) {
         case "fileDownload":
-            return false;
         case "streamingText":
-            return false;
-        case "object":
-            return true;
-        case "reference":
-            return true;
         case "streamCondition":
             return false;
         default:
-            assertNever(httpResponse.type);
+            return true;
     }
 }
 

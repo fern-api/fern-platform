@@ -3,6 +3,7 @@ export * from "./convertNavigatableToResolvedPath";
 export * from "./fern";
 export * from "./mdx";
 export * from "./ResolvedPath";
+export * from "./resolver";
 export * from "./serialize-node";
 export * from "./slug";
 export * from "./theme/loadDocsBackgroundImage";

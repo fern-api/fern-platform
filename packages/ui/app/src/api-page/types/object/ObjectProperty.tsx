@@ -1,7 +1,6 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { ResolvedObjectProperty } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { useCallback, useMemo } from "react";
-import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { getAnchorId } from "../../../util/anchor";
@@ -14,16 +13,11 @@ import {
     useTypeDefinitionContext,
 } from "../context/TypeDefinitionContext";
 import { InternalTypeReferenceDefinitions } from "../type-reference/InternalTypeReferenceDefinitions";
-import { TypeShorthand } from "../type-shorthand/TypeShorthand";
-
-interface DescriptionInfo {
-    description: string;
-    isMarkdown: boolean;
-}
+import { renderTypeShorthand } from "../type-shorthand/TypeShorthand";
 
 export declare namespace ObjectProperty {
     export interface Props {
-        property: APIV1Read.ObjectProperty;
+        property: ResolvedObjectProperty;
         anchorIdParts: string[];
         route: string;
         applyErrorStyles: boolean;
@@ -39,7 +33,6 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
     defaultExpandAll,
 }) => {
     const anchorId = getAnchorId(anchorIdParts);
-    const { resolveTypeById } = useApiDefinitionContext();
 
     const contextValue = useTypeDefinitionContext();
     const jsonPropertyPath = useMemo(
@@ -80,33 +73,12 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
         };
     }, [contextValue, jsonPropertyPath]);
 
-    const descriptionInfo = useMemo<DescriptionInfo | undefined>(() => {
-        if (property.description != null) {
-            return {
-                description: property.description,
-                isMarkdown: Boolean(property.descriptionContainsMarkdown),
-            };
-        }
-        if (property.valueType.type === "id") {
-            const typeDef = resolveTypeById(property.valueType.value);
-            if (typeDef?.description == null) {
-                return undefined;
-            }
-            return {
-                description: typeDef.description,
-                isMarkdown: Boolean(typeDef.descriptionContainsMarkdown),
-            };
-        }
-        return undefined;
-    }, [property.description, property.descriptionContainsMarkdown, property.valueType, resolveTypeById]);
-
     const anchorRoute = `${route}#${anchorId}`;
 
     return (
         <div
             data-route={anchorRoute.toLowerCase()}
-            id={anchorId}
-            className={classNames("flex relative flex-col py-3 scroll-mt-20", {
+            className={classNames("flex relative flex-col py-3 scroll-mt-20 gap-2", {
                 "px-3": !contextValue.isRootTypeDefinition,
             })}
         >
@@ -119,18 +91,16 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
                         </MonospaceText>
                     </div>
                 </div>
-                <div className="t-muted text-xs">
-                    <TypeShorthand type={property.valueType} plural={false} />
-                </div>
+                <div className="t-muted text-xs">{renderTypeShorthand(property.valueShape)}</div>
                 {property.availability != null && (
                     <EndpointAvailabilityTag availability={property.availability} minimal={true} />
                 )}
             </div>
             <div className="flex flex-col">
-                <ApiPageDescription className="mt-3" isMarkdown={true} description={descriptionInfo?.description} />
+                <ApiPageDescription isMarkdown={true} description={property.description} className="text-sm" />
                 <TypeDefinitionContext.Provider value={newContextValue}>
                     <InternalTypeReferenceDefinitions
-                        type={property.valueType}
+                        shape={property.valueShape}
                         isCollapsible
                         applyErrorStyles={applyErrorStyles}
                         anchorIdParts={anchorIdParts}

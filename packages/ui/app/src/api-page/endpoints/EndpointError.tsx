@@ -1,19 +1,17 @@
-import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { APIV1Read } from "@fern-api/fdr-sdk";
+import { ResolvedError } from "@fern-ui/app-utils";
 import classNames from "classnames";
-import { memo, MouseEventHandler, ReactElement } from "react";
+import { memo, MouseEventHandler } from "react";
 import { toTitleCase } from "../../util/string";
 import { type JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
-import { TypeDefinitionContextProvider } from "../types/context/TypeDefinitionContextProvider";
-import { InternalTypeDefinitionError } from "../types/type-definition/InternalTypeDefinitionError";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
-import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
+import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
 import { getErrorNameForStatus } from "../utils/getErrorNameForStatus";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 
 export declare namespace EndpointError {
     export interface Props {
-        error: FdrAPI.api.v1.read.ErrorDeclarationV2;
+        error: ResolvedError;
         isFirst: boolean;
         isLast: boolean;
         isSelected: boolean;
@@ -67,48 +65,22 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                 {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
             </div>
 
-            {isSelected && error.type != null && (
+            {isSelected && error.shape != null && (
                 <div className="w-full pb-3">
                     <div className="t-muted mt-3 w-full text-start text-sm leading-7">
-                        This error returns{" "}
-                        {visitDiscriminatedUnion(error.type, "type")._visit<string | ReactElement>({
-                            alias: (type) => (
-                                <>
-                                    <TypeShorthand type={type.value} plural={false} withArticle />.
-                                </>
-                            ),
-                            object: () => "an object.",
-                            discriminatedUnion: () => "a union.",
-                            undiscriminatedUnion: () => "a union.",
-                            enum: () => "an enum.",
-                            _other: () => "unknown.",
-                        })}
+                        {`This error return ${renderTypeShorthand(error.shape, { withArticle: true })}.`}
                     </div>
-                    {error.type.type === "alias" ? (
-                        <div className="w-full text-start">
-                            <TypeReferenceDefinitions
-                                isCollapsible
-                                applyErrorStyles
-                                type={error.type.value}
-                                onHoverProperty={onHoverProperty}
-                                anchorIdParts={anchorIdParts}
-                                route={route}
-                                defaultExpandAll={defaultExpandAll}
-                            />
-                        </div>
-                    ) : error.type.type === "object" ? (
-                        <div className="mt-2.5 w-full text-start">
-                            <TypeDefinitionContextProvider onHoverProperty={onHoverProperty}>
-                                <InternalTypeDefinitionError
-                                    isCollapsible
-                                    typeShape={error.type}
-                                    anchorIdParts={anchorIdParts}
-                                    route={route}
-                                    defaultExpandAll={defaultExpandAll}
-                                />
-                            </TypeDefinitionContextProvider>
-                        </div>
-                    ) : null}
+                    <div className="w-full text-start">
+                        <TypeReferenceDefinitions
+                            isCollapsible
+                            applyErrorStyles
+                            shape={error.shape}
+                            onHoverProperty={onHoverProperty}
+                            anchorIdParts={anchorIdParts}
+                            route={route}
+                            defaultExpandAll={defaultExpandAll}
+                        />
+                    </div>
                 </div>
             )}
         </button>
