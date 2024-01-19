@@ -196,7 +196,7 @@ export const ApiPlaygroundContextProvider: FC<ApiPlaygroundContextProviderProps>
         [closeSecretsModal, setPlaygroundFormState]
     );
 
-    if (!domain.toLowerCase().includes("cloudflare") || !domain.toLowerCase().includes("cohere")) {
+    if (!domain.toLowerCase().includes("cloudflare") && !domain.toLowerCase().includes("cohere")) {
         return <>{children}</>;
     }
 
