@@ -1,40 +1,13 @@
-import {
-    NodeFactory,
-    PathResolver,
-    type DocsDefinitionSummary,
-    type NavigatableDocsNode,
-    type NodeNeighbors,
-} from "@fern-api/fdr-sdk";
-import { DefinitionObjectFactory, type ResolvedPath } from "@fern-ui/app-utils";
+import { type NavigatableDocsNode, type NodeNeighbors } from "@fern-api/fdr-sdk";
+import { type ResolvedPath } from "@fern-ui/app-utils";
 import { noop } from "@fern-ui/core-utils";
 import React from "react";
-
-const EMPTY_DEFINITION = DefinitionObjectFactory.createDocsDefinition();
-const EMPTY_DEFINITION_SUMMARY: DocsDefinitionSummary = {
-    apis: EMPTY_DEFINITION.apis,
-    docsConfig: EMPTY_DEFINITION.config,
-};
 
 export const NavigationContext = React.createContext<NavigationContextValue>({
     basePath: undefined,
     justNavigated: false,
-    activeNavigatable: NodeFactory.createPage({
-        slug: "",
-        leadingSlug: "",
-        page: {
-            id: "",
-            title: "",
-            urlSlug: "",
-        },
-        section: null,
-        context: {
-            type: "unversioned-untabbed",
-            root: NodeFactory.createRoot(EMPTY_DEFINITION_SUMMARY),
-            navigationConfig: { items: [] },
-            version: null,
-            tab: null,
-        },
-    }),
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    activeNavigatable: undefined!,
     activeNavigatableNeighbors: {
         previous: null,
         next: null,
@@ -43,7 +16,6 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
     userIsScrolling: () => false,
     onScrollToPath: noop,
     observeDocContent: noop,
-    resolver: new PathResolver({ definition: EMPTY_DEFINITION_SUMMARY }),
     registerScrolledToPathListener: () => noop,
     resolvedPath: {
         type: "custom-markdown-page",
@@ -68,7 +40,6 @@ export interface NavigationContextValue {
     userIsScrolling: () => boolean;
     onScrollToPath: (slug: string) => void;
     observeDocContent: (element: HTMLDivElement) => void;
-    resolver: PathResolver;
     registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
     resolvedPath: ResolvedPath; // the initial path that was hard-navigated
     hydrated: boolean;
