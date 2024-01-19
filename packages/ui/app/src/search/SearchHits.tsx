@@ -7,6 +7,7 @@ import { Hit } from "instantsearch.js";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch-hooks-web";
+import { useDocsContext } from "../docs-context/useDocsContext";
 import { useNavigationContext } from "../navigation-context";
 import { useSearchContext } from "../search-context/useSearchContext";
 import { SearchHit } from "./SearchHit";
@@ -20,7 +21,8 @@ export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {
 };
 
 export const SearchHits: React.FC = () => {
-    const { resolver, navigateToPath, basePath } = useNavigationContext();
+    const { pathResolver, basePath } = useDocsContext();
+    const { navigateToPath } = useNavigationContext();
     const { closeSearchDialog } = useSearchContext();
     const { hits } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
@@ -31,13 +33,13 @@ export const SearchHits: React.FC = () => {
     const getFullPathForHit = useCallback(
         (hit: Hit<SearchRecord>) => {
             const path = getFullPathForSearchRecord(hit, basePath);
-            const navigatable = resolver.resolveNavigatable(path);
+            const navigatable = pathResolver.resolveNavigatable(path);
             if (navigatable == null) {
                 return basePath?.slice(1) ?? "";
             }
             return getFullSlugForNavigatable(navigatable, { omitDefault: true, basePath });
         },
-        [basePath, resolver]
+        [basePath, pathResolver]
     );
 
     const refs = useRef(new Map<string, HTMLAnchorElement>());
