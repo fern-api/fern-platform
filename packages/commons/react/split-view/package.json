@@ -29,7 +29,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@blueprintjs/core": "^4.11.5",
+    "@blueprintjs/core": "^5.8.1",
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/react-commons": "workspace:*",
     "classnames": "^2.5.1",

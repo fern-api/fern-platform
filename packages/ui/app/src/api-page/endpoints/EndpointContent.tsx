@@ -1,12 +1,15 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
+import {
+    ResolvedApiDefinitionPackage,
+    ResolvedEndpointDefinition,
+    ResolvedNavigationItemApiSection,
+} from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { useNavigationContext } from "../../navigation-context";
 import { useViewportContext } from "../../viewport-context/useViewportContext";
 import { type CodeExampleClient } from "../examples/code-example";
@@ -18,6 +21,8 @@ import { convertNameToAnchorPart, EndpointContentLeft } from "./EndpointContentL
 
 export declare namespace EndpointContent {
     export interface Props {
+        apiSection: ResolvedNavigationItemApiSection;
+        apiDefinition: ResolvedApiDefinitionPackage;
         endpoint: ResolvedEndpointDefinition;
         subpackageTitle: string | undefined;
         hideBottomSeparator?: boolean;
@@ -93,6 +98,8 @@ function maybeGetErrorStatusCodeOrNameFromAnchor(anchor: string | undefined): nu
 }
 
 export const EndpointContent: React.FC<EndpointContent.Props> = ({
+    apiSection,
+    apiDefinition,
     endpoint,
     subpackageTitle,
     hideBottomSeparator = false,
@@ -107,7 +114,6 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         onChange: setIsInViewport,
         rootMargin: "100%",
     });
-    const { apiSection, apiDefinition } = useApiDefinitionContext();
     const [hoveredRequestPropertyPath, setHoveredRequestPropertyPath] = useState<JsonPropertyPath | undefined>();
     const [hoveredResponsePropertyPath, setHoveredResponsePropertyPath] = useState<JsonPropertyPath | undefined>();
     const onHoverRequestProperty = useCallback(
@@ -167,10 +173,10 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     const curlLines = useMemo(
         () =>
-            example != null && apiDefinition != null
-                ? getCurlLines(apiDefinition, endpoint, example, flattenJsonToLines(example.requestBody))
+            example != null
+                ? getCurlLines(apiSection.auth, endpoint, example, flattenJsonToLines(example.requestBody))
                 : [],
-        [apiDefinition, endpoint, example]
+        [apiSection.auth, endpoint, example]
     );
     const selectedExampleClientLineCount = useMemo(() => {
         return selectedExampleClient.id === "curl"
@@ -265,6 +271,9 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                 >
                     {isInViewport && example != null && (
                         <EndpointContentCodeSnippets
+                            apiSection={apiSection}
+                            apiDefinition={apiDefinition}
+                            endpoint={endpoint}
                             example={example}
                             availableExampleClients={availableExampleClients}
                             selectedExampleClient={selectedExampleClient}

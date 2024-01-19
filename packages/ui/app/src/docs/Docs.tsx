@@ -1,9 +1,10 @@
-import { resolveNavigationItems } from "@fern-ui/app-utils";
+import { isResolvedNavigationItemApiSection, resolveNavigationItems } from "@fern-ui/app-utils";
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { useTheme } from "next-themes";
 import { memo, useCallback, useEffect, useMemo } from "react";
+import { ApiPlaygroundContextProvider } from "../api-playground/ApiPlaygroundContext";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
@@ -24,6 +25,9 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
 
     const searchService = useSearchService();
     const { resolvedTheme: theme, themes, setTheme } = useTheme();
+    useEffect(() => {
+        document.body.className = theme === "dark" ? "antialiased bp5-dark" : "antialiased";
+    });
     useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
 
     useEffect(() => {
@@ -86,6 +90,8 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
         docsDefinition,
     ]);
 
+    const apiSections = useMemo(() => navigationItems.filter(isResolvedNavigationItemApiSection), [navigationItems]);
+
     return (
         <>
             <BgImageGradient
@@ -115,36 +121,38 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                     />
                 </div>
 
-                <div className="max-w-8xl relative mx-auto flex min-h-0 w-full min-w-0 flex-1">
-                    {isMobileSidebarOpen && (
-                        <div
-                            className="fixed inset-0 z-20 block bg-white/60 lg:hidden dark:bg-black/40"
-                            onClick={closeMobileSidebar}
-                        />
-                    )}
-                    <div
-                        className={classNames(
-                            "z-20 fixed inset-0 top-16 lg:mt-16 lg:sticky lg:h-[calc(100vh-64px)] lg:w-72 sm:max-w-[20rem] sm:border-r lg:border-none border-border-concealed-light dark:border-border-concealed-dark",
-                            "transition-opacity transition-transform lg:transition-none sm:-translate-x-full lg:transition-none lg:translate-x-0",
-                            {
-                                "opacity-0 sm:opacity-100 sm:block pointer-events-none lg:pointer-events-auto sm:-translate-x-full":
-                                    !isMobileSidebarOpen,
-                                "sm:translate-x-0 opacity-100": isMobileSidebarOpen,
-                            }
+                <ApiPlaygroundContextProvider apiSections={apiSections}>
+                    <div className="max-w-8xl relative mx-auto flex min-h-0 w-full min-w-0 flex-1">
+                        {isMobileSidebarOpen && (
+                            <div
+                                className="fixed inset-0 z-20 block bg-white/60 lg:hidden dark:bg-black/40"
+                                onClick={closeMobileSidebar}
+                            />
                         )}
-                    >
-                        {renderBackground("lg:hidden backdrop-blur-lg")}
-                        <Sidebar
-                            navigationItems={navigationItems}
-                            currentSlug={currentSlug}
-                            registerScrolledToPathListener={registerScrolledToPathListener}
-                        />
-                    </div>
+                        <div
+                            className={classNames(
+                                "z-20 fixed inset-0 top-16 lg:mt-16 lg:sticky lg:h-[calc(100vh-64px)] lg:w-72 sm:max-w-[20rem] sm:border-r lg:border-none border-border-concealed-light dark:border-border-concealed-dark",
+                                "transition-opacity transition-transform lg:transition-none sm:-translate-x-full lg:transition-none lg:translate-x-0",
+                                {
+                                    "opacity-0 sm:opacity-100 sm:block pointer-events-none lg:pointer-events-auto sm:-translate-x-full":
+                                        !isMobileSidebarOpen,
+                                    "sm:translate-x-0 opacity-100": isMobileSidebarOpen,
+                                }
+                            )}
+                        >
+                            {renderBackground("lg:hidden backdrop-blur-lg")}
+                            <Sidebar
+                                navigationItems={navigationItems}
+                                currentSlug={currentSlug}
+                                registerScrolledToPathListener={registerScrolledToPathListener}
+                            />
+                        </div>
 
-                    <main className={classNames("relative flex w-full min-w-0 flex-1 flex-col pt-16")}>
-                        <DocsMainContent navigationItems={navigationItems} />
-                    </main>
-                </div>
+                        <main className={classNames("relative flex w-full min-w-0 flex-1 flex-col pt-16")}>
+                            <DocsMainContent navigationItems={navigationItems} />
+                        </main>
+                    </div>
+                </ApiPlaygroundContextProvider>
             </div>
         </>
     );

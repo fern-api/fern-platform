@@ -1,12 +1,12 @@
-import { Intent, Position, Toaster, ToasterInstance, ToasterPosition, ToastProps } from "@blueprintjs/core";
+import { Intent, OverlayToaster, Position, Toaster, ToasterPosition, ToastProps } from "@blueprintjs/core";
 import classNames from "classnames";
 import styles from "./toaster.module.scss";
 
 const DEFAULT_POSITION = Position.TOP;
 
-const TOASTERS: Partial<Record<ToasterPosition, ToasterInstance>> = {};
-function getToaster(position: ToasterPosition): ToasterInstance {
-    return (TOASTERS[position] ??= Toaster.create({ position }));
+const TOASTERS: Partial<Record<ToasterPosition, Toaster>> = {};
+function getToaster(position: ToasterPosition): Toaster {
+    return (TOASTERS[position] ??= OverlayToaster.create({ position }));
 }
 
 export interface ToastParams extends Pick<ToastProps, "className" | "intent" | "icon" | "action"> {

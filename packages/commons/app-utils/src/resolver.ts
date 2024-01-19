@@ -1,8 +1,7 @@
-import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
+import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { last, noop, sortBy, startCase } from "lodash-es";
-import title from "title";
-import { SPECIAL_TOKENS } from "./specialTokens";
+import { last, noop, sortBy } from "lodash-es";
+import { titleCase } from "./titleCase";
 
 export function resolveNavigationItems(
     navigationItems: DocsV1Read.NavigationItem[],
@@ -43,7 +42,13 @@ export function resolveNavigationItems(
                         hasMultipleBaseUrls: definition.hasMultipleBaseUrls,
                         slug: [...parentSlugs, api.urlSlug],
                         endpoints: definition.rootPackage.endpoints.map((endpoint) =>
-                            resolveEndpointDefinition(endpoint, definition.types, definitionSlug)
+                            resolveEndpointDefinition(
+                                definition.id,
+                                definition.id,
+                                endpoint,
+                                definition.types,
+                                definitionSlug
+                            )
                         ),
                         webhooks: definition.rootPackage.webhooks.map((webhook) =>
                             resolveWebhookDefinition(webhook, definition.types, definitionSlug)
@@ -51,6 +56,7 @@ export function resolveNavigationItems(
                         subpackages: definition.rootPackage.subpackages
                             .map((subpackageId) =>
                                 resolveSubpackage(
+                                    api.api,
                                     subpackageId,
                                     definition.subpackages,
                                     definition.types,
@@ -81,15 +87,8 @@ export function resolveNavigationItems(
     return resolvedNavigationItems;
 }
 
-function formatSubpackageTitle(name: string) {
-    const titleCased = title(startCase(name), { special: SPECIAL_TOKENS });
-
-    // regex match "V 2", "V 4", etc. and replace it with "V2", "V4", etc.
-    const versionedTitle = titleCased.replace(/V\s(\d)/g, "V$1");
-    return versionedTitle;
-}
-
 function resolveSubpackage(
+    apiSectionId: FdrAPI.ApiDefinitionId,
     subpackageId: APIV1Read.SubpackageId,
     subpackagesMap: Record<string, APIV1Read.ApiDefinitionSubpackage>,
     types: Record<string, APIV1Read.TypeDefinition>,
@@ -100,10 +99,12 @@ function resolveSubpackage(
         return undefined;
     }
     const slug = [...parentSlugs, subpackage.urlSlug];
-    const endpoints = subpackage.endpoints.map((endpoint) => resolveEndpointDefinition(endpoint, types, slug));
+    const endpoints = subpackage.endpoints.map((endpoint) =>
+        resolveEndpointDefinition(apiSectionId, subpackageId, endpoint, types, slug)
+    );
     const webhooks = subpackage.webhooks.map((webhook) => resolveWebhookDefinition(webhook, types, slug));
     const subpackages = subpackage.subpackages
-        .map((subpackageId) => resolveSubpackage(subpackageId, subpackagesMap, types, slug))
+        .map((subpackageId) => resolveSubpackage(apiSectionId, subpackageId, subpackagesMap, types, slug))
         .filter(isNonNullish);
 
     if (endpoints.length === 0 && webhooks.length === 0 && subpackages.length === 0) {
@@ -111,8 +112,9 @@ function resolveSubpackage(
     }
     return {
         ...subpackage,
-        title: formatSubpackageTitle(subpackage.name),
+        title: titleCase(subpackage.name),
         type: "subpackage",
+        apiSectionId,
         id: subpackageId,
         slug,
         endpoints,
@@ -123,6 +125,8 @@ function resolveSubpackage(
 }
 
 function resolveEndpointDefinition(
+    apiSectionId: FdrAPI.ApiDefinitionId,
+    apiPackageId: FdrAPI.ApiDefinitionId,
     endpoint: APIV1Read.EndpointDefinition,
     types: Record<string, APIV1Read.TypeDefinition>,
     parentSlugs: string[]
@@ -154,6 +158,8 @@ function resolveEndpointDefinition(
     return {
         slug: [...parentSlugs, endpoint.urlSlug],
         ...endpoint,
+        apiSectionId,
+        apiPackageId,
         title: endpoint.name != null ? endpoint.name : stringifyResolvedEndpointPathParts(path),
         defaultEnvironment: endpoint.environments.find((environment) => environment.id === endpoint.defaultEnvironment),
         path,
@@ -344,6 +350,7 @@ export type ResolvedNavigationItem =
     | ResolvedNavigationItemPageGroup
     | ResolvedNavigationItemApiSection
     | ResolvedNavigationItemSection;
+
 export interface ResolvedNavigationItemPageGroup {
     type: "pageGroup";
     pages: ResolvedPageMetadata[];
@@ -352,7 +359,6 @@ export interface ResolvedNavigationItemPageGroup {
 export interface ResolvedPageMetadata {
     id: DocsV1Read.PageId;
     slug: string[];
-
     title: string;
 }
 
@@ -365,10 +371,20 @@ export interface ResolvedNavigationItemApiSection
     slug: string[];
 }
 
+export function isResolvedNavigationItemApiSection(
+    item: ResolvedNavigationItem
+): item is ResolvedNavigationItemApiSection {
+    return item.type === "apiSection";
+}
+
 export interface ResolvedNavigationItemSection extends Omit<DocsV1Read.DocsSection, "items" | "urlSlug"> {
     type: "section";
     items: ResolvedNavigationItem[];
     slug: string[];
+}
+
+export function isResolvedNavigationItemSection(item: ResolvedNavigationItem): item is ResolvedNavigationItemSection {
+    return item.type === "section";
 }
 
 export interface ResolvedWithApiDefinition {
@@ -380,6 +396,7 @@ export interface ResolvedWithApiDefinition {
 
 export interface ResolvedSubpackage extends APIV1Read.WithDescription, ResolvedWithApiDefinition {
     type: "subpackage";
+    apiSectionId: FdrAPI.ApiDefinitionId;
     id: APIV1Read.SubpackageId;
     name: string;
     title: string;
@@ -390,6 +407,8 @@ export type ResolvedApiDefinitionPackage = ResolvedNavigationItemApiSection | Re
 
 export interface ResolvedEndpointDefinition extends APIV1Read.WithDescription {
     id: APIV1Read.EndpointId;
+    apiSectionId: FdrAPI.ApiDefinitionId;
+    apiPackageId: FdrAPI.ApiDefinitionId | APIV1Read.SubpackageId;
     slug: string[];
     authed: boolean;
     availability?: APIV1Read.Availability;
@@ -532,8 +551,47 @@ export type ResolvedTypeReference =
 
 export type ResolvedHttpRequestBodyShape = APIV1Read.HttpRequestBodyShape.FileUpload | ResolvedTypeReference;
 
+interface ResolvedHttpRequestBodyShapeVisitor<T> {
+    fileUpload: (shape: APIV1Read.HttpRequestBodyShape.FileUpload) => T;
+    typeReference: (shape: ResolvedTypeReference) => T;
+}
+
+export function visitResolvedHttpRequestBodyShape<T>(
+    shape: ResolvedHttpRequestBodyShape,
+    visitor: ResolvedHttpRequestBodyShapeVisitor<T>
+): T {
+    if (shape.type === "fileUpload") {
+        return visitor.fileUpload(shape);
+    } else {
+        return visitor.typeReference(shape);
+    }
+}
+
 export type ResolvedHttpResponseBodyShape =
     | APIV1Read.HttpResponseBodyShape.FileDownload
     | APIV1Read.HttpResponseBodyShape.StreamingText
     | APIV1Read.HttpResponseBodyShape.StreamCondition
     | ResolvedTypeReference;
+
+interface ResolvedHttpResponseBodyShapeVisitor<T> {
+    fileDownload: (shape: APIV1Read.HttpResponseBodyShape.FileDownload) => T;
+    streamingText: (shape: APIV1Read.HttpResponseBodyShape.StreamingText) => T;
+    streamCondition: (shape: APIV1Read.HttpResponseBodyShape.StreamCondition) => T;
+    typeReference: (shape: ResolvedTypeReference) => T;
+}
+
+export function visitResolvedHttpResponseBodyShape<T>(
+    shape: ResolvedHttpResponseBodyShape,
+    visitor: ResolvedHttpResponseBodyShapeVisitor<T>
+): T {
+    switch (shape.type) {
+        case "fileDownload":
+            return visitor.fileDownload(shape);
+        case "streamingText":
+            return visitor.streamingText(shape);
+        case "streamCondition":
+            return visitor.streamCondition(shape);
+        default:
+            return visitor.typeReference(shape);
+    }
+}

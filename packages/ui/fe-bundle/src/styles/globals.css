@@ -22,7 +22,7 @@
     }
 
     ::selection {
-        @apply bg-accent-primary/20 dark:bg-accent-primary-dark/20;
+        @apply bg-accent-highlight/20 dark:bg-accent-highlight-dark/20;
     }
 
     html,
@@ -87,5 +87,46 @@
 
     .hide-scrollbar:not(:hover)::-webkit-scrollbar {
         display: none;
+    }
+
+    .bp5-dark a,
+    .bp5-dark a:hover {
+        color: unset;
+    }
+
+    .bp5-dark .bp5-control .bp5-control-indicator {
+        @apply ring-1 ring-accent-primary-dark !important;
+    }
+
+    .light .bp5-control input:checked ~ .bp5-control-indicator {
+        @apply bg-accent-primary !important;
+    }
+
+    .bp5-dark .bp5-control input:checked ~ .bp5-control-indicator {
+        @apply bg-accent-primary-dark !important;
+    }
+
+    .light input.bp5-input:focus {
+        @apply ring-1 ring-accent-primary !important;
+    }
+
+    .bp5-dark .bp5-input:focus {
+        @apply ring-1 ring-accent-primary-dark !important;
+    }
+
+    .bp5-dark .bp5-segmented-control {
+        @apply bg-tag-primary-dark !important;
+    }
+
+    .light .bp5-segmented-control {
+        @apply bg-tag-primary !important;
+    }
+
+    .description-mask {
+        @apply overflow-hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        text-overflow: -o-ellipsis-lastline;
     }
 }

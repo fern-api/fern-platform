@@ -24,7 +24,7 @@ export const CustomDocsPageHeader = ({ resolvedPath }: Pick<CustomDocsPage.Props
                     </div>
                 )}
 
-                <h1 className="inline-block text-3xl">{resolvedPath.page.title}</h1>
+                <h1 className="my-0 inline-block text-3xl">{resolvedPath.page.title}</h1>
             </div>
         </header>
     );

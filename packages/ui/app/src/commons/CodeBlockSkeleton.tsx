@@ -21,7 +21,6 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
     fontSize,
     style,
 }) => {
-    const { resolvedTheme: theme } = useTheme();
     return (
         <div
             className={classNames(
@@ -35,33 +34,47 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
             )}
             style={style}
         >
-            <SyntaxHighlighter
-                style={theme === "dark" ? prism.vscDarkPlus : prism.oneLight}
-                customStyle={{
-                    width: "100%",
-                    overflowX: "auto",
-                    margin: 0,
-                    paddingRight: 16,
-                    paddingLeft: 16,
-                    paddingBottom: 12,
-                    fontSize: fontSize === "sm" ? 12 : 14,
-                    lineHeight: fontSize === "sm" ? "20px" : "24px",
-                    background: "unset",
-                    backgroundColor: "unset",
-                    fontFamily: "inherit",
-                }}
-                codeTagProps={{
-                    style: {
-                        background: "unset",
-                        fontFamily: "unset",
-                        fontSize: "unset",
-                    },
-                }}
+            <FernSyntaxHighlighter
                 language={language}
                 PreTag="pre"
+                customStyle={{
+                    fontSize: fontSize === "sm" ? 12 : 14,
+                    lineHeight: fontSize === "sm" ? "20px" : "24px",
+                }}
             >
                 {content}
-            </SyntaxHighlighter>
+            </FernSyntaxHighlighter>
         </div>
+    );
+};
+
+export const FernSyntaxHighlighter: React.FC<React.ComponentProps<typeof SyntaxHighlighter>> = (props) => {
+    const { resolvedTheme: theme } = useTheme();
+    return (
+        <SyntaxHighlighter
+            {...props}
+            style={theme === "dark" ? prism.vscDarkPlus : prism.oneLight}
+            customStyle={{
+                width: "100%",
+                overflowX: "auto",
+                margin: 0,
+                paddingRight: 16,
+                paddingLeft: 16,
+                paddingBottom: 12,
+                background: "unset",
+                backgroundColor: "unset",
+                fontFamily: "inherit",
+                ...props.customStyle,
+            }}
+            codeTagProps={{
+                ...props.codeTagProps,
+                style: {
+                    background: "unset",
+                    fontFamily: "unset",
+                    fontSize: "unset",
+                    ...props.codeTagProps?.style,
+                },
+            }}
+        />
     );
 };

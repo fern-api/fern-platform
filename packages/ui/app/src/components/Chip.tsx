@@ -1,4 +1,4 @@
-import { Tooltip2 } from "@blueprintjs/popover2";
+import { Tooltip } from "@blueprintjs/core";
 import { ReactElement } from "react";
 
 type ChipProps = {
@@ -11,9 +11,9 @@ type ChipProps = {
 export const Chip = ({ name, description = undefined }: ChipProps): ReactElement => {
     return (
         <span className="border-default t-primary bg-tag-default rounded border px-1.5 py-0.5 text-xs">
-            <Tooltip2 disabled={description == null} content={description}>
+            <Tooltip disabled={description == null} content={description}>
                 {name}
-            </Tooltip2>
+            </Tooltip>
         </span>
     );
 };

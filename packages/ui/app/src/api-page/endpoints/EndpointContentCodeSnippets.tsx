@@ -1,6 +1,12 @@
 "use client";
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import {
+    ResolvedApiDefinitionPackage,
+    ResolvedEndpointDefinition,
+    ResolvedNavigationItemApiSection,
+} from "@fern-ui/app-utils";
 import { memo } from "react";
+import { ApiPlaygroundButton } from "../../api-playground/ApiPlaygroundButton";
 import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";
 import type { CodeExampleClient } from "../examples/code-example";
 import { CurlExample } from "../examples/curl-example/CurlExample";
@@ -13,6 +19,9 @@ import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
 
 export declare namespace EndpointContentCodeSnippets {
     export interface Props {
+        apiSection: ResolvedNavigationItemApiSection;
+        apiDefinition: ResolvedApiDefinitionPackage;
+        endpoint: ResolvedEndpointDefinition;
         example: APIV1Read.ExampleEndpointCall;
         availableExampleClients: CodeExampleClient[];
         selectedExampleClient: CodeExampleClient;
@@ -29,6 +38,9 @@ export declare namespace EndpointContentCodeSnippets {
 const TITLED_EXAMPLE_PADDING = 43;
 
 const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippets.Props> = ({
+    apiSection,
+    apiDefinition,
+    endpoint,
     example,
     availableExampleClients,
     selectedExampleClient,
@@ -55,18 +67,25 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         : selectedExampleClient.example;
                 }}
                 actions={
-                    availableExampleClients.length > 1 ? (
-                        <CodeExampleClientDropdown
-                            clients={availableExampleClients}
-                            onClickClient={(clientId) => {
-                                const client = availableExampleClients.find((c) => c.id === clientId);
-                                if (client != null) {
-                                    onClickExampleClient(client);
-                                }
-                            }}
-                            selectedClient={selectedExampleClient}
+                    <>
+                        <ApiPlaygroundButton
+                            endpoint={endpoint}
+                            apiSection={apiSection}
+                            apiDefinition={apiDefinition}
                         />
-                    ) : undefined
+                        {availableExampleClients.length > 1 ? (
+                            <CodeExampleClientDropdown
+                                clients={availableExampleClients}
+                                onClickClient={(clientId) => {
+                                    const client = availableExampleClients.find((c) => c.id === clientId);
+                                    if (client != null) {
+                                        onClickExampleClient(client);
+                                    }
+                                }}
+                                selectedClient={selectedExampleClient}
+                            />
+                        ) : undefined}
+                    </>
                 }
             >
                 {selectedExampleClient.id === "curl" ? (

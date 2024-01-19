@@ -1,28 +1,35 @@
 import { joinUrlSlugs } from "@fern-api/fdr-sdk";
-import { ResolvedSubpackage } from "@fern-ui/app-utils";
+import { ResolvedApiDefinitionPackage, ResolvedNavigationItemApiSection } from "@fern-ui/app-utils";
 import { ApiPackageContents } from "../ApiPackageContents";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 
 export declare namespace ApiSubpackage {
     export interface Props {
-        subpackage: ResolvedSubpackage;
+        apiSection: ResolvedNavigationItemApiSection;
+        apiDefinition: ResolvedApiDefinitionPackage;
         isLastInParentPackage: boolean;
         anchorIdParts: string[];
     }
 }
 
-export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackage, isLastInParentPackage, anchorIdParts }) => {
-    const subpackageSlug = joinUrlSlugs(...subpackage.slug);
+export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({
+    apiSection,
+    apiDefinition,
+    isLastInParentPackage,
+    anchorIdParts,
+}) => {
+    const subpackageSlug = joinUrlSlugs(...apiDefinition.slug);
     const { setTargetRef } = useApiPageCenterElement({ slug: subpackageSlug });
     return (
         <>
             <ApiPageMargins>
                 <div ref={setTargetRef} data-route={`/${subpackageSlug}`.toLowerCase()} className="scroll-mt-16" />
             </ApiPageMargins>
-            {subpackage != null && (
+            {apiSection != null && (
                 <ApiPackageContents
-                    package={subpackage}
+                    apiSection={apiSection}
+                    apiDefinition={apiDefinition}
                     isLastInParentPackage={isLastInParentPackage}
                     anchorIdParts={anchorIdParts}
                 />

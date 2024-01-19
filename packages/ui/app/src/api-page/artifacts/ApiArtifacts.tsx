@@ -1,7 +1,6 @@
 import { H2 } from "@blueprintjs/core";
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { joinUrlSlugs } from "@fern-ui/app-utils";
-import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
+import { joinUrlSlugs, ResolvedApiDefinitionPackage } from "@fern-ui/app-utils";
 import { API_ARTIFACTS_TITLE } from "../../config";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
@@ -15,13 +14,13 @@ import { SdkCardLayout } from "./SdkCardLayout";
 
 export declare namespace ApiArtifacts {
     export interface Props {
+        apiDefinition: ResolvedApiDefinitionPackage;
         apiArtifacts: DocsV1Read.ApiArtifacts;
     }
 }
 
-export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiArtifacts }) => {
-    const { apiSlug } = useApiDefinitionContext();
-    const slug = joinUrlSlugs(apiSlug, "client-libraries");
+export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiDefinition, apiArtifacts }) => {
+    const slug = joinUrlSlugs(...apiDefinition.slug, "client-libraries");
 
     const { setTargetRef } = useApiPageCenterElement({ slug });
 

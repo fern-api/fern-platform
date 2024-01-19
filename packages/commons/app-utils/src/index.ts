@@ -8,3 +8,4 @@ export * from "./serialize-node";
 export * from "./slug";
 export * from "./theme/loadDocsBackgroundImage";
 export * from "./theme/loadDocsTypography";
+export * from "./titleCase";
