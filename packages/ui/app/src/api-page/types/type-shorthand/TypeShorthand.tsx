@@ -53,5 +53,6 @@ export function renderTypeShorthand(
         // other
         unknown: () => "any",
         _other: () => "<unknown>",
+        reference: (reference) => renderTypeShorthand(reference.shape(), { plural, withArticle }),
     });
 }

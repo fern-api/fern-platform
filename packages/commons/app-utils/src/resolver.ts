@@ -222,9 +222,9 @@ function resolveWebhookPayloadShape(
     return visitDiscriminatedUnion(payloadShape, "type")._visit<ResolvedTypeReference>({
         object: (object) => ({
             type: "object",
-            properties: resolveObjectProperties(object, types),
+            properties: () => resolveObjectProperties(object, types),
         }),
-        reference: (reference) => resolveTypeReference(reference.value, types),
+        reference: (reference) => ({ type: "reference", shape: () => resolveTypeReference(reference.value, types) }),
         _other: () => ({ type: "unknown" }),
     });
 }
@@ -236,10 +236,10 @@ function resolveRequestBodyShape(
     return visitDiscriminatedUnion(requestBodyShape, "type")._visit<ResolvedHttpRequestBodyShape>({
         object: (object) => ({
             type: "object",
-            properties: resolveObjectProperties(object, types),
+            properties: () => resolveObjectProperties(object, types),
         }),
         fileUpload: (fileUpload) => fileUpload,
-        reference: (reference) => resolveTypeReference(reference.value, types),
+        reference: (reference) => ({ type: "reference", shape: () => resolveTypeReference(reference.value, types) }),
         _other: () => ({ type: "unknown" }),
     });
 }
@@ -251,12 +251,12 @@ function resolveResponseBodyShape(
     return visitDiscriminatedUnion(responseBodyShape, "type")._visit<ResolvedHttpResponseBodyShape>({
         object: (object) => ({
             type: "object",
-            properties: resolveObjectProperties(object, types),
+            properties: () => resolveObjectProperties(object, types),
         }),
         fileDownload: (fileDownload) => fileDownload,
         streamingText: (streamingText) => streamingText,
         streamCondition: (streamCondition) => streamCondition,
-        reference: (reference) => resolveTypeReference(reference.value, types),
+        reference: (reference) => ({ type: "reference", shape: () => resolveTypeReference(reference.value, types) }),
         _other: () => ({ type: "unknown" }),
     });
 }
@@ -268,7 +268,7 @@ function resolveTypeShape(
     return visitDiscriminatedUnion(typeShape, "type")._visit<ResolvedTypeReference>({
         object: (object) => ({
             type: "object",
-            properties: resolveObjectProperties(object, types),
+            properties: () => resolveObjectProperties(object, types),
         }),
         enum: (enum_) => enum_,
         undiscriminatedUnion: (undiscriminatedUnion) => ({
@@ -334,7 +334,7 @@ function resolveObjectProperties(
             console.error("Object extends non-object", typeId);
             return [];
         }
-        return shape.properties;
+        return shape.properties();
     });
     if (extendedProperties.length === 0) {
         return directProperties;
@@ -486,7 +486,7 @@ export interface ResolvedWebhookPayload extends APIV1Read.WithDescription {
 
 export interface ResolvedObjectShape {
     type: "object";
-    properties: ResolvedObjectProperty[];
+    properties: () => ResolvedObjectProperty[];
 }
 
 export interface ResolvedUndiscriminatedUnionShapeVariant
@@ -547,7 +547,13 @@ export type ResolvedTypeReference =
     | ResolvedSetShape
     | ResolvedMapShape
     | APIV1Read.LiteralType
-    | APIV1Read.TypeReference.Unknown;
+    | APIV1Read.TypeReference.Unknown
+    | ResolvedReferenceShape;
+
+export interface ResolvedReferenceShape {
+    type: "reference";
+    shape: () => ResolvedTypeReference;
+}
 
 export type ResolvedHttpRequestBodyShape = APIV1Read.HttpRequestBodyShape.FileUpload | ResolvedTypeReference;
 

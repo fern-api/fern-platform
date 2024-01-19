@@ -34,7 +34,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
     const shape = useMemo((): ResolvedTypeShape => {
         return {
             type: "object",
-            properties: [
+            properties: () => [
                 {
                     key: discriminant,
                     valueShape: {
