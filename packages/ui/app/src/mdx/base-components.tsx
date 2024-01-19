@@ -220,14 +220,14 @@ export const Ul: React.FC<HTMLAttributes<HTMLUListElement>> = ({ className, ...r
             {...rest}
             className={classNames(
                 className,
-                "list-image-dash-light list-outside dark:list-image-dash-dark space-y-2 mb-3 ml-[22px]" // 22px is the width of the dash svg
+                "list-image-dash-light list-outside dark:list-image-dash-dark space-y-2 mb-3"
             )}
         />
     );
 };
 
 export const Li: React.FC<HTMLAttributes<HTMLLIElement>> = ({ className, ...rest }) => {
-    return <li {...rest} className={classNames(className, "text-base leading-7")} />;
+    return <li {...rest} className={className} />;
 };
 
 export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, children, href, ...rest }) => {
