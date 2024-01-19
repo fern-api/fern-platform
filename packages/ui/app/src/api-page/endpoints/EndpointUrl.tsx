@@ -1,11 +1,9 @@
+import { divideEndpointPathToParts, ResolvedEndpointDefinition, type EndpointPathPart } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import React, { PropsWithChildren, ReactElement, useCallback, useMemo } from "react";
-// import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
-import { divideEndpointPathToParts, ResolvedEndpointDefinition, type EndpointPathPart } from "@fern-ui/app-utils";
 import { HttpMethodTag } from "../../commons/HttpMethodTag";
 import styles from "./EndpointUrl.module.scss";
-// import { getEndpointEnvironmentUrl } from "./getEndpointEnvironmentUrl";
 
 export declare namespace EndpointUrl {
     export type Props = React.PropsWithChildren<{
@@ -19,7 +17,6 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
     { endpoint, className, urlStyle },
     ref
 ) {
-    // const { apiDefinition } = useApiDefinitionContext();
     const endpointPathParts = useMemo(() => divideEndpointPathToParts(endpoint), [endpoint]);
 
     const renderPathParts = useCallback((parts: EndpointPathPart[]) => {

@@ -22,6 +22,7 @@ import {
     useEffect,
     useState,
 } from "react";
+import { useDocsContext } from "../docs-context/useDocsContext";
 import { ApiPlaygroundDrawer } from "./ApiPlaygroundDrawer";
 import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundRequestFormAuth, PlaygroundRequestFormState } from "./types";
@@ -71,6 +72,7 @@ interface ApiPlaygroundContextProviderProps extends PropsWithChildren {
 }
 
 export const ApiPlaygroundContextProvider: FC<ApiPlaygroundContextProviderProps> = ({ apiSections, children }) => {
+    const { domain } = useDocsContext();
     const [selectionState, setSelectionState] = useState<ApiPlaygroundSelectionState | undefined>();
 
     const [intermediateHeight, setHeight] = useAtom(playgroundHeightAtom);
@@ -193,6 +195,10 @@ export const ApiPlaygroundContextProvider: FC<ApiPlaygroundContextProviderProps>
         },
         [closeSecretsModal, setPlaygroundFormState]
     );
+
+    if (!domain.toLowerCase().includes("cloudflare") || !domain.toLowerCase().includes("cohere")) {
+        return <>{children}</>;
+    }
 
     return (
         <ApiPlaygroundContext.Provider

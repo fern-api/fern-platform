@@ -1,7 +1,6 @@
 import { isApiNode } from "@fern-api/fdr-sdk";
 import { ResolvedNavigationItem, ResolvedNavigationItemApiSection } from "@fern-ui/app-utils";
 import { useMemo } from "react";
-import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContextProvider";
 import { ApiPage } from "../api-page/ApiPage";
 import { CustomDocsPage } from "../custom-docs-page/CustomDocsPage";
 import { useNavigationContext } from "../navigation-context";
@@ -36,11 +35,7 @@ export const DocsMainContent: React.FC<DocsMainContentProps> = ({ navigationItem
         if (apiSection == null) {
             return null;
         }
-        return (
-            <ApiDefinitionContextProvider apiSection={activeNavigatable.section}>
-                <ApiPage apiSection={apiSection} />
-            </ApiDefinitionContextProvider>
-        );
+        return <ApiPage apiSection={apiSection} />;
     } else {
         return null;
     }

@@ -114,7 +114,6 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         onChange: setIsInViewport,
         rootMargin: "100%",
     });
-    // const { apiSection, apiDefinition } = useApiDefinitionContext();
     const [hoveredRequestPropertyPath, setHoveredRequestPropertyPath] = useState<JsonPropertyPath | undefined>();
     const [hoveredResponsePropertyPath, setHoveredResponsePropertyPath] = useState<JsonPropertyPath | undefined>();
     const onHoverRequestProperty = useCallback(

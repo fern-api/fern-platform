@@ -14,7 +14,7 @@ export const ApiPage: React.FC<ApiPage.Props> = ({ apiSection }) => {
     return (
         <div className="min-h-0 pb-36">
             {apiSection.artifacts != null && areApiArtifactsNonEmpty(apiSection.artifacts) && (
-                <ApiArtifacts apiArtifacts={apiSection.artifacts} />
+                <ApiArtifacts apiArtifacts={apiSection.artifacts} apiDefinition={apiSection} />
             )}
 
             <ApiPackageContents
