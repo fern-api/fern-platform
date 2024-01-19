@@ -17,6 +17,14 @@ export declare namespace NavigationContextProvider {
     }>;
 }
 
+const smoothScrollIntoView = debounce(
+    (node: HTMLElement) => {
+        node.scrollIntoView({ behavior: "smooth" });
+    },
+    100,
+    { leading: true, trailing: false }
+);
+
 export const NavigationContextProvider: React.FC<NavigationContextProvider.Props> = ({
     resolvedPath,
     children,
@@ -66,9 +74,15 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         if (!userIsScrolling.current && routeWithoutAnchor != null) {
             // fallback to "routeWithoutAnchor" if anchor is not detected (otherwise API reference will scroll to top)
             const node = getRouteNode(route) ?? getRouteNode(routeWithoutAnchor);
-            node?.scrollIntoView({
-                behavior: disableSmooth ? "auto" : "smooth",
-            });
+            if (node != null) {
+                if (disableSmooth) {
+                    node.scrollIntoView({
+                        behavior: "auto",
+                    });
+                } else {
+                    smoothScrollIntoView(node);
+                }
+            }
         }
         justNavigatedTo.current = route;
     });
