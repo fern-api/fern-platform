@@ -1,10 +1,11 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import { ResolvedTypeReference } from "@fern-ui/app-utils";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { getAnchorId } from "../../util/anchor";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
-import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
+import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 
 export declare namespace EndpointParameter {
@@ -12,7 +13,7 @@ export declare namespace EndpointParameter {
         name: string;
         description: string | undefined;
         descriptionContainsMarkdown: boolean;
-        type: APIV1Read.TypeReference;
+        shape: ResolvedTypeReference;
         anchorIdParts: string[];
         route: string;
         availability: APIV1Read.Availability | undefined;
@@ -24,7 +25,7 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
     description,
     anchorIdParts,
     route,
-    type,
+    shape,
     availability,
 }) => {
     const anchorId = getAnchorId(anchorIdParts);
@@ -32,7 +33,6 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
     return (
         <div
             data-route={anchorRoute.toLowerCase()}
-            id={anchorId}
             className="group/anchor-container relative flex scroll-mt-20 flex-col gap-2 py-3"
         >
             <AbsolutelyPositionedAnchor href={anchorRoute} />
@@ -40,14 +40,12 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
                 <MonospaceText className="text-text-primary-light dark:text-text-primary-dark text-sm">
                     {name}
                 </MonospaceText>
-                <div className="t-muted text-xs">
-                    <TypeShorthand type={type} plural={false} />
-                </div>
+                <div className="t-muted text-xs">{renderTypeShorthand(shape)}</div>
                 {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
             </div>
-            <ApiPageDescription isMarkdown={true} description={description} />
+            <ApiPageDescription isMarkdown={true} description={description} className="text-sm" />
             <TypeReferenceDefinitions
-                type={type}
+                shape={shape}
                 isCollapsible
                 anchorIdParts={anchorIdParts}
                 applyErrorStyles={false}

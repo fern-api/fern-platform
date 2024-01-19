@@ -200,8 +200,6 @@ export const P: React.FC<{ variant: "api" | "markdown" } & HTMLAttributes<HTMLPa
         <p
             {...rest}
             className={classNames(className, {
-                "text-sm leading-6": variant === "api",
-                "text-base leading-7": variant === "markdown",
                 "mb-3": variant === "markdown",
             })}
         />

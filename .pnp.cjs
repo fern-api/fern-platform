@@ -4107,6 +4107,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.5.11"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.18.13"],\
+            ["@types/title", "npm:3.4.3"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.7.0"],\
@@ -4117,6 +4118,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:b977a69fb19c4d0f85f8b91df4d5bbb0d247e9cfda57636e95b33f40dfc5a05b68c27a163035a0eb7204d129d5e24e42811c10b0902ee38cf8cf4debee72619b#npm:18.2.0"],\
             ["remark-gfm", "npm:3.0.1"],\
+            ["title", "npm:3.5.3"],\
             ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"]\
           ],\
           "linkType": "SOFT"\
@@ -4497,7 +4499,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react-syntax-highlighter", "npm:15.5.11"],\
             ["@types/react-test-renderer", "npm:18.0.7"],\
             ["@types/tinycolor2", "npm:1.4.6"],\
-            ["@types/title", "npm:3.4.3"],\
             ["algoliasearch", "npm:4.22.1"],\
             ["classnames", "npm:2.5.1"],\
             ["depcheck", "npm:1.4.3"],\
@@ -4527,7 +4528,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["remark-gfm", "npm:3.0.1"],\
             ["stylelint", "npm:16.1.0"],\
             ["tinycolor2", "npm:1.6.0"],\
-            ["title", "npm:3.5.3"],\
             ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"],\
             ["vite", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:4.5.1"]\
           ],\

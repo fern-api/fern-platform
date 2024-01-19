@@ -1,12 +1,10 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { ResolvedDiscriminatedUnionShapeVariant, ResolvedTypeShape } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { startCase } from "lodash-es";
 import { useCallback, useMemo } from "react";
-import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
-import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
@@ -17,7 +15,7 @@ import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinitio
 export declare namespace DiscriminatedUnionVariant {
     export interface Props {
         discriminant: string;
-        unionVariant: APIV1Read.DiscriminatedUnionVariant;
+        unionVariant: ResolvedDiscriminatedUnionShapeVariant;
         anchorIdParts: string[];
         route: string;
         defaultExpandAll?: boolean;
@@ -32,27 +30,22 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
     defaultExpandAll = false,
 }) => {
     const { isRootTypeDefinition } = useTypeDefinitionContext();
-    const { resolveTypeById } = useApiDefinitionContext();
 
-    const shape = useMemo((): APIV1Read.TypeShape => {
+    const shape = useMemo((): ResolvedTypeShape => {
         return {
-            extends: [],
             type: "object",
             properties: [
                 {
                     key: discriminant,
-                    valueType: {
-                        type: "literal",
-                        value: {
-                            type: "stringLiteral",
-                            value: unionVariant.discriminantValue,
-                        },
+                    valueShape: {
+                        type: "stringLiteral",
+                        value: unionVariant.discriminantValue,
                     },
                 },
-                ...getAllObjectProperties(unionVariant.additionalProperties, resolveTypeById),
+                ...unionVariant.additionalProperties,
             ],
         };
-    }, [discriminant, resolveTypeById, unionVariant.additionalProperties, unionVariant.discriminantValue]);
+    }, [discriminant, unionVariant.additionalProperties, unionVariant.discriminantValue]);
 
     const contextValue = useTypeDefinitionContext();
     const newContextValue = useCallback(
@@ -72,7 +65,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
 
     return (
         <div
-            className={classNames("flex flex-col py-3", {
+            className={classNames("flex flex-col py-3 gap-2", {
                 "px-3": !isRootTypeDefinition,
             })}
         >
@@ -83,7 +76,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                 <EndpointAvailabilityTag availability={unionVariant.availability} minimal={true} />
             )}
             <div className="flex flex-col">
-                <ApiPageDescription description={unionVariant.description} isMarkdown={true} />
+                <ApiPageDescription isMarkdown={true} description={unionVariant.description} className="text-sm" />
                 <TypeDefinitionContext.Provider value={newContextValue}>
                     <InternalTypeDefinition
                         typeShape={shape}

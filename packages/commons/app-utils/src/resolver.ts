@@ -127,19 +127,27 @@ function resolveEndpointDefinition(
     types: Record<string, APIV1Read.TypeDefinition>,
     parentSlugs: string[]
 ): ResolvedEndpointDefinition {
+    const pathParameters = endpoint.path.pathParameters.map(
+        (parameter): ResolvedParameter => ({
+            ...parameter,
+            shape: resolveTypeReference(parameter.type, types),
+        })
+    );
     const path = endpoint.path.parts.map((pathPart): ResolvedEndpointPathParts => {
         if (pathPart.type === "literal") {
             return pathPart;
         } else {
-            const parameter = endpoint.path.pathParameters.find((parameter) => parameter.key === pathPart.value);
+            const parameter = pathParameters.find((parameter) => parameter.key === pathPart.value);
+            if (parameter == null) {
+                return {
+                    type: "pathParameter",
+                    key: pathPart.value,
+                    shape: { type: "unknown" },
+                };
+            }
             return {
+                ...parameter,
                 type: "pathParameter",
-                key: pathPart.value,
-                shape: parameter != null ? resolveTypeReference(parameter.type, types) : { type: "unknown" },
-                description: parameter?.description,
-                htmlDescription: parameter?.htmlDescription,
-                descriptionContainsMarkdown: parameter?.descriptionContainsMarkdown,
-                availability: parameter?.availability,
             };
         }
     });
@@ -149,6 +157,7 @@ function resolveEndpointDefinition(
         title: endpoint.name != null ? endpoint.name : stringifyResolvedEndpointPathParts(path),
         defaultEnvironment: endpoint.environments.find((environment) => environment.id === endpoint.defaultEnvironment),
         path,
+        pathParameters,
         queryParameters: endpoint.queryParameters.map((parameter) => ({
             ...parameter,
             shape: resolveTypeReference(parameter.type, types),
@@ -193,21 +202,18 @@ function resolveWebhookDefinition(
             ...header,
             shape: resolveTypeReference(header.type, types),
         })),
-        payload:
-            webhook.payload != null
-                ? {
-                      ...webhook.payload,
-                      shape: resolveWebhookPayloadShape(webhook.payload.type, types),
-                  }
-                : undefined,
+        payload: {
+            ...webhook.payload,
+            shape: resolveWebhookPayloadShape(webhook.payload.type, types),
+        },
     };
 }
 
 function resolveWebhookPayloadShape(
     payloadShape: APIV1Read.WebhookPayloadShape,
     types: Record<string, APIV1Read.TypeDefinition>
-): ResolvedWebhookPayloadShape {
-    return visitDiscriminatedUnion(payloadShape, "type")._visit<ResolvedWebhookPayloadShape>({
+): ResolvedTypeReference {
+    return visitDiscriminatedUnion(payloadShape, "type")._visit<ResolvedTypeReference>({
         object: (object) => ({
             type: "object",
             properties: resolveObjectProperties(object, types),
@@ -269,7 +275,7 @@ function resolveTypeShape(
         }),
         alias: (alias) => resolveTypeReference(alias.value, types),
         discriminatedUnion: (discriminatedUnion) => ({
-            type: "DiscriminatedUnion",
+            type: "discriminatedUnion",
             discriminant: discriminatedUnion.discriminant,
             variants: discriminatedUnion.variants.map((variant) => ({
                 ...variant,
@@ -352,9 +358,8 @@ export interface ResolvedPageMetadata {
 
 export interface ResolvedNavigationItemApiSection
     extends Omit<DocsV1Read.ApiSection, "urlSlug">,
-        ResolvedApiDefinitionPackage {
+        ResolvedWithApiDefinition {
     type: "apiSection";
-
     auth: APIV1Read.ApiAuth | undefined;
     hasMultipleBaseUrls: boolean | undefined;
     slug: string[];
@@ -366,20 +371,22 @@ export interface ResolvedNavigationItemSection extends Omit<DocsV1Read.DocsSecti
     slug: string[];
 }
 
-export interface ResolvedApiDefinitionPackage {
+export interface ResolvedWithApiDefinition {
     endpoints: ResolvedEndpointDefinition[];
     webhooks: ResolvedWebhookDefinition[];
     subpackages: ResolvedSubpackage[];
     pointsTo: APIV1Read.SubpackageId | undefined;
 }
 
-export interface ResolvedSubpackage extends APIV1Read.WithDescription, ResolvedApiDefinitionPackage {
+export interface ResolvedSubpackage extends APIV1Read.WithDescription, ResolvedWithApiDefinition {
     type: "subpackage";
     id: APIV1Read.SubpackageId;
     name: string;
     title: string;
     slug: string[];
 }
+
+export type ResolvedApiDefinitionPackage = ResolvedNavigationItemApiSection | ResolvedSubpackage;
 
 export interface ResolvedEndpointDefinition extends APIV1Read.WithDescription {
     id: APIV1Read.EndpointId;
@@ -392,6 +399,7 @@ export interface ResolvedEndpointDefinition extends APIV1Read.WithDescription {
     name?: string;
     title: string;
     path: ResolvedEndpointPathParts[];
+    pathParameters: ResolvedParameter[];
     queryParameters: ResolvedParameter[];
     headers: ResolvedParameter[];
     requestBody: ResolvedRequestBody | undefined;
@@ -432,10 +440,8 @@ export declare namespace ResolvedEndpointPathParts {
         value: string;
     }
 
-    interface PathParameter extends APIV1Read.WithDescription, APIV1Read.WithAvailability {
+    interface PathParameter extends ResolvedParameter {
         type: "pathParameter";
-        key: APIV1Read.PathParameterKey;
-        shape: ResolvedTypeReference;
     }
 }
 
@@ -451,12 +457,12 @@ export interface ResolvedWebhookDefinition extends APIV1Read.WithDescription {
     name?: string;
     path: string[];
     headers: ResolvedParameter[];
-    payload: ResolvedWebhookPayload | undefined;
+    payload: ResolvedWebhookPayload;
     examples: APIV1Read.ExampleWebhookPayload[];
 }
 
 export interface ResolvedWebhookPayload extends APIV1Read.WithDescription {
-    shape: ResolvedWebhookPayloadShape;
+    shape: ResolvedTypeReference;
 }
 
 export interface ResolvedObjectShape {
@@ -482,7 +488,7 @@ export interface ResolvedDiscriminatedUnionShapeVariant extends APIV1Read.WithDe
 }
 
 export interface ResolvedDiscriminatedUnionShape {
-    type: "DiscriminatedUnion";
+    type: "discriminatedUnion";
     discriminant: string;
     variants: ResolvedDiscriminatedUnionShapeVariant[];
 }
@@ -508,11 +514,14 @@ export interface ResolvedMapShape {
     valueShape: ResolvedTypeReference;
 }
 
-export type ResolvedTypeReference =
-    | APIV1Read.TypeShape.Enum
+export type ResolvedTypeShape =
+    | ResolvedObjectShape
     | ResolvedUndiscriminatedUnionShape
     | ResolvedDiscriminatedUnionShape
-    | ResolvedObjectShape
+    | APIV1Read.TypeShape.Enum;
+
+export type ResolvedTypeReference =
+    | ResolvedTypeShape
     | APIV1Read.PrimitiveType
     | ResolvedOptionalShape
     | ResolvedListShape
@@ -521,16 +530,10 @@ export type ResolvedTypeReference =
     | APIV1Read.LiteralType
     | APIV1Read.TypeReference.Unknown;
 
-export type ResolvedHttpRequestBodyShape =
-    | ResolvedObjectShape
-    | APIV1Read.HttpRequestBodyShape.FileUpload
-    | ResolvedTypeReference;
+export type ResolvedHttpRequestBodyShape = APIV1Read.HttpRequestBodyShape.FileUpload | ResolvedTypeReference;
 
 export type ResolvedHttpResponseBodyShape =
-    | ResolvedObjectShape
     | APIV1Read.HttpResponseBodyShape.FileDownload
     | APIV1Read.HttpResponseBodyShape.StreamingText
     | APIV1Read.HttpResponseBodyShape.StreamCondition
     | ResolvedTypeReference;
-
-export type ResolvedWebhookPayloadShape = ResolvedObjectShape | ResolvedTypeReference;

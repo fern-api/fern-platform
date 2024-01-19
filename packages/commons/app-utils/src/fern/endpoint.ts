@@ -1,5 +1,6 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { ResolvedEndpointDefinition } from "../resolver";
 
 export type EndpointPathPart =
     | {
@@ -24,9 +25,9 @@ export function getEndpointAvailabilityLabel(availability: APIV1Read.Availabilit
     }
 }
 
-export function divideEndpointPathToParts(endpoint: APIV1Read.EndpointDefinition): EndpointPathPart[] {
+export function divideEndpointPathToParts(endpoint: ResolvedEndpointDefinition): EndpointPathPart[] {
     const parts: EndpointPathPart[] = [];
-    endpoint.path.parts.forEach((part) => {
+    endpoint.path.forEach((part) => {
         if (part.type === "literal") {
             const subparts = part.value.split("/");
             subparts.forEach((subpart) => {
@@ -35,22 +36,16 @@ export function divideEndpointPathToParts(endpoint: APIV1Read.EndpointDefinition
                 }
             });
         } else {
-            if (part.value.length > 0) {
-                parts.push({ type: "pathParameter", name: part.value });
+            if (part.key.length > 0) {
+                parts.push({ type: "pathParameter", name: part.key });
             }
         }
     });
     return parts;
 }
 
-export function getEndpointEnvironmentUrl(endpoint: APIV1Read.EndpointDefinition): string | undefined {
-    if (endpoint.defaultEnvironment != null) {
-        const defaultEnvironment = endpoint.environments.find((env) => env.id === endpoint.defaultEnvironment);
-        if (defaultEnvironment != null) {
-            return defaultEnvironment.baseUrl;
-        }
-    }
-    return endpoint.environments[0]?.baseUrl;
+export function getEndpointEnvironmentUrl(endpoint: ResolvedEndpointDefinition): string | undefined {
+    return endpoint.defaultEnvironment?.baseUrl ?? endpoint.environments[0]?.baseUrl;
 }
 
 export function getEndpointTitleAsString(endpoint: APIV1Read.EndpointDefinition): string {

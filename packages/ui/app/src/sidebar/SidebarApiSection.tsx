@@ -1,4 +1,5 @@
 import { DocsV1Read, isApiNode } from "@fern-api/fdr-sdk";
+import { ResolvedApiDefinitionPackage, ResolvedNavigationItemApiSection } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { isEqual } from "lodash-es";
 import { FC, useCallback } from "react";
@@ -6,7 +7,6 @@ import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNo
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { API_ARTIFACTS_TITLE } from "../config";
 import { useNavigationContext } from "../navigation-context";
-import { ResolvedApiDefinitionPackage, ResolvedNavigationItemApiSection } from "../util/resolver";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { SidebarSlugLink } from "./SidebarLink";
 

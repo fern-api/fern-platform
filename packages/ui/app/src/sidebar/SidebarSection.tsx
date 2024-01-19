@@ -1,9 +1,9 @@
-import { APIV1Read, DocsV1Read, FdrAPI, joinUrlSlugs } from "@fern-api/fdr-sdk";
+import { joinUrlSlugs } from "@fern-api/fdr-sdk";
+import { ResolvedNavigationItem } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { isEqual } from "lodash-es";
 import { FC, Fragment, useCallback } from "react";
-import { ResolvedNavigationItem } from "../util/resolver";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { SidebarApiSection } from "./SidebarApiSection";
 import { SidebarHeading } from "./SidebarHeading";
@@ -15,10 +15,6 @@ export interface SidebarSectionProps {
     slug: string[];
 
     registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
-
-    docsDefinition: DocsV1Read.DocsDefinition;
-    activeTabIndex: number | null;
-    resolveApi: (apiId: FdrAPI.ApiDefinitionId) => APIV1Read.ApiDefinition | undefined;
 
     topLevel?: boolean;
     nested?: boolean;
@@ -35,9 +31,6 @@ const ExpandableSidebarSection: React.FC<ExpandableSidebarSectionProps> = ({
     slug,
     navigationItems,
     registerScrolledToPathListener,
-    docsDefinition,
-    activeTabIndex,
-    resolveApi,
     depth,
 }) => {
     const { checkExpanded, toggleExpanded, selectedSlug } = useCollapseSidebar();
@@ -63,9 +56,6 @@ const ExpandableSidebarSection: React.FC<ExpandableSidebarSectionProps> = ({
                 slug={slug}
                 navigationItems={navigationItems}
                 registerScrolledToPathListener={registerScrolledToPathListener}
-                docsDefinition={docsDefinition}
-                activeTabIndex={activeTabIndex}
-                resolveApi={resolveApi}
                 depth={depth + 1}
             />
         </SidebarSlugLink>
@@ -76,9 +66,6 @@ export const SidebarSection: FC<SidebarSectionProps> = ({
     className,
     navigationItems,
     registerScrolledToPathListener,
-    docsDefinition,
-    activeTabIndex,
-    resolveApi,
     topLevel = false,
     depth,
 }) => {
@@ -127,9 +114,6 @@ export const SidebarSection: FC<SidebarSectionProps> = ({
                                         slug={section.slug}
                                         navigationItems={section.items}
                                         registerScrolledToPathListener={registerScrolledToPathListener}
-                                        docsDefinition={docsDefinition}
-                                        activeTabIndex={activeTabIndex}
-                                        resolveApi={resolveApi}
                                         depth={depth + 1}
                                     />
                                 </li>
@@ -145,9 +129,6 @@ export const SidebarSection: FC<SidebarSectionProps> = ({
                                     slug={section.slug}
                                     navigationItems={section.items}
                                     registerScrolledToPathListener={registerScrolledToPathListener}
-                                    docsDefinition={docsDefinition}
-                                    activeTabIndex={activeTabIndex}
-                                    resolveApi={resolveApi}
                                     depth={depth}
                                 />
                             );

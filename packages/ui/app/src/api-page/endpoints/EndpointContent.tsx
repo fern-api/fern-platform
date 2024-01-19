@@ -1,8 +1,8 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
-import { sortBy } from "lodash-es";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
@@ -14,13 +14,12 @@ import { getCurlLines } from "../examples/curl-example/curlUtils";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { flattenJsonToLines } from "../examples/json-example/jsonLineUtils";
 import { EndpointContentCodeSnippets } from "./EndpointContentCodeSnippets";
-import { EndpointContentLeft } from "./EndpointContentLeft";
-import { convertNameToAnchorPart } from "./EndpointErrorsSection";
+import { convertNameToAnchorPart, EndpointContentLeft } from "./EndpointContentLeft";
 
 export declare namespace EndpointContent {
     export interface Props {
-        endpoint: APIV1Read.EndpointDefinition;
-        package: APIV1Read.ApiDefinitionPackage;
+        endpoint: ResolvedEndpointDefinition;
+        subpackageTitle: string | undefined;
         hideBottomSeparator?: boolean;
         setContainerRef: (ref: HTMLElement | null) => void;
         route: string;
@@ -95,7 +94,7 @@ function maybeGetErrorStatusCodeOrNameFromAnchor(anchor: string | undefined): nu
 
 export const EndpointContent: React.FC<EndpointContent.Props> = ({
     endpoint,
-    package: package_,
+    subpackageTitle,
     hideBottomSeparator = false,
     setContainerRef,
     route,
@@ -130,7 +129,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     useEffect(() => {
         const statusCodeOrName = maybeGetErrorStatusCodeOrNameFromAnchor(router.asPath.split("#")[1]);
         if (statusCodeOrName != null) {
-            const error = endpoint.errorsV2?.find((e) =>
+            const error = endpoint.errors.find((e) =>
                 typeof statusCodeOrName === "number"
                     ? e.statusCode === statusCodeOrName
                     : convertNameToAnchorPart(e.name) === statusCodeOrName
@@ -141,14 +140,6 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    const errors = useMemo(() => {
-        return sortBy(
-            endpoint.errorsV2 ?? [],
-            (e) => e.statusCode,
-            (e) => e.name
-        );
-    }, [endpoint.errorsV2]);
 
     const example = useMemo(() => {
         if (selectedError == null) {
@@ -249,11 +240,10 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                     {apiSection && (
                         <EndpointContentLeft
                             endpoint={endpoint}
-                            package={package_}
+                            subpackageTitle={subpackageTitle}
                             apiSection={apiSection}
                             onHoverRequestProperty={onHoverRequestProperty}
                             onHoverResponseProperty={onHoverResponseProperty}
-                            errors={errors}
                             selectedError={selectedError}
                             setSelectedError={setSelectedError}
                             route={route}
