@@ -54,7 +54,7 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
     const renderLink = () => {
         const linkClassName = classNames(
             linkClassNameProp,
-            "text-inherit text-left hover:text-inherit relative inline-flex flex-1 content-between items-center px-4 lg:px-3 no-underline hover:no-underline py-3 lg:py-2 rounded-lg ring-border-primary dark:ring-border-primary-dark ring-inset",
+            "!text-inherit text-left !hover:text-inherit relative inline-flex flex-1 content-between items-center px-4 lg:px-3 no-underline hover:no-underline py-3 lg:py-2 rounded-lg ring-border-primary dark:ring-border-primary-dark ring-inset",
             {
                 "bg-tag-primary dark:bg-tag-primary-dark ring-1 lg:ring-0": selected,
                 "lg:hover:bg-tag-default-light/5/10 lg:dark:hover:bg-tag-default-dark/5 ring-0": !selected,
@@ -121,7 +121,7 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
                                 "lg:hover:bg-tag-default-light/5 lg:dark:hover:bg-tag-default-dark/5 lg:opacity-60 group-hover/sidebar:opacity-100 transition-opacity":
                                     toggleExpand != null,
                                 "lg:rounded-l-none": depth > 0,
-                                "lg:bg-tag-primary lg:dark:bg-tag-primary-dark relative lg:after:content-none after:content-[''] after:absolute after:inset-1 after:rounded-lg after:bg-tag-primary after:dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark lg:text-inherit after:pointer-events-none":
+                                "lg:bg-tag-primary lg:dark:bg-tag-primary-dark relative lg:after:content-none after:content-[''] after:absolute after:inset-1 after:rounded-lg after:bg-tag-primary after:dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark !lg:text-inherit after:pointer-events-none":
                                     showIndicator,
                             }
                         )}

@@ -18,10 +18,10 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, sel
             <Link
                 className={classNames(
                     "no-underline hover:no-underline min-h-[44px] lg:min-h-[36px]",
-                    "text-base lg:text-sm flex flex-1 py-2 px-3 group/tab-button transition rounded-lg justify-start items-center select-none min-w-0",
+                    "text-base lg:text-sm flex flex-1 py-2 px-3 group/tab-button transition rounded-lg justify-start items-center select-none min-w-0 hover:text-accent-primary hover:dark:text-accent-primary-dark",
                     {
                         "text-accent-primary dark:text-accent-primary-dark": selected,
-                        "t-muted hover:text-accent-primary hover:dark:text-accent-primary-dark": !selected,
+                        "t-muted": !selected,
                     }
                 )}
                 href={`/${slug}`}
