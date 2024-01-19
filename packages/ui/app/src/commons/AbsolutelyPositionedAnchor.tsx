@@ -61,7 +61,7 @@ export const AbsolutelyPositionedAnchor: React.FC<AbsolutelyPositionedAnchor.Pro
                 )}
                 <Transition
                     show={wasJustCopied}
-                    leave="duration-200 pointer-events-none transition-all"
+                    leave="duration-200 pointer-events-none transition-all ease-in"
                     leaveFrom="opacity-100 translate-x-0"
                     leaveTo="opacity-0 -translate-x-2"
                     as={Fragment}
