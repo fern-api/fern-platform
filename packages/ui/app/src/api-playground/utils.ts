@@ -285,7 +285,7 @@ export function matchesTypeReference(shape: ResolvedTypeReference, value: unknow
                 return false;
             }
             const propertyMap = new Map<string, ResolvedObjectProperty>();
-            object.properties.forEach((property) => propertyMap.set(property.key, property));
+            object.properties().forEach((property) => propertyMap.set(property.key, property));
             return Object.keys(value).every((key) => {
                 const property = propertyMap.get(key);
                 if (property == null) {
@@ -349,6 +349,7 @@ export function matchesTypeReference(shape: ResolvedTypeReference, value: unknow
         booleanLiteral: (literalType) => value === literalType.value,
         unknown: () => value == null,
         _other: () => value == null,
+        reference: (reference) => matchesTypeReference(reference.shape(), value),
     });
 }
 
@@ -368,7 +369,7 @@ export function getDefaultValuesForBody(requestShape: ResolvedHttpRequestBodySha
     } else if (requestShape.type === "fileUpload") {
         return null;
     } else if (requestShape.type === "object") {
-        return getDefaultValueForObjectProperties(requestShape.properties);
+        return getDefaultValueForObjectProperties(requestShape.properties());
     } else {
         return getDefaultValueForType(requestShape);
     }
@@ -376,7 +377,7 @@ export function getDefaultValuesForBody(requestShape: ResolvedHttpRequestBodySha
 
 export function getDefaultValueForType(shape: ResolvedTypeReference): unknown {
     return visitDiscriminatedUnion(shape, "type")._visit<unknown>({
-        object: (object) => getDefaultValueForObjectProperties(object.properties),
+        object: (object) => getDefaultValueForObjectProperties(object.properties()),
         discriminatedUnion: (discriminatedUnion) => {
             const variant = discriminatedUnion.variants[0];
 
@@ -415,6 +416,7 @@ export function getDefaultValueForType(shape: ResolvedTypeReference): unknown {
         booleanLiteral: (literal) => literal.value,
         unknown: () => undefined,
         _other: () => undefined,
+        reference: (reference) => getDefaultValueForType(reference.shape()),
     });
 }
 
@@ -441,5 +443,6 @@ export function isExpandable(valueShape: ResolvedTypeReference, currentValue: un
         date: () => false,
         booleanLiteral: () => false,
         stringLiteral: () => false,
+        reference: (reference) => isExpandable(reference.shape(), currentValue),
     });
 }

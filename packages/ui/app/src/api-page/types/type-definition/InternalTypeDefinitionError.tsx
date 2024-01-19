@@ -51,15 +51,17 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
         () =>
             visitDiscriminatedUnion(typeShape, "type")._visit<CollapsibleContent | undefined>({
                 object: (object) => ({
-                    elements: object.properties.map((property) => (
-                        <ObjectProperty
-                            key={property.key}
-                            property={property}
-                            anchorIdParts={[...anchorIdParts, property.key]}
-                            route={route}
-                            applyErrorStyles
-                        />
-                    )),
+                    elements: object
+                        .properties()
+                        .map((property) => (
+                            <ObjectProperty
+                                key={property.key}
+                                property={property}
+                                anchorIdParts={[...anchorIdParts, property.key]}
+                                route={route}
+                                applyErrorStyles
+                            />
+                        )),
                     elementNameSingular: "property",
                     elementNamePlural: "properties",
                 }),

@@ -105,7 +105,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                 onOpenStack={onOpenStack}
                 onCloseStack={onCloseStack}
             >
-                <PlaygroundObjectPropertiesForm properties={object.properties} onChange={onChange} value={value} />
+                <PlaygroundObjectPropertiesForm properties={object.properties()} onChange={onChange} value={value} />
             </WithPanel>
         ),
         enum: ({ values }) => <PlaygroundEnumForm enumValues={values} onChange={onChange} value={value} />,
@@ -276,5 +276,14 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
             />
         ),
         _other: () => null,
+        reference: (reference) => (
+            <PlaygroundTypeReferenceForm
+                shape={reference.shape()}
+                onChange={onChange}
+                value={value}
+                onFocus={onFocus}
+                onBlur={onBlur}
+            />
+        ),
     });
 };

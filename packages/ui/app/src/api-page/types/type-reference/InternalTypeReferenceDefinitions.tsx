@@ -138,5 +138,16 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
         stringLiteral: () => null,
         unknown: () => null,
         _other: () => null,
+        reference: (reference) => (
+            <InternalTypeReferenceDefinitions
+                shape={reference.shape()}
+                isCollapsible={isCollapsible}
+                applyErrorStyles={applyErrorStyles}
+                className={className}
+                anchorIdParts={anchorIdParts}
+                route={route}
+                defaultExpandAll={defaultExpandAll}
+            />
+        ),
     });
 };
