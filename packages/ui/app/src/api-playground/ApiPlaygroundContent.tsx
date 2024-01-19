@@ -1,5 +1,10 @@
 import { NonIdealState, Spinner } from "@blueprintjs/core";
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import {
+    ResolvedApiDefinitionPackage,
+    ResolvedEndpointDefinition,
+    ResolvedNavigationItemApiSection,
+} from "@fern-ui/app-utils";
 import { failed, Loadable, loaded, loading, notStartedLoading, visitLoadable } from "@fern-ui/loadable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
@@ -7,7 +12,6 @@ import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useCallback, useState } from "react";
-import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 import { ApiPlaygroundEndpointSelector } from "./ApiPlaygroundEndpointSelector";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
 import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
@@ -24,36 +28,32 @@ interface ResponsePayload {
 }
 
 interface ApiPlayroundContentProps {
-    endpoint: APIV1Read.EndpointDefinition;
-    slug: string | undefined;
-    apiId: string | undefined;
-    package: APIV1Read.ApiDefinitionPackage | undefined;
+    auth: APIV1Read.ApiAuth | undefined;
+    apiDefinition: ResolvedApiDefinitionPackage | undefined;
+    navigationItems: ResolvedNavigationItemApiSection[];
+    endpoint: ResolvedEndpointDefinition;
     formState: PlaygroundRequestFormState;
     setFormState: Dispatch<SetStateAction<PlaygroundRequestFormState>>;
     resetWithExample: () => void;
     resetWithoutExample: () => void;
     openSecretsModal: () => void;
     secrets: SecretBearer[];
-    resolveTypeById: (typeId: APIV1Read.TypeId) => APIV1Read.TypeDefinition | undefined;
 }
 
 const requestTypeAtom = atomWithStorage<"curl" | "javascript" | "python">("api-playground-atom-alpha", "curl");
 
 export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
+    auth,
+    apiDefinition,
+    navigationItems,
     endpoint,
-    package: package_,
     formState,
     setFormState,
     resetWithExample,
     resetWithoutExample,
     openSecretsModal,
     secrets,
-    slug,
-    apiId,
-    resolveTypeById,
 }) => {
-    const { apiDefinition } = useApiPlaygroundContext();
-
     const [requestType, setRequestType] = useAtom(requestTypeAtom);
 
     const [response, setResponse] = useState<Loadable<ResponsePayload>>(notStartedLoading());
@@ -63,11 +63,11 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
         try {
             const response = await fetch("/api/proxy", {
                 method: "POST",
-                headers: buildUnredactedHeaders(apiDefinition?.auth, endpoint, formState),
+                headers: buildUnredactedHeaders(auth, endpoint, formState),
                 body: JSON.stringify({
                     url: buildUrl(endpoint, formState),
                     method: endpoint?.method,
-                    headers: buildUnredactedHeaders(apiDefinition?.auth, endpoint, formState),
+                    headers: buildUnredactedHeaders(auth, endpoint, formState),
                     body: formState?.body,
                 }),
             });
@@ -77,15 +77,16 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
             console.error(e);
             setResponse(failed(e));
         }
-    }, [apiDefinition?.auth, endpoint, formState]);
+    }, [auth, endpoint, formState]);
 
     return (
         <div className="divide-border-default-light dark:divide-border-default-dark flex min-h-0 flex-1 shrink items-stretch divide-x">
             <div className="relative flex min-w-0 flex-1 shrink flex-col overflow-hidden">
                 <div className="border-border-default-light dark:border-border-default-dark flex h-10 w-full shrink-0 items-center justify-between border-b px-4 py-2">
                     <ApiPlaygroundEndpointSelector
+                        apiDefinition={apiDefinition}
                         endpoint={endpoint}
-                        package={package_}
+                        navigationItems={navigationItems}
                         popoverPlacement="bottom-start"
                     />
 
@@ -114,9 +115,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                     setFormState={setFormState}
                     openSecretsModal={openSecretsModal}
                     secrets={secrets}
-                    slug={slug}
-                    apiId={apiId}
-                    resolveTypeById={resolveTypeById}
+                    auth={auth}
                 />
             </div>
             <div className="divide-border-default-light dark:divide-border-default-dark xl:flex-2 flex min-w-0 flex-1 shrink flex-col divide-y xl:flex-row xl:divide-x xl:divide-y-0">
@@ -166,7 +165,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                         </div>
                     </div>
                     <PlaygroundRequestPreview
-                        auth={apiDefinition?.auth}
+                        auth={auth}
                         endpoint={endpoint}
                         formState={formState}
                         requestType={requestType}

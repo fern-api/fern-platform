@@ -6,10 +6,12 @@ import { DocsContext } from "./DocsContext";
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
         docsDefinition: DocsV1Read.DocsDefinition;
+        domain: string;
     }>;
 }
 
 export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
+    domain,
     docsDefinition: unmemoizedDocsDefinition,
     children,
 }) => {
@@ -54,6 +56,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     return (
         <DocsContext.Provider
             value={{
+                domain,
                 docsDefinition,
                 resolveApi,
                 resolvePage,

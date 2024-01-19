@@ -1,17 +1,14 @@
 import { Button, MenuItem, SegmentedControl, Tooltip } from "@blueprintjs/core";
 import { CaretDown } from "@blueprintjs/icons";
 import { Select } from "@blueprintjs/select";
-import { APIV1Read } from "@fern-api/fdr-sdk";
-import { startCase } from "lodash-es";
+import { ResolvedDiscriminatedUnionShape, ResolvedDiscriminatedUnionShapeVariant, titleCase } from "@fern-ui/app-utils";
 import { FC, useCallback } from "react";
-import { getAllObjectProperties } from "../api-page/utils/getAllObjectProperties";
 import { InfoIcon } from "../commons/icons/InfoIcon";
-import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
-import { PlaygroundObjectPropertyForm } from "./PlaygroundObjectPropertyForm";
-import { castToRecord, getDefaultValueForObject } from "./utils";
+import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
+import { castToRecord, getDefaultValueForObjectProperties } from "./utils";
 
 interface PlaygroundDiscriminatedUnionFormProps {
-    discriminatedUnion: APIV1Read.TypeShape.DiscriminatedUnion;
+    discriminatedUnion: ResolvedDiscriminatedUnionShape;
     onChange: (value: unknown) => void;
     value: unknown;
 }
@@ -21,8 +18,6 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
     onChange,
     value,
 }) => {
-    const { resolveTypeById } = useApiPlaygroundContext();
-
     const selectedVariant =
         value != null ? (castToRecord(value)[discriminatedUnion.discriminant] as string) : undefined;
 
@@ -43,36 +38,21 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                 }
                 return {
                     [discriminatedUnion.discriminant]: variantKey,
-                    ...getDefaultValueForObject(selectedVariant.additionalProperties, resolveTypeById),
+                    ...getDefaultValueForObjectProperties(selectedVariant.additionalProperties),
                 };
             });
         },
-        [discriminatedUnion.discriminant, discriminatedUnion.variants, onChange, resolveTypeById]
+        [discriminatedUnion.discriminant, discriminatedUnion.variants, onChange]
     );
 
-    const handleChangeProperty = useCallback(
-        (key: string, newValue: unknown) => {
-            onChange((oldValue: unknown) => {
-                const oldObject = castToRecord(oldValue);
-                return {
-                    ...oldObject,
-                    [key]: typeof newValue === "function" ? newValue(oldObject[key]) : newValue,
-                };
-            });
-        },
-        [onChange]
-    );
-
-    const activeItem = discriminatedUnion.variants.find((variant) => variant.discriminantValue === selectedVariant);
-
-    const variantObject = activeItem?.additionalProperties;
+    const activeVariant = discriminatedUnion.variants.find((variant) => variant.discriminantValue === selectedVariant);
 
     return (
         <div className="w-full">
             {discriminatedUnion.variants.length < 4 ? (
                 <SegmentedControl
                     options={discriminatedUnion.variants.map((variant) => ({
-                        label: startCase(variant.discriminantValue),
+                        label: titleCase(variant.discriminantValue),
                         value: variant.discriminantValue,
                     }))}
                     value={selectedVariant}
@@ -81,7 +61,7 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                     fill={true}
                 />
             ) : (
-                <Select<APIV1Read.DiscriminatedUnionVariant>
+                <Select<ResolvedDiscriminatedUnionShapeVariant>
                     items={discriminatedUnion.variants}
                     itemRenderer={(variant, { ref, handleClick, handleFocus, modifiers }) =>
                         modifiers.matchesPredicate && (
@@ -110,14 +90,14 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                         variant.discriminantValue.toLowerCase().includes(query.toLowerCase())
                     }
                     onItemSelect={(variant) => setSelectedVariant(variant.discriminantValue)}
-                    activeItem={activeItem}
+                    activeItem={activeVariant}
                     popoverProps={{ minimal: true, matchTargetWidth: true }}
                     fill={true}
                 >
                     <Button
                         text={
-                            activeItem != null ? (
-                                <span className="font-mono">{activeItem.discriminantValue}</span>
+                            activeVariant != null ? (
+                                <span className="font-mono">{activeVariant.discriminantValue}</span>
                             ) : (
                                 <span className="t-muted">Select a variant...</span>
                             )
@@ -128,18 +108,12 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                     />
                 </Select>
             )}
-            {variantObject != null && (
-                <ul className="divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark -mx-4 my-4 list-none divide-y border-y">
-                    {getAllObjectProperties(variantObject, resolveTypeById).map((property) => (
-                        <PlaygroundObjectPropertyForm
-                            key={property.key}
-                            property={property}
-                            onChange={handleChangeProperty}
-                            value={castToRecord(value)[property.key]}
-                            resolveTypeById={resolveTypeById}
-                        />
-                    ))}
-                </ul>
+            {activeVariant != null && (
+                <PlaygroundObjectPropertiesForm
+                    properties={activeVariant.additionalProperties}
+                    value={value}
+                    onChange={onChange}
+                />
             )}
         </div>
     );

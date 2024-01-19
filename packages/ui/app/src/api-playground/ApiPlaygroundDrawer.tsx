@@ -1,6 +1,11 @@
 import { Button, Tooltip } from "@blueprintjs/core";
 import { Cross } from "@blueprintjs/icons";
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import {
+    ResolvedApiDefinitionPackage,
+    ResolvedEndpointDefinition,
+    ResolvedNavigationItemApiSection,
+} from "@fern-ui/app-utils";
 import { Dispatch, FC, ReactElement, SetStateAction } from "react";
 import { ApiPlayroundContent } from "./ApiPlaygroundContent";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
@@ -10,31 +15,29 @@ import { SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundRequestFormState } from "./types";
 
 interface ApiPlaygroundDrawerProps {
-    endpoint: APIV1Read.EndpointDefinition | undefined;
-    package: APIV1Read.ApiDefinitionPackage | undefined;
+    navigationItems: ResolvedNavigationItemApiSection[];
+    auth: APIV1Read.ApiAuth | undefined;
+    apiDefinition: ResolvedApiDefinitionPackage | undefined;
+    endpoint: ResolvedEndpointDefinition | undefined;
     formState: PlaygroundRequestFormState;
     setFormState: Dispatch<SetStateAction<PlaygroundRequestFormState>>;
     resetWithExample: () => void;
     resetWithoutExample: () => void;
     openSecretsModal: () => void;
     secrets: SecretBearer[];
-    slug: string | undefined;
-    apiId: string | undefined;
-    resolveTypeById: (typeId: APIV1Read.TypeId) => APIV1Read.TypeDefinition | undefined;
 }
 
 export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
+    navigationItems,
+    auth,
+    apiDefinition,
     endpoint,
-    package: package_,
     formState,
     setFormState,
     resetWithExample,
     resetWithoutExample,
     openSecretsModal,
     secrets,
-    slug,
-    apiId,
-    resolveTypeById,
 }): ReactElement => {
     const { collapseApiPlayground } = useApiPlaygroundContext();
 
@@ -66,23 +69,23 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
 
             {endpoint != null ? (
                 <ApiPlayroundContent
+                    auth={auth}
+                    apiDefinition={apiDefinition}
+                    navigationItems={navigationItems}
                     endpoint={endpoint}
-                    package={package_}
                     formState={formState}
                     setFormState={setFormState}
                     resetWithExample={resetWithExample}
                     resetWithoutExample={resetWithoutExample}
                     openSecretsModal={openSecretsModal}
                     secrets={secrets}
-                    slug={slug}
-                    apiId={apiId}
-                    resolveTypeById={resolveTypeById}
                 />
             ) : (
                 <div className="flex flex-1 items-center justify-center">
                     <ApiPlaygroundEndpointSelector
+                        navigationItems={navigationItems}
+                        apiDefinition={apiDefinition}
                         endpoint={endpoint}
-                        package={package_}
                         placeholderText="Select an endpoint to get started"
                         buttonClassName="text-base"
                         popoverPlacement="top"

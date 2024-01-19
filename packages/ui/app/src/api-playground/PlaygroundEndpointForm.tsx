@@ -1,45 +1,42 @@
 import { Button, InputGroup } from "@blueprintjs/core";
 import { ArrowTopRight, Cross, GlobeNetwork, Person } from "@blueprintjs/icons";
-import { APIV1Read, isApiNode } from "@fern-api/fdr-sdk";
+import { isApiNode, joinUrlSlugs } from "@fern-api/fdr-sdk";
+import {
+    ResolvedEndpointDefinition,
+    ResolvedNavigationItemApiSection,
+    visitResolvedHttpRequestBodyShape,
+} from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import Link from "next/link";
 import { Dispatch, FC, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 import { Markdown } from "../api-page/markdown/Markdown";
-import { getAllObjectProperties } from "../api-page/utils/getAllObjectProperties";
 import { useNavigationContext } from "../navigation-context";
-import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundObjectPropertyForm } from "./PlaygroundObjectPropertyForm";
 import { SecretBearer, SecretSpan } from "./PlaygroundSecretsModal";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { PlaygroundRequestFormAuth, PlaygroundRequestFormState } from "./types";
-import { castToRecord } from "./utils";
 
 interface PlaygroundEndpointFormProps {
-    slug: string | undefined;
-    apiId: string | undefined;
-    endpoint: APIV1Read.EndpointDefinition;
+    auth: ResolvedNavigationItemApiSection["auth"];
+    endpoint: ResolvedEndpointDefinition;
     formState: PlaygroundRequestFormState | undefined;
     setFormState: Dispatch<SetStateAction<PlaygroundRequestFormState>>;
     openSecretsModal: () => void;
     secrets: SecretBearer[];
-    resolveTypeById: (typeId: APIV1Read.TypeId) => APIV1Read.TypeDefinition | undefined;
 }
 
 export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
+    auth,
     endpoint,
     formState,
     setFormState,
     openSecretsModal,
     secrets,
-    slug,
-    apiId,
-    resolveTypeById,
 }) => {
     const { activeNavigatable } = useNavigationContext();
-    const { apiDefinition } = useApiPlaygroundContext();
     const setAuthorization = useCallback(
         (newAuthValue: PlaygroundRequestFormAuth) => {
             setFormState((state) => ({
@@ -99,19 +96,6 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
         [setFormState]
     );
 
-    const setBodyByKey = useCallback(
-        (key: string, value: unknown) => {
-            setBody((bodyState: unknown) => {
-                const oldBody = castToRecord(bodyState);
-                return {
-                    ...oldBody,
-                    [key]: typeof value === "function" ? value(oldBody[key]) : value,
-                };
-            });
-        },
-        [setBody]
-    );
-
     const descriptionRef = useRef<HTMLDivElement>(null);
     const { value: showFullDescription, toggleValue: toggleShowFullDescription } = useBooleanState(false);
     const [descriptionIsClamped, setDescriptionIsClamped] = useState(false);
@@ -157,11 +141,11 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 </section>
             )}
 
-            {endpoint.authed && apiDefinition?.auth != null && (
+            {endpoint.authed && auth != null && (
                 <section>
                     <h6 className="t-muted m-0 mb-2">Authorization</h6>
                     <ul className="divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark -mx-4 mb-4 list-none divide-y border-y">
-                        {visitDiscriminatedUnion(apiDefinition.auth, "type")._visit({
+                        {visitDiscriminatedUnion(auth, "type")._visit({
                             bearerAuth: (bearerAuth) => (
                                 <li className="divide-border-default-light dark:divide-border-default-dark flex min-h-12 flex-row items-stretch divide-x px-4">
                                     <div className="flex min-w-0 flex-1 shrink items-center justify-between gap-2 pr-2">
@@ -322,7 +306,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                 key={header.key}
                                 property={{
                                     key: header.key,
-                                    valueType: header.type,
+                                    valueShape: header.shape,
                                     description: header.description,
                                     descriptionContainsMarkdown: header.descriptionContainsMarkdown,
                                     htmlDescription: header.htmlDescription,
@@ -330,23 +314,22 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                 }}
                                 onChange={setHeader}
                                 value={formState?.headers[header.key]}
-                                resolveTypeById={resolveTypeById}
                             />
                         ))}
                     </ul>
                 </section>
             )}
 
-            {endpoint.path.pathParameters.length > 0 && (
+            {endpoint.pathParameters.length > 0 && (
                 <section>
                     <h6 className="t-muted m-0 mb-2">Path parameters</h6>
                     <ul className="divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark -mx-4 mb-4 list-none divide-y border-y">
-                        {endpoint.path.pathParameters.map((pathParameter) => (
+                        {endpoint.pathParameters.map((pathParameter) => (
                             <PlaygroundObjectPropertyForm
                                 key={pathParameter.key}
                                 property={{
                                     key: pathParameter.key,
-                                    valueType: pathParameter.type,
+                                    valueShape: pathParameter.shape,
                                     description: pathParameter.description,
                                     descriptionContainsMarkdown: pathParameter.descriptionContainsMarkdown,
                                     htmlDescription: pathParameter.htmlDescription,
@@ -354,7 +337,6 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                 }}
                                 onChange={setPathParameter}
                                 value={formState?.pathParameters[pathParameter.key]}
-                                resolveTypeById={resolveTypeById}
                             />
                         ))}
                     </ul>
@@ -370,7 +352,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                 key={queryParameter.key}
                                 property={{
                                     key: queryParameter.key,
-                                    valueType: queryParameter.type,
+                                    valueShape: queryParameter.shape,
                                     description: queryParameter.description,
                                     descriptionContainsMarkdown: queryParameter.descriptionContainsMarkdown,
                                     htmlDescription: queryParameter.htmlDescription,
@@ -378,101 +360,33 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                 }}
                                 onChange={setQueryParameter}
                                 value={formState?.queryParameters[queryParameter.key]}
-                                resolveTypeById={resolveTypeById}
                             />
                         ))}
                     </ul>
                 </section>
             )}
 
-            {endpoint.request != null && (
+            {endpoint.requestBody != null && (
                 <section>
                     <h6 className="t-muted m-0 mb-2">Body</h6>
 
-                    {visitDiscriminatedUnion(endpoint.request.type, "type")._visit({
-                        object: (object) => (
-                            <ul className="divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark -mx-4 mb-4 list-none divide-y border-y">
-                                {getAllObjectProperties(object, resolveTypeById)
-                                    .filter((property) => !isOptionalTypeReference(property.valueType, resolveTypeById))
-                                    .map((property) => (
-                                        <PlaygroundObjectPropertyForm
-                                            key={property.key}
-                                            property={property}
-                                            onChange={setBodyByKey}
-                                            value={castToRecord(formState?.body)[property.key]}
-                                            expandByDefault={false}
-                                            resolveTypeById={resolveTypeById}
-                                        />
-                                    ))}
-
-                                {getAllObjectProperties(object, resolveTypeById)
-                                    .filter((property) => isOptionalTypeReference(property.valueType, resolveTypeById))
-                                    .map((property) => (
-                                        <PlaygroundObjectPropertyForm
-                                            key={property.key}
-                                            property={property}
-                                            onChange={setBodyByKey}
-                                            value={castToRecord(formState?.body)[property.key]}
-                                            expandByDefault={false}
-                                            resolveTypeById={resolveTypeById}
-                                        />
-                                    ))}
-                            </ul>
-                        ),
-                        reference: (reference) => (
-                            <PlaygroundTypeReferenceForm
-                                typeReference={reference.value}
-                                onChange={setBody}
-                                value={formState?.body}
-                                resolveTypeById={resolveTypeById}
-                            />
-                        ),
+                    {visitResolvedHttpRequestBodyShape(endpoint.requestBody.shape, {
                         fileUpload: () => <span>fileUpload</span>,
-                        _other: () => null,
+                        typeReference: (shape) => (
+                            <PlaygroundTypeReferenceForm shape={shape} onChange={setBody} value={formState?.body} />
+                        ),
                     })}
                 </section>
             )}
 
-            {slug != null && (
-                <Link
-                    href={`/${slug}`}
-                    shallow={isApiNode(activeNavigatable) && activeNavigatable.section.api === apiId}
-                    className="t-muted hover:text-accent-primary hover:dark:text-accent-primary-dark inline-flex items-center gap-2 text-sm font-semibold underline decoration-1 underline-offset-4 hover:decoration-2"
-                >
-                    <span>View in API Reference</span>
-                    <ArrowTopRight />
-                </Link>
-            )}
+            <Link
+                href={`/${joinUrlSlugs(...endpoint.slug)}`}
+                shallow={isApiNode(activeNavigatable) && activeNavigatable.section.api === endpoint.apiSectionId}
+                className="t-muted hover:text-accent-primary hover:dark:text-accent-primary-dark inline-flex items-center gap-2 text-sm font-semibold underline decoration-1 underline-offset-4 hover:decoration-2"
+            >
+                <span>View in API Reference</span>
+                <ArrowTopRight />
+            </Link>
         </div>
     );
 };
-
-function isOptionalTypeReference(
-    typeReference: APIV1Read.TypeReference,
-    resolveTypeById: (typeId: string) => APIV1Read.TypeDefinition | undefined
-): boolean {
-    return visitDiscriminatedUnion(typeReference, "type")._visit({
-        map: () => false,
-        id: (id) => {
-            const typeDefinition = resolveTypeById(id.value);
-            if (typeDefinition == null) {
-                return false;
-            }
-            return visitDiscriminatedUnion(typeDefinition.shape, "type")._visit({
-                object: () => false,
-                alias: (alias) => isOptionalTypeReference(alias.value, resolveTypeById),
-                enum: () => false,
-                undiscriminatedUnion: () => false,
-                discriminatedUnion: () => false,
-                _other: () => false,
-            });
-        },
-        primitive: () => false,
-        optional: () => true,
-        list: () => false,
-        set: () => false,
-        literal: () => false,
-        unknown: () => false,
-        _other: () => false,
-    });
-}

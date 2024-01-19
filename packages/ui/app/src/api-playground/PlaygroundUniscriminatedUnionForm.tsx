@@ -1,16 +1,15 @@
 import { Button, MenuItem, SegmentedControl, Tooltip } from "@blueprintjs/core";
 import { CaretDown } from "@blueprintjs/icons";
 import { Select } from "@blueprintjs/select";
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { ResolvedUndiscriminatedUnionShape, ResolvedUndiscriminatedUnionShapeVariant } from "@fern-ui/app-utils";
 import { isEqual } from "instantsearch.js/es/lib/utils";
 import { FC, useCallback, useState } from "react";
 import { InfoIcon } from "../commons/icons/InfoIcon";
-import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType, matchesTypeReference } from "./utils";
 
 interface PlaygroundUniscriminatedUnionFormProps {
-    undiscriminatedUnion: APIV1Read.TypeShape.UndiscriminatedUnion;
+    undiscriminatedUnion: ResolvedUndiscriminatedUnionShape;
     onChange: (value: unknown) => void;
     value: unknown;
 }
@@ -20,13 +19,9 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
     onChange,
     value,
 }) => {
-    const { resolveTypeById } = useApiPlaygroundContext();
-
     const [internalSelectedVariant, setInternalSelectedVariant] = useState<number>(() => {
         return Math.max(
-            undiscriminatedUnion.variants.findIndex((variant) =>
-                matchesTypeReference(variant.type, resolveTypeById, value)
-            ),
+            undiscriminatedUnion.variants.findIndex((variant) => matchesTypeReference(variant.shape, value)),
             0
         );
     });
@@ -39,10 +34,10 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
             const variant = undiscriminatedUnion.variants[variantIdx];
             if (variantIdx !== internalSelectedVariant && variant != null) {
                 setInternalSelectedVariant(variantIdx);
-                onChange(getDefaultValueForType(variant.type, resolveTypeById));
+                onChange(getDefaultValueForType(variant.shape));
             }
         },
-        [internalSelectedVariant, onChange, resolveTypeById, undiscriminatedUnion.variants]
+        [internalSelectedVariant, onChange, undiscriminatedUnion.variants]
     );
 
     return (
@@ -59,7 +54,7 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
                     fill={true}
                 />
             ) : (
-                <Select<APIV1Read.UndiscriminatedUnionVariant>
+                <Select<ResolvedUndiscriminatedUnionShapeVariant>
                     items={undiscriminatedUnion.variants}
                     itemRenderer={(variant, { ref, handleClick, handleFocus, modifiers, index }) =>
                         modifiers.matchesPredicate && (
@@ -112,12 +107,7 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
             )}
             {selectedVariant != null && (
                 <div className="mt-2">
-                    <PlaygroundTypeReferenceForm
-                        typeReference={selectedVariant.type}
-                        onChange={onChange}
-                        value={value}
-                        resolveTypeById={resolveTypeById}
-                    />
+                    <PlaygroundTypeReferenceForm shape={selectedVariant.shape} onChange={onChange} value={value} />
                 </div>
             )}
         </div>

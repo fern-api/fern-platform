@@ -1,11 +1,11 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import useSize from "@react-hook/size";
 import { useRef } from "react";
 import { EndpointUrl } from "./EndpointUrl";
 
 export declare namespace EndpointUrlWithOverflow {
     export interface Props {
-        endpoint: APIV1Read.EndpointDefinition;
+        endpoint: ResolvedEndpointDefinition;
     }
 }
 

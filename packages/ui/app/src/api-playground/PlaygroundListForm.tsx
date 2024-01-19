@@ -1,24 +1,23 @@
 import { Button } from "@blueprintjs/core";
 import { Cross, Plus } from "@blueprintjs/icons";
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { ResolvedTypeReference } from "@fern-ui/app-utils";
 import { FC, useCallback } from "react";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType } from "./utils";
 
 interface PlaygroundListFormProps {
-    itemType: APIV1Read.TypeReference;
+    itemShape: ResolvedTypeReference;
     onChange: (value: unknown) => void;
     value: unknown;
-    resolveTypeById: (typeId: APIV1Read.TypeId) => APIV1Read.TypeDefinition | undefined;
 }
 
-export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemType, onChange, value, resolveTypeById }) => {
+export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemShape, onChange, value }) => {
     const appendItem = useCallback(() => {
         onChange((oldValue: unknown) => {
             const oldArray = Array.isArray(oldValue) ? oldValue : [];
-            return [...oldArray, getDefaultValueForType(itemType, resolveTypeById)];
+            return [...oldArray, getDefaultValueForType(itemShape)];
         });
-    }, [itemType, onChange, resolveTypeById]);
+    }, [itemShape, onChange]);
     const valueAsList = Array.isArray(value) ? value : [];
     const handleChangeItem = useCallback(
         (idx: number, newValue: unknown) => {
@@ -54,13 +53,12 @@ export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemType, onCh
 
                             <div className="flex min-w-0 flex-1 shrink items-center gap-2">
                                 <PlaygroundTypeReferenceForm
-                                    typeReference={itemType}
+                                    shape={itemShape}
                                     value={item}
                                     onChange={(newItem) =>
                                         handleChangeItem(idx, typeof newItem === "function" ? newItem(item) : newItem)
                                     }
                                     renderAsPanel={true}
-                                    resolveTypeById={resolveTypeById}
                                 />
                                 <Button
                                     icon={<Cross />}

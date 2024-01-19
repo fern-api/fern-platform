@@ -1,4 +1,5 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
@@ -7,20 +8,18 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { useNavigationContext } from "../../navigation-context";
-import { getAnchorId } from "../../util/anchor";
 import { useViewportContext } from "../../viewport-context/useViewportContext";
 import { type CodeExampleClient } from "../examples/code-example";
 import { getCurlLines } from "../examples/curl-example/curlUtils";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { flattenJsonToLines } from "../examples/json-example/jsonLineUtils";
 import { EndpointContentCodeSnippets } from "./EndpointContentCodeSnippets";
-import { EndpointContentLeft } from "./EndpointContentLeft";
+import { convertNameToAnchorPart, EndpointContentLeft } from "./EndpointContentLeft";
 
 export declare namespace EndpointContent {
     export interface Props {
-        endpoint: APIV1Read.EndpointDefinition;
-        package: APIV1Read.ApiDefinitionPackage;
-        anchorIdParts: string[];
+        endpoint: ResolvedEndpointDefinition;
+        subpackageTitle: string | undefined;
         hideBottomSeparator?: boolean;
         setContainerRef: (ref: HTMLElement | null) => void;
         route: string;
@@ -74,12 +73,30 @@ function getAvailableExampleClients(example: APIV1Read.ExampleEndpointCall): Cod
 
 const fernClientIdAtom = atomWithStorage<CodeExampleClient["id"]>("fern-client-id", DEFAULT_CLIENT.id);
 
+const ERROR_ANCHOR_PREFIX = "response.error.";
+
+function maybeGetErrorStatusCodeOrNameFromAnchor(anchor: string | undefined): number | string | undefined {
+    if (anchor != null && anchor.startsWith(ERROR_ANCHOR_PREFIX)) {
+        // error anchor format is response.error.{statusCode}.property.a.b.c
+        // get {statusCode} from the anchor
+        const statusCodeOrErrorName = anchor.split(".")[2];
+        if (statusCodeOrErrorName != null) {
+            const statusCode = parseInt(statusCodeOrErrorName, 10);
+            if (!isNaN(statusCode)) {
+                return statusCode;
+            } else {
+                return statusCodeOrErrorName;
+            }
+        }
+    }
+    return undefined;
+}
+
 export const EndpointContent: React.FC<EndpointContent.Props> = ({
     endpoint,
-    package: package_,
+    subpackageTitle,
     hideBottomSeparator = false,
     setContainerRef,
-    anchorIdParts,
     route,
 }) => {
     const router = useRouter();
@@ -107,25 +124,23 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     );
 
     const [storedSelectedExampleClientId, setSelectedExampleClientId] = useAtom(fernClientIdAtom);
-    const [selectedErrorIndex, setSelectedErrorIndex] = useState<number | null>(null);
+    const [selectedError, setSelectedError] = useState<APIV1Read.ErrorDeclarationV2 | undefined>();
 
     useEffect(() => {
-        const currentAnchor = router.asPath.split("#")[1];
-        const errorAnchor = getAnchorId([...anchorIdParts, "errors"]);
-        if (currentAnchor != null && currentAnchor.startsWith(`${errorAnchor}-`)) {
-            const idx = Number(currentAnchor.substring(errorAnchor.length + 1).split("-")[0]);
-            setSelectedErrorIndex(idx);
+        const statusCodeOrName = maybeGetErrorStatusCodeOrNameFromAnchor(router.asPath.split("#")[1]);
+        if (statusCodeOrName != null) {
+            const error = endpoint.errors.find((e) =>
+                typeof statusCodeOrName === "number"
+                    ? e.statusCode === statusCodeOrName
+                    : convertNameToAnchorPart(e.name) === statusCodeOrName
+            );
+            if (error != null) {
+                setSelectedError(error);
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const errors = useMemo(() => {
-        return [...(endpoint.errorsV2 ?? [])]
-            .sort((e1, e2) => (e1.name != null && e2.name != null ? e1.name.localeCompare(e2.name) : 0))
-            .sort((e1, e2) => e1.statusCode - e2.statusCode);
-    }, [endpoint.errorsV2]);
-
-    const selectedError = selectedErrorIndex == null ? null : errors[selectedErrorIndex] ?? null;
     const example = useMemo(() => {
         if (selectedError == null) {
             // Look for success example
@@ -208,13 +223,13 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
             className={classNames("pb-20 pl-6 md:pl-12 pr-4 scroll-mt-20", {
                 "border-border-default-light dark:border-border-default-dark border-b": !hideBottomSeparator,
             })}
-            onClick={() => setSelectedErrorIndex(null)}
+            onClick={() => setSelectedError(undefined)}
             ref={containerRef}
         >
             <div
                 className="flex min-w-0 flex-1 scroll-mt-16 flex-col justify-between lg:flex-row lg:space-x-[4vw]"
                 ref={setContainerRef}
-                data-route={route}
+                data-route={route.toLowerCase()}
             >
                 <div
                     className="flex min-w-0 max-w-2xl flex-1 flex-col"
@@ -225,14 +240,12 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                     {apiSection && (
                         <EndpointContentLeft
                             endpoint={endpoint}
-                            package={package_}
-                            anchorIdParts={anchorIdParts}
+                            subpackageTitle={subpackageTitle}
                             apiSection={apiSection}
                             onHoverRequestProperty={onHoverRequestProperty}
                             onHoverResponseProperty={onHoverResponseProperty}
-                            errors={errors}
-                            selectedErrorIndex={selectedErrorIndex}
-                            setSelectedErrorIndex={setSelectedErrorIndex}
+                            selectedError={selectedError}
+                            setSelectedError={setSelectedError}
                             route={route}
                         />
                     )}

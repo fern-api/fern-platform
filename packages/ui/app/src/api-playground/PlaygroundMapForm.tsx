@@ -1,17 +1,16 @@
 import { Button } from "@blueprintjs/core";
 import { Cross, Plus } from "@blueprintjs/icons";
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { ResolvedTypeReference } from "@fern-ui/app-utils";
 import { isPlainObject } from "@fern-ui/core-utils";
 import { FC, useCallback, useEffect, useState } from "react";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType, unknownToString } from "./utils";
 
 interface PlaygroundMapFormProps {
-    keyType: APIV1Read.TypeReference;
-    valueType: APIV1Read.TypeReference;
+    keyShape: ResolvedTypeReference;
+    valueShape: ResolvedTypeReference;
     onChange: (value: unknown) => void;
     value: unknown;
-    resolveTypeById: (typeId: APIV1Read.TypeId) => APIV1Read.TypeDefinition | undefined;
 }
 
 function toKeyValuePairs(value: unknown): Array<{ key: unknown; value: unknown }> {
@@ -29,13 +28,7 @@ function fromKeyValuePairs(keyValuePairs: Array<{ key: unknown; value: unknown }
     }, {});
 }
 
-export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({
-    keyType,
-    valueType,
-    onChange,
-    value,
-    resolveTypeById,
-}) => {
+export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ keyShape, valueShape, onChange, value }) => {
     const [internalState, setInternalState] = useState<Array<{ key: unknown; value: unknown }>>(() =>
         toKeyValuePairs(value)
     );
@@ -48,11 +41,11 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({
         setInternalState((oldState) => [
             ...oldState,
             {
-                key: getDefaultValueForType(keyType, resolveTypeById),
-                value: getDefaultValueForType(valueType, resolveTypeById),
+                key: getDefaultValueForType(keyShape),
+                value: getDefaultValueForType(valueShape),
             },
         ]);
-    }, [keyType, resolveTypeById, valueType]);
+    }, [keyShape, valueShape]);
 
     const handleChangeKey = useCallback((idx: number, newKey: unknown) => {
         setInternalState((oldState) => {
@@ -92,18 +85,16 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({
 
                             <div className="min-w-0 flex-1 shrink">
                                 <PlaygroundTypeReferenceForm
-                                    typeReference={keyType}
+                                    shape={keyShape}
                                     value={item.key}
                                     onChange={(newKey) => handleChangeKey(idx, newKey)}
-                                    resolveTypeById={resolveTypeById}
                                 />
                             </div>
                             <div className="min-w-0 flex-1 shrink">
                                 <PlaygroundTypeReferenceForm
-                                    typeReference={valueType}
+                                    shape={valueShape}
                                     value={item.value}
                                     onChange={(newValue) => handleChangeValue(idx, newValue)}
-                                    resolveTypeById={resolveTypeById}
                                 />
                             </div>
                             <div>

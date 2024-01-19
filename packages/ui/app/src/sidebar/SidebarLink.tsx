@@ -1,3 +1,4 @@
+import { joinUrlSlugs } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { range } from "lodash-es";
 import { Url } from "next/dist/shared/lib/router/router";
@@ -5,10 +6,9 @@ import Link from "next/link";
 import { FC, HTMLAttributeAnchorTarget, memo, PropsWithChildren, ReactNode, useEffect, useRef } from "react";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
-import { useCollapseSidebar } from "./CollapseSidebarContext";
 
 interface SidebarSlugLinkProps {
-    slug?: string;
+    slug?: string[];
     onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
     className?: string;
     linkClassName?: string;
@@ -49,8 +49,6 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
         // SidebarSlugLink props
         closeMobileSidebar?: () => void;
         elementRef?: React.Ref<HTMLLIElement>;
-        collapseAll?: () => void;
-        expandAll?: () => void;
     }
 >) {
     const renderLink = () => {
@@ -76,7 +74,7 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
                 }}
                 shallow={shallow}
             >
-                <span className="flex-1 text-base leading-5 lg:text-sm lg:leading-4">{title}</span>
+                <span className="flex-1 text-base leading-6 lg:text-sm lg:leading-5">{title}</span>
                 {rightElement}
             </Link>
         ) : (
@@ -86,7 +84,7 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
                     onClick?.(e);
                 }}
             >
-                <span className="flex-1 text-base leading-5 lg:text-sm lg:leading-4">{title}</span>
+                <span className="flex-1 text-base leading-6 lg:text-sm lg:leading-5">{title}</span>
                 {rightElement}
             </button>
         );
@@ -127,9 +125,7 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
                                     showIndicator,
                             }
                         )}
-                        onClick={(e) => {
-                            e.detail === 1 && toggleExpand?.();
-                        }}
+                        onClick={toggleExpand}
                     >
                         <ChevronDownIcon
                             className={classNames("h-6 w-6 lg:h-5 w-5 transition-transform", {
@@ -158,12 +154,10 @@ export const SidebarSlugLink: FC<PropsWithChildren<SidebarSlugLinkProps>> = ({
         if (slug == null) {
             return undefined;
         }
-        return registerScrolledToPathListener(slug, () => {
+        return registerScrolledToPathListener(joinUrlSlugs(...slug), () => {
             ref.current?.scrollIntoView({ block: "nearest", inline: "nearest" });
         });
     }, [slug, registerScrolledToPathListener]);
-
-    const { expandAll, collapseAll } = useCollapseSidebar();
 
     useEffect(() => {
         if (isMobileSidebarOpen && props.selected) {
@@ -176,9 +170,7 @@ export const SidebarSlugLink: FC<PropsWithChildren<SidebarSlugLinkProps>> = ({
             {...props}
             elementRef={ref}
             closeMobileSidebar={closeMobileSidebar}
-            expandAll={expandAll}
-            collapseAll={collapseAll}
-            href={slug != null ? `/${slug}` : undefined}
+            href={slug != null ? `/${slug.join("/")}` : undefined}
         />
     );
 };

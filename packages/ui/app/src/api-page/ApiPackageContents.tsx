@@ -1,14 +1,11 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
-import { doesSubpackageHaveEndpointsOrWebhooksRecursive, joinUrlSlugs } from "@fern-ui/app-utils";
-import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
+import { ResolvedApiDefinitionPackage } from "@fern-ui/app-utils";
 import { Endpoint } from "./endpoints/Endpoint";
 import { ApiSubpackage } from "./subpackages/ApiSubpackage";
 import { Webhook } from "./webhooks/Webhook";
 
 export declare namespace ApiPackageContents {
     export interface Props {
-        package: APIV1Read.ApiDefinitionPackage;
-        slug: string;
+        package: ResolvedApiDefinitionPackage;
         isLastInParentPackage: boolean;
         anchorIdParts: string[];
     }
@@ -16,52 +13,39 @@ export declare namespace ApiPackageContents {
 
 export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
     package: package_,
-    slug,
     isLastInParentPackage,
     anchorIdParts,
 }) => {
-    const { resolveSubpackageById } = useApiDefinitionContext();
+    const { endpoints, webhooks, subpackages } = package_;
+
+    const subpackageTitle = package_.type === "subpackage" ? package_.title : undefined;
 
     return (
         <>
-            {package_.endpoints.map((endpoint, idx) => (
+            {endpoints.map((endpoint, idx) => (
                 <Endpoint
                     key={endpoint.id}
                     endpoint={endpoint}
-                    isLastInApi={isLastInParentPackage && idx === package_.endpoints.length - 1}
-                    fullSlug={joinUrlSlugs(slug, endpoint.urlSlug)}
-                    package={package_}
-                    anchorIdParts={anchorIdParts}
+                    subpackageTitle={subpackageTitle}
+                    isLastInApi={isLastInParentPackage && idx === endpoints.length - 1}
                 />
             ))}
-            {package_.webhooks.map((webhook, idx) => (
+            {webhooks.map((webhook, idx) => (
                 <Webhook
                     key={webhook.id}
                     webhook={webhook}
-                    isLastInApi={isLastInParentPackage && idx === package_.webhooks.length - 1}
-                    fullSlug={joinUrlSlugs(slug, webhook.urlSlug)}
-                    package={package_}
+                    subpackageTitle={subpackageTitle}
+                    isLastInApi={isLastInParentPackage && idx === webhooks.length - 1}
+                />
+            ))}
+            {subpackages.map((subpackage, idx) => (
+                <ApiSubpackage
+                    key={subpackage.id}
+                    subpackage={subpackage}
+                    isLastInParentPackage={idx === subpackages.length - 1}
                     anchorIdParts={anchorIdParts}
                 />
             ))}
-            {package_.subpackages.map((subpackageId, idx) => {
-                if (!doesSubpackageHaveEndpointsOrWebhooksRecursive(subpackageId, resolveSubpackageById)) {
-                    return null;
-                }
-                const subpackage = resolveSubpackageById(subpackageId);
-                if (subpackage == null) {
-                    return null;
-                }
-                return (
-                    <ApiSubpackage
-                        key={subpackageId}
-                        subpackageId={subpackageId}
-                        isLastInParentPackage={idx === package_.subpackages.length - 1}
-                        slug={joinUrlSlugs(slug, subpackage.urlSlug)}
-                        anchorIdParts={anchorIdParts}
-                    />
-                );
-            })}
         </>
     );
 };

@@ -1,15 +1,12 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { ReactElement } from "react";
+import { ResolvedRequestBody } from "@fern-ui/app-utils";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
-import { TypeDefinition } from "../types/type-definition/TypeDefinition";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
-import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
+import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
 
 export declare namespace EndpointRequestSection {
     export interface Props {
-        httpRequest: APIV1Read.HttpRequest;
+        requestBody: ResolvedRequestBody;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: string[];
         route: string;
@@ -18,7 +15,7 @@ export declare namespace EndpointRequestSection {
 }
 
 export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
-    httpRequest,
+    requestBody,
     onHoverProperty,
     anchorIdParts,
     route,
@@ -26,42 +23,25 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
 }) => {
     return (
         <div className="flex flex-col">
-            <ApiPageDescription className="mt-3" description={httpRequest.description} isMarkdown={true} />
+            <ApiPageDescription className="mt-3 text-sm" description={requestBody.description} isMarkdown={true} />
             <div className="t-muted border-border-default-light dark:border-border-default-dark border-b pb-5 text-sm leading-6">
-                {"This endpoint expects "}
-                {visitDiscriminatedUnion(httpRequest.type, "type")._visit<ReactElement | string>({
-                    object: () => "an object",
-                    reference: (type) => <TypeShorthand type={type.value} plural={false} withArticle />,
-                    fileUpload: () => "a file",
-                    _other: () => "unknown",
-                })}
-                .
+                {`This endpoint expects ${
+                    requestBody.shape.type === "fileUpload"
+                        ? "a file"
+                        : renderTypeShorthand(requestBody.shape, { withArticle: true })
+                }.`}
             </div>
-            {visitDiscriminatedUnion(httpRequest.type, "type")._visit({
-                object: (object) => (
-                    <TypeDefinition
-                        typeShape={object}
-                        isCollapsible={false}
-                        onHoverProperty={onHoverProperty}
-                        anchorIdParts={anchorIdParts}
-                        route={route}
-                        defaultExpandAll={defaultExpandAll}
-                    />
-                ),
-                reference: (type) => (
-                    <TypeReferenceDefinitions
-                        type={type.value}
-                        isCollapsible={false}
-                        onHoverProperty={onHoverProperty}
-                        anchorIdParts={anchorIdParts}
-                        applyErrorStyles={false}
-                        route={route}
-                        defaultExpandAll={defaultExpandAll}
-                    />
-                ),
-                fileUpload: () => null,
-                _other: () => null,
-            })}
+            {requestBody.shape.type === "fileUpload" ? null : (
+                <TypeReferenceDefinitions
+                    shape={requestBody.shape}
+                    isCollapsible={false}
+                    onHoverProperty={onHoverProperty}
+                    anchorIdParts={anchorIdParts}
+                    route={route}
+                    defaultExpandAll={defaultExpandAll}
+                    applyErrorStyles={false}
+                />
+            )}
         </div>
     );
 };

@@ -45,56 +45,51 @@ export type ActiveNavigationConfigContext = ActiveNavigationConfigContextUntabbe
 
 export function useDocsSelectors(): DocsSelectors {
     const { basePath, activeNavigatable } = useNavigationContext();
+    const { context: navigationContext } = activeNavigatable;
 
     const prefix = basePath != null && basePath.trim().length > 1 ? basePath.trim().slice(1) + "/" : "";
 
-    const definitionInfo = useMemo(() => activeNavigatable.context.root.info, [activeNavigatable]);
+    const definitionInfo = navigationContext.root.info;
 
     const activeVersionContext = useMemo<ActiveVersionContext>(() => {
-        if (
-            activeNavigatable.context.type === "versioned-tabbed" ||
-            activeNavigatable.context.type === "versioned-untabbed"
-        ) {
-            return { type: "versioned", version: activeNavigatable.context.version };
+        if (navigationContext.type === "versioned-tabbed" || navigationContext.type === "versioned-untabbed") {
+            return { type: "versioned", version: navigationContext.version };
         } else {
             return { type: "unversioned" };
         }
-    }, [activeNavigatable]);
+    }, [navigationContext]);
 
     const activeNavigationConfigContext = useMemo<ActiveNavigationConfigContext>(() => {
-        if (
-            activeNavigatable.context.type === "versioned-tabbed" ||
-            activeNavigatable.context.type === "unversioned-tabbed"
-        ) {
-            return { type: "tabbed", config: activeNavigatable.context.navigationConfig };
+        if (navigationContext.type === "versioned-tabbed" || navigationContext.type === "unversioned-tabbed") {
+            return { type: "tabbed", config: navigationContext.navigationConfig };
         } else {
-            return { type: "untabbed", config: activeNavigatable.context.navigationConfig };
+            return { type: "untabbed", config: navigationContext.navigationConfig };
         }
-    }, [activeNavigatable]);
+    }, [navigationContext]);
 
     const selectedSlug = getFullSlugForNavigatable(activeNavigatable, { omitDefault: true, basePath });
 
     const withTabSlug = useCallback(
         (slug: string) => {
-            const c = activeNavigatable.context;
+            const c = navigationContext;
             if (c.type === "unversioned-tabbed" || c.type === "versioned-tabbed") {
                 return joinUrlSlugs(c.tab.slug, slug);
             }
             return slug;
         },
-        [activeNavigatable.context]
+        [navigationContext]
     );
 
     const withVersionSlug = useCallback(
         (slug: string, opts?: WithVersionSlugOpts) => {
             const { omitDefault = false } = opts ?? {};
-            const c = activeNavigatable.context;
+            const c = navigationContext;
             if (c.type === "versioned-tabbed" || c.type === "versioned-untabbed") {
                 return omitDefault && c.version.info.index === 0 ? slug : joinUrlSlugs(c.version.slug, slug);
             }
             return slug;
         },
-        [activeNavigatable.context]
+        [navigationContext]
     );
 
     const withVersionAndTabSlugs = useCallback(

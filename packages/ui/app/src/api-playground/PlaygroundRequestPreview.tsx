@@ -1,4 +1,5 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import { useTheme } from "next-themes";
 import { FC } from "react";
 import { FernSyntaxHighlighter } from "../commons/CodeBlockSkeleton";
@@ -8,7 +9,7 @@ import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils"
 
 interface PlaygroundRequestPreviewProps {
     auth: APIV1Read.ApiAuth | undefined;
-    endpoint: APIV1Read.EndpointDefinition | undefined;
+    endpoint: ResolvedEndpointDefinition | undefined;
     formState: PlaygroundRequestFormState;
     requestType: "curl" | "javascript" | "python";
 }

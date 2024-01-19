@@ -1,15 +1,13 @@
 import { Collapse, Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { ResolvedTypeShape } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
-import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { useNavigationContext } from "../../../navigation-context";
 import { getAnchorId } from "../../../util/anchor";
-import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
@@ -24,7 +22,7 @@ import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 
 export declare namespace InternalTypeDefinitionError {
     export interface Props {
-        typeShape: APIV1Read.TypeShape;
+        typeShape: ResolvedTypeShape;
         isCollapsible: boolean;
         anchorIdParts: string[];
         route: string;
@@ -46,16 +44,14 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
     route,
     defaultExpandAll = false,
 }) => {
-    const { hydrated } = useNavigationContext();
-    const { resolveTypeById } = useApiDefinitionContext();
+    const { hydrated, justNavigated } = useNavigationContext();
     const router = useRouter();
 
     const collapsableContent = useMemo(
         () =>
             visitDiscriminatedUnion(typeShape, "type")._visit<CollapsibleContent | undefined>({
-                alias: () => undefined,
                 object: (object) => ({
-                    elements: getAllObjectProperties(object, resolveTypeById).map((property) => (
+                    elements: object.properties.map((property) => (
                         <ObjectProperty
                             key={property.key}
                             property={property}
@@ -68,22 +64,15 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                     elementNamePlural: "properties",
                 }),
                 undiscriminatedUnion: (union) => ({
-                    elements: union.variants
-                        .sort((v1, v2) => {
-                            if (v1.type.type === "id") {
-                                return v2.type.type === "id" ? 0 : -1;
-                            }
-                            return v2.type.type !== "id" ? 0 : 1;
-                        })
-                        .map((variant, variantIdx) => (
-                            <UndiscriminatedUnionVariant
-                                key={variantIdx}
-                                unionVariant={variant}
-                                anchorIdParts={anchorIdParts}
-                                applyErrorStyles={false}
-                                route={route}
-                            />
-                        )),
+                    elements: union.variants.map((variant, variantIdx) => (
+                        <UndiscriminatedUnionVariant
+                            key={variantIdx}
+                            unionVariant={variant}
+                            anchorIdParts={anchorIdParts}
+                            applyErrorStyles={false}
+                            route={route}
+                        />
+                    )),
                     elementNameSingular: "variant",
                     elementNamePlural: "variants",
                     separatorText: "OR",
@@ -111,11 +100,11 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                 }),
                 _other: () => undefined,
             }),
-        [typeShape, resolveTypeById, anchorIdParts, route]
+        [typeShape, anchorIdParts, route]
     );
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);
-    const matchesAnchorLink = router.asPath.startsWith(`${route}#${anchorIdSoFar}-`);
+    const matchesAnchorLink = router.asPath.startsWith(`${route}#${anchorIdSoFar}.`);
     const {
         value: isCollapsed,
         toggleValue: toggleIsCollapsed,
@@ -200,7 +189,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                             {isCollapsed ? showText : hideText}
                         </div>
                     </div>
-                    <Collapse isOpen={!isCollapsed} transitionDuration={!hydrated ? 0 : 200}>
+                    <Collapse isOpen={!isCollapsed} transitionDuration={!hydrated || justNavigated ? 0 : 200}>
                         <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
                             <TypeDefinitionDetails
                                 elements={collapsableContent.elements}

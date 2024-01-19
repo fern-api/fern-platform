@@ -1,3 +1,4 @@
+import { resolveNavigationItems } from "@fern-ui/app-utils";
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand } from "@fern-ui/react-commons";
 import classNames from "classnames";
@@ -9,6 +10,7 @@ import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSide
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
 import { useSearchContext } from "../search-context/useSearchContext";
 import { SearchDialog } from "../search/SearchDialog";
+import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { useSearchService } from "../services/useSearchService";
 import { Sidebar } from "../sidebar/Sidebar";
 import { BgImageGradient } from "./BgImageGradient";
@@ -16,11 +18,11 @@ import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
 
 export const Docs: React.FC = memo(function UnmemoizedDocs() {
-    const { observeDocContent, activeNavigatable } = useNavigationContext();
-    const docsContext = useDocsContext();
-    const { docsDefinition } = docsContext;
-    const searchContext = useSearchContext();
-    const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = searchContext;
+    const { observeDocContent, activeNavigatable, registerScrolledToPathListener } = useNavigationContext();
+    const { docsDefinition } = useDocsContext();
+    const { activeNavigationConfigContext, withVersionAndTabSlugs } = useDocsSelectors();
+    const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = useSearchContext();
+
     const searchService = useSearchService();
     const { resolvedTheme: theme, themes, setTheme } = useTheme();
     useEffect(() => {
@@ -65,6 +67,28 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
         ),
         [backgroundType, hasSpecifiedBackgroundImage]
     );
+
+    const currentSlug = useMemo(
+        () =>
+            withVersionAndTabSlugs("", { omitDefault: true })
+                .split("/")
+                .filter((s) => s.length > 0),
+        [withVersionAndTabSlugs]
+    );
+
+    const navigationItems = useMemo(() => {
+        const unresolvedNavigationItems =
+            activeNavigationConfigContext.type === "tabbed"
+                ? activeNavigatable.context.tab?.items
+                : activeNavigationConfigContext.config.items;
+        return resolveNavigationItems(unresolvedNavigationItems ?? [], docsDefinition, currentSlug);
+    }, [
+        activeNavigatable.context.tab?.items,
+        activeNavigationConfigContext.config,
+        activeNavigationConfigContext.type,
+        currentSlug,
+        docsDefinition,
+    ]);
 
     return (
         <>
@@ -115,11 +139,15 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                             )}
                         >
                             {renderBackground("lg:hidden backdrop-blur-lg")}
-                            <Sidebar />
+                            <Sidebar
+                                navigationItems={navigationItems}
+                                currentSlug={currentSlug}
+                                registerScrolledToPathListener={registerScrolledToPathListener}
+                            />
                         </div>
 
                         <main className={classNames("relative flex w-full min-w-0 flex-1 flex-col pt-16")}>
-                            <DocsMainContent />
+                            <DocsMainContent navigationItems={navigationItems} />
                         </main>
                     </div>
                 </ApiPlaygroundContextProvider>

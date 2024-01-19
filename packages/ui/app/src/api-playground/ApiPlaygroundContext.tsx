@@ -1,5 +1,9 @@
-import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
-import { isSubpackage } from "@fern-ui/app-utils";
+import { APIV1Read } from "@fern-api/fdr-sdk";
+import {
+    ResolvedApiDefinitionPackage,
+    ResolvedEndpointDefinition,
+    ResolvedNavigationItemApiSection,
+} from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { Transition } from "@headlessui/react";
@@ -18,17 +22,15 @@ import {
     useEffect,
     useState,
 } from "react";
-import { useDocsContext } from "../docs-context/useDocsContext";
 import { ApiPlaygroundDrawer } from "./ApiPlaygroundDrawer";
 import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundRequestFormAuth, PlaygroundRequestFormState } from "./types";
 import { getDefaultValueForTypes, getDefaultValuesForBody } from "./utils";
 
 export interface ApiPlaygroundSelectionState {
-    apiId: DocsV1Read.ApiSection["api"];
-    endpoint: APIV1Read.EndpointDefinition;
-    package: APIV1Read.ApiDefinitionPackage;
-    slug: string;
+    apiSection: ResolvedNavigationItemApiSection;
+    apiDefinition: ResolvedApiDefinitionPackage;
+    endpoint: ResolvedEndpointDefinition;
 }
 
 const EMPTY_FORM_STATE: PlaygroundRequestFormState = {
@@ -40,21 +42,15 @@ const EMPTY_FORM_STATE: PlaygroundRequestFormState = {
 };
 
 interface ApiPlaygroundContextValue {
-    apiDefinition: APIV1Read.ApiDefinition | undefined;
-    resolveTypeById: (typeId: APIV1Read.TypeId) => APIV1Read.TypeDefinition | undefined;
     selectionState: ApiPlaygroundSelectionState | undefined;
     setSelectionStateAndOpen: (state: ApiPlaygroundSelectionState) => void;
-    isOpen: boolean;
     expandApiPlayground: () => void;
     collapseApiPlayground: () => void;
 }
 
 const ApiPlaygroundContext = createContext<ApiPlaygroundContextValue>({
-    apiDefinition: undefined,
-    resolveTypeById: () => undefined,
     selectionState: undefined,
     setSelectionStateAndOpen: noop,
-    isOpen: false,
     expandApiPlayground: noop,
     collapseApiPlayground: noop,
 });
@@ -67,22 +63,12 @@ const playgroundFormStateAtom = atomWithStorage<Record<string, PlaygroundRequest
 );
 const playgroundFormSecretsAtom = atomWithStorage<SecretBearer[]>("api-playground-secrets-alpha", []);
 
-export const ApiPlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) => {
-    const [selectionState, setSelectionState] = useState<ApiPlaygroundSelectionState | undefined>();
-    const { resolveApi } = useDocsContext();
-    const apiDefinition = selectionState != null ? resolveApi(selectionState.apiId) : undefined;
+interface ApiPlaygroundContextProviderProps extends PropsWithChildren {
+    apiSections: ResolvedNavigationItemApiSection[];
+}
 
-    const resolveTypeById = useCallback(
-        (typeId: APIV1Read.TypeId): APIV1Read.TypeDefinition | undefined => {
-            const type = apiDefinition?.types[typeId];
-            if (type == null) {
-                // eslint-disable-next-line no-console
-                console.error("Type does not exist", typeId, "in apiDefinitionId", apiDefinition?.id);
-            }
-            return type;
-        },
-        [apiDefinition]
-    );
+export const ApiPlaygroundContextProvider: FC<ApiPlaygroundContextProviderProps> = ({ apiSections, children }) => {
+    const [selectionState, setSelectionState] = useState<ApiPlaygroundSelectionState | undefined>();
 
     const [intermediateHeight, setHeight] = useAtom(playgroundHeightAtom);
     const [windowHeight, setWindowHeight] = useState<number | undefined>(undefined);
@@ -149,16 +135,15 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren> = ({ children }
                     return {
                         ...currentFormState,
                         [createFormStateKey(newSelectionState)]: getInitialModalFormStateWithExample(
-                            apiDefinition?.auth,
+                            selectionState?.apiSection.auth,
                             newSelectionState.endpoint,
-                            resolveTypeById,
                             newSelectionState.endpoint?.examples[0]
                         ),
                     };
                 });
             }
         },
-        [apiDefinition?.auth, expandApiPlayground, globalFormState, resolveTypeById, setGlobalFormState]
+        [expandApiPlayground, globalFormState, selectionState?.apiSection.auth, setGlobalFormState]
     );
     const resetWithExample = useCallback(() => {
         if (selectionState == null) {
@@ -166,19 +151,19 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren> = ({ children }
         }
         setPlaygroundFormState(
             getInitialModalFormStateWithExample(
-                apiDefinition?.auth,
+                selectionState.apiSection.auth,
                 selectionState.endpoint,
-                resolveTypeById,
                 selectionState.endpoint?.examples[0]
             )
         );
-    }, [apiDefinition?.auth, resolveTypeById, selectionState, setPlaygroundFormState]);
+    }, [selectionState, setPlaygroundFormState]);
+
     const resetWithoutExample = useCallback(() => {
         if (selectionState == null) {
             return;
         }
-        setPlaygroundFormState(getInitialModalFormState(apiDefinition?.auth, selectionState.endpoint, resolveTypeById));
-    }, [apiDefinition?.auth, resolveTypeById, selectionState, setPlaygroundFormState]);
+        setPlaygroundFormState(getInitialModalFormState(selectionState.apiSection.auth, selectionState.endpoint));
+    }, [selectionState, setPlaygroundFormState]);
 
     useEffect(() => {
         // if keyboard press "ctrl + `", open playground
@@ -234,11 +219,8 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren> = ({ children }
     return (
         <ApiPlaygroundContext.Provider
             value={{
-                apiDefinition,
-                resolveTypeById,
                 selectionState,
                 setSelectionStateAndOpen,
-                isOpen: isPlaygroundOpen,
                 expandApiPlayground,
                 collapseApiPlayground,
             }}
@@ -264,17 +246,16 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren> = ({ children }
                             draggable={true}
                         />
                         <ApiPlaygroundDrawer
+                            navigationItems={apiSections}
+                            auth={selectionState?.apiSection.auth}
+                            apiDefinition={selectionState?.apiDefinition}
                             endpoint={selectionState?.endpoint}
-                            package={selectionState?.package}
                             formState={playgroundFormState}
                             setFormState={setPlaygroundFormState}
                             resetWithExample={resetWithExample}
                             resetWithoutExample={resetWithoutExample}
                             openSecretsModal={openSecretsModal}
                             secrets={globalFormSecrets}
-                            slug={selectionState?.slug}
-                            apiId={selectionState?.apiId}
-                            resolveTypeById={resolveTypeById}
                         />
                     </div>
                 </Transition.Child>
@@ -296,15 +277,14 @@ export function useApiPlaygroundContext(): ApiPlaygroundContextValue {
 
 function getInitialModalFormState(
     auth: APIV1Read.ApiAuth | undefined,
-    endpoint: APIV1Read.EndpointDefinition | undefined,
-    resolveTypeById: (typeId: APIV1Read.TypeId) => APIV1Read.TypeDefinition | undefined
+    endpoint: ResolvedEndpointDefinition | undefined
 ): PlaygroundRequestFormState {
     return {
         auth: getInitialAuthState(auth),
-        headers: getDefaultValueForTypes(endpoint?.headers, resolveTypeById),
-        pathParameters: getDefaultValueForTypes(endpoint?.path.pathParameters, resolveTypeById),
-        queryParameters: getDefaultValueForTypes(endpoint?.queryParameters, resolveTypeById),
-        body: getDefaultValuesForBody(endpoint?.request?.type, resolveTypeById),
+        headers: getDefaultValueForTypes(endpoint?.headers),
+        pathParameters: getDefaultValueForTypes(endpoint?.pathParameters),
+        queryParameters: getDefaultValueForTypes(endpoint?.queryParameters),
+        body: getDefaultValuesForBody(endpoint?.requestBody?.shape),
     };
 }
 
@@ -322,12 +302,11 @@ function getInitialAuthState(auth: APIV1Read.ApiAuth | undefined): PlaygroundReq
 
 function getInitialModalFormStateWithExample(
     auth: APIV1Read.ApiAuth | undefined,
-    endpoint: APIV1Read.EndpointDefinition | undefined,
-    resolveTypeById: (typeId: APIV1Read.TypeId) => APIV1Read.TypeDefinition | undefined,
+    endpoint: ResolvedEndpointDefinition | undefined,
     exampleCall: APIV1Read.ExampleEndpointCall | undefined
 ): PlaygroundRequestFormState {
     if (exampleCall == null) {
-        return getInitialModalFormState(auth, endpoint, resolveTypeById);
+        return getInitialModalFormState(auth, endpoint);
     }
     return {
         auth: getInitialAuthState(auth),
@@ -337,9 +316,8 @@ function getInitialModalFormStateWithExample(
         body: exampleCall.requestBody,
     };
 }
-function createFormStateKey(selectionState: ApiPlaygroundSelectionState) {
-    if (isSubpackage(selectionState.package)) {
-        return `${selectionState.apiId}/${selectionState.package.subpackageId}/${selectionState.endpoint.id}`;
-    }
-    return `${selectionState.apiId}/${selectionState.endpoint.id}`;
+function createFormStateKey({ apiDefinition, endpoint }: ApiPlaygroundSelectionState) {
+    const packageId =
+        apiDefinition.type === "apiSection" ? apiDefinition.api : `${apiDefinition.apiSectionId}/${apiDefinition.id}`;
+    return `${packageId}/${endpoint.id}`;
 }

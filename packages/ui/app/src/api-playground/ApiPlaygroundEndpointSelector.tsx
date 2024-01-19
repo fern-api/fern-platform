@@ -1,133 +1,88 @@
 import { Button, InputGroup } from "@blueprintjs/core";
 import { Cross, Search } from "@blueprintjs/icons";
-import { APIV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
-import { getSubpackageTitle, isSubpackage } from "@fern-ui/app-utils";
+import {
+    ResolvedApiDefinitionPackage,
+    ResolvedEndpointDefinition,
+    ResolvedNavigationItemApiSection,
+} from "@fern-ui/app-utils";
+import { isNonNullish } from "@fern-ui/core-utils";
 import { useBooleanState, useKeyboardPress } from "@fern-ui/react-commons";
 import { Transition } from "@headlessui/react";
 import classNames from "classnames";
-import { FC, Fragment, ReactElement, useEffect, useMemo, useRef, useState } from "react";
-import { resolveSubpackage } from "../api-context/ApiDefinitionContextProvider";
+import { FC, Fragment, ReactElement, useEffect, useRef, useState } from "react";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
-import { useDocsContext } from "../docs-context/useDocsContext";
-import { useNavigationContext } from "../navigation-context";
-import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 
 export interface ApiPlaygroundEndpointSelectorProps {
-    endpoint: APIV1Read.EndpointDefinition | undefined;
-    package: APIV1Read.ApiDefinitionPackage | undefined;
+    apiDefinition: ResolvedApiDefinitionPackage | undefined;
+    endpoint: ResolvedEndpointDefinition | undefined;
+    navigationItems: ResolvedNavigationItemApiSection[];
     popoverPlacement?: "bottom-start" | "bottom" | "bottom-end" | "top-start" | "top" | "top-end";
     placeholderText?: string;
     buttonClassName?: string;
 }
 
-interface PackageAndApiId {
-    apiId: string;
-    package: APIV1Read.ApiDefinitionPackage;
-    parents: APIV1Read.ApiDefinitionPackage[];
-    slug: string;
+function matchesEndpoint(query: string, endpoint: ResolvedEndpointDefinition): boolean {
+    return (
+        endpoint.name?.toLowerCase().includes(query.toLowerCase()) ||
+        endpoint.description?.toLowerCase().includes(query.toLowerCase()) ||
+        endpoint.method.toLowerCase().includes(query.toLowerCase())
+    );
 }
 
 export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProps> = ({
+    apiDefinition,
     endpoint,
-    package: package_,
+    navigationItems,
     popoverPlacement = "bottom",
     placeholderText,
     buttonClassName,
 }) => {
     const { setSelectionStateAndOpen } = useApiPlaygroundContext();
     const { value: showDropdown, toggleValue: toggleDropdown, setFalse: closeDropdown } = useBooleanState(false);
-    const { resolveApi } = useDocsContext();
-    const { activeNavigationConfigContext } = useDocsSelectors();
-    const { activeNavigatable } = useNavigationContext();
 
     const [filterValue, setFilterValue] = useState<string>("");
 
-    const navigationItems =
-        activeNavigationConfigContext.type === "tabbed"
-            ? activeNavigatable.context.tab?.items
-            : activeNavigationConfigContext.config.items;
+    // const endpointsWithRef = useMemo<EndpointWithRef[]>(() => {
+    //     return navigationItems.flatMap((apiSection) => {
+    //         const flattenSubpackages = (
+    //             apiDefinition: ResolvedApiDefinitionPackage,
+    //             parents: ResolvedApiDefinitionPackage[]
+    //         ): EndpointWithRef[] => [
+    //             ...apiDefinition.endpoints.map((endpoint) => ({
+    //                 endpoint,
+    //                 apiSection,
+    //                 apiDefinition,
+    //                 parents,
+    //             })),
+    //             ...apiDefinition.subpackages.flatMap((subpackage) =>
+    //                 flattenSubpackages(subpackage, [...parents, subpackage])
+    //             ),
+    //         ];
 
-    const packages = useMemo<PackageAndApiId[]>(() => {
-        if (navigationItems == null) {
-            return [];
-        }
+    //         return flattenSubpackages(apiSection, []);
+    //     });
+    // }, [navigationItems]);
 
-        return navigationItems.flatMap((item) => {
-            if (item.type !== "api") {
-                return [];
-            }
+    // const selectedEndpointWithRef = useMemo<EndpointWithRef | undefined>(() => {
+    //     return endpointsWithRef.find(({ endpoint: endpointItem }) => endpointItem.id === endpoint?.id);
+    // }, [endpoint?.id, endpointsWithRef]);
 
-            const apiDefinition = resolveApi(item.api);
+    // const filteredEndpointsWithRef = useMemo<EndpointWithRef[]>(() => {
+    //     const filterValueCleaned = filterValue.trim().toLowerCase();
+    //     if (filterValueCleaned.length === 0) {
+    //         return endpointsWithRef;
+    //     }
 
-            if (apiDefinition == null) {
-                return [];
-            }
-
-            const flattenSubpackages = (
-                subpackageId: APIV1Read.SubpackageId,
-                parents: APIV1Read.ApiDefinitionPackage[],
-                slug: string
-            ): PackageAndApiId[] => {
-                const subpackage = resolveSubpackage(apiDefinition, subpackageId);
-
-                if (subpackage == null) {
-                    return [];
-                }
-
-                const parentSlug = joinUrlSlugs(slug, subpackage.urlSlug);
-
-                return [
-                    { apiId: item.api, package: subpackage, parents, slug: parentSlug },
-                    ...subpackage.subpackages.flatMap((subpackageId) =>
-                        flattenSubpackages(subpackageId, [...parents, subpackage], parentSlug)
-                    ),
-                ];
-            };
-
-            const parentSlug = joinUrlSlugs(item.urlSlug);
-
-            return [
-                { apiId: item.api, package: apiDefinition.rootPackage, parents: [], slug: parentSlug },
-                ...apiDefinition.rootPackage.subpackages.flatMap((subpackageId) =>
-                    flattenSubpackages(subpackageId, [apiDefinition.rootPackage], parentSlug)
-                ),
-            ];
-        });
-    }, [navigationItems, resolveApi]);
-
-    const filteredPackages = useMemo<PackageAndApiId[]>(() => {
-        const filterValueCleaned = filterValue.trim().toLowerCase();
-        if (filterValueCleaned.length === 0) {
-            return packages;
-        }
-
-        return packages.flatMap(({ package: package_, apiId, parents, slug }) => {
-            const endpoints = package_.endpoints.filter(
-                (endpoint) =>
-                    endpoint.name?.toLowerCase().includes(filterValueCleaned.toLowerCase()) ||
-                    endpoint.description?.toLowerCase().includes(filterValueCleaned.toLowerCase()) ||
-                    endpoint.method.toLowerCase().includes(filterValueCleaned.toLowerCase())
-            );
-
-            if (endpoints.length === 0) {
-                return [];
-            }
-
-            return [
-                {
-                    apiId,
-                    package: {
-                        ...package_,
-                        endpoints,
-                    },
-                    parents,
-                    slug,
-                },
-            ];
-        });
-    }, [filterValue, packages]);
+    //     return endpointsWithRef.filter(({ endpoint }) => {
+    //         return (
+    //             endpoint.name?.toLowerCase().includes(filterValueCleaned.toLowerCase()) ||
+    //             endpoint.description?.toLowerCase().includes(filterValueCleaned.toLowerCase()) ||
+    //             endpoint.method.toLowerCase().includes(filterValueCleaned.toLowerCase())
+    //         );
+    //     });
+    // }, [filterValue, endpointsWithRef]);
 
     const selectedItemRef = useRef<HTMLLIElement>(null);
 
@@ -152,6 +107,61 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
         };
     }, [closeDropdown, showDropdown]);
 
+    function renderApiDefinitionPackage(apiDefinition: ResolvedApiDefinitionPackage) {
+        const endpoints = apiDefinition.endpoints.filter((endpoint) => matchesEndpoint(filterValue, endpoint));
+        const subpackages = apiDefinition.subpackages.map(renderApiDefinitionPackage).filter(isNonNullish);
+        if (endpoints.length === 0 && subpackages.length === 0) {
+            return null;
+        }
+        return (
+            <li key={apiDefinition.type === "apiSection" ? apiDefinition.api : apiDefinition.id}>
+                <div className="bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark sticky top-0 gap-2 border-b px-3 py-1">
+                    <span className="text-accent-primary dark:text-accent-primary-dark shrink truncate whitespace-nowrap text-xs">
+                        {apiDefinition.title}
+                    </span>
+                </div>
+                <ul className="mb-2 list-none py-1">
+                    {endpoints.map((endpointItem) => (
+                        <li
+                            ref={endpointItem.id === endpoint?.id ? selectedItemRef : undefined}
+                            key={endpointItem.id}
+                            className={classNames(
+                                "gap-4 scroll-m-2 mx-1 flex h-8 cursor-pointer items-center rounded px-2 py-1 text-sm justify-between",
+                                {
+                                    "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark":
+                                        endpointItem.id === endpoint?.id,
+                                    "hover:bg-tag-default-light dark:hover:bg-tag-default-dark hover:text-accent-primary dark:hover:text-accent-primary-dark":
+                                        endpointItem.id !== endpoint?.id,
+                                }
+                            )}
+                            onClick={() => {
+                                setSelectionStateAndOpen({
+                                    endpoint: endpointItem,
+                                    apiDefinition,
+                                    apiSection:
+                                        apiDefinition.type === "apiSection"
+                                            ? apiDefinition
+                                            : // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                                              navigationItems.find((item) => item.api === apiDefinition.apiSectionId)!,
+                                });
+                                closeDropdown();
+                            }}
+                        >
+                            <span className="whitespace-nowrap">
+                                {renderTextWithHighlight(endpointItem.name ?? "", filterValue)}
+                            </span>
+
+                            <HttpMethodTag method={endpointItem.method} small={true} />
+                        </li>
+                    ))}
+                    {subpackages}
+                </ul>
+            </li>
+        );
+    }
+
+    const renderedListItems = navigationItems.map(renderApiDefinitionPackage).filter(isNonNullish);
+
     return (
         <div className="relative -ml-2 min-w-0 shrink">
             <button
@@ -165,11 +175,12 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                 )}
                 onClick={toggleDropdown}
             >
-                {package_ != null && isSubpackage(package_) && (
+                {apiDefinition != null && (
                     <span className="text-accent-primary dark:text-accent-primary-dark shrink truncate whitespace-nowrap text-xs">
-                        {getSubpackageTitle(package_)}
+                        {apiDefinition.title}
                     </span>
                 )}
+
                 <span className="whitespace-nowrap">{endpoint?.name ?? placeholderText ?? "Select an endpoint"}</span>
                 <ChevronDownIcon
                     className={classNames("h-5 w-5 transition", {
@@ -210,8 +221,8 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                     {popoverPlacement.startsWith("bottom") && (
                         <div
                             className={classNames("relative z-10 px-1 pt-1", {
-                                "pb-1": filteredPackages.length === 0,
-                                "pb-0": filteredPackages.length > 0,
+                                "pb-1": renderedListItems.length === 0,
+                                "pb-0": renderedListItems.length > 0,
                             })}
                         >
                             <InputGroup
@@ -229,71 +240,12 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                             />
                         </div>
                     )}
-                    <ul className="scroll-contain list-none overflow-y-auto">
-                        {filteredPackages.map(({ package: packageItem, apiId, parents, slug }, idx) =>
-                            isSubpackage(packageItem) && packageItem.endpoints.length > 0 ? (
-                                <li key={idx}>
-                                    {isSubpackage(packageItem) && (
-                                        <div className="bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark sticky top-0 gap-2 border-b px-3 py-1">
-                                            {parents.map(
-                                                (parent, idx) =>
-                                                    isSubpackage(parent) && (
-                                                        <span
-                                                            key={idx}
-                                                            className="text-accent-primary dark:text-accent-primary-dark mr-2 shrink truncate whitespace-nowrap text-xs"
-                                                        >
-                                                            {getSubpackageTitle(parent)}
-                                                        </span>
-                                                    )
-                                            )}
-                                            <span className="text-accent-primary dark:text-accent-primary-dark shrink truncate whitespace-nowrap text-xs">
-                                                {getSubpackageTitle(packageItem)}
-                                            </span>
-                                        </div>
-                                    )}
-                                    {packageItem.endpoints.length > 0 && (
-                                        <ul className="mb-2 list-none py-1">
-                                            {packageItem.endpoints.map((endpointItem) => (
-                                                <li
-                                                    ref={endpointItem.id === endpoint?.id ? selectedItemRef : undefined}
-                                                    key={endpointItem.id}
-                                                    className={classNames(
-                                                        "gap-4 scroll-m-2 mx-1 flex h-8 cursor-pointer items-center rounded px-2 py-1 text-sm justify-between",
-                                                        {
-                                                            "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark":
-                                                                endpointItem.id === endpoint?.id,
-                                                            "hover:bg-tag-default-light dark:hover:bg-tag-default-dark hover:text-accent-primary dark:hover:text-accent-primary-dark":
-                                                                endpointItem.id !== endpoint?.id,
-                                                        }
-                                                    )}
-                                                    onClick={() => {
-                                                        setSelectionStateAndOpen({
-                                                            apiId,
-                                                            endpoint: endpointItem,
-                                                            package: packageItem,
-                                                            slug: joinUrlSlugs(slug, endpointItem.urlSlug),
-                                                        });
-                                                        closeDropdown();
-                                                    }}
-                                                >
-                                                    <span className="whitespace-nowrap">
-                                                        {renderTextWithHighlight(endpointItem.name ?? "", filterValue)}
-                                                    </span>
-
-                                                    <HttpMethodTag method={endpointItem.method} small={true} />
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    )}
-                                </li>
-                            ) : null
-                        )}
-                    </ul>
+                    <ul className="scroll-contain list-none overflow-y-auto">{renderedListItems}</ul>
                     {popoverPlacement.startsWith("top") && (
                         <div
                             className={classNames("relative z-10 px-1 pb-1", {
-                                "pt-1": filteredPackages.length === 0,
-                                "pt-0": filteredPackages.length > 0,
+                                "pt-1": renderedListItems.length === 0,
+                                "pt-0": renderedListItems.length > 0,
                             })}
                         >
                             <InputGroup

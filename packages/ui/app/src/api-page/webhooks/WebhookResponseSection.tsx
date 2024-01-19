@@ -11,7 +11,7 @@ export const WebhookResponseSection: React.FC = () => {
                     <div className="t-muted text-xs">any</div>
                 </div>
                 <div className="mt-3 text-start">
-                    <ApiPageDescription description={STATUS_200_TEXT} isMarkdown={true} />
+                    <ApiPageDescription description={STATUS_200_TEXT} isMarkdown={true} className="text-sm" />
                 </div>
             </div>
         </div>

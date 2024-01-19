@@ -1,27 +1,22 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { joinUrlSlugs } from "@fern-api/fdr-sdk";
+import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import { useShouldHideFromSsg } from "../../navigation-context/useNavigationContext";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContent } from "./EndpointContent";
 
 export declare namespace Endpoint {
     export interface Props {
-        endpoint: APIV1Read.EndpointDefinition;
+        endpoint: ResolvedEndpointDefinition;
+        subpackageTitle: string | undefined;
         isLastInApi: boolean;
-        package: APIV1Read.ApiDefinitionPackage;
-        fullSlug: string;
-        anchorIdParts: string[];
     }
 }
 
-export const Endpoint: React.FC<Endpoint.Props> = ({
-    endpoint,
-    fullSlug,
-    package: package_,
-    isLastInApi,
-    anchorIdParts,
-}) => {
-    const { setTargetRef } = useApiPageCenterElement({ slug: fullSlug });
+export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint, subpackageTitle, isLastInApi }) => {
+    const fullSlug = joinUrlSlugs(...endpoint.slug);
     const route = `/${fullSlug}`;
+
+    const { setTargetRef } = useApiPageCenterElement({ slug: fullSlug });
 
     // TODO: this is a temporary fix to only SSG the content that is requested by the requested route.
     // - webcrawlers will accurately determine the canonical URL (right now every page "returns" the same full-length content)
@@ -33,10 +28,9 @@ export const Endpoint: React.FC<Endpoint.Props> = ({
     return (
         <EndpointContent
             endpoint={endpoint}
+            subpackageTitle={subpackageTitle}
             setContainerRef={setTargetRef}
-            package={package_}
             hideBottomSeparator={isLastInApi}
-            anchorIdParts={[...anchorIdParts, endpoint.id]}
             route={route}
         />
     );

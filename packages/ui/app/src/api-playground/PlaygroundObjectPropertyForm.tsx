@@ -1,6 +1,6 @@
 import { Button, Checkbox, Tooltip } from "@blueprintjs/core";
 import { ChevronDown, ChevronUp } from "@blueprintjs/icons";
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { ResolvedObjectProperty } from "@fern-ui/app-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { isUndefined } from "lodash-es";
@@ -8,14 +8,13 @@ import { ChangeEventHandler, FC, useCallback, useEffect, useState } from "react"
 import { EndpointAvailabilityTag } from "../api-page/endpoints/EndpointAvailabilityTag";
 import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
-import { getDefaultValueForType, isExpandable } from "./utils";
+import { castToRecord, getDefaultValueForType, isExpandable } from "./utils";
 
 interface PlaygroundObjectPropertyFormProps {
-    property: APIV1Read.ObjectProperty;
+    property: ResolvedObjectProperty;
     onChange: (key: string, value: unknown) => void;
     value: unknown;
     expandByDefault?: boolean;
-    resolveTypeById: (typeId: APIV1Read.TypeId) => APIV1Read.TypeDefinition | undefined;
 }
 
 export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps> = ({
@@ -23,7 +22,6 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
     onChange,
     value,
     expandByDefault = true,
-    resolveTypeById,
 }) => {
     const handleChange = useCallback(
         (newValue: unknown) => {
@@ -32,7 +30,7 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
         [onChange, property.key]
     );
 
-    const expandable = isExpandable(property.valueType, resolveTypeById, value);
+    const expandable = isExpandable(property.valueShape, value);
     const {
         value: expanded,
         setTrue: setExpanded,
@@ -41,15 +39,15 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
 
     const handleChangeOptional = useCallback<ChangeEventHandler<HTMLInputElement>>(
         (e) => {
-            if (property.valueType.type === "optional") {
+            if (property.valueShape.type === "optional") {
                 onChange(
                     property.key,
-                    e.target.checked ? getDefaultValueForType(property.valueType.itemType, resolveTypeById) : undefined
+                    e.target.checked ? getDefaultValueForType(property.valueShape.shape) : undefined
                 );
                 setExpanded();
             }
         },
-        [onChange, property.key, property.valueType, resolveTypeById, setExpanded]
+        [onChange, property.key, property.valueShape, setExpanded]
     );
 
     useEffect(() => {
@@ -91,27 +89,26 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                         <div className="flex min-w-0 max-w-full flex-1 shrink items-center justify-end gap-2 pl-2">
                             {!isUndefined(value) && !expandable && (
                                 <PlaygroundTypeReferenceForm
-                                    typeReference={
-                                        property.valueType.type === "optional"
-                                            ? property.valueType.itemType
-                                            : property.valueType
+                                    shape={
+                                        property.valueShape.type === "optional"
+                                            ? property.valueShape.shape
+                                            : property.valueShape
                                     }
                                     onChange={handleChange}
                                     value={value}
                                     onFocus={handleFocus}
                                     onBlur={handleBlur}
                                     renderAsPanel={true}
-                                    resolveTypeById={resolveTypeById}
                                 />
                             )}
 
-                            {((property.valueType.type === "optional" && isUndefined(value)) || expandable) && (
+                            {((property.valueShape.type === "optional" && isUndefined(value)) || expandable) && (
                                 <span className="t-muted whitespace-nowrap text-xs">
-                                    {renderTypeShorthand(property.valueType, false, false, resolveTypeById)}
+                                    {renderTypeShorthand(property.valueShape)}
                                 </span>
                             )}
 
-                            {expandable && (property.valueType.type === "optional" ? !isUndefined(value) : true) && (
+                            {expandable && (property.valueShape.type === "optional" ? !isUndefined(value) : true) && (
                                 <Button
                                     icon={expanded ? <ChevronDown /> : <ChevronUp />}
                                     minimal={true}
@@ -121,7 +118,7 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                                 />
                             )}
 
-                            {property.valueType.type === "optional" && (
+                            {property.valueShape.type === "optional" && (
                                 <span className="inline-flex items-center">
                                     <Checkbox
                                         checked={!isUndefined(value)}
@@ -135,22 +132,59 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                     {!isUndefined(value) && expandable && expanded && (
                         <div className="px-4">
                             <PlaygroundTypeReferenceForm
-                                typeReference={
-                                    property.valueType.type === "optional"
-                                        ? property.valueType.itemType
-                                        : property.valueType
+                                shape={
+                                    property.valueShape.type === "optional"
+                                        ? property.valueShape.shape
+                                        : property.valueShape
                                 }
                                 onChange={handleChange}
                                 value={value}
                                 onFocus={handleFocus}
                                 onBlur={handleBlur}
                                 renderAsPanel={true}
-                                resolveTypeById={resolveTypeById}
                             />
                         </div>
                     )}
                 </li>
             )}
         />
+    );
+};
+
+interface PlaygroundObjectPropertiesFormProps {
+    properties: ResolvedObjectProperty[];
+    onChange: (value: unknown) => void;
+    value: unknown;
+}
+
+export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormProps> = ({
+    properties,
+    onChange,
+    value,
+}) => {
+    const onChangeObjectProperty = useCallback(
+        (key: string, newValue: unknown) => {
+            onChange((oldValue: unknown) => {
+                const oldObject = castToRecord(oldValue);
+                return { ...oldObject, [key]: typeof newValue === "function" ? newValue(oldObject[key]) : newValue };
+            });
+        },
+        [onChange]
+    );
+    return (
+        <ul
+            className={
+                "divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark -mx-4 mb-4 list-none divide-y border-y"
+            }
+        >
+            {properties.map((property) => (
+                <PlaygroundObjectPropertyForm
+                    key={property.key}
+                    property={property}
+                    onChange={onChangeObjectProperty}
+                    value={castToRecord(value)[property.key]}
+                />
+            ))}
+        </ul>
     );
 };

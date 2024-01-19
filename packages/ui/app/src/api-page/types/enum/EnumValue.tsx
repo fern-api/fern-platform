@@ -15,12 +15,12 @@ export const EnumValue: React.FC<EnumValue.Props> = ({ enumValue }) => {
 
     return (
         <div
-            className={classNames("flex flex-col py-4", {
+            className={classNames("flex flex-col gap-2 py-2", {
                 "px-2": !isRootTypeDefinition,
             })}
         >
             <MonospaceText className="text-text-primary-light dark:text-text-primary-dark text-sm">{`"${enumValue.value}"`}</MonospaceText>
-            <ApiPageDescription className="mt-3" description={enumValue.description} isMarkdown={true} />
+            <ApiPageDescription className="text-sm" description={enumValue.description} isMarkdown={true} />
         </div>
     );
 };
