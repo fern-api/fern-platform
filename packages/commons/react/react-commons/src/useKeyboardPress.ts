@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 type Arrow = "Up" | "Down" | "Right" | "Left";
 
-type OtherKey = "Enter" | "Escape";
+type OtherKey = "Enter" | "Escape" | "Slash";
 
 export declare namespace useKeyboardPress {
     export interface Args {

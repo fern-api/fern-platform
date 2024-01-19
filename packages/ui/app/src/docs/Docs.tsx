@@ -1,6 +1,6 @@
 import { isResolvedNavigationItemApiSection, resolveNavigationItems } from "@fern-ui/app-utils";
 import { PLATFORM } from "@fern-ui/core-utils";
-import { useKeyboardCommand } from "@fern-ui/react-commons";
+import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { useTheme } from "next-themes";
 import { memo, useCallback, useEffect, useMemo } from "react";
@@ -29,6 +29,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
         document.body.className = theme === "dark" ? "antialiased bp5-dark" : "antialiased";
     });
     useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
+    useKeyboardPress({ key: "Slash", onPress: openSearchDialog });
 
     useEffect(() => {
         // this is a hack to ensure that the theme is always set to a valid value, even if localStorage is corrupted
