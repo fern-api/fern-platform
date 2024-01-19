@@ -1,30 +1,34 @@
-import { ResolvedApiDefinitionPackage } from "@fern-ui/app-utils";
+import { ResolvedApiDefinitionPackage, ResolvedNavigationItemApiSection } from "@fern-ui/app-utils";
 import { Endpoint } from "./endpoints/Endpoint";
 import { ApiSubpackage } from "./subpackages/ApiSubpackage";
 import { Webhook } from "./webhooks/Webhook";
 
 export declare namespace ApiPackageContents {
     export interface Props {
-        package: ResolvedApiDefinitionPackage;
+        apiSection: ResolvedNavigationItemApiSection;
+        apiDefinition: ResolvedApiDefinitionPackage;
         isLastInParentPackage: boolean;
         anchorIdParts: string[];
     }
 }
 
 export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
-    package: package_,
+    apiSection,
+    apiDefinition,
     isLastInParentPackage,
     anchorIdParts,
 }) => {
-    const { endpoints, webhooks, subpackages } = package_;
+    const { endpoints, webhooks, subpackages } = apiDefinition;
 
-    const subpackageTitle = package_.type === "subpackage" ? package_.title : undefined;
+    const subpackageTitle = apiDefinition.type === "subpackage" ? apiDefinition.title : undefined;
 
     return (
         <>
             {endpoints.map((endpoint, idx) => (
                 <Endpoint
                     key={endpoint.id}
+                    apiSection={apiSection}
+                    apiDefinition={apiDefinition}
                     endpoint={endpoint}
                     subpackageTitle={subpackageTitle}
                     isLastInApi={isLastInParentPackage && idx === endpoints.length - 1}
@@ -41,7 +45,8 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
             {subpackages.map((subpackage, idx) => (
                 <ApiSubpackage
                     key={subpackage.id}
-                    subpackage={subpackage}
+                    apiSection={apiSection}
+                    apiDefinition={subpackage}
                     isLastInParentPackage={idx === subpackages.length - 1}
                     anchorIdParts={anchorIdParts}
                 />

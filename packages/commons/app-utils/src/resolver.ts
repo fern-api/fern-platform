@@ -350,6 +350,7 @@ export type ResolvedNavigationItem =
     | ResolvedNavigationItemPageGroup
     | ResolvedNavigationItemApiSection
     | ResolvedNavigationItemSection;
+
 export interface ResolvedNavigationItemPageGroup {
     type: "pageGroup";
     pages: ResolvedPageMetadata[];

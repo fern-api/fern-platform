@@ -43,16 +43,31 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
 
     return (
         <div className="divide-border-default-light dark:divide-border-default-dark scroll-contain flex h-full flex-col divide-y overscroll-none rounded-lg">
-            <div className="flex items-stretch justify-between gap-4 px-4 py-2">
+            <div className="flex h-10 items-stretch justify-between gap-2 px-4">
+                {endpoint != null && (
+                    <>
+                        <div className="flex items-center">
+                            <ApiPlaygroundEndpointSelector
+                                apiDefinition={apiDefinition}
+                                endpoint={endpoint}
+                                navigationItems={navigationItems}
+                                popoverPlacement="bottom-start"
+                            />
+                        </div>
+                        <div className="bg-border-default-light dark:bg-border-default-dark h-10 w-[1px] shrink-0" />
+                    </>
+                )}
                 {endpoint != null ? (
                     <PlaygroundEndpointRender endpoint={endpoint} formState={formState} />
                 ) : (
-                    <div className="flex items-center gap-2">
-                        <span className="text-accent-primary dark:text-accent-primary-dark text-sm font-semibold">
-                            API Playground
-                        </span>
-                        <span className="bg-tag-primary dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark flex h-5 items-center rounded-md px-1.5 py-1 font-mono text-xs uppercase">
-                            BETA
+                    <div className="flex items-center">
+                        <span className="inline-flex items-baseline gap-2">
+                            <span className="text-accent-primary dark:text-accent-primary-dark text-sm font-semibold">
+                                API Playground
+                            </span>
+                            <span className="bg-tag-primary dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark flex h-5 items-center rounded-md px-1.5 py-1 font-mono text-xs uppercase">
+                                BETA
+                            </span>
                         </span>
                     </div>
                 )}
@@ -70,8 +85,6 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
             {endpoint != null ? (
                 <ApiPlayroundContent
                     auth={auth}
-                    apiDefinition={apiDefinition}
-                    navigationItems={navigationItems}
                     endpoint={endpoint}
                     formState={formState}
                     setFormState={setFormState}

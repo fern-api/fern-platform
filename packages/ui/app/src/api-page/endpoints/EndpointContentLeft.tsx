@@ -1,5 +1,5 @@
-import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
-import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
+import { APIV1Read } from "@fern-api/fdr-sdk";
+import { ResolvedEndpointDefinition, ResolvedNavigationItemApiSection } from "@fern-ui/app-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { camelCase, sortBy, upperFirst } from "lodash-es";
 import { memo } from "react";
@@ -22,7 +22,7 @@ export declare namespace EndpointContentLeft {
     export interface Props {
         endpoint: ResolvedEndpointDefinition;
         subpackageTitle: string | undefined;
-        apiSection: DocsV1Read.ApiSection;
+        apiSection: ResolvedNavigationItemApiSection;
         onHoverRequestProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
         onHoverResponseProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
         selectedError: APIV1Read.ErrorDeclarationV2 | undefined;

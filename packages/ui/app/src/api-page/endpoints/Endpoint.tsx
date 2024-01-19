@@ -1,18 +1,30 @@
 import { joinUrlSlugs } from "@fern-api/fdr-sdk";
-import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
+import {
+    ResolvedApiDefinitionPackage,
+    ResolvedEndpointDefinition,
+    ResolvedNavigationItemApiSection,
+} from "@fern-ui/app-utils";
 import { useShouldHideFromSsg } from "../../navigation-context/useNavigationContext";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContent } from "./EndpointContent";
 
 export declare namespace Endpoint {
     export interface Props {
+        apiSection: ResolvedNavigationItemApiSection;
+        apiDefinition: ResolvedApiDefinitionPackage;
         endpoint: ResolvedEndpointDefinition;
         subpackageTitle: string | undefined;
         isLastInApi: boolean;
     }
 }
 
-export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint, subpackageTitle, isLastInApi }) => {
+export const Endpoint: React.FC<Endpoint.Props> = ({
+    apiSection,
+    apiDefinition,
+    endpoint,
+    subpackageTitle,
+    isLastInApi,
+}) => {
     const fullSlug = joinUrlSlugs(...endpoint.slug);
     const route = `/${fullSlug}`;
 
@@ -27,6 +39,8 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint, subpackageTitle, 
 
     return (
         <EndpointContent
+            apiSection={apiSection}
+            apiDefinition={apiDefinition}
             endpoint={endpoint}
             subpackageTitle={subpackageTitle}
             setContainerRef={setTargetRef}

@@ -1,4 +1,4 @@
-import { resolveNavigationItems } from "@fern-ui/app-utils";
+import { isResolvedNavigationItemApiSection, resolveNavigationItems } from "@fern-ui/app-utils";
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand } from "@fern-ui/react-commons";
 import classNames from "classnames";
@@ -90,6 +90,8 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
         docsDefinition,
     ]);
 
+    const apiSections = useMemo(() => navigationItems.filter(isResolvedNavigationItemApiSection), [navigationItems]);
+
     return (
         <>
             <BgImageGradient
@@ -119,7 +121,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                     />
                 </div>
 
-                <ApiPlaygroundContextProvider>
+                <ApiPlaygroundContextProvider apiSections={apiSections}>
                     <div className="max-w-8xl relative mx-auto flex min-h-0 w-full min-w-0 flex-1">
                         {isMobileSidebarOpen && (
                             <div

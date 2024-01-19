@@ -17,7 +17,12 @@ export const ApiPage: React.FC<ApiPage.Props> = ({ apiSection }) => {
                 <ApiArtifacts apiArtifacts={apiSection.artifacts} />
             )}
 
-            <ApiPackageContents package={apiSection} isLastInParentPackage={false} anchorIdParts={[]} />
+            <ApiPackageContents
+                apiSection={apiSection}
+                apiDefinition={apiSection}
+                isLastInParentPackage={false}
+                anchorIdParts={[]}
+            />
 
             <div className="pl-6 pr-4 md:pl-12">
                 <BottomNavigationButtons />

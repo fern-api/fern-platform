@@ -14,12 +14,13 @@ interface PlaygroundEndpointRenderProps {
 }
 
 export const PlaygroundEndpointRender: FC<PlaygroundEndpointRenderProps> = ({ endpoint, formState }) => {
+    const environment = endpoint.defaultEnvironment ?? endpoint.environments[0];
     return (
         <div className="group flex min-w-0 flex-1 shrink items-center gap-2">
             <div className="inline-flex items-baseline">
-                {endpoint != null && <HttpMethodTag className="-ml-2 mr-2" method={endpoint.method} />}
+                {endpoint != null && <HttpMethodTag className="mr-2" method={endpoint.method} />}
                 <span className="font-mono text-xs">
-                    <span className="t-muted">{endpoint?.environments[0]?.baseUrl}</span>
+                    <span className="t-muted">{environment?.baseUrl}</span>
                     {endpoint?.path.map((part, idx) => {
                         return visitDiscriminatedUnion(part, "type")._visit({
                             literal: (literal) => <span key={idx}>{literal.value}</span>,

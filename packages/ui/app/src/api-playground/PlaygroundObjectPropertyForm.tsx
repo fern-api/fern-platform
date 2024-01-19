@@ -59,13 +59,16 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
     const [focused, setFocused] = useState(false);
     const handleFocus = useCallback(() => setFocused(true), []);
     const handleBlur = useCallback(() => setFocused(false), []);
+    const [isUnderStack, setIsUnderStack] = useState(false);
+    const handleOpenStack = useCallback(() => setIsUnderStack(true), []);
+    const handleCloseStack = useCallback(() => setIsUnderStack(false), []);
 
     return (
         <Tooltip
             isOpen={focused === true ? true : undefined}
             content={property.description}
             popoverClassName="max-w-xs text-xs"
-            disabled={property.description == null || property.description.length === 0}
+            disabled={property.description == null || property.description.length === 0 || isUnderStack}
             placement="right"
             renderTarget={({ ref, isOpen, className, ...targetProps }) => (
                 <li ref={ref} className={className} {...targetProps}>
@@ -99,6 +102,8 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                                     onFocus={handleFocus}
                                     onBlur={handleBlur}
                                     renderAsPanel={true}
+                                    onOpenStack={handleOpenStack}
+                                    onCloseStack={handleCloseStack}
                                 />
                             )}
 
@@ -142,6 +147,8 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                                 onFocus={handleFocus}
                                 onBlur={handleBlur}
                                 renderAsPanel={true}
+                                onOpenStack={handleOpenStack}
+                                onCloseStack={handleCloseStack}
                             />
                         </div>
                     )}

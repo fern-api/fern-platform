@@ -32,7 +32,7 @@ export interface CurlLineJson {
 export type CurlLine = CurlLineParam | CurlLineJson;
 
 export function getCurlLines(
-    apiDefinition: APIV1Read.ApiDefinition,
+    auth: APIV1Read.ApiAuth | undefined,
     endpoint: ResolvedEndpointDefinition,
     example: APIV1Read.ExampleEndpointCall,
     jsonLines: JsonLine[]
@@ -76,8 +76,8 @@ export function getCurlLines(
         });
     }
 
-    if (apiDefinition.auth != null && endpoint.authed) {
-        visitDiscriminatedUnion(apiDefinition.auth, "type")._visit({
+    if (auth != null && endpoint.authed) {
+        visitDiscriminatedUnion(auth, "type")._visit({
             basicAuth: ({ usernameName = "username", passwordName = "password" }) => {
                 parts.push({
                     type: "param",

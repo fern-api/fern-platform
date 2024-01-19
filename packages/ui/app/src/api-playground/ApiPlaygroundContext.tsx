@@ -25,6 +25,7 @@ import {
 import { ApiPlaygroundDrawer } from "./ApiPlaygroundDrawer";
 import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundRequestFormAuth, PlaygroundRequestFormState } from "./types";
+import { useVerticalSplitPane, useWindowHeight } from "./useSplitPlane";
 import { getDefaultValueForTypes, getDefaultValuesForBody } from "./utils";
 
 export interface ApiPlaygroundSelectionState {
@@ -42,6 +43,7 @@ const EMPTY_FORM_STATE: PlaygroundRequestFormState = {
 };
 
 interface ApiPlaygroundContextValue {
+    hasPlayground: boolean;
     selectionState: ApiPlaygroundSelectionState | undefined;
     setSelectionStateAndOpen: (state: ApiPlaygroundSelectionState) => void;
     expandApiPlayground: () => void;
@@ -49,6 +51,7 @@ interface ApiPlaygroundContextValue {
 }
 
 const ApiPlaygroundContext = createContext<ApiPlaygroundContextValue>({
+    hasPlayground: false,
     selectionState: undefined,
     setSelectionStateAndOpen: noop,
     expandApiPlayground: noop,
@@ -71,25 +74,19 @@ export const ApiPlaygroundContextProvider: FC<ApiPlaygroundContextProviderProps>
     const [selectionState, setSelectionState] = useState<ApiPlaygroundSelectionState | undefined>();
 
     const [intermediateHeight, setHeight] = useAtom(playgroundHeightAtom);
-    const [windowHeight, setWindowHeight] = useState<number | undefined>(undefined);
+    const windowHeight = useWindowHeight();
 
-    const height = windowHeight != null ? Math.min(windowHeight - 64, intermediateHeight) : intermediateHeight;
+    const height =
+        windowHeight != null ? Math.max(Math.min(windowHeight - 64, intermediateHeight), 100) : intermediateHeight;
 
-    useEffect(() => {
-        if (window == null) {
-            return;
-        }
+    const setOffset = useCallback(
+        (offset: number) => {
+            windowHeight != null && setHeight(Math.min(windowHeight - 64, windowHeight - offset));
+        },
+        [setHeight, windowHeight]
+    );
 
-        setWindowHeight(window.innerHeight);
-
-        const handleResize = () => {
-            setWindowHeight(window.innerHeight);
-        };
-        window.addEventListener("resize", handleResize);
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
+    const handleVerticalResize = useVerticalSplitPane(setOffset);
 
     const [isPlaygroundOpen, setPlaygroundOpen] = useAtom(playgroundOpenAtom);
     const [globalFormState, setGlobalFormState] = useAtom(playgroundFormStateAtom);
@@ -178,25 +175,6 @@ export const ApiPlaygroundContextProvider: FC<ApiPlaygroundContextProviderProps>
         };
     }, [togglePlayground]);
 
-    const handleMouseDown = useCallback(
-        (e: React.MouseEvent<HTMLDivElement>) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const handleMouseMove = (e: MouseEvent | TouchEvent) => {
-                if (e instanceof MouseEvent) {
-                    setHeight(Math.min(window.innerHeight - e.clientY, window.innerHeight - 64));
-                }
-            };
-            const handleMouseUp = () => {
-                window.removeEventListener("mousemove", handleMouseMove);
-                window.removeEventListener("mouseup", handleMouseUp);
-            };
-            window.addEventListener("mousemove", handleMouseMove);
-            window.addEventListener("mouseup", handleMouseUp);
-        },
-        [setHeight]
-    );
-
     const handleSelectSecret = useCallback(
         (secret: SecretBearer) => {
             closeSecretsModal();
@@ -219,6 +197,7 @@ export const ApiPlaygroundContextProvider: FC<ApiPlaygroundContextProviderProps>
     return (
         <ApiPlaygroundContext.Provider
             value={{
+                hasPlayground: apiSections.length > 0,
                 selectionState,
                 setSelectionStateAndOpen,
                 expandApiPlayground,
@@ -241,9 +220,8 @@ export const ApiPlaygroundContextProvider: FC<ApiPlaygroundContextProviderProps>
                         style={{ height }}
                     >
                         <div
-                            className="bg-accent-primary dark:bg-accent-primary-dark absolute inset-x-0 -top-1 h-1 cursor-row-resize opacity-0 transition-opacity hover:opacity-100"
-                            onMouseDown={handleMouseDown}
-                            draggable={true}
+                            className="bg-accent-primary dark:bg-accent-primary-dark absolute inset-x-0 -top-1 h-1 cursor-row-resize opacity-0 transition-opacity hover:opacity-100 active:opacity-100"
+                            onMouseDown={handleVerticalResize}
                         />
                         <ApiPlaygroundDrawer
                             navigationItems={apiSections}

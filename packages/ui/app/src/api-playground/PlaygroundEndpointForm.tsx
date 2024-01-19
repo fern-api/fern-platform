@@ -241,7 +241,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                             </label>
                                         </div>
 
-                                        <div className="flex min-w-0 flex-1 shrink justify-between gap-2 pl-2">
+                                        <div className="flex min-w-0 flex-1 shrink items-center justify-between gap-2 pl-2">
                                             <PasswordInputGroup
                                                 fill={true}
                                                 onValueChange={(newValue) =>
@@ -271,7 +271,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                             </span>
                                         </label>
                                     </div>
-                                    <div className="flex min-w-0 flex-1 shrink justify-between gap-2 pl-2">
+                                    <div className="flex min-w-0 flex-1 shrink items-center justify-between gap-2 pl-2">
                                         <PasswordInputGroup
                                             fill={true}
                                             onValueChange={(newValue) =>

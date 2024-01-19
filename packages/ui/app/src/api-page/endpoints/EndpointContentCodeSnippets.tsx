@@ -1,7 +1,11 @@
 "use client";
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import {
+    ResolvedApiDefinitionPackage,
+    ResolvedEndpointDefinition,
+    ResolvedNavigationItemApiSection,
+} from "@fern-ui/app-utils";
 import { memo } from "react";
-import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { ApiPlaygroundButton } from "../../api-playground/ApiPlaygroundButton";
 import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";
 import type { CodeExampleClient } from "../examples/code-example";
@@ -15,8 +19,9 @@ import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
 
 export declare namespace EndpointContentCodeSnippets {
     export interface Props {
-        endpoint: APIV1Read.EndpointDefinition;
-        package: APIV1Read.ApiDefinitionPackage;
+        apiSection: ResolvedNavigationItemApiSection;
+        apiDefinition: ResolvedApiDefinitionPackage;
+        endpoint: ResolvedEndpointDefinition;
         example: APIV1Read.ExampleEndpointCall;
         availableExampleClients: CodeExampleClient[];
         selectedExampleClient: CodeExampleClient;
@@ -27,15 +32,15 @@ export declare namespace EndpointContentCodeSnippets {
         hoveredResponsePropertyPath: JsonPropertyPath | undefined;
         requestHeight: number;
         responseHeight: number;
-        slug: string;
     }
 }
 
 const TITLED_EXAMPLE_PADDING = 43;
 
 const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippets.Props> = ({
+    apiSection,
+    apiDefinition,
     endpoint,
-    package: package_,
     example,
     availableExampleClients,
     selectedExampleClient,
@@ -46,9 +51,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     hoveredResponsePropertyPath,
     requestHeight,
     responseHeight,
-    slug,
 }) => {
-    const { apiSection } = useApiDefinitionContext();
     return (
         <div className="grid min-h-0 flex-1 grid-rows-[repeat(auto-fit,_minmax(0,_min-content))] gap-6">
             <TitledExample
@@ -67,10 +70,8 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     <>
                         <ApiPlaygroundButton
                             endpoint={endpoint}
-                            package={package_}
-                            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                            apiId={apiSection!.api}
-                            slug={slug}
+                            apiSection={apiSection}
+                            apiDefinition={apiDefinition}
                         />
                         {availableExampleClients.length > 1 ? (
                             <CodeExampleClientDropdown

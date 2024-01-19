@@ -44,46 +44,6 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
 
     const [filterValue, setFilterValue] = useState<string>("");
 
-    // const endpointsWithRef = useMemo<EndpointWithRef[]>(() => {
-    //     return navigationItems.flatMap((apiSection) => {
-    //         const flattenSubpackages = (
-    //             apiDefinition: ResolvedApiDefinitionPackage,
-    //             parents: ResolvedApiDefinitionPackage[]
-    //         ): EndpointWithRef[] => [
-    //             ...apiDefinition.endpoints.map((endpoint) => ({
-    //                 endpoint,
-    //                 apiSection,
-    //                 apiDefinition,
-    //                 parents,
-    //             })),
-    //             ...apiDefinition.subpackages.flatMap((subpackage) =>
-    //                 flattenSubpackages(subpackage, [...parents, subpackage])
-    //             ),
-    //         ];
-
-    //         return flattenSubpackages(apiSection, []);
-    //     });
-    // }, [navigationItems]);
-
-    // const selectedEndpointWithRef = useMemo<EndpointWithRef | undefined>(() => {
-    //     return endpointsWithRef.find(({ endpoint: endpointItem }) => endpointItem.id === endpoint?.id);
-    // }, [endpoint?.id, endpointsWithRef]);
-
-    // const filteredEndpointsWithRef = useMemo<EndpointWithRef[]>(() => {
-    //     const filterValueCleaned = filterValue.trim().toLowerCase();
-    //     if (filterValueCleaned.length === 0) {
-    //         return endpointsWithRef;
-    //     }
-
-    //     return endpointsWithRef.filter(({ endpoint }) => {
-    //         return (
-    //             endpoint.name?.toLowerCase().includes(filterValueCleaned.toLowerCase()) ||
-    //             endpoint.description?.toLowerCase().includes(filterValueCleaned.toLowerCase()) ||
-    //             endpoint.method.toLowerCase().includes(filterValueCleaned.toLowerCase())
-    //         );
-    //     });
-    // }, [filterValue, endpointsWithRef]);
-
     const selectedItemRef = useRef<HTMLLIElement>(null);
 
     useKeyboardPress({ key: "Escape", onPress: closeDropdown });
@@ -107,20 +67,27 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
         };
     }, [closeDropdown, showDropdown]);
 
-    function renderApiDefinitionPackage(apiDefinition: ResolvedApiDefinitionPackage) {
+    function renderApiDefinitionPackage(apiDefinition: ResolvedApiDefinitionPackage, depth: number = 0) {
         const endpoints = apiDefinition.endpoints.filter((endpoint) => matchesEndpoint(filterValue, endpoint));
-        const subpackages = apiDefinition.subpackages.map(renderApiDefinitionPackage).filter(isNonNullish);
+        const subpackages = apiDefinition.subpackages
+            .map((subpackage) => renderApiDefinitionPackage(subpackage, depth + 1))
+            .filter(isNonNullish);
         if (endpoints.length === 0 && subpackages.length === 0) {
             return null;
         }
         return (
-            <li key={apiDefinition.type === "apiSection" ? apiDefinition.api : apiDefinition.id}>
-                <div className="bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark sticky top-0 gap-2 border-b px-3 py-1">
+            <li key={apiDefinition.type === "apiSection" ? apiDefinition.api : apiDefinition.id} className="gap-2">
+                <div
+                    className="bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark sticky z-10 h-[30px] gap-2 border-b px-3 py-1"
+                    style={{
+                        top: depth * 30,
+                    }}
+                >
                     <span className="text-accent-primary dark:text-accent-primary-dark shrink truncate whitespace-nowrap text-xs">
                         {apiDefinition.title}
                     </span>
                 </div>
-                <ul className="mb-2 list-none py-1">
+                <ul className="relative z-0 list-none py-1">
                     {endpoints.map((endpointItem) => (
                         <li
                             ref={endpointItem.id === endpoint?.id ? selectedItemRef : undefined}
@@ -160,7 +127,9 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
         );
     }
 
-    const renderedListItems = navigationItems.map(renderApiDefinitionPackage).filter(isNonNullish);
+    const renderedListItems = navigationItems
+        .map((apiSection) => renderApiDefinitionPackage(apiSection))
+        .filter(isNonNullish);
 
     return (
         <div className="relative -ml-2 min-w-0 shrink">
@@ -191,10 +160,10 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
             <Transition
                 show={showDropdown}
                 as={Fragment}
-                enter="ease-out transition-opacity transition-transform"
+                enter="ease-out transition-all"
                 enterFrom="opacity-0 scale-95"
                 enterTo="opacity-100 scale-100"
-                leave="ease-in transition-opacity transition-transform"
+                leave="ease-in transition-all"
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
                 beforeEnter={() => {
@@ -207,7 +176,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                 <div
                     ref={dropdownRef}
                     className={classNames(
-                        "bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark absolute z-10 flex max-h-96 min-h-4 min-w-fit flex-col rounded border shadow-xl min-w-full",
+                        "overflow-hidden bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark absolute z-10 flex max-h-96 min-h-4 min-w-fit flex-col rounded border shadow-xl min-w-full",
                         {
                             "origin-top-left left-0 top-full mt-2": popoverPlacement === "bottom-start",
                             "origin-top -translate-x-[50%] left-[50%] top-full mt-2": popoverPlacement === "bottom",
@@ -220,7 +189,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                 >
                     {popoverPlacement.startsWith("bottom") && (
                         <div
-                            className={classNames("relative z-10 px-1 pt-1", {
+                            className={classNames("relative z-20 px-1 pt-1", {
                                 "pb-1": renderedListItems.length === 0,
                                 "pb-0": renderedListItems.length > 0,
                             })}
@@ -243,7 +212,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                     <ul className="scroll-contain list-none overflow-y-auto">{renderedListItems}</ul>
                     {popoverPlacement.startsWith("top") && (
                         <div
-                            className={classNames("relative z-10 px-1 pb-1", {
+                            className={classNames("relative z-20 px-1 pb-1", {
                                 "pt-1": renderedListItems.length === 0,
                                 "pt-0": renderedListItems.length > 0,
                             })}

@@ -5,7 +5,7 @@ import { ResolvedTypeReference } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { Transition } from "@headlessui/react";
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren, useEffect } from "react";
 import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
 import { PlaygroundDiscriminatedUnionForm } from "./PlaygroundDescriminatedUnionForm";
 import { PlaygroundEnumForm } from "./PlaygroundEnumForm";
@@ -20,6 +20,8 @@ interface PlaygroundTypeReferenceFormProps {
     value?: unknown;
     onFocus?: () => void;
     onBlur?: () => void;
+    onOpenStack?: () => void;
+    onCloseStack?: () => void;
     renderAsPanel?: boolean;
 }
 
@@ -27,10 +29,26 @@ interface WithPanelProps {
     value: unknown;
     typeShape: ResolvedTypeReference;
     renderAsPanel: boolean;
+    onOpenStack?: () => void;
+    onCloseStack?: () => void;
 }
 
-const WithPanel: FC<PropsWithChildren<WithPanelProps>> = ({ children, value, typeShape, renderAsPanel }) => {
+const WithPanel: FC<PropsWithChildren<WithPanelProps>> = ({
+    children,
+    value,
+    typeShape,
+    renderAsPanel,
+    onOpenStack,
+    onCloseStack,
+}) => {
     const { value: isPanelOpen, setTrue: showPanel, setFalse: hidePanel } = useBooleanState(false);
+    useEffect(() => {
+        if (isPanelOpen && renderAsPanel) {
+            onOpenStack?.();
+        } else {
+            onCloseStack?.();
+        }
+    }, [isPanelOpen, onCloseStack, onOpenStack, renderAsPanel]);
     if (!renderAsPanel) {
         return <>{children}</>;
     }
@@ -51,12 +69,12 @@ const WithPanel: FC<PropsWithChildren<WithPanelProps>> = ({ children, value, typ
                 as="div"
                 show={isPanelOpen}
                 appear={true}
-                enter="ease-out transition-opacity transition-transform"
-                enterFrom="opacity-0 translate-x-full"
+                enter="ease-out transition-all duration-200"
+                enterFrom="opacity-70 translate-x-full"
                 enterTo="opacity-100 translate-x-0"
-                leave="ease-in transition-opacity transition-transform"
+                leave="ease-in transition-all duration-200"
                 leaveFrom="opacity-100 translate-x-0"
-                leaveTo="opacity-0 translate-x-full"
+                leaveTo="opacity-70 translate-x-full"
                 className="bg-background dark:bg-background-dark scroll-contain absolute inset-0 z-30 overflow-y-auto overflow-x-hidden"
             >
                 <div className="bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark sticky top-0 z-30 flex h-10 items-center border-b px-2">
@@ -72,19 +90,33 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
     shape,
     onChange,
     value,
-    onBlur: handleBlur,
-    onFocus: handleFocus,
+    onBlur,
+    onFocus,
+    onOpenStack,
+    onCloseStack,
     renderAsPanel = false,
 }) => {
     return visitDiscriminatedUnion(shape, "type")._visit({
         object: (object) => (
-            <WithPanel value={value} typeShape={object} renderAsPanel={renderAsPanel}>
+            <WithPanel
+                value={value}
+                typeShape={object}
+                renderAsPanel={renderAsPanel}
+                onOpenStack={onOpenStack}
+                onCloseStack={onCloseStack}
+            >
                 <PlaygroundObjectPropertiesForm properties={object.properties} onChange={onChange} value={value} />
             </WithPanel>
         ),
         enum: ({ values }) => <PlaygroundEnumForm enumValues={values} onChange={onChange} value={value} />,
         undiscriminatedUnion: (undiscriminatedUnion) => (
-            <WithPanel value={value} typeShape={undiscriminatedUnion} renderAsPanel={renderAsPanel}>
+            <WithPanel
+                value={value}
+                typeShape={undiscriminatedUnion}
+                renderAsPanel={renderAsPanel}
+                onOpenStack={onOpenStack}
+                onCloseStack={onCloseStack}
+            >
                 <PlaygroundUniscriminatedUnionForm
                     undiscriminatedUnion={undiscriminatedUnion}
                     onChange={onChange}
@@ -93,7 +125,13 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
             </WithPanel>
         ),
         discriminatedUnion: (discriminatedUnion) => (
-            <WithPanel value={value} typeShape={discriminatedUnion} renderAsPanel={renderAsPanel}>
+            <WithPanel
+                value={value}
+                typeShape={discriminatedUnion}
+                renderAsPanel={renderAsPanel}
+                onOpenStack={onOpenStack}
+                onCloseStack={onCloseStack}
+            >
                 <PlaygroundDiscriminatedUnionForm
                     discriminatedUnion={discriminatedUnion}
                     onChange={onChange}
@@ -108,8 +146,8 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     value={typeof value === "string" ? value : ""}
                     onValueChange={onChange}
                     rightElement={<span className="t-muted mx-2 flex h-[30px] items-center text-xs">{"string"}</span>}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
                 />
             </div>
         ),
@@ -131,8 +169,8 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     value={typeof value === "number" ? value : undefined}
                     onValueChange={onChange}
                     rightElement={<span className="t-muted mx-2 flex h-[30px] items-center text-xs">{"integer"}</span>}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
                 />
             </div>
         ),
@@ -143,8 +181,8 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     value={typeof value === "number" ? value : undefined}
                     onValueChange={onChange}
                     rightElement={<span className="t-muted mx-2 flex h-[30px] items-center text-xs">{"double"}</span>}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
                 />
             </div>
         ),
@@ -156,8 +194,8 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     value={typeof value === "number" ? value : undefined}
                     onValueChange={onChange}
                     rightElement={<span className="t-muted mx-2 flex h-[30px] items-center text-xs">{"long"}</span>}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
                 />
             </div>
         ),
@@ -170,8 +208,8 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     value={typeof value === "string" ? value : undefined}
                     onChange={onChange}
                     inputProps={{
-                        onFocus: handleFocus,
-                        onBlur: handleBlur,
+                        onFocus,
+                        onBlur,
                     }}
                 />
             </div>
@@ -184,8 +222,8 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     onValueChange={onChange}
                     placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
                     rightElement={<span className="t-muted mx-2 flex h-[30px] items-center text-xs">{"uuid"}</span>}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
                 />
             </div>
         ),
@@ -195,8 +233,8 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     fill={true}
                     value={typeof value === "string" ? value : ""}
                     onChange={(e) => onChange(e.target.value)}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
                 />
             </div>
         ),
@@ -208,8 +246,8 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     value={typeof value === "string" ? value : undefined}
                     onChange={onChange}
                     inputProps={{
-                        onFocus: handleFocus,
-                        onBlur: handleBlur,
+                        onFocus,
+                        onBlur,
                     }}
                 />
             </div>
