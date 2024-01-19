@@ -29,3 +29,9 @@ export function resetPosthog(): void {
         posthog.reset();
     });
 }
+
+export function capturePosthogEvent(eventName: string, properties?: Record<string, unknown>): void {
+    safeAccessPosthog(() => {
+        posthog.capture(eventName, properties);
+    });
+}

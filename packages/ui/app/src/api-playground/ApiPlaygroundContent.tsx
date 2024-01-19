@@ -1,5 +1,5 @@
 import { NonIdealState, Spinner } from "@blueprintjs/core";
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { APIV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import { failed, Loadable, loaded, loading, notStartedLoading, visitLoadable } from "@fern-ui/loadable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,6 +8,7 @@ import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useCallback, useState } from "react";
+import { capturePosthogEvent } from "../analytics/posthog";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
 import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
 import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
@@ -62,23 +63,54 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
     const [response, setResponse] = useState<Loadable<ResponsePayload>>(notStartedLoading());
 
     const sendRequest = useCallback(async () => {
+        const startTime = performance.now();
         setResponse(loading());
         try {
+            capturePosthogEvent("api_playground_request_sent", {
+                endpointId: endpoint.id,
+                endpointName: endpoint.name,
+                method: endpoint.method,
+                docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
+            });
             const response = await fetch("/api/proxy", {
                 method: "POST",
                 headers: buildUnredactedHeaders(auth, endpoint, formState),
                 body: JSON.stringify({
                     url: buildUrl(endpoint, formState),
-                    method: endpoint?.method,
+                    method: endpoint.method,
                     headers: buildUnredactedHeaders(auth, endpoint, formState),
-                    body: formState?.body,
+                    body: formState.body,
                 }),
             });
-            setResponse(loaded(await response.json()));
+            const loadedResponse: ResponsePayload = await response.json();
+            setResponse(loaded(loadedResponse));
+            const proxyTime = performance.now() - startTime;
+            capturePosthogEvent("api_playground_request_received", {
+                endpointId: endpoint.id,
+                endpointName: endpoint.name,
+                method: endpoint.method,
+                docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
+                response: {
+                    status: loadedResponse.status,
+                    time: loadedResponse.time,
+                    size: loadedResponse.size,
+                },
+                proxy: {
+                    ok: response.ok,
+                    status: response.status,
+                    time: response.headers.get("x-response-time") ?? proxyTime,
+                },
+            });
         } catch (e) {
             // eslint-disable-next-line no-console
             console.error(e);
             setResponse(failed(e));
+            capturePosthogEvent("api_playground_request_failed", {
+                endpointId: endpoint.id,
+                endpointName: endpoint.name,
+                method: endpoint.method,
+                docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
+            });
         }
     }, [auth, endpoint, formState]);
 

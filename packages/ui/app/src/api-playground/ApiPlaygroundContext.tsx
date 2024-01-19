@@ -22,6 +22,7 @@ import {
     useEffect,
     useState,
 } from "react";
+import { capturePosthogEvent } from "../analytics/posthog";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { ApiPlaygroundDrawer } from "./ApiPlaygroundDrawer";
 import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
@@ -122,13 +123,30 @@ export const ApiPlaygroundContextProvider: FC<ApiPlaygroundContextProviderProps>
             ? globalFormState[createFormStateKey(selectionState)] ?? EMPTY_FORM_STATE
             : EMPTY_FORM_STATE;
 
-    const expandApiPlayground = useCallback(() => setPlaygroundOpen(true), [setPlaygroundOpen]);
+    const expandApiPlayground = useCallback(() => {
+        capturePosthogEvent("api_playground_opened");
+        return setPlaygroundOpen(true);
+    }, [setPlaygroundOpen]);
     const collapseApiPlayground = useCallback(() => setPlaygroundOpen(false), [setPlaygroundOpen]);
-    const togglePlayground = useCallback(() => setPlaygroundOpen((current) => !current), [setPlaygroundOpen]);
+    const togglePlayground = useCallback(
+        (usingKeyboardShortcut: boolean) => {
+            return setPlaygroundOpen((current) => {
+                if (!current) {
+                    capturePosthogEvent("api_playground_opened", { usingKeyboardShortcut });
+                }
+                return !current;
+            });
+        },
+        [setPlaygroundOpen]
+    );
     const setSelectionStateAndOpen = useCallback(
         (newSelectionState: ApiPlaygroundSelectionState) => {
             setSelectionState(newSelectionState);
             expandApiPlayground();
+            capturePosthogEvent("api_playground_opened", {
+                endpointId: newSelectionState.endpoint.id,
+                endpointName: newSelectionState.endpoint.name,
+            });
             if (globalFormState[createFormStateKey(newSelectionState)] == null) {
                 setGlobalFormState((currentFormState) => {
                     return {
@@ -168,7 +186,7 @@ export const ApiPlaygroundContextProvider: FC<ApiPlaygroundContextProviderProps>
         // if keyboard press "ctrl + `", open playground
         const togglePlaygroundHandler = (e: KeyboardEvent) => {
             if (e.ctrlKey && e.key === "`") {
-                togglePlayground();
+                togglePlayground(true);
             }
         };
         document.addEventListener("keydown", togglePlaygroundHandler, false);
