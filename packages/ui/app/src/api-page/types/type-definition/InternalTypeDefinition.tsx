@@ -52,16 +52,18 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
         () =>
             visitDiscriminatedUnion(typeShape, "type")._visit<CollapsibleContent | undefined>({
                 object: (object) => ({
-                    elements: object.properties.map((property) => (
-                        <ObjectProperty
-                            key={property.key}
-                            property={property}
-                            anchorIdParts={[...anchorIdParts, property.key]}
-                            applyErrorStyles={false}
-                            route={route}
-                            defaultExpandAll={defaultExpandAll}
-                        />
-                    )),
+                    elements: object
+                        .properties()
+                        .map((property) => (
+                            <ObjectProperty
+                                key={property.key}
+                                property={property}
+                                anchorIdParts={[...anchorIdParts, property.key]}
+                                applyErrorStyles={false}
+                                route={route}
+                                defaultExpandAll={defaultExpandAll}
+                            />
+                        )),
                     elementNameSingular: "property",
                     elementNamePlural: "properties",
                 }),

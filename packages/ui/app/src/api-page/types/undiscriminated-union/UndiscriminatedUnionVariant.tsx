@@ -40,6 +40,7 @@ function getIconInfoForTypeReference(typeRef: ResolvedTypeReference): IconInfo |
         stringLiteral: () => ({ content: "!", size: 6 }),
         unknown: () => ({ content: "{}", size: 6 }),
         _other: () => null,
+        reference: (reference) => getIconInfoForTypeReference(reference.shape()),
     });
 }
 
