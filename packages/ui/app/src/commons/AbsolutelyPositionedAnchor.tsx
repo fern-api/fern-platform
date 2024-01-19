@@ -41,12 +41,15 @@ export const AbsolutelyPositionedAnchor: React.FC<AbsolutelyPositionedAnchor.Pro
             <Link
                 href={href}
                 shallow={true}
-                scroll={false}
                 replace={true}
-                className={classNames("flex items-center border-0 relative", {
-                    "-ml-10": !smallGap,
-                    "-ml-8": smallGap,
-                })}
+                className={classNames(
+                    "flex items-center border-0 relative h-6 group-hover/anchor-container:bg-background group-hover/anchor-container:dark:bg-background rounded-md",
+                    {
+                        "-ml-10": !smallGap,
+                        "-ml-8": smallGap,
+                        "bg-background dark:bg-background": wasJustCopied,
+                    }
+                )}
                 onClick={copyToClipboard}
             >
                 {!wasJustCopied && (
@@ -58,9 +61,9 @@ export const AbsolutelyPositionedAnchor: React.FC<AbsolutelyPositionedAnchor.Pro
                 )}
                 <Transition
                     show={wasJustCopied}
-                    leave="transition-opacity duration-200 pointer-events-none"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
+                    leave="duration-200 pointer-events-none transition-all"
+                    leaveFrom="opacity-100 translate-x-0"
+                    leaveTo="opacity-0 -translate-x-2"
                     as={Fragment}
                 >
                     <div className="bg-tag-primary dark:bg-tag-primary-dark ring-accent-primary/60 dark:ring-accent-primary/60 absolute left-0 flex h-6 w-6 items-center justify-center rounded-md ring-1">

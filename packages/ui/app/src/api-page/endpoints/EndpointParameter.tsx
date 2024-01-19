@@ -31,17 +31,16 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
     const anchorId = getAnchorId(anchorIdParts);
     const anchorRoute = `${route}#${anchorId}`;
     return (
-        <div
-            data-route={anchorRoute.toLowerCase()}
-            className="group/anchor-container relative flex scroll-mt-20 flex-col gap-2 py-3"
-        >
-            <AbsolutelyPositionedAnchor href={anchorRoute} />
-            <div className="flex items-baseline gap-1">
-                <MonospaceText className="text-text-primary-light dark:text-text-primary-dark text-sm">
-                    {name}
-                </MonospaceText>
-                <div className="t-muted text-xs">{renderTypeShorthand(shape)}</div>
-                {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
+        <div data-route={anchorRoute.toLowerCase()} className="relative flex scroll-mt-20 flex-col gap-2 py-3">
+            <div className="group/anchor-container flex items-center">
+                <AbsolutelyPositionedAnchor href={anchorRoute} />
+                <span className="inline-flex items-baseline gap-1">
+                    <MonospaceText className="text-text-primary-light dark:text-text-primary-dark text-sm">
+                        {name}
+                    </MonospaceText>
+                    <div className="t-muted text-xs">{renderTypeShorthand(shape)}</div>
+                    {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
+                </span>
             </div>
             <ApiPageDescription isMarkdown={true} description={description} className="text-sm" />
             <TypeReferenceDefinitions
