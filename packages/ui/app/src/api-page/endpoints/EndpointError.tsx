@@ -68,7 +68,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
             {isSelected && error.shape != null && (
                 <div className="w-full pb-3">
                     <div className="t-muted mt-3 w-full text-start text-sm leading-7">
-                        {`This error return ${renderTypeShorthand(error.shape, false, true)}.`}
+                        {`This error return ${renderTypeShorthand(error.shape, { withArticle: true })}.`}
                     </div>
                     <div className="w-full text-start">
                         <TypeReferenceDefinitions

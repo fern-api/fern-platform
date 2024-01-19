@@ -21,7 +21,7 @@ export const WebhookPayloadSection: React.FC<WebhookPayloadSection.Props> = ({
     return (
         <div className="flex flex-col">
             <div className="t-muted border-border-default-light dark:border-border-default-dark border-b pb-5 text-sm leading-6">
-                {`The payload of this webhook request is ${renderTypeShorthand(payload.shape, false, true)}.`}
+                {`The payload of this webhook request is ${renderTypeShorthand(payload.shape, { withArticle: true })}.`}
             </div>
             <TypeReferenceDefinitions
                 shape={payload.shape}

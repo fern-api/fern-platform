@@ -28,7 +28,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                 {`This endpoint expects ${
                     requestBody.shape.type === "fileUpload"
                         ? "a file"
-                        : renderTypeShorthand(requestBody.shape, false, true)
+                        : renderTypeShorthand(requestBody.shape, { withArticle: true })
                 }.`}
             </div>
             {requestBody.shape.type === "fileUpload" ? null : (

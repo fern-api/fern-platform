@@ -32,7 +32,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                         ? "sends text responses over a long-lived HTTP connection"
                         : responseBody.shape.type === "streamCondition"
                         ? "return a stream"
-                        : `return ${renderTypeShorthand(responseBody.shape, false, true)}`
+                        : `return ${renderTypeShorthand(responseBody.shape, { withArticle: true })}`
                 }.`}
             </div>
             {responseBody.shape.type === "fileDownload" ||
