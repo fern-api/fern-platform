@@ -108,7 +108,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
 
     return (
         <>
-            <NextNProgress color={accentColor} />
+            <NextNProgress color={accentColor} options={{ showSpinner: false }} showOnShallow={false} />
             <BgImageGradient
                 backgroundType={backgroundType}
                 hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage}
