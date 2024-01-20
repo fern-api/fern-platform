@@ -136,10 +136,10 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     const timeout = useRef<NodeJS.Timeout>();
 
-    const navigateToPath = useEventCallback((fullSlug: string) => {
+    const navigateToPath = useEventCallback((fullSlug: string, shallow = false) => {
         justNavigated.current = true;
         const navigatable = pathResolver.resolveNavigatable(fullSlug);
-        navigateToRoute.current(`/${fullSlug}`, undefined);
+        navigateToRoute.current(`/${fullSlug}`, !shallow);
         if (navigatable != null) {
             setActiveNavigatable(navigatable);
 
@@ -155,8 +155,8 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     });
 
     useEffect(() => {
-        const handleRouteChangeStart = (route: string) => {
-            navigateToPath(route.substring(1));
+        const handleRouteChangeStart = (route: string, { shallow }: { shallow: boolean }) => {
+            navigateToPath(route.substring(1), shallow);
         };
         router.events.on("routeChangeComplete", handleRouteChangeStart);
         router.events.on("hashChangeComplete", handleRouteChangeStart);

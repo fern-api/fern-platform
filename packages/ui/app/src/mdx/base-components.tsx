@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode, useCallback } from "react";
+import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from "react";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
 import { useNavigationContext } from "../navigation-context";
 import { onlyText } from "../util/onlyText";
@@ -231,19 +230,9 @@ export const Li: React.FC<HTMLAttributes<HTMLLIElement>> = ({ className, ...rest
 };
 
 export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, children, href, ...rest }) => {
-    const router = useRouter();
-    const { navigateToPath } = useNavigationContext();
     const isExternalUrl = href != null && href.includes("http");
 
     const classNamesCombined = classNames(className, styles.mdxAnchor);
-
-    const handleClick = useCallback(() => {
-        // this is a hack to enable hyperlinking between markdown page and api page
-        if (!isExternalUrl && href != null && href.startsWith("/")) {
-            navigateToPath(href.substring(1));
-            void router.push(`${href}`, undefined, { shallow: true });
-        }
-    }, [href, isExternalUrl, navigateToPath, router]);
 
     return (
         <Link
@@ -252,7 +241,6 @@ export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className
             target={isExternalUrl ? "_blank" : undefined}
             rel={isExternalUrl ? "noopener noreferrer" : undefined}
             {...rest}
-            onClick={handleClick}
         >
             {children}
         </Link>

@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import Link from "next/link";
 import { FontAwesomeIcon } from "../../commons/FontAwesomeIcon";
-import { useNavigationContext } from "../../navigation-context";
 
 export declare namespace Card {
     export interface Props {
@@ -14,7 +13,6 @@ export declare namespace Card {
 }
 
 export const Card: React.FC<Card.Props> = ({ title, icon, iconPosition = "top", children, href }) => {
-    const { navigateToPath } = useNavigationContext();
     const isInternalUrl = typeof href === "string" && href.startsWith("/");
     const isUrlOnThisPage = typeof href === "string" && href.startsWith("#");
 
@@ -41,17 +39,8 @@ export const Card: React.FC<Card.Props> = ({ title, icon, iconPosition = "top", 
     );
 
     if (isInternalUrl || isUrlOnThisPage) {
-        const slug = href.slice(1, href.length);
         return (
-            <Link
-                className={className}
-                href={href}
-                onClick={() => {
-                    if (isInternalUrl) {
-                        navigateToPath(slug);
-                    }
-                }}
-            >
+            <Link className={className} href={href}>
                 {content}
             </Link>
         );
