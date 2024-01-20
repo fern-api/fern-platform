@@ -132,7 +132,7 @@ interface ExpandableSidebarApiSectionProps extends InnerSidebarApiSectionProps {
     title: string;
 }
 
-const ExpandableSidebarApiSection: React.FC<ExpandableSidebarApiSectionProps> = ({
+export const ExpandableSidebarApiSection: React.FC<ExpandableSidebarApiSectionProps> = ({
     className,
     title,
     slug,
