@@ -1,4 +1,4 @@
-import { isResolvedNavigationItemApiSection, resolveNavigationItems } from "@fern-ui/app-utils";
+import { crawlResolvedNavigationItemApiSections, resolveNavigationItems } from "@fern-ui/app-utils";
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
 import classNames from "classnames";
@@ -91,7 +91,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
         docsDefinition,
     ]);
 
-    const apiSections = useMemo(() => navigationItems.filter(isResolvedNavigationItemApiSection), [navigationItems]);
+    const apiSections = useMemo(() => crawlResolvedNavigationItemApiSections(navigationItems), [navigationItems]);
 
     return (
         <>

@@ -1,5 +1,9 @@
 import { isApiNode } from "@fern-api/fdr-sdk";
-import { ResolvedNavigationItem, ResolvedNavigationItemApiSection } from "@fern-ui/app-utils";
+import {
+    crawlResolvedNavigationItemApiSections,
+    ResolvedNavigationItem,
+    ResolvedNavigationItemApiSection,
+} from "@fern-ui/app-utils";
 import { useMemo } from "react";
 import { ApiPage } from "../api-page/ApiPage";
 import { CustomDocsPage } from "../custom-docs-page/CustomDocsPage";
@@ -14,10 +18,8 @@ export const DocsMainContent: React.FC<DocsMainContentProps> = ({ navigationItem
 
     const apiSectionsById = useMemo(() => {
         const toRet = new Map<string, ResolvedNavigationItemApiSection>();
-        navigationItems.forEach((item) => {
-            if (item.type === "apiSection") {
-                toRet.set(item.api, item);
-            }
+        crawlResolvedNavigationItemApiSections(navigationItems).forEach((item) => {
+            toRet.set(item.api, item);
         });
         return toRet;
     }, [navigationItems]);
