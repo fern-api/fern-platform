@@ -377,6 +377,20 @@ export function isResolvedNavigationItemApiSection(
     return item.type === "apiSection";
 }
 
+export function crawlResolvedNavigationItemApiSections(
+    items: ResolvedNavigationItem[]
+): ResolvedNavigationItemApiSection[] {
+    const packages: ResolvedNavigationItemApiSection[] = [];
+    for (const item of items) {
+        if (isResolvedNavigationItemApiSection(item)) {
+            packages.push(item);
+        } else if (item.type === "section") {
+            packages.push(...crawlResolvedNavigationItemApiSections(item.items));
+        }
+    }
+    return packages;
+}
+
 export interface ResolvedNavigationItemSection extends Omit<DocsV1Read.DocsSection, "items" | "urlSlug"> {
     type: "section";
     items: ResolvedNavigationItem[];
