@@ -5,7 +5,7 @@ import classNames from "classnames";
 import { isEqual } from "lodash-es";
 import { FC, Fragment, useCallback } from "react";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
-import { SidebarApiSection } from "./SidebarApiSection";
+import { ExpandableSidebarApiSection, SidebarApiSection } from "./SidebarApiSection";
 import { SidebarHeading } from "./SidebarHeading";
 import { SidebarSlugLink } from "./SidebarLink";
 
@@ -135,7 +135,7 @@ export const SidebarSection: FC<SidebarSectionProps> = ({
                         }
                     },
                     apiSection: (apiSection) => {
-                        return (
+                        return depth === 0 ? (
                             <li key={apiSection.api}>
                                 <SidebarHeading
                                     className={classNames({
@@ -151,6 +151,15 @@ export const SidebarSection: FC<SidebarSectionProps> = ({
                                     depth={depth + 1}
                                 />
                             </li>
+                        ) : (
+                            <ExpandableSidebarApiSection
+                                slug={apiSection.slug}
+                                apiSection={apiSection}
+                                registerScrolledToPathListener={registerScrolledToPathListener}
+                                depth={depth}
+                                title={apiSection.title}
+                                apiDefinitionPackage={apiSection}
+                            />
                         );
                     },
                     _other: () => null,
