@@ -67,7 +67,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
         };
     }, [closeDropdown, showDropdown]);
 
-    function renderApiDefinitionPackage(apiDefinition: ResolvedApiDefinitionPackage, depth: number = 0) {
+    function renderApiDefinitionPackage(apiDefinition: ResolvedApiDefinitionPackage, depth: number) {
         const endpoints = apiDefinition.endpoints.filter((endpoint) => matchesEndpoint(filterValue, endpoint));
         const subpackages = apiDefinition.subpackages
             .map((subpackage) => renderApiDefinitionPackage(subpackage, depth + 1))
@@ -77,17 +77,19 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
         }
         return (
             <li key={apiDefinition.type === "apiSection" ? apiDefinition.api : apiDefinition.id} className="gap-2">
-                <div
-                    className="bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark sticky z-10 h-[30px] gap-2 border-b px-3 py-1"
-                    style={{
-                        top: depth * 30,
-                    }}
-                >
-                    <span className="text-accent-primary dark:text-accent-primary-dark shrink truncate whitespace-nowrap text-xs">
-                        {apiDefinition.title}
-                    </span>
-                </div>
-                <ul className="relative z-0 list-none py-1">
+                {depth >= 0 && (
+                    <div
+                        className="bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark sticky z-10 flex h-[30px] items-center gap-2 border-b px-3 py-1"
+                        style={{
+                            top: depth * 30,
+                        }}
+                    >
+                        <span className="text-accent-primary dark:text-accent-primary-dark shrink truncate whitespace-nowrap text-xs">
+                            {apiDefinition.title}
+                        </span>
+                    </div>
+                )}
+                <ul className="relative z-0 list-none">
                     {endpoints.map((endpointItem) => (
                         <li
                             ref={endpointItem.id === endpoint?.id ? selectedItemRef : undefined}
@@ -128,7 +130,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
     }
 
     const renderedListItems = navigationItems
-        .map((apiSection) => renderApiDefinitionPackage(apiSection))
+        .map((apiSection) => renderApiDefinitionPackage(apiSection, navigationItems.length === 1 ? -1 : 0))
         .filter(isNonNullish);
 
     return (
@@ -160,12 +162,12 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
             <Transition
                 show={showDropdown}
                 as={Fragment}
-                enter="ease-out transition-all"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in transition-all"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
+                // enter="ease-out transition-transform"
+                // enterFrom="opacity-0 scale-95"
+                // enterTo="opacity-100 scale-100"
+                // leave="ease-in transition-transform"
+                // leaveFrom="opacity-100 scale-100"
+                // leaveTo="opacity-0 scale-95"
                 beforeEnter={() => {
                     selectedItemRef.current?.scrollIntoView({
                         block: "center",
