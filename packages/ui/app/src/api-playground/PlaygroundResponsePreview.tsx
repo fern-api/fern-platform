@@ -16,7 +16,7 @@ export const PlaygroundResponsePreview: FC<PlaygroundResponsePreviewProps> = ({ 
                 className="absolute right-2 top-2 z-10 opacity-0 transition-opacity group-hover:opacity-100"
                 content={responseJson}
             />
-            <div className="typography-font-code h-full overflow-auto text-xs">
+            <div className="h-full overflow-auto font-mono text-xs">
                 <FernSyntaxHighlighter
                     language={"json"}
                     customStyle={{ height: "100%", paddingLeft: 0 }}

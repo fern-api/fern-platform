@@ -66,13 +66,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                 </div>
             </div>
             <div className="flex min-h-0 flex-1">
-                <div
-                    className={classNames(
-                        className,
-                        "flex flex-1 leading-relaxed text-xs min-w-0",
-                        "typography-font-code"
-                    )}
-                >
+                <div className={classNames(className, "flex flex-1 leading-relaxed text-xs min-w-0 font-mono")}>
                     <div
                         className={classNames("flex-1 overflow-hidden rounded-b-xl whitespace-pre", {
                             "py-4": !disablePadding,
