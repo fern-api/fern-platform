@@ -103,7 +103,7 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
                         key={i}
                         className={classNames(
                             "relative flex-0 w-[22px] lg:w-3 shrink-0 border-r",
-                            "transition-transform group-hover/sidebar:translate-x-0 lg:translate-x-1 group-hover/sidebar:opacity-100 transition-opacity ease-out group-hover/sidebar:ease-out",
+                            "transition-transform group-hover/sidebar:translate-x-0 lg:translate-x-1 group-hover/sidebar:opacity-100 transition-opacity ease-out",
                             {
                                 "border-accent-primary/60 dark:border-accent-primary-dark/60":
                                     selected && i === depth - 1,
@@ -116,7 +116,7 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
                 {(toggleExpand != null || expanded) && (
                     <button
                         className={classNames(
-                            "flex w-[44px] lg:w-6 justify-center items-center transition-colors rounded-none lg:rounded-lg transition-transform lg:translate-x-1 group-hover/sidebar:translate-x-0 ease-out group-hover/sidebar:ease-out",
+                            "flex w-[44px] lg:w-6 justify-center items-center transition-colors rounded-none lg:rounded-lg transition-transform lg:translate-x-1 group-hover/sidebar:translate-x-0 ease-out",
                             {
                                 "lg:hover:bg-tag-default-light/5 lg:dark:hover:bg-tag-default-dark/5 lg:opacity-60 group-hover/sidebar:opacity-100 transition-opacity":
                                     toggleExpand != null,
