@@ -1,4 +1,3 @@
-import { FdrAPI, PathResolver } from "@fern-api/fdr-sdk";
 import { getFullSlugForNavigatable, type ResolvedPath } from "@fern-ui/app-utils";
 import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
@@ -22,7 +21,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     children,
     basePath,
 }) => {
-    const { docsDefinition } = useDocsContext();
+    const { docsDefinition, pathResolver } = useDocsContext();
     const router = useRouter();
     const userIsScrolling = useRef(false);
     const resolvedRoute = getRouteForResolvedPath({
@@ -30,34 +29,22 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         asPath: router.asPath, // do not include basepath because it is already included
     });
     const justNavigatedTo = useRef<string | undefined>(resolvedRoute);
-    type ApiDefinition = FdrAPI.api.v1.read.ApiDefinition;
-    const resolver = useMemo(
-        () =>
-            new PathResolver({
-                definition: {
-                    apis: docsDefinition.apis as Record<ApiDefinition["id"], ApiDefinition>,
-                    docsConfig: docsDefinition.config,
-                    basePath,
-                },
-            }),
-        [basePath, docsDefinition.apis, docsDefinition.config]
-    );
 
     const resolvedNavigatable = useMemo(() => {
-        const node = resolver.resolveNavigatable(resolvedPath.fullSlug);
+        const node = pathResolver.resolveNavigatable(resolvedPath.fullSlug);
         if (node == null) {
             throw new Error(
                 `Implementation Error. Cannot resolve navigatable for resolved path ${resolvedPath.fullSlug}`
             );
         }
         return node;
-    }, [resolver, resolvedPath.fullSlug]);
+    }, [pathResolver, resolvedPath.fullSlug]);
 
     const [activeNavigatable, setActiveNavigatable] = useState(resolvedNavigatable);
 
     const activeNavigatableNeighbors = useMemo(() => {
-        return resolver.getNeighborsForNavigatable(activeNavigatable);
-    }, [resolver, activeNavigatable]);
+        return pathResolver.getNeighborsForNavigatable(activeNavigatable);
+    }, [pathResolver, activeNavigatable]);
 
     const selectedSlug = getFullSlugForNavigatable(activeNavigatable, { omitDefault: true, basePath });
 
@@ -139,7 +126,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         if (justNavigated.current || fullSlug === selectedSlug) {
             return;
         }
-        const navigatable = resolver.resolveNavigatable(fullSlug);
+        const navigatable = pathResolver.resolveNavigatable(fullSlug);
         if (navigatable != null) {
             setActiveNavigatable(navigatable);
         }
@@ -151,7 +138,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     const navigateToPath = useEventCallback((fullSlug: string) => {
         justNavigated.current = true;
-        const navigatable = resolver.resolveNavigatable(fullSlug);
+        const navigatable = pathResolver.resolveNavigatable(fullSlug);
         navigateToRoute.current(`/${fullSlug}`, undefined);
         if (navigatable != null) {
             setActiveNavigatable(navigatable);
@@ -171,13 +158,9 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         const handleRouteChangeStart = (route: string) => {
             navigateToPath(route.substring(1));
         };
-        router.events.on("routeChangeStart", handleRouteChangeStart);
-        router.events.on("hashChangeStart", handleRouteChangeStart);
         router.events.on("routeChangeComplete", handleRouteChangeStart);
         router.events.on("hashChangeComplete", handleRouteChangeStart);
         return () => {
-            router.events.off("routeChangeStart", handleRouteChangeStart);
-            router.events.off("hashChangeStart", handleRouteChangeStart);
             router.events.off("routeChangeComplete", handleRouteChangeStart);
             router.events.off("hashChangeComplete", handleRouteChangeStart);
         };
@@ -186,14 +169,14 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     useEffect(() => {
         router.beforePopState(({ as }) => {
             const slugCandidate = as.substring(1, as.length);
-            const previousNavigatable = resolver.resolveNavigatable(slugCandidate);
+            const previousNavigatable = pathResolver.resolveNavigatable(slugCandidate);
             if (previousNavigatable != null) {
                 const fullSlug = getFullSlugForNavigatable(previousNavigatable, { basePath });
                 navigateToPath(fullSlug);
             }
             return true;
         });
-    }, [router, navigateToPath, docsDefinition, resolver, basePath]);
+    }, [router, navigateToPath, docsDefinition, pathResolver, basePath]);
 
     const hydrated = useBooleanState(false);
     useEffect(() => {
@@ -211,7 +194,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 userIsScrolling: () => userIsScrolling.current,
                 onScrollToPath,
                 observeDocContent,
-                resolver,
                 registerScrolledToPathListener: scrollToPathListeners.registerListener,
                 activeNavigatableNeighbors,
                 resolvedPath,
