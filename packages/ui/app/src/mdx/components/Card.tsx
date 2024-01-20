@@ -20,7 +20,7 @@ export const Card: React.FC<Card.Props> = ({ title, icon, iconPosition = "top", 
 
     const className = classNames(
         "text-sm border-black/20 dark:border-white/20 bg-white/70 dark:bg-white/5 flex items-start rounded-lg border p-4 !no-underline hover:transition mb-4",
-        "grow basis-1/4",
+        "grow basis-1/4 not-prose",
         {
             "space-y-3 flex-col": iconPosition === "top",
             "space-x-3 flex-row": iconPosition === "left",
