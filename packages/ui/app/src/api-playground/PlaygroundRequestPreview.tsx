@@ -35,7 +35,7 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({
                         : ""
                 }
             />
-            <div className="font-mono h-full overflow-auto text-xs">
+            <div className="h-full overflow-auto font-mono text-xs">
                 <FernSyntaxHighlighter
                     language={requestType === "curl" ? "shell" : requestType}
                     customStyle={{ height: "100%", paddingLeft: 0 }}
