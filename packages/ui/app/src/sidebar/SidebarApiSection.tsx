@@ -1,4 +1,4 @@
-import { DocsV1Read, isApiNode } from "@fern-api/fdr-sdk";
+import { DocsV1Read, isApiNode, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import { ResolvedApiDefinitionPackage, ResolvedNavigationItemApiSection } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { isEqual } from "lodash-es";
@@ -86,7 +86,7 @@ const InnerSidebarApiSection: FC<InnerSidebarApiSectionProps> = ({
             {apiDefinitionPackage.endpoints.map((endpoint) => {
                 return (
                     <SidebarSlugLink
-                        key={endpoint.id}
+                        key={joinUrlSlugs(...endpoint.slug)}
                         slug={endpoint.slug}
                         shallow={shallow}
                         title={endpoint.title}
@@ -100,7 +100,7 @@ const InnerSidebarApiSection: FC<InnerSidebarApiSectionProps> = ({
             {apiDefinitionPackage.webhooks.map((webhook) => {
                 return (
                     <SidebarSlugLink
-                        key={webhook.id}
+                        key={joinUrlSlugs(...webhook.slug)}
                         slug={webhook.slug}
                         shallow={shallow}
                         title={webhook.name ?? "/" + webhook.path.join("/")}
@@ -113,7 +113,7 @@ const InnerSidebarApiSection: FC<InnerSidebarApiSectionProps> = ({
             {apiDefinitionPackage.subpackages.map((subpackage) => {
                 return (
                     <ExpandableSidebarApiSection
-                        key={subpackage.id}
+                        key={joinUrlSlugs(...subpackage.slug)}
                         title={subpackage.title}
                         slug={subpackage.slug}
                         apiDefinitionPackage={subpackage}

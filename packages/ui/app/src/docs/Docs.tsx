@@ -3,7 +3,9 @@ import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { useTheme } from "next-themes";
-import { memo, useCallback, useEffect, useMemo } from "react";
+import NextNProgress from "nextjs-progressbar";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import tinycolor from "tinycolor2";
 import { ApiPlaygroundContextProvider } from "../api-playground/ApiPlaygroundContext";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
@@ -56,6 +58,17 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
         }
     }, [colorsV3, theme]);
 
+    const [accentColor, setAccentColor] = useState<string>();
+    useEffect(() => {
+        if (colorsV3.type === "darkAndLight") {
+            if (theme === "dark" || theme === "light") {
+                setAccentColor(tinycolor(colorsV3[theme].accentPrimary).toHex8String());
+            }
+        } else {
+            setAccentColor(tinycolor(colorsV3.accentPrimary).toHex8String());
+        }
+    }, [colorsV3, theme]);
+
     const renderBackground = useCallback(
         (className?: string) => (
             <div className={classNames(className, "clipped-background")}>
@@ -95,6 +108,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
 
     return (
         <>
+            <NextNProgress color={accentColor} />
             <BgImageGradient
                 backgroundType={backgroundType}
                 hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage}
