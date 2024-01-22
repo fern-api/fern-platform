@@ -263,7 +263,8 @@ function resolveResponseBodyShape(
 
 function resolveTypeShape(
     typeShape: APIV1Read.TypeShape,
-    types: Record<string, APIV1Read.TypeDefinition>
+    types: Record<string, APIV1Read.TypeDefinition>,
+    unwrapOptional: boolean = false
 ): ResolvedTypeReference {
     return visitDiscriminatedUnion(typeShape, "type")._visit<ResolvedTypeReference>({
         object: (object) => ({
@@ -279,7 +280,7 @@ function resolveTypeShape(
                 shape: resolveTypeReference(type, types),
             })),
         }),
-        alias: (alias) => resolveTypeReference(alias.value, types),
+        alias: (alias) => resolveTypeReference(alias.value, types, unwrapOptional),
         discriminatedUnion: (discriminatedUnion) => ({
             type: "discriminatedUnion",
             discriminant: discriminatedUnion.discriminant,
@@ -294,12 +295,16 @@ function resolveTypeShape(
 
 function resolveTypeReference(
     typeReference: APIV1Read.TypeReference,
-    types: Record<string, APIV1Read.TypeDefinition>
+    types: Record<string, APIV1Read.TypeDefinition>,
+    unwrapOptional: boolean = false
 ): ResolvedTypeReference {
     return visitDiscriminatedUnion(typeReference, "type")._visit<ResolvedTypeReference>({
         literal: (literal) => literal.value,
         unknown: (unknown) => unknown,
-        optional: (optional) => ({ type: "optional", shape: resolveTypeReference(optional.itemType, types) }),
+        optional: (optional) =>
+            unwrapOptional
+                ? resolveTypeReference(optional.itemType, types, true)
+                : { type: "optional", shape: resolveTypeReference(optional.itemType, types, true) },
         list: (list) => ({ type: "list", shape: resolveTypeReference(list.itemType, types) }),
         set: (set) => ({ type: "set", shape: resolveTypeReference(set.itemType, types) }),
         map: (map) => ({
@@ -312,7 +317,7 @@ function resolveTypeReference(
             if (typeDefinition == null) {
                 return { type: "unknown" };
             }
-            return resolveTypeShape(typeDefinition.shape, types);
+            return resolveTypeShape(typeDefinition.shape, types, unwrapOptional);
         },
         primitive: (primitive) => primitive.value,
         _other: () => ({ type: "unknown" }),
