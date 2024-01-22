@@ -12,7 +12,10 @@ import {
     TypeDefinitionContextValue,
     useTypeDefinitionContext,
 } from "../context/TypeDefinitionContext";
-import { InternalTypeReferenceDefinitions } from "../type-reference/InternalTypeReferenceDefinitions";
+import {
+    hasInternalTypeReference,
+    InternalTypeReferenceDefinitions,
+} from "../type-reference/InternalTypeReferenceDefinitions";
 import { renderTypeShorthand } from "../type-shorthand/TypeShorthand";
 
 export declare namespace ObjectProperty {
@@ -96,19 +99,21 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
                     <EndpointAvailabilityTag availability={property.availability} minimal={true} />
                 )}
             </div>
-            <div className="flex flex-col">
-                <ApiPageDescription isMarkdown={true} description={property.description} className="text-sm" />
-                <TypeDefinitionContext.Provider value={newContextValue}>
-                    <InternalTypeReferenceDefinitions
-                        shape={property.valueShape}
-                        isCollapsible
-                        applyErrorStyles={applyErrorStyles}
-                        anchorIdParts={anchorIdParts}
-                        route={route}
-                        defaultExpandAll={defaultExpandAll}
-                    />
-                </TypeDefinitionContext.Provider>
-            </div>
+            {property.description || hasInternalTypeReference(property.valueShape) ? (
+                <div className="flex flex-col">
+                    <ApiPageDescription isMarkdown={true} description={property.description} className="text-sm" />
+                    <TypeDefinitionContext.Provider value={newContextValue}>
+                        <InternalTypeReferenceDefinitions
+                            shape={property.valueShape}
+                            isCollapsible
+                            applyErrorStyles={applyErrorStyles}
+                            anchorIdParts={anchorIdParts}
+                            route={route}
+                            defaultExpandAll={defaultExpandAll}
+                        />
+                    </TypeDefinitionContext.Provider>
+                </div>
+            ) : undefined}
         </div>
     );
 };
