@@ -1,4 +1,4 @@
-import { Collapse, Icon } from "@blueprintjs/core";
+import { Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import { ResolvedTypeShape } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
@@ -7,7 +7,7 @@ import classNames from "classnames";
 import { useRouter } from "next/router";
 import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
 import { Chip } from "../../../components/Chip";
-import { useNavigationContext } from "../../../navigation-context";
+import { FernCollapse } from "../../../components/FernCollapse";
 import { getAnchorId } from "../../../util/anchor";
 import {
     TypeDefinitionContext,
@@ -45,7 +45,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     route,
     defaultExpandAll = false,
 }) => {
-    const { hydrated, justNavigated } = useNavigationContext();
+    // const { hydrated, justNavigated } = useNavigationContext();
     const router = useRouter();
 
     const collapsableContent = useMemo(
@@ -211,14 +211,14 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                             </div>
                         </div>
                     )}
-                    <Collapse isOpen={!isCollapsed} transitionDuration={!hydrated || justNavigated ? 0 : 200}>
+                    <FernCollapse isOpen={!isCollapsed}>
                         <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
                             <TypeDefinitionDetails
                                 elements={collapsableContent.elements}
                                 separatorText={collapsableContent.separatorText}
                             />
                         </TypeDefinitionContext.Provider>
-                    </Collapse>
+                    </FernCollapse>
                 </div>
             ) : (
                 <EnumTypeDefinition

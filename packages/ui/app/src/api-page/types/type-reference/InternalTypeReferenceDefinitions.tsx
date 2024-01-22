@@ -18,6 +18,33 @@ export declare namespace InternalTypeReferenceDefinitions {
     }
 }
 
+export function hasInternalTypeReference(shape: ResolvedTypeReference): boolean {
+    return visitDiscriminatedUnion(shape, "type")._visit<boolean>({
+        object: () => true,
+        enum: () => true,
+        undiscriminatedUnion: () => true,
+        discriminatedUnion: () => true,
+        list: () => true,
+        set: () => true,
+        optional: (optional) => hasInternalTypeReference(optional.shape),
+        map: (map) => hasInternalTypeReference(map.keyShape) || hasInternalTypeReference(map.valueShape),
+        string: () => false,
+        boolean: () => false,
+        integer: () => false,
+        double: () => false,
+        long: () => false,
+        datetime: () => false,
+        uuid: () => false,
+        base64: () => false,
+        date: () => false,
+        booleanLiteral: () => false,
+        stringLiteral: () => false,
+        unknown: () => false,
+        _other: () => false,
+        reference: (reference) => hasInternalTypeReference(reference.shape()),
+    });
+}
+
 export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDefinitions.Props> = ({
     shape,
     applyErrorStyles,
