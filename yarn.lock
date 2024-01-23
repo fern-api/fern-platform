@@ -2587,6 +2587,7 @@ __metadata:
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
     "@types/react-dom": ^18.2.18
+    "@vercel/speed-insights": ^1.0.7
     autoprefixer: ^10.4.16
     depcheck: ^1.4.3
     env-cmd: toddbluhm/env-cmd
@@ -4574,6 +4575,33 @@ __metadata:
   version: 0.2.2
   resolution: "@ungap/url-search-params@npm:0.2.2"
   checksum: 779506cca3d36bc291e4e6eb0484e8bd87186cbe5bb6a6d37f17a866c47069d8a3a20b9331ef0a5c96f26b4db8210cf26c6e5a1f4a6c8be3be13a619e82cb93c
+  languageName: node
+  linkType: hard
+
+"@vercel/speed-insights@npm:^1.0.7":
+  version: 1.0.7
+  resolution: "@vercel/speed-insights@npm:1.0.7"
+  peerDependencies:
+    "@sveltejs/kit": ^1 || ^2
+    next: ">= 13"
+    react: ^18 || ^19
+    svelte: ^4
+    vue: ^3
+    vue-router: ^4
+  peerDependenciesMeta:
+    "@sveltejs/kit":
+      optional: true
+    next:
+      optional: true
+    react:
+      optional: true
+    svelte:
+      optional: true
+    vue:
+      optional: true
+    vue-router:
+      optional: true
+  checksum: 91581b4e68f78581db8b0002122f80ad6900631f7967a90f7134a26d9e839ec306d9962dc68a21389f83bf91d16f9c846b6b2d726a8fa4c39339d74fda530371
   languageName: node
   linkType: hard
 

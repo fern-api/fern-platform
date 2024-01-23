@@ -4398,6 +4398,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.18.13"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", "npm:18.2.18"],\
+            ["@vercel/speed-insights", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:1.0.7"],\
             ["autoprefixer", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:10.4.16"],\
             ["depcheck", "npm:1.4.3"],\
             ["env-cmd", "https://github.com/toddbluhm/env-cmd.git#commit=8f35b71651f6a78710308ff38ab30896ea72ee8b"],\
@@ -6869,6 +6870,48 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@ungap-url-search-params-npm-0.2.2-038ac53cb9-779506cca3.zip/node_modules/@ungap/url-search-params/",\
           "packageDependencies": [\
             ["@ungap/url-search-params", "npm:0.2.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@vercel/speed-insights", [\
+        ["npm:1.0.7", {\
+          "packageLocation": "./.yarn/unplugged/@vercel-speed-insights-virtual-f246288bac/node_modules/@vercel/speed-insights/",\
+          "packageDependencies": [\
+            ["@vercel/speed-insights", "npm:1.0.7"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:1.0.7", {\
+          "packageLocation": "./.yarn/unplugged/@vercel-speed-insights-virtual-f246288bac/node_modules/@vercel/speed-insights/",\
+          "packageDependencies": [\
+            ["@vercel/speed-insights", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:1.0.7"],\
+            ["@sveltejs/kit", null],\
+            ["@types/next", null],\
+            ["@types/react", "npm:18.0.20"],\
+            ["@types/svelte", null],\
+            ["@types/sveltejs__kit", null],\
+            ["@types/vue", null],\
+            ["@types/vue-router", null],\
+            ["next", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:14.0.4"],\
+            ["react", "npm:18.2.0"],\
+            ["svelte", null],\
+            ["vue", null],\
+            ["vue-router", null]\
+          ],\
+          "packagePeers": [\
+            "@sveltejs/kit",\
+            "@types/next",\
+            "@types/react",\
+            "@types/svelte",\
+            "@types/sveltejs__kit",\
+            "@types/vue-router",\
+            "@types/vue",\
+            "next",\
+            "react",\
+            "svelte",\
+            "vue-router",\
+            "vue"\
           ],\
           "linkType": "HARD"\
         }]\
