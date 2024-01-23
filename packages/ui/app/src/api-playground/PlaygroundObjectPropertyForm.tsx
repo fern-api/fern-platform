@@ -73,12 +73,9 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
             renderTarget={({ ref, isOpen, className, ...targetProps }) => (
                 <li ref={ref} className={className} {...targetProps}>
                     <div
-                        className={classNames(
-                            "divide-border-default-light dark:divide-border-default-dark flex min-h-12 flex-row items-stretch divide-x px-4",
-                            {
-                                "divide-x-0": expanded && expandable,
-                            }
-                        )}
+                        className={
+                            "divide-border-default-light dark:divide-border-default-dark flex min-h-12 flex-row items-stretch divide-x"
+                        }
                     >
                         <div className="flex min-w-0 max-w-full flex-1 shrink items-center justify-between gap-2 py-2 pr-2">
                             <label className="inline-flex w-full items-baseline gap-2">
@@ -88,8 +85,12 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                                     <EndpointAvailabilityTag availability={property.availability} minimal={true} />
                                 )}
                             </label>
+
+                            <span className="t-muted whitespace-nowrap text-xs">
+                                {renderTypeShorthand(property.valueShape)}
+                            </span>
                         </div>
-                        <div className="flex min-w-0 max-w-full flex-1 shrink items-center justify-end gap-2 pl-2">
+                        <div className="flex min-w-0 max-w-full flex-1 shrink items-center justify-between gap-2 pl-2">
                             {!isUndefined(value) && !expandable && (
                                 <PlaygroundTypeReferenceForm
                                     shape={
@@ -107,9 +108,9 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                                 />
                             )}
 
-                            {((property.valueShape.type === "optional" && isUndefined(value)) || expandable) && (
+                            {property.valueShape.type === "list" && Array.isArray(value) && (
                                 <span className="t-muted whitespace-nowrap text-xs">
-                                    {renderTypeShorthand(property.valueShape)}
+                                    {value.length} {value.length === 1 ? "item" : "items"}
                                 </span>
                             )}
 
@@ -135,22 +136,20 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                         </div>
                     </div>
                     {!isUndefined(value) && expandable && expanded && (
-                        <div className="px-4">
-                            <PlaygroundTypeReferenceForm
-                                shape={
-                                    property.valueShape.type === "optional"
-                                        ? property.valueShape.shape
-                                        : property.valueShape
-                                }
-                                onChange={handleChange}
-                                value={value}
-                                onFocus={handleFocus}
-                                onBlur={handleBlur}
-                                renderAsPanel={true}
-                                onOpenStack={handleOpenStack}
-                                onCloseStack={handleCloseStack}
-                            />
-                        </div>
+                        <PlaygroundTypeReferenceForm
+                            shape={
+                                property.valueShape.type === "optional"
+                                    ? property.valueShape.shape
+                                    : property.valueShape
+                            }
+                            onChange={handleChange}
+                            value={value}
+                            onFocus={handleFocus}
+                            onBlur={handleBlur}
+                            renderAsPanel={true}
+                            onOpenStack={handleOpenStack}
+                            onCloseStack={handleCloseStack}
+                        />
                     )}
                 </li>
             )}
@@ -181,7 +180,7 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
     return (
         <ul
             className={
-                "divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark -mx-4 mb-4 list-none divide-y border-y"
+                "divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark mb-4 list-none divide-y border-y"
             }
         >
             {properties.map((property) => (

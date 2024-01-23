@@ -1,28 +1,18 @@
 import { NonIdealState, Spinner } from "@blueprintjs/core";
-import { APIV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
-import { failed, Loadable, loaded, loading, notStartedLoading, visitLoadable } from "@fern-ui/loadable";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Loadable, visitLoadable } from "@fern-ui/loadable";
 import classNames from "classnames";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useCallback, useState } from "react";
-import { capturePosthogEvent } from "../analytics/posthog";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
 import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
 import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
 import { SecretBearer } from "./PlaygroundSecretsModal";
-import { PlaygroundRequestFormState } from "./types";
+import { PlaygroundRequestFormState, ResponsePayload } from "./types";
 import { useHorizontalSplitPane, useWindowWidth } from "./useSplitPlane";
-import { buildUnredactedHeaders, buildUrl } from "./utils";
-
-interface ResponsePayload {
-    status: number;
-    time: number;
-    size: string | null;
-    body: unknown;
-}
 
 interface ApiPlayroundContentProps {
     auth: APIV1Read.ApiAuth | undefined;
@@ -33,9 +23,10 @@ interface ApiPlayroundContentProps {
     resetWithoutExample: () => void;
     openSecretsModal: () => void;
     secrets: SecretBearer[];
+    response: Loadable<ResponsePayload>;
 }
 
-const requestTypeAtom = atomWithStorage<"form" | "curl" | "javascript" | "python">("api-playground-atom-alpha", "curl");
+const requestTypeAtom = atomWithStorage<"form" | "curl" | "javascript" | "python">("api-playground-atom-alpha", "form");
 
 export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
     auth,
@@ -46,9 +37,10 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
     resetWithoutExample,
     openSecretsModal,
     secrets,
+    response,
 }) => {
     const [requestType, setRequestType] = useAtom(requestTypeAtom);
-    const [width, setWidthPercent] = useState<number>(0.5);
+    const [width, setWidthPercent] = useState<number>(0.7);
     const windowWidth = useWindowWidth();
     const setWidth = useCallback(
         (width: number) => {
@@ -59,60 +51,6 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
         [windowWidth]
     );
     const handleResize = useHorizontalSplitPane(setWidth);
-
-    const [response, setResponse] = useState<Loadable<ResponsePayload>>(notStartedLoading());
-
-    const sendRequest = useCallback(async () => {
-        const startTime = performance.now();
-        setResponse(loading());
-        try {
-            capturePosthogEvent("api_playground_request_sent", {
-                endpointId: endpoint.id,
-                endpointName: endpoint.name,
-                method: endpoint.method,
-                docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
-            });
-            const response = await fetch("/api/proxy", {
-                method: "POST",
-                headers: buildUnredactedHeaders(auth, endpoint, formState),
-                body: JSON.stringify({
-                    url: buildUrl(endpoint, formState),
-                    method: endpoint.method,
-                    headers: buildUnredactedHeaders(auth, endpoint, formState),
-                    body: formState.body,
-                }),
-            });
-            const loadedResponse: ResponsePayload = await response.json();
-            setResponse(loaded(loadedResponse));
-            const proxyTime = performance.now() - startTime;
-            capturePosthogEvent("api_playground_request_received", {
-                endpointId: endpoint.id,
-                endpointName: endpoint.name,
-                method: endpoint.method,
-                docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
-                response: {
-                    status: loadedResponse.status,
-                    time: loadedResponse.time,
-                    size: loadedResponse.size,
-                },
-                proxy: {
-                    ok: response.ok,
-                    status: response.status,
-                    time: response.headers.get("x-response-time") ?? proxyTime,
-                },
-            });
-        } catch (e) {
-            // eslint-disable-next-line no-console
-            console.error(e);
-            setResponse(failed(e));
-            capturePosthogEvent("api_playground_request_failed", {
-                endpointId: endpoint.id,
-                endpointName: endpoint.name,
-                method: endpoint.method,
-                docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
-            });
-        }
-    }, [auth, endpoint, formState]);
 
     return (
         <div className="divide-border-default-light dark:divide-border-default-dark flex min-h-0 flex-1 shrink items-stretch divide-x">
@@ -216,7 +154,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                 )}
             </div>
             <div className="relative flex min-h-0 min-w-0 flex-1 shrink flex-col">
-                {response.type !== "notStartedLoading" && endpoint != null && (
+                {/* {response.type !== "notStartedLoading" && endpoint != null && (
                     <div className="absolute bottom-4 right-4 z-20">
                         <button
                             className="dark:text-dark bg-accent-primary dark:bg-accent-primary-dark hover:bg-accent-primary/70 dark:hover:bg-accent-primary-dark/70 text-accent-primary-contrast dark:text-accent-primary-dark-contrast group flex items-center justify-center space-x-3 rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
@@ -231,73 +169,58 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                             </div>
                         </button>
                     </div>
-                )}
+                )} */}
 
-                <div
-                    className="bg-accent-primary dark:bg-accent-primary-dark absolute inset-y-0 -ml-0.5 w-1 cursor-col-resize opacity-0 transition-opacity hover:opacity-100 active:opacity-100"
-                    onMouseDown={handleResize}
-                />
-                <div className="border-border-default-light dark:border-border-default-dark flex h-10 w-full shrink-0 items-center justify-between border-b px-4 py-2">
-                    <span className="t-muted text-xs uppercase">Response</span>
+                {response.type !== "notStartedLoading" && (
+                    <>
+                        <div
+                            className="bg-accent-primary dark:bg-accent-primary-dark absolute inset-y-0 z-30 -ml-0.5 w-1 cursor-col-resize opacity-0 transition-opacity hover:opacity-100 active:opacity-100"
+                            onMouseDown={handleResize}
+                        />
+                        <div className="border-border-default-light dark:border-border-default-dark flex h-10 w-full shrink-0 items-center justify-between border-b px-4 py-2">
+                            <span className="t-muted text-xs uppercase">Response</span>
 
-                    {response.type === "loaded" && (
-                        <div className="flex items-center gap-2 text-xs">
-                            <span
-                                className={classNames("font-mono flex items-center py-1 px-1.5 rounded-md h-5", {
-                                    ["bg-method-get/10 text-method-get dark:bg-method-get-dark/10 dark:text-method-get-dark"]:
-                                        response.value.status >= 200 && response.value.status < 300,
-                                    ["bg-method-delete/10 text-method-delete dark:bg-method-delete-dark/10 dark:text-method-delete-dark"]:
-                                        response.value.status > 300,
-                                })}
-                            >
-                                status: {response.value.status}
-                            </span>
-                            <span
-                                className={
-                                    "bg-tag-default-light dark:bg-tag-default-dark flex h-5 items-center rounded-md px-1.5 py-1 font-mono"
-                                }
-                            >
-                                time: {round(response.value.time, 2)}ms
-                            </span>
-                            {!isEmpty(response.value.size) && (
-                                <span
-                                    className={
-                                        "bg-tag-default-light dark:bg-tag-default-dark flex h-5 items-center rounded-md px-1.5 py-1 font-mono"
-                                    }
-                                >
-                                    size: {response.value.size}b
-                                </span>
+                            {response.type === "loaded" && (
+                                <div className="flex items-center gap-2 text-xs">
+                                    <span
+                                        className={classNames(
+                                            "font-mono flex items-center py-1 px-1.5 rounded-md h-5",
+                                            {
+                                                ["bg-method-get/10 text-method-get dark:bg-method-get-dark/10 dark:text-method-get-dark"]:
+                                                    response.value.status >= 200 && response.value.status < 300,
+                                                ["bg-method-delete/10 text-method-delete dark:bg-method-delete-dark/10 dark:text-method-delete-dark"]:
+                                                    response.value.status > 300,
+                                            }
+                                        )}
+                                    >
+                                        status: {response.value.status}
+                                    </span>
+                                    <span
+                                        className={
+                                            "bg-tag-default-light dark:bg-tag-default-dark flex h-5 items-center rounded-md px-1.5 py-1 font-mono"
+                                        }
+                                    >
+                                        time: {round(response.value.time, 2)}ms
+                                    </span>
+                                    {!isEmpty(response.value.size) && (
+                                        <span
+                                            className={
+                                                "bg-tag-default-light dark:bg-tag-default-dark flex h-5 items-center rounded-md px-1.5 py-1 font-mono"
+                                            }
+                                        >
+                                            size: {response.value.size}b
+                                        </span>
+                                    )}
+                                </div>
                             )}
                         </div>
-                    )}
-                </div>
-                {visitLoadable(response, {
-                    loading: () => (
-                        <NonIdealState
-                            className="flex-1"
-                            icon={
-                                response.type === "notStartedLoading" ? (
-                                    <button
-                                        className="dark:text-dark bg-accent-primary dark:bg-accent-primary-dark hover:bg-accent-primary/70 dark:hover:bg-accent-primary-dark/70 text-accent-primary-contrast dark:text-accent-primary-dark-contrast group flex items-center justify-center space-x-3 rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
-                                        onClick={sendRequest}
-                                    >
-                                        <span className="whitespace-nowrap">Send request</span>
-                                        <div className="flex h-4 w-4 items-center">
-                                            <FontAwesomeIcon
-                                                icon="paper-plane-top"
-                                                className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
-                                            />
-                                        </div>
-                                    </button>
-                                ) : (
-                                    <Spinner />
-                                )
-                            }
-                        />
-                    ),
-                    loaded: (response) => <PlaygroundResponsePreview responseBody={response.body} />,
-                    failed: () => <span>Failed</span>,
-                })}
+                        {visitLoadable(response, {
+                            loading: () => <NonIdealState className="flex-1" icon={<Spinner />} />,
+                            loaded: (response) => <PlaygroundResponsePreview responseBody={response.body} />,
+                            failed: () => <span>Failed</span>,
+                        })}
+                    </>
+                )}
             </div>
         </div>
     );

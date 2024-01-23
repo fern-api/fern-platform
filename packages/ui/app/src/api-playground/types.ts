@@ -26,3 +26,10 @@ export interface PlaygroundRequestFormState {
     queryParameters: Record<string, unknown>;
     body: unknown;
 }
+
+export interface ResponsePayload {
+    status: number;
+    time: number;
+    size: string | null;
+    body: unknown;
+}

@@ -1,12 +1,11 @@
 import { Button, InputGroup, NumericInput, Switch, TextArea } from "@blueprintjs/core";
 import { DateInput3 } from "@blueprintjs/datetime2";
 import { ArrowLeft } from "@blueprintjs/icons";
-import { ResolvedTypeReference } from "@fern-ui/app-utils";
+import { ResolvedObjectProperty, ResolvedTypeReference } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { Transition } from "@headlessui/react";
 import { FC, PropsWithChildren, useEffect } from "react";
-import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
 import { PlaygroundDiscriminatedUnionForm } from "./PlaygroundDescriminatedUnionForm";
 import { PlaygroundEnumForm } from "./PlaygroundEnumForm";
 import { PlaygroundListForm } from "./PlaygroundListForm";
@@ -23,11 +22,12 @@ interface PlaygroundTypeReferenceFormProps {
     onOpenStack?: () => void;
     onCloseStack?: () => void;
     renderAsPanel?: boolean;
+    onlyRequired?: boolean;
+    onlyOptional?: boolean;
 }
 
 interface WithPanelProps {
     value: unknown;
-    typeShape: ResolvedTypeReference;
     renderAsPanel: boolean;
     onOpenStack?: () => void;
     onCloseStack?: () => void;
@@ -36,7 +36,6 @@ interface WithPanelProps {
 const WithPanel: FC<PropsWithChildren<WithPanelProps>> = ({
     children,
     value,
-    typeShape,
     renderAsPanel,
     onOpenStack,
     onCloseStack,
@@ -56,13 +55,12 @@ const WithPanel: FC<PropsWithChildren<WithPanelProps>> = ({
         <>
             <div
                 onClick={showPanel}
-                className="group flex h-full min-h-8 w-full min-w-0 shrink cursor-pointer items-center justify-end"
+                className="group flex h-full min-h-8 w-full min-w-0 shrink cursor-pointer items-center"
             >
-                <span className="inline-flex flex-1 shrink items-baseline justify-end gap-2 overflow-hidden">
+                <span className="inline-flex flex-1 shrink items-baseline justify-between gap-2 overflow-hidden">
                     <span className="group-hover:bg-tag-default-light dark:group-hover:bg-tag-default-dark -mx-0.5 min-w-0 shrink truncate whitespace-nowrap rounded px-0.5 font-mono text-xs">
                         {JSON.stringify(value)}
                     </span>
-                    <span className="t-muted whitespace-nowrap text-xs">{renderTypeShorthand(typeShape)}</span>
                 </span>
             </div>
             <Transition
@@ -80,10 +78,23 @@ const WithPanel: FC<PropsWithChildren<WithPanelProps>> = ({
                 <div className="bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark sticky top-0 z-30 flex h-10 items-center border-b px-2">
                     <Button minimal icon={<ArrowLeft />} text="Back" onClick={hidePanel} />
                 </div>
-                <div className="p-4">{children}</div>
+                <div className="mx-auto my-10 flex w-full max-w-2xl flex-col gap-y-4 p-4 pb-10">{children}</div>
             </Transition>
         </>
     );
+};
+
+const createFilter = (onlyRequired: boolean, onlyOptional: boolean) => {
+    if (onlyRequired && onlyOptional) {
+        return () => true;
+    }
+    if (onlyRequired) {
+        return (property: ResolvedObjectProperty) => property.valueShape.type !== "optional";
+    }
+    if (onlyOptional) {
+        return (property: ResolvedObjectProperty) => property.valueShape.type === "optional";
+    }
+    return () => true;
 };
 
 export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> = ({
@@ -95,24 +106,28 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
     onOpenStack,
     onCloseStack,
     renderAsPanel = false,
+    onlyRequired = false,
+    onlyOptional = false,
 }) => {
     return visitDiscriminatedUnion(shape, "type")._visit({
         object: (object) => (
             <WithPanel
                 value={value}
-                typeShape={object}
                 renderAsPanel={renderAsPanel}
                 onOpenStack={onOpenStack}
                 onCloseStack={onCloseStack}
             >
-                <PlaygroundObjectPropertiesForm properties={object.properties()} onChange={onChange} value={value} />
+                <PlaygroundObjectPropertiesForm
+                    properties={object.properties().filter(createFilter(onlyRequired, onlyOptional))}
+                    onChange={onChange}
+                    value={value}
+                />
             </WithPanel>
         ),
         enum: ({ values }) => <PlaygroundEnumForm enumValues={values} onChange={onChange} value={value} />,
         undiscriminatedUnion: (undiscriminatedUnion) => (
             <WithPanel
                 value={value}
-                typeShape={undiscriminatedUnion}
                 renderAsPanel={renderAsPanel}
                 onOpenStack={onOpenStack}
                 onCloseStack={onCloseStack}
@@ -127,7 +142,6 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
         discriminatedUnion: (discriminatedUnion) => (
             <WithPanel
                 value={value}
-                typeShape={discriminatedUnion}
                 renderAsPanel={renderAsPanel}
                 onOpenStack={onOpenStack}
                 onCloseStack={onCloseStack}
@@ -168,7 +182,6 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     minorStepSize={null}
                     value={typeof value === "number" ? value : undefined}
                     onValueChange={onChange}
-                    rightElement={<span className="t-muted mx-2 flex h-[30px] items-center text-xs">{"integer"}</span>}
                     onFocus={onFocus}
                     onBlur={onBlur}
                 />
@@ -180,7 +193,6 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     fill={true}
                     value={typeof value === "number" ? value : undefined}
                     onValueChange={onChange}
-                    rightElement={<span className="t-muted mx-2 flex h-[30px] items-center text-xs">{"double"}</span>}
                     onFocus={onFocus}
                     onBlur={onBlur}
                 />
@@ -193,7 +205,6 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     minorStepSize={null}
                     value={typeof value === "number" ? value : undefined}
                     onValueChange={onChange}
-                    rightElement={<span className="t-muted mx-2 flex h-[30px] items-center text-xs">{"long"}</span>}
                     onFocus={onFocus}
                     onBlur={onBlur}
                 />
@@ -221,7 +232,6 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     value={typeof value === "string" ? value : ""}
                     onValueChange={onChange}
                     placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-                    rightElement={<span className="t-muted mx-2 flex h-[30px] items-center text-xs">{"uuid"}</span>}
                     onFocus={onFocus}
                     onBlur={onBlur}
                 />
@@ -283,6 +293,8 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                 value={value}
                 onFocus={onFocus}
                 onBlur={onBlur}
+                onlyRequired={onlyRequired}
+                onlyOptional={onlyOptional}
             />
         ),
     });
