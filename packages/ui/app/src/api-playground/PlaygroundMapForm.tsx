@@ -60,15 +60,9 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ keyShape, valueS
             return [...oldState.slice(0, idx), { ...oldState[idx]!, value: newValue }, ...oldState.slice(idx + 1)];
         });
     }, []);
-    const handleRemoveItem = useCallback(
-        (idx: number) => {
-            onChange((oldValue: unknown) => {
-                const oldArray = Array.isArray(oldValue) ? oldValue : [];
-                return [...oldArray.slice(0, idx), ...oldArray.slice(idx + 1)];
-            });
-        },
-        [onChange]
-    );
+    const handleRemoveItem = useCallback((idx: number) => {
+        setInternalState((oldArray) => [...oldArray.slice(0, idx), ...oldArray.slice(idx + 1)]);
+    }, []);
     return (
         <div>
             {internalState.length > 0 && (
@@ -102,7 +96,7 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ keyShape, valueS
                             </div>
                         </li>
                     ))}
-                    <li>
+                    <li className="py-2">
                         <Button
                             icon={<Plus />}
                             text="Add new item"

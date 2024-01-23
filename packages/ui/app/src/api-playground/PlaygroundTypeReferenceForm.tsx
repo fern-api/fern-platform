@@ -238,7 +238,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
             </div>
         ),
         base64: () => (
-            <div className="flex min-w-0 flex-1 justify-end">
+            <div className="flex min-w-0 flex-1 py-2">
                 <TextArea
                     fill={true}
                     value={typeof value === "string" ? value : ""}
@@ -279,11 +279,13 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
             </div>
         ),
         unknown: () => (
-            <TextArea
-                fill={true}
-                value={typeof value === "string" ? value : ""}
-                onChange={(e) => onChange(e.target.value)}
-            />
+            <div className="flex min-w-0 flex-1 py-2">
+                <TextArea
+                    fill={true}
+                    value={typeof value === "string" ? value : ""}
+                    onChange={(e) => onChange(e.target.value)}
+                />
+            </div>
         ),
         _other: () => null,
         reference: (reference) => (

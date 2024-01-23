@@ -14,7 +14,6 @@ import {
     createContext,
     Dispatch,
     FC,
-    Fragment,
     PropsWithChildren,
     SetStateAction,
     useCallback,
@@ -229,38 +228,33 @@ export const ApiPlaygroundContextProvider: FC<ApiPlaygroundContextProviderProps>
             }}
         >
             {children}
-            <Transition show={isPlaygroundOpen} as={Fragment}>
-                <Transition.Child
-                    as={Fragment}
-                    enter="ease-out transition-all duration-300"
-                    enterFrom="opacity-0 translate-y-full"
-                    enterTo="opacity-100 translate-y-0"
-                    leave="ease-in transition-all duration-200"
-                    leaveFrom="opacity-100 translate-y-0"
-                    leaveTo="opacity-0 translate-y-full"
-                >
-                    <div
-                        className="bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark fixed inset-x-0 bottom-0 z-20 border-t"
-                        style={{ height }}
-                    >
-                        <div
-                            className="bg-accent-primary dark:bg-accent-primary-dark absolute inset-x-0 -top-1 h-1 cursor-row-resize opacity-0 transition-opacity hover:opacity-100 active:opacity-100"
-                            onMouseDown={handleVerticalResize}
-                        />
-                        <ApiPlaygroundDrawer
-                            navigationItems={apiSections}
-                            auth={selectionState?.apiSection.auth}
-                            apiDefinition={selectionState?.apiDefinition}
-                            endpoint={selectionState?.endpoint}
-                            formState={playgroundFormState}
-                            setFormState={setPlaygroundFormState}
-                            resetWithExample={resetWithExample}
-                            resetWithoutExample={resetWithoutExample}
-                            openSecretsModal={openSecretsModal}
-                            secrets={globalFormSecrets}
-                        />
-                    </div>
-                </Transition.Child>
+            <Transition
+                show={isPlaygroundOpen}
+                className="bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark fixed inset-x-0 bottom-0 z-20 border-t"
+                style={{ height }}
+                enter="ease-out transition-transform duration-300 transform"
+                enterFrom="translate-y-full"
+                enterTo="translate-y-0"
+                leave="ease-in transition-transform duration-200 transform"
+                leaveFrom="translate-y-0"
+                leaveTo="translate-y-full"
+            >
+                <div
+                    className="bg-accent-primary dark:bg-accent-primary-dark absolute inset-x-0 -top-1 h-1 cursor-row-resize opacity-0 transition-opacity hover:opacity-100 active:opacity-100"
+                    onMouseDown={handleVerticalResize}
+                />
+                <ApiPlaygroundDrawer
+                    navigationItems={apiSections}
+                    auth={selectionState?.apiSection.auth}
+                    apiDefinition={selectionState?.apiDefinition}
+                    endpoint={selectionState?.endpoint}
+                    formState={playgroundFormState}
+                    setFormState={setPlaygroundFormState}
+                    resetWithExample={resetWithExample}
+                    resetWithoutExample={resetWithoutExample}
+                    openSecretsModal={openSecretsModal}
+                    secrets={globalFormSecrets}
+                />
             </Transition>
             <PlaygroundSecretsModal
                 secrets={globalFormSecrets}

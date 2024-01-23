@@ -56,7 +56,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
         <div className="divide-border-default-light dark:divide-border-default-dark flex min-h-0 flex-1 shrink items-stretch divide-x">
             <div
                 className={"relative flex min-w-0 shrink flex-col overflow-hidden"}
-                style={{ width: `${width * 100}%` }}
+                style={{ width: response.type !== "notStartedLoading" ? `${width * 100}%` : "100%" }}
             >
                 <div className="border-border-default-light dark:border-border-default-dark flex h-10 w-full shrink-0 items-center justify-between border-b px-4 py-2">
                     <span className="t-muted text-xs uppercase">Request</span>
@@ -153,8 +153,9 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                     />
                 )}
             </div>
-            <div className="relative flex min-h-0 min-w-0 flex-1 shrink flex-col">
-                {/* {response.type !== "notStartedLoading" && endpoint != null && (
+            {response.type !== "notStartedLoading" && (
+                <div className="relative flex min-h-0 min-w-0 flex-1 shrink flex-col">
+                    {/* {response.type !== "notStartedLoading" && endpoint != null && (
                     <div className="absolute bottom-4 right-4 z-20">
                         <button
                             className="dark:text-dark bg-accent-primary dark:bg-accent-primary-dark hover:bg-accent-primary/70 dark:hover:bg-accent-primary-dark/70 text-accent-primary-contrast dark:text-accent-primary-dark-contrast group flex items-center justify-center space-x-3 rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
@@ -171,57 +172,51 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                     </div>
                 )} */}
 
-                {response.type !== "notStartedLoading" && (
-                    <>
-                        <div
-                            className="bg-accent-primary dark:bg-accent-primary-dark absolute inset-y-0 z-30 -ml-0.5 w-1 cursor-col-resize opacity-0 transition-opacity hover:opacity-100 active:opacity-100"
-                            onMouseDown={handleResize}
-                        />
-                        <div className="border-border-default-light dark:border-border-default-dark flex h-10 w-full shrink-0 items-center justify-between border-b px-4 py-2">
-                            <span className="t-muted text-xs uppercase">Response</span>
+                    <div
+                        className="bg-accent-primary dark:bg-accent-primary-dark absolute inset-y-0 z-30 -ml-0.5 w-1 cursor-col-resize opacity-0 transition-opacity hover:opacity-100 active:opacity-100"
+                        onMouseDown={handleResize}
+                    />
+                    <div className="border-border-default-light dark:border-border-default-dark flex h-10 w-full shrink-0 items-center justify-between border-b px-4 py-2">
+                        <span className="t-muted text-xs uppercase">Response</span>
 
-                            {response.type === "loaded" && (
-                                <div className="flex items-center gap-2 text-xs">
-                                    <span
-                                        className={classNames(
-                                            "font-mono flex items-center py-1 px-1.5 rounded-md h-5",
-                                            {
-                                                ["bg-method-get/10 text-method-get dark:bg-method-get-dark/10 dark:text-method-get-dark"]:
-                                                    response.value.status >= 200 && response.value.status < 300,
-                                                ["bg-method-delete/10 text-method-delete dark:bg-method-delete-dark/10 dark:text-method-delete-dark"]:
-                                                    response.value.status > 300,
-                                            }
-                                        )}
-                                    >
-                                        status: {response.value.status}
-                                    </span>
+                        {response.type === "loaded" && (
+                            <div className="flex items-center gap-2 text-xs">
+                                <span
+                                    className={classNames("font-mono flex items-center py-1 px-1.5 rounded-md h-5", {
+                                        ["bg-method-get/10 text-method-get dark:bg-method-get-dark/10 dark:text-method-get-dark"]:
+                                            response.value.status >= 200 && response.value.status < 300,
+                                        ["bg-method-delete/10 text-method-delete dark:bg-method-delete-dark/10 dark:text-method-delete-dark"]:
+                                            response.value.status > 300,
+                                    })}
+                                >
+                                    status: {response.value.status}
+                                </span>
+                                <span
+                                    className={
+                                        "bg-tag-default-light dark:bg-tag-default-dark flex h-5 items-center rounded-md px-1.5 py-1 font-mono"
+                                    }
+                                >
+                                    time: {round(response.value.time, 2)}ms
+                                </span>
+                                {!isEmpty(response.value.size) && (
                                     <span
                                         className={
                                             "bg-tag-default-light dark:bg-tag-default-dark flex h-5 items-center rounded-md px-1.5 py-1 font-mono"
                                         }
                                     >
-                                        time: {round(response.value.time, 2)}ms
+                                        size: {response.value.size}b
                                     </span>
-                                    {!isEmpty(response.value.size) && (
-                                        <span
-                                            className={
-                                                "bg-tag-default-light dark:bg-tag-default-dark flex h-5 items-center rounded-md px-1.5 py-1 font-mono"
-                                            }
-                                        >
-                                            size: {response.value.size}b
-                                        </span>
-                                    )}
-                                </div>
-                            )}
-                        </div>
-                        {visitLoadable(response, {
-                            loading: () => <NonIdealState className="flex-1" icon={<Spinner />} />,
-                            loaded: (response) => <PlaygroundResponsePreview responseBody={response.body} />,
-                            failed: () => <span>Failed</span>,
-                        })}
-                    </>
-                )}
-            </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                    {visitLoadable(response, {
+                        loading: () => <NonIdealState className="flex-1" icon={<Spinner />} />,
+                        loaded: (response) => <PlaygroundResponsePreview responseBody={response.body} />,
+                        failed: () => <span>Failed</span>,
+                    })}
+                </div>
+            )}
         </div>
     );
 };

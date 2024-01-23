@@ -3,6 +3,7 @@ import { ArrowTopRight, Cross, GlobeNetwork, Person } from "@blueprintjs/icons";
 import { isApiNode, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import {
     ResolvedEndpointDefinition,
+    ResolvedHttpRequestBodyShape,
     ResolvedNavigationItemApiSection,
     visitResolvedHttpRequestBodyShape,
 } from "@fern-ui/app-utils";
@@ -303,7 +304,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
 
                 {endpoint.headers.length > 0 && (
                     <section className="mb-8">
-                        <h6 className="t-muted m-0 mb-2">Headers</h6>
+                        <h6 className="t-muted m-0 mb-2">Header</h6>
                         <ul className="divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark list-none divide-y border-y">
                             {endpoint.headers.map((header) => (
                                 <PlaygroundObjectPropertyForm
@@ -326,7 +327,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
 
                 {endpoint.pathParameters.length > 0 && (
                     <section className="mb-8">
-                        <h6 className="t-muted m-0 mb-2">Path parameters</h6>
+                        <h6 className="t-muted m-0 mb-2">Path parameter</h6>
                         <ul className="divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark list-none divide-y border-y">
                             {endpoint.pathParameters.map((pathParameter) => (
                                 <PlaygroundObjectPropertyForm
@@ -349,7 +350,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
 
                 {endpoint.queryParameters.length > 0 && (
                     <section className="mb-8">
-                        <h6 className="t-muted m-0 mb-2">Query parameters</h6>
+                        <h6 className="t-muted m-0 mb-2">Query parameter</h6>
                         <ul className="divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark list-none divide-y border-y">
                             {endpoint.queryParameters.map((queryParameter) => (
                                 <PlaygroundObjectPropertyForm
@@ -370,9 +371,9 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                     </section>
                 )}
 
-                {endpoint.requestBody != null && (
+                {endpoint.requestBody != null && hasRequiredFields(endpoint.requestBody.shape) && (
                     <section className="mb-8">
-                        <h6 className="t-muted m-0 mb-2">Required body</h6>
+                        <h6 className="t-muted m-0 mb-2">Required body parameter</h6>
 
                         {visitResolvedHttpRequestBodyShape(endpoint.requestBody.shape, {
                             fileUpload: () => <span>fileUpload</span>,
@@ -388,9 +389,9 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                     </section>
                 )}
 
-                {endpoint.requestBody != null && (
+                {endpoint.requestBody != null && hasOptionalFields(endpoint.requestBody.shape) && (
                     <section className="mb-8">
-                        <h6 className="t-muted m-0 mb-2">Optional body</h6>
+                        <h6 className="t-muted m-0 mb-2">Optional body parameter</h6>
 
                         {visitResolvedHttpRequestBodyShape(endpoint.requestBody.shape, {
                             fileUpload: () => <span>fileUpload</span>,
@@ -418,3 +419,65 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
         </div>
     );
 };
+
+function hasRequiredFields(bodyShape: ResolvedHttpRequestBodyShape): boolean {
+    return visitResolvedHttpRequestBodyShape(bodyShape, {
+        fileUpload: () => true,
+        typeReference: (shape) =>
+            visitDiscriminatedUnion(shape, "type")._visit({
+                string: () => true,
+                boolean: () => true,
+                object: (object) => object.properties().some((property) => hasRequiredFields(property.valueShape)),
+                undiscriminatedUnion: () => true,
+                discriminatedUnion: () => true,
+                enum: () => true,
+                integer: () => true,
+                double: () => true,
+                long: () => true,
+                datetime: () => true,
+                uuid: () => true,
+                base64: () => true,
+                date: () => true,
+                optional: () => false,
+                list: () => true,
+                set: () => true,
+                map: () => true,
+                booleanLiteral: () => true,
+                stringLiteral: () => true,
+                unknown: () => true,
+                reference: (reference) => hasRequiredFields(reference.shape()),
+                _other: () => true,
+            }),
+    });
+}
+
+function hasOptionalFields(bodyShape: ResolvedHttpRequestBodyShape): boolean {
+    return visitResolvedHttpRequestBodyShape(bodyShape, {
+        fileUpload: () => false,
+        typeReference: (shape) =>
+            visitDiscriminatedUnion(shape, "type")._visit({
+                string: () => false,
+                boolean: () => false,
+                object: (object) => object.properties().some((property) => hasOptionalFields(property.valueShape)),
+                undiscriminatedUnion: () => false,
+                discriminatedUnion: () => false,
+                enum: () => false,
+                integer: () => false,
+                double: () => false,
+                long: () => false,
+                datetime: () => false,
+                uuid: () => false,
+                base64: () => false,
+                date: () => false,
+                optional: () => true,
+                list: () => false,
+                set: () => false,
+                map: () => false,
+                booleanLiteral: () => false,
+                stringLiteral: () => false,
+                unknown: () => false,
+                reference: (reference) => hasOptionalFields(reference.shape()),
+                _other: () => false,
+            }),
+    });
+}
