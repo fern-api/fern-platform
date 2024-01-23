@@ -49,6 +49,7 @@
     "@fortawesome/pro-light-svg-icons": "^6.4.2",
     "@fortawesome/pro-regular-svg-icons": "^6.4.2",
     "@fortawesome/pro-solid-svg-icons": "^6.4.2",
+    "@vercel/speed-insights": "^1.0.7",
     "lodash-es": "^4.17.21",
     "next": "^14.0.4",
     "react": "^18.2.0",
