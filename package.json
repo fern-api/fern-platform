@@ -16,7 +16,7 @@
     "test": "yarn compile && jest --passWithNoTests",
     "test:only": "jest --passWithNoTests",
     "lint:fix": "yarn lint:monorepo:fix && yarn root-package:fix && yarn lint:eslint:fix && yarn lint:style:fix && yarn format:fix",
-    "lint:eslint": "eslint --max-warnings 0 . --report-unused-disable-directives",
+    "lint:eslint": "yarn compile && eslint --max-warnings 0 . --report-unused-disable-directives",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "lint:monorepo": "mrlint lint",
     "lint:monorepo:fix": "yarn lint:monorepo --fix",

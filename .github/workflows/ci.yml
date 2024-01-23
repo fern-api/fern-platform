@@ -1,23 +1,111 @@
-name: Dependabot auto-merge
-on: pull_request
+name: CI
 
-permissions:
-  contents: write
-  pull-requests: write
+# Controls when the workflow will run
+on:
+  push:
+    branches:
+      - "**"
 
 jobs:
-  dependabot:
+  # Jobs go here
+  check:
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
-      - name: Dependabot metadata
-        id: metadata
-        uses: dependabot/fetch-metadata@v1
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
         with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-      - name: Enable auto-merge for Dependabot PRs
-        if: ${{contains(steps.metadata.outputs.dependency-names, 'my-dependency') && steps.metadata.outputs.update-type == 'version-update:semver-patch'}}
-        run: gh pr merge --auto --merge "$PR_URL"
-        env:
-          PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          node-version: 18
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Check root package
+        run: yarn root-package:check
+
+      - name: Check dependencies
+        run: yarn depcheck
+
+      - name: Check format
+        run: yarn format:check
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Lint monorepo
+        run: yarn lint:monorepo
+
+      - name: Lint style
+        run: yarn lint:style
+
+      - name: Lint typescript
+        run: yarn lint:eslint
+
+  organize-imports:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Organize imports
+        # not using --list-different because sometimes this removes a trailing
+        # comma that prettier adds back
+        run: |
+          yarn organize-imports
+          yarn format:fix
+          git --no-pager diff --exit-code
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Run tests
+        run: yarn test --ci
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code
+
+  check-docs-release-is-allowed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Check release blockers
+        run: yarn check-docs-release-blockers
