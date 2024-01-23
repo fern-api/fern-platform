@@ -1,14 +1,3 @@
-import { Head, Html, Main, NextScript } from "next/document";
-import { ReactElement } from "react";
+import { NextDocument } from "@fern-ui/ui";
 
-export default function Document(): ReactElement {
-    return (
-        <Html lang="en" suppressHydrationWarning>
-            <Head />
-            <body className="overscroll-y-none antialiased">
-                <Main />
-                <NextScript />
-            </body>
-        </Html>
-    );
-}
+export default NextDocument;

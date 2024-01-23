@@ -68,6 +68,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/ui/app"\
       },\
       {\
+        "name": "@fern-ui/auth-fe-bundle",\
+        "reference": "workspace:packages/ui/auth-fe-bundle"\
+      },\
+      {\
         "name": "@fern-ui/fe-bundle",\
         "reference": "workspace:packages/ui/fe-bundle"\
       },\
@@ -80,6 +84,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
     "fallbackExclusionList": [\
       ["@fern-ui/app-utils", ["workspace:packages/commons/app-utils"]],\
+      ["@fern-ui/auth-fe-bundle", ["workspace:packages/ui/auth-fe-bundle"]],\
       ["@fern-ui/cdk", ["workspace:packages/cdk"]],\
       ["@fern-ui/common-components", ["workspace:packages/commons/react/common-components"]],\
       ["@fern-ui/compile-root", ["workspace:packages/_root"]],\
@@ -4281,6 +4286,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
+      ["@fern-ui/auth-fe-bundle", [\
+        ["workspace:packages/ui/auth-fe-bundle", {\
+          "packageLocation": "./packages/ui/auth-fe-bundle/",\
+          "packageDependencies": [\
+            ["@fern-ui/auth-fe-bundle", "workspace:packages/ui/auth-fe-bundle"],\
+            ["@fern-ui/ui", "workspace:packages/ui/app"],\
+            ["@tailwindcss/typography", "virtual:f54f4819912018751f18b6d7c671a76da3592c59ddf777dcc3e1e343aee2e64b03a8ff0e3bdcf8f547ca49c657bfb775284403686a4fea82b24ae8d2f3977256#npm:0.5.10"],\
+            ["@types/jest", "npm:29.5.11"],\
+            ["@types/node", "npm:18.18.13"],\
+            ["depcheck", "npm:1.4.3"],\
+            ["eslint", "npm:8.56.0"],\
+            ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.7.0"],\
+            ["next", "virtual:f54f4819912018751f18b6d7c671a76da3592c59ddf777dcc3e1e343aee2e64b03a8ff0e3bdcf8f547ca49c657bfb775284403686a4fea82b24ae8d2f3977256#npm:14.0.4"],\
+            ["organize-imports-cli", "npm:0.10.0"],\
+            ["prettier", "npm:2.8.8"],\
+            ["stylelint", "npm:16.1.0"],\
+            ["tailwindcss", "npm:3.4.1"],\
+            ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
       ["@fern-ui/cdk", [\
         ["workspace:packages/cdk", {\
           "packageLocation": "./packages/cdk/",\
@@ -4380,31 +4407,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/ui/fe-bundle/",\
           "packageDependencies": [\
             ["@fern-ui/fe-bundle", "workspace:packages/ui/fe-bundle"],\
-            ["@fern-api/fdr-sdk", "npm:0.44.0-1-geb2e930"],\
-            ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
-            ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
-            ["@fortawesome/fontawesome-svg-core", "npm:6.4.2"],\
-            ["@fortawesome/free-brands-svg-icons", "npm:6.4.2"],\
-            ["@fortawesome/free-solid-svg-icons", "npm:6.4.2"],\
-            ["@fortawesome/pro-duotone-svg-icons", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-duotone-svg-icons%2F-%2F6.4.2%2Fpro-duotone-svg-icons-6.4.2.tgz"],\
-            ["@fortawesome/pro-light-svg-icons", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-light-svg-icons%2F-%2F6.4.2%2Fpro-light-svg-icons-6.4.2.tgz"],\
-            ["@fortawesome/pro-regular-svg-icons", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-regular-svg-icons%2F-%2F6.4.2%2Fpro-regular-svg-icons-6.4.2.tgz"],\
-            ["@fortawesome/pro-solid-svg-icons", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-solid-svg-icons%2F-%2F6.4.2%2Fpro-solid-svg-icons-6.4.2.tgz"],\
             ["@next/bundle-analyzer", "npm:14.0.3"],\
-            ["@tailwindcss/typography", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:0.5.10"],\
+            ["@tailwindcss/typography", "virtual:f54f4819912018751f18b6d7c671a76da3592c59ddf777dcc3e1e343aee2e64b03a8ff0e3bdcf8f547ca49c657bfb775284403686a4fea82b24ae8d2f3977256#npm:0.5.10"],\
             ["@types/jest", "npm:29.5.11"],\
-            ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.18.13"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", "npm:18.2.18"],\
-            ["@vercel/speed-insights", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:1.0.7"],\
             ["autoprefixer", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:10.4.16"],\
             ["depcheck", "npm:1.4.3"],\
             ["env-cmd", "https://github.com/toddbluhm/env-cmd.git#commit=8f35b71651f6a78710308ff38ab30896ea72ee8b"],\
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.7.0"],\
-            ["lodash-es", "npm:4.17.21"],\
             ["next", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:14.0.4"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["postcss", "npm:8.4.31"],\
@@ -4463,19 +4477,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/ui/local-preview-bundle/",\
           "packageDependencies": [\
             ["@fern-ui/local-preview-bundle", "workspace:packages/ui/local-preview-bundle"],\
-            ["@fern-api/fdr-sdk", "npm:0.44.0-1-geb2e930"],\
-            ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
-            ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
-            ["@fortawesome/fontawesome-svg-core", "npm:6.4.2"],\
-            ["@fortawesome/free-brands-svg-icons", "npm:6.4.2"],\
-            ["@fortawesome/free-solid-svg-icons", "npm:6.4.2"],\
-            ["@fortawesome/pro-duotone-svg-icons", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-duotone-svg-icons%2F-%2F6.4.2%2Fpro-duotone-svg-icons-6.4.2.tgz"],\
-            ["@fortawesome/pro-light-svg-icons", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-light-svg-icons%2F-%2F6.4.2%2Fpro-light-svg-icons-6.4.2.tgz"],\
-            ["@fortawesome/pro-regular-svg-icons", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-regular-svg-icons%2F-%2F6.4.2%2Fpro-regular-svg-icons-6.4.2.tgz"],\
-            ["@fortawesome/pro-solid-svg-icons", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-solid-svg-icons%2F-%2F6.4.2%2Fpro-solid-svg-icons-6.4.2.tgz"],\
             ["@next/bundle-analyzer", "npm:14.0.3"],\
-            ["@tailwindcss/typography", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:0.5.10"],\
+            ["@tailwindcss/typography", "virtual:f54f4819912018751f18b6d7c671a76da3592c59ddf777dcc3e1e343aee2e64b03a8ff0e3bdcf8f547ca49c657bfb775284403686a4fea82b24ae8d2f3977256#npm:0.5.10"],\
             ["@types/jest", "npm:29.5.11"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.18.13"],\
@@ -4646,7 +4650,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/loadable", "workspace:packages/commons/loadable"],\
             ["@fern-ui/react-commons", "workspace:packages/commons/react/react-commons"],\
             ["@fontsource/ibm-plex-mono", "npm:4.5.13"],\
-            ["@fortawesome/fontawesome-svg-core", "npm:6.4.2"],\
+            ["@fortawesome/fontawesome-svg-core", "npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Ffontawesome-svg-core%2F-%2F6.5.1%2Ffontawesome-svg-core-6.5.1.tgz"],\
+            ["@fortawesome/free-brands-svg-icons", "npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Ffree-brands-svg-icons%2F-%2F6.5.1%2Ffree-brands-svg-icons-6.5.1.tgz"],\
+            ["@fortawesome/free-solid-svg-icons", "npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Ffree-solid-svg-icons%2F-%2F6.5.1%2Ffree-solid-svg-icons-6.5.1.tgz"],\
+            ["@fortawesome/pro-duotone-svg-icons", "npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-duotone-svg-icons%2F-%2F6.5.1%2Fpro-duotone-svg-icons-6.5.1.tgz"],\
+            ["@fortawesome/pro-light-svg-icons", "npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-light-svg-icons%2F-%2F6.5.1%2Fpro-light-svg-icons-6.5.1.tgz"],\
+            ["@fortawesome/pro-regular-svg-icons", "npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-regular-svg-icons%2F-%2F6.5.1%2Fpro-regular-svg-icons-6.5.1.tgz"],\
+            ["@fortawesome/pro-solid-svg-icons", "npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-solid-svg-icons%2F-%2F6.5.1%2Fpro-solid-svg-icons-6.5.1.tgz"],\
             ["@fortawesome/react-fontawesome", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:0.2.0"],\
             ["@headlessui/react", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.7.18"],\
             ["@react-hook/size", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.1.2"],\
@@ -4660,6 +4670,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react-syntax-highlighter", "npm:15.5.11"],\
             ["@types/react-test-renderer", "npm:18.0.7"],\
             ["@types/tinycolor2", "npm:1.4.6"],\
+            ["@vercel/speed-insights", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.0.7"],\
             ["algoliasearch", "npm:4.22.1"],\
             ["classnames", "npm:2.5.1"],\
             ["depcheck", "npm:1.4.3"],\
@@ -4706,80 +4717,80 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fortawesome/fontawesome-common-types", [\
-        ["npm:6.4.2", {\
-          "packageLocation": "./.yarn/unplugged/@fortawesome-fontawesome-common-types-npm-6.4.2-1f8b184e1e/node_modules/@fortawesome/fontawesome-common-types/",\
+        ["npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Ffontawesome-common-types%2F-%2F6.5.1%2Ffontawesome-common-types-6.5.1.tgz", {\
+          "packageLocation": "./.yarn/unplugged/@fortawesome-fontawesome-common-types-npm-6.5.1-4399949ed0/node_modules/@fortawesome/fontawesome-common-types/",\
           "packageDependencies": [\
-            ["@fortawesome/fontawesome-common-types", "npm:6.4.2"]\
+            ["@fortawesome/fontawesome-common-types", "npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Ffontawesome-common-types%2F-%2F6.5.1%2Ffontawesome-common-types-6.5.1.tgz"]\
           ],\
           "linkType": "HARD"\
         }]\
       ]],\
       ["@fortawesome/fontawesome-svg-core", [\
-        ["npm:6.4.2", {\
-          "packageLocation": "./.yarn/unplugged/@fortawesome-fontawesome-svg-core-npm-6.4.2-530d31922b/node_modules/@fortawesome/fontawesome-svg-core/",\
+        ["npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Ffontawesome-svg-core%2F-%2F6.5.1%2Ffontawesome-svg-core-6.5.1.tgz", {\
+          "packageLocation": "./.yarn/unplugged/@fortawesome-fontawesome-svg-core-npm-6.5.1-64fd39325c/node_modules/@fortawesome/fontawesome-svg-core/",\
           "packageDependencies": [\
-            ["@fortawesome/fontawesome-svg-core", "npm:6.4.2"],\
-            ["@fortawesome/fontawesome-common-types", "npm:6.4.2"]\
+            ["@fortawesome/fontawesome-svg-core", "npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Ffontawesome-svg-core%2F-%2F6.5.1%2Ffontawesome-svg-core-6.5.1.tgz"],\
+            ["@fortawesome/fontawesome-common-types", "npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Ffontawesome-common-types%2F-%2F6.5.1%2Ffontawesome-common-types-6.5.1.tgz"]\
           ],\
           "linkType": "HARD"\
         }]\
       ]],\
       ["@fortawesome/free-brands-svg-icons", [\
-        ["npm:6.4.2", {\
-          "packageLocation": "./.yarn/unplugged/@fortawesome-free-brands-svg-icons-npm-6.4.2-e571a9405c/node_modules/@fortawesome/free-brands-svg-icons/",\
+        ["npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Ffree-brands-svg-icons%2F-%2F6.5.1%2Ffree-brands-svg-icons-6.5.1.tgz", {\
+          "packageLocation": "./.yarn/unplugged/@fortawesome-free-brands-svg-icons-npm-6.5.1-c1ff0cee20/node_modules/@fortawesome/free-brands-svg-icons/",\
           "packageDependencies": [\
-            ["@fortawesome/free-brands-svg-icons", "npm:6.4.2"],\
-            ["@fortawesome/fontawesome-common-types", "npm:6.4.2"]\
+            ["@fortawesome/free-brands-svg-icons", "npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Ffree-brands-svg-icons%2F-%2F6.5.1%2Ffree-brands-svg-icons-6.5.1.tgz"],\
+            ["@fortawesome/fontawesome-common-types", "npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Ffontawesome-common-types%2F-%2F6.5.1%2Ffontawesome-common-types-6.5.1.tgz"]\
           ],\
           "linkType": "HARD"\
         }]\
       ]],\
       ["@fortawesome/free-solid-svg-icons", [\
-        ["npm:6.4.2", {\
-          "packageLocation": "./.yarn/unplugged/@fortawesome-free-solid-svg-icons-npm-6.4.2-c582f5c032/node_modules/@fortawesome/free-solid-svg-icons/",\
+        ["npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Ffree-solid-svg-icons%2F-%2F6.5.1%2Ffree-solid-svg-icons-6.5.1.tgz", {\
+          "packageLocation": "./.yarn/unplugged/@fortawesome-free-solid-svg-icons-npm-6.5.1-d790fa2f25/node_modules/@fortawesome/free-solid-svg-icons/",\
           "packageDependencies": [\
-            ["@fortawesome/free-solid-svg-icons", "npm:6.4.2"],\
-            ["@fortawesome/fontawesome-common-types", "npm:6.4.2"]\
+            ["@fortawesome/free-solid-svg-icons", "npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Ffree-solid-svg-icons%2F-%2F6.5.1%2Ffree-solid-svg-icons-6.5.1.tgz"],\
+            ["@fortawesome/fontawesome-common-types", "npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Ffontawesome-common-types%2F-%2F6.5.1%2Ffontawesome-common-types-6.5.1.tgz"]\
           ],\
           "linkType": "HARD"\
         }]\
       ]],\
       ["@fortawesome/pro-duotone-svg-icons", [\
-        ["npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-duotone-svg-icons%2F-%2F6.4.2%2Fpro-duotone-svg-icons-6.4.2.tgz", {\
-          "packageLocation": "./.yarn/unplugged/@fortawesome-pro-duotone-svg-icons-npm-6.4.2-f0a98834db/node_modules/@fortawesome/pro-duotone-svg-icons/",\
+        ["npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-duotone-svg-icons%2F-%2F6.5.1%2Fpro-duotone-svg-icons-6.5.1.tgz", {\
+          "packageLocation": "./.yarn/unplugged/@fortawesome-pro-duotone-svg-icons-npm-6.5.1-7896266a48/node_modules/@fortawesome/pro-duotone-svg-icons/",\
           "packageDependencies": [\
-            ["@fortawesome/pro-duotone-svg-icons", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-duotone-svg-icons%2F-%2F6.4.2%2Fpro-duotone-svg-icons-6.4.2.tgz"],\
-            ["@fortawesome/fontawesome-common-types", "npm:6.4.2"]\
+            ["@fortawesome/pro-duotone-svg-icons", "npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-duotone-svg-icons%2F-%2F6.5.1%2Fpro-duotone-svg-icons-6.5.1.tgz"],\
+            ["@fortawesome/fontawesome-common-types", "npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Ffontawesome-common-types%2F-%2F6.5.1%2Ffontawesome-common-types-6.5.1.tgz"]\
           ],\
           "linkType": "HARD"\
         }]\
       ]],\
       ["@fortawesome/pro-light-svg-icons", [\
-        ["npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-light-svg-icons%2F-%2F6.4.2%2Fpro-light-svg-icons-6.4.2.tgz", {\
-          "packageLocation": "./.yarn/unplugged/@fortawesome-pro-light-svg-icons-npm-6.4.2-f9513a5b14/node_modules/@fortawesome/pro-light-svg-icons/",\
+        ["npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-light-svg-icons%2F-%2F6.5.1%2Fpro-light-svg-icons-6.5.1.tgz", {\
+          "packageLocation": "./.yarn/unplugged/@fortawesome-pro-light-svg-icons-npm-6.5.1-cc49b87862/node_modules/@fortawesome/pro-light-svg-icons/",\
           "packageDependencies": [\
-            ["@fortawesome/pro-light-svg-icons", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-light-svg-icons%2F-%2F6.4.2%2Fpro-light-svg-icons-6.4.2.tgz"],\
-            ["@fortawesome/fontawesome-common-types", "npm:6.4.2"]\
+            ["@fortawesome/pro-light-svg-icons", "npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-light-svg-icons%2F-%2F6.5.1%2Fpro-light-svg-icons-6.5.1.tgz"],\
+            ["@fortawesome/fontawesome-common-types", "npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Ffontawesome-common-types%2F-%2F6.5.1%2Ffontawesome-common-types-6.5.1.tgz"]\
           ],\
           "linkType": "HARD"\
         }]\
       ]],\
       ["@fortawesome/pro-regular-svg-icons", [\
-        ["npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-regular-svg-icons%2F-%2F6.4.2%2Fpro-regular-svg-icons-6.4.2.tgz", {\
-          "packageLocation": "./.yarn/unplugged/@fortawesome-pro-regular-svg-icons-npm-6.4.2-64f69e3e7f/node_modules/@fortawesome/pro-regular-svg-icons/",\
+        ["npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-regular-svg-icons%2F-%2F6.5.1%2Fpro-regular-svg-icons-6.5.1.tgz", {\
+          "packageLocation": "./.yarn/unplugged/@fortawesome-pro-regular-svg-icons-npm-6.5.1-924ea76bde/node_modules/@fortawesome/pro-regular-svg-icons/",\
           "packageDependencies": [\
-            ["@fortawesome/pro-regular-svg-icons", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-regular-svg-icons%2F-%2F6.4.2%2Fpro-regular-svg-icons-6.4.2.tgz"],\
-            ["@fortawesome/fontawesome-common-types", "npm:6.4.2"]\
+            ["@fortawesome/pro-regular-svg-icons", "npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-regular-svg-icons%2F-%2F6.5.1%2Fpro-regular-svg-icons-6.5.1.tgz"],\
+            ["@fortawesome/fontawesome-common-types", "npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Ffontawesome-common-types%2F-%2F6.5.1%2Ffontawesome-common-types-6.5.1.tgz"]\
           ],\
           "linkType": "HARD"\
         }]\
       ]],\
       ["@fortawesome/pro-solid-svg-icons", [\
-        ["npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-solid-svg-icons%2F-%2F6.4.2%2Fpro-solid-svg-icons-6.4.2.tgz", {\
-          "packageLocation": "./.yarn/unplugged/@fortawesome-pro-solid-svg-icons-npm-6.4.2-291c35e3da/node_modules/@fortawesome/pro-solid-svg-icons/",\
+        ["npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-solid-svg-icons%2F-%2F6.5.1%2Fpro-solid-svg-icons-6.5.1.tgz", {\
+          "packageLocation": "./.yarn/unplugged/@fortawesome-pro-solid-svg-icons-npm-6.5.1-264be7397e/node_modules/@fortawesome/pro-solid-svg-icons/",\
           "packageDependencies": [\
-            ["@fortawesome/pro-solid-svg-icons", "npm:6.4.2::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-solid-svg-icons%2F-%2F6.4.2%2Fpro-solid-svg-icons-6.4.2.tgz"],\
-            ["@fortawesome/fontawesome-common-types", "npm:6.4.2"]\
+            ["@fortawesome/pro-solid-svg-icons", "npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Fpro-solid-svg-icons%2F-%2F6.5.1%2Fpro-solid-svg-icons-6.5.1.tgz"],\
+            ["@fortawesome/fontawesome-common-types", "npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Ffontawesome-common-types%2F-%2F6.5.1%2Ffontawesome-common-types-6.5.1.tgz"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -4796,7 +4807,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/__virtual__/@fortawesome-react-fontawesome-virtual-4761f86e1d/0/cache/@fortawesome-react-fontawesome-npm-0.2.0-a36215138f-f652a0c217.zip/node_modules/@fortawesome/react-fontawesome/",\
           "packageDependencies": [\
             ["@fortawesome/react-fontawesome", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:0.2.0"],\
-            ["@fortawesome/fontawesome-svg-core", "npm:6.4.2"],\
+            ["@fortawesome/fontawesome-svg-core", "npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.fontawesome.com%2F%40fortawesome%2Ffontawesome-svg-core%2F-%2F6.5.1%2Ffontawesome-svg-core-6.5.1.tgz"],\
             ["@types/fortawesome__fontawesome-svg-core", null],\
             ["@types/react", "npm:18.0.20"],\
             ["prop-types", "npm:15.8.1"],\
@@ -5737,10 +5748,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:0.5.10", {\
-          "packageLocation": "./.yarn/__virtual__/@tailwindcss-typography-virtual-77029918de/0/cache/@tailwindcss-typography-npm-0.5.10-2b2ed3a63b-9e7cbef661.zip/node_modules/@tailwindcss/typography/",\
+        ["virtual:f54f4819912018751f18b6d7c671a76da3592c59ddf777dcc3e1e343aee2e64b03a8ff0e3bdcf8f547ca49c657bfb775284403686a4fea82b24ae8d2f3977256#npm:0.5.10", {\
+          "packageLocation": "./.yarn/__virtual__/@tailwindcss-typography-virtual-2c27b65d93/0/cache/@tailwindcss-typography-npm-0.5.10-2b2ed3a63b-9e7cbef661.zip/node_modules/@tailwindcss/typography/",\
           "packageDependencies": [\
-            ["@tailwindcss/typography", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:0.5.10"],\
+            ["@tailwindcss/typography", "virtual:f54f4819912018751f18b6d7c671a76da3592c59ddf777dcc3e1e343aee2e64b03a8ff0e3bdcf8f547ca49c657bfb775284403686a4fea82b24ae8d2f3977256#npm:0.5.10"],\
             ["@types/tailwindcss", null],\
             ["lodash.castarray", "npm:4.4.0"],\
             ["lodash.isplainobject", "npm:4.0.6"],\
@@ -6876,16 +6887,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ]],\
       ["@vercel/speed-insights", [\
         ["npm:1.0.7", {\
-          "packageLocation": "./.yarn/unplugged/@vercel-speed-insights-virtual-f246288bac/node_modules/@vercel/speed-insights/",\
+          "packageLocation": "./.yarn/unplugged/@vercel-speed-insights-virtual-f9fe9883fd/node_modules/@vercel/speed-insights/",\
           "packageDependencies": [\
             ["@vercel/speed-insights", "npm:1.0.7"]\
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:1.0.7", {\
-          "packageLocation": "./.yarn/unplugged/@vercel-speed-insights-virtual-f246288bac/node_modules/@vercel/speed-insights/",\
+        ["virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.0.7", {\
+          "packageLocation": "./.yarn/unplugged/@vercel-speed-insights-virtual-f9fe9883fd/node_modules/@vercel/speed-insights/",\
           "packageDependencies": [\
-            ["@vercel/speed-insights", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:1.0.7"],\
+            ["@vercel/speed-insights", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.0.7"],\
             ["@sveltejs/kit", null],\
             ["@types/next", null],\
             ["@types/react", "npm:18.0.20"],\
@@ -6893,7 +6904,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/sveltejs__kit", null],\
             ["@types/vue", null],\
             ["@types/vue-router", null],\
-            ["next", "virtual:513b573dadecb2e53485d1d420245b36c5c83edc3fbf86eee8f7b0afd025eda848cf0f2926d4221e8442f13b570dfe0c9f589b89f35fea0b33c733f83aca7ca6#npm:14.0.4"],\
+            ["next", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:14.0.4"],\
             ["react", "npm:18.2.0"],\
             ["svelte", null],\
             ["vue", null],\
@@ -15595,6 +15606,48 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             "sass"\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["virtual:f54f4819912018751f18b6d7c671a76da3592c59ddf777dcc3e1e343aee2e64b03a8ff0e3bdcf8f547ca49c657bfb775284403686a4fea82b24ae8d2f3977256#npm:14.0.4", {\
+          "packageLocation": "./.yarn/__virtual__/next-virtual-888687fcb3/0/cache/next-npm-14.0.4-93c7e4ca0b-879842979d.zip/node_modules/next/",\
+          "packageDependencies": [\
+            ["next", "virtual:f54f4819912018751f18b6d7c671a76da3592c59ddf777dcc3e1e343aee2e64b03a8ff0e3bdcf8f547ca49c657bfb775284403686a4fea82b24ae8d2f3977256#npm:14.0.4"],\
+            ["@next/env", "npm:14.0.4"],\
+            ["@next/swc-darwin-arm64", "npm:14.0.4"],\
+            ["@next/swc-darwin-x64", "npm:14.0.4"],\
+            ["@next/swc-linux-arm64-gnu", "npm:14.0.4"],\
+            ["@next/swc-linux-arm64-musl", "npm:14.0.4"],\
+            ["@next/swc-linux-x64-gnu", "npm:14.0.4"],\
+            ["@next/swc-linux-x64-musl", "npm:14.0.4"],\
+            ["@next/swc-win32-arm64-msvc", "npm:14.0.4"],\
+            ["@next/swc-win32-ia32-msvc", "npm:14.0.4"],\
+            ["@next/swc-win32-x64-msvc", "npm:14.0.4"],\
+            ["@opentelemetry/api", null],\
+            ["@swc/helpers", "npm:0.5.2"],\
+            ["@types/opentelemetry__api", null],\
+            ["@types/react", null],\
+            ["@types/react-dom", null],\
+            ["@types/sass", null],\
+            ["busboy", "npm:1.6.0"],\
+            ["caniuse-lite", "npm:1.0.30001576"],\
+            ["graceful-fs", "npm:4.2.11"],\
+            ["postcss", "npm:8.4.31"],\
+            ["react", null],\
+            ["react-dom", null],\
+            ["sass", null],\
+            ["styled-jsx", "virtual:888687fcb363b4d77ebf2f07ba23d0b33631901f9eea7299a5e9391bc007821b2258199ce511d91698e64530fbc9ad690126181b6861beb18515636e47112e35#npm:5.1.1"],\
+            ["watchpack", "npm:2.4.0"]\
+          ],\
+          "packagePeers": [\
+            "@opentelemetry/api",\
+            "@types/opentelemetry__api",\
+            "@types/react-dom",\
+            "@types/react",\
+            "@types/sass",\
+            "react-dom",\
+            "react",\
+            "sass"\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["next-mdx-remote", [\
@@ -18897,6 +18950,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["babel-plugin-macros", null],\
             ["client-only", "npm:0.0.1"],\
             ["react", "npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@babel/core",\
+            "@types/babel-plugin-macros",\
+            "@types/babel__core",\
+            "@types/react",\
+            "babel-plugin-macros",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["virtual:888687fcb363b4d77ebf2f07ba23d0b33631901f9eea7299a5e9391bc007821b2258199ce511d91698e64530fbc9ad690126181b6861beb18515636e47112e35#npm:5.1.1", {\
+          "packageLocation": "./.yarn/__virtual__/styled-jsx-virtual-3127a71a37/0/cache/styled-jsx-npm-5.1.1-2557a209ba-523a33b386.zip/node_modules/styled-jsx/",\
+          "packageDependencies": [\
+            ["styled-jsx", "virtual:888687fcb363b4d77ebf2f07ba23d0b33631901f9eea7299a5e9391bc007821b2258199ce511d91698e64530fbc9ad690126181b6861beb18515636e47112e35#npm:5.1.1"],\
+            ["@babel/core", null],\
+            ["@types/babel-plugin-macros", null],\
+            ["@types/babel__core", null],\
+            ["@types/react", null],\
+            ["babel-plugin-macros", null],\
+            ["client-only", "npm:0.0.1"],\
+            ["react", null]\
           ],\
           "packagePeers": [\
             "@babel/core",\
