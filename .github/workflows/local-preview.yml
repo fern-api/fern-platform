@@ -1,63 +1,58 @@
-# name: Deploy local preview
+name: Deploy local preview
 
-# on:
-#   push:
-#     branches:
-#       - "**"
-#     tags:
-#       - "**"
+on: workflow_dispatch
 
-# jobs:
-#   dryrun-deploy-local-preview-dev:
-#     runs-on: ubuntu-latest
-#     container:
-#       image: cimg/node:18.18.2
-#     steps:
-#       - uses: actions/checkout@v4
-#       - uses: aws-actions/configure-aws-credentials@v4
-#         with:
-#           aws-region: us-east-1
-#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#       - run: yarn install
-#       - name: Build local preview bundle
-#         run: yarn workspace @fern-ui/local-preview-bundle run build
-#       - name: Synthesize local preview bundle
-#         run: yarn workspace @fern-ui/cdk run synth:dev
+jobs:
+  dryrun-deploy-local-preview-dev:
+    runs-on: ubuntu-latest
+    container:
+      image: cimg/node:18.18.2
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - run: yarn install
+      - name: Build local preview bundle
+        run: yarn workspace @fern-ui/local-preview-bundle run build
+      - name: Synthesize local preview bundle
+        run: yarn workspace @fern-ui/cdk run synth:dev
 
-#   deploy-local-preview-dev:
-#     needs: [dryrun-deploy-local-preview-dev]
-#     runs-on: ubuntu-latest
-#     container:
-#       image: cimg/node:18.18.2
-#     steps:
-#       - uses: actions/checkout@v4
-#       - uses: aws-actions/configure-aws-credentials@v4
-#         with:
-#           aws-region: us-east-1
-#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#       - run: yarn install
-#       - name: Build local preview bundle
-#         run: yarn workspace @fern-ui/local-preview-bundle run build
-#       - name: Deploy local preview bundle
-#         run: yarn workspace @fern-ui/cdk run deploy:dev
+  deploy-local-preview-dev:
+    needs: [dryrun-deploy-local-preview-dev]
+    runs-on: ubuntu-latest
+    container:
+      image: cimg/node:18.18.2
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - run: yarn install
+      - name: Build local preview bundle
+        run: yarn workspace @fern-ui/local-preview-bundle run build
+      - name: Deploy local preview bundle
+        run: yarn workspace @fern-ui/cdk run deploy:dev
 
-#   deploy-local-preview-prod:
-#     needs: [deploy-local-preview-dev]
-#     runs-on: ubuntu-latest
-#     if: startsWith(github.ref, 'refs/tags/')
-#     container:
-#       image: cimg/node:18.18.2
-#     steps:
-#       - uses: actions/checkout@v4
-#       - uses: aws-actions/configure-aws-credentials@v4
-#         with:
-#           aws-region: us-east-1
-#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#       - run: yarn install
-#       - name: Build local preview bundle
-#         run: yarn workspace @fern-ui/local-preview-bundle run build
-#       - name: Deploy local preview bundle
-#         run: yarn workspace @fern-ui/cdk run deploy:prod
+  deploy-local-preview-prod:
+    needs: [deploy-local-preview-dev]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    container:
+      image: cimg/node:18.18.2
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - run: yarn install
+      - name: Build local preview bundle
+        run: yarn workspace @fern-ui/local-preview-bundle run build
+      - name: Deploy local preview bundle
+        run: yarn workspace @fern-ui/cdk run deploy:prod
