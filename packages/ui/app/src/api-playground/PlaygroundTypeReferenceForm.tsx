@@ -24,6 +24,7 @@ interface PlaygroundTypeReferenceFormProps {
     renderAsPanel?: boolean;
     onlyRequired?: boolean;
     onlyOptional?: boolean;
+    hideObjects?: boolean;
 }
 
 interface WithPanelProps {
@@ -108,22 +109,24 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
     renderAsPanel = false,
     onlyRequired = false,
     onlyOptional = false,
+    hideObjects = false,
 }) => {
     return visitDiscriminatedUnion(shape, "type")._visit({
-        object: (object) => (
-            <WithPanel
-                value={value}
-                renderAsPanel={renderAsPanel}
-                onOpenStack={onOpenStack}
-                onCloseStack={onCloseStack}
-            >
-                <PlaygroundObjectPropertiesForm
-                    properties={object.properties().filter(createFilter(onlyRequired, onlyOptional))}
-                    onChange={onChange}
+        object: (object) =>
+            hideObjects ? null : (
+                <WithPanel
                     value={value}
-                />
-            </WithPanel>
-        ),
+                    renderAsPanel={renderAsPanel}
+                    onOpenStack={onOpenStack}
+                    onCloseStack={onCloseStack}
+                >
+                    <PlaygroundObjectPropertiesForm
+                        properties={object.properties().filter(createFilter(onlyRequired, onlyOptional))}
+                        onChange={onChange}
+                        value={value}
+                    />
+                </WithPanel>
+            ),
         enum: ({ values }) => <PlaygroundEnumForm enumValues={values} onChange={onChange} value={value} />,
         undiscriminatedUnion: (undiscriminatedUnion) => (
             <WithPanel
@@ -297,6 +300,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                 onBlur={onBlur}
                 onlyRequired={onlyRequired}
                 onlyOptional={onlyOptional}
+                hideObjects={hideObjects}
             />
         ),
     });

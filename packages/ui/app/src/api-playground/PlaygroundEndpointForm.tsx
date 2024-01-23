@@ -5,13 +5,14 @@ import {
     ResolvedEndpointDefinition,
     ResolvedHttpRequestBodyShape,
     ResolvedNavigationItemApiSection,
+    ResolvedTypeReference,
     visitResolvedHttpRequestBodyShape,
 } from "@fern-ui/app-utils";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import Link from "next/link";
-import { Dispatch, FC, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
+import { Dispatch, FC, SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Markdown } from "../api-page/markdown/Markdown";
 import { useNavigationContext } from "../navigation-context";
 import { PasswordInputGroup } from "./PasswordInputGroup";
@@ -116,6 +117,27 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
         }
         return undefined;
     }, [showFullDescription]);
+
+    const bodyObjectSections = useMemo(() => {
+        if (endpoint.requestBody == null) {
+            return [];
+        }
+
+        function getObject(
+            typeShape: ResolvedHttpRequestBodyShape
+        ): { key: string; valueShape: ResolvedTypeReference }[] {
+            if (typeShape.type === "object") {
+                return typeShape.properties().filter((property) => property.valueShape.type === "object");
+            }
+
+            if (typeShape.type === "reference") {
+                return getObject(typeShape.shape());
+            }
+            return [];
+        }
+
+        return getObject(endpoint.requestBody.shape);
+    }, [endpoint.requestBody]);
 
     return (
         <div className="min-h-0 flex-1 shrink overflow-y-auto overflow-x-hidden">
@@ -371,6 +393,26 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                     </section>
                 )}
 
+                {bodyObjectSections.map((section) => (
+                    <section key={section.key}>
+                        <h6 className="t-muted m-0 mb-2">{section.key}</h6>
+                        <PlaygroundTypeReferenceForm
+                            shape={section.valueShape}
+                            onChange={(value) => {
+                                setBody((oldBody: Record<string, unknown>) => ({
+                                    ...oldBody,
+                                    [section.key]: typeof value === "function" ? value(oldBody[section.key]) : value,
+                                }));
+                            }}
+                            value={
+                                formState != null && isPlainObject(formState.body)
+                                    ? formState.body[section.key] ?? {}
+                                    : {}
+                            }
+                        />
+                    </section>
+                ))}
+
                 {endpoint.requestBody != null && hasRequiredFields(endpoint.requestBody.shape) && (
                     <section className="mb-8">
                         <h6 className="t-muted m-0 mb-2">Required body parameter</h6>
@@ -401,6 +443,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                     onChange={setBody}
                                     value={formState?.body}
                                     onlyOptional
+                                    // hideObjects
                                 />
                             ),
                         })}
