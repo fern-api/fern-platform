@@ -16,6 +16,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: yarn
 
       - name: Install dependencies
         run: yarn install --immutable
@@ -27,7 +28,7 @@ jobs:
         run: yarn depcheck
 
       - name: Check format
-        run: format:check
+        run: yarn format:check
 
   lint:
     runs-on: ubuntu-latest
@@ -37,6 +38,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: yarn
 
       - name: Install dependencies
         run: yarn install --immutable
@@ -48,10 +50,7 @@ jobs:
         run: yarn lint:style
 
       - name: Lint typescript
-        # compilation is needed for some typescript-eslint rules
-        run: |
-          yarn compile
-          yarn lint:eslint
+        run: yarn lint:eslint
 
   organize-imports:
     runs-on: ubuntu-latest
@@ -61,6 +60,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: yarn
 
       - name: Install dependencies
         run: yarn install --immutable
@@ -81,6 +81,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: yarn
 
       - name: Install dependencies
         run: yarn install --immutable
@@ -99,6 +100,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: yarn
 
       - name: Install dependencies
         run: yarn install --immutable
