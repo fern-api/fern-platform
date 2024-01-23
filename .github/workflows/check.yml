@@ -1,0 +1,75 @@
+name: Checks
+
+# Controls when the workflow will run
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  set-up-environment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+  # Jobs go here
+  check:
+    needs: set-up-environment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check root package
+        run: root-package:check
+      - name: Check dependencies
+        run: yarn depcheck
+      - name: Check format
+        run: format:check
+
+  lint:
+    needs: set-up-environment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lint monorepo
+        run: yarn lint:monorepo
+      - name: Lint style
+        run: yarn lint:style
+      - name: Lint typescript
+        # compilation is needed for some typescript-eslint rules
+        run: |
+          yarn compile
+          yarn lint:eslint
+
+  organize-imports:
+    needs: set-up-environment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Organize imports
+        # not using --list-different because sometimes this removes a trailing
+        # comma that prettier adds back
+        run: |
+          yarn organize-imports
+          yarn format:fix
+          git --no-pager diff --exit-code
+
+  test:
+    needs: set-up-environment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run tests
+        run: yarn test --ci
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code
+
+  check-docs-release-is-allowed:
+    needs: set-up-environment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check release blockers
+        run: yarn check-docs-release-blockers

@@ -1,0 +1,45 @@
+name: Vercel Development Deployment
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=development --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build Project Artifacts
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+
+  generate-customer-docs:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        customer: [candid, fern, flatfile, mercoa, primer, superagent, vellum]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install fern-dev CLI
+        run: |
+          npm config set //registry.npmjs.org/:_authToken ${{ secrets.YARN_NPM_AUTH_TOKEN }}
+          npm install -g @fern-api/fern-api-dev --prefix=$HOME/.local
+
+      - name: Generate Customer Docs
+        run: |
+          export FERN_TOKEN="${{ secrets.FERN_ORG_TOKEN_DEV }}"
+          cd tests/${{ matrix.customer }}
+          fern-dev generate --docs --log-level debug
+          echo "Generated docs for ${{ matrix.customer }}!"
