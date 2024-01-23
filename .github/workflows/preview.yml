@@ -9,7 +9,7 @@ on:
     tags-ignore:
       - "**"
 jobs:
-  deploy-preview:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
