@@ -1,4 +1,14 @@
 {
   "type": "next-app",
-  "private": true
+  "private": true,
+  "rules": {
+    "depcheck": {
+      "ignores": [
+        "@types/react",
+        "@types/react-dom",
+        "autoprefixer",
+        "postcss"
+      ]
+    }
+  }
 }

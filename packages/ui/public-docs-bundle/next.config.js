@@ -14,7 +14,7 @@ const nextConfig = {
             },
             {
                 source: `/_fern/images/:query*`,
-                destination: "/_next/image/:query*",
+                destination: "/_next/images/:query*",
             },
             {
                 source: `/_fern/api/:path*`,

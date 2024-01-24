@@ -1,1 +1,4 @@
-{ "ignores": ["@types/jest", "@types/node"], "ignore-patterns": ["lib"] }
+{
+  "ignores": ["@types/jest", "@types/node", "@types/react", "@types/react-dom", "autoprefixer", "postcss"],
+  "ignore-patterns": ["lib"]
+}
