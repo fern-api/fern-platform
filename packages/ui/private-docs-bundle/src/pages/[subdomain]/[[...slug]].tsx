@@ -21,7 +21,7 @@ export const getServerSideProps: GetServerSideProps<DocsPage.Props & SessionProp
         return {
             redirect: {
                 destination: getAuthorizationUrl({
-                    organization: "org_01HMWD9VS0JY61CYKAFWMJSX5Q",
+                    organizationId: "org_01HMWD9VS0JY61CYKAFWMJSX5Q",
                 }),
                 permanent: false,
             },

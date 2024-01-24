@@ -1,4 +1,4 @@
-import WorkOS, { AuthorizationURLOptions } from "@workos-inc/node";
+import WorkOS from "@workos-inc/node";
 import { AuthOptions } from "next-auth";
 import WorkOSProvider from "next-auth/providers/workos";
 
@@ -23,6 +23,17 @@ export function getWorkOSClientId(): string {
     }
 
     return clientId;
+}
+
+interface AuthorizationURLOptions {
+    clientId: string;
+    connectionId?: string;
+    organizationId?: string;
+    domainHint?: string;
+    loginHint?: string;
+    provider?: string;
+    redirectUri: string;
+    state?: string;
 }
 
 export function getAuthorizationUrl(
@@ -53,6 +64,7 @@ export const authOptions: AuthOptions = {
             client: {
                 token_endpoint_auth_method: "client_secret_post",
             },
+            checks: "none",
         }),
     ],
     pages: {
