@@ -52,6 +52,7 @@ export function createMockDocs({
         updatedTime: new Date(),
         docsConfigInstanceId: "123",
         isPreview: false,
+        authType: "PUBLIC",
     };
 }
 

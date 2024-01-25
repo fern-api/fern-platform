@@ -1,7 +1,7 @@
 import { convertDbAPIDefinitionToRead, convertDbDocsConfigToRead, visitDbNavigationConfig } from "@fern-api/fdr-sdk";
-import type { IndexSegment } from "@prisma/client";
+import { AuthType, type IndexSegment } from "@prisma/client";
 import { LoadDocsDefinitionByUrlResponse } from "../.../../../../db";
-import { APIV1Db, APIV1Read, DocsV1Db, DocsV1Read, DocsV1ReadService } from "../../../api";
+import { APIV1Db, APIV1Read, DocsV1Db, DocsV1Read, DocsV1ReadService, FdrAPI } from "../../../api";
 import type { FdrApplication } from "../../../app";
 import { readBuffer } from "../../../util";
 
@@ -44,6 +44,10 @@ export async function getDocsForDomain({
     const docsDefinitionJson = readBuffer(docs.docsDefinition);
     const docsDbDefinition = migrateDocsDbDefinition(docsDefinitionJson);
 
+    if (docsV2 != null && docsV2.authType !== AuthType.PUBLIC) {
+        throw new FdrAPI.UnauthorizedError("You must be authorized to view this documentation.");
+    }
+
     return {
         response: await getDocsDefinition({
             app,
@@ -59,6 +63,7 @@ export async function getDocsForDomain({
                           path: docsV2.path,
                           domain: docsV2.domain,
                           updatedTime: docsV2.updatedTime,
+                          authType: docsV2.authType,
                       }
                     : null,
         }),

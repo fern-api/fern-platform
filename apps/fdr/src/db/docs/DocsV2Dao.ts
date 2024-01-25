@@ -1,6 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import { AuthType, PrismaClient } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
-import { DocsV1Db } from "../../api";
+import { DocsV1Db, FdrAPI } from "../../api";
 import { DocsRegistrationInfo } from "../../controllers/docs/v2/getDocsWriteV2Service";
 import type { IndexSegment } from "../../services/algolia";
 import { WithoutQuestionMarks, readBuffer, writeBuffer } from "../../util";
@@ -20,6 +20,7 @@ export interface LoadDocsDefinitionByUrlResponse {
     indexSegmentIds: string[];
     docsConfigInstanceId: string | null;
     updatedTime: Date;
+    authType: AuthType;
 }
 
 export interface LoadDocsConfigResponse {
@@ -28,6 +29,8 @@ export interface LoadDocsConfigResponse {
 }
 
 export interface DocsV2Dao {
+    checkDomainsDontBelongToAnotherOrg(domains: string[], orgId: string): Promise<void>;
+
     loadDocsForURL(url: URL): Promise<LoadDocsDefinitionByUrlResponse | undefined>;
 
     loadDocsConfigByInstanceId(docsConfigInstanceId: string): Promise<LoadDocsConfigResponse | undefined>;
@@ -45,6 +48,25 @@ export interface DocsV2Dao {
 
 export class DocsV2DaoImpl implements DocsV2Dao {
     constructor(private readonly prisma: PrismaClient) {}
+    public async checkDomainsDontBelongToAnotherOrg(domains: string[], orgId: string): Promise<void> {
+        const matchedDomains = await this.prisma.docsV2.findMany({
+            select: {
+                orgID: true,
+            },
+            where: {
+                domain: {
+                    in: domains,
+                },
+            },
+            distinct: ["orgID", "domain"],
+        });
+
+        matchedDomains.forEach((matchedDomain) => {
+            if (matchedDomain.orgID !== orgId) {
+                throw new FdrAPI.DomainBelongsToAnotherOrgError();
+            }
+        });
+    }
 
     public async loadDocsForURL(url: URL): Promise<WithoutQuestionMarks<LoadDocsDefinitionByUrlResponse> | undefined> {
         const possibleDocs = await this.prisma.docsV2.findMany({
@@ -70,6 +92,7 @@ export class DocsV2DaoImpl implements DocsV2Dao {
             path: docsDomain.path,
             domain: docsDomain.domain,
             updatedTime: docsDomain.updatedTime,
+            authType: docsDomain.authType,
         };
     }
 
@@ -138,6 +161,7 @@ export class DocsV2DaoImpl implements DocsV2Dao {
                 bufferDocsDefinition,
                 indexSegmentIds,
                 isPreview: docsRegistrationInfo.isPreview,
+                authType: docsRegistrationInfo.authType,
             });
 
             // Step 5: Upsert custom domains with the docs definition + algolia index
@@ -151,6 +175,7 @@ export class DocsV2DaoImpl implements DocsV2Dao {
                     bufferDocsDefinition,
                     indexSegmentIds,
                     isPreview: docsRegistrationInfo.isPreview,
+                    authType: docsRegistrationInfo.authType,
                 });
             }
 
@@ -175,6 +200,7 @@ async function createOrUpdateDocsDefinition({
     orgId,
     indexSegmentIds,
     isPreview,
+    authType,
 }: {
     tx: PrismaTransaction;
     instanceId: string;
@@ -184,6 +210,7 @@ async function createOrUpdateDocsDefinition({
     orgId: string;
     indexSegmentIds: IndexSegmentIds;
     isPreview: boolean;
+    authType: AuthType;
 }): Promise<void> {
     await tx.docsV2.upsert({
         where: {
@@ -200,6 +227,7 @@ async function createOrUpdateDocsDefinition({
             docsConfigInstanceId: instanceId,
             algoliaIndex: null,
             isPreview,
+            authType,
         },
         update: {
             docsDefinition: bufferDocsDefinition,
@@ -207,6 +235,7 @@ async function createOrUpdateDocsDefinition({
             docsConfigInstanceId: instanceId,
             indexSegmentIds,
             isPreview,
+            authType,
         },
     });
 }

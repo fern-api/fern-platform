@@ -1,8 +1,11 @@
 import { convertDbAPIDefinitionToRead, convertDbDocsConfigToRead, convertDocsDefinitionToDb } from "@fern-api/fdr-sdk";
+import { DocsDefinitionDb } from "@fern-api/fdr-sdk/dist/client/generated/api/resources/docs/resources/v1/resources/db";
+import { AuthType } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 import { APIV1Db, DocsV1Write, DocsV2Write, DocsV2WriteService, FdrAPI } from "../../../api";
 import { type FdrApplication } from "../../../app";
 import { type S3FileInfo } from "../../../services/s3";
+import { WithoutQuestionMarks } from "../../../util";
 import { ParsedBaseUrl } from "../../../util/ParsedBaseUrl";
 import { createObjectFromMap } from "../../../util/object";
 
@@ -14,6 +17,7 @@ export interface DocsRegistrationInfo {
     orgId: FdrAPI.OrgId;
     s3FileInfos: Record<DocsV1Write.FilePath, S3FileInfo>;
     isPreview: boolean;
+    authType: AuthType;
 }
 
 function validateAndParseFernDomainUrl({ app, url }: { app: FdrApplication; url: string }): ParsedBaseUrl {
@@ -53,8 +57,16 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 authHeader: req.headers.authorization,
                 orgId: req.body.orgId,
             });
+
             const fernUrl = validateAndParseFernDomainUrl({ app, url: req.body.domain });
             const customUrls = validateAndParseCustomDomainUrl({ customUrls: req.body.customDomains });
+
+            // ensure that the domains are not already registered by another org
+            app.dao.docsV2().checkDomainsDontBelongToAnotherOrg(
+                [fernUrl, ...customUrls].map((url) => url.getFullUrl()),
+                req.body.orgId,
+            );
+
             const docsRegistrationId = uuidv4();
             const s3FileInfos = await app.services.s3.getPresignedUploadUrls({
                 domain: req.body.domain,
@@ -71,6 +83,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 orgId: req.body.orgId,
                 s3FileInfos,
                 isPreview: false,
+                authType: req.body.authConfig?.type === "private" ? AuthType.WORKOS_SSO : AuthType.PUBLIC,
             };
             return res.send({
                 docsRegistrationId,
@@ -100,6 +113,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 orgId: req.body.orgId,
                 s3FileInfos,
                 isPreview: true,
+                authType: req.body.authConfig?.type === "private" ? AuthType.WORKOS_SSO : AuthType.PUBLIC,
             };
             return res.send({
                 docsRegistrationId,
@@ -129,18 +143,6 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                     files: docsRegistrationInfo.s3FileInfos,
                 });
 
-                app.logger.debug(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Generating new index segments`);
-                const generateNewIndexSegmentsResult =
-                    app.services.algoliaIndexSegmentManager.generateIndexSegmentsForDefinition({
-                        dbDocsDefinition,
-                        url: docsRegistrationInfo.fernUrl.getFullUrl(),
-                    });
-                const configSegmentTuples =
-                    generateNewIndexSegmentsResult.type === "versioned"
-                        ? generateNewIndexSegmentsResult.configSegmentTuples
-                        : [generateNewIndexSegmentsResult.configSegmentTuple];
-                const newIndexSegments = configSegmentTuples.map(([, seg]) => seg);
-
                 const apiDefinitionsById = await (async () => {
                     const apiIdDefinitionTuples = await Promise.all(
                         dbDocsDefinition.referencedApis.map(
@@ -150,24 +152,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                     return new Map(apiIdDefinitionTuples) as Map<string, APIV1Db.DbApiDefinition>;
                 })();
 
-                app.logger.debug(
-                    `[${docsRegistrationInfo.fernUrl.getFullUrl()}] Generating search records for all versions`,
-                );
-                const searchRecords = await app.services.algolia.generateSearchRecords({
-                    docsDefinition: dbDocsDefinition,
-                    apiDefinitionsById,
-                    configSegmentTuples,
-                });
-
-                app.logger.debug(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Uploading search records to Algolia`);
-                await app.services.algolia.uploadSearchRecords(searchRecords);
-
-                app.logger.debug(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Updating db docs definitions`);
-                await app.docsDefinitionCache.storeDocsForUrl({
-                    docsRegistrationInfo,
-                    dbDocsDefinition,
-                    indexSegments: newIndexSegments,
-                });
+                await uploadToAlgolia(app, docsRegistrationInfo, dbDocsDefinition, apiDefinitionsById);
 
                 // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
                 delete DOCS_REGISTRATIONS[req.params.docsRegistrationId];
@@ -207,5 +192,51 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 throw e;
             }
         },
+    });
+}
+
+async function uploadToAlgolia(
+    app: FdrApplication,
+    docsRegistrationInfo: DocsRegistrationInfo,
+    dbDocsDefinition: WithoutQuestionMarks<DocsDefinitionDb.V2>,
+    apiDefinitionsById: Map<string, APIV1Db.DbApiDefinition>,
+): Promise<void> {
+    // TODO: make sure to store private docs index into user-restricted algolia index
+    // see https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data/
+    if (docsRegistrationInfo.authType !== AuthType.PUBLIC) {
+        return;
+    }
+
+    // skip algolia step for preview
+    if (docsRegistrationInfo.isPreview) {
+        return;
+    }
+
+    app.logger.debug(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Generating new index segments`);
+    const generateNewIndexSegmentsResult = app.services.algoliaIndexSegmentManager.generateIndexSegmentsForDefinition({
+        dbDocsDefinition,
+        url: docsRegistrationInfo.fernUrl.getFullUrl(),
+    });
+    const configSegmentTuples =
+        generateNewIndexSegmentsResult.type === "versioned"
+            ? generateNewIndexSegmentsResult.configSegmentTuples
+            : [generateNewIndexSegmentsResult.configSegmentTuple];
+    const newIndexSegments = configSegmentTuples.map(([, seg]) => seg);
+
+    app.logger.debug(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Generating search records for all versions`);
+    const searchRecords = await app.services.algolia.generateSearchRecords({
+        docsDefinition: dbDocsDefinition,
+        apiDefinitionsById,
+        configSegmentTuples,
+    });
+
+    app.logger.debug(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Uploading search records to Algolia`);
+    await app.services.algolia.uploadSearchRecords(searchRecords);
+
+    app.logger.debug(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Updating db docs definitions`);
+    await app.docsDefinitionCache.storeDocsForUrl({
+        docsRegistrationInfo,
+        dbDocsDefinition,
+        indexSegments: newIndexSegments,
     });
 }

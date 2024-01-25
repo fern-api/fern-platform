@@ -21,6 +21,7 @@ service:
               type: string
               docs: A `buildwithfern.com` url
             customDomains: list<string>
+            authConfig: optional<AuthConfig>
             orgId: rootCommons.OrgId
             apiId:
               type: rootCommons.ApiId
@@ -32,22 +33,23 @@ service:
       errors:
         - InvalidDomainError
         - InvalidCustomDomainError
-    
-    startDocsPreviewRegister: 
+
+    startDocsPreviewRegister:
       auth: true
       path: /preview/init
-      request: 
+      request:
         name: StartDocsPreviewRegisterRequestV2
-        body: 
-          properties: 
+        body:
+          properties:
             orgId: rootCommons.OrgId
+            authConfig: optional<AuthConfig>
             filepaths:
               type: list<v1DocsWrite.FilePath>
               docs: Relative filepath from docs folder.
       response: StartDocsPreviewRegisterResponse
       errors:
         - InvalidDomainError
-            
+
     finishDocsRegister:
       auth: true
       method: POST
@@ -65,8 +67,8 @@ service:
         - v1DocsWrite.DocsRegistrationIdNotFound
 types:
   StartDocsPreviewRegisterResponse:
-    extends: v1DocsWrite.StartDocsRegisterResponse   
-    properties: 
+    extends: v1DocsWrite.StartDocsRegisterResponse
+    properties:
       previewUrl: string
 
   InvalidDomainErrorBody:
@@ -80,6 +82,20 @@ types:
       overlappingDomains: list<OverlappingCustomDomains>
 
   OverlappingCustomDomains: list<string>
+
+  AuthConfig:
+    union:
+      public: PublicAuthConfig
+      private: PrivateAuthConfig
+
+  PublicAuthConfig:
+    docs: Allow anyone to access the docs.
+    properties: {}
+
+  PrivateAuthConfig:
+    docs: Use SSO to authenticate users before they can access the docs.
+    properties:
+      authType: literal<"sso">
 
 errors:
   InvalidDomainError:

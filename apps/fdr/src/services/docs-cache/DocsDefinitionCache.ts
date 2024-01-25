@@ -1,4 +1,5 @@
-import { DocsV1Db, DocsV1Read, DocsV2Read } from "../../api";
+import { AuthType } from "@prisma/client";
+import { DocsV1Db, DocsV1Read, DocsV2Read, FdrAPI } from "../../api";
 import { FdrApplication } from "../../app";
 import { getDocsDefinition, getDocsForDomain } from "../../controllers/docs/v1/getDocsReadService";
 import { DocsRegistrationInfo } from "../../controllers/docs/v2/getDocsWriteV2Service";
@@ -31,6 +32,7 @@ interface CachedDocsResponse {
     updatedTime: Date;
     response: DocsV2Read.LoadDocsForUrlResponse;
     dbFiles: Record<DocsV1Read.FileId, DocsV1Db.DbFileInfo>;
+    isPrivate: boolean;
 }
 
 export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
@@ -44,11 +46,15 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
     public async getDocsForUrl({ url }: { url: URL }): Promise<DocsV2Read.LoadDocsForUrlResponse> {
         const cachedResponse = this.getDocsForUrlFromCache({ url });
         if (cachedResponse != null) {
+            if (cachedResponse.isPrivate) {
+                throw new FdrAPI.UnauthorizedError("You must be authorized to view this documentation.");
+            }
             const updatedFileEntries = await Promise.all(
                 Object.entries(cachedResponse.dbFiles).map(async ([fileId, dbFileInfo]) => {
                     return [fileId, await this.app.services.s3.getPresignedDownloadUrl({ key: dbFileInfo.s3Key })];
                 }),
             );
+
             // we always pull updated s3 URLs
             return {
                 ...cachedResponse.response,
@@ -60,6 +66,11 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
         }
         const dbResponse = await this.getDocsForUrlFromDatabase({ url });
         this.cacheResponse({ url, cachedResponse: dbResponse });
+
+        if (dbResponse.isPrivate) {
+            throw new FdrAPI.UnauthorizedError("You must be authorized to view this documentation.");
+        }
+
         return dbResponse.response;
     }
 
@@ -130,6 +141,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                     definition,
                     lightModeEnabled: definition.config.colorsV3.type != "dark",
                 },
+                isPrivate: dbDocs.authType !== AuthType.PUBLIC,
             };
         } else {
             // TODO(dsinghvi): Stop serving the v1 APIs
@@ -150,6 +162,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                     definition: v1Docs.response,
                     lightModeEnabled: v1Docs.response.config.colorsV3.type != "dark",
                 },
+                isPrivate: false,
             };
         }
     }

@@ -2,20 +2,20 @@
 
 types:
   ApiDefinitionId: uuid
-  
-  OrgId: 
+
+  OrgId:
     type: string
     docs: Human readable org id (e.g. fern)
 
-  ApiId: 
+  ApiId:
     type: string
     docs: Human readable api identifier (e.g. venus)
-  
-  DocsConfigId: 
+
+  DocsConfigId:
     type: string
     docs: The ID of a particular docs config.
 
-errors: 
+errors:
   BadRequestError:
     status-code: 400
     type: string
@@ -25,6 +25,9 @@ errors:
     type: string
 
   UserNotInOrgError:
+    status-code: 403
+
+  DomainBelongsToAnotherOrgError:
     status-code: 403
 
   InternalError:

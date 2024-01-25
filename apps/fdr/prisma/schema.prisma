@@ -29,6 +29,7 @@ model Docs {
 
 model DocsV2 {
   orgID                String
+  authType             AuthType @default(PUBLIC)
   updatedTime          DateTime @updatedAt
   domain               String
   path                 String
@@ -39,6 +40,11 @@ model DocsV2 {
   isPreview            Boolean  @default(false)
 
   @@id([domain, path])
+}
+
+enum AuthType {
+  PUBLIC
+  WORKOS_SSO
 }
 
 model DocsConfigInstances {
