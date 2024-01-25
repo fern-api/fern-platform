@@ -2642,6 +2642,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/private-docs-bundle@workspace:packages/ui/private-docs-bundle"
   dependencies:
+    "@fern-api/fdr-sdk": 0.44.0-1-geb2e930
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/ui": "workspace:*"
     "@next/bundle-analyzer": ^14.1.0
@@ -2859,6 +2860,7 @@ __metadata:
     "@types/react-test-renderer": ^18.0.7
     "@types/tinycolor2": ^1.4.6
     "@vercel/speed-insights": ^1.0.7
+    "@workos-inc/node": ^5.1.1
     algoliasearch: ^4.22.1
     classnames: ^2.5.1
     depcheck: ^1.4.3
@@ -2870,6 +2872,7 @@ __metadata:
     lru-cache: ^10.0.1
     marked: ^5.0.4
     next: ^14.0.4
+    next-auth: ^4.24.5
     next-themes: ^0.2.1
     nextjs-progressbar: ^0.0.16
     normalize.css: ^8.0.1

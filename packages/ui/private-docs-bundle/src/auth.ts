@@ -3,7 +3,7 @@ import { AuthOptions } from "next-auth";
 import WorkOSProvider from "next-auth/providers/workos";
 
 // Initialize the WorkOS client
-export const workos = new WorkOS(getWorkOSApiKey());
+const workos = new WorkOS(getWorkOSApiKey());
 
 export function getWorkOSApiKey(): string {
     const apiKey = process.env.WORKOS_API_KEY;
@@ -67,30 +67,17 @@ export const authOptions: AuthOptions = {
             checks: "none",
         }),
     ],
-    pages: {
-        signIn: "/login",
+    callbacks: {
+        async jwt({ token, account }) {
+            if (account) {
+                token.accessToken = account.access_token;
+            }
+            return token;
+        },
+        async session({ session, token }) {
+            (session as unknown as Record<string, unknown>).accessToken = token.accessToken;
+            return session;
+        },
     },
     debug: true,
 };
-
-// export async function getUser(): Promise<{
-//     isAuthenticated: boolean;
-//     user?: User | null;
-// }> {
-//     const token = cookies().get("token")?.value;
-//     const verifiedToken = token && (await verifyJwtToken(token));
-
-//     if (verifiedToken) {
-//         return {
-//             isAuthenticated: true,
-//             user: verifiedToken.user as User | null,
-//         };
-//     }
-
-//     return { isAuthenticated: false };
-// }
-
-// export async function clearCookie(): Promise<void> {
-//     cookies().delete("token");
-//     redirect("/");
-// }

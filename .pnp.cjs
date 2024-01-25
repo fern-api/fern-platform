@@ -4466,6 +4466,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/ui/private-docs-bundle/",\
           "packageDependencies": [\
             ["@fern-ui/private-docs-bundle", "workspace:packages/ui/private-docs-bundle"],\
+            ["@fern-api/fdr-sdk", "npm:0.44.0-1-geb2e930"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
             ["@next/bundle-analyzer", "npm:14.1.0"],\
@@ -4695,6 +4696,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react-test-renderer", "npm:18.0.7"],\
             ["@types/tinycolor2", "npm:1.4.6"],\
             ["@vercel/speed-insights", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.0.7"],\
+            ["@workos-inc/node", "npm:5.1.1"],\
             ["algoliasearch", "npm:4.22.1"],\
             ["classnames", "npm:2.5.1"],\
             ["depcheck", "npm:1.4.3"],\
@@ -4706,6 +4708,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["lru-cache", "npm:10.0.1"],\
             ["marked", "npm:5.1.2"],\
             ["next", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:14.0.4"],\
+            ["next-auth", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.24.5"],\
             ["next-themes", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:0.2.1"],\
             ["nextjs-progressbar", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:0.0.16"],\
             ["normalize.css", "npm:8.0.1"],\
@@ -15739,7 +15742,41 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["oauth", "npm:0.9.15"],\
             ["openid-client", "npm:5.6.4"],\
             ["preact", "npm:10.19.3"],\
-            ["preact-render-to-string", "virtual:d759c7d221ea6215374504f1d8d30ce4ce48eb0f3eada023c5a857f17e630a1824c262e5a66ca0739f0861af87aa89b548568379cffd4f625c8ba22489fe50df#npm:5.2.6"],\
+            ["preact-render-to-string", "virtual:995d1a767e97dc7f88f12b3b4b44b303168af0e8a60d30f2fb1b20c091b05ba16725eb84c11409600b13593bc53023a41cd6d2e210397b59355a10ca4707f407#npm:5.2.6"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
+            ["uuid", "npm:8.3.2"]\
+          ],\
+          "packagePeers": [\
+            "@types/next",\
+            "@types/nodemailer",\
+            "@types/react-dom",\
+            "@types/react",\
+            "next",\
+            "nodemailer",\
+            "react-dom",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.24.5", {\
+          "packageLocation": "./.yarn/__virtual__/next-auth-virtual-995d1a767e/0/cache/next-auth-npm-4.24.5-8428e11927-7cc4938512.zip/node_modules/next-auth/",\
+          "packageDependencies": [\
+            ["next-auth", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.24.5"],\
+            ["@babel/runtime", "npm:7.23.8"],\
+            ["@panva/hkdf", "npm:1.1.1"],\
+            ["@types/next", null],\
+            ["@types/nodemailer", null],\
+            ["@types/react", "npm:18.0.20"],\
+            ["@types/react-dom", "npm:18.2.18"],\
+            ["cookie", "npm:0.5.0"],\
+            ["jose", "npm:4.15.4"],\
+            ["next", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:14.0.4"],\
+            ["nodemailer", null],\
+            ["oauth", "npm:0.9.15"],\
+            ["openid-client", "npm:5.6.4"],\
+            ["preact", "npm:10.19.3"],\
+            ["preact-render-to-string", "virtual:995d1a767e97dc7f88f12b3b4b44b303168af0e8a60d30f2fb1b20c091b05ba16725eb84c11409600b13593bc53023a41cd6d2e210397b59355a10ca4707f407#npm:5.2.6"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
             ["uuid", "npm:8.3.2"]\
@@ -16948,10 +16985,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:d759c7d221ea6215374504f1d8d30ce4ce48eb0f3eada023c5a857f17e630a1824c262e5a66ca0739f0861af87aa89b548568379cffd4f625c8ba22489fe50df#npm:5.2.6", {\
-          "packageLocation": "./.yarn/__virtual__/preact-render-to-string-virtual-3a200036e4/0/cache/preact-render-to-string-npm-5.2.6-5999db0763-be8d5d8fb5.zip/node_modules/preact-render-to-string/",\
+        ["virtual:995d1a767e97dc7f88f12b3b4b44b303168af0e8a60d30f2fb1b20c091b05ba16725eb84c11409600b13593bc53023a41cd6d2e210397b59355a10ca4707f407#npm:5.2.6", {\
+          "packageLocation": "./.yarn/__virtual__/preact-render-to-string-virtual-2c7a238ee6/0/cache/preact-render-to-string-npm-5.2.6-5999db0763-be8d5d8fb5.zip/node_modules/preact-render-to-string/",\
           "packageDependencies": [\
-            ["preact-render-to-string", "virtual:d759c7d221ea6215374504f1d8d30ce4ce48eb0f3eada023c5a857f17e630a1824c262e5a66ca0739f0861af87aa89b548568379cffd4f625c8ba22489fe50df#npm:5.2.6"],\
+            ["preact-render-to-string", "virtual:995d1a767e97dc7f88f12b3b4b44b303168af0e8a60d30f2fb1b20c091b05ba16725eb84c11409600b13593bc53023a41cd6d2e210397b59355a10ca4707f407#npm:5.2.6"],\
             ["@types/preact", null],\
             ["preact", "npm:10.19.3"],\
             ["pretty-format", "npm:3.8.0"]\

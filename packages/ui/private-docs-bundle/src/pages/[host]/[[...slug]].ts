@@ -4,16 +4,11 @@ import { compact } from "lodash-es";
 import { GetServerSideProps, GetServerSidePropsResult } from "next";
 import { getServerSession } from "next-auth/next";
 import { authOptions, getAuthorizationUrl } from "../../auth";
-import { SessionProps } from "../_app";
 
 export default DocsPage;
 
-export const getServerSideProps: GetServerSideProps<DocsPage.Props & SessionProps> = async ({
-    req,
-    res,
-    params = {},
-}) => {
-    const xFernHost = `${params.subdomain}.docs.buildwithfern.com`;
+export const getServerSideProps: GetServerSideProps<DocsPage.Props> = async ({ req, res, params = {} }) => {
+    const xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? (params.host as string);
     const slugArray = compact(params.slug);
     const session = await getServerSession(req, res, authOptions);
 
@@ -30,12 +25,13 @@ export const getServerSideProps: GetServerSideProps<DocsPage.Props & SessionProp
 
     const result = await getDocsPageProps(xFernHost, slugArray);
 
-    return visitDiscriminatedUnion(result, "type")._visit<GetServerSidePropsResult<DocsPage.Props & SessionProps>>({
+    return visitDiscriminatedUnion(result, "type")._visit<GetServerSidePropsResult<DocsPage.Props>>({
         notFound: () => ({ notFound: true }),
         redirect: (redirect) => ({ redirect: redirect.redirect }),
         props: (props) => ({
             props: {
                 ...props.props,
+                session,
             },
         }),
         _other: () => ({ notFound: true }),

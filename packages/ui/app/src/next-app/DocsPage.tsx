@@ -9,6 +9,7 @@ import {
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { compact } from "lodash-es";
 import { GetStaticProps, Redirect } from "next";
+import { Session } from "next-auth";
 import Head from "next/head";
 import { ReactElement } from "react";
 import { useColorTheme } from "../hooks/useColorTheme";
@@ -22,6 +23,7 @@ export declare namespace DocsPage {
         typographyStyleSheet?: string;
         backgroundImageStyleSheet: string | null;
         resolvedPath: ResolvedPath;
+        session: Session | undefined;
     }
 }
 
@@ -127,6 +129,7 @@ export const getDocsPageProps = async (
             typographyStyleSheet,
             backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
             resolvedPath,
+            session: undefined,
         },
         revalidate: 60 * 60 * 24 * 6, // 6 days
     };

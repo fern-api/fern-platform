@@ -10,6 +10,7 @@ import { HeaderLogoSection } from "./HeaderLogoSection";
 import { HeaderPrimaryLink } from "./HeaderPrimaryLink";
 import { HeaderSecondaryLink } from "./HeaderSecondaryLink";
 import { ThemeButton } from "./ThemeButton";
+import { User } from "./User";
 
 export declare namespace Header {
     export interface Props {
@@ -64,6 +65,8 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
 
             <div className="-mr-2 ml-auto flex items-center space-x-0 md:mr-0 lg:space-x-4">
                 {navbarLinksSection}
+
+                <User />
 
                 {colorsV3.type === "darkAndLight" && (
                     <>
