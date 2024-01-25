@@ -22,6 +22,8 @@ export function convertDbDocsConfigToRead({
         favicon: dbShape.favicon,
         backgroundImage: dbShape.backgroundImage,
         typography: dbShape.typography,
+        layout: dbShape.layout,
+        typographyV2: dbShape.typographyV2,
     };
 }
 

@@ -27,39 +27,39 @@ types:
       files: map<docsReadV1.FileId, DbFileInfo>
       config: DocsDbConfig
       colors: optional<docsReadV1.ColorsConfig>
-      typography: optional<DocsTypographyConfig>
+      typography: optional<docsReadV1.DocsTypographyConfig>
 
   DocsDbConfig:
     properties:
       title: optional<string>
       navigation: NavigationConfig
-      logo: optional<docsReadV1.FileId>
+
+      # logo
       logoV2: optional<docsReadV1.LogoV2>
       logoHeight: optional<docsReadV1.Height>
       logoHref: optional<docsReadV1.Url>
       favicon: optional<docsReadV1.FileId>
+
+      # styles
       backgroundImage: optional<docsReadV1.FileId>
-      colors: optional<docsReadV1.ColorsConfig>
-      colorsV2: optional<docsReadV1.ColorsConfigV2>
       colorsV3: optional<docsReadV1.ColorsConfigV3>
       navbarLinks: optional<list<docsReadV1.NavbarLink>>
-      typography: optional<DocsTypographyConfig>
+      layout: optional<docsReadV1.DocsLayoutConfig>
+      typographyV2: optional<docsReadV1.DocsTypographyConfigV2>
 
-  LogoV2:
-    properties:
-      dark: optional<docsReadV1.FileId>
-      light: optional<docsReadV1.FileId>
-
-  DocsTypographyConfig:
-    properties:
-      headingsFont: optional<FontConfig>
-      bodyFont: optional<FontConfig>
-      codeFont: optional<FontConfig>
-
-  FontConfig:
-    properties:
-      name: string
-      fontFile: docsReadV1.FileId
+      # deprecated
+      logo:
+        type: optional<docsReadV1.FileId>
+        availability: deprecated
+      colors:
+        type: optional<docsReadV1.ColorsConfig>
+        availability: deprecated
+      colorsV2:
+        type: optional<docsReadV1.ColorsConfigV2>
+        availability: deprecated
+      typography:
+        type: optional<docsReadV1.DocsTypographyConfig>
+        availability: deprecated
 
   DbFileInfo:
     properties:

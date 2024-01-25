@@ -81,38 +81,54 @@ types:
     properties:
       title: optional<string>
       navigation: NavigationConfig
-      logo: optional<FileId>
+
+      # logo
       logoV2: optional<LogoV2>
       logoHeight: optional<Height>
       logoHref: optional<Url>
       favicon: optional<FileId>
+
+      # styles
       backgroundImage: optional<FileId>
-      colors: optional<ColorsConfig>
-      colorsV2: optional<ColorsConfigV2>
       colorsV3: optional<ColorsConfigV3>
       navbarLinks: optional<list<NavbarLink>>
-      typography: optional<DocsTypographyConfig>
-  
-  ColorsConfigV3: 
-    union: 
+      layout: optional<DocsLayoutConfig>
+      typographyV2: optional<DocsTypographyConfigV2>
+
+      # deprecated
+      logo:
+        type: optional<FileId>
+        availability: deprecated
+      colors:
+        type: optional<ColorsConfig>
+        availability: deprecated
+      colorsV2:
+        type: optional<ColorsConfigV2>
+        availability: deprecated
+      typography:
+        type: optional<DocsTypographyConfig>
+        availability: deprecated
+
+  ColorsConfigV3:
+    union:
       dark: DarkModeConfig
       light: LightModeConfig
       darkAndLight: DarkAndLightModeConfig
-  
-  DarkModeConfig: 
-    properties: 
+
+  DarkModeConfig:
+    properties:
       logo: optional<FileId>
       accentPrimary: optional<RgbColor>
       background: optional<RgbColor>
-  
-  LightModeConfig: 
-    properties: 
+
+  LightModeConfig:
+    properties:
       logo: optional<FileId>
       accentPrimary: optional<RgbColor>
       background: optional<RgbColor>
-  
-  DarkAndLightModeConfig: 
-    properties: 
+
+  DarkAndLightModeConfig:
+    properties:
       dark: DarkModeConfig
       light: LightModeConfig
 
@@ -127,10 +143,18 @@ types:
       bodyFont: optional<FontConfig>
       codeFont: optional<FontConfig>
 
+  DocsTypographyConfigV2:
+    properties:
+      headingsFont: optional<list<FontConfig>>
+      bodyFont: optional<list<FontConfig>>
+      codeFont: optional<list<FontConfig>>
+
   FontConfig:
     properties:
       name: string
       fontFile: FileId
+      weights: optional<string>
+      fontVariationSettings: optional<string>
 
   NavbarLink:
     union:
@@ -183,13 +207,38 @@ types:
       urlSlugOverride: optional<string>
       availability: optional<VersionAvailability>
       config: UnversionedNavigationConfig
-  
-  VersionAvailability: 
-    enum: 
+
+  VersionAvailability:
+    enum:
       - Stable
       - GenerallyAvailable
       - Deprecated
       - Beta
+
+  DocsLayoutConfig:
+    properties:
+      pageWidth: optional<PageWidthSizeConfig>
+      contentWidth: optional<SizeConfig>
+      sidebarWidth: optional<SizeConfig>
+      sidebarPosition: optional<SidebarOrHeaderPlacement>
+      headerHeight: optional<SizeConfig>
+      tabsPosition: optional<SidebarOrHeaderPlacement>
+
+  SidebarOrHeaderPlacement:
+    enum:
+      - HEADER
+      - SIDEBAR
+
+  PageWidthSizeConfig:
+    union:
+      px: double
+      rem: double
+      full: {}
+
+  SizeConfig:
+    union:
+      px: double
+      rem: double
 
   NavigationItem:
     union:

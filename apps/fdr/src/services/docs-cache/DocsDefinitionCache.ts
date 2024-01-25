@@ -139,7 +139,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                         basePath: dbDocs.path === "" ? undefined : dbDocs.path,
                     },
                     definition,
-                    lightModeEnabled: definition.config.colorsV3.type != "dark",
+                    lightModeEnabled: definition.config.colorsV3?.type !== "dark",
                 },
                 isPrivate: dbDocs.authType !== AuthType.PUBLIC,
             };
@@ -160,7 +160,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                         basePath: undefined,
                     },
                     definition: v1Docs.response,
-                    lightModeEnabled: v1Docs.response.config.colorsV3.type != "dark",
+                    lightModeEnabled: v1Docs.response.config.colorsV3?.type !== "dark",
                 },
                 isPrivate: false,
             };
