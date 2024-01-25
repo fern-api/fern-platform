@@ -14,7 +14,7 @@ jobs:
           name: Generate Fern SDKs
           command: |
             npm install -g fern-api
-            fern generate --group local --log-level debug
+            fern generate --local --group local --log-level debug
       - run:
           name: Build
           command: yarn build
@@ -108,12 +108,6 @@ jobs:
     steps:
       - attach_workspace: { at: /home/circleci }
       - run:
-          name: Publish FDR Fiddle SDK
-          command: |
-            npm install -g fern-api
-            git_version="$(scripts/git-version.sh)"
-            fern generate --group fiddle --version "${git_version}" --log-level debug
-      - run:
           name: Publish FDR SDK
           command: |
             git_version="$(scripts/git-version.sh)"
@@ -129,6 +123,12 @@ jobs:
           command: |
             git_version="$(scripts/git-version.sh)"
             fern register --version "${git_version}"
+      - run:
+          name: Publish FDR Fiddle SDK
+          command: |
+            npm install -g fern-api
+            git_version="$(scripts/git-version.sh)"
+            fern generate --group fiddle --version "${git_version}" --log-level debug
 
 workflows:
   version: 2
