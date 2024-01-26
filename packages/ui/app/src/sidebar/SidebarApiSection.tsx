@@ -150,11 +150,6 @@ export const ExpandableSidebarApiSection: React.FC<ExpandableSidebarApiSectionPr
             className={className}
             depth={Math.max(depth - 1, 0)}
             registerScrolledToPathListener={registerScrolledToPathListener}
-            onClick={useCallback(() => {
-                if (!expanded) {
-                    toggleExpanded(slug);
-                }
-            }, [expanded, slug, toggleExpanded])}
             title={title}
             expanded={expanded}
             toggleExpand={useCallback(() => toggleExpanded(slug), [slug, toggleExpanded])}
