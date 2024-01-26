@@ -3,12 +3,12 @@ import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
 import { ReactElement, useRef, useState } from "react";
 import { useSearchBox, UseSearchBoxProps } from "react-instantsearch-hooks-web";
 
-interface CustomSearchBoxProps extends UseSearchBoxProps {
+interface SearchBoxProps extends UseSearchBoxProps {
     inputClassName?: string;
     placeholder?: string;
 }
 
-export function CustomSearchBox({ queryHook, inputClassName, placeholder }: CustomSearchBoxProps): ReactElement {
+export function SearchBox({ queryHook, inputClassName, placeholder }: SearchBoxProps): ReactElement {
     const { query, refine } = useSearchBox({ queryHook });
     const [inputValue, setInputValue] = useState(query);
     const inputRef = useRef<HTMLInputElement>(null);
