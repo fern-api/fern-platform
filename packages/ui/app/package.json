@@ -34,7 +34,7 @@
     "@blueprintjs/datetime2": "^2.2.9",
     "@blueprintjs/icons": "^5.7.0",
     "@blueprintjs/select": "^5.0.22",
-    "@fern-api/fdr-sdk": "0.44.0-1-geb2e930",
+    "@fern-api/fdr-sdk": "0.46.1-7-ge796a1c",
     "@fern-ui/app-utils": "workspace:*",
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/loadable": "workspace:*",

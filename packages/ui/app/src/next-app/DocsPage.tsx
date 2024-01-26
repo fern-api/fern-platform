@@ -3,7 +3,6 @@ import {
     convertNavigatableToResolvedPath,
     generateFontFaces,
     loadDocsBackgroundImage,
-    loadDocTypography,
     type ResolvedPath,
 } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
@@ -43,7 +42,7 @@ export function DocsPage({
             <style jsx global>
                 {`
                     ${colorThemeStyleSheet}
-                    ${typographyStyleSheet}
+                    \n${typographyStyleSheet}
                     ${backgroundImageStyleSheet}
                 `}
             </style>
@@ -91,8 +90,7 @@ export const getDocsPageProps = async (
     }
 
     const docsDefinition = docs.body.definition;
-    const typographyConfig = loadDocTypography(docsDefinition);
-    const typographyStyleSheet = generateFontFaces(typographyConfig, docs.body.baseUrl.basePath);
+    const typographyStyleSheet = generateFontFaces(docsDefinition.config.typographyV2, docsDefinition.files);
     const backgroundImageStyleSheet = loadDocsBackgroundImage(docsDefinition);
     type ApiDefinition = APIV1Read.ApiDefinition;
     const resolver = new PathResolver({

@@ -37,12 +37,12 @@ export function MobileSidebarHeaderLinks(): ReactElement | null {
             config: { navbarLinks },
         },
     } = useDocsContext();
-    if (navbarLinks.length === 0) {
+    if (navbarLinks == null || navbarLinks.length === 0) {
         return null;
     }
     return (
         <ul className="border-border-concealed-light dark:border-border-concealed-dark -mx-4 list-none border-b p-4 lg:hidden">
-            {navbarLinks.map((navbarLink, idx) => (
+            {navbarLinks?.map((navbarLink, idx) => (
                 <SidebarLink
                     key={idx}
                     href={navbarLink.url}
