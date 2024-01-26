@@ -18,13 +18,17 @@ export interface S3FileInfo {
     key: string;
 }
 
+type ConvertedDocsDefinition = WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb.V2> & {
+    config: WithoutQuestionMarks<DocsV1Db.DocsDbConfig>;
+};
+
 export function convertDocsDefinitionToDb({
     writeShape,
     files,
 }: {
     writeShape: DocsV1Write.DocsDefinition;
     files: Record<DocsV1Write.FilePath, S3FileInfo>;
-}): WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb.V2> {
+}): ConvertedDocsDefinition {
     const navigationConfig: DocsV1Db.NavigationConfig = transformNavigationConfigForDb(writeShape.config.navigation);
     const transformedFiles: Record<DocsV1Write.FileId, DocsV1Db.DbFileInfo> = {};
     Object.entries(files).forEach(([, s3FileInfo]) => {
@@ -74,6 +78,7 @@ export function convertDocsDefinitionToDb({
             backgroundImage: writeShape.config.backgroundImage,
             typography: writeShape.config.typography,
             typographyV2: writeShape.config.typographyV2,
+            layout: writeShape.config.layout,
         },
         pages: writeShape.pages,
         colors: {
