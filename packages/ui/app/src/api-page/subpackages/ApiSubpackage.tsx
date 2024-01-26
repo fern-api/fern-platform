@@ -24,7 +24,7 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({
     return (
         <>
             <ApiPageMargins>
-                <div ref={setTargetRef} data-route={`/${subpackageSlug}`.toLowerCase()} className="scroll-mt-16" />
+                <div ref={setTargetRef} data-route={`/${subpackageSlug}`.toLowerCase()} className="scroll-mt-[74px]" />
             </ApiPageMargins>
             {apiSection != null && (
                 <ApiPackageContents

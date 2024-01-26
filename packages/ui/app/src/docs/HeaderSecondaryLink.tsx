@@ -1,4 +1,5 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import classNames from "classnames";
 import Link from "next/link";
 
 export declare namespace HeaderSecondaryLink {
@@ -10,9 +11,12 @@ export declare namespace HeaderSecondaryLink {
 export const HeaderSecondaryLink: React.FC<HeaderSecondaryLink.Props> = ({ navbarLink }) => {
     return (
         <Link
-            className={
-                "hover:text-accent-primary hover:dark:text-accent-primary-dark t-muted text-sm !no-underline transition"
-            }
+            className={classNames(
+                "hover:text-accent-primary hover:dark:text-accent-primary-dark t-muted font-mono text-sm tracking-wider !no-underline transition",
+                {
+                    "font-semibold text-[#212121]": navbarLink.url === "/",
+                }
+            )}
             href={navbarLink.url}
             target="_blank"
             rel="noreferrer noopener"

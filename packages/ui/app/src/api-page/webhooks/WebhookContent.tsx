@@ -48,7 +48,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
             })}
         >
             <div
-                className="flex min-w-0 flex-1 scroll-mt-16 flex-col lg:flex-row lg:space-x-[4vw]"
+                className="flex min-w-0 flex-1 scroll-mt-[74px] flex-col lg:flex-row lg:space-x-[4vw]"
                 ref={setContainerRef}
                 data-route={route.toLowerCase()}
             >
@@ -59,7 +59,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                                 {subpackageTitle}
                             </div>
                         )}
-                        <h2 className="inline-block text-2xl sm:text-3xl">{webhook.name}</h2>
+                        <h1 className="inline-block">{webhook.name}</h1>
                     </div>
                     <ApiPageDescription
                         description={webhook.description}

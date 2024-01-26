@@ -5,7 +5,7 @@ import { Transition } from "@headlessui/react";
 import classNames from "classnames";
 import { useTheme } from "next-themes";
 import NextNProgress from "nextjs-progressbar";
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import tinycolor from "tinycolor2";
 import { ApiPlaygroundContextProvider } from "../api-playground/ApiPlaygroundContext";
 import { useDocsContext } from "../docs-context/useDocsContext";
@@ -71,19 +71,6 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
         }
     }, [colorsV3, theme]);
 
-    const renderBackground = useCallback(
-        (className?: string) => (
-            <div className={classNames(className, "clipped-background")}>
-                <BgImageGradient
-                    className="h-screen opacity-60 dark:opacity-50"
-                    backgroundType={backgroundType}
-                    hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage}
-                />
-            </div>
-        ),
-        [backgroundType, hasSpecifiedBackgroundImage]
-    );
-
     const currentSlug = useMemo(
         () =>
             withVersionAndTabSlugs("", { omitDefault: true })
@@ -137,8 +124,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
             )}
 
             <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
-                <div className="border-border-concealed-light dark:border-border-concealed-dark dark:shadow-header-dark fixed inset-x-0 top-0 z-30 h-16 overflow-visible border-b backdrop-blur-lg lg:backdrop-blur">
-                    {renderBackground()}
+                <div className="fixed inset-x-0 top-0 z-30 m-3 h-[50px] overflow-visible rounded-lg border border-[#E0E0E0] bg-[#FAFAFA]">
                     <Header
                         className="mx-auto"
                         style={{
@@ -162,13 +148,13 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                     >
                         {isMobileSidebarOpen && (
                             <div
-                                className="fixed inset-0 z-20 block bg-white/60 lg:hidden dark:bg-black/40"
+                                className="fixed inset-0 z-20 block bg-[#E9E6DE]/60 lg:hidden dark:bg-black/40"
                                 onClick={closeMobileSidebar}
                             />
                         )}
                         {["lg", "xl", "2xl"].includes(breakpoint) ? (
                             <div
-                                className="sticky top-0 z-20 mt-16 h-[calc(100vh-64px)]"
+                                className="sticky top-[74px] z-20 -mb-3 mt-[74px] hidden h-[calc(100vh-64px)] lg:block"
                                 style={{
                                     width:
                                         layout?.sidebarWidth == null
@@ -188,7 +174,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                             </div>
                         ) : (
                             <Transition
-                                className="border-border-concealed-light dark:border-border-concealed-dark fixed inset-0 top-16 z-20 sm:w-72 sm:border-r"
+                                className="fixed inset-3 top-[74px] z-20 rounded-lg border border-[#E0E0E0] bg-[#FAFAFA] sm:w-72"
                                 show={isMobileSidebarOpen}
                                 enter="transition ease-in-out duration-300 transform"
                                 enterFrom="-translate-x-full"
@@ -197,7 +183,6 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                                 leaveFrom="translate-x-0"
                                 leaveTo="-translate-x-full"
                             >
-                                {renderBackground("lg:hidden backdrop-blur-lg")}
                                 <Sidebar
                                     navigationItems={navigationItems}
                                     currentSlug={currentSlug}
@@ -206,7 +191,12 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                             </Transition>
                         )}
 
-                        <main className={classNames("relative flex w-full min-w-0 flex-1 flex-col pt-16")}>
+                        <main
+                            className={classNames(
+                                "relative flex w-full min-w-0 flex-1 flex-col mt-[74px]",
+                                "bg-[#FAFAFA] border border-[#E0E0E0] rounded-lg mb-3 mx-3 lg:ml-0"
+                            )}
+                        >
                             <DocsMainContent navigationItems={navigationItems} contentWidth={layout?.contentWidth} />
                         </main>
                     </div>

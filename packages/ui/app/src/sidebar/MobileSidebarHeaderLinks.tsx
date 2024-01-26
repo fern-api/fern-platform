@@ -41,7 +41,7 @@ export function MobileSidebarHeaderLinks(): ReactElement | null {
         return null;
     }
     return (
-        <ul className="border-border-concealed-light dark:border-border-concealed-dark -mx-4 list-none border-b p-4 lg:hidden">
+        <ul className="border-border-concealed-light dark:border-border-concealed-dark -mx-3 list-none border-b p-4 lg:hidden">
             {navbarLinks?.map((navbarLink, idx) => (
                 <SidebarLink
                     key={idx}

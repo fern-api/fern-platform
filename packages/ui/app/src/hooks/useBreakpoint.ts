@@ -55,6 +55,8 @@ export function useBreakpoint(): "mobile" | "sm" | "md" | "lg" | "xl" | "2xl" {
             });
         };
 
+        handleBreakpointChange();
+
         mobile.addEventListener("change", handleBreakpointChange);
         sm.addEventListener("change", handleBreakpointChange);
         md.addEventListener("change", handleBreakpointChange);

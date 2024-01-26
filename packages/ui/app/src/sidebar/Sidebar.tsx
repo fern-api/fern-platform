@@ -14,11 +14,11 @@ export interface SidebarProps {
 export const Sidebar: React.FC<SidebarProps> = ({ navigationItems, currentSlug, registerScrolledToPathListener }) => {
     return (
         <nav
-            className="group/sidebar smooth-scroll hide-scrollbar relative h-full w-full overflow-x-hidden overflow-y-scroll overscroll-contain px-4 pb-12 lg:overflow-y-auto"
+            className="group/sidebar smooth-scroll hide-scrollbar relative h-full w-full overflow-x-hidden overflow-y-scroll overscroll-contain px-3 pb-12 lg:overflow-y-auto"
             aria-label="secondary"
         >
             <MobileSidebarHeaderLinks />
-            <SidebarFixedItemsSection className="-mx-4 lg:sticky lg:top-0 lg:z-20" />
+            <SidebarFixedItemsSection className="-mx-3 lg:sticky lg:top-0 lg:z-20" />
             <CollapseSidebarProvider>
                 <SidebarSection
                     navigationItems={navigationItems}

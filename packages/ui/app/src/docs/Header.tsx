@@ -40,7 +40,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     const { navbarLinks, colorsV3 } = docsDefinition.config;
 
     const navbarLinksSection = (
-        <div className="hidden items-center space-x-5 lg:flex lg:space-x-8">
+        <div className="hidden items-center space-x-4 lg:flex lg:space-x-6">
             {navbarLinks?.map((navbarLink, idx) =>
                 visitDiscriminatedUnion(navbarLink, "type")._visit({
                     primary: (navbarLink) => <HeaderPrimaryLink key={idx} navbarLink={navbarLink} />,
@@ -55,7 +55,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
         <nav
             aria-label="primary"
             className={classNames(
-                "flex justify-between items-center shrink-0 px-6 sm:px-8",
+                "flex justify-between items-center shrink-0 px-4",
                 // this matches with the calc() in the EndpointContent examples section
                 "h-full",
                 className

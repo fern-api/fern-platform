@@ -26,7 +26,7 @@ export const CustomDocsPageHeader = ({ resolvedPath }: Pick<CustomDocsPage.Props
                     </div>
                 )}
 
-                <h1 className="my-0 inline-block text-3xl">{resolvedPath.page.title}</h1>
+                <h1 className="!my-0 inline-block">{resolvedPath.page.title}</h1>
             </div>
         </header>
     );
@@ -49,7 +49,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({
         <div className="flex justify-between px-6 sm:px-8 lg:pl-12 lg:pr-20 xl:pr-0">
             <div className="w-full min-w-0 lg:pr-6">
                 <article
-                    className="prose dark:prose-invert mx-auto w-full lg:ml-0 xl:mx-auto"
+                    className="prose dark:prose-invert w-full"
                     style={{
                         maxWidth:
                             contentWidth == null

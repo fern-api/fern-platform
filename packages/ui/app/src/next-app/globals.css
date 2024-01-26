@@ -36,7 +36,7 @@
     code,
     pre,
     .font-mono {
-        font-family: var(--typography-code-font-family);
+        font-family: var(--typography-code-font-family) !important;
     }
 
     code.inline-code {
@@ -50,21 +50,26 @@
     h4,
     h5,
     h6 {
-        @apply scroll-mt-20 tracking-tight mt-8;
+        @apply scroll-mt-[74px] tracking-tight mt-8;
 
         font-family: var(--typography-heading-font-family);
     }
 
     h1 {
-        @apply text-[2.25rem] font-extrabold;
+        @apply text-[2.25rem] !font-normal;
+    }
+
+    p + h1,
+    div + h1 {
+        @apply mt-12 !important;
     }
 
     h2 {
-        @apply text-[1.5rem] font-bold;
+        @apply text-[1.5rem] !font-normal;
     }
 
     h3 {
-        @apply text-[1.25rem] font-semibold;
+        @apply text-[1.25rem] !font-normal;
     }
 
     h4 {

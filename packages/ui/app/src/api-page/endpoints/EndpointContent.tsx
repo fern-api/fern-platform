@@ -226,14 +226,14 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     return (
         <div
-            className={classNames("pb-20 pl-6 md:pl-12 pr-4 scroll-mt-20", {
+            className={classNames("pb-20 pl-6 md:pl-12 pr-4 scroll-mt-[74px]", {
                 "border-border-default-light dark:border-border-default-dark border-b": !hideBottomSeparator,
             })}
             onClick={() => setSelectedError(undefined)}
             ref={containerRef}
         >
             <div
-                className="flex min-w-0 flex-1 scroll-mt-16 flex-col justify-between lg:flex-row lg:space-x-[4vw]"
+                className="flex min-w-0 flex-1 scroll-mt-[74px] flex-col justify-between lg:flex-row lg:space-x-[4vw]"
                 ref={setContainerRef}
                 data-route={route.toLowerCase()}
             >
