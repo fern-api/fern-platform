@@ -215,6 +215,7 @@ function convertResponseToDb({
         case "object":
         case "reference":
         case "streamingText":
+        case "stream":
             return {
                 ...writeShape,
                 type: writeShapeType,

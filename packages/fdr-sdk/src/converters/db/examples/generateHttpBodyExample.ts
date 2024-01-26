@@ -62,6 +62,14 @@ export function generateHttpResponseBodyExample(
             return "example-text";
         case "streamCondition":
             return "example-text";
+        case "stream": {
+            switch (type.shape.type) {
+                case "object":
+                    return generateExampleObject(type.shape, resolveTypeById, false, new Set(), 0);
+                case "reference":
+                    return generateExampleFromTypeReference(type.shape.value, resolveTypeById, false, new Set(), 0);
+            }
+        }
     }
 }
 

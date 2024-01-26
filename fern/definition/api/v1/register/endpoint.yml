@@ -10,7 +10,7 @@ types:
   EndpointId: string
 
   EndpointDefinition:
-    extends: 
+    extends:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
@@ -53,7 +53,7 @@ types:
       pathParameter: PathParameterKey
 
   PathParameter:
-    extends: 
+    extends:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
@@ -63,7 +63,7 @@ types:
   PathParameterKey: string
 
   QueryParameter:
-    extends: 
+    extends:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
@@ -71,7 +71,7 @@ types:
       type: type.TypeReference
 
   Header:
-    extends: 
+    extends:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
@@ -85,7 +85,7 @@ types:
 
   HttpRequestBodyShape:
     union:
-      object: 
+      object:
         # deprecated, the CLI will use json instead
         type: type.ObjectType
       reference:
@@ -93,14 +93,14 @@ types:
         type: type.TypeReference
       json: JsonRequestBody
       fileUpload: {}
-  
-  JsonRequestBody: 
-    properties: 
+
+  JsonRequestBody:
+    properties:
       contentType: string
       shape: JsonBodyShape
-  
-  JsonBodyShape: 
-    union: 
+
+  JsonBodyShape:
+    union:
       object: type.ObjectType
       reference: type.TypeReference
 
@@ -110,18 +110,18 @@ types:
       type: HttpResponseBodyShape
 
   ErrorDeclaration:
-    extends: 
+    extends:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
       type: optional<type.TypeReference>
       statusCode: integer
-  
-  ErrorDeclarationV2: 
-    extends: 
+
+  ErrorDeclarationV2:
+    extends:
       - commons.WithDescription
       - commons.WithAvailability
-    properties: 
+    properties:
       type: optional<type.TypeShape>
       statusCode: integer
       name: optional<string>
@@ -132,28 +132,39 @@ types:
       reference: type.TypeReference
       fileDownload: {}
       streamingText: {}
-      streamCondition: 
+      stream: StreamResponseV2
+
+      # deprecated
+      streamCondition:
         type: StreamConditionResponse
-        docs: | 
+        docs: |
           A response that can either be streaming or REST
 
-  StreamConditionResponse: 
-    properties: 
+  StreamResponseV2:
+    properties:
+      shape: JsonBodyShape
+
+  StreamConditionResponse:
+    availability: deprecated
+    properties:
       response: NonStreamResponse
       streamResponse: StreamResponse
       streamCondition: StreamCondition
-  
-  NonStreamResponse: 
-    properties: 
+
+  NonStreamResponse:
+    availability: deprecated
+    properties:
       shape: JsonBodyShape
       examples: list<ExampleEndpointCall>
-  
-  StreamResponse:   
-    properties: 
+
+  StreamResponse:
+    availability: deprecated
+    properties:
       shape: JsonBodyShape
       examples: list<ExampleEndpointCall>
-  
+
   StreamCondition:
+    availability: deprecated
     union:
       booleanRequestProperty: type.PropertyKey
 
@@ -165,12 +176,12 @@ types:
       pathParameters: map<PathParameterKey, unknown>
       queryParameters: map<string, unknown>
       headers: map<string, unknown>
-      requestBody: 
+      requestBody:
         type: unknown
         availability: deprecated
       requestBodyV3: optional<ExampleEndpointRequest>
       responseStatusCode: integer
-      responseBody: 
+      responseBody:
         type: unknown
         availability: deprecated
       responseBodyV3: optional<ExampleEndpointResponse>

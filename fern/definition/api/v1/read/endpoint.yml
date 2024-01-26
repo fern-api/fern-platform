@@ -55,7 +55,7 @@ types:
       pathParameter: PathParameterKey
 
   PathParameter:
-    extends: 
+    extends:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
@@ -65,7 +65,7 @@ types:
   PathParameterKey: string
 
   QueryParameter:
-    extends: 
+    extends:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
@@ -73,7 +73,7 @@ types:
       type: type.TypeReference
 
   Header:
-    extends: 
+    extends:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
@@ -96,8 +96,8 @@ types:
     extends: commons.WithDescription
     properties:
       type: HttpResponseBodyShape
-  
-  JsonBodyShape: 
+
+  JsonBodyShape:
     union:
       object: type.ObjectType
       reference: type.TypeReference
@@ -108,44 +108,54 @@ types:
       reference: type.TypeReference
       fileDownload: {}
       streamingText: {}
-      streamCondition: 
+      stream: StreamResponseV2
+
+      # deprecated
+      streamCondition:
         type: StreamConditionResponse
-        docs: | 
+        docs: |
           A response that can either be streaming or REST
 
-  StreamConditionResponse: 
-    properties: 
+  StreamResponseV2:
+    properties:
+      shape: JsonBodyShape
+
+  StreamConditionResponse:
+    availability: deprecated
+    properties:
       response: NonStreamResponse
       streamResponse: StreamResponse
       streamCondition: StreamCondition
-  
-  NonStreamResponse: 
-    properties: 
+
+  NonStreamResponse:
+    availability: deprecated
+    properties:
       shape: JsonBodyShape
       examples: list<ExampleEndpointCall>
-  
-  StreamResponse:   
-    properties: 
+
+  StreamResponse:
+    availability: deprecated
+    properties:
       shape: JsonBodyShape
       examples: list<ExampleEndpointCall>
-  
+
   StreamCondition:
     union:
       booleanRequestProperty: type.PropertyKey
 
   ErrorDeclaration:
-    extends: 
+    extends:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
       type: optional<type.TypeReference>
       statusCode: integer
-  
-  ErrorDeclarationV2: 
-    extends: 
+
+  ErrorDeclarationV2:
+    extends:
       - commons.WithDescription
       - commons.WithAvailability
-    properties: 
+    properties:
       type: optional<type.TypeShape>
       statusCode: integer
       name: optional<string>
@@ -187,13 +197,12 @@ types:
       json: unknown
       filename: string
       stream: list<unknown>
-    
-  PythonSnippet: 
-    properties: 
+
+  PythonSnippet:
+    properties:
       async_client: string
       sync_client: string
-  
-  TypescriptSnippet: 
-    properties: 
-      client: string
 
+  TypescriptSnippet:
+    properties:
+      client: string
