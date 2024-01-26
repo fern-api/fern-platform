@@ -57,7 +57,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
             className={classNames(
                 "flex justify-between items-center shrink-0 px-4",
                 // this matches with the calc() in the EndpointContent examples section
-                "h-full",
+                // "h-full",
                 className
             )}
             ref={ref}

@@ -4,6 +4,7 @@ import { range } from "lodash-es";
 import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
 import { FC, HTMLAttributeAnchorTarget, memo, PropsWithChildren, ReactNode, useEffect, useRef } from "react";
+import { ReactElement } from "react-markdown/lib/react-markdown";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 
@@ -51,16 +52,16 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
         elementRef?: React.Ref<HTMLLIElement>;
     }
 >) {
-    const renderLink = () => {
+    const renderLink = (child: ReactElement) => {
         const linkClassName = classNames(
             linkClassNameProp,
-            "!text-inherit text-left !hover:text-inherit relative inline-flex flex-1 content-between items-center px-4 lg:px-3 no-underline hover:no-underline py-3 lg:py-2 rounded-lg ring-border-primary dark:ring-border-primary-dark ring-inset",
+            "!text-inherit text-left !hover:text-inherit relative inline-flex flex-1 content-between items-stretch px-4 lg:px-3 no-underline hover:no-underline rounded-lg ring-border-primary dark:ring-border-primary-dark ring-inset",
             {
-                "bg-[#FAFAFA] ring-[#E0E0E0] ring-1": selected,
+                "bg-tag-primary dark:bg-tag-primary-dark ring-1 lg:ring-0": selected,
                 "lg:hover:bg-tag-default-light/5/10 lg:dark:hover:bg-tag-default-dark/5 ring-0": !selected,
             },
             {
-                "ml-[38px] lg:ml-6": toggleExpand == null && !expanded && depth > 0,
+                "!pl-0": toggleExpand != null || expanded || depth > 0,
             }
         );
 
@@ -71,71 +72,86 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
                 onClick={(e) => {
                     closeMobileSidebar?.();
                     onClick?.(e);
+                    toggleExpand?.();
                 }}
                 shallow={shallow}
             >
-                <span className="flex-1 text-base leading-6 lg:text-sm lg:leading-5">{title}</span>
-                {rightElement}
+                {child}
             </Link>
         ) : (
             <button
                 className={linkClassName}
                 onClick={(e) => {
                     onClick?.(e);
+                    toggleExpand?.();
                 }}
             >
-                <span className="flex-1 text-base leading-6 lg:text-sm lg:leading-5">{title}</span>
-                {rightElement}
+                {child}
             </button>
         );
     };
 
+    const expandButton = (toggleExpand != null || expanded) && (
+        <span
+            className={classNames(
+                "relative",
+                "flex w-[44px] lg:w-6 justify-center items-center transition-colors rounded-none transition-transform lg:translate-x-1 group-hover/sidebar:translate-x-0 ease-out",
+                {
+                    "lg:opacity-60 group-hover/sidebar:opacity-100 transition-opacity": toggleExpand != null,
+                    "lg:bg-tag-primary lg:dark:bg-tag-primary-dark lg:after:content-none after:content-[''] after:absolute after:inset-1 after:rounded-lg after:bg-tag-primary after:dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark !lg:text-inherit after:pointer-events-none":
+                        showIndicator,
+                    "lg:hover:bg-tag-default-light/5 lg:dark:hover:bg-tag-default-dark/5":
+                        !showIndicator && toggleExpand != null,
+                    "lg:rounded-lg group-hover:rounded-r-none": depth === 0,
+                    "lg:rounded-r-lg group-hover:rounded-r-none": depth > 0,
+                }
+            )}
+        >
+            <ChevronDownIcon
+                className={classNames("h-6 w-6 lg:h-5 w-5 transition-transform", {
+                    "-rotate-90": !expanded,
+                    "rotate-0": expanded,
+                })}
+            />
+        </span>
+    );
+
+    const titleSpanClassName = classNames("flex-1 text-base leading-6 lg:text-sm lg:leading-5", {
+        "ml-[12px]": toggleExpand != null || expanded,
+        "ml-[36px]": depth > 0 && toggleExpand == null && !expanded,
+    });
+
     return (
         <li ref={elementRef} className="scroll-my-32">
             <div
-                className={classNames(className, "items-stretch relative flex min-h-[44px] lg:min-h-[36px]", {
+                className={classNames(className, "group items-stretch relative flex min-h-[44px] lg:min-h-[36px]", {
                     "hover:text-accent-primary hover:dark:text-accent-primary-dark t-muted": !selected,
                     "text-accent-primary dark:text-accent-primary-dark": selected,
                 })}
             >
-                {range(0, depth).map((i) => (
-                    <div
-                        key={i}
-                        className={classNames(
-                            "relative flex-0 w-[22px] lg:w-3 shrink-0 border-r",
-                            "transition-transform group-hover/sidebar:translate-x-0 lg:translate-x-1 group-hover/sidebar:opacity-100 transition-opacity ease-out",
-                            {
-                                "border-accent-primary/60 dark:border-accent-primary-dark/60":
-                                    selected && i === depth - 1,
-                                "border-border-default-light dark:border-border-default-dark lg:opacity-60":
-                                    !selected || i < depth - 1,
-                            }
-                        )}
-                    />
-                ))}
-                {(toggleExpand != null || expanded) && (
-                    <button
-                        className={classNames(
-                            "flex w-[44px] lg:w-6 justify-center items-center transition-colors rounded-none lg:rounded-lg transition-transform lg:translate-x-1 group-hover/sidebar:translate-x-0 ease-out",
-                            {
-                                "lg:hover:bg-tag-default-light/5 lg:dark:hover:bg-tag-default-dark/5 lg:opacity-60 group-hover/sidebar:opacity-100 transition-opacity":
-                                    toggleExpand != null,
-                                "lg:rounded-l-none": depth > 0,
-                                "lg:bg-tag-primary lg:dark:bg-tag-primary-dark relative lg:after:content-none after:content-[''] after:absolute after:inset-1 after:rounded-lg after:bg-tag-primary after:dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark !lg:text-inherit after:pointer-events-none":
-                                    showIndicator,
-                            }
-                        )}
-                        onClick={toggleExpand}
-                    >
-                        <ChevronDownIcon
-                            className={classNames("h-6 w-6 lg:h-5 w-5 transition-transform", {
-                                "-rotate-90": !expanded,
-                                "rotate-0": expanded,
-                            })}
-                        />
-                    </button>
+                {renderLink(
+                    <>
+                        {range(0, depth).map((i) => (
+                            <div
+                                key={i}
+                                className={classNames(
+                                    "relative flex-0 w-[22px] lg:w-3 shrink-0 border-r",
+                                    "transition-transform group-hover/sidebar:translate-x-0 lg:translate-x-1 group-hover/sidebar:opacity-100 transition-opacity ease-out",
+                                    {
+                                        "border-accent-primary/60 dark:border-accent-primary-dark/60": selected,
+                                        "border-border-default-light dark:border-border-default-dark lg:opacity-60":
+                                            !selected,
+                                    }
+                                )}
+                            />
+                        ))}
+                        {expandButton}
+                        <span className="inline-flex flex-1 items-center py-3 lg:py-2">
+                            <span className={titleSpanClassName}>{title}</span>
+                            {rightElement}
+                        </span>
+                    </>
                 )}
-                {renderLink()}
             </div>
             {children}
         </li>

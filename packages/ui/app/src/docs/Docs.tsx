@@ -124,9 +124,14 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
             )}
 
             <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
-                <div className="fixed inset-x-0 top-0 z-30 m-3 h-[50px] overflow-visible rounded-lg border border-[#E0E0E0] bg-[#FAFAFA]">
+                <div
+                    className="fixed inset-x-0 top-0 z-30 mx-auto overflow-visible"
+                    style={{
+                        maxWidth: maxPageWidth,
+                    }}
+                >
                     <Header
-                        className="mx-auto"
+                        className="m-3 h-[50px] rounded-lg border border-[#E0E0E0] bg-[#FAFAFA]"
                         style={{
                             maxWidth: maxPageWidth,
                         }}
@@ -154,7 +159,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                         )}
                         {["lg", "xl", "2xl"].includes(breakpoint) ? (
                             <div
-                                className="sticky top-[74px] z-20 -mb-3 mt-[74px] hidden h-[calc(100vh-64px)] lg:block"
+                                className="sticky top-[74px] z-20 m-3 mt-[74px] hidden h-[calc(100vh-86px)] overflow-hidden rounded-lg border border-[#E0E0E0] bg-[#FAFAFA] lg:block"
                                 style={{
                                     width:
                                         layout?.sidebarWidth == null
