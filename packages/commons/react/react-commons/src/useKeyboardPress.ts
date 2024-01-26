@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 type Arrow = "Up" | "Down" | "Right" | "Left";
 
-type OtherKey = "Enter" | "Escape" | "Slash";
+type OtherKey = "Enter" | "Escape" | "Slash" | "Backspace" | "Tab" | "Space" | "Delete";
 
 export declare namespace useKeyboardPress {
     export interface Args {
@@ -49,10 +49,10 @@ export function useKeyboardPress(args: useKeyboardPress.Args): void {
             }
         }
 
-        document.addEventListener("keydown", handleSaveKeyPress, false);
+        document.addEventListener("keydown", handleSaveKeyPress, true);
 
         return () => {
-            document.removeEventListener("keydown", handleSaveKeyPress, false);
+            document.removeEventListener("keydown", handleSaveKeyPress, true);
         };
     }, [key, onPress, preventDefault]);
 }
