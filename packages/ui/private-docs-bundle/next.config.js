@@ -7,6 +7,10 @@ const nextConfig = {
     },
     rewrites: () => [
         {
+            source: "/api/:path*",
+            destination: "/api/:path*",
+        },
+        {
             has: [
                 {
                     type: "header",
