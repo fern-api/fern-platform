@@ -33,14 +33,18 @@ export function checkSlugStartsWith(slug: string[], startsWith: string[]): boole
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useCollapseSidebar = () => useContext(CollapseSidebarContext);
 
+function expandArray(arr: string[]): string[][] {
+    return arr.map((_, idx) => arr.slice(0, idx + 1));
+}
+
 export const CollapseSidebarProvider: FC<PropsWithChildren> = ({ children }) => {
     const { selectedSlug: selectedSlugString } = useDocsSelectors();
 
     const selectedSlug = useMemo(() => selectedSlugString.split("/"), [selectedSlugString]);
-    const [expanded, setExpanded] = useState<string[][]>(() => [selectedSlug]);
+    const [expanded, setExpanded] = useState<string[][]>(() => expandArray(selectedSlug));
 
     useEffect(() => {
-        setExpanded([selectedSlug]);
+        setExpanded(expandArray(selectedSlug));
     }, [selectedSlug]);
 
     const checkExpanded = useCallback(
