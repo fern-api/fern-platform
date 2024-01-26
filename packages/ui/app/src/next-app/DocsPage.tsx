@@ -5,7 +5,7 @@ import {
     loadDocsBackgroundImage,
     type ResolvedPath,
 } from "@fern-ui/app-utils";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { compact } from "lodash-es";
 import { GetStaticProps, Redirect } from "next";
 import Head from "next/head";
@@ -40,11 +40,9 @@ export function DocsPage({
                 */}
             {/* eslint-disable-next-line react/no-unknown-property */}
             <style jsx global>
-                {`
-                    ${colorThemeStyleSheet}
-                    \n${typographyStyleSheet}
-                    ${backgroundImageStyleSheet}
-                `}
+                {[colorThemeStyleSheet, typographyStyleSheet, backgroundImageStyleSheet]
+                    .filter(isNonNullish)
+                    .join("\n\n")}
             </style>
             <Head>
                 <meta
