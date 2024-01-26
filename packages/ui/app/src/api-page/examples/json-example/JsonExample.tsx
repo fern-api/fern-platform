@@ -5,8 +5,8 @@ import { VirtualizedExample } from "../VirtualizedExample";
 import { JsonPropertyPath } from "./contexts/JsonPropertyPath";
 import { flattenJsonToLines, getIsSelectedArr, JsonLine, renderJsonLine } from "./jsonLineUtils";
 
-const LINE_HEIGHT = 21.5;
-const VERTICAL_PADDING = 20;
+const LINE_HEIGHT = 20;
+const VERTICAL_PADDING = 12;
 
 export declare namespace JsonExample {
     export interface Props {
@@ -44,6 +44,7 @@ export const JsonExample = React.memo<JsonExample.Props>(function JsonExample({ 
                             "relative w-fit min-w-full px-4 transition py-px",
                             isSelected ? "bg-accent-primary/20" : "bg-transparent"
                         )}
+                        style={{ lineHeight: `${LINE_HEIGHT}px`, height: `${LINE_HEIGHT}px` }}
                         key={i}
                     >
                         {isSelected && <div className="bg-accent-primary absolute inset-y-0 left-0 w-1" />}
@@ -80,6 +81,7 @@ export const JsonExampleVirtualized: React.FC<JsonExampleVirtualized.Props> = ({
                         "relative w-fit h-full min-w-full px-4 transition py-px",
                         isSelected ? "bg-accent-primary/20" : "bg-transparent"
                     )}
+                    style={{ lineHeight: `${LINE_HEIGHT}px`, height: `${LINE_HEIGHT}px` }}
                 >
                     {isSelected && <div className="bg-accent-primary absolute inset-y-0 left-0 w-1" />}
                     {renderJsonLine(row)}

@@ -127,7 +127,7 @@ export function getCurlLines(
             case "fileUpload":
                 parts.push({
                     type: "param",
-                    paramKey: "--data",
+                    paramKey: "-d",
                     value: "@file",
                 });
                 break;
@@ -135,7 +135,7 @@ export function getCurlLines(
                 if (jsonLines.length === 1 && jsonLines[0] != null) {
                     parts.push({
                         type: "param",
-                        paramKey: "--data",
+                        paramKey: "-d",
                         value: [
                             { type: "symbol", value: "'" },
                             { type: "jsonLine", value: jsonLines[0] },
@@ -148,16 +148,16 @@ export function getCurlLines(
                     parts.push(
                         {
                             type: "param",
-                            paramKey: "--data",
-                            value: [{ type: "symbol", value: "'" }],
+                            paramKey: "-d @-",
+                            value: [{ type: "symbol", value: "<<BODY" }],
                             excludeTrailingBackslash: true,
                             doNotStringifyValue: true,
                         },
                         ...jsonLines.map((line): CurlLine => ({ type: "json", line })),
                         {
                             type: "param",
-                            value: [{ type: "symbol", value: "'" }],
-                            excludeIndent: true,
+                            value: [{ type: "symbol", value: "BODY" }],
+                            // excludeIndent: true,
                             doNotStringifyValue: true,
                         }
                     );

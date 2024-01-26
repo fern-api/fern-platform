@@ -14,30 +14,26 @@ export const CurlParameter: React.FC<CurlParameter.Props> = ({ paramKey, value, 
     return (
         <>
             {paramKey != null && (
-                <span className="text-text-primary-light dark:text-text-primary-dark">{paramKey}</span>
+                <span className="text-text-primary-light dark:text-text-primary-dark">{paramKey} </span>
             )}
-            {value != null && (
-                <>
-                    {" "}
-                    {doNotStringifyValue || typeof value !== "string" ? (
-                        <span className="text-text-primary-light dark:text-text-primary-dark">
-                            {typeof value === "string"
-                                ? value
-                                : value.map((v, i) =>
-                                      v.type === "symbol" ? (
-                                          <JsonExampleString key={i} value={v.value} doNotStringify />
-                                      ) : (
-                                          <span className="text-text-primary-light dark:text-text-primary-dark" key={i}>
-                                              {renderJsonLine(v.value)}
-                                          </span>
-                                      )
-                                  )}
-                        </span>
-                    ) : (
-                        <JsonExampleString value={value} />
-                    )}
-                </>
-            )}
+            {value != null &&
+                (doNotStringifyValue || typeof value !== "string" ? (
+                    <span className="text-text-primary-light dark:text-text-primary-dark">
+                        {typeof value === "string"
+                            ? value
+                            : value.map((v, i) =>
+                                  v.type === "symbol" ? (
+                                      <JsonExampleString key={i} value={v.value} doNotStringify />
+                                  ) : (
+                                      <span className="text-text-primary-light dark:text-text-primary-dark" key={i}>
+                                          {renderJsonLine(v.value)}
+                                      </span>
+                                  )
+                              )}
+                    </span>
+                ) : (
+                    <JsonExampleString value={value} />
+                ))}
         </>
     );
 };

@@ -35,7 +35,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
     return (
         <div
             className={classNames(
-                "flex flex-col rounded-xl border border-black/20 dark:border-white/20 overflow-visible basis-full bg-background-primary-light dark:bg-background-primary-dark",
+                "flex flex-col rounded-lg border border-border-primary dark:border-border-primary-dark overflow-visible basis-full bg-background-primary-light dark:bg-background-primary-dark",
                 className
             )}
             onClick={onClick}
@@ -43,9 +43,9 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
         >
             <div
                 className={classNames(
-                    "border-black/20 rounded-t-xl dark:border-white/20 flex h-10 items-center justify-between border-b py-1 pl-3 pr-2",
+                    "border-border-primary dark:border-border-primary-dark rounded-t-lg flex h-10 items-center justify-between border-b py-1 pl-3 pr-2",
                     {
-                        "bg-black/5 dark:bg-white/5": type === "primary",
+                        "bg-background/75 dark:bg-background-dark/75": type === "primary",
                         "bg-red-500/20": type === "warning",
                     }
                 )}
