@@ -5,7 +5,7 @@ import {
     loadDocsBackgroundImage,
     type ResolvedPath,
 } from "@fern-ui/app-utils";
-import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { compact } from "lodash-es";
 import { GetStaticProps, Redirect } from "next";
 import Head from "next/head";
@@ -18,16 +18,16 @@ import { DocsApp } from "./DocsApp";
 export declare namespace DocsPage {
     export interface Props {
         docs: DocsV2Read.LoadDocsForUrlResponse;
-        typographyStyleSheet?: string;
-        backgroundImageStyleSheet: string | null;
+        typographyStyleSheet: string;
+        backgroundImageStyleSheet: string;
         resolvedPath: ResolvedPath;
     }
 }
 
 export function DocsPage({
     docs,
-    typographyStyleSheet = "",
-    backgroundImageStyleSheet = "",
+    typographyStyleSheet,
+    backgroundImageStyleSheet,
     resolvedPath,
 }: DocsPage.Props): ReactElement {
     const colorThemeStyleSheet = useColorTheme(docs.definition);
@@ -40,9 +40,11 @@ export function DocsPage({
                 */}
             {/* eslint-disable-next-line react/no-unknown-property */}
             <style jsx global>
-                {[colorThemeStyleSheet, typographyStyleSheet, backgroundImageStyleSheet]
-                    .filter(isNonNullish)
-                    .join("\n\n")}
+                {`
+                    ${colorThemeStyleSheet}
+                    ${typographyStyleSheet}
+                    ${backgroundImageStyleSheet}
+                `}
             </style>
             <Head>
                 <meta
@@ -121,7 +123,7 @@ export const getDocsPageProps = async (
         props: {
             docs: docs.body,
             typographyStyleSheet,
-            backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
+            backgroundImageStyleSheet: backgroundImageStyleSheet ?? "",
             resolvedPath,
         },
         revalidate: 60 * 60 * 24 * 6, // 6 days
