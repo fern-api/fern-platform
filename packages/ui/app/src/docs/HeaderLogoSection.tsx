@@ -54,9 +54,20 @@ export const HeaderLogoSection: React.FC = () => {
             {logoHref != null ? (
                 <Link href={logoHref} className="flex items-center">
                     {renderLogoContent()}
+                    <span className="text-logo text-accent-primary dark:text-accent-primary-dark font-light lowercase">
+                        docs
+                    </span>
                 </Link>
             ) : (
-                <div className="flex items-center">{renderLogoContent()}</div>
+                <div className="flex items-baseline">
+                    {renderLogoContent()}
+                    <span
+                        className="text-logo text-accent-primary dark:text-accent-primary-dark ml-1 font-light lowercase"
+                        style={{ fontFamily: "var(--typography-heading-font-family)" }}
+                    >
+                        docs
+                    </span>
+                </div>
             )}
             {hasMultipleVersions && (
                 <div>

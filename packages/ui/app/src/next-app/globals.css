@@ -134,4 +134,10 @@
         -webkit-box-orient: vertical;
         text-overflow: -o-ellipsis-lastline;
     }
+
+    .text-logo {
+        font-size: 1.5rem;
+        line-height: 100%;
+        letter-spacing: 0;
+    }
 }
