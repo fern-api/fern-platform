@@ -1,6 +1,7 @@
 import { DocsV1Read, type DocsNode } from "@fern-api/fdr-sdk";
 import { type ResolvedPath, type SerializedMdxContent } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import Link from "next/link";
 import { ReactElement, useMemo } from "react";
 import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
 import { useDocsContext } from "../docs-context/useDocsContext";
@@ -69,6 +70,16 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({
             </div>
             <aside className="scroll-contain smooth-scroll hide-scrollbar sticky top-16 hidden max-h-[calc(100vh-64px)] w-[19rem] shrink-0 overflow-auto overflow-x-hidden px-8 pb-12 pt-8 xl:block">
                 <TableOfContents markdown={page?.markdown ?? ""} />
+                {page?.editThisPageUrl != null && (
+                    <Link
+                        href={page.editThisPageUrl}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="t-muted hover:dark:text-text-primary-dark hover:text-text-primary-light my-3 block hyphens-auto break-words py-1.5 text-sm leading-5 no-underline transition hover:no-underline"
+                    >
+                        Edit this page
+                    </Link>
+                )}
             </aside>
         </div>
     );
