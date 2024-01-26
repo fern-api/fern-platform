@@ -73,6 +73,7 @@ export function convertDocsDefinitionToDb({
             favicon: writeShape.config.favicon,
             backgroundImage: writeShape.config.backgroundImage,
             typography: writeShape.config.typography,
+            typographyV2: writeShape.config.typographyV2,
         },
         pages: writeShape.pages,
         colors: {
