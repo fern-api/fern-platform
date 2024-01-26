@@ -102,8 +102,8 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
                         showIndicator,
                     "lg:hover:bg-tag-default-light/5 lg:dark:hover:bg-tag-default-dark/5":
                         !showIndicator && toggleExpand != null,
-                    "lg:rounded-lg group-hover:rounded-r-none": depth === 0,
-                    "lg:rounded-r-lg group-hover:rounded-r-none": depth > 0,
+                    "lg:rounded-lg dark:group-hover:rounded-r-none": depth === 0,
+                    "lg:rounded-r-lg dark:group-hover:rounded-r-none": depth > 0,
                 }
             )}
         >
