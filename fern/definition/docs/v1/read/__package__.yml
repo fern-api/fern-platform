@@ -143,12 +143,14 @@ types:
       logo: optional<FileId>
       accentPrimary: RgbColor
       background: Background
+      backgroundSecondary: optional<Background>
 
   LightModeConfig:
     properties:
       logo: optional<FileId>
       accentPrimary: RgbColor
       background: Background
+      backgroundSecondary: optional<Background>
 
   DarkAndLightModeConfig:
     properties:

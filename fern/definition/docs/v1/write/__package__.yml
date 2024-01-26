@@ -121,12 +121,14 @@ types:
       logo: optional<FileId>
       accentPrimary: optional<RgbColor>
       background: optional<RgbColor>
+      backgroundSecondary: optional<RgbColor>
 
   LightModeConfig:
     properties:
       logo: optional<FileId>
       accentPrimary: optional<RgbColor>
       background: optional<RgbColor>
+      backgroundSecondary: optional<RgbColor>
 
   DarkAndLightModeConfig:
     properties:

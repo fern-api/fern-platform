@@ -284,6 +284,10 @@ function transformColorsV3ForDb({
                 accentPrimary: writeShape.accentPrimary ?? DEFAULT_DARK_MODE_ACCENT_PRIMARY,
                 background:
                     writeShape.background != null ? { type: "solid", ...writeShape.background } : { type: "gradient" },
+                backgroundSecondary:
+                    writeShape.backgroundSecondary != null
+                        ? { type: "solid", ...writeShape.backgroundSecondary }
+                        : undefined,
                 logo: docsConfig.logoV2?.dark ?? docsConfig.logo,
             };
         case "light":
@@ -292,6 +296,10 @@ function transformColorsV3ForDb({
                 accentPrimary: writeShape.accentPrimary ?? DEFAULT_LIGHT_MODE_ACCENT_PRIMARY,
                 background:
                     writeShape.background != null ? { type: "solid", ...writeShape.background } : { type: "gradient" },
+                backgroundSecondary:
+                    writeShape.backgroundSecondary != null
+                        ? { type: "solid", ...writeShape.backgroundSecondary }
+                        : undefined,
                 logo: docsConfig.logoV2?.light,
             };
         case "darkAndLight":
@@ -303,6 +311,10 @@ function transformColorsV3ForDb({
                         writeShape.light.background != null
                             ? { type: "solid", ...writeShape.light.background }
                             : { type: "gradient" },
+                    backgroundSecondary:
+                        writeShape.light.backgroundSecondary != null
+                            ? { type: "solid", ...writeShape.light.backgroundSecondary }
+                            : undefined,
                     logo: docsConfig.logoV2?.light,
                 },
                 dark: {
@@ -311,6 +323,10 @@ function transformColorsV3ForDb({
                         writeShape.dark.background != null
                             ? { type: "solid", ...writeShape.dark.background }
                             : { type: "gradient" },
+                    backgroundSecondary:
+                        writeShape.dark.backgroundSecondary != null
+                            ? { type: "solid", ...writeShape.dark.backgroundSecondary }
+                            : undefined,
                     logo: docsConfig.logoV2?.dark ?? docsConfig.logo,
                 },
             };
