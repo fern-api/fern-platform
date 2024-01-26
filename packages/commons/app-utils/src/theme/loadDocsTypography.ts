@@ -85,7 +85,7 @@ export function generateFontFaces(
         }
 
         if (typography.headingsFont.fontVariationSettings != null) {
-            additionalCss += `h1, h2, h3 {\n    font-variation-settings: ${typography.headingsFont.fontVariationSettings};\n}\n`;
+            additionalCss += `h1 {\n    font-variation-settings: ${typography.headingsFont.fontVariationSettings};\n}\n`;
         }
     } else {
         variables.push(`--typography-heading-font-family: ${BODY_FONT_FALLBACK}`);
