@@ -32,15 +32,16 @@
     "lint": "yarn compile && next lint"
   },
   "dependencies": {
-    "@fern-api/fdr-sdk": "0.44.0-1-geb2e930",
+    "@fern-api/fdr-sdk": "0.46.1-12-g728c8f6",
+    "@fern-api/venus-api-sdk": "^0.0.38",
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/ui": "workspace:*",
     "@workos-inc/node": "^5.1.1",
+    "cookies-next": "^4.1.1",
     "iron-session": "^8.0.1",
     "jose": "^5.2.0",
     "lodash-es": "^4.17.21",
     "next": "^14.0.4",
-    "next-auth": "^4.24.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

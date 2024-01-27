@@ -1,4 +1,4 @@
-import { APIV1Read, DocsV1Read, DocsV2Read, PathResolver } from "@fern-api/fdr-sdk";
+import { APIV1Read, DocsV2Read, NavigatableDocsNode, PathResolver } from "@fern-api/fdr-sdk";
 import {
     convertNavigatableToResolvedPath,
     generateFontFaces,
@@ -9,7 +9,6 @@ import {
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { compact } from "lodash-es";
 import { GetStaticProps, Redirect } from "next";
-import { Session } from "next-auth";
 import Head from "next/head";
 import { ReactElement } from "react";
 import { useColorTheme } from "../hooks/useColorTheme";
@@ -23,7 +22,6 @@ export declare namespace DocsPage {
         typographyStyleSheet?: string;
         backgroundImageStyleSheet: string | null;
         resolvedPath: ResolvedPath;
-        session: Session | undefined;
     }
 }
 
@@ -92,19 +90,7 @@ export const getDocsPageProps = async (
         };
     }
 
-    const docsDefinition = docs.body.definition;
-    const typographyConfig = loadDocTypography(docsDefinition);
-    const typographyStyleSheet = generateFontFaces(typographyConfig, docs.body.baseUrl.basePath);
-    const backgroundImageStyleSheet = loadDocsBackgroundImage(docsDefinition);
-    type ApiDefinition = APIV1Read.ApiDefinition;
-    const resolver = new PathResolver({
-        definition: {
-            apis: docs.body.definition.apis as Record<ApiDefinition["id"], ApiDefinition>,
-            docsConfig: docs.body.definition.config,
-            basePath: docs.body.baseUrl.basePath,
-        },
-    });
-    const resolvedNavigatable = resolver.resolveNavigatable(pathname);
+    const resolvedNavigatable = getResolvedNavigatable(docs.body, pathname);
 
     if (resolvedNavigatable == null) {
         // eslint-disable-next-line no-console
@@ -116,22 +102,47 @@ export const getDocsPageProps = async (
         };
     }
 
-    const resolvedPath = await convertNavigatableToResolvedPath({
-        navigatable: resolvedNavigatable,
-        docsDefinition: docsDefinition as DocsV1Read.DocsDefinition,
-        basePath: docs.body.baseUrl.basePath,
-    });
-
     return {
         type: "props",
-        props: {
-            docs: docs.body,
-            typographyStyleSheet,
-            backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
-            resolvedPath,
-            session: undefined,
-        },
+        props: await createDocsPageProps(docs.body, resolvedNavigatable),
         revalidate: 60 * 60 * 24 * 6, // 6 days
+    };
+};
+
+export const getResolvedNavigatable = (
+    docs: DocsV2Read.LoadDocsForUrlResponse,
+    pathname: string
+): NavigatableDocsNode | undefined => {
+    const { definition: docsDefinition, baseUrl } = docs;
+    type ApiDefinition = APIV1Read.ApiDefinition;
+    const resolver = new PathResolver({
+        definition: {
+            apis: docsDefinition.apis as Record<ApiDefinition["id"], ApiDefinition>,
+            docsConfig: docsDefinition.config,
+            basePath: baseUrl.basePath,
+        },
+    });
+    return resolver.resolveNavigatable(pathname);
+};
+
+export const createDocsPageProps = async (
+    docs: DocsV2Read.LoadDocsForUrlResponse,
+    resolvedNavigatable: NavigatableDocsNode
+): Promise<DocsPage.Props> => {
+    const resolvedPath = await convertNavigatableToResolvedPath({
+        navigatable: resolvedNavigatable,
+        docsDefinition: docs.definition,
+        basePath: docs.baseUrl.basePath,
+    });
+
+    const typographyConfig = loadDocTypography(docs.definition);
+    const typographyStyleSheet = generateFontFaces(typographyConfig, docs.baseUrl.basePath);
+    const backgroundImageStyleSheet = loadDocsBackgroundImage(docs.definition);
+    return {
+        docs,
+        typographyStyleSheet,
+        backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
+        resolvedPath,
     };
 };
 

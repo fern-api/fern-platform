@@ -1885,15 +1885,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.20.13":
-  version: 7.23.9
-  resolution: "@babel/runtime@npm:7.23.9"
-  dependencies:
-    regenerator-runtime: ^0.14.0
-  checksum: 6bbebe8d27c0c2dd275d1ac197fc1a6c00e18dab68cc7aaff0adc3195b45862bae9c4cc58975629004b0213955b2ed91e99eccb3d9b39cabea246c657323d667
-  languageName: node
-  linkType: hard
-
 "@babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.23.2":
   version: 7.23.8
   resolution: "@babel/runtime@npm:7.23.8"
@@ -2443,9 +2434,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/fdr-sdk@npm:0.44.0-1-geb2e930":
-  version: 0.44.0-1-geb2e930
-  resolution: "@fern-api/fdr-sdk@npm:0.44.0-1-geb2e930"
+"@fern-api/fdr-sdk@npm:0.46.1-12-g728c8f6":
+  version: 0.46.1-12-g728c8f6
+  resolution: "@fern-api/fdr-sdk@npm:0.46.1-12-g728c8f6"
   dependencies:
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
@@ -2453,7 +2444,19 @@ __metadata:
     lodash: ^4.17.21
     marked: ^5.1.0
     url-join: 4.0.1
-  checksum: 2d0b70a66e77e319720b9fb4a4b18ae47e01bae825469a54bbbcc2ae5cef3e73197cc78a180dfbffeb84eccef874d2f8491cee4348f1000dd51bbce2d4958130
+  checksum: 3e6405c8903fc41dbdb54b51ec0a8d2c0bec3338c75d288ff6e9b35699946694bae7d19a1af03f35cb8fcbadb98ffcb8551b8ef10e12082d7e541fb9b9d7ffac
+  languageName: node
+  linkType: hard
+
+"@fern-api/venus-api-sdk@npm:^0.0.38":
+  version: 0.0.38
+  resolution: "@fern-api/venus-api-sdk@npm:0.0.38"
+  dependencies:
+    "@types/url-join": 4.0.1
+    axios: 0.27.2
+    js-base64: 3.7.2
+    url-join: 4.0.1
+  checksum: 82131dd8b187f8b9fad7721e7515ad6d15bcbf084c80c9b9a375417b694114e19055d0d922e08085f480518d036fc4601fe2c45a43c0eded276b95890f562522
   languageName: node
   linkType: hard
 
@@ -2474,7 +2477,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/app-utils@workspace:packages/commons/app-utils"
   dependencies:
-    "@fern-api/fdr-sdk": 0.44.0-1-geb2e930
+    "@fern-api/fdr-sdk": 0.46.1-12-g728c8f6
     "@fern-ui/core-utils": "workspace:*"
     "@types/jest": ^29.5.11
     "@types/lodash-es": ^4.17.12
@@ -2651,7 +2654,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/private-docs-bundle@workspace:packages/ui/private-docs-bundle"
   dependencies:
-    "@fern-api/fdr-sdk": 0.44.0-1-geb2e930
+    "@fern-api/fdr-sdk": 0.46.1-12-g728c8f6
+    "@fern-api/venus-api-sdk": ^0.0.38
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/ui": "workspace:*"
     "@next/bundle-analyzer": ^14.1.0
@@ -2663,6 +2667,7 @@ __metadata:
     "@types/react-dom": ^18.2.18
     "@workos-inc/node": ^5.1.1
     autoprefixer: ^10.4.16
+    cookies-next: ^4.1.1
     depcheck: ^1.4.3
     eslint: ^8.56.0
     iron-session: ^8.0.1
@@ -2670,7 +2675,6 @@ __metadata:
     jose: ^5.2.0
     lodash-es: ^4.17.21
     next: ^14.0.4
-    next-auth: ^4.24.5
     organize-imports-cli: ^0.10.0
     postcss: ^8.4.33
     prettier: ^2.8.8
@@ -2842,7 +2846,7 @@ __metadata:
     "@blueprintjs/datetime2": ^2.2.9
     "@blueprintjs/icons": ^5.7.0
     "@blueprintjs/select": ^5.0.22
-    "@fern-api/fdr-sdk": 0.44.0-1-geb2e930
+    "@fern-api/fdr-sdk": 0.46.1-12-g728c8f6
     "@fern-ui/app-utils": "workspace:*"
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/loadable": "workspace:*"
@@ -2881,7 +2885,6 @@ __metadata:
     lru-cache: ^10.0.1
     marked: ^5.0.4
     next: ^14.0.4
-    next-auth: ^4.24.5
     next-themes: ^0.2.1
     nextjs-progressbar: ^0.0.16
     normalize.css: ^8.0.1
@@ -3612,13 +3615,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@panva/hkdf@npm:^1.0.2":
-  version: 1.1.1
-  resolution: "@panva/hkdf@npm:1.1.1"
-  checksum: f0dd12903751d8792420353f809ed3c7de860cf506399759fff5f59f7acfef8a77e2b64012898cee7e5b047708fa0bd91dff5ef55a502bf8ea11aad9842160da
-  languageName: node
-  linkType: hard
-
 "@pkgjs/parseargs@npm:^0.11.0":
   version: 0.11.0
   resolution: "@pkgjs/parseargs@npm:0.11.0"
@@ -3961,6 +3957,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/cookie@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "@types/cookie@npm:0.6.0"
+  checksum: 5edce7995775b0b196b142883e4d4f71fd93c294eaec973670f1fa2540b70ea7390408ed513ddefef5fcb12a578100c76596e8f2a714b0c2ae9f70ee773f4510
+  languageName: node
+  linkType: hard
+
 "@types/debug@npm:^4.0.0":
   version: 4.1.7
   resolution: "@types/debug@npm:4.1.7"
@@ -4188,6 +4191,13 @@ __metadata:
   version: 18.7.18
   resolution: "@types/node@npm:18.7.18"
   checksum: 8aec61f0f96e2a69ce51f1f40f949ca578bbb4fe05d7c0b8ce3aeeb848e90f755837f17f6ac132ca404d974fe9b2974150ad3b4984fc9dc7c3ceddb10bae0167
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^16.10.2":
+  version: 16.18.76
+  resolution: "@types/node@npm:16.18.76"
+  checksum: 8486668c32f0c77a559ad11549192abb1779816a8bf39e7b6679bfeefe792fbd4920f7f9f75ab1518972deb1c31fbf4ed301bd89fc47a3a124875f5092a2b080
   languageName: node
   linkType: hard
 
@@ -6368,17 +6378,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cookie@npm:0.6.0":
+"cookie@npm:0.6.0, cookie@npm:^0.6.0":
   version: 0.6.0
   resolution: "cookie@npm:0.6.0"
   checksum: f56a7d32a07db5458e79c726b77e3c2eff655c36792f2b6c58d351fb5f61531e5b1ab7f46987150136e366c65213cbe31729e02a3eaed630c3bf7334635fb410
   languageName: node
   linkType: hard
 
-"cookie@npm:^0.5.0":
-  version: 0.5.0
-  resolution: "cookie@npm:0.5.0"
-  checksum: 1f4bd2ca5765f8c9689a7e8954183f5332139eb72b6ff783d8947032ec1fdf43109852c178e21a953a30c0dd42257828185be01b49d1eb1a67fd054ca588a180
+"cookies-next@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "cookies-next@npm:4.1.1"
+  dependencies:
+    "@types/cookie": ^0.6.0
+    "@types/node": ^16.10.2
+    cookie: ^0.6.0
+  checksum: 2bdd593b77e5c1b54314ac35615723c1c358c28391e61fba313015977f27c34d55b44120db99dee05b1a53193532a3a553e939e3f1f5f1364c9a3ab84111e749
   languageName: node
   linkType: hard
 
@@ -10484,13 +10498,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"jose@npm:^4.11.4, jose@npm:^4.15.4":
-  version: 4.15.4
-  resolution: "jose@npm:4.15.4"
-  checksum: dccad91cb3357f36423774a0b89ad830dd84b31090de65cd139b85488439f16a00f8c59c0773825e8a1adb0dd9d13ad725ad66e6ea33880ecb3959bb99e1ea5b
-  languageName: node
-  linkType: hard
-
 "jose@npm:^5.2.0":
   version: 5.2.0
   resolution: "jose@npm:5.2.0"
@@ -12204,31 +12211,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"next-auth@npm:^4.24.5":
-  version: 4.24.5
-  resolution: "next-auth@npm:4.24.5"
-  dependencies:
-    "@babel/runtime": ^7.20.13
-    "@panva/hkdf": ^1.0.2
-    cookie: ^0.5.0
-    jose: ^4.11.4
-    oauth: ^0.9.15
-    openid-client: ^5.4.0
-    preact: ^10.6.3
-    preact-render-to-string: ^5.1.19
-    uuid: ^8.3.2
-  peerDependencies:
-    next: ^12.2.5 || ^13 || ^14
-    nodemailer: ^6.6.5
-    react: ^17.0.2 || ^18
-    react-dom: ^17.0.2 || ^18
-  peerDependenciesMeta:
-    nodemailer:
-      optional: true
-  checksum: 7cc49385123690ccb908f4552b75012717c4e45205a9fdc7cf48cd730dbcc7823a3e33e2a2073ecf1edae5c1980123f68678fd4af9198ea21ab0decb630cc71e
-  languageName: node
-  linkType: hard
-
 "next-mdx-remote@npm:^4.4.1":
   version: 4.4.1
   resolution: "next-mdx-remote@npm:4.4.1"
@@ -12479,24 +12461,10 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"oauth@npm:^0.9.15":
-  version: 0.9.15
-  resolution: "oauth@npm:0.9.15"
-  checksum: 957c0d8d85300398dcb0e293953650c0fc3facc795bee8228238414f19f59cef5fd4ee8d17a972c142924c10c5f6ec50ef80f77f4a6cc6e3c98f9d22c027801c
-  languageName: node
-  linkType: hard
-
 "object-assign@npm:^4.0.1, object-assign@npm:^4.1.1":
   version: 4.1.1
   resolution: "object-assign@npm:4.1.1"
   checksum: fcc6e4ea8c7fe48abfbb552578b1c53e0d194086e2e6bbbf59e0a536381a292f39943c6e9628af05b5528aa5e3318bb30d6b2e53cadaf5b8fe9e12c4b69af23f
-  languageName: node
-  linkType: hard
-
-"object-hash@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "object-hash@npm:2.2.0"
-  checksum: 55ba841e3adce9c4f1b9b46b41983eda40f854e0d01af2802d3ae18a7085a17168d6b81731d43fdf1d6bcbb3c9f9c56d22c8fea992203ad90a38d7d919bc28f1
   languageName: node
   linkType: hard
 
@@ -12605,13 +12573,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"oidc-token-hash@npm:^5.0.3":
-  version: 5.0.3
-  resolution: "oidc-token-hash@npm:5.0.3"
-  checksum: 35fa19aea9ff2c509029ec569d74b778c8a215b92bd5e6e9bc4ebbd7ab035f44304ff02430a6397c3fb7c1d15ebfa467807ca0bcd31d06ba610b47798287d303
-  languageName: node
-  linkType: hard
-
 "once@npm:^1.3.0, once@npm:^1.3.1, once@npm:^1.4.0":
   version: 1.4.0
   resolution: "once@npm:1.4.0"
@@ -12645,18 +12606,6 @@ env-cmd@toddbluhm/env-cmd:
   bin:
     opener: bin/opener-bin.js
   checksum: 33b620c0d53d5b883f2abc6687dd1c5fd394d270dbe33a6356f2d71e0a2ec85b100d5bac94694198ccf5c30d592da863b2292c5539009c715a9c80c697b4f6cc
-  languageName: node
-  linkType: hard
-
-"openid-client@npm:^5.4.0":
-  version: 5.6.4
-  resolution: "openid-client@npm:5.6.4"
-  dependencies:
-    jose: ^4.15.4
-    lru-cache: ^6.0.0
-    object-hash: ^2.2.0
-    oidc-token-hash: ^5.0.3
-  checksum: 69843f078dacbbc6bad6d65ca6689414ac73f095dfe2f8e606822e6cfc9d9cd7d0dfaf2649352eda604653806f0ea65326ad2d6266da897e4740ec93d26d21f6
   languageName: node
   linkType: hard
 
@@ -13207,28 +13156,10 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"preact-render-to-string@npm:^5.1.19":
-  version: 5.2.6
-  resolution: "preact-render-to-string@npm:5.2.6"
-  dependencies:
-    pretty-format: ^3.8.0
-  peerDependencies:
-    preact: ">=10"
-  checksum: be8d5d8fb502d422c503e68af7bcccb6facd942f3ae9a4d093ebe3f1d4f0b15c540624bdac434d53a2a8e8fb7afa4606383414e937c40933ca43445470a026ff
-  languageName: node
-  linkType: hard
-
 "preact@npm:^10.10.0":
   version: 10.15.1
   resolution: "preact@npm:10.15.1"
   checksum: dabad11843b19b40b11846a25ff0b1fc4bc58268909e01a7faddb341a40983d24fbe7d44ad6e2c5d35e43091963af616800552fec9af44dd0a2f0f698d1bba1f
-  languageName: node
-  linkType: hard
-
-"preact@npm:^10.6.3":
-  version: 10.19.3
-  resolution: "preact@npm:10.19.3"
-  checksum: cb4fcc801f7ff302b9706eb4bb4a36cc7cd96f3231ac28baeb3ea5caf6724372222121cb487f66af44a1312bf61dbe74825ce2fda98295d2108e7443c20b0e56
   languageName: node
   linkType: hard
 
@@ -13278,13 +13209,6 @@ env-cmd@toddbluhm/env-cmd:
     ansi-styles: ^5.0.0
     react-is: ^18.0.0
   checksum: 032c1602383e71e9c0c02a01bbd25d6759d60e9c7cf21937dde8357aa753da348fcec5def5d1002c9678a8524d5fe099ad98861286550ef44de8808cc61e43b6
-  languageName: node
-  linkType: hard
-
-"pretty-format@npm:^3.8.0":
-  version: 3.8.0
-  resolution: "pretty-format@npm:3.8.0"
-  checksum: 21a114d43ef06978f8f7f6212be4649b0b094f05d9b30e14e37550bf35c8ca24d8adbca9e5adc4cc15d9eaf7a1e7a30478a4dc37b30982bfdf0292a5b385484c
   languageName: node
   linkType: hard
 
@@ -15998,15 +15922,6 @@ env-cmd@toddbluhm/env-cmd:
   version: 1.0.2
   resolution: "util-deprecate@npm:1.0.2"
   checksum: 474acf1146cb2701fe3b074892217553dfcf9a031280919ba1b8d651a068c9b15d863b7303cb15bd00a862b498e6cf4ad7b4a08fb134edd5a6f7641681cb54a2
-  languageName: node
-  linkType: hard
-
-"uuid@npm:^8.3.2":
-  version: 8.3.2
-  resolution: "uuid@npm:8.3.2"
-  bin:
-    uuid: dist/bin/uuid
-  checksum: 5575a8a75c13120e2f10e6ddc801b2c7ed7d8f3c8ac22c7ed0c7b2ba6383ec0abda88c905085d630e251719e0777045ae3236f04c812184b7c765f63a70e58df
   languageName: node
   linkType: hard
 
