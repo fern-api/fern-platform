@@ -33,10 +33,11 @@ export const getServerSideProps: GetServerSideProps<DocsPage.Props> = async ({ p
 
     const docsV2ReadClient = new FdrClient({
         environment: process.env.NEXT_PUBLIC_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
-        token,
+        // prefix token with `workos_` to signify that it's a WorkOS token in Venus
+        token: token != null ? `workos_${token}` : undefined,
     }).docs.v2.read;
     const pathname = slugArray != null ? slugArray.join("/") : "";
-    const docs = await docsV2ReadClient.getDocsForUrl({
+    const docs = await docsV2ReadClient.getPrivateDocsForUrl({
         url: buildUrl({ host: xFernHost, pathname }),
     });
 
