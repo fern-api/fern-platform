@@ -18,6 +18,22 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
             const response = await app.docsDefinitionCache.getDocsForUrl({ url: parsedUrl });
             return res.send(response);
         },
+        getPrivateDocsForUrl: async (req, res) => {
+            const parsedUrl = getParsedUrl(req.body.url);
+            const response = await app.docsDefinitionCache.getDocsForUrl({
+                url: parsedUrl,
+                authorization: req.headers.authorization,
+            });
+            return res.send(response);
+        },
+        getOrganizationForUrl: async (req, res) => {
+            const parsedUrl = getParsedUrl(req.body.url);
+            const orgId = await app.docsDefinitionCache.getOrganizationForUrl(parsedUrl);
+            if (orgId == null) {
+                throw new DocsV2Read.DomainNotRegisteredError();
+            }
+            return res.send(orgId);
+        },
         getDocsConfigById: async (req, res) => {
             let docsConfig: DocsV2Read.GetDocsConfigByIdResponse | undefined =
                 DOCS_CONFIG_ID_CACHE.get<DocsV2Read.GetDocsConfigByIdResponse>(req.params.docsConfigId);

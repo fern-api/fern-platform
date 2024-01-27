@@ -1884,10 +1884,10 @@
   resolved "https://registry.npmjs.org/@eslint/js/-/js-8.51.0.tgz"
   integrity sha512-HxjQ8Qn+4SI3/AFv6sOrDB+g6PpUTDwSJiQqOrnneEk8L71161srI9gjzzZvYVbzHiVg/BvcH95+cK/zfIt4pg==
 
-"@fern-api/venus-api-sdk@0.0.35-3-g5644f73":
-  version "0.0.35-3-g5644f73"
-  resolved "https://registry.yarnpkg.com/@fern-api/venus-api-sdk/-/venus-api-sdk-0.0.35-3-g5644f73.tgz#2c0294c1e58156f86268172f0c36a5cd67dca3c2"
-  integrity sha512-28prGRxLR9JAAcXT+MWB58hgmeheRjgGHtxSDpdNklFPUERYvZ6Npq/XNvU+TBxUGFRVVTTz7ryu/CzHS/1eRA==
+"@fern-api/venus-api-sdk@0.0.38":
+  version "0.0.38"
+  resolved "https://registry.yarnpkg.com/@fern-api/venus-api-sdk/-/venus-api-sdk-0.0.38.tgz#eaf21fcf734ac635a77487450fbe55369cc672fb"
+  integrity sha512-1JjuctZwyPu4jN51bBqjIy+uCBPGa/ROcDfqN0UnGeVEW7NyztkGh/qOFwnN6K07VMMql1AIF4Zov+MVqTPwmw==
   dependencies:
     "@types/url-join" "4.0.1"
     axios "0.27.2"

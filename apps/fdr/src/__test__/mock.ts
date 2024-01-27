@@ -53,6 +53,10 @@ class MockAuthService implements AuthService {
             orgIds: new Set<string>(this.orgIds),
         };
     }
+
+    async getWorkOSOrganization(_orgId: { orgId: string }): Promise<string | undefined> {
+        return undefined;
+    }
 }
 
 class MockSlackService implements SlackService {

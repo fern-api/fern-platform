@@ -11,11 +11,37 @@ service:
   audiences:
     - read
   endpoints:
+    getOrganizationForUrl:
+      method: POST
+      path: /organization-for-url
+      request:
+        name: GetOrganizationForUrlRequest
+        body:
+          properties:
+            url: string
+      response: rootCommons.OrgId
+      errors:
+        - DomainNotRegisteredError
+
     getDocsForUrl:
       method: POST
       path: /load-with-url
       request:
         name: LoadDocsForUrlRequest
+        body:
+          properties:
+            url: string
+      response: LoadDocsForUrlResponse
+      errors:
+        - DomainNotRegisteredError
+        - rootCommons.UnauthorizedError
+
+    getPrivateDocsForUrl:
+      method: POST
+      auth: true
+      path: /private/load-with-url
+      request:
+        name: LoadPrivateDocsForUrlRequest
         body:
           properties:
             url: string

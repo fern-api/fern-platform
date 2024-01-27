@@ -9,7 +9,9 @@ import type { IndexSegment } from "../../services/algolia";
 const DOCS_DOMAIN_REGX = /^([^.\s]+)/;
 
 export interface DocsDefinitionCache {
-    getDocsForUrl({ url }: { url: URL }): Promise<DocsV2Read.LoadDocsForUrlResponse>;
+    getDocsForUrl(request: { url: URL; authorization?: string }): Promise<DocsV2Read.LoadDocsForUrlResponse>;
+
+    getOrganizationForUrl(url: URL): Promise<FdrAPI.OrgId | undefined>;
 
     storeDocsForUrl({
         docsRegistrationInfo,
@@ -43,7 +45,13 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
         private readonly dao: FdrDao,
     ) {}
 
-    public async getDocsForUrl({ url }: { url: URL }): Promise<DocsV2Read.LoadDocsForUrlResponse> {
+    public async getDocsForUrl({
+        url,
+        authorization,
+    }: {
+        url: URL;
+        authorization: string | undefined;
+    }): Promise<DocsV2Read.LoadDocsForUrlResponse> {
         const cachedResponse = this.getDocsForUrlFromCache({ url });
         if (cachedResponse != null) {
             if (cachedResponse.isPrivate) {
@@ -68,10 +76,24 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
         this.cacheResponse({ url, cachedResponse: dbResponse });
 
         if (dbResponse.isPrivate) {
-            throw new FdrAPI.UnauthorizedError("You must be authorized to view this documentation.");
+            const orgId = await this.getOrganizationForUrl(url);
+            if (orgId == null) {
+                throw new FdrAPI.InternalError("Cannot find organization for URL");
+            }
+            this.app.services.auth.checkUserBelongsToOrg({
+                authHeader: authorization,
+                orgId: orgId,
+            });
         }
 
         return dbResponse.response;
+    }
+
+    public async getOrganizationForUrl(url: URL): Promise<FdrAPI.OrgId | undefined> {
+        // TODO: cache this
+        const dbDocs = await this.dao.docsV2().loadDocsForURL(url);
+
+        return dbDocs?.orgId;
     }
 
     public async storeDocsForUrl({
