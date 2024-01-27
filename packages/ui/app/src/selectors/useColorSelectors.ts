@@ -12,11 +12,11 @@ export function useColorSelectors(): ColorSelectors {
     const { colorsV3: colors } = docsDefinition.config;
 
     const accentPrimary = useMemo(() => {
-        return colors.type === "darkAndLight"
+        return colors?.type === "darkAndLight"
             ? theme === "dark" || theme === "light"
                 ? colors[theme].accentPrimary
                 : undefined
-            : colors.accentPrimary;
+            : colors?.accentPrimary;
     }, [theme, colors]);
 
     const getAccentPrimary = useCallback(

@@ -1,7 +1,7 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
-import { forwardRef, memo, PropsWithChildren } from "react";
+import { CSSProperties, forwardRef, memo, PropsWithChildren } from "react";
 import { MenuIcon } from "../commons/icons/MenuIcon";
 import { SearchIcon } from "../commons/icons/SearchIcon";
 import { XIcon } from "../commons/icons/XIcon";
@@ -15,6 +15,7 @@ import { User } from "./User";
 export declare namespace Header {
     export interface Props {
         className?: string;
+        style?: CSSProperties;
         docsDefinition: DocsV1Read.DocsDefinition;
         openSearchDialog: () => void;
         isMobileSidebarOpen: boolean;
@@ -27,6 +28,7 @@ export declare namespace Header {
 const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Props>>(function Header(
     {
         className,
+        style,
         docsDefinition,
         openSearchDialog,
         isMobileSidebarOpen,
@@ -40,7 +42,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
 
     const navbarLinksSection = (
         <div className="hidden items-center space-x-5 lg:flex lg:space-x-8">
-            {navbarLinks.map((navbarLink, idx) =>
+            {navbarLinks?.map((navbarLink, idx) =>
                 visitDiscriminatedUnion(navbarLink, "type")._visit({
                     primary: (navbarLink) => <HeaderPrimaryLink key={idx} navbarLink={navbarLink} />,
                     secondary: (navbarLink) => <HeaderSecondaryLink key={idx} navbarLink={navbarLink} />,
@@ -60,15 +62,14 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                 className
             )}
             ref={ref}
+            style={style}
         >
             <HeaderLogoSection />
 
             <div className="-mr-2 ml-auto flex items-center space-x-0 md:mr-0 lg:space-x-4">
                 {navbarLinksSection}
 
-                <User />
-
-                {colorsV3.type === "darkAndLight" && (
+                {colorsV3?.type === "darkAndLight" && (
                     <>
                         <div className="dark:bg-border-default-dark bg-border-default-light hidden w-px self-stretch lg:flex" />
                         <ThemeButton className="hidden lg:flex" />

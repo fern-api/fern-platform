@@ -4,7 +4,7 @@ import { FC } from "react";
 export declare namespace BgImageGradient {
     export interface Props {
         className?: string;
-        backgroundType: "solid" | "gradient" | null;
+        backgroundType: "solid" | "gradient" | undefined;
         hasSpecifiedBackgroundImage: boolean;
     }
 }

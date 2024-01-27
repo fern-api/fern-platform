@@ -34,6 +34,7 @@
     "root-package:check": "yarn fern-script check-root-package",
     "root-package:fix": "yarn root-package:check --fix",
     "dev:docs": "yarn workspace @fern-ui/public-docs-bundle run dev:fern-prod",
+    "dev:docs-dev": "yarn workspace @fern-ui/public-docs-bundle run dev:fern-dev",
     "dev:private-docs": "yarn workspace @fern-ui/private-docs-bundle run dev"
   },
   "devDependencies": {

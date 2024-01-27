@@ -55,22 +55,27 @@ export function useColorTheme(docsDefinition: DocsV1Read.DocsDefinition): string
     //     return "";
     // }
 
-    const accentPrimary = colorsV3.type !== "darkAndLight" ? colorsV3.accentPrimary : colorsV3["light"].accentPrimary;
-    const background = colorsV3.type !== "darkAndLight" ? colorsV3.background : colorsV3["light"].background;
-    const backgroundColor = background.type === "solid" ? background : DEFAULT_COLORS.background["light"];
+    const accentPrimary =
+        colorsV3?.type !== "darkAndLight"
+            ? colorsV3?.accentPrimary ?? DEFAULT_COLORS.accentPrimary["light"]
+            : colorsV3["light"].accentPrimary;
+    const background = colorsV3?.type !== "darkAndLight" ? colorsV3?.background : colorsV3["light"].background;
+    const backgroundColor = background?.type === "solid" ? background : DEFAULT_COLORS.background["light"];
     const accentPrimaryDark =
-        colorsV3.type !== "darkAndLight" ? colorsV3.accentPrimary : colorsV3["dark"].accentPrimary;
+        colorsV3?.type !== "darkAndLight"
+            ? colorsV3?.accentPrimary ?? DEFAULT_COLORS.accentPrimary["dark"]
+            : colorsV3["dark"].accentPrimary;
     const accentPrimaryContrast = tinycolor(accentPrimary).isDark()
         ? tinycolor("white").toRgb()
         : tinycolor("black").toRgb();
     const accentPrimaryDarkContrast = tinycolor(accentPrimaryDark).isDark()
         ? tinycolor("white").toRgb()
         : tinycolor("black").toRgb();
-    const backgroundDark = colorsV3.type !== "darkAndLight" ? colorsV3.background : colorsV3["dark"].background;
-    const backgroundColorDark = backgroundDark.type === "solid" ? backgroundDark : DEFAULT_COLORS.background["dark"];
+    const backgroundDark = colorsV3?.type !== "darkAndLight" ? colorsV3?.background : colorsV3["dark"].background;
+    const backgroundColorDark = backgroundDark?.type === "solid" ? backgroundDark : DEFAULT_COLORS.background["dark"];
 
-    const themeBackgroundColor = background.type === "solid" ? background : tinycolor(accentPrimary);
-    const themeBackgroundColorDark = backgroundDark.type === "solid" ? backgroundDark : tinycolor(accentPrimary);
+    const themeBackgroundColor = background?.type === "solid" ? background : tinycolor(accentPrimary);
+    const themeBackgroundColorDark = backgroundDark?.type === "solid" ? backgroundDark : tinycolor(accentPrimary);
 
     return `
         :root {

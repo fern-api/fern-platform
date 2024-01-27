@@ -1,4 +1,4 @@
-import { isApiNode } from "@fern-api/fdr-sdk";
+import { DocsV1Read, isApiNode } from "@fern-api/fdr-sdk";
 import {
     crawlResolvedNavigationItemApiSections,
     ResolvedNavigationItem,
@@ -11,9 +11,10 @@ import { useNavigationContext } from "../navigation-context";
 
 export interface DocsMainContentProps {
     navigationItems: ResolvedNavigationItem[];
+    contentWidth: DocsV1Read.SizeConfig | undefined;
 }
 
-export const DocsMainContent: React.FC<DocsMainContentProps> = ({ navigationItems }) => {
+export const DocsMainContent: React.FC<DocsMainContentProps> = ({ navigationItems, contentWidth }) => {
     const { activeNavigatable, resolvedPath } = useNavigationContext();
 
     const apiSectionsById = useMemo(() => {
@@ -30,6 +31,7 @@ export const DocsMainContent: React.FC<DocsMainContentProps> = ({ navigationItem
                 serializedMdxContent={resolvedPath.serializedMdxContent}
                 navigatable={activeNavigatable}
                 resolvedPath={resolvedPath}
+                contentWidth={contentWidth}
             />
         );
     } else if (isApiNode(activeNavigatable)) {

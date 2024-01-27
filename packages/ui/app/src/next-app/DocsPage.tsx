@@ -3,7 +3,6 @@ import {
     convertNavigatableToResolvedPath,
     generateFontFaces,
     loadDocsBackgroundImage,
-    loadDocTypography,
     type ResolvedPath,
 } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
@@ -43,7 +42,7 @@ export function DocsPage({
             <style jsx global>
                 {`
                     ${colorThemeStyleSheet}
-                    ${typographyStyleSheet}
+                    \n${typographyStyleSheet}
                     ${backgroundImageStyleSheet}
                 `}
             </style>

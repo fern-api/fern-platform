@@ -10,7 +10,7 @@ import "./globals.css";
 setupFontAwesomeIcons();
 
 export function NextApp({ Component, pageProps }: AppProps<Partial<DocsPage.Props>>): ReactElement {
-    const theme = pageProps.docs?.definition.config.colorsV3.type;
+    const theme = pageProps.docs?.definition.config.colorsV3?.type;
     return (
         <ThemeProvider theme={theme}>
             <Component {...pageProps} />

@@ -1,5 +1,6 @@
-import { type DocsNode } from "@fern-api/fdr-sdk";
+import { DocsV1Read, type DocsNode } from "@fern-api/fdr-sdk";
 import { type ResolvedPath, type SerializedMdxContent } from "@fern-ui/app-utils";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ReactElement, useMemo } from "react";
 import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
 import { useDocsContext } from "../docs-context/useDocsContext";
@@ -11,6 +12,7 @@ export declare namespace CustomDocsPage {
         navigatable: DocsNode.Page;
         serializedMdxContent: SerializedMdxContent | undefined;
         resolvedPath: ResolvedPath.CustomMarkdownPage;
+        contentWidth: DocsV1Read.SizeConfig | undefined;
     }
 }
 
@@ -30,7 +32,11 @@ export const CustomDocsPageHeader = ({ resolvedPath }: Pick<CustomDocsPage.Props
     );
 };
 
-export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ serializedMdxContent, resolvedPath }) => {
+export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({
+    serializedMdxContent,
+    resolvedPath,
+    contentWidth,
+}) => {
     const { resolvePage } = useDocsContext();
 
     const page = useMemo(() => resolvePage(resolvedPath.page.id), [resolvedPath.page.id, resolvePage]);
@@ -42,7 +48,19 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ serializedMdxCo
     return (
         <div className="flex justify-between px-6 sm:px-8 lg:pl-12 lg:pr-20 xl:pr-0">
             <div className="w-full min-w-0 lg:pr-6">
-                <article className="prose dark:prose-invert mx-auto w-full max-w-[70ch] lg:ml-0 xl:mx-auto">
+                <article
+                    className="prose dark:prose-invert mx-auto w-full lg:ml-0 xl:mx-auto"
+                    style={{
+                        maxWidth:
+                            contentWidth == null
+                                ? "44rem"
+                                : visitDiscriminatedUnion(contentWidth, "type")._visit({
+                                      px: (px) => `${px.value}px`,
+                                      rem: (rem) => `${rem.value}rem`,
+                                      _other: () => "44rem",
+                                  }),
+                    }}
+                >
                     <CustomDocsPageHeader resolvedPath={resolvedPath} />
                     {content}
                     <BottomNavigationButtons />

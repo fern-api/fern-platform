@@ -1,6 +1,7 @@
 import { crawlResolvedNavigationItemApiSections, resolveNavigationItems } from "@fern-ui/app-utils";
-import { PLATFORM } from "@fern-ui/core-utils";
+import { PLATFORM, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
+import { Transition } from "@headlessui/react";
 import classNames from "classnames";
 import { useTheme } from "next-themes";
 import NextNProgress from "nextjs-progressbar";
@@ -8,6 +9,7 @@ import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import tinycolor from "tinycolor2";
 import { ApiPlaygroundContextProvider } from "../api-playground/ApiPlaygroundContext";
 import { useDocsContext } from "../docs-context/useDocsContext";
+import { useBreakpoint } from "../hooks/useBreakpoint";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
 import { useSearchContext } from "../search-context/useSearchContext";
@@ -45,27 +47,27 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
 
     const hasSpecifiedBackgroundImage = !!docsDefinition.config.backgroundImage;
 
-    const { colorsV3 } = docsDefinition.config;
+    const { colorsV3, layout } = docsDefinition.config;
 
     const backgroundType = useMemo(() => {
-        if (colorsV3.type === "darkAndLight") {
+        if (colorsV3?.type === "darkAndLight") {
             if (theme === "dark" || theme === "light") {
-                return colorsV3[theme].background.type;
+                return colorsV3?.[theme].background.type;
             }
-            return null;
+            return undefined;
         } else {
-            return colorsV3.background.type;
+            return colorsV3?.background.type;
         }
     }, [colorsV3, theme]);
 
     const [accentColor, setAccentColor] = useState<string>();
     useEffect(() => {
-        if (colorsV3.type === "darkAndLight") {
+        if (colorsV3?.type === "darkAndLight") {
             if (theme === "dark" || theme === "light") {
-                setAccentColor(tinycolor(colorsV3[theme].accentPrimary).toHex8String());
+                setAccentColor(tinycolor(colorsV3?.[theme].accentPrimary).toHex8String());
             }
         } else {
-            setAccentColor(tinycolor(colorsV3.accentPrimary).toHex8String());
+            setAccentColor(tinycolor(colorsV3?.accentPrimary).toHex8String());
         }
     }, [colorsV3, theme]);
 
@@ -106,6 +108,18 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
 
     const apiSections = useMemo(() => crawlResolvedNavigationItemApiSections(navigationItems), [navigationItems]);
 
+    const maxPageWidth =
+        layout?.pageWidth == null
+            ? "88rem"
+            : visitDiscriminatedUnion(layout.pageWidth, "type")._visit({
+                  px: (px) => `${px.value}px`,
+                  rem: (rem) => `${rem.value}rem`,
+                  full: () => undefined,
+                  _other: () => "88rem",
+              });
+
+    const breakpoint = useBreakpoint();
+
     return (
         <>
             <NextNProgress color={accentColor} options={{ showSpinner: false }} showOnShallow={false} />
@@ -126,7 +140,10 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                 <div className="border-border-concealed-light dark:border-border-concealed-dark dark:shadow-header-dark fixed inset-x-0 top-0 z-30 h-16 overflow-visible border-b backdrop-blur-lg lg:backdrop-blur">
                     {renderBackground()}
                     <Header
-                        className="max-w-8xl mx-auto"
+                        className="mx-auto"
+                        style={{
+                            maxWidth: maxPageWidth,
+                        }}
                         docsDefinition={docsDefinition}
                         openSearchDialog={openSearchDialog}
                         isMobileSidebarOpen={isMobileSidebarOpen}
@@ -137,34 +154,60 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                 </div>
 
                 <ApiPlaygroundContextProvider apiSections={apiSections}>
-                    <div className="max-w-8xl relative mx-auto flex min-h-0 w-full min-w-0 flex-1">
+                    <div
+                        className="relative mx-auto flex min-h-0 w-full min-w-0 flex-1"
+                        style={{
+                            maxWidth: maxPageWidth,
+                        }}
+                    >
                         {isMobileSidebarOpen && (
                             <div
                                 className="fixed inset-0 z-20 block bg-white/60 lg:hidden dark:bg-black/40"
                                 onClick={closeMobileSidebar}
                             />
                         )}
-                        <div
-                            className={classNames(
-                                "z-20 fixed inset-0 top-16 lg:mt-16 lg:sticky lg:h-[calc(100vh-64px)] lg:w-72 sm:max-w-[20rem] sm:border-r lg:border-none border-border-concealed-light dark:border-border-concealed-dark",
-                                "transition-opacity transition-transform lg:transition-none sm:-translate-x-full lg:transition-none lg:translate-x-0",
-                                {
-                                    "opacity-0 sm:opacity-100 sm:block pointer-events-none lg:pointer-events-auto sm:-translate-x-full":
-                                        !isMobileSidebarOpen,
-                                    "sm:translate-x-0 opacity-100": isMobileSidebarOpen,
-                                }
-                            )}
-                        >
-                            {renderBackground("lg:hidden backdrop-blur-lg")}
-                            <Sidebar
-                                navigationItems={navigationItems}
-                                currentSlug={currentSlug}
-                                registerScrolledToPathListener={registerScrolledToPathListener}
-                            />
-                        </div>
+                        {["lg", "xl", "2xl"].includes(breakpoint) ? (
+                            <div
+                                className="sticky top-0 z-20 mt-16 h-[calc(100vh-64px)]"
+                                style={{
+                                    width:
+                                        layout?.sidebarWidth == null
+                                            ? "18rem"
+                                            : visitDiscriminatedUnion(layout.sidebarWidth, "type")._visit({
+                                                  px: (px) => `${px.value}px`,
+                                                  rem: (rem) => `${rem.value}rem`,
+                                                  _other: () => "18rem",
+                                              }),
+                                }}
+                            >
+                                <Sidebar
+                                    navigationItems={navigationItems}
+                                    currentSlug={currentSlug}
+                                    registerScrolledToPathListener={registerScrolledToPathListener}
+                                />
+                            </div>
+                        ) : (
+                            <Transition
+                                className="border-border-concealed-light dark:border-border-concealed-dark fixed inset-0 top-16 z-20 sm:w-72 sm:border-r"
+                                show={isMobileSidebarOpen}
+                                enter="transition ease-in-out duration-300 transform"
+                                enterFrom="-translate-x-full"
+                                enterTo="translate-x-0"
+                                leave="transition ease-in-out duration-300 transform"
+                                leaveFrom="translate-x-0"
+                                leaveTo="-translate-x-full"
+                            >
+                                {renderBackground("lg:hidden backdrop-blur-lg")}
+                                <Sidebar
+                                    navigationItems={navigationItems}
+                                    currentSlug={currentSlug}
+                                    registerScrolledToPathListener={registerScrolledToPathListener}
+                                />
+                            </Transition>
+                        )}
 
                         <main className={classNames("relative flex w-full min-w-0 flex-1 flex-col pt-16")}>
-                            <DocsMainContent navigationItems={navigationItems} />
+                            <DocsMainContent navigationItems={navigationItems} contentWidth={layout?.contentWidth} />
                         </main>
                     </div>
                 </ApiPlaygroundContextProvider>
