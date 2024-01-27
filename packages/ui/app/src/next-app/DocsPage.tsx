@@ -134,8 +134,7 @@ export const createDocsPageProps = async (
         basePath: docs.baseUrl.basePath,
     });
 
-    const typographyConfig = loadDocTypography(docs.definition);
-    const typographyStyleSheet = generateFontFaces(typographyConfig, docs.baseUrl.basePath);
+    const typographyStyleSheet = generateFontFaces(docs.definition.config.typographyV2, docs.definition.files);
     const backgroundImageStyleSheet = loadDocsBackgroundImage(docs.definition);
     return {
         docs,

@@ -256,6 +256,7 @@ function resolveResponseBodyShape(
         fileDownload: (fileDownload) => fileDownload,
         streamingText: (streamingText) => streamingText,
         streamCondition: (streamCondition) => streamCondition,
+        stream: () => ({ type: "unknown" }),
         reference: (reference) => ({ type: "reference", shape: () => resolveTypeReference(reference.value, types) }),
         _other: () => ({ type: "unknown" }),
     });

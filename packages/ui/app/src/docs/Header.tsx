@@ -10,7 +10,6 @@ import { HeaderLogoSection } from "./HeaderLogoSection";
 import { HeaderPrimaryLink } from "./HeaderPrimaryLink";
 import { HeaderSecondaryLink } from "./HeaderSecondaryLink";
 import { ThemeButton } from "./ThemeButton";
-import { User } from "./User";
 
 export declare namespace Header {
     export interface Props {
