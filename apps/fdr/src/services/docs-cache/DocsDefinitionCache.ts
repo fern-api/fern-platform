@@ -55,7 +55,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
         const cachedResponse = this.getDocsForUrlFromCache({ url });
         if (cachedResponse != null) {
             if (cachedResponse.isPrivate) {
-                throw new FdrAPI.UnauthorizedError("You must be authorized to view this documentation.");
+                await this.checkUserBelongsToOrg(url, authorization);
             }
             const updatedFileEntries = await Promise.all(
                 Object.entries(cachedResponse.dbFiles).map(async ([fileId, dbFileInfo]) => {
@@ -76,17 +76,24 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
         this.cacheResponse({ url, cachedResponse: dbResponse });
 
         if (dbResponse.isPrivate) {
-            const orgId = await this.getOrganizationForUrl(url);
-            if (orgId == null) {
-                throw new FdrAPI.InternalError("Cannot find organization for URL");
-            }
-            this.app.services.auth.checkUserBelongsToOrg({
-                authHeader: authorization,
-                orgId: orgId,
-            });
+            await this.checkUserBelongsToOrg(url, authorization);
         }
 
         return dbResponse.response;
+    }
+
+    private async checkUserBelongsToOrg(url: URL, authorization: string | undefined): Promise<void> {
+        if (authorization == null) {
+            throw new FdrAPI.UnauthorizedError("Authorization header is required");
+        }
+        const orgId = await this.getOrganizationForUrl(url);
+        if (orgId == null) {
+            throw new FdrAPI.InternalError("Cannot find organization for URL");
+        }
+        await this.app.services.auth.checkUserBelongsToOrg({
+            authHeader: authorization,
+            orgId: orgId,
+        });
     }
 
     public async getOrganizationForUrl(url: URL): Promise<FdrAPI.OrgId | undefined> {
