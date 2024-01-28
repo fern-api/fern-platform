@@ -4563,7 +4563,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.18.13"],\
             ["@types/yargs", "npm:17.0.32"],\
-            ["@yarnpkg/esbuild-plugin-pnp", "virtual:2db085a410602eca0a152058979ec27a6ff405389e9bfff65a5c274ee8e258565c3aa901da9b432be4e8578c42e23397178058afee24c24be1773f7dd3ff138f#npm:3.0.0-rc.14"],\
+            ["@yarnpkg/esbuild-plugin-pnp", "virtual:2db085a410602eca0a152058979ec27a6ff405389e9bfff65a5c274ee8e258565c3aa901da9b432be4e8578c42e23397178058afee24c24be1773f7dd3ff138f#npm:3.0.0-rc.15"],\
             ["chalk", "npm:5.3.0"],\
             ["depcheck", "npm:1.4.3"],\
             ["esbuild", "npm:0.15.7"],\
@@ -7048,20 +7048,20 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@yarnpkg/esbuild-plugin-pnp", [\
-        ["npm:3.0.0-rc.14", {\
-          "packageLocation": "./.yarn/cache/@yarnpkg-esbuild-plugin-pnp-npm-3.0.0-rc.14-1f35c4d7ab-7213b06d80.zip/node_modules/@yarnpkg/esbuild-plugin-pnp/",\
+        ["npm:3.0.0-rc.15", {\
+          "packageLocation": "./.yarn/cache/@yarnpkg-esbuild-plugin-pnp-npm-3.0.0-rc.15-b916c218b3-04da15355a.zip/node_modules/@yarnpkg/esbuild-plugin-pnp/",\
           "packageDependencies": [\
-            ["@yarnpkg/esbuild-plugin-pnp", "npm:3.0.0-rc.14"]\
+            ["@yarnpkg/esbuild-plugin-pnp", "npm:3.0.0-rc.15"]\
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:2db085a410602eca0a152058979ec27a6ff405389e9bfff65a5c274ee8e258565c3aa901da9b432be4e8578c42e23397178058afee24c24be1773f7dd3ff138f#npm:3.0.0-rc.14", {\
-          "packageLocation": "./.yarn/__virtual__/@yarnpkg-esbuild-plugin-pnp-virtual-962408668d/0/cache/@yarnpkg-esbuild-plugin-pnp-npm-3.0.0-rc.14-1f35c4d7ab-7213b06d80.zip/node_modules/@yarnpkg/esbuild-plugin-pnp/",\
+        ["virtual:2db085a410602eca0a152058979ec27a6ff405389e9bfff65a5c274ee8e258565c3aa901da9b432be4e8578c42e23397178058afee24c24be1773f7dd3ff138f#npm:3.0.0-rc.15", {\
+          "packageLocation": "./.yarn/__virtual__/@yarnpkg-esbuild-plugin-pnp-virtual-4dec1f5866/0/cache/@yarnpkg-esbuild-plugin-pnp-npm-3.0.0-rc.15-b916c218b3-04da15355a.zip/node_modules/@yarnpkg/esbuild-plugin-pnp/",\
           "packageDependencies": [\
-            ["@yarnpkg/esbuild-plugin-pnp", "virtual:2db085a410602eca0a152058979ec27a6ff405389e9bfff65a5c274ee8e258565c3aa901da9b432be4e8578c42e23397178058afee24c24be1773f7dd3ff138f#npm:3.0.0-rc.14"],\
+            ["@yarnpkg/esbuild-plugin-pnp", "virtual:2db085a410602eca0a152058979ec27a6ff405389e9bfff65a5c274ee8e258565c3aa901da9b432be4e8578c42e23397178058afee24c24be1773f7dd3ff138f#npm:3.0.0-rc.15"],\
             ["@types/esbuild", null],\
             ["esbuild", "npm:0.15.7"],\
-            ["tslib", "npm:1.14.1"]\
+            ["tslib", "npm:2.5.3"]\
           ],\
           "packagePeers": [\
             "@types/esbuild",\
