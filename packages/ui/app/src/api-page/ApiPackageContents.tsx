@@ -9,6 +9,7 @@ export declare namespace ApiPackageContents {
         apiDefinition: ResolvedApiDefinitionPackage;
         isLastInParentPackage: boolean;
         anchorIdParts: string[];
+        maxContentWidth: string;
     }
 }
 
@@ -17,6 +18,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
     apiDefinition,
     isLastInParentPackage,
     anchorIdParts,
+    maxContentWidth,
 }) => {
     const { endpoints, webhooks, subpackages } = apiDefinition;
 
@@ -32,6 +34,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                     endpoint={endpoint}
                     subpackageTitle={subpackageTitle}
                     isLastInApi={isLastInParentPackage && idx === endpoints.length - 1}
+                    maxContentWidth={maxContentWidth}
                 />
             ))}
             {webhooks.map((webhook, idx) => (
@@ -40,6 +43,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                     webhook={webhook}
                     subpackageTitle={subpackageTitle}
                     isLastInApi={isLastInParentPackage && idx === webhooks.length - 1}
+                    maxContentWidth={maxContentWidth}
                 />
             ))}
             {subpackages.map((subpackage, idx) => (
@@ -49,6 +53,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                     apiDefinition={subpackage}
                     isLastInParentPackage={idx === subpackages.length - 1}
                     anchorIdParts={anchorIdParts}
+                    maxContentWidth={maxContentWidth}
                 />
             ))}
         </>

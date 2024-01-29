@@ -10,6 +10,7 @@ export declare namespace ApiSubpackage {
         apiDefinition: ResolvedApiDefinitionPackage;
         isLastInParentPackage: boolean;
         anchorIdParts: string[];
+        maxContentWidth: string;
     }
 }
 
@@ -18,6 +19,7 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({
     apiDefinition,
     isLastInParentPackage,
     anchorIdParts,
+    maxContentWidth,
 }) => {
     const subpackageSlug = joinUrlSlugs(...apiDefinition.slug);
     const { setTargetRef } = useApiPageCenterElement({ slug: subpackageSlug });
@@ -32,6 +34,7 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({
                     apiDefinition={apiDefinition}
                     isLastInParentPackage={isLastInParentPackage}
                     anchorIdParts={anchorIdParts}
+                    maxContentWidth={maxContentWidth}
                 />
             )}
         </>

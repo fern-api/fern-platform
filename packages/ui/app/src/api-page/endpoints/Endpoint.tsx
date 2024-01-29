@@ -15,6 +15,7 @@ export declare namespace Endpoint {
         endpoint: ResolvedEndpointDefinition;
         subpackageTitle: string | undefined;
         isLastInApi: boolean;
+        maxContentWidth: string;
     }
 }
 
@@ -24,6 +25,7 @@ export const Endpoint: React.FC<Endpoint.Props> = ({
     endpoint,
     subpackageTitle,
     isLastInApi,
+    maxContentWidth,
 }) => {
     const fullSlug = joinUrlSlugs(...endpoint.slug);
     const route = `/${fullSlug}`;
@@ -46,6 +48,7 @@ export const Endpoint: React.FC<Endpoint.Props> = ({
             setContainerRef={setTargetRef}
             hideBottomSeparator={isLastInApi}
             route={route}
+            maxContentWidth={maxContentWidth}
         />
     );
 };

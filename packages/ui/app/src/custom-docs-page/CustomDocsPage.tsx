@@ -1,6 +1,5 @@
-import { DocsV1Read, type DocsNode } from "@fern-api/fdr-sdk";
+import { type DocsNode } from "@fern-api/fdr-sdk";
 import { type ResolvedPath, type SerializedMdxContent } from "@fern-ui/app-utils";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import Link from "next/link";
 import { ReactElement } from "react";
 import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
@@ -12,7 +11,7 @@ export declare namespace CustomDocsPage {
         navigatable: DocsNode.Page;
         serializedMdxContent: SerializedMdxContent | undefined;
         resolvedPath: ResolvedPath.CustomMarkdownPage;
-        contentWidth: DocsV1Read.SizeConfig | undefined;
+        maxContentWidth: string;
     }
 }
 
@@ -32,23 +31,11 @@ export const CustomDocsPageHeader = ({ resolvedPath }: Pick<CustomDocsPage.Props
     );
 };
 
-export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath, contentWidth }) => {
+export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath, maxContentWidth }) => {
     return (
         <div className="flex w-full justify-start px-6 sm:px-8 lg:pl-12 lg:pr-20 xl:pr-0">
             <div className="min-w-0 lg:pr-12">
-                <article
-                    className="prose dark:prose-invert w-full"
-                    style={{
-                        maxWidth:
-                            contentWidth == null
-                                ? "44rem"
-                                : visitDiscriminatedUnion(contentWidth, "type")._visit({
-                                      px: (px) => `${px.value}px`,
-                                      rem: (rem) => `${rem.value}rem`,
-                                      _other: () => "44rem",
-                                  }),
-                    }}
-                >
+                <article className="prose dark:prose-invert w-full" style={{ maxWidth: maxContentWidth }}>
                     <CustomDocsPageHeader resolvedPath={resolvedPath} />
                     <MdxContent mdx={resolvedPath.serializedMdxContent} />
                     <BottomNavigationButtons />

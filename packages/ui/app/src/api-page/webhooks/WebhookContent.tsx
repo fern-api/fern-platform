@@ -19,6 +19,7 @@ export declare namespace WebhookContent {
         hideBottomSeparator?: boolean;
         setContainerRef: (ref: HTMLElement | null) => void;
         route: string;
+        maxContentWidth: string;
     }
 }
 
@@ -28,6 +29,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
     hideBottomSeparator = false,
     setContainerRef,
     route,
+    maxContentWidth,
 }) {
     const { setHoveredPayloadPropertyPath } = useWebhookContext();
     const onHoverPayloadProperty = useCallback(
@@ -52,7 +54,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                 ref={setContainerRef}
                 data-route={route.toLowerCase()}
             >
-                <div className="flex min-w-0 max-w-2xl flex-1 flex-col">
+                <div className="flex min-w-0 flex-1 flex-col" style={{ maxWidth: maxContentWidth }}>
                     <div className="space-y-2.5 py-8">
                         {subpackageTitle != null && (
                             <div className="text-accent-primary dark:text-accent-primary-dark text-xs font-semibold uppercase tracking-wider">

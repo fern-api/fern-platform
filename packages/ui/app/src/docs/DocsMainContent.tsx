@@ -4,6 +4,7 @@ import {
     ResolvedNavigationItem,
     ResolvedNavigationItemApiSection,
 } from "@fern-ui/app-utils";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useMemo } from "react";
 import { ApiPage } from "../api-page/ApiPage";
 import { CustomDocsPage } from "../custom-docs-page/CustomDocsPage";
@@ -25,13 +26,22 @@ export const DocsMainContent: React.FC<DocsMainContentProps> = ({ navigationItem
         return toRet;
     }, [navigationItems]);
 
+    const maxContentWidth =
+        contentWidth == null
+            ? "44rem"
+            : visitDiscriminatedUnion(contentWidth, "type")._visit({
+                  px: (px) => `${px.value}px`,
+                  rem: (rem) => `${rem.value}rem`,
+                  _other: () => "44rem",
+              });
+
     if (activeNavigatable.type === "page" && resolvedPath.type === "custom-markdown-page") {
         return (
             <CustomDocsPage
                 serializedMdxContent={resolvedPath.serializedMdxContent}
                 navigatable={activeNavigatable}
                 resolvedPath={resolvedPath}
-                contentWidth={contentWidth}
+                maxContentWidth={maxContentWidth}
             />
         );
     } else if (isApiNode(activeNavigatable)) {
@@ -39,7 +49,7 @@ export const DocsMainContent: React.FC<DocsMainContentProps> = ({ navigationItem
         if (apiSection == null) {
             return null;
         }
-        return <ApiPage apiSection={apiSection} />;
+        return <ApiPage apiSection={apiSection} maxContentWidth={maxContentWidth} />;
     } else {
         return null;
     }
