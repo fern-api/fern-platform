@@ -53,7 +53,22 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     </div>
                 )}
                 <div>
-                    <h1 className="mt-0 inline-block">{endpoint.title}</h1>
+                    <h1 className="mt-0 inline-block">
+                        {endpoint.id.endsWith("_stream") ? (
+                            <span className="inline-flex items-baseline gap-2">
+                                <span>{endpoint.title}</span>
+                                <span
+                                    className={
+                                        "bg-accent-primary/10 dark:bg-accent-primary-dark/10 text-accent-primary dark:text-accent-primary-dark flex items-center rounded-[8px] p-1 font-mono text-xl uppercase leading-none"
+                                    }
+                                >
+                                    {"STREAM"}
+                                </span>
+                            </span>
+                        ) : (
+                            endpoint.title
+                        )}
+                    </h1>
                     {endpoint.availability != null && (
                         <span className="relative">
                             <EndpointAvailabilityTag

@@ -2427,9 +2427,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/fdr-sdk@npm:0.46.1-7-ge796a1c":
-  version: 0.46.1-7-ge796a1c
-  resolution: "@fern-api/fdr-sdk@npm:0.46.1-7-ge796a1c"
+"@fern-api/fdr-sdk@npm:0.46.1-15-g3f95c92":
+  version: 0.46.1-15-g3f95c92
+  resolution: "@fern-api/fdr-sdk@npm:0.46.1-15-g3f95c92"
   dependencies:
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
@@ -2437,7 +2437,7 @@ __metadata:
     lodash: ^4.17.21
     marked: ^5.1.0
     url-join: 4.0.1
-  checksum: be65d58b52ce9ab270260abc54e2f693d0999e3df152539aa9322930e98013b36837b84afc1414d7556b300b1eb797cecd782fc6299c1017a1ab3644036838f0
+  checksum: 9437e1d80d9f70e98dc02bd3c99e75dd443cc367fc2d26656f37f40cd318b1ae35f9c3ce2903aeb719cd089ac036633742841b3235b90db06ff8c6a7e5f6748b
   languageName: node
   linkType: hard
 
@@ -2458,7 +2458,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/app-utils@workspace:packages/commons/app-utils"
   dependencies:
-    "@fern-api/fdr-sdk": 0.46.1-7-ge796a1c
+    "@fern-api/fdr-sdk": 0.46.1-15-g3f95c92
     "@fern-ui/core-utils": "workspace:*"
     "@types/jest": ^29.5.11
     "@types/lodash-es": ^4.17.12
@@ -2812,7 +2812,7 @@ __metadata:
     "@blueprintjs/datetime2": ^2.2.9
     "@blueprintjs/icons": ^5.7.0
     "@blueprintjs/select": ^5.0.22
-    "@fern-api/fdr-sdk": 0.46.1-7-ge796a1c
+    "@fern-api/fdr-sdk": 0.46.1-15-g3f95c92
     "@fern-ui/app-utils": "workspace:*"
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/loadable": "workspace:*"

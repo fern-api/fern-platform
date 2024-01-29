@@ -250,8 +250,29 @@ function resolveResponseBodyShape(
             properties: () => resolveObjectProperties(object, types),
         }),
         fileDownload: (fileDownload) => fileDownload,
-        streamingText: (streamingText) => streamingText,
-        streamCondition: (streamCondition) => streamCondition,
+        streamingText: (streamingText) => ({ type: "stream", shape: streamingText }),
+        // streamCondition is not used
+        streamCondition: (streamCondition) => ({
+            type: "stream",
+            shape: {
+                type: "reference",
+                shape: () =>
+                    streamCondition.streamResponse.shape.type === "object"
+                        ? resolveTypeShape(streamCondition.streamResponse.shape, types)
+                        : resolveTypeReference(streamCondition.streamResponse.shape.value, types),
+            },
+        }),
+        // stream replaces streamCondition
+        stream: (stream) => ({
+            type: "stream",
+            shape: {
+                type: "reference",
+                shape: () =>
+                    stream.shape.type === "object"
+                        ? resolveTypeShape(stream.shape, types)
+                        : resolveTypeReference(stream.shape.value, types),
+            },
+        }),
         reference: (reference) => ({ type: "reference", shape: () => resolveTypeReference(reference.value, types) }),
         _other: () => ({ type: "unknown" }),
     });
@@ -590,14 +611,17 @@ export function visitResolvedHttpRequestBodyShape<T>(
 
 export type ResolvedHttpResponseBodyShape =
     | APIV1Read.HttpResponseBodyShape.FileDownload
-    | APIV1Read.HttpResponseBodyShape.StreamingText
-    | APIV1Read.HttpResponseBodyShape.StreamCondition
+    | ResolvedStreamResponse
     | ResolvedTypeReference;
+
+export interface ResolvedStreamResponse {
+    type: "stream";
+    shape: APIV1Read.HttpResponseBodyShape.StreamingText | ResolvedTypeReference;
+}
 
 interface ResolvedHttpResponseBodyShapeVisitor<T> {
     fileDownload: (shape: APIV1Read.HttpResponseBodyShape.FileDownload) => T;
-    streamingText: (shape: APIV1Read.HttpResponseBodyShape.StreamingText) => T;
-    streamCondition: (shape: APIV1Read.HttpResponseBodyShape.StreamCondition) => T;
+    stream: (shape: ResolvedStreamResponse) => T;
     typeReference: (shape: ResolvedTypeReference) => T;
 }
 
@@ -608,10 +632,8 @@ export function visitResolvedHttpResponseBodyShape<T>(
     switch (shape.type) {
         case "fileDownload":
             return visitor.fileDownload(shape);
-        case "streamingText":
-            return visitor.streamingText(shape);
-        case "streamCondition":
-            return visitor.streamCondition(shape);
+        case "stream":
+            return visitor.stream(shape);
         default:
             return visitor.typeReference(shape);
     }

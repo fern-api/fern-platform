@@ -173,8 +173,7 @@ export function getCurlLines(
 function isJsonResponse(httpResponse: ResolvedResponseBody): boolean {
     switch (httpResponse.shape.type) {
         case "fileDownload":
-        case "streamingText":
-        case "streamCondition":
+        case "stream":
             return false;
         default:
             return true;

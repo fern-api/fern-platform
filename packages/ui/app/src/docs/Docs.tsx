@@ -217,12 +217,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                         </Transition>
                     )}
 
-                    <main
-                        className={classNames(
-                            "relative flex w-full min-w-0 flex-1 flex-col mt-[74px]",
-                            "bg-[#FAFAFA] border border-[#E0E0E0] rounded-lg mb-3 mx-3 lg:ml-0"
-                        )}
-                    >
+                    <main className={classNames("relative flex w-full min-w-0 flex-1 flex-col mt-[74px]")}>
                         <DocsMainContent navigationItems={navigationItems} contentWidth={layout?.contentWidth} />
                     </main>
                 </div>

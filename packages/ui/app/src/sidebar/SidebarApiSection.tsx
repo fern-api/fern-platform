@@ -89,7 +89,23 @@ const InnerSidebarApiSection: FC<InnerSidebarApiSectionProps> = ({
                         key={joinUrlSlugs(...endpoint.slug)}
                         slug={endpoint.slug}
                         shallow={shallow}
-                        title={endpoint.title}
+                        title={
+                            endpoint.id.endsWith("_stream") ? (
+                                <span className="inline-flex items-baseline gap-2">
+                                    <span>{endpoint.title}</span>
+                                    <span
+                                        className={classNames(
+                                            className,
+                                            "uppercase font-mono flex items-center text-xs leading-none bg-accent-primary/10 dark:bg-accent-primary-dark/10 text-accent-primary dark:text-accent-primary-dark p-0.5 rounded-[4px]"
+                                        )}
+                                    >
+                                        {"STREAM"}
+                                    </span>
+                                </span>
+                            ) : (
+                                endpoint.title
+                            )
+                        }
                         registerScrolledToPathListener={registerScrolledToPathListener}
                         selected={isEqual(endpoint.slug, selectedSlug)}
                         depth={Math.max(0, depth - 1)}

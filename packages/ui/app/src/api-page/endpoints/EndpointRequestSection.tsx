@@ -24,7 +24,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
     return (
         <div className="flex flex-col">
             <ApiPageDescription className="mt-3 text-sm" description={requestBody.description} isMarkdown={true} />
-            <div className="t-muted border-border-default-light dark:border-border-default-dark border-b pb-5 text-sm leading-6">
+            <div className="t-muted border-border-default-light dark:border-border-default-dark border-b pb-5 text-base leading-6">
                 {`This endpoint expects ${
                     requestBody.shape.type === "fileUpload"
                         ? "a file"
