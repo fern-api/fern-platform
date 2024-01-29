@@ -15,6 +15,7 @@ types:
       method: readEndpoint.HttpMethod
       id: readEndpoint.EndpointId
       urlSlug: string
+      migratedFromUrlSlugs: optional<list<string>>
       name: optional<string>
       path: readEndpoint.EndpointPath
       queryParameters: list<readEndpoint.QueryParameter>
@@ -24,7 +25,7 @@ types:
       errors: optional<list<readEndpoint.ErrorDeclaration>>
       errorsV2: optional<list<readEndpoint.ErrorDeclarationV2>>
       examples: list<readEndpoint.ExampleEndpointCall>
-  
+
   DbHttpRequest:
     extends: readCommons.WithDescription
     properties:

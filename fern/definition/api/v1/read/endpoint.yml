@@ -21,6 +21,7 @@ types:
       method: HttpMethod
       id: EndpointId
       urlSlug: string
+      migratedFromUrlSlugs: optional<list<string>>
       name: optional<string>
       path: EndpointPath
       queryParameters: list<QueryParameter>

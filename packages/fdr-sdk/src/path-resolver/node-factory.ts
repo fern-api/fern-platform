@@ -116,12 +116,14 @@ export class NodeFactory {
     public static createTopLevelEndpoint({
         slug,
         leadingSlug,
+        migratedSlugs,
         endpoint,
         section,
         context,
     }: {
         slug: string;
         leadingSlug: string;
+        migratedSlugs: string[];
         endpoint: APIV1Read.EndpointDefinition;
         section: DocsV1Read.ApiSection;
         context: NodeDocsContext;
@@ -130,6 +132,7 @@ export class NodeFactory {
             type: "top-level-endpoint",
             slug,
             leadingSlug,
+            migratedSlugs,
             endpoint,
             section,
             context,
@@ -139,6 +142,7 @@ export class NodeFactory {
     public static createEndpoint({
         slug,
         leadingSlug,
+        migratedSlugs,
         endpoint,
         section,
         subpackage,
@@ -146,6 +150,7 @@ export class NodeFactory {
     }: {
         slug: string;
         leadingSlug: string;
+        migratedSlugs: string[];
         endpoint: APIV1Read.EndpointDefinition;
         section: DocsV1Read.ApiSection;
         subpackage: APIV1Read.ApiDefinitionSubpackage;
@@ -155,6 +160,7 @@ export class NodeFactory {
             type: "endpoint",
             slug,
             leadingSlug,
+            migratedSlugs,
             endpoint,
             section,
             subpackage,
@@ -165,12 +171,14 @@ export class NodeFactory {
     public static createTopLevelWebhook({
         slug,
         leadingSlug,
+        migratedSlugs,
         webhook,
         section,
         context,
     }: {
         slug: string;
         leadingSlug: string;
+        migratedSlugs: string[];
         webhook: APIV1Read.WebhookDefinition;
         section: DocsV1Read.ApiSection;
         context: NodeDocsContext;
@@ -179,6 +187,7 @@ export class NodeFactory {
             type: "top-level-webhook",
             slug,
             leadingSlug,
+            migratedSlugs,
             webhook,
             section,
             context,
@@ -188,6 +197,7 @@ export class NodeFactory {
     public static createWebhook({
         slug,
         leadingSlug,
+        migratedSlugs,
         webhook,
         section,
         subpackage,
@@ -195,6 +205,7 @@ export class NodeFactory {
     }: {
         slug: string;
         leadingSlug: string;
+        migratedSlugs: string[];
         webhook: APIV1Read.WebhookDefinition;
         section: DocsV1Read.ApiSection;
         subpackage: APIV1Read.ApiDefinitionSubpackage;
@@ -204,6 +215,7 @@ export class NodeFactory {
             type: "webhook",
             slug,
             leadingSlug,
+            migratedSlugs,
             webhook,
             section,
             subpackage,
@@ -228,6 +240,7 @@ export class NodeFactory {
             type: "page",
             slug,
             leadingSlug,
+            migratedSlugs: [],
             page,
             section,
             context,

@@ -1,4 +1,4 @@
-import { kebabCase, startCase } from "lodash";
+import { isEqual, kebabCase, startCase } from "lodash";
 import { marked } from "marked";
 import { APIV1Db, APIV1Read, APIV1Write, FdrAPI } from "../../client";
 import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
@@ -111,8 +111,11 @@ function transformWebhook({
     apiDefinition: APIV1Write.ApiDefinition;
 }): WithoutQuestionMarks<FdrAPI.api.v1.read.WebhookDefinition> {
     const htmlDescription = getHtmlDescription(writeShape.description);
+    const urlSlug = kebabCase(writeShape.id);
+    const oldUrlSlug = kebabCase(writeShape.name ?? writeShape.id);
     return {
-        urlSlug: kebabCase(writeShape.name ?? writeShape.id),
+        urlSlug,
+        migratedFromUrlSlugs: !isEqual(oldUrlSlug, urlSlug) ? [oldUrlSlug] : undefined,
         description: writeShape.description,
         htmlDescription,
         descriptionContainsMarkdown: true,
@@ -142,11 +145,16 @@ function transformEndpoint({
 }): WithoutQuestionMarks<APIV1Db.DbEndpointDefinition> {
     context.registerEnvironments(writeShape.environments ?? []);
     const htmlDescription = getHtmlDescription(writeShape.description);
+    const urlSlug = kebabCase(writeShape.id);
+    const oldUrlSlug = kebabCase(writeShape.name ?? writeShape.id);
     return {
         availability: writeShape.availability,
         environments: writeShape.environments,
         defaultEnvironment: writeShape.defaultEnvironment,
-        urlSlug: kebabCase(writeShape.name),
+        urlSlug,
+        // id is more unique than name, so we use that as the url slug
+        // keep name as a fallback for backwards compatibility (via redirects)
+        migratedFromUrlSlugs: !isEqual(oldUrlSlug, urlSlug) ? [oldUrlSlug] : undefined,
         method: writeShape.method,
         id: writeShape.id,
         name: writeShape.name,

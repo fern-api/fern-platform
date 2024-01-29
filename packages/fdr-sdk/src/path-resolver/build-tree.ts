@@ -353,6 +353,7 @@ function buildNodeForTopLevelEndpoint({
         section,
         slug: endpoint.urlSlug,
         leadingSlug: joinUrlSlugs(...parentSlugs, endpoint.urlSlug),
+        migratedSlugs: endpoint.migratedFromUrlSlugs?.map((slug) => joinUrlSlugs(...parentSlugs, slug)) ?? [],
         context,
     });
     return endpointNode;
@@ -377,6 +378,7 @@ function buildNodeForEndpoint({
         subpackage,
         slug: endpoint.urlSlug,
         leadingSlug: joinUrlSlugs(...parentSlugs, endpoint.urlSlug),
+        migratedSlugs: endpoint.migratedFromUrlSlugs?.map((slug) => joinUrlSlugs(...parentSlugs, slug)) ?? [],
         context,
     });
     return endpointNode;
@@ -398,6 +400,7 @@ function buildNodeForTopLevelWebhook({
         section,
         slug: webhook.urlSlug,
         leadingSlug: joinUrlSlugs(...parentSlugs, webhook.urlSlug),
+        migratedSlugs: webhook.migratedFromUrlSlugs?.map((slug) => joinUrlSlugs(...parentSlugs, slug)) ?? [],
         context,
     });
     return webhookNode;
@@ -422,6 +425,7 @@ function buildNodeForWebhook({
         subpackage,
         slug: webhook.urlSlug,
         leadingSlug: joinUrlSlugs(...parentSlugs, webhook.urlSlug),
+        migratedSlugs: webhook.migratedFromUrlSlugs?.map((slug) => joinUrlSlugs(...parentSlugs, slug)) ?? [],
         context,
     });
     return webhookNode;

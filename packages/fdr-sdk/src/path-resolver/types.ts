@@ -25,6 +25,11 @@ interface NavigatableNode {
      * Path slug without version.
      */
     leadingSlug: FullSlug;
+
+    /**
+     * Slugs that should redirect to this node.
+     */
+    migratedSlugs: FullSlug[];
 }
 
 export type DocsNode =

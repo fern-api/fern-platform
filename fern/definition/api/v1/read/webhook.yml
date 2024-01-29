@@ -12,6 +12,7 @@ types:
     extends: commons.WithDescription
     properties:
       urlSlug: string
+      migratedFromUrlSlugs: optional<list<string>>
       method: WebhookHttpMethod
       id: WebhookId
       name: optional<string>
@@ -34,7 +35,7 @@ types:
     union:
       object: type.ObjectType
       reference: type.TypeReference
-  
-  ExampleWebhookPayload: 
-    properties: 
+
+  ExampleWebhookPayload:
+    properties:
       payload: unknown

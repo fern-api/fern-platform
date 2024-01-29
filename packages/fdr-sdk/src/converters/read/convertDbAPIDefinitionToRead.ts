@@ -64,6 +64,7 @@ function transformEndpoint({
         availability: dbShape.availability,
         defaultEnvironment: dbShape.defaultEnvironment,
         urlSlug: dbShape.urlSlug,
+        migratedFromUrlSlugs: dbShape.migratedFromUrlSlugs,
         method: dbShape.method,
         id: dbShape.id,
         name: dbShape.name,

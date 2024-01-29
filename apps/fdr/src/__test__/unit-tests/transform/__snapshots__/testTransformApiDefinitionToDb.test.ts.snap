@@ -163,6 +163,7 @@ the current organization_id of the authenticated user</p>
 ",
           "id": "getAll",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get All",
           "path": Object {
             "parts": Array [
@@ -331,6 +332,7 @@ authenticated user, then response code of 403 will be returned</p>
 ",
           "id": "get",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get",
           "path": Object {
             "parts": Array [
@@ -449,6 +451,7 @@ the current organization_id of the auathenticated user. Otherwise, response code
 ",
           "id": "create",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Create",
           "path": Object {
             "parts": Array [
@@ -557,6 +560,7 @@ current organization_id, then a response code of <code>403</code> will be return
 ",
           "id": "update",
           "method": "PATCH",
+          "migratedFromUrlSlugs": undefined,
           "name": "Update",
           "path": Object {
             "parts": Array [
@@ -663,6 +667,7 @@ current organization_id, then a response code of <code>403</code> will be return
 ",
           "id": "delete",
           "method": "DELETE",
+          "migratedFromUrlSlugs": undefined,
           "name": "Delete",
           "path": Object {
             "parts": Array [
@@ -876,6 +881,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "get_token",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Token",
           "path": Object {
             "parts": Array [
@@ -1003,6 +1009,9 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "create",
           "method": "POST",
+          "migratedFromUrlSlugs": Array [
+            "create-billing-note",
+          ],
           "name": "Create billing note",
           "path": Object {
             "parts": Array [
@@ -1048,7 +1057,7 @@ current organization_id, then a response code of <code>403</code> will be return
               },
             },
           },
-          "urlSlug": "create-billing-note",
+          "urlSlug": "create",
         },
         Object {
           "authed": true,
@@ -1095,6 +1104,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "delete",
           "method": "DELETE",
+          "migratedFromUrlSlugs": undefined,
           "name": "Delete",
           "path": Object {
             "parts": Array [
@@ -1260,6 +1270,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "execute",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Execute",
           "path": Object {
             "parts": Array [
@@ -1407,6 +1418,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "validate",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Validate",
           "path": Object {
             "parts": Array [
@@ -1577,6 +1589,7 @@ current organization_id, then a response code of <code>403</code> will be return
 ",
           "id": "delete_all",
           "method": "DELETE",
+          "migratedFromUrlSlugs": undefined,
           "name": "Delete All",
           "path": Object {
             "parts": Array [
@@ -1659,6 +1672,7 @@ current organization_id, then a response code of <code>403</code> will be return
 ",
           "id": "delete_entries_by_ids",
           "method": "DELETE",
+          "migratedFromUrlSlugs": undefined,
           "name": "Delete Entries By Ids",
           "path": Object {
             "parts": Array [
@@ -2644,6 +2658,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "get",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get",
           "path": Object {
             "parts": Array [
@@ -2918,6 +2933,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "get_service_line_adjudication_details",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Service Line Adjudication Details",
           "path": Object {
             "parts": Array [
@@ -3161,6 +3177,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "get_statuses",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Statuses",
           "path": Object {
             "parts": Array [
@@ -3966,6 +3983,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "create",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Create",
           "path": Object {
             "parts": Array [
@@ -4143,6 +4161,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "getLegalComparisons",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Legal Comparisons",
           "path": Object {
             "parts": Array [
@@ -4328,6 +4347,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "get",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get",
           "path": Object {
             "parts": Array [
@@ -4887,6 +4907,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "update",
           "method": "PATCH",
+          "migratedFromUrlSlugs": undefined,
           "name": "Update",
           "path": Object {
             "parts": Array [
@@ -5102,6 +5123,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "delete",
           "method": "DELETE",
+          "migratedFromUrlSlugs": undefined,
           "name": "Delete",
           "path": Object {
             "parts": Array [
@@ -5525,6 +5547,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "resolveConfigForScope",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Resolve Config For Scope",
           "path": Object {
             "parts": Array [
@@ -5776,6 +5799,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "validateRule",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Validate Rule",
           "path": Object {
             "parts": Array [
@@ -6315,6 +6339,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "create",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Create",
           "path": Object {
             "parts": Array [
@@ -6466,6 +6491,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "getAllVariableSummaries",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get All Variable Summaries",
           "path": Object {
             "parts": Array [
@@ -6656,6 +6682,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "get",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get",
           "path": Object {
             "parts": Array [
@@ -7136,6 +7163,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "update",
           "method": "PATCH",
+          "migratedFromUrlSlugs": undefined,
           "name": "Update",
           "path": Object {
             "parts": Array [
@@ -7423,6 +7451,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "delete",
           "method": "DELETE",
+          "migratedFromUrlSlugs": undefined,
           "name": "Delete",
           "path": Object {
             "parts": Array [
@@ -7561,6 +7590,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "getAllVariablesPaged",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get All Variables Paged",
           "path": Object {
             "parts": Array [
@@ -7860,6 +7890,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "get",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get",
           "path": Object {
             "parts": Array [
@@ -8137,6 +8168,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "getAll",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get All",
           "path": Object {
             "parts": Array [
@@ -8500,6 +8532,7 @@ current organization_id, then a response code of <code>403</code> will be return
 ",
           "id": "create",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Create",
           "path": Object {
             "parts": Array [
@@ -8617,6 +8650,7 @@ Max items is 100.
           "htmlDescription": undefined,
           "id": "delete",
           "method": "DELETE",
+          "migratedFromUrlSlugs": undefined,
           "name": "Delete",
           "path": Object {
             "parts": Array [
@@ -8879,6 +8913,7 @@ Max items is 100.
           "htmlDescription": undefined,
           "id": "update",
           "method": "PATCH",
+          "migratedFromUrlSlugs": undefined,
           "name": "Update",
           "path": Object {
             "parts": Array [
@@ -9132,6 +9167,7 @@ value, overriding what was set before.
           "htmlDescription": undefined,
           "id": "get_multi",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Multi",
           "path": Object {
             "parts": Array [
@@ -9254,6 +9290,7 @@ value, overriding what was set before.
           "htmlDescription": undefined,
           "id": "create",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Create",
           "path": Object {
             "parts": Array [
@@ -9360,6 +9397,7 @@ value, overriding what was set before.
           "htmlDescription": undefined,
           "id": "update",
           "method": "PATCH",
+          "migratedFromUrlSlugs": undefined,
           "name": "Update",
           "path": Object {
             "parts": Array [
@@ -9505,6 +9543,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
           "htmlDescription": undefined,
           "id": "delete",
           "method": "DELETE",
+          "migratedFromUrlSlugs": undefined,
           "name": "Delete",
           "path": Object {
             "parts": Array [
@@ -9729,6 +9768,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
           "htmlDescription": undefined,
           "id": "update_referring_provider",
           "method": "PATCH",
+          "migratedFromUrlSlugs": undefined,
           "name": "Update Referring Provider",
           "path": Object {
             "parts": Array [
@@ -10054,6 +10094,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
           "htmlDescription": undefined,
           "id": "getSummaries",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Summaries",
           "path": Object {
             "parts": Array [
@@ -10748,6 +10789,7 @@ or encounter external id.
           "htmlDescription": undefined,
           "id": "getSummary",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Summary",
           "path": Object {
             "parts": Array [
@@ -11015,6 +11057,7 @@ or encounter external id.
           "htmlDescription": undefined,
           "id": "get",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get",
           "path": Object {
             "parts": Array [
@@ -11305,6 +11348,7 @@ or encounter external id.
           "htmlDescription": undefined,
           "id": "reverse_manual_insurance_adjustment_remit",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Reverse Manual Insurance Adjustment Remit",
           "path": Object {
             "parts": Array [
@@ -11521,6 +11565,7 @@ or encounter external id.
           "htmlDescription": undefined,
           "id": "calculate_financial_information",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Calculate Financial Information",
           "path": Object {
             "parts": Array [
@@ -12488,6 +12533,9 @@ or encounter external id.
           "htmlDescription": undefined,
           "id": "getAll",
           "method": "GET",
+          "migratedFromUrlSlugs": Array [
+            "get-all-encounters",
+          ],
           "name": "Get all encounters",
           "path": Object {
             "parts": Array [
@@ -12682,7 +12730,7 @@ or encounter external id.
               },
             },
           },
-          "urlSlug": "get-all-encounters",
+          "urlSlug": "get-all",
         },
         Object {
           "authed": true,
@@ -13560,6 +13608,9 @@ or encounter external id.
           "htmlDescription": undefined,
           "id": "get",
           "method": "GET",
+          "migratedFromUrlSlugs": Array [
+            "get-encounter",
+          ],
           "name": "Get encounter",
           "path": Object {
             "parts": Array [
@@ -13601,7 +13652,7 @@ or encounter external id.
               },
             },
           },
-          "urlSlug": "get-encounter",
+          "urlSlug": "get",
         },
         Object {
           "authed": true,
@@ -15347,6 +15398,9 @@ or encounter external id.
           "htmlDescription": undefined,
           "id": "create",
           "method": "POST",
+          "migratedFromUrlSlugs": Array [
+            "create-encounter",
+          ],
           "name": "Create encounter",
           "path": Object {
             "parts": Array [
@@ -15551,7 +15605,7 @@ in bounds of the diagnoses list field
               },
             },
           },
-          "urlSlug": "create-encounter",
+          "urlSlug": "create",
         },
         Object {
           "authed": true,
@@ -16730,6 +16784,9 @@ in bounds of the diagnoses list field
           "htmlDescription": undefined,
           "id": "update",
           "method": "PATCH",
+          "migratedFromUrlSlugs": Array [
+            "update-encounter",
+          ],
           "name": "Update encounter",
           "path": Object {
             "parts": Array [
@@ -16971,7 +17028,7 @@ submitted to the payor.
               },
             },
           },
-          "urlSlug": "update-encounter",
+          "urlSlug": "update",
         },
         Object {
           "authed": true,
@@ -17039,6 +17096,9 @@ submitted to the payor.
           "htmlDescription": undefined,
           "id": "getAttachments",
           "method": "GET",
+          "migratedFromUrlSlugs": Array [
+            "get-attachments-for-encounter",
+          ],
           "name": "Get attachments for encounter",
           "path": Object {
             "parts": Array [
@@ -17083,7 +17143,7 @@ submitted to the payor.
               },
             },
           },
-          "urlSlug": "get-attachments-for-encounter",
+          "urlSlug": "get-attachments",
         },
         Object {
           "authed": true,
@@ -17141,6 +17201,7 @@ submitted to the payor.
           "htmlDescription": undefined,
           "id": "generateClinicalNotesPdf",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Generate clinical notes PDF",
           "path": Object {
             "parts": Array [
@@ -17423,6 +17484,9 @@ submitted to the payor.
 ",
           "id": "recomputeNetworkStatusResults",
           "method": "PUT",
+          "migratedFromUrlSlugs": Array [
+            "recompute-encounter-network-status",
+          ],
           "name": "Recompute encounter network status",
           "path": Object {
             "parts": Array [
@@ -17464,7 +17528,7 @@ submitted to the payor.
               },
             },
           },
-          "urlSlug": "recompute-encounter-network-status",
+          "urlSlug": "recompute-network-status-results",
         },
         Object {
           "authed": true,
@@ -17522,6 +17586,9 @@ submitted to the payor.
           "htmlDescription": undefined,
           "id": "markAsNotBillable",
           "method": "PUT",
+          "migratedFromUrlSlugs": Array [
+            "mark-encounter-not-billable",
+          ],
           "name": "Mark encounter not billable",
           "path": Object {
             "parts": Array [
@@ -17563,7 +17630,7 @@ submitted to the payor.
               },
             },
           },
-          "urlSlug": "mark-encounter-not-billable",
+          "urlSlug": "mark-as-not-billable",
         },
       ],
       "htmlDescription": undefined,
@@ -17747,6 +17814,7 @@ submitted to the payor.
           "htmlDescription": undefined,
           "id": "get",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get",
           "path": Object {
             "parts": Array [
@@ -17933,6 +18001,7 @@ submitted to the payor.
           "htmlDescription": undefined,
           "id": "get_multi",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Multi",
           "path": Object {
             "parts": Array [
@@ -18112,6 +18181,7 @@ submitted to the payor.
           "htmlDescription": undefined,
           "id": "delete",
           "method": "DELETE",
+          "migratedFromUrlSlugs": undefined,
           "name": "Delete",
           "path": Object {
             "parts": Array [
@@ -18272,6 +18342,7 @@ submitted to the payor.
           "htmlDescription": undefined,
           "id": "update",
           "method": "PATCH",
+          "migratedFromUrlSlugs": undefined,
           "name": "Update",
           "path": Object {
             "parts": Array [
@@ -18582,6 +18653,7 @@ submitted to the payor.
           "htmlDescription": undefined,
           "id": "create",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Create",
           "path": Object {
             "parts": Array [
@@ -18698,6 +18770,7 @@ submitted to the payor.
           "htmlDescription": undefined,
           "id": "get_latest_change_enrollment_import_datetime",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Latest Change Enrollment Import Datetime",
           "path": Object {
             "parts": Array [
@@ -18778,6 +18851,7 @@ submitted to the payor.
           "htmlDescription": undefined,
           "id": "download_attachment",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Download Attachment",
           "path": Object {
             "parts": Array [
@@ -18898,6 +18972,7 @@ submitted to the payor.
           "htmlDescription": undefined,
           "id": "list_attachments",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "List Attachments",
           "path": Object {
             "parts": Array [
@@ -18992,6 +19067,7 @@ submitted to the payor.
           "htmlDescription": undefined,
           "id": "upload_attachment",
           "method": "PUT",
+          "migratedFromUrlSlugs": undefined,
           "name": "Upload Attachment",
           "path": Object {
             "parts": Array [
@@ -19081,6 +19157,7 @@ submitted to the payor.
           "htmlDescription": undefined,
           "id": "delete_attachment",
           "method": "DELETE",
+          "migratedFromUrlSlugs": undefined,
           "name": "Delete Attachment",
           "path": Object {
             "parts": Array [
@@ -19485,6 +19562,7 @@ submitted to the payor.
           "htmlDescription": undefined,
           "id": "compute",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Compute",
           "path": Object {
             "parts": Array [
@@ -19721,6 +19799,9 @@ submitted to the payor.
           "htmlDescription": undefined,
           "id": "compute",
           "method": "POST",
+          "migratedFromUrlSlugs": Array [
+            "compute-network-status",
+          ],
           "name": "Compute network status",
           "path": Object {
             "parts": Array [
@@ -19850,7 +19931,7 @@ submitted to the payor.
               },
             },
           },
-          "urlSlug": "compute-network-status",
+          "urlSlug": "compute",
         },
       ],
       "htmlDescription": undefined,
@@ -20288,6 +20369,7 @@ submitted to the payor.
           "htmlDescription": undefined,
           "id": "get_exports",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Exports",
           "path": Object {
             "parts": Array [
@@ -20550,6 +20632,7 @@ Must be within 30 days of start_date.
           "htmlDescription": undefined,
           "id": "get",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get",
           "path": Object {
             "parts": Array [
@@ -20754,6 +20837,7 @@ Must be within 30 days of start_date.
 ",
           "id": "get_fee_schedule_configuration_mechanism",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Fee Schedule Configuration Mechanism",
           "path": Object {
             "parts": Array [
@@ -20989,6 +21073,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
 ",
           "id": "get_grouped_fee_schedules_for_payer",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Grouped Fee Schedules For Payer",
           "path": Object {
             "parts": Array [
@@ -21195,6 +21280,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
 ",
           "id": "get_bound_fee_schedule",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Bound Fee Schedule",
           "path": Object {
             "parts": Array [
@@ -21490,6 +21576,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
           "htmlDescription": undefined,
           "id": "create",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Create",
           "path": Object {
             "parts": Array [
@@ -21639,6 +21726,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
           "htmlDescription": undefined,
           "id": "get",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get",
           "path": Object {
             "parts": Array [
@@ -21779,6 +21867,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
           "htmlDescription": undefined,
           "id": "update",
           "method": "PATCH",
+          "migratedFromUrlSlugs": undefined,
           "name": "Update",
           "path": Object {
             "parts": Array [
@@ -22067,6 +22156,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
           "htmlDescription": undefined,
           "id": "update",
           "method": "PATCH",
+          "migratedFromUrlSlugs": undefined,
           "name": "Update",
           "path": Object {
             "parts": Array [
@@ -22522,6 +22612,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
 ",
           "id": "validate_insurance_adjustment",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Validate Insurance Adjustment",
           "path": Object {
             "parts": Array [
@@ -22803,6 +22894,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
           "htmlDescription": undefined,
           "id": "create_insurance_adjustment",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Create Insurance Adjustment",
           "path": Object {
             "parts": Array [
@@ -22980,6 +23072,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
 ",
           "id": "upload_attachment",
           "method": "PUT",
+          "migratedFromUrlSlugs": undefined,
           "name": "Upload Attachment",
           "path": Object {
             "parts": Array [
@@ -23162,6 +23255,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
           "htmlDescription": undefined,
           "id": "update",
           "method": "PATCH",
+          "migratedFromUrlSlugs": undefined,
           "name": "Update",
           "path": Object {
             "parts": Array [
@@ -23308,6 +23402,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
           "htmlDescription": undefined,
           "id": "get_images",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Images",
           "path": Object {
             "parts": Array [
@@ -23544,6 +23639,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
           "htmlDescription": undefined,
           "id": "create_movie",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Create Movie",
           "path": Object {
             "parts": Array [
@@ -23713,6 +23809,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
           "htmlDescription": undefined,
           "id": "get_movie",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Movie",
           "path": Object {
             "parts": Array [
@@ -24009,6 +24106,7 @@ identified by the id, then 403 response will be returned</p>
 ",
           "id": "get",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get",
           "path": Object {
             "parts": Array [
@@ -24165,6 +24263,7 @@ will be limited to only those invoices that belong to the patient_external_id</p
 ",
           "id": "search",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Search",
           "path": Object {
             "parts": Array [
@@ -24513,6 +24612,7 @@ upon creation of the invoice.</p>
 ",
           "id": "create",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Create",
           "path": Object {
             "parts": Array [
@@ -24804,6 +24904,7 @@ upon creation of the invoice.</p>
           "htmlDescription": undefined,
           "id": "getById",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get By Id",
           "path": Object {
             "parts": Array [
@@ -25009,6 +25110,7 @@ upon creation of the invoice.</p>
           "htmlDescription": undefined,
           "id": "getMulti",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Multi",
           "path": Object {
             "parts": Array [
@@ -25263,6 +25365,7 @@ upon creation of the invoice.</p>
           "htmlDescription": undefined,
           "id": "create",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Create",
           "path": Object {
             "parts": Array [
@@ -25454,6 +25557,7 @@ upon creation of the invoice.</p>
           "htmlDescription": undefined,
           "id": "update",
           "method": "PUT",
+          "migratedFromUrlSlugs": undefined,
           "name": "Update",
           "path": Object {
             "parts": Array [
@@ -25624,6 +25728,7 @@ upon creation of the invoice.</p>
           "htmlDescription": undefined,
           "id": "delete",
           "method": "DELETE",
+          "migratedFromUrlSlugs": undefined,
           "name": "Delete",
           "path": Object {
             "parts": Array [
@@ -25766,6 +25871,7 @@ upon creation of the invoice.</p>
 ",
           "id": "search",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Search",
           "path": Object {
             "parts": Array [
@@ -25886,6 +25992,7 @@ upon creation of the invoice.</p>
 ",
           "id": "get_multi",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Multi",
           "path": Object {
             "parts": Array [
@@ -26020,6 +26127,7 @@ upon creation of the invoice.</p>
 ",
           "id": "add_organization_payer",
           "method": "PUT",
+          "migratedFromUrlSlugs": undefined,
           "name": "Add Organization Payer",
           "path": Object {
             "parts": Array [
@@ -26208,6 +26316,7 @@ upon creation of the invoice.</p>
           "htmlDescription": undefined,
           "id": "get",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get",
           "path": Object {
             "parts": Array [
@@ -26377,6 +26486,7 @@ upon creation of the invoice.</p>
           "htmlDescription": undefined,
           "id": "getAll",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get All",
           "path": Object {
             "parts": Array [
@@ -26613,6 +26723,7 @@ upon creation of the invoice.</p>
           "htmlDescription": undefined,
           "id": "create",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Create",
           "path": Object {
             "parts": Array [
@@ -26775,6 +26886,7 @@ upon creation of the invoice.</p>
           "htmlDescription": undefined,
           "id": "update",
           "method": "PATCH",
+          "migratedFromUrlSlugs": undefined,
           "name": "Update",
           "path": Object {
             "parts": Array [
@@ -27042,6 +27154,7 @@ upon creation of the invoice.</p>
           "htmlDescription": undefined,
           "id": "delete",
           "method": "DELETE",
+          "migratedFromUrlSlugs": undefined,
           "name": "Delete",
           "path": Object {
             "parts": Array [
@@ -27235,6 +27348,7 @@ upon creation of the invoice.</p>
           "htmlDescription": undefined,
           "id": "get",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get",
           "path": Object {
             "parts": Array [
@@ -27428,6 +27542,7 @@ upon creation of the invoice.</p>
           "htmlDescription": undefined,
           "id": "get_multi",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Multi",
           "path": Object {
             "parts": Array [
@@ -27813,6 +27928,7 @@ upon creation of the invoice.</p>
           "htmlDescription": undefined,
           "id": "create",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Create",
           "path": Object {
             "parts": Array [
@@ -28062,6 +28178,7 @@ upon creation of the invoice.</p>
           "htmlDescription": undefined,
           "id": "update",
           "method": "PATCH",
+          "migratedFromUrlSlugs": undefined,
           "name": "Update",
           "path": Object {
             "parts": Array [
@@ -28279,6 +28396,7 @@ upon creation of the invoice.</p>
           "htmlDescription": undefined,
           "id": "getAll",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get All",
           "path": Object {
             "parts": Array [
@@ -28552,6 +28670,7 @@ upon creation of the invoice.</p>
           "htmlDescription": undefined,
           "id": "create",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Create",
           "path": Object {
             "parts": Array [
@@ -28774,6 +28893,7 @@ upon creation of the invoice.</p>
           "htmlDescription": undefined,
           "id": "delete",
           "method": "DELETE",
+          "migratedFromUrlSlugs": undefined,
           "name": "Delete",
           "path": Object {
             "parts": Array [
@@ -28890,6 +29010,7 @@ upon creation of the invoice.</p>
           "htmlDescription": undefined,
           "id": "create",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Create",
           "path": Object {
             "parts": Array [
@@ -29151,6 +29272,7 @@ identified by the id, then 403 response will be returned</p>
 ",
           "id": "get",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get",
           "path": Object {
             "parts": Array [
@@ -29276,6 +29398,7 @@ identified by the id, then 403 response will be returned</p>
 ",
           "id": "search",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Search",
           "path": Object {
             "parts": Array [
@@ -29519,6 +29642,7 @@ identified by the id, then 403 response will be returned</p>
 ",
           "id": "create",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Create",
           "path": Object {
             "parts": Array [
@@ -29775,6 +29899,7 @@ If the authenticated user does not have the permission to update the PatientPaym
 ",
           "id": "patch",
           "method": "PATCH",
+          "migratedFromUrlSlugs": undefined,
           "name": "Patch",
           "path": Object {
             "parts": Array [
@@ -30022,6 +30147,7 @@ by the id, then 403 will be returned</p>
 ",
           "id": "delete",
           "method": "DELETE",
+          "migratedFromUrlSlugs": undefined,
           "name": "Delete",
           "path": Object {
             "parts": Array [
@@ -30268,6 +30394,7 @@ by the id, then 403 will be returned</p>
 ",
           "id": "search",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Search",
           "path": Object {
             "parts": Array [
@@ -30585,6 +30712,7 @@ by the id, then 403 will be returned</p>
 ",
           "id": "get",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get",
           "path": Object {
             "parts": Array [
@@ -30709,6 +30837,7 @@ by the id, then 403 will be returned</p>
 ",
           "id": "create",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Create",
           "path": Object {
             "parts": Array [
@@ -31126,6 +31255,7 @@ by the id, then 403 will be returned</p>
 ",
           "id": "update",
           "method": "PATCH",
+          "migratedFromUrlSlugs": undefined,
           "name": "Update",
           "path": Object {
             "parts": Array [
@@ -31491,6 +31621,7 @@ by the id, then 403 will be returned</p>
 ",
           "id": "delete",
           "method": "DELETE",
+          "migratedFromUrlSlugs": undefined,
           "name": "Delete",
           "path": Object {
             "parts": Array [
@@ -31724,6 +31855,7 @@ the current organization_id of the authenticated user.</p>
 ",
           "id": "search",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Search",
           "path": Object {
             "parts": Array [
@@ -32065,6 +32197,7 @@ authenticated user, then response code of 403 will be returned.</p>
 ",
           "id": "get",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get",
           "path": Object {
             "parts": Array [
@@ -32351,6 +32484,7 @@ The order of specificity from the most specific to least specific is <code>servi
 ",
           "id": "create",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Create",
           "path": Object {
             "parts": Array [
@@ -32780,6 +32914,7 @@ The order of specificity from the most specific to least specific is <code>servi
 ",
           "id": "update",
           "method": "PATCH",
+          "migratedFromUrlSlugs": undefined,
           "name": "Update",
           "path": Object {
             "parts": Array [
@@ -33179,6 +33314,7 @@ current organization_id, then a response code of <code>403</code> will be return
 ",
           "id": "delete",
           "method": "DELETE",
+          "migratedFromUrlSlugs": undefined,
           "name": "Delete",
           "path": Object {
             "parts": Array [
@@ -33333,6 +33469,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "getAll",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get All",
           "path": Object {
             "parts": Array [
@@ -33821,6 +33958,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "htmlDescription": undefined,
           "id": "get",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get",
           "path": Object {
             "parts": Array [
@@ -33960,6 +34098,9 @@ slashes.
           "htmlDescription": undefined,
           "id": "get",
           "method": "GET",
+          "migratedFromUrlSlugs": Array [
+            "get-payer",
+          ],
           "name": "Get payer",
           "path": Object {
             "parts": Array [
@@ -34001,7 +34142,7 @@ slashes.
               },
             },
           },
-          "urlSlug": "get-payer",
+          "urlSlug": "get",
         },
         Object {
           "authed": true,
@@ -34073,6 +34214,9 @@ slashes.
           "htmlDescription": undefined,
           "id": "getAll",
           "method": "GET",
+          "migratedFromUrlSlugs": Array [
+            "get-all-payers",
+          ],
           "name": "Get all payers",
           "path": Object {
             "parts": Array [
@@ -34134,7 +34278,7 @@ slashes.
               },
             },
           },
-          "urlSlug": "get-all-payers",
+          "urlSlug": "get-all",
         },
       ],
       "htmlDescription": undefined,
@@ -34382,6 +34526,7 @@ identified by the id, then 403 response will be returned</p>
 ",
           "id": "get",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get",
           "path": Object {
             "parts": Array [
@@ -34499,6 +34644,7 @@ identified by the id, then 403 response will be returned</p>
 ",
           "id": "getAll",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get All",
           "path": Object {
             "parts": Array [
@@ -34879,6 +35025,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
 ",
           "id": "create",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Create",
           "path": Object {
             "parts": Array [
@@ -35307,6 +35454,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
 ",
           "id": "patch",
           "method": "PATCH",
+          "migratedFromUrlSlugs": undefined,
           "name": "Patch",
           "path": Object {
             "parts": Array [
@@ -35554,6 +35702,7 @@ by the id, then 403 will be returned</p>
 ",
           "id": "delete",
           "method": "DELETE",
+          "migratedFromUrlSlugs": undefined,
           "name": "Delete",
           "path": Object {
             "parts": Array [
@@ -35754,6 +35903,7 @@ and the third party payment processor&#39;s customer can be identified by the pa
 ",
           "id": "verifyCanInvoice",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Verify Can Invoice",
           "path": Object {
             "parts": Array [
@@ -35846,6 +35996,7 @@ Verification includes that the provided token has all of the appropriate permiss
 ",
           "id": "verifyApiToken",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Verify Api Token",
           "path": Object {
             "parts": Array [
@@ -35949,6 +36100,7 @@ customer page will be returned (this generally is a page listing the existing cu
 ",
           "id": "verifyCustomerExists",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Verify Customer Exists",
           "path": Object {
             "parts": Array [
@@ -36201,6 +36353,7 @@ as the billing_provider_npis should suffice.</p>
           "htmlDescription": undefined,
           "id": "get_pipeline_configurations",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Pipeline Configurations",
           "path": Object {
             "parts": Array [
@@ -36533,6 +36686,7 @@ as the billing_provider_npis should suffice.</p>
 ",
           "id": "get_multi",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Multi",
           "path": Object {
             "parts": Array [
@@ -36733,6 +36887,7 @@ as the billing_provider_npis should suffice.</p>
           "htmlDescription": undefined,
           "id": "get_multi_paged",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Multi Paged",
           "path": Object {
             "parts": Array [
@@ -37179,6 +37334,7 @@ as the billing_provider_npis should suffice.</p>
           "htmlDescription": undefined,
           "id": "post_remit",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Post Remit",
           "path": Object {
             "parts": Array [
@@ -37473,6 +37629,7 @@ as the billing_provider_npis should suffice.</p>
           "htmlDescription": undefined,
           "id": "create",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Create",
           "path": Object {
             "parts": Array [
@@ -37654,6 +37811,7 @@ as the billing_provider_npis should suffice.</p>
           "htmlDescription": undefined,
           "id": "validate",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Validate",
           "path": Object {
             "parts": Array [
@@ -37837,6 +37995,7 @@ as the billing_provider_npis should suffice.</p>
           "htmlDescription": undefined,
           "id": "prepopulate",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Prepopulate",
           "path": Object {
             "parts": Array [
@@ -37977,6 +38136,7 @@ as the billing_provider_npis should suffice.</p>
           "htmlDescription": undefined,
           "id": "update",
           "method": "PATCH",
+          "migratedFromUrlSlugs": undefined,
           "name": "Update",
           "path": Object {
             "parts": Array [
@@ -38310,6 +38470,7 @@ as the billing_provider_npis should suffice.</p>
           "htmlDescription": undefined,
           "id": "get_ledger_tables",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Ledger Tables",
           "path": Object {
             "parts": Array [
@@ -38565,6 +38726,7 @@ as the billing_provider_npis should suffice.</p>
           "htmlDescription": undefined,
           "id": "calculate_financial_information",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Calculate Financial Information",
           "path": Object {
             "parts": Array [
@@ -38698,6 +38860,7 @@ as the billing_provider_npis should suffice.</p>
           "htmlDescription": undefined,
           "id": "getAll",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get All",
           "path": Object {
             "parts": Array [
@@ -38795,6 +38958,7 @@ as the billing_provider_npis should suffice.</p>
           "htmlDescription": undefined,
           "id": "create",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Create",
           "path": Object {
             "parts": Array [
@@ -38954,6 +39118,7 @@ as the billing_provider_npis should suffice.</p>
           "htmlDescription": undefined,
           "id": "get_actions",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Actions",
           "path": Object {
             "parts": Array [
@@ -39142,6 +39307,7 @@ as the billing_provider_npis should suffice.</p>
           "htmlDescription": undefined,
           "id": "get_internal_enrollment_assignees",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Internal Enrollment Assignees",
           "path": Object {
             "parts": Array [
@@ -39333,6 +39499,7 @@ as the billing_provider_npis should suffice.</p>
           "htmlDescription": undefined,
           "id": "get_assignable_users",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Assignable Users",
           "path": Object {
             "parts": Array [
@@ -39547,6 +39714,7 @@ as the billing_provider_npis should suffice.</p>
           "htmlDescription": undefined,
           "id": "get_multi",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Multi",
           "path": Object {
             "parts": Array [
@@ -39679,6 +39847,7 @@ as the billing_provider_npis should suffice.</p>
           "htmlDescription": undefined,
           "id": "get_assignable_users_unpaginated",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get Assignable Users Unpaginated",
           "path": Object {
             "parts": Array [
@@ -39859,6 +40028,7 @@ as the billing_provider_npis should suffice.</p>
           "htmlDescription": undefined,
           "id": "get_by_external_id",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get By External Id",
           "path": Object {
             "parts": Array [
@@ -40097,6 +40267,7 @@ as the billing_provider_npis should suffice.</p>
           "htmlDescription": undefined,
           "id": "get",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get",
           "path": Object {
             "parts": Array [
@@ -40226,6 +40397,7 @@ as the billing_provider_npis should suffice.</p>
           "htmlDescription": undefined,
           "id": "getAllWorkQueues",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Get All Work Queues",
           "path": Object {
             "parts": Array [
@@ -88730,6 +88902,9 @@ Object {
 ",
           "id": "get",
           "method": "GET",
+          "migratedFromUrlSlugs": Array [
+            "retrieve-a-transaction",
+          ],
           "name": "Retrieve a transaction",
           "path": Object {
             "parts": Array [
@@ -88773,7 +88948,7 @@ Object {
               },
             },
           },
-          "urlSlug": "retrieve-a-transaction",
+          "urlSlug": "get",
         },
       ],
       "htmlDescription": undefined,
@@ -89047,6 +89222,7 @@ Object {
 ",
           "id": "CreateLeastCostFulfillment",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Create Least Cost Fulfillment",
           "path": Object {
             "parts": Array [
@@ -90029,6 +90205,7 @@ Object {
 ",
         "id": "execute-workflow-stream",
         "method": "POST",
+        "migratedFromUrlSlugs": undefined,
         "name": "Execute Workflow Stream",
         "path": Object {
           "parts": Array [
@@ -90502,6 +90679,7 @@ Object {
 ",
         "id": "generate",
         "method": "POST",
+        "migratedFromUrlSlugs": undefined,
         "name": "Generate",
         "path": Object {
           "parts": Array [
@@ -90886,6 +91064,7 @@ Object {
 ",
         "id": "generate-stream",
         "method": "POST",
+        "migratedFromUrlSlugs": undefined,
         "name": "Generate Stream",
         "path": Object {
           "parts": Array [
@@ -91190,6 +91369,7 @@ Object {
 ",
         "id": "search",
         "method": "POST",
+        "migratedFromUrlSlugs": undefined,
         "name": "Search",
         "path": Object {
           "parts": Array [
@@ -91478,6 +91658,7 @@ Object {
 ",
         "id": "submit-completion-actuals",
         "method": "POST",
+        "migratedFromUrlSlugs": undefined,
         "name": "Submit Completion Actuals",
         "path": Object {
           "parts": Array [
@@ -91605,6 +91786,7 @@ Object {
 ",
         "id": "submit-workflow-execution-actuals",
         "method": "POST",
+        "migratedFromUrlSlugs": undefined,
         "name": "Submit Workflow Execution Actuals",
         "path": Object {
           "parts": Array [
@@ -91909,6 +92091,7 @@ Object {
 ",
           "id": "retrieve",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Retrieve",
           "path": Object {
             "parts": Array [
@@ -92048,6 +92231,7 @@ Object {
 ",
           "id": "create",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Create",
           "path": Object {
             "parts": Array [
@@ -92283,6 +92467,7 @@ Object {
 ",
           "id": "list",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "List",
           "path": Object {
             "parts": Array [
@@ -92449,6 +92634,7 @@ Object {
 ",
           "id": "partialUpdate",
           "method": "PATCH",
+          "migratedFromUrlSlugs": undefined,
           "name": "Partial Update",
           "path": Object {
             "parts": Array [
@@ -92592,6 +92778,7 @@ Object {
           "htmlDescription": undefined,
           "id": "destroy",
           "method": "DELETE",
+          "migratedFromUrlSlugs": undefined,
           "name": "Destroy",
           "path": Object {
             "parts": Array [
@@ -92808,6 +92995,7 @@ Object {
 ",
           "id": "upload",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Upload",
           "path": Object {
             "parts": Array [
@@ -93031,6 +93219,7 @@ Object {
 ",
           "id": "retrieve",
           "method": "GET",
+          "migratedFromUrlSlugs": undefined,
           "name": "Retrieve",
           "path": Object {
             "parts": Array [
@@ -93143,6 +93332,7 @@ Object {
 ",
           "id": "model_version_compile_prompt",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Model Version Compile Prompt",
           "path": Object {
             "parts": Array [
@@ -93489,6 +93679,7 @@ partners, not directly by Vellum users.</p>
 ",
           "id": "register_prompt",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Register Prompt",
           "path": Object {
             "parts": Array [
@@ -93736,6 +93927,7 @@ or overwritten with default values.</p>
 ",
           "id": "upsert_sandbox_scenario",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Upsert Sandbox Scenario",
           "path": Object {
             "parts": Array [
@@ -93882,6 +94074,7 @@ or overwritten with default values.</p>
 ",
           "id": "delete_sandbox_scenario",
           "method": "DELETE",
+          "migratedFromUrlSlugs": undefined,
           "name": "Delete Sandbox Scenario",
           "path": Object {
             "parts": Array [
@@ -94039,6 +94232,7 @@ or overwritten with default values.</p>
 ",
           "id": "upsert_test_suite_test_case",
           "method": "POST",
+          "migratedFromUrlSlugs": undefined,
           "name": "Upsert Test Suite Test Case",
           "path": Object {
             "parts": Array [
@@ -94190,6 +94384,7 @@ or overwritten with default values.</p>
 ",
           "id": "delete_test_suite_test_case",
           "method": "DELETE",
+          "migratedFromUrlSlugs": undefined,
           "name": "Delete Test Suite Test Case",
           "path": Object {
             "parts": Array [
