@@ -229,7 +229,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     return (
         <div
             className={classNames(
-                "pb-10 pl-6 md:pl-12 pr-4 scroll-mt-[74px]",
+                "pl-6 md:pl-12 pr-4 scroll-mt-[74px]",
                 "bg-[#FAFAFA] border border-[#E0E0E0] rounded-lg mb-3 mx-3 lg:ml-0",
                 {
                     "border-border-default-light dark:border-border-default-dark border-b": !hideBottomSeparator,
@@ -244,7 +244,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                 data-route={route.toLowerCase()}
             >
                 <div
-                    className="flex min-w-0 flex-1 flex-col"
+                    className="flex min-w-0 flex-1 flex-col pb-10"
                     style={{
                         minHeight: layoutBreakpoint === "lg" ? `${exampleHeight}px` : undefined,
                         maxWidth: maxContentWidth,
