@@ -34,8 +34,8 @@ export const CustomDocsPageHeader = ({ resolvedPath }: Pick<CustomDocsPage.Props
 
 export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath, contentWidth }) => {
     return (
-        <div className="flex justify-between px-6 sm:px-8 lg:pl-12 lg:pr-20 xl:pr-0">
-            <div className="w-full min-w-0 lg:pr-6">
+        <div className="flex w-full justify-start px-6 sm:px-8 lg:pl-12 lg:pr-20 xl:pr-0">
+            <div className="min-w-0 lg:pr-12">
                 <article
                     className="prose dark:prose-invert w-full"
                     style={{
