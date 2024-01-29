@@ -30,7 +30,7 @@ export async function serializePageNode({
     return {
         ...pageNode,
         tableOfContents: createTableOfContents(pageContent.markdown),
-        editThisPageUrl: pageContent.editThisPageUrl,
+        editThisPageUrl: undefined,
         serializedMdxContent: await serializeMdxContent(pageContent.markdown),
     };
 }
