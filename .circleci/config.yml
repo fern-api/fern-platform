@@ -119,11 +119,6 @@ jobs:
             echo "//registry.npmjs.org/:_authToken=${YARN_NPM_AUTH_TOKEN}" > ~/.npmrc
             npm publish --access public
       - run:
-          name: Register definition
-          command: |
-            git_version="$(scripts/git-version.sh)"
-            fern register --version "${git_version}"
-      - run:
           name: Publish FDR Fiddle SDK
           command: |
             npm install -g fern-api
