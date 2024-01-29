@@ -105,14 +105,14 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     />
                 )}
             </TitledExample>
-            {example.responseBody != null && (
+            {example.responseBodyV3 != null && (
                 <TitledExample
                     title={example.responseStatusCode >= 400 ? "Error Response" : "Response"}
                     type={example.responseStatusCode >= 400 ? "warning" : "primary"}
                     onClick={(e) => {
                         e.stopPropagation();
                     }}
-                    copyToClipboardText={() => JSON.stringify(example.responseBody, undefined, 2)}
+                    copyToClipboardText={() => JSON.stringify(example.responseBodyV3?.value, undefined, 2)}
                     disablePadding={true}
                 >
                     <JsonExampleVirtualized

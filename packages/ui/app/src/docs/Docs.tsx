@@ -9,6 +9,7 @@ import dynamic from "next/dynamic";
 import NextNProgress from "nextjs-progressbar";
 import { memo, useEffect, useMemo, useState } from "react";
 import tinycolor from "tinycolor2";
+import { ApiPlaygroundContextProvider } from "../api-playground/ApiPlaygroundContext";
 import { useBreakpoint } from "../hooks/useBreakpoint";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
@@ -21,10 +22,9 @@ import { BgImageGradient } from "./BgImageGradient";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
 
-const ApiPlaygroundContextProvider = dynamic(
-    () => import("../api-playground/ApiPlaygroundContext").then((m) => m.ApiPlaygroundContextProvider),
-    { ssr: false }
-);
+const ApiPlayground = dynamic(() => import("../api-playground/ApiPlayground").then((m) => m.ApiPlayground), {
+    ssr: false,
+});
 
 interface DocsProps {
     config: DocsV1Read.DocsConfig;
@@ -139,90 +139,92 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                 />
             )}
 
-            <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
-                <div
-                    className="fixed inset-x-0 top-0 z-30 mx-auto overflow-visible"
-                    style={{
-                        maxWidth: maxPageWidth,
-                    }}
-                >
-                    <Header
-                        className="m-3 h-[50px] rounded-lg border border-[#E0E0E0] bg-[#FAFAFA]"
+            <ApiPlaygroundContextProvider apiSections={apiSections}>
+                <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
+                    <div
+                        className="fixed inset-x-0 top-0 z-30 mx-auto overflow-visible"
                         style={{
                             maxWidth: maxPageWidth,
                         }}
-                        config={config}
-                        openSearchDialog={openSearchDialog}
-                        isMobileSidebarOpen={isMobileSidebarOpen}
-                        openMobileSidebar={openMobileSidebar}
-                        closeMobileSidebar={closeMobileSidebar}
-                        searchService={searchService}
-                    />
-                </div>
-
-                <div
-                    className="relative mx-auto flex min-h-0 w-full min-w-0 flex-1"
-                    style={{
-                        maxWidth: maxPageWidth,
-                    }}
-                >
-                    {isMobileSidebarOpen && (
-                        <div
-                            className="fixed inset-0 z-20 block bg-[#E9E6DE]/60 lg:hidden dark:bg-black/40"
-                            onClick={closeMobileSidebar}
-                        />
-                    )}
-                    {["lg", "xl", "2xl"].includes(breakpoint) ? (
-                        <div
-                            className="sticky top-[74px] z-20 m-3 mt-[74px] hidden h-[calc(100vh-86px)] overflow-hidden rounded-lg border border-[#E0E0E0] bg-[#FAFAFA] lg:block"
+                    >
+                        <Header
+                            className="m-3 h-[50px] rounded-lg border border-[#E0E0E0] bg-[#FAFAFA]"
                             style={{
-                                width:
-                                    layout?.sidebarWidth == null
-                                        ? "18rem"
-                                        : visitDiscriminatedUnion(layout.sidebarWidth, "type")._visit({
-                                              px: (px) => `${px.value}px`,
-                                              rem: (rem) => `${rem.value}rem`,
-                                              _other: () => "18rem",
-                                          }),
+                                maxWidth: maxPageWidth,
                             }}
-                        >
-                            <Sidebar
-                                navigationItems={navigationItems}
-                                currentSlug={currentSlug}
-                                registerScrolledToPathListener={registerScrolledToPathListener}
-                                searchInfo={search}
-                                algoliaSearchIndex={algoliaSearchIndex}
-                                navbarLinks={config.navbarLinks}
-                            />
-                        </div>
-                    ) : (
-                        <Transition
-                            className="fixed inset-3 top-[74px] z-20 rounded-lg border border-[#E0E0E0] bg-[#FAFAFA] sm:w-72"
-                            show={isMobileSidebarOpen}
-                            enter="transition ease-in-out duration-300 transform"
-                            enterFrom="-translate-x-full"
-                            enterTo="translate-x-0"
-                            leave="transition ease-in-out duration-300 transform"
-                            leaveFrom="translate-x-0"
-                            leaveTo="-translate-x-full"
-                        >
-                            <Sidebar
-                                navigationItems={navigationItems}
-                                currentSlug={currentSlug}
-                                registerScrolledToPathListener={registerScrolledToPathListener}
-                                searchInfo={search}
-                                algoliaSearchIndex={algoliaSearchIndex}
-                                navbarLinks={config.navbarLinks}
-                            />
-                        </Transition>
-                    )}
+                            config={config}
+                            openSearchDialog={openSearchDialog}
+                            isMobileSidebarOpen={isMobileSidebarOpen}
+                            openMobileSidebar={openMobileSidebar}
+                            closeMobileSidebar={closeMobileSidebar}
+                            searchService={searchService}
+                        />
+                    </div>
 
-                    <main className={classNames("relative flex w-full min-w-0 flex-1 flex-col mt-[74px]")}>
-                        <DocsMainContent navigationItems={navigationItems} contentWidth={layout?.contentWidth} />
-                    </main>
+                    <div
+                        className="relative mx-auto flex min-h-0 w-full min-w-0 flex-1"
+                        style={{
+                            maxWidth: maxPageWidth,
+                        }}
+                    >
+                        {isMobileSidebarOpen && (
+                            <div
+                                className="fixed inset-0 z-20 block bg-[#E9E6DE]/60 lg:hidden dark:bg-black/40"
+                                onClick={closeMobileSidebar}
+                            />
+                        )}
+                        {["lg", "xl", "2xl"].includes(breakpoint) ? (
+                            <div
+                                className="sticky top-[74px] z-20 m-3 mt-[74px] hidden h-[calc(100vh-86px)] overflow-hidden rounded-lg border border-[#E0E0E0] bg-[#FAFAFA] lg:block"
+                                style={{
+                                    width:
+                                        layout?.sidebarWidth == null
+                                            ? "18rem"
+                                            : visitDiscriminatedUnion(layout.sidebarWidth, "type")._visit({
+                                                  px: (px) => `${px.value}px`,
+                                                  rem: (rem) => `${rem.value}rem`,
+                                                  _other: () => "18rem",
+                                              }),
+                                }}
+                            >
+                                <Sidebar
+                                    navigationItems={navigationItems}
+                                    currentSlug={currentSlug}
+                                    registerScrolledToPathListener={registerScrolledToPathListener}
+                                    searchInfo={search}
+                                    algoliaSearchIndex={algoliaSearchIndex}
+                                    navbarLinks={config.navbarLinks}
+                                />
+                            </div>
+                        ) : (
+                            <Transition
+                                className="fixed inset-3 top-[74px] z-20 rounded-lg border border-[#E0E0E0] bg-[#FAFAFA] sm:w-72"
+                                show={isMobileSidebarOpen}
+                                enter="transition ease-in-out duration-300 transform"
+                                enterFrom="-translate-x-full"
+                                enterTo="translate-x-0"
+                                leave="transition ease-in-out duration-300 transform"
+                                leaveFrom="translate-x-0"
+                                leaveTo="-translate-x-full"
+                            >
+                                <Sidebar
+                                    navigationItems={navigationItems}
+                                    currentSlug={currentSlug}
+                                    registerScrolledToPathListener={registerScrolledToPathListener}
+                                    searchInfo={search}
+                                    algoliaSearchIndex={algoliaSearchIndex}
+                                    navbarLinks={config.navbarLinks}
+                                />
+                            </Transition>
+                        )}
+
+                        <main className={classNames("relative flex w-full min-w-0 flex-1 flex-col mt-[74px]")}>
+                            <DocsMainContent navigationItems={navigationItems} contentWidth={layout?.contentWidth} />
+                        </main>
+                    </div>
+                    <ApiPlayground apiSections={apiSections} />
                 </div>
-                <ApiPlaygroundContextProvider apiSections={apiSections} />
-            </div>
+            </ApiPlaygroundContextProvider>
         </>
     );
 });
