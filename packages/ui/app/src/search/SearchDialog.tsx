@@ -50,6 +50,7 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
                                             ? `Search across version ${activeVersion}`
                                             : "Find something..."
                                     }
+                                    className="flex-1"
                                     inputClassName="w-full text-base t-muted placeholder:text-text-muted-light placeholder:dark:text-text-muted-dark bg-transparent py-5 focus:outline-none"
                                 />
                             </div>

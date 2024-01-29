@@ -2488,7 +2488,7 @@ __metadata:
     "@types/node": ^18.7.18
     archiver: ^6.0.1
     aws-cdk: ^2.118.0
-    aws-cdk-lib: ^2.118.0
+    aws-cdk-lib: ^2.122.0
     axios: ^1.6.5
     constructs: ^10.3.0
     prettier: ^2.8.8
@@ -2516,7 +2516,7 @@ __metadata:
     react-dom: ^18.2.0
     stylelint: ^16.1.0
     typescript: 4.9.4
-    vite: ^4.4.12
+    vite: ^4.5.2
   languageName: unknown
   linkType: soft
 
@@ -2580,7 +2580,7 @@ __metadata:
     react: ^18.2.0
     stylelint: ^16.1.0
     typescript: 4.9.4
-    vite: ^4.4.12
+    vite: ^4.5.2
   languageName: unknown
   linkType: soft
 
@@ -2699,7 +2699,7 @@ __metadata:
     react: ^18.2.0
     stylelint: ^16.1.0
     typescript: 4.9.4
-    vite: ^4.4.12
+    vite: ^4.5.2
   languageName: unknown
   linkType: soft
 
@@ -2720,7 +2720,7 @@ __metadata:
     react: ^18.2.0
     stylelint: ^16.1.0
     typescript: 4.9.4
-    vite: ^4.4.12
+    vite: ^4.5.2
   languageName: unknown
   linkType: soft
 
@@ -2732,8 +2732,8 @@ __metadata:
     "@types/js-yaml": ^4.0.5
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
-    "@types/yargs": ^17.0.12
-    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
+    "@types/yargs": ^17.0.32
+    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.15
     chalk: ^5.3.0
     depcheck: ^1.4.3
     esbuild: ^0.15.7
@@ -2776,7 +2776,7 @@ __metadata:
     sass: ^1.69.7
     stylelint: ^16.1.0
     typescript: 4.9.4
-    vite: ^4.4.12
+    vite: ^4.5.2
   languageName: unknown
   linkType: soft
 
@@ -2797,7 +2797,7 @@ __metadata:
     react-dom: ^18.2.0
     stylelint: ^16.1.0
     typescript: 4.9.4
-    vite: ^4.4.12
+    vite: ^4.5.2
   languageName: unknown
   linkType: soft
 
@@ -2868,7 +2868,7 @@ __metadata:
     stylelint: ^16.1.0
     tinycolor2: ^1.6.0
     typescript: 4.9.4
-    vite: ^4.4.12
+    vite: ^4.5.2
   languageName: unknown
   linkType: soft
 
@@ -4375,7 +4375,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/yargs@npm:^17.0.12, @types/yargs@npm:^17.0.8":
+"@types/yargs@npm:^17.0.32":
+  version: 17.0.32
+  resolution: "@types/yargs@npm:17.0.32"
+  dependencies:
+    "@types/yargs-parser": "*"
+  checksum: 4505bdebe8716ff383640c6e928f855b5d337cb3c68c81f7249fc6b983d0aa48de3eee26062b84f37e0d75a5797bc745e0c6e76f42f81771252a758c638f36ba
+  languageName: node
+  linkType: hard
+
+"@types/yargs@npm:^17.0.8":
   version: 17.0.12
   resolution: "@types/yargs@npm:17.0.12"
   dependencies:
@@ -4713,14 +4722,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@yarnpkg/esbuild-plugin-pnp@npm:^3.0.0-rc.14":
-  version: 3.0.0-rc.14
-  resolution: "@yarnpkg/esbuild-plugin-pnp@npm:3.0.0-rc.14"
+"@yarnpkg/esbuild-plugin-pnp@npm:^3.0.0-rc.15":
+  version: 3.0.0-rc.15
+  resolution: "@yarnpkg/esbuild-plugin-pnp@npm:3.0.0-rc.15"
   dependencies:
-    tslib: ^1.13.0
+    tslib: ^2.4.0
   peerDependencies:
     esbuild: ">=0.10.0"
-  checksum: 7213b06d807b20dfb51a631779b8279abcad822be0c0ef14312401fde30fcb4a6a997a195f7971d5f4df0099d9bd5dc00b8a18004af920c21c0c72eec160dcff
+  checksum: 04da15355a99773b441742814ba4d0f3453a83df47aa07e215f167e156f109ab8e971489c8b1a4ddf3c79d568d35213f496ad52e97298228597e1aacc22680aa
   languageName: node
   linkType: hard
 
@@ -5362,9 +5371,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aws-cdk-lib@npm:^2.118.0":
-  version: 2.118.0
-  resolution: "aws-cdk-lib@npm:2.118.0"
+"aws-cdk-lib@npm:^2.122.0":
+  version: 2.122.0
+  resolution: "aws-cdk-lib@npm:2.122.0"
   dependencies:
     "@aws-cdk/asset-awscli-v1": ^2.2.201
     "@aws-cdk/asset-kubectl-v20": ^2.1.2
@@ -5381,7 +5390,7 @@ __metadata:
     yaml: 1.10.2
   peerDependencies:
     constructs: ^10.0.0
-  checksum: 9760bef6f4c90ed231a944416bf83fa5f351e678117dcce801df081eb16f10f480e481dba4556f7ba3c9f522762934d8f5b9e44e3620807a27295e2d157dae04
+  checksum: ac4deffd941c874aefcdd388545cea4c3c78999c8ce39a92e72735ab176e883645d5cb620a4d7840fedb1ed8034917f5368c959ce91f0d293ff142f9b195ffce
   languageName: node
   linkType: hard
 
@@ -15354,7 +15363,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"tslib@npm:^1.13.0, tslib@npm:^1.8.1":
+"tslib@npm:^1.8.1":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd
@@ -15864,9 +15873,9 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"vite@npm:^4.4.12":
-  version: 4.5.1
-  resolution: "vite@npm:4.5.1"
+"vite@npm:^4.5.2":
+  version: 4.5.2
+  resolution: "vite@npm:4.5.2"
   dependencies:
     esbuild: ^0.18.10
     fsevents: ~2.3.2
@@ -15900,7 +15909,7 @@ env-cmd@toddbluhm/env-cmd:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 72b3584b3d3b8d14e8a37f0248e47fb8b4d02ab35de5b5a8e5ca8ae55c3be2aab73760dc36edac4fa722de182f78cc492eb44888fcb4a9a0712c4605dad644f9
+  checksum: 9d1f84f703c2660aced34deee7f309278ed368880f66e9570ac115c793d91f7fffb80ab19c602b3c8bc1341fe23437d86a3fcca2a9ef82f7ef0cdac5a40d0c86
   languageName: node
   linkType: hard
 
