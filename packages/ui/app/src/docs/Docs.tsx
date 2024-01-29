@@ -1,3 +1,4 @@
+import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { crawlResolvedNavigationItemApiSections, resolveNavigationItems } from "@fern-ui/app-utils";
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
@@ -7,7 +8,6 @@ import NextNProgress from "nextjs-progressbar";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import tinycolor from "tinycolor2";
 import { ApiPlaygroundContextProvider } from "../api-playground/ApiPlaygroundContext";
-import { useDocsContext } from "../docs-context/useDocsContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
 import { useSearchContext } from "../search-context/useSearchContext";
@@ -19,13 +19,24 @@ import { BgImageGradient } from "./BgImageGradient";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
 
-export const Docs: React.FC = memo(function UnmemoizedDocs() {
+interface DocsProps {
+    config: DocsV1Read.DocsConfig;
+    search: DocsV1Read.SearchInfo;
+    apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>;
+    algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
+}
+
+export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs({
+    config,
+    search,
+    apis,
+    algoliaSearchIndex,
+}) {
     const { observeDocContent, activeNavigatable, registerScrolledToPathListener } = useNavigationContext();
-    const { docsDefinition } = useDocsContext();
     const { activeNavigationConfigContext, withVersionAndTabSlugs } = useDocsSelectors();
     const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = useSearchContext();
 
-    const searchService = useSearchService();
+    const searchService = useSearchService(search, algoliaSearchIndex);
     const { resolvedTheme: theme, themes, setTheme } = useTheme();
     useEffect(() => {
         document.body.className = theme === "dark" ? "antialiased bp5-dark" : "antialiased";
@@ -43,9 +54,9 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
 
     const { isMobileSidebarOpen, openMobileSidebar, closeMobileSidebar } = useMobileSidebarContext();
 
-    const hasSpecifiedBackgroundImage = !!docsDefinition.config.backgroundImage;
+    const hasSpecifiedBackgroundImage = !!config.backgroundImage;
 
-    const { colorsV3 } = docsDefinition.config;
+    const { colorsV3 } = config;
 
     const backgroundType = useMemo(() => {
         if (colorsV3.type === "darkAndLight") {
@@ -95,13 +106,13 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
             activeNavigationConfigContext.type === "tabbed"
                 ? activeNavigatable.context.tab?.items
                 : activeNavigationConfigContext.config.items;
-        return resolveNavigationItems(unresolvedNavigationItems ?? [], docsDefinition, currentSlug);
+        return resolveNavigationItems(unresolvedNavigationItems ?? [], apis, currentSlug);
     }, [
         activeNavigatable.context.tab?.items,
         activeNavigationConfigContext.config,
         activeNavigationConfigContext.type,
+        apis,
         currentSlug,
-        docsDefinition,
     ]);
 
     const apiSections = useMemo(() => crawlResolvedNavigationItemApiSections(navigationItems), [navigationItems]);
@@ -127,7 +138,7 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                     {renderBackground()}
                     <Header
                         className="max-w-8xl mx-auto"
-                        docsDefinition={docsDefinition}
+                        config={config}
                         openSearchDialog={openSearchDialog}
                         isMobileSidebarOpen={isMobileSidebarOpen}
                         openMobileSidebar={openMobileSidebar}
@@ -160,6 +171,9 @@ export const Docs: React.FC = memo(function UnmemoizedDocs() {
                                 navigationItems={navigationItems}
                                 currentSlug={currentSlug}
                                 registerScrolledToPathListener={registerScrolledToPathListener}
+                                searchInfo={search}
+                                algoliaSearchIndex={algoliaSearchIndex}
+                                navbarLinks={config.navbarLinks}
                             />
                         </div>
 

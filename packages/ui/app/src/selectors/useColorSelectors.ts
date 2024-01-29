@@ -1,15 +1,14 @@
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { useTheme } from "next-themes";
 import { useCallback, useMemo } from "react";
-import { useDocsContext } from "../docs-context/useDocsContext";
 
 type ColorSelectors = {
     getAccentPrimary: (opacity: number) => string | undefined;
 };
 
-export function useColorSelectors(): ColorSelectors {
-    const { docsDefinition } = useDocsContext();
+export function useColorSelectors(config: DocsV1Read.DocsConfig): ColorSelectors {
     const { resolvedTheme: theme } = useTheme();
-    const { colorsV3: colors } = docsDefinition.config;
+    const { colorsV3: colors } = config;
 
     const accentPrimary = useMemo(() => {
         return colors.type === "darkAndLight"
