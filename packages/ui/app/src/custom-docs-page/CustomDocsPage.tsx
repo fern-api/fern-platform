@@ -34,14 +34,12 @@ export const CustomDocsPageHeader = ({ resolvedPath }: Pick<CustomDocsPage.Props
 export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath, maxContentWidth }) => {
     return (
         <div className="flex w-full justify-start px-6 sm:px-8 lg:pl-12 lg:pr-20 xl:pr-0">
-            <div className="min-w-0 lg:pr-12">
-                <article className="prose dark:prose-invert w-full" style={{ maxWidth: maxContentWidth }}>
-                    <CustomDocsPageHeader resolvedPath={resolvedPath} />
-                    <MdxContent mdx={resolvedPath.serializedMdxContent} />
-                    <BottomNavigationButtons />
-                    <div className="h-8" />
-                </article>
-            </div>
+            <article className="prose dark:prose-invert mr-12 w-full" style={{ maxWidth: maxContentWidth }}>
+                <CustomDocsPageHeader resolvedPath={resolvedPath} />
+                <MdxContent mdx={resolvedPath.serializedMdxContent} />
+                <BottomNavigationButtons />
+                <div className="h-8" />
+            </article>
             <aside className="scroll-contain smooth-scroll hide-scrollbar sticky top-16 hidden max-h-[calc(100vh-86px)] w-[19rem] shrink-0 overflow-auto overflow-x-hidden px-8 pb-12 pt-8 xl:block">
                 <TableOfContents tableOfContents={resolvedPath.tableOfContents} />
                 {resolvedPath?.editThisPageUrl != null && (
