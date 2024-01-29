@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { TableOfContentsItem } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { CSSProperties } from "react";

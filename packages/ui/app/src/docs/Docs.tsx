@@ -9,7 +9,6 @@ import dynamic from "next/dynamic";
 import NextNProgress from "nextjs-progressbar";
 import { memo, useEffect, useMemo, useState } from "react";
 import tinycolor from "tinycolor2";
-// import { ApiPlaygroundContextProvider } from "../api-playground/ApiPlaygroundContext";
 import { useBreakpoint } from "../hooks/useBreakpoint";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
