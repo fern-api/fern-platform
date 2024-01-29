@@ -21,7 +21,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     children,
     basePath,
 }) => {
-    const { docsDefinition, pathResolver } = useDocsContext();
+    const { pathResolver } = useDocsContext();
     const router = useRouter();
     const userIsScrolling = useRef(false);
     const resolvedRoute = getRouteForResolvedPath({
@@ -176,7 +176,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             }
             return true;
         });
-    }, [router, navigateToPath, docsDefinition, pathResolver, basePath]);
+    }, [router, navigateToPath, pathResolver, basePath]);
 
     const hydrated = useBooleanState(false);
     useEffect(() => {

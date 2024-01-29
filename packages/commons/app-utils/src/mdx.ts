@@ -4,6 +4,12 @@ import remarkGfm from "remark-gfm";
 
 const REMARK_PLUGINS = [remarkGfm];
 
+export interface TableOfContentsItem {
+    // heading: marked.Tokens.Heading | undefined;
+    simpleString: string;
+    children: TableOfContentsItem[];
+}
+
 export type SerializedMdxContent = MDXRemoteSerializeResult<Record<string, unknown>, Record<string, unknown>>;
 
 /**

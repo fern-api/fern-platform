@@ -15,7 +15,7 @@ export declare namespace Header {
     export interface Props {
         className?: string;
         style?: CSSProperties;
-        docsDefinition: DocsV1Read.DocsDefinition;
+        config: DocsV1Read.DocsConfig;
         openSearchDialog: () => void;
         isMobileSidebarOpen: boolean;
         openMobileSidebar: () => void;
@@ -28,7 +28,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     {
         className,
         style,
-        docsDefinition,
+        config,
         openSearchDialog,
         isMobileSidebarOpen,
         openMobileSidebar,
@@ -37,8 +37,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     },
     ref
 ) {
-    const { navbarLinks, colorsV3 } = docsDefinition.config;
-
+    const { navbarLinks, colorsV3 } = config;
     const navbarLinksSection = (
         <div className="hidden items-center space-x-4 lg:flex lg:space-x-6">
             {navbarLinks?.map((navbarLink, idx) =>
@@ -63,7 +62,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
             ref={ref}
             style={style}
         >
-            <HeaderLogoSection />
+            <HeaderLogoSection config={config} />
 
             <div className="-mr-2 ml-auto flex items-center space-x-0 md:mr-0 lg:space-x-4">
                 {navbarLinksSection}

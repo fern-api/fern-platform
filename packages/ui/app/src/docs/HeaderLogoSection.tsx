@@ -1,3 +1,4 @@
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import Link from "next/link";
 import { DEFAULT_LOGO_HEIGHT } from "../config";
@@ -5,12 +6,15 @@ import { useDocsContext } from "../docs-context/useDocsContext";
 import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { VersionDropdown } from "./VersionDropdown";
 
-export declare namespace HeaderLogoSection {}
+export interface HeaderLogoSectionProps {
+    config: DocsV1Read.DocsConfig;
+}
 
-export const HeaderLogoSection: React.FC = () => {
-    const { resolveFile, docsDefinition } = useDocsContext();
+export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
+    config: { logo, logoV2, logoHeight, logoHref },
+}) => {
+    const { resolveFile } = useDocsContext();
     const { definitionInfo, activeVersionContext } = useDocsSelectors();
-    const { logo, logoV2, logoHeight, logoHref } = docsDefinition.config;
     const logoImageHeight = logoHeight ?? DEFAULT_LOGO_HEIGHT;
 
     const hasMultipleVersions = definitionInfo.type === "versioned";

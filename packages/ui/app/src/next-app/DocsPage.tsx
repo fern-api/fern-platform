@@ -1,4 +1,4 @@
-import { APIV1Read, DocsV1Read, DocsV2Read, PathResolver } from "@fern-api/fdr-sdk";
+import { APIV1Read, DocsV1Read, DocsV2Read, FdrAPI, PathResolver } from "@fern-api/fdr-sdk";
 import {
     convertNavigatableToResolvedPath,
     generateFontFaces,
@@ -17,7 +17,13 @@ import { DocsApp } from "./DocsApp";
 
 export declare namespace DocsPage {
     export interface Props {
-        docs: DocsV2Read.LoadDocsForUrlResponse;
+        // docs: DocsV2Read.LoadDocsForUrlResponse;
+        baseUrl: DocsV2Read.BaseUrl;
+        config: DocsV1Read.DocsConfig;
+        search: DocsV1Read.SearchInfo;
+        algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
+        files: Record<DocsV1Read.FileId, DocsV1Read.Url>;
+        apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>;
         typographyStyleSheet: string;
         backgroundImageStyleSheet: string;
         resolvedPath: ResolvedPath;
@@ -25,12 +31,17 @@ export declare namespace DocsPage {
 }
 
 export function DocsPage({
-    docs,
+    baseUrl,
+    config,
+    search,
+    algoliaSearchIndex,
+    files,
+    apis,
     typographyStyleSheet,
     backgroundImageStyleSheet,
     resolvedPath,
 }: DocsPage.Props): ReactElement {
-    const colorThemeStyleSheet = useColorTheme(docs.definition);
+    const colorThemeStyleSheet = useColorTheme(config);
     return (
         <>
             {/* 
@@ -51,12 +62,18 @@ export function DocsPage({
                     name="viewport"
                     content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
                 />
-                {docs.definition.config.title != null && <title>{docs.definition.config.title}</title>}
-                {docs.definition.config.favicon != null && (
-                    <link rel="icon" id="favicon" href={docs.definition.files[docs.definition.config.favicon]} />
-                )}
+                {config.title != null && <title>{config.title}</title>}
+                {config.favicon != null && <link rel="icon" id="favicon" href={files[config.favicon]} />}
             </Head>
-            <DocsApp docs={docs} resolvedPath={resolvedPath} />
+            <DocsApp
+                baseUrl={baseUrl}
+                config={config}
+                search={search}
+                algoliaSearchIndex={algoliaSearchIndex}
+                files={files}
+                apis={apis}
+                resolvedPath={resolvedPath}
+            />
         </>
     );
 }
@@ -121,7 +138,13 @@ export const getDocsPageProps = async (
     return {
         type: "props",
         props: {
-            docs: docs.body,
+            // docs: docs.body,
+            baseUrl: docs.body.baseUrl,
+            config: docs.body.definition.config,
+            search: docs.body.definition.search,
+            algoliaSearchIndex: docs.body.definition.algoliaSearchIndex ?? null,
+            files: docs.body.definition.files,
+            apis: docs.body.definition.apis,
             typographyStyleSheet,
             backgroundImageStyleSheet: backgroundImageStyleSheet ?? "",
             resolvedPath,

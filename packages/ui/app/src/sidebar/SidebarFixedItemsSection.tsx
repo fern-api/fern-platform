@@ -1,3 +1,4 @@
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { useMemo } from "react";
 import { useNavigationContext } from "../navigation-context";
@@ -10,14 +11,20 @@ import { SidebarTabButton } from "./SidebarTabButton";
 export declare namespace SidebarFixedItemsSection {
     export interface Props {
         className?: string;
+        searchInfo: DocsV1Read.SearchInfo;
+        algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
     }
 }
 
-export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> = ({ className }) => {
+export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> = ({
+    className,
+    searchInfo,
+    algoliaSearchIndex,
+}) => {
     const { activeNavigatable } = useNavigationContext();
     const { activeNavigationConfigContext, withVersionSlug } = useDocsSelectors();
     const { openSearchDialog } = useSearchContext();
-    const searchService = useSearchService();
+    const searchService = useSearchService(searchInfo, algoliaSearchIndex);
 
     const showSearchBar = searchService.isAvailable;
     const showTabs = activeNavigationConfigContext.type === "tabbed";

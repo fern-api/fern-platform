@@ -4268,12 +4268,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@types/jest", "npm:29.5.11"],\
             ["@types/lodash-es", "npm:4.17.12"],\
+            ["@types/marked", "npm:5.0.0"],\
             ["@types/node", "npm:18.18.13"],\
             ["@types/title", "npm:3.4.3"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.7.0"],\
             ["lodash-es", "npm:4.17.21"],\
+            ["marked", "npm:5.1.2"],\
             ["next-mdx-remote", "virtual:b977a69fb19c4d0f85f8b91df4d5bbb0d247e9cfda57636e95b33f40dfc5a05b68c27a163035a0eb7204d129d5e24e42811c10b0902ee38cf8cf4debee72619b#npm:4.4.1"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.8.8"],\

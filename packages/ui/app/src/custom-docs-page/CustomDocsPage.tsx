@@ -2,9 +2,8 @@ import { DocsV1Read, type DocsNode } from "@fern-api/fdr-sdk";
 import { type ResolvedPath, type SerializedMdxContent } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import Link from "next/link";
-import { ReactElement, useMemo } from "react";
+import { ReactElement } from "react";
 import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
-import { useDocsContext } from "../docs-context/useDocsContext";
 import { MdxContent } from "../mdx/MdxContent";
 import { TableOfContents } from "./TableOfContents";
 
@@ -33,19 +32,7 @@ export const CustomDocsPageHeader = ({ resolvedPath }: Pick<CustomDocsPage.Props
     );
 };
 
-export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({
-    serializedMdxContent,
-    resolvedPath,
-    contentWidth,
-}) => {
-    const { resolvePage } = useDocsContext();
-
-    const page = useMemo(() => resolvePage(resolvedPath.page.id), [resolvedPath.page.id, resolvePage]);
-
-    const content = useMemo(() => {
-        return serializedMdxContent != null ? <MdxContent mdx={serializedMdxContent} /> : null;
-    }, [serializedMdxContent]);
-
+export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath, contentWidth }) => {
     return (
         <div className="flex justify-between px-6 sm:px-8 lg:pl-12 lg:pr-20 xl:pr-0">
             <div className="w-full min-w-0 lg:pr-6">
@@ -63,16 +50,16 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({
                     }}
                 >
                     <CustomDocsPageHeader resolvedPath={resolvedPath} />
-                    {content}
+                    <MdxContent mdx={resolvedPath.serializedMdxContent} />
                     <BottomNavigationButtons />
                     <div className="h-8" />
                 </article>
             </div>
             <aside className="scroll-contain smooth-scroll hide-scrollbar sticky top-16 hidden max-h-[calc(100vh-86px)] w-[19rem] shrink-0 overflow-auto overflow-x-hidden px-8 pb-12 pt-8 xl:block">
-                <TableOfContents markdown={page?.markdown ?? ""} />
-                {page?.editThisPageUrl != null && (
+                <TableOfContents tableOfContents={resolvedPath.tableOfContents} />
+                {resolvedPath?.editThisPageUrl != null && (
                     <Link
-                        href={page.editThisPageUrl}
+                        href={resolvedPath.editThisPageUrl}
                         target="_blank"
                         rel="noreferrer noopener"
                         className="t-muted hover:dark:text-text-primary-dark hover:text-text-primary-light my-3 block hyphens-auto break-words py-1.5 text-sm leading-5 no-underline transition hover:no-underline"
