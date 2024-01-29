@@ -31,7 +31,7 @@
   "dependencies": {
     "@blueprintjs/core": "^5.8.1",
     "@blueprintjs/datetime": "^5.2.10",
-    "@blueprintjs/datetime2": "^2.2.9",
+    "@blueprintjs/datetime2": "^2.2.10",
     "@blueprintjs/icons": "^5.7.0",
     "@blueprintjs/select": "^5.0.22",
     "@fern-api/fdr-sdk": "0.44.0-1-geb2e930",
