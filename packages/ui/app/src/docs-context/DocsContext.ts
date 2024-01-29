@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { DocsDefinitionSummary, DocsV1Read, PathResolver } from "@fern-api/fdr-sdk";
 import { DefinitionObjectFactory } from "@fern-ui/app-utils";
 import React from "react";
