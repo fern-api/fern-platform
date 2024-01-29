@@ -2623,7 +2623,7 @@ __metadata:
     prettier: ^2.8.8
     react: ^18.2.0
     react-dom: ^18.2.0
-    sass: ^1.69.7
+    sass: ^1.70.0
     styled-jsx: ^5.1.2
     stylelint: ^16.1.0
     tailwindcss: ^3.4.1
@@ -2673,7 +2673,7 @@ __metadata:
     prettier: ^2.8.8
     react: ^18.2.0
     react-dom: ^18.2.0
-    sass: ^1.69.7
+    sass: ^1.70.0
     stylelint: ^16.1.0
     tailwindcss: ^3.4.1
     typescript: 4.9.4
@@ -2773,7 +2773,7 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     react-draggable: ^4.4.6
-    sass: ^1.69.7
+    sass: ^1.70.0
     stylelint: ^16.1.0
     typescript: 4.9.4
     vite: ^4.5.2
@@ -14106,7 +14106,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.58.3, sass@npm:^1.69.7":
+"sass@npm:^1.58.3":
   version: 1.69.7
   resolution: "sass@npm:1.69.7"
   dependencies:
@@ -14116,6 +14116,19 @@ env-cmd@toddbluhm/env-cmd:
   bin:
     sass: sass.js
   checksum: c67cd32b69fb26a50e4535353e4145de8cbc8187db07c467cc335157fd56d03cae98754f86efe43b880b29f20c0a168ab972c7f74ebfe234e2bd2dfb868890cb
+  languageName: node
+  linkType: hard
+
+"sass@npm:^1.70.0":
+  version: 1.70.0
+  resolution: "sass@npm:1.70.0"
+  dependencies:
+    chokidar: ">=3.0.0 <4.0.0"
+    immutable: ^4.0.0
+    source-map-js: ">=0.6.2 <2.0.0"
+  bin:
+    sass: sass.js
+  checksum: fd1b622cf9b7fa699a03ec634611997552ece45eb98ac365fef22f42bdcb8ed63b326b64173379c966830c8551ae801e44e4a00d2de16fdadda2dc8f35400bbb
   languageName: node
   linkType: hard
 

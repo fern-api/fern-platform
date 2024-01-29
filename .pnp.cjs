@@ -4443,7 +4443,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.8.8"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
-            ["sass", "npm:1.69.7"],\
+            ["sass", "npm:1.70.0"],\
             ["styled-jsx", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:5.1.2"],\
             ["stylelint", "npm:16.1.0"],\
             ["tailwindcss", "npm:3.4.1"],\
@@ -4497,7 +4497,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.8.8"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
-            ["sass", "npm:1.69.7"],\
+            ["sass", "npm:1.70.0"],\
             ["stylelint", "npm:16.1.0"],\
             ["tailwindcss", "npm:3.4.1"],\
             ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"]\
@@ -4603,7 +4603,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
             ["react-draggable", "virtual:83226786336e3ec1d65bc4d7ab2fe8e410a92ae0faa428c376517262a7687f8c564f714ddc7188c47ae46ee441f6c920894158bd24f5245f2836019a45954fca#npm:4.4.6"],\
-            ["sass", "npm:1.69.7"],\
+            ["sass", "npm:1.70.0"],\
             ["stylelint", "npm:16.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"],\
             ["vite", "virtual:83226786336e3ec1d65bc4d7ab2fe8e410a92ae0faa428c376517262a7687f8c564f714ddc7188c47ae46ee441f6c920894158bd24f5245f2836019a45954fca#npm:4.5.2"]\
@@ -15641,7 +15641,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["postcss", "npm:8.4.31"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
-            ["sass", "npm:1.69.7"],\
+            ["sass", "npm:1.70.0"],\
             ["styled-jsx", "virtual:1fb4793cda658baa2784e33af35bd4eb8b51de4759933685f057e3640bfdc682d7fa82fa1edb5a01c899681a1d18776cc50dfb9cadcf037888f9270bc612a8bf#npm:5.1.1"],\
             ["watchpack", "npm:2.4.0"]\
           ],\
@@ -18218,6 +18218,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["source-map-js", "npm:1.0.2"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:1.70.0", {\
+          "packageLocation": "./.yarn/cache/sass-npm-1.70.0-153257249c-fd1b622cf9.zip/node_modules/sass/",\
+          "packageDependencies": [\
+            ["sass", "npm:1.70.0"],\
+            ["chokidar", "npm:3.5.3"],\
+            ["immutable", "npm:4.0.0"],\
+            ["source-map-js", "npm:1.0.2"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["sax", [\
@@ -20426,7 +20436,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["lightningcss", null],\
             ["postcss", "npm:8.4.31"],\
             ["rollup", "npm:3.29.3"],\
-            ["sass", "npm:1.69.7"],\
+            ["sass", "npm:1.70.0"],\
             ["stylus", null],\
             ["sugarss", null],\
             ["terser", null]\
