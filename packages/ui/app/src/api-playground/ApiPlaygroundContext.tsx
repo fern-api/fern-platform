@@ -15,7 +15,6 @@ import {
     Dispatch,
     FC,
     Fragment,
-    PropsWithChildren,
     SetStateAction,
     useCallback,
     useContext,
@@ -68,11 +67,11 @@ const playgroundFormStateAtom = atomWithStorage<Record<string, PlaygroundRequest
 );
 const playgroundFormSecretsAtom = atomWithStorage<SecretBearer[]>("api-playground-secrets-alpha", []);
 
-interface ApiPlaygroundContextProviderProps extends PropsWithChildren {
+interface ApiPlaygroundContextProviderProps {
     apiSections: ResolvedNavigationItemApiSection[];
 }
 
-export const ApiPlaygroundContextProvider: FC<ApiPlaygroundContextProviderProps> = ({ apiSections, children }) => {
+export const ApiPlaygroundContextProvider: FC<ApiPlaygroundContextProviderProps> = ({ apiSections }) => {
     const { domain } = useDocsContext();
     const [selectionState, setSelectionState] = useState<ApiPlaygroundSelectionState | undefined>();
 
@@ -215,7 +214,7 @@ export const ApiPlaygroundContextProvider: FC<ApiPlaygroundContextProviderProps>
     );
 
     if (!domain.toLowerCase().includes("cloudflare") && !domain.toLowerCase().includes("cohere")) {
-        return <>{children}</>;
+        return null;
     }
 
     return (
@@ -228,7 +227,6 @@ export const ApiPlaygroundContextProvider: FC<ApiPlaygroundContextProviderProps>
                 collapseApiPlayground,
             }}
         >
-            {children}
             <Transition show={isPlaygroundOpen} as={Fragment}>
                 <Transition.Child
                     as={Fragment}
