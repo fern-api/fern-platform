@@ -3,7 +3,6 @@ import classNames from "classnames";
 import Link from "next/link";
 import { ReactElement } from "react";
 import { ArrowRightIcon } from "../commons/icons/ArrowRightIcon";
-import { useDocsContext } from "../docs-context/useDocsContext";
 import { SidebarLink } from "./SidebarLink";
 
 interface HeaderSidebarSlugLinkProps {
@@ -31,13 +30,12 @@ export const HeaderSidebarSlugLink: React.FC<HeaderSidebarSlugLinkProps> = ({ na
     );
 };
 
-export function MobileSidebarHeaderLinks(): ReactElement | null {
-    const {
-        docsDefinition: {
-            config: { navbarLinks },
-        },
-    } = useDocsContext();
-    if (navbarLinks.length === 0) {
+interface MobileSidebarHeaderLinksProps {
+    navbarLinks: DocsV1Read.NavbarLink[] | undefined;
+}
+
+export function MobileSidebarHeaderLinks({ navbarLinks }: MobileSidebarHeaderLinksProps): ReactElement | null {
+    if (navbarLinks == null || navbarLinks.length === 0) {
         return null;
     }
     return (
