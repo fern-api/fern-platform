@@ -5,7 +5,6 @@ import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
 import { Transition } from "@headlessui/react";
 import classNames from "classnames";
 import { useTheme } from "next-themes";
-import dynamic from "next/dynamic";
 import NextNProgress from "nextjs-progressbar";
 import { memo, useEffect, useMemo, useState } from "react";
 import tinycolor from "tinycolor2";
@@ -21,10 +20,6 @@ import { Sidebar } from "../sidebar/Sidebar";
 import { BgImageGradient } from "./BgImageGradient";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
-
-const ApiPlayground = dynamic(() => import("../api-playground/ApiPlayground").then((m) => m.ApiPlayground), {
-    ssr: false,
-});
 
 interface DocsProps {
     config: DocsV1Read.DocsConfig;
