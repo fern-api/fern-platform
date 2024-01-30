@@ -83,7 +83,13 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundPro
         [expandApiPlayground, globalFormState, selectionState?.apiSection.auth, setGlobalFormState]
     );
 
-    if (!domain.toLowerCase().includes("cloudflare") && !domain.toLowerCase().includes("cohere")) {
+    if (
+        !domain.toLowerCase().includes("cloudflare") &&
+        !domain.toLowerCase().includes("cohere") &&
+        !["docs.buildwithfern.com", "fern.docs.buildwithfern.com", "fern.docs.dev.buildwithfern.com"].includes(
+            domain.toLowerCase()
+        )
+    ) {
         return <>{children}</>;
     }
 

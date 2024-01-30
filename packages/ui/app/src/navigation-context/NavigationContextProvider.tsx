@@ -1,5 +1,5 @@
 import { NavigatableDocsNode } from "@fern-api/fdr-sdk";
-import { getFullSlugForNavigatable, type ResolvedPath } from "@fern-ui/app-utils";
+import { FernDocsFrontmatter, getFullSlugForNavigatable, type ResolvedPath } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
@@ -187,7 +187,9 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const activeTitle = convertToTitle(activeNavigatable);
+    const frontmatter = getFrontmatter(resolvedPath);
+    const activeTitle = convertToTitle(activeNavigatable, frontmatter);
+    const activeDescription = convertToDescription(activeNavigatable, frontmatter);
 
     return (
         <NavigationContext.Provider
@@ -205,23 +207,47 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 hydrated: hydrated.value,
             }}
         >
-            {activeTitle != null && (
-                <Head>
-                    <title>{activeTitle}</title>
-                </Head>
-            )}
+            <Head>
+                {activeTitle != null && <title>{activeTitle}</title>}
+                {activeDescription != null && <meta name="description" content={activeDescription} />}
+                {frontmatter?.image != null && <meta property="og:image" content={frontmatter.image} />}
+            </Head>
             {children}
         </NavigationContext.Provider>
     );
 };
 
-function convertToTitle(navigatable: NavigatableDocsNode): string | undefined {
+function getFrontmatter(resolvedPath: ResolvedPath): FernDocsFrontmatter | undefined {
+    if (resolvedPath.type === "custom-markdown-page") {
+        return resolvedPath.serializedMdxContent.frontmatter;
+    }
+    return undefined;
+}
+
+function convertToTitle(
+    navigatable: NavigatableDocsNode,
+    frontmatter: FernDocsFrontmatter | undefined
+): string | undefined {
     return visitDiscriminatedUnion(navigatable, "type")._visit({
-        page: (page) => page.page.title,
+        page: (page) => frontmatter?.title ?? page.page.title,
         "top-level-endpoint": (endpoint) => endpoint.endpoint.name,
         "top-level-webhook": (webhook) => webhook.webhook.name,
         webhook: (webhook) => webhook.webhook.name,
         endpoint: (endpoint) => endpoint.endpoint.name,
+        _other: () => undefined,
+    });
+}
+
+function convertToDescription(
+    navigatable: NavigatableDocsNode,
+    frontmatter: FernDocsFrontmatter | undefined
+): string | undefined {
+    return visitDiscriminatedUnion(navigatable, "type")._visit({
+        page: () => frontmatter?.description,
+        "top-level-endpoint": (endpoint) => endpoint.endpoint.description,
+        "top-level-webhook": (webhook) => webhook.webhook.description,
+        webhook: (webhook) => webhook.webhook.description,
+        endpoint: (endpoint) => endpoint.endpoint.description,
         _other: () => undefined,
     });
 }

@@ -37,6 +37,9 @@ export const CustomDocsPageHeader = ({ resolvedPath }: Pick<CustomDocsPage.Props
 export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath, maxContentWidth }) => {
     const mdxContent = <MdxContent mdx={resolvedPath.serializedMdxContent} />;
     const mdxString = renderToString(mdxContent);
+    const editThisPageUrl =
+        resolvedPath.serializedMdxContent.frontmatter.editThisPageUrl ?? resolvedPath?.editThisPageUrl;
+
     return (
         <TableOfContentsContextProvider>
             <div
@@ -56,9 +59,9 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath, m
                 </article>
                 <aside className="scroll-contain smooth-scroll hide-scrollbar sticky top-16 hidden max-h-[calc(100vh-86px)] w-[19rem] shrink-0 overflow-auto overflow-x-hidden px-8 pb-12 pt-8 xl:block">
                     <TableOfContents renderedHtml={mdxString} />
-                    {resolvedPath?.editThisPageUrl != null && (
+                    {editThisPageUrl != null && (
                         <Link
-                            href={resolvedPath.editThisPageUrl}
+                            href={editThisPageUrl}
                             target="_blank"
                             rel="noreferrer noopener"
                             className="t-muted hover:dark:text-text-primary-dark hover:text-text-primary-light group my-3 flex items-center gap-1 hyphens-auto break-words py-1.5 text-sm leading-5 no-underline transition hover:no-underline"

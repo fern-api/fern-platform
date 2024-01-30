@@ -8,7 +8,7 @@ export declare namespace ResolvedPath {
         page: DocsV1Read.PageMetadata;
         sectionTitle: string | null;
         serializedMdxContent: SerializedMdxContent;
-        editThisPageUrl: string | undefined;
+        editThisPageUrl: string | null;
     }
 
     interface ApiPage {

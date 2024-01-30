@@ -6,5 +6,4 @@ export { serializeMdxApiHandler } from "./next-apis/serialize-mdx";
 export { sitemapApiHandler } from "./next-apis/sitemap";
 export { DocsPage, getDocsPageProps, getDocsPageStaticProps } from "./next-app/DocsPage";
 export { NextApp } from "./next-app/NextApp";
-export { NextDocument } from "./next-app/NextDocument";
 export { getNotFoundPageStaticProps, NotFoundPage } from "./next-app/NotFoundPage";
