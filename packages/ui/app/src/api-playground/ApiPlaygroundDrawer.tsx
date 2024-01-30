@@ -16,7 +16,7 @@ import { PlaygroundEndpointRender } from "./PlaygroundEndpointRender";
 import { SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
 import { PlaygroundRequestFormState, ResponsePayload } from "./types";
-import { buildUnredactedHeaders, buildUrl } from "./utils";
+import { buildEndpointUrl, buildUnredactedHeaders } from "./utils";
 
 interface ApiPlaygroundDrawerProps {
     navigationItems: ResolvedNavigationItemApiSection[];
@@ -64,7 +64,7 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
                 method: "POST",
                 headers: buildUnredactedHeaders(auth, endpoint, formState),
                 body: JSON.stringify({
-                    url: buildUrl(endpoint, formState),
+                    url: buildEndpointUrl(endpoint, formState),
                     method: endpoint.method,
                     headers: buildUnredactedHeaders(auth, endpoint, formState),
                     body: formState.body,

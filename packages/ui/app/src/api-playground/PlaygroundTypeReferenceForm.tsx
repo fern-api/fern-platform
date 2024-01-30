@@ -6,6 +6,7 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { Transition } from "@headlessui/react";
 import { FC, PropsWithChildren, useEffect } from "react";
+import { FernInput } from "./FernInput";
 import { PlaygroundDiscriminatedUnionForm } from "./PlaygroundDescriminatedUnionForm";
 import { PlaygroundEnumForm } from "./PlaygroundEnumForm";
 import { PlaygroundListForm } from "./PlaygroundListForm";
@@ -25,6 +26,7 @@ interface PlaygroundTypeReferenceFormProps {
     onlyRequired?: boolean;
     onlyOptional?: boolean;
     hideObjects?: boolean;
+    sortProperties?: boolean;
 }
 
 interface WithPanelProps {
@@ -110,23 +112,25 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
     onlyRequired = false,
     onlyOptional = false,
     hideObjects = false,
+    sortProperties = false,
 }) => {
     return visitDiscriminatedUnion(shape, "type")._visit({
-        object: (object) =>
-            hideObjects ? null : (
-                <WithPanel
+        object: (object) => (
+            <WithPanel
+                value={value}
+                renderAsPanel={renderAsPanel}
+                onOpenStack={onOpenStack}
+                onCloseStack={onCloseStack}
+            >
+                <PlaygroundObjectPropertiesForm
+                    properties={object.properties().filter(createFilter(onlyRequired, onlyOptional))}
+                    onChange={onChange}
                     value={value}
-                    renderAsPanel={renderAsPanel}
-                    onOpenStack={onOpenStack}
-                    onCloseStack={onCloseStack}
-                >
-                    <PlaygroundObjectPropertiesForm
-                        properties={object.properties().filter(createFilter(onlyRequired, onlyOptional))}
-                        onChange={onChange}
-                        value={value}
-                    />
-                </WithPanel>
-            ),
+                    hideObjects={hideObjects}
+                    sortProperties={sortProperties}
+                />
+            </WithPanel>
+        ),
         enum: ({ values }) => <PlaygroundEnumForm enumValues={values} onChange={onChange} value={value} />,
         undiscriminatedUnion: (undiscriminatedUnion) => (
             <WithPanel
@@ -157,16 +161,12 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
             </WithPanel>
         ),
         string: () => (
-            <div className="flex min-w-0 flex-1 justify-end">
-                <InputGroup
-                    fill={true}
-                    value={typeof value === "string" ? value : ""}
-                    onValueChange={onChange}
-                    rightElement={<span className="t-muted mx-2 flex h-[30px] items-center text-xs">{"string"}</span>}
-                    onFocus={onFocus}
-                    onBlur={onBlur}
-                />
-            </div>
+            <FernInput
+                value={typeof value === "string" ? value : ""}
+                onChange={onChange}
+                onFocus={onFocus}
+                onBlur={onBlur}
+            />
         ),
         boolean: () => (
             <div className="flex min-w-0 flex-1 justify-end">
@@ -271,16 +271,22 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
         map: (map) => (
             <PlaygroundMapForm keyShape={map.keyShape} valueShape={map.valueShape} onChange={onChange} value={value} />
         ),
-        stringLiteral: (literal) => (
-            <div>
-                <span>{literal.value ? "TRUE" : "FALSE"}</span>
-            </div>
-        ),
-        booleanLiteral: (literal) => (
-            <div>
-                <span>{literal.value}</span>
-            </div>
-        ),
+        stringLiteral: (literal) => {
+            onChange(literal.value);
+            return (
+                <div>
+                    <span>{literal.value ? "TRUE" : "FALSE"}</span>
+                </div>
+            );
+        },
+        booleanLiteral: (literal) => {
+            onChange(literal.value);
+            return (
+                <div>
+                    <span>{literal.value}</span>
+                </div>
+            );
+        },
         unknown: () => (
             <div className="flex min-w-0 flex-1 py-2">
                 <TextArea
@@ -301,6 +307,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                 onlyRequired={onlyRequired}
                 onlyOptional={onlyOptional}
                 hideObjects={hideObjects}
+                sortProperties={sortProperties}
             />
         ),
     });
