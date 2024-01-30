@@ -26,7 +26,9 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
             urlSlug: "",
         },
         sectionTitle: "",
+        tableOfContents: [],
         serializedMdxContent: { compiledSource: "", frontmatter: {}, scope: {} },
+        editThisPageUrl: null,
     },
     hydrated: false,
 });

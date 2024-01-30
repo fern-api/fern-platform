@@ -28,6 +28,9 @@ function hrefToString(href: Url): string {
         }
         result = result.slice(0, -1);
     }
+    if (href.hash != null) {
+        result += `#${href.hash}`;
+    }
     return result;
 }
 

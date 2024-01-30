@@ -6,6 +6,7 @@ export declare namespace useKeyboardCommand {
         key: UppercaseLetter | Digit;
         platform: "mac" | "windows" | "other";
         onCommand: () => void | Promise<void>;
+        preventDefault?: boolean;
     }
 
     export type Return = void;
@@ -17,22 +18,24 @@ export declare namespace useKeyboardCommand {
  * alphanumeric.
  */
 export function useKeyboardCommand(args: useKeyboardCommand.Args): void {
-    const { onCommand, key, platform } = args;
+    const { onCommand, key, platform, preventDefault = true } = args;
 
     useEffect(() => {
         async function handleSaveKeyPress(e: KeyboardEvent) {
             const isCmdCtrlPressed = (platform === "mac" && e.metaKey) || (platform === "windows" && e.ctrlKey);
             const doKeysMatch = e.code === (typeof key === "string" ? `Key${key}` : `Digit${key}`);
             if (isCmdCtrlPressed && doKeysMatch) {
-                e.preventDefault();
+                if (preventDefault) {
+                    e.preventDefault();
+                }
                 await onCommand();
             }
         }
 
-        document.addEventListener("keydown", handleSaveKeyPress, false);
+        document.addEventListener("keydown", handleSaveKeyPress, true);
 
         return () => {
-            document.removeEventListener("keydown", handleSaveKeyPress, false);
+            document.removeEventListener("keydown", handleSaveKeyPress, true);
         };
-    }, [key, onCommand, platform]);
+    }, [key, onCommand, platform, preventDefault]);
 }

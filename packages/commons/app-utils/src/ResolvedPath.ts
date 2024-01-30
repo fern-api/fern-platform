@@ -1,5 +1,5 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { type SerializedMdxContent } from "./mdx";
+import { TableOfContentsItem, type SerializedMdxContent } from "./mdx";
 
 export declare namespace ResolvedPath {
     interface CustomMarkdownPage {
@@ -7,7 +7,9 @@ export declare namespace ResolvedPath {
         fullSlug: string;
         page: DocsV1Read.PageMetadata;
         sectionTitle: string | null;
+        tableOfContents: TableOfContentsItem[];
         serializedMdxContent: SerializedMdxContent;
+        editThisPageUrl: string | null;
     }
 
     interface ApiPage {
