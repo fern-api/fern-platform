@@ -4,6 +4,7 @@ const nextConfig = {
     productionBrowserSourceMaps: true,
     experimental: {
         scrollRestoration: true,
+        optimizePackageImports: ["@fern-ui/ui"],
     },
     assetPrefix: process.env.CDN_URI != null ? new URL("/_fern", process.env.CDN_URI).href : "/_fern",
     rewrites: async () => ({
