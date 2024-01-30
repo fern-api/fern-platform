@@ -70,7 +70,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                     <ApiPageDescription
                         description={webhook.description}
                         isMarkdown={true}
-                        className="text-sm leading-6"
+                        className="text-base leading-6"
                     />
                     {webhook.headers.length > 0 && (
                         <div className="mt-8 flex">

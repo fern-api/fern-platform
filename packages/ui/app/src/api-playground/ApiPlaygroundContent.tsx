@@ -15,7 +15,7 @@ import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
 import { SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundRequestFormState } from "./types";
 import { useHorizontalSplitPane, useWindowWidth } from "./useSplitPlane";
-import { buildUnredactedHeaders, buildUrl } from "./utils";
+import { buildEndpointUrl, buildUnredactedHeaders } from "./utils";
 
 interface ResponsePayload {
     status: number;
@@ -76,7 +76,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                 method: "POST",
                 headers: buildUnredactedHeaders(auth, endpoint, formState),
                 body: JSON.stringify({
-                    url: buildUrl(endpoint, formState),
+                    url: buildEndpointUrl(endpoint, formState),
                     method: endpoint.method,
                     headers: buildUnredactedHeaders(auth, endpoint, formState),
                     body: formState.body,

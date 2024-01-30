@@ -81,7 +81,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
             </div>
             <EndpointUrlWithOverflow endpoint={endpoint} />
             <ApiPageDescription
-                className="mt-3 text-sm leading-6"
+                className="mt-3 text-base leading-6"
                 description={endpoint.description}
                 isMarkdown={true}
             />

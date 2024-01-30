@@ -12,7 +12,7 @@ export declare namespace HttpMethodTag {
 const UnmemoizedHttpMethodTag: React.FC<HttpMethodTag.Props> = ({ method, small = false, className }) => {
     return (
         <span
-            className={classNames(className, "uppercase font-mono flex items-center", {
+            className={classNames(className, "uppercase font-mono inline-flex items-center leading-none", {
                 ["bg-method-get/10 text-method-get dark:bg-method-get-dark/10 dark:text-method-get-dark"]:
                     method === FdrAPI.api.v1.read.HttpMethod.Get,
                 ["bg-method-post/10 text-method-post dark:bg-method-post-dark/10 dark:text-method-post-dark"]:
@@ -28,7 +28,6 @@ const UnmemoizedHttpMethodTag: React.FC<HttpMethodTag.Props> = ({ method, small 
             })}
             style={{
                 fontSize: small ? "10px" : "12px",
-                lineHeight: 1,
             }}
         >
             {method === FdrAPI.api.v1.read.HttpMethod.Delete ? "DEL" : method}
