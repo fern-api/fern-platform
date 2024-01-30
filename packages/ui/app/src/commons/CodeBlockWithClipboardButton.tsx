@@ -1,12 +1,7 @@
 import classNames from "classnames";
-import dynamic from "next/dynamic";
 import React from "react";
+import { CodeBlockSkeleton } from "./CodeBlockSkeleton";
 import { CopyToClipboardButton } from "./CopyToClipboardButton";
-
-const CodeBlockSkeleton = dynamic(
-    () => import("./CodeBlockSkeleton").then(({ CodeBlockSkeleton }) => CodeBlockSkeleton),
-    { ssr: false }
-);
 
 type CodeBlockWithClipboardButtonProps = {
     variant: "sm" | "lg";
@@ -20,7 +15,7 @@ export const CodeBlockWithClipboardButton: React.FC<CodeBlockWithClipboardButton
     content,
 }) => {
     return (
-        <div className="group/cb-container border-default relative mb-5 flex w-full rounded-t-lg border-t">
+        <div className="group/cb-container bg-background-primary-light dark:bg-background-primary-dark border-border-default-light dark:border-border-default-dark relative mb-5 w-full min-w-0 max-w-full rounded-lg border">
             <CopyToClipboardButton
                 className={classNames(
                     "absolute right-3 top-3 ml-auto",

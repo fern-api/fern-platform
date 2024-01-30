@@ -37,7 +37,7 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
                 PreTag="pre"
                 customStyle={{
                     fontSize: fontSize === "sm" ? 12 : 14,
-                    lineHeight: fontSize === "sm" ? "20px" : "24px",
+                    lineHeight: fontSize === "sm" ? "18px" : "20px",
                 }}
             >
                 {content}

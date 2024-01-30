@@ -1,13 +1,8 @@
 import classNames from "classnames";
-import dynamic from "next/dynamic";
 import { useState } from "react";
+import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
 import type { CodeBlockItem } from "./common/types";
-
-const CodeBlockSkeleton = dynamic(
-    () => import("../../commons/CodeBlockSkeleton").then(({ CodeBlockSkeleton }) => CodeBlockSkeleton),
-    { ssr: false }
-);
 
 export declare namespace _CodeBlocks {
     export interface Props {
@@ -61,7 +56,7 @@ export const _CodeBlocks: React.FC<React.PropsWithChildren<_CodeBlocks.Props>> =
                 className="max-h-[500px] overflow-y-auto"
                 language={codeBlockItem.language}
                 content={codeBlockItem.content}
-                fontSize="sm"
+                fontSize="lg"
             />
         </div>
     );
