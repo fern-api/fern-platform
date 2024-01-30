@@ -6,7 +6,7 @@ import { FC, Fragment } from "react";
 import { CopyToClipboardButton } from "../commons/CopyToClipboardButton";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { PlaygroundRequestFormState } from "./types";
-import { buildUrl, unknownToString } from "./utils";
+import { buildEndpointUrl, unknownToString } from "./utils";
 
 interface PlaygroundEndpointRenderProps {
     endpoint: ResolvedEndpointDefinition;
@@ -76,9 +76,7 @@ export const PlaygroundEndpointRender: FC<PlaygroundEndpointRenderProps> = ({ en
             </div>
             <CopyToClipboardButton
                 className={"opacity-0 transition-opacity group-hover:opacity-100"}
-                content={() => {
-                    return buildUrl(endpoint, formState);
-                }}
+                content={() => buildEndpointUrl(endpoint, formState)}
             />
         </div>
     );
