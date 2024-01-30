@@ -1,4 +1,4 @@
-import { MDXRemote, MDXRemoteProps, MDXRemoteSerializeResult } from "@fern-ui/app-utils";
+import { MDXRemote, MDXRemoteProps, SerializedMdxContent } from "@fern-ui/app-utils";
 import React, { HTMLAttributes, useCallback } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { CodeBlockWithClipboardButton } from "../commons/CodeBlockWithClipboardButton";
@@ -33,7 +33,7 @@ import { MdxErrorBoundaryContent } from "./MdxErrorBoundaryContent";
 
 export declare namespace MdxContent {
     export interface Props {
-        mdx: MDXRemoteSerializeResult;
+        mdx: SerializedMdxContent;
     }
 }
 
