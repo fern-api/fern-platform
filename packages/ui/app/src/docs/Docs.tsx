@@ -7,6 +7,7 @@ import { useTheme } from "next-themes";
 import NextNProgress from "nextjs-progressbar";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import tinycolor from "tinycolor2";
+import { ApiPlayground } from "../api-playground/ApiPlayground";
 import { ApiPlaygroundContextProvider } from "../api-playground/ApiPlaygroundContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
@@ -133,21 +134,21 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                 />
             )}
 
-            <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
-                <div className="border-border-concealed-light dark:border-border-concealed-dark dark:shadow-header-dark fixed inset-x-0 top-0 z-30 h-16 overflow-visible border-b backdrop-blur-lg lg:backdrop-blur">
-                    {renderBackground()}
-                    <Header
-                        className="max-w-8xl mx-auto"
-                        config={config}
-                        openSearchDialog={openSearchDialog}
-                        isMobileSidebarOpen={isMobileSidebarOpen}
-                        openMobileSidebar={openMobileSidebar}
-                        closeMobileSidebar={closeMobileSidebar}
-                        searchService={searchService}
-                    />
-                </div>
+            <ApiPlaygroundContextProvider apiSections={apiSections}>
+                <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
+                    <div className="border-border-concealed-light dark:border-border-concealed-dark dark:shadow-header-dark fixed inset-x-0 top-0 z-30 h-16 overflow-visible border-b backdrop-blur-lg lg:backdrop-blur">
+                        {renderBackground()}
+                        <Header
+                            className="max-w-8xl mx-auto"
+                            config={config}
+                            openSearchDialog={openSearchDialog}
+                            isMobileSidebarOpen={isMobileSidebarOpen}
+                            openMobileSidebar={openMobileSidebar}
+                            closeMobileSidebar={closeMobileSidebar}
+                            searchService={searchService}
+                        />
+                    </div>
 
-                <ApiPlaygroundContextProvider apiSections={apiSections}>
                     <div className="max-w-8xl relative mx-auto flex min-h-0 w-full min-w-0 flex-1">
                         {isMobileSidebarOpen && (
                             <div
@@ -181,8 +182,9 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                             <DocsMainContent navigationItems={navigationItems} />
                         </main>
                     </div>
-                </ApiPlaygroundContextProvider>
-            </div>
+                    <ApiPlayground apiSections={apiSections} />
+                </div>
+            </ApiPlaygroundContextProvider>
         </>
     );
 });

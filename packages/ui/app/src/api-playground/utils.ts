@@ -57,7 +57,7 @@ function buildPath(path: ResolvedEndpointPathParts[], formState?: PlaygroundRequ
         .join("");
 }
 
-export function buildUrl(
+export function buildEndpointUrl(
     endpoint: ResolvedEndpointDefinition | undefined,
     formState: PlaygroundRequestFormState | undefined
 ): string {
@@ -65,7 +65,7 @@ export function buildUrl(
         return "";
     }
     return (
-        endpoint.environments[0]?.baseUrl +
+        endpoint.defaultEnvironment?.baseUrl +
         buildPath(endpoint.path, formState) +
         buildQueryParams(formState?.queryParameters)
     );
@@ -98,7 +98,7 @@ export function stringifyFetch(
     return `// ${endpoint.name} (${endpoint.method} ${endpoint.path
         .map((part) => (part.type === "literal" ? part.value : `:${part.key}`))
         .join("")})
-const response = fetch("${buildUrl(endpoint, formState)}", {
+const response = fetch("${buildEndpointUrl(endpoint, formState)}", {
   method: "${endpoint.method}",
   headers: ${indentAfter(JSON.stringify(headers, undefined, 2), 2, 0)},${
         endpoint.requestBody?.contentType === "application/json" &&
@@ -129,7 +129,7 @@ export function stringifyPythonRequests(
 
 # ${endpoint.name} (${endpoint.method} ${buildPath(endpoint.path)})
 response = requests.${endpoint.method.toLowerCase()}(
-  "${buildUrl(endpoint, formState)}",
+  "${buildEndpointUrl(endpoint, formState)}",
   headers=${indentAfter(JSON.stringify(headers, undefined, 2), 2, 0)},${
         endpoint.requestBody?.contentType === "application/json" &&
         !isEmpty(formState.body) &&
@@ -255,7 +255,7 @@ export function stringifyCurl(
     const headers = redacted
         ? buildRedactedHeaders(auth, endpoint, formState)
         : buildUnredactedHeaders(auth, endpoint, formState);
-    return `curl -X ${endpoint.method} "${buildUrl(endpoint, formState)}"${Object.entries(headers)
+    return `curl -X ${endpoint.method} "${buildEndpointUrl(endpoint, formState)}"${Object.entries(headers)
         .map(([key, value]) => ` \\\n     -H "${key}: ${value}"`)
         .join("")}${
         endpoint.requestBody?.contentType === "application/json" &&

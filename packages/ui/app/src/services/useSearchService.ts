@@ -27,7 +27,10 @@ function createSearchApiKeyLoader(envConfig: EnvironmentConfig, indexSegmentId: 
         if (!resp.ok) {
             // eslint-disable-next-line no-console
             console.error("Failed to fetch index segment api key", resp.error);
-            return undefined;
+            return {
+                appId: envConfig.algoliaAppId,
+                searchApiKey: envConfig.algoliaApiKey,
+            };
         }
         const { searchApiKey } = resp.body;
         return {
@@ -102,6 +105,8 @@ export function useSearchService(
                 };
             }
         } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error("Failed to initialize search service", e);
             return { isAvailable: false };
         }
     }, [activeVersionContext, algoliaSearchIndex, searchInfo]);
