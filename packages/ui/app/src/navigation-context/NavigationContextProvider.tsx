@@ -1,6 +1,9 @@
+import { NavigatableDocsNode } from "@fern-api/fdr-sdk";
 import { getFullSlugForNavigatable, type ResolvedPath } from "@fern-ui/app-utils";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
@@ -184,6 +187,8 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const activeTitle = convertToTitle(activeNavigatable);
+
     return (
         <NavigationContext.Provider
             value={{
@@ -200,7 +205,23 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 hydrated: hydrated.value,
             }}
         >
+            {activeTitle != null && (
+                <Head>
+                    <title>{activeTitle}</title>
+                </Head>
+            )}
             {children}
         </NavigationContext.Provider>
     );
 };
+
+function convertToTitle(navigatable: NavigatableDocsNode): string | undefined {
+    return visitDiscriminatedUnion(navigatable, "type")._visit({
+        page: (page) => page.page.title,
+        "top-level-endpoint": (endpoint) => endpoint.endpoint.name,
+        "top-level-webhook": (webhook) => webhook.webhook.name,
+        webhook: (webhook) => webhook.webhook.name,
+        endpoint: (endpoint) => endpoint.endpoint.name,
+        _other: () => undefined,
+    });
+}

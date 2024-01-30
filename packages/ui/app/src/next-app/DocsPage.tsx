@@ -42,6 +42,7 @@ export function DocsPage({
     resolvedPath,
 }: DocsPage.Props): ReactElement {
     const colorThemeStyleSheet = useColorTheme(config);
+
     return (
         <>
             {/* 
@@ -62,7 +63,7 @@ export function DocsPage({
                     name="viewport"
                     content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
                 />
-                {config.title != null && <title>{config.title}</title>}
+                {<title>{getDocumentTitle(config, resolvedPath)}</title>}
                 {config.favicon != null && <link rel="icon" id="favicon" href={files[config.favicon]} />}
             </Head>
             <DocsApp
@@ -166,3 +167,15 @@ export const getDocsPageStaticProps: GetStaticProps<DocsPage.Props> = async ({ p
         _other: () => ({ notFound: true }),
     });
 };
+
+function getDocumentTitle(config: DocsV1Read.DocsConfig, resolvedPath: ResolvedPath): string {
+    if (resolvedPath.type === "custom-markdown-page") {
+        return resolvedPath.serializedMdxContent.frontmatter.title ?? resolvedPath.page.title;
+    }
+
+    if (resolvedPath.type === "api-page") {
+        return resolvedPath.apiSection.title;
+    }
+
+    return config.title ?? "Documentation";
+}
