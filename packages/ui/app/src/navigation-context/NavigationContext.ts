@@ -28,7 +28,7 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
         sectionTitle: "",
         tableOfContents: [],
         serializedMdxContent: { compiledSource: "", frontmatter: {}, scope: {} },
-        editThisPageUrl: undefined,
+        editThisPageUrl: null,
     },
     hydrated: false,
 });

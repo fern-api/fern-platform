@@ -9,7 +9,7 @@ export declare namespace ResolvedPath {
         sectionTitle: string | null;
         tableOfContents: TableOfContentsItem[];
         serializedMdxContent: SerializedMdxContent;
-        editThisPageUrl: string | undefined;
+        editThisPageUrl: string | null;
     }
 
     interface ApiPage {

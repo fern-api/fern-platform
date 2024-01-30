@@ -5,7 +5,7 @@ import { serializeMdxContent, TableOfContentsItem, type SerializedMdxContent } f
 
 export type SerializedPageNode = DocsNode.Page & {
     tableOfContents: TableOfContentsItem[];
-    editThisPageUrl: string | undefined;
+    editThisPageUrl: string | null;
     serializedMdxContent: SerializedMdxContent;
 };
 
@@ -30,7 +30,7 @@ export async function serializePageNode({
     return {
         ...pageNode,
         tableOfContents: createTableOfContents(pageContent.markdown),
-        editThisPageUrl: undefined,
+        editThisPageUrl: null,
         serializedMdxContent: await serializeMdxContent(pageContent.markdown),
     };
 }
