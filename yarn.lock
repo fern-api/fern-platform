@@ -2060,12 +2060,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@blueprintjs/datetime2@npm:^2.2.9":
-  version: 2.2.9
-  resolution: "@blueprintjs/datetime2@npm:2.2.9"
+"@blueprintjs/datetime2@npm:^2.2.10":
+  version: 2.2.10
+  resolution: "@blueprintjs/datetime2@npm:2.2.10"
   dependencies:
-    "@blueprintjs/core": ^5.8.1
-    "@blueprintjs/datetime": ^5.2.10
+    "@blueprintjs/core": ^5.8.2
+    "@blueprintjs/datetime": ^5.2.11
     "@blueprintjs/icons": ^5.7.0
     classnames: ^2.3.1
     date-fns: ^2.28.0
@@ -2079,11 +2079,11 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: ef35243cad6eeb34916f5bc56316bb271fc55594faf031456fc5535d897c3196fcb655c0979e2fab5911853bcc3f903d1520208838d9cdfb3e194fe2ded2f8a0
+  checksum: 2abb547a204de7a66b8714f5ba95c474c188508494c09d127623f3d6a9847243ff47f3567994ae6ba2e928accc9884fe332d9c334607aec070770b3e043a2f26
   languageName: node
   linkType: hard
 
-"@blueprintjs/datetime@npm:^5.2.10":
+"@blueprintjs/datetime@npm:^5.2.10, @blueprintjs/datetime@npm:^5.2.11":
   version: 5.2.11
   resolution: "@blueprintjs/datetime@npm:5.2.11"
   dependencies:
@@ -2811,7 +2811,7 @@ __metadata:
   dependencies:
     "@blueprintjs/core": ^5.8.1
     "@blueprintjs/datetime": ^5.2.10
-    "@blueprintjs/datetime2": ^2.2.9
+    "@blueprintjs/datetime2": ^2.2.10
     "@blueprintjs/icons": ^5.7.0
     "@blueprintjs/select": ^5.0.22
     "@fern-api/fdr-sdk": 0.44.0-1-geb2e930
