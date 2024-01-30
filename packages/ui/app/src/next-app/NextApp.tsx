@@ -12,7 +12,7 @@ import "./globals.css";
 setupFontAwesomeIcons();
 
 export function NextApp({ Component, pageProps, router }: AppProps<Partial<DocsPage.Props>>): ReactElement {
-    const theme = pageProps.docs?.definition.config.colorsV3.type;
+    const theme = pageProps.config?.colorsV3?.type;
     useInterceptNextDataHref({
         router,
         basePath: pageProps.docs?.baseUrl.basePath,

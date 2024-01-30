@@ -14,7 +14,7 @@ import { ThemeButton } from "./ThemeButton";
 export declare namespace Header {
     export interface Props {
         className?: string;
-        docsDefinition: DocsV1Read.DocsDefinition;
+        config: DocsV1Read.DocsConfig;
         openSearchDialog: () => void;
         isMobileSidebarOpen: boolean;
         openMobileSidebar: () => void;
@@ -24,19 +24,10 @@ export declare namespace Header {
 }
 
 const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Props>>(function Header(
-    {
-        className,
-        docsDefinition,
-        openSearchDialog,
-        isMobileSidebarOpen,
-        openMobileSidebar,
-        closeMobileSidebar,
-        searchService,
-    },
+    { className, config, openSearchDialog, isMobileSidebarOpen, openMobileSidebar, closeMobileSidebar, searchService },
     ref
 ) {
-    const { navbarLinks, colorsV3 } = docsDefinition.config;
-
+    const { navbarLinks, colorsV3 } = config;
     const navbarLinksSection = (
         <div className="hidden items-center space-x-5 lg:flex lg:space-x-8">
             {navbarLinks.map((navbarLink, idx) =>
@@ -60,7 +51,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
             )}
             ref={ref}
         >
-            <HeaderLogoSection />
+            <HeaderLogoSection config={config} />
 
             <div className="-mr-2 ml-auto flex items-center space-x-0 md:mr-0 lg:space-x-4">
                 {navbarLinksSection}

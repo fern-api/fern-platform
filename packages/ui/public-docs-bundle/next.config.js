@@ -15,6 +15,10 @@ const nextConfig = {
         ],
         afterFiles: [
             {
+                source: "/api/:path*",
+                destination: "/api/:path*",
+            },
+            {
                 has: [
                     {
                         type: "header",
