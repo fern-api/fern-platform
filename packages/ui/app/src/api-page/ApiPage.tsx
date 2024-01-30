@@ -26,7 +26,7 @@ export const ApiPage: React.FC<ApiPage.Props> = ({ apiSection, maxContentWidth }
                 maxContentWidth={maxContentWidth}
             />
 
-            <div className="mx-3 mb-3 rounded-lg border border-[#E0E0E0] bg-[#FAFAFA] py-8 pl-6 pr-4 md:pl-12 lg:ml-0">
+            <div className="mx-3 mb-3 rounded-lg border border-[#E0E0E0] bg-[#FAFAFA] px-6 py-8 md:pl-12 lg:ml-0">
                 <div style={{ maxWidth: maxContentWidth }}>
                     <BottomNavigationButtons hideLine={true} />
                 </div>

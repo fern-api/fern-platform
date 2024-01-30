@@ -229,7 +229,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     return (
         <div
             className={classNames(
-                "pl-6 md:pl-12 pr-4 scroll-mt-[74px]",
+                "pl-6 md:pl-12 pr-6 scroll-mt-[74px]",
                 "bg-[#FAFAFA] border border-[#E0E0E0] rounded-lg mb-3 mx-3 lg:ml-0",
                 {
                     "border-border-default-light dark:border-border-default-dark border-b": !hideBottomSeparator,
