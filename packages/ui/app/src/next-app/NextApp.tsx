@@ -15,7 +15,7 @@ export function NextApp({ Component, pageProps, router }: AppProps<Partial<DocsP
     const theme = pageProps.config?.colorsV3?.type;
     useInterceptNextDataHref({
         router,
-        basePath: pageProps.docs?.baseUrl.basePath,
+        basePath: pageProps.baseUrl?.basePath,
     });
     return (
         <>
