@@ -26,8 +26,7 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
             className={classNames(
                 "font-mono",
                 {
-                    "w-full border-l border-r border-b rounded-bl-lg rounded-br-lg border-border-default-light dark:border-border-default-dark":
-                        !usePlainStyles,
+                    "w-full rounded-bl-lg rounded-br-lg": !usePlainStyles,
                 },
                 className
             )}
@@ -57,8 +56,8 @@ export const FernSyntaxHighlighter: React.FC<React.ComponentProps<typeof SyntaxH
                 width: "100%",
                 overflowX: "auto",
                 margin: 0,
-                paddingRight: 16,
-                paddingLeft: 16,
+                paddingRight: 12,
+                paddingLeft: 12,
                 paddingBottom: 12,
                 background: "unset",
                 backgroundColor: "unset",

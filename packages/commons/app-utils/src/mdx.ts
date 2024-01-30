@@ -4,12 +4,6 @@ import remarkGfm from "remark-gfm";
 
 const REMARK_PLUGINS = [remarkGfm];
 
-export interface TableOfContentsItem {
-    // heading: marked.Tokens.Heading | undefined;
-    simpleString: string;
-    children: TableOfContentsItem[];
-}
-
 export interface FernDocsFrontmatter {
     title?: string;
     description?: string;

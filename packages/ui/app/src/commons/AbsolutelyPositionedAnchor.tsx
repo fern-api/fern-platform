@@ -50,6 +50,8 @@ export const AbsolutelyPositionedAnchor: React.FC<AbsolutelyPositionedAnchor.Pro
                     "-ml-8": smallGap,
                 })}
                 onClick={copyToClipboard}
+                aria-label="Copy link"
+                tabIndex={-1}
             >
                 {!wasJustCopied && (
                     <span className="zinc-box absolute left-0 flex h-6 w-6 items-center justify-center rounded-md bg-white text-gray-400 opacity-0 ring-1 ring-gray-400/30 backdrop-blur hover:ring-gray-400/60 group-hover/anchor-container:opacity-100 dark:bg-white/5 dark:ring-gray-700/25 dark:hover:ring-white/20">

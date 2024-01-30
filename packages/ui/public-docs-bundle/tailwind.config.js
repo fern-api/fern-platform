@@ -63,7 +63,7 @@ module.exports = {
                 "intent-danger-light": "rgb(220, 38, 38)",
 
                 "background-primary-dark": "rgb(3, 7, 18)",
-                "background-primary-light": "rgb(255, 255, 255)",
+                "background-primary-light": "#E9E6DE",
                 "background-secondary-dark": "rgb(17, 24, 39)",
                 "background-secondary-light": "rgb(249, 250, 251)",
                 "background-tertiary-dark": "rgb(31, 41, 55)",
