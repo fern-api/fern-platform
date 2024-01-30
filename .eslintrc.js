@@ -1,5 +1,5 @@
 module.exports = {
-    extends: "next",
+    extends: ["next", "prettier"],
     root: true,
     env: {
         browser: true,
@@ -118,5 +118,7 @@ module.exports = {
         "react/react-in-jsx-scope": "off",
         "react/prop-types": "off",
         "tailwindcss/no-custom-classname": "off",
+        "@next/next/no-html-link-for-pages": "off",
+        "@next/next/no-img-element": "off",
     },
 };
