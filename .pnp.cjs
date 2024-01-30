@@ -4465,7 +4465,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@tailwindcss/typography", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:0.5.10"],\
             ["@types/jest", "npm:29.5.11"],\
             ["@types/node", "npm:18.18.13"],\
-            ["@types/react", "npm:18.2.48"],\
+            ["@types/react", "npm:18.0.20"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.7.0"],\
@@ -6397,16 +6397,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-react-npm-18.0.20-064ea90ef1-f67f5b16ef.zip/node_modules/@types/react/",\
           "packageDependencies": [\
             ["@types/react", "npm:18.0.20"],\
-            ["@types/prop-types", "npm:15.7.5"],\
-            ["@types/scheduler", "npm:0.16.2"],\
-            ["csstype", "npm:3.1.0"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:18.2.48", {\
-          "packageLocation": "./.yarn/cache/@types-react-npm-18.2.48-3bda252d86-c9ca43ed29.zip/node_modules/@types/react/",\
-          "packageDependencies": [\
-            ["@types/react", "npm:18.2.48"],\
             ["@types/prop-types", "npm:15.7.5"],\
             ["@types/scheduler", "npm:0.16.2"],\
             ["csstype", "npm:3.1.0"]\
@@ -15594,7 +15584,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@opentelemetry/api", null],\
             ["@swc/helpers", "npm:0.5.2"],\
             ["@types/opentelemetry__api", null],\
-            ["@types/react", "npm:18.2.48"],\
+            ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", null],\
             ["@types/sass", null],\
             ["busboy", "npm:1.6.0"],\
@@ -15604,7 +15594,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react", "npm:18.2.0"],\
             ["react-dom", null],\
             ["sass", null],\
-            ["styled-jsx", "virtual:fa4a12f3d57619f2041981c49b8c130ab00a6ebc5a589d0a82a9600a10810c12d871113bcf69ff22de0f3ac128e04a6aa6eb419345e15e8b529b1fc578e4b093#npm:5.1.1"],\
+            ["styled-jsx", "virtual:1fb4793cda658baa2784e33af35bd4eb8b51de4759933685f057e3640bfdc682d7fa82fa1edb5a01c899681a1d18776cc50dfb9cadcf037888f9270bc612a8bf#npm:5.1.1"],\
             ["watchpack", "npm:2.4.0"]\
           ],\
           "packagePeers": [\
@@ -19023,28 +19013,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/babel-plugin-macros", null],\
             ["@types/babel__core", null],\
             ["@types/react", "npm:18.0.20"],\
-            ["babel-plugin-macros", null],\
-            ["client-only", "npm:0.0.1"],\
-            ["react", "npm:18.2.0"]\
-          ],\
-          "packagePeers": [\
-            "@babel/core",\
-            "@types/babel-plugin-macros",\
-            "@types/babel__core",\
-            "@types/react",\
-            "babel-plugin-macros",\
-            "react"\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["virtual:fa4a12f3d57619f2041981c49b8c130ab00a6ebc5a589d0a82a9600a10810c12d871113bcf69ff22de0f3ac128e04a6aa6eb419345e15e8b529b1fc578e4b093#npm:5.1.1", {\
-          "packageLocation": "./.yarn/__virtual__/styled-jsx-virtual-3f5fc177ce/0/cache/styled-jsx-npm-5.1.1-2557a209ba-523a33b386.zip/node_modules/styled-jsx/",\
-          "packageDependencies": [\
-            ["styled-jsx", "virtual:fa4a12f3d57619f2041981c49b8c130ab00a6ebc5a589d0a82a9600a10810c12d871113bcf69ff22de0f3ac128e04a6aa6eb419345e15e8b529b1fc578e4b093#npm:5.1.1"],\
-            ["@babel/core", null],\
-            ["@types/babel-plugin-macros", null],\
-            ["@types/babel__core", null],\
-            ["@types/react", "npm:18.2.48"],\
             ["babel-plugin-macros", null],\
             ["client-only", "npm:0.0.1"],\
             ["react", "npm:18.2.0"]\
