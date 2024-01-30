@@ -222,7 +222,6 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                             <DocsMainContent navigationItems={navigationItems} contentWidth={layout?.contentWidth} />
                         </main>
                     </div>
-                    <ApiPlayground apiSections={apiSections} />
                 </div>
             </ApiPlaygroundContextProvider>
         </>
