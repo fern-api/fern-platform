@@ -15,10 +15,10 @@ const nextConfig = {
             },
         ],
         afterFiles: [
-            {
-                source: "/api/:path*",
-                destination: "/api/:path*",
-            },
+            ...["proxy", "revalidate-all", "revalidate-v2", "revalidate", "serialize-mdx", "sitemap"].map((prefix) => ({
+                source: `/api/${prefix}`,
+                destination: `/api/${prefix}`,
+            })),
             {
                 has: [
                     {
