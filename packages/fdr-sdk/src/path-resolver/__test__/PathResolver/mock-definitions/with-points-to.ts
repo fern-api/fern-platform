@@ -39,6 +39,7 @@ const API_DEF_1: APIV1Read.ApiDefinition = {
                     path: { parts: [], pathParameters: [] },
                     queryParameters: [],
                     urlSlug: "create-agent",
+                    customCodeSamples: [],
                 },
                 {
                     id: "ep_2",
@@ -51,6 +52,7 @@ const API_DEF_1: APIV1Read.ApiDefinition = {
                     path: { parts: [], pathParameters: [] },
                     queryParameters: [],
                     urlSlug: "update-agent",
+                    customCodeSamples: [],
                 },
             ],
         },

@@ -84,6 +84,7 @@ Object {
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Returns all adjustments satisfying the search_terms AND whose organization_id matches
 the current organization_id of the authenticated user
@@ -112,6 +113,7 @@ the current organization_id of the authenticated user
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/adjustments/v1",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -269,6 +271,7 @@ the current organization_id of the authenticated user</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Returns the adjustment for the provided adjustment_id.
 If the adjustment's organization_id does not match the current organization_id of the
@@ -298,6 +301,7 @@ authenticated user, then response code of 403 will be returned
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/adjustments/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "adjustment_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -379,6 +383,7 @@ authenticated user, then response code of 403 will be returned</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Creates a new adjustment record and returns the newly created Adjustment object.
 It is expected that the organization_id of the input adjustment object will match
@@ -408,6 +413,7 @@ the current organization_id of the auathenticated user. Otherwise, response code
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/adjustments/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -494,6 +500,7 @@ the current organization_id of the auathenticated user. Otherwise, response code
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Updates the adjustment record matching the provided adjustment_id.
 If the matching record's organization_id does not match the authenticated user's
@@ -523,6 +530,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/adjustments/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "adjustment_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -619,6 +627,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Deletes the adjustment record matching the provided adjustment_id.
 If the matching record's organization_id does not match the authenticated user's
@@ -648,6 +657,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/adjustments/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "adjustment_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -744,6 +754,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": false,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -806,6 +817,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/auth/v2/token",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -845,6 +857,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/auth/v2/token",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -943,6 +956,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -969,6 +983,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/billing_notes/v2",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -1062,6 +1077,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -1088,6 +1104,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/billing_notes/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "billing_note_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -1178,6 +1195,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -1204,6 +1222,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/bulk-claim-actions/v1/execute",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -1326,6 +1345,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -1352,6 +1372,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/bulk-claim-actions/v1/validate",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -1537,6 +1558,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Delete all chargemasters",
           "descriptionContainsMarkdown": true,
@@ -1563,6 +1585,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/chargemasters/v2",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -1620,6 +1643,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Delete a set of chargemaster entries by entry ids",
           "descriptionContainsMarkdown": true,
@@ -1646,6 +1670,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/chargemasters/v2/entries",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -1743,6 +1768,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -1839,6 +1865,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/claim-submission/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "claim_submission_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -2595,6 +2622,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/claim-submission/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "claim_submission_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -2629,6 +2657,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/claim-submission/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "claim_submission_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -2724,6 +2753,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -2820,6 +2850,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/claims/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "claim_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -2870,6 +2901,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/claims/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "claim_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -2904,6 +2936,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/claims/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "claim_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -2980,6 +3013,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -3076,6 +3110,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/claims/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/statuses",
               "pathParameters": Object {
                 "claim_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -3114,6 +3149,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/claims/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/statuses",
               "pathParameters": Object {
                 "claim_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -3148,6 +3184,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/claims/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/statuses",
               "pathParameters": Object {
                 "claim_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -3381,6 +3418,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -3545,6 +3583,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -3644,6 +3683,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -3723,6 +3763,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -3802,6 +3843,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -3881,6 +3923,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -4072,6 +4115,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -4098,6 +4142,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules/v1/comparisons",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -4192,6 +4237,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -4254,6 +4300,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "configurable_rule_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -4318,6 +4365,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "configurable_rule_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -4394,6 +4442,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -4592,6 +4641,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "configurable_rule_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -4659,6 +4709,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "configurable_rule_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -4696,6 +4747,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "configurable_rule_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -4743,6 +4795,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "configurable_rule_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -4790,6 +4843,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "configurable_rule_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -4837,6 +4891,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "configurable_rule_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -5011,6 +5066,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -5073,6 +5129,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "configurable_rule_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -5094,6 +5151,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "configurable_rule_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -5162,6 +5220,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -5292,6 +5351,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules/v1/config-for-scope",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -5375,6 +5435,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules/v1/config-for-scope",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -5434,6 +5495,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules/v1/config-for-scope",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -5493,6 +5555,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules/v1/config-for-scope",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -5596,6 +5659,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -5658,6 +5722,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules/v1/validate",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -5725,6 +5790,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules/v1/validate",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -5989,6 +6055,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -6085,6 +6152,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules-variables/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -6184,6 +6252,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules-variables/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -6277,6 +6346,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules-variables/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -6416,6 +6486,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -6442,6 +6513,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules-variables/v1/summaries",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -6525,6 +6597,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -6587,6 +6660,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules-variables/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "variable_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -6653,6 +6727,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules-variables/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "variable_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -6729,6 +6804,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -6893,6 +6969,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules-variables/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "variable_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -6962,6 +7039,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules-variables/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "variable_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -7025,6 +7103,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules-variables/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "variable_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -7062,6 +7141,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules-variables/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "variable_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -7131,6 +7211,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules-variables/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "variable_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -7265,6 +7346,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -7361,6 +7443,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules-variables/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "variable_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -7382,6 +7465,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules-variables/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "variable_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -7422,6 +7506,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules-variables/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "variable_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -7490,6 +7575,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -7516,6 +7602,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/configurable-rules-variables/v1",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -7669,6 +7756,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -7695,6 +7783,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/contracts/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "contract_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -7937,6 +8026,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -7963,6 +8053,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/contracts/v2",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -8283,6 +8374,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Creates a new contract within the user's current organization",
           "descriptionContainsMarkdown": true,
@@ -8309,6 +8401,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/contracts/v2",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -8608,6 +8701,7 @@ Max items is 100.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -8634,6 +8728,7 @@ Max items is 100.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/contracts/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "contract_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -8689,6 +8784,7 @@ Max items is 100.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -8715,6 +8811,7 @@ Max items is 100.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/contracts/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "contract_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -9090,6 +9187,7 @@ value, overriding what was set before.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -9116,6 +9214,7 @@ value, overriding what was set before.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/dashboards/v2",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -9220,6 +9319,7 @@ value, overriding what was set before.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -9246,6 +9346,7 @@ value, overriding what was set before.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/diagnoses/v2",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -9333,6 +9434,7 @@ value, overriding what was set before.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -9359,6 +9461,7 @@ value, overriding what was set before.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/diagnoses/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "diagnosis_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -9501,6 +9604,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -9527,6 +9631,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/diagnoses/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "diagnosis_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -9619,6 +9724,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -9681,6 +9787,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounter-providers/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -9736,6 +9843,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounter-providers/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -9866,6 +9974,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -9892,6 +10001,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounter-summaries/v1",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -10538,6 +10648,7 @@ or encounter external id.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -10600,6 +10711,7 @@ or encounter external id.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounter-summaries/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -10760,6 +10872,7 @@ or encounter external id.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounter-summaries/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -10856,6 +10969,7 @@ or encounter external id.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -10952,6 +11066,7 @@ or encounter external id.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounter-timeline/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -10994,6 +11109,7 @@ or encounter external id.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounter-timeline/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -11028,6 +11144,7 @@ or encounter external id.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounter-timeline/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -11158,6 +11275,7 @@ or encounter external id.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -11254,6 +11372,7 @@ or encounter external id.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounters-internal/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/reverse-remit/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -11283,6 +11402,7 @@ or encounter external id.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounters-internal/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/reverse-remit/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -11318,6 +11438,7 @@ or encounter external id.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounters-internal/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/reverse-remit/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -11410,6 +11531,7 @@ or encounter external id.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -11472,6 +11594,7 @@ or encounter external id.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounters-internal/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/financial-information",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -11536,6 +11659,7 @@ or encounter external id.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounters-internal/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/financial-information",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -11634,6 +11758,7 @@ or encounter external id.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -11660,6 +11785,7 @@ or encounter external id.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounters/v4",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -12735,6 +12861,7 @@ or encounter external id.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -12761,6 +12888,7 @@ or encounter external id.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounters/v4/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -13657,6 +13785,7 @@ or encounter external id.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -13861,6 +13990,7 @@ or encounter external id.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounters/v4",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -14798,6 +14928,7 @@ or encounter external id.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounters/v4",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -14917,6 +15048,7 @@ or encounter external id.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounters/v4",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -15036,6 +15168,7 @@ or encounter external id.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounters/v4",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -15159,6 +15292,7 @@ or encounter external id.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounters/v4",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -15284,6 +15418,7 @@ or encounter external id.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounters/v4",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -15610,6 +15745,7 @@ in bounds of the diagnoses list field
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -15780,6 +15916,7 @@ in bounds of the diagnoses list field
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounters/v4/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -16635,6 +16772,7 @@ in bounds of the diagnoses list field
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounters/v4/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -16672,6 +16810,7 @@ in bounds of the diagnoses list field
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounters/v4/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -16709,6 +16848,7 @@ in bounds of the diagnoses list field
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounters/v4/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -16746,6 +16886,7 @@ in bounds of the diagnoses list field
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounters/v4/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -17033,6 +17174,7 @@ submitted to the payor.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -17059,6 +17201,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounters/v4/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/attachments",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -17148,6 +17291,7 @@ submitted to the payor.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -17174,6 +17318,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounters/v4/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/clinical-notes-pdf/generate",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -17248,6 +17393,7 @@ submitted to the payor.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Initiates a re-calculation of the contracting status",
           "descriptionContainsMarkdown": true,
@@ -17274,6 +17420,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounters/v4/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/network-status-results",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -17533,6 +17680,7 @@ submitted to the payor.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -17559,6 +17707,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/encounters/v4/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/mark-as-not-billable",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -17695,6 +17844,7 @@ submitted to the payor.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -17721,6 +17871,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/enrollments/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "enrollment_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -17861,6 +18012,7 @@ submitted to the payor.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -17887,6 +18039,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/enrollments/v2",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -18139,6 +18292,7 @@ submitted to the payor.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -18165,6 +18319,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/enrollments/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "enrollment_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -18220,6 +18375,7 @@ submitted to the payor.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -18246,6 +18402,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/enrollments/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "enrollment_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -18442,6 +18599,7 @@ submitted to the payor.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -18504,6 +18662,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/enrollments/v2",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -18613,6 +18772,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/enrollments/v2",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -18723,6 +18883,7 @@ submitted to the payor.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -18749,6 +18910,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/enrollments/v2/change-import/latest-import-datetime",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -18801,6 +18963,7 @@ submitted to the payor.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -18827,6 +18990,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/enrollments/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/attachments/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "attachment_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -18913,6 +19077,7 @@ submitted to the payor.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -18939,6 +19104,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/enrollments/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/attachments",
               "pathParameters": Object {
                 "enrollment_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -19022,6 +19188,7 @@ submitted to the payor.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -19048,6 +19215,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/enrollments/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/attachments",
               "pathParameters": Object {
                 "enrollment_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -19114,6 +19282,7 @@ submitted to the payor.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -19140,6 +19309,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/enrollments/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/attachments/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "attachment_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -19300,6 +19470,7 @@ submitted to the payor.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -19396,6 +19567,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/expected-network-status-tia/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -19457,6 +19629,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/expected-network-status-tia/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -19512,6 +19685,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/expected-network-status-tia/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -19729,6 +19903,7 @@ submitted to the payor.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -19755,6 +19930,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/expected-network-status/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -19970,6 +20146,7 @@ submitted to the payor.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -20174,6 +20351,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/exports/v3",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -20209,6 +20387,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/exports/v3",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -20250,6 +20429,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/exports/v3",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -20281,6 +20461,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/exports/v3",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -20312,6 +20493,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/exports/v3",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -20343,6 +20525,7 @@ submitted to the payor.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/exports/v3",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -20459,6 +20642,7 @@ Must be within 30 days of start_date.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -20521,6 +20705,7 @@ Must be within 30 days of start_date.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/fee-schedules/v1",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -20595,6 +20780,7 @@ Must be within 30 days of start_date.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/fee-schedules/v1",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -20789,6 +20975,7 @@ Must be within 30 days of start_date.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Gets which fee schedule configuration mechanism the current organization is using.",
           "descriptionContainsMarkdown": true,
@@ -20815,6 +21002,7 @@ Must be within 30 days of start_date.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/fee-schedules/v2/fee-schedule-configuration-mechanism",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -20868,6 +21056,7 @@ Must be within 30 days of start_date.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Gets bound fee schedules for a given payer grouped by billing provider NPI.
 This is intended for Candid App usage, different from a get_multi endpoint that
@@ -20933,6 +21122,7 @@ doesn't data wrangle the modeling into the presentation shape.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/fee-schedules/v2/grouped",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -21034,6 +21224,7 @@ doesn't data wrangle the modeling into the presentation shape.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/fee-schedules/v2/grouped",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -21167,6 +21358,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Get the unpaginated fee schedule entries for a provided bound fee schedule.",
           "descriptionContainsMarkdown": true,
@@ -21193,6 +21385,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/fee-schedules/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "bound_fee_schedule_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -21393,6 +21586,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -21455,6 +21649,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/guarantors/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -21536,6 +21731,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/guarantors/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -21635,6 +21831,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -21661,6 +21858,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/guarantors/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "guarantor_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -21773,6 +21971,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -21799,6 +21998,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/guarantors/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "guarantor_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -22076,6 +22276,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -22102,6 +22303,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/individuals/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "individual_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -22379,6 +22581,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Validate an insurance adjustment before creating it. This endpoint also instructs the client on what the adjustment and other PR amounts should be.
 ",
@@ -22442,6 +22645,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/insurance-adjustments/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/validate",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -22517,6 +22721,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/insurance-adjustments/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/validate",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -22671,6 +22876,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -22733,6 +22939,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/insurance-adjustments/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/create",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -22804,6 +23011,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/insurance-adjustments/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/create",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -22953,6 +23161,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Upload an attachment to an insurance adjustment. This endpoint should remain internal only until Fern can support file uploads
 ",
@@ -23016,6 +23225,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/insurance-adjustments/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/attachments/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -23041,6 +23251,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/insurance-adjustments/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/attachments/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -23181,6 +23392,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -23207,6 +23419,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/insurance_cards/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "insurance_card_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -23351,6 +23564,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -23377,6 +23591,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/insurance_cards/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/images",
               "pathParameters": Object {
                 "insurance_card_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -23486,6 +23701,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -23548,6 +23764,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/internal-api-testing/v1/movies",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -23597,6 +23814,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/internal-api-testing/v1/movies",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -23682,6 +23900,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -23744,6 +23963,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/internal-api-testing/v1/movies/:movie_name",
               "pathParameters": Object {
                 "movie_name": ":movie_name",
@@ -23780,6 +24000,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/internal-api-testing/v1/movies/:movie_name",
               "pathParameters": Object {
                 "movie_name": ":movie_name",
@@ -23877,6 +24098,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Returns Invoice identified by the id.
 If the given id is not found, then 404 response will be returned.
@@ -23977,6 +24199,7 @@ identified by the id, then 403 response will be returned
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/invoices/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -24039,6 +24262,7 @@ identified by the id, then 403 response will be returned
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/invoices/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -24073,6 +24297,7 @@ identified by the id, then 403 response will be returned
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/invoices/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -24154,6 +24379,7 @@ identified by the id, then 403 response will be returned</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Returns all Invoices for the authenticated user's organziation.
 If optional patient_external_id is provided in query string, then the result
@@ -24183,6 +24409,7 @@ will be limited to only those invoices that belong to the patient_external_id
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/invoices/v1",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -24395,6 +24622,7 @@ will be limited to only those invoices that belong to the patient_external_id</p
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Create invoices and return the newly created Invoices.
 Please note that single InvoiceCreate can result in multiple Invoices being created due to the
@@ -24464,6 +24692,7 @@ upon creation of the invoice.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/invoices/v1",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -24554,6 +24783,7 @@ upon creation of the invoice.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/invoices/v1",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -24761,6 +24991,7 @@ upon creation of the invoice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -24823,6 +25054,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/managed-emr-configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "managed_emr_config_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -24875,6 +25107,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/managed-emr-configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "managed_emr_config_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -24951,6 +25184,7 @@ upon creation of the invoice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -25013,6 +25247,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/managed-emr-configs/v1",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -25079,6 +25314,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/managed-emr-configs/v1",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -25176,6 +25412,7 @@ upon creation of the invoice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -25238,6 +25475,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/managed-emr-configs/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -25313,6 +25551,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/managed-emr-configs/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -25408,6 +25647,7 @@ upon creation of the invoice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -25470,6 +25710,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/managed-emr-configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "managed_emr_config_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -25525,6 +25766,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/managed-emr-configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "managed_emr_config_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -25616,6 +25858,7 @@ upon creation of the invoice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -25678,6 +25921,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/managed-emr-configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "managed_emr_config_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -25699,6 +25943,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/managed-emr-configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "managed_emr_config_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -25801,6 +26046,7 @@ upon creation of the invoice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Search for the payer given a payer uuid.",
           "descriptionContainsMarkdown": true,
@@ -25827,6 +26073,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/organization-payers/v1/search",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -25910,6 +26157,7 @@ upon creation of the invoice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Get the payers affiliated with the current organization.",
           "descriptionContainsMarkdown": true,
@@ -25936,6 +26184,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/organization-payers/v1",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -26058,6 +26307,7 @@ upon creation of the invoice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Associate a payer with the current organization. If the payer is already associated, nothing is done.",
           "descriptionContainsMarkdown": true,
@@ -26084,6 +26334,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/organization-payers/v1/add",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -26211,6 +26462,7 @@ upon creation of the invoice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -26237,6 +26489,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/organization_providers/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "organization_provider_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -26363,6 +26616,7 @@ upon creation of the invoice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -26389,6 +26643,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/organization_providers/v2",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -26605,6 +26860,7 @@ upon creation of the invoice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -26631,6 +26887,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/organization_providers/v2",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -26778,6 +27035,7 @@ upon creation of the invoice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -26804,6 +27062,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/organization_providers/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "organization_provider_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -27112,6 +27371,7 @@ upon creation of the invoice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -27138,6 +27398,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/organization_providers/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "organization_provider_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -27219,6 +27480,7 @@ upon creation of the invoice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -27245,6 +27507,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/organization-providers/v3/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "organization_provider_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -27395,6 +27658,7 @@ upon creation of the invoice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -27421,6 +27685,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/organization-providers/v3",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -27661,6 +27926,7 @@ upon creation of the invoice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -27723,6 +27989,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/organization-providers/v3",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -27864,6 +28131,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/organization-providers/v3",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -27971,6 +28239,7 @@ upon creation of the invoice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -28033,6 +28302,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/organization-providers/v3/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "organization_provider_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -28144,6 +28414,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/organization-providers/v3/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "organization_provider_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -28257,6 +28528,7 @@ upon creation of the invoice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -28319,6 +28591,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/organization-tags/v1",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -28366,6 +28639,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/organization-tags/v1",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -28450,6 +28724,7 @@ upon creation of the invoice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -28546,6 +28821,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/organization-tags/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -28589,6 +28865,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/organization-tags/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -28632,6 +28909,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/organization-tags/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -28713,6 +28991,7 @@ upon creation of the invoice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -28809,6 +29088,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/organization-tags/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "organization_tag_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -28830,6 +29110,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/organization-tags/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "organization_tag_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -28864,6 +29145,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/organization-tags/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "organization_tag_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -28953,6 +29235,7 @@ upon creation of the invoice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -28979,6 +29262,7 @@ upon creation of the invoice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/page-sessions/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -29065,6 +29349,7 @@ upon creation of the invoice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Returns PatientPaymentConfig identified by the id.
 If the given id is not found, then 404 response will be returned.
@@ -29165,6 +29450,7 @@ identified by the id, then 403 response will be returned
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient_payment_configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -29205,6 +29491,7 @@ identified by the id, then 403 response will be returned
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient_payment_configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -29239,6 +29526,7 @@ identified by the id, then 403 response will be returned
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient_payment_configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -29320,6 +29608,7 @@ identified by the id, then 403 response will be returned</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Returns all PatientPaymentConfig for the authenticated user's organization",
           "descriptionContainsMarkdown": true,
@@ -29346,6 +29635,7 @@ identified by the id, then 403 response will be returned</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient_payment_configs/v1",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -29483,6 +29773,7 @@ identified by the id, then 403 response will be returned</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Creates the given PatientPaymentConfig, and returns the newly created PatientPaymentConfig.
 ",
@@ -29546,6 +29837,7 @@ identified by the id, then 403 response will be returned</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient_payment_configs/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -29599,6 +29891,7 @@ identified by the id, then 403 response will be returned</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient_payment_configs/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -29685,6 +29978,7 @@ identified by the id, then 403 response will be returned</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Patch PatientPaymentConfig identified the id.
 If PatientPaymentConfig is not found by the provided id, then 404 will be returned.
@@ -29784,6 +30078,7 @@ If the authenticated user does not have the permission to update the PatientPaym
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient_payment_configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -29827,6 +30122,7 @@ If the authenticated user does not have the permission to update the PatientPaym
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient_payment_configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -29864,6 +30160,7 @@ If the authenticated user does not have the permission to update the PatientPaym
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient_payment_configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -29959,6 +30256,7 @@ If the authenticated user does not have the permission to update the PatientPaym
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Deletes the PatientPaymentConfigId identified by the id.
 If PatientPaymentConfigId is not found by the provided id, then 404 will be returned.
@@ -30059,6 +30357,7 @@ by the id, then 403 will be returned
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient_payment_configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -30080,6 +30379,7 @@ by the id, then 403 will be returned
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient_payment_configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -30114,6 +30414,7 @@ by the id, then 403 will be returned
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient_payment_configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -30227,6 +30528,7 @@ by the id, then 403 will be returned</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Returns all patient payments satisfying the search criteria AND whose organization_id matches the current organization_id of the authenticated user.
 ",
@@ -30290,6 +30592,7 @@ by the id, then 403 will be returned</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v2",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -30358,6 +30661,7 @@ by the id, then 403 will be returned</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v2",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -30501,6 +30805,7 @@ by the id, then 403 will be returned</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Returns the patient payment for the provided patient_payment_id. If the patient payment's organization_id does not match the current organization_id of the authenticated user, then response code of 403 will be returned.
 ",
@@ -30598,6 +30903,7 @@ by the id, then 403 will be returned</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v2/:patient_payment_id",
               "pathParameters": Object {
                 "patient_payment_id": ":patient_payment_id",
@@ -30648,6 +30954,7 @@ by the id, then 403 will be returned</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v2/:patient_payment_id",
               "pathParameters": Object {
                 "patient_payment_id": ":patient_payment_id",
@@ -30682,6 +30989,7 @@ by the id, then 403 will be returned</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v2/:patient_payment_id",
               "pathParameters": Object {
                 "patient_payment_id": ":patient_payment_id",
@@ -30759,6 +31067,7 @@ by the id, then 403 will be returned</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Creates a new patient payment record and returns the newly created PatientPayment object. It is expected that the organization_id of the input patient_payment object will match the current organization_id of the auathenticated user. Otherwise, response code of 400 will be returned.
 ",
@@ -30786,6 +31095,7 @@ by the id, then 403 will be returned</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v2",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -30964,6 +31274,7 @@ by the id, then 403 will be returned</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Updates the patient payment record matching the provided patient_payment_id. If the matching record's organization_id does not match the authenticated user's current organization_id, then a response code of \`403\` will be returned.
 ",
@@ -31095,6 +31406,7 @@ by the id, then 403 will be returned</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v2/:patient_payment_id",
               "pathParameters": Object {
                 "patient_payment_id": ":patient_payment_id",
@@ -31148,6 +31460,7 @@ by the id, then 403 will be returned</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v2/:patient_payment_id",
               "pathParameters": Object {
                 "patient_payment_id": ":patient_payment_id",
@@ -31185,6 +31498,7 @@ by the id, then 403 will be returned</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v2/:patient_payment_id",
               "pathParameters": Object {
                 "patient_payment_id": ":patient_payment_id",
@@ -31222,6 +31536,7 @@ by the id, then 403 will be returned</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v2/:patient_payment_id",
               "pathParameters": Object {
                 "patient_payment_id": ":patient_payment_id",
@@ -31371,6 +31686,7 @@ by the id, then 403 will be returned</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Deletes the patient payment record matching the provided patient_payment_id. If the matching record's organization_id does not match the authenticated user's current organization_id, then a response code of \`403\` will be returned.
 ",
@@ -31502,6 +31818,7 @@ by the id, then 403 will be returned</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v2/:patient_payment_id",
               "pathParameters": Object {
                 "patient_payment_id": ":patient_payment_id",
@@ -31523,6 +31840,7 @@ by the id, then 403 will be returned</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v2/:patient_payment_id",
               "pathParameters": Object {
                 "patient_payment_id": ":patient_payment_id",
@@ -31557,6 +31875,7 @@ by the id, then 403 will be returned</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v2/:patient_payment_id",
               "pathParameters": Object {
                 "patient_payment_id": ":patient_payment_id",
@@ -31591,6 +31910,7 @@ by the id, then 403 will be returned</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v2/:patient_payment_id",
               "pathParameters": Object {
                 "patient_payment_id": ":patient_payment_id",
@@ -31682,6 +32002,7 @@ by the id, then 403 will be returned</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Returns all patient payments satisfying the search criteria AND whose organization_id matches
 the current organization_id of the authenticated user.
@@ -31746,6 +32067,7 @@ the current organization_id of the authenticated user.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v3",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -31816,6 +32138,7 @@ the current organization_id of the authenticated user.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v3",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -31982,6 +32305,7 @@ the current organization_id of the authenticated user.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Returns the patient payment for the provided patient_payment_id.
 If the patient payment's organization_id does not match the current organization_id of the
@@ -32081,6 +32405,7 @@ authenticated user, then response code of 403 will be returned.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v3/:patient_payment_id",
               "pathParameters": Object {
                 "patient_payment_id": ":patient_payment_id",
@@ -32131,6 +32456,7 @@ authenticated user, then response code of 403 will be returned.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v3/:patient_payment_id",
               "pathParameters": Object {
                 "patient_payment_id": ":patient_payment_id",
@@ -32165,6 +32491,7 @@ authenticated user, then response code of 403 will be returned.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v3/:patient_payment_id",
               "pathParameters": Object {
                 "patient_payment_id": ":patient_payment_id",
@@ -32244,6 +32571,7 @@ authenticated user, then response code of 403 will be returned.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Creates a new patient payment record and returns the newly created PatientPayment object.
 It is expected that the organization_id of the input patient_payment object will match
@@ -32348,6 +32676,7 @@ The order of specificity from the most specific to least specific is \`service_l
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v3",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -32403,6 +32732,7 @@ The order of specificity from the most specific to least specific is \`service_l
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v3",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -32442,6 +32772,7 @@ The order of specificity from the most specific to least specific is \`service_l
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v3",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -32611,6 +32942,7 @@ The order of specificity from the most specific to least specific is <code>servi
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Updates the patient payment record matching the provided patient_payment_id.
 If the matching record's organization_id does not match the authenticated user's
@@ -32748,6 +33080,7 @@ The order of specificity from the most specific to least specific is \`service_l
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v3/:patient_payment_id",
               "pathParameters": Object {
                 "patient_payment_id": ":patient_payment_id",
@@ -32801,6 +33134,7 @@ The order of specificity from the most specific to least specific is \`service_l
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v3/:patient_payment_id",
               "pathParameters": Object {
                 "patient_payment_id": ":patient_payment_id",
@@ -32838,6 +33172,7 @@ The order of specificity from the most specific to least specific is \`service_l
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v3/:patient_payment_id",
               "pathParameters": Object {
                 "patient_payment_id": ":patient_payment_id",
@@ -32875,6 +33210,7 @@ The order of specificity from the most specific to least specific is \`service_l
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v3/:patient_payment_id",
               "pathParameters": Object {
                 "patient_payment_id": ":patient_payment_id",
@@ -33060,6 +33396,7 @@ The order of specificity from the most specific to least specific is <code>servi
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Deletes the patient payment record matching the provided patient_payment_id.
 If the matching record's organization_id does not match the authenticated user's
@@ -33193,6 +33530,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v3/:patient_payment_id",
               "pathParameters": Object {
                 "patient_payment_id": ":patient_payment_id",
@@ -33214,6 +33552,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v3/:patient_payment_id",
               "pathParameters": Object {
                 "patient_payment_id": ":patient_payment_id",
@@ -33248,6 +33587,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v3/:patient_payment_id",
               "pathParameters": Object {
                 "patient_payment_id": ":patient_payment_id",
@@ -33282,6 +33622,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patient-payments/v3/:patient_payment_id",
               "pathParameters": Object {
                 "patient_payment_id": ":patient_payment_id",
@@ -33375,6 +33716,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -33401,6 +33743,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patients/v1",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -33569,6 +33912,7 @@ current organization_id, then a response code of <code>403</code> will be return
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -33665,6 +34009,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patients/v1/:patient_external_id",
               "pathParameters": Object {
                 "patient_external_id": ":patient_external_id",
@@ -33891,6 +34236,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patients/v1/:patient_external_id",
               "pathParameters": Object {
                 "patient_external_id": ":patient_external_id",
@@ -33927,6 +34273,7 @@ current organization_id, then a response code of <code>403</code> will be return
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/patients/v1/:patient_external_id",
               "pathParameters": Object {
                 "patient_external_id": ":patient_external_id",
@@ -34045,6 +34392,7 @@ slashes.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -34071,6 +34419,7 @@ slashes.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/payers/v3/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "payer_uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -34147,6 +34496,7 @@ slashes.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -34173,6 +34523,7 @@ slashes.
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/payers/v3",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -34313,6 +34664,7 @@ as the billing_provider_npis should suffice.
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Returns PaymentAccountConfig identified by the id.
 If the given id is not found, then 404 response will be returned.
@@ -34413,6 +34765,7 @@ identified by the id, then 403 response will be returned
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/payment_account_configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -34459,6 +34812,7 @@ identified by the id, then 403 response will be returned
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/payment_account_configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -34493,6 +34847,7 @@ identified by the id, then 403 response will be returned
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/payment_account_configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -34574,6 +34929,7 @@ identified by the id, then 403 response will be returned</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Returns all PaymentAccountConfigs for the authenticated user's organization",
           "descriptionContainsMarkdown": true,
@@ -34600,6 +34956,7 @@ identified by the id, then 403 response will be returned</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/payment_account_configs/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -34678,6 +35035,7 @@ identified by the id, then 403 response will be returned</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Creates the given PaymentAccountConfig, and returns the newly created PaymentAccountConfig.
 If the provided PaymentAccountApiToken is either invalid or does not have all of the requried permissions, then 422 response will be returned.
@@ -34811,6 +35169,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/payment_account_configs/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -34874,6 +35233,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/payment_account_configs/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -34925,6 +35285,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/payment_account_configs/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -34976,6 +35337,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/payment_account_configs/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -35068,6 +35430,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Patch PaymentAccountConfig identified the id.
 If PaymentAccountConfig is not found by the provided id, then 404 will be returned.
@@ -35237,6 +35600,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/payment_account_configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -35290,6 +35654,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/payment_account_configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -35331,6 +35696,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/payment_account_configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -35372,6 +35738,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/payment_account_configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -35413,6 +35780,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/payment_account_configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -35514,6 +35882,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Deletes the PaymentAccountConfig identified by the id.
 If PaymentAccountConfig is not found by the provided id, then 404 will be returned.
@@ -35614,6 +35983,7 @@ by the id, then 403 will be returned
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/payment_account_configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -35635,6 +36005,7 @@ by the id, then 403 will be returned
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/payment_account_configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -35669,6 +36040,7 @@ by the id, then 403 will be returned
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/payment_account_configs/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -35742,6 +36114,7 @@ by the id, then 403 will be returned</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Verify that the provided claims can be invoiced for the provided patient_external_id.
 Invoice creation requires that there exists a valid PaymentAccountConfig for the claim's billing provider npi
@@ -35807,6 +36180,7 @@ and the third party payment processor's customer can be identified by the patien
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/payment_account_configs/v1/verify_can_invoice",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -35860,6 +36234,7 @@ and the third party payment processor's customer can be identified by the patien
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/payment_account_configs/v1/verify_can_invoice",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -35946,6 +36321,7 @@ and the third party payment processor&#39;s customer can be identified by the pa
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Verify that the provided PaymentAccountApiToken is a valid token.
 Verification includes that the provided token has all of the appropriate permissions.
@@ -35974,6 +36350,7 @@ Verification includes that the provided token has all of the appropriate permiss
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/payment_account_configs/v1/verify_api_token",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -36041,6 +36418,7 @@ Verification includes that the provided token has all of the appropriate permiss
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Verifies that the provided PatientExternalId is associated with a third party payment processor's customer.
 If the customer exists, then the URL for the customer specific page will be return. Otherwise, the URL for the general
@@ -36070,6 +36448,7 @@ customer page will be returned (this generally is a page listing the existing cu
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/payment_account_configs/v1/verify_customer_exists",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -36248,6 +36627,7 @@ as the billing_provider_npis should suffice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -36274,6 +36654,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/pipeline-configuration/v2",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -36423,6 +36804,7 @@ as the billing_provider_npis should suffice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": "Returns all remits for the claim_id.
 ",
@@ -36520,6 +36902,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/remits/v1",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -36618,6 +37001,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/remits/v1",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -36654,6 +37038,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/remits/v1",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -36751,6 +37136,7 @@ as the billing_provider_npis should suffice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -36777,6 +37163,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/remits/v1/paged",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -37011,6 +37398,7 @@ as the billing_provider_npis should suffice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -37141,6 +37529,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/remits/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/post",
               "pathParameters": Object {
                 "remit_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -37237,6 +37626,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/remits/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/post",
               "pathParameters": Object {
                 "remit_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -37271,6 +37661,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/remits/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/post",
               "pathParameters": Object {
                 "remit_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -37305,6 +37696,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/remits/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/post",
               "pathParameters": Object {
                 "remit_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -37450,6 +37842,7 @@ as the billing_provider_npis should suffice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -37512,6 +37905,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/secondary-submission/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -37573,6 +37967,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/secondary-submission/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -37688,6 +38083,7 @@ as the billing_provider_npis should suffice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -37750,6 +38146,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/secondary-submission/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/validate",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -37782,6 +38179,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/secondary-submission/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/validate",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -37858,6 +38256,7 @@ as the billing_provider_npis should suffice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -37920,6 +38319,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/secondary-submission/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/pre-populate",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -37966,6 +38366,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/secondary-submission/v1/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/pre-populate",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -38066,6 +38467,7 @@ as the billing_provider_npis should suffice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -38092,6 +38494,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/service_facility/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "service_facility_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -38251,6 +38654,7 @@ as the billing_provider_npis should suffice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -38347,6 +38751,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/service-line-ledgers/v1/table/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -38407,6 +38812,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/service-line-ledgers/v1/table/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -38441,6 +38847,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/service-line-ledgers/v1/table/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "pathParameters": Object {
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -38565,6 +38972,7 @@ as the billing_provider_npis should suffice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -38627,6 +39035,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/service-lines/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/financial-information",
               "pathParameters": Object {
                 "service_line_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -38697,6 +39106,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/service-lines/v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/financial-information",
               "pathParameters": Object {
                 "service_line_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -38803,6 +39213,7 @@ as the billing_provider_npis should suffice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -38829,6 +39240,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/tags/v3",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -38894,6 +39306,7 @@ as the billing_provider_npis should suffice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -38920,6 +39333,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/tags/v3",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -39055,6 +39469,7 @@ as the billing_provider_npis should suffice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -39081,6 +39496,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/tasks/v3/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/actions",
               "pathParameters": Object {
                 "task_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -39238,6 +39654,7 @@ as the billing_provider_npis should suffice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -39264,6 +39681,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/users/v2/internal-enrollment-assignees",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -39338,6 +39756,7 @@ as the billing_provider_npis should suffice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -39400,6 +39819,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/users/v2/assignable-users",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -39469,6 +39889,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/users/v2/assignable-users",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -39553,6 +39974,7 @@ as the billing_provider_npis should suffice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -39615,6 +40037,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/users/v2",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -39684,6 +40107,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/users/v2",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -39768,6 +40192,7 @@ as the billing_provider_npis should suffice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -39794,6 +40219,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/users/v2/assignable-users-unpaginated",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -39881,6 +40307,7 @@ as the billing_provider_npis should suffice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -39943,6 +40370,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/users/v2/external-id/:external_id",
               "pathParameters": Object {
                 "external_id": ":external_id",
@@ -39999,6 +40427,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/users/v2/external-id/:external_id",
               "pathParameters": Object {
                 "external_id": ":external_id",
@@ -40120,6 +40549,7 @@ as the billing_provider_npis should suffice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -40182,6 +40612,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/work-queues/v1/:work_queue_id",
               "pathParameters": Object {
                 "work_queue_id": ":work_queue_id",
@@ -40238,6 +40669,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/work-queues/v1/:work_queue_id",
               "pathParameters": Object {
                 "work_queue_id": ":work_queue_id",
@@ -40314,6 +40746,7 @@ as the billing_provider_npis should suffice.</p>
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -40340,6 +40773,7 @@ as the billing_provider_npis should suffice.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/api/work-queues/v1",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -88842,6 +89276,7 @@ Object {
         Object {
           "authed": false,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "Production",
           "description": "Retrieves the user with the given ID.",
           "descriptionContainsMarkdown": true,
@@ -88868,6 +89303,7 @@ Object {
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/transactions/:transaction_id",
               "pathParameters": Object {
                 "transaction_id": ":transaction_id",
@@ -89062,6 +89498,7 @@ Object {
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "Production",
           "description": "For a shipment, find the lowest cost shipping option based on provided parameters.",
           "descriptionContainsMarkdown": true,
@@ -89093,6 +89530,7 @@ Object {
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/lcf",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -89976,6 +90414,7 @@ Object {
       Object {
         "authed": true,
         "availability": undefined,
+        "customCodeSamples": Array [],
         "defaultEnvironment": "Production",
         "description": "Executes a deployed Workflow and streams back its results.",
         "descriptionContainsMarkdown": true,
@@ -90048,6 +90487,7 @@ Object {
             "descriptionContainsMarkdown": true,
             "headers": Object {},
             "htmlDescription": undefined,
+            "name": undefined,
             "path": "/v1/execute-workflow-stream",
             "pathParameters": Object {},
             "queryParameters": Object {},
@@ -90086,6 +90526,7 @@ Object {
             "descriptionContainsMarkdown": true,
             "headers": Object {},
             "htmlDescription": undefined,
+            "name": undefined,
             "path": "/v1/execute-workflow-stream",
             "pathParameters": Object {},
             "queryParameters": Object {},
@@ -90127,6 +90568,7 @@ Object {
             "descriptionContainsMarkdown": true,
             "headers": Object {},
             "htmlDescription": undefined,
+            "name": undefined,
             "path": "/v1/execute-workflow-stream",
             "pathParameters": Object {},
             "queryParameters": Object {},
@@ -90168,6 +90610,7 @@ Object {
             "descriptionContainsMarkdown": true,
             "headers": Object {},
             "htmlDescription": undefined,
+            "name": undefined,
             "path": "/v1/execute-workflow-stream",
             "pathParameters": Object {},
             "queryParameters": Object {},
@@ -90315,6 +90758,7 @@ Object {
       Object {
         "authed": true,
         "availability": "GenerallyAvailable",
+        "customCodeSamples": Array [],
         "defaultEnvironment": "Production",
         "description": "Generate a completion using a previously defined deployment.
 
@@ -90407,6 +90851,7 @@ Object {
             "descriptionContainsMarkdown": true,
             "headers": Object {},
             "htmlDescription": undefined,
+            "name": undefined,
             "path": "/v1/generate",
             "pathParameters": Object {},
             "queryParameters": Object {},
@@ -90514,6 +90959,7 @@ Object {
             "descriptionContainsMarkdown": true,
             "headers": Object {},
             "htmlDescription": undefined,
+            "name": undefined,
             "path": "/v1/generate",
             "pathParameters": Object {},
             "queryParameters": Object {},
@@ -90555,6 +91001,7 @@ Object {
             "descriptionContainsMarkdown": true,
             "headers": Object {},
             "htmlDescription": undefined,
+            "name": undefined,
             "path": "/v1/generate",
             "pathParameters": Object {},
             "queryParameters": Object {},
@@ -90600,6 +91047,7 @@ Object {
             "descriptionContainsMarkdown": true,
             "headers": Object {},
             "htmlDescription": undefined,
+            "name": undefined,
             "path": "/v1/generate",
             "pathParameters": Object {},
             "queryParameters": Object {},
@@ -90641,6 +91089,7 @@ Object {
             "descriptionContainsMarkdown": true,
             "headers": Object {},
             "htmlDescription": undefined,
+            "name": undefined,
             "path": "/v1/generate",
             "pathParameters": Object {},
             "queryParameters": Object {},
@@ -90769,6 +91218,7 @@ Object {
       Object {
         "authed": true,
         "availability": "GenerallyAvailable",
+        "customCodeSamples": Array [],
         "defaultEnvironment": "Production",
         "description": "Generate a stream of completions using a previously defined deployment.
 
@@ -90861,6 +91311,7 @@ Object {
             "descriptionContainsMarkdown": true,
             "headers": Object {},
             "htmlDescription": undefined,
+            "name": undefined,
             "path": "/v1/generate-stream",
             "pathParameters": Object {},
             "queryParameters": Object {},
@@ -90899,6 +91350,7 @@ Object {
             "descriptionContainsMarkdown": true,
             "headers": Object {},
             "htmlDescription": undefined,
+            "name": undefined,
             "path": "/v1/generate-stream",
             "pathParameters": Object {},
             "queryParameters": Object {},
@@ -90940,6 +91392,7 @@ Object {
             "descriptionContainsMarkdown": true,
             "headers": Object {},
             "htmlDescription": undefined,
+            "name": undefined,
             "path": "/v1/generate-stream",
             "pathParameters": Object {},
             "queryParameters": Object {},
@@ -90985,6 +91438,7 @@ Object {
             "descriptionContainsMarkdown": true,
             "headers": Object {},
             "htmlDescription": undefined,
+            "name": undefined,
             "path": "/v1/generate-stream",
             "pathParameters": Object {},
             "queryParameters": Object {},
@@ -91026,6 +91480,7 @@ Object {
             "descriptionContainsMarkdown": true,
             "headers": Object {},
             "htmlDescription": undefined,
+            "name": undefined,
             "path": "/v1/generate-stream",
             "pathParameters": Object {},
             "queryParameters": Object {},
@@ -91146,6 +91601,7 @@ Object {
       Object {
         "authed": true,
         "availability": "GenerallyAvailable",
+        "customCodeSamples": Array [],
         "defaultEnvironment": "Production",
         "description": "Perform a search against a document index.
 
@@ -91220,6 +91676,7 @@ Object {
             "descriptionContainsMarkdown": true,
             "headers": Object {},
             "htmlDescription": undefined,
+            "name": undefined,
             "path": "/v1/search",
             "pathParameters": Object {},
             "queryParameters": Object {},
@@ -91285,6 +91742,7 @@ Object {
             "descriptionContainsMarkdown": true,
             "headers": Object {},
             "htmlDescription": undefined,
+            "name": undefined,
             "path": "/v1/search",
             "pathParameters": Object {},
             "queryParameters": Object {},
@@ -91314,6 +91772,7 @@ Object {
             "descriptionContainsMarkdown": true,
             "headers": Object {},
             "htmlDescription": undefined,
+            "name": undefined,
             "path": "/v1/search",
             "pathParameters": Object {},
             "queryParameters": Object {},
@@ -91343,6 +91802,7 @@ Object {
             "descriptionContainsMarkdown": true,
             "headers": Object {},
             "htmlDescription": undefined,
+            "name": undefined,
             "path": "/v1/search",
             "pathParameters": Object {},
             "queryParameters": Object {},
@@ -91458,6 +91918,7 @@ Object {
       Object {
         "authed": true,
         "availability": "GenerallyAvailable",
+        "customCodeSamples": Array [],
         "defaultEnvironment": "Production",
         "description": "Used to submit feedback regarding the quality of previously generated completions.
 
@@ -91532,6 +91993,7 @@ Object {
             "descriptionContainsMarkdown": true,
             "headers": Object {},
             "htmlDescription": undefined,
+            "name": undefined,
             "path": "/v1/submit-completion-actuals",
             "pathParameters": Object {},
             "queryParameters": Object {},
@@ -91562,6 +92024,7 @@ Object {
             "descriptionContainsMarkdown": true,
             "headers": Object {},
             "htmlDescription": undefined,
+            "name": undefined,
             "path": "/v1/submit-completion-actuals",
             "pathParameters": Object {},
             "queryParameters": Object {},
@@ -91595,6 +92058,7 @@ Object {
             "descriptionContainsMarkdown": true,
             "headers": Object {},
             "htmlDescription": undefined,
+            "name": undefined,
             "path": "/v1/submit-completion-actuals",
             "pathParameters": Object {},
             "queryParameters": Object {},
@@ -91628,6 +92092,7 @@ Object {
             "descriptionContainsMarkdown": true,
             "headers": Object {},
             "htmlDescription": undefined,
+            "name": undefined,
             "path": "/v1/submit-completion-actuals",
             "pathParameters": Object {},
             "queryParameters": Object {},
@@ -91729,6 +92194,7 @@ Object {
       Object {
         "authed": true,
         "availability": "GenerallyAvailable",
+        "customCodeSamples": Array [],
         "defaultEnvironment": "Production",
         "description": "    Used to submit feedback regarding the quality of previous workflow execution and its outputs.
 
@@ -91753,6 +92219,7 @@ Object {
             "descriptionContainsMarkdown": true,
             "headers": Object {},
             "htmlDescription": undefined,
+            "name": undefined,
             "path": "/v1/submit-workflow-execution-actuals",
             "pathParameters": Object {},
             "queryParameters": Object {},
@@ -92011,6 +92478,7 @@ Object {
         Object {
           "authed": true,
           "availability": "Beta",
+          "customCodeSamples": Array [],
           "defaultEnvironment": "Production",
           "description": "Used to retrieve a deployment given its ID or name.",
           "descriptionContainsMarkdown": true,
@@ -92033,6 +92501,7 @@ Object {
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/v1/deployments/:id",
               "pathParameters": Object {
                 "id": ":id",
@@ -92156,6 +92625,7 @@ Object {
         Object {
           "authed": true,
           "availability": "Beta",
+          "customCodeSamples": Array [],
           "defaultEnvironment": "Production",
           "description": "Creates a new document index.",
           "descriptionContainsMarkdown": true,
@@ -92178,6 +92648,7 @@ Object {
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/v1/document-indexes",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -92366,6 +92837,7 @@ Object {
         Object {
           "authed": true,
           "availability": "GenerallyAvailable",
+          "customCodeSamples": Array [],
           "defaultEnvironment": "Production",
           "description": "Used to list documents. Optionally filter on supported fields.",
           "descriptionContainsMarkdown": true,
@@ -92388,6 +92860,7 @@ Object {
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/v1/documents",
               "pathParameters": Object {},
               "queryParameters": Object {
@@ -92551,6 +93024,7 @@ Object {
         Object {
           "authed": true,
           "availability": "Beta",
+          "customCodeSamples": Array [],
           "defaultEnvironment": "Production",
           "description": "Update a Document, keying off of its Vellum-generated ID. Particularly useful for updating its metadata.",
           "descriptionContainsMarkdown": true,
@@ -92573,6 +93047,7 @@ Object {
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/v1/documents/:id",
               "pathParameters": Object {
                 "id": ":id",
@@ -92740,6 +93215,7 @@ Object {
         Object {
           "authed": true,
           "availability": undefined,
+          "customCodeSamples": Array [],
           "defaultEnvironment": "Production",
           "description": undefined,
           "descriptionContainsMarkdown": true,
@@ -92762,6 +93238,7 @@ Object {
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/v1/documents/:id",
               "pathParameters": Object {
                 "id": ":id",
@@ -92820,6 +93297,7 @@ Object {
         Object {
           "authed": true,
           "availability": "GenerallyAvailable",
+          "customCodeSamples": Array [],
           "defaultEnvironment": "Production",
           "description": "Upload a document to be indexed and used for search.
 
@@ -92894,6 +93372,7 @@ Object {
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/v1/upload-document",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -92923,6 +93402,7 @@ Object {
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/v1/upload-document",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -92948,6 +93428,7 @@ Object {
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/v1/upload-document",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -92973,6 +93454,7 @@ Object {
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/v1/upload-document",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -93049,6 +93531,7 @@ Object {
         Object {
           "authed": true,
           "availability": "Beta",
+          "customCodeSamples": Array [],
           "defaultEnvironment": "Production",
           "description": "Used to retrieve a model version given its ID.",
           "descriptionContainsMarkdown": true,
@@ -93071,6 +93554,7 @@ Object {
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/v1/model-versions/:id",
               "pathParameters": Object {
                 "id": ":id",
@@ -93269,6 +93753,7 @@ Object {
         Object {
           "authed": true,
           "availability": "Beta",
+          "customCodeSamples": Array [],
           "defaultEnvironment": "Production",
           "description": "Compiles the prompt backing the model version using the provided input values.",
           "descriptionContainsMarkdown": true,
@@ -93291,6 +93776,7 @@ Object {
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/v1/model-versions/:id/compile-prompt",
               "pathParameters": Object {
                 "id": ":id",
@@ -93424,6 +93910,7 @@ Object {
         Object {
           "authed": true,
           "availability": "Beta",
+          "customCodeSamples": Array [],
           "defaultEnvironment": "Production",
           "description": "Registers a prompt within Vellum and creates associated Vellum entities. Intended to be used by integration
 partners, not directly by Vellum users.
@@ -93469,6 +93956,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/v1/registered-prompts/register",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -93594,6 +94082,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/v1/registered-prompts/register",
               "pathParameters": Object {},
               "queryParameters": Object {},
@@ -93818,6 +94307,7 @@ partners, not directly by Vellum users.</p>
         Object {
           "authed": true,
           "availability": "Beta",
+          "customCodeSamples": Array [],
           "defaultEnvironment": "Production",
           "description": "Upserts a new scenario for a sandbox, keying off of the optionally provided scenario id.
 
@@ -93846,6 +94336,7 @@ or overwritten with default values.",
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/v1/sandboxes/:id/scenarios",
               "pathParameters": Object {
                 "id": ":id",
@@ -94034,6 +94525,7 @@ or overwritten with default values.</p>
         Object {
           "authed": true,
           "availability": "Beta",
+          "customCodeSamples": Array [],
           "defaultEnvironment": "Production",
           "description": "Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
           "descriptionContainsMarkdown": true,
@@ -94056,6 +94548,7 @@ or overwritten with default values.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/v1/sandboxes/:id/scenarios/:scenario_id",
               "pathParameters": Object {
                 "id": ":id",
@@ -94149,6 +94642,7 @@ or overwritten with default values.</p>
         Object {
           "authed": true,
           "availability": "Beta",
+          "customCodeSamples": Array [],
           "defaultEnvironment": "Production",
           "description": "Upserts a new test case for a test suite, keying off of the optionally provided test case id.
 
@@ -94177,6 +94671,7 @@ or overwritten with default values.",
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/v1/test-suites/:id/test-cases",
               "pathParameters": Object {
                 "id": ":id",
@@ -94343,6 +94838,7 @@ or overwritten with default values.</p>
         Object {
           "authed": true,
           "availability": "Beta",
+          "customCodeSamples": Array [],
           "defaultEnvironment": "Production",
           "description": "Deletes an existing test case for a test suite, keying off of the test case id.
 ",
@@ -94366,6 +94862,7 @@ or overwritten with default values.</p>
               "descriptionContainsMarkdown": true,
               "headers": Object {},
               "htmlDescription": undefined,
+              "name": undefined,
               "path": "/v1/test-suites/:id/test-cases/:test_case_id",
               "pathParameters": Object {
                 "id": ":id",

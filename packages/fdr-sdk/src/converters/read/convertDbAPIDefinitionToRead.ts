@@ -95,6 +95,7 @@ function transformEndpoint({
         htmlDescription: dbShape.htmlDescription,
         authed: dbShape.authed ?? false,
         descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
+        customCodeSamples: dbShape.customCodeSamples ?? [],
     };
 }
 
@@ -139,6 +140,7 @@ export function convertExampleEndpointCall({
     dbShape: APIV1Read.ExampleEndpointCall;
 }): WithoutQuestionMarks<APIV1Read.ExampleEndpointCall> {
     return {
+        name: dbShape.name,
         description: dbShape.description,
         htmlDescription: dbShape.htmlDescription,
         descriptionContainsMarkdown: true,

@@ -203,6 +203,7 @@ function transformEndpoint({
         htmlDescription,
         authed: writeShape.auth,
         descriptionContainsMarkdown: true,
+        customCodeSamples: writeShape.customCodeSamples ?? [],
     };
 }
 
@@ -412,6 +413,7 @@ export function transformExampleEndpointCall({
 }): WithoutQuestionMarks<FdrAPI.api.v1.read.ExampleEndpointCall> {
     const htmlDescription = getHtmlDescription(writeShape.description);
     return {
+        name: writeShape.name,
         description: writeShape.description,
         htmlDescription,
         descriptionContainsMarkdown: true,
