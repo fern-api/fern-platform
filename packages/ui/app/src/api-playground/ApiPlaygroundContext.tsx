@@ -8,11 +8,16 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { noop } from "lodash-es";
+import dynamic from "next/dynamic";
 import { createContext, FC, PropsWithChildren, useCallback, useContext, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { PlaygroundRequestFormAuth, PlaygroundRequestFormState } from "./types";
 import { getDefaultValueForTypes, getDefaultValuesForBody } from "./utils";
+
+const ApiPlayground = dynamic(() => import("../api-playground/ApiPlayground").then((m) => m.ApiPlayground), {
+    ssr: false,
+});
 
 export interface ApiPlaygroundSelectionState {
     apiSection: ResolvedNavigationItemApiSection;
@@ -104,6 +109,7 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundPro
             }}
         >
             {children}
+            <ApiPlayground apiSections={apiSections} />
         </ApiPlaygroundContext.Provider>
     );
 };

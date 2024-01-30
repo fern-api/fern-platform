@@ -7,7 +7,6 @@ import { useTheme } from "next-themes";
 import NextNProgress from "nextjs-progressbar";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import tinycolor from "tinycolor2";
-import { ApiPlayground } from "../api-playground/ApiPlayground";
 import { ApiPlaygroundContextProvider } from "../api-playground/ApiPlaygroundContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
@@ -182,7 +181,6 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                             <DocsMainContent navigationItems={navigationItems} />
                         </main>
                     </div>
-                    <ApiPlayground apiSections={apiSections} />
                 </div>
             </ApiPlaygroundContextProvider>
         </>
