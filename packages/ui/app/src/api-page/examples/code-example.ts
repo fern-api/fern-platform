@@ -78,7 +78,7 @@ export function generateCodeExamples(examples: APIV1Read.ExampleEndpointCall[]):
         example.codeSamples.forEach((codeSample, j) => {
             const language = cleanLanguage(codeSample.language);
             codeExamples.set(language, [
-                ...(codeExamples.get(language) ?? []),
+                ...(codeExamples.get(language) ?? []).filter((e) => e.exampleIndex !== i),
                 {
                     key: `${language}-${i}/${j}`,
                     exampleIndex: i,
