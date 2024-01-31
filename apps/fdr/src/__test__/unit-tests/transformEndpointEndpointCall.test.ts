@@ -71,7 +71,10 @@ describe("transformEndpointEndpointCall", () => {
         expect(transformed).toEqual({
             codeExamples: {
                 nodeAxios: "",
+                pythonSdk: undefined,
+                typescriptSdk: undefined,
             },
+            codeSamples: [],
             description: undefined,
             descriptionContainsMarkdown: true,
             htmlDescription: undefined,
@@ -86,9 +89,9 @@ describe("transformEndpointEndpointCall", () => {
                 queryParam: 123,
             },
             requestBody: undefined,
-            requestBodyV2: undefined,
+            requestBodyV3: undefined,
             responseBody: undefined,
-            responseBodyV2: undefined,
+            responseBodyV3: undefined,
             responseStatusCode: 200,
         });
     });

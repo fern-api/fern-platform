@@ -203,7 +203,6 @@ function transformEndpoint({
         htmlDescription,
         authed: writeShape.auth,
         descriptionContainsMarkdown: true,
-        customCodeSamples: writeShape.customCodeSamples ?? [],
     };
 }
 
@@ -442,6 +441,7 @@ export function transformExampleEndpointCall({
                       value: writeShape.responseBody,
                   }
                 : undefined,
+        codeSamples: writeShape.codeSamples ?? [],
     };
 }
 

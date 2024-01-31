@@ -95,7 +95,6 @@ function transformEndpoint({
         htmlDescription: dbShape.htmlDescription,
         authed: dbShape.authed ?? false,
         descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
-        customCodeSamples: dbShape.customCodeSamples ?? [],
     };
 }
 
@@ -166,5 +165,6 @@ export function convertExampleEndpointCall({
                       value: dbShape.responseBody,
                   }
                 : undefined,
+        codeSamples: dbShape.codeSamples ?? [],
     };
 }

@@ -31,7 +31,6 @@ types:
       errors: list<ErrorDeclaration>
       errorsV2: optional<list<ErrorDeclarationV2>>
       examples: list<ExampleEndpointCall>
-      customCodeSamples: list<CustomCodeSample>
 
   Environment:
     properties:
@@ -178,6 +177,7 @@ types:
       responseBody: unknown
       responseBodyV3: optional<ExampleEndpointResponse>
       codeExamples: CodeExamples
+      codeSamples: list<CustomCodeSample>
 
   CodeExamples:
     properties:
@@ -186,6 +186,7 @@ types:
       typescriptSdk: optional<TypescriptSnippet>
 
   CustomCodeSample:
+    docs: Hand-written code samples
     extends: commons.WithDescription
     properties:
       language: Language

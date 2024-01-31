@@ -28,7 +28,6 @@ types:
       errors: optional<list<ErrorDeclaration>>
       errorsV2: optional<list<ErrorDeclarationV2>>
       examples: list<ExampleEndpointCall>
-      customCodeSamples: optional<list<CustomCodeSample>>
 
   Environment:
     properties:
@@ -187,8 +186,10 @@ types:
         type: unknown
         availability: deprecated
       responseBodyV3: optional<ExampleEndpointResponse>
+      codeSamples: optional<list<CustomCodeSample>>
 
   CustomCodeSample:
+    docs: Hand-written code samples
     extends: commons.WithDescription
     properties:
       language: string
