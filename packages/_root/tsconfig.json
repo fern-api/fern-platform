@@ -14,6 +14,6 @@
     { "path": "../commons/react/split-view" },
     { "path": "../commons/react/toaster" },
     { "path": "../scripts" },
-    { "path": "../ui/app" },
-  ],
+    { "path": "../ui/app" }
+  ]
 }

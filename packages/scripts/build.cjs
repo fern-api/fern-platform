@@ -31,7 +31,7 @@ async function main() {
         "cli.cjs",
         `#!/usr/bin/env node
 
-require("./bundle.cjs");`,
+require("./bundle.cjs");`
     );
     await chmod("cli.cjs", "755");
 }
