@@ -2,7 +2,8 @@ import classNames from "classnames";
 import { useTheme } from "next-themes";
 import React from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import * as prism from "react-syntax-highlighter/dist/cjs/styles/prism";
+import oneLight from "react-syntax-highlighter/dist/cjs/styles/prism/one-light";
+import vscDarkPlus from "react-syntax-highlighter/dist/cjs/styles/prism/vsc-dark-plus";
 
 type CodeBlockSkeletonProps = {
     className?: string;
@@ -51,7 +52,7 @@ export const FernSyntaxHighlighter: React.FC<React.ComponentProps<typeof SyntaxH
     return (
         <SyntaxHighlighter
             {...props}
-            style={theme === "dark" ? prism.vscDarkPlus : prism.oneLight}
+            style={theme === "dark" ? vscDarkPlus : oneLight}
             customStyle={{
                 width: "100%",
                 overflowX: "auto",
