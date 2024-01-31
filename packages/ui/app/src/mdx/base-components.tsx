@@ -21,13 +21,15 @@ export const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({ className, .
 
 export const Table: React.FC<HTMLAttributes<HTMLTableElement>> = ({ className, ...rest }) => {
     return (
-        <table
-            {...rest}
-            className={classNames(
-                className,
-                "block border-separate border-spacing-0 overflow-x-auto table-auto mb-3 text-sm max-w-full not-prose border border-border-default-light dark:border-border-default-dark rounded-lg bg-background-primary-light dark:bg-background-primary-dark"
-            )}
-        />
+        <div className="border-border-default-light dark:border-border-default-dark mb-3 overflow-hidden rounded-lg border">
+            <table
+                {...rest}
+                className={classNames(
+                    className,
+                    "min-w-full border-separate border-spacing-0 overflow-x-auto table-auto text-sm max-w-full not-prose bg-background-primary-light dark:bg-background-primary-dark"
+                )}
+            />
+        </div>
     );
 };
 
