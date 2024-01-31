@@ -1,5 +1,5 @@
-import { streamToResponse } from "ai";
 import { NextApiHandler, NextApiResponse } from "next";
+import { Stream } from "../api-playground/Stream";
 
 interface ProxyRequest {
     url: string;
@@ -62,7 +62,20 @@ export const proxyApiHandler: NextApiHandler = async (req, res: NextApiResponse<
                 headers: Object.fromEntries(headers.entries()),
             });
         } else if (response.body != null) {
-            return streamToResponse(response.body, res);
+            const stream = new Stream({
+                stream: response.body,
+                parse: async (i) => JSON.stringify(i) + "\n",
+                terminator: "\n",
+            });
+            res.writeHead(response.status, undefined, {
+                "Content-Type": "application/json",
+                "Transfer-Encoding": "chunked",
+            });
+            res.flushHeaders();
+            for await (const chunk of stream) {
+                res.write(chunk);
+            }
+            res.end();
         }
     } catch (err) {
         // eslint-disable-next-line no-console

@@ -5,10 +5,12 @@ import { CopyToClipboardButton } from "../commons/CopyToClipboardButton";
 
 interface PlaygroundResponsePreviewProps {
     responseBody: unknown;
+    stream?: boolean;
 }
 
 export const PlaygroundResponsePreview: FC<PlaygroundResponsePreviewProps> = memo(function PlaygroundResponsePreview({
     responseBody,
+    stream,
 }) {
     const { resolvedTheme: theme } = useTheme();
     const responseJson = JSON.stringify(responseBody, null, 2);
@@ -19,19 +21,30 @@ export const PlaygroundResponsePreview: FC<PlaygroundResponsePreviewProps> = mem
                 content={responseJson}
             />
             <div className="h-full overflow-auto font-mono text-xs">
-                <FernSyntaxHighlighter
-                    language={"json"}
-                    customStyle={{ height: "100%", paddingLeft: 0 }}
-                    showLineNumbers={true}
-                    lineNumberStyle={{
-                        position: "sticky",
-                        left: 0,
-                        // paddingLeft: 8,
-                        backgroundColor: theme === "dark" ? "rgb(var(--background-dark))" : "rgb(var(--background))",
-                    }}
-                >
-                    {responseJson}
-                </FernSyntaxHighlighter>
+                {stream && Array.isArray(responseBody) ? (
+                    <ul className="p-4">
+                        {responseBody.map((item, index) => (
+                            <li key={index}>
+                                <span className="whitespace-pre">{JSON.stringify(item)}</span>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <FernSyntaxHighlighter
+                        language={"json"}
+                        customStyle={{ height: "100%", paddingLeft: 0 }}
+                        showLineNumbers={true}
+                        lineNumberStyle={{
+                            position: "sticky",
+                            left: 0,
+                            // paddingLeft: 8,
+                            backgroundColor:
+                                theme === "dark" ? "rgb(var(--background-dark))" : "rgb(var(--background))",
+                        }}
+                    >
+                        {responseJson}
+                    </FernSyntaxHighlighter>
+                )}
             </div>
         </div>
     );

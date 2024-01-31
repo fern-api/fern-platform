@@ -51,7 +51,6 @@
     "@headlessui/react": "^1.7.18",
     "@react-hook/size": "^2.1.2",
     "@vercel/speed-insights": "^1.0.7",
-    "ai": "^2.2.32",
     "algoliasearch": "^4.22.1",
     "classnames": "^2.5.1",
     "instantsearch.js": "^4.63.0",

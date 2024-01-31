@@ -331,6 +331,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                     loaded: (response) => (
                         <PlaygroundResponsePreview
                             responseBody={response.type === "json" ? response.body : response.items}
+                            stream={response.type === "stream"}
                         />
                     ),
                     failed: () => <span>Failed</span>,
