@@ -44,9 +44,7 @@ export const DocsApp: React.FC<App.Props> = ({
     const config = useDeepCompareMemoize(unmemoizedConfig);
 
     useEffect(() => {
-        if (process.env.NEXT_PUBLIC_POSTHOG_API_KEY != null && process.env.NEXT_PUBLIC_POSTHOG_API_KEY.length > 0) {
-            initializePosthog(process.env.NEXT_PUBLIC_POSTHOG_API_KEY);
-        }
+        initializePosthog();
     }, []);
 
     return (

@@ -3563,6 +3563,31 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
+        ["virtual:25a018ab65c05215e2e32d797a61f32ad791cd7d01a45a0ee6e38123e67ae52b308d49541a997a63cb73cc5870d8015c95956cf4d1cd58f265161b6134899ca2#npm:5.8.2", {\
+          "packageLocation": "./.yarn/__virtual__/@blueprintjs-core-virtual-1e9074024c/0/cache/@blueprintjs-core-npm-5.8.2-0b8a2ac3e1-f8480389af.zip/node_modules/@blueprintjs/core/",\
+          "packageDependencies": [\
+            ["@blueprintjs/core", "virtual:25a018ab65c05215e2e32d797a61f32ad791cd7d01a45a0ee6e38123e67ae52b308d49541a997a63cb73cc5870d8015c95956cf4d1cd58f265161b6134899ca2#npm:5.8.2"],\
+            ["@blueprintjs/colors", "npm:5.0.9"],\
+            ["@blueprintjs/icons", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.7.0"],\
+            ["@popperjs/core", "npm:2.11.8"],\
+            ["@types/react", "npm:18.0.20"],\
+            ["@types/react-dom", "npm:18.2.18"],\
+            ["classnames", "npm:2.3.1"],\
+            ["normalize.css", "npm:8.0.1"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
+            ["react-popper", "virtual:d2059c01bad8c87a960b7c316c717ff4d401763b53ca0bcceba53192f92d96077662942ff5d2f83d3edd879296685f5879e2141a8e458aa09fbc478e496ca744#npm:2.3.0"],\
+            ["react-transition-group", "virtual:d2059c01bad8c87a960b7c316c717ff4d401763b53ca0bcceba53192f92d96077662942ff5d2f83d3edd879296685f5879e2141a8e458aa09fbc478e496ca744#npm:4.4.5"],\
+            ["tslib", "npm:2.6.2"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:5.8.1", {\
           "packageLocation": "./.yarn/__virtual__/@blueprintjs-core-virtual-12f0dbd532/0/cache/@blueprintjs-core-npm-5.8.1-97817e2227-938bc0bf64.zip/node_modules/@blueprintjs/core/",\
           "packageDependencies": [\
@@ -3578,31 +3603,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
             ["react-popper", "virtual:12f0dbd532a540be73fd452f90d2fe8d5c4fdf973bab4973c5d08fba1a179ff60e1642c42ed0011f693478d5adba909c1bab5c64e53e6b1e34accd86be561caf#npm:2.3.0"],\
             ["react-transition-group", "virtual:12f0dbd532a540be73fd452f90d2fe8d5c4fdf973bab4973c5d08fba1a179ff60e1642c42ed0011f693478d5adba909c1bab5c64e53e6b1e34accd86be561caf#npm:4.4.5"],\
-            ["tslib", "npm:2.6.2"]\
-          ],\
-          "packagePeers": [\
-            "@types/react-dom",\
-            "@types/react",\
-            "react-dom",\
-            "react"\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["virtual:3e15f123fa60f3a21c3200c61f0f4cd2cc2baa7e0bc47b9e21f659b954501f75b22b15f0ee46445729b25a6c108b0bbb87ad967a4afcee6a9d133905b2da674c#npm:5.8.2", {\
-          "packageLocation": "./.yarn/__virtual__/@blueprintjs-core-virtual-52afeed0dc/0/cache/@blueprintjs-core-npm-5.8.2-0b8a2ac3e1-f8480389af.zip/node_modules/@blueprintjs/core/",\
-          "packageDependencies": [\
-            ["@blueprintjs/core", "virtual:3e15f123fa60f3a21c3200c61f0f4cd2cc2baa7e0bc47b9e21f659b954501f75b22b15f0ee46445729b25a6c108b0bbb87ad967a4afcee6a9d133905b2da674c#npm:5.8.2"],\
-            ["@blueprintjs/colors", "npm:5.0.9"],\
-            ["@blueprintjs/icons", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.7.0"],\
-            ["@popperjs/core", "npm:2.11.8"],\
-            ["@types/react", "npm:18.0.20"],\
-            ["@types/react-dom", "npm:18.2.18"],\
-            ["classnames", "npm:2.3.1"],\
-            ["normalize.css", "npm:8.0.1"],\
-            ["react", "npm:18.2.0"],\
-            ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
-            ["react-popper", "virtual:d2059c01bad8c87a960b7c316c717ff4d401763b53ca0bcceba53192f92d96077662942ff5d2f83d3edd879296685f5879e2141a8e458aa09fbc478e496ca744#npm:2.3.0"],\
-            ["react-transition-group", "virtual:d2059c01bad8c87a960b7c316c717ff4d401763b53ca0bcceba53192f92d96077662942ff5d2f83d3edd879296685f5879e2141a8e458aa09fbc478e496ca744#npm:4.4.5"],\
             ["tslib", "npm:2.6.2"]\
           ],\
           "packagePeers": [\
@@ -3676,7 +3676,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/__virtual__/@blueprintjs-datetime-virtual-3e15f123fa/0/cache/@blueprintjs-datetime-npm-5.2.11-9c709ae380-c69470e3c0.zip/node_modules/@blueprintjs/datetime/",\
           "packageDependencies": [\
             ["@blueprintjs/datetime", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.2.11"],\
-            ["@blueprintjs/core", "virtual:3e15f123fa60f3a21c3200c61f0f4cd2cc2baa7e0bc47b9e21f659b954501f75b22b15f0ee46445729b25a6c108b0bbb87ad967a4afcee6a9d133905b2da674c#npm:5.8.2"],\
+            ["@blueprintjs/core", "virtual:25a018ab65c05215e2e32d797a61f32ad791cd7d01a45a0ee6e38123e67ae52b308d49541a997a63cb73cc5870d8015c95956cf4d1cd58f265161b6134899ca2#npm:5.8.2"],\
             ["@blueprintjs/icons", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.7.0"],\
             ["@blueprintjs/select", "virtual:3e15f123fa60f3a21c3200c61f0f4cd2cc2baa7e0bc47b9e21f659b954501f75b22b15f0ee46445729b25a6c108b0bbb87ad967a4afcee6a9d133905b2da674c#npm:5.0.23"],\
             ["@types/react", "npm:18.0.20"],\
@@ -3700,18 +3700,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@blueprintjs/datetime2", [\
-        ["npm:2.2.9", {\
-          "packageLocation": "./.yarn/cache/@blueprintjs-datetime2-npm-2.2.9-a95144ba37-ef35243cad.zip/node_modules/@blueprintjs/datetime2/",\
+        ["npm:2.2.10", {\
+          "packageLocation": "./.yarn/cache/@blueprintjs-datetime2-npm-2.2.10-6d05f4e79a-2abb547a20.zip/node_modules/@blueprintjs/datetime2/",\
           "packageDependencies": [\
-            ["@blueprintjs/datetime2", "npm:2.2.9"]\
+            ["@blueprintjs/datetime2", "npm:2.2.10"]\
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.2.9", {\
-          "packageLocation": "./.yarn/__virtual__/@blueprintjs-datetime2-virtual-329252a27e/0/cache/@blueprintjs-datetime2-npm-2.2.9-a95144ba37-ef35243cad.zip/node_modules/@blueprintjs/datetime2/",\
+        ["virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.2.10", {\
+          "packageLocation": "./.yarn/__virtual__/@blueprintjs-datetime2-virtual-25a018ab65/0/cache/@blueprintjs-datetime2-npm-2.2.10-6d05f4e79a-2abb547a20.zip/node_modules/@blueprintjs/datetime2/",\
           "packageDependencies": [\
-            ["@blueprintjs/datetime2", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.2.9"],\
-            ["@blueprintjs/core", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.8.1"],\
+            ["@blueprintjs/datetime2", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.2.10"],\
+            ["@blueprintjs/core", "virtual:25a018ab65c05215e2e32d797a61f32ad791cd7d01a45a0ee6e38123e67ae52b308d49541a997a63cb73cc5870d8015c95956cf4d1cd58f265161b6134899ca2#npm:5.8.2"],\
             ["@blueprintjs/datetime", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.2.11"],\
             ["@blueprintjs/icons", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.7.0"],\
             ["@types/react", "npm:18.0.20"],\
@@ -3719,9 +3719,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["classnames", "npm:2.3.1"],\
             ["date-fns", "npm:2.30.0"],\
             ["react", "npm:18.2.0"],\
-            ["react-day-picker", "virtual:329252a27e49932f69418975d73c05dc01d5c3fc89f87c6c327886996920188474fa5405912dbf955a4470276069c982eafb2f34c316d3bed64564007da84a8e#npm:8.10.0"],\
+            ["react-day-picker", "virtual:25a018ab65c05215e2e32d797a61f32ad791cd7d01a45a0ee6e38123e67ae52b308d49541a997a63cb73cc5870d8015c95956cf4d1cd58f265161b6134899ca2#npm:8.10.0"],\
             ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
-            ["react-innertext", "virtual:329252a27e49932f69418975d73c05dc01d5c3fc89f87c6c327886996920188474fa5405912dbf955a4470276069c982eafb2f34c316d3bed64564007da84a8e#npm:1.1.5"],\
+            ["react-innertext", "virtual:25a018ab65c05215e2e32d797a61f32ad791cd7d01a45a0ee6e38123e67ae52b308d49541a997a63cb73cc5870d8015c95956cf4d1cd58f265161b6134899ca2#npm:1.1.5"],\
             ["tslib", "npm:2.6.2"]\
           ],\
           "packagePeers": [\
@@ -3833,7 +3833,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/__virtual__/@blueprintjs-select-virtual-7b867869d6/0/cache/@blueprintjs-select-npm-5.0.23-41413e5d03-dca93f736e.zip/node_modules/@blueprintjs/select/",\
           "packageDependencies": [\
             ["@blueprintjs/select", "virtual:3e15f123fa60f3a21c3200c61f0f4cd2cc2baa7e0bc47b9e21f659b954501f75b22b15f0ee46445729b25a6c108b0bbb87ad967a4afcee6a9d133905b2da674c#npm:5.0.23"],\
-            ["@blueprintjs/core", "virtual:3e15f123fa60f3a21c3200c61f0f4cd2cc2baa7e0bc47b9e21f659b954501f75b22b15f0ee46445729b25a6c108b0bbb87ad967a4afcee6a9d133905b2da674c#npm:5.8.2"],\
+            ["@blueprintjs/core", "virtual:25a018ab65c05215e2e32d797a61f32ad791cd7d01a45a0ee6e38123e67ae52b308d49541a997a63cb73cc5870d8015c95956cf4d1cd58f265161b6134899ca2#npm:5.8.2"],\
             ["@blueprintjs/icons", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.7.0"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", "npm:18.2.18"],\
@@ -4445,7 +4445,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.8.8"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
-            ["sass", "npm:1.69.7"],\
+            ["sass", "npm:1.70.0"],\
             ["styled-jsx", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:5.1.2"],\
             ["stylelint", "npm:16.1.0"],\
             ["tailwindcss", "npm:3.4.1"],\
@@ -4501,7 +4501,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.8.8"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
-            ["sass", "npm:1.69.7"],\
+            ["sass", "npm:1.70.0"],\
             ["stylelint", "npm:16.1.0"],\
             ["tailwindcss", "npm:3.4.1"],\
             ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"]\
@@ -4607,7 +4607,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
             ["react-draggable", "virtual:83226786336e3ec1d65bc4d7ab2fe8e410a92ae0faa428c376517262a7687f8c564f714ddc7188c47ae46ee441f6c920894158bd24f5245f2836019a45954fca#npm:4.4.6"],\
-            ["sass", "npm:1.69.7"],\
+            ["sass", "npm:1.70.0"],\
             ["stylelint", "npm:16.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"],\
             ["vite", "virtual:83226786336e3ec1d65bc4d7ab2fe8e410a92ae0faa428c376517262a7687f8c564f714ddc7188c47ae46ee441f6c920894158bd24f5245f2836019a45954fca#npm:4.5.2"]\
@@ -4645,7 +4645,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
             ["@blueprintjs/core", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.8.1"],\
             ["@blueprintjs/datetime", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.2.11"],\
-            ["@blueprintjs/datetime2", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.2.9"],\
+            ["@blueprintjs/datetime2", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.2.10"],\
             ["@blueprintjs/icons", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.7.0"],\
             ["@blueprintjs/select", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.0.22"],\
             ["@fern-api/fdr-sdk", "npm:0.46.1-18-g26596cb"],\
@@ -15666,7 +15666,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["postcss", "npm:8.4.31"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
-            ["sass", "npm:1.69.7"],\
+            ["sass", "npm:1.70.0"],\
             ["styled-jsx", "virtual:1fb4793cda658baa2784e33af35bd4eb8b51de4759933685f057e3640bfdc682d7fa82fa1edb5a01c899681a1d18776cc50dfb9cadcf037888f9270bc612a8bf#npm:5.1.1"],\
             ["watchpack", "npm:2.4.0"]\
           ],\
@@ -17113,10 +17113,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:329252a27e49932f69418975d73c05dc01d5c3fc89f87c6c327886996920188474fa5405912dbf955a4470276069c982eafb2f34c316d3bed64564007da84a8e#npm:8.10.0", {\
-          "packageLocation": "./.yarn/__virtual__/react-day-picker-virtual-dd60cc2b7d/0/cache/react-day-picker-npm-8.10.0-f78f1a9c78-a265e8c2f3.zip/node_modules/react-day-picker/",\
+        ["virtual:25a018ab65c05215e2e32d797a61f32ad791cd7d01a45a0ee6e38123e67ae52b308d49541a997a63cb73cc5870d8015c95956cf4d1cd58f265161b6134899ca2#npm:8.10.0", {\
+          "packageLocation": "./.yarn/__virtual__/react-day-picker-virtual-d9c8f4e73b/0/cache/react-day-picker-npm-8.10.0-f78f1a9c78-a265e8c2f3.zip/node_modules/react-day-picker/",\
           "packageDependencies": [\
-            ["react-day-picker", "virtual:329252a27e49932f69418975d73c05dc01d5c3fc89f87c6c327886996920188474fa5405912dbf955a4470276069c982eafb2f34c316d3bed64564007da84a8e#npm:8.10.0"],\
+            ["react-day-picker", "virtual:25a018ab65c05215e2e32d797a61f32ad791cd7d01a45a0ee6e38123e67ae52b308d49541a997a63cb73cc5870d8015c95956cf4d1cd58f265161b6134899ca2#npm:8.10.0"],\
             ["@types/date-fns", null],\
             ["@types/react", "npm:18.0.20"],\
             ["date-fns", "npm:2.30.0"],\
@@ -17252,10 +17252,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:329252a27e49932f69418975d73c05dc01d5c3fc89f87c6c327886996920188474fa5405912dbf955a4470276069c982eafb2f34c316d3bed64564007da84a8e#npm:1.1.5", {\
-          "packageLocation": "./.yarn/__virtual__/react-innertext-virtual-8faf6d9082/0/cache/react-innertext-npm-1.1.5-50613b71c6-01c9c8a5a4.zip/node_modules/react-innertext/",\
+        ["virtual:25a018ab65c05215e2e32d797a61f32ad791cd7d01a45a0ee6e38123e67ae52b308d49541a997a63cb73cc5870d8015c95956cf4d1cd58f265161b6134899ca2#npm:1.1.5", {\
+          "packageLocation": "./.yarn/__virtual__/react-innertext-virtual-8e82bc2bc6/0/cache/react-innertext-npm-1.1.5-50613b71c6-01c9c8a5a4.zip/node_modules/react-innertext/",\
           "packageDependencies": [\
-            ["react-innertext", "virtual:329252a27e49932f69418975d73c05dc01d5c3fc89f87c6c327886996920188474fa5405912dbf955a4470276069c982eafb2f34c316d3bed64564007da84a8e#npm:1.1.5"],\
+            ["react-innertext", "virtual:25a018ab65c05215e2e32d797a61f32ad791cd7d01a45a0ee6e38123e67ae52b308d49541a997a63cb73cc5870d8015c95956cf4d1cd58f265161b6134899ca2#npm:1.1.5"],\
             ["@types/react", "npm:18.0.20"],\
             ["react", "npm:18.2.0"]\
           ],\
@@ -18238,6 +18238,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/sass-npm-1.69.7-ac434a094c-c67cd32b69.zip/node_modules/sass/",\
           "packageDependencies": [\
             ["sass", "npm:1.69.7"],\
+            ["chokidar", "npm:3.5.3"],\
+            ["immutable", "npm:4.0.0"],\
+            ["source-map-js", "npm:1.0.2"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:1.70.0", {\
+          "packageLocation": "./.yarn/cache/sass-npm-1.70.0-153257249c-fd1b622cf9.zip/node_modules/sass/",\
+          "packageDependencies": [\
+            ["sass", "npm:1.70.0"],\
             ["chokidar", "npm:3.5.3"],\
             ["immutable", "npm:4.0.0"],\
             ["source-map-js", "npm:1.0.2"]\
@@ -20429,7 +20439,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["lightningcss", null],\
             ["postcss", "npm:8.4.31"],\
             ["rollup", "npm:3.29.3"],\
-            ["sass", "npm:1.69.7"],\
+            ["sass", "npm:1.70.0"],\
             ["stylus", null],\
             ["sugarss", null],\
             ["terser", null]\

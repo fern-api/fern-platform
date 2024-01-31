@@ -2060,12 +2060,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@blueprintjs/datetime2@npm:^2.2.9":
-  version: 2.2.9
-  resolution: "@blueprintjs/datetime2@npm:2.2.9"
+"@blueprintjs/datetime2@npm:^2.2.10":
+  version: 2.2.10
+  resolution: "@blueprintjs/datetime2@npm:2.2.10"
   dependencies:
-    "@blueprintjs/core": ^5.8.1
-    "@blueprintjs/datetime": ^5.2.10
+    "@blueprintjs/core": ^5.8.2
+    "@blueprintjs/datetime": ^5.2.11
     "@blueprintjs/icons": ^5.7.0
     classnames: ^2.3.1
     date-fns: ^2.28.0
@@ -2079,11 +2079,11 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: ef35243cad6eeb34916f5bc56316bb271fc55594faf031456fc5535d897c3196fcb655c0979e2fab5911853bcc3f903d1520208838d9cdfb3e194fe2ded2f8a0
+  checksum: 2abb547a204de7a66b8714f5ba95c474c188508494c09d127623f3d6a9847243ff47f3567994ae6ba2e928accc9884fe332d9c334607aec070770b3e043a2f26
   languageName: node
   linkType: hard
 
-"@blueprintjs/datetime@npm:^5.2.10":
+"@blueprintjs/datetime@npm:^5.2.10, @blueprintjs/datetime@npm:^5.2.11":
   version: 5.2.11
   resolution: "@blueprintjs/datetime@npm:5.2.11"
   dependencies:
@@ -2623,7 +2623,7 @@ __metadata:
     prettier: ^2.8.8
     react: ^18.2.0
     react-dom: ^18.2.0
-    sass: ^1.69.7
+    sass: ^1.70.0
     styled-jsx: ^5.1.2
     stylelint: ^16.1.0
     tailwindcss: ^3.4.1
@@ -2675,7 +2675,7 @@ __metadata:
     prettier: ^2.8.8
     react: ^18.2.0
     react-dom: ^18.2.0
-    sass: ^1.69.7
+    sass: ^1.70.0
     stylelint: ^16.1.0
     tailwindcss: ^3.4.1
     typescript: 4.9.4
@@ -2775,7 +2775,7 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     react-draggable: ^4.4.6
-    sass: ^1.69.7
+    sass: ^1.70.0
     stylelint: ^16.1.0
     typescript: 4.9.4
     vite: ^4.5.2
@@ -2809,7 +2809,7 @@ __metadata:
   dependencies:
     "@blueprintjs/core": ^5.8.1
     "@blueprintjs/datetime": ^5.2.10
-    "@blueprintjs/datetime2": ^2.2.9
+    "@blueprintjs/datetime2": ^2.2.10
     "@blueprintjs/icons": ^5.7.0
     "@blueprintjs/select": ^5.0.22
     "@fern-api/fdr-sdk": 0.46.1-18-g26596cb
@@ -14121,7 +14121,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.58.3, sass@npm:^1.69.7":
+"sass@npm:^1.58.3":
   version: 1.69.7
   resolution: "sass@npm:1.69.7"
   dependencies:
@@ -14131,6 +14131,19 @@ env-cmd@toddbluhm/env-cmd:
   bin:
     sass: sass.js
   checksum: c67cd32b69fb26a50e4535353e4145de8cbc8187db07c467cc335157fd56d03cae98754f86efe43b880b29f20c0a168ab972c7f74ebfe234e2bd2dfb868890cb
+  languageName: node
+  linkType: hard
+
+"sass@npm:^1.70.0":
+  version: 1.70.0
+  resolution: "sass@npm:1.70.0"
+  dependencies:
+    chokidar: ">=3.0.0 <4.0.0"
+    immutable: ^4.0.0
+    source-map-js: ">=0.6.2 <2.0.0"
+  bin:
+    sass: sass.js
+  checksum: fd1b622cf9b7fa699a03ec634611997552ece45eb98ac365fef22f42bdcb8ed63b326b64173379c966830c8551ae801e44e4a00d2de16fdadda2dc8f35400bbb
   languageName: node
   linkType: hard
 
