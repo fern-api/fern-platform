@@ -8,7 +8,7 @@ type OtherKey = "Enter" | "Escape" | "Slash" | "Backspace" | "Tab" | "Space" | "
 export declare namespace useKeyboardPress {
     export interface Args {
         key: UppercaseLetter | Digit | Arrow | OtherKey;
-        onPress: () => void | Promise<void>;
+        onPress: (e: KeyboardEvent) => void | Promise<void>;
         preventDefault?: boolean;
     }
 
@@ -45,7 +45,7 @@ export function useKeyboardPress(args: useKeyboardPress.Args): void {
                 if (preventDefault) {
                     e.preventDefault();
                 }
-                await onPress();
+                await onPress(e);
             }
         }
 

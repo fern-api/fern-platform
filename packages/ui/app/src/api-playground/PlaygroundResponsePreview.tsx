@@ -1,5 +1,5 @@
 import { useTheme } from "next-themes";
-import { FC } from "react";
+import { FC, memo } from "react";
 import { FernSyntaxHighlighter } from "../commons/CodeBlockSkeleton";
 import { CopyToClipboardButton } from "../commons/CopyToClipboardButton";
 
@@ -7,11 +7,13 @@ interface PlaygroundResponsePreviewProps {
     responseBody: unknown;
 }
 
-export const PlaygroundResponsePreview: FC<PlaygroundResponsePreviewProps> = ({ responseBody }) => {
+export const PlaygroundResponsePreview: FC<PlaygroundResponsePreviewProps> = memo(function PlaygroundResponsePreview({
+    responseBody,
+}) {
     const { resolvedTheme: theme } = useTheme();
     const responseJson = JSON.stringify(responseBody, null, 2);
     return (
-        <div className="group relative h-full flex-1">
+        <div className="group relative min-h-0 flex-1 shrink">
             <CopyToClipboardButton
                 className="absolute right-2 top-2 z-10 opacity-0 transition-opacity group-hover:opacity-100"
                 content={responseJson}
@@ -33,4 +35,4 @@ export const PlaygroundResponsePreview: FC<PlaygroundResponsePreviewProps> = ({ 
             </div>
         </div>
     );
-};
+});

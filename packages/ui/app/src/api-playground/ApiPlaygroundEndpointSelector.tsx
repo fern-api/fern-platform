@@ -117,9 +117,24 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                                 closeDropdown();
                             }}
                         >
-                            <span className="whitespace-nowrap">
-                                {renderTextWithHighlight(endpointItem.name ?? "", filterValue)}
-                            </span>
+                            {endpointItem.id.endsWith("_stream") ? (
+                                <span className="inline-flex items-baseline gap-2">
+                                    <span className="whitespace-nowrap">
+                                        {renderTextWithHighlight(endpointItem.name ?? "", filterValue)}
+                                    </span>
+                                    <span
+                                        className={classNames(
+                                            "uppercase font-mono flex items-center text-xs leading-none bg-accent-primary/10 dark:bg-accent-primary-dark/10 text-accent-primary dark:text-accent-primary-dark p-0.5 rounded-[4px]"
+                                        )}
+                                    >
+                                        {"STREAM"}
+                                    </span>
+                                </span>
+                            ) : (
+                                <span className="whitespace-nowrap">
+                                    {renderTextWithHighlight(endpointItem.name ?? "", filterValue)}
+                                </span>
+                            )}
 
                             <HttpMethodTag method={endpointItem.method} small={true} />
                         </li>
@@ -153,7 +168,24 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                     </span>
                 )}
 
-                <span className="whitespace-nowrap">{endpoint?.name ?? placeholderText ?? "Select an endpoint"}</span>
+                {endpoint?.id.endsWith("_stream") ? (
+                    <span className="inline-flex items-baseline gap-2">
+                        <span className="whitespace-nowrap">
+                            {endpoint?.name ?? placeholderText ?? "Select an endpoint"}
+                        </span>
+                        <span
+                            className={classNames(
+                                "uppercase font-mono flex items-center text-xs leading-none bg-accent-primary/10 dark:bg-accent-primary-dark/10 text-accent-primary dark:text-accent-primary-dark p-0.5 rounded-[4px]"
+                            )}
+                        >
+                            {"STREAM"}
+                        </span>
+                    </span>
+                ) : (
+                    <span className="whitespace-nowrap">
+                        {endpoint?.name ?? placeholderText ?? "Select an endpoint"}
+                    </span>
+                )}
                 <ChevronDownIcon
                     className={classNames("h-5 w-5 transition", {
                         "rotate-180": showDropdown,

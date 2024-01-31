@@ -107,7 +107,9 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                                 />
                             )}
 
-                            {((property.valueShape.type === "optional" && isUndefined(value)) || expandable) && (
+                            {((property.valueShape.type === "optional" && isUndefined(value)) ||
+                                expandable ||
+                                ["stringLiteral", "booleanLiteral"].includes(property.valueShape.type)) && (
                                 <span className="t-muted whitespace-nowrap text-xs">
                                     {renderTypeShorthand(property.valueShape)}
                                 </span>

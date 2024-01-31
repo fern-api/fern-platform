@@ -18,12 +18,22 @@ import { PlaygroundRequestFormState } from "./types";
 import { useHorizontalSplitPane } from "./useSplitPlane";
 import { buildEndpointUrl, buildUnredactedHeaders } from "./utils";
 
-interface ResponsePayload {
+interface JsonResponsePayload {
+    type: "json";
     status: number;
     time: number;
     size: string | null;
     body: unknown;
 }
+
+interface StreamResponsePayload {
+    type: "stream";
+    status: number;
+    time: number;
+    items: unknown[];
+}
+
+type ResponsePayload = JsonResponsePayload | StreamResponsePayload;
 
 interface ApiPlayroundContentProps {
     auth: APIV1Read.ApiAuth | undefined;
@@ -75,6 +85,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                 method: endpoint.method,
                 docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
             });
+            const stream = endpoint.responseBody?.shape.type === "stream";
             const response = await fetch("/api/proxy", {
                 method: "POST",
                 headers: buildUnredactedHeaders(auth, endpoint, formState),
@@ -83,27 +94,58 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                     method: endpoint.method,
                     headers: buildUnredactedHeaders(auth, endpoint, formState),
                     body: formState.body,
+                    stream,
                 }),
             });
-            const loadedResponse: ResponsePayload = await response.json();
-            setResponse(loaded(loadedResponse));
-            const proxyTime = performance.now() - startTime;
-            capturePosthogEvent("api_playground_request_received", {
-                endpointId: endpoint.id,
-                endpointName: endpoint.name,
-                method: endpoint.method,
-                docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
-                response: {
-                    status: loadedResponse.status,
-                    time: loadedResponse.time,
-                    size: loadedResponse.size,
-                },
-                proxy: {
-                    ok: response.ok,
-                    status: response.status,
-                    time: response.headers.get("x-response-time") ?? proxyTime,
-                },
-            });
+            if (!stream) {
+                const loadedResponse: Omit<JsonResponsePayload, "type"> = await response.json();
+                setResponse(loaded({ ...loadedResponse, type: "json" }));
+                const proxyTime = performance.now() - startTime;
+                capturePosthogEvent("api_playground_request_received", {
+                    endpointId: endpoint.id,
+                    endpointName: endpoint.name,
+                    method: endpoint.method,
+                    docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
+                    response: {
+                        status: loadedResponse.status,
+                        time: loadedResponse.time,
+                        size: loadedResponse.size,
+                    },
+                    proxy: {
+                        ok: response.ok,
+                        status: response.status,
+                        time: response.headers.get("x-response-time") ?? proxyTime,
+                    },
+                });
+            } else if (response.body != null) {
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                const read = () => {
+                    return reader.read().then(async ({ done, value }): Promise<Uint8Array | undefined> => {
+                        if (!done) {
+                            const parsedValues = decoder
+                                .decode(value)
+                                .split("\n")
+                                .filter((v) => v.length > 0)
+                                .map((v) => JSON.parse(v));
+                            setResponse((lastValue) =>
+                                loaded({
+                                    type: "stream",
+                                    status: response.status,
+                                    time: performance.now() - startTime,
+                                    items:
+                                        lastValue.type === "loaded" && lastValue.value.type === "stream"
+                                            ? [...lastValue.value.items, ...parsedValues]
+                                            : parsedValues,
+                                })
+                            );
+                            return read();
+                        }
+                        return;
+                    });
+                };
+                await read();
+            }
         } catch (e) {
             // eslint-disable-next-line no-console
             console.error(e);
@@ -262,7 +304,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                             >
                                 time: {round(response.value.time, 2)}ms
                             </span>
-                            {!isEmpty(response.value.size) && (
+                            {response.value.type === "json" && !isEmpty(response.value.size) && (
                                 <span
                                     className={
                                         "bg-tag-default-light dark:bg-tag-default-dark flex h-5 items-center rounded-md px-1.5 py-1 font-mono"
@@ -298,7 +340,11 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                             }
                         />
                     ),
-                    loaded: (response) => <PlaygroundResponsePreview responseBody={response.body} />,
+                    loaded: (response) => (
+                        <PlaygroundResponsePreview
+                            responseBody={response.type === "json" ? response.body : response.items}
+                        />
+                    ),
                     failed: () => <span>Failed</span>,
                 })}
             </div>

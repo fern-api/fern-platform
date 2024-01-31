@@ -44,7 +44,14 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
         document.body.className = theme === "dark" ? "antialiased bp5-dark" : "antialiased";
     });
     useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
-    useKeyboardPress({ key: "Slash", onPress: openSearchDialog });
+    useKeyboardPress({
+        key: "Slash",
+        onPress: (e) => {
+            if (e.target == null || e.target === document.body) {
+                openSearchDialog();
+            }
+        },
+    });
 
     useEffect(() => {
         // this is a hack to ensure that the theme is always set to a valid value, even if localStorage is corrupted

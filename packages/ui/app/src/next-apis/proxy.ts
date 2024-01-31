@@ -1,3 +1,4 @@
+import { streamToResponse } from "ai";
 import { NextApiHandler, NextApiResponse } from "next";
 
 interface ProxyRequest {
@@ -5,6 +6,7 @@ interface ProxyRequest {
     method: string;
     headers: Record<string, string>;
     body: unknown | undefined;
+    stream?: boolean;
 }
 
 interface ProxyResponseError {
@@ -46,18 +48,22 @@ export const proxyApiHandler: NextApiHandler = async (req, res: NextApiResponse<
             headers: proxyRequest.headers,
             body: proxyRequest.body != null ? JSON.stringify(proxyRequest.body) : undefined,
         });
-        const body = await response.json();
-        const endTime = performance.now();
-        const headers = response.headers;
+        if (!proxyRequest.stream) {
+            const body = await response.json();
+            const endTime = performance.now();
+            const headers = response.headers;
 
-        res.status(200).json({
-            type: "success",
-            body,
-            status: response.status,
-            time: endTime - startTime,
-            size: headers.get("Content-Length"),
-            headers: Object.fromEntries(headers.entries()),
-        });
+            res.status(200).json({
+                type: "success",
+                body,
+                status: response.status,
+                time: endTime - startTime,
+                size: headers.get("Content-Length"),
+                headers: Object.fromEntries(headers.entries()),
+            });
+        } else if (response.body != null) {
+            return streamToResponse(response.body, res);
+        }
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);

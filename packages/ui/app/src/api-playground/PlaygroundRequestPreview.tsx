@@ -22,7 +22,7 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({
 }) => {
     const { resolvedTheme: theme } = useTheme();
     return (
-        <div className="group relative h-full flex-1">
+        <div className="group relative min-h-0 flex-1 shrink">
             <CopyToClipboardButton
                 className="absolute right-2 top-2 z-10 opacity-0 transition-opacity group-hover:opacity-100"
                 content={() =>
