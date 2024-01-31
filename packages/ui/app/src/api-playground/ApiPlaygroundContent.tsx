@@ -14,6 +14,7 @@ import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
 import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
 import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
 import { SecretBearer } from "./PlaygroundSecretsModal";
+import { Stream } from "./Stream";
 import { PlaygroundRequestFormState } from "./types";
 import { useHorizontalSplitPane } from "./useSplitPlane";
 import { buildEndpointUrl, buildUnredactedHeaders } from "./utils";
@@ -118,33 +119,20 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                     },
                 });
             } else if (response.body != null) {
-                const reader = response.body.getReader();
-                const decoder = new TextDecoder();
-                const read = () => {
-                    return reader.read().then(async ({ done, value }): Promise<Uint8Array | undefined> => {
-                        if (!done) {
-                            const parsedValues = decoder
-                                .decode(value)
-                                .split("\n")
-                                .filter((v) => v.length > 0)
-                                .map((v) => JSON.parse(v));
-                            setResponse((lastValue) =>
-                                loaded({
-                                    type: "stream",
-                                    status: response.status,
-                                    time: performance.now() - startTime,
-                                    items:
-                                        lastValue.type === "loaded" && lastValue.value.type === "stream"
-                                            ? [...lastValue.value.items, ...parsedValues]
-                                            : parsedValues,
-                                })
-                            );
-                            return read();
-                        }
-                        return;
-                    });
-                };
-                await read();
+                const stream = new Stream({ stream: response.body, parse: async (i) => i, terminator: "\n" });
+                for await (const item of stream) {
+                    setResponse((lastValue) =>
+                        loaded({
+                            type: "stream",
+                            status: response.status,
+                            time: performance.now() - startTime,
+                            items:
+                                lastValue.type === "loaded" && lastValue.value.type === "stream"
+                                    ? [...lastValue.value.items, item]
+                                    : [item],
+                        })
+                    );
+                }
             }
         } catch (e) {
             // eslint-disable-next-line no-console
