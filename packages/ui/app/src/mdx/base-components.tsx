@@ -25,7 +25,7 @@ export const Table: React.FC<HTMLAttributes<HTMLTableElement>> = ({ className, .
             {...rest}
             className={classNames(
                 className,
-                "block border-separate border-spacing-0 overflow-x-auto table-auto mb-3 text-sm max-w-full not-prose border border-border-default-light dark:border-border-default-dark rounded-lg bg-background-primary-light dark:bg-background-primary-dark"
+                "block border-separate border-spacing-0 overflow-x-auto table-auto mb-3 text-sm max-w-full not-prose"
             )}
         />
     );
@@ -36,7 +36,7 @@ export const Thead: React.FC<HTMLAttributes<HTMLTableSectionElement>> = ({ class
 };
 
 export const Tr: React.FC<HTMLAttributes<HTMLTableRowElement>> = ({ className, ...rest }) => {
-    return <tr {...rest} className={classNames(className, "odd:bg-[#FAFAFA]")} />;
+    return <tr {...rest} className={classNames(className)} />;
 };
 
 export const Th: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, ...rest }) => {
@@ -45,7 +45,7 @@ export const Th: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
             {...rest}
             className={classNames(
                 className,
-                "text-left truncate px-3 py-1 leading-7 border-b border-border-default-light dark:border-border-default-dark t-muted text-xs bg-background-primary-light dark:bg-background-primary-dark"
+                "text-left truncate px-3 py-1 leading-7 border-b border-border-default-light dark:border-border-default-dark first:pl-0 last:pr-0"
             )}
         />
     );
@@ -56,12 +56,16 @@ export const Td: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
     return (
         <td
             {...rest}
-            className={classNames(className, "px-3 py-1 leading-7", {
-                // if the table has many columns, do not collapse short string content into multi-line:
-                "whitespace-nowrap": childrenAsString.length < 100,
-                // prevent table's auto sizing from collapsing a paragraph into a tall-skinny column of broken sentences:
-                "min-w-sm": childrenAsString.length > 200,
-            })}
+            className={classNames(
+                className,
+                "border-b border-border-default-light dark:border-border-default-dark px-3 py-1 leading-7 first:pl-0 last:pr-0",
+                {
+                    // if the table has many columns, do not collapse short string content into multi-line:
+                    "whitespace-nowrap": childrenAsString.length < 100,
+                    // prevent table's auto sizing from collapsing a paragraph into a tall-skinny column of broken sentences:
+                    "min-w-sm": childrenAsString.length > 200,
+                }
+            )}
         >
             {children}
         </td>
