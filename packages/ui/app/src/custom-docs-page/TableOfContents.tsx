@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { CSSProperties, useContext, useEffect, useState } from "react";
+import { FernCollapse } from "../components/FernCollapse";
 import { getSlugFromText } from "../mdx/base-components";
 import { TableOfContentsContext } from "./TableOfContentsContext";
 
@@ -18,46 +19,45 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, re
         setTableOfContents(generateTableOfContents(renderedHtml));
     }, [renderedHtml]);
     const renderList = (headings: TableOfContentsItem[], indent?: boolean) => {
-        if (headings.length === 0) {
-            return null;
-        }
         return (
-            <ul
-                className={classNames("list-none", {
-                    "pl-4": indent,
-                    [className ?? ""]: !indent,
-                    "pt-3 pb-4 border-b border-border-default-light dark:border-border-default-dark": !indent,
-                })}
-                style={style}
-            >
-                {headings.map(({ simpleString: text, children }, index) => {
-                    if (text.length === 0 && children.length === 0) {
-                        // don't render empty headings
-                        return null;
-                    }
-                    const anchor = getSlugFromText(text);
-                    return (
-                        <li key={index}>
-                            {text.length > 0 && (
-                                <a
-                                    className={classNames(
-                                        "hover:dark:text-text-primary-dark hover:text-text-primary-light block hyphens-auto break-words py-1.5 text-sm leading-5 no-underline transition hover:no-underline",
-                                        {
-                                            "t-muted": anchorInView !== anchor,
-                                            "text-accent-primary dark:text-accent-primary-dark":
-                                                anchorInView === anchor,
-                                        }
-                                    )}
-                                    href={`#${getSlugFromText(text)}`}
-                                >
-                                    {text}
-                                </a>
-                            )}
-                            {children.length > 0 && renderList(children, true)}
-                        </li>
-                    );
-                })}
-            </ul>
+            <FernCollapse isOpen={headings.length > 0}>
+                <ul
+                    className={classNames("list-none", {
+                        "pl-4": indent,
+                        [className ?? ""]: !indent,
+                        "pt-3 pb-4 border-b border-border-default-light dark:border-border-default-dark": !indent,
+                    })}
+                    style={style}
+                >
+                    {headings.map(({ simpleString: text, children }, index) => {
+                        if (text.length === 0 && children.length === 0) {
+                            // don't render empty headings
+                            return null;
+                        }
+                        const anchor = getSlugFromText(text);
+                        return (
+                            <li key={index}>
+                                {text.length > 0 && (
+                                    <a
+                                        className={classNames(
+                                            "hover:dark:text-text-primary-dark hover:text-text-primary-light block hyphens-auto break-words py-1.5 text-sm leading-5 no-underline transition hover:no-underline",
+                                            {
+                                                "t-muted": anchorInView !== anchor,
+                                                "text-accent-primary dark:text-accent-primary-dark":
+                                                    anchorInView === anchor,
+                                            }
+                                        )}
+                                        href={`#${getSlugFromText(text)}`}
+                                    >
+                                        {text}
+                                    </a>
+                                )}
+                                {children.length > 0 && renderList(children, true)}
+                            </li>
+                        );
+                    })}
+                </ul>
+            </FernCollapse>
         );
     };
 
