@@ -112,6 +112,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                                             ? apiDefinition
                                             : // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                                               navigationItems.find((item) => item.api === apiDefinition.apiSectionId)!,
+                                    example: undefined,
                                 });
                                 closeDropdown();
                             }}
