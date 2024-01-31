@@ -21,7 +21,7 @@ export const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({ className, .
 
 export const Table: React.FC<HTMLAttributes<HTMLTableElement>> = ({ className, ...rest }) => {
     return (
-        <div className="border-border-default-light dark:border-border-default-dark bg-background-primary-light dark:bg-background-primary-dark mb-3 overflow-hidden rounded-lg border">
+        <div className="border-border-default-light dark:border-border-default-dark bg-background-primary-light dark:bg-background-primary-dark mb-3 overflow-x-auto rounded-lg border">
             <table
                 {...rest}
                 className={classNames(
