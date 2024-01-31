@@ -1,7 +1,6 @@
 import { Play } from "@blueprintjs/icons";
 import { FC } from "react";
-import { ApiPlaygroundSelectionState } from "./ApiPlayground";
-import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
+import { ApiPlaygroundSelectionState, useApiPlaygroundContext } from "./ApiPlaygroundContext";
 
 export const ApiPlaygroundButton: FC<ApiPlaygroundSelectionState> = ({
     apiSection,

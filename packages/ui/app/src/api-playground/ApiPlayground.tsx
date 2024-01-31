@@ -1,9 +1,5 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import {
-    ResolvedApiDefinitionPackage,
-    ResolvedEndpointDefinition,
-    ResolvedNavigationItemApiSection,
-} from "@fern-ui/app-utils";
+import { ResolvedEndpointDefinition, ResolvedNavigationItemApiSection } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { Transition } from "@headlessui/react";
@@ -13,6 +9,7 @@ import { Dispatch, FC, Fragment, SetStateAction, useCallback, useEffect } from "
 import { capturePosthogEvent } from "../analytics/posthog";
 import { useViewportContext } from "../viewport-context/useViewportContext";
 import {
+    ApiPlaygroundSelectionState,
     getInitialModalFormStateWithExample,
     PLAYGROUND_FORM_STATE_ATOM,
     PLAYGROUND_OPEN_ATOM,
@@ -23,13 +20,6 @@ import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundRequestFormAuth, PlaygroundRequestFormState } from "./types";
 import { useVerticalSplitPane } from "./useSplitPlane";
 import { getDefaultValueForTypes, getDefaultValuesForBody } from "./utils";
-
-export interface ApiPlaygroundSelectionState {
-    apiSection: ResolvedNavigationItemApiSection;
-    apiDefinition: ResolvedApiDefinitionPackage;
-    endpoint: ResolvedEndpointDefinition;
-    example: APIV1Read.ExampleEndpointCall;
-}
 
 const EMPTY_FORM_STATE: PlaygroundRequestFormState = {
     auth: undefined,
