@@ -119,7 +119,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         return endpoint.examples.filter((e) => e.responseStatusCode === selectedError.statusCode) ?? null;
     }, [endpoint.examples, selectedError]);
 
-    const clients = useMemo(() => generateCodeExamples(examples), [examples]);
+    const clients = useMemo(() => generateCodeExamples(examples, endpoint), [endpoint, examples]);
     const [selectedLanguage, setSelectedLanguage] = useAtom(fernLanguageAtom);
     const [selectedClient, setSelectedClient] = useState<CodeExample>(() => {
         const curlExample = clients[0]?.examples[0];
