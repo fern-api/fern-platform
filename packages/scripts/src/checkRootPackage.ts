@@ -75,8 +75,14 @@ async function asyncFilter<T>(items: T[], predicate: (item: T) => Promise<boolea
 }
 
 async function doesPackageEmit(p: YarnPackage): Promise<boolean> {
-    const tsConfigLocation = path.join(p.location, "tsconfig.json");
-    const tsConfigStr = (await readFile(tsConfigLocation)).toString();
-    const tsConfigJson = JSON.parse(tsConfigStr);
-    return tsConfigJson?.compilerOptions?.noEmit !== true;
+    try {
+        const tsConfigLocation = path.join(p.location, "tsconfig.json");
+        const tsConfigStr = (await readFile(tsConfigLocation)).toString();
+        const tsConfigJson = JSON.parse(tsConfigStr);
+        return tsConfigJson?.compilerOptions?.noEmit !== true;
+    } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+        throw new Error(`Could not read tsconfig.json for ${p.name}`);
+    }
 }
