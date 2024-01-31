@@ -12,7 +12,12 @@ import { atomWithStorage } from "jotai/utils";
 import { Dispatch, FC, Fragment, SetStateAction, useCallback, useEffect } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { useViewportContext } from "../viewport-context/useViewportContext";
-import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, useApiPlaygroundContext } from "./ApiPlaygroundContext";
+import {
+    getInitialModalFormStateWithExample,
+    PLAYGROUND_FORM_STATE_ATOM,
+    PLAYGROUND_OPEN_ATOM,
+    useApiPlaygroundContext,
+} from "./ApiPlaygroundContext";
 import { ApiPlaygroundDrawer } from "./ApiPlaygroundDrawer";
 import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundRequestFormAuth, PlaygroundRequestFormState } from "./types";
@@ -112,7 +117,7 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
             getInitialModalFormStateWithExample(
                 selectionState.apiSection.auth,
                 selectionState.endpoint,
-                selectionState.endpoint?.examples[0]
+                selectionState.example
             )
         );
     }, [selectionState, setPlaygroundFormState]);
@@ -231,22 +236,6 @@ function getInitialAuthState(auth: APIV1Read.ApiAuth | undefined): PlaygroundReq
     });
 }
 
-function getInitialModalFormStateWithExample(
-    auth: APIV1Read.ApiAuth | undefined,
-    endpoint: ResolvedEndpointDefinition | undefined,
-    exampleCall: APIV1Read.ExampleEndpointCall | undefined
-): PlaygroundRequestFormState {
-    if (exampleCall == null) {
-        return getInitialModalFormState(auth, endpoint);
-    }
-    return {
-        auth: getInitialAuthState(auth),
-        headers: exampleCall.headers,
-        pathParameters: exampleCall.pathParameters,
-        queryParameters: exampleCall.queryParameters,
-        body: exampleCall.requestBody,
-    };
-}
 function createFormStateKey({ apiDefinition, endpoint }: ApiPlaygroundSelectionState) {
     const packageId =
         apiDefinition.type === "apiSection" ? apiDefinition.api : `${apiDefinition.apiSectionId}/${apiDefinition.id}`;

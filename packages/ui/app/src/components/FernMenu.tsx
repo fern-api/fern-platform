@@ -46,7 +46,7 @@ export const FernMenu: FC<FernMenu.Props> = ({
                                 {icon}
                                 <span className="font-mono text-xs font-normal transition-colors">{text}</span>
                                 <ChevronDownIcon
-                                    className={classNames("h-5 w-5 transition", {
+                                    className={classNames("h-5 w-5 transition !ml-1", {
                                         "rotate-180": open,
                                     })}
                                 />

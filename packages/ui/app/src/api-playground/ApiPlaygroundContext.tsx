@@ -80,7 +80,7 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundPro
                         [createFormStateKey(newSelectionState)]: getInitialModalFormStateWithExample(
                             selectionState?.apiSection.auth,
                             newSelectionState.endpoint,
-                            newSelectionState.endpoint?.examples[0]
+                            newSelectionState.example
                         ),
                     };
                 });
@@ -144,7 +144,7 @@ function getInitialAuthState(auth: APIV1Read.ApiAuth | undefined): PlaygroundReq
     });
 }
 
-function getInitialModalFormStateWithExample(
+export function getInitialModalFormStateWithExample(
     auth: APIV1Read.ApiAuth | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
     exampleCall: APIV1Read.ExampleEndpointCall | undefined
