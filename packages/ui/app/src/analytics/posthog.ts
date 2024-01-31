@@ -7,8 +7,9 @@ function safeAccessPosthog(run: () => void): void {
     }
 }
 
-export function initializePosthog(apiKey: string): void {
-    if (process.env.NODE_ENV === "production") {
+export function initializePosthog(): void {
+    const apiKey = process.env.NEXT_PUBLIC_POSTHOG_API_KEY?.trim();
+    if (process.env.NODE_ENV === "production" && apiKey != null && apiKey.length > 0 && !IS_POSTHOG_INITIALIZED) {
         posthog.init(apiKey, {
             api_host: "https://app.posthog.com",
             loaded: () => {

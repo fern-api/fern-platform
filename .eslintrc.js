@@ -1,19 +1,11 @@
 module.exports = {
-    extends: "next",
+    extends: ["next", "prettier"],
     root: true,
     env: {
         browser: true,
         es2021: true,
     },
-    plugins: [
-        "@typescript-eslint",
-        "jest",
-        "@blueprintjs",
-        "deprecation",
-        "import",
-        "react",
-        "eslint-plugin-tailwindcss",
-    ],
+    plugins: ["@typescript-eslint", "jest", "@blueprintjs", "deprecation", "import", "eslint-plugin-tailwindcss"],
     extends: [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
@@ -24,10 +16,16 @@ module.exports = {
         "plugin:react/recommended",
         "plugin:react-hooks/recommended",
         "plugin:tailwindcss/recommended",
+        "plugin:@next/next/recommended",
     ],
     settings: {
         react: {
             version: "^18.2.0",
+        },
+        settings: {
+            next: {
+                rootDir: "packages/public-docs-bundle/",
+            },
         },
     },
     parser: "@typescript-eslint/parser",
@@ -120,5 +118,7 @@ module.exports = {
         "react/react-in-jsx-scope": "off",
         "react/prop-types": "off",
         "tailwindcss/no-custom-classname": "off",
+        "@next/next/no-html-link-for-pages": "off",
+        "@next/next/no-img-element": "off",
     },
 };

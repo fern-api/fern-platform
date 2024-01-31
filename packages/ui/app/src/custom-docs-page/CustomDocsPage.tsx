@@ -1,11 +1,13 @@
 import { DocsV1Read, type DocsNode } from "@fern-api/fdr-sdk";
 import { type ResolvedPath, type SerializedMdxContent } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { ReactElement, useMemo } from "react";
+import Link from "next/link";
+import { ReactElement } from "react";
+import { renderToString } from "react-dom/server";
 import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
-import { useDocsContext } from "../docs-context/useDocsContext";
 import { MdxContent } from "../mdx/MdxContent";
 import { TableOfContents } from "./TableOfContents";
+import { TableOfContentsContextProvider } from "./TableOfContentsContext";
 
 export declare namespace CustomDocsPage {
     export interface Props {
@@ -32,44 +34,47 @@ export const CustomDocsPageHeader = ({ resolvedPath }: Pick<CustomDocsPage.Props
     );
 };
 
-export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({
-    serializedMdxContent,
-    resolvedPath,
-    contentWidth,
-}) => {
-    const { resolvePage } = useDocsContext();
-
-    const page = useMemo(() => resolvePage(resolvedPath.page.id), [resolvedPath.page.id, resolvePage]);
-
-    const content = useMemo(() => {
-        return serializedMdxContent != null ? <MdxContent mdx={serializedMdxContent} /> : null;
-    }, [serializedMdxContent]);
-
+export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath, contentWidth }) => {
+    const mdxContent = <MdxContent mdx={resolvedPath.serializedMdxContent} />;
+    const mdxString = renderToString(mdxContent);
+    const editThisPage = resolvedPath.serializedMdxContent.frontmatter.editThisPageUrl ?? resolvedPath?.editThisPageUrl;
     return (
-        <div className="flex justify-between px-6 sm:px-8 lg:pl-12 lg:pr-20 xl:pr-0">
-            <div className="w-full min-w-0 lg:pr-6">
-                <article
-                    className="prose dark:prose-invert mx-auto w-full lg:ml-0 xl:mx-auto"
-                    style={{
-                        maxWidth:
-                            contentWidth == null
-                                ? "44rem"
-                                : visitDiscriminatedUnion(contentWidth, "type")._visit({
-                                      px: (px) => `${px.value}px`,
-                                      rem: (rem) => `${rem.value}rem`,
-                                      _other: () => "44rem",
-                                  }),
-                    }}
-                >
-                    <CustomDocsPageHeader resolvedPath={resolvedPath} />
-                    {content}
-                    <BottomNavigationButtons />
-                    <div className="h-20" />
-                </article>
+        <TableOfContentsContextProvider>
+            <div className="flex justify-between px-6 sm:px-8 lg:pl-12 lg:pr-20 xl:pr-0">
+                <div className="w-full min-w-0 lg:pr-6">
+                    <article
+                        className="prose dark:prose-invert mx-auto w-full lg:ml-0 xl:mx-auto"
+                        style={{
+                            maxWidth:
+                                contentWidth == null
+                                    ? "44rem"
+                                    : visitDiscriminatedUnion(contentWidth, "type")._visit({
+                                          px: (px) => `${px.value}px`,
+                                          rem: (rem) => `${rem.value}rem`,
+                                          _other: () => "44rem",
+                                      }),
+                        }}
+                    >
+                        <CustomDocsPageHeader resolvedPath={resolvedPath} />
+                        {mdxContent}
+                        <BottomNavigationButtons />
+                        <div className="h-20" />
+                    </article>
+                </div>
+                <aside className="scroll-contain smooth-scroll hide-scrollbar sticky top-16 hidden max-h-[calc(100vh-86px)] w-[19rem] shrink-0 overflow-auto overflow-x-hidden px-8 pb-12 pt-8 xl:block">
+                    <TableOfContents renderedHtml={mdxString} />
+                    {editThisPage != null && (
+                        <Link
+                            href={editThisPage}
+                            target="_blank"
+                            rel="noreferrer noopener"
+                            className="t-muted hover:dark:text-text-primary-dark hover:text-text-primary-light my-3 block hyphens-auto break-words py-1.5 text-sm leading-5 no-underline transition hover:no-underline"
+                        >
+                            Edit this page
+                        </Link>
+                    )}
+                </aside>
             </div>
-            <aside className="scroll-contain smooth-scroll hide-scrollbar sticky top-16 hidden max-h-[calc(100vh-64px)] w-[19rem] shrink-0 overflow-auto overflow-x-hidden px-8 pb-12 pt-8 xl:block">
-                <TableOfContents markdown={page?.markdown ?? ""} />
-            </aside>
-        </div>
+        </TableOfContentsContextProvider>
     );
 };

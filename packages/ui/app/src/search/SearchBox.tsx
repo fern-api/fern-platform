@@ -4,11 +4,12 @@ import { ReactElement, useRef, useState } from "react";
 import { useSearchBox, UseSearchBoxProps } from "react-instantsearch-hooks-web";
 
 interface SearchBoxProps extends UseSearchBoxProps {
+    className?: string;
     inputClassName?: string;
     placeholder?: string;
 }
 
-export function SearchBox({ queryHook, inputClassName, placeholder }: SearchBoxProps): ReactElement {
+export function SearchBox({ queryHook, className, inputClassName, placeholder }: SearchBoxProps): ReactElement {
     const { query, refine } = useSearchBox({ queryHook });
     const [inputValue, setInputValue] = useState(query);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -51,7 +52,7 @@ export function SearchBox({ queryHook, inputClassName, placeholder }: SearchBoxP
     });
 
     return (
-        <div>
+        <div className={className}>
             <form
                 action=""
                 role="search"

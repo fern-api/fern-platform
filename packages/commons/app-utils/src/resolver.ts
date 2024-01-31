@@ -5,7 +5,7 @@ import { titleCase } from "./titleCase";
 
 export function resolveNavigationItems(
     navigationItems: DocsV1Read.NavigationItem[],
-    docsDefinition: DocsV1Read.DocsDefinition,
+    apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
     parentSlugs: string[] = []
 ): ResolvedNavigationItem[] {
     const resolvedNavigationItems: ResolvedNavigationItem[] = [];
@@ -32,7 +32,7 @@ export function resolveNavigationItems(
                 }
             },
             api: (api) => {
-                const definition = docsDefinition.apis[api.api];
+                const definition = apis[api.api];
                 if (definition != null) {
                     const definitionSlug = api.skipUrlSlug ? parentSlugs : [...parentSlugs, api.urlSlug];
                     resolvedNavigationItems.push({
@@ -73,11 +73,7 @@ export function resolveNavigationItems(
                 resolvedNavigationItems.push({
                     ...section,
                     slug: sectionSlug,
-                    items: resolveNavigationItems(
-                        section.items,
-                        docsDefinition,
-                        section.skipUrlSlug ? parentSlugs : sectionSlug
-                    ),
+                    items: resolveNavigationItems(section.items, apis, section.skipUrlSlug ? parentSlugs : sectionSlug),
                 });
             },
             _other: noop,

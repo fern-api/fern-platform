@@ -1,5 +1,5 @@
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { useMemo } from "react";
-import { useDocsContext } from "../docs-context/useDocsContext";
 import { getEnvConfig, type EnvironmentConfig } from "../env";
 import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { REGISTRY_SERVICE } from "./registry";
@@ -27,7 +27,10 @@ function createSearchApiKeyLoader(envConfig: EnvironmentConfig, indexSegmentId: 
         if (!resp.ok) {
             // eslint-disable-next-line no-console
             console.error("Failed to fetch index segment api key", resp.error);
-            return undefined;
+            return {
+                appId: envConfig.algoliaAppId,
+                searchApiKey: envConfig.algoliaApiKey,
+            };
         }
         const { searchApiKey } = resp.body;
         return {
@@ -37,27 +40,28 @@ function createSearchApiKeyLoader(envConfig: EnvironmentConfig, indexSegmentId: 
     };
 }
 
-export function useSearchService(): SearchService {
-    const { docsDefinition } = useDocsContext();
+export function useSearchService(
+    searchInfo: DocsV1Read.SearchInfo,
+    algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null
+): SearchService {
     const { activeVersionContext } = useDocsSelectors();
-    const { search: searchInfo } = docsDefinition;
 
     return useMemo<SearchService>(() => {
         try {
             const envConfig = getEnvConfig();
             if (typeof searchInfo !== "object") {
-                return docsDefinition.algoliaSearchIndex != null
+                return algoliaSearchIndex != null
                     ? {
                           isAvailable: true,
                           loadCredentials: async () => ({
                               appId: envConfig.algoliaAppId,
                               searchApiKey: envConfig.algoliaApiKey,
                           }),
-                          index: docsDefinition.algoliaSearchIndex,
+                          index: algoliaSearchIndex,
                       }
                     : { isAvailable: false };
             } else if (searchInfo.type === "legacyMultiAlgoliaIndex") {
-                const algoliaIndex = searchInfo.algoliaIndex ?? docsDefinition.algoliaSearchIndex;
+                const algoliaIndex = searchInfo.algoliaIndex ?? algoliaSearchIndex;
                 return algoliaIndex != null
                     ? {
                           isAvailable: true,
@@ -101,7 +105,9 @@ export function useSearchService(): SearchService {
                 };
             }
         } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error("Failed to initialize search service", e);
             return { isAvailable: false };
         }
-    }, [activeVersionContext, docsDefinition.algoliaSearchIndex, searchInfo]);
+    }, [activeVersionContext, algoliaSearchIndex, searchInfo]);
 }

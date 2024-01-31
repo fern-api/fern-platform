@@ -46,8 +46,8 @@ const CSS_VARIABLES = {
     ACCENT_PRIMARY_DARK_CONTRAST: "--accent-primary-dark-contrast",
 } as const;
 
-export function useColorTheme(docsDefinition: DocsV1Read.DocsDefinition): string {
-    const colorsV3 = docsDefinition.config.colorsV3;
+export function useColorTheme(config: DocsV1Read.DocsConfig): string {
+    const colorsV3 = config.colorsV3;
     // const { theme } = useTheme(colorsV3.type);
     // const invertedTheme = theme === "dark" ? "light" : "dark";
 

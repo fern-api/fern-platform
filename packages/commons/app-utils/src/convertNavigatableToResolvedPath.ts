@@ -25,6 +25,7 @@ export async function convertNavigatableToResolvedPath({
                 page: serializedNavigatable.page,
                 sectionTitle: serializedNavigatable.section?.title ?? null,
                 serializedMdxContent: serializedNavigatable.serializedMdxContent,
+                editThisPageUrl: serializedNavigatable.editThisPageUrl,
             };
         case "endpoint":
         case "top-level-endpoint":

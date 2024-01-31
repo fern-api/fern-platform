@@ -2,6 +2,7 @@ import type { DocsNode, FdrAPI, NavigatableDocsNode } from "@fern-api/fdr-sdk";
 import { serializeMdxContent, type SerializedMdxContent } from "./mdx";
 
 export type SerializedPageNode = DocsNode.Page & {
+    editThisPageUrl: string | null;
     serializedMdxContent: SerializedMdxContent;
 };
 
@@ -25,6 +26,7 @@ export async function serializePageNode({
     }
     return {
         ...pageNode,
+        editThisPageUrl: null,
         serializedMdxContent: await serializeMdxContent(pageContent.markdown),
     };
 }

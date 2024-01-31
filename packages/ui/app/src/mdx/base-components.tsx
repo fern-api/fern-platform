@@ -2,6 +2,7 @@ import classNames from "classnames";
 import Link from "next/link";
 import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from "react";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
+import { useAnchorInView } from "../custom-docs-page/TableOfContentsContext";
 import { useNavigationContext } from "../navigation-context";
 import { onlyText } from "../util/onlyText";
 import styles from "./base-components.module.scss";
@@ -24,7 +25,7 @@ export const Table: React.FC<HTMLAttributes<HTMLTableElement>> = ({ className, .
             {...rest}
             className={classNames(
                 className,
-                "block border-separate border-spacing-0 overflow-x-auto table-auto mb-3 text-sm max-w-full not-prose"
+                "block border-separate border-spacing-0 overflow-x-auto table-auto mb-3 text-sm max-w-full not-prose border border-border-default-light dark:border-border-default-dark rounded-lg bg-background-primary-light dark:bg-background-primary-dark"
             )}
         />
     );
@@ -35,7 +36,7 @@ export const Thead: React.FC<HTMLAttributes<HTMLTableSectionElement>> = ({ class
 };
 
 export const Tr: React.FC<HTMLAttributes<HTMLTableRowElement>> = ({ className, ...rest }) => {
-    return <tr {...rest} className={classNames(className)} />;
+    return <tr {...rest} className={classNames(className, "odd:bg-[#FAFAFA]")} />;
 };
 
 export const Th: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, ...rest }) => {
@@ -44,7 +45,7 @@ export const Th: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
             {...rest}
             className={classNames(
                 className,
-                "text-left truncate px-3 py-1 leading-7 border-b border-border-default-light dark:border-border-default-dark first:pl-0 last:pr-0"
+                "text-left truncate px-3 py-1 leading-7 border-b border-border-default-light dark:border-border-default-dark t-muted text-xs bg-background-primary-light dark:bg-background-primary-dark"
             )}
         />
     );
@@ -55,16 +56,12 @@ export const Td: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
     return (
         <td
             {...rest}
-            className={classNames(
-                className,
-                "border-b border-border-default-light dark:border-border-default-dark px-3 py-1 leading-7 first:pl-0 last:pr-0",
-                {
-                    // if the table has many columns, do not collapse short string content into multi-line:
-                    "whitespace-nowrap": childrenAsString.length < 100,
-                    // prevent table's auto sizing from collapsing a paragraph into a tall-skinny column of broken sentences:
-                    "min-w-sm": childrenAsString.length > 200,
-                }
-            )}
+            className={classNames(className, "px-3 py-1 leading-7", {
+                // if the table has many columns, do not collapse short string content into multi-line:
+                "whitespace-nowrap": childrenAsString.length < 100,
+                // prevent table's auto sizing from collapsing a paragraph into a tall-skinny column of broken sentences:
+                "min-w-sm": childrenAsString.length > 200,
+            })}
         >
             {children}
         </td>
@@ -98,11 +95,13 @@ export const H1: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     const children = React.Children.toArray(rest.children);
     const text = children.reduce(flatten, "");
     const slug = getSlugFromText(text);
+
     return (
         <h1
             id={slug}
             className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
             {...rest}
+            ref={useAnchorInView(slug)}
         >
             <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
             <span>{children}</span>
@@ -119,6 +118,7 @@ export const H2: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
             {...rest}
+            ref={useAnchorInView(slug)}
         >
             <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
             <span>{children}</span>
@@ -135,6 +135,7 @@ export const H3: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
             {...rest}
+            ref={useAnchorInView(slug)}
         >
             <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
             <span>{children}</span>
@@ -151,6 +152,7 @@ export const H4: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
             {...rest}
+            ref={useAnchorInView(slug)}
         >
             <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
             <span>{children}</span>
@@ -167,6 +169,7 @@ export const H5: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
             {...rest}
+            ref={useAnchorInView(slug)}
         >
             <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
             <span>{children}</span>
@@ -183,6 +186,7 @@ export const H6: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
             {...rest}
+            ref={useAnchorInView(slug)}
         >
             <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
             {children}
@@ -214,19 +218,11 @@ export const Ol: React.FC<HTMLAttributes<HTMLOListElement>> = ({ className, ...r
 };
 
 export const Ul: React.FC<HTMLAttributes<HTMLUListElement>> = ({ className, ...rest }) => {
-    return (
-        <ul
-            {...rest}
-            className={classNames(
-                className,
-                "list-image-dash-light list-outside dark:list-image-dash-dark space-y-2 mb-3"
-            )}
-        />
-    );
+    return <ul {...rest} className={classNames(className, "list-outside space-y-2 mb-3")} />;
 };
 
 export const Li: React.FC<HTMLAttributes<HTMLLIElement>> = ({ className, ...rest }) => {
-    return <li {...rest} className={className} />;
+    return <li {...rest} className={classNames(className, "marker:text-inherit")} />;
 };
 
 export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, children, href, ...rest }) => {
@@ -248,5 +244,5 @@ export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className
 };
 
 export function getSlugFromText(text: string): string {
-    return text.toLowerCase().replace(/\W/g, "-");
+    return text.toLowerCase().replace(/\W/g, "-").replace(/-+/g, "-");
 }
