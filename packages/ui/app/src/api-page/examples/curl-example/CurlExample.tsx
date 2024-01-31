@@ -38,7 +38,10 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ curlLines, selectedPr
                 const isLastPart = index === curlLines.length - 1;
                 return (
                     <div
-                        className={classNames("relative w-fit min-w-full px-4 transition py-px", "bg-transparent")}
+                        className={classNames(
+                            "relative w-fit min-w-full px-4 transition whitespace-pre",
+                            "bg-transparent"
+                        )}
                         style={{ lineHeight: "20px", height: "20px" }}
                     >
                         {index === 0 ? curlElement : " ".repeat(excludeIndent ? 0 : CURL_PREFIX.length)}
@@ -59,7 +62,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ curlLines, selectedPr
                 return (
                     <div
                         className={classNames(
-                            "relative w-fit min-w-full px-4 transition py-px",
+                            "relative w-fit min-w-full px-4 transition whitespace-pre",
                             isSelected ? "bg-accent-primary/20" : "bg-transparent"
                         )}
                         style={{ lineHeight: "20px", height: "20px" }}

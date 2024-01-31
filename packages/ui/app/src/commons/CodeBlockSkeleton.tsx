@@ -33,7 +33,7 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
             style={style}
         >
             <FernSyntaxHighlighter
-                language={language}
+                language={language === "curl" ? "shell" : language}
                 PreTag="pre"
                 customStyle={{
                     fontSize: fontSize === "sm" ? 12 : 14,

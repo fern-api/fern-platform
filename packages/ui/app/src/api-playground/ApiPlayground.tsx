@@ -11,17 +11,19 @@ import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { Dispatch, FC, Fragment, SetStateAction, useCallback, useEffect } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
+import { useViewportContext } from "../viewport-context/useViewportContext";
 import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, useApiPlaygroundContext } from "./ApiPlaygroundContext";
 import { ApiPlaygroundDrawer } from "./ApiPlaygroundDrawer";
 import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundRequestFormAuth, PlaygroundRequestFormState } from "./types";
-import { useVerticalSplitPane, useWindowHeight } from "./useSplitPlane";
+import { useVerticalSplitPane } from "./useSplitPlane";
 import { getDefaultValueForTypes, getDefaultValuesForBody } from "./utils";
 
 export interface ApiPlaygroundSelectionState {
     apiSection: ResolvedNavigationItemApiSection;
     apiDefinition: ResolvedApiDefinitionPackage;
     endpoint: ResolvedEndpointDefinition;
+    example: APIV1Read.ExampleEndpointCall;
 }
 
 const EMPTY_FORM_STATE: PlaygroundRequestFormState = {
@@ -43,7 +45,9 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
     const { selectionState, hasPlayground } = useApiPlaygroundContext();
 
     const [intermediateHeight, setHeight] = useAtom(playgroundHeightAtom);
-    const windowHeight = useWindowHeight();
+    const {
+        viewportSize: { height: windowHeight },
+    } = useViewportContext();
 
     const height =
         windowHeight != null ? Math.max(Math.min(windowHeight - 64, intermediateHeight), 100) : intermediateHeight;

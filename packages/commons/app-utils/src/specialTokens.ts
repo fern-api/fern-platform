@@ -31,6 +31,8 @@ export const SPECIAL_TOKENS = [
     "HTML",
     "CSS",
     "JS",
+    "JavaScript",
+    "TypeScript",
     "SQL",
     "DB",
     "UI",

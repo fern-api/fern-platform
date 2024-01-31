@@ -159,7 +159,9 @@ export function flattenJsonToLines(
                 { depth, type: "listEnd", comma: !isLast, path },
             ];
         },
-        string: (value): JsonLine[] => [{ depth, type: "string", key, value, comma: !isLast, path }],
+        string: (value): JsonLine[] => [
+            { depth, type: "string", key, value: value.replace(/\n/g, "\\n"), comma: !isLast, path },
+        ],
         number: (value): JsonLine[] => [{ depth, type: "number", key, value, comma: !isLast, path }],
         boolean: (value): JsonLine[] => [{ depth, type: "boolean", key, value, comma: !isLast, path }],
         null: (): JsonLine[] => [{ depth, type: "null", key, comma: !isLast, path }],

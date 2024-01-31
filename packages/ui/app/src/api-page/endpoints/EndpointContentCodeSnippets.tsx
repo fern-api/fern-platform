@@ -5,10 +5,11 @@ import {
     ResolvedEndpointDefinition,
     ResolvedNavigationItemApiSection,
 } from "@fern-ui/app-utils";
+import classNames from "classnames";
 import { memo } from "react";
 import { ApiPlaygroundButton } from "../../api-playground/ApiPlaygroundButton";
 import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";
-import type { CodeExampleClient } from "../examples/code-example";
+import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 import { CurlExample } from "../examples/curl-example/CurlExample";
 import { CurlLine, curlLinesToString } from "../examples/curl-example/curlUtils";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
@@ -23,9 +24,9 @@ export declare namespace EndpointContentCodeSnippets {
         apiDefinition: ResolvedApiDefinitionPackage;
         endpoint: ResolvedEndpointDefinition;
         example: APIV1Read.ExampleEndpointCall;
-        availableExampleClients: CodeExampleClient[];
-        selectedExampleClient: CodeExampleClient;
-        onClickExampleClient: (client: CodeExampleClient) => void;
+        clients: CodeExampleGroup[];
+        selectedClient: CodeExample;
+        onClickClient: (example: CodeExample) => void;
         requestCurlLines: CurlLine[];
         responseJsonLines: JsonLine[];
         hoveredRequestPropertyPath: JsonPropertyPath | undefined;
@@ -42,9 +43,9 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     apiDefinition,
     endpoint,
     example,
-    availableExampleClients,
-    selectedExampleClient,
-    onClickExampleClient,
+    clients,
+    selectedClient,
+    onClickClient,
     requestCurlLines,
     responseJsonLines,
     hoveredRequestPropertyPath,
@@ -52,19 +53,43 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     requestHeight,
     responseHeight,
 }) => {
+    const selectedClientGroup = clients.find((client) => client.language === selectedClient.language);
     return (
-        <div className="grid min-h-0 flex-1 grid-rows-[repeat(auto-fit,_minmax(0,_min-content))] gap-6">
+        <div className="flex min-h-0 flex-1 flex-col gap-6">
+            {selectedClientGroup != null && selectedClientGroup.examples.length > 1 && (
+                <div className="flex min-w-0 shrink gap-2">
+                    {selectedClientGroup?.examples.map((example) => (
+                        <button
+                            key={example.key}
+                            className={classNames("h-6 px-3 rounded-xl shrink min-w-0", {
+                                "bg-background dark:bg-background-dark ring-1 ring-border-primary dark:ring-border-primary-dark":
+                                    example.key === selectedClient.key,
+                                "bg-background/50 dark:bg-background-dark/50 hover:bg-background dark:hover:bg-background-dark":
+                                    example.key !== selectedClient.key,
+                            })}
+                            onClick={() => {
+                                onClickClient(example);
+                            }}
+                        >
+                            <span className="block overflow-hidden truncate font-mono text-xs font-normal">
+                                {example.name}
+                            </span>
+                        </button>
+                    ))}
+                </div>
+            )}
             <TitledExample
                 title="Request"
+                // afterTitle={<span className="text-accent-primary mx-1 px-1 text-xs">{selectedClient.name}</span>}
                 type="primary"
                 onClick={(e) => {
                     e.stopPropagation();
                 }}
                 disablePadding={true}
                 copyToClipboardText={() => {
-                    return selectedExampleClient.id === "curl"
+                    return selectedClient.language === "curl" && selectedClient.code === ""
                         ? curlLinesToString(requestCurlLines)
-                        : selectedExampleClient.example;
+                        : selectedClient.code;
                 }}
                 actions={
                     <>
@@ -72,23 +97,19 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                             endpoint={endpoint}
                             apiSection={apiSection}
                             apiDefinition={apiDefinition}
+                            example={selectedClient.exampleCall}
                         />
-                        {availableExampleClients.length > 1 ? (
+                        {clients.length > 1 ? (
                             <CodeExampleClientDropdown
-                                clients={availableExampleClients}
-                                onClickClient={(clientId) => {
-                                    const client = availableExampleClients.find((c) => c.id === clientId);
-                                    if (client != null) {
-                                        onClickExampleClient(client);
-                                    }
-                                }}
-                                selectedClient={selectedExampleClient}
+                                clients={clients}
+                                onClickClient={onClickClient}
+                                selectedClient={selectedClient}
                             />
                         ) : undefined}
                     </>
                 }
             >
-                {selectedExampleClient.id === "curl" ? (
+                {selectedClient.language === "curl" && selectedClient.code === "" ? (
                     <CurlExample
                         curlLines={requestCurlLines}
                         selectedProperty={hoveredRequestPropertyPath}
@@ -97,8 +118,8 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 ) : (
                     <CodeBlockSkeleton
                         className="rounded-b-x w-0 min-w-full overflow-y-auto pt-1.5"
-                        content={selectedExampleClient.example}
-                        language={selectedExampleClient.language}
+                        content={selectedClient.code}
+                        language={selectedClient.language}
                         usePlainStyles
                         fontSize="sm"
                         style={{ maxHeight: requestHeight - TITLED_EXAMPLE_PADDING }}

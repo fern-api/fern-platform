@@ -5,6 +5,7 @@ import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
 export declare namespace TitledExample {
     export interface Props {
         title: string;
+        afterTitle?: ReactElement;
         type: "primary" | "warning";
         actions?: ReactElement;
         className?: string;
@@ -18,6 +19,7 @@ export declare namespace TitledExample {
 
 export const TitledExample: React.FC<TitledExample.Props> = ({
     title,
+    afterTitle,
     type,
     className,
     actions,
@@ -35,7 +37,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
     return (
         <div
             className={classNames(
-                "flex flex-col rounded-lg border border-[#d7cfc1] overflow-visible basis-full bg-background-primary-light dark:bg-background-primary-dark",
+                "flex flex-col rounded-lg border border-[#d7cfc1] overflow-visible bg-background-primary-light dark:bg-background-primary-dark",
                 className
             )}
             onClick={onClick}
@@ -50,15 +52,16 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                     }
                 )}
             >
-                <div className="flex items-center">
-                    <div
-                        className={classNames("text-xs uppercase tracking-wide", {
-                            "text-text-primary-light dark:text-text-muted-dark": type === "primary",
+                <div className="flex items-baseline">
+                    <span
+                        className={classNames("inline-flex h-10 items-center text-sm font-semibold uppercase", {
+                            "text-text-primary-light/60 dark:text-text-muted-dark": type === "primary",
                             "text-red-400": type === "warning",
                         })}
                     >
                         {title}
-                    </div>
+                    </span>
+                    {afterTitle}
                 </div>
                 <div className="flex gap-2">
                     {actions}

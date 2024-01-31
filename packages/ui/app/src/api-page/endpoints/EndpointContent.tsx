@@ -12,7 +12,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useNavigationContext } from "../../navigation-context";
 import { useViewportContext } from "../../viewport-context/useViewportContext";
-import { type CodeExampleClient } from "../examples/code-example";
+import { CodeExample, generateCodeExamples } from "../examples/code-example";
 import { getCurlLines } from "../examples/curl-example/curlUtils";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { flattenJsonToLines } from "../examples/json-example/jsonLineUtils";
@@ -40,44 +40,7 @@ const LINE_HEIGHT = 20;
 const MOBILE_MAX_LINES = 20;
 const CONTENT_PADDING = 24 + TITLED_EXAMPLE_PADDING;
 
-const DEFAULT_CLIENT: CodeExampleClient = {
-    id: "curl",
-    name: "cURL",
-};
-
-function getAvailableExampleClients(example: APIV1Read.ExampleEndpointCall): CodeExampleClient[] {
-    const clients: CodeExampleClient[] = [DEFAULT_CLIENT];
-    const { pythonSdk, typescriptSdk } = example.codeExamples;
-    if (pythonSdk != null) {
-        clients.push(
-            {
-                id: "python",
-                name: "Python",
-                language: "python",
-                example: pythonSdk.sync_client,
-            },
-            {
-                id: "python-async",
-                name: "Python (Async)",
-                language: "python",
-                example: pythonSdk.async_client,
-            }
-        );
-    }
-
-    if (typescriptSdk != null && typescriptSdk.client != null) {
-        clients.push({
-            id: "typescript",
-            name: "TypeScript",
-            language: "typescript",
-            example: typescriptSdk.client,
-        });
-    }
-
-    return clients;
-}
-
-const fernClientIdAtom = atomWithStorage<CodeExampleClient["id"]>("fern-client-id", DEFAULT_CLIENT.id);
+const fernLanguageAtom = atomWithStorage<string>("fern-language-id", "curl");
 
 const ERROR_ANCHOR_PREFIX = "response.error.";
 
@@ -131,7 +94,6 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         [setHoveredResponsePropertyPath]
     );
 
-    const [storedSelectedExampleClientId, setSelectedExampleClientId] = useAtom(fernClientIdAtom);
     const [selectedError, setSelectedError] = useState<APIV1Read.ErrorDeclarationV2 | undefined>();
 
     useEffect(() => {
@@ -149,58 +111,76 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const example = useMemo(() => {
+    const examples = useMemo(() => {
         if (selectedError == null) {
             // Look for success example
-            return endpoint.examples.find((e) => e.responseStatusCode >= 200 && e.responseStatusCode < 300) ?? null;
+            return endpoint.examples.filter((e) => e.responseStatusCode >= 200 && e.responseStatusCode < 300) ?? null;
         }
-        return endpoint.examples.find((e) => e.responseStatusCode === selectedError.statusCode) ?? null;
+        return endpoint.examples.filter((e) => e.responseStatusCode === selectedError.statusCode) ?? null;
     }, [endpoint.examples, selectedError]);
 
-    const availableExampleClients = useMemo(
-        () => (example != null ? getAvailableExampleClients(example) : []),
-        [example]
-    );
-
-    const selectedExampleClient =
-        availableExampleClients.find((client) => client.id === storedSelectedExampleClientId) ?? DEFAULT_CLIENT;
+    const clients = useMemo(() => generateCodeExamples(examples), [examples]);
+    const [selectedLanguage, setSelectedLanguage] = useAtom(fernLanguageAtom);
+    const [selectedClient, setSelectedClient] = useState<CodeExample>(() => {
+        const curlExample = clients[0]?.examples[0];
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        return clients.find((c) => c.language === selectedLanguage)?.examples[0] ?? curlExample!;
+    });
+    useEffect(() => {
+        setSelectedClient((prev) => {
+            if (prev.language === selectedLanguage) {
+                return prev;
+            }
+            return clients.find((c) => c.language === selectedLanguage)?.examples[0] ?? prev;
+        });
+    }, [clients, selectedLanguage]);
 
     const setSelectedExampleClientAndScrollToTop = useCallback(
-        (nextClient: CodeExampleClient) => {
-            setSelectedExampleClientId(nextClient.id);
+        (nextClient: CodeExample) => {
+            setSelectedClient(nextClient);
             navigateToPath(route.substring(1));
+            setSelectedLanguage(nextClient.language);
         },
-        [navigateToPath, route, setSelectedExampleClientId]
+        [navigateToPath, route, setSelectedLanguage]
     );
 
     const curlLines = useMemo(
         () =>
-            example != null
-                ? getCurlLines(apiSection.auth, endpoint, example, flattenJsonToLines(example.requestBody))
-                : [],
-        [apiSection.auth, endpoint, example]
+            getCurlLines(
+                apiSection.auth,
+                endpoint,
+                selectedClient.exampleCall,
+                flattenJsonToLines(selectedClient.exampleCall.requestBody)
+            ),
+        [apiSection.auth, endpoint, selectedClient.exampleCall]
     );
     const selectedExampleClientLineCount = useMemo(() => {
-        return selectedExampleClient.id === "curl"
+        return selectedClient.language === "curl" && selectedClient.code === ""
             ? curlLines.length
-            : selectedExampleClient.example.split("\n").length;
-    }, [curlLines.length, selectedExampleClient]);
+            : selectedClient.code.split("\n").length;
+    }, [curlLines.length, selectedClient]);
 
-    const jsonLines = useMemo(() => flattenJsonToLines(example?.responseBody), [example?.responseBody]);
+    const jsonLines = useMemo(
+        () => flattenJsonToLines(selectedClient.exampleCall.responseBody),
+        [selectedClient.exampleCall.responseBody]
+    );
+
+    const selectorHeight =
+        clients.find((c) => c.language === selectedClient.language)?.examples.length ?? 0 > 1 ? GAP_6 + 24 : 0;
 
     const [requestHeight, responseHeight] = useMemo((): [number, number] => {
-        if (layoutBreakpoint !== "lg") {
-            const requestLines = Math.min(MOBILE_MAX_LINES + 0.5, selectedExampleClientLineCount);
-            const responseLines = Math.min(MOBILE_MAX_LINES + 0.5, jsonLines.length);
+        if (!["lg", "xl", "2xl"].includes(layoutBreakpoint)) {
+            const requestLines = Math.min(MOBILE_MAX_LINES, selectedExampleClientLineCount);
+            const responseLines = Math.min(MOBILE_MAX_LINES, jsonLines.length);
             const requestContainerHeight = requestLines * LINE_HEIGHT + CONTENT_PADDING;
             const responseContainerHeight = responseLines * LINE_HEIGHT + CONTENT_PADDING;
             return [requestContainerHeight, responseContainerHeight];
         }
         const maxRequestContainerHeight = selectedExampleClientLineCount * LINE_HEIGHT + CONTENT_PADDING;
         const maxResponseContainerHeight = jsonLines.length * LINE_HEIGHT + CONTENT_PADDING;
-        const containerHeight = viewportSize.height - 64 - PADDING_TOP - PADDING_BOTTOM;
+        const containerHeight = viewportSize.height - 64 - PADDING_TOP - PADDING_BOTTOM - selectorHeight;
         const halfContainerHeight = (containerHeight - GAP_6) / 2;
-        if (example?.responseBody == null) {
+        if (selectedClient.exampleCall.responseBody == null) {
             return [Math.min(maxRequestContainerHeight, containerHeight), 0];
         }
         if (maxRequestContainerHeight >= halfContainerHeight && maxResponseContainerHeight >= halfContainerHeight) {
@@ -221,15 +201,16 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         selectedExampleClientLineCount,
         jsonLines.length,
         viewportSize.height,
-        example?.responseBody,
+        selectorHeight,
+        selectedClient.exampleCall.responseBody,
     ]);
 
-    const exampleHeight = requestHeight + responseHeight + GAP_6 + 70;
+    const exampleHeight = requestHeight + responseHeight + GAP_6 + 70 + selectorHeight;
 
     return (
         <div
             className={classNames(
-                "pl-6 md:pl-12 pr-6 scroll-mt-[74px]",
+                "px-6 md:px-12 lg:pr-6 scroll-mt-[74px]",
                 "bg-[#FAFAFA] border border-[#E0E0E0] rounded-lg mb-3 mx-3 lg:ml-0",
                 {
                     "border-border-default-light dark:border-border-default-dark border-b": !hideBottomSeparator,
@@ -267,24 +248,24 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                 <div
                     className={classNames(
                         "lg:flex-1 lg:sticky lg:self-start lg:min-w-sm lg:max-w-lg lg:ml-auto",
-                        "pb-10 pt-8",
+                        "lg:pb-10 lg:pt-8",
                         // the 4rem is the same as the h-10 as the Header
                         "max-h-[150vh] lg:max-h-[calc(100vh-4rem)]",
                         "flex",
                         // header offset
-                        "mt-10 lg:mt-0 lg:top-16"
+                        "mt-0 lg:top-16"
                     )}
                     style={{ height: `${exampleHeight}px` }}
                 >
-                    {isInViewport && example != null && (
+                    {isInViewport && (
                         <EndpointContentCodeSnippets
                             apiSection={apiSection}
                             apiDefinition={apiDefinition}
                             endpoint={endpoint}
-                            example={example}
-                            availableExampleClients={availableExampleClients}
-                            selectedExampleClient={selectedExampleClient}
-                            onClickExampleClient={setSelectedExampleClientAndScrollToTop}
+                            example={selectedClient.exampleCall}
+                            clients={clients}
+                            selectedClient={selectedClient}
+                            onClickClient={setSelectedExampleClientAndScrollToTop}
                             requestCurlLines={curlLines}
                             responseJsonLines={jsonLines}
                             hoveredRequestPropertyPath={hoveredRequestPropertyPath}

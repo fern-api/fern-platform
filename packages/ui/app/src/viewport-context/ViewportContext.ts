@@ -9,6 +9,6 @@ export const ViewportContext = createContext<ViewportContextValue>({
 });
 
 export interface ViewportContextValue {
-    layoutBreakpoint: "sm" | "md" | "lg";
+    layoutBreakpoint: "mobile" | "sm" | "md" | "lg" | "xl" | "2xl";
     viewportSize: { width: number; height: number };
 }

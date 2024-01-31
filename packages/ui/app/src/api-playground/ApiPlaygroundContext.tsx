@@ -23,6 +23,7 @@ export interface ApiPlaygroundSelectionState {
     apiSection: ResolvedNavigationItemApiSection;
     apiDefinition: ResolvedApiDefinitionPackage;
     endpoint: ResolvedEndpointDefinition;
+    example: APIV1Read.ExampleEndpointCall;
 }
 
 interface ApiPlaygroundContextValue {

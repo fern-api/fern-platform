@@ -9,12 +9,13 @@ import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useCallback, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
+import { useViewportContext } from "../viewport-context/useViewportContext";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
 import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
 import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
 import { SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundRequestFormState } from "./types";
-import { useHorizontalSplitPane, useWindowWidth } from "./useSplitPlane";
+import { useHorizontalSplitPane } from "./useSplitPlane";
 import { buildEndpointUrl, buildUnredactedHeaders } from "./utils";
 
 interface ResponsePayload {
@@ -49,7 +50,9 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
 }) => {
     const [requestType, setRequestType] = useAtom(requestTypeAtom);
     const [width, setWidthPercent] = useState<number>(0.5);
-    const windowWidth = useWindowWidth();
+    const {
+        viewportSize: { width: windowWidth },
+    } = useViewportContext();
     const setWidth = useCallback(
         (width: number) => {
             if (windowWidth != null) {

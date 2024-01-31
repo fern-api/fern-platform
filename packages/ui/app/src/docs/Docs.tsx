@@ -9,7 +9,6 @@ import NextNProgress from "nextjs-progressbar";
 import { memo, useEffect, useMemo, useState } from "react";
 import tinycolor from "tinycolor2";
 import { ApiPlaygroundContextProvider } from "../api-playground/ApiPlaygroundContext";
-import { useBreakpoint } from "../hooks/useBreakpoint";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
 import { useSearchContext } from "../search-context/useSearchContext";
@@ -17,6 +16,7 @@ import { SearchDialog } from "../search/SearchDialog";
 import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { useSearchService } from "../services/useSearchService";
 import { Sidebar } from "../sidebar/Sidebar";
+import { useViewportContext } from "../viewport-context/useViewportContext";
 import { BgImageGradient } from "./BgImageGradient";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
@@ -116,7 +116,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                   _other: () => "88rem",
               });
 
-    const breakpoint = useBreakpoint();
+    const { layoutBreakpoint } = useViewportContext();
 
     return (
         <>
@@ -168,7 +168,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                                 onClick={closeMobileSidebar}
                             />
                         )}
-                        {["lg", "xl", "2xl"].includes(breakpoint) ? (
+                        {["lg", "xl", "2xl"].includes(layoutBreakpoint) ? (
                             <div
                                 className="sticky top-[74px] z-20 m-3 mt-[74px] hidden h-[calc(100vh-86px)] overflow-hidden rounded-lg border border-[#E0E0E0] bg-[#FAFAFA] lg:block"
                                 style={{

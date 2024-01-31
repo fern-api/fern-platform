@@ -91,23 +91,34 @@ export const FernMenu: FC<FernMenu.Props> = ({
 
 export declare namespace FernMenuItem {
     export interface Props {
+        className?: string;
         href?: LinkProps["href"];
-        onClick?: () => void;
+        onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
         selected?: boolean;
         children: ReactNode | ((active: boolean) => ReactNode);
+        disableRoundCorners?: boolean;
     }
 }
 
-export const FernMenuItem: FC<FernMenuItem.Props> = ({ href, onClick, selected = false, children }) => {
+export const FernMenuItem: FC<FernMenuItem.Props> = ({
+    className: parentClassName,
+    href,
+    onClick,
+    selected = false,
+    children,
+    disableRoundCorners = false,
+}) => {
     return (
         <HeadlessMenu.Item>
             {({ active }) => {
                 const className = classNames(
-                    "flex justify-between !no-underline items-center p-2 first:rounded-t-md last:rounded-b-md gap-2",
+                    parentClassName,
+                    "flex justify-between !no-underline items-center p-2 gap-2",
                     {
                         "bg-tag-primary": active,
                         "!text-accent-primary dark:!text-accent-primary-dark": selected || (active && !selected),
                         "!text-text-muted-light dark:!text-text-muted-dark": !active && !selected,
+                        "first:rounded-t-md last:rounded-b-md": !disableRoundCorners,
                     }
                 );
                 const checkIcon = <CheckIcon className={classNames("h-3 w-3", { invisible: !selected })} />;
