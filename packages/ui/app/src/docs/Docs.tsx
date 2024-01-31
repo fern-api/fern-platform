@@ -90,7 +90,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                 />
             </div>
         ),
-        [backgroundType, hasSpecifiedBackgroundImage]
+        [backgroundType, hasSpecifiedBackgroundImage],
     );
 
     const currentSlug = useMemo(
@@ -98,7 +98,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
             withVersionAndTabSlugs("", { omitDefault: true })
                 .split("/")
                 .filter((s) => s.length > 0),
-        [withVersionAndTabSlugs]
+        [withVersionAndTabSlugs],
     );
 
     const navigationItems = useMemo(() => {
@@ -163,7 +163,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                                     "opacity-0 sm:opacity-100 sm:block pointer-events-none lg:pointer-events-auto sm:-translate-x-full":
                                         !isMobileSidebarOpen,
                                     "sm:translate-x-0 opacity-100": isMobileSidebarOpen,
-                                }
+                                },
                             )}
                         >
                             {renderBackground("lg:hidden backdrop-blur-lg")}

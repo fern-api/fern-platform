@@ -25,7 +25,7 @@ export declare namespace Header {
 
 const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Props>>(function Header(
     { className, config, openSearchDialog, isMobileSidebarOpen, openMobileSidebar, closeMobileSidebar, searchService },
-    ref
+    ref,
 ) {
     const { navbarLinks, colorsV3 } = config;
     const navbarLinksSection = (
@@ -35,7 +35,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                     primary: (navbarLink) => <HeaderPrimaryLink key={idx} navbarLink={navbarLink} />,
                     secondary: (navbarLink) => <HeaderSecondaryLink key={idx} navbarLink={navbarLink} />,
                     _other: () => null,
-                })
+                }),
             )}
         </div>
     );
@@ -47,7 +47,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                 "flex justify-between items-center shrink-0 px-6 sm:px-8",
                 // this matches with the calc() in the EndpointContent examples section
                 "h-full",
-                className
+                className,
             )}
             ref={ref}
         >
@@ -79,7 +79,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                         {
                             "!text-accent-primary !dark:text-accent-primary-dark bg-tag-primary dark:bg-tag-primary-dark ring-inset ring-1 ring-border-primary dark:ring-border-primary-dark":
                                 isMobileSidebarOpen,
-                        }
+                        },
                     )}
                 >
                     {isMobileSidebarOpen ? <XIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}

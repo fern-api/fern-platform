@@ -86,7 +86,7 @@ export type DocsPageResult<Props> =
 
 export const getDocsPageProps = async (
     xFernHost: string | undefined,
-    slugArray: string[]
+    slugArray: string[],
 ): Promise<DocsPageResult<DocsPage.Props>> => {
     if (xFernHost == null || Array.isArray(xFernHost)) {
         return { type: "notFound", notFound: true };

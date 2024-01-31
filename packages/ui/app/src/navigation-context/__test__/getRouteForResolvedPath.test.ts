@@ -22,7 +22,7 @@ describe("getRouteForResolvedPath", () => {
             "/api-reference/payments-api/authorize-a-payment#payments_api-authorize_payment-response-transactions",
         ];
         expect(args.map(([resolvedSlug, asPath]) => getRouteForResolvedPath({ resolvedSlug, asPath }))).toEqual(
-            expectedRoutes
+            expectedRoutes,
         );
     });
 });

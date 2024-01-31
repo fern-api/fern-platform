@@ -36,7 +36,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
         <div
             className={classNames(
                 "flex flex-col rounded-xl border border-black/20 dark:border-white/20 overflow-visible basis-full bg-background-primary-light dark:bg-background-primary-dark",
-                className
+                className,
             )}
             onClick={onClick}
             ref={containerRef}
@@ -47,7 +47,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                     {
                         "bg-black/5 dark:bg-white/5": type === "primary",
                         "bg-red-500/20": type === "warning",
-                    }
+                    },
                 )}
             >
                 <div className="flex items-center">

@@ -30,7 +30,7 @@ export const CurlParameter: React.FC<CurlParameter.Props> = ({ paramKey, value, 
                                           <span className="text-text-primary-light dark:text-text-primary-dark" key={i}>
                                               {renderJsonLine(v.value)}
                                           </span>
-                                      )
+                                      ),
                                   )}
                         </span>
                     ) : (

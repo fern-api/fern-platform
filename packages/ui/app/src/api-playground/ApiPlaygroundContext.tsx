@@ -44,7 +44,7 @@ const ApiPlaygroundContext = createContext<ApiPlaygroundContextValue>({
 export const PLAYGROUND_OPEN_ATOM = atomWithStorage<boolean>("api-playground-is-open", false);
 export const PLAYGROUND_FORM_STATE_ATOM = atomWithStorage<Record<string, PlaygroundRequestFormState | undefined>>(
     "api-playground-selection-state-alpha",
-    {}
+    {},
 );
 
 interface ApiPlaygroundProps {
@@ -79,20 +79,20 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundPro
                         [createFormStateKey(newSelectionState)]: getInitialModalFormStateWithExample(
                             selectionState?.apiSection.auth,
                             newSelectionState.endpoint,
-                            newSelectionState.endpoint?.examples[0]
+                            newSelectionState.endpoint?.examples[0],
                         ),
                     };
                 });
             }
         },
-        [expandApiPlayground, globalFormState, selectionState?.apiSection.auth, setGlobalFormState]
+        [expandApiPlayground, globalFormState, selectionState?.apiSection.auth, setGlobalFormState],
     );
 
     if (
         !domain.toLowerCase().includes("cloudflare") &&
         !domain.toLowerCase().includes("cohere") &&
         !["docs.buildwithfern.com", "fern.docs.buildwithfern.com", "fern.docs.dev.buildwithfern.com"].includes(
-            domain.toLowerCase()
+            domain.toLowerCase(),
         )
     ) {
         return <>{children}</>;
@@ -120,7 +120,7 @@ export function useApiPlaygroundContext(): ApiPlaygroundContextValue {
 
 function getInitialModalFormState(
     auth: APIV1Read.ApiAuth | undefined,
-    endpoint: ResolvedEndpointDefinition | undefined
+    endpoint: ResolvedEndpointDefinition | undefined,
 ): PlaygroundRequestFormState {
     return {
         auth: getInitialAuthState(auth),
@@ -146,7 +146,7 @@ function getInitialAuthState(auth: APIV1Read.ApiAuth | undefined): PlaygroundReq
 function getInitialModalFormStateWithExample(
     auth: APIV1Read.ApiAuth | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
-    exampleCall: APIV1Read.ExampleEndpointCall | undefined
+    exampleCall: APIV1Read.ExampleEndpointCall | undefined,
 ): PlaygroundRequestFormState {
     if (exampleCall == null) {
         return getInitialModalFormState(auth, endpoint);

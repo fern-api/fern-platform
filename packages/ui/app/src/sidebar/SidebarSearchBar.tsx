@@ -21,7 +21,7 @@ export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = memo(function 
             className={classNames(
                 className,
                 "text-sm dark:border-white/20 border-black/20 group flex items-center rounded-lg border px-2.5 py-2",
-                "bg-background-primary-light hover:bg-background-hover-light dark:bg-background-primary-dark dark:hover:bg-background-hover-dark"
+                "bg-background-primary-light hover:bg-background-hover-light dark:bg-background-primary-dark dark:hover:bg-background-hover-dark",
             )}
         >
             <div className="flex items-center space-x-3">

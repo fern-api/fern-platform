@@ -58,7 +58,7 @@ export const DocsApp: React.FC<App.Props> = ({
                         <NavigationContextProvider resolvedPath={resolvedPath} basePath={baseUrl.basePath}>
                             <Docs config={config} search={search} apis={apis} algoliaSearchIndex={algoliaSearchIndex} />
                         </NavigationContextProvider>
-                    </DocsContextProvider>
+                    </DocsContextProvider>,
                 )}
             </div>
         </div>

@@ -84,7 +84,7 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
             ...contextValue,
             jsonPropertyPath: [...contextValue.jsonPropertyPath],
         }),
-        [contextValue]
+        [contextValue],
     );
 
     return (

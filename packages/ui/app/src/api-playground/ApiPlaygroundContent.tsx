@@ -56,7 +56,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                 setWidthPercent(width / windowWidth);
             }
         },
-        [windowWidth]
+        [windowWidth],
     );
     const handleResize = useHorizontalSplitPane(setWidth);
 
@@ -131,7 +131,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                                     "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark":
                                         requestType === "form",
                                     "t-muted": requestType !== "form",
-                                }
+                                },
                             )}
                             onClick={() => setRequestType("form")}
                         >
@@ -144,7 +144,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                                     "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark":
                                         requestType === "curl",
                                     "t-muted": requestType !== "curl",
-                                }
+                                },
                             )}
                             onClick={() => setRequestType("curl")}
                         >
@@ -157,7 +157,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                                     "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark":
                                         requestType === "javascript",
                                     "t-muted": requestType !== "javascript",
-                                }
+                                },
                             )}
                             onClick={() => setRequestType("javascript")}
                         >
@@ -170,7 +170,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                                     "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark":
                                         requestType === "python",
                                     "t-muted": requestType !== "python",
-                                }
+                                },
                             )}
                             onClick={() => setRequestType("python")}
                         >

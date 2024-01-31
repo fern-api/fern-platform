@@ -7,6 +7,12 @@
       "options": {
         "tabWidth": 2
       }
+    },
+    {
+      "files": "*.{json,cjs}",
+      "options": {
+        "trailingComma": "none"
+      }
     }
   ]
 }

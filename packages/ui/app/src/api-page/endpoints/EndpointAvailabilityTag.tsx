@@ -33,7 +33,7 @@ export const EndpointAvailabilityTag = memo<EndpointAvailabilityTag.Props>(funct
                     "bg-tag-danger border-danger dark:bg-tag-danger-dark dark:border-border-danger-dark":
                         availability === "Deprecated" && !minimal,
                 },
-                className
+                className,
             )}
         >
             {getEndpointAvailabilityLabel(availability)}

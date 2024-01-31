@@ -25,7 +25,7 @@ export function useCopyToClipboard(content: string | (() => string) | undefined)
         () => {
             setWasJustCopied(false);
         },
-        wasJustCopied ? 2_000 : undefined
+        wasJustCopied ? 2_000 : undefined,
     );
 
     return {

@@ -22,7 +22,7 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
     const [internalSelectedVariant, setInternalSelectedVariant] = useState<number>(() => {
         return Math.max(
             undiscriminatedUnion.variants.findIndex((variant) => matchesTypeReference(variant.shape, value)),
-            0
+            0,
         );
     });
 
@@ -37,7 +37,7 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
                 onChange(getDefaultValueForType(variant.shape));
             }
         },
-        [internalSelectedVariant, onChange, undiscriminatedUnion.variants]
+        [internalSelectedVariant, onChange, undiscriminatedUnion.variants],
     );
 
     return (
@@ -84,7 +84,7 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
                     }
                     onItemSelect={(variant) =>
                         setSelectedVariant(
-                            undiscriminatedUnion.variants.findIndex((v) => isEqual(v, variant)).toString(10)
+                            undiscriminatedUnion.variants.findIndex((v) => isEqual(v, variant)).toString(10),
                         )
                     }
                     activeItem={selectedVariant}

@@ -108,7 +108,7 @@ export const serializeMdxApiHandler: NextApiHandler = async (req, res: NextApiRe
                 }
                 const serializedMdxContent = await serializeMdxContent(content.markdown);
                 return { fullSlug, serializedMdxContent };
-            })
+            }),
         );
         const resultsByFullSlug = results.reduce<Record<FullSlug, SerializedMdxContent | null>>((acc, result) => {
             acc[result.fullSlug] = result.serializedMdxContent;

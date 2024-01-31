@@ -9,7 +9,7 @@ export function useAreFontsReady(fonts: string[]): boolean {
             });
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        fonts
+        fonts,
     );
     return isReady;
 }

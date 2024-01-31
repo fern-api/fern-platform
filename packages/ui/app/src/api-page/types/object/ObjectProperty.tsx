@@ -46,14 +46,14 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
                 propertyName: property.key,
             },
         ],
-        [contextValue.jsonPropertyPath, property.key]
+        [contextValue.jsonPropertyPath, property.key],
     );
     const newContextValue = useCallback(
         (): TypeDefinitionContextValue => ({
             ...contextValue,
             jsonPropertyPath,
         }),
-        [contextValue, jsonPropertyPath]
+        [contextValue, jsonPropertyPath],
     );
 
     const onMouseEnterPropertyName = useMemo(() => {

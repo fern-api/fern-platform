@@ -30,7 +30,7 @@ function fromKeyValuePairs(keyValuePairs: Array<{ key: unknown; value: unknown }
 
 export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ keyShape, valueShape, onChange, value }) => {
     const [internalState, setInternalState] = useState<Array<{ key: unknown; value: unknown }>>(() =>
-        toKeyValuePairs(value)
+        toKeyValuePairs(value),
     );
 
     useEffect(() => {
@@ -67,7 +67,7 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ keyShape, valueS
                 return [...oldArray.slice(0, idx), ...oldArray.slice(idx + 1)];
             });
         },
-        [onChange]
+        [onChange],
     );
     return (
         <div>

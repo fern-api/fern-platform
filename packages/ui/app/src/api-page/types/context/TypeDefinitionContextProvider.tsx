@@ -18,7 +18,7 @@ export const TypeDefinitionContextProvider: React.FC<TypeReferenceDefinitions.Pr
             jsonPropertyPath: [],
             onHoverProperty,
         }),
-        [onHoverProperty]
+        [onHoverProperty],
     );
 
     return <TypeDefinitionContext.Provider value={contextValue}>{children}</TypeDefinitionContext.Provider>;

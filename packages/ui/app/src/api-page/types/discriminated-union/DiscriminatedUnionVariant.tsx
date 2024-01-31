@@ -60,7 +60,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                 },
             ],
         }),
-        [contextValue, discriminant, unionVariant.discriminantValue]
+        [contextValue, discriminant, unionVariant.discriminantValue],
     );
 
     return (

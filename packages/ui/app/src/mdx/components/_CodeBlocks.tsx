@@ -6,7 +6,7 @@ import type { CodeBlockItem } from "./common/types";
 
 const CodeBlockSkeleton = dynamic(
     () => import("../../commons/CodeBlockSkeleton").then(({ CodeBlockSkeleton }) => CodeBlockSkeleton),
-    { ssr: false }
+    { ssr: false },
 );
 
 export declare namespace _CodeBlocks {

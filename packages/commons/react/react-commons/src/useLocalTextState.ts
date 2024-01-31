@@ -67,7 +67,7 @@ export function useLocalTextState({
             dispatch({ type: "confirmRename", value });
             onRename?.(value);
         },
-        [onRename]
+        [onRename],
     );
 
     return {

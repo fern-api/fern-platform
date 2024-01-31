@@ -37,7 +37,7 @@ export const FernMenu: FC<FernMenu.Props> = ({
                         "py-1 pl-2.5 pr-1",
                         {
                             "rounded-r-none": clearSelection != null,
-                        }
+                        },
                     )}
                 >
                     {({ open }) => {
@@ -79,7 +79,7 @@ export const FernMenu: FC<FernMenu.Props> = ({
                             "left-0": align === "left",
                             "right-0": align === "right",
                         },
-                        menuClassName
+                        menuClassName,
                     )}
                 >
                     {children}
@@ -108,7 +108,7 @@ export const FernMenuItem: FC<FernMenuItem.Props> = ({ href, onClick, selected =
                         "bg-tag-primary": active,
                         "!text-accent-primary dark:!text-accent-primary-dark": selected || (active && !selected),
                         "!text-text-muted-light dark:!text-text-muted-dark": !active && !selected,
-                    }
+                    },
                 );
                 const checkIcon = <CheckIcon className={classNames("h-3 w-3", { invisible: !selected })} />;
                 const renderedChildren = typeof children === "function" ? children(active) : children;

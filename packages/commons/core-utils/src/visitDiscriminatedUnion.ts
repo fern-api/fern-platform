@@ -6,7 +6,7 @@ export type DiscriminatedUnionVisitor<T extends Record<Discriminant, string>, U,
 
 export function visitDiscriminatedUnion<T extends Record<Discriminant, string>, Discriminant extends string>(
     item: T,
-    discriminant: Discriminant
+    discriminant: Discriminant,
 ): { _visit: <U>(visitor: DiscriminatedUnionVisitor<T, U, Discriminant>) => U } {
     return {
         _visit: (visitor) => {

@@ -44,7 +44,7 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, re
                                             "t-muted": anchorInView !== anchor,
                                             "text-accent-primary dark:text-accent-primary-dark":
                                                 anchorInView === anchor,
-                                        }
+                                        },
                                     )}
                                     href={`#${getSlugFromText(text)}`}
                                 >
@@ -94,7 +94,7 @@ const makeTree = (
         depth: number;
         text: string;
     }[],
-    depth: number = 1
+    depth: number = 1,
 ): TableOfContentsItem[] => {
     const tree: TableOfContentsItem[] = [];
 

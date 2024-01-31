@@ -14,7 +14,7 @@ export const HeaderPrimaryLink: React.FC<HeaderPrimaryLink.Props> = ({ navbarLin
         <Link
             className={classNames(
                 "text-sm group pl-4 pr-3 py-1.5 flex space-x-1.5 items-center no-underline hover:no-underline text-accent-primary dark:text-accent-primary-dark hover:text-accent-primary dark:hover:text-accent-primary-dark transition rounded-lg hover:bg-tag-primary dark:hover:bg-tag-primary-dark",
-                "ring-border-primary dark:ring-border-primary-dark ring-1 hover:ring-2 ring-inset"
+                "ring-border-primary dark:ring-border-primary-dark ring-1 hover:ring-2 ring-inset",
             )}
             href={navbarLink.url}
             target="_blank"
