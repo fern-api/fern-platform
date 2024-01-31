@@ -29,10 +29,10 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({
                     requestType === "curl"
                         ? stringifyCurl(auth, endpoint, formState, false)
                         : requestType === "javascript"
-                        ? stringifyFetch(auth, endpoint, formState, false)
-                        : requestType === "python"
-                        ? stringifyPythonRequests(auth, endpoint, formState, false)
-                        : ""
+                          ? stringifyFetch(auth, endpoint, formState, false)
+                          : requestType === "python"
+                            ? stringifyPythonRequests(auth, endpoint, formState, false)
+                            : ""
                 }
             />
             <div className="h-full overflow-auto font-mono text-xs">
@@ -50,10 +50,10 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({
                     {requestType === "curl"
                         ? stringifyCurl(auth, endpoint, formState)
                         : requestType === "javascript"
-                        ? stringifyFetch(auth, endpoint, formState)
-                        : requestType === "python"
-                        ? stringifyPythonRequests(auth, endpoint, formState)
-                        : ""}
+                          ? stringifyFetch(auth, endpoint, formState)
+                          : requestType === "python"
+                            ? stringifyPythonRequests(auth, endpoint, formState)
+                            : ""}
                 </FernSyntaxHighlighter>
             </div>
         </div>

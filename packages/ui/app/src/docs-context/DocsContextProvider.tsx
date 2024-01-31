@@ -27,7 +27,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             }
             return file;
         },
-        [files]
+        [files],
     );
 
     const pathResolver = useMemo(
@@ -39,7 +39,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
                     basePath: baseUrl.basePath,
                 },
             }),
-        [apis, baseUrl.basePath, config]
+        [apis, baseUrl.basePath, config],
     );
 
     return (

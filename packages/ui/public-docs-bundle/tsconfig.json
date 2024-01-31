@@ -8,9 +8,9 @@
     "incremental": true,
     "noEmit": true,
     "jsx": "preserve",
-    "plugins": [{ "name": "next" }]
+    "plugins": [{ "name": "next" }],
   },
   "include": ["./src/**/*"],
   "exclude": ["node_modules"],
-  "references": [{ "path": "../app" }]
+  "references": [{ "path": "../app" }],
 }

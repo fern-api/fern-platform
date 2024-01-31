@@ -21,7 +21,7 @@ export const MobileSidebarContextProvider: React.FC<MobileSidebarContextProvider
             openMobileSidebar,
             closeMobileSidebar,
         }),
-        [isMobileSidebarOpen, openMobileSidebar, closeMobileSidebar]
+        [isMobileSidebarOpen, openMobileSidebar, closeMobileSidebar],
     );
 
     return <MobileSidebarContext.Provider value={contextValue}>{children}</MobileSidebarContext.Provider>;

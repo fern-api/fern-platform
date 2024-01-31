@@ -59,7 +59,7 @@ export function useCollapsedState({
             }
             setTimeout(onStopResizing);
         },
-        [convertSizeToPixels, initialSize, onStopResizing, setSizeInPixels, sizeInPixels, sizeToCollapse]
+        [convertSizeToPixels, initialSize, onStopResizing, setSizeInPixels, sizeInPixels, sizeToCollapse],
     );
 
     return [isCollapsed, setIsCollapsed];

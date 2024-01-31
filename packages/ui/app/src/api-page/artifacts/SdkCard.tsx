@@ -33,7 +33,7 @@ export const SdkCard: React.FC<SdkCard.Props> = ({ sdk }) => {
                 pypi: () => undefined,
                 _other: () => undefined,
             }),
-        [sdk]
+        [sdk],
     );
 
     if (renderInfo == null) {

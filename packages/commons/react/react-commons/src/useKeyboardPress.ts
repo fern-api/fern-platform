@@ -37,10 +37,10 @@ export function useKeyboardPress(args: useKeyboardPress.Args): void {
                 (isUppercaseLetter(key)
                     ? `Key${key}`
                     : isArrow(key)
-                    ? `Arrow${key}`
-                    : isDigit(key)
-                    ? `Digit${key}`
-                    : key);
+                      ? `Arrow${key}`
+                      : isDigit(key)
+                        ? `Digit${key}`
+                        : key);
             if (doKeysMatch) {
                 if (preventDefault) {
                     e.preventDefault();

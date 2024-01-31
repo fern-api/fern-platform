@@ -65,7 +65,7 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
                 {
                     "py-4 lg:pb-2": tabs != null,
                 },
-                className
+                className,
             )}
         >
             {searchBar}

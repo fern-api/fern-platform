@@ -47,7 +47,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
                                             },
                                             {
                                                 "border-accent-primary/75": active,
-                                            }
+                                            },
                                         )}
                                     >
                                         {getVersionAvailabilityLabel(availability)}

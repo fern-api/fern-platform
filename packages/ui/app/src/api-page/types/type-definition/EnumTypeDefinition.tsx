@@ -54,7 +54,7 @@ export const EnumTypeDefinition = ({
                         {
                             "w-full": !isCollapsed,
                             "w-fit": isCollapsed,
-                        }
+                        },
                     )}
                     // ref={ref}
                 >
@@ -64,7 +64,7 @@ export const EnumTypeDefinition = ({
                             {
                                 "border-transparent": isCollapsed,
                                 "border-border-default-light dark:border-border-default-dark": !isCollapsed,
-                            }
+                            },
                         )}
                         onClick={(e) => {
                             e.stopPropagation();

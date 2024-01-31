@@ -17,7 +17,7 @@ module.exports = {
             }
             return newParserOptions;
         },
-        {}
+        {},
     ),
     rules: Object.entries(DEFAULT_CONFIG.rules).reduce(
         (newRules, [ruleId, rule]) => {
@@ -28,7 +28,7 @@ module.exports = {
         },
         {
             "no-unused-vars": "off",
-        }
+        },
     ),
 };
 

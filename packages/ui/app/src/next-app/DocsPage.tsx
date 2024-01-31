@@ -87,7 +87,7 @@ export type DocsPageResult<Props> =
 
 export const getDocsPageProps = async (
     xFernHost: string | undefined,
-    slugArray: string[]
+    slugArray: string[],
 ): Promise<DocsPageResult<DocsPage.Props>> => {
     try {
         initializePosthog();

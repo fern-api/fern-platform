@@ -6,6 +6,6 @@
     { "path": "../../commons/app-utils" },
     { "path": "../../commons/core-utils" },
     { "path": "../../commons/loadable" },
-    { "path": "../../commons/react/react-commons" }
-  ]
+    { "path": "../../commons/react/react-commons" },
+  ],
 }

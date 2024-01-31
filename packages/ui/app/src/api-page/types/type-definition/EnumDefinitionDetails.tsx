@@ -15,7 +15,7 @@ export const EnumDefinitionDetails = ({ elements, searchInput }: TypeDefinitionD
         const temp = elements.filter(
             (element) =>
                 element.props.name.toLowerCase().includes(searchInput.toLowerCase()) ||
-                element.props?.description?.toLowerCase().includes(searchInput.toLowerCase())
+                element.props?.description?.toLowerCase().includes(searchInput.toLowerCase()),
         );
         setFilteredElements(temp);
     }, [elements, searchInput]);

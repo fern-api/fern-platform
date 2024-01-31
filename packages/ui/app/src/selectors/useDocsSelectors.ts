@@ -77,7 +77,7 @@ export function useDocsSelectors(): DocsSelectors {
             }
             return slug;
         },
-        [navigationContext]
+        [navigationContext],
     );
 
     const withVersionSlug = useCallback(
@@ -89,12 +89,12 @@ export function useDocsSelectors(): DocsSelectors {
             }
             return slug;
         },
-        [navigationContext]
+        [navigationContext],
     );
 
     const withVersionAndTabSlugs = useCallback(
         (slug: string, opts?: WithVersionSlugOpts) => prefix + withVersionSlug(withTabSlug(slug), opts),
-        [prefix, withVersionSlug, withTabSlug]
+        [prefix, withVersionSlug, withTabSlug],
     );
 
     return {

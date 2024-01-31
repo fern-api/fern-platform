@@ -32,7 +32,7 @@ export const SplitView: React.FC<React.PropsWithChildren<SplitView.Props>> = ({
 
     const containerSizeInPixels = useMemo(
         () => (dimensions != null ? getRelevationDimensionForOrientation(dimensions, orientation) : undefined),
-        [dimensions, orientation]
+        [dimensions, orientation],
     );
 
     const contextValue = useCallback(
@@ -41,7 +41,7 @@ export const SplitView: React.FC<React.PropsWithChildren<SplitView.Props>> = ({
             orientation,
             disabled,
         }),
-        [containerSizeInPixels, disabled, orientation]
+        [containerSizeInPixels, disabled, orientation],
     );
 
     return (

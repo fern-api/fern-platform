@@ -26,7 +26,7 @@ export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemShape, onC
                 return [...oldArray.slice(0, idx), newValue, ...oldArray.slice(idx + 1)];
             });
         },
-        [onChange]
+        [onChange],
     );
     const handleRemoveItem = useCallback(
         (idx: number) => {
@@ -35,7 +35,7 @@ export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemShape, onC
                 return [...oldArray.slice(0, idx), ...oldArray.slice(idx + 1)];
             });
         },
-        [onChange]
+        [onChange],
     );
     return (
         <>

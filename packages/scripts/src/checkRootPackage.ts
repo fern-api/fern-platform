@@ -34,7 +34,7 @@ export async function checkRootPackage({ shouldFix }: { shouldFix: boolean }): P
             ...dependencies,
             [p.name]: "workspace:*",
         }),
-        {}
+        {},
     );
 
     if (isEqual(oldDependencies, newDependencies)) {
@@ -46,9 +46,9 @@ export async function checkRootPackage({ shouldFix }: { shouldFix: boolean }): P
         console.log(
             chalk.red(
                 `${COMPILE_ROOT_PACKAGE} dependencies are not correct. Run ${chalk.bold(
-                    "yarn root-package:fix"
-                )} to fix.`
-            )
+                    "yarn root-package:fix",
+                )} to fix.`,
+            ),
         );
         process.exit(1);
     }
@@ -60,8 +60,8 @@ export async function checkRootPackage({ shouldFix }: { shouldFix: boolean }): P
                 draft.dependencies = newDependencies;
             }),
             undefined,
-            2
-        )
+            2,
+        ),
     );
     await execa("yarn", ["lint:monorepo:fix"]);
     await execa("yarn", ["install"]);

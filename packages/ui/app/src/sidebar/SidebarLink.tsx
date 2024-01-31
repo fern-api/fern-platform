@@ -62,7 +62,7 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
             },
             {
                 "!pl-0": toggleExpand != null || expanded || depth > 0,
-            }
+            },
         );
 
         return href != null ? (
@@ -104,7 +104,7 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
                         !showIndicator && toggleExpand != null,
                     "lg:rounded-lg dark:group-hover:rounded-r-none": depth === 0,
                     "lg:rounded-r-lg dark:group-hover:rounded-r-none": depth > 0,
-                }
+                },
             )}
         >
             <ChevronDownIcon
@@ -141,7 +141,7 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
                                         "border-accent-primary/60 dark:border-accent-primary-dark/60": selected,
                                         "border-border-default-light dark:border-border-default-dark lg:opacity-60":
                                             !selected,
-                                    }
+                                    },
                                 )}
                             />
                         ))}
@@ -150,7 +150,7 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
                             <span className={titleSpanClassName}>{title}</span>
                             {rightElement}
                         </span>
-                    </>
+                    </>,
                 )}
             </div>
             {children}

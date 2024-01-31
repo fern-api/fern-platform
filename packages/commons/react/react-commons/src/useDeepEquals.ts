@@ -14,7 +14,7 @@ function checkDeps(deps: DependencyList) {
     }
     if (deps.every(isPrimitive)) {
         throw new Error(
-            "useDeepCompareEffect should not be used with dependencies that are all primitive values. Use React.useEffect instead."
+            "useDeepCompareEffect should not be used with dependencies that are all primitive values. Use React.useEffect instead.",
         );
     }
 }

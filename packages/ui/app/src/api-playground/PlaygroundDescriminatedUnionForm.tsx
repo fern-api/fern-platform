@@ -29,7 +29,7 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                     return oldValue;
                 }
                 const selectedVariant = discriminatedUnion.variants.find(
-                    (variant) => variant.discriminantValue === variantKey
+                    (variant) => variant.discriminantValue === variantKey,
                 );
                 if (selectedVariant == null) {
                     // eslint-disable-next-line no-console
@@ -42,7 +42,7 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                 };
             });
         },
-        [discriminatedUnion.discriminant, discriminatedUnion.variants, onChange]
+        [discriminatedUnion.discriminant, discriminatedUnion.variants, onChange],
     );
 
     const activeVariant = discriminatedUnion.variants.find((variant) => variant.discriminantValue === selectedVariant);

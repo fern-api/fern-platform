@@ -13,7 +13,7 @@ export const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({ className, .
             {...rest}
             className={classNames(
                 className,
-                "not-prose inline-code font-mono border border-border-concealed-light dark:border-border-concealed-dark rounded bg-background/75 dark:bg-background-dark/75 py-0.5 px-1"
+                "not-prose inline-code font-mono border border-border-concealed-light dark:border-border-concealed-dark rounded bg-background/75 dark:bg-background-dark/75 py-0.5 px-1",
             )}
         />
     );
@@ -25,7 +25,7 @@ export const Table: React.FC<HTMLAttributes<HTMLTableElement>> = ({ className, .
             {...rest}
             className={classNames(
                 className,
-                "block border-separate border-spacing-0 overflow-x-auto table-auto mb-3 text-sm max-w-full not-prose border border-border-default-light dark:border-border-default-dark rounded-lg bg-background-primary-light dark:bg-background-primary-dark"
+                "block border-separate border-spacing-0 overflow-x-auto table-auto mb-3 text-sm max-w-full not-prose border border-border-default-light dark:border-border-default-dark rounded-lg bg-background-primary-light dark:bg-background-primary-dark",
             )}
         />
     );
@@ -45,7 +45,7 @@ export const Th: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
             {...rest}
             className={classNames(
                 className,
-                "text-left truncate px-3 py-1 leading-7 border-b border-border-default-light dark:border-border-default-dark t-muted text-xs bg-background-primary-light dark:bg-background-primary-dark"
+                "text-left truncate px-3 py-1 leading-7 border-b border-border-default-light dark:border-border-default-dark t-muted text-xs bg-background-primary-light dark:bg-background-primary-dark",
             )}
         />
     );
@@ -73,7 +73,7 @@ export const Td: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
  */
 const flatten = (
     text: string,
-    child: ReactNode
+    child: ReactNode,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): any => {
     return typeof child === "string"

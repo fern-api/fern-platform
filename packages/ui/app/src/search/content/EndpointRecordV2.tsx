@@ -31,7 +31,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                             {
                                 "t-muted": !isHovered,
                                 "text-accent-primary-contrast dark:text-accent-primary-dark-contrast": isHovered,
-                            }
+                            },
                         )}
                     >
                         {hit.endpoint.method}
@@ -54,7 +54,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                                                     "t-muted": !isHovered,
                                                     "text-accent-primary-contrast dark:text-accent-primary-dark-contrast":
                                                         isHovered,
-                                                }
+                                                },
                                             )}
                                             key={idx}
                                         >
@@ -62,7 +62,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                                         </span>
                                     ),
                                     _other: () => null,
-                                })
+                                }),
                             )}
                     </div>
                 </div>

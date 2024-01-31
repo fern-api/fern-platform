@@ -19,7 +19,7 @@ export const EndpointDescriptor: React.FC<EndpointDescriptor.Props> = ({ endpoin
                 literal: (literal) => literal.value,
                 pathParameter: (pathParameter) => getPathParameterAsString(pathParameter.value),
                 _other: () => "",
-            })
+            }),
         )
         .join("")
         .split("/")
@@ -30,7 +30,7 @@ export const EndpointDescriptor: React.FC<EndpointDescriptor.Props> = ({ endpoin
                 <>
                     <wbr />/{p}
                 </>
-            )
+            ),
         );
 
     return (

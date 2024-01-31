@@ -43,7 +43,7 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
                 },
             ],
         }),
-        [breadcrumbs, object, propertyKey]
+        [breadcrumbs, object, propertyKey],
     );
 
     const { selectedProperty } = useJsonExampleContext();
@@ -77,7 +77,7 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
     const { isSelected: isAncestorSelected } = useContext(JsonPropertySelectionContext);
     const propertySelectionContextValue = useMemo(
         (): JsonPropertySelectionContextValue => ({ isSelected: isSelected || isAncestorSelected }),
-        [isAncestorSelected, isSelected]
+        [isAncestorSelected, isSelected],
     );
 
     return (

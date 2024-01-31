@@ -34,7 +34,7 @@ async function getEnvironments(): Promise<Environments> {
             headers: {
                 Authorization: "Bearer " + process.env["GITHUB_TOKEN"],
             },
-        }
+        },
     );
     return response.data as Environments;
 }

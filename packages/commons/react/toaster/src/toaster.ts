@@ -36,7 +36,12 @@ export function errorToast(message: string, params?: Exclude<ToastParams, "inten
 
 export function showToast(
     message: string,
-    { preventDismiss = false, position = DEFAULT_POSITION, toastKey: existingToastKey, ...toastProps }: ToastParams = {}
+    {
+        preventDismiss = false,
+        position = DEFAULT_POSITION,
+        toastKey: existingToastKey,
+        ...toastProps
+    }: ToastParams = {},
 ): Toast {
     const toaster = getToaster(position);
     const toastKey = toaster.show(
@@ -48,7 +53,7 @@ export function showToast(
             }),
             message,
         },
-        existingToastKey
+        existingToastKey,
     );
     return {
         toastKey,

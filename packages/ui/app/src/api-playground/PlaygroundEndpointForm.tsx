@@ -44,7 +44,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 auth: newAuthValue,
             }));
         },
-        [setFormState]
+        [setFormState],
     );
 
     const setHeader = useCallback(
@@ -57,7 +57,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 },
             }));
         },
-        [setFormState]
+        [setFormState],
     );
 
     const setPathParameter = useCallback(
@@ -70,7 +70,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 },
             }));
         },
-        [setFormState]
+        [setFormState],
     );
 
     const setQueryParameter = useCallback(
@@ -83,7 +83,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 },
             }));
         },
-        [setFormState]
+        [setFormState],
     );
 
     const setBody = useCallback(
@@ -93,7 +93,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 body: typeof value === "function" ? value(state.body) : value,
             }));
         },
-        [setFormState]
+        [setFormState],
     );
 
     const descriptionRef = useRef<HTMLDivElement>(null);
@@ -160,7 +160,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                         secrets.some(
                                             (secret) =>
                                                 formState?.auth?.type === "bearerAuth" &&
-                                                formState.auth.token === secret.token
+                                                formState.auth.token === secret.token,
                                         ) ? (
                                             <span className="inline-flex items-center gap-1">
                                                 <SecretSpan secret={formState.auth.token} className="text-sm" />

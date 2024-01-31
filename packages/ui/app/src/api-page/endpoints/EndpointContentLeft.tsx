@@ -181,7 +181,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                 {sortBy(
                                     endpoint.errors,
                                     (e) => e.statusCode,
-                                    (e) => e.name
+                                    (e) => e.name,
                                 ).map((error, idx) => {
                                     return (
                                         <EndpointError

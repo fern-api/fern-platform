@@ -49,7 +49,7 @@ export const CollapseSidebarProvider: FC<PropsWithChildren> = ({ children }) => 
 
     const checkExpanded = useCallback(
         (expandableSlug: string[]) => expanded.some((slug) => checkSlugStartsWith(slug, expandableSlug)),
-        [expanded]
+        [expanded],
     );
 
     const toggleExpanded = useCallback((slug: string[]) => {

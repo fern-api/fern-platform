@@ -25,7 +25,7 @@ export const Card: React.FC<Card.Props> = ({ title, icon, iconPosition = "top", 
         },
         {
             "hover:border-accent-primary hover:dark:border-accent-primary": href != null,
-        }
+        },
     );
 
     const content = (

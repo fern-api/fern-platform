@@ -56,7 +56,7 @@ export const JsonItemTopLineContent: React.FC<JsonItemTopLineContent.Props> = ({
                 }),
                 null: () => ({ content: <span>null</span>, isEndOfElement: true }),
             }),
-        [value]
+        [value],
     );
 
     return (

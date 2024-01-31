@@ -107,7 +107,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                 }),
                 _other: () => undefined,
             }),
-        [typeShape, anchorIdParts, route, defaultExpandAll]
+        [typeShape, anchorIdParts, route, defaultExpandAll],
     );
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);
@@ -135,7 +135,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
             ...contextValue,
             isRootTypeDefinition: false,
         }),
-        [contextValue]
+        [contextValue],
     );
 
     if (collapsableContent == null || collapsableContent.elements.length === 0) {
@@ -165,7 +165,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
             className={classNames(
                 "text-sm",
                 styles.internalTypeDefinitionContainer,
-                collapsableContent.elementNameSingular === "enum value" ? styles.enumContainer : undefined
+                collapsableContent.elementNameSingular === "enum value" ? styles.enumContainer : undefined,
             )}
             data-expanded={!isCollapsed}
         >
@@ -179,7 +179,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                             "w-fit": isCollapsed,
                             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                             [styles.expanded!]: !isCollapsed,
-                        }
+                        },
                     )}
                 >
                     {collapsableContent.elements.length > 0 && (
@@ -190,7 +190,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                                 {
                                     "border-transparent": isCollapsed,
                                     "border-border-default-light dark:border-border-default-dark": !isCollapsed,
-                                }
+                                },
                             )}
                             onClick={(e) => {
                                 toggleIsCollapsed();

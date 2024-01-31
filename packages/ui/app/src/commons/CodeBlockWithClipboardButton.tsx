@@ -5,7 +5,7 @@ import { CopyToClipboardButton } from "./CopyToClipboardButton";
 
 const CodeBlockSkeleton = dynamic(
     () => import("./CodeBlockSkeleton").then(({ CodeBlockSkeleton }) => CodeBlockSkeleton),
-    { ssr: false }
+    { ssr: false },
 );
 
 type CodeBlockWithClipboardButtonProps = {
@@ -28,7 +28,7 @@ export const CodeBlockWithClipboardButton: React.FC<CodeBlockWithClipboardButton
                     {
                         "right-3 top-3": variant === "sm",
                         "right-4 top-4": variant === "lg",
-                    }
+                    },
                 )}
                 content={content}
             />

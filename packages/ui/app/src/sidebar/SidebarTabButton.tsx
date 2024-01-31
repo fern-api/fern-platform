@@ -22,7 +22,7 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, sel
                     {
                         "text-accent-primary dark:text-accent-primary-dark": selected,
                         "t-muted": !selected,
-                    }
+                    },
                 )}
                 href={`/${slug}`}
             >
@@ -35,7 +35,7 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, sel
                                     "bg-tag-primary border-border-primary dark:bg-tag-primary-dark dark:border-border-primary-dark":
                                         selected,
                                     "bg-tag-default-light/5 dark:bg-tag-default-dark/5 border-transparent": !selected,
-                                }
+                                },
                             )}
                         >
                             <FontAwesomeIcon
@@ -44,7 +44,7 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, sel
                                     {
                                         "text-accent-primary dark:text-accent-primary-dark": selected,
                                         "t-muted": !selected,
-                                    }
+                                    },
                                 )}
                                 icon={tab.icon}
                             />

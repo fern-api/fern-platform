@@ -25,7 +25,7 @@ export interface GenerationFontConfigs {
 
 export function getFontConfig(
     docsDefinition: DocsV1Read.DocsDefinition,
-    fontType: FontType
+    fontType: FontType,
 ): GenerationFontConfig | undefined {
     const typographyFontType = docsDefinition.config.typography?.[fontType];
     if (typographyFontType == null) {
