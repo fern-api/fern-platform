@@ -55,7 +55,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
 }) => {
     const selectedClientGroup = clients.find((client) => client.language === selectedClient.language);
     return (
-        <div className="flex min-h-0 flex-1 flex-col gap-6">
+        <div className="flex min-h-0 min-w-0 flex-1 shrink flex-col gap-6">
             {selectedClientGroup != null && selectedClientGroup.examples.length > 1 && (
                 <div className="flex min-w-0 shrink gap-2">
                     {selectedClientGroup?.examples.map((example) => (
