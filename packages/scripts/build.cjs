@@ -18,8 +18,8 @@ async function main() {
         plugins: [pnpPlugin()],
         define: {
             "process.env.CLI_NAME": JSON.stringify("fern-scripts"),
-            "process.env.CLI_VERSION": JSON.stringify(packageJson.version),
-        },
+            "process.env.CLI_VERSION": JSON.stringify(packageJson.version)
+        }
     };
 
     await build(options).catch(() => process.exit(1));
@@ -31,7 +31,7 @@ async function main() {
         "cli.cjs",
         `#!/usr/bin/env node
 
-require("./bundle.cjs");`,
+require("./bundle.cjs");`
     );
     await chmod("cli.cjs", "755");
 }

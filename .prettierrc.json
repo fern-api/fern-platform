@@ -9,7 +9,7 @@
       }
     },
     {
-      "files": "*.json",
+      "files": "*.{json,cjs}",
       "options": {
         "trailingComma": "none"
       }
