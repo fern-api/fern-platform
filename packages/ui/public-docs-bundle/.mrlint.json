@@ -2,10 +2,7 @@
   "type": "next-app",
   "private": true,
   "environment": {
-    "environments": [
-      "fern-dev",
-      "fern-prod"
-    ],
+    "environments": ["fern-dev", "fern-prod"],
     "variables": [
       "NEXT_PUBLIC_FDR_ORIGIN",
       "NEXT_PUBLIC_POSTHOG_API_KEY",
@@ -17,12 +14,7 @@
   },
   "rules": {
     "depcheck": {
-      "ignores": [
-        "@types/react",
-        "@types/react-dom",
-        "autoprefixer",
-        "postcss"
-      ]
+      "ignores": ["@types/react", "@types/react-dom", "autoprefixer", "postcss"]
     }
   }
 }
