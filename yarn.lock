@@ -2576,8 +2576,10 @@ __metadata:
     "@fortawesome/pro-light-svg-icons": ^6.5.1
     "@fortawesome/pro-regular-svg-icons": ^6.5.1
     "@fortawesome/pro-solid-svg-icons": ^6.5.1
+    "@next/bundle-analyzer": ^14.0.3
     "@types/jest": ^29.5.11
     "@types/node": ^18.7.18
+    "@types/react": 18.2.48
     depcheck: ^1.4.3
     eslint: ^8.56.0
     jest: ^29.7.0
@@ -4265,6 +4267,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: f67f5b16efd89e237bf0e40d133218c398cf2a2f81166ce1e9fa32d0df6b869106740983396c51df9708a1b79b2a9d725eda1230cc3064c92d86d9ea6a4b714c
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:18.2.48":
+  version: 18.2.48
+  resolution: "@types/react@npm:18.2.48"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: c9ca43ed2995389b7e09492c24e6f911a8439bb8276dd17cc66a2fbebbf0b42daf7b2ad177043256533607c2ca644d7d928fdfce37a67af1f8646d2bac988900
   languageName: node
   linkType: hard
 
