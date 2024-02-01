@@ -1,4 +1,3 @@
-import "@fortawesome/fontawesome-svg-core/styles.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
