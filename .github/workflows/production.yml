@@ -6,6 +6,7 @@ env:
   ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
   ALGOLIA_SEARCH_INDEX: ${{ secrets. ALGOLIA_SEARCH_INDEX }}
   POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
+  FONTAWESOME_CDN_HOST: https://fontawesome-cdn.vercel.app
 on:
   push:
     tags:
