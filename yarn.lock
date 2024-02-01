@@ -2565,6 +2565,34 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-ui/fontawesome-cdn@workspace:packages/ui/fontawesome-cdn":
+  version: 0.0.0-use.local
+  resolution: "@fern-ui/fontawesome-cdn@workspace:packages/ui/fontawesome-cdn"
+  dependencies:
+    "@fortawesome/fontawesome-svg-core": ^6.5.1
+    "@fortawesome/free-brands-svg-icons": ^6.5.1
+    "@fortawesome/free-solid-svg-icons": ^6.5.1
+    "@fortawesome/pro-duotone-svg-icons": ^6.5.1
+    "@fortawesome/pro-light-svg-icons": ^6.5.1
+    "@fortawesome/pro-regular-svg-icons": ^6.5.1
+    "@fortawesome/pro-solid-svg-icons": ^6.5.1
+    "@next/bundle-analyzer": ^14.0.3
+    "@types/jest": ^29.5.11
+    "@types/node": ^18.7.18
+    "@types/react": ^18.0.20
+    depcheck: ^1.4.3
+    eslint: ^8.56.0
+    jest: ^29.7.0
+    next: ^14.0.4
+    organize-imports-cli: ^0.10.0
+    prettier: ^3.2.4
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    stylelint: ^16.1.0
+    typescript: 4.9.4
+  languageName: unknown
+  linkType: soft
+
 "@fern-ui/fonts@workspace:*, @fern-ui/fonts@workspace:packages/commons/react/fonts":
   version: 0.0.0-use.local
   resolution: "@fern-ui/fonts@workspace:packages/commons/react/fonts"
@@ -2818,14 +2846,6 @@ __metadata:
     "@fern-ui/loadable": "workspace:*"
     "@fern-ui/react-commons": "workspace:*"
     "@fontsource/ibm-plex-mono": ^4.5.13
-    "@fortawesome/fontawesome-svg-core": ^6.5.1
-    "@fortawesome/free-brands-svg-icons": ^6.5.1
-    "@fortawesome/free-solid-svg-icons": ^6.5.1
-    "@fortawesome/pro-duotone-svg-icons": ^6.5.1
-    "@fortawesome/pro-light-svg-icons": ^6.5.1
-    "@fortawesome/pro-regular-svg-icons": ^6.5.1
-    "@fortawesome/pro-solid-svg-icons": ^6.5.1
-    "@fortawesome/react-fontawesome": 0.2.0
     "@headlessui/react": ^1.7.18
     "@react-hook/size": ^2.1.2
     "@testing-library/react": ^14.0.0
@@ -2947,18 +2967,6 @@ __metadata:
   dependencies:
     "@fortawesome/fontawesome-common-types": 6.5.1
   checksum: 0eb0cee7e4d69677bd4c1a118f20acacb44eb4ce243f678f16a4b2ef69909e63345bd717d7f17949c69a3ff9cc0999c2c517c56b382d37742af8518c8de9547c
-  languageName: node
-  linkType: hard
-
-"@fortawesome/react-fontawesome@npm:0.2.0":
-  version: 0.2.0
-  resolution: "@fortawesome/react-fontawesome@npm:0.2.0"
-  dependencies:
-    prop-types: ^15.8.1
-  peerDependencies:
-    "@fortawesome/fontawesome-svg-core": ~1 || ~6
-    react: ">=16.3"
-  checksum: f652a0c2172e7b209e2d9e7e511f9b8c17abad85f55e0bd09bb1175ea1927693215da47eb6cd95b1f3a23bd124368553c677907fa76cb17c5093afc1fcffe338
   languageName: node
   linkType: hard
 

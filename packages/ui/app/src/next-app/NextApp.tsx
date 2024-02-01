@@ -1,15 +1,11 @@
-import "@fortawesome/fontawesome-svg-core/styles.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
 import { Router } from "next/router";
 import { ReactElement, useEffect } from "react";
 import { ThemeProvider } from "../docs/ThemeProvider";
-import { setupFontAwesomeIcons } from "../util/setupFontAwesomeIcons";
 import { DocsPage } from "./DocsPage";
 import "./globals.css";
-
-setupFontAwesomeIcons();
 
 export function NextApp({ Component, pageProps, router }: AppProps<Partial<DocsPage.Props>>): ReactElement {
     const theme = pageProps.config?.colorsV3?.type;

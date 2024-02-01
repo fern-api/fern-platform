@@ -1,8 +1,8 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Menu as HeadlessMenu, Transition } from "@headlessui/react";
 import classNames from "classnames";
 import Link, { LinkProps } from "next/link";
 import { FC, Fragment, PropsWithChildren, ReactNode } from "react";
+import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { CheckIcon } from "../commons/icons/CheckIcon";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 
@@ -59,7 +59,7 @@ export const FernMenu: FC<FernMenu.Props> = ({
                         className="hover:bg-tag-primary border-border-primary dark:border-border-primary-dark text-accent-primary dark:text-accent-primary-dark -ml-px inline-flex w-fit items-center justify-center rounded-lg rounded-l-none border px-2 py-1 tracking-tight transition hover:border-2 hover:px-[calc(theme(spacing[2])-1px)]"
                         onClick={clearSelection}
                     >
-                        <FontAwesomeIcon icon="close" />
+                        <RemoteFontAwesomeIcon icon="close" className="bg-accent-primary dark:bg-accent-primary-dark" />
                     </button>
                 )}
             </div>

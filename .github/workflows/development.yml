@@ -5,6 +5,7 @@ env:
   ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
   ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
   ALGOLIA_SEARCH_INDEX: ${{ secrets. ALGOLIA_SEARCH_INDEX }}
+  FONTAWESOME_CDN_HOST: https://fontawesome-cdn.vercel.app
 on:
   push:
     branches:
