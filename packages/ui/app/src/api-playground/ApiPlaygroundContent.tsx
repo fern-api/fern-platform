@@ -2,13 +2,13 @@ import { NonIdealState, Spinner } from "@blueprintjs/core";
 import { APIV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import { failed, Loadable, loaded, loading, notStartedLoading, visitLoadable } from "@fern-ui/loadable";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useCallback, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
+import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
 import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
 import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
@@ -219,14 +219,14 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                 {response.type !== "notStartedLoading" && endpoint != null && (
                     <div className="absolute bottom-4 right-4 z-20">
                         <button
-                            className="dark:text-dark bg-accent-primary dark:bg-accent-primary-dark hover:bg-accent-primary/70 dark:hover:bg-accent-primary-dark/70 text-accent-primary-contrast dark:text-accent-primary-dark-contrast group flex items-center justify-center space-x-3 rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
+                            className="bg-accent-primary dark:bg-accent-primary-dark hover:bg-accent-primary/70 dark:hover:bg-accent-primary-dark/70 text-accent-primary-contrast dark:text-accent-primary-dark-contrast group flex items-center justify-center space-x-3 rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
                             onClick={sendRequest}
                         >
                             <span className="whitespace-nowrap">Send request</span>
                             <div className="flex h-4 w-4 items-center">
-                                <FontAwesomeIcon
+                                <RemoteFontAwesomeIcon
                                     icon="paper-plane-top"
-                                    className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                                    className="bg-accent-primary-contrast dark:bg-accent-primary-dark-contrast h-4 w-4 transition-transform group-hover:translate-x-0.5"
                                 />
                             </div>
                         </button>
@@ -278,14 +278,14 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                             icon={
                                 response.type === "notStartedLoading" ? (
                                     <button
-                                        className="dark:text-dark bg-accent-primary dark:bg-accent-primary-dark hover:bg-accent-primary/70 dark:hover:bg-accent-primary-dark/70 text-accent-primary-contrast dark:text-accent-primary-dark-contrast group flex items-center justify-center space-x-3 rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
+                                        className="bg-accent-primary dark:bg-accent-primary-dark hover:bg-accent-primary/70 dark:hover:bg-accent-primary-dark/70 text-accent-primary-contrast dark:text-accent-primary-dark-contrast group flex items-center justify-center space-x-3 rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
                                         onClick={sendRequest}
                                     >
                                         <span className="whitespace-nowrap">Send request</span>
                                         <div className="flex h-4 w-4 items-center">
-                                            <FontAwesomeIcon
+                                            <RemoteFontAwesomeIcon
                                                 icon="paper-plane-top"
-                                                className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                                                className="bg-accent-primary-contrast dark:bg-accent-primary-dark-contrast h-4 w-4 transition-transform group-hover:translate-x-0.5"
                                             />
                                         </div>
                                     </button>
