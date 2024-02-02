@@ -1,11 +1,14 @@
+import classNames from "classnames";
 import { FC, useRef, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernButton } from "../components/FernButton";
 import { FernCollapse } from "../components/FernCollapse";
 
-interface FeedbackProps {}
+interface FeedbackProps {
+    className?: string;
+}
 
-export const Feedback: FC<FeedbackProps> = () => {
+export const Feedback: FC<FeedbackProps> = ({ className }) => {
     const [sent, setSent] = useState(false);
     const [feedback, setFeedback] = useState<"yes" | "no" | null>(null);
     const [showFeedbackInput, setShowFeedbackInput] = useState(false);
@@ -34,9 +37,14 @@ export const Feedback: FC<FeedbackProps> = () => {
         setSent(true);
     };
     return (
-        <div className="border-border-default-light dark:border-border-default-dark group my-12 w-fit rounded-lg border">
+        <div
+            className={classNames(
+                "border-border-default-light dark:border-border-default-dark group mt-12 rounded-lg border",
+                className,
+            )}
+        >
             {!sent ? (
-                <div className="flex items-center gap-4 px-4 py-2">
+                <div className="flex flex-col items-center gap-1 p-2">
                     <span className="t-muted text-sm">Did this page help you?</span>
                     <div className="flex items-center">
                         <FernButton
@@ -66,7 +74,7 @@ export const Feedback: FC<FeedbackProps> = () => {
             )}
             {!sent && (
                 <FernCollapse isOpen={showFeedbackInput}>
-                    <div className="px-4 pb-4">
+                    <div className="px-2 pb-2">
                         <textarea
                             ref={textareaRef}
                             autoFocus={true}
