@@ -44,7 +44,7 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
             )}
         >
             {!sent ? (
-                <div className="flex flex-col items-center gap-1 p-2">
+                <div className="flex flex-col items-center gap-1 p-2 text-center">
                     <span className="t-muted text-sm">Did this page help you?</span>
                     <div className="flex items-center">
                         <FernButton
@@ -68,8 +68,8 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
                     </div>
                 </div>
             ) : (
-                <div className="px-4 py-2">
-                    <div className="t-muted text-sm">Thank you for your feedback!</div>
+                <div className="px-4 py-2 text-center">
+                    <span className="t-muted text-sm">Thank you for your feedback!</span>
                 </div>
             )}
             {!sent && (
