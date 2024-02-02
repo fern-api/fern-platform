@@ -11,6 +11,7 @@ interface FernButtonProps extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLBut
     mono?: boolean;
     active?: boolean;
     full?: boolean;
+    disabled?: boolean;
 }
 export const FernButton: FC<FernButtonProps> = ({
     icon: leftIcon,
@@ -23,6 +24,7 @@ export const FernButton: FC<FernButtonProps> = ({
     mono = false,
     active = false,
     full = false,
+    disabled = false,
     ...props
 }) => {
     function renderIcon(icon: string | ReactNode | undefined) {
@@ -67,6 +69,18 @@ export const FernButton: FC<FernButtonProps> = ({
                 "bg-tag-danger": intent === "danger" && active,
                 "w-full": full,
             })}
+            onClick={
+                props.onClick != null
+                    ? (e) => {
+                          if (disabled) {
+                              e.preventDefault();
+                              e.stopPropagation();
+                          } else {
+                              props.onClick?.(e);
+                          }
+                      }
+                    : undefined
+            }
         >
             <span
                 className={classNames("inline-flex items-center", {
