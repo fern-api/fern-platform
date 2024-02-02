@@ -44,8 +44,6 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
                     <article className="prose dark:prose-invert mx-auto w-full max-w-[70ch] lg:ml-0 xl:mx-auto">
                         <CustomDocsPageHeader resolvedPath={resolvedPath} />
                         {mdxContent}
-
-                        <Feedback />
                         <BottomNavigationButtons />
                         <div className="h-20" />
                     </article>
