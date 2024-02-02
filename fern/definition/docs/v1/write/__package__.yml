@@ -96,6 +96,10 @@ types:
       layout: optional<DocsLayoutConfig>
       typographyV2: optional<DocsTypographyConfigV2>
 
+      # css and js
+      css: optional<CssConfig>
+      js: optional<JsConfig>
+
       # deprecated
       logo:
         type: optional<FileId>
@@ -376,6 +380,32 @@ types:
       overlappingDomains: list<OverlappingCustomDomains>
 
   OverlappingCustomDomains: list<string>
+
+  CssConfig:
+    properties:
+      inline: optional<list<string>>
+
+  JsConfig:
+    properties:
+      remote: optional<list<JsRemoteConfig>>
+      files: list<JsFileConfig>
+      inline: optional<list<string>>
+
+  JsRemoteConfig:
+    properties:
+      url: Url
+      strategy: optional<JsScriptStrategy>
+
+  JsFileConfig:
+    properties:
+      fileId: FileId
+      strategy: optional<JsScriptStrategy>
+
+  JsScriptStrategy:
+    enum:
+      - beforeInteractive
+      - afterInteractive # default
+      - lazyOnload
 
 errors:
   DocsRegistrationIdNotFound:

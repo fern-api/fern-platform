@@ -25,6 +25,7 @@ export function getDocsWriteService(app: FdrApplication): DocsV1WriteService {
             const s3FileInfos = await app.services.s3.getPresignedUploadUrls({
                 domain: req.body.domain,
                 filepaths: req.body.filepaths,
+                images: [],
             });
             DOCS_REGISTRATIONS[docsRegistrationId] = {
                 domain: req.body.domain,

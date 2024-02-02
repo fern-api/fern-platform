@@ -11,6 +11,7 @@ types:
     union:
       v1: DocsDefinitionDbV1
       v2: DocsDefinitionDbV2
+      v3: DocsDefinitionDbV3
 
   DocsDefinitionDbV1:
     properties:
@@ -28,6 +29,13 @@ types:
       config: DocsDbConfig
       colors: optional<docsReadV1.ColorsConfig>
       typography: optional<docsReadV1.DocsTypographyConfig>
+
+  DocsDefinitionDbV3:
+    properties:
+      pages: map<docsReadV1.PageId, docsReadV1.PageContent>
+      referencedApis: set<rootCommons.ApiDefinitionId>
+      files: map<docsReadV1.FileId, DbFileInfoV2>
+      config: DocsDbConfig
 
   DocsDbConfig:
     properties:
@@ -47,6 +55,10 @@ types:
       layout: optional<docsReadV1.DocsLayoutConfig>
       typographyV2: optional<docsReadV1.DocsTypographyConfigV2>
 
+      # css and js
+      css: optional<docsReadV1.CssConfig>
+      js: optional<docsReadV1.JsConfig>
+
       # deprecated
       logo:
         type: optional<docsReadV1.FileId>
@@ -61,9 +73,22 @@ types:
         type: optional<docsReadV1.DocsTypographyConfig>
         availability: deprecated
 
+  DbFileInfoV2:
+    union:
+      s3Key: DbFileInfo
+      image: DbImageFileInfo
+
   DbFileInfo:
     properties:
       s3Key: string
+
+  DbImageFileInfo:
+    properties:
+      s3Key: string
+      width: double
+      height: double
+      blurDataUrl: optional<string>
+      alt: optional<string>
 
   NavigationConfig:
     discriminated: false

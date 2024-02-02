@@ -39,6 +39,23 @@ types:
 
   Url: string
 
+  File:
+    union:
+      url: UrlFile
+      image: ImageFile
+
+  UrlFile:
+    properties:
+      url: Url
+
+  ImageFile:
+    properties:
+      url: Url
+      width: double
+      height: double
+      blurDataUrl: optional<string>
+      alt: optional<string>
+
   FileId: string
 
   Height: double
@@ -91,6 +108,7 @@ types:
       pages: map<PageId, PageContent>
       apis: map<rootCommons.ApiDefinitionId, apiReadV1.ApiDefinition>
       files: map<FileId, Url>
+      filesV2: map<FileId, File>
       id: optional<rootCommons.DocsConfigId>
       config: DocsConfig
       search: SearchInfo
@@ -117,6 +135,10 @@ types:
       navbarLinks: optional<list<NavbarLink>>
       layout: optional<DocsLayoutConfig>
       typographyV2: optional<DocsTypographyConfigV2>
+
+      # css and js
+      css: optional<CssConfig>
+      js: optional<JsConfig>
 
       # deprecated
       logo:
@@ -468,6 +490,32 @@ types:
       page: AlgoliaPageRecord
       endpoint-v2: AlgoliaEndpointRecordV2
       page-v2: AlgoliaPageRecordV2
+
+  CssConfig:
+    properties:
+      inline: optional<list<string>>
+
+  JsConfig:
+    properties:
+      remote: optional<list<JsRemoteConfig>>
+      files: list<JsFileConfig>
+      inline: optional<list<string>>
+
+  JsRemoteConfig:
+    properties:
+      url: Url
+      strategy: optional<JsScriptStrategy>
+
+  JsFileConfig:
+    properties:
+      fileId: FileId
+      strategy: optional<JsScriptStrategy>
+
+  JsScriptStrategy:
+    enum:
+      - beforeInteractive
+      - afterInteractive # default
+      - lazyOnload
 
 errors:
   DomainNotRegisteredError:

@@ -24,6 +24,8 @@ export function convertDbDocsConfigToRead({
         typography: dbShape.typography ?? transformTypographyV2ToV1(dbShape.typographyV2),
         typographyV2: dbShape.typographyV2 ?? transformTypographyToV2(dbShape.typography),
         layout: dbShape.layout,
+        css: dbShape.css,
+        js: dbShape.js,
     };
 }
 

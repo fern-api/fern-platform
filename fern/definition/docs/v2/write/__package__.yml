@@ -29,6 +29,7 @@ service:
             filepaths:
               type: list<v1DocsWrite.FilePath>
               docs: Relative filepath from docs folder.
+            images: optional<list<ImageFilePath>>
       response: v1DocsWrite.StartDocsRegisterResponse
       errors:
         - InvalidDomainError
@@ -46,6 +47,7 @@ service:
             filepaths:
               type: list<v1DocsWrite.FilePath>
               docs: Relative filepath from docs folder.
+            images: optional<list<ImageFilePath>>
       response: StartDocsPreviewRegisterResponse
       errors:
         - InvalidDomainError
@@ -66,6 +68,14 @@ service:
         - rootCommons.UserNotInOrgError
         - v1DocsWrite.DocsRegistrationIdNotFound
 types:
+  ImageFilePath:
+    properties:
+      filePath: v1DocsWrite.FilePath
+      width: double
+      height: double
+      blurDataUrl: optional<string>
+      alt: optional<string>
+
   StartDocsPreviewRegisterResponse:
     extends: v1DocsWrite.StartDocsRegisterResponse
     properties:

@@ -19,7 +19,7 @@ export interface DocsDefinitionCache {
         indexSegments,
     }: {
         docsRegistrationInfo: DocsRegistrationInfo;
-        dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V2;
+        dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V3;
         indexSegments: IndexSegment[];
     }): Promise<void>;
 }
@@ -109,7 +109,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
         indexSegments,
     }: {
         docsRegistrationInfo: DocsRegistrationInfo;
-        dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V2;
+        dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V3;
         indexSegments: IndexSegment[];
     }): Promise<void> {
         await this.dao.docsV2().storeDocsDefinition({

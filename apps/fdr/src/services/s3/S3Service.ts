@@ -2,21 +2,31 @@ import { GetObjectCommand, PutObjectCommand, PutObjectCommandInput, S3Client } f
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import NodeCache from "node-cache";
 import { v4 as uuidv4 } from "uuid";
-import { DocsV1Write } from "../../api";
+import { DocsV1Write, DocsV2Write } from "../../api";
 import type { FdrApplication } from "../../app";
 
 export interface S3FileInfo {
     presignedUrl: DocsV1Write.FileS3UploadUrl;
     key: string;
+    imageMetadata:
+        | {
+              width: number;
+              height: number;
+              blurDataUrl: string | undefined;
+              alt: string | undefined;
+          }
+        | undefined;
 }
 
 export interface S3Service {
     getPresignedUploadUrls({
         domain,
         filepaths,
+        images,
     }: {
         domain: string;
         filepaths: DocsV1Write.FilePath[];
+        images: DocsV2Write.ImageFilePath[];
     }): Promise<Record<DocsV1Write.FilePath, S3FileInfo>>;
 
     getPresignedDownloadUrl({ key }: { key: string }): Promise<string>;
@@ -58,9 +68,11 @@ export class S3ServiceImpl implements S3Service {
     async getPresignedUploadUrls({
         domain,
         filepaths,
+        images,
     }: {
         domain: string;
         filepaths: DocsV1Write.FilePath[];
+        images: DocsV2Write.ImageFilePath[];
     }): Promise<Record<DocsV1Write.FilePath, S3FileInfo>> {
         const result: Record<DocsV1Write.FilePath, S3FileInfo> = {};
         const time: string = new Date().toISOString();
@@ -72,6 +84,27 @@ export class S3ServiceImpl implements S3Service {
                     uploadUrl: url,
                 },
                 key,
+                imageMetadata: undefined,
+            };
+        }
+        for (const image of images) {
+            const { url, key } = await this.createPresignedUploadUrlWithClient({
+                domain,
+                time,
+                filepath: image.filePath,
+            });
+            result[image.filePath] = {
+                presignedUrl: {
+                    fileId: uuidv4(),
+                    uploadUrl: url,
+                },
+                key,
+                imageMetadata: {
+                    width: image.width,
+                    height: image.height,
+                    blurDataUrl: image.blurDataUrl,
+                    alt: image.alt,
+                },
             };
         }
         return result;

@@ -41,7 +41,7 @@ export interface DocsV2Dao {
         indexSegments,
     }: {
         docsRegistrationInfo: DocsRegistrationInfo;
-        dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V2;
+        dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V3;
         indexSegments: IndexSegment[];
     }): Promise<StoreDocsDefinitionResponse>;
 }
@@ -117,7 +117,7 @@ export class DocsV2DaoImpl implements DocsV2Dao {
         indexSegments,
     }: {
         docsRegistrationInfo: DocsRegistrationInfo;
-        dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V2;
+        dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V3;
         indexSegments: IndexSegment[];
     }): Promise<StoreDocsDefinitionResponse> {
         return await this.prisma.$transaction(async (tx) => {

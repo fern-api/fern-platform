@@ -71,6 +71,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
             const s3FileInfos = await app.services.s3.getPresignedUploadUrls({
                 domain: req.body.domain,
                 filepaths: req.body.filepaths,
+                images: req.body.images ?? [],
             });
 
             await app.services.slack.notifyGeneratedDocs({
@@ -106,6 +107,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
             const s3FileInfos = await app.services.s3.getPresignedUploadUrls({
                 domain: fernUrl.hostname,
                 filepaths: req.body.filepaths,
+                images: req.body.images ?? [],
             });
             DOCS_REGISTRATIONS[docsRegistrationId] = {
                 fernUrl,
@@ -198,7 +200,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
 async function uploadToAlgolia(
     app: FdrApplication,
     docsRegistrationInfo: DocsRegistrationInfo,
-    dbDocsDefinition: WithoutQuestionMarks<DocsDefinitionDb.V2>,
+    dbDocsDefinition: WithoutQuestionMarks<DocsDefinitionDb.V3>,
     apiDefinitionsById: Map<string, APIV1Db.DbApiDefinition>,
 ): Promise<void> {
     // TODO: make sure to store private docs index into user-restricted algolia index

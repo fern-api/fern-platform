@@ -546,6 +546,7 @@ it("get snippets", async () => {
             domain: "https://acme.docs.buildwithfern.com",
             customDomains: [],
             filepaths: ["logo.png", "guides/guide.mdx"],
+            images: [],
         }),
     );
     await CLIENT.docs.v2.write.finishDocsRegister(startDocsRegisterResponse.docsRegistrationId, {

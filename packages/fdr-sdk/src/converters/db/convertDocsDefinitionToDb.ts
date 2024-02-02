@@ -16,9 +16,17 @@ import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } f
 export interface S3FileInfo {
     presignedUrl: DocsV1Write.FileS3UploadUrl;
     key: string;
+    imageMetadata:
+        | {
+              width: number;
+              height: number;
+              blurDataUrl: string | undefined;
+              alt: string | undefined;
+          }
+        | undefined;
 }
 
-type ConvertedDocsDefinition = WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb.V2> & {
+type ConvertedDocsDefinition = WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb.V3> & {
     config: WithoutQuestionMarks<DocsV1Db.DocsDbConfig>;
 };
 
@@ -30,11 +38,22 @@ export function convertDocsDefinitionToDb({
     files: Record<DocsV1Write.FilePath, S3FileInfo>;
 }): ConvertedDocsDefinition {
     const navigationConfig: DocsV1Db.NavigationConfig = transformNavigationConfigForDb(writeShape.config.navigation);
-    const transformedFiles: Record<DocsV1Write.FileId, DocsV1Db.DbFileInfo> = {};
+    const transformedFiles: Record<DocsV1Write.FileId, DocsV1Db.DbFileInfoV2> = {};
     Object.entries(files).forEach(([, s3FileInfo]) => {
-        transformedFiles[s3FileInfo.presignedUrl.fileId] = {
-            s3Key: s3FileInfo.key,
-        };
+        transformedFiles[s3FileInfo.presignedUrl.fileId] =
+            s3FileInfo.imageMetadata != null
+                ? {
+                      type: "image",
+                      s3Key: s3FileInfo.key,
+                      width: s3FileInfo.imageMetadata.width,
+                      height: s3FileInfo.imageMetadata.height,
+                      blurDataUrl: s3FileInfo.imageMetadata.blurDataUrl,
+                      alt: s3FileInfo.imageMetadata.alt,
+                  }
+                : {
+                      type: "s3Key",
+                      s3Key: s3FileInfo.key,
+                  };
     });
 
     const logo = writeShape.config.logo;
@@ -57,7 +76,7 @@ export function convertDocsDefinitionToDb({
     }
 
     return {
-        type: "v2",
+        type: "v3",
         referencedApis: getReferencedApiDefinitionIds(navigationConfig),
         files: transformedFiles,
         config: {
@@ -79,12 +98,10 @@ export function convertDocsDefinitionToDb({
             typography: writeShape.config.typography,
             typographyV2: writeShape.config.typographyV2,
             layout: writeShape.config.layout,
+            css: writeShape.config.css,
+            js: writeShape.config.js,
         },
         pages: writeShape.pages,
-        colors: {
-            accentPrimary: writeShape.config.colors?.accentPrimary,
-        },
-        typography: writeShape.config.typography,
     };
 }
 
