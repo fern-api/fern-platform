@@ -44,13 +44,11 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
                     <article className="prose dark:prose-invert mx-auto w-full max-w-[70ch] lg:ml-0 xl:mx-auto">
                         <CustomDocsPageHeader resolvedPath={resolvedPath} />
                         {mdxContent}
-
-                        <Feedback />
                         <BottomNavigationButtons />
                         <div className="h-20" />
                     </article>
                 </div>
-                <aside className="scroll-contain smooth-scroll hide-scrollbar sticky top-16 hidden max-h-[calc(100vh-86px)] w-[19rem] shrink-0 overflow-auto overflow-x-hidden px-8 pb-12 pt-8 xl:block">
+                <aside className="scroll-contain smooth-scroll hide-scrollbar sticky top-16 hidden h-[calc(100vh-64px)] w-[19rem] shrink-0 overflow-auto overflow-x-hidden px-8 pb-12 pt-8 xl:block">
                     <TableOfContents renderedHtml={mdxString} />
                     {editThisPage != null && (
                         <Link
@@ -62,6 +60,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
                             Edit this page
                         </Link>
                     )}
+                    <Feedback className="sticky top-full" />
                 </aside>
             </div>
         </TableOfContentsContextProvider>
