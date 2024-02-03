@@ -48,27 +48,36 @@ export const FernButton: FC<FernButtonProps> = ({
     return (
         <button
             {...props}
-            className={classNames(className, "fern-button transition-shadow text-center align-middle", {
-                "rounded-md": small && !className?.includes("rounded"),
-                "rounded-lg": !small && !className?.includes("rounded"),
-                "px-2 py-1 text-xs h-6": small,
-                "px-3.5 py-1.5 text-sm h-9": !small,
-                "border ring-0 hover:ring-2": !minimal,
-                "border-border-primary dark:border-border-primary-dark ring-border-primary/10 dark:ring-border-primary-dark/10":
-                    !minimal && intent === "primary",
-                "ring-text-primary dark:ring-text-primary-dark": !minimal && intent === "none",
-                "ring-intent-success-light dark:ring-intent-success-dark": !minimal && intent === "success",
-                "ring-intent-danger-light dark:ring-intent-danger-dark": !minimal && intent === "danger",
-                "hover:bg-tag-primary text-accent-primary dark:text-accent-primary-dark": intent === "primary",
-                "hover:bg-tag-primary bg-transparent dark:bg-transparent-dark text-text-primary-light/60 dark:text-text-primary-dark/60":
-                    intent === "none",
-                "hover:bg-tag-success text-intent-success-light dark:text-intent-success-dark": intent === "success",
-                "hover:bg-tag-danger text-intent-danger-light dark:text-intent-danger-dark": intent === "danger",
-                "bg-tag-primary": intent === "primary" && active,
-                "bg-tag-success": intent === "success" && active,
-                "bg-tag-danger": intent === "danger" && active,
-                "w-full": full,
-            })}
+            className={classNames(
+                className,
+                "fern-button transition-shadow hover:transition-[background] text-center align-middle",
+                {
+                    "rounded-md": small && !className?.includes("rounded"),
+                    "rounded-lg": !small && !className?.includes("rounded"),
+                    "px-2 py-1 text-xs h-6": small,
+                    "px-3.5 py-1.5 text-sm h-9": !small,
+                    "border ring-0": !minimal,
+                    "hover:ring-2": !minimal && !disabled,
+                    "border-border-primary dark:border-border-primary-dark ring-border-primary/10 dark:ring-border-primary-dark/10":
+                        !minimal && intent === "primary",
+                    "ring-text-primary dark:ring-text-primary-dark": !minimal && intent === "none",
+                    "ring-intent-success-light dark:ring-intent-success-dark": !minimal && intent === "success",
+                    "ring-intent-danger-light dark:ring-intent-danger-dark": !minimal && intent === "danger",
+                    "text-accent-primary dark:text-accent-primary-dark": intent === "primary",
+                    "hover:bg-tag-primary": (intent === "primary" || intent === "none") && !disabled,
+                    "bg-transparent dark:bg-transparent-dark text-text-primary-light/60 dark:text-text-primary-dark/60":
+                        intent === "none",
+                    "text-intent-success-light dark:text-intent-success-dark": intent === "success",
+                    "hover:bg-tag-success": intent === "success" && !disabled,
+                    "text-intent-danger-light dark:text-intent-danger-dark": intent === "danger",
+                    "hover:bg-tag-danger": intent === "danger" && !disabled,
+                    "bg-tag-primary": intent === "primary" && active,
+                    "bg-tag-success": intent === "success" && active,
+                    "bg-tag-danger": intent === "danger" && active,
+                    "w-full": full,
+                    "cursor-not-allowed opacity-70": disabled,
+                },
+            )}
             onClick={
                 props.onClick != null
                     ? (e) => {

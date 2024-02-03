@@ -48,7 +48,10 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
                         <div className="h-20" />
                     </article>
                 </div>
-                <aside className="scroll-contain smooth-scroll hide-scrollbar sticky top-16 hidden h-[calc(100vh-64px)] w-[19rem] shrink-0 overflow-auto overflow-x-hidden px-8 pb-12 pt-8 xl:block">
+                <aside
+                    id="right-sidebar"
+                    className="scroll-contain smooth-scroll hide-scrollbar sticky top-16 hidden h-[calc(100vh-64px)] w-[19rem] shrink-0 overflow-auto overflow-x-hidden px-8 pb-12 pt-8 xl:block"
+                >
                     <TableOfContents renderedHtml={mdxString} />
                     {editThisPage != null && (
                         <Link
