@@ -1,5 +1,6 @@
 import classNames from "classnames";
-import { FC, useRef, useState } from "react";
+import { useRouter } from "next/router";
+import { FC, useEffect, useRef, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernButton } from "../components/FernButton";
 import { FernCollapse } from "../components/FernCollapse";
@@ -9,10 +10,24 @@ interface FeedbackProps {
 }
 
 export const Feedback: FC<FeedbackProps> = ({ className }) => {
+    const router = useRouter();
     const [sent, setSent] = useState(false);
     const [feedback, setFeedback] = useState<"yes" | "no" | null>(null);
     const [showFeedbackInput, setShowFeedbackInput] = useState(false);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+    useEffect(() => {
+        const resetForm = () => {
+            setSent(false);
+            setFeedback(null);
+            setShowFeedbackInput(false);
+        };
+        router.events.on("routeChangeComplete", resetForm);
+        return () => {
+            router.events.off("routeChangeComplete", resetForm);
+        };
+    }, [router.events]);
+
     const handleYes = () => {
         setFeedback("yes");
         setShowFeedbackInput(true);
