@@ -2,7 +2,7 @@ import { useKeyboardPress } from "@fern-ui/react-commons";
 import { Portal, Transition } from "@headlessui/react";
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernButton } from "../components/FernButton";
 import { FernRadio } from "../components/FernRadio";
@@ -99,14 +99,14 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
 
     useKeyboardPress({
         key: "Escape",
-        onPress: () => {
+        onPress: useCallback(() => {
             if (textareaRef.current === document.activeElement) {
                 textareaRef.current?.blur();
                 fieldsetRef.current?.querySelector<HTMLInputElement>("input:checked")?.focus();
             } else if (showFeedbackInput) {
                 setShowFeedbackInput(false);
             }
-        },
+        }, [showFeedbackInput]),
     });
 
     const legend = feedback === "yes" ? "What did you like?" : feedback === "no" ? "What went wrong?" : "Feedback";
@@ -119,21 +119,21 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
                     <span className="-mr-1 inline-flex items-center">
                         <FernButton
                             icon="regular thumbs-up"
-                            minimal
+                            buttonStyle="minimal"
                             intent={feedback === "yes" ? "success" : "none"}
                             onClick={handleYes}
                             active={feedback === "yes"}
-                            small
+                            size="small"
                         >
                             Yes
                         </FernButton>
                         <FernButton
                             icon="regular thumbs-down"
-                            minimal={true}
+                            buttonStyle="minimal"
                             intent={feedback === "no" ? "danger" : "none"}
                             onClick={handleNo}
                             active={feedback === "no"}
-                            small
+                            size="small"
                         >
                             No
                         </FernButton>
@@ -149,7 +149,7 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
                     <Transition
                         ref={modalRef}
                         show={showFeedbackInput}
-                        className="border-border-default-light dark:border-border-default-dark fixed z-50 w-96 rounded-lg border bg-white/50 p-4 shadow-xl backdrop-blur-xl dark:bg-white/10"
+                        className="border-border-default-light dark:border-border-default-dark fixed z-50 w-96 rounded-lg border bg-white/50 p-4 shadow-xl backdrop-blur-xl dark:bg-black/50"
                         enter="transition-all origin-bottom-right"
                         enterFrom="opacity-0 scale-90"
                         enterTo="opacity-100 scale-100"
@@ -229,6 +229,7 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
                                 className="mt-4 rounded-md"
                                 onClick={handleSubmitFeedback}
                                 disabled={feedbackDetail == null}
+                                size="large"
                             >
                                 Send feedback
                             </FernButton>

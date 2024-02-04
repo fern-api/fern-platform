@@ -9,6 +9,7 @@ import { isEmpty, round } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useCallback, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
+import { FernButton } from "../components/FernButton";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
 import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
 import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
@@ -218,18 +219,18 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
             <div className="relative flex min-h-0 min-w-0 flex-1 shrink flex-col">
                 {response.type !== "notStartedLoading" && endpoint != null && (
                     <div className="absolute bottom-4 right-4 z-20">
-                        <button
-                            className="bg-accent-primary dark:bg-accent-primary-dark hover:bg-accent-primary/70 dark:hover:bg-accent-primary-dark/70 text-accent-primary-contrast dark:text-accent-primary-dark-contrast group flex items-center justify-center space-x-3 rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
+                        <FernButton
                             onClick={sendRequest}
-                        >
-                            <span className="whitespace-nowrap">Send request</span>
-                            <div className="flex h-4 w-4 items-center">
+                            rightIcon={
                                 <RemoteFontAwesomeIcon
                                     icon="paper-plane-top"
-                                    className="bg-accent-primary-contrast dark:bg-accent-primary-dark-contrast h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                                    className="transition-transform group-hover:translate-x-0.5"
                                 />
-                            </div>
-                        </button>
+                            }
+                            intent="primary"
+                        >
+                            Send request
+                        </FernButton>
                     </div>
                 )}
 
@@ -277,18 +278,19 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                             className="flex-1"
                             icon={
                                 response.type === "notStartedLoading" ? (
-                                    <button
-                                        className="bg-accent-primary dark:bg-accent-primary-dark hover:bg-accent-primary/70 dark:hover:bg-accent-primary-dark/70 text-accent-primary-contrast dark:text-accent-primary-dark-contrast group flex items-center justify-center space-x-3 rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
+                                    <FernButton
                                         onClick={sendRequest}
-                                    >
-                                        <span className="whitespace-nowrap">Send request</span>
-                                        <div className="flex h-4 w-4 items-center">
+                                        rightIcon={
                                             <RemoteFontAwesomeIcon
                                                 icon="paper-plane-top"
-                                                className="bg-accent-primary-contrast dark:bg-accent-primary-dark-contrast h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                                                className="transition-transform group-hover:translate-x-0.5"
                                             />
-                                        </div>
-                                    </button>
+                                        }
+                                        intent="primary"
+                                        size="large"
+                                    >
+                                        Send request
+                                    </FernButton>
                                 ) : (
                                     <Spinner />
                                 )

@@ -1,5 +1,4 @@
-import { Button, Tooltip } from "@blueprintjs/core";
-import { Cross } from "@blueprintjs/icons";
+import { Tooltip } from "@blueprintjs/core";
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import {
     ResolvedApiDefinitionPackage,
@@ -7,6 +6,7 @@ import {
     ResolvedNavigationItemApiSection,
 } from "@fern-ui/app-utils";
 import { Dispatch, FC, ReactElement, SetStateAction } from "react";
+import { FernButton } from "../components/FernButton";
 import { ApiPlayroundContent } from "./ApiPlaygroundContent";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 import { ApiPlaygroundEndpointSelector } from "./ApiPlaygroundEndpointSelector";
@@ -78,7 +78,13 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
                             Sign in to use your API keys
                         </a>
                     </Tooltip>
-                    <Button minimal={true} icon={<Cross />} onClick={collapseApiPlayground} className="-mr-2" />
+                    <FernButton
+                        buttonStyle="minimal"
+                        icon="xmark"
+                        onClick={collapseApiPlayground}
+                        className="-mr-2"
+                        rounded
+                    />
                 </div>
             </div>
 

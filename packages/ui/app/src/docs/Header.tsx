@@ -5,6 +5,7 @@ import { forwardRef, memo, PropsWithChildren } from "react";
 import { MenuIcon } from "../commons/icons/MenuIcon";
 import { SearchIcon } from "../commons/icons/SearchIcon";
 import { XIcon } from "../commons/icons/XIcon";
+import { FernButtonGroup } from "../components/FernButton";
 import { SearchService } from "../services/useSearchService";
 import { HeaderLogoSection } from "./HeaderLogoSection";
 import { HeaderPrimaryLink } from "./HeaderPrimaryLink";
@@ -29,14 +30,18 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
 ) {
     const { navbarLinks, colorsV3 } = config;
     const navbarLinksSection = (
-        <div className="hidden items-center space-x-5 lg:flex lg:space-x-8">
-            {navbarLinks.map((navbarLink, idx) =>
-                visitDiscriminatedUnion(navbarLink, "type")._visit({
-                    primary: (navbarLink) => <HeaderPrimaryLink key={idx} navbarLink={navbarLink} />,
-                    secondary: (navbarLink) => <HeaderSecondaryLink key={idx} navbarLink={navbarLink} />,
-                    _other: () => null,
-                }),
-            )}
+        <div className="hidden lg:block">
+            <FernButtonGroup>
+                {navbarLinks.map((navbarLink, idx) =>
+                    visitDiscriminatedUnion(navbarLink, "type")._visit({
+                        primary: (navbarLink) => <HeaderPrimaryLink key={idx} navbarLink={navbarLink} />,
+                        secondary: (navbarLink) => <HeaderSecondaryLink key={idx} navbarLink={navbarLink} />,
+                        _other: () => null,
+                    }),
+                )}
+
+                {colorsV3.type === "darkAndLight" && <ThemeButton className="hidden lg:flex" />}
+            </FernButtonGroup>
         </div>
     );
 
@@ -55,13 +60,6 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
 
             <div className="-mr-2 ml-auto flex items-center space-x-0 md:mr-0 lg:space-x-4">
                 {navbarLinksSection}
-
-                {colorsV3.type === "darkAndLight" && (
-                    <>
-                        <div className="dark:bg-border-default-dark bg-border-default-light hidden w-px self-stretch lg:flex" />
-                        <ThemeButton className="hidden lg:flex" />
-                    </>
-                )}
 
                 {searchService.isAvailable && (
                     <button

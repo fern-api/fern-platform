@@ -23,7 +23,7 @@ export const _CodeBlocks: React.FC<React.PropsWithChildren<_CodeBlocks.Props>> =
     }
     return (
         <div className="mb-5 w-full min-w-0 max-w-full">
-            <div className="border-border-default-light dark:border-border-default-dark flex justify-between rounded-t-lg border bg-gray-200/90 dark:bg-[#19181C]">
+            <div className="border-border-default-light dark:border-border-default-dark flex items-center justify-between rounded-t-lg border bg-gray-200/90 dark:bg-[#19181C]">
                 <div className="flex overflow-x-auto">
                     {items.map((item, idx) => (
                         <button
@@ -40,7 +40,7 @@ export const _CodeBlocks: React.FC<React.PropsWithChildren<_CodeBlocks.Props>> =
                     ))}
                 </div>
 
-                <CopyToClipboardButton className="ml-auto mr-4" content={codeBlockItem.content} />
+                <CopyToClipboardButton className="ml-2 mr-1" content={codeBlockItem.content} />
             </div>
             <CodeBlockSkeleton
                 className="max-h-[350px] overflow-y-auto"

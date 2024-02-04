@@ -19,6 +19,8 @@
     *::before,
     *::after {
         box-sizing: inherit;
+
+        @apply focus:outline-accent-primary dark:focus:outline-accent-primary-dark;
     }
 
     ::selection {
@@ -87,11 +89,6 @@
 
     .hide-scrollbar:not(:hover)::-webkit-scrollbar {
         display: none;
-    }
-
-    .bp5-dark a,
-    .bp5-dark a:hover {
-        color: unset;
     }
 
     .bp5-dark .bp5-control .bp5-control-indicator {

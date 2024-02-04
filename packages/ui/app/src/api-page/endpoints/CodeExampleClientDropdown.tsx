@@ -39,6 +39,7 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                     />
                 }
                 align="right"
+                size="small"
             >
                 {clients.map(({ id: clientId, name: clientName }) => {
                     const selected = clientId === selectedClient.id;

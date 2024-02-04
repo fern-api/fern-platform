@@ -1,0 +1,486 @@
+a.fern-button {
+    @apply no-underline hover:no-underline;
+}
+
+.fern-button {
+    @apply hover:transition-[background];
+    @apply inline-flex items-center justify-center;
+    @apply rounded-lg px-3 py-1 text-sm h-8;
+    @apply focus:outline-accent-primary dark:focus:outline-accent-primary-dark;
+
+    &.rounded {
+        @apply rounded-full;
+    }
+
+    > .fern-button-content {
+        @apply text-center items-center justify-center inline-flex;
+        @apply gap-1.5 h-6;
+
+        > .fa-icon {
+            @apply w-4 h-4;
+        }
+    }
+
+    &.square {
+        @apply px-1;
+        > .fern-button-content {
+            @apply w-6;
+        }
+    }
+
+    &.small {
+        @apply px-2 py-1 text-xs h-6;
+
+        > .fern-button-content {
+            @apply gap-1.5 h-4;
+
+            > .fa-icon {
+                @apply w-3 h-3;
+            }
+        }
+
+        &.square {
+            @apply px-1;
+            > .fern-button-content {
+                @apply w-6;
+            }
+        }
+    }
+
+    &.large {
+        @apply px-4 py-2 text-base h-10;
+
+        > .fern-button-content {
+            @apply gap-2 h-6;
+
+            > .fern-button-icon {
+                @apply w-5 h-5;
+            }
+        }
+
+        &.square {
+            @apply px-2;
+            > .fern-button-content {
+                @apply w-10;
+            }
+        }
+    }
+
+    &.disabled {
+        @apply cursor-not-allowed bg-black/20 text-text-primary-light/40 hover:text-text-primary-light/40;
+
+        html.dark & {
+            @apply bg-white/10 text-text-primary-dark/50 hover:text-text-primary-dark/50;
+        }
+    }
+
+    &:not(.disabled) {
+        &.minimal {
+            @apply bg-transparent;
+
+            @apply text-text-primary-light/60 hover:text-text-primary-light/60;
+
+            &:hover,
+            &.active {
+                @apply bg-black/10;
+            }
+
+            .fa-icon {
+                @apply bg-text-primary-light/60;
+            }
+
+            html.dark & {
+                @apply text-text-primary-dark/70 hover:text-text-primary-dark/70;
+
+                &:hover,
+                &.active {
+                    @apply bg-white/10;
+                }
+
+                .fa-icon {
+                    @apply bg-text-primary-dark/70;
+                }
+            }
+
+            &.primary {
+                @apply t-primary hover:t-primary;
+
+                &:hover,
+                &.active {
+                    @apply bg-tag-primary;
+                }
+
+                .fa-icon {
+                    @apply bg-text-primary-light;
+
+                    html.dark & {
+                        @apply bg-tag-primary-dark;
+                    }
+                }
+            }
+
+            &.success {
+                @apply t-success hover:t-success;
+
+                &:hover,
+                &.active {
+                    @apply bg-tag-success;
+                }
+
+                .fa-icon {
+                    @apply bg-intent-success-light;
+
+                    html.dark & {
+                        @apply bg-intent-success-dark;
+                    }
+                }
+            }
+
+            &.warning {
+                @apply t-warning hover:t-warning;
+
+                &:hover,
+                &.active {
+                    @apply bg-tag-warning;
+                }
+
+                .fa-icon {
+                    @apply bg-intent-warning-light;
+
+                    html.dark & {
+                        @apply bg-intent-warning-dark;
+                    }
+                }
+            }
+
+            &.danger {
+                @apply t-danger hover:t-danger;
+
+                &:hover,
+                &.active {
+                    @apply bg-tag-danger;
+                }
+
+                .fa-icon {
+                    @apply bg-intent-danger-light;
+
+                    html.dark & {
+                        @apply bg-intent-danger-dark;
+                    }
+                }
+            }
+        }
+
+        &.filled {
+            @apply bg-text-primary-light/60 text-white;
+
+            &:hover,
+            &.active {
+                @apply bg-text-primary-light/60 text-white;
+            }
+
+            .fa-icon {
+                @apply bg-text-primary-light/60 text-white;
+            }
+
+            html.dark & {
+                @apply bg-text-primary-dark/60 text-black;
+
+                &:hover,
+                &.active {
+                    @apply bg-text-primary-dark/60 text-black;
+                }
+
+                .fa-icon {
+                    @apply bg-text-primary-dark/60 text-black;
+                }
+            }
+
+            &.primary {
+                @apply bg-accent-primary hover:bg-accent-primary text-accent-primary-contrast;
+
+                &:hover,
+                &.active {
+                    @apply bg-accent-primary-darkened text-accent-primary-contrast;
+                }
+
+                .fa-icon {
+                    @apply bg-accent-primary-contrast;
+                }
+
+                html.dark & {
+                    @apply bg-accent-primary-dark hover:bg-accent-primary-dark text-accent-primary-dark-contrast;
+
+                    &:hover,
+                    &.active {
+                        @apply bg-accent-primary-dark-lightened text-accent-primary-dark-contrast;
+                    }
+
+                    .fa-icon {
+                        @apply bg-accent-primary-dark-contrast;
+                    }
+                }
+            }
+
+            &.success {
+                @apply bg-intent-success-light text-white;
+
+                &:hover,
+                &.active {
+                    @apply bg-intent-success-light-darkened text-white;
+                }
+
+                .fa-icon {
+                    @apply bg-white;
+                }
+
+                html.dark & {
+                    @apply bg-intent-success-dark text-black;
+
+                    &:hover,
+                    &.active {
+                        @apply bg-intent-success-dark-lightened text-black;
+                    }
+
+                    .fa-icon {
+                        @apply bg-black;
+                    }
+                }
+            }
+
+            &.warning {
+                @apply bg-intent-warning-light text-white;
+
+                &:hover,
+                &.active {
+                    @apply bg-intent-warning-light-darkened text-white;
+                }
+
+                .fa-icon {
+                    @apply bg-white;
+                }
+
+                html.dark & {
+                    @apply bg-intent-warning-dark text-black;
+
+                    &:hover,
+                    &.active {
+                        @apply bg-intent-warning-dark-lightened text-black;
+                    }
+
+                    .fa-icon {
+                        @apply bg-black;
+                    }
+                }
+            }
+
+            &.danger {
+                @apply bg-intent-danger-light text-white;
+
+                &:hover,
+                &.active {
+                    @apply bg-intent-danger-light-darkened text-white;
+                }
+
+                .fa-icon {
+                    @apply bg-white;
+                }
+
+                html.dark & {
+                    @apply bg-intent-danger-dark text-black;
+
+                    &:hover,
+                    &.active {
+                        @apply bg-intent-danger-dark-lightened text-black;
+                    }
+
+                    .fa-icon {
+                        @apply bg-black;
+                    }
+                }
+            }
+        }
+
+        &.outlined {
+            @apply ring-1 transition-shadow transition-[background] ring-inset;
+
+            &:hover,
+            &.active {
+                @apply ring-2;
+            }
+
+            @apply ring-text-primary-light/60 text-text-primary-light/60;
+
+            &:hover,
+            .active {
+                @apply bg-black/10 text-text-primary-light/60;
+            }
+
+            .fa-icon {
+                @apply bg-text-primary-light/60;
+            }
+
+            html.dark & {
+                @apply ring-text-primary-dark/60 text-text-primary-dark/60;
+
+                &:hover,
+                .active {
+                    @apply bg-white/10 text-text-primary-dark/60;
+                }
+
+                .fa-icon {
+                    @apply bg-text-primary-dark/60;
+                }
+            }
+
+            &.primary {
+                @apply ring-border-primary text-accent-primary;
+
+                &:hover,
+                .active {
+                    @apply bg-tag-primary text-accent-primary;
+                }
+
+                .fa-icon {
+                    @apply bg-accent-primary;
+                }
+
+                html.dark & {
+                    @apply ring-border-primary-dark text-accent-primary-dark;
+
+                    &:hover,
+                    .active {
+                        @apply bg-tag-primary-dark text-accent-primary-dark;
+                    }
+
+                    .fa-icon {
+                        @apply bg-accent-primary-dark;
+                    }
+                }
+            }
+
+            &.success {
+                @apply ring-border-success-light text-intent-success-light;
+
+                &:hover,
+                .active {
+                    @apply bg-tag-success text-intent-success-light;
+                }
+
+                .fa-icon {
+                    @apply bg-intent-success-light;
+                }
+
+                html.dark & {
+                    @apply ring-border-success-dark text-intent-success-dark;
+
+                    &:hover,
+                    .active {
+                        @apply bg-tag-success-dark text-intent-success-dark;
+                    }
+
+                    .fa-icon {
+                        @apply bg-intent-success-dark;
+                    }
+                }
+            }
+
+            &.warning {
+                @apply ring-border-warning-light text-intent-warning-light;
+
+                &:hover,
+                .active {
+                    @apply bg-tag-warning text-intent-warning-light;
+                }
+
+                .fa-icon {
+                    @apply bg-intent-warning-light;
+                }
+
+                html.dark & {
+                    @apply ring-border-warning-dark text-intent-warning-dark;
+
+                    &:hover,
+                    .active {
+                        @apply bg-tag-success-dark text-intent-warning-dark;
+                    }
+
+                    .fa-icon {
+                        @apply bg-intent-warning-dark;
+                    }
+                }
+            }
+
+            &.danger {
+                @apply ring-border-danger-light text-intent-danger-light;
+
+                &:hover,
+                .active {
+                    @apply bg-tag-danger text-intent-danger-light;
+                }
+
+                .fa-icon {
+                    @apply bg-intent-danger-light;
+                }
+
+                html.dark & {
+                    @apply ring-border-danger-dark text-intent-danger-dark;
+
+                    &:hover,
+                    .active {
+                        @apply bg-tag-success-dark text-intent-danger-dark;
+                    }
+
+                    .fa-icon {
+                        @apply bg-intent-danger-dark;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.fern-button-group {
+    @apply inline-flex items-stretch;
+    > .fern-button {
+        + .fern-button.outlined,
+        + .fern-button.filled {
+            @apply ml-2;
+        }
+    }
+
+    > .fern-button.small {
+        + .fern-button.small.outlined,
+        + .fern-button.small.filled {
+            @apply ml-1;
+        }
+    }
+
+    > .fern-button.large {
+        + .fern-button.large.outlined,
+        + .fern-button.large.filled {
+            @apply ml-3;
+        }
+    }
+
+    > .fern-button.outlined,
+    > .fern-button.filled {
+        + .fern-button.minimal {
+            @apply ml-2;
+        }
+    }
+
+    > .fern-button.small.outlined,
+    > .fern-button.small.filled {
+        + .fern-button.small.minimal {
+            @apply ml-1;
+        }
+    }
+
+    > .fern-button.large.outlined,
+    > .fern-button.large.filled {
+        + .fern-button.large.minimal {
+            @apply ml-3;
+        }
+    }
+}

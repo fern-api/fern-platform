@@ -1,6 +1,6 @@
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 import classNames from "classnames";
-import { CheckIcon } from "./icons/CheckIcon";
+import { FernButton } from "../components/FernButton";
 import { CopyIcon } from "./icons/CopyIcon";
 
 export declare namespace CopyToClipboardButton {
@@ -15,19 +15,15 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({ c
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(content);
 
     return (
-        <button
-            className={classNames("cursor-pointer", className)}
+        <FernButton
+            className={classNames("group cursor-pointer", className)}
             onClick={copyToClipboard}
             disabled={copyToClipboard == null}
             data-testid={testId}
-        >
-            {wasJustCopied ? (
-                <div className="bg-tag-primary dark:bg-tag-primary-dark flex h-4 w-4 items-center justify-center rounded-sm">
-                    <CheckIcon className="text-accent-primary dark:text-accent-primary-dark h-4 w-4" />
-                </div>
-            ) : (
-                <CopyIcon className="text-intent-default hover:text-accent-primary hover:dark:text-accent-primary-dark h-4 w-4 transition-colors" />
-            )}
-        </button>
+            rounded={true}
+            icon={wasJustCopied ? "check" : <CopyIcon className="h-4 w-4" />}
+            buttonStyle="minimal"
+            intent={wasJustCopied ? "success" : "none"}
+        />
     );
 };

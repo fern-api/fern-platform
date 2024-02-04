@@ -1,5 +1,5 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import Link from "next/link";
+import { FernLinkButton } from "../components/FernButton";
 
 export declare namespace HeaderSecondaryLink {
     export interface Props {
@@ -9,15 +9,8 @@ export declare namespace HeaderSecondaryLink {
 
 export const HeaderSecondaryLink: React.FC<HeaderSecondaryLink.Props> = ({ navbarLink }) => {
     return (
-        <Link
-            className={
-                "hover:text-accent-primary hover:dark:text-accent-primary-dark t-muted text-sm !no-underline transition"
-            }
-            href={navbarLink.url}
-            target="_blank"
-            rel="noreferrer noopener"
-        >
+        <FernLinkButton href={navbarLink.url} target="_blank" buttonStyle="minimal">
             {navbarLink.text}
-        </Link>
+        </FernLinkButton>
     );
 };

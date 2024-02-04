@@ -62,7 +62,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                 </div>
                 <div className="flex gap-2">
                     {actions}
-                    <CopyToClipboardButton content={copyToClipboardContent} />
+                    <CopyToClipboardButton content={copyToClipboardContent} className="-m-1" />
                 </div>
             </div>
             <div className="flex min-h-0 flex-1">
