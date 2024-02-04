@@ -1,7 +1,7 @@
 import * as ScrollArea from "@radix-ui/react-scroll-area";
 import classNames from "classnames";
 import { forwardRef, PropsWithChildren } from "react";
-import "./FernScrollArea.scss";
+import "./FernScrollArea.css";
 
 interface FernScrollAreaProps extends ScrollArea.ScrollAreaProps {
     className?: string;

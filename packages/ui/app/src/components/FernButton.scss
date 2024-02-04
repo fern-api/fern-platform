@@ -23,6 +23,7 @@ a.fern-button {
 
     &.square {
         @apply px-1;
+
         > .fern-button-content {
             @apply w-6;
         }
@@ -41,6 +42,7 @@ a.fern-button {
 
         &.square {
             @apply px-1;
+
             > .fern-button-content {
                 @apply w-6;
             }
@@ -60,6 +62,7 @@ a.fern-button {
 
         &.square {
             @apply px-2;
+
             > .fern-button-content {
                 @apply w-10;
             }
@@ -77,7 +80,6 @@ a.fern-button {
     &:not(.disabled) {
         &.minimal {
             @apply bg-transparent;
-
             @apply text-text-default-light/60 hover:text-text-default-light/60;
 
             &:hover,
@@ -89,7 +91,7 @@ a.fern-button {
                 @apply bg-text-default-light/60;
             }
 
-            html.dark &:not(.primary):not(.success):not(.warning):not(.danger) {
+            html.dark &:not(.primary, .success, .warning, .danger) {
                 @apply text-text-default-dark/70 hover:text-text-default-dark/70;
 
                 &:hover,
@@ -442,6 +444,7 @@ a.fern-button {
 
 .fern-button-group {
     @apply inline-flex items-stretch;
+
     > .fern-button {
         + .fern-button.outlined,
         + .fern-button.filled {

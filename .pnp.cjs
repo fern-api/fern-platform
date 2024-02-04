@@ -4541,6 +4541,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["next", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:14.0.4"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["postcss", "npm:8.4.31"],\
+            ["postcss-import", "virtual:5468f8421a4cb12dc44b4e3a031a211209537278ecf2763e0286bc13fd7c6ba57c5b5a43e6f64f6416e367f53aef96012b48d928329edae13e27b89cbe83316c#npm:16.0.0"],\
             ["prettier", "npm:3.2.4"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
@@ -16907,10 +16908,33 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
+        ["npm:16.0.0", {\
+          "packageLocation": "./.yarn/cache/postcss-import-npm-16.0.0-1727b6e4ff-dd25ec2c8d.zip/node_modules/postcss-import/",\
+          "packageDependencies": [\
+            ["postcss-import", "npm:16.0.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
         ["virtual:3903e2abcca6da181c68e3e2b020ce8f100d606c384b27bb480d49951a24008cb45e54ac92bc5acb3f9572c7f339e46fe691a8e40f22e16c18dac03b8a3a63fc#npm:15.1.0", {\
           "packageLocation": "./.yarn/__virtual__/postcss-import-virtual-1f4f253a7b/0/cache/postcss-import-npm-15.1.0-8b9e86f900-7bd04bd8f0.zip/node_modules/postcss-import/",\
           "packageDependencies": [\
             ["postcss-import", "virtual:3903e2abcca6da181c68e3e2b020ce8f100d606c384b27bb480d49951a24008cb45e54ac92bc5acb3f9572c7f339e46fe691a8e40f22e16c18dac03b8a3a63fc#npm:15.1.0"],\
+            ["@types/postcss", null],\
+            ["postcss", "npm:8.4.31"],\
+            ["postcss-value-parser", "npm:4.2.0"],\
+            ["read-cache", "npm:1.0.0"],\
+            ["resolve", "patch:resolve@npm%3A1.22.1#~builtin<compat/resolve>::version=1.22.1&hash=c3c19d"]\
+          ],\
+          "packagePeers": [\
+            "@types/postcss",\
+            "postcss"\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["virtual:5468f8421a4cb12dc44b4e3a031a211209537278ecf2763e0286bc13fd7c6ba57c5b5a43e6f64f6416e367f53aef96012b48d928329edae13e27b89cbe83316c#npm:16.0.0", {\
+          "packageLocation": "./.yarn/__virtual__/postcss-import-virtual-6f916e0abf/0/cache/postcss-import-npm-16.0.0-1727b6e4ff-dd25ec2c8d.zip/node_modules/postcss-import/",\
+          "packageDependencies": [\
+            ["postcss-import", "virtual:5468f8421a4cb12dc44b4e3a031a211209537278ecf2763e0286bc13fd7c6ba57c5b5a43e6f64f6416e367f53aef96012b48d928329edae13e27b89cbe83316c#npm:16.0.0"],\
             ["@types/postcss", null],\
             ["postcss", "npm:8.4.31"],\
             ["postcss-value-parser", "npm:4.2.0"],\

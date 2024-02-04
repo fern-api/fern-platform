@@ -11,10 +11,6 @@
         font-weight: inherit;
     }
 
-    html.dark & {
-        @apply text-text-default-dark hover:text-accent-primary-dark decoration-accent-primary-dark;
-    }
-
     svg.external-link-icon {
         @apply ml-1.5 mr-0.5 inline-block h-3 w-3 t-muted;
     }
@@ -23,5 +19,9 @@
         svg.external-link-icon {
             @apply t-primary;
         }
+    }
+
+    html.dark & {
+        @apply text-text-default-dark hover:text-accent-primary-dark decoration-accent-primary-dark;
     }
 }
