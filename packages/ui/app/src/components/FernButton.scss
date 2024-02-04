@@ -67,10 +67,10 @@ a.fern-button {
     }
 
     &.disabled {
-        @apply cursor-not-allowed bg-black/20 text-text-primary-light/40 hover:text-text-primary-light/40;
+        @apply cursor-not-allowed bg-black/20 text-text-default-light/40 hover:text-text-default-light/40;
 
         html.dark & {
-            @apply bg-white/10 text-text-primary-dark/50 hover:text-text-primary-dark/50;
+            @apply bg-white/10 text-text-default-dark/50 hover:text-text-default-dark/50;
         }
     }
 
@@ -78,7 +78,7 @@ a.fern-button {
         &.minimal {
             @apply bg-transparent;
 
-            @apply text-text-primary-light/60 hover:text-text-primary-light/60;
+            @apply text-text-default-light/60 hover:text-text-default-light/60;
 
             &:hover,
             &.active {
@@ -86,11 +86,11 @@ a.fern-button {
             }
 
             .fa-icon {
-                @apply bg-text-primary-light/60;
+                @apply bg-text-default-light/60;
             }
 
-            html.dark & {
-                @apply text-text-primary-dark/70 hover:text-text-primary-dark/70;
+            html.dark &:not(.primary):not(.success):not(.warning):not(.danger) {
+                @apply text-text-default-dark/70 hover:text-text-default-dark/70;
 
                 &:hover,
                 &.active {
@@ -98,12 +98,12 @@ a.fern-button {
                 }
 
                 .fa-icon {
-                    @apply bg-text-primary-dark/70;
+                    @apply bg-text-default-dark/70;
                 }
             }
 
             &.primary {
-                @apply t-primary hover:t-primary;
+                @apply t-default hover:t-default;
 
                 &:hover,
                 &.active {
@@ -111,7 +111,7 @@ a.fern-button {
                 }
 
                 .fa-icon {
-                    @apply bg-text-primary-light;
+                    @apply bg-text-default-light;
 
                     html.dark & {
                         @apply bg-tag-primary-dark;
@@ -172,27 +172,27 @@ a.fern-button {
         }
 
         &.filled {
-            @apply bg-text-primary-light/60 text-white;
+            @apply bg-text-default-light/60 text-white;
 
             &:hover,
             &.active {
-                @apply bg-text-primary-light/60 text-white;
+                @apply bg-text-default-light/60 text-white;
             }
 
             .fa-icon {
-                @apply bg-text-primary-light/60 text-white;
+                @apply bg-text-default-light/60 text-white;
             }
 
             html.dark & {
-                @apply bg-text-primary-dark/60 text-black;
+                @apply bg-text-default-dark/60 text-black;
 
                 &:hover,
                 &.active {
-                    @apply bg-text-primary-dark/60 text-black;
+                    @apply bg-text-default-dark/60 text-black;
                 }
 
                 .fa-icon {
-                    @apply bg-text-primary-dark/60 text-black;
+                    @apply bg-text-default-dark/60 text-black;
                 }
             }
 
@@ -309,27 +309,27 @@ a.fern-button {
                 @apply ring-2;
             }
 
-            @apply ring-text-primary-light/60 text-text-primary-light/60;
+            @apply ring-text-default-light/60 text-text-default-light/60;
 
             &:hover,
             .active {
-                @apply bg-black/10 text-text-primary-light/60;
+                @apply bg-black/10 text-text-default-light/60;
             }
 
             .fa-icon {
-                @apply bg-text-primary-light/60;
+                @apply bg-text-default-light/60;
             }
 
             html.dark & {
-                @apply ring-text-primary-dark/60 text-text-primary-dark/60;
+                @apply ring-text-default-dark/60 text-text-default-dark/60;
 
                 &:hover,
                 .active {
-                    @apply bg-white/10 text-text-primary-dark/60;
+                    @apply bg-white/10 text-text-default-dark/60;
                 }
 
                 .fa-icon {
-                    @apply bg-text-primary-dark/60;
+                    @apply bg-text-default-dark/60;
                 }
             }
 

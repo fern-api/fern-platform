@@ -1,0 +1,35 @@
+.fern-anchor {
+    @apply absolute hidden md:block;
+
+    a {
+        @apply flex items-center border-0 relative h-6 rounded-md;
+    }
+
+    .fern-anchor-icon {
+        @apply absolute left-0 flex h-6 w-6 items-center justify-center rounded-md;
+    }
+
+    .fern-anchor-icon:not(.copied) {
+        @apply bg-white text-gray-400 ring-1 ring-gray-400/30 backdrop-blur hover:ring-gray-400/60 dark:bg-white/5;
+
+        html.dark & {
+            @apply ring-gray-700/25 hover:ring-white/20;
+        }
+    }
+
+    .fern-anchor-icon.copied {
+        @apply bg-tag-primary ring-accent-primary/60 ring-1 backdrop-blur;
+
+        > svg {
+            @apply text-accent-primary h-4 w-4;
+        }
+
+        html.dark & {
+            @apply bg-tag-primary-dark ring-accent-primary/60;
+
+            > svg {
+                @apply text-accent-primary-dark;
+            }
+        }
+    }
+}

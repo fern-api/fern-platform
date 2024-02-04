@@ -1,0 +1,15 @@
+.fern-card {
+    @apply border-border-default-light t-default hover:t-default border bg-white no-underline hover:no-underline dark:bg-white/5;
+
+    &.interactive {
+        @apply cursor-pointer shadow-card-light hover:shadow-card-light-elevated hover:border-border-primary hover:transition-all;
+    }
+
+    html.dark & {
+        @apply border-border-default-dark;
+
+        &.interactive {
+            @apply hover:border-border-primary-dark shadow-none hover:shadow-card-dark-elevated;
+        }
+    }
+}

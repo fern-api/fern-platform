@@ -81,8 +81,8 @@ module.exports = {
                 "border-danger-dark": "rgba(248, 113, 113, 0.30)",
                 "border-danger-light": "rgba(220, 38, 38, 0.30)",
 
-                "text-primary-dark": "rgb(255, 255, 255)",
-                "text-primary-light": "rgb(3,7,18)",
+                "text-default-dark": "rgb(255, 255, 255)",
+                "text-default-light": "rgb(3,7,18)",
                 "text-muted-light": "rgb(0, 0, 0, 0.52)",
                 "text-muted-dark": "rgb(255, 255, 255, 0.68)",
                 "text-disabled-light": "rgb(209, 213, 219)",
@@ -109,7 +109,7 @@ module.exports = {
             addComponents({
                 // Text
                 ".t-primary": {
-                    "@apply text-text-primary-light dark:text-text-primary-dark": {},
+                    "@apply text-text-default-light dark:text-text-default-dark": {},
                 },
                 ".t-muted": {
                     "@apply text-text-muted-light dark:text-text-muted-dark": {},

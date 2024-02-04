@@ -1,13 +1,15 @@
 import classNames from "classnames";
+import "./FontAwesomeIcon.scss";
 
 export declare namespace RemoteFontAwesomeIcon {
     export interface Props {
         className?: string; // you must specify the bg-color rather than text-color because this is a mask.
         icon?: string;
+        outlined?: boolean;
     }
 }
 export const RemoteFontAwesomeIcon: React.FC<RemoteFontAwesomeIcon.Props> = ({ className, icon }) => {
-    return (
+    const iconSvg = (
         <span
             className={classNames(className, "fa-icon")}
             style={{
@@ -20,6 +22,8 @@ export const RemoteFontAwesomeIcon: React.FC<RemoteFontAwesomeIcon.Props> = ({ c
             }}
         />
     );
+
+    return iconSvg;
 };
 
 function getIconUrl(icon: string | undefined): string {

@@ -74,7 +74,7 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
 
                 <div className="bg-background dark:bg-background-dark -mx-4 flex items-center gap-2 px-4">
                     <Tooltip content="Coming soon" popoverClassName="text-xs">
-                        <a className="text-text-primary-light hover:text-accent-primary decoration-accent-primary dark:text-text-primary-dark dark:hover:text-accent-primary-dark dark:decoration-accent-primary-dark whitespace-nowrap text-sm font-semibold underline decoration-1 underline-offset-4 hover:decoration-2">
+                        <a className="text-text-default-light hover:text-accent-primary decoration-accent-primary dark:text-text-default-dark dark:hover:text-accent-primary-dark dark:decoration-accent-primary-dark whitespace-nowrap text-sm font-semibold underline decoration-1 underline-offset-4 hover:decoration-2">
                             Sign in to use your API keys
                         </a>
                     </Tooltip>

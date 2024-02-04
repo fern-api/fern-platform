@@ -41,6 +41,7 @@
     "@fern-ui/react-commons": "workspace:*",
     "@fontsource/ibm-plex-mono": "^4.5.13",
     "@headlessui/react": "^1.7.18",
+    "@radix-ui/react-scroll-area": "^1.0.5",
     "@react-hook/size": "^2.1.2",
     "@vercel/speed-insights": "^1.0.7",
     "algoliasearch": "^4.22.1",

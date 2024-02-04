@@ -21,7 +21,7 @@ export const HeaderPrimaryLink: React.FC<HeaderPrimaryLink.Props> = ({ navbarLin
                     className="transition-transform group-hover:translate-x-0.5"
                 />
             }
-            buttonStyle="filled"
+            buttonStyle="outlined"
         >
             {navbarLink.text}
         </FernLinkButton>

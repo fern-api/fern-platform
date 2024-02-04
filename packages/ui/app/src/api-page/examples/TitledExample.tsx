@@ -53,7 +53,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                 <div className="flex items-center">
                     <div
                         className={classNames("text-xs uppercase tracking-wide", {
-                            "text-text-primary-light dark:text-text-muted-dark": type === "primary",
+                            "text-text-default-light dark:text-text-muted-dark": type === "primary",
                             "text-red-400": type === "warning",
                         })}
                     >

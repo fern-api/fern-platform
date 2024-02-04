@@ -64,7 +64,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                 {searchService.isAvailable && (
                     <button
                         onClick={openSearchDialog}
-                        className="text-intent-default dark:hover:text-text-primary-dark hover:text-text-primary-light flex h-[44px] w-[44px] items-center justify-center transition lg:hidden"
+                        className="t-muted hover:t-default flex h-[44px] w-[44px] items-center justify-center transition lg:hidden"
                     >
                         <SearchIcon className="h-5 w-5" />
                     </button>
@@ -73,9 +73,9 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                 <button
                     onClick={isMobileSidebarOpen ? closeMobileSidebar : openMobileSidebar}
                     className={classNames(
-                        "text-intent-default dark:hover:text-text-primary-dark hover:text-text-primary-light flex h-[44px] w-[44px] items-center justify-center transition lg:hidden rounded-lg",
+                        "t-muted hover:t-default flex h-[44px] w-[44px] items-center justify-center transition lg:hidden rounded-lg",
                         {
-                            "!text-accent-primary !dark:text-accent-primary-dark bg-tag-primary dark:bg-tag-primary-dark ring-inset ring-1 ring-border-primary dark:ring-border-primary-dark":
+                            "t-primary bg-tag-primary dark:bg-tag-primary-dark ring-inset ring-1 ring-border-primary dark:ring-border-primary-dark":
                                 isMobileSidebarOpen,
                         },
                     )}

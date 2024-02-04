@@ -1,8 +1,8 @@
 import { type DocsNode } from "@fern-api/fdr-sdk";
 import { getFullSlugForNavigatable } from "@fern-ui/app-utils";
-import Link from "next/link";
 import { useMemo } from "react";
 import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
+import { FernLinkCard } from "../components/FernCard";
 import { useDocsContext } from "../docs-context/useDocsContext";
 
 export declare namespace BottomNavigationButton {
@@ -42,10 +42,7 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
     const fullSlug = getFullSlugForNavigatable(navigatable, { omitDefault: true, basePath });
 
     return (
-        <Link
-            className="border-border-default-light dark:border-border-default-dark hover:border-border-primary dark:hover:border-accent-primary-dark/50 t-primary hover:t-primary hover:shadow-card-light dark:hover:shadow-card-dark my-12 flex items-center rounded-xl border bg-white p-6 no-underline ring-0 ring-transparent transition-shadow hover:no-underline hover:ring-4 dark:bg-white/5"
-            href={`/${fullSlug}`}
-        >
+        <FernLinkCard className="my-12 flex items-center rounded-xl p-6" href={`/${fullSlug}`}>
             <div className="flex-1">
                 <span className="text-base font-semibold">{text}</span>
             </div>
@@ -56,6 +53,6 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
                     className="bg-text-muted-light dark:bg-text-muted-dark h-3 w-3"
                 />
             </span>
-        </Link>
+        </FernLinkCard>
     );
 };

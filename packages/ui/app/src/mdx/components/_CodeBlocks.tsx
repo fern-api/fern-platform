@@ -29,7 +29,7 @@ export const _CodeBlocks: React.FC<React.PropsWithChildren<_CodeBlocks.Props>> =
                         <button
                             className={classNames("border-b py-2.5 px-4 transition text-xs", {
                                 "text-accent-primary border-accent-primary": selectedTabIndex === idx,
-                                "text-text-primary-light dark:text-text-muted-dark border-transparent hover:text-accent-primary hover:dark:text-text-primary-dark":
+                                "text-text-default-light dark:text-text-muted-dark border-transparent hover:text-accent-primary hover:dark:text-text-default-dark":
                                     selectedTabIndex !== idx,
                             })}
                             key={idx}

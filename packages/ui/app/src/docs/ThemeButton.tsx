@@ -25,8 +25,9 @@ export const ThemeButton: React.FC<ThemeButton.Props> = ({ className }) => {
             }}
             rounded={true}
             buttonStyle="minimal"
+            intent="primary"
             icon={
-                <IconToUse className="text-intent-default group-hover:text-text-primary-light group-hover:dark:text-text-primary-dark h-4 w-4 transition" />
+                <IconToUse className="text-intent-default dark:text-intent-default-dark group-hover:t-primary h-4 w-4 group-hover:transition" />
             }
         />
     );

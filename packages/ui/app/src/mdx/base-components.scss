@@ -1,0 +1,27 @@
+.fern-mdx-link {
+    @apply text-text-default-light hover:text-accent-primary underline underline-offset-4 decoration-1 hover:decoration-2 decoration-accent-primary;
+    @apply font-semibold;
+
+    h1 &,
+    h2 &,
+    h3 &,
+    h4 &,
+    h5 &,
+    h6 & {
+        font-weight: inherit;
+    }
+
+    html.dark & {
+        @apply text-text-default-dark hover:text-accent-primary-dark decoration-accent-primary-dark;
+    }
+
+    svg.external-link-icon {
+        @apply ml-1.5 mr-0.5 inline-block h-3 w-3 t-muted;
+    }
+
+    &:hover {
+        svg.external-link-icon {
+            @apply t-primary;
+        }
+    }
+}
