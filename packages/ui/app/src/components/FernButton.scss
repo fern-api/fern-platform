@@ -211,7 +211,7 @@ a.fern-button {
                 }
 
                 html.dark & {
-                    @apply bg-accent-primary-dark hover:bg-accent-primary-dark text-accent-primary-dark-contrast;
+                    @apply text-accent-primary-dark-contrast;
 
                     &:hover,
                     &.active {

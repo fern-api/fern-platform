@@ -173,7 +173,7 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
                         style={{ height }}
                     >
                         <div
-                            className="bg-accent-primary dark:bg-accent-primary-dark absolute inset-x-0 -top-1 h-1 cursor-row-resize opacity-0 transition-opacity hover:opacity-100 active:opacity-100"
+                            className="bg-accent-primary absolute inset-x-0 -top-1 h-1 cursor-row-resize opacity-0 transition-opacity hover:opacity-100 active:opacity-100"
                             onMouseDown={handleVerticalResize}
                         />
                         <ApiPlaygroundDrawer

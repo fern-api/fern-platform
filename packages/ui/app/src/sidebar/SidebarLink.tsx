@@ -98,7 +98,7 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
                 "flex w-[44px] lg:w-6 justify-center items-center transition-colors rounded-none transition-transform lg:translate-x-1 group-hover/sidebar:translate-x-0 ease-out",
                 {
                     "lg:opacity-60 group-hover/sidebar:opacity-100 transition-opacity": toggleExpand != null,
-                    "lg:bg-tag-primary lg:dark:bg-tag-primary-dark lg:after:content-none after:content-[''] after:absolute after:inset-1 after:rounded-lg after:bg-tag-primary after:dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark !lg:text-inherit after:pointer-events-none":
+                    "lg:bg-tag-primary lg:dark:bg-tag-primary-dark lg:after:content-none after:content-[''] after:absolute after:inset-1 after:rounded-lg after:bg-tag-primary after:dark:bg-tag-primary-dark text-accent-primary !lg:text-inherit after:pointer-events-none":
                         showIndicator,
                     "lg:hover:bg-tag-default-light/5 lg:dark:hover:bg-tag-default-dark/5":
                         !showIndicator && toggleExpand != null,
@@ -125,8 +125,8 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
         <li ref={elementRef} className="scroll-my-32">
             <div
                 className={classNames(className, "group items-stretch relative flex min-h-[44px] lg:min-h-[36px]", {
-                    "hover:text-accent-primary hover:dark:text-accent-primary-dark t-muted": !selected,
-                    "text-accent-primary dark:text-accent-primary-dark": selected,
+                    "hover:text-accent-primary t-muted": !selected,
+                    "text-accent-primary": selected,
                 })}
             >
                 {renderLink(
@@ -138,7 +138,7 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
                                     "relative flex-0 w-[22px] lg:w-3 shrink-0 border-r",
                                     "transition-transform group-hover/sidebar:translate-x-0 lg:translate-x-1 group-hover/sidebar:opacity-100 transition-opacity ease-out",
                                     {
-                                        "border-accent-primary/60 dark:border-accent-primary-dark/60": selected,
+                                        "border-accent-primary/60": selected,
                                         "border-border-default-light dark:border-border-default-dark lg:opacity-60":
                                             !selected,
                                     },

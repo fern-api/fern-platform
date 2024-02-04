@@ -22,7 +22,7 @@ export const PageRecord: React.FC<PageRecord.Props> = ({ hit, isHovered }) => {
                 <Icon
                     className={classNames({
                         "!text-text-muted-light dark:!text-text-muted-dark": !isHovered,
-                        "!text-accent-primary dark:text-accent-primary-dark": isHovered,
+                        "!text-accent-primary": isHovered,
                     })}
                     size={14}
                     icon="document"

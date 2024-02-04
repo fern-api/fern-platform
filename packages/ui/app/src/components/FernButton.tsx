@@ -55,6 +55,7 @@ export const FernLinkButton = forwardRef<HTMLAnchorElement, FernLinkButtonProps>
         intent,
         active,
         full,
+        rounded,
         ...linkProps
     } = props;
     return (
@@ -95,6 +96,7 @@ export const FernButton: FC<FernButtonProps> = forwardRef<HTMLButtonElement, Fer
             intent,
             active,
             full,
+            rounded,
             ...buttonProps
         } = props;
         return (

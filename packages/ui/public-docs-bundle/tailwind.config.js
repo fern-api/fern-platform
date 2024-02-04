@@ -34,7 +34,7 @@ module.exports = {
             },
 
             colors: {
-                "accent-primary": withOpacity("--accent-primary"),
+                "accent-primary-light": withOpacity("--accent-primary"),
                 "accent-primary-darkened": withOpacity("--accent-primary-darkened"),
                 "accent-primary-dark": withOpacity("--accent-primary-dark"),
                 "accent-primary-dark-lightened": withOpacity("--accent-primary-dark-lightened"),
@@ -127,8 +127,11 @@ module.exports = {
                 ".t-muted": {
                     "@apply text-intent-default dark:text-intent-default-dark": {},
                 },
+                ".text-accent-primary": {
+                    "@apply text-accent-primary-light dark:text-accent-primary-dark": {},
+                },
                 ".t-primary": {
-                    "@apply text-accent-primary dark:text-accent-primary-dark": {},
+                    "@apply text-accent-primary-light dark:text-accent-primary-dark": {},
                 },
                 ".t-success": {
                     "@apply text-intent-success-light dark:text-intent-success-dark": {},
@@ -140,6 +143,9 @@ module.exports = {
                     "@apply text-intent-danger-light dark:text-intent-danger-dark": {},
                 },
                 // Background
+                ".bg-accent-primary": {
+                    "@apply bg-accent-primary-light dark:bg-accent-primary-dark": {},
+                },
                 ".bg-tag-default": {
                     "@apply bg-tag-default-light dark:bg-tag-default-dark": {},
                 },
@@ -153,6 +159,9 @@ module.exports = {
                     "@apply bg-tag-danger-light dark:bg-tag-danger-dark": {},
                 },
                 // Border
+                ".border-accent-primary": {
+                    "@apply border-accent-primary-light dark:border-accent-primary-dark": {},
+                },
                 ".border-concealed": {
                     "@apply border-border-concealed-light dark:border-border-concealed-dark": {},
                 },
@@ -167,6 +176,15 @@ module.exports = {
                 },
                 ".border-danger": {
                     "@apply border-border-danger-light dark:border-border-danger-dark": {},
+                },
+                ".outline-accent-primary": {
+                    "@apply outline-accent-primary-light dark:outline-accent-primary-dark": {},
+                },
+                ".ring-accent-primary": {
+                    "@apply ring-accent-primary-light dark:ring-accent-primary-dark": {},
+                },
+                ".decoration-accent-primary": {
+                    "@apply decoration-accent-primary-light dark:decoration-accent-primary-dark": {},
                 },
             });
         }),

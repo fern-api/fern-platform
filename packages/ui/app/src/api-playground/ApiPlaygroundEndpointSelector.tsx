@@ -85,7 +85,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                             top: depth * 30,
                         }}
                     >
-                        <span className="text-accent-primary dark:text-accent-primary-dark shrink truncate whitespace-nowrap text-xs">
+                        <span className="text-accent-primary shrink truncate whitespace-nowrap text-xs">
                             {apiDefinition.title}
                         </span>
                     </div>
@@ -98,7 +98,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                             className={classNames(
                                 "gap-4 scroll-m-2 mx-1 flex h-8 cursor-pointer items-center rounded px-2 py-1 text-sm justify-between",
                                 {
-                                    "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark":
+                                    "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary":
                                         endpointItem.id === endpoint?.id,
                                     "hover:bg-tag-default-light dark:hover:bg-tag-default-dark hover:text-accent-primary dark:hover:text-accent-primary-dark":
                                         endpointItem.id !== endpoint?.id,
@@ -151,7 +151,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                 buttonStyle="minimal"
             >
                 {apiDefinition != null && (
-                    <span className="text-accent-primary dark:text-accent-primary-dark shrink truncate whitespace-nowrap text-xs">
+                    <span className="text-accent-primary shrink truncate whitespace-nowrap text-xs">
                         {apiDefinition.title}
                     </span>
                 )}

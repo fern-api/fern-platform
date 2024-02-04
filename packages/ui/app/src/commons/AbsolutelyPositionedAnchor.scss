@@ -18,18 +18,14 @@
     }
 
     .fern-anchor-icon.copied {
-        @apply bg-tag-primary ring-accent-primary/60 ring-1 backdrop-blur;
+        @apply bg-tag-primary ring-border-primary ring-1 backdrop-blur;
 
         > svg {
             @apply text-accent-primary h-4 w-4;
         }
 
         html.dark & {
-            @apply bg-tag-primary-dark ring-accent-primary/60;
-
-            > svg {
-                @apply text-accent-primary-dark;
-            }
+            @apply bg-tag-primary-dark ring-border-primary-dark;
         }
     }
 }

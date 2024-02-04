@@ -126,53 +126,38 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
 
                     <div className="flex items-center text-xs">
                         <button
-                            className={classNames(
-                                "px-2 py-1 -my-1 rounded-lg hover:text-accent-primary hover:dark:text-accent-primary-dark",
-                                {
-                                    "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark":
-                                        requestType === "form",
-                                    "t-muted": requestType !== "form",
-                                },
-                            )}
+                            className={classNames("px-2 py-1 -my-1 rounded-lg hover:text-accent-primary", {
+                                "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary": requestType === "form",
+                                "t-muted": requestType !== "form",
+                            })}
                             onClick={() => setRequestType("form")}
                         >
                             Form
                         </button>
                         <button
-                            className={classNames(
-                                "px-2 py-1 -my-1 rounded-lg hover:text-accent-primary hover:dark:text-accent-primary-dark",
-                                {
-                                    "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark":
-                                        requestType === "curl",
-                                    "t-muted": requestType !== "curl",
-                                },
-                            )}
+                            className={classNames("px-2 py-1 -my-1 rounded-lg hover:text-accent-primary", {
+                                "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary": requestType === "curl",
+                                "t-muted": requestType !== "curl",
+                            })}
                             onClick={() => setRequestType("curl")}
                         >
                             CURL
                         </button>
                         <button
-                            className={classNames(
-                                "px-2 py-1 -my-1 rounded-lg hover:text-accent-primary hover:dark:text-accent-primary-dark",
-                                {
-                                    "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark":
-                                        requestType === "javascript",
-                                    "t-muted": requestType !== "javascript",
-                                },
-                            )}
+                            className={classNames("px-2 py-1 -my-1 rounded-lg hover:text-accent-primary", {
+                                "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary":
+                                    requestType === "javascript",
+                                "t-muted": requestType !== "javascript",
+                            })}
                             onClick={() => setRequestType("javascript")}
                         >
                             JavaScript
                         </button>
                         <button
-                            className={classNames(
-                                "px-2 py-1 -my-1 rounded-lg hover:text-accent-primary hover:dark:text-accent-primary-dark",
-                                {
-                                    "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark":
-                                        requestType === "python",
-                                    "t-muted": requestType !== "python",
-                                },
-                            )}
+                            className={classNames("px-2 py-1 -my-1 rounded-lg hover:text-accent-primary", {
+                                "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary": requestType === "python",
+                                "t-muted": requestType !== "python",
+                            })}
                             onClick={() => setRequestType("python")}
                         >
                             Python
@@ -181,17 +166,13 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                         <div className="bg-border-default-light dark:bg-border-default-dark mx-2 h-[40px] w-[1px] shrink-0" />
 
                         <button
-                            className={
-                                "hover:text-accent-primary hover:dark:text-accent-primary-dark t-muted -my-1 whitespace-nowrap rounded-lg px-2 py-1"
-                            }
+                            className={"hover:text-accent-primary t-muted -my-1 whitespace-nowrap rounded-lg px-2 py-1"}
                             onClick={resetWithExample}
                         >
                             Use example
                         </button>
                         <button
-                            className={
-                                "hover:text-accent-primary hover:dark:text-accent-primary-dark t-muted -my-1 whitespace-nowrap rounded-lg px-2 py-1"
-                            }
+                            className={"hover:text-accent-primary t-muted -my-1 whitespace-nowrap rounded-lg px-2 py-1"}
                             onClick={resetWithoutExample}
                         >
                             Clear form
@@ -235,7 +216,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                 )}
 
                 <div
-                    className="bg-accent-primary dark:bg-accent-primary-dark absolute inset-y-0 -ml-0.5 w-1 cursor-col-resize opacity-0 transition-opacity hover:opacity-100 active:opacity-100"
+                    className="bg-accent-primary absolute inset-y-0 -ml-0.5 w-1 cursor-col-resize opacity-0 transition-opacity hover:opacity-100 active:opacity-100"
                     onMouseDown={handleResize}
                 />
                 <div className="border-border-default-light dark:border-border-default-dark flex h-10 w-full shrink-0 items-center justify-between border-b px-4 py-2">

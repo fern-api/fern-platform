@@ -23,7 +23,7 @@ export const EndpointAvailabilityTag = memo<EndpointAvailabilityTag.Props>(funct
                 {
                     "border px-1.5 py-0.5": !minimal,
                     "bg-tag-default-light dark:bg-tag-default-dark t-muted": false,
-                    "text-accent-primary dark:text-accent-primary-dark": availability === "GenerallyAvailable",
+                    "text-accent-primary": availability === "GenerallyAvailable",
                     "t-warning": availability === "Beta",
                     "t-danger": availability === "Deprecated",
                     "bg-tag-primary border-border-primary dark:bg-tag-primary-dark dark:border-border-primary-dark":

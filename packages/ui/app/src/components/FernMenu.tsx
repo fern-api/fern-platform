@@ -54,13 +54,10 @@ export const FernMenu: FC<FernMenu.Props> = ({
                         </HeadlessMenu.Button>
                         {clearSelection != null && (
                             <button
-                                className="hover:bg-tag-primary border-border-primary dark:border-border-primary-dark text-accent-primary dark:text-accent-primary-dark -ml-px inline-flex w-fit items-center justify-center rounded-lg rounded-l-none border px-2 py-1 tracking-tight transition hover:border-2 hover:px-[calc(theme(spacing[2])-1px)]"
+                                className="hover:bg-tag-primary border-border-primary dark:border-border-primary-dark text-accent-primary -ml-px inline-flex w-fit items-center justify-center rounded-lg rounded-l-none border px-2 py-1 tracking-tight transition hover:border-2 hover:px-[calc(theme(spacing[2])-1px)]"
                                 onClick={clearSelection}
                             >
-                                <RemoteFontAwesomeIcon
-                                    icon="close"
-                                    className="bg-accent-primary dark:bg-accent-primary-dark"
-                                />
+                                <RemoteFontAwesomeIcon icon="close" className="bg-accent-primary" />
                             </button>
                         )}
                     </div>
@@ -109,7 +106,7 @@ export const FernMenuItem: FC<FernMenuItem.Props> = ({ href, onClick, selected =
                     "flex justify-between !no-underline items-center p-2 first:rounded-t-md last:rounded-b-md gap-2",
                     {
                         "bg-tag-primary": active,
-                        "!text-accent-primary dark:!text-accent-primary-dark": selected || (active && !selected),
+                        "!text-accent-primary": selected || (active && !selected),
                         "!text-text-muted-light dark:!text-text-muted-dark": !active && !selected,
                     },
                 );
