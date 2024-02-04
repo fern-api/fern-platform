@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import "./FontAwesomeIcon.scss";
+import "./FontAwesomeIcon.css";
 
 export declare namespace RemoteFontAwesomeIcon {
     export interface Props {
