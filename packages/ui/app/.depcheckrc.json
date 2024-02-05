@@ -1,1 +1,14 @@
-{ "ignores": ["@types/jest", "@types/node", "vite", "@types/react", "@types/react-dom"], "ignore-patterns": ["lib"] }
+{
+  "ignores": [
+    "@types/jest",
+    "@types/node",
+    "vite",
+    "@types/react",
+    "@types/react",
+    "@types/react-dom",
+    "autoprefixer",
+    "postcss",
+    "postcss-import"
+  ],
+  "ignore-patterns": ["lib"]
+}
