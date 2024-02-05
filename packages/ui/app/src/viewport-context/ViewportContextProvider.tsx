@@ -10,7 +10,7 @@ export const ViewportContextProvider: React.FC<PropsWithChildren<unknown>> = ({ 
             const handleResize = () => {
                 setViewportSize({
                     height: window.innerHeight,
-                    width: window.innerWidth,
+                    width: document.body.scrollWidth,
                 });
 
                 if (window.innerWidth < 768) {

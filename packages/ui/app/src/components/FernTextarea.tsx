@@ -34,7 +34,7 @@ export const FernTextarea = forwardRef<HTMLTextAreaElement, FernTextareaProps>(f
 
 // Updates the height of a <textarea> when the value changes.
 function useAutosizeTextArea(textAreaRef: HTMLTextAreaElement | null, value: string, minLines: number): void {
-    const minHeight = minLines * 20 + 16;
+    const minHeight = minLines * 20 + 18;
     useEffect(() => {
         if (textAreaRef) {
             // We need to reset the height momentarily to get the correct scrollHeight for the textarea
