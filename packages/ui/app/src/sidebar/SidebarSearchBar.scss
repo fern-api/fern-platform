@@ -1,6 +1,7 @@
 .fern-search-bar {
     @apply text-sm border-border-default-light flex items-center rounded-lg border px-2.5 py-2 t-muted;
     @apply bg-background-primary-light hover:bg-background-hover-light;
+    @apply dark:border-border-default-dark dark:bg-background-primary-dark dark:hover:bg-background-hover-dark;
 
     .search-placeholder {
         @apply inline-flex flex-1 items-center space-x-3;
@@ -8,13 +9,6 @@
 
     .keyboard-shortcut-hint {
         @apply t-muted border-border-default-light shadow-card-light inline-flex h-5 w-5 items-center justify-center rounded border bg-white font-mono text-xs leading-none;
-    }
-
-    html.dark & {
-        @apply border-border-default-dark bg-background-primary-dark hover:bg-background-hover-dark;
-
-        .keyboard-shortcut-hint {
-            @apply border-border-default-dark shadow-card-dark bg-white/5;
-        }
+        @apply dark:border-border-default-dark dark:shadow-card-dark dark:bg-white/5;
     }
 }

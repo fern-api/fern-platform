@@ -21,7 +21,5 @@
         }
     }
 
-    html.dark & {
-        @apply text-text-default-dark hover:text-accent-primary-dark decoration-accent-primary-dark;
-    }
+    @apply dark:text-text-default-dark dark:hover:text-accent-primary-dark dark:decoration-accent-primary-dark;
 }
