@@ -3,7 +3,7 @@
   "private": true,
   "rules": {
     "depcheck": {
-      "ignores": ["@types/react", "@types/react-dom", "autoprefixer", "postcss", "styled-jsx"]
+      "ignores": ["@types/react", "@types/react-dom", "autoprefixer", "postcss", "postcss-import", "styled-jsx"]
     }
   }
 }
