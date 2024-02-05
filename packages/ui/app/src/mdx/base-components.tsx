@@ -13,7 +13,7 @@ export const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({ className, .
             {...rest}
             className={classNames(
                 className,
-                "not-prose inline-code font-mono border border-border-concealed-light dark:border-border-concealed-dark rounded bg-background/75 dark:bg-background-dark/75 py-0.5 px-1"
+                "not-prose inline-code font-mono border border-border-concealed-light dark:border-border-concealed-dark rounded bg-background/75 dark:bg-background-dark/75 py-0.5 px-1",
             )}
         />
     );
@@ -26,7 +26,7 @@ export const Table: React.FC<HTMLAttributes<HTMLTableElement>> = ({ className, .
                 {...rest}
                 className={classNames(
                     className,
-                    "min-w-full border-separate border-spacing-0 overflow-x-auto table-auto text-sm max-w-full not-prose bg-background-primary-light dark:bg-background-primary-dark"
+                    "min-w-full border-separate border-spacing-0 overflow-x-auto table-auto text-sm max-w-full not-prose bg-background-primary-light dark:bg-background-primary-dark",
                 )}
             />
         </div>
@@ -38,7 +38,7 @@ export const Thead: React.FC<HTMLAttributes<HTMLTableSectionElement>> = ({ class
 };
 
 export const Tr: React.FC<HTMLAttributes<HTMLTableRowElement>> = ({ className, ...rest }) => {
-    return <tr {...rest} className={classNames(className, "odd:bg-[#FAFAFA]")} />;
+    return <tr {...rest} className={classNames(className)} />;
 };
 
 export const Th: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, ...rest }) => {
@@ -47,7 +47,7 @@ export const Th: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
             {...rest}
             className={classNames(
                 className,
-                "text-left truncate px-3 py-1 leading-7 border-b border-border-default-light dark:border-border-default-dark t-muted text-xs bg-background-primary-light dark:bg-background-primary-dark"
+                "text-left truncate px-3 py-1 leading-7 border-b border-border-default-light dark:border-border-default-dark first:pl-0 last:pr-0",
             )}
         />
     );
@@ -58,12 +58,16 @@ export const Td: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
     return (
         <td
             {...rest}
-            className={classNames(className, "px-3 py-1 leading-7", {
-                // if the table has many columns, do not collapse short string content into multi-line:
-                "whitespace-nowrap": childrenAsString.length < 100,
-                // prevent table's auto sizing from collapsing a paragraph into a tall-skinny column of broken sentences:
-                "min-w-sm": childrenAsString.length > 200,
-            })}
+            className={classNames(
+                className,
+                "border-b border-border-default-light dark:border-border-default-dark px-3 py-1 leading-7 first:pl-0 last:pr-0",
+                {
+                    // if the table has many columns, do not collapse short string content into multi-line:
+                    "whitespace-nowrap": childrenAsString.length < 100,
+                    // prevent table's auto sizing from collapsing a paragraph into a tall-skinny column of broken sentences:
+                    "min-w-sm": childrenAsString.length > 200,
+                },
+            )}
         >
             {children}
         </td>
@@ -75,7 +79,7 @@ export const Td: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
  */
 const flatten = (
     text: string,
-    child: ReactNode
+    child: ReactNode,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): any => {
     return typeof child === "string"

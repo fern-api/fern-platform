@@ -42,12 +42,14 @@ export const JsonExample = React.memo<JsonExample.Props>(function JsonExample({ 
                     <div
                         className={classNames(
                             "relative w-fit min-w-full px-4 transition py-px",
-                            isSelected ? "bg-accent-primary/20" : "bg-transparent"
+                            isSelected ? "bg-accent-primary/20 dark:bg-accent-primary-dark/20" : "bg-transparent",
                         )}
                         style={{ lineHeight: `${LINE_HEIGHT}px`, height: `${LINE_HEIGHT}px` }}
                         key={i}
                     >
-                        {isSelected && <div className="bg-accent-primary absolute inset-y-0 left-0 w-1" />}
+                        {isSelected && (
+                            <div className="bg-accent-primary dark:bg-accent-primary-dark absolute inset-y-0 left-0 w-1" />
+                        )}
                         {renderJsonLine(line)}
                     </div>
                 );
@@ -79,7 +81,7 @@ export const JsonExampleVirtualized: React.FC<JsonExampleVirtualized.Props> = ({
                 <div
                     className={classNames(
                         "relative w-fit h-full min-w-full px-4 transition py-px",
-                        isSelected ? "bg-accent-primary/20" : "bg-transparent"
+                        isSelected ? "bg-accent-primary/20" : "bg-transparent",
                     )}
                     style={{ lineHeight: `${LINE_HEIGHT}px`, height: `${LINE_HEIGHT}px` }}
                 >
@@ -88,7 +90,7 @@ export const JsonExampleVirtualized: React.FC<JsonExampleVirtualized.Props> = ({
                 </div>
             );
         },
-        [isSelectedArr]
+        [isSelectedArr],
     );
 
     return (

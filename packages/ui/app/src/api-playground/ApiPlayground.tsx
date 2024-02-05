@@ -51,7 +51,7 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
         (offset: number) => {
             windowHeight != null && setHeight(Math.min(windowHeight - 64, windowHeight - offset));
         },
-        [setHeight, windowHeight]
+        [setHeight, windowHeight],
     );
 
     const handleVerticalResize = useVerticalSplitPane(setOffset);
@@ -80,7 +80,7 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
                 };
             });
         },
-        [selectionState, setGlobalFormState]
+        [selectionState, setGlobalFormState],
     );
 
     const playgroundFormState =
@@ -97,7 +97,7 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
                 return !current;
             });
         },
-        [setPlaygroundOpen]
+        [setPlaygroundOpen],
     );
     const resetWithExample = useCallback(() => {
         if (selectionState == null) {
@@ -107,8 +107,8 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
             getInitialModalFormStateWithExample(
                 selectionState.apiSection.auth,
                 selectionState.endpoint,
-                selectionState.example
-            )
+                selectionState.example,
+            ),
         );
     }, [selectionState, setPlaygroundFormState]);
 
@@ -148,7 +148,7 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
                 };
             });
         },
-        [closeSecretsModal, setPlaygroundFormState]
+        [closeSecretsModal, setPlaygroundFormState],
     );
 
     if (!hasPlayground) {
@@ -203,7 +203,7 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
 
 function getInitialModalFormState(
     auth: APIV1Read.ApiAuth | undefined,
-    endpoint: ResolvedEndpointDefinition | undefined
+    endpoint: ResolvedEndpointDefinition | undefined,
 ): PlaygroundRequestFormState {
     return {
         auth: getInitialAuthState(auth),

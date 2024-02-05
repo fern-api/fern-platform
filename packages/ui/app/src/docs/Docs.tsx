@@ -94,7 +94,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
             withVersionAndTabSlugs("", { omitDefault: true })
                 .split("/")
                 .filter((s) => s.length > 0),
-        [withVersionAndTabSlugs]
+        [withVersionAndTabSlugs],
     );
 
     const navigationItems = useMemo(() => {

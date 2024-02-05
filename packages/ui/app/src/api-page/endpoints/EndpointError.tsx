@@ -53,7 +53,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                 {
                     "py-3": !isSelected,
                     "pt-3": isSelected,
-                }
+                },
             )}
             onClick={onClick}
         >

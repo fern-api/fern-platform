@@ -1,8 +1,8 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Menu as HeadlessMenu, Transition } from "@headlessui/react";
 import classNames from "classnames";
 import Link, { LinkProps } from "next/link";
 import { FC, Fragment, PropsWithChildren, ReactNode } from "react";
+import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { CheckIcon } from "../commons/icons/CheckIcon";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 
@@ -37,7 +37,7 @@ export const FernMenu: FC<FernMenu.Props> = ({
                         "py-1 pl-2.5 pr-1",
                         {
                             "rounded-r-none": clearSelection != null,
-                        }
+                        },
                     )}
                 >
                     {({ open }) => {
@@ -59,7 +59,7 @@ export const FernMenu: FC<FernMenu.Props> = ({
                         className="hover:bg-tag-primary border-border-primary dark:border-border-primary-dark text-accent-primary dark:text-accent-primary-dark -ml-px inline-flex w-fit items-center justify-center rounded-lg rounded-l-none border px-2 py-1 tracking-tight transition hover:border-2 hover:px-[calc(theme(spacing[2])-1px)]"
                         onClick={clearSelection}
                     >
-                        <FontAwesomeIcon icon="close" />
+                        <RemoteFontAwesomeIcon icon="close" className="bg-accent-primary dark:bg-accent-primary-dark" />
                     </button>
                 )}
             </div>
@@ -79,7 +79,7 @@ export const FernMenu: FC<FernMenu.Props> = ({
                             "left-0": align === "left",
                             "right-0": align === "right",
                         },
-                        menuClassName
+                        menuClassName,
                     )}
                 >
                     {children}
@@ -119,7 +119,7 @@ export const FernMenuItem: FC<FernMenuItem.Props> = ({
                         "!text-accent-primary dark:!text-accent-primary-dark": selected || (active && !selected),
                         "!text-text-muted-light dark:!text-text-muted-dark": !active && !selected,
                         "first:rounded-t-md last:rounded-b-md": !disableRoundCorners,
-                    }
+                    },
                 );
                 const checkIcon = <CheckIcon className={classNames("h-3 w-3", { invisible: !selected })} />;
                 const renderedChildren = typeof children === "function" ? children(active) : children;

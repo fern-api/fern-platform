@@ -49,7 +49,7 @@ export function useSlugListeners(label: string, { selectedSlug }: useSlugListene
                 }
             };
         },
-        [label]
+        [label],
     );
 
     return {

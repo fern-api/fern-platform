@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import Link from "next/link";
-import { FontAwesomeIcon } from "../../commons/FontAwesomeIcon";
+import { RemoteFontAwesomeIcon } from "../../commons/FontAwesomeIcon";
 
 export declare namespace Card {
     export interface Props {
@@ -25,12 +25,12 @@ export const Card: React.FC<Card.Props> = ({ title, icon, iconPosition = "top", 
         },
         {
             "hover:border-accent-primary hover:dark:border-accent-primary": href != null,
-        }
+        },
     );
 
     const content = (
         <>
-            <FontAwesomeIcon className="text-intent-default dark:text-intent-default h-5 w-5" icon={icon} />
+            <RemoteFontAwesomeIcon className="bg-intent-default dark:bg-intent-default h-5 w-5" icon={icon} />
             <div>
                 <div className="text-text-primary-light dark:text-text-primary-dark">{title}</div>
                 {children != null && <div className="t-muted mt-1">{children}</div>}

@@ -102,7 +102,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                 }),
                 _other: () => undefined,
             }),
-        [typeShape, anchorIdParts, route]
+        [typeShape, anchorIdParts, route],
     );
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);
@@ -130,7 +130,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
             ...contextValue,
             isRootTypeDefinition: false,
         }),
-        [contextValue]
+        [contextValue],
     );
 
     if (collapsableContent == null || collapsableContent.elements.length === 0) {
@@ -171,7 +171,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                             {
                                 "border-transparent": isCollapsed,
                                 "border-concealed": !isCollapsed,
-                            }
+                            },
                         )}
                         onClick={(e) => {
                             toggleIsCollapsed();

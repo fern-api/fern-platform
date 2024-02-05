@@ -39,7 +39,7 @@ export const SearchHits: React.FC = () => {
             }
             return getFullSlugForNavigatable(navigatable, { omitDefault: true, basePath });
         },
-        [basePath, pathResolver]
+        [basePath, pathResolver],
     );
 
     const refs = useRef(new Map<string, HTMLAnchorElement>());
@@ -145,7 +145,7 @@ export const SearchHits: React.FC = () => {
             <div
                 className={classNames(
                     "t-muted flex w-full flex-col items-center",
-                    progress === "success" && hits.length > 0 ? "min-h-[6rem]" : "min-h-[3rem]"
+                    progress === "success" && hits.length > 0 ? "min-h-[6rem]" : "min-h-[3rem]",
                 )}
             >
                 {visitDiscriminatedUnion({ progress }, "progress")._visit<React.ReactNode>({

@@ -42,7 +42,7 @@ export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ inte
                     success: () =>
                         "bg-tag-success-light/5 dark:bg-tag-success-dark/5 border-border-success-light dark:border-border-success-dark",
                     _other: () => "",
-                })
+                }),
             )}
         >
             <div className="min-w-fit">
@@ -66,7 +66,7 @@ export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ inte
                         warning: () => "text-intent-warning-light dark:text-intent-warning-dark",
                         success: () => "text-intent-success-light dark:text-intent-success-dark",
                         _other: () => "",
-                    })
+                    }),
                 )}
             >
                 <div className={classNames(styles.content, "not-prose")}>{children}</div>

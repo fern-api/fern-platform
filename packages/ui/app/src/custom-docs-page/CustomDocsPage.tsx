@@ -6,6 +6,7 @@ import { renderToString } from "react-dom/server";
 import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
 import { ArrowRightIcon } from "../commons/icons/ArrowRightIcon";
 import { MdxContent } from "../mdx/MdxContent";
+import { Feedback } from "./Feedback";
 import { TableOfContents } from "./TableOfContents";
 import { TableOfContentsContextProvider } from "./TableOfContentsContext";
 
@@ -70,6 +71,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath, m
                             <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                         </Link>
                     )}
+                    <Feedback className="sticky top-full" />
                 </aside>
             </div>
         </TableOfContentsContextProvider>

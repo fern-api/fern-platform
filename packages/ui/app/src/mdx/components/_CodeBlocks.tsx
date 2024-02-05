@@ -35,7 +35,7 @@ export const _CodeBlocks: React.FC<React.PropsWithChildren<_CodeBlocks.Props>> =
                                             selectedTabIndex === idx,
                                         "text-text-primary-light dark:text-text-muted-dark border-transparent hover:text-accent-primary hover:dark:text-text-primary-dark":
                                             selectedTabIndex !== idx,
-                                    }
+                                    },
                                 )}
                                 key={idx}
                                 onClick={() => setSelectedTabIndex(idx)}

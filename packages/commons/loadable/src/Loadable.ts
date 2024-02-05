@@ -24,7 +24,7 @@ export function notStartedLoading<V>(): NotStartedLoading<V> {
 export function isNotStartedLoading<V>(loadable: Loadable<V> | undefined): loadable is NotStartedLoading<V> | undefined;
 export function isNotStartedLoading<V>(loadable: Loadable<V>): loadable is NotStartedLoading<V>;
 export function isNotStartedLoading<V>(
-    loadable: Loadable<V> | undefined
+    loadable: Loadable<V> | undefined,
 ): loadable is NotStartedLoading<V> | undefined {
     return loadable == null || loadable.type === "notStartedLoading";
 }

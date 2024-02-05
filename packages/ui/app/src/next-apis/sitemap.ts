@@ -62,7 +62,7 @@ export const sitemapApiHandler: NextApiHandler = async (req, res: NextApiRespons
                     return "/";
                 }
                 return toRet;
-            })
+            }),
         );
     } catch (err) {
         // eslint-disable-next-line no-console

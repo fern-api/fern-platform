@@ -40,7 +40,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ curlLines, selectedPr
                     <div
                         className={classNames(
                             "relative w-fit min-w-full px-4 transition whitespace-pre",
-                            "bg-transparent"
+                            "bg-transparent",
                         )}
                         style={{ lineHeight: "20px", height: "20px" }}
                     >
@@ -63,7 +63,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ curlLines, selectedPr
                     <div
                         className={classNames(
                             "relative w-fit min-w-full px-4 transition whitespace-pre",
-                            isSelected ? "bg-accent-primary/20" : "bg-transparent"
+                            isSelected ? "bg-accent-primary/20" : "bg-transparent",
                         )}
                         style={{ lineHeight: "20px", height: "20px" }}
                     >

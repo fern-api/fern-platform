@@ -101,7 +101,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                                         endpointItem.id === endpoint?.id,
                                     "hover:bg-tag-default-light dark:hover:bg-tag-default-dark hover:text-accent-primary dark:hover:text-accent-primary-dark":
                                         endpointItem.id !== endpoint?.id,
-                                }
+                                },
                             )}
                             onClick={() => {
                                 setSelectionStateAndOpen({
@@ -158,7 +158,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                     {
                         "bg-black/10 dark:bg-white/10": showDropdown,
                         "text-sm": buttonClassName == null,
-                    }
+                    },
                 )}
                 onClick={toggleDropdown}
             >
@@ -219,7 +219,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                             "origin-bottom-left left-0 bottom-full mb-2": popoverPlacement === "top-start",
                             "origin-bottom -translate-x-[50%] left-[50%] bottom-full mb-2": popoverPlacement === "top",
                             "origin-bottom-right right-0 bottom-full mb-2": popoverPlacement === "top-end",
-                        }
+                        },
                     )}
                 >
                     {popoverPlacement.startsWith("bottom") && (
@@ -284,6 +284,6 @@ function renderTextWithHighlight(text: string, highlight: string): ReactElement[
             </mark>
         ) : (
             <span key={idx}>{part}</span>
-        )
+        ),
     );
 }

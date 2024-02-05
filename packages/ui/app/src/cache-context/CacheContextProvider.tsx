@@ -12,7 +12,7 @@ export const CacheContextProvider: React.FC<PropsWithChildren> = ({ children }) 
     const storeSerializedMdxContent = useCallback(
         (fullSlug: FullSlug, serializedMdxContent: SerializedMdxContent) =>
             lruCache.current.set(fullSlug, serializedMdxContent),
-        []
+        [],
     );
 
     const getSerializedMdxContent = useCallback((fullSlug: FullSlug) => lruCache.current.get(fullSlug), []);
@@ -22,7 +22,7 @@ export const CacheContextProvider: React.FC<PropsWithChildren> = ({ children }) 
             storeSerializedMdxContent,
             getSerializedMdxContent,
         }),
-        [storeSerializedMdxContent, getSerializedMdxContent]
+        [storeSerializedMdxContent, getSerializedMdxContent],
     );
 
     return <CacheContext.Provider value={contextValue}>{children}</CacheContext.Provider>;

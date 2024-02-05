@@ -37,7 +37,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         const node = pathResolver.resolveNavigatable(resolvedPath.fullSlug);
         if (node == null) {
             throw new Error(
-                `Implementation Error. Cannot resolve navigatable for resolved path ${resolvedPath.fullSlug}`
+                `Implementation Error. Cannot resolve navigatable for resolved path ${resolvedPath.fullSlug}`,
             );
         }
         return node;
@@ -82,8 +82,8 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 userIsScrolling.current = false;
             },
             300,
-            { leading: false, trailing: true }
-        )
+            { leading: false, trailing: true },
+        ),
     );
 
     const resizeObserver = useRef<ResizeObserver>();
@@ -226,7 +226,7 @@ function getFrontmatter(resolvedPath: ResolvedPath): FernDocsFrontmatter | undef
 
 function convertToTitle(
     navigatable: NavigatableDocsNode,
-    frontmatter: FernDocsFrontmatter | undefined
+    frontmatter: FernDocsFrontmatter | undefined,
 ): string | undefined {
     return visitDiscriminatedUnion(navigatable, "type")._visit({
         page: (page) => frontmatter?.title ?? page.page.title,
@@ -240,7 +240,7 @@ function convertToTitle(
 
 function convertToDescription(
     navigatable: NavigatableDocsNode,
-    frontmatter: FernDocsFrontmatter | undefined
+    frontmatter: FernDocsFrontmatter | undefined,
 ): string | undefined {
     return visitDiscriminatedUnion(navigatable, "type")._visit({
         page: () => frontmatter?.description,

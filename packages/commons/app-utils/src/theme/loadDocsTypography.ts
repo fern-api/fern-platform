@@ -16,7 +16,7 @@ const MONO_FONT_FALLBACK = "Menlo, Monaco, monospace";
 function generateFontFace(
     variant: DocsV1Read.CustomFontConfigVariant,
     fontConfig: DocsV1Read.FontConfigV2,
-    files: Record<DocsV1Read.FileId, DocsV1Read.Url>
+    files: Record<DocsV1Read.FileId, DocsV1Read.Url>,
 ): string | undefined {
     const file = files[variant.fontFile];
     if (file == null) {
@@ -35,7 +35,7 @@ function generateFontFace(
 
 export function generateFontFaces(
     typography: DocsV1Read.DocsTypographyConfigV2 | undefined,
-    files: Record<DocsV1Read.FileId, DocsV1Read.Url>
+    files: Record<DocsV1Read.FileId, DocsV1Read.Url>,
 ): string {
     if (typography == null) {
         return "";
@@ -56,7 +56,7 @@ export function generateFontFaces(
             variables.push(
                 `--typography-body-font-family: '${typography.bodyFont.name}', ${
                     typography.bodyFont.fallback?.join(", ") ?? BODY_FONT_FALLBACK
-                }`
+                }`,
             );
         } else {
             variables.push(`--typography-body-font-family: ${BODY_FONT_FALLBACK}`);
@@ -78,7 +78,7 @@ export function generateFontFaces(
             variables.push(
                 `--typography-heading-font-family: '${typography.headingsFont.name}', ${
                     typography.headingsFont.fallback?.join(", ") ?? BODY_FONT_FALLBACK
-                }`
+                }`,
             );
         } else {
             variables.push(`--typography-heading-font-family: ${BODY_FONT_FALLBACK}`);
@@ -104,7 +104,7 @@ export function generateFontFaces(
             variables.push(
                 `--typography-code-font-family: '${typography.codeFont.name}', ${
                     typography.codeFont.fallback?.join(", ") ?? MONO_FONT_FALLBACK
-                }`
+                }`,
             );
         } else {
             variables.push(`--typography-code-font-family: ${MONO_FONT_FALLBACK}`);

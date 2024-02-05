@@ -85,13 +85,13 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         (jsonPropertyPath: JsonPropertyPath, { isHovering }: { isHovering: boolean }) => {
             setHoveredRequestPropertyPath(isHovering ? jsonPropertyPath : undefined);
         },
-        [setHoveredRequestPropertyPath]
+        [setHoveredRequestPropertyPath],
     );
     const onHoverResponseProperty = useCallback(
         (jsonPropertyPath: JsonPropertyPath, { isHovering }: { isHovering: boolean }) => {
             setHoveredResponsePropertyPath(isHovering ? jsonPropertyPath : undefined);
         },
-        [setHoveredResponsePropertyPath]
+        [setHoveredResponsePropertyPath],
     );
 
     const [selectedError, setSelectedError] = useState<APIV1Read.ErrorDeclarationV2 | undefined>();
@@ -102,7 +102,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
             const error = endpoint.errors.find((e) =>
                 typeof statusCodeOrName === "number"
                     ? e.statusCode === statusCodeOrName
-                    : convertNameToAnchorPart(e.name) === statusCodeOrName
+                    : convertNameToAnchorPart(e.name) === statusCodeOrName,
             );
             if (error != null) {
                 setSelectedError(error);
@@ -141,7 +141,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
             navigateToPath(route.substring(1));
             setSelectedLanguage(nextClient.language);
         },
-        [navigateToPath, route, setSelectedLanguage]
+        [navigateToPath, route, setSelectedLanguage],
     );
 
     const curlLines = useMemo(
@@ -150,9 +150,9 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                 apiSection.auth,
                 endpoint,
                 selectedClient.exampleCall,
-                flattenJsonToLines(selectedClient.exampleCall.requestBody)
+                flattenJsonToLines(selectedClient.exampleCall.requestBody),
             ),
-        [apiSection.auth, endpoint, selectedClient.exampleCall]
+        [apiSection.auth, endpoint, selectedClient.exampleCall],
     );
     const selectedExampleClientLineCount = useMemo(() => {
         return selectedClient.language === "curl" && selectedClient.code === ""
@@ -162,7 +162,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     const jsonLines = useMemo(
         () => flattenJsonToLines(selectedClient.exampleCall.responseBody),
-        [selectedClient.exampleCall.responseBody]
+        [selectedClient.exampleCall.responseBody],
     );
 
     const selectorHeight =
@@ -214,7 +214,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                 "bg-[#FAFAFA] border border-[#E0E0E0] rounded-lg mb-3 mx-3 lg:ml-0",
                 {
                     "border-border-default-light dark:border-border-default-dark border-b": !hideBottomSeparator,
-                }
+                },
             )}
             onClick={() => setSelectedError(undefined)}
             ref={containerRef}
@@ -253,7 +253,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                         "max-h-[150vh] lg:max-h-[calc(100vh-4rem)]",
                         "flex",
                         // header offset
-                        "mt-0 lg:top-16"
+                        "mt-0 lg:top-16",
                     )}
                     style={{ height: `${exampleHeight}px` }}
                 >

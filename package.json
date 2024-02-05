@@ -72,7 +72,7 @@
     "lodash-es": "^4.17.21",
     "mrlint": "^0.0.133",
     "organize-imports-cli": "^0.10.0",
-    "prettier": "^2.8.8",
+    "prettier": "^3.2.4",
     "react": "^18.2.0",
     "styled-jsx": "^5.1.2",
     "stylelint": "^16.1.0",

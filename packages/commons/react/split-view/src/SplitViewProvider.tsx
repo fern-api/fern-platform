@@ -18,7 +18,7 @@ export const SplitViewProvider: React.FC<React.PropsWithChildren> = ({ children 
             onStartResizing,
             onStopResizing,
         }),
-        [isResizing, onStartResizing, onStopResizing]
+        [isResizing, onStartResizing, onStopResizing],
     );
 
     return <SplitViewContext.Provider value={value}>{children}</SplitViewContext.Provider>;

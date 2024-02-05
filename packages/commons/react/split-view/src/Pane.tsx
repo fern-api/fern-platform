@@ -57,7 +57,7 @@ export const Pane: React.FC<Pane.Props> = ({
 
     const getInitialSizeInPixels = useCallback(() => {
         const sizeInPixels = convertSizeToPixels(
-            startCollapsed && sizeToCollapse != null ? sizeToCollapse : defaultSize
+            startCollapsed && sizeToCollapse != null ? sizeToCollapse : defaultSize,
         );
         if (sizeInPixels === 0) {
             return undefined;
@@ -108,10 +108,10 @@ export const Pane: React.FC<Pane.Props> = ({
     const onMoveResizeHandle = useCallback(
         (event: ResizeEvent) => {
             setSizeInPixels((existing) =>
-                existing != null ? existing + getDeltaForPosition(event, resizeHandlePosition) : existing
+                existing != null ? existing + getDeltaForPosition(event, resizeHandlePosition) : existing,
             );
         },
-        [resizeHandlePosition]
+        [resizeHandlePosition],
     );
 
     // when the container size changes, use the previous percent to figure out the new size in pixels

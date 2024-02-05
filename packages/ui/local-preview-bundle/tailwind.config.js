@@ -15,10 +15,6 @@ module.exports = {
             fontSize: {
                 base: ["0.9575rem", { lineHeight: "1.3rem" }],
             },
-            listStyleImage: {
-                "dash-dark": 'url("/dash-dark.svg")',
-                "dash-light": 'url("/dash-light.svg")',
-            },
             minWidth: {
                 sm: "24rem",
                 md: "28rem",

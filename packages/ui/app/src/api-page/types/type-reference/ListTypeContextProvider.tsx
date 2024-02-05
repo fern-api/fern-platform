@@ -17,7 +17,7 @@ export const ListTypeContextProvider: React.FC<PropsWithChildren> = ({ children 
                 },
             ],
         }),
-        [contextValue]
+        [contextValue],
     );
 
     return <TypeDefinitionContext.Provider value={newContextValue}>{children}</TypeDefinitionContext.Provider>;

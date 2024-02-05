@@ -82,17 +82,17 @@ export function useColorTheme(config: DocsV1Read.DocsConfig): string {
             ${CSS_VARIABLES.ACCENT_PRIMARY}: ${accentPrimary.r}, ${accentPrimary.g}, ${accentPrimary.b};
             ${CSS_VARIABLES.BACKGROUND}: ${backgroundColor.r}, ${backgroundColor.g}, ${backgroundColor.b};
             ${CSS_VARIABLES.ACCENT_PRIMARY_DARK}: ${accentPrimaryDark.r}, ${accentPrimaryDark.g}, ${
-        accentPrimaryDark.b
-    };
+                accentPrimaryDark.b
+            };
             ${CSS_VARIABLES.BACKGROUND_DARK}: ${backgroundColorDark.r}, ${backgroundColorDark.g}, ${
-        backgroundColorDark.b
-    };
+                backgroundColorDark.b
+            };
             ${CSS_VARIABLES.ACCENT_PRIMARY_CONTRAST}: ${accentPrimaryContrast.r}, ${accentPrimaryContrast.g}, ${
-        accentPrimaryContrast.b
-    };
+                accentPrimaryContrast.b
+            };
             ${CSS_VARIABLES.ACCENT_PRIMARY_DARK_CONTRAST}: ${accentPrimaryDarkContrast.r}, ${
-        accentPrimaryDarkContrast.g
-    }, ${accentPrimaryDarkContrast.b};
+                accentPrimaryDarkContrast.g
+            }, ${accentPrimaryDarkContrast.b};
         }
 
 

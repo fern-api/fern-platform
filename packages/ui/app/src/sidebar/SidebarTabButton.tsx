@@ -2,7 +2,7 @@ import { DocsV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import Link from "next/link";
 import { memo } from "react";
-import { FontAwesomeIcon } from "../commons/FontAwesomeIcon";
+import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 
 export declare namespace SidebarTabButton {
     export interface Props {
@@ -22,7 +22,7 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, sel
                     {
                         "text-accent-primary dark:text-accent-primary-dark": selected,
                         "t-muted": !selected,
-                    }
+                    },
                 )}
                 href={`/${slug}`}
             >
@@ -35,16 +35,16 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, sel
                                     "bg-tag-primary border-border-primary dark:bg-tag-primary-dark dark:border-border-primary-dark":
                                         selected,
                                     "bg-tag-default-light/5 dark:bg-tag-default-dark/5 border-transparent": !selected,
-                                }
+                                },
                             )}
                         >
-                            <FontAwesomeIcon
+                            <RemoteFontAwesomeIcon
                                 className={classNames(
-                                    "h-3.5 w-3.5 group-hover/tab-button:text-accent-primary group-hover/tab-button:dark:text-accent-primary-dark",
+                                    "h-3.5 w-3.5 group-hover/tab-button:bg-accent-primary group-hover/tab-button:dark:bg-accent-primary-dark",
                                     {
-                                        "text-accent-primary dark:text-accent-primary-dark": selected,
-                                        "t-muted": !selected,
-                                    }
+                                        "bg-accent-primary dark:bg-accent-primary-dark": selected,
+                                        "bg-text-muted-light dark:bg-text-muted-dark": !selected,
+                                    },
                                 )}
                                 icon={tab.icon}
                             />

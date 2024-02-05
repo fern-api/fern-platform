@@ -19,7 +19,7 @@ export const SubpackageEndpointsOverview: React.FC<SubpackageEndpointsOverview.P
             const endpointSlug = joinUrlSlugs(slug, endpointDef.urlSlug);
             navigateToPath(endpointSlug);
         },
-        [navigateToPath, slug]
+        [navigateToPath, slug],
     );
 
     return (

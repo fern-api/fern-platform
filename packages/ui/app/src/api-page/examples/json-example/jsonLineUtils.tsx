@@ -131,7 +131,7 @@ export function flattenJsonToLines(
     key?: string,
     depth: number = 0,
     isLast: boolean = true,
-    path: string[] = key != null ? [key] : []
+    path: string[] = key != null ? [key] : [],
 ): JsonLine[] {
     return visitJsonItem(json, {
         object: (o): JsonLine[] => {
@@ -142,7 +142,7 @@ export function flattenJsonToLines(
             return [
                 { depth, type: "objectStart", key, path },
                 ...entries.flatMap(([key, v], i) =>
-                    flattenJsonToLines(v, key, depth + 1, i === entries.length - 1, [...path, key])
+                    flattenJsonToLines(v, key, depth + 1, i === entries.length - 1, [...path, key]),
                 ),
                 { depth, type: "objectEnd", comma: !isLast, path },
             ];
@@ -154,7 +154,7 @@ export function flattenJsonToLines(
             return [
                 { depth, type: "listStart", key, path },
                 ...list.flatMap((item, i) =>
-                    flattenJsonToLines(item, undefined, depth + 1, i === list.length - 1, [...path, `${i}`])
+                    flattenJsonToLines(item, undefined, depth + 1, i === list.length - 1, [...path, `${i}`]),
                 ),
                 { depth, type: "listEnd", comma: !isLast, path },
             ];
@@ -300,38 +300,38 @@ export function jsonLineToString(line: JsonLine, tabWidth = TAB_WIDTH): string {
     return visitJsonLine(line, {
         objectEmpty: (line) =>
             `${" ".repeat(tabWidth * line.depth)}${line.key != null ? `"${line.key}": ` : ""}${jsonLineValueToString(
-                line
+                line,
             )}`,
         objectStart: (line) =>
             `${" ".repeat(tabWidth * line.depth)}${line.key != null ? `"${line.key}": ` : ""}${jsonLineValueToString(
-                line
+                line,
             )}`,
         objectEnd: (line) =>
             `${" ".repeat(tabWidth * line.depth)}${jsonLineValueToString(line)}${line.comma ? "," : ""}`,
         listEmpty: (line) =>
             `${" ".repeat(tabWidth * line.depth)}${line.key != null ? `"${line.key}": ` : ""}${jsonLineValueToString(
-                line
+                line,
             )}`,
         listStart: (line) =>
             `${" ".repeat(tabWidth * line.depth)}${line.key != null ? `"${line.key}": ` : ""}${jsonLineValueToString(
-                line
+                line,
             )}`,
         listEnd: (line) => `${" ".repeat(tabWidth * line.depth)}${jsonLineValueToString(line)}${line.comma ? "," : ""}`,
         string: (line) =>
             `${" ".repeat(tabWidth * line.depth)}${line.key != null ? `"${line.key}": ` : ""}${jsonLineValueToString(
-                line
+                line,
             )}${line.comma ? "," : ""}`,
         number: (line) =>
             `${" ".repeat(tabWidth * line.depth)}${line.key != null ? `"${line.key}": ` : ""}${jsonLineValueToString(
-                line
+                line,
             )}${line.comma ? "," : ""}`,
         boolean: (line) =>
             `${" ".repeat(tabWidth * line.depth)}${line.key != null ? `"${line.key}": ` : ""}${jsonLineValueToString(
-                line
+                line,
             )}${line.comma ? "," : ""}`,
         null: (line) =>
             `${" ".repeat(tabWidth * line.depth)}${line.key != null ? `"${line.key}": ` : ""}${jsonLineValueToString(
-                line
+                line,
             )}${line.comma ? "," : ""}`,
     });
 }

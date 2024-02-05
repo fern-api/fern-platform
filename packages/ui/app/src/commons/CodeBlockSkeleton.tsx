@@ -29,7 +29,7 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
                 {
                     "w-full rounded-bl-lg rounded-br-lg": !usePlainStyles,
                 },
-                className
+                className,
             )}
             style={style}
         >

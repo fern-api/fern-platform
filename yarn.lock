@@ -2470,7 +2470,7 @@ __metadata:
     lodash-es: ^4.17.21
     next-mdx-remote: ^4.4.1
     organize-imports-cli: ^0.10.0
-    prettier: ^2.8.8
+    prettier: ^3.2.4
     react: ^18.2.0
     react-dom: ^18.2.0
     remark-gfm: ^3.0.1
@@ -2491,7 +2491,7 @@ __metadata:
     aws-cdk-lib: ^2.122.0
     axios: ^1.6.5
     constructs: ^10.3.0
-    prettier: ^2.8.8
+    prettier: ^3.2.4
     typescript: 4.9.4
   languageName: unknown
   linkType: soft
@@ -2511,7 +2511,7 @@ __metadata:
     eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.8.8
+    prettier: ^3.2.4
     react: ^18.2.0
     react-dom: ^18.2.0
     stylelint: ^16.1.0
@@ -2542,7 +2542,7 @@ __metadata:
     eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.8.8
+    prettier: ^3.2.4
     typescript: 4.9.4
   languageName: unknown
   linkType: soft
@@ -2558,10 +2558,38 @@ __metadata:
     eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.8.8
+    prettier: ^3.2.4
     strip-ansi: ^7.1.0
     typescript: 4.9.4
     ua-parser-js: ^1.0.35
+  languageName: unknown
+  linkType: soft
+
+"@fern-ui/fontawesome-cdn@workspace:packages/ui/fontawesome-cdn":
+  version: 0.0.0-use.local
+  resolution: "@fern-ui/fontawesome-cdn@workspace:packages/ui/fontawesome-cdn"
+  dependencies:
+    "@fortawesome/fontawesome-svg-core": ^6.5.1
+    "@fortawesome/free-brands-svg-icons": ^6.5.1
+    "@fortawesome/free-solid-svg-icons": ^6.5.1
+    "@fortawesome/pro-duotone-svg-icons": ^6.5.1
+    "@fortawesome/pro-light-svg-icons": ^6.5.1
+    "@fortawesome/pro-regular-svg-icons": ^6.5.1
+    "@fortawesome/pro-solid-svg-icons": ^6.5.1
+    "@next/bundle-analyzer": ^14.0.3
+    "@types/jest": ^29.5.11
+    "@types/node": ^18.7.18
+    "@types/react": ^18.0.20
+    depcheck: ^1.4.3
+    eslint: ^8.56.0
+    jest: ^29.7.0
+    next: ^14.0.4
+    organize-imports-cli: ^0.10.0
+    prettier: ^3.2.4
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    stylelint: ^16.1.0
+    typescript: 4.9.4
   languageName: unknown
   linkType: soft
 
@@ -2576,7 +2604,7 @@ __metadata:
     eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.8.8
+    prettier: ^3.2.4
     react: ^18.2.0
     stylelint: ^16.1.0
     typescript: 4.9.4
@@ -2595,7 +2623,7 @@ __metadata:
     eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.8.8
+    prettier: ^3.2.4
     typescript: 4.9.4
   languageName: unknown
   linkType: soft
@@ -2620,7 +2648,7 @@ __metadata:
     next: ^14.0.4
     organize-imports-cli: ^0.10.0
     postcss: ^8.4.33
-    prettier: ^2.8.8
+    prettier: ^3.2.4
     react: ^18.2.0
     react-dom: ^18.2.0
     sass: ^1.70.0
@@ -2645,7 +2673,7 @@ __metadata:
     jest: ^29.7.0
     next: ^14.0.4
     organize-imports-cli: ^0.10.0
-    prettier: ^2.8.8
+    prettier: ^3.2.4
     react: ^18.2.0
     stylelint: ^16.1.0
     tailwindcss: ^3.4.1
@@ -2672,7 +2700,7 @@ __metadata:
     next: ^14.0.4
     organize-imports-cli: ^0.10.0
     postcss: ^8.4.33
-    prettier: ^2.8.8
+    prettier: ^3.2.4
     react: ^18.2.0
     react-dom: ^18.2.0
     sass: ^1.70.0
@@ -2697,7 +2725,7 @@ __metadata:
     jest: ^29.7.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
-    prettier: ^2.8.8
+    prettier: ^3.2.4
     react: ^18.2.0
     stylelint: ^16.1.0
     typescript: 4.9.4
@@ -2718,7 +2746,7 @@ __metadata:
     eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.8.8
+    prettier: ^3.2.4
     react: ^18.2.0
     stylelint: ^16.1.0
     typescript: 4.9.4
@@ -2746,7 +2774,7 @@ __metadata:
     js-yaml: ^4.1.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
-    prettier: ^2.8.8
+    prettier: ^3.2.4
     typescript: 4.9.4
     yargs: ^17.4.1
   bin:
@@ -2771,7 +2799,7 @@ __metadata:
     jest: ^29.7.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
-    prettier: ^2.8.8
+    prettier: ^3.2.4
     react: ^18.2.0
     react-dom: ^18.2.0
     react-draggable: ^4.4.6
@@ -2794,7 +2822,7 @@ __metadata:
     eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.8.8
+    prettier: ^3.2.4
     react: ^18.2.0
     react-dom: ^18.2.0
     stylelint: ^16.1.0
@@ -2818,14 +2846,6 @@ __metadata:
     "@fern-ui/loadable": "workspace:*"
     "@fern-ui/react-commons": "workspace:*"
     "@fontsource/ibm-plex-mono": ^4.5.13
-    "@fortawesome/fontawesome-svg-core": ^6.5.1
-    "@fortawesome/free-brands-svg-icons": ^6.5.1
-    "@fortawesome/free-solid-svg-icons": ^6.5.1
-    "@fortawesome/pro-duotone-svg-icons": ^6.5.1
-    "@fortawesome/pro-light-svg-icons": ^6.5.1
-    "@fortawesome/pro-regular-svg-icons": ^6.5.1
-    "@fortawesome/pro-solid-svg-icons": ^6.5.1
-    "@fortawesome/react-fontawesome": 0.2.0
     "@headlessui/react": ^1.7.18
     "@react-hook/size": ^2.1.2
     "@testing-library/react": ^14.0.0
@@ -2854,7 +2874,7 @@ __metadata:
     normalize.css: ^8.0.1
     organize-imports-cli: ^0.10.0
     posthog-js: ^1.81.1
-    prettier: ^2.8.8
+    prettier: ^3.2.4
     react: ^18.2.0
     react-dom: ^18.2.0
     react-error-boundary: ^4.0.10
@@ -2947,18 +2967,6 @@ __metadata:
   dependencies:
     "@fortawesome/fontawesome-common-types": 6.5.1
   checksum: 0eb0cee7e4d69677bd4c1a118f20acacb44eb4ce243f678f16a4b2ef69909e63345bd717d7f17949c69a3ff9cc0999c2c517c56b382d37742af8518c8de9547c
-  languageName: node
-  linkType: hard
-
-"@fortawesome/react-fontawesome@npm:0.2.0":
-  version: 0.2.0
-  resolution: "@fortawesome/react-fontawesome@npm:0.2.0"
-  dependencies:
-    prop-types: ^15.8.1
-  peerDependencies:
-    "@fortawesome/fontawesome-svg-core": ~1 || ~6
-    react: ">=16.3"
-  checksum: f652a0c2172e7b209e2d9e7e511f9b8c17abad85f55e0bd09bb1175ea1927693215da47eb6cd95b1f3a23bd124368553c677907fa76cb17c5093afc1fcffe338
   languageName: node
   linkType: hard
 
@@ -8222,7 +8230,7 @@ env-cmd@toddbluhm/env-cmd:
     lodash-es: ^4.17.21
     mrlint: ^0.0.133
     organize-imports-cli: ^0.10.0
-    prettier: ^2.8.8
+    prettier: ^3.2.4
     react: ^18.2.0
     styled-jsx: ^5.1.2
     stylelint: ^16.1.0
@@ -13159,12 +13167,12 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.8.8":
-  version: 2.8.8
-  resolution: "prettier@npm:2.8.8"
+"prettier@npm:^3.2.4":
+  version: 3.2.4
+  resolution: "prettier@npm:3.2.4"
   bin:
-    prettier: bin-prettier.js
-  checksum: b49e409431bf129dd89238d64299ba80717b57ff5a6d1c1a8b1a28b590d998a34e083fa13573bc732bb8d2305becb4c9a4407f8486c81fa7d55100eb08263cf8
+    prettier: bin/prettier.cjs
+  checksum: 6ec9385a836e0b9bac549e585101c086d1521c31d7b882d5c8bb7d7646da0693da5f31f4fff6dc080710e5e2d34c85e6fb2f8766876b3645c8be2f33b9c3d1a3
   languageName: node
   linkType: hard
 

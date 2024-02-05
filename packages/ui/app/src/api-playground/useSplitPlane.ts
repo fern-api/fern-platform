@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 
 export function useVerticalSplitPane(
-    setHeight: (height: number) => void
+    setHeight: (height: number) => void,
 ): (e: React.MouseEvent<HTMLDivElement>) => void {
     return useCallback(
         (e: React.MouseEvent<HTMLDivElement>) => {
@@ -19,12 +19,12 @@ export function useVerticalSplitPane(
             window.addEventListener("mousemove", handleMouseMove);
             window.addEventListener("mouseup", handleMouseUp);
         },
-        [setHeight]
+        [setHeight],
     );
 }
 
 export function useHorizontalSplitPane(
-    setWidth: (width: number) => void
+    setWidth: (width: number) => void,
 ): (e: React.MouseEvent<HTMLDivElement>) => void {
     return useCallback(
         (e: React.MouseEvent<HTMLDivElement>) => {
@@ -42,6 +42,6 @@ export function useHorizontalSplitPane(
             window.addEventListener("mousemove", handleMouseMove);
             window.addEventListener("mouseup", handleMouseUp);
         },
-        [setWidth]
+        [setWidth],
     );
 }

@@ -27,7 +27,7 @@ export const JsonListItem: React.FC<JsonListItem> = ({ list, index, item, isLast
                 },
             ],
         }),
-        [breadcrumbs, index, list]
+        [breadcrumbs, index, list],
     );
 
     return (

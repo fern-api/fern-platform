@@ -1,4 +1,4 @@
-import { FontAwesomeIcon } from "../../commons/FontAwesomeIcon";
+import { RemoteFontAwesomeIcon } from "../../commons/FontAwesomeIcon";
 import { FernMenu, FernMenuItem } from "../../components/FernMenu";
 import type { CodeExample, CodeExampleGroup } from "../examples//code-example";
 
@@ -20,7 +20,7 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
         <div className="flex justify-end">
             <FernMenu
                 text={selectedClientGroup?.languageDisplayName ?? selectedClient.language}
-                icon={<FontAwesomeIcon className="h-4 w-4" icon={selectedClientGroup?.icon} />}
+                icon={<RemoteFontAwesomeIcon className="h-4 w-4" icon={selectedClientGroup?.icon} />}
                 align="right"
                 menuClassName="overflow-hidden"
             >
@@ -32,13 +32,13 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                             if (client.examples[0] != null) {
                                 onClickClient(
                                     client.examples.find(
-                                        (example) => example.exampleIndex === selectedClient.exampleIndex
-                                    ) ?? client.examples[0]
+                                        (example) => example.exampleIndex === selectedClient.exampleIndex,
+                                    ) ?? client.examples[0],
                                 );
                             }
                         }}
                     >
-                        <FontAwesomeIcon className="h-4 w-4" icon={client.icon} />
+                        <RemoteFontAwesomeIcon className="h-4 w-4" icon={client.icon} />
                         <div className="flex items-center whitespace-nowrap">
                             <span className="font-mono text-xs font-normal">{client.languageDisplayName}</span>
                         </div>

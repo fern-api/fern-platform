@@ -27,7 +27,7 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
         (newValue: unknown) => {
             onChange(property.key, newValue);
         },
-        [onChange, property.key]
+        [onChange, property.key],
     );
 
     const expandable = isExpandable(property.valueShape, value);
@@ -42,12 +42,12 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
             if (property.valueShape.type === "optional") {
                 onChange(
                     property.key,
-                    e.target.checked ? getDefaultValueForType(property.valueShape.shape) : undefined
+                    e.target.checked ? getDefaultValueForType(property.valueShape.shape) : undefined,
                 );
                 setExpanded();
             }
         },
-        [onChange, property.key, property.valueShape, setExpanded]
+        [onChange, property.key, property.valueShape, setExpanded],
     );
 
     useEffect(() => {
@@ -77,7 +77,7 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                             "divide-border-default-light dark:divide-border-default-dark flex min-h-12 flex-row items-stretch divide-x px-4",
                             {
                                 "divide-x-0": expanded && expandable,
-                            }
+                            },
                         )}
                     >
                         <div className="flex min-w-0 max-w-full flex-1 shrink items-center justify-between gap-2 py-2 pr-2">
@@ -178,7 +178,7 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
                 return { ...oldObject, [key]: typeof newValue === "function" ? newValue(oldObject[key]) : newValue };
             });
         },
-        [onChange]
+        [onChange],
     );
     return (
         <ul
