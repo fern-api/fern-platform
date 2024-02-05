@@ -1,13 +1,17 @@
+import classNames from "classnames";
+import "./FontAwesomeIcon.css";
+
 export declare namespace RemoteFontAwesomeIcon {
     export interface Props {
         className?: string; // you must specify the bg-color rather than text-color because this is a mask.
         icon?: string;
+        outlined?: boolean;
     }
 }
 export const RemoteFontAwesomeIcon: React.FC<RemoteFontAwesomeIcon.Props> = ({ className, icon }) => {
-    return (
-        <svg
-            className={className}
+    const iconSvg = (
+        <span
+            className={classNames(className, "fa-icon")}
             style={{
                 maskImage: `url("${getIconUrl(icon)}")`,
                 maskRepeat: "no-repeat",
@@ -16,8 +20,10 @@ export const RemoteFontAwesomeIcon: React.FC<RemoteFontAwesomeIcon.Props> = ({ c
                 WebkitMaskRepeat: "no-repeat",
                 WebkitMaskPosition: "center center",
             }}
-        ></svg>
+        />
     );
+
+    return iconSvg;
 };
 
 function getIconUrl(icon: string | undefined): string {

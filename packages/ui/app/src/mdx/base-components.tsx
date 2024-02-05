@@ -2,10 +2,11 @@ import classNames from "classnames";
 import Link from "next/link";
 import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from "react";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
+import { ShareIcon } from "../commons/icons/ShareIcon";
 import { useAnchorInView } from "../custom-docs-page/TableOfContentsContext";
 import { useNavigationContext } from "../navigation-context";
 import { onlyText } from "../util/onlyText";
-import styles from "./base-components.module.scss";
+import "./base-components.scss";
 
 export const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({ className, ...rest }) => {
     return (
@@ -232,7 +233,7 @@ export const Li: React.FC<HTMLAttributes<HTMLLIElement>> = ({ className, ...rest
 export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, children, href, ...rest }) => {
     const isExternalUrl = href != null && href.includes("http");
 
-    const classNamesCombined = classNames(className, styles.mdxAnchor);
+    const classNamesCombined = classNames("fern-mdx-link", className);
 
     return (
         <Link
@@ -243,6 +244,8 @@ export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className
             {...rest}
         >
             {children}
+
+            {isExternalUrl && <ShareIcon className="external-link-icon" />}
         </Link>
     );
 };

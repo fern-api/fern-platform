@@ -23,7 +23,7 @@ export const CustomDocsPageHeader = ({ resolvedPath }: Pick<CustomDocsPage.Props
         <header className="my-8">
             <div className="space-y-2.5">
                 {resolvedPath.sectionTitle != null && (
-                    <div className="text-accent-primary dark:text-accent-primary-dark text-xs font-semibold uppercase tracking-wider">
+                    <div className="text-accent-primary text-xs font-semibold uppercase tracking-wider">
                         {resolvedPath.sectionTitle}
                     </div>
                 )}

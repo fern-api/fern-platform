@@ -10,8 +10,9 @@ import { useBooleanState, useKeyboardPress } from "@fern-ui/react-commons";
 import { Transition } from "@headlessui/react";
 import classNames from "classnames";
 import { FC, Fragment, ReactElement, useEffect, useRef, useState } from "react";
+import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
-import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
+import { FernButton } from "../components/FernButton";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 
 export interface ApiPlaygroundEndpointSelectorProps {
@@ -84,7 +85,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                             top: depth * 30,
                         }}
                     >
-                        <span className="text-accent-primary dark:text-accent-primary-dark shrink truncate whitespace-nowrap text-xs">
+                        <span className="text-accent-primary shrink truncate whitespace-nowrap text-xs">
                             {apiDefinition.title}
                         </span>
                     </div>
@@ -97,7 +98,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                             className={classNames(
                                 "gap-4 scroll-m-2 mx-1 flex h-8 cursor-pointer items-center rounded px-2 py-1 text-sm justify-between",
                                 {
-                                    "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark":
+                                    "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary":
                                         endpointItem.id === endpoint?.id,
                                     "hover:bg-tag-default-light dark:hover:bg-tag-default-dark hover:text-accent-primary dark:hover:text-accent-primary-dark":
                                         endpointItem.id !== endpoint?.id,
@@ -135,30 +136,28 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
 
     return (
         <div className="relative -ml-2 min-w-0 shrink">
-            <button
-                className={classNames(
-                    buttonClassName,
-                    "max-w-full flex cursor-pointer items-center gap-2 rounded px-2 py-1 -my-1 text-left hover:bg-black/10 hover:dark:bg-white/10",
-                    {
-                        "bg-black/10 dark:bg-white/10": showDropdown,
-                        "text-sm": buttonClassName == null,
-                    },
-                )}
+            <FernButton
+                className={classNames(buttonClassName, "max-w-full -my-1 !text-left")}
                 onClick={toggleDropdown}
+                active={showDropdown}
+                rightIcon={
+                    <RemoteFontAwesomeIcon
+                        icon={popoverPlacement.startsWith("bottom") ? "chevron-down" : "chevron-up"}
+                        className={classNames("transition-transform !h-3 !w-3", {
+                            "rotate-180": showDropdown,
+                        })}
+                    />
+                }
+                buttonStyle="minimal"
             >
                 {apiDefinition != null && (
-                    <span className="text-accent-primary dark:text-accent-primary-dark shrink truncate whitespace-nowrap text-xs">
+                    <span className="text-accent-primary shrink truncate whitespace-nowrap text-xs">
                         {apiDefinition.title}
                     </span>
                 )}
 
                 <span className="whitespace-nowrap">{endpoint?.name ?? placeholderText ?? "Select an endpoint"}</span>
-                <ChevronDownIcon
-                    className={classNames("h-5 w-5 transition", {
-                        "rotate-180": showDropdown,
-                    })}
-                />
-            </button>
+            </FernButton>
             <Transition
                 show={showDropdown}
                 as={Fragment}

@@ -34,11 +34,12 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                 text={selectedClient.name}
                 icon={
                     <RemoteFontAwesomeIcon
-                        className="bg-accent-primary dark:bg-accent-primary-dark h-4 w-4"
+                        className="bg-accent-primary h-4 w-4"
                         icon={getIconForClient(selectedClient.id)}
                     />
                 }
                 align="right"
+                size="small"
             >
                 {clients.map(({ id: clientId, name: clientName }) => {
                     const selected = clientId === selectedClient.id;
@@ -52,8 +53,7 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                                 <>
                                     <RemoteFontAwesomeIcon
                                         className={classNames("h-4 w-4", {
-                                            "!bg-accent-primary dark:!bg-accent-primary-dark":
-                                                selected || (active && !selected),
+                                            "!bg-accent-primary": selected || (active && !selected),
                                             "!bg-text-muted-light dark:!bg-text-muted-dark": !active && !selected,
                                         })}
                                         icon={getIconForClient(clientId)}

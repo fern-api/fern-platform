@@ -73,26 +73,26 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
     return (
         <div className={classNames("mt-12", className)} ref={ref}>
             {!sent ? (
-                <div className="flex items-center justify-between gap-1">
+                <div className="flex items-center justify-start gap-2">
                     <span className="t-muted text-xs">Was this page helpful?</span>
                     <span className="inline-flex items-center">
                         <FernButton
                             icon="regular thumbs-up"
-                            minimal
+                            buttonStyle="minimal"
                             intent={feedback === "yes" ? "success" : "none"}
                             onClick={handleYes}
                             active={feedback === "yes"}
-                            small
+                            size="small"
                         >
                             Yes
                         </FernButton>
                         <FernButton
                             icon="regular thumbs-down"
-                            minimal={true}
+                            buttonStyle="minimal"
                             intent={feedback === "no" ? "danger" : "none"}
                             onClick={handleNo}
                             active={feedback === "no"}
-                            small
+                            size="small"
                         >
                             No
                         </FernButton>

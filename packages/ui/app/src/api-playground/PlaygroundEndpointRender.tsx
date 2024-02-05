@@ -30,10 +30,9 @@ export const PlaygroundEndpointRender: FC<PlaygroundEndpointRenderProps> = ({ en
                                     <span
                                         key={idx}
                                         className={classNames({
-                                            "bg-accent-highlight dark:bg-accent-highlight-dark text-accent-primary dark:text-accent-primary-dark px-1 rounded before:content-[':']":
+                                            "bg-accent-highlight dark:bg-accent-highlight-dark text-accent-primary px-1 rounded before:content-[':']":
                                                 stateValue.length === 0,
-                                            "text-accent-primary dark:text-accent-primary-dark font-semibold":
-                                                stateValue.length > 0,
+                                            "text-accent-primary font-semibold": stateValue.length > 0,
                                         })}
                                     >
                                         {stateValue.length > 0 ? encodeURI(stateValue) : pathParameter.key}
@@ -62,11 +61,7 @@ export const PlaygroundEndpointRender: FC<PlaygroundEndpointRenderProps> = ({ en
 
                                         <span>{queryParameter.key}</span>
                                         <span>{"="}</span>
-                                        <span
-                                            className={
-                                                "text-accent-primary dark:text-accent-primary-dark font-semibold"
-                                            }
-                                        >
+                                        <span className={"text-accent-primary font-semibold"}>
                                             {encodeURI(stateValue)}
                                         </span>
                                     </Fragment>

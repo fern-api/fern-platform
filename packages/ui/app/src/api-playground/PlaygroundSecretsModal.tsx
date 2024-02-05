@@ -111,7 +111,7 @@ export const PlaygroundSecretsModal: FC<PlaygroundSecretsModalProps> = ({
                             setSecrets([...secrets, { type: "bearer", token: value }]);
                             setValue("");
                         }}
-                        className="dark:text-dark bg-accent-primary dark:bg-accent-primary-dark hover:bg-accent-primary/70 dark:hover:bg-accent-primary-dark/70 text-accent-primary-contrast dark:text-accent-primary-dark-contrast group flex h-[30px] items-center justify-center space-x-3 rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
+                        className="dark:text-dark bg-accent-primary hover:bg-accent-primary/70 dark:hover:bg-accent-primary-dark/70 text-accent-primary-contrast-contrast group flex h-[30px] items-center justify-center space-x-3 rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
                     >
                         Add
                     </button>

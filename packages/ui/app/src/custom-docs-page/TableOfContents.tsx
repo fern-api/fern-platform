@@ -39,11 +39,10 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, re
                             {text.length > 0 && (
                                 <a
                                     className={classNames(
-                                        "hover:dark:text-text-primary-dark hover:text-text-primary-light block hyphens-auto break-words py-1.5 text-sm leading-5 no-underline transition hover:no-underline",
+                                        "hover:dark:text-text-default-dark hover:text-text-default-light block hyphens-auto break-words py-1.5 text-sm leading-5 no-underline transition hover:no-underline",
                                         {
                                             "t-muted": anchorInView !== anchor,
-                                            "text-accent-primary dark:text-accent-primary-dark":
-                                                anchorInView === anchor,
+                                            "t-primary": anchorInView === anchor,
                                         },
                                     )}
                                     href={`#${getSlugFromText(text)}`}

@@ -13,11 +13,11 @@ export const JsonItemBottomLine: React.FC<JsonItemBottomLine.Props> = ({ value, 
     const element = visitJsonItem(value, {
         object: (object) =>
             size(object) === 0 ? undefined : (
-                <span className="text-text-primary-light dark:text-text-primary-dark">{"}"}</span>
+                <span className="text-text-default-light dark:text-text-default-dark">{"}"}</span>
             ),
         list: (list) =>
             list.length === 0 ? undefined : (
-                <span className="text-text-primary-light dark:text-text-primary-dark">{"]"}</span>
+                <span className="text-text-default-light dark:text-text-default-dark">{"]"}</span>
             ),
         string: () => undefined,
         number: () => undefined,

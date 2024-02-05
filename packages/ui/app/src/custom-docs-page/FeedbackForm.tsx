@@ -99,6 +99,7 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({ feedback, onSubmit }) => {
                 className="mt-4 rounded-md"
                 onClick={handleSubmitFeedback}
                 disabled={feedbackId == null}
+                size="large"
             >
                 Send feedback
             </FernButton>

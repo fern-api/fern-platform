@@ -141,7 +141,7 @@ export const SearchHits: React.FC = () => {
         <div
             ref={containerRef}
             className={classNames("max-h-80 overflow-y-auto p-2", {
-                "border-border-default-light/10 dark:border-border-default-dark/10 border-t":
+                "border-border-default-light dark:border-border-default-dark border-t":
                     (progress === "success" || progress === "pending") && hits.length > 0,
             })}
         >

@@ -1,41 +1,20 @@
-import { Icon } from "@blueprintjs/core";
-import { IconNames } from "@blueprintjs/icons";
 import { type DocsNode } from "@fern-api/fdr-sdk";
 import { getFullSlugForNavigatable } from "@fern-ui/app-utils";
-import { assertNever } from "@fern-ui/core-utils";
-import Link from "next/link";
 import { useMemo } from "react";
+import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
+import { FernLinkCard } from "../components/FernCard";
 import { useDocsContext } from "../docs-context/useDocsContext";
 
 export declare namespace BottomNavigationButton {
     export interface Props {
         docsNode: DocsNode;
-        direction: "previous" | "next";
     }
 }
 
-export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({ docsNode, direction }) => {
+export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({ docsNode }) => {
     const { pathResolver, basePath } = useDocsContext();
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
-    const visitDirection = <T extends unknown>({ previous, next }: { previous: T; next: T }): T => {
-        switch (direction) {
-            case "previous":
-                return previous;
-            case "next":
-                return next;
-            default:
-                assertNever(direction);
-        }
-    };
 
     const navigatable = useMemo(() => pathResolver.resolveNavigatable(docsNode), [pathResolver, docsNode]);
-
-    const iconName = visitDirection({
-        previous: IconNames.CHEVRON_LEFT,
-        next: IconNames.CHEVRON_RIGHT,
-    });
-
-    const iconElement = <Icon icon={iconName} />;
 
     const text = useMemo(() => {
         switch (docsNode.type) {
@@ -56,26 +35,24 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
         }
     }, [docsNode]);
 
-    if (navigatable == null) {
+    if (navigatable == null || text == null) {
         return null;
     }
 
     const fullSlug = getFullSlugForNavigatable(navigatable, { omitDefault: true, basePath });
 
     return (
-        <Link
-            className="text-accent-primary/80 dark:text-accent-primary-dark/80 hover:text-accent-primary hover:dark:text-accent-primary-dark flex cursor-pointer items-center gap-2 rounded text-sm !no-underline transition"
-            href={`/${fullSlug}`}
-        >
-            {visitDirection({
-                previous: iconElement,
-                next: null,
-            })}
-            <div className="font-medium">{text ?? "Unknown"}</div>
-            {visitDirection({
-                previous: null,
-                next: iconElement,
-            })}
-        </Link>
+        <FernLinkCard className="my-12 flex items-center rounded-xl p-6" href={`/${fullSlug}`}>
+            <div className="flex-1">
+                <span className="text-base font-semibold">{text}</span>
+            </div>
+            <span className="border-border-default-light dark:border-border-default-dark t-muted ml-6 inline-flex items-center gap-2 border-l py-2.5 pl-6 text-sm">
+                <span className="leading-none">Up Next</span>
+                <RemoteFontAwesomeIcon
+                    icon="light chevron-right"
+                    className="bg-text-muted-light dark:bg-text-muted-dark h-3 w-3"
+                />
+            </span>
+        </FernLinkCard>
     );
 };

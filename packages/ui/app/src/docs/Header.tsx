@@ -5,6 +5,7 @@ import { forwardRef, memo, PropsWithChildren } from "react";
 import { MenuIcon } from "../commons/icons/MenuIcon";
 import { SearchIcon } from "../commons/icons/SearchIcon";
 import { XIcon } from "../commons/icons/XIcon";
+import { FernButtonGroup } from "../components/FernButton";
 import { SearchService } from "../services/useSearchService";
 import { HeaderLogoSection } from "./HeaderLogoSection";
 import { HeaderPrimaryLink } from "./HeaderPrimaryLink";
@@ -29,14 +30,18 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
 ) {
     const { navbarLinks, colorsV3 } = config;
     const navbarLinksSection = (
-        <div className="hidden items-center space-x-5 lg:flex lg:space-x-8">
-            {navbarLinks.map((navbarLink, idx) =>
-                visitDiscriminatedUnion(navbarLink, "type")._visit({
-                    primary: (navbarLink) => <HeaderPrimaryLink key={idx} navbarLink={navbarLink} />,
-                    secondary: (navbarLink) => <HeaderSecondaryLink key={idx} navbarLink={navbarLink} />,
-                    _other: () => null,
-                }),
-            )}
+        <div className="hidden lg:block">
+            <FernButtonGroup>
+                {navbarLinks.map((navbarLink, idx) =>
+                    visitDiscriminatedUnion(navbarLink, "type")._visit({
+                        primary: (navbarLink) => <HeaderPrimaryLink key={idx} navbarLink={navbarLink} />,
+                        secondary: (navbarLink) => <HeaderSecondaryLink key={idx} navbarLink={navbarLink} />,
+                        _other: () => null,
+                    }),
+                )}
+
+                {colorsV3.type === "darkAndLight" && <ThemeButton className="hidden lg:flex" />}
+            </FernButtonGroup>
         </div>
     );
 
@@ -56,17 +61,10 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
             <div className="-mr-2 ml-auto flex items-center space-x-0 md:mr-0 lg:space-x-4">
                 {navbarLinksSection}
 
-                {colorsV3.type === "darkAndLight" && (
-                    <>
-                        <div className="dark:bg-border-default-dark bg-border-default-light hidden w-px self-stretch lg:flex" />
-                        <ThemeButton className="hidden lg:flex" />
-                    </>
-                )}
-
                 {searchService.isAvailable && (
                     <button
                         onClick={openSearchDialog}
-                        className="text-intent-default dark:hover:text-text-primary-dark hover:text-text-primary-light flex h-[44px] w-[44px] items-center justify-center transition lg:hidden"
+                        className="t-muted hover:t-default flex h-[44px] w-[44px] items-center justify-center transition lg:hidden"
                     >
                         <SearchIcon className="h-5 w-5" />
                     </button>
@@ -75,9 +73,9 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                 <button
                     onClick={isMobileSidebarOpen ? closeMobileSidebar : openMobileSidebar}
                     className={classNames(
-                        "text-intent-default dark:hover:text-text-primary-dark hover:text-text-primary-light flex h-[44px] w-[44px] items-center justify-center transition lg:hidden rounded-lg",
+                        "t-muted hover:t-default flex h-[44px] w-[44px] items-center justify-center transition lg:hidden rounded-lg",
                         {
-                            "!text-accent-primary !dark:text-accent-primary-dark bg-tag-primary dark:bg-tag-primary-dark ring-inset ring-1 ring-border-primary dark:ring-border-primary-dark":
+                            "t-primary bg-tag-primary dark:bg-tag-primary-dark ring-inset ring-1 ring-border-primary dark:ring-border-primary-dark":
                                 isMobileSidebarOpen,
                         },
                     )}

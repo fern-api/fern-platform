@@ -1,5 +1,4 @@
-import { Portal } from "@blueprintjs/core";
-import { Transition } from "@headlessui/react";
+import { Portal, Transition } from "@headlessui/react";
 import classNames from "classnames";
 import { FC, PropsWithChildren, RefObject, useEffect, useRef } from "react";
 import { useViewportContext } from "../viewport-context/useViewportContext";

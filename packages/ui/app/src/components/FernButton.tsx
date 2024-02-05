@@ -1,83 +1,69 @@
 import classNames from "classnames";
-import { ButtonHTMLAttributes, DetailedHTMLProps, FC, ReactNode } from "react";
+import Link from "next/link";
+import {
+    ButtonHTMLAttributes,
+    ComponentProps,
+    DetailedHTMLProps,
+    FC,
+    forwardRef,
+    PropsWithChildren,
+    ReactNode,
+} from "react";
 import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
+import "./FernButton.scss";
 
-interface FernButtonProps extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+type Intent = "none" | "primary" | "success" | "warning" | "danger";
+
+interface FernButtonSharedProps {
+    className?: string;
     icon?: string | ReactNode;
     rightIcon?: string | ReactNode;
-    minimal?: boolean;
-    intent?: "none" | "primary" | "success" | "danger";
-    small?: boolean;
+    buttonStyle?: "minimal" | "filled" | "outlined";
+    intent?: Intent;
+    size?: "small" | "normal" | "large";
     mono?: boolean;
     active?: boolean;
     full?: boolean;
     disabled?: boolean;
+    rounded?: boolean;
 }
-export const FernButton: FC<FernButtonProps> = ({
-    icon: leftIcon,
-    rightIcon,
-    className,
-    children,
-    minimal = false,
-    intent = "none",
-    small = false,
-    mono = false,
-    active = false,
-    full = false,
-    disabled = false,
-    ...props
-}) => {
-    function renderIcon(icon: string | ReactNode | undefined) {
-        if (typeof icon === "string") {
-            return (
-                <RemoteFontAwesomeIcon
-                    icon={icon}
-                    className={classNames("h-4 w-4", {
-                        "bg-accent-primary dark:bg-accent-primary-dark": intent === "primary",
-                        "bg-text-primary-light/60 dark:bg-text-primary-dark/60": intent === "none",
-                        "bg-intent-success-light dark:bg-intent-success-dark": intent === "success",
-                        "bg-intent-danger-light dark:bg-intent-danger-dark": intent === "danger",
-                    })}
-                />
-            );
-        } else {
-            return icon;
-        }
-    }
 
+interface FernButtonProps
+    extends Omit<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, "ref">,
+        PropsWithChildren<FernButtonSharedProps> {}
+
+interface FernLinkButtonProps extends ComponentProps<typeof Link>, PropsWithChildren<FernButtonSharedProps> {}
+
+function renderIcon(icon: string | ReactNode | undefined) {
+    if (typeof icon === "string") {
+        return <RemoteFontAwesomeIcon icon={icon} />;
+    } else {
+        return icon;
+    }
+}
+
+export const FernLinkButton = forwardRef<HTMLAnchorElement, FernLinkButtonProps>(function FernAnchorButton(props, ref) {
+    const {
+        icon,
+        disabled = false,
+        rightIcon,
+        className,
+        children,
+        buttonStyle,
+        size,
+        mono,
+        intent,
+        active,
+        full,
+        rounded,
+        ...linkProps
+    } = props;
     return (
-        <button
-            {...props}
-            className={classNames(
-                className,
-                "fern-button transition-shadow hover:transition-[background] text-center align-middle",
-                {
-                    "rounded-md": small && !className?.includes("rounded"),
-                    "rounded-lg": !small && !className?.includes("rounded"),
-                    "px-2 py-1 text-xs h-6": small,
-                    "px-3.5 py-1.5 text-sm h-9": !small,
-                    "border ring-0": !minimal,
-                    "hover:ring-2": !minimal && !disabled,
-                    "border-border-primary dark:border-border-primary-dark ring-border-primary/10 dark:ring-border-primary-dark/10":
-                        !minimal && intent === "primary",
-                    "ring-text-primary dark:ring-text-primary-dark": !minimal && intent === "none",
-                    "ring-intent-success-light dark:ring-intent-success-dark": !minimal && intent === "success",
-                    "ring-intent-danger-light dark:ring-intent-danger-dark": !minimal && intent === "danger",
-                    "text-accent-primary dark:text-accent-primary-dark": intent === "primary",
-                    "hover:bg-tag-primary": (intent === "primary" || intent === "none") && !disabled,
-                    "bg-transparent dark:bg-transparent-dark text-text-primary-light/60 dark:text-text-primary-dark/60":
-                        intent === "none",
-                    "text-intent-success-light dark:text-intent-success-dark": intent === "success",
-                    "hover:bg-tag-success": intent === "success" && !disabled,
-                    "text-intent-danger-light dark:text-intent-danger-dark": intent === "danger",
-                    "hover:bg-tag-danger": intent === "danger" && !disabled,
-                    "bg-tag-primary": intent === "primary" && active,
-                    "bg-tag-success": intent === "success" && active,
-                    "bg-tag-danger": intent === "danger" && active,
-                    "w-full": full,
-                    "cursor-not-allowed opacity-70": disabled,
-                },
-            )}
+        <Link
+            ref={ref}
+            {...linkProps}
+            aria-disabled={disabled}
+            className={getButtonClassName(props)}
             onClick={
                 props.onClick != null
                     ? (e) => {
@@ -91,26 +77,112 @@ export const FernButton: FC<FernButtonProps> = ({
                     : undefined
             }
         >
-            <span
-                className={classNames("inline-flex items-center", {
-                    "gap-1": small,
-                    "h-[14px]": small && !minimal,
-                    "h-4": small && minimal,
-                    "gap-1.5": !small,
-                    "h-[22px]": !small && !minimal,
-                    "h-6": !small && minimal,
-                })}
+            {renderButtonContent(props)}
+        </Link>
+    );
+});
+
+export const FernButton: FC<FernButtonProps> = forwardRef<HTMLButtonElement, FernButtonProps>(
+    function FernButton(props, ref) {
+        const {
+            icon,
+            disabled = false,
+            rightIcon,
+            className,
+            children,
+            buttonStyle,
+            size,
+            mono,
+            intent,
+            active,
+            full,
+            rounded,
+            ...buttonProps
+        } = props;
+        return (
+            <button
+                ref={ref}
+                {...buttonProps}
+                disabled={disabled}
+                aria-disabled={disabled}
+                aria-selected={active}
+                className={getButtonClassName(props)}
+                onClick={
+                    props.onClick != null
+                        ? (e) => {
+                              if (disabled) {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                              } else {
+                                  props.onClick?.(e);
+                              }
+                          }
+                        : undefined
+                }
             >
-                {renderIcon(leftIcon)}
+                {renderButtonContent(props)}
+            </button>
+        );
+    },
+);
+
+export const FernButtonGroup = forwardRef<HTMLSpanElement, ComponentProps<"div">>(function FernButtonGroup(
+    { className, children, ...props },
+    ref,
+) {
+    return (
+        <span ref={ref} className={classNames(className, "fern-button-group")} {...props}>
+            {children}
+        </span>
+    );
+});
+
+function renderButtonContent({
+    icon: leftIcon,
+    rightIcon,
+    mono = false,
+    children,
+}: PropsWithChildren<FernButtonSharedProps>) {
+    return (
+        <span className="fern-button-content">
+            {renderIcon(leftIcon)}
+            {children && (
                 <span
-                    className={classNames({
+                    className={classNames("whitespace-nowrap", {
                         "font-mono tracking-tight": mono,
                     })}
                 >
                     {children}
                 </span>
-                {renderIcon(rightIcon)}
-            </span>
-        </button>
+            )}
+            {renderIcon(rightIcon)}
+        </span>
     );
-};
+}
+
+function getButtonClassName({
+    className,
+    buttonStyle = "filled",
+    intent = "none",
+    size = "normal",
+    active = false,
+    full = false,
+    disabled = false,
+    rounded = false,
+    icon,
+    rightIcon,
+    children,
+}: PropsWithChildren<FernButtonSharedProps>) {
+    return classNames(className, "fern-button", buttonStyle, {
+        small: size === "small",
+        normal: size === "normal",
+        large: size === "large",
+        [size]: size !== "normal",
+        [intent]: intent !== "none",
+        disabled,
+        active,
+        "w-full": full,
+        rounded,
+        square: icon != null && children == null && rightIcon == null,
+    });
+}

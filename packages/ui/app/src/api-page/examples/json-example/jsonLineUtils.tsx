@@ -171,7 +171,7 @@ const TAB_WIDTH = 2;
 function renderKey(key: string | undefined) {
     if (key != null) {
         return (
-            <span className="text-text-primary-light dark:text-text-primary-dark">
+            <span className="text-text-default-light dark:text-text-default-dark">
                 &quot;{key}&quot;{": "}
             </span>
         );
@@ -180,17 +180,17 @@ function renderKey(key: string | undefined) {
 }
 
 function renderComma() {
-    return <span className="text-text-primary-light dark:text-text-primary-dark">{","}</span>;
+    return <span className="text-text-default-light dark:text-text-default-dark">{","}</span>;
 }
 
 export function renderJsonLineValue(line: JsonLine): ReactNode {
     return visitJsonLine(line, {
-        objectEmpty: () => <span className="text-text-primary-light dark:text-text-primary-dark">{"{}"}</span>,
-        objectStart: () => <span className="text-text-primary-light dark:text-text-primary-dark">{"{"}</span>,
-        objectEnd: () => <span className="text-text-primary-light dark:text-text-primary-dark">{"}"}</span>,
-        listEmpty: () => <span className="text-text-primary-light dark:text-text-primary-dark">{"[]"}</span>,
-        listStart: () => <span className="text-text-primary-light dark:text-text-primary-dark">{"["}</span>,
-        listEnd: () => <span className="text-text-primary-light dark:text-text-primary-dark">{"]"}</span>,
+        objectEmpty: () => <span className="text-text-default-light dark:text-text-default-dark">{"{}"}</span>,
+        objectStart: () => <span className="text-text-default-light dark:text-text-default-dark">{"{"}</span>,
+        objectEnd: () => <span className="text-text-default-light dark:text-text-default-dark">{"}"}</span>,
+        listEmpty: () => <span className="text-text-default-light dark:text-text-default-dark">{"[]"}</span>,
+        listStart: () => <span className="text-text-default-light dark:text-text-default-dark">{"["}</span>,
+        listEnd: () => <span className="text-text-default-light dark:text-text-default-dark">{"]"}</span>,
         string: (line) => <JsonExampleString value={line.value} newLineColOffset={line.depth * TAB_WIDTH} />,
         number: (line) => <span className="text-[#d67653]">{line.value}</span>,
         boolean: (line) => <span className="font-medium text-[#738ee8]">{line.value.toString()}</span>,

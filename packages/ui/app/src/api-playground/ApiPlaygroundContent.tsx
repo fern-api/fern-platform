@@ -9,6 +9,7 @@ import { isEmpty, round } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useCallback, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
+import { FernButton } from "../components/FernButton";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
 import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
 import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
@@ -125,53 +126,38 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
 
                     <div className="flex items-center text-xs">
                         <button
-                            className={classNames(
-                                "px-2 py-1 -my-1 rounded-lg hover:text-accent-primary hover:dark:text-accent-primary-dark",
-                                {
-                                    "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark":
-                                        requestType === "form",
-                                    "t-muted": requestType !== "form",
-                                },
-                            )}
+                            className={classNames("px-2 py-1 -my-1 rounded-lg hover:text-accent-primary", {
+                                "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary": requestType === "form",
+                                "t-muted": requestType !== "form",
+                            })}
                             onClick={() => setRequestType("form")}
                         >
                             Form
                         </button>
                         <button
-                            className={classNames(
-                                "px-2 py-1 -my-1 rounded-lg hover:text-accent-primary hover:dark:text-accent-primary-dark",
-                                {
-                                    "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark":
-                                        requestType === "curl",
-                                    "t-muted": requestType !== "curl",
-                                },
-                            )}
+                            className={classNames("px-2 py-1 -my-1 rounded-lg hover:text-accent-primary", {
+                                "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary": requestType === "curl",
+                                "t-muted": requestType !== "curl",
+                            })}
                             onClick={() => setRequestType("curl")}
                         >
                             CURL
                         </button>
                         <button
-                            className={classNames(
-                                "px-2 py-1 -my-1 rounded-lg hover:text-accent-primary hover:dark:text-accent-primary-dark",
-                                {
-                                    "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark":
-                                        requestType === "javascript",
-                                    "t-muted": requestType !== "javascript",
-                                },
-                            )}
+                            className={classNames("px-2 py-1 -my-1 rounded-lg hover:text-accent-primary", {
+                                "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary":
+                                    requestType === "javascript",
+                                "t-muted": requestType !== "javascript",
+                            })}
                             onClick={() => setRequestType("javascript")}
                         >
                             JavaScript
                         </button>
                         <button
-                            className={classNames(
-                                "px-2 py-1 -my-1 rounded-lg hover:text-accent-primary hover:dark:text-accent-primary-dark",
-                                {
-                                    "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark":
-                                        requestType === "python",
-                                    "t-muted": requestType !== "python",
-                                },
-                            )}
+                            className={classNames("px-2 py-1 -my-1 rounded-lg hover:text-accent-primary", {
+                                "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary": requestType === "python",
+                                "t-muted": requestType !== "python",
+                            })}
                             onClick={() => setRequestType("python")}
                         >
                             Python
@@ -180,17 +166,13 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                         <div className="bg-border-default-light dark:bg-border-default-dark mx-2 h-[40px] w-[1px] shrink-0" />
 
                         <button
-                            className={
-                                "hover:text-accent-primary hover:dark:text-accent-primary-dark t-muted -my-1 whitespace-nowrap rounded-lg px-2 py-1"
-                            }
+                            className={"hover:text-accent-primary t-muted -my-1 whitespace-nowrap rounded-lg px-2 py-1"}
                             onClick={resetWithExample}
                         >
                             Use example
                         </button>
                         <button
-                            className={
-                                "hover:text-accent-primary hover:dark:text-accent-primary-dark t-muted -my-1 whitespace-nowrap rounded-lg px-2 py-1"
-                            }
+                            className={"hover:text-accent-primary t-muted -my-1 whitespace-nowrap rounded-lg px-2 py-1"}
                             onClick={resetWithoutExample}
                         >
                             Clear form
@@ -218,23 +200,23 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
             <div className="relative flex min-h-0 min-w-0 flex-1 shrink flex-col">
                 {response.type !== "notStartedLoading" && endpoint != null && (
                     <div className="absolute bottom-4 right-4 z-20">
-                        <button
-                            className="bg-accent-primary dark:bg-accent-primary-dark hover:bg-accent-primary/70 dark:hover:bg-accent-primary-dark/70 text-accent-primary-contrast dark:text-accent-primary-dark-contrast group flex items-center justify-center space-x-3 rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
+                        <FernButton
                             onClick={sendRequest}
-                        >
-                            <span className="whitespace-nowrap">Send request</span>
-                            <div className="flex h-4 w-4 items-center">
+                            rightIcon={
                                 <RemoteFontAwesomeIcon
                                     icon="paper-plane-top"
-                                    className="bg-accent-primary-contrast dark:bg-accent-primary-dark-contrast h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                                    className="transition-transform group-hover:translate-x-0.5"
                                 />
-                            </div>
-                        </button>
+                            }
+                            intent="primary"
+                        >
+                            Send request
+                        </FernButton>
                     </div>
                 )}
 
                 <div
-                    className="bg-accent-primary dark:bg-accent-primary-dark absolute inset-y-0 -ml-0.5 w-1 cursor-col-resize opacity-0 transition-opacity hover:opacity-100 active:opacity-100"
+                    className="bg-accent-primary absolute inset-y-0 -ml-0.5 w-1 cursor-col-resize opacity-0 transition-opacity hover:opacity-100 active:opacity-100"
                     onMouseDown={handleResize}
                 />
                 <div className="border-border-default-light dark:border-border-default-dark flex h-10 w-full shrink-0 items-center justify-between border-b px-4 py-2">
@@ -277,18 +259,19 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                             className="flex-1"
                             icon={
                                 response.type === "notStartedLoading" ? (
-                                    <button
-                                        className="bg-accent-primary dark:bg-accent-primary-dark hover:bg-accent-primary/70 dark:hover:bg-accent-primary-dark/70 text-accent-primary-contrast dark:text-accent-primary-dark-contrast group flex items-center justify-center space-x-3 rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
+                                    <FernButton
                                         onClick={sendRequest}
-                                    >
-                                        <span className="whitespace-nowrap">Send request</span>
-                                        <div className="flex h-4 w-4 items-center">
+                                        rightIcon={
                                             <RemoteFontAwesomeIcon
                                                 icon="paper-plane-top"
-                                                className="bg-accent-primary-contrast dark:bg-accent-primary-dark-contrast h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                                                className="transition-transform group-hover:translate-x-0.5"
                                             />
-                                        </div>
-                                    </button>
+                                        }
+                                        intent="primary"
+                                        size="large"
+                                    >
+                                        Send request
+                                    </FernButton>
                                 ) : (
                                     <Spinner />
                                 )
