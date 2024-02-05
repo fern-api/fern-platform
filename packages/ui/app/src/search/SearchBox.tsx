@@ -37,18 +37,21 @@ export function SearchBox({ queryHook, className, inputClassName, placeholder }:
         key: "Backspace",
         onPress: focusInput,
         preventDefault: false,
+        capture: true,
     });
 
     useKeyboardPress({
         key: "Space",
         onPress: focusInput,
         preventDefault: false,
+        capture: true,
     });
 
     useKeyboardPress({
         key: "Delete",
         onPress: focusInput,
         preventDefault: false,
+        capture: true,
     });
 
     return (
