@@ -84,6 +84,7 @@ export const SearchHits: React.FC = () => {
                 ref?.focus();
             }
         },
+        capture: true,
     });
 
     useKeyboardPress({
@@ -100,6 +101,7 @@ export const SearchHits: React.FC = () => {
                 ref?.focus();
             }
         },
+        capture: true,
     });
 
     useKeyboardPress({
@@ -116,6 +118,7 @@ export const SearchHits: React.FC = () => {
             });
         },
         preventDefault: true,
+        capture: true,
     });
 
     const progress = useMemo((): Progress => {
