@@ -14,7 +14,7 @@
   },
   "rules": {
     "depcheck": {
-      "ignores": ["@types/react", "@types/react-dom", "autoprefixer", "postcss"]
+      "ignores": ["@types/react", "@types/react-dom", "autoprefixer", "postcss", "postcss-import"]
     }
   }
 }
