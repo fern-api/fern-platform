@@ -1,8 +1,8 @@
 import { Icon } from "@blueprintjs/core";
-import { Dialog } from "@headlessui/react";
+import { Dialog, Transition } from "@headlessui/react";
 import algolia from "algoliasearch/lite";
 import classNames from "classnames";
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { InstantSearch } from "react-instantsearch-hooks-web";
 import { type SearchCredentials, type SearchService } from "../services/useSearchService";
 import { SearchBox } from "./SearchBox";
@@ -35,12 +35,23 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
         return algolia(credentials.appId, credentials.searchApiKey);
     }, [credentials?.appId, credentials?.searchApiKey]);
 
+    if (!searchService.isAvailable || searchClient == null) {
+        return null;
+    }
+
     return (
-        <Dialog as="div" className="fixed inset-0 z-30" open={isOpen} onClose={onClose}>
-            <div className="flex min-h-screen items-start justify-center p-4">
-                <Dialog.Overlay className="bg-background/40 dark:bg-background-dark/40 fixed inset-0 backdrop-blur-sm" />
-                {searchService.isAvailable && searchClient != null && (
-                    <InstantSearch searchClient={searchClient} indexName={searchService.index}>
+        <InstantSearch searchClient={searchClient} indexName={searchService.index}>
+            <Transition show={isOpen} as={Fragment} appear={true}>
+                <Dialog as="div" className="fixed inset-0 z-30" onClose={onClose}>
+                    <div className="flex min-h-screen items-start justify-center p-4">
+                        <Transition.Child
+                            as={Fragment}
+                            enter="transition-all ease-linear duration-200"
+                            enterFrom="backdrop-blur-0 opacity-0"
+                            enterTo="backdrop-blur-sm opacity-100"
+                        >
+                            <Dialog.Overlay className="bg-background/40 dark:bg-background-dark/40 fixed inset-0 backdrop-blur-sm" />
+                        </Transition.Child>
                         <div className="border-border-default-light dark:border-border-default-dark bg-background-primary-light dark:bg-background-primary-dark z-10 mx-3 mb-8 mt-10 flex w-full max-w-2xl flex-col overflow-hidden rounded-md border text-left align-middle shadow-2xl">
                             <div className={classNames(styles.searchBox, "flex items-center space-x-3 px-5")}>
                                 <Icon className="t-muted" icon="search" size={14} />
@@ -56,9 +67,9 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
                             </div>
                             <SearchHits />
                         </div>
-                    </InstantSearch>
-                )}
-            </div>
-        </Dialog>
+                    </div>
+                </Dialog>
+            </Transition>
+        </InstantSearch>
     );
 };
