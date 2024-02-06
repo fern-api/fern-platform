@@ -1,0 +1,28 @@
+.fern-radio-group {
+    @apply space-y-4;
+}
+
+.fern-radio-label {
+    @apply flex cursor-pointer;
+}
+
+.fern-radio-item {
+    @apply ring-border-default-light dark:ring-border-default-dark relative mt-0.5 inline-block size-4 rounded-lg ring-1 ring-inset;
+}
+
+.fern-radio-item:hover {
+    @apply bg-tag-primary;
+}
+
+.fern-radio-item:focus {
+    @apply outline outline-4 outline-offset-0 outline-tag-primary-light dark:outline-tag-primary-dark;
+}
+
+.fern-radio-indicator {
+    @apply w-4 h-4 bg-accent-primary dark:bg-accent-primary-dark flex items-center justify-center rounded-lg;
+}
+
+.fern-radio-indicator:after {
+    @apply bg-background dark:bg-background-dark absolute size-2 rounded;
+    content: "";
+}

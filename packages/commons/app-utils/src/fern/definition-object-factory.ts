@@ -6,6 +6,7 @@ export class DefinitionObjectFactory {
             pages: {},
             apis: {},
             files: {},
+            filesV2: {},
             config: {
                 colorsV3: {
                     type: "dark",

@@ -14,7 +14,7 @@ export function useIsHovering(): useIsHovering.Return {
     const [state, dispatch] = useReducer(
         (
             previousState: "inside" | "outside" | "hovering",
-            action: "mouseover" | "mouseleave" | "mousemove" | "mouseenter"
+            action: "mouseover" | "mouseleave" | "mousemove" | "mouseenter",
         ) => {
             switch (action) {
                 case "mouseover":
@@ -29,7 +29,7 @@ export function useIsHovering(): useIsHovering.Return {
                     assertNever(action);
             }
         },
-        "outside"
+        "outside",
     );
 
     return {

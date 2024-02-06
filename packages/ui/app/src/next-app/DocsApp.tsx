@@ -15,6 +15,7 @@ import { CONTEXTS } from "../contexts";
 import { DocsContextProvider } from "../docs-context/DocsContextProvider";
 import { Docs } from "../docs/Docs";
 import { NavigationContextProvider } from "../navigation-context/NavigationContextProvider";
+import "./globals.css";
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -44,13 +45,11 @@ export const DocsApp: React.FC<App.Props> = ({
     const config = useDeepCompareMemoize(unmemoizedConfig);
 
     useEffect(() => {
-        if (process.env.NEXT_PUBLIC_POSTHOG_API_KEY != null && process.env.NEXT_PUBLIC_POSTHOG_API_KEY.length > 0) {
-            initializePosthog(process.env.NEXT_PUBLIC_POSTHOG_API_KEY);
-        }
+        initializePosthog();
     }, []);
 
     return (
-        <div className="flex h-screen flex-1">
+        <div className="flex min-h-screen flex-1">
             <div className="w-full">
                 {CONTEXTS.reduceRight(
                     (children, Context) => (
@@ -60,7 +59,7 @@ export const DocsApp: React.FC<App.Props> = ({
                         <NavigationContextProvider resolvedPath={resolvedPath} basePath={baseUrl.basePath}>
                             <Docs config={config} search={search} apis={apis} algoliaSearchIndex={algoliaSearchIndex} />
                         </NavigationContextProvider>
-                    </DocsContextProvider>
+                    </DocsContextProvider>,
                 )}
             </div>
         </div>

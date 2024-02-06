@@ -27,7 +27,10 @@ function createSearchApiKeyLoader(envConfig: EnvironmentConfig, indexSegmentId: 
         if (!resp.ok) {
             // eslint-disable-next-line no-console
             console.error("Failed to fetch index segment api key", resp.error);
-            return undefined;
+            return {
+                appId: envConfig.algoliaAppId,
+                searchApiKey: envConfig.algoliaApiKey,
+            };
         }
         const { searchApiKey } = resp.body;
         return {
@@ -39,7 +42,7 @@ function createSearchApiKeyLoader(envConfig: EnvironmentConfig, indexSegmentId: 
 
 export function useSearchService(
     searchInfo: DocsV1Read.SearchInfo,
-    algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null
+    algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null,
 ): SearchService {
     const { activeVersionContext } = useDocsSelectors();
 
@@ -89,7 +92,7 @@ export function useSearchService(
                 const indexSegment = indexSegmentsByVersionId[versionId];
                 if (indexSegment == null) {
                     throw new Error(
-                        `Inconsistent State: Did not receive index segment for version "${versionId}". This may indicate a backend bug.`
+                        `Inconsistent State: Did not receive index segment for version "${versionId}". This may indicate a backend bug.`,
                     );
                 }
                 if (envConfig.algoliaSearchIndex == null) {
@@ -102,6 +105,8 @@ export function useSearchService(
                 };
             }
         } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error("Failed to initialize search service", e);
             return { isAvailable: false };
         }
     }, [activeVersionContext, algoliaSearchIndex, searchInfo]);

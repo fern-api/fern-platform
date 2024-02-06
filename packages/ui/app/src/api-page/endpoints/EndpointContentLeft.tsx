@@ -48,7 +48,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
         <>
             <div className="space-y-2.5 pb-2 pt-8">
                 {subpackageTitle != null && (
-                    <div className="text-accent-primary dark:text-accent-primary-dark text-xs font-semibold uppercase tracking-wider">
+                    <div className="text-accent-primary text-xs font-semibold uppercase tracking-wider">
                         {subpackageTitle}
                     </div>
                 )}
@@ -66,7 +66,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
             </div>
             <EndpointUrlWithOverflow endpoint={endpoint} />
             <ApiPageDescription
-                className="mt-3 text-sm leading-6"
+                className="mt-3 text-base leading-6"
                 description={endpoint.description}
                 isMarkdown={true}
             />
@@ -181,7 +181,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                 {sortBy(
                                     endpoint.errors,
                                     (e) => e.statusCode,
-                                    (e) => e.name
+                                    (e) => e.name,
                                 ).map((error, idx) => {
                                     return (
                                         <EndpointError

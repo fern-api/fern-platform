@@ -34,7 +34,7 @@ export function useDimensions(): useDimensions.Return {
                 updateDimensions();
             }
         },
-        [updateDimensions]
+        [updateDimensions],
     );
 
     return {

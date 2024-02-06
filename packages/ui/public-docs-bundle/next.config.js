@@ -10,23 +10,15 @@ const nextConfig = {
     rewrites: async () => ({
         beforeFiles: [
             {
-                source: "/_fern/_next/:path*",
+                source: "/:prefix*/_next/:path*",
                 destination: "/_next/:path*",
-            },
-            {
-                source: `/_fern/images/:query*`,
-                destination: "/_next/image/:query*",
-            },
-            {
-                source: `/_fern/api/:path*`,
-                destination: "/api/:path*",
             },
         ],
         afterFiles: [
-            {
-                source: "/api/:path*",
-                destination: "/api/:path*",
-            },
+            ...["proxy", "revalidate-all", "revalidate-v2", "revalidate", "serialize-mdx", "sitemap"].map((prefix) => ({
+                source: `/api/${prefix}`,
+                destination: `/api/${prefix}`,
+            })),
             {
                 has: [
                     {

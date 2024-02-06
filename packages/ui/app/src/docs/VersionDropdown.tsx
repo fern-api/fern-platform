@@ -46,8 +46,9 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
                                                     slug !== selectedVersionSlug && !active,
                                             },
                                             {
-                                                "border-accent-primary/75": active,
-                                            }
+                                                "border-accent-primary-light/75 dark:border-accent-primary-dark/75":
+                                                    active,
+                                            },
                                         )}
                                     >
                                         {getVersionAvailabilityLabel(availability)}

@@ -4,7 +4,7 @@ import { FC } from "react";
 export declare namespace BgImageGradient {
     export interface Props {
         className?: string;
-        backgroundType: "solid" | "gradient" | null;
+        backgroundType: "solid" | "gradient" | undefined;
         hasSpecifiedBackgroundImage: boolean;
     }
 }
@@ -22,7 +22,7 @@ export const BgImageGradient: FC<BgImageGradient.Props> = ({
                 {
                     "from-accent-primary/5 dark:from-accent-primary/[0.09] overscroll-y-none bg-gradient-to-b to-transparent":
                         backgroundType === "gradient" && !hasSpecifiedBackgroundImage,
-                }
+                },
             )}
             style={
                 hasSpecifiedBackgroundImage

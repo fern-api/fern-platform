@@ -24,7 +24,6 @@ export async function convertNavigatableToResolvedPath({
                 fullSlug,
                 page: serializedNavigatable.page,
                 sectionTitle: serializedNavigatable.section?.title ?? null,
-                tableOfContents: serializedNavigatable.tableOfContents,
                 serializedMdxContent: serializedNavigatable.serializedMdxContent,
                 editThisPageUrl: serializedNavigatable.editThisPageUrl,
             };

@@ -19,15 +19,17 @@
     *::before,
     *::after {
         box-sizing: inherit;
+
+        @apply focus:outline-accent-primary dark:focus:outline-accent-primary-dark;
     }
 
     ::selection {
-        @apply bg-accent-highlight/20 dark:bg-accent-highlight-dark/20;
+        @apply bg-accent-highlight;
     }
 
     html,
     body {
-        @apply text-text-primary-light dark:text-text-primary-dark;
+        @apply text-text-default-light dark:text-text-default-dark;
 
         font-family: var(--typography-body-font-family) !important;
         font-size: 16px !important;
@@ -50,7 +52,7 @@
     h4,
     h5,
     h6 {
-        @apply scroll-mt-20 tracking-tight mt-8;
+        @apply scroll-mt-header-height-padded tracking-tight mt-8;
 
         font-family: var(--typography-heading-font-family);
     }
@@ -85,13 +87,8 @@
         clip-path: inset(0);
     }
 
-    .hide-scrollbar:not(:hover)::-webkit-scrollbar {
+    .hide-scrollbar::-webkit-scrollbar {
         display: none;
-    }
-
-    .bp5-dark a,
-    .bp5-dark a:hover {
-        color: unset;
     }
 
     .bp5-dark .bp5-control .bp5-control-indicator {
@@ -99,7 +96,7 @@
     }
 
     .light .bp5-control input:checked ~ .bp5-control-indicator {
-        @apply bg-accent-primary !important;
+        @apply bg-accent-primary-light !important;
     }
 
     .bp5-dark .bp5-control input:checked ~ .bp5-control-indicator {
@@ -119,7 +116,7 @@
     }
 
     .light .bp5-segmented-control {
-        @apply bg-tag-primary !important;
+        @apply bg-tag-primary-light !important;
     }
 
     .description-mask {

@@ -50,7 +50,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 auth: newAuthValue,
             }));
         },
-        [setFormState]
+        [setFormState],
     );
 
     const setHeader = useCallback(
@@ -63,7 +63,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 },
             }));
         },
-        [setFormState]
+        [setFormState],
     );
 
     const setPathParameter = useCallback(
@@ -76,7 +76,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 },
             }));
         },
-        [setFormState]
+        [setFormState],
     );
 
     const setQueryParameter = useCallback(
@@ -89,7 +89,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 },
             }));
         },
-        [setFormState]
+        [setFormState],
     );
 
     const setBody = useCallback(
@@ -99,7 +99,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 body: typeof value === "function" ? value(state.body) : value,
             }));
         },
-        [setFormState]
+        [setFormState],
     );
 
     const descriptionRef = useRef<HTMLDivElement>(null);
@@ -128,7 +128,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
         }
 
         function getObject(
-            typeShape: ResolvedHttpRequestBodyShape
+            typeShape: ResolvedHttpRequestBodyShape,
         ): { key: string; valueShape: ResolvedTypeReference }[] {
             if (typeShape.type === "object") {
                 return typeShape.properties().filter((property) => property.valueShape.type === "object");
@@ -149,14 +149,14 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
         }
 
         function getObject(
-            typeShape: ResolvedHttpRequestBodyShape
+            typeShape: ResolvedHttpRequestBodyShape,
         ): { key: string; valueShape: ResolvedTypeReference }[] {
             if (typeShape.type === "object") {
                 return typeShape
                     .properties()
                     .filter(
                         (property) =>
-                            property.valueShape.type === "optional" && property.valueShape.shape.type === "object"
+                            property.valueShape.type === "optional" && property.valueShape.shape.type === "object",
                     );
             }
 
@@ -190,7 +190,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                             secrets.some(
                                                 (secret) =>
                                                     formState?.auth?.type === "bearerAuth" &&
-                                                    formState.auth.token === secret.token
+                                                    formState.auth.token === secret.token,
                                             ) ? (
                                                 <span className="inline-flex items-center gap-1">
                                                     <SecretSpan secret={formState.auth.token} className="text-sm" />
@@ -407,7 +407,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                                                 {param.key}
                                                             </button>
                                                         </li>
-                                                    ) : null
+                                                    ) : null,
                                                 )
                                             ) : (
                                                 <li>
@@ -453,7 +453,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                                                   {param.key}
                                                               </button>
                                                           </li>
-                                                      ) : undefined
+                                                      ) : undefined,
                                                   )
                                                 : null,
                                     })}
@@ -615,7 +615,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                                 handleChange(
                                                     e.target.checked
                                                         ? getDefaultValueForType(unwrappedShape)
-                                                        : undefined
+                                                        : undefined,
                                                 );
                                             }}
                                             className="!-my-2 !-mr-2"

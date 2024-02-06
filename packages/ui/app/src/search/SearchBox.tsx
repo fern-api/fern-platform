@@ -1,6 +1,6 @@
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
-import { ReactElement, useRef, useState } from "react";
+import { forwardRef, ReactElement, useCallback, useImperativeHandle, useRef, useState } from "react";
 import { useSearchBox, UseSearchBoxProps } from "react-instantsearch-hooks-web";
 
 interface SearchBoxProps extends UseSearchBoxProps {
@@ -9,22 +9,30 @@ interface SearchBoxProps extends UseSearchBoxProps {
     placeholder?: string;
 }
 
-export function SearchBox({ queryHook, className, inputClassName, placeholder }: SearchBoxProps): ReactElement {
+export const SearchBox = forwardRef<HTMLInputElement, SearchBoxProps>(function SearchBox(
+    { queryHook, className, inputClassName, placeholder },
+    ref,
+): ReactElement {
     const { query, refine } = useSearchBox({ queryHook });
     const [inputValue, setInputValue] = useState(query);
     const inputRef = useRef<HTMLInputElement>(null);
 
-    function setQuery(newQuery: string) {
-        setInputValue(newQuery);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    useImperativeHandle(ref, () => inputRef.current!);
 
-        refine(newQuery);
-    }
+    const setQuery = useCallback(
+        (newQuery: string) => {
+            setInputValue(newQuery);
+            refine(newQuery);
+        },
+        [refine],
+    );
 
-    function focusInput() {
+    const focusInput = useCallback(() => {
         if (inputRef.current) {
             inputRef.current.focus();
         }
-    }
+    }, []);
 
     useKeyboardCommand({
         key: "A",
@@ -37,18 +45,21 @@ export function SearchBox({ queryHook, className, inputClassName, placeholder }:
         key: "Backspace",
         onPress: focusInput,
         preventDefault: false,
+        capture: true,
     });
 
     useKeyboardPress({
         key: "Space",
         onPress: focusInput,
         preventDefault: false,
+        capture: true,
     });
 
     useKeyboardPress({
         key: "Delete",
         onPress: focusInput,
         preventDefault: false,
+        capture: true,
     });
 
     return (
@@ -95,4 +106,4 @@ export function SearchBox({ queryHook, className, inputClassName, placeholder }:
             </form>
         </div>
     );
-}
+});

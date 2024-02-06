@@ -9,7 +9,7 @@ export interface OptimisticUpdateOptions<T> {
 
 export async function performOptimisticUpdate<T>(
     queryClient: QueryClient,
-    options: OptimisticUpdateOptions<T>
+    options: OptimisticUpdateOptions<T>,
 ): Promise<void> {
     await performOptimisticUpdateWithoutInvalidating(queryClient, options);
     await queryClient.invalidateQueries(options.queryKey, { exact: options.exact });
@@ -17,7 +17,7 @@ export async function performOptimisticUpdate<T>(
 
 export async function performOptimisticUpdateWithoutInvalidating<T>(
     queryClient: QueryClient,
-    { queryKey, value, exact = true }: OptimisticUpdateOptions<T>
+    { queryKey, value, exact = true }: OptimisticUpdateOptions<T>,
 ): Promise<void> {
     await queryClient.cancelQueries(queryKey, { exact });
     queryClient.setQueryData<T>(queryKey, value);

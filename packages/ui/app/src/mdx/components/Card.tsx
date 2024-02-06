@@ -1,6 +1,6 @@
 import classNames from "classnames";
-import Link from "next/link";
-import { FontAwesomeIcon } from "../../commons/FontAwesomeIcon";
+import { RemoteFontAwesomeIcon } from "../../commons/FontAwesomeIcon";
+import { FernCard, FernLinkCard } from "../../components/FernCard";
 
 export declare namespace Card {
     export interface Props {
@@ -13,43 +13,27 @@ export declare namespace Card {
 }
 
 export const Card: React.FC<Card.Props> = ({ title, icon, iconPosition = "top", children, href }) => {
-    const isInternalUrl = typeof href === "string" && href.startsWith("/");
-    const isUrlOnThisPage = typeof href === "string" && href.startsWith("#");
-
-    const className = classNames(
-        "text-sm border-black/20 dark:border-white/20 bg-white/70 dark:bg-white/5 flex items-start rounded-lg border p-4 !no-underline hover:transition mb-4",
-        "grow basis-1/4 not-prose",
-        {
-            "space-y-3 flex-col": iconPosition === "top",
-            "space-x-3 flex-row": iconPosition === "left",
-        },
-        {
-            "hover:border-accent-primary hover:dark:border-accent-primary": href != null,
-        }
-    );
+    const className = classNames("text-sm flex items-start border p-4 mb-4 grow basis-1/4 not-prose rounded-lg", {
+        "space-y-3 flex-col": iconPosition === "top",
+        "space-x-3 flex-row": iconPosition === "left",
+    });
 
     const content = (
         <>
-            <FontAwesomeIcon className="text-intent-default dark:text-intent-default h-5 w-5" icon={icon} />
+            <RemoteFontAwesomeIcon className="bg-intent-default dark:bg-intent-default-dark size-5" icon={icon} />
             <div>
-                <div className="text-text-primary-light dark:text-text-primary-dark">{title}</div>
-                {children != null && <div className="t-muted mt-1">{children}</div>}
+                <div className="text-text-default-light dark:text-text-default-dark font-medium">{title}</div>
+                {children != null && <div className="t-muted mt-1 text-xs">{children}</div>}
             </div>
         </>
     );
 
-    if (isInternalUrl || isUrlOnThisPage) {
+    if (href != null) {
         return (
-            <Link className={className} href={href}>
+            <FernLinkCard className={className} href={href}>
                 {content}
-            </Link>
+            </FernLinkCard>
         );
     }
-
-    const Component = href != null ? "a" : "div";
-    return (
-        <Component className={className} href={href}>
-            {content}
-        </Component>
-    );
+    return <FernCard className={className}>{content}</FernCard>;
 };

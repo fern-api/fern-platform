@@ -11,11 +11,11 @@ export function useColorSelectors(config: DocsV1Read.DocsConfig): ColorSelectors
     const { colorsV3: colors } = config;
 
     const accentPrimary = useMemo(() => {
-        return colors.type === "darkAndLight"
+        return colors?.type === "darkAndLight"
             ? theme === "dark" || theme === "light"
                 ? colors[theme].accentPrimary
                 : undefined
-            : colors.accentPrimary;
+            : colors?.accentPrimary;
     }, [theme, colors]);
 
     const getAccentPrimary = useCallback(
@@ -25,7 +25,7 @@ export function useColorSelectors(config: DocsV1Read.DocsConfig): ColorSelectors
             }
             return `rgba(${accentPrimary.r},${accentPrimary.g},${accentPrimary.b},${opacity})`;
         },
-        [accentPrimary]
+        [accentPrimary],
     );
 
     return { getAccentPrimary };

@@ -30,8 +30,8 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                             },
                             {
                                 "t-muted": !isHovered,
-                                "text-accent-primary-contrast dark:text-accent-primary-dark-contrast": isHovered,
-                            }
+                                "text-accent-primary-contrast-contrast": isHovered,
+                            },
                         )}
                     >
                         {hit.endpoint.method}
@@ -52,9 +52,8 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                                                 },
                                                 {
                                                     "t-muted": !isHovered,
-                                                    "text-accent-primary-contrast dark:text-accent-primary-dark-contrast":
-                                                        isHovered,
-                                                }
+                                                    "text-accent-primary-contrast-contrast": isHovered,
+                                                },
                                             )}
                                             key={idx}
                                         >
@@ -62,7 +61,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                                         </span>
                                     ),
                                     _other: () => null,
-                                })
+                                }),
                             )}
                     </div>
                 </div>
@@ -86,7 +85,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                 </span>
 
                 <ArrowUTurnRightIcon
-                    className={classNames("h-3 w-3 rotate-180", {
+                    className={classNames("size-3 rotate-180", {
                         "text-white dark:text-black": isHovered,
                         "t-muted": !isHovered,
                     })}

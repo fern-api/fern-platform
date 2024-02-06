@@ -24,7 +24,7 @@ export function useIsDirectlyHovering(): useIsDirectlyHovering.Return {
                     assertNever(action);
             }
         },
-        "outside"
+        "outside",
     );
 
     return {

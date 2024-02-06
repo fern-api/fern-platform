@@ -2,12 +2,12 @@ import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { crawlResolvedNavigationItemApiSections, resolveNavigationItems } from "@fern-ui/app-utils";
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
+import { Transition } from "@headlessui/react";
 import classNames from "classnames";
 import { useTheme } from "next-themes";
 import NextNProgress from "nextjs-progressbar";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import tinycolor from "tinycolor2";
-import { ApiPlayground } from "../api-playground/ApiPlayground";
 import { ApiPlaygroundContextProvider } from "../api-playground/ApiPlaygroundContext";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
@@ -16,6 +16,7 @@ import { SearchDialog } from "../search/SearchDialog";
 import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { useSearchService } from "../services/useSearchService";
 import { Sidebar } from "../sidebar/Sidebar";
+import { useViewportContext } from "../viewport-context/useViewportContext";
 import { BgImageGradient } from "./BgImageGradient";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
@@ -60,24 +61,24 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     const { colorsV3 } = config;
 
     const backgroundType = useMemo(() => {
-        if (colorsV3.type === "darkAndLight") {
+        if (colorsV3?.type === "darkAndLight") {
             if (theme === "dark" || theme === "light") {
-                return colorsV3[theme].background.type;
+                return colorsV3?.[theme].background.type;
             }
-            return null;
+            return undefined;
         } else {
-            return colorsV3.background.type;
+            return colorsV3?.background.type;
         }
     }, [colorsV3, theme]);
 
     const [accentColor, setAccentColor] = useState<string>();
     useEffect(() => {
-        if (colorsV3.type === "darkAndLight") {
+        if (colorsV3?.type === "darkAndLight") {
             if (theme === "dark" || theme === "light") {
-                setAccentColor(tinycolor(colorsV3[theme].accentPrimary).toHex8String());
+                setAccentColor(tinycolor(colorsV3?.[theme].accentPrimary).toHex8String());
             }
         } else {
-            setAccentColor(tinycolor(colorsV3.accentPrimary).toHex8String());
+            setAccentColor(tinycolor(colorsV3?.accentPrimary).toHex8String());
         }
     }, [colorsV3, theme]);
 
@@ -91,7 +92,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                 />
             </div>
         ),
-        [backgroundType, hasSpecifiedBackgroundImage]
+        [backgroundType, hasSpecifiedBackgroundImage],
     );
 
     const currentSlug = useMemo(
@@ -99,7 +100,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
             withVersionAndTabSlugs("", { omitDefault: true })
                 .split("/")
                 .filter((s) => s.length > 0),
-        [withVersionAndTabSlugs]
+        [withVersionAndTabSlugs],
     );
 
     const navigationItems = useMemo(() => {
@@ -117,6 +118,8 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     ]);
 
     const apiSections = useMemo(() => crawlResolvedNavigationItemApiSections(navigationItems), [navigationItems]);
+
+    const { layoutBreakpoint: breakpoint } = useViewportContext();
 
     return (
         <>
@@ -136,10 +139,10 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
 
             <ApiPlaygroundContextProvider apiSections={apiSections}>
                 <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
-                    <div className="border-border-concealed-light dark:border-border-concealed-dark dark:shadow-header-dark fixed inset-x-0 top-0 z-30 h-16 overflow-visible border-b backdrop-blur-lg lg:backdrop-blur">
+                    <div className="border-border-concealed-light dark:border-border-concealed-dark dark:shadow-header-dark h-header-height fixed inset-x-0 top-0 z-30 overflow-visible border-b backdrop-blur-lg lg:backdrop-blur">
                         {renderBackground()}
                         <Header
-                            className="max-w-8xl mx-auto"
+                            className="max-w-page-width mx-auto"
                             config={config}
                             openSearchDialog={openSearchDialog}
                             isMobileSidebarOpen={isMobileSidebarOpen}
@@ -149,40 +152,52 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                         />
                     </div>
 
-                    <div className="max-w-8xl relative mx-auto flex min-h-0 w-full min-w-0 flex-1">
+                    <div className="max-w-page-width relative mx-auto flex min-h-0 w-full min-w-0 flex-1">
                         {isMobileSidebarOpen && (
                             <div
                                 className="fixed inset-0 z-20 block bg-white/60 lg:hidden dark:bg-black/40"
                                 onClick={closeMobileSidebar}
                             />
                         )}
-                        <div
-                            className={classNames(
-                                "z-20 fixed inset-0 top-16 lg:mt-16 lg:sticky lg:h-[calc(100vh-64px)] lg:w-72 sm:max-w-[20rem] sm:border-r lg:border-none border-border-concealed-light dark:border-border-concealed-dark",
-                                "transition-opacity transition-transform lg:transition-none sm:-translate-x-full lg:transition-none lg:translate-x-0",
-                                {
-                                    "opacity-0 sm:opacity-100 sm:block pointer-events-none lg:pointer-events-auto sm:-translate-x-full":
-                                        !isMobileSidebarOpen,
-                                    "sm:translate-x-0 opacity-100": isMobileSidebarOpen,
-                                }
-                            )}
-                        >
-                            {renderBackground("lg:hidden backdrop-blur-lg")}
-                            <Sidebar
-                                navigationItems={navigationItems}
-                                currentSlug={currentSlug}
-                                registerScrolledToPathListener={registerScrolledToPathListener}
-                                searchInfo={search}
-                                algoliaSearchIndex={algoliaSearchIndex}
-                                navbarLinks={config.navbarLinks}
-                            />
-                        </div>
 
-                        <main className={classNames("relative flex w-full min-w-0 flex-1 flex-col pt-16")}>
+                        {["lg", "xl", "2xl"].includes(breakpoint) ? (
+                            <div className="w-sidebar-width mt-header-height top-header-height h-vh-minus-header sticky z-20">
+                                <Sidebar
+                                    navigationItems={navigationItems}
+                                    currentSlug={currentSlug}
+                                    registerScrolledToPathListener={registerScrolledToPathListener}
+                                    searchInfo={search}
+                                    algoliaSearchIndex={algoliaSearchIndex}
+                                    navbarLinks={config.navbarLinks}
+                                />
+                            </div>
+                        ) : (
+                            <Transition
+                                className="border-border-concealed-light dark:border-border-concealed-dark top-header-height fixed inset-0 z-20 sm:w-72 sm:border-r"
+                                show={isMobileSidebarOpen}
+                                enter="transition ease-in-out duration-300 transform"
+                                enterFrom="-translate-x-full"
+                                enterTo="translate-x-0"
+                                leave="transition ease-in-out duration-300 transform"
+                                leaveFrom="translate-x-0"
+                                leaveTo="-translate-x-full"
+                            >
+                                {renderBackground("lg:hidden backdrop-blur-lg")}
+                                <Sidebar
+                                    navigationItems={navigationItems}
+                                    currentSlug={currentSlug}
+                                    registerScrolledToPathListener={registerScrolledToPathListener}
+                                    searchInfo={search}
+                                    algoliaSearchIndex={algoliaSearchIndex}
+                                    navbarLinks={config.navbarLinks}
+                                />
+                            </Transition>
+                        )}
+
+                        <main className={classNames("relative flex w-full min-w-0 flex-1 flex-col pt-header-height")}>
                             <DocsMainContent navigationItems={navigationItems} />
                         </main>
                     </div>
-                    <ApiPlayground apiSections={apiSections} />
                 </div>
             </ApiPlaygroundContextProvider>
         </>

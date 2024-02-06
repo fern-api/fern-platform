@@ -8,7 +8,7 @@ import {
 
 export function visitUseQueryResult<T, U, E = unknown>(
     result: UseQueryResult<T, E>,
-    visitor: UseQueryResultVisitor<T, E, U>
+    visitor: UseQueryResultVisitor<T, E, U>,
 ): U {
     if (result.isSuccess) {
         return visitor.loaded(result);

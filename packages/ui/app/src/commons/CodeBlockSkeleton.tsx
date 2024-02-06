@@ -30,7 +30,7 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
                     "w-full border-l border-r border-b rounded-bl-lg rounded-br-lg border-border-default-light dark:border-border-default-dark":
                         !usePlainStyles,
                 },
-                className
+                className,
             )}
             style={style}
         >

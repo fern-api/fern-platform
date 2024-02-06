@@ -60,7 +60,7 @@ export const ResizeHandle: React.FC<ResizeHandle.Props> = ({
             });
             onStartResizing?.();
         },
-        [contextValue, onStartResizing]
+        [contextValue, onStartResizing],
     );
 
     const onStop: DraggableEventHandler = useCallback(() => {
@@ -83,7 +83,7 @@ export const ResizeHandle: React.FC<ResizeHandle.Props> = ({
                 lastEvent.current = nextEvent;
             }
         },
-        [dragStart, onResize]
+        [dragStart, onResize],
     );
 
     const { isHovering, onMouseOver, onMouseLeave, onMouseMove } = useIsHovering();

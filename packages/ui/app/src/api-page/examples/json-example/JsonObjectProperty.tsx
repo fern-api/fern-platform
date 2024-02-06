@@ -43,7 +43,7 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
                 },
             ],
         }),
-        [breadcrumbs, object, propertyKey]
+        [breadcrumbs, object, propertyKey],
     );
 
     const { selectedProperty } = useJsonExampleContext();
@@ -77,13 +77,13 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
     const { isSelected: isAncestorSelected } = useContext(JsonPropertySelectionContext);
     const propertySelectionContextValue = useMemo(
         (): JsonPropertySelectionContextValue => ({ isSelected: isSelected || isAncestorSelected }),
-        [isAncestorSelected, isSelected]
+        [isAncestorSelected, isSelected],
     );
 
     return (
         <JsonPropertySelectionContext.Provider value={propertySelectionContextValue}>
             <JsonExampleLine ref={topLineRef}>
-                <span className="text-text-primary-light dark:text-text-primary-dark">
+                <span className="text-text-default-light dark:text-text-default-dark">
                     &quot;{propertyKey}&quot;{": "}
                 </span>
                 <JsonItemTopLineContent value={propertyValue} isNonLastItemInCollection={!isLastProperty} />

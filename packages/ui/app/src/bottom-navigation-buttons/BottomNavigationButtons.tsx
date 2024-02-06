@@ -10,16 +10,16 @@ export const BottomNavigationButtons: React.FC = () => {
     }
 
     return (
-        <div className="flex flex-col">
-            <div className="mb-6 mt-10 h-px bg-[#A7A7B0]/20"></div>
-            <div className="flex justify-between">
+        <div>
+            {/* <div className="flex justify-between py-10">
                 {leftNeighbor != null ? (
                     <BottomNavigationButton docsNode={leftNeighbor} direction="previous" />
                 ) : (
                     <div />
                 )}
                 {rightNeighbor != null ? <BottomNavigationButton docsNode={rightNeighbor} direction="next" /> : <div />}
-            </div>
+            </div> */}
+            {rightNeighbor != null && <BottomNavigationButton docsNode={rightNeighbor} />}
         </div>
     );
 };

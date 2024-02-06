@@ -29,10 +29,10 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                     responseBody.shape.type === "fileDownload"
                         ? "returns a file"
                         : responseBody.shape.type === "streamingText"
-                        ? "sends text responses over a long-lived HTTP connection"
-                        : responseBody.shape.type === "streamCondition"
-                        ? "return a stream"
-                        : `return ${renderTypeShorthand(responseBody.shape, { withArticle: true })}`
+                          ? "sends text responses over a long-lived HTTP connection"
+                          : responseBody.shape.type === "streamCondition"
+                            ? "return a stream"
+                            : `return ${renderTypeShorthand(responseBody.shape, { withArticle: true })}`
                 }.`}
             </div>
             {responseBody.shape.type === "fileDownload" ||

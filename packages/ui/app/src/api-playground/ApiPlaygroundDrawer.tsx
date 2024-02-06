@@ -123,10 +123,8 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
                 ) : (
                     <div className="flex items-center">
                         <span className="inline-flex items-baseline gap-2">
-                            <span className="text-accent-primary dark:text-accent-primary-dark text-sm font-semibold">
-                                API Playground
-                            </span>
-                            <span className="bg-tag-primary dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark flex h-5 items-center rounded-md px-1.5 py-1 font-mono text-xs uppercase">
+                            <span className="text-accent-primary text-sm font-semibold">API Playground</span>
+                            <span className="bg-tag-primary text-accent-primary flex h-5 items-center rounded-md px-1.5 py-1 font-mono text-xs uppercase">
                                 BETA
                             </span>
                         </span>

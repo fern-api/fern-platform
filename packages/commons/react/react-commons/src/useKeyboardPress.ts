@@ -8,8 +8,9 @@ type OtherKey = "Enter" | "Escape" | "Slash" | "Backspace" | "Tab" | "Space" | "
 export declare namespace useKeyboardPress {
     export interface Args {
         key: UppercaseLetter | Digit | Arrow | OtherKey;
-        onPress: () => void | Promise<void>;
+        onPress: (e: KeyboardEvent) => void | Promise<void>;
         preventDefault?: boolean;
+        capture?: boolean;
     }
 
     export type Return = void;
@@ -28,7 +29,7 @@ function isDigit(key: unknown): key is Digit {
 }
 
 export function useKeyboardPress(args: useKeyboardPress.Args): void {
-    const { key, onPress, preventDefault = false } = args;
+    const { key, onPress, preventDefault = false, capture } = args;
 
     useEffect(() => {
         async function handleSaveKeyPress(e: KeyboardEvent) {
@@ -37,22 +38,22 @@ export function useKeyboardPress(args: useKeyboardPress.Args): void {
                 (isUppercaseLetter(key)
                     ? `Key${key}`
                     : isArrow(key)
-                    ? `Arrow${key}`
-                    : isDigit(key)
-                    ? `Digit${key}`
-                    : key);
+                      ? `Arrow${key}`
+                      : isDigit(key)
+                        ? `Digit${key}`
+                        : key);
             if (doKeysMatch) {
                 if (preventDefault) {
                     e.preventDefault();
                 }
-                await onPress();
+                await onPress(e);
             }
         }
 
-        document.addEventListener("keydown", handleSaveKeyPress, true);
+        document.addEventListener("keydown", handleSaveKeyPress, capture);
 
         return () => {
-            document.removeEventListener("keydown", handleSaveKeyPress, true);
+            document.removeEventListener("keydown", handleSaveKeyPress, capture);
         };
-    }, [key, onPress, preventDefault]);
+    }, [capture, key, onPress, preventDefault]);
 }

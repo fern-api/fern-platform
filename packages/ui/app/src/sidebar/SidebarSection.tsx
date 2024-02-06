@@ -158,7 +158,7 @@ export const SidebarSection: FC<SidebarSectionProps> = ({
                         );
                     },
                     _other: () => null,
-                })
+                }),
             )}
         </ul>
     );

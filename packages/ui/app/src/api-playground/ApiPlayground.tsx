@@ -52,7 +52,7 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
         (offset: number) => {
             windowHeight != null && setHeight(Math.min(windowHeight - 64, windowHeight - offset));
         },
-        [setHeight, windowHeight]
+        [setHeight, windowHeight],
     );
 
     const handleVerticalResize = useVerticalSplitPane(setOffset);
@@ -81,7 +81,7 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
                 };
             });
         },
-        [selectionState, setGlobalFormState]
+        [selectionState, setGlobalFormState],
     );
 
     const playgroundFormState =
@@ -98,7 +98,7 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
                 return !current;
             });
         },
-        [setPlaygroundOpen]
+        [setPlaygroundOpen],
     );
     const resetWithExample = useCallback(() => {
         if (selectionState == null) {
@@ -108,8 +108,8 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
             getInitialModalFormStateWithExample(
                 selectionState.apiSection.auth,
                 selectionState.endpoint,
-                selectionState.endpoint?.examples[0]
-            )
+                selectionState.endpoint?.examples[0],
+            ),
         );
     }, [selectionState, setPlaygroundFormState]);
 
@@ -149,7 +149,7 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
                 };
             });
         },
-        [closeSecretsModal, setPlaygroundFormState]
+        [closeSecretsModal, setPlaygroundFormState],
     );
 
     if (!hasPlayground) {
@@ -202,7 +202,7 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
 
 function getInitialModalFormState(
     auth: APIV1Read.ApiAuth | undefined,
-    endpoint: ResolvedEndpointDefinition | undefined
+    endpoint: ResolvedEndpointDefinition | undefined,
 ): PlaygroundRequestFormState {
     return {
         auth: getInitialAuthState(auth),
@@ -228,7 +228,7 @@ function getInitialAuthState(auth: APIV1Read.ApiAuth | undefined): PlaygroundReq
 function getInitialModalFormStateWithExample(
     auth: APIV1Read.ApiAuth | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
-    exampleCall: APIV1Read.ExampleEndpointCall | undefined
+    exampleCall: APIV1Read.ExampleEndpointCall | undefined,
 ): PlaygroundRequestFormState {
     if (exampleCall == null) {
         return getInitialModalFormState(auth, endpoint);

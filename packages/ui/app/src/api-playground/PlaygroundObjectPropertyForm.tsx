@@ -27,7 +27,7 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
         (newValue: unknown) => {
             onChange(property.key, newValue);
         },
-        [onChange, property.key]
+        [onChange, property.key],
     );
 
     const expandable = isExpandable(property.valueShape, value);
@@ -42,12 +42,12 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
             if (property.valueShape.type === "optional") {
                 onChange(
                     property.key,
-                    e.target.checked ? getDefaultValueForType(property.valueShape.shape) : undefined
+                    e.target.checked ? getDefaultValueForType(property.valueShape.shape) : undefined,
                 );
                 setExpanded();
             }
         },
-        [onChange, property.key, property.valueShape, setExpanded]
+        [onChange, property.key, property.valueShape, setExpanded],
     );
 
     useEffect(() => {
@@ -157,11 +157,11 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
                 return { ...oldObject, [key]: typeof newValue === "function" ? newValue(oldObject[key]) : newValue };
             });
         },
-        [onChange]
+        [onChange],
     );
     const propertiesToRender: ResolvedObjectProperty[] = useMemo(() => {
         const filteredProperties = properties.filter((property) =>
-            hideObjects ? !isObjectOrOptionalObject(property.valueShape) : true
+            hideObjects ? !isObjectOrOptionalObject(property.valueShape) : true,
         );
         if (sortProperties) {
             return sortBy(filteredProperties, (property) => property.key);

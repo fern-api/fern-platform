@@ -8,7 +8,7 @@ export interface TypeShorthandOptions {
 
 export function renderTypeShorthand(
     shape: ResolvedTypeReference,
-    { plural = false, withArticle = false }: TypeShorthandOptions = { plural: false, withArticle: false }
+    { plural = false, withArticle = false }: TypeShorthandOptions = { plural: false, withArticle: false },
 ): string {
     const maybeWithArticle = (article: string, stringWithoutArticle: string) =>
         withArticle ? `${article} ${stringWithoutArticle}` : stringWithoutArticle;

@@ -24,13 +24,15 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
     const { activeNavigatable } = useNavigationContext();
     const { activeNavigationConfigContext, withVersionSlug } = useDocsSelectors();
     const { openSearchDialog } = useSearchContext();
-    const searchService = useSearchService(searchInfo, algoliaSearchIndex);
-
-    const showSearchBar = searchService.isAvailable;
     const showTabs = activeNavigationConfigContext.type === "tabbed";
 
+    const showSearchBar = useSearchService(searchInfo, algoliaSearchIndex).isAvailable;
     const searchBar = useMemo(() => {
-        return showSearchBar ? <SidebarSearchBar onClick={openSearchDialog} className="hidden lg:flex" /> : null;
+        return showSearchBar ? (
+            <div className="hidden lg:block">
+                <SidebarSearchBar onClick={openSearchDialog} className="w-full" />
+            </div>
+        ) : null;
     }, [showSearchBar, openSearchDialog]);
 
     const tabs = useMemo(() => {
@@ -58,18 +60,20 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
     return (
         <div
             className={classNames(
-                "flex flex-col px-4 lg:pt-8 lg:backdrop-blur",
+                "flex flex-col px-4 lg:pt-4 lg:backdrop-blur",
                 {
                     "border-b border-border-concealed-light dark:border-border-concealed-dark": tabs != null,
                 },
                 {
                     "py-4 lg:pb-2": tabs != null,
                 },
-                className
+                className,
             )}
         >
             {searchBar}
             {tabs}
+
+            {/* <div className="from-background dark:from-background-dark absolute inset-x-0 top-full -ml-4 mt-px h-8 bg-gradient-to-b" /> */}
         </div>
     );
 };

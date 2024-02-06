@@ -16,7 +16,7 @@ export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({ enumValues, on
         (enumValue: APIV1Read.EnumValue) => {
             onChange(enumValue.value);
         },
-        [onChange]
+        [onChange],
     );
 
     if (enumValues.length === 0) {

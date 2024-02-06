@@ -4,13 +4,14 @@ import remarkGfm from "remark-gfm";
 
 const REMARK_PLUGINS = [remarkGfm];
 
-export interface TableOfContentsItem {
-    // heading: marked.Tokens.Heading | undefined;
-    simpleString: string;
-    children: TableOfContentsItem[];
+export interface FernDocsFrontmatter {
+    title?: string;
+    description?: string;
+    editThisPageUrl?: string;
+    image?: string;
 }
 
-export type SerializedMdxContent = MDXRemoteSerializeResult<Record<string, unknown>, Record<string, unknown>>;
+export type SerializedMdxContent = MDXRemoteSerializeResult<Record<string, unknown>, FernDocsFrontmatter>;
 
 /**
  * Should only be invoked server-side.
@@ -27,6 +28,6 @@ export async function serializeMdxContent(content: string): Promise<SerializedMd
              */
             development: process.env.NODE_ENV !== "production",
         },
-        parseFrontmatter: false,
+        parseFrontmatter: true,
     });
 }

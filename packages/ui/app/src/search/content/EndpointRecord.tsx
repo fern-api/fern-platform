@@ -22,7 +22,7 @@ export const EndpointRecord: React.FC<EndpointRecord.Props> = ({ hit, isHovered 
                 <Icon
                     className={classNames({
                         "text-text-muted-light dark:text-text-muted-dark": !isHovered,
-                        "text-accent-primary dark:text-accent-primary-dark": isHovered,
+                        "text-accent-primary": isHovered,
                     })}
                     size={14}
                     icon="code"
@@ -33,7 +33,7 @@ export const EndpointRecord: React.FC<EndpointRecord.Props> = ({ hit, isHovered 
                 <div className="flex justify-between">
                     <Snippet
                         className={classNames("line-clamp-1 text-start", {
-                            "text-text-primary-light dark:text-text-primary-dark": !isHovered,
+                            "text-text-default-light dark:text-text-default-dark": !isHovered,
                             "text-white dark:text-black": isHovered,
                         })}
                         attribute="title"

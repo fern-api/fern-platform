@@ -1,6 +1,9 @@
-import { getFullSlugForNavigatable, type ResolvedPath } from "@fern-ui/app-utils";
+import { NavigatableDocsNode } from "@fern-api/fdr-sdk";
+import { FernDocsFrontmatter, getFullSlugForNavigatable, type ResolvedPath } from "@fern-ui/app-utils";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
@@ -34,7 +37,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         const node = pathResolver.resolveNavigatable(resolvedPath.fullSlug);
         if (node == null) {
             throw new Error(
-                `Implementation Error. Cannot resolve navigatable for resolved path ${resolvedPath.fullSlug}`
+                `Implementation Error. Cannot resolve navigatable for resolved path ${resolvedPath.fullSlug}`,
             );
         }
         return node;
@@ -79,8 +82,8 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 userIsScrolling.current = false;
             },
             300,
-            { leading: false, trailing: true }
-        )
+            { leading: false, trailing: true },
+        ),
     );
 
     const resizeObserver = useRef<ResizeObserver>();
@@ -184,6 +187,10 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const frontmatter = getFrontmatter(resolvedPath);
+    const activeTitle = convertToTitle(activeNavigatable, frontmatter);
+    const activeDescription = convertToDescription(activeNavigatable, frontmatter);
+
     return (
         <NavigationContext.Provider
             value={{
@@ -200,7 +207,47 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 hydrated: hydrated.value,
             }}
         >
+            <Head>
+                {activeTitle != null && <title>{activeTitle}</title>}
+                {activeDescription != null && <meta name="description" content={activeDescription} />}
+                {frontmatter?.image != null && <meta property="og:image" content={frontmatter.image} />}
+            </Head>
             {children}
         </NavigationContext.Provider>
     );
 };
+
+function getFrontmatter(resolvedPath: ResolvedPath): FernDocsFrontmatter | undefined {
+    if (resolvedPath.type === "custom-markdown-page") {
+        return resolvedPath.serializedMdxContent.frontmatter;
+    }
+    return undefined;
+}
+
+function convertToTitle(
+    navigatable: NavigatableDocsNode,
+    frontmatter: FernDocsFrontmatter | undefined,
+): string | undefined {
+    return visitDiscriminatedUnion(navigatable, "type")._visit({
+        page: (page) => frontmatter?.title ?? page.page.title,
+        "top-level-endpoint": (endpoint) => endpoint.endpoint.name,
+        "top-level-webhook": (webhook) => webhook.webhook.name,
+        webhook: (webhook) => webhook.webhook.name,
+        endpoint: (endpoint) => endpoint.endpoint.name,
+        _other: () => undefined,
+    });
+}
+
+function convertToDescription(
+    navigatable: NavigatableDocsNode,
+    frontmatter: FernDocsFrontmatter | undefined,
+): string | undefined {
+    return visitDiscriminatedUnion(navigatable, "type")._visit({
+        page: () => frontmatter?.description,
+        "top-level-endpoint": (endpoint) => endpoint.endpoint.description,
+        "top-level-webhook": (webhook) => webhook.webhook.description,
+        webhook: (webhook) => webhook.webhook.description,
+        endpoint: (endpoint) => endpoint.endpoint.description,
+        _other: () => undefined,
+    });
+}

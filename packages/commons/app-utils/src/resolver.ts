@@ -6,7 +6,7 @@ import { titleCase } from "./titleCase";
 export function resolveNavigationItems(
     navigationItems: DocsV1Read.NavigationItem[],
     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
-    parentSlugs: string[] = []
+    parentSlugs: string[] = [],
 ): ResolvedNavigationItem[] {
     const resolvedNavigationItems: ResolvedNavigationItem[] = [];
 
@@ -47,11 +47,11 @@ export function resolveNavigationItems(
                                 definition.id,
                                 endpoint,
                                 definition.types,
-                                definitionSlug
-                            )
+                                definitionSlug,
+                            ),
                         ),
                         webhooks: definition.rootPackage.webhooks.map((webhook) =>
-                            resolveWebhookDefinition(webhook, definition.types, definitionSlug)
+                            resolveWebhookDefinition(webhook, definition.types, definitionSlug),
                         ),
                         subpackages: definition.rootPackage.subpackages
                             .map((subpackageId) =>
@@ -60,8 +60,8 @@ export function resolveNavigationItems(
                                     subpackageId,
                                     definition.subpackages,
                                     definition.types,
-                                    api.skipUrlSlug ? parentSlugs : [...parentSlugs, api.urlSlug]
-                                )
+                                    api.skipUrlSlug ? parentSlugs : [...parentSlugs, api.urlSlug],
+                                ),
                             )
                             .filter(isNonNullish),
                         pointsTo: definition.rootPackage.pointsTo,
@@ -88,7 +88,7 @@ function resolveSubpackage(
     subpackageId: APIV1Read.SubpackageId,
     subpackagesMap: Record<string, APIV1Read.ApiDefinitionSubpackage>,
     types: Record<string, APIV1Read.TypeDefinition>,
-    parentSlugs: string[]
+    parentSlugs: string[],
 ): ResolvedSubpackage | undefined {
     const subpackage = subpackagesMap[subpackageId];
     if (subpackage == null) {
@@ -96,7 +96,7 @@ function resolveSubpackage(
     }
     const slug = [...parentSlugs, subpackage.urlSlug];
     const endpoints = subpackage.endpoints.map((endpoint) =>
-        resolveEndpointDefinition(apiSectionId, subpackageId, endpoint, types, slug)
+        resolveEndpointDefinition(apiSectionId, subpackageId, endpoint, types, slug),
     );
     const webhooks = subpackage.webhooks.map((webhook) => resolveWebhookDefinition(webhook, types, slug));
     const subpackages = subpackage.subpackages
@@ -125,13 +125,13 @@ function resolveEndpointDefinition(
     apiPackageId: FdrAPI.ApiDefinitionId,
     endpoint: APIV1Read.EndpointDefinition,
     types: Record<string, APIV1Read.TypeDefinition>,
-    parentSlugs: string[]
+    parentSlugs: string[],
 ): ResolvedEndpointDefinition {
     const pathParameters = endpoint.path.pathParameters.map(
         (parameter): ResolvedParameter => ({
             ...parameter,
             shape: resolveTypeReference(parameter.type, types),
-        })
+        }),
     );
     const path = endpoint.path.parts.map((pathPart): ResolvedEndpointPathParts => {
         if (pathPart.type === "literal") {
@@ -187,7 +187,7 @@ function resolveEndpointDefinition(
                 ...error,
                 name: error.name,
                 shape: error.type != null ? resolveTypeShape(error.type, types) : undefined,
-            })
+            }),
         ),
     };
 }
@@ -195,7 +195,7 @@ function resolveEndpointDefinition(
 function resolveWebhookDefinition(
     webhook: APIV1Read.WebhookDefinition,
     types: Record<string, APIV1Read.TypeDefinition>,
-    parentSlugs: string[]
+    parentSlugs: string[],
 ): ResolvedWebhookDefinition {
     return {
         slug: [...parentSlugs, webhook.urlSlug],
@@ -213,7 +213,7 @@ function resolveWebhookDefinition(
 
 function resolveWebhookPayloadShape(
     payloadShape: APIV1Read.WebhookPayloadShape,
-    types: Record<string, APIV1Read.TypeDefinition>
+    types: Record<string, APIV1Read.TypeDefinition>,
 ): ResolvedTypeReference {
     return visitDiscriminatedUnion(payloadShape, "type")._visit<ResolvedTypeReference>({
         object: (object) => ({
@@ -227,7 +227,7 @@ function resolveWebhookPayloadShape(
 
 function resolveRequestBodyShape(
     requestBodyShape: APIV1Read.HttpRequestBodyShape,
-    types: Record<string, APIV1Read.TypeDefinition>
+    types: Record<string, APIV1Read.TypeDefinition>,
 ): ResolvedHttpRequestBodyShape {
     return visitDiscriminatedUnion(requestBodyShape, "type")._visit<ResolvedHttpRequestBodyShape>({
         object: (object) => ({
@@ -242,7 +242,7 @@ function resolveRequestBodyShape(
 
 function resolveResponseBodyShape(
     responseBodyShape: APIV1Read.HttpResponseBodyShape,
-    types: Record<string, APIV1Read.TypeDefinition>
+    types: Record<string, APIV1Read.TypeDefinition>,
 ): ResolvedHttpResponseBodyShape {
     return visitDiscriminatedUnion(responseBodyShape, "type")._visit<ResolvedHttpResponseBodyShape>({
         object: (object) => ({
@@ -253,6 +253,7 @@ function resolveResponseBodyShape(
         streamingText: (streamingText) => streamingText,
         streamCondition: (streamCondition) => streamCondition,
         reference: (reference) => ({ type: "reference", shape: () => resolveTypeReference(reference.value, types) }),
+        stream: () => ({ type: "unknown" }), //TODO IMPLEMENT
         _other: () => ({ type: "unknown" }),
     });
 }
@@ -260,7 +261,7 @@ function resolveResponseBodyShape(
 function resolveTypeShape(
     typeShape: APIV1Read.TypeShape,
     types: Record<string, APIV1Read.TypeDefinition>,
-    unwrapOptional: boolean = false
+    unwrapOptional: boolean = false,
 ): ResolvedTypeReference {
     return visitDiscriminatedUnion(typeShape, "type")._visit<ResolvedTypeReference>({
         object: (object) => ({
@@ -292,7 +293,7 @@ function resolveTypeShape(
 function resolveTypeReference(
     typeReference: APIV1Read.TypeReference,
     types: Record<string, APIV1Read.TypeDefinition>,
-    unwrapOptional: boolean = false
+    unwrapOptional: boolean = false,
 ): ResolvedTypeReference {
     return visitDiscriminatedUnion(typeReference, "type")._visit<ResolvedTypeReference>({
         literal: (literal) => literal.value,
@@ -322,7 +323,7 @@ function resolveTypeReference(
 
 function resolveObjectProperties(
     object: APIV1Read.ObjectType,
-    types: Record<string, APIV1Read.TypeDefinition>
+    types: Record<string, APIV1Read.TypeDefinition>,
 ): ResolvedObjectProperty[] {
     const directProperties = object.properties.map((property) => ({
         ...property,
@@ -342,7 +343,7 @@ function resolveObjectProperties(
     }
     const propertyKeys = new Set(object.properties.map((property) => property.key));
     const filteredExtendedProperties = extendedProperties.filter(
-        (extendedProperty) => !propertyKeys.has(extendedProperty.key)
+        (extendedProperty) => !propertyKeys.has(extendedProperty.key),
     );
     return sortBy([...directProperties, ...filteredExtendedProperties], (property) => property.key);
 }
@@ -373,13 +374,13 @@ export interface ResolvedNavigationItemApiSection
 }
 
 export function isResolvedNavigationItemApiSection(
-    item: ResolvedNavigationItem
+    item: ResolvedNavigationItem,
 ): item is ResolvedNavigationItemApiSection {
     return item.type === "apiSection";
 }
 
 export function crawlResolvedNavigationItemApiSections(
-    items: ResolvedNavigationItem[]
+    items: ResolvedNavigationItem[],
 ): ResolvedNavigationItemApiSection[] {
     const packages: ResolvedNavigationItemApiSection[] = [];
     for (const item of items) {
@@ -579,7 +580,7 @@ interface ResolvedHttpRequestBodyShapeVisitor<T> {
 
 export function visitResolvedHttpRequestBodyShape<T>(
     shape: ResolvedHttpRequestBodyShape,
-    visitor: ResolvedHttpRequestBodyShapeVisitor<T>
+    visitor: ResolvedHttpRequestBodyShapeVisitor<T>,
 ): T {
     if (shape.type === "fileUpload") {
         return visitor.fileUpload(shape);
@@ -603,7 +604,7 @@ interface ResolvedHttpResponseBodyShapeVisitor<T> {
 
 export function visitResolvedHttpResponseBodyShape<T>(
     shape: ResolvedHttpResponseBodyShape,
-    visitor: ResolvedHttpResponseBodyShapeVisitor<T>
+    visitor: ResolvedHttpResponseBodyShapeVisitor<T>,
 ): T {
     switch (shape.type) {
         case "fileDownload":

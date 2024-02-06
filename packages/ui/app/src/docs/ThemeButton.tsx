@@ -3,6 +3,7 @@ import classNames from "classnames";
 import { useTheme } from "next-themes";
 import { MoonIcon } from "../commons/icons/MoonIcon";
 import { SunIcon } from "../commons/icons/SunIcon";
+import { FernButton } from "../components/FernButton";
 
 export declare namespace ThemeButton {
     export interface Props {
@@ -17,13 +18,17 @@ export const ThemeButton: React.FC<ThemeButton.Props> = ({ className }) => {
     const IconToUse = mounted && resolvedTheme === "dark" ? MoonIcon : SunIcon;
 
     return (
-        <button
-            className={classNames("group flex w-9 items-center justify-center self-stretch", className)}
+        <FernButton
+            className={classNames("group !ml-3", className)}
             onClick={() => {
                 setTheme(resolvedTheme === "dark" ? "light" : "dark");
             }}
-        >
-            <IconToUse className="text-intent-default group-hover:text-text-primary-light group-hover:dark:text-text-primary-dark h-4 w-4 transition" />
-        </button>
+            rounded={true}
+            buttonStyle="minimal"
+            intent="primary"
+            icon={
+                <IconToUse className="text-intent-default dark:text-intent-default-dark group-hover:t-primary size-4 group-hover:transition" />
+            }
+        />
     );
 };
