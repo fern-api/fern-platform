@@ -210,9 +210,9 @@ async function uploadToAlgolia(
     }
 
     // skip algolia step for preview
-    if (docsRegistrationInfo.isPreview) {
-        return;
-    }
+    // if (docsRegistrationInfo.isPreview) {
+    //     return;
+    // }
 
     app.logger.debug(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Generating new index segments`);
     const generateNewIndexSegmentsResult = app.services.algoliaIndexSegmentManager.generateIndexSegmentsForDefinition({
