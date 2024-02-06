@@ -120,7 +120,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                         // the py-10 is the same as the 40px below
                         "pb-10 pt-8",
                         // the 4rem is the same as the h-10 as the Header
-                        "max-h-[calc(100vh-4rem)]",
+                        "max-h-vh-minus-header",
                         // hide on mobile,
                         "hidden lg:flex",
                     )}

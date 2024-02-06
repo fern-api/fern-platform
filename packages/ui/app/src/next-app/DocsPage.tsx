@@ -68,22 +68,12 @@ function getLayoutVariables(layout: DocsV1Read.DocsLayoutConfig | undefined): st
                   _other: () => "4rem",
               });
 
-    const headerHeightPadded =
-        layout?.headerHeight == null
-            ? "5rem"
-            : visitDiscriminatedUnion(layout.headerHeight, "type")._visit({
-                  px: (px) => `${px.value + 16}px`,
-                  rem: (rem) => `${rem.value + 1}rem`,
-                  _other: () => "5rem",
-              });
-
     return `
 :root {
     --spacing-page-width: ${pageWidth};
     --spacing-content-width: ${contentWidth};
     --spacing-sidebar-width: ${sidebarWidth};
     --spacing-header-height: ${headerHeight};
-    --spacing-header-height-padded: ${headerHeightPadded};
 }
 `;
 }

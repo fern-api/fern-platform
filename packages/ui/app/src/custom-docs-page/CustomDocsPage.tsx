@@ -51,7 +51,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
                 </div>
                 <aside
                     id="right-sidebar"
-                    className="top-header-height sticky hidden h-[calc(100vh-64px)] w-[19rem] shrink-0 pl-4 xl:block"
+                    className="top-header-height h-vh-minus-header sticky hidden w-[19rem] shrink-0 pl-4 xl:block"
                 >
                     <FernScrollArea viewportClassName="px-4 pb-12 pt-8">
                         <TableOfContents renderedHtml={mdxString} />

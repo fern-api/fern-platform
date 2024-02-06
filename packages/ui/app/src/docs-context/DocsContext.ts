@@ -11,6 +11,7 @@ const EMPTY_DEFINITION_SUMMARY: DocsDefinitionSummary = {
 export const DocsContext = React.createContext<DocsContextValue>({
     domain: "app.buildwithfern.com",
     basePath: undefined,
+    config: EMPTY_DEFINITION.config,
     pathResolver: new PathResolver({ definition: EMPTY_DEFINITION_SUMMARY }),
     resolveFile: () => undefined,
 });
@@ -19,6 +20,7 @@ export interface DocsContextValue {
     domain: string;
     basePath: string | undefined;
     pathResolver: PathResolver;
+    config: DocsV1Read.DocsConfig;
 
     resolveFile: (fileId: DocsV1Read.FileId) => DocsV1Read.Url | undefined;
 }

@@ -47,6 +47,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             value={{
                 domain: baseUrl.domain,
                 basePath: baseUrl.basePath,
+                config,
                 pathResolver,
                 resolveFile,
             }}

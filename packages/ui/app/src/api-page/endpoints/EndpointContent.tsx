@@ -4,12 +4,14 @@ import {
     ResolvedEndpointDefinition,
     ResolvedNavigationItemApiSection,
 } from "@fern-ui/app-utils";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
+import { useDocsContext } from "../../docs-context/useDocsContext";
 import { useNavigationContext } from "../../navigation-context";
 import { useViewportContext } from "../../viewport-context/useViewportContext";
 import { CodeExample, generateCodeExamples } from "../examples/code-example";
@@ -70,6 +72,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     route,
 }) => {
     const router = useRouter();
+    const { config } = useDocsContext();
     const { layoutBreakpoint, viewportSize } = useViewportContext();
     const { navigateToPath } = useNavigationContext();
     const [isInViewport, setIsInViewport] = useState(false);
@@ -164,20 +167,33 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         [selectedClient.exampleCall.responseBody],
     );
 
+    const jsonLineLength = jsonLines
+        .map((jsonLine) => (jsonLine.type === "string" ? jsonLine.value.split("\n").length : 1))
+        .reduce((a, b) => a + b, 0);
+
     const selectorHeight =
-        clients.find((c) => c.language === selectedClient.language)?.examples.length ?? 0 > 1 ? GAP_6 + 24 : 0;
+        (clients.find((c) => c.language === selectedClient.language)?.examples.length ?? 0) > 1 ? GAP_6 + 24 : 0;
+
+    const headerHeight =
+        config.layout?.headerHeight == null
+            ? 64
+            : visitDiscriminatedUnion(config.layout.headerHeight, "type")._visit({
+                  px: (px) => px.value,
+                  rem: (rem) => rem.value * 16,
+                  _other: () => 64,
+              });
 
     const [requestHeight, responseHeight] = useMemo((): [number, number] => {
         if (!["lg", "xl", "2xl"].includes(layoutBreakpoint)) {
             const requestLines = Math.min(MOBILE_MAX_LINES + 0.5, selectedExampleClientLineCount);
-            const responseLines = Math.min(MOBILE_MAX_LINES + 0.5, jsonLines.length);
+            const responseLines = Math.min(MOBILE_MAX_LINES + 0.5, jsonLineLength);
             const requestContainerHeight = requestLines * LINE_HEIGHT + CONTENT_PADDING;
             const responseContainerHeight = responseLines * LINE_HEIGHT + CONTENT_PADDING;
             return [requestContainerHeight, responseContainerHeight];
         }
         const maxRequestContainerHeight = selectedExampleClientLineCount * LINE_HEIGHT + CONTENT_PADDING;
-        const maxResponseContainerHeight = jsonLines.length * LINE_HEIGHT + CONTENT_PADDING;
-        const containerHeight = viewportSize.height - 64 - PADDING_TOP - PADDING_BOTTOM - selectorHeight;
+        const maxResponseContainerHeight = jsonLineLength * LINE_HEIGHT + CONTENT_PADDING;
+        const containerHeight = viewportSize.height - headerHeight - PADDING_TOP - PADDING_BOTTOM - selectorHeight;
         const halfContainerHeight = (containerHeight - GAP_6) / 2;
         if (selectedClient.exampleCall?.responseBody == null) {
             return [Math.min(maxRequestContainerHeight, containerHeight), 0];
@@ -198,8 +214,9 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     }, [
         layoutBreakpoint,
         selectedExampleClientLineCount,
-        jsonLines.length,
+        jsonLineLength,
         viewportSize.height,
+        headerHeight,
         selectorHeight,
         selectedClient.exampleCall?.responseBody,
     ]);
@@ -244,7 +261,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                         "lg:flex-1 lg:sticky lg:self-start lg:min-w-sm lg:max-w-lg lg:ml-auto",
                         "pb-10 pt-8",
                         // the 4rem is the same as the h-10 as the Header
-                        "max-h-[150vh] lg:max-h-[calc(100vh-4rem)]",
+                        "max-h-[150vh] lg:max-h-vh-minus-header",
                         "flex",
                         // header offset
                         "mt-10 lg:mt-0 lg:top-header-height",
