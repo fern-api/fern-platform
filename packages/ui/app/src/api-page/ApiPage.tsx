@@ -1,5 +1,4 @@
 import { ResolvedNavigationItemApiSection } from "@fern-ui/app-utils";
-import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
 import { ApiPackageContents } from "./ApiPackageContents";
 import { ApiArtifacts } from "./artifacts/ApiArtifacts";
 import { areApiArtifactsNonEmpty } from "./artifacts/areApiArtifactsNonEmpty";
@@ -24,9 +23,7 @@ export const ApiPage: React.FC<ApiPage.Props> = ({ apiSection }) => {
                 anchorIdParts={[]}
             />
 
-            <div className="pl-6 pr-4 md:pl-12">
-                <BottomNavigationButtons />
-            </div>
+            <div className="pl-6 pr-4 md:pl-12">{/* <BottomNavigationButtons /> */}</div>
         </div>
     );
 };

@@ -47,8 +47,8 @@ module.exports = {
                 "accent-primary-dark-lightened": withOpacity("--accent-primary-dark-lightened"),
                 "accent-primary-contrast": withOpacity("--accent-primary-contrast"),
                 "accent-primary-dark-contrast": withOpacity("--accent-primary-dark-contrast"),
-                "accent-highlight": "rgba(var(--accent-primary), 10%)",
-                "accent-highlight-dark": "rgba(var(--accent-primary-dark), 10%)",
+                "accent-highlight-light": "rgba(var(--accent-primary), 20%)",
+                "accent-highlight-dark": "rgba(var(--accent-primary-dark), 20%)",
                 background: withOpacity("--background"),
                 "background-dark": withOpacity("--background-dark"),
 
@@ -152,6 +152,9 @@ module.exports = {
                 // Background
                 ".bg-accent-primary": {
                     "@apply bg-accent-primary-light dark:bg-accent-primary-dark": {},
+                },
+                ".bg-accent-highlight": {
+                    "@apply bg-accent-highlight-light dark:bg-accent-highlight-dark": {},
                 },
                 ".bg-tag-default": {
                     "@apply bg-tag-default-light dark:bg-tag-default-dark": {},

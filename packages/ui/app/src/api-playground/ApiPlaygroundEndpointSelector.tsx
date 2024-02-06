@@ -244,7 +244,7 @@ function renderTextWithHighlight(text: string, highlight: string): ReactElement[
     const parts = text.split(new RegExp(`(${highlight})`, "gi"));
     return parts.map((part, idx) =>
         part.toLowerCase() === highlight.toLowerCase() ? (
-            <mark className="bg-accent-highlight dark:bg-accent-highlight-dark" key={idx}>
+            <mark className="bg-accent-highlight" key={idx}>
                 {part}
             </mark>
         ) : (
