@@ -237,6 +237,8 @@ export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className
 
     const classNamesCombined = classNames("fern-mdx-link", className);
 
+    const hideExternalLinkIcon = React.isValidElement(children) && (children.type === "img" || children.type === Img);
+
     return (
         <Link
             className={classNamesCombined}
@@ -245,21 +247,26 @@ export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className
             rel={isExternalUrl ? "noopener noreferrer" : undefined}
             {...rest}
         >
-            {children}
+            {React.isValidElement(children) && isImgElement(children)
+                ? React.cloneElement<ImgProps>(children, { disableZoom: true })
+                : children}
 
-            {isExternalUrl && <ShareIcon className="external-link-icon" />}
+            {isExternalUrl && !hideExternalLinkIcon && <ShareIcon className="external-link-icon" />}
         </Link>
     );
 };
 
-export const Img: React.FC<DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>> = ({
-    className,
-    src,
-    alt,
-    ...rest
-}) => {
+interface ImgProps extends DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement> {
+    disableZoom?: boolean;
+}
+
+function isImgElement(element: ReactNode): element is React.ReactElement<ImgProps> {
+    return React.isValidElement(element) && element.type === Img;
+}
+
+export const Img: React.FC<ImgProps> = ({ className, src, alt, disableZoom, ...rest }) => {
     const mounted = useMounted();
-    if (!mounted) {
+    if (!mounted || disableZoom) {
         return <img {...rest} className={classNames(className, "max-w-full")} src={src} alt={alt} />;
     }
     return (
