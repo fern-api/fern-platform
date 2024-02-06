@@ -6,7 +6,7 @@
     }
 
     .fern-anchor-icon {
-        @apply absolute left-0 flex h-6 w-6 items-center justify-center rounded-md;
+        @apply absolute left-0 flex size-6 items-center justify-center rounded-md;
     }
 
     .fern-anchor-icon:not(.copied) {
@@ -18,7 +18,7 @@
         @apply bg-tag-primary ring-border-primary ring-1 backdrop-blur;
 
         > svg {
-            @apply text-accent-primary h-4 w-4;
+            @apply text-accent-primary size-4;
         }
 
         @apply dark:ring-border-primary-dark;

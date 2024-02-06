@@ -17,7 +17,7 @@ export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = memo(function 
     return (
         <button onClick={onClick} className={classNames("fern-search-bar", className)}>
             <span className="search-placeholder">
-                <SearchIcon className="h-5 w-5" />
+                <SearchIcon className="size-5" />
                 <span>Search...</span>
             </span>
 

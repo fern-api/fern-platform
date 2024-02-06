@@ -47,12 +47,12 @@ export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ inte
         >
             <div className="min-w-fit">
                 {visitDiscriminatedUnion({ intent }, "intent")._visit({
-                    info: () => <InfoIcon className="text-intent-default dark:text-intent-default-dark h-5 w-5" />,
+                    info: () => <InfoIcon className="text-intent-default dark:text-intent-default-dark size-5" />,
                     warning: () => (
-                        <WarningIcon className="text-intent-warning-light dark:text-intent-warning-dark h-5 w-5" />
+                        <WarningIcon className="text-intent-warning-light dark:text-intent-warning-dark size-5" />
                     ),
                     success: () => (
-                        <CheckIcon className="text-intent-success-light dark:text-intent-success-dark h-5 w-5" />
+                        <CheckIcon className="text-intent-success-light dark:text-intent-success-dark size-5" />
                     ),
                     _other: () => null,
                 })}

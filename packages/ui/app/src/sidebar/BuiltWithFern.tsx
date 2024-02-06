@@ -26,7 +26,7 @@ export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className }) => {
             className={classNames("flex cursor-pointer items-center space-x-2 pl-3 py-3 mt-4 !no-underline", className)}
             {...containerCallbacks}
         >
-            <div className="h-4 w-4">
+            <div className="size-4">
                 <FernLogo fill={isHovering ? undefined : "rgb(82, 82, 82)"} />
             </div>
             <div

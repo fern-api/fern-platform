@@ -22,7 +22,7 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                 text={selectedClientGroup?.languageDisplayName ?? selectedClient.language}
                 icon={
                     <RemoteFontAwesomeIcon
-                        className="bg-accent-primary dark:bg-accent-primary-dark h-4 w-4"
+                        className="bg-accent-primary dark:bg-accent-primary-dark size-4"
                         icon={selectedClientGroup?.icon}
                     />
                 }
@@ -45,7 +45,7 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                         }}
                     >
                         <RemoteFontAwesomeIcon
-                            className="bg-accent-primary dark:bg-accent-primary-dark h-4 w-4"
+                            className="bg-accent-primary dark:bg-accent-primary-dark size-4"
                             icon={client.icon}
                         />
                         <div className="flex items-center whitespace-nowrap">

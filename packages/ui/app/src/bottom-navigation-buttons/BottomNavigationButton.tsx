@@ -50,7 +50,7 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
                 <span className="leading-none">Up Next</span>
                 <RemoteFontAwesomeIcon
                     icon="light chevron-right"
-                    className="bg-text-muted-light dark:bg-text-muted-dark h-3 w-3"
+                    className="bg-text-muted-light dark:bg-text-muted-dark size-3"
                 />
             </span>
         </FernLinkCard>

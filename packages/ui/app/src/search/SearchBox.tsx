@@ -1,6 +1,6 @@
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
-import { ReactElement, useRef, useState } from "react";
+import { ReactElement, useCallback, useRef, useState } from "react";
 import { useSearchBox, UseSearchBoxProps } from "react-instantsearch-hooks-web";
 
 interface SearchBoxProps extends UseSearchBoxProps {
@@ -14,17 +14,19 @@ export function SearchBox({ queryHook, className, inputClassName, placeholder }:
     const [inputValue, setInputValue] = useState(query);
     const inputRef = useRef<HTMLInputElement>(null);
 
-    function setQuery(newQuery: string) {
-        setInputValue(newQuery);
+    const setQuery = useCallback(
+        (newQuery: string) => {
+            setInputValue(newQuery);
+            refine(newQuery);
+        },
+        [refine],
+    );
 
-        refine(newQuery);
-    }
-
-    function focusInput() {
+    const focusInput = useCallback(() => {
         if (inputRef.current) {
             inputRef.current.focus();
         }
-    }
+    }, []);
 
     useKeyboardCommand({
         key: "A",

@@ -52,7 +52,7 @@ function getIconForTypeReference(typeRef: ResolvedTypeReference): ReactElement |
     const { content, size } = info;
     return (
         <div
-            className="border-border-default-light dark:border-border-default-dark flex h-6 w-6 items-center justify-center rounded border"
+            className="border-border-default-light dark:border-border-default-dark flex size-6 items-center justify-center rounded border"
             style={{ fontSize: size }}
         >
             {content}

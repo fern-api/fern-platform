@@ -42,7 +42,7 @@ export const PageRecordV2: React.FC<PageRecordV2.Props> = ({ hit, isHovered }) =
                 </span>
 
                 <ArrowUTurnRightIcon
-                    className={classNames("h-3 w-3 rotate-180", {
+                    className={classNames("size-3 rotate-180", {
                         "text-white dark:text-black": isHovered,
                         "t-muted": !isHovered,
                     })}

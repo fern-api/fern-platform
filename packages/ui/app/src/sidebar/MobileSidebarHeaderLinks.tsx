@@ -22,8 +22,8 @@ export const HeaderSidebarSlugLink: React.FC<HeaderSidebarSlugLinkProps> = ({ na
         >
             <span className="whitespace-nowrap">{navbarLink.text}</span>
             {navbarLink.type === "primary" && (
-                <div className="flex h-5 w-5 items-center">
-                    <ArrowRightIcon className="h-5 w-5" />
+                <div className="flex size-5 items-center">
+                    <ArrowRightIcon className="size-5" />
                 </div>
             )}
         </Link>
@@ -49,8 +49,8 @@ export function MobileSidebarHeaderLinks({ navbarLinks }: MobileSidebarHeaderLin
                     title={navbarLink.text}
                     rightElement={
                         navbarLink.type === "primary" && (
-                            <div className="flex h-5 w-5 items-center">
-                                <ArrowRightIcon className="h-5 w-5" />
+                            <div className="flex size-5 items-center">
+                                <ArrowRightIcon className="size-5" />
                             </div>
                         )
                     }

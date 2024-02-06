@@ -11,7 +11,7 @@ exports[`CopyToClipboardButton renders correctly 1`] = `
     className="fern-button-content"
   >
     <svg
-      className="h-4 w-4"
+      className="size-4"
       fill="currentColor"
       viewBox="0 0 20 20"
       xmlns="http://www.w3.org/2000/svg"

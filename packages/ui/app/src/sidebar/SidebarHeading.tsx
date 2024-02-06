@@ -41,7 +41,7 @@ export const SidebarHeading: FC<SidebarHeadingProps> = ({
                 onClick={toggleExpand}
             >
                 <ChevronDownIcon
-                    className={classNames("h-4 w-4 transition-transform", {
+                    className={classNames("size-4 transition-transform", {
                         "-rotate-90": !expanded,
                         "rotate-0": expanded,
                     })}

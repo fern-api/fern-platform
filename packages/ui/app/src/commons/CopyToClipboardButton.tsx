@@ -22,7 +22,7 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({ c
             disabled={copyToClipboard == null}
             data-testid={testId}
             rounded={true}
-            icon={wasJustCopied ? <CheckIcon className="h-4 w-4" /> : <CopyIcon className="h-4 w-4" />}
+            icon={wasJustCopied ? <CheckIcon className="size-4" /> : <CopyIcon className="size-4" />}
             buttonStyle="minimal"
             intent={wasJustCopied ? "success" : "none"}
         />

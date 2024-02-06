@@ -110,7 +110,7 @@ export const FernMenuItem: FC<FernMenuItem.Props> = ({ href, onClick, selected =
                         "!text-text-muted-light dark:!text-text-muted-dark": !active && !selected,
                     },
                 );
-                const checkIcon = <CheckIcon className={classNames("h-3 w-3", { invisible: !selected })} />;
+                const checkIcon = <CheckIcon className={classNames("size-3", { invisible: !selected })} />;
                 const renderedChildren = typeof children === "function" ? children(active) : children;
                 if (href == null) {
                     return (

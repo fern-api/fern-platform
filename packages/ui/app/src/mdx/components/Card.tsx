@@ -20,7 +20,7 @@ export const Card: React.FC<Card.Props> = ({ title, icon, iconPosition = "top", 
 
     const content = (
         <>
-            <RemoteFontAwesomeIcon className="bg-intent-default dark:bg-intent-default-dark h-5 w-5" icon={icon} />
+            <RemoteFontAwesomeIcon className="bg-intent-default dark:bg-intent-default-dark size-5" icon={icon} />
             <div>
                 <div className="text-text-default-light dark:text-text-default-dark font-medium">{title}</div>
                 {children != null && <div className="t-muted mt-1 text-xs">{children}</div>}

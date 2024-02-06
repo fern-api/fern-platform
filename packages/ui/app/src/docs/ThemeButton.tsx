@@ -27,7 +27,7 @@ export const ThemeButton: React.FC<ThemeButton.Props> = ({ className }) => {
             buttonStyle="minimal"
             intent="primary"
             icon={
-                <IconToUse className="text-intent-default dark:text-intent-default-dark group-hover:t-primary h-4 w-4 group-hover:transition" />
+                <IconToUse className="text-intent-default dark:text-intent-default-dark group-hover:t-primary size-4 group-hover:transition" />
             }
         />
     );

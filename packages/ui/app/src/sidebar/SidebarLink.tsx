@@ -108,7 +108,7 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
             )}
         >
             <ChevronDownIcon
-                className={classNames("h-6 w-6 lg:h-5 w-5 transition-transform", {
+                className={classNames("size-6 lg:size-5 transition-transform", {
                     "-rotate-90": !expanded,
                     "rotate-0": expanded,
                 })}
