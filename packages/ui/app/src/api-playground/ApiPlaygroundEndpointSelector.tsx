@@ -98,8 +98,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                             className={classNames(
                                 "gap-4 scroll-m-2 mx-1 flex h-8 cursor-pointer items-center rounded px-2 py-1 text-sm justify-between",
                                 {
-                                    "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary":
-                                        endpointItem.id === endpoint?.id,
+                                    "bg-tag-primary text-accent-primary": endpointItem.id === endpoint?.id,
                                     "hover:bg-tag-default-light dark:hover:bg-tag-default-dark hover:text-accent-primary dark:hover:text-accent-primary-dark":
                                         endpointItem.id !== endpoint?.id,
                                 },

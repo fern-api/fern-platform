@@ -30,10 +30,9 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, sel
                     <div className="min-w-fit">
                         <div
                             className={classNames(
-                                "flex h-6 w-6 items-center border border-border-default-light dark:border-border-default-dark justify-center rounded-md group-hover/tab-button:bg-tag-primary group-hover/tab-button:border-border-primary group-hover/tab-button:dark:bg-tag-primary-dark group-hover/tab-button:dark:border-border-primary-dark",
+                                "flex h-6 w-6 items-center border border-border-default-light dark:border-border-default-dark justify-center rounded-md group-hover/tab-button:bg-tag-primary group-hover/tab-button:border-border-primary group-hover/tab-button:dark:border-border-primary-dark",
                                 {
-                                    "bg-tag-primary border-border-primary dark:bg-tag-primary-dark dark:border-border-primary-dark":
-                                        selected,
+                                    "bg-tag-primary border-border-primary dark:border-border-primary-dark": selected,
                                     "bg-tag-default-light/5 dark:bg-tag-default-dark/5": !selected,
                                 },
                             )}

@@ -127,7 +127,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                     <div className="flex items-center text-xs">
                         <button
                             className={classNames("px-2 py-1 -my-1 rounded-lg hover:text-accent-primary", {
-                                "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary": requestType === "form",
+                                "bg-tag-primary text-accent-primary": requestType === "form",
                                 "t-muted": requestType !== "form",
                             })}
                             onClick={() => setRequestType("form")}
@@ -136,7 +136,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                         </button>
                         <button
                             className={classNames("px-2 py-1 -my-1 rounded-lg hover:text-accent-primary", {
-                                "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary": requestType === "curl",
+                                "bg-tag-primary text-accent-primary": requestType === "curl",
                                 "t-muted": requestType !== "curl",
                             })}
                             onClick={() => setRequestType("curl")}
@@ -145,8 +145,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                         </button>
                         <button
                             className={classNames("px-2 py-1 -my-1 rounded-lg hover:text-accent-primary", {
-                                "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary":
-                                    requestType === "javascript",
+                                "bg-tag-primary text-accent-primary": requestType === "javascript",
                                 "t-muted": requestType !== "javascript",
                             })}
                             onClick={() => setRequestType("javascript")}
@@ -155,7 +154,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                         </button>
                         <button
                             className={classNames("px-2 py-1 -my-1 rounded-lg hover:text-accent-primary", {
-                                "bg-tag-primary dark:bg-tag-primary-dark text-accent-primary": requestType === "python",
+                                "bg-tag-primary text-accent-primary": requestType === "python",
                                 "t-muted": requestType !== "python",
                             })}
                             onClick={() => setRequestType("python")}

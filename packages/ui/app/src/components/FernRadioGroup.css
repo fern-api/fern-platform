@@ -11,11 +11,11 @@
 }
 
 .fern-radio-item:hover {
-    @apply bg-tag-primary dark:bg-tag-primary-dark;
+    @apply bg-tag-primary;
 }
 
 .fern-radio-item:focus {
-    @apply outline outline-4 outline-offset-0 outline-tag-primary dark:outline-tag-primary-dark;
+    @apply outline outline-4 outline-offset-0 outline-tag-primary-light dark:outline-tag-primary-dark;
 }
 
 .fern-radio-indicator {

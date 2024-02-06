@@ -48,7 +48,7 @@ export const SecretSpan: FC<{ secret: string } & React.HTMLAttributes<HTMLSpanEl
                             className={classNames(
                                 parentClassName,
                                 className,
-                                "bg-tag-default-light dark:bg-tag-default-dark hover:bg-tag-primary hover:dark:bg-tag-primary-dark -mx-0.5 cursor-pointer rounded px-0.5 font-mono",
+                                "bg-tag-default-light dark:bg-tag-default-dark hover:bg-tag-primary -mx-0.5 cursor-pointer rounded px-0.5 font-mono",
                             )}
                             onClick={copyToClipboard}
                             {...props}

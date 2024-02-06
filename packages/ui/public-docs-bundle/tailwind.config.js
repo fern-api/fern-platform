@@ -103,7 +103,7 @@ module.exports = {
 
                 "tag-default-dark": "rgba(255, 255, 255, 10%)",
                 "tag-default-light": "rgba(3, 7, 18, 5%)",
-                "tag-primary": "rgba(var(--accent-primary), 15%)",
+                "tag-primary-light": "rgba(var(--accent-primary), 15%)",
                 "tag-primary-dark": "rgba(var(--accent-primary-dark), 15%)",
                 "tag-warning-dark": "rgba(251, 190, 36, 0.15)",
                 "tag-warning-light": "rgba(217, 119, 6, 0.10)",
@@ -148,6 +148,9 @@ module.exports = {
                 },
                 ".bg-tag-default": {
                     "@apply bg-tag-default-light dark:bg-tag-default-dark": {},
+                },
+                ".bg-tag-primary": {
+                    "@apply bg-tag-primary-light dark:bg-tag-primary-dark": {},
                 },
                 ".bg-tag-success": {
                     "@apply bg-tag-success-light dark:bg-tag-success-dark": {},

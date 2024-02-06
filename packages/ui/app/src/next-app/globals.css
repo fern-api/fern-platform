@@ -96,7 +96,7 @@
     }
 
     .light .bp5-control input:checked ~ .bp5-control-indicator {
-        @apply bg-accent-primary !important;
+        @apply bg-accent-primary-light !important;
     }
 
     .bp5-dark .bp5-control input:checked ~ .bp5-control-indicator {
@@ -116,7 +116,7 @@
     }
 
     .light .bp5-segmented-control {
-        @apply bg-tag-primary !important;
+        @apply bg-tag-primary-light !important;
     }
 
     .description-mask {
