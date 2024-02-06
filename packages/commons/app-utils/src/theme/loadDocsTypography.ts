@@ -37,13 +37,10 @@ export function generateFontFaces(
     typography: DocsV1Read.DocsTypographyConfigV2 | undefined,
     files: Record<DocsV1Read.FileId, DocsV1Read.Url>,
 ): string {
-    if (typography == null) {
-        return "";
-    }
     const fontFaces: string[] = [];
     const variables: string[] = [];
     let additionalCss: string = "";
-    if (typography.bodyFont != null && typography.bodyFont.variants != null) {
+    if (typography?.bodyFont != null && typography.bodyFont.variants != null) {
         let setVariant = false;
         for (const variant of typography.bodyFont.variants) {
             const fontFace = generateFontFace(variant, typography.bodyFont, files);
@@ -65,7 +62,7 @@ export function generateFontFaces(
         variables.push(`--typography-body-font-family: ${BODY_FONT_FALLBACK}`);
     }
 
-    if (typography.headingsFont != null && typography.headingsFont.variants != null) {
+    if (typography?.headingsFont != null && typography.headingsFont.variants != null) {
         let setVariant = false;
         for (const variant of typography.headingsFont.variants) {
             const fontFace = generateFontFace(variant, typography.headingsFont, files);
@@ -91,7 +88,7 @@ export function generateFontFaces(
         variables.push(`--typography-heading-font-family: ${BODY_FONT_FALLBACK}`);
     }
 
-    if (typography.codeFont != null && typography.codeFont.variants != null) {
+    if (typography?.codeFont != null && typography.codeFont.variants != null) {
         let setVariant = false;
         for (const variant of typography.codeFont.variants) {
             const fontFace = generateFontFace(variant, typography.codeFont, files);
