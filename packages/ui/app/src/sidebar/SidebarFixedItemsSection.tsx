@@ -60,7 +60,7 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
     return (
         <div
             className={classNames(
-                "flex flex-col px-4 lg:pt-4 lg:backdrop-blur lg:bg-background/70 dark:lg:bg-background-dark/60",
+                "flex flex-col px-4 lg:pt-4 lg:backdrop-blur",
                 {
                     "border-b border-border-concealed-light dark:border-border-concealed-dark": tabs != null,
                 },
@@ -73,7 +73,7 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
             {searchBar}
             {tabs}
 
-            <div className="from-background dark:from-background-dark absolute inset-x-0 top-full -ml-4 mt-px h-8 bg-gradient-to-b" />
+            {/* <div className="from-background dark:from-background-dark absolute inset-x-0 top-full -ml-4 mt-px h-8 bg-gradient-to-b" /> */}
         </div>
     );
 };
