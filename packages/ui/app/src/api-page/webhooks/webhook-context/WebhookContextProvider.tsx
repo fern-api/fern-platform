@@ -10,7 +10,7 @@ export const WebhookContextProvider: React.FC<React.PropsWithChildren> = ({ chil
             hoveredPayloadPropertyPath,
             setHoveredPayloadPropertyPath,
         }),
-        [hoveredPayloadPropertyPath, setHoveredPayloadPropertyPath]
+        [hoveredPayloadPropertyPath, setHoveredPayloadPropertyPath],
     );
 
     return <WebhookContext.Provider value={contextValue}>{children}</WebhookContext.Provider>;

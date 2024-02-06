@@ -92,7 +92,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                 />
             </div>
         ),
-        [backgroundType, hasSpecifiedBackgroundImage]
+        [backgroundType, hasSpecifiedBackgroundImage],
     );
 
     const currentSlug = useMemo(
@@ -100,7 +100,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
             withVersionAndTabSlugs("", { omitDefault: true })
                 .split("/")
                 .filter((s) => s.length > 0),
-        [withVersionAndTabSlugs]
+        [withVersionAndTabSlugs],
     );
 
     const navigationItems = useMemo(() => {
@@ -177,9 +177,10 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                                 onClick={closeMobileSidebar}
                             />
                         )}
+
                         {["lg", "xl", "2xl"].includes(breakpoint) ? (
                             <div
-                                className="sticky top-0 z-20 mt-16 h-[calc(100vh-64px)]"
+                                className="sticky top-16 z-20 mt-16 h-[calc(100vh-64px)]"
                                 style={{
                                     width:
                                         layout?.sidebarWidth == null
@@ -222,6 +223,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                                 />
                             </Transition>
                         )}
+
                         <main className={classNames("relative flex w-full min-w-0 flex-1 flex-col pt-16")}>
                             <DocsMainContent navigationItems={navigationItems} contentWidth={layout?.contentWidth} />
                         </main>

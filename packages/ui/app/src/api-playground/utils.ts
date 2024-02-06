@@ -59,7 +59,7 @@ function buildPath(path: ResolvedEndpointPathParts[], formState?: PlaygroundRequ
 
 export function buildEndpointUrl(
     endpoint: ResolvedEndpointDefinition | undefined,
-    formState: PlaygroundRequestFormState | undefined
+    formState: PlaygroundRequestFormState | undefined,
 ): string {
     if (endpoint == null) {
         return "";
@@ -87,7 +87,7 @@ export function stringifyFetch(
     auth: APIV1Read.ApiAuth | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
     formState: PlaygroundRequestFormState,
-    redacted = true
+    redacted = true,
 ): string {
     if (endpoint == null) {
         return "";
@@ -101,12 +101,12 @@ export function stringifyFetch(
 const response = fetch("${buildEndpointUrl(endpoint, formState)}", {
   method: "${endpoint.method}",
   headers: ${indentAfter(JSON.stringify(headers, undefined, 2), 2, 0)},${
-        endpoint.requestBody?.contentType === "application/json" &&
-        !isEmpty(formState.body) &&
-        endpoint.requestBody.shape.type !== "fileUpload"
-            ? `\n  body: JSON.stringify(${indentAfter(JSON.stringify(formState.body, undefined, 2), 2, 0)}),`
-            : ""
-    }
+      endpoint.requestBody?.contentType === "application/json" &&
+      !isEmpty(formState.body) &&
+      endpoint.requestBody.shape.type !== "fileUpload"
+          ? `\n  body: JSON.stringify(${indentAfter(JSON.stringify(formState.body, undefined, 2), 2, 0)}),`
+          : ""
+  }
 });
 
 const body = await response.json();
@@ -117,7 +117,7 @@ export function stringifyPythonRequests(
     auth: APIV1Read.ApiAuth | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
     formState: PlaygroundRequestFormState,
-    redacted = true
+    redacted = true,
 ): string {
     if (endpoint == null) {
         return "";
@@ -131,12 +131,12 @@ export function stringifyPythonRequests(
 response = requests.${endpoint.method.toLowerCase()}(
   "${buildEndpointUrl(endpoint, formState)}",
   headers=${indentAfter(JSON.stringify(headers, undefined, 2), 2, 0)},${
-        endpoint.requestBody?.contentType === "application/json" &&
-        !isEmpty(formState.body) &&
-        endpoint.requestBody.shape.type !== "fileUpload"
-            ? `\n  json=${indentAfter(JSON.stringify(formState.body, undefined, 2), 2, 0)},`
-            : ""
-    }
+      endpoint.requestBody?.contentType === "application/json" &&
+      !isEmpty(formState.body) &&
+      endpoint.requestBody.shape.type !== "fileUpload"
+          ? `\n  json=${indentAfter(JSON.stringify(formState.body, undefined, 2), 2, 0)},`
+          : ""
+  }
 )
 
 print(response.json())`;
@@ -155,7 +155,7 @@ export function obfuscateSecret(secret: string): string {
 function buildRedactedHeaders(
     auth: APIV1Read.ApiAuth | undefined,
     endpoint: ResolvedEndpointDefinition,
-    formState: PlaygroundRequestFormState
+    formState: PlaygroundRequestFormState,
 ): Record<string, string> {
     const headers: Record<string, string> = {};
     endpoint.headers.forEach((header) => {
@@ -186,7 +186,7 @@ function buildRedactedHeaders(
             basicAuth: (basicAuth) => {
                 if (auth.type === "basicAuth") {
                     headers["Authorization"] = `Basic ${btoa(
-                        `${basicAuth.username}:${obfuscateSecret(basicAuth.password)}`
+                        `${basicAuth.username}:${obfuscateSecret(basicAuth.password)}`,
                     )}`;
                 }
             },
@@ -200,7 +200,7 @@ function buildRedactedHeaders(
 export function buildUnredactedHeaders(
     auth: APIV1Read.ApiAuth | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
-    formState: PlaygroundRequestFormState | undefined
+    formState: PlaygroundRequestFormState | undefined,
 ): Record<string, string> {
     const headers: Record<string, string> = {};
     if (endpoint == null) {
@@ -247,7 +247,7 @@ export function stringifyCurl(
     auth: APIV1Read.ApiAuth | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
     formState: PlaygroundRequestFormState,
-    redacted = true
+    redacted = true,
 ): string {
     if (endpoint == null) {
         return "";

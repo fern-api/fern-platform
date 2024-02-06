@@ -46,7 +46,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ curlLines, selectedPr
                             doNotStringifyValue={part.doNotStringifyValue}
                         />
                         {!excludeTrailingBackslash && !isLastPart && (
-                            <span className="text-text-primary-light dark:text-text-primary-dark">{" \\"}</span>
+                            <span className="text-text-default-light dark:text-text-default-dark">{" \\"}</span>
                         )}
                     </div>
                 );
@@ -57,7 +57,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ curlLines, selectedPr
                     <div
                         className={classNames(
                             "relative w-fit min-w-full px-4 transition py-px",
-                            isSelected ? "bg-accent-primary/20" : "bg-transparent"
+                            isSelected ? "bg-accent-primary/20" : "bg-transparent",
                         )}
                     >
                         {isSelected && <div className="bg-accent-primary absolute inset-y-0 left-0 w-1" />}

@@ -19,7 +19,7 @@ void yargs(hideBin(process.argv))
             await checkRootPackage({
                 shouldFix: argv.fix,
             });
-        }
+        },
     )
     .command("check-docs-release-blockers", "Check that there are no release blockers for docs", noop, async () => {
         await checkReleaseBlockers("release-blockers-docs.yml");

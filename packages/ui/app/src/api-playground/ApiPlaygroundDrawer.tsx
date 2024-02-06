@@ -1,5 +1,4 @@
-import { Button, Tooltip } from "@blueprintjs/core";
-import { Cross } from "@blueprintjs/icons";
+import { Tooltip } from "@blueprintjs/core";
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import {
     ResolvedApiDefinitionPackage,
@@ -7,6 +6,7 @@ import {
     ResolvedNavigationItemApiSection,
 } from "@fern-ui/app-utils";
 import { Dispatch, FC, ReactElement, SetStateAction } from "react";
+import { FernButton } from "../components/FernButton";
 import { ApiPlayroundContent } from "./ApiPlaygroundContent";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 import { ApiPlaygroundEndpointSelector } from "./ApiPlaygroundEndpointSelector";
@@ -62,10 +62,8 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
                 ) : (
                     <div className="flex items-center">
                         <span className="inline-flex items-baseline gap-2">
-                            <span className="text-accent-primary dark:text-accent-primary-dark text-sm font-semibold">
-                                API Playground
-                            </span>
-                            <span className="bg-tag-primary dark:bg-tag-primary-dark text-accent-primary dark:text-accent-primary-dark flex h-5 items-center rounded-md px-1.5 py-1 font-mono text-xs uppercase">
+                            <span className="text-accent-primary text-sm font-semibold">API Playground</span>
+                            <span className="bg-tag-primary text-accent-primary flex h-5 items-center rounded-md px-1.5 py-1 font-mono text-xs uppercase">
                                 BETA
                             </span>
                         </span>
@@ -74,11 +72,17 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
 
                 <div className="bg-background dark:bg-background-dark -mx-4 flex items-center gap-2 px-4">
                     <Tooltip content="Coming soon" popoverClassName="text-xs">
-                        <a className="text-text-primary-light hover:text-accent-primary decoration-accent-primary dark:text-text-primary-dark dark:hover:text-accent-primary-dark dark:decoration-accent-primary-dark whitespace-nowrap text-sm font-semibold underline decoration-1 underline-offset-4 hover:decoration-2">
+                        <a className="text-text-default-light hover:text-accent-primary decoration-accent-primary dark:text-text-default-dark dark:hover:text-accent-primary-dark dark:decoration-accent-primary-dark whitespace-nowrap text-sm font-semibold underline decoration-1 underline-offset-4 hover:decoration-2">
                             Sign in to use your API keys
                         </a>
                     </Tooltip>
-                    <Button minimal={true} icon={<Cross />} onClick={collapseApiPlayground} className="-mr-2" />
+                    <FernButton
+                        buttonStyle="minimal"
+                        icon="xmark"
+                        onClick={collapseApiPlayground}
+                        className="-mr-2"
+                        rounded
+                    />
                 </div>
             </div>
 

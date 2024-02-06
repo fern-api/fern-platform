@@ -46,14 +46,14 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
                 propertyName: property.key,
             },
         ],
-        [contextValue.jsonPropertyPath, property.key]
+        [contextValue.jsonPropertyPath, property.key],
     );
     const newContextValue = useCallback(
         (): TypeDefinitionContextValue => ({
             ...contextValue,
             jsonPropertyPath,
         }),
-        [contextValue, jsonPropertyPath]
+        [contextValue, jsonPropertyPath],
     );
 
     const onMouseEnterPropertyName = useMemo(() => {
@@ -89,7 +89,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
                 <div className="group/anchor-container relative flex items-center">
                     <AbsolutelyPositionedAnchor href={anchorRoute} smallGap />
                     <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName}>
-                        <MonospaceText className="text-text-primary-light dark:text-text-primary-dark text-sm">
+                        <MonospaceText className="text-text-default-light dark:text-text-default-dark text-sm">
                             {property.key}
                         </MonospaceText>
                     </div>

@@ -33,10 +33,10 @@ export const SidebarHeading: FC<SidebarHeadingProps> = ({
         {toggleExpand != null && (
             <button
                 className={classNames(
-                    "t-muted flex w-6 justify-center items-center hover:bg-tag-primary/10 hover:dark:bg-tag-primary-dark/10 transition-colors",
+                    "t-muted flex w-6 justify-center items-center hover:bg-tag-primary-light/10 hover:dark:bg-tag-primary-dark/10 transition-colors",
                     {
                         "rounded-lg": depth === 0,
-                    }
+                    },
                 )}
                 onClick={toggleExpand}
             >
@@ -54,7 +54,7 @@ export const SidebarHeading: FC<SidebarHeadingProps> = ({
                 "inline-flex flex-1 content-between items-center px-4 lg:px-3 text-inherit no-underline hover:text-inherit hover:no-underline",
                 {
                     pointer: toggleExpand != null,
-                }
+                },
             )}
             onClick={toggleExpand}
         >

@@ -131,7 +131,7 @@ export function flattenJsonToLines(
     key?: string,
     depth: number = 0,
     isLast: boolean = true,
-    path: string[] = key != null ? [key] : []
+    path: string[] = key != null ? [key] : [],
 ): JsonLine[] {
     return visitJsonItem(json, {
         object: (o): JsonLine[] => {
@@ -142,7 +142,7 @@ export function flattenJsonToLines(
             return [
                 { depth, type: "objectStart", key, path },
                 ...entries.flatMap(([key, v], i) =>
-                    flattenJsonToLines(v, key, depth + 1, i === entries.length - 1, [...path, key])
+                    flattenJsonToLines(v, key, depth + 1, i === entries.length - 1, [...path, key]),
                 ),
                 { depth, type: "objectEnd", comma: !isLast, path },
             ];
@@ -154,7 +154,7 @@ export function flattenJsonToLines(
             return [
                 { depth, type: "listStart", key, path },
                 ...list.flatMap((item, i) =>
-                    flattenJsonToLines(item, undefined, depth + 1, i === list.length - 1, [...path, `${i}`])
+                    flattenJsonToLines(item, undefined, depth + 1, i === list.length - 1, [...path, `${i}`]),
                 ),
                 { depth, type: "listEnd", comma: !isLast, path },
             ];
@@ -171,7 +171,7 @@ const TAB_WIDTH = 2;
 function renderKey(key: string | undefined) {
     if (key != null) {
         return (
-            <span className="text-text-primary-light dark:text-text-primary-dark">
+            <span className="text-text-default-light dark:text-text-default-dark">
                 &quot;{key}&quot;{": "}
             </span>
         );
@@ -180,17 +180,17 @@ function renderKey(key: string | undefined) {
 }
 
 function renderComma() {
-    return <span className="text-text-primary-light dark:text-text-primary-dark">{","}</span>;
+    return <span className="text-text-default-light dark:text-text-default-dark">{","}</span>;
 }
 
 export function renderJsonLineValue(line: JsonLine): ReactNode {
     return visitJsonLine(line, {
-        objectEmpty: () => <span className="text-text-primary-light dark:text-text-primary-dark">{"{}"}</span>,
-        objectStart: () => <span className="text-text-primary-light dark:text-text-primary-dark">{"{"}</span>,
-        objectEnd: () => <span className="text-text-primary-light dark:text-text-primary-dark">{"}"}</span>,
-        listEmpty: () => <span className="text-text-primary-light dark:text-text-primary-dark">{"[]"}</span>,
-        listStart: () => <span className="text-text-primary-light dark:text-text-primary-dark">{"["}</span>,
-        listEnd: () => <span className="text-text-primary-light dark:text-text-primary-dark">{"]"}</span>,
+        objectEmpty: () => <span className="text-text-default-light dark:text-text-default-dark">{"{}"}</span>,
+        objectStart: () => <span className="text-text-default-light dark:text-text-default-dark">{"{"}</span>,
+        objectEnd: () => <span className="text-text-default-light dark:text-text-default-dark">{"}"}</span>,
+        listEmpty: () => <span className="text-text-default-light dark:text-text-default-dark">{"[]"}</span>,
+        listStart: () => <span className="text-text-default-light dark:text-text-default-dark">{"["}</span>,
+        listEnd: () => <span className="text-text-default-light dark:text-text-default-dark">{"]"}</span>,
         string: (line) => <JsonExampleString value={line.value} newLineColOffset={line.depth * TAB_WIDTH} />,
         number: (line) => <span className="text-[#d67653]">{line.value}</span>,
         boolean: (line) => <span className="font-medium text-[#738ee8]">{line.value.toString()}</span>,
@@ -298,38 +298,38 @@ export function jsonLineToString(line: JsonLine, tabWidth = TAB_WIDTH): string {
     return visitJsonLine(line, {
         objectEmpty: (line) =>
             `${" ".repeat(tabWidth * line.depth)}${line.key != null ? `"${line.key}": ` : ""}${jsonLineValueToString(
-                line
+                line,
             )}`,
         objectStart: (line) =>
             `${" ".repeat(tabWidth * line.depth)}${line.key != null ? `"${line.key}": ` : ""}${jsonLineValueToString(
-                line
+                line,
             )}`,
         objectEnd: (line) =>
             `${" ".repeat(tabWidth * line.depth)}${jsonLineValueToString(line)}${line.comma ? "," : ""}`,
         listEmpty: (line) =>
             `${" ".repeat(tabWidth * line.depth)}${line.key != null ? `"${line.key}": ` : ""}${jsonLineValueToString(
-                line
+                line,
             )}`,
         listStart: (line) =>
             `${" ".repeat(tabWidth * line.depth)}${line.key != null ? `"${line.key}": ` : ""}${jsonLineValueToString(
-                line
+                line,
             )}`,
         listEnd: (line) => `${" ".repeat(tabWidth * line.depth)}${jsonLineValueToString(line)}${line.comma ? "," : ""}`,
         string: (line) =>
             `${" ".repeat(tabWidth * line.depth)}${line.key != null ? `"${line.key}": ` : ""}${jsonLineValueToString(
-                line
+                line,
             )}${line.comma ? "," : ""}`,
         number: (line) =>
             `${" ".repeat(tabWidth * line.depth)}${line.key != null ? `"${line.key}": ` : ""}${jsonLineValueToString(
-                line
+                line,
             )}${line.comma ? "," : ""}`,
         boolean: (line) =>
             `${" ".repeat(tabWidth * line.depth)}${line.key != null ? `"${line.key}": ` : ""}${jsonLineValueToString(
-                line
+                line,
             )}${line.comma ? "," : ""}`,
         null: (line) =>
             `${" ".repeat(tabWidth * line.depth)}${line.key != null ? `"${line.key}": ` : ""}${jsonLineValueToString(
-                line
+                line,
             )}${line.comma ? "," : ""}`,
     });
 }

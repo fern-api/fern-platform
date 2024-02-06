@@ -42,7 +42,7 @@ function createSearchApiKeyLoader(envConfig: EnvironmentConfig, indexSegmentId: 
 
 export function useSearchService(
     searchInfo: DocsV1Read.SearchInfo,
-    algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null
+    algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null,
 ): SearchService {
     const { activeVersionContext } = useDocsSelectors();
 
@@ -92,7 +92,7 @@ export function useSearchService(
                 const indexSegment = indexSegmentsByVersionId[versionId];
                 if (indexSegment == null) {
                     throw new Error(
-                        `Inconsistent State: Did not receive index segment for version "${versionId}". This may indicate a backend bug.`
+                        `Inconsistent State: Did not receive index segment for version "${versionId}". This may indicate a backend bug.`,
                     );
                 }
                 if (envConfig.algoliaSearchIndex == null) {

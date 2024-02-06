@@ -36,7 +36,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
         <div
             className={classNames(
                 "flex flex-col rounded-xl border border-black/20 dark:border-white/20 overflow-visible basis-full bg-background-primary-light dark:bg-background-primary-dark",
-                className
+                className,
             )}
             onClick={onClick}
             ref={containerRef}
@@ -47,13 +47,13 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                     {
                         "bg-black/5 dark:bg-white/5": type === "primary",
                         "bg-red-500/20": type === "warning",
-                    }
+                    },
                 )}
             >
                 <div className="flex items-center">
                     <div
                         className={classNames("text-xs uppercase tracking-wide", {
-                            "text-text-primary-light dark:text-text-muted-dark": type === "primary",
+                            "text-text-default-light dark:text-text-muted-dark": type === "primary",
                             "text-red-400": type === "warning",
                         })}
                     >
@@ -62,7 +62,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                 </div>
                 <div className="flex gap-2">
                     {actions}
-                    <CopyToClipboardButton content={copyToClipboardContent} />
+                    <CopyToClipboardButton content={copyToClipboardContent} className="-m-1" />
                 </div>
             </div>
             <div className="flex min-h-0 flex-1">

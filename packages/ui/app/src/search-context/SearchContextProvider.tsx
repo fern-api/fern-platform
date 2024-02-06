@@ -21,7 +21,7 @@ export const SearchContextProvider: React.FC<SearchContextProvider.Props> = ({ c
             openSearchDialog,
             closeSearchDialog,
         }),
-        [isSearchDialogOpen, openSearchDialog, closeSearchDialog]
+        [isSearchDialogOpen, openSearchDialog, closeSearchDialog],
     );
 
     return <SearchContext.Provider value={contextValue}>{children}</SearchContext.Provider>;

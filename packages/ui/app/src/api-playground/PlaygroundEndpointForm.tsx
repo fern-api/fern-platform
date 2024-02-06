@@ -44,7 +44,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 auth: newAuthValue,
             }));
         },
-        [setFormState]
+        [setFormState],
     );
 
     const setHeader = useCallback(
@@ -57,7 +57,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 },
             }));
         },
-        [setFormState]
+        [setFormState],
     );
 
     const setPathParameter = useCallback(
@@ -70,7 +70,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 },
             }));
         },
-        [setFormState]
+        [setFormState],
     );
 
     const setQueryParameter = useCallback(
@@ -83,7 +83,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 },
             }));
         },
-        [setFormState]
+        [setFormState],
     );
 
     const setBody = useCallback(
@@ -93,7 +93,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 body: typeof value === "function" ? value(state.body) : value,
             }));
         },
-        [setFormState]
+        [setFormState],
     );
 
     const descriptionRef = useRef<HTMLDivElement>(null);
@@ -133,7 +133,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                     </div>
                     {descriptionIsClamped && (
                         <div>
-                            <a className="text-accent-primary dark:text-accent-primary-dark text-xs">
+                            <a className="text-accent-primary text-xs">
                                 {showFullDescription ? "Show less" : "Show more"}
                             </a>
                         </div>
@@ -160,7 +160,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                         secrets.some(
                                             (secret) =>
                                                 formState?.auth?.type === "bearerAuth" &&
-                                                formState.auth.token === secret.token
+                                                formState.auth.token === secret.token,
                                         ) ? (
                                             <span className="inline-flex items-center gap-1">
                                                 <SecretSpan secret={formState.auth.token} className="text-sm" />
@@ -382,7 +382,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
             <Link
                 href={`/${joinUrlSlugs(...endpoint.slug)}`}
                 shallow={isApiNode(activeNavigatable) && activeNavigatable.section.api === endpoint.apiSectionId}
-                className="t-muted hover:text-accent-primary hover:dark:text-accent-primary-dark inline-flex items-center gap-2 text-sm font-semibold underline decoration-1 underline-offset-4 hover:decoration-2"
+                className="t-muted hover:text-accent-primary inline-flex items-center gap-2 text-sm font-semibold underline decoration-1 underline-offset-4 hover:decoration-2"
             >
                 <span>View in API Reference</span>
                 <ArrowTopRight />

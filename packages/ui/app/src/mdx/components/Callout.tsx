@@ -42,12 +42,12 @@ export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ inte
                     success: () =>
                         "bg-tag-success-light/5 dark:bg-tag-success-dark/5 border-border-success-light dark:border-border-success-dark",
                     _other: () => "",
-                })
+                }),
             )}
         >
             <div className="min-w-fit">
                 {visitDiscriminatedUnion({ intent }, "intent")._visit({
-                    info: () => <InfoIcon className="text-intent-default h-5 w-5" />,
+                    info: () => <InfoIcon className="text-intent-default dark:text-intent-default-dark h-5 w-5" />,
                     warning: () => (
                         <WarningIcon className="text-intent-warning-light dark:text-intent-warning-dark h-5 w-5" />
                     ),
@@ -66,7 +66,7 @@ export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ inte
                         warning: () => "text-intent-warning-light dark:text-intent-warning-dark",
                         success: () => "text-intent-success-light dark:text-intent-success-dark",
                         _other: () => "",
-                    })
+                    }),
                 )}
             >
                 <div className={classNames(styles.content, "not-prose")}>{children}</div>

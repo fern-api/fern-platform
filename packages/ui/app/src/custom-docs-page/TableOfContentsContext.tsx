@@ -14,8 +14,8 @@ export const TableOfContentsContext = createContext<TableOfContentsContextValue>
 export function useAnchorInView(anchor: string | undefined): (node?: Element | null | undefined) => void {
     const { setAnchorInView } = useContext(TableOfContentsContext);
     const { ref } = useInView({
-        rootMargin: "50% 0px -50% 0px",
-        threshold: 0,
+        rootMargin: "0px 0px -50% 0px",
+        threshold: 0.5,
         onChange: (inView) => {
             if (inView) {
                 setAnchorInView(anchor);

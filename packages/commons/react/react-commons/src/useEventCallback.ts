@@ -13,6 +13,6 @@ export function useEventCallback<A extends unknown[], R>(fn: Fn<A, R>): Fn<A, R>
                 const { current } = ref;
                 return current(...args);
             },
-        []
+        [],
     );
 }

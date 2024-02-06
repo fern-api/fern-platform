@@ -18,7 +18,7 @@ export const CurlExampleLine: React.FC<CurlExampleLine.Props> = ({ part, indentI
             {" ".repeat(excludeIndent ? 0 : indentInSpaces)}
             {part.value}
             {!excludeTrailingBackslash && !isLastPart && (
-                <span className="text-text-primary-light dark:text-text-primary-dark">{" \\"}</span>
+                <span className="text-text-default-light dark:text-text-default-dark">{" \\"}</span>
             )}
         </div>
     );

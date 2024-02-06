@@ -60,7 +60,7 @@ function getAvailableExampleClients(example: APIV1Read.ExampleEndpointCall): Cod
                 name: "Python (Async)",
                 language: "python",
                 example: pythonSdk.async_client,
-            }
+            },
         );
     }
 
@@ -120,13 +120,13 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         (jsonPropertyPath: JsonPropertyPath, { isHovering }: { isHovering: boolean }) => {
             setHoveredRequestPropertyPath(isHovering ? jsonPropertyPath : undefined);
         },
-        [setHoveredRequestPropertyPath]
+        [setHoveredRequestPropertyPath],
     );
     const onHoverResponseProperty = useCallback(
         (jsonPropertyPath: JsonPropertyPath, { isHovering }: { isHovering: boolean }) => {
             setHoveredResponsePropertyPath(isHovering ? jsonPropertyPath : undefined);
         },
-        [setHoveredResponsePropertyPath]
+        [setHoveredResponsePropertyPath],
     );
 
     const [storedSelectedExampleClientId, setSelectedExampleClientId] = useAtom(fernClientIdAtom);
@@ -138,7 +138,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
             const error = endpoint.errors.find((e) =>
                 typeof statusCodeOrName === "number"
                     ? e.statusCode === statusCodeOrName
-                    : convertNameToAnchorPart(e.name) === statusCodeOrName
+                    : convertNameToAnchorPart(e.name) === statusCodeOrName,
             );
             if (error != null) {
                 setSelectedError(error);
@@ -157,7 +157,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     const availableExampleClients = useMemo(
         () => (example != null ? getAvailableExampleClients(example) : []),
-        [example]
+        [example],
     );
 
     const selectedExampleClient =
@@ -168,7 +168,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
             setSelectedExampleClientId(nextClient.id);
             navigateToPath(route.substring(1));
         },
-        [navigateToPath, route, setSelectedExampleClientId]
+        [navigateToPath, route, setSelectedExampleClientId],
     );
 
     const curlLines = useMemo(
@@ -176,7 +176,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
             example != null
                 ? getCurlLines(apiSection.auth, endpoint, example, flattenJsonToLines(example.requestBody))
                 : [],
-        [apiSection.auth, endpoint, example]
+        [apiSection.auth, endpoint, example],
     );
     const selectedExampleClientLineCount = useMemo(() => {
         return selectedExampleClient.id === "curl"
@@ -265,7 +265,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                         "max-h-[150vh] lg:max-h-[calc(100vh-4rem)]",
                         "flex",
                         // header offset
-                        "mt-10 lg:mt-0 lg:top-16"
+                        "mt-10 lg:mt-0 lg:top-16",
                     )}
                     style={{ height: `${exampleHeight}px` }}
                 >

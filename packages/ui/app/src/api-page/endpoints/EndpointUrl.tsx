@@ -15,7 +15,7 @@ export declare namespace EndpointUrl {
 
 export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<EndpointUrl.Props>>(function EndpointUrl(
     { endpoint, className, urlStyle },
-    ref
+    ref,
 ) {
     const endpointPathParts = useMemo(() => divideEndpointPathToParts(endpoint), [endpoint]);
 
@@ -48,13 +48,13 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                     pathParameter: (pathParameter) => (
                         <div
                             key={`part-${i}`}
-                            className="bg-accent-highlight dark:bg-accent-highlight-dark text-accent-primary dark:text-accent-primary-dark flex items-center justify-center whitespace-nowrap rounded px-1 font-mono text-xs"
+                            className="bg-accent-highlight dark:bg-accent-highlight-dark text-accent-primary flex items-center justify-center whitespace-nowrap rounded px-1 font-mono text-xs"
                         >
                             :{pathParameter.name}
                         </div>
                     ),
                     _other: () => null,
-                })
+                }),
             );
         });
         return elements;

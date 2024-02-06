@@ -10,7 +10,6 @@ import { compact } from "lodash-es";
 import { GetStaticProps, Redirect } from "next";
 import Head from "next/head";
 import { ReactElement } from "react";
-import { capturePosthogEvent, initializePosthog } from "../analytics/posthog";
 import { useColorTheme } from "../hooks/useColorTheme";
 import { REGISTRY_SERVICE } from "../services/registry";
 import { buildUrl } from "../util/buildUrl";
@@ -86,15 +85,8 @@ export type DocsPageResult<Props> =
 
 export const getDocsPageProps = async (
     xFernHost: string | undefined,
-    slugArray: string[]
+    slugArray: string[],
 ): Promise<DocsPageResult<DocsPage.Props>> => {
-    try {
-        initializePosthog();
-    } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error("Failed to initialize Posthog", e);
-    }
-
     if (xFernHost == null || Array.isArray(xFernHost)) {
         return { type: "notFound", notFound: true };
     }
@@ -104,20 +96,9 @@ export const getDocsPageProps = async (
         url: buildUrl({ host: xFernHost, pathname }),
     });
 
-    capturePosthogEvent("static_generate_docs_page", {
-        host: xFernHost,
-        path: pathname,
-        ok: docs.ok,
-    });
-
     if (!docs.ok) {
         // eslint-disable-next-line no-console
         console.error(`Failed to fetch docs for path: /${pathname}`, docs.error);
-        capturePosthogEvent("static_generate_docs_page_error", {
-            host: xFernHost,
-            path: pathname,
-            error: docs.error,
-        });
         return {
             type: "notFound",
             notFound: true,
@@ -126,6 +107,7 @@ export const getDocsPageProps = async (
     }
 
     const docsDefinition = docs.body.definition;
+    const basePath = docs.body.baseUrl.basePath;
     const typographyStyleSheet = generateFontFaces(docsDefinition.config.typographyV2, docsDefinition.files);
     const backgroundImageStyleSheet = loadDocsBackgroundImage(docsDefinition);
     type ApiDefinition = APIV1Read.ApiDefinition;
@@ -133,19 +115,14 @@ export const getDocsPageProps = async (
         definition: {
             apis: docs.body.definition.apis as Record<ApiDefinition["id"], ApiDefinition>,
             docsConfig: docs.body.definition.config,
-            basePath: docs.body.baseUrl.basePath,
+            basePath,
         },
     });
-    const resolvedNavigatable = resolver.resolveNavigatable(pathname);
+    const navigatable = resolver.resolveNavigatable(pathname);
 
-    if (resolvedNavigatable == null) {
+    if (navigatable == null) {
         // eslint-disable-next-line no-console
         console.error(`Cannot resolve navigatable corresponding to "${pathname}"`);
-        capturePosthogEvent("static_generate_docs_page_error", {
-            host: xFernHost,
-            path: pathname,
-            error: `Cannot resolve navigatable corresponding to "${pathname}"`,
-        });
         return {
             type: "notFound",
             notFound: true,
@@ -154,9 +131,9 @@ export const getDocsPageProps = async (
     }
 
     const resolvedPath = await convertNavigatableToResolvedPath({
-        navigatable: resolvedNavigatable,
-        docsDefinition: docsDefinition as DocsV1Read.DocsDefinition,
-        basePath: docs.body.baseUrl.basePath,
+        navigatable,
+        docsDefinition,
+        basePath,
     });
 
     return {

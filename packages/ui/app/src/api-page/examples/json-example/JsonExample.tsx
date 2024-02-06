@@ -42,7 +42,7 @@ export const JsonExample = React.memo<JsonExample.Props>(function JsonExample({ 
                     <div
                         className={classNames(
                             "relative w-fit min-w-full px-4 transition py-px",
-                            isSelected ? "bg-accent-primary/20" : "bg-transparent"
+                            isSelected ? "bg-accent-primary/20/20" : "bg-transparent",
                         )}
                         key={i}
                     >
@@ -78,7 +78,7 @@ export const JsonExampleVirtualized: React.FC<JsonExampleVirtualized.Props> = ({
                 <div
                     className={classNames(
                         "relative w-fit h-full min-w-full px-4 transition py-px",
-                        isSelected ? "bg-accent-primary/20" : "bg-transparent"
+                        isSelected ? "bg-accent-primary/20" : "bg-transparent",
                     )}
                 >
                     {isSelected && <div className="bg-accent-primary absolute inset-y-0 left-0 w-1" />}
@@ -86,7 +86,7 @@ export const JsonExampleVirtualized: React.FC<JsonExampleVirtualized.Props> = ({
                 </div>
             );
         },
-        [isSelectedArr]
+        [isSelectedArr],
     );
 
     return (

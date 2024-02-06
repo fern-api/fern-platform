@@ -48,7 +48,7 @@ export const SecretSpan: FC<{ secret: string } & React.HTMLAttributes<HTMLSpanEl
                             className={classNames(
                                 parentClassName,
                                 className,
-                                "bg-tag-default-light dark:bg-tag-default-dark hover:bg-tag-primary hover:dark:bg-tag-primary-dark -mx-0.5 cursor-pointer rounded px-0.5 font-mono"
+                                "bg-tag-default-light dark:bg-tag-default-dark hover:bg-tag-primary -mx-0.5 cursor-pointer rounded px-0.5 font-mono",
                             )}
                             onClick={copyToClipboard}
                             {...props}
@@ -111,7 +111,7 @@ export const PlaygroundSecretsModal: FC<PlaygroundSecretsModalProps> = ({
                             setSecrets([...secrets, { type: "bearer", token: value }]);
                             setValue("");
                         }}
-                        className="dark:text-dark bg-accent-primary dark:bg-accent-primary-dark hover:bg-accent-primary/70 dark:hover:bg-accent-primary-dark/70 text-accent-primary-contrast dark:text-accent-primary-dark-contrast group flex h-[30px] items-center justify-center space-x-3 rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
+                        className="dark:text-dark bg-accent-primary hover:bg-accent-primary/70 dark:hover:bg-accent-primary-dark/70 text-accent-primary-contrast-contrast group flex h-[30px] items-center justify-center space-x-3 rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
                     >
                         Add
                     </button>

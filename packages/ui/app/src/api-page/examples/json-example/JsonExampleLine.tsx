@@ -7,7 +7,7 @@ const TAB_WIDTH = 2;
 
 export const JsonExampleLine = React.forwardRef<HTMLDivElement, PropsWithChildren>(function JsonExampleLine(
     { children },
-    ref
+    ref,
 ) {
     const { depth } = useContext(JsonExampleDepthContext);
     const { isSelected } = useContext(JsonPropertySelectionContext);
@@ -16,7 +16,7 @@ export const JsonExampleLine = React.forwardRef<HTMLDivElement, PropsWithChildre
         <div
             className={classNames(
                 "relative w-fit min-w-full px-4 transition py-px",
-                isSelected ? "bg-accent-primary/20" : "bg-transparent"
+                isSelected ? "bg-accent-primary/20" : "bg-transparent",
             )}
             ref={ref}
         >

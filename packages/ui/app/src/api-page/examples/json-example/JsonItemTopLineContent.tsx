@@ -21,13 +21,13 @@ export const JsonItemTopLineContent: React.FC<JsonItemTopLineContent.Props> = ({
                     size(object) > 0
                         ? {
                               content: (
-                                  <span className="text-text-primary-light dark:text-text-primary-dark">{"{"}</span>
+                                  <span className="text-text-default-light dark:text-text-default-dark">{"{"}</span>
                               ),
                               isEndOfElement: false,
                           }
                         : {
                               content: (
-                                  <span className="text-text-primary-light dark:text-text-primary-dark">{"{}"}</span>
+                                  <span className="text-text-default-light dark:text-text-default-dark">{"{}"}</span>
                               ),
                               isEndOfElement: true,
                           },
@@ -35,13 +35,13 @@ export const JsonItemTopLineContent: React.FC<JsonItemTopLineContent.Props> = ({
                     list.length > 0
                         ? {
                               content: (
-                                  <span className="text-text-primary-light dark:text-text-primary-dark">{"["}</span>
+                                  <span className="text-text-default-light dark:text-text-default-dark">{"["}</span>
                               ),
                               isEndOfElement: false,
                           }
                         : {
                               content: (
-                                  <span className="text-text-primary-light dark:text-text-primary-dark">{"[]"}</span>
+                                  <span className="text-text-default-light dark:text-text-default-dark">{"[]"}</span>
                               ),
                               isEndOfElement: true,
                           },
@@ -56,14 +56,14 @@ export const JsonItemTopLineContent: React.FC<JsonItemTopLineContent.Props> = ({
                 }),
                 null: () => ({ content: <span>null</span>, isEndOfElement: true }),
             }),
-        [value]
+        [value],
     );
 
     return (
         <span className="whitespace-nowrap">
             {content}
             {isNonLastItemInCollection && isEndOfElement && (
-                <span className="text-text-primary-light dark:text-text-primary-dark">,</span>
+                <span className="text-text-default-light dark:text-text-default-dark">,</span>
             )}
         </span>
     );

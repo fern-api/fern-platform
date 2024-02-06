@@ -34,7 +34,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
         (jsonPropertyPath: JsonPropertyPath, { isHovering }: { isHovering: boolean }) => {
             setHoveredPayloadPropertyPath(isHovering ? jsonPropertyPath : undefined);
         },
-        [setHoveredPayloadPropertyPath]
+        [setHoveredPayloadPropertyPath],
     );
 
     const example = webhook.examples[0]; // TODO: Need a way to show all the examples
@@ -55,7 +55,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                 <div className="flex min-w-0 max-w-2xl flex-1 flex-col">
                     <div className="space-y-2.5 py-8">
                         {subpackageTitle != null && (
-                            <div className="text-accent-primary dark:text-accent-primary-dark text-xs font-semibold uppercase tracking-wider">
+                            <div className="text-accent-primary text-xs font-semibold uppercase tracking-wider">
                                 {subpackageTitle}
                             </div>
                         )}
@@ -122,7 +122,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                         // the 4rem is the same as the h-10 as the Header
                         "max-h-[calc(100vh-4rem)]",
                         // hide on mobile,
-                        "hidden lg:flex"
+                        "hidden lg:flex",
                     )}
                 >
                     {webhookExample}

@@ -35,7 +35,7 @@ export function getCurlLines(
     auth: APIV1Read.ApiAuth | undefined,
     endpoint: ResolvedEndpointDefinition,
     example: APIV1Read.ExampleEndpointCall,
-    jsonLines: JsonLine[]
+    jsonLines: JsonLine[],
 ): CurlLine[] {
     const parts: CurlLine[] = [];
     const environmentUrl = getEndpointEnvironmentUrl(endpoint) ?? "localhost:8000";
@@ -159,7 +159,7 @@ export function getCurlLines(
                             value: [{ type: "symbol", value: "'" }],
                             excludeIndent: true,
                             doNotStringifyValue: true,
-                        }
+                        },
                     );
                 }
                 break;
@@ -187,7 +187,7 @@ const CURL_INDENT = " ".repeat(CURL_PREFIX.length);
 function curlParameterToString(
     { excludeIndent, paramKey, doNotStringifyValue, value, excludeTrailingBackslash }: CurlLineParam,
     index: number,
-    isLast: boolean
+    isLast: boolean,
 ): string {
     const prefix = index === 0 ? CURL_PREFIX : excludeIndent ? "" : CURL_INDENT;
 
@@ -205,7 +205,7 @@ export function curlLinesToString(curlLines: CurlLine[]): string {
         .map((curlLine, index) =>
             curlLine.type === "param"
                 ? curlParameterToString(curlLine, index, index === curlLines.length - 1)
-                : jsonLineToString(curlLine.line)
+                : jsonLineToString(curlLine.line),
         )
         .join("\n");
 }

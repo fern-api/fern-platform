@@ -64,7 +64,7 @@ export const revalidateV1ApiHandler: NextApiHandler = async (req, res) => {
                 } else {
                     failures.push(path);
                 }
-            })
+            }),
         );
 
         // eslint-disable-next-line no-console

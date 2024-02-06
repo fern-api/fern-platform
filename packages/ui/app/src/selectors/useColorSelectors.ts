@@ -25,7 +25,7 @@ export function useColorSelectors(config: DocsV1Read.DocsConfig): ColorSelectors
             }
             return `rgba(${accentPrimary.r},${accentPrimary.g},${accentPrimary.b},${opacity})`;
         },
-        [accentPrimary]
+        [accentPrimary],
     );
 
     return { getAccentPrimary };
