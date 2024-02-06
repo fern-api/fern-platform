@@ -253,6 +253,7 @@ function resolveResponseBodyShape(
         streamingText: (streamingText) => streamingText,
         streamCondition: (streamCondition) => streamCondition,
         reference: (reference) => ({ type: "reference", shape: () => resolveTypeReference(reference.value, types) }),
+        stream: () => ({ type: "unknown" }), //TODO IMPLEMENT
         _other: () => ({ type: "unknown" }),
     });
 }
