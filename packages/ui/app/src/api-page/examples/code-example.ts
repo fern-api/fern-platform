@@ -1,5 +1,5 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { ResolvedEndpointDefinition, titleCase } from "@fern-ui/app-utils";
+import { titleCase } from "@fern-ui/app-utils";
 import { sortBy } from "lodash-es";
 
 export interface CodeExample {
@@ -19,18 +19,8 @@ export interface CodeExampleGroup {
     examples: CodeExample[];
 }
 
-function getExampleNameForEndpoint(endpoint: ResolvedEndpointDefinition, idx: number): string | undefined {
-    if (endpoint.id === "chat") {
-        return idx === 0 ? "Chat" : idx === 1 ? "Chat with web search" : undefined;
-    }
-    return undefined;
-}
-
 // key is the language
-export function generateCodeExamples(
-    examples: APIV1Read.ExampleEndpointCall[],
-    endpoint: ResolvedEndpointDefinition
-): CodeExampleGroup[] {
+export function generateCodeExamples(examples: APIV1Read.ExampleEndpointCall[]): CodeExampleGroup[] {
     const codeExamples = new Map<string, CodeExample[]>();
     examples.forEach((example, i) => {
         codeExamples.set("curl", [
@@ -93,11 +83,7 @@ export function generateCodeExamples(
                     key: `${language}-${i}/${j}`,
                     exampleIndex: i,
                     language,
-                    name:
-                        getExampleNameForEndpoint(endpoint, i) ??
-                        codeSample.name ??
-                        example.name ??
-                        titleCase(`${language} Example`),
+                    name: codeSample.name ?? example.name ?? titleCase(`${language} Example`),
                     code: codeSample.code,
                     install: codeSample.install,
                     exampleCall: example,
@@ -123,7 +109,7 @@ export function generateCodeExamples(
                 icon: getIconForClient(language),
                 examples,
             })),
-            "language"
+            "language",
         ),
     ];
 }
