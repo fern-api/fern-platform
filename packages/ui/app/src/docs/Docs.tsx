@@ -1,6 +1,6 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { crawlResolvedNavigationItemApiSections, resolveNavigationItems } from "@fern-ui/app-utils";
-import { PLATFORM, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
 import { Transition } from "@headlessui/react";
 import classNames from "classnames";
@@ -58,7 +58,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
 
     const hasSpecifiedBackgroundImage = !!config.backgroundImage;
 
-    const { colorsV3, layout } = config;
+    const { colorsV3 } = config;
 
     const backgroundType = useMemo(() => {
         if (colorsV3?.type === "darkAndLight") {
@@ -119,16 +119,6 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
 
     const apiSections = useMemo(() => crawlResolvedNavigationItemApiSections(navigationItems), [navigationItems]);
 
-    const maxPageWidth =
-        layout?.pageWidth == null
-            ? "88rem"
-            : visitDiscriminatedUnion(layout.pageWidth, "type")._visit({
-                  px: (px) => `${px.value}px`,
-                  rem: (rem) => `${rem.value}rem`,
-                  full: () => undefined,
-                  _other: () => "88rem",
-              });
-
     const { layoutBreakpoint: breakpoint } = useViewportContext();
 
     return (
@@ -149,13 +139,10 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
 
             <ApiPlaygroundContextProvider apiSections={apiSections}>
                 <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
-                    <div className="border-border-concealed-light dark:border-border-concealed-dark dark:shadow-header-dark fixed inset-x-0 top-0 z-30 h-16 overflow-visible border-b backdrop-blur-lg lg:backdrop-blur">
+                    <div className="border-border-concealed-light dark:border-border-concealed-dark dark:shadow-header-dark h-header-height fixed inset-x-0 top-0 z-30 overflow-visible border-b backdrop-blur-lg lg:backdrop-blur">
                         {renderBackground()}
                         <Header
-                            className="mx-auto"
-                            style={{
-                                maxWidth: maxPageWidth,
-                            }}
+                            className="max-w-page-width mx-auto"
                             config={config}
                             openSearchDialog={openSearchDialog}
                             isMobileSidebarOpen={isMobileSidebarOpen}
@@ -165,12 +152,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                         />
                     </div>
 
-                    <div
-                        className="relative mx-auto flex min-h-0 w-full min-w-0 flex-1"
-                        style={{
-                            maxWidth: maxPageWidth,
-                        }}
-                    >
+                    <div className="max-w-page-width relative mx-auto flex min-h-0 w-full min-w-0 flex-1">
                         {isMobileSidebarOpen && (
                             <div
                                 className="fixed inset-0 z-20 block bg-white/60 lg:hidden dark:bg-black/40"
@@ -179,19 +161,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                         )}
 
                         {["lg", "xl", "2xl"].includes(breakpoint) ? (
-                            <div
-                                className="sticky top-16 z-20 mt-16 h-[calc(100vh-64px)]"
-                                style={{
-                                    width:
-                                        layout?.sidebarWidth == null
-                                            ? "18rem"
-                                            : visitDiscriminatedUnion(layout.sidebarWidth, "type")._visit({
-                                                  px: (px) => `${px.value}px`,
-                                                  rem: (rem) => `${rem.value}rem`,
-                                                  _other: () => "18rem",
-                                              }),
-                                }}
-                            >
+                            <div className="w-sidebar-width mt-header-height top-header-height sticky z-20 h-[calc(100vh-64px)]">
                                 <Sidebar
                                     navigationItems={navigationItems}
                                     currentSlug={currentSlug}
@@ -203,7 +173,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                             </div>
                         ) : (
                             <Transition
-                                className="border-border-concealed-light dark:border-border-concealed-dark fixed inset-0 top-16 z-20 sm:w-72 sm:border-r"
+                                className="border-border-concealed-light dark:border-border-concealed-dark top-header-height fixed inset-0 z-20 sm:w-72 sm:border-r"
                                 show={isMobileSidebarOpen}
                                 enter="transition ease-in-out duration-300 transform"
                                 enterFrom="-translate-x-full"
@@ -224,8 +194,8 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                             </Transition>
                         )}
 
-                        <main className={classNames("relative flex w-full min-w-0 flex-1 flex-col pt-16")}>
-                            <DocsMainContent navigationItems={navigationItems} contentWidth={layout?.contentWidth} />
+                        <main className={classNames("relative flex w-full min-w-0 flex-1 flex-col pt-header-height")}>
+                            <DocsMainContent navigationItems={navigationItems} />
                         </main>
                     </div>
                 </div>

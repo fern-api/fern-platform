@@ -52,7 +52,7 @@
     h4,
     h5,
     h6 {
-        @apply scroll-mt-20 tracking-tight mt-8;
+        @apply scroll-mt-header-height-padded tracking-tight mt-8;
 
         font-family: var(--typography-heading-font-family);
     }

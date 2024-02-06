@@ -12,6 +12,13 @@ module.exports = {
     ],
     theme: {
         extend: {
+            spacing: {
+                "page-width": "var(--spacing-page-width)",
+                "content-width": "var(--spacing-content-width)",
+                "sidebar-width": "var(--spacing-sidebar-width)",
+                "header-height": "var(--spacing-header-height)",
+                "header-height-padded": "var(--spacing-header-height-padded)",
+            },
             flex: {
                 2: "2 2 0%",
             },

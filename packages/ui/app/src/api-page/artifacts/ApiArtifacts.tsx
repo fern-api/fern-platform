@@ -26,12 +26,12 @@ export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiDefinition, apiA
 
     return (
         <ApiPageMargins>
-            <div ref={setTargetRef} data-route={`/${slug}`.toLowerCase()} className="scroll-mt-20">
+            <div ref={setTargetRef} data-route={`/${slug}`.toLowerCase()} className="scroll-mt-header-height-padded">
                 <H2 className="pt-20">{API_ARTIFACTS_TITLE}</H2>
                 <div className="t-muted mt-5 text-lg">
                     Official open-source client libraries for your favorite platforms.
                 </div>
-                <div className="mt-16 grid grid-cols-3 gap-10">
+                <div className="mt-header-height grid grid-cols-3 gap-10">
                     {apiArtifacts.sdks.map((sdk, index) => (
                         <SdkCard key={index} sdk={sdk} />
                     ))}

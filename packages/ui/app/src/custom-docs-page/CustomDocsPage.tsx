@@ -1,6 +1,5 @@
-import { DocsV1Read, type DocsNode } from "@fern-api/fdr-sdk";
+import { type DocsNode } from "@fern-api/fdr-sdk";
 import { type ResolvedPath, type SerializedMdxContent } from "@fern-ui/app-utils";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import Link from "next/link";
 import { ReactElement } from "react";
 import { renderToString } from "react-dom/server";
@@ -16,7 +15,6 @@ export declare namespace CustomDocsPage {
         navigatable: DocsNode.Page;
         serializedMdxContent: SerializedMdxContent | undefined;
         resolvedPath: ResolvedPath.CustomMarkdownPage;
-        contentWidth: DocsV1Read.SizeConfig | undefined;
     }
 }
 
@@ -36,7 +34,7 @@ export const CustomDocsPageHeader = ({ resolvedPath }: Pick<CustomDocsPage.Props
     );
 };
 
-export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath, contentWidth }) => {
+export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath }) => {
     const mdxContent = <MdxContent mdx={resolvedPath.serializedMdxContent} />;
     const mdxString = renderToString(mdxContent);
     const editThisPage = resolvedPath.serializedMdxContent.frontmatter.editThisPageUrl ?? resolvedPath?.editThisPageUrl;
@@ -44,19 +42,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath, c
         <TableOfContentsContextProvider>
             <div className="flex justify-between px-6 sm:px-8 lg:pl-12 lg:pr-20 xl:pr-0">
                 <div className="w-full min-w-0 lg:pr-6">
-                    <article
-                        className="prose dark:prose-invert mx-auto w-full lg:ml-0 xl:mx-auto"
-                        style={{
-                            maxWidth:
-                                contentWidth == null
-                                    ? "44rem"
-                                    : visitDiscriminatedUnion(contentWidth, "type")._visit({
-                                          px: (px) => `${px.value}px`,
-                                          rem: (rem) => `${rem.value}rem`,
-                                          _other: () => "44rem",
-                                      }),
-                        }}
-                    >
+                    <article className="prose dark:prose-invert max-w-content-width mx-auto w-full lg:ml-0 xl:mx-auto">
                         <CustomDocsPageHeader resolvedPath={resolvedPath} />
                         {mdxContent}
                         <BottomNavigationButtons />
@@ -65,7 +51,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath, c
                 </div>
                 <aside
                     id="right-sidebar"
-                    className="sticky top-16 hidden h-[calc(100vh-64px)] w-[19rem] shrink-0 pl-4 xl:block"
+                    className="top-header-height sticky hidden h-[calc(100vh-64px)] w-[19rem] shrink-0 pl-4 xl:block"
                 >
                     <FernScrollArea viewportClassName="px-4 pb-12 pt-8">
                         <TableOfContents renderedHtml={mdxString} />

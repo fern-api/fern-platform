@@ -81,7 +81,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
     return (
         <div
             data-route={anchorRoute.toLowerCase()}
-            className={classNames("flex relative flex-col py-3 scroll-mt-20 gap-2", {
+            className={classNames("flex relative flex-col py-3 scroll-mt-header-height-padded gap-2", {
                 "px-3": !contextValue.isRootTypeDefinition,
             })}
         >
