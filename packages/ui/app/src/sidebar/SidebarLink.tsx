@@ -138,7 +138,7 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
                                     "relative flex-0 w-[22px] lg:w-3 shrink-0 border-r",
                                     "transition-transform group-hover/sidebar:translate-x-0 lg:translate-x-1 group-hover/sidebar:opacity-100 transition-opacity ease-out",
                                     {
-                                        "border-accent-primary/60": selected,
+                                        "border-accent-primary-light/60 dark:border-accent-primary-dark/60": selected,
                                         "border-border-default-light dark:border-border-default-dark lg:opacity-60":
                                             !selected,
                                     },

@@ -89,15 +89,15 @@ a.fern-button {
             }
 
             &:not(.primary, .success, .warning, .danger) {
-                @apply text-text-default-dark/70 hover:text-text-default-dark/70;
+                @apply dark:text-text-default-dark/70 dark:hover:text-text-default-dark/70;
 
                 &:hover,
                 &.active {
-                    @apply bg-white/10;
+                    @apply dark:bg-white/10;
                 }
 
                 .fa-icon {
-                    @apply bg-text-default-dark/70;
+                    @apply dark:bg-text-default-dark/70;
                 }
             }
 
