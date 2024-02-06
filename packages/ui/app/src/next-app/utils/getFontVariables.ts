@@ -1,5 +1,11 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 
+export const CSS_VARIABLES = {
+    BODY_FONT: "--typography-body-font-family",
+    HEADING_FONT: "--typography-heading-font-family",
+    CODE_FONT: "--typography-code-font-family",
+};
+
 function getFontExtension(url: string): string {
     const ext = url.split(".").pop();
     if (ext == null) {
@@ -33,13 +39,24 @@ function generateFontFace(
     return `@font-face {\n${lines.map((line) => `    ${line}`).join(";\n")};\n}`;
 }
 
-export function generateFontFaces(
+interface TypographyResult {
+    fontFaces: string[];
+    cssVariables: Record<string, string>;
+    additionalCss: string;
+}
+
+export function getFontVariables(
     typography: DocsV1Read.DocsTypographyConfigV2 | undefined,
     files: Record<DocsV1Read.FileId, DocsV1Read.Url>,
-): string {
+): TypographyResult {
     const fontFaces: string[] = [];
-    const variables: string[] = [];
+    const cssVariables: Record<string, string> = {
+        [CSS_VARIABLES.BODY_FONT]: BODY_FONT_FALLBACK,
+        [CSS_VARIABLES.HEADING_FONT]: BODY_FONT_FALLBACK,
+        [CSS_VARIABLES.CODE_FONT]: MONO_FONT_FALLBACK,
+    };
     let additionalCss: string = "";
+
     if (typography?.bodyFont != null && typography.bodyFont.variants != null) {
         let setVariant = false;
         for (const variant of typography.bodyFont.variants) {
@@ -50,16 +67,10 @@ export function generateFontFaces(
             }
         }
         if (setVariant) {
-            variables.push(
-                `--typography-body-font-family: '${typography.bodyFont.name}', ${
-                    typography.bodyFont.fallback?.join(", ") ?? BODY_FONT_FALLBACK
-                }`,
-            );
-        } else {
-            variables.push(`--typography-body-font-family: ${BODY_FONT_FALLBACK}`);
+            cssVariables[CSS_VARIABLES.BODY_FONT] = `'${typography.bodyFont.name}', ${
+                typography.bodyFont.fallback?.join(", ") ?? BODY_FONT_FALLBACK
+            }`;
         }
-    } else {
-        variables.push(`--typography-body-font-family: ${BODY_FONT_FALLBACK}`);
     }
 
     if (typography?.headingsFont != null && typography.headingsFont.variants != null) {
@@ -72,20 +83,14 @@ export function generateFontFaces(
             }
         }
         if (setVariant) {
-            variables.push(
-                `--typography-heading-font-family: '${typography.headingsFont.name}', ${
-                    typography.headingsFont.fallback?.join(", ") ?? BODY_FONT_FALLBACK
-                }`,
-            );
-        } else {
-            variables.push(`--typography-heading-font-family: ${BODY_FONT_FALLBACK}`);
+            cssVariables[CSS_VARIABLES.HEADING_FONT] = `'${typography.headingsFont.name}', ${
+                typography.headingsFont.fallback?.join(", ") ?? BODY_FONT_FALLBACK
+            }`;
         }
 
         if (typography.headingsFont.fontVariationSettings != null) {
             additionalCss += `h1, h2, h3 {\n    font-variation-settings: ${typography.headingsFont.fontVariationSettings};\n}\n`;
         }
-    } else {
-        variables.push(`--typography-heading-font-family: ${BODY_FONT_FALLBACK}`);
     }
 
     if (typography?.codeFont != null && typography.codeFont.variants != null) {
@@ -98,19 +103,15 @@ export function generateFontFaces(
             }
         }
         if (setVariant) {
-            variables.push(
-                `--typography-code-font-family: '${typography.codeFont.name}', ${
-                    typography.codeFont.fallback?.join(", ") ?? MONO_FONT_FALLBACK
-                }`,
-            );
-        } else {
-            variables.push(`--typography-code-font-family: ${MONO_FONT_FALLBACK}`);
+            cssVariables[CSS_VARIABLES.CODE_FONT] = `'${typography.codeFont.name}', ${
+                typography.codeFont.fallback?.join(", ") ?? MONO_FONT_FALLBACK
+            }`;
         }
-    } else {
-        variables.push(`--typography-code-font-family: ${MONO_FONT_FALLBACK}`);
     }
 
-    return `${fontFaces.join("\n")}\n\n:root {\n${variables
-        .map((line) => `    ${line};`)
-        .join("\n")}\n}\n${additionalCss}`;
+    return {
+        fontFaces,
+        cssVariables,
+        additionalCss,
+    };
 }

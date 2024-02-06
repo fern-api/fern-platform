@@ -238,7 +238,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                 data-route={route.toLowerCase()}
             >
                 <div
-                    className="flex min-w-0 max-w-2xl flex-1 flex-col"
+                    className="max-w-content-width flex min-w-0 flex-1 flex-col"
                     style={{
                         minHeight: layoutBreakpoint === "lg" ? `${exampleHeight}px` : undefined,
                     }}
