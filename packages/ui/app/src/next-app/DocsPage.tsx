@@ -4,6 +4,7 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { compact } from "lodash-es";
 import { GetStaticProps, Redirect } from "next";
 import Head from "next/head";
+import Script from "next/script";
 import { ReactElement } from "react";
 import { REGISTRY_SERVICE } from "../services/registry";
 import { buildUrl } from "../util/buildUrl";
@@ -63,6 +64,17 @@ export function DocsPage({
                 apis={apis}
                 resolvedPath={resolvedPath}
             />
+            {config.js?.inline?.map((inline, idx) => (
+                <Script key={`inline-script-${idx}`} id={`inline-script-${idx}`}>
+                    {inline}
+                </Script>
+            ))}
+            {config.js?.files.map((file) => (
+                <Script key={file.fileId} src={files[file.fileId]} strategy={file.strategy} />
+            ))}
+            {config.js?.remote?.map((remote) => (
+                <Script key={remote.url} src={remote.url} strategy={remote.strategy} />
+            ))}
         </>
     );
 }

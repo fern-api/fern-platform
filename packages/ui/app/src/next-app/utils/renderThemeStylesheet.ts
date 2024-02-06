@@ -24,6 +24,8 @@ export function renderThemeStylesheet(
     const bgColor = `#${tinycolor(`rgb(${colors[CSS_VARIABLES.BACKGROUND]})`).toHex()}`;
     const bgDarkColor = `#${tinycolor(`rgb(${colors[CSS_VARIABLES.BACKGROUND_DARK]})`).toHex()}`;
 
+    const inlinedCss = config.css?.inline?.join("\n\n") ?? "";
+
     return `
 :root {
     ${Object.entries(cssVariables)
@@ -42,5 +44,7 @@ html.dark {
 }
 
 ${additionalCss}
+
+${inlinedCss}
 `;
 }
