@@ -2,7 +2,7 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import {
     ResolvedApiDefinitionPackage,
     ResolvedEndpointDefinition,
-    ResolvedNavigationItemApiSection,
+    ResolvedNavigationItemApiSection
 } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useAtom } from "jotai";
@@ -90,6 +90,7 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundPro
 
     if (
         !domain.toLowerCase().includes("cloudflare") &&
+        !domain.toLowerCase().includes("assemblyai") &&
         !domain.toLowerCase().includes("cohere") &&
         !["docs.buildwithfern.com", "fern.docs.buildwithfern.com", "fern.docs.dev.buildwithfern.com"].includes(
             domain.toLowerCase(),
