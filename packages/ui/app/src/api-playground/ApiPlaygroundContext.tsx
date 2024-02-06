@@ -90,6 +90,7 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundPro
 
     if (
         !domain.toLowerCase().includes("cloudflare") &&
+        !domain.toLowerCase().includes("assemblyai") &&
         !domain.toLowerCase().includes("cohere") &&
         !["docs.buildwithfern.com", "fern.docs.buildwithfern.com", "fern.docs.dev.buildwithfern.com"].includes(
             domain.toLowerCase(),
