@@ -1,25 +1,12 @@
-import classNames from "classnames";
 import { RemoteFontAwesomeIcon } from "../../commons/FontAwesomeIcon";
 import { FernMenu, FernMenuItem } from "../../components/FernMenu";
-import type { CodeExampleClient, CodeExampleClientId } from "../examples//code-example";
-
-function getIconForClient(clientId: CodeExampleClientId) {
-    switch (clientId) {
-        case "curl":
-            return "fa-solid fa-code";
-        case "python":
-        case "python-async":
-            return "fa-brands fa-python";
-        case "typescript":
-            return "fa-brands fa-js";
-    }
-}
+import type { CodeExample, CodeExampleGroup } from "../examples//code-example";
 
 export declare namespace CodeExampleClientDropdown {
     export interface Props {
-        clients: CodeExampleClient[];
-        selectedClient: CodeExampleClient;
-        onClickClient: (clientId: CodeExampleClientId) => void;
+        clients: CodeExampleGroup[];
+        selectedClient: CodeExample;
+        onClickClient: (example: CodeExample) => void;
     }
 }
 
@@ -28,45 +15,66 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
     selectedClient,
     onClickClient,
 }) => {
+    const selectedClientGroup = clients.find((client) => client.language === selectedClient.language);
     return (
         <div className="flex justify-end">
             <FernMenu
-                text={selectedClient.name}
+                text={selectedClientGroup?.languageDisplayName ?? selectedClient.language}
                 icon={
                     <RemoteFontAwesomeIcon
-                        className="bg-accent-primary h-4 w-4"
-                        icon={getIconForClient(selectedClient.id)}
+                        className="bg-accent-primary dark:bg-accent-primary-dark h-4 w-4"
+                        icon={selectedClientGroup?.icon}
                     />
                 }
                 align="right"
+                menuClassName="overflow-hidden"
                 size="small"
             >
-                {clients.map(({ id: clientId, name: clientName }) => {
-                    const selected = clientId === selectedClient.id;
-                    return (
-                        <FernMenuItem
-                            key={clientId}
-                            selected={clientId === selectedClient.id}
-                            onClick={() => onClickClient(clientId)}
-                        >
-                            {(active) => (
-                                <>
-                                    <RemoteFontAwesomeIcon
-                                        className={classNames("h-4 w-4", {
-                                            "!bg-accent-primary": selected || (active && !selected),
-                                            "!bg-text-muted-light dark:!bg-text-muted-dark": !active && !selected,
-                                        })}
-                                        icon={getIconForClient(clientId)}
-                                    />
-                                    <div className="flex items-center whitespace-nowrap">
-                                        <span className="font-mono text-xs font-normal">{clientName}</span>
-                                    </div>
-                                </>
-                            )}
-                        </FernMenuItem>
-                    );
-                })}
+                {clients.map((client) => (
+                    <FernMenuItem
+                        key={client.language}
+                        selected={client.language === selectedClient.language}
+                        onClick={() => {
+                            if (client.examples[0] != null) {
+                                onClickClient(
+                                    client.examples.find(
+                                        (example) => example.exampleIndex === selectedClient.exampleIndex,
+                                    ) ?? client.examples[0],
+                                );
+                            }
+                        }}
+                    >
+                        <RemoteFontAwesomeIcon
+                            className="bg-accent-primary dark:bg-accent-primary-dark h-4 w-4"
+                            icon={client.icon}
+                        />
+                        <div className="flex items-center whitespace-nowrap">
+                            <span className="font-mono text-xs font-normal">{client.languageDisplayName}</span>
+                        </div>
+                    </FernMenuItem>
+                ))}
             </FernMenu>
         </div>
     );
 };
+
+/*
+{selectedClientGroup != null && selectedClientGroup.examples.length > 1 && (
+    <div className="divide-border-primary dark:divide-border-primary-dark flex flex-col items-stretch divide-y overflow-hidden rounded-md bg-white shadow">
+        {selectedClientGroup?.examples.map((example) => (
+            <FernMenuItem
+                key={example.key}
+                selected={example.key === selectedClient.key}
+                onClick={() => {
+                    onClickClient(example);
+                }}
+                disableRoundCorners
+            >
+                <div className="flex items-center whitespace-nowrap">
+                    <span className="font-mono text-xs font-normal">{example.name}</span>
+                </div>
+            </FernMenuItem>
+        ))}
+    </div>
+)}
+*/

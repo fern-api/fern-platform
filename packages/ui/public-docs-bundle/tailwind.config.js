@@ -17,7 +17,8 @@ module.exports = {
                 "content-width": "var(--spacing-content-width)",
                 "sidebar-width": "var(--spacing-sidebar-width)",
                 "header-height": "var(--spacing-header-height)",
-                "header-height-padded": "var(--spacing-header-height-padded)",
+                "header-height-padded": "calc(var(--spacing-header-height) + 1rem)",
+                "vh-minus-header": "calc(100vh - var(--spacing-header-height))",
             },
             flex: {
                 2: "2 2 0%",

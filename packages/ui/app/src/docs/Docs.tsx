@@ -161,7 +161,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                         )}
 
                         {["lg", "xl", "2xl"].includes(breakpoint) ? (
-                            <div className="w-sidebar-width mt-header-height top-header-height sticky z-20 h-[calc(100vh-64px)]">
+                            <div className="w-sidebar-width mt-header-height top-header-height h-vh-minus-header sticky z-20">
                                 <Sidebar
                                     navigationItems={navigationItems}
                                     currentSlug={currentSlug}
