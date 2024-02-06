@@ -3,7 +3,6 @@ import {
     convertNavigatableToResolvedPath,
     generateFontFaces,
     loadDocsBackgroundImage,
-    loadDocTypography,
     type ResolvedPath,
 } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
@@ -31,6 +30,64 @@ export declare namespace DocsPage {
     }
 }
 
+function getLayoutVariables(layout: DocsV1Read.DocsLayoutConfig | undefined): string {
+    const pageWidth =
+        layout?.pageWidth == null
+            ? "88rem"
+            : visitDiscriminatedUnion(layout.pageWidth, "type")._visit({
+                  px: (px) => `${px.value}px`,
+                  rem: (rem) => `${rem.value}rem`,
+                  full: () => "100%",
+                  _other: () => "88rem",
+              });
+
+    const contentWidth =
+        layout?.contentWidth == null
+            ? "44rem"
+            : visitDiscriminatedUnion(layout.contentWidth, "type")._visit({
+                  px: (px) => `${px.value}px`,
+                  rem: (rem) => `${rem.value}rem`,
+                  _other: () => "44rem",
+              });
+
+    const sidebarWidth =
+        layout?.sidebarWidth == null
+            ? "18rem"
+            : visitDiscriminatedUnion(layout.sidebarWidth, "type")._visit({
+                  px: (px) => `${px.value}px`,
+                  rem: (rem) => `${rem.value}rem`,
+                  _other: () => "18rem",
+              });
+
+    const headerHeight =
+        layout?.headerHeight == null
+            ? "4rem"
+            : visitDiscriminatedUnion(layout.headerHeight, "type")._visit({
+                  px: (px) => `${px.value}px`,
+                  rem: (rem) => `${rem.value}rem`,
+                  _other: () => "4rem",
+              });
+
+    const headerHeightPadded =
+        layout?.headerHeight == null
+            ? "5rem"
+            : visitDiscriminatedUnion(layout.headerHeight, "type")._visit({
+                  px: (px) => `${px.value + 16}px`,
+                  rem: (rem) => `${rem.value + 1}rem`,
+                  _other: () => "5rem",
+              });
+
+    return `
+:root {
+    --spacing-page-width: ${pageWidth};
+    --spacing-content-width: ${contentWidth};
+    --spacing-sidebar-width: ${sidebarWidth};
+    --spacing-header-height: ${headerHeight};
+    --spacing-header-height-padded: ${headerHeightPadded};
+}
+`;
+}
+
 export function DocsPage({
     baseUrl,
     config,
@@ -43,6 +100,7 @@ export function DocsPage({
     resolvedPath,
 }: DocsPage.Props): ReactElement {
     const colorThemeStyleSheet = useColorTheme(config);
+    const layoutVariables = getLayoutVariables(config.layout);
     return (
         <>
             {/* 
@@ -54,8 +112,12 @@ export function DocsPage({
             <style jsx global>
                 {`
                     ${colorThemeStyleSheet}
-                    ${typographyStyleSheet}
+
+                    \n${typographyStyleSheet}
+                    
                     ${backgroundImageStyleSheet}
+                    
+                    ${layoutVariables}
                 `}
             </style>
             <Head>
@@ -109,8 +171,7 @@ export const getDocsPageProps = async (
 
     const docsDefinition = docs.body.definition;
     const basePath = docs.body.baseUrl.basePath;
-    const typographyConfig = loadDocTypography(docsDefinition);
-    const typographyStyleSheet = generateFontFaces(typographyConfig, basePath);
+    const typographyStyleSheet = generateFontFaces(docsDefinition.config.typographyV2, docsDefinition.files);
     const backgroundImageStyleSheet = loadDocsBackgroundImage(docsDefinition);
     type ApiDefinition = APIV1Read.ApiDefinition;
     const resolver = new PathResolver({

@@ -42,7 +42,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
         <TableOfContentsContextProvider>
             <div className="flex justify-between px-6 sm:px-8 lg:pl-12 lg:pr-20 xl:pr-0">
                 <div className="w-full min-w-0 lg:pr-6">
-                    <article className="prose dark:prose-invert mx-auto w-full max-w-[70ch] lg:ml-0 xl:mx-auto">
+                    <article className="prose dark:prose-invert max-w-content-width mx-auto w-full lg:ml-0 xl:mx-auto">
                         <CustomDocsPageHeader resolvedPath={resolvedPath} />
                         {mdxContent}
                         <BottomNavigationButtons />
@@ -51,7 +51,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
                 </div>
                 <aside
                     id="right-sidebar"
-                    className="sticky top-16 hidden h-[calc(100vh-64px)] w-[19rem] shrink-0 pl-4 xl:block"
+                    className="top-header-height sticky hidden h-[calc(100vh-64px)] w-[19rem] shrink-0 pl-4 xl:block"
                 >
                     <FernScrollArea viewportClassName="px-4 pb-12 pt-8">
                         <TableOfContents renderedHtml={mdxString} />

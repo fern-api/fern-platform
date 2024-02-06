@@ -30,7 +30,11 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
     const showTabs = activeNavigationConfigContext.type === "tabbed";
 
     const searchBar = useMemo(() => {
-        return showSearchBar ? <SidebarSearchBar onClick={openSearchDialog} className="hidden lg:flex" /> : null;
+        return showSearchBar ? (
+            <div className="hidden lg:block">
+                <SidebarSearchBar onClick={openSearchDialog} className="w-full" />
+            </div>
+        ) : null;
     }, [showSearchBar, openSearchDialog]);
 
     const tabs = useMemo(() => {

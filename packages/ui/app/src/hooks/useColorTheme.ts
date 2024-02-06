@@ -49,7 +49,8 @@ const CSS_VARIABLES = {
 } as const;
 
 export function useColorTheme(config: DocsV1Read.DocsConfig): string {
-    const colorsV3 = config.colorsV3;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const colorsV3 = config.colorsV3!;
     // const { theme } = useTheme(colorsV3.type);
     // const invertedTheme = theme === "dark" ? "light" : "dark";
 
@@ -84,8 +85,8 @@ export function useColorTheme(config: DocsV1Read.DocsConfig): string {
     const accentPrimaryDarkContrast = tinycolor(accentPrimaryDark).isDark()
         ? tinycolor("white").toRgb()
         : tinycolor("black").toRgb();
-    const backgroundDark = colorsV3.type !== "darkAndLight" ? colorsV3.background : colorsV3["dark"].background;
-    const backgroundColorDark = backgroundDark.type === "solid" ? backgroundDark : DEFAULT_COLORS.background["dark"];
+    const backgroundDark = colorsV3?.type !== "darkAndLight" ? colorsV3?.background : colorsV3["dark"].background;
+    const backgroundColorDark = backgroundDark?.type === "solid" ? backgroundDark : DEFAULT_COLORS.background["dark"];
 
     return `
         :root {

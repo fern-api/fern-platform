@@ -1,7 +1,7 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
-import { forwardRef, memo, PropsWithChildren } from "react";
+import { CSSProperties, forwardRef, memo, PropsWithChildren } from "react";
 import { MenuIcon } from "../commons/icons/MenuIcon";
 import { SearchIcon } from "../commons/icons/SearchIcon";
 import { XIcon } from "../commons/icons/XIcon";
@@ -15,6 +15,7 @@ import { ThemeButton } from "./ThemeButton";
 export declare namespace Header {
     export interface Props {
         className?: string;
+        style?: CSSProperties;
         config: DocsV1Read.DocsConfig;
         openSearchDialog: () => void;
         isMobileSidebarOpen: boolean;
@@ -25,14 +26,23 @@ export declare namespace Header {
 }
 
 const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Props>>(function Header(
-    { className, config, openSearchDialog, isMobileSidebarOpen, openMobileSidebar, closeMobileSidebar, searchService },
+    {
+        className,
+        style,
+        config,
+        openSearchDialog,
+        isMobileSidebarOpen,
+        openMobileSidebar,
+        closeMobileSidebar,
+        searchService,
+    },
     ref,
 ) {
     const { navbarLinks, colorsV3 } = config;
     const navbarLinksSection = (
         <div className="hidden lg:block">
             <FernButtonGroup>
-                {navbarLinks.map((navbarLink, idx) =>
+                {navbarLinks?.map((navbarLink, idx) =>
                     visitDiscriminatedUnion(navbarLink, "type")._visit({
                         primary: (navbarLink) => <HeaderPrimaryLink key={idx} navbarLink={navbarLink} />,
                         secondary: (navbarLink) => <HeaderSecondaryLink key={idx} navbarLink={navbarLink} />,
@@ -40,7 +50,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                     }),
                 )}
 
-                {colorsV3.type === "darkAndLight" && <ThemeButton className="hidden lg:flex" />}
+                {colorsV3?.type === "darkAndLight" && <ThemeButton className="hidden lg:flex" />}
             </FernButtonGroup>
         </div>
     );
@@ -55,6 +65,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                 className,
             )}
             ref={ref}
+            style={style}
         >
             <HeaderLogoSection config={config} />
 
