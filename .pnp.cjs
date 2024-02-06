@@ -4940,6 +4940,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-instantsearch-hooks-web", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:6.45.0"],\
             ["react-intersection-observer", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:9.4.3"],\
             ["react-markdown", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:8.0.5"],\
+            ["react-medium-image-zoom", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.1.10"],\
             ["react-syntax-highlighter", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:15.5.0"],\
             ["react-test-renderer", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:18.2.0"],\
             ["react-virtuoso", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.6.0"],\
@@ -18330,6 +18331,32 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "packagePeers": [\
             "@types/react",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["react-medium-image-zoom", [\
+        ["npm:5.1.10", {\
+          "packageLocation": "./.yarn/cache/react-medium-image-zoom-npm-5.1.10-cc206a7706-9c2cf83fc6.zip/node_modules/react-medium-image-zoom/",\
+          "packageDependencies": [\
+            ["react-medium-image-zoom", "npm:5.1.10"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.1.10", {\
+          "packageLocation": "./.yarn/__virtual__/react-medium-image-zoom-virtual-1a9b8b28ea/0/cache/react-medium-image-zoom-npm-5.1.10-cc206a7706-9c2cf83fc6.zip/node_modules/react-medium-image-zoom/",\
+          "packageDependencies": [\
+            ["react-medium-image-zoom", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.1.10"],\
+            ["@types/react", "npm:18.0.20"],\
+            ["@types/react-dom", "npm:18.2.18"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
             "react"\
           ],\
           "linkType": "HARD"\
