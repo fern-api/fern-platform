@@ -9,7 +9,7 @@ export function renderThemeStylesheet(
     config: DocsV1Read.DocsConfig,
     files: Record<DocsV1Read.FileId, DocsV1Read.Url>,
 ): string {
-    const bg = getBgVariables(config, {});
+    const bg = getBgVariables(config, files);
     const { fontFaces, cssVariables: fonts, additionalCss } = getFontVariables(config.typographyV2, files);
     const colors = getColorVariables(config.colorsV3);
     const layout = getLayoutVariables(config.layout);
