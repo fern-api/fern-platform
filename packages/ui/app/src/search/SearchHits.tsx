@@ -121,8 +121,8 @@ export const SearchHits: React.FC = () => {
 
     return (
         <FernScrollArea
-            className="border-border-default-light dark:border-border-default-dark max-h-96 border-t"
-            viewportClassName="p-2 max-h-96"
+            className="border-border-default-light dark:border-border-default-dark min-h-0 flex-1 shrink border-t"
+            viewportClassName="p-2"
         >
             {hits.map((hit) => (
                 <SearchHit

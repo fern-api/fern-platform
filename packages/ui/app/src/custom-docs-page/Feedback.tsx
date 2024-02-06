@@ -70,6 +70,10 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
         }, [showFeedbackInput]),
     });
 
+    const handleClose = useCallback(() => {
+        setShowFeedbackInput(false);
+    }, []);
+
     return (
         <div className={classNames("mt-12", className)} ref={ref}>
             {!sent ? (
@@ -104,7 +108,7 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
                 </div>
             )}
             {!sent && (
-                <FeedbackFormDialog show={showFeedbackInput} targetRef={ref}>
+                <FeedbackFormDialog show={showFeedbackInput} targetRef={ref} onClose={handleClose}>
                     <FeedbackForm feedback={feedback} onSubmit={handleSubmitFeedback} />
                 </FeedbackFormDialog>
             )}

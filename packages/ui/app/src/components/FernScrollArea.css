@@ -1,9 +1,9 @@
 .fern-scroll-area {
-    @apply h-full w-full overflow-hidden;
+    @apply h-full w-full overflow-hidden flex flex-col;
 }
 
 .fern-scroll-area-viewport {
-    @apply h-full w-full;
+    @apply h-full w-full shrink flex min-h-0;
     border-radius: inherit;
 
     > div {

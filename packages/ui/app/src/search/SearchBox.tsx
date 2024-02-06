@@ -1,6 +1,6 @@
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
-import { ReactElement, useCallback, useRef, useState } from "react";
+import { forwardRef, ReactElement, useCallback, useImperativeHandle, useRef, useState } from "react";
 import { useSearchBox, UseSearchBoxProps } from "react-instantsearch-hooks-web";
 
 interface SearchBoxProps extends UseSearchBoxProps {
@@ -9,10 +9,16 @@ interface SearchBoxProps extends UseSearchBoxProps {
     placeholder?: string;
 }
 
-export function SearchBox({ queryHook, className, inputClassName, placeholder }: SearchBoxProps): ReactElement {
+export const SearchBox = forwardRef<HTMLInputElement, SearchBoxProps>(function SearchBox(
+    { queryHook, className, inputClassName, placeholder },
+    ref,
+): ReactElement {
     const { query, refine } = useSearchBox({ queryHook });
     const [inputValue, setInputValue] = useState(query);
     const inputRef = useRef<HTMLInputElement>(null);
+
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    useImperativeHandle(ref, () => inputRef.current!);
 
     const setQuery = useCallback(
         (newQuery: string) => {
@@ -100,4 +106,4 @@ export function SearchBox({ queryHook, className, inputClassName, placeholder }:
             </form>
         </div>
     );
-}
+});
