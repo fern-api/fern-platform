@@ -1,6 +1,8 @@
+import { useMounted } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import Link from "next/link";
-import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from "react";
+import React, { AnchorHTMLAttributes, DetailedHTMLProps, HTMLAttributes, ReactNode } from "react";
+import Zoom from "react-medium-image-zoom";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
 import { ShareIcon } from "../commons/icons/ShareIcon";
 import { useAnchorInView } from "../custom-docs-page/TableOfContentsContext";
@@ -247,6 +249,23 @@ export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className
 
             {isExternalUrl && <ShareIcon className="external-link-icon" />}
         </Link>
+    );
+};
+
+export const Img: React.FC<DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>> = ({
+    className,
+    src,
+    alt,
+    ...rest
+}) => {
+    const mounted = useMounted();
+    if (!mounted) {
+        return <img {...rest} className={classNames(className, "max-w-full")} src={src} alt={alt} />;
+    }
+    return (
+        <Zoom>
+            <img {...rest} className={classNames(className, "max-w-full")} src={src} alt={alt} />
+        </Zoom>
     );
 };
 

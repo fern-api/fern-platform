@@ -48,7 +48,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                     pathParameter: (pathParameter) => (
                         <div
                             key={`part-${i}`}
-                            className="bg-accent-highlight dark:bg-accent-highlight-dark text-accent-primary flex items-center justify-center whitespace-nowrap rounded px-1 font-mono text-xs"
+                            className="bg-accent-highlight text-accent-primary flex items-center justify-center whitespace-nowrap rounded px-1 font-mono text-xs"
                         >
                             :{pathParameter.name}
                         </div>

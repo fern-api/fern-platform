@@ -17,17 +17,17 @@
     @apply dark:bg-tag-default-dark;
 }
 .fern-scroll-area-scrollbar[data-orientation="vertical"] {
-    @apply w-[4px];
+    @apply w-[6px];
 
     &:hover {
-        @apply w-[6px];
+        @apply w-[10px];
     }
 }
 .fern-scroll-area-scrollbar[data-orientation="horizontal"] {
-    @apply flex-col h-[4px];
+    @apply flex-col h-[6px];
 
     &:hover {
-        @apply h-[6px];
+        @apply h-[10px];
     }
 }
 

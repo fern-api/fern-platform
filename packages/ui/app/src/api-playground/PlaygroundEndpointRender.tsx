@@ -30,7 +30,7 @@ export const PlaygroundEndpointRender: FC<PlaygroundEndpointRenderProps> = ({ en
                                     <span
                                         key={idx}
                                         className={classNames({
-                                            "bg-accent-highlight dark:bg-accent-highlight-dark text-accent-primary px-1 rounded before:content-[':']":
+                                            "bg-accent-highlight text-accent-primary px-1 rounded before:content-[':']":
                                                 stateValue.length === 0,
                                             "text-accent-primary font-semibold": stateValue.length > 0,
                                         })}

@@ -1,19 +1,14 @@
 import { APIV1Read, DocsV1Read, DocsV2Read, FdrAPI, PathResolver } from "@fern-api/fdr-sdk";
-import {
-    convertNavigatableToResolvedPath,
-    generateFontFaces,
-    loadDocsBackgroundImage,
-    type ResolvedPath,
-} from "@fern-ui/app-utils";
+import { convertNavigatableToResolvedPath, type ResolvedPath } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { compact } from "lodash-es";
 import { GetStaticProps, Redirect } from "next";
 import Head from "next/head";
 import { ReactElement } from "react";
-import { useColorTheme } from "../hooks/useColorTheme";
 import { REGISTRY_SERVICE } from "../services/registry";
 import { buildUrl } from "../util/buildUrl";
 import { DocsApp } from "./DocsApp";
+import { renderThemeStylesheet } from "./utils/renderThemeStylesheet";
 
 export declare namespace DocsPage {
     export interface Props {
@@ -24,58 +19,8 @@ export declare namespace DocsPage {
         algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
         files: Record<DocsV1Read.FileId, DocsV1Read.Url>;
         apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>;
-        typographyStyleSheet: string;
-        backgroundImageStyleSheet: string;
         resolvedPath: ResolvedPath;
     }
-}
-
-function getLayoutVariables(layout: DocsV1Read.DocsLayoutConfig | undefined): string {
-    const pageWidth =
-        layout?.pageWidth == null
-            ? "88rem"
-            : visitDiscriminatedUnion(layout.pageWidth, "type")._visit({
-                  px: (px) => `${px.value}px`,
-                  rem: (rem) => `${rem.value}rem`,
-                  full: () => "100%",
-                  _other: () => "88rem",
-              });
-
-    const contentWidth =
-        layout?.contentWidth == null
-            ? "44rem"
-            : visitDiscriminatedUnion(layout.contentWidth, "type")._visit({
-                  px: (px) => `${px.value}px`,
-                  rem: (rem) => `${rem.value}rem`,
-                  _other: () => "44rem",
-              });
-
-    const sidebarWidth =
-        layout?.sidebarWidth == null
-            ? "18rem"
-            : visitDiscriminatedUnion(layout.sidebarWidth, "type")._visit({
-                  px: (px) => `${px.value}px`,
-                  rem: (rem) => `${rem.value}rem`,
-                  _other: () => "18rem",
-              });
-
-    const headerHeight =
-        layout?.headerHeight == null
-            ? "4rem"
-            : visitDiscriminatedUnion(layout.headerHeight, "type")._visit({
-                  px: (px) => `${px.value}px`,
-                  rem: (rem) => `${rem.value}rem`,
-                  _other: () => "4rem",
-              });
-
-    return `
-:root {
-    --spacing-page-width: ${pageWidth};
-    --spacing-content-width: ${contentWidth};
-    --spacing-sidebar-width: ${sidebarWidth};
-    --spacing-header-height: ${headerHeight};
-}
-`;
 }
 
 export function DocsPage({
@@ -85,12 +30,9 @@ export function DocsPage({
     algoliaSearchIndex,
     files,
     apis,
-    typographyStyleSheet,
-    backgroundImageStyleSheet,
     resolvedPath,
 }: DocsPage.Props): ReactElement {
-    const colorThemeStyleSheet = useColorTheme(config);
-    const layoutVariables = getLayoutVariables(config.layout);
+    const stylesheet = renderThemeStylesheet(config, files);
     return (
         <>
             {/* 
@@ -101,13 +43,7 @@ export function DocsPage({
             {/* eslint-disable-next-line react/no-unknown-property */}
             <style jsx global>
                 {`
-                    ${colorThemeStyleSheet}
-
-                    \n${typographyStyleSheet}
-                    
-                    ${backgroundImageStyleSheet}
-                    
-                    ${layoutVariables}
+                    ${stylesheet}
                 `}
             </style>
             <Head>
@@ -161,8 +97,7 @@ export const getDocsPageProps = async (
 
     const docsDefinition = docs.body.definition;
     const basePath = docs.body.baseUrl.basePath;
-    const typographyStyleSheet = generateFontFaces(docsDefinition.config.typographyV2, docsDefinition.files);
-    const backgroundImageStyleSheet = loadDocsBackgroundImage(docsDefinition);
+
     type ApiDefinition = APIV1Read.ApiDefinition;
     const resolver = new PathResolver({
         definition: {
@@ -199,8 +134,6 @@ export const getDocsPageProps = async (
             algoliaSearchIndex: docs.body.definition.algoliaSearchIndex ?? null,
             files: docs.body.definition.files,
             apis: docs.body.definition.apis,
-            typographyStyleSheet,
-            backgroundImageStyleSheet: backgroundImageStyleSheet ?? "",
             resolvedPath,
         },
         revalidate: 60 * 60 * 24 * 6, // 6 days

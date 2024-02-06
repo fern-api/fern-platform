@@ -36,7 +36,7 @@ const DEFAULT_COLORS: {
     },
 };
 
-const CSS_VARIABLES = {
+export const CSS_VARIABLES = {
     ACCENT_PRIMARY: "--accent-primary",
     ACCENT_PRIMARY_DARKENED: "--accent-primary-darkened", // for hover state
     BACKGROUND: "--background",
@@ -48,16 +48,14 @@ const CSS_VARIABLES = {
     ACCENT_PRIMARY_DARK_CONTRAST: "--accent-primary-dark-contrast",
 } as const;
 
-export function useColorTheme(config: DocsV1Read.DocsConfig): string {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const colorsV3 = config.colorsV3!;
-    // const { theme } = useTheme(colorsV3.type);
-    // const invertedTheme = theme === "dark" ? "light" : "dark";
+export function getColorVariables(colorsV3: DocsV1Read.ColorsConfigV3 | undefined): Record<string, string> {
+    if (colorsV3 == null) {
+        // eslint-disable-next-line no-console
+        console.error("No colors config found.");
 
-    // if (theme == null) {
-    //     return "";
-    // }
-
+        // TODO: set default colors
+        return {};
+    }
     const accentPrimary = colorsV3.type !== "darkAndLight" ? colorsV3.accentPrimary : colorsV3["light"].accentPrimary;
 
     const accentPrimaryTinyColor = tinycolor(accentPrimary);
@@ -88,33 +86,14 @@ export function useColorTheme(config: DocsV1Read.DocsConfig): string {
     const backgroundDark = colorsV3?.type !== "darkAndLight" ? colorsV3?.background : colorsV3["dark"].background;
     const backgroundColorDark = backgroundDark?.type === "solid" ? backgroundDark : DEFAULT_COLORS.background["dark"];
 
-    return `
-        :root {
-            ${CSS_VARIABLES.ACCENT_PRIMARY}: ${accentPrimary.r}, ${accentPrimary.g}, ${accentPrimary.b};
-            ${CSS_VARIABLES.ACCENT_PRIMARY_DARKENED}: ${accentPrimaryDarkened.r}, ${accentPrimaryDarkened.g}, ${accentPrimaryDarkened.b};
-            ${CSS_VARIABLES.ACCENT_PRIMARY_DARK_LIGHTENED}: ${accentPrimaryDarkLightened.r}, ${accentPrimaryDarkLightened.g}, ${accentPrimaryDarkLightened.b};
-            ${CSS_VARIABLES.BACKGROUND}: ${backgroundColor.r}, ${backgroundColor.g}, ${backgroundColor.b};
-            ${CSS_VARIABLES.ACCENT_PRIMARY_DARK}: ${accentPrimaryDark.r}, ${accentPrimaryDark.g}, ${
-                accentPrimaryDark.b
-            };
-            ${CSS_VARIABLES.BACKGROUND_DARK}: ${backgroundColorDark.r}, ${backgroundColorDark.g}, ${
-                backgroundColorDark.b
-            };
-            ${CSS_VARIABLES.ACCENT_PRIMARY_CONTRAST}: ${accentPrimaryContrast.r}, ${accentPrimaryContrast.g}, ${
-                accentPrimaryContrast.b
-            };
-            ${CSS_VARIABLES.ACCENT_PRIMARY_DARK_CONTRAST}: ${accentPrimaryDarkContrast.r}, ${
-                accentPrimaryDarkContrast.g
-            }, ${accentPrimaryDarkContrast.b};
-        }
-
-
-        html {
-            background-color: #${tinycolor(backgroundColor).toHex()};
-        }
-
-        html.dark {
-            background-color: #${tinycolor(backgroundColorDark).toHex()};
-        }
-    `;
+    return {
+        [CSS_VARIABLES.ACCENT_PRIMARY]: `${accentPrimary.r}, ${accentPrimary.g}, ${accentPrimary.b}`,
+        [CSS_VARIABLES.ACCENT_PRIMARY_DARKENED]: `${accentPrimaryDarkened.r}, ${accentPrimaryDarkened.g}, ${accentPrimaryDarkened.b}`,
+        [CSS_VARIABLES.ACCENT_PRIMARY_DARK_LIGHTENED]: `${accentPrimaryDarkLightened.r}, ${accentPrimaryDarkLightened.g}, ${accentPrimaryDarkLightened.b}`,
+        [CSS_VARIABLES.BACKGROUND]: `${backgroundColor.r}, ${backgroundColor.g}, ${backgroundColor.b}`,
+        [CSS_VARIABLES.ACCENT_PRIMARY_DARK]: `${accentPrimaryDark.r}, ${accentPrimaryDark.g}, ${accentPrimaryDark.b}`,
+        [CSS_VARIABLES.BACKGROUND_DARK]: `${backgroundColorDark.r}, ${backgroundColorDark.g}, ${backgroundColorDark.b}`,
+        [CSS_VARIABLES.ACCENT_PRIMARY_CONTRAST]: `${accentPrimaryContrast.r}, ${accentPrimaryContrast.g}, ${accentPrimaryContrast.b}`,
+        [CSS_VARIABLES.ACCENT_PRIMARY_DARK_CONTRAST]: `${accentPrimaryDarkContrast.r}, ${accentPrimaryDarkContrast.g}, ${accentPrimaryDarkContrast.b}`,
+    };
 }
