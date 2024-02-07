@@ -141,6 +141,9 @@ export const getDocsPageProps = async (
     });
 
     const versionAndTabSlug = [];
+    if (basePath != null) {
+        versionAndTabSlug.push(...basePath.split("/").filter((s) => s.length > 0));
+    }
     if (navigatable.context.type === "versioned-tabbed" || navigatable.context.type === "versioned-untabbed") {
         if (navigatable.context.version.info.index !== 0) {
             versionAndTabSlug.push(navigatable.context.version.slug);
