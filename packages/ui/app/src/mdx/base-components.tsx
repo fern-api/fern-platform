@@ -16,7 +16,7 @@ export const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({ className, .
             {...rest}
             className={classNames(
                 className,
-                "not-prose inline-code font-mono border border-border-concealed-light dark:border-border-concealed-dark rounded bg-background/75 dark:bg-background-dark/75 py-0.5 px-1",
+                "not-prose inline-code font-mono border border-border-concealed-light dark:border-border-concealed-dark rounded bg-background-light/75 dark:bg-background-dark/75 py-0.5 px-1",
             )}
         />
     );

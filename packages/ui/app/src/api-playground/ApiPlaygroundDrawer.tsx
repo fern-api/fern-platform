@@ -1,5 +1,3 @@
-import { Button } from "@blueprintjs/core";
-import { Cross } from "@blueprintjs/icons";
 import { APIV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import {
     ResolvedApiDefinitionPackage,
@@ -9,6 +7,8 @@ import {
 import { failed, Loadable, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
+import { XIcon } from "../commons/icons/XIcon";
+import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { ApiPlayroundContent } from "./ApiPlaygroundContent";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 import { ApiPlaygroundEndpointSelector } from "./ApiPlaygroundEndpointSelector";
@@ -106,17 +106,14 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
         <div className="divide-border-default-light dark:divide-border-default-dark scroll-contain flex h-full flex-col divide-y overscroll-none rounded-lg">
             <div className="flex h-10 items-stretch justify-between gap-2 px-4">
                 {endpoint != null && (
-                    <>
-                        <div className="flex items-center">
-                            <ApiPlaygroundEndpointSelector
-                                apiDefinition={apiDefinition}
-                                endpoint={endpoint}
-                                navigationItems={navigationItems}
-                                popoverPlacement="bottom-start"
-                            />
-                        </div>
-                        <div className="bg-border-default-light dark:bg-border-default-dark h-10 w-[1px] shrink-0" />
-                    </>
+                    <div className="flex items-center">
+                        <ApiPlaygroundEndpointSelector
+                            apiDefinition={apiDefinition}
+                            endpoint={endpoint}
+                            navigationItems={navigationItems}
+                            popoverPlacement="bottom-start"
+                        />
+                    </div>
                 )}
                 {endpoint != null ? (
                     <PlaygroundEndpointRender endpoint={endpoint} formState={formState} />
@@ -131,14 +128,21 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
                     </div>
                 )}
 
-                <div className="bg-background dark:bg-background-dark -mx-4 flex items-center gap-2 px-4">
+                <div className="bg-background dark:bg-background-dark -mr-2 flex items-center px-2">
                     {/* <Tooltip content="Coming soon" popoverClassName="text-xs">
                         <a className="text-text-primary-light hover:text-accent-primary decoration-accent-primary dark:text-text-primary-dark dark:hover:text-accent-primary-dark dark:decoration-accent-primary-dark whitespace-nowrap text-sm font-semibold underline decoration-1 underline-offset-4 hover:decoration-2">
                             Sign in to use your API keys
                         </a>
                     </Tooltip> */}
-                    <PlaygroundSendRequestButton sendRequest={sendRequest} />
-                    <Button minimal={true} icon={<Cross />} onClick={collapseApiPlayground} className="-mr-2" />
+                    <FernButtonGroup>
+                        <PlaygroundSendRequestButton sendRequest={sendRequest} />
+                        <FernButton
+                            buttonStyle="minimal"
+                            icon={<XIcon />}
+                            className="-mr-2"
+                            onClick={collapseApiPlayground}
+                        />
+                    </FernButtonGroup>
                 </div>
             </div>
 

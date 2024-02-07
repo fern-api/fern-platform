@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { DetailedHTMLProps, forwardRef, InputHTMLAttributes, useEffect, useImperativeHandle, useRef } from "react";
+import "./FernInput.css";
 
 interface FernTextareaProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement> {
     onValueChange?: (value: string) => void;
@@ -23,10 +24,7 @@ export const FernTextarea = forwardRef<HTMLTextAreaElement, FernTextareaProps>(f
         <textarea
             {...props}
             ref={inputRef}
-            className={classNames(
-                className,
-                "border-border-default-light dark:border-border-default-dark focus-visible:ring-tag-primary-light focus-visible:dark:ring-tag-primary-dark focus-visible:border-accent-primary caret-accent-primary-light dark:caret-accent-primary-dark rounded-md border bg-white p-2 text-sm focus:outline-none focus-visible:ring-4 dark:bg-white/10 resize-none",
-            )}
+            className={classNames("fern-textarea", className)}
             onChange={handleChange}
         />
     );

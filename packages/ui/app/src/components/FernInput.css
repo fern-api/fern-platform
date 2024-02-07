@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .fern-input {
+        @apply form-input;
+    }
+
+    .fern-textarea {
+        @apply form-textarea;
+    }
+
+    .fern-input,
+    .fern-textarea {
+        @apply border-default caret-accent-primary-light dark:caret-accent-primary-dark rounded-md border bg-white p-2 text-sm dark:bg-white/5 resize-none;
+        @apply focus-visible:ring-tag-primary-light focus-visible:dark:ring-tag-primary-dark focus-visible:border-accent-primary focus-visible:outline-none focus-visible:ring-4;
+    }
+}

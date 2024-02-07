@@ -1,4 +1,4 @@
-import { Button, InputGroup, NumericInput, Switch, TextArea } from "@blueprintjs/core";
+import { Button, NumericInput, Switch, TextArea } from "@blueprintjs/core";
 import { DateInput3 } from "@blueprintjs/datetime2";
 import { ArrowLeft } from "@blueprintjs/icons";
 import { ResolvedObjectProperty, ResolvedTypeReference } from "@fern-ui/app-utils";
@@ -6,7 +6,7 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { Transition } from "@headlessui/react";
 import { FC, PropsWithChildren, useEffect } from "react";
-import { FernInput } from "./FernInput";
+import { FernInput } from "../components/FernInput";
 import { PlaygroundDiscriminatedUnionForm } from "./PlaygroundDescriminatedUnionForm";
 import { PlaygroundEnumForm } from "./PlaygroundEnumForm";
 import { PlaygroundListForm } from "./PlaygroundListForm";
@@ -162,8 +162,9 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
         ),
         string: () => (
             <FernInput
+                className="w-full"
                 value={typeof value === "string" ? value : ""}
-                onChange={onChange}
+                onValueChange={onChange}
                 onFocus={onFocus}
                 onBlur={onBlur}
             />
@@ -230,11 +231,11 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
         ),
         uuid: () => (
             <div className="flex min-w-0 flex-1 justify-end">
-                <InputGroup
-                    fill={true}
+                <FernInput
+                    className="w-full"
                     value={typeof value === "string" ? value : ""}
-                    onValueChange={onChange}
                     placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                    onValueChange={onChange}
                     onFocus={onFocus}
                     onBlur={onBlur}
                 />

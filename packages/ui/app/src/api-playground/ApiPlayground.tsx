@@ -160,7 +160,7 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
         <>
             <Transition
                 show={isPlaygroundOpen}
-                className="bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark fixed inset-x-0 bottom-0 z-20 border-t"
+                className="bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark fixed inset-x-0 bottom-0 z-40 border-t"
                 style={{ height }}
                 enter="ease-out transition-transform duration-300 transform"
                 enterFrom="translate-y-full"
@@ -174,7 +174,7 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
                     onMouseDown={handleVerticalResize}
                 >
                     <div className="bg-accent-primary dark:bg-accent-primary-dark absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
-                    <div className="bg-accent-primary dark:bg-accent-primary-dark relative top-2 mx-auto h-1 w-10 rounded-sm" />
+                    <div className="bg-accent-primary dark:bg-accent-primary-dark relative top-2 z-30 mx-auto h-1 w-10 rounded-sm" />
                 </div>
                 <ApiPlaygroundDrawer
                     navigationItems={apiSections}

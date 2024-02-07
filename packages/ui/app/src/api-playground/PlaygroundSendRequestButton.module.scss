@@ -1,9 +1,0 @@
-.playgroundSendRequestButton {
-    @apply bg-accent-primary text-accent-primary-contrast flex items-center justify-center space-x-3 rounded-md px-3 py-1.5 text-sm font-medium transition-colors;
-    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75;
-    @apply hover:bg-accent-primary/70;
-
-    :global(.dark) & {
-        @apply bg-accent-primary-dark hover:bg-accent-primary-dark/70 text-accent-primary-dark-contrast;
-    }
-}
