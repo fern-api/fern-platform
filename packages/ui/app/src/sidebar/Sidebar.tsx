@@ -1,7 +1,8 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { ResolvedNavigationItem } from "@fern-ui/app-utils";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, memo } from "react";
+import { useRouter } from "next/router";
+import { Fragment, memo, useEffect } from "react";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useViewportContext } from "../viewport-context/useViewportContext";
@@ -20,14 +21,14 @@ export interface SidebarProps {
     navbarLinks: DocsV1Read.NavbarLink[] | undefined;
 }
 
-const SidebarInner: React.FC<SidebarProps> = ({
+const SidebarInner = memo<SidebarProps>(function SidebarInner({
     navigationItems,
     currentSlug,
     registerScrolledToPathListener,
     searchInfo,
     algoliaSearchIndex,
     navbarLinks,
-}) => {
+}) {
     return (
         <nav className="h-full w-full" aria-label="secondary">
             <FernScrollArea className="group/sidebar" viewportClassName="px-4 pb-12">
@@ -50,17 +51,21 @@ const SidebarInner: React.FC<SidebarProps> = ({
             </FernScrollArea>
         </nav>
     );
-};
+});
 
-export const Sidebar = memo<SidebarProps>(function Sidebar(props) {
+function MobileSidebar(props: SidebarProps) {
+    const router = useRouter();
     const { isMobileSidebarOpen, closeMobileSidebar } = useMobileSidebarContext();
-    const { layoutBreakpoint: breakpoint } = useViewportContext();
 
-    return ["lg", "xl", "2xl"].includes(breakpoint) ? (
-        <div className="w-sidebar-width mt-header-height top-header-height h-vh-minus-header sticky z-20 hidden lg:block">
-            <SidebarInner {...props} />
-        </div>
-    ) : (
+    // close the mobile sidebar when the route changes
+    useEffect(() => {
+        router.events.on("routeChangeComplete", closeMobileSidebar);
+        return () => {
+            router.events.off("routeChangeComplete", closeMobileSidebar);
+        };
+    }, [closeMobileSidebar, router.events]);
+
+    return (
         <Transition as={Fragment} show={isMobileSidebarOpen}>
             <Dialog onClose={closeMobileSidebar} className="top-header-height fixed inset-0 z-20">
                 <Transition.Child
@@ -85,4 +90,16 @@ export const Sidebar = memo<SidebarProps>(function Sidebar(props) {
             </Dialog>
         </Transition>
     );
+}
+
+export const Sidebar = memo<SidebarProps & { className: string }>(function Sidebar({ className, ...props }) {
+    const { layoutBreakpoint: breakpoint } = useViewportContext();
+    if (["lg", "xl", "2xl"].includes(breakpoint)) {
+        return (
+            <div className={className}>
+                <SidebarInner {...props} />
+            </div>
+        );
+    }
+    return <MobileSidebar {...props} />;
 });

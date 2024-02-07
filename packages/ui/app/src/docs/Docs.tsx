@@ -155,6 +155,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
 
                     <div className="max-w-page-width relative mx-auto flex min-h-0 w-full min-w-0 flex-1">
                         <Sidebar
+                            className="w-sidebar-width mt-header-height top-header-height h-vh-minus-header sticky z-20 hidden lg:block"
                             navigationItems={navigationItems}
                             currentSlug={currentSlug}
                             registerScrolledToPathListener={registerScrolledToPathListener}

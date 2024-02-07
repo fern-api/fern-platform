@@ -39,7 +39,6 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
     expanded = false,
     rightElement,
     children,
-    closeMobileSidebar,
     elementRef,
 }: PropsWithChildren<
     Omit<SidebarSlugLinkProps, "registerScrolledToPathListener" | "slug"> & {
@@ -48,8 +47,6 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
         rel?: string | undefined;
         target?: HTMLAttributeAnchorTarget | undefined;
 
-        // SidebarSlugLink props
-        closeMobileSidebar?: () => void;
         elementRef?: React.Ref<HTMLLIElement>;
     }
 >) {
@@ -63,7 +60,6 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
                 href={href}
                 className={classNames(linkClassName, "!text-inherit")}
                 onClick={(e) => {
-                    closeMobileSidebar?.();
                     onClick?.(e);
                     toggleExpand?.();
                 }}
@@ -139,7 +135,7 @@ export const SidebarSlugLink: FC<PropsWithChildren<SidebarSlugLinkProps>> = ({
     ...props
 }) => {
     const ref = useRef<HTMLLIElement>(null);
-    const { closeMobileSidebar, isMobileSidebarOpen } = useMobileSidebarContext();
+    const { isMobileSidebarOpen } = useMobileSidebarContext();
 
     useEffect(() => {
         if (slug == null) {
@@ -156,12 +152,5 @@ export const SidebarSlugLink: FC<PropsWithChildren<SidebarSlugLinkProps>> = ({
         }
     }, [isMobileSidebarOpen, props.selected]);
 
-    return (
-        <SidebarLink
-            {...props}
-            elementRef={ref}
-            closeMobileSidebar={closeMobileSidebar}
-            href={slug != null ? `/${slug.join("/")}` : undefined}
-        />
-    );
+    return <SidebarLink {...props} elementRef={ref} href={slug != null ? `/${slug.join("/")}` : undefined} />;
 };

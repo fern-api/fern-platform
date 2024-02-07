@@ -8,7 +8,7 @@
     }
 
     .fern-sidebar-link-container {
-        @apply items-stretch relative flex min-h-[44px] lg:min-h-[36px];
+        @apply items-stretch relative flex min-h-[32px] lg:min-h-[36px];
     }
 
     .fern-sidebar-link-container[data-state="active"] {
@@ -20,7 +20,7 @@
     }
 
     .fern-sidebar-link-indent {
-        @apply relative flex-none w-[22px] lg:w-3 shrink-0 border-r;
+        @apply relative flex-none w-5 lg:w-3 shrink-0 border-r;
     }
 
     .fern-sidebar-link-container[data-state="active"] .fern-sidebar-link-indent {
@@ -32,7 +32,10 @@
     }
 
     .fern-sidebar-link {
-        @apply text-left relative inline-flex flex-1 content-between items-stretch px-4 lg:px-3 no-underline hover:no-underline rounded-xl lg:rounded-lg ring-border-primary dark:ring-border-primary-dark ring-inset;
+        @apply text-left relative inline-flex flex-1 content-between items-stretch px-4 lg:px-3;
+        @apply no-underline hover:no-underline;
+        @apply rounded-xl lg:rounded-lg;
+        @apply ring-border-primary dark:ring-border-primary-dark ring-inset;
     }
 
     .fern-sidebar-link-container[data-state="active"] .fern-sidebar-link {
@@ -44,7 +47,7 @@
     }
 
     .fern-sidebar-link-content {
-        @apply inline-flex flex-1 items-center py-3 lg:py-2;
+        @apply inline-flex flex-1 items-center py-2;
     }
 
     .fern-sidebar-link-text {
