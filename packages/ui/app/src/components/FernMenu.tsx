@@ -1,9 +1,8 @@
 import { Menu as HeadlessMenu, Transition } from "@headlessui/react";
+import { CheckIcon, ChevronDownIcon, Cross1Icon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import Link, { LinkProps } from "next/link";
 import { FC, Fragment, PropsWithChildren, ReactNode } from "react";
-import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
-import { CheckIcon } from "../commons/icons/CheckIcon";
 import { FernButton } from "./FernButton";
 
 export declare namespace FernMenu {
@@ -38,9 +37,8 @@ export const FernMenu: FC<FernMenu.Props> = ({
                             })}
                             icon={icon}
                             rightIcon={
-                                <RemoteFontAwesomeIcon
-                                    icon="chevron-down"
-                                    className={classNames("transition-transform !h-3 !w-3", {
+                                <ChevronDownIcon
+                                    className={classNames("transition-transform", {
                                         "rotate-180": open,
                                     })}
                                 />
@@ -57,7 +55,7 @@ export const FernMenu: FC<FernMenu.Props> = ({
                                 className="hover:bg-tag-primary border-border-primary dark:border-border-primary-dark text-accent-primary -ml-px inline-flex w-fit items-center justify-center rounded-lg rounded-l-none border px-2 py-1 tracking-tight transition hover:border-2 hover:px-[calc(theme(spacing[2])-1px)]"
                                 onClick={clearSelection}
                             >
-                                <RemoteFontAwesomeIcon icon="close" className="bg-accent-primary" />
+                                <Cross1Icon />
                             </button>
                         )}
                     </div>

@@ -2,13 +2,13 @@ import { NonIdealState, Spinner } from "@blueprintjs/core";
 import { APIV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import { failed, Loadable, loaded, loading, notStartedLoading, visitLoadable } from "@fern-ui/loadable";
+import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useCallback, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
-import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { FernButton } from "../components/FernButton";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
 import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
@@ -201,12 +201,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                     <div className="absolute bottom-4 right-4 z-20">
                         <FernButton
                             onClick={sendRequest}
-                            rightIcon={
-                                <RemoteFontAwesomeIcon
-                                    icon="paper-plane-top"
-                                    className="transition-transform group-hover:translate-x-0.5"
-                                />
-                            }
+                            rightIcon={<PaperPlaneIcon className="transition-transform group-hover:translate-x-0.5" />}
                             intent="primary"
                         >
                             Send request
@@ -261,10 +256,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                                     <FernButton
                                         onClick={sendRequest}
                                         rightIcon={
-                                            <RemoteFontAwesomeIcon
-                                                icon="paper-plane-top"
-                                                className="transition-transform group-hover:translate-x-0.5"
-                                            />
+                                            <PaperPlaneIcon className="transition-transform group-hover:translate-x-0.5" />
                                         }
                                         intent="primary"
                                         size="large"

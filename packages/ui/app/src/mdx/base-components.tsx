@@ -1,10 +1,10 @@
 import { useMounted } from "@fern-ui/react-commons";
+import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import Link from "next/link";
 import React, { AnchorHTMLAttributes, DetailedHTMLProps, HTMLAttributes, ReactNode } from "react";
 import Zoom from "react-medium-image-zoom";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
-import { ShareIcon } from "../commons/icons/ShareIcon";
 import { useAnchorInView } from "../custom-docs-page/TableOfContentsContext";
 import { useNavigationContext } from "../navigation-context";
 import { onlyText } from "../util/onlyText";
@@ -251,7 +251,7 @@ export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className
                 ? React.cloneElement<ImgProps>(children, { disableZoom: true })
                 : children}
 
-            {isExternalUrl && !hideExternalLinkIcon && <ShareIcon className="external-link-icon" />}
+            {isExternalUrl && !hideExternalLinkIcon && <ExternalLinkIcon className="external-link-icon" />}
         </Link>
     );
 };

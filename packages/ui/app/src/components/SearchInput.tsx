@@ -1,5 +1,4 @@
-import { Icon } from "@blueprintjs/core";
-import { IconNames } from "@blueprintjs/icons";
+import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { ReactElement } from "react";
 
@@ -24,7 +23,7 @@ export const SearchInput = ({
                 border,
             })}
         >
-            <Icon icon={IconNames.SEARCH} className="t-muted" />
+            <MagnifyingGlassIcon className="t-muted" />
             <input
                 autoFocus={autofocus}
                 type={clear ? "search" : "text"}

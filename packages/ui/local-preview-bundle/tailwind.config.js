@@ -17,7 +17,9 @@ module.exports = {
                 "content-width": "var(--spacing-content-width)",
                 "sidebar-width": "var(--spacing-sidebar-width)",
                 "header-height": "var(--spacing-header-height)",
-                "header-height-padded": "var(--spacing-header-height-padded)",
+                "header-height-padded": "calc(var(--spacing-header-height) + 1rem)",
+                "vh-minus-header": "calc(100vh - var(--spacing-header-height))",
+                icon: "15px",
             },
             flex: {
                 2: "2 2 0%",
@@ -47,8 +49,8 @@ module.exports = {
                 "accent-primary-dark-lightened": withOpacity("--accent-primary-dark-lightened"),
                 "accent-primary-contrast": withOpacity("--accent-primary-contrast"),
                 "accent-primary-dark-contrast": withOpacity("--accent-primary-dark-contrast"),
-                "accent-highlight": "rgba(var(--accent-primary), 10%)",
-                "accent-highlight-dark": "rgba(var(--accent-primary-dark), 10%)",
+                "accent-highlight-light": "rgba(var(--accent-primary), 20%)",
+                "accent-highlight-dark": "rgba(var(--accent-primary-dark), 20%)",
                 background: withOpacity("--background"),
                 "background-dark": withOpacity("--background-dark"),
 
@@ -132,7 +134,8 @@ module.exports = {
                     "@apply text-text-default-light dark:text-text-default-dark": {},
                 },
                 ".t-muted": {
-                    "@apply text-intent-default dark:text-intent-default-dark": {},
+                    "@apply text-text-muted-light dark:text-text-muted-dark dark:[text-shadow:_0_1px_3px_rgb(0_0_0_/_40%)]":
+                        {},
                 },
                 ".text-accent-primary": {
                     "@apply text-accent-primary-light dark:text-accent-primary-dark": {},
@@ -152,6 +155,9 @@ module.exports = {
                 // Background
                 ".bg-accent-primary": {
                     "@apply bg-accent-primary-light dark:bg-accent-primary-dark": {},
+                },
+                ".bg-accent-highlight": {
+                    "@apply bg-accent-highlight-light dark:bg-accent-highlight-dark": {},
                 },
                 ".bg-tag-default": {
                     "@apply bg-tag-default-light dark:bg-tag-default-dark": {},

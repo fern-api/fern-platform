@@ -1,8 +1,8 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { ArrowRightIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import Link from "next/link";
 import { ReactElement } from "react";
-import { ArrowRightIcon } from "../commons/icons/ArrowRightIcon";
 import { SidebarLink } from "./SidebarLink";
 
 interface HeaderSidebarSlugLinkProps {

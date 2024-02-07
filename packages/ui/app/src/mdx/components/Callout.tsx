@@ -1,9 +1,7 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { CheckCircledIcon, ExclamationTriangleIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import React from "react";
-import { CheckIcon } from "../../commons/icons/CheckIcon";
-import { InfoIcon } from "../../commons/icons/InfoIcon";
-import { WarningIcon } from "../../commons/icons/WarningIcon";
 import styles from "./Callout.module.scss";
 
 type Intent = "info" | "warning" | "success";
@@ -47,12 +45,14 @@ export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ inte
         >
             <div className="min-w-fit">
                 {visitDiscriminatedUnion({ intent }, "intent")._visit({
-                    info: () => <InfoIcon className="text-intent-default dark:text-intent-default-dark size-5" />,
+                    info: () => (
+                        <InfoCircledIcon className="text-intent-default dark:text-intent-default-dark size-5" />
+                    ),
                     warning: () => (
-                        <WarningIcon className="text-intent-warning-light dark:text-intent-warning-dark size-5" />
+                        <ExclamationTriangleIcon className="text-intent-warning-light dark:text-intent-warning-dark size-5" />
                     ),
                     success: () => (
-                        <CheckIcon className="text-intent-success-light dark:text-intent-success-dark size-5" />
+                        <CheckCircledIcon className="text-intent-success-light dark:text-intent-success-dark size-5" />
                     ),
                     _other: () => null,
                 })}

@@ -1,4 +1,4 @@
-import { IconNames } from "@blueprintjs/icons";
+import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import dynamic from "next/dynamic";
 import React, { useMemo } from "react";
 
@@ -23,7 +23,7 @@ export const MdxErrorBoundaryContent: React.FC<MdxErrorBoundaryContent.Props> = 
 
     return (
         <div className="flex flex-col items-center">
-            <NonIdealState icon={IconNames.WarningSign} title="Failed to render" />
+            <NonIdealState icon={<ExclamationTriangleIcon />} title="Failed to render" />
             <pre className="pre t-muted mt-6 max-w-[500px] whitespace-normal rounded bg-black/30 p-5">
                 {stringifiedError}
             </pre>

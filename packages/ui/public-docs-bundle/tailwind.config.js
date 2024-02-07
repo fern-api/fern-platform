@@ -19,6 +19,7 @@ module.exports = {
                 "header-height": "var(--spacing-header-height)",
                 "header-height-padded": "calc(var(--spacing-header-height) + 1rem)",
                 "vh-minus-header": "calc(100vh - var(--spacing-header-height))",
+                icon: "15px",
             },
             flex: {
                 2: "2 2 0%",
@@ -133,7 +134,8 @@ module.exports = {
                     "@apply text-text-default-light dark:text-text-default-dark": {},
                 },
                 ".t-muted": {
-                    "@apply text-intent-default dark:text-intent-default-dark": {},
+                    "@apply text-text-muted-light dark:text-text-muted-dark dark:[text-shadow:_0_1px_3px_rgb(0_0_0_/_40%)]":
+                        {},
                 },
                 ".text-accent-primary": {
                     "@apply text-accent-primary-light dark:text-accent-primary-dark": {},

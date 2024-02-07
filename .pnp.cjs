@@ -3784,7 +3784,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@blueprintjs/core", "virtual:25a018ab65c05215e2e32d797a61f32ad791cd7d01a45a0ee6e38123e67ae52b308d49541a997a63cb73cc5870d8015c95956cf4d1cd58f265161b6134899ca2#npm:5.8.2"],\
             ["@blueprintjs/colors", "npm:5.0.9"],\
-            ["@blueprintjs/icons", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.7.0"],\
+            ["@blueprintjs/icons", "virtual:d2059c01bad8c87a960b7c316c717ff4d401763b53ca0bcceba53192f92d96077662942ff5d2f83d3edd879296685f5879e2141a8e458aa09fbc478e496ca744#npm:5.7.0"],\
             ["@popperjs/core", "npm:2.11.8"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", "npm:18.2.18"],\
@@ -3794,31 +3794,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
             ["react-popper", "virtual:d2059c01bad8c87a960b7c316c717ff4d401763b53ca0bcceba53192f92d96077662942ff5d2f83d3edd879296685f5879e2141a8e458aa09fbc478e496ca744#npm:2.3.0"],\
             ["react-transition-group", "virtual:d2059c01bad8c87a960b7c316c717ff4d401763b53ca0bcceba53192f92d96077662942ff5d2f83d3edd879296685f5879e2141a8e458aa09fbc478e496ca744#npm:4.4.5"],\
-            ["tslib", "npm:2.6.2"]\
-          ],\
-          "packagePeers": [\
-            "@types/react-dom",\
-            "@types/react",\
-            "react-dom",\
-            "react"\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:5.8.1", {\
-          "packageLocation": "./.yarn/__virtual__/@blueprintjs-core-virtual-12f0dbd532/0/cache/@blueprintjs-core-npm-5.8.1-97817e2227-938bc0bf64.zip/node_modules/@blueprintjs/core/",\
-          "packageDependencies": [\
-            ["@blueprintjs/core", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:5.8.1"],\
-            ["@blueprintjs/colors", "npm:5.0.9"],\
-            ["@blueprintjs/icons", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:5.7.0"],\
-            ["@popperjs/core", "npm:2.11.8"],\
-            ["@types/react", "npm:18.0.20"],\
-            ["@types/react-dom", null],\
-            ["classnames", "npm:2.3.1"],\
-            ["normalize.css", "npm:8.0.1"],\
-            ["react", "npm:18.2.0"],\
-            ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
-            ["react-popper", "virtual:12f0dbd532a540be73fd452f90d2fe8d5c4fdf973bab4973c5d08fba1a179ff60e1642c42ed0011f693478d5adba909c1bab5c64e53e6b1e34accd86be561caf#npm:2.3.0"],\
-            ["react-transition-group", "virtual:12f0dbd532a540be73fd452f90d2fe8d5c4fdf973bab4973c5d08fba1a179ff60e1642c42ed0011f693478d5adba909c1bab5c64e53e6b1e34accd86be561caf#npm:4.4.5"],\
             ["tslib", "npm:2.6.2"]\
           ],\
           "packagePeers": [\
@@ -3859,7 +3834,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@blueprintjs/core", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.8.1"],\
             ["@blueprintjs/colors", "npm:5.0.9"],\
-            ["@blueprintjs/icons", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.7.0"],\
+            ["@blueprintjs/icons", "virtual:d2059c01bad8c87a960b7c316c717ff4d401763b53ca0bcceba53192f92d96077662942ff5d2f83d3edd879296685f5879e2141a8e458aa09fbc478e496ca744#npm:5.7.0"],\
             ["@popperjs/core", "npm:2.11.8"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", "npm:18.2.18"],\
@@ -3869,6 +3844,31 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
             ["react-popper", "virtual:d2059c01bad8c87a960b7c316c717ff4d401763b53ca0bcceba53192f92d96077662942ff5d2f83d3edd879296685f5879e2141a8e458aa09fbc478e496ca744#npm:2.3.0"],\
             ["react-transition-group", "virtual:d2059c01bad8c87a960b7c316c717ff4d401763b53ca0bcceba53192f92d96077662942ff5d2f83d3edd879296685f5879e2141a8e458aa09fbc478e496ca744#npm:4.4.5"],\
+            ["tslib", "npm:2.6.2"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["virtual:83226786336e3ec1d65bc4d7ab2fe8e410a92ae0faa428c376517262a7687f8c564f714ddc7188c47ae46ee441f6c920894158bd24f5245f2836019a45954fca#npm:5.8.1", {\
+          "packageLocation": "./.yarn/__virtual__/@blueprintjs-core-virtual-17dc9275f3/0/cache/@blueprintjs-core-npm-5.8.1-97817e2227-938bc0bf64.zip/node_modules/@blueprintjs/core/",\
+          "packageDependencies": [\
+            ["@blueprintjs/core", "virtual:83226786336e3ec1d65bc4d7ab2fe8e410a92ae0faa428c376517262a7687f8c564f714ddc7188c47ae46ee441f6c920894158bd24f5245f2836019a45954fca#npm:5.8.1"],\
+            ["@blueprintjs/colors", "npm:5.0.9"],\
+            ["@blueprintjs/icons", "virtual:17dc9275f37029209cab08c46e17eb2fbe9f457611ad938acf473795040d16a1b5bd3654e0a20da165e3bc9e37085b6dd1669454b4e4081d0f6aeeaae282d407#npm:5.7.0"],\
+            ["@popperjs/core", "npm:2.11.8"],\
+            ["@types/react", "npm:18.0.20"],\
+            ["@types/react-dom", null],\
+            ["classnames", "npm:2.3.1"],\
+            ["normalize.css", "npm:8.0.1"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:18.2.0"],\
+            ["react-popper", "virtual:17dc9275f37029209cab08c46e17eb2fbe9f457611ad938acf473795040d16a1b5bd3654e0a20da165e3bc9e37085b6dd1669454b4e4081d0f6aeeaae282d407#npm:2.3.0"],\
+            ["react-transition-group", "virtual:17dc9275f37029209cab08c46e17eb2fbe9f457611ad938acf473795040d16a1b5bd3654e0a20da165e3bc9e37085b6dd1669454b4e4081d0f6aeeaae282d407#npm:4.4.5"],\
             ["tslib", "npm:2.6.2"]\
           ],\
           "packagePeers": [\
@@ -3893,7 +3893,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@blueprintjs/datetime", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.2.11"],\
             ["@blueprintjs/core", "virtual:25a018ab65c05215e2e32d797a61f32ad791cd7d01a45a0ee6e38123e67ae52b308d49541a997a63cb73cc5870d8015c95956cf4d1cd58f265161b6134899ca2#npm:5.8.2"],\
-            ["@blueprintjs/icons", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.7.0"],\
+            ["@blueprintjs/icons", "virtual:d2059c01bad8c87a960b7c316c717ff4d401763b53ca0bcceba53192f92d96077662942ff5d2f83d3edd879296685f5879e2141a8e458aa09fbc478e496ca744#npm:5.7.0"],\
             ["@blueprintjs/select", "virtual:3e15f123fa60f3a21c3200c61f0f4cd2cc2baa7e0bc47b9e21f659b954501f75b22b15f0ee46445729b25a6c108b0bbb87ad967a4afcee6a9d133905b2da674c#npm:5.0.23"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", "npm:18.2.18"],\
@@ -3929,7 +3929,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@blueprintjs/datetime2", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.2.10"],\
             ["@blueprintjs/core", "virtual:25a018ab65c05215e2e32d797a61f32ad791cd7d01a45a0ee6e38123e67ae52b308d49541a997a63cb73cc5870d8015c95956cf4d1cd58f265161b6134899ca2#npm:5.8.2"],\
             ["@blueprintjs/datetime", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.2.11"],\
-            ["@blueprintjs/icons", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.7.0"],\
+            ["@blueprintjs/icons", "virtual:d2059c01bad8c87a960b7c316c717ff4d401763b53ca0bcceba53192f92d96077662942ff5d2f83d3edd879296685f5879e2141a8e458aa09fbc478e496ca744#npm:5.7.0"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", "npm:18.2.18"],\
             ["classnames", "npm:2.3.1"],\
@@ -3969,10 +3969,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:5.7.0", {\
-          "packageLocation": "./.yarn/__virtual__/@blueprintjs-icons-virtual-b563ae3c95/0/cache/@blueprintjs-icons-npm-5.7.0-a4d3151607-d8a938a168.zip/node_modules/@blueprintjs/icons/",\
+        ["virtual:17dc9275f37029209cab08c46e17eb2fbe9f457611ad938acf473795040d16a1b5bd3654e0a20da165e3bc9e37085b6dd1669454b4e4081d0f6aeeaae282d407#npm:5.7.0", {\
+          "packageLocation": "./.yarn/__virtual__/@blueprintjs-icons-virtual-c2de97ae18/0/cache/@blueprintjs-icons-npm-5.7.0-a4d3151607-d8a938a168.zip/node_modules/@blueprintjs/icons/",\
           "packageDependencies": [\
-            ["@blueprintjs/icons", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:5.7.0"],\
+            ["@blueprintjs/icons", "virtual:17dc9275f37029209cab08c46e17eb2fbe9f457611ad938acf473795040d16a1b5bd3654e0a20da165e3bc9e37085b6dd1669454b4e4081d0f6aeeaae282d407#npm:5.7.0"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", null],\
             ["change-case", "npm:4.1.2"],\
@@ -4009,10 +4009,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.7.0", {\
-          "packageLocation": "./.yarn/__virtual__/@blueprintjs-icons-virtual-ad15175117/0/cache/@blueprintjs-icons-npm-5.7.0-a4d3151607-d8a938a168.zip/node_modules/@blueprintjs/icons/",\
+        ["virtual:d2059c01bad8c87a960b7c316c717ff4d401763b53ca0bcceba53192f92d96077662942ff5d2f83d3edd879296685f5879e2141a8e458aa09fbc478e496ca744#npm:5.7.0", {\
+          "packageLocation": "./.yarn/__virtual__/@blueprintjs-icons-virtual-bb1ab01f01/0/cache/@blueprintjs-icons-npm-5.7.0-a4d3151607-d8a938a168.zip/node_modules/@blueprintjs/icons/",\
           "packageDependencies": [\
-            ["@blueprintjs/icons", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.7.0"],\
+            ["@blueprintjs/icons", "virtual:d2059c01bad8c87a960b7c316c717ff4d401763b53ca0bcceba53192f92d96077662942ff5d2f83d3edd879296685f5879e2141a8e458aa09fbc478e496ca744#npm:5.7.0"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", "npm:18.2.18"],\
             ["change-case", "npm:4.1.2"],\
@@ -4050,7 +4050,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@blueprintjs/select", "virtual:3e15f123fa60f3a21c3200c61f0f4cd2cc2baa7e0bc47b9e21f659b954501f75b22b15f0ee46445729b25a6c108b0bbb87ad967a4afcee6a9d133905b2da674c#npm:5.0.23"],\
             ["@blueprintjs/core", "virtual:25a018ab65c05215e2e32d797a61f32ad791cd7d01a45a0ee6e38123e67ae52b308d49541a997a63cb73cc5870d8015c95956cf4d1cd58f265161b6134899ca2#npm:5.8.2"],\
-            ["@blueprintjs/icons", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.7.0"],\
+            ["@blueprintjs/icons", "virtual:d2059c01bad8c87a960b7c316c717ff4d401763b53ca0bcceba53192f92d96077662942ff5d2f83d3edd879296685f5879e2141a8e458aa09fbc478e496ca744#npm:5.7.0"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", "npm:18.2.18"],\
             ["classnames", "npm:2.3.1"],\
@@ -4071,7 +4071,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@blueprintjs/select", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.0.22"],\
             ["@blueprintjs/core", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.8.1"],\
-            ["@blueprintjs/icons", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.7.0"],\
+            ["@blueprintjs/icons", "virtual:d2059c01bad8c87a960b7c316c717ff4d401763b53ca0bcceba53192f92d96077662942ff5d2f83d3edd879296685f5879e2141a8e458aa09fbc478e496ca744#npm:5.7.0"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", "npm:18.2.18"],\
             ["classnames", "npm:2.3.1"],\
@@ -4528,13 +4528,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/commons/react/common-components/",\
           "packageDependencies": [\
             ["@fern-ui/common-components", "workspace:packages/commons/react/common-components"],\
-            ["@blueprintjs/core", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:5.8.1"],\
-            ["@blueprintjs/icons", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:5.7.0"],\
             ["@fern-ui/loadable", "workspace:packages/commons/loadable"],\
             ["@types/jest", "npm:29.5.11"],\
             ["@types/node", "npm:18.18.13"],\
             ["@types/react", "npm:18.0.20"],\
-            ["classnames", "npm:2.5.1"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.7.0"],\
@@ -4839,7 +4836,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/commons/react/split-view/",\
           "packageDependencies": [\
             ["@fern-ui/split-view", "workspace:packages/commons/react/split-view"],\
-            ["@blueprintjs/core", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:5.8.1"],\
+            ["@blueprintjs/core", "virtual:83226786336e3ec1d65bc4d7ab2fe8e410a92ae0faa428c376517262a7687f8c564f714ddc7188c47ae46ee441f6c920894158bd24f5245f2836019a45954fca#npm:5.8.1"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/react-commons", "workspace:packages/commons/react/react-commons"],\
             ["@types/jest", "npm:29.5.11"],\
@@ -4895,7 +4892,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@blueprintjs/core", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.8.1"],\
             ["@blueprintjs/datetime", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.2.11"],\
             ["@blueprintjs/datetime2", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.2.10"],\
-            ["@blueprintjs/icons", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.7.0"],\
             ["@blueprintjs/select", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.0.22"],\
             ["@fern-api/fdr-sdk", "npm:0.46.1-19-g5e3bf66"],\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
@@ -4904,6 +4900,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/react-commons", "workspace:packages/commons/react/react-commons"],\
             ["@fontsource/ibm-plex-mono", "npm:4.5.13"],\
             ["@headlessui/react", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.7.18"],\
+            ["@radix-ui/react-icons", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.3.0"],\
             ["@radix-ui/react-radio-group", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.1.3"],\
             ["@radix-ui/react-scroll-area", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.0.5"],\
             ["@react-hook/size", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.1.2"],\
@@ -5911,6 +5908,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@radix-ui/react-direction", "virtual:6eb0925764c45a5794aecb3dbb3fbecf92f5a7ec06fb94363b01cffdbd538a37f224e01082e3086936d5cca22bdb281aa0cc1ea38ebd3f10c93f7fc2cc353969#npm:1.0.1"],\
             ["@babel/runtime", "npm:7.23.9"],\
+            ["@types/react", "npm:18.0.20"],\
+            ["react", "npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@radix-ui/react-icons", [\
+        ["npm:1.3.0", {\
+          "packageLocation": "./.yarn/cache/@radix-ui-react-icons-npm-1.3.0-2aeeb348f1-982f3ee227.zip/node_modules/@radix-ui/react-icons/",\
+          "packageDependencies": [\
+            ["@radix-ui/react-icons", "npm:1.3.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.3.0", {\
+          "packageLocation": "./.yarn/__virtual__/@radix-ui-react-icons-virtual-d299b91067/0/cache/@radix-ui-react-icons-npm-1.3.0-2aeeb348f1-982f3ee227.zip/node_modules/@radix-ui/react-icons/",\
+          "packageDependencies": [\
+            ["@radix-ui/react-icons", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.3.0"],\
             ["@types/react", "npm:18.0.20"],\
             ["react", "npm:18.2.0"]\
           ],\
@@ -18370,10 +18389,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:12f0dbd532a540be73fd452f90d2fe8d5c4fdf973bab4973c5d08fba1a179ff60e1642c42ed0011f693478d5adba909c1bab5c64e53e6b1e34accd86be561caf#npm:2.3.0", {\
-          "packageLocation": "./.yarn/__virtual__/react-popper-virtual-d9500c7de6/0/cache/react-popper-npm-2.3.0-1045578379-837111c987.zip/node_modules/react-popper/",\
+        ["virtual:17dc9275f37029209cab08c46e17eb2fbe9f457611ad938acf473795040d16a1b5bd3654e0a20da165e3bc9e37085b6dd1669454b4e4081d0f6aeeaae282d407#npm:2.3.0", {\
+          "packageLocation": "./.yarn/__virtual__/react-popper-virtual-c5e133358d/0/cache/react-popper-npm-2.3.0-1045578379-837111c987.zip/node_modules/react-popper/",\
           "packageDependencies": [\
-            ["react-popper", "virtual:12f0dbd532a540be73fd452f90d2fe8d5c4fdf973bab4973c5d08fba1a179ff60e1642c42ed0011f693478d5adba909c1bab5c64e53e6b1e34accd86be561caf#npm:2.3.0"],\
+            ["react-popper", "virtual:17dc9275f37029209cab08c46e17eb2fbe9f457611ad938acf473795040d16a1b5bd3654e0a20da165e3bc9e37085b6dd1669454b4e4081d0f6aeeaae282d407#npm:2.3.0"],\
             ["@popperjs/core", "npm:2.11.8"],\
             ["@types/popperjs__core", null],\
             ["@types/react", "npm:18.0.20"],\
@@ -18524,10 +18543,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:12f0dbd532a540be73fd452f90d2fe8d5c4fdf973bab4973c5d08fba1a179ff60e1642c42ed0011f693478d5adba909c1bab5c64e53e6b1e34accd86be561caf#npm:4.4.5", {\
-          "packageLocation": "./.yarn/__virtual__/react-transition-group-virtual-009694544f/0/cache/react-transition-group-npm-4.4.5-98ea4ef96e-7560284010.zip/node_modules/react-transition-group/",\
+        ["virtual:17dc9275f37029209cab08c46e17eb2fbe9f457611ad938acf473795040d16a1b5bd3654e0a20da165e3bc9e37085b6dd1669454b4e4081d0f6aeeaae282d407#npm:4.4.5", {\
+          "packageLocation": "./.yarn/__virtual__/react-transition-group-virtual-0aca8809ce/0/cache/react-transition-group-npm-4.4.5-98ea4ef96e-7560284010.zip/node_modules/react-transition-group/",\
           "packageDependencies": [\
-            ["react-transition-group", "virtual:12f0dbd532a540be73fd452f90d2fe8d5c4fdf973bab4973c5d08fba1a179ff60e1642c42ed0011f693478d5adba909c1bab5c64e53e6b1e34accd86be561caf#npm:4.4.5"],\
+            ["react-transition-group", "virtual:17dc9275f37029209cab08c46e17eb2fbe9f457611ad938acf473795040d16a1b5bd3654e0a20da165e3bc9e37085b6dd1669454b4e4081d0f6aeeaae282d407#npm:4.4.5"],\
             ["@babel/runtime", "npm:7.20.13"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", null],\

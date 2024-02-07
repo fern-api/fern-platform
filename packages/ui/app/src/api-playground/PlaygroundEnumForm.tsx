@@ -1,9 +1,8 @@
 import { Button, MenuItem, SegmentedControl, Tooltip } from "@blueprintjs/core";
-import { CaretDown } from "@blueprintjs/icons";
 import { Select } from "@blueprintjs/select";
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import { CaretDownIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import { FC, useCallback } from "react";
-import { InfoIcon } from "../commons/icons/InfoIcon";
 
 interface PlaygroundEnumFormProps {
     enumValues: APIV1Read.EnumValue[];
@@ -58,7 +57,7 @@ export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({ enumValues, on
                         roleStructure="listoption"
                         labelElement={
                             <Tooltip content={description} compact={true} popoverClassName="max-w-xs text-xs">
-                                <InfoIcon />
+                                <InfoCircledIcon />
                             </Tooltip>
                         }
                     />
@@ -79,7 +78,7 @@ export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({ enumValues, on
                     )
                 }
                 alignText="left"
-                rightIcon={<CaretDown />}
+                rightIcon={<CaretDownIcon />}
                 fill={true}
             />
         </Select>

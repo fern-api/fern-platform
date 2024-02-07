@@ -18,7 +18,7 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, sel
             <Link
                 className={classNames(
                     "no-underline hover:no-underline min-h-[44px] lg:min-h-[36px]",
-                    "text-base lg:text-sm flex flex-1 py-2 px-3 group/tab-button transition rounded-lg justify-start items-center select-none min-w-0 hover:text-accent-primary",
+                    "text-base lg:text-sm flex flex-1 py-2 px-3 group/tab-button group-hover/tab-button:transition rounded-lg justify-start items-center select-none min-w-0 hover:text-accent-primary",
                     {
                         "text-accent-primary": selected,
                         "t-muted": !selected,
@@ -38,7 +38,7 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, sel
                             )}
                         >
                             <RemoteFontAwesomeIcon
-                                className={classNames("h-3.5 w-3.5 group-hover/tab-button:bg-accent-primary", {
+                                className={classNames("size-3.5 group-hover/tab-button:bg-accent-primary", {
                                     "bg-accent-primary": selected,
                                     "bg-text-muted-light dark:bg-text-muted-dark": !selected,
                                 })}
