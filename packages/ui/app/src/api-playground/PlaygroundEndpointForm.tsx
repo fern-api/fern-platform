@@ -1,5 +1,4 @@
 import { Button, Checkbox, InputGroup } from "@blueprintjs/core";
-import { ArrowTopRight, Cross, GlobeNetwork, Person } from "@blueprintjs/icons";
 import { isApiNode, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import {
     ResolvedEndpointDefinition,
@@ -11,6 +10,7 @@ import {
 } from "@fern-ui/app-utils";
 import { isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
+import { ArrowTopRightIcon, Cross1Icon, GlobeIcon, PersonIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { isUndefined } from "lodash-es";
 import Link from "next/link";
@@ -195,7 +195,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                                 <span className="inline-flex items-center gap-1">
                                                     <SecretSpan secret={formState.auth.token} className="text-sm" />
                                                     <Button
-                                                        icon={<Cross />}
+                                                        icon={<Cross1Icon className="size-4" />}
                                                         minimal={true}
                                                         small={true}
                                                         onClick={() => {
@@ -226,7 +226,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                                     rightElement={
                                                         <Button
                                                             onClick={openSecretsModal}
-                                                            icon={<GlobeNetwork />}
+                                                            icon={<GlobeIcon className="size-4" />}
                                                             minimal={true}
                                                         />
                                                     }
@@ -261,7 +261,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                                             ? formState.auth.username
                                                             : ""
                                                     }
-                                                    leftIcon={<Person />}
+                                                    leftIcon={<PersonIcon className="size-4" />}
                                                     rightElement={<span className="t-muted text-xs">{"string"}</span>}
                                                 />
                                             </div>
@@ -661,10 +661,10 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                             shallow={
                                 isApiNode(activeNavigatable) && activeNavigatable.section.api === endpoint.apiSectionId
                             }
-                            className="t-muted hover:text-accent-primary hover:dark:text-accent-primary-dark inline-flex items-center gap-2 text-sm font-semibold underline decoration-1 underline-offset-4 hover:decoration-2"
+                            className="t-muted hover:text-accent-primary hover:dark:text-accent-primary-dark inline-flex items-center gap-1 text-sm font-semibold underline decoration-1 underline-offset-4 hover:decoration-2"
                         >
                             <span>View in API Reference</span>
-                            <ArrowTopRight />
+                            <ArrowTopRightIcon className="size-4" />
                         </Link>
                     </div>
                 </div>

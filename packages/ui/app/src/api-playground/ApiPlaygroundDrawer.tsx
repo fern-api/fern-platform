@@ -5,9 +5,9 @@ import {
     ResolvedNavigationItemApiSection,
 } from "@fern-ui/app-utils";
 import { failed, Loadable, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
+import { Cross1Icon } from "@radix-ui/react-icons";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
-import { XIcon } from "../commons/icons/XIcon";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { ApiPlayroundContent } from "./ApiPlaygroundContent";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
@@ -138,7 +138,7 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
                         <PlaygroundSendRequestButton sendRequest={sendRequest} />
                         <FernButton
                             buttonStyle="minimal"
-                            icon={<XIcon />}
+                            icon={<Cross1Icon className="size-4" />}
                             className="-mr-2"
                             onClick={collapseApiPlayground}
                         />
