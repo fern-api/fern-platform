@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { CornerDownLeft } from "react-feather";
 import type { PageSearchRecordV2 } from "../types";
+import { SearchHitBreadCrumbs } from "./SearchHitBreadCrumbs";
 
 export declare namespace PageRecordV2 {
     export interface Props {
@@ -10,7 +11,6 @@ export declare namespace PageRecordV2 {
 }
 
 export const PageRecordV2: React.FC<PageRecordV2.Props> = ({ hit, isHovered }) => {
-    const breadcrumbs = hit.path.parts.map((p) => p.name).join(" > ");
     return (
         <div className="flex w-full flex-col space-y-1.5">
             <div className="flex justify-between">
@@ -38,7 +38,7 @@ export const PageRecordV2: React.FC<PageRecordV2.Props> = ({ hit, isHovered }) =
                         "t-muted": !isHovered,
                     })}
                 >
-                    {breadcrumbs}
+                    <SearchHitBreadCrumbs parts={hit.path.parts} />
                 </span>
 
                 <CornerDownLeft

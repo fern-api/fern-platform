@@ -2,6 +2,7 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { CornerDownLeft } from "react-feather";
 import type { EndpointSearchRecordV2 } from "../types";
+import { SearchHitBreadCrumbs } from "./SearchHitBreadCrumbs";
 
 export declare namespace EndpointRecordV2 {
     export interface Props {
@@ -11,7 +12,6 @@ export declare namespace EndpointRecordV2 {
 }
 
 export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHovered }) => {
-    const breadcrumbs = hit.path.parts.map((p) => p.name).join(" > ");
     return (
         <div className="flex w-full flex-col space-y-1.5">
             <div className="flex justify-between">
@@ -81,7 +81,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                         "t-muted": !isHovered,
                     })}
                 >
-                    {breadcrumbs}
+                    <SearchHitBreadCrumbs parts={hit.path.parts} />
                 </span>
 
                 <CornerDownLeft
