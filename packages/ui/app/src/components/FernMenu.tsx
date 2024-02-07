@@ -1,8 +1,9 @@
 import { Menu as HeadlessMenu, Transition } from "@headlessui/react";
-import { CheckIcon, ChevronDownIcon, Cross1Icon } from "@radix-ui/react-icons";
+import { ChevronDownIcon, Cross1Icon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import Link, { LinkProps } from "next/link";
 import { FC, Fragment, PropsWithChildren, ReactNode } from "react";
+import { Check } from "react-feather";
 import { FernButton } from "./FernButton";
 
 export declare namespace FernMenu {
@@ -108,7 +109,7 @@ export const FernMenuItem: FC<FernMenuItem.Props> = ({ href, onClick, selected =
                         "!text-text-muted-light dark:!text-text-muted-dark": !active && !selected,
                     },
                 );
-                const checkIcon = <CheckIcon className={classNames("size-3", { invisible: !selected })} />;
+                const checkIcon = <Check className={classNames("size-3", { invisible: !selected })} />;
                 const renderedChildren = typeof children === "function" ? children(active) : children;
                 if (href == null) {
                     return (

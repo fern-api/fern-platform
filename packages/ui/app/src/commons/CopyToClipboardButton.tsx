@@ -1,6 +1,7 @@
 import { useCopyToClipboard } from "@fern-ui/react-commons";
-import { CheckIcon, CopyIcon } from "@radix-ui/react-icons";
+import { CopyIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
+import { Check } from "react-feather";
 import { FernButton } from "../components/FernButton";
 
 export declare namespace CopyToClipboardButton {
@@ -21,7 +22,7 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({ c
             disabled={copyToClipboard == null}
             data-testid={testId}
             rounded={true}
-            icon={wasJustCopied ? <CheckIcon className="size-4" /> : <CopyIcon className="size-4" />}
+            icon={wasJustCopied ? <Check className="size-4" /> : <CopyIcon className="size-4" />}
             buttonStyle="minimal"
             intent={wasJustCopied ? "success" : "none"}
         />

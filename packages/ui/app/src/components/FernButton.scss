@@ -16,8 +16,9 @@ a.fern-button {
         @apply text-center items-center justify-center inline-flex;
         @apply gap-1.5 h-6;
 
-        > .fa-icon {
-            @apply w-4 h-4;
+        > .fa-icon,
+        > svg {
+            @apply size-4;
         }
     }
 
@@ -35,8 +36,9 @@ a.fern-button {
         > .fern-button-content {
             @apply gap-1.5 h-4;
 
-            > .fa-icon {
-                @apply w-3 h-3;
+            > .fa-icon,
+            > svg {
+                @apply size-3;
             }
         }
 

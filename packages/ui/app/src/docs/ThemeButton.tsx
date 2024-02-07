@@ -1,8 +1,7 @@
 import { useMounted } from "@fern-ui/react-commons";
-import { SunIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { useTheme } from "next-themes";
-import { MoonIcon } from "../commons/icons/MoonIcon";
+import { Moon as MoonIcon, Sun as SunIcon } from "react-feather";
 import { FernButton } from "../components/FernButton";
 
 export declare namespace ThemeButton {

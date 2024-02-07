@@ -1,6 +1,6 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { ArrowRightIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
+import { CornerDownLeft } from "react-feather";
 import type { EndpointSearchRecordV2 } from "../types";
 
 export declare namespace EndpointRecordV2 {
@@ -84,8 +84,8 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                     {breadcrumbs}
                 </span>
 
-                <ArrowRightIcon
-                    className={classNames({
+                <CornerDownLeft
+                    className={classNames("size-3", {
                         "text-white dark:text-black": isHovered,
                         "t-muted": !isHovered,
                     })}
