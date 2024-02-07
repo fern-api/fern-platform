@@ -42,7 +42,7 @@ export const Markdown = React.memo<Markdown.Props>(function Markdown({ children,
     }
     return (
         <ReactMarkdown
-            className={classNames(className, styles.container, "prose dark:prose-invert max-w-none")}
+            className={classNames(className, styles.container, "prose dark:prose-invert break-words max-w-none")}
             remarkPlugins={REMARK_PLUGINS}
             rehypePlugins={REHYPE_PLUGINS}
             components={{

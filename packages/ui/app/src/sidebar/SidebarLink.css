@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .fern-sidebar-item {
+        @apply scroll-my-32;
+    }
+
+    .fern-sidebar-link-container {
+        @apply items-stretch relative flex min-h-[32px] lg:min-h-[36px];
+    }
+
+    .fern-sidebar-link-container[data-state="active"] {
+        @apply text-accent-primary;
+    }
+
+    .fern-sidebar-link-container[data-state="inactive"] {
+        @apply hover:text-accent-primary t-muted;
+    }
+
+    .fern-sidebar-link-indent {
+        @apply relative flex-none w-5 lg:w-3 shrink-0 border-r;
+    }
+
+    .fern-sidebar-link-container[data-state="active"] .fern-sidebar-link-indent {
+        @apply border-accent-primary-light/60 dark:border-accent-primary-dark/60;
+    }
+
+    .fern-sidebar-link-container[data-state="inactive"] .fern-sidebar-link-indent {
+        @apply border-border-default-light dark:border-border-default-dark lg:opacity-60;
+    }
+
+    .fern-sidebar-link {
+        @apply text-left relative inline-flex flex-1 content-between items-stretch px-4 lg:px-3;
+        @apply no-underline hover:no-underline;
+        @apply rounded-xl lg:rounded-lg;
+        @apply ring-border-primary dark:ring-border-primary-dark ring-inset;
+    }
+
+    .fern-sidebar-link-container[data-state="active"] .fern-sidebar-link {
+        @apply bg-tag-primary ring-1 lg:ring-0;
+    }
+
+    .fern-sidebar-link-container[data-state="inactive"] .fern-sidebar-link {
+        @apply lg:hover:bg-tag-default-light/5 lg:dark:hover:bg-tag-default-dark/5 ring-0;
+    }
+
+    .fern-sidebar-link-content {
+        @apply inline-flex flex-1 items-center py-2;
+    }
+
+    .fern-sidebar-link-text {
+        @apply flex-1 text-base leading-6 lg:text-sm lg:leading-5;
+    }
+
+    .fern-sidebar-link-expand {
+        @apply relative flex w-10 lg:w-6 justify-center items-center transition-colors rounded-none transition-transform ease-out;
+        @apply lg:rounded-lg;
+    }
+
+    .fern-sidebar-link-indent + .fern-sidebar-link-expand {
+        @apply lg:rounded-l-none;
+    }
+
+    .fern-sidebar-link-expand[data-state="active"] {
+        @apply after:content-[''] after:absolute after:inset-1 after:rounded-xl lg:after:rounded-md after:bg-tag-primary text-accent-primary after:pointer-events-none;
+    }
+}

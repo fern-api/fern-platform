@@ -128,12 +128,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         return clients.find((c) => c.language === selectedLanguage)?.examples[0] ?? curlExample!;
     });
     useEffect(() => {
-        setSelectedClient((prev) => {
-            if (prev.language === selectedLanguage) {
-                return prev;
-            }
-            return clients.find((c) => c.language === selectedLanguage)?.examples[0] ?? prev;
-        });
+        setSelectedClient((prev) => clients.find((c) => c.language === selectedLanguage)?.examples[0] ?? prev);
     }, [clients, selectedLanguage]);
 
     const setSelectedExampleClientAndScrollToTop = useCallback(

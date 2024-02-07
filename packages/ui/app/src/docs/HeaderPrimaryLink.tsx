@@ -1,5 +1,5 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
+import { ArrowRightIcon } from "@radix-ui/react-icons";
 import { FernLinkButton } from "../components/FernButton";
 
 export declare namespace HeaderPrimaryLink {
@@ -15,12 +15,7 @@ export const HeaderPrimaryLink: React.FC<HeaderPrimaryLink.Props> = ({ navbarLin
             href={navbarLink.url}
             target="_blank"
             intent="primary"
-            rightIcon={
-                <RemoteFontAwesomeIcon
-                    icon="regular arrow-right"
-                    className="transition-transform group-hover:translate-x-0.5"
-                />
-            }
+            rightIcon={<ArrowRightIcon className="transition-transform group-hover:translate-x-0.5" />}
             buttonStyle="outlined"
         >
             {navbarLink.text}

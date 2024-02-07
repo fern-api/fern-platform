@@ -12,6 +12,15 @@ module.exports = {
     ],
     theme: {
         extend: {
+            spacing: {
+                "page-width": "var(--spacing-page-width)",
+                "content-width": "var(--spacing-content-width)",
+                "sidebar-width": "var(--spacing-sidebar-width)",
+                "header-height": "var(--spacing-header-height)",
+                "header-height-padded": "calc(var(--spacing-header-height) + 1rem)",
+                "vh-minus-header": "calc(100vh - var(--spacing-header-height))",
+                icon: "15px",
+            },
             flex: {
                 2: "2 2 0%",
             },
@@ -34,14 +43,14 @@ module.exports = {
             },
 
             colors: {
-                "accent-primary": withOpacity("--accent-primary"),
+                "accent-primary-light": withOpacity("--accent-primary"),
                 "accent-primary-darkened": withOpacity("--accent-primary-darkened"),
                 "accent-primary-dark": withOpacity("--accent-primary-dark"),
                 "accent-primary-dark-lightened": withOpacity("--accent-primary-dark-lightened"),
                 "accent-primary-contrast": withOpacity("--accent-primary-contrast"),
                 "accent-primary-dark-contrast": withOpacity("--accent-primary-dark-contrast"),
-                "accent-highlight": "rgba(var(--accent-primary), 10%)",
-                "accent-highlight-dark": "rgba(var(--accent-primary-dark), 10%)",
+                "accent-highlight-light": "rgba(var(--accent-primary), 20%)",
+                "accent-highlight-dark": "rgba(var(--accent-primary-dark), 20%)",
                 background: withOpacity("--background"),
                 "background-dark": withOpacity("--background-dark"),
 
@@ -103,7 +112,7 @@ module.exports = {
 
                 "tag-default-dark": "rgba(255, 255, 255, 10%)",
                 "tag-default-light": "rgba(3, 7, 18, 5%)",
-                "tag-primary": "rgba(var(--accent-primary), 15%)",
+                "tag-primary-light": "rgba(var(--accent-primary), 15%)",
                 "tag-primary-dark": "rgba(var(--accent-primary-dark), 15%)",
                 "tag-warning-dark": "rgba(251, 190, 36, 0.15)",
                 "tag-warning-light": "rgba(217, 119, 6, 0.10)",
@@ -125,10 +134,14 @@ module.exports = {
                     "@apply text-text-default-light dark:text-text-default-dark": {},
                 },
                 ".t-muted": {
-                    "@apply text-intent-default dark:text-intent-default-dark": {},
+                    "@apply text-text-muted-light dark:text-text-muted-dark dark:[text-shadow:_0_1px_3px_rgb(0_0_0_/_40%)]":
+                        {},
+                },
+                ".text-accent-primary": {
+                    "@apply text-accent-primary-light dark:text-accent-primary-dark": {},
                 },
                 ".t-primary": {
-                    "@apply text-accent-primary dark:text-accent-primary-dark": {},
+                    "@apply text-accent-primary-light dark:text-accent-primary-dark": {},
                 },
                 ".t-success": {
                     "@apply text-intent-success-light dark:text-intent-success-dark": {},
@@ -140,8 +153,17 @@ module.exports = {
                     "@apply text-intent-danger-light dark:text-intent-danger-dark": {},
                 },
                 // Background
+                ".bg-accent-primary": {
+                    "@apply bg-accent-primary-light dark:bg-accent-primary-dark": {},
+                },
+                ".bg-accent-highlight": {
+                    "@apply bg-accent-highlight-light dark:bg-accent-highlight-dark": {},
+                },
                 ".bg-tag-default": {
                     "@apply bg-tag-default-light dark:bg-tag-default-dark": {},
+                },
+                ".bg-tag-primary": {
+                    "@apply bg-tag-primary-light dark:bg-tag-primary-dark": {},
                 },
                 ".bg-tag-success": {
                     "@apply bg-tag-success-light dark:bg-tag-success-dark": {},
@@ -153,6 +175,9 @@ module.exports = {
                     "@apply bg-tag-danger-light dark:bg-tag-danger-dark": {},
                 },
                 // Border
+                ".border-accent-primary": {
+                    "@apply border-accent-primary-light dark:border-accent-primary-dark": {},
+                },
                 ".border-concealed": {
                     "@apply border-border-concealed-light dark:border-border-concealed-dark": {},
                 },
@@ -167,6 +192,15 @@ module.exports = {
                 },
                 ".border-danger": {
                     "@apply border-border-danger-light dark:border-border-danger-dark": {},
+                },
+                ".outline-accent-primary": {
+                    "@apply outline-accent-primary-light dark:outline-accent-primary-dark": {},
+                },
+                ".ring-accent-primary": {
+                    "@apply ring-accent-primary-light dark:ring-accent-primary-dark": {},
+                },
+                ".decoration-accent-primary": {
+                    "@apply decoration-accent-primary-light dark:decoration-accent-primary-dark": {},
                 },
             });
         }),

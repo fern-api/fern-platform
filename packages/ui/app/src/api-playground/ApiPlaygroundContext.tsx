@@ -51,6 +51,19 @@ interface ApiPlaygroundProps {
     apiSections: ResolvedNavigationItemApiSection[];
 }
 
+function isApiPlaygroundEnabled(domain: string) {
+    domain = domain.toLowerCase();
+    if (domain.includes("cloudflare") || domain.includes("assemblyai") || domain.includes("cohere")) {
+        return true;
+    }
+
+    if (["docs.buildwithfern.com", "fern.docs.buildwithfern.com", "fern.docs.dev.buildwithfern.com"].includes(domain)) {
+        return true;
+    }
+
+    return process.env.NODE_ENV !== "production";
+}
+
 export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundProps>> = ({ children, apiSections }) => {
     const { domain } = useDocsContext();
     const [selectionState, setSelectionState] = useState<ApiPlaygroundSelectionState | undefined>();
@@ -88,15 +101,7 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundPro
         [expandApiPlayground, globalFormState, selectionState?.apiSection.auth, setGlobalFormState],
     );
 
-    if (
-        !domain.toLowerCase().includes("cloudflare") &&
-        !domain.toLowerCase().includes("assemblyai") &&
-        !domain.toLowerCase().includes("cohere") &&
-        !domain.toLowerCase().includes("candid") &&
-        !["docs.buildwithfern.com", "fern.docs.buildwithfern.com", "fern.docs.dev.buildwithfern.com"].includes(
-            domain.toLowerCase(),
-        )
-    ) {
+    if (!isApiPlaygroundEnabled(domain)) {
         return <>{children}</>;
     }
 

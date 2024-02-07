@@ -1,6 +1,7 @@
 import classNames from "classnames";
-import { ArrowUTurnRightIcon } from "../../commons/icons/ArrowUTurnRightIcon";
+import { CornerDownLeft } from "react-feather";
 import type { PageSearchRecordV2 } from "../types";
+import { SearchHitBreadCrumbs } from "./SearchHitBreadCrumbs";
 
 export declare namespace PageRecordV2 {
     export interface Props {
@@ -10,7 +11,6 @@ export declare namespace PageRecordV2 {
 }
 
 export const PageRecordV2: React.FC<PageRecordV2.Props> = ({ hit, isHovered }) => {
-    const breadcrumbs = hit.path.parts.map((p) => p.name).join(" > ");
     return (
         <div className="flex w-full flex-col space-y-1.5">
             <div className="flex justify-between">
@@ -38,11 +38,11 @@ export const PageRecordV2: React.FC<PageRecordV2.Props> = ({ hit, isHovered }) =
                         "t-muted": !isHovered,
                     })}
                 >
-                    {breadcrumbs}
+                    <SearchHitBreadCrumbs parts={hit.path.parts} />
                 </span>
 
-                <ArrowUTurnRightIcon
-                    className={classNames("size-3 rotate-180", {
+                <CornerDownLeft
+                    className={classNames("size-3", {
                         "text-white dark:text-black": isHovered,
                         "t-muted": !isHovered,
                     })}

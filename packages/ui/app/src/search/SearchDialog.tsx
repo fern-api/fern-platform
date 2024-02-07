@@ -1,9 +1,9 @@
 import { Dialog, Transition } from "@headlessui/react";
+import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import algolia from "algoliasearch/lite";
 import classNames from "classnames";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { InstantSearch } from "react-instantsearch-hooks-web";
-import { SearchIcon } from "../commons/icons/SearchIcon";
 import { type SearchCredentials, type SearchService } from "../services/useSearchService";
 import { SearchBox } from "./SearchBox";
 import styles from "./SearchDialog.module.scss";
@@ -45,16 +45,15 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
             <Transition show={isOpen} as={Fragment} appear={true}>
                 <Dialog as="div" className="fixed inset-0 z-30" onClose={onClose} initialFocus={inputRef}>
                     <Transition.Child
-                        as={Fragment}
+                        as="div"
+                        className="bg-background-light/40 dark:bg-background-dark/40 fixed inset-0 z-0 backdrop-blur-sm"
                         enter="transition-all ease-linear duration-200"
                         enterFrom="backdrop-blur-0 opacity-0"
                         enterTo="backdrop-blur-sm opacity-100"
-                    >
-                        <Dialog.Overlay className="bg-background-light/40 dark:bg-background-dark/40 fixed inset-0 z-0 backdrop-blur-sm" />
-                    </Transition.Child>
-                    <div className="border-border-default-light dark:border-border-default-dark bg-background-primary-light dark:bg-background-primary-dark md:height-auto relative z-10 mx-auto flex h-screen w-full flex-col overflow-hidden text-left align-middle shadow-2xl md:my-10 md:max-h-96 md:max-w-2xl md:rounded-md md:border">
+                    />
+                    <Dialog.Panel className="border-border-default-light dark:border-border-default-dark bg-background-primary-light dark:bg-background-primary-dark relative z-10 mx-auto flex h-screen w-full flex-col overflow-hidden text-left align-middle shadow-2xl md:my-10 md:h-auto md:max-h-96 md:max-w-2xl md:rounded-md md:border">
                         <div className={classNames(styles.searchBox, "flex items-center space-x-3 px-5")}>
-                            <SearchIcon className="t-muted size-5" />
+                            <MagnifyingGlassIcon className="t-muted size-5" />
                             <SearchBox
                                 ref={inputRef}
                                 placeholder={
@@ -67,7 +66,7 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
                             />
                         </div>
                         <SearchHits />
-                    </div>
+                    </Dialog.Panel>
                 </Dialog>
             </Transition>
         </InstantSearch>

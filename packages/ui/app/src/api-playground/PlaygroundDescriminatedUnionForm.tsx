@@ -1,9 +1,8 @@
 import { Button, MenuItem, SegmentedControl, Tooltip } from "@blueprintjs/core";
-import { CaretDown } from "@blueprintjs/icons";
 import { Select } from "@blueprintjs/select";
 import { ResolvedDiscriminatedUnionShape, ResolvedDiscriminatedUnionShapeVariant, titleCase } from "@fern-ui/app-utils";
+import { CaretDownIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import { FC, useCallback } from "react";
-import { InfoIcon } from "../commons/icons/InfoIcon";
 import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
 import { castToRecord, getDefaultValueForObjectProperties } from "./utils";
 
@@ -80,7 +79,7 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                                         compact={true}
                                         popoverClassName="max-w-xs text-xs"
                                     >
-                                        <InfoIcon />
+                                        <InfoCircledIcon />
                                     </Tooltip>
                                 }
                             />
@@ -103,7 +102,7 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                             )
                         }
                         alignText="left"
-                        rightIcon={<CaretDown />}
+                        rightIcon={<CaretDownIcon />}
                         fill={true}
                     />
                 </Select>

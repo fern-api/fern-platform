@@ -42,7 +42,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
         <TableOfContentsContextProvider>
             <div className="flex justify-between px-6 sm:px-8 lg:pl-12 lg:pr-20 xl:pr-0">
                 <div className="w-full min-w-0 lg:pr-6">
-                    <article className="prose dark:prose-invert max-w-content-width mx-auto w-full lg:ml-0 xl:mx-auto">
+                    <article className="prose dark:prose-invert max-w-content-width mx-auto w-full break-words lg:ml-0 xl:mx-auto">
                         <CustomDocsPageHeader resolvedPath={resolvedPath} />
                         {mdxContent}
                         <BottomNavigationButtons />

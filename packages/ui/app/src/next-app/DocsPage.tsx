@@ -7,6 +7,7 @@ import Head from "next/head";
 import Script from "next/script";
 import { ReactElement } from "react";
 import { REGISTRY_SERVICE } from "../services/registry";
+import { resolveSidebarNodes, SidebarNode } from "../sidebar/types";
 import { buildUrl } from "../util/buildUrl";
 import { DocsApp } from "./DocsApp";
 import { renderThemeStylesheet } from "./utils/renderThemeStylesheet";
@@ -15,6 +16,7 @@ export declare namespace DocsPage {
     export interface Props {
         // docs: DocsV2Read.LoadDocsForUrlResponse;
         baseUrl: DocsV2Read.BaseUrl;
+        navigation: SidebarNode[];
         config: DocsV1Read.DocsConfig;
         search: DocsV1Read.SearchInfo;
         algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
@@ -32,6 +34,7 @@ export function DocsPage({
     files,
     apis,
     resolvedPath,
+    navigation,
 }: DocsPage.Props): ReactElement {
     const stylesheet = renderThemeStylesheet(config, files);
     return (
@@ -63,6 +66,7 @@ export function DocsPage({
                 files={files}
                 apis={apis}
                 resolvedPath={resolvedPath}
+                navigation={navigation}
             />
             {config.js?.inline?.map((inline, idx) => (
                 <Script key={`inline-script-${idx}`} id={`inline-script-${idx}`}>
@@ -136,6 +140,26 @@ export const getDocsPageProps = async (
         basePath,
     });
 
+    const versionAndTabSlug = [];
+    if (basePath != null) {
+        versionAndTabSlug.push(...basePath.split("/").filter((s) => s.length > 0));
+    }
+    if (navigatable.context.type === "versioned-tabbed" || navigatable.context.type === "versioned-untabbed") {
+        if (navigatable.context.version.info.index !== 0) {
+            versionAndTabSlug.push(navigatable.context.version.slug);
+        }
+    }
+    if (navigatable.context.type === "versioned-tabbed" || navigatable.context.type === "unversioned-tabbed") {
+        versionAndTabSlug.push(navigatable.context.tab.slug);
+    }
+
+    const currentNavigationItems =
+        navigatable.context.type === "versioned-tabbed" || navigatable.context.type === "unversioned-tabbed"
+            ? navigatable.context.tab?.items
+            : navigatable.context.navigationConfig.items;
+
+    const navigation = resolveSidebarNodes(currentNavigationItems, docs.body.definition.apis, versionAndTabSlug);
+
     return {
         type: "props",
         props: {
@@ -147,6 +171,7 @@ export const getDocsPageProps = async (
             files: docs.body.definition.files,
             apis: docs.body.definition.apis,
             resolvedPath,
+            navigation,
         },
         revalidate: 60 * 60 * 24 * 6, // 6 days
     };

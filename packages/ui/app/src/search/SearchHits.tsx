@@ -3,7 +3,7 @@ import { useKeyboardPress } from "@fern-ui/react-commons";
 import { Hit } from "instantsearch.js";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useInfiniteHits } from "react-instantsearch-hooks-web";
+import { useInfiniteHits, useInstantSearch } from "react-instantsearch-hooks-web";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useNavigationContext } from "../navigation-context";
@@ -21,6 +21,7 @@ export const SearchHits: React.FC = () => {
     const { navigateToPath } = useNavigationContext();
     const { closeSearchDialog } = useSearchContext();
     const { hits } = useInfiniteHits<SearchRecord>();
+    const search = useInstantSearch();
     const [hoveredSearchHitId, setHoveredSearchHitId] = useState<string | null>(null);
     const router = useRouter();
 
@@ -115,7 +116,7 @@ export const SearchHits: React.FC = () => {
         capture: true,
     });
 
-    if (hits.length === 0) {
+    if (hits.length === 0 || search.results.query.length === 0) {
         return null;
     }
 

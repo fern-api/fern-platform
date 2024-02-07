@@ -1,10 +1,10 @@
 import { Button, NumericInput, Switch, TextArea } from "@blueprintjs/core";
 import { DateInput3 } from "@blueprintjs/datetime2";
-import { ArrowLeft } from "@blueprintjs/icons";
-import { ResolvedObjectProperty, ResolvedTypeReference } from "@fern-ui/app-utils";
+import { ResolvedTypeReference } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { Transition } from "@headlessui/react";
+import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import { FC, PropsWithChildren, useEffect } from "react";
 import { FernInput } from "../components/FernInput";
 import { PlaygroundDiscriminatedUnionForm } from "./PlaygroundDescriminatedUnionForm";
@@ -79,7 +79,7 @@ const WithPanel: FC<PropsWithChildren<WithPanelProps>> = ({
                 className="bg-background dark:bg-background-dark scroll-contain absolute inset-0 z-30 overflow-y-auto overflow-x-hidden"
             >
                 <div className="bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark sticky top-0 z-30 flex h-10 items-center border-b px-2">
-                    <Button minimal icon={<ArrowLeft />} text="Back" onClick={hidePanel} />
+                    <Button minimal icon={<ArrowLeftIcon />} text="Back" onClick={hidePanel} />
                 </div>
                 <div className="mx-auto my-10 flex w-full max-w-2xl flex-col gap-y-4 p-4 pb-10">{children}</div>
             </Transition>

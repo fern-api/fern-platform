@@ -1,10 +1,9 @@
 import { Button, MenuItem, SegmentedControl, Tooltip } from "@blueprintjs/core";
-import { CaretDown } from "@blueprintjs/icons";
 import { Select } from "@blueprintjs/select";
 import { ResolvedUndiscriminatedUnionShape, ResolvedUndiscriminatedUnionShapeVariant } from "@fern-ui/app-utils";
-import { isEqual } from "instantsearch.js/es/lib/utils";
+import { CaretDownIcon, InfoCircledIcon } from "@radix-ui/react-icons";
+import { isEqual } from "lodash-es";
 import { FC, useCallback, useState } from "react";
-import { InfoIcon } from "../commons/icons/InfoIcon";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType, matchesTypeReference } from "./utils";
 
@@ -73,7 +72,7 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
                                         compact={true}
                                         popoverClassName="max-w-xs text-xs"
                                     >
-                                        <InfoIcon />
+                                        <InfoCircledIcon />
                                     </Tooltip>
                                 }
                             />
@@ -100,7 +99,7 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
                             )
                         }
                         alignText="left"
-                        rightIcon={<CaretDown />}
+                        rightIcon={<CaretDownIcon />}
                         fill={true}
                     />
                 </Select>

@@ -1,6 +1,6 @@
 import { Button } from "@blueprintjs/core";
-import { Cross, Plus } from "@blueprintjs/icons";
 import { ResolvedTypeReference } from "@fern-ui/app-utils";
+import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
 import { FC, useCallback } from "react";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType } from "./utils";
@@ -61,7 +61,7 @@ export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemShape, onC
                                     renderAsPanel={true}
                                 />
                                 <Button
-                                    icon={<Cross />}
+                                    icon={<Cross1Icon />}
                                     onClick={() => handleRemoveItem(idx)}
                                     minimal={true}
                                     small={true}
@@ -71,12 +71,18 @@ export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemShape, onC
                         </li>
                     ))}
                     <li className="py-2">
-                        <Button icon={<Plus />} text="Add new item" onClick={appendItem} outlined={true} fill={true} />
+                        <Button
+                            icon={<PlusIcon />}
+                            text="Add new item"
+                            onClick={appendItem}
+                            outlined={true}
+                            fill={true}
+                        />
                     </li>
                 </ul>
             )}
             {valueAsList.length === 0 && (
-                <Button icon={<Plus />} text="Add new item" onClick={appendItem} outlined={true} fill={true} />
+                <Button icon={<PlusIcon />} text="Add new item" onClick={appendItem} outlined={true} fill={true} />
             )}
         </>
     );

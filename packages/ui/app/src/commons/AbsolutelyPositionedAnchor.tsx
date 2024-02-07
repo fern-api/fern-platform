@@ -1,10 +1,11 @@
 import { useCopyToClipboard, useMounted } from "@fern-ui/react-commons";
 import { Transition } from "@headlessui/react";
-import { CheckIcon, Link1Icon } from "@radix-ui/react-icons";
+import { Link1Icon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
 import { Fragment } from "react";
+import { Check } from "react-feather";
 import "./AbsolutelyPositionedAnchor.scss";
 
 export declare namespace AbsolutelyPositionedAnchor {
@@ -69,7 +70,7 @@ export const AbsolutelyPositionedAnchor: React.FC<AbsolutelyPositionedAnchor.Pro
                         as={Fragment}
                     >
                         <div className="fern-anchor-icon copied">
-                            <CheckIcon />
+                            <Check className="size-4" />
                         </div>
                     </Transition>
                 )}

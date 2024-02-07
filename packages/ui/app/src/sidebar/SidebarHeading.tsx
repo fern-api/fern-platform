@@ -1,7 +1,7 @@
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { range } from "lodash-es";
 import { FC, ReactNode } from "react";
-import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 
 interface SidebarHeadingProps {
     className?: string;
@@ -21,7 +21,7 @@ export const SidebarHeading: FC<SidebarHeadingProps> = ({
     expanded = false,
     rightElement,
 }) => (
-    <div className={classNames(className, "flex min-h-[44px] lg:min-h-[36px]")}>
+    <div className={classNames(className, "flex min-h-[32px] lg:min-h-[36px]")}>
         {range(0, depth).map((i) => (
             <div
                 key={i}

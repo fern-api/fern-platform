@@ -139,12 +139,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                     <div className="absolute bottom-4 right-4 z-20">
                         <FernButton
                             onClick={sendRequest}
-                            rightIcon={
-                                <RemoteFontAwesomeIcon
-                                    icon="paper-plane-top"
-                                    className="transition-transform group-hover:translate-x-0.5"
-                                />
-                            }
+                            rightIcon={<PaperPlaneIcon className="transition-transform group-hover:translate-x-0.5" />}
                             intent="primary"
                         >
                             Send request

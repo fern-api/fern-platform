@@ -1,6 +1,6 @@
 import { Button, ButtonGroup, mergeRefs, Tooltip } from "@blueprintjs/core";
-import { ArrowRight, Cross, Trash } from "@blueprintjs/icons";
 import { useCopyToClipboard } from "@fern-ui/react-commons";
+import { ArrowRightIcon, Cross1Icon, TrashIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { FC, useState } from "react";
 import { FernModal } from "../components/FernModal";
@@ -72,7 +72,7 @@ export const PlaygroundSecretsModal: FC<PlaygroundSecretsModalProps> = ({
     const [value, setValue] = useState<string>("");
     return (
         <FernModal isOpen={isOpen} onClose={onClose} className="relative w-96 rounded-lg p-4">
-            <Button className="absolute right-2 top-2" minimal icon={<Cross />} onClick={onClose} />
+            <Button className="absolute right-2 top-2" minimal icon={<Cross1Icon />} onClick={onClose} />
             <h3 className="m-0 mb-2">Secrets</h3>
             <ul>
                 {secrets.map((secret, idx) => (
@@ -83,13 +83,13 @@ export const PlaygroundSecretsModal: FC<PlaygroundSecretsModalProps> = ({
                         <span>
                             <ButtonGroup minimal>
                                 <Button
-                                    icon={<Trash />}
+                                    icon={<TrashIcon />}
                                     onClick={() => {
                                         setSecrets([...secrets.slice(0, idx), ...secrets.slice(idx + 1)]);
                                     }}
                                 />
                                 <Button
-                                    icon={<ArrowRight />}
+                                    icon={<ArrowRightIcon />}
                                     onClick={() => {
                                         selectSecret(secret);
                                     }}

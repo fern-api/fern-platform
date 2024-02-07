@@ -2,6 +2,7 @@ import { useKeyboardPress } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
+import { ThumbsDown, ThumbsUp } from "react-feather";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernButton } from "../components/FernButton";
 import { FeedbackForm } from "./FeedbackForm";
@@ -81,7 +82,7 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
                     <span className="t-muted text-xs">Was this page helpful?</span>
                     <span className="inline-flex items-center">
                         <FernButton
-                            icon="regular thumbs-up"
+                            icon={<ThumbsUp />}
                             buttonStyle="minimal"
                             intent={feedback === "yes" ? "success" : "none"}
                             onClick={handleYes}
@@ -91,7 +92,7 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
                             Yes
                         </FernButton>
                         <FernButton
-                            icon="regular thumbs-down"
+                            icon={<ThumbsDown />}
                             buttonStyle="minimal"
                             intent={feedback === "no" ? "danger" : "none"}
                             onClick={handleNo}

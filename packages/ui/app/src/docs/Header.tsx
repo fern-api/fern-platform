@@ -1,10 +1,8 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { Cross1Icon, HamburgerMenuIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { CSSProperties, forwardRef, memo, PropsWithChildren } from "react";
-import { MenuIcon } from "../commons/icons/MenuIcon";
-import { SearchIcon } from "../commons/icons/SearchIcon";
-import { XIcon } from "../commons/icons/XIcon";
 import { FernButtonGroup } from "../components/FernButton";
 import { SearchService } from "../services/useSearchService";
 import { HeaderLogoSection } from "./HeaderLogoSection";
@@ -75,23 +73,23 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                 {searchService.isAvailable && (
                     <button
                         onClick={openSearchDialog}
-                        className="t-muted hover:t-default flex h-[44px] w-[44px] items-center justify-center transition lg:hidden"
+                        className="t-muted hover:t-default flex h-[32px] w-[32px] items-center justify-center transition lg:hidden"
                     >
-                        <SearchIcon className="size-5" />
+                        <MagnifyingGlassIcon className="size-5" />
                     </button>
                 )}
 
                 <button
                     onClick={isMobileSidebarOpen ? closeMobileSidebar : openMobileSidebar}
                     className={classNames(
-                        "t-muted hover:t-default flex h-[44px] w-[44px] items-center justify-center transition lg:hidden rounded-lg",
+                        "t-muted hover:t-default flex h-[32px] w-[32px] items-center justify-center transition lg:hidden rounded-lg",
                         {
                             "t-primary bg-tag-primary ring-inset ring-1 ring-border-primary dark:ring-border-primary-dark":
                                 isMobileSidebarOpen,
                         },
                     )}
                 >
-                    {isMobileSidebarOpen ? <XIcon className="size-6" /> : <MenuIcon className="size-6" />}
+                    {isMobileSidebarOpen ? <Cross1Icon className="size-5" /> : <HamburgerMenuIcon className="size-5" />}
                 </button>
             </div>
         </nav>

@@ -1,8 +1,7 @@
-import { Icon } from "@blueprintjs/core";
-import { IconNames } from "@blueprintjs/icons";
 import { ResolvedTypeShape } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
+import { Cross2Icon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
@@ -197,11 +196,10 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                                 e.stopPropagation();
                             }}
                         >
-                            <Icon
+                            <Cross2Icon
                                 className={classNames("transition", {
                                     "rotate-45": isCollapsed,
                                 })}
-                                icon={IconNames.CROSS}
                             />
                             <div
                                 className={classNames(styles.showPropertiesButton, "select-none whitespace-nowrap")}

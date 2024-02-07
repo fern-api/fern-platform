@@ -1,7 +1,7 @@
 import { Button, Checkbox, Tooltip } from "@blueprintjs/core";
-import { ChevronDown, ChevronUp } from "@blueprintjs/icons";
 import { ResolvedObjectProperty } from "@fern-ui/app-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
+import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { isUndefined, sortBy } from "lodash-es";
 import { ChangeEventHandler, FC, useCallback, useEffect, useMemo, useState } from "react";
