@@ -121,6 +121,18 @@ module.exports = {
                 "tag-danger-light": "rgba(220, 38, 38, 0.10)",
                 "tag-danger-dark": "rgba(248, 113, 113, 0.15)",
             },
+            typography: {
+                DEFAULT: {
+                    css: {
+                        color: "#000000",
+                    },
+                },
+                invert: {
+                    css: {
+                        color: "#ffffff",
+                    },
+                },
+            },
         },
     },
     plugins: [
