@@ -105,8 +105,8 @@ export const FernMenuItem: FC<FernMenuItem.Props> = ({ href, onClick, selected =
                     "flex justify-between !no-underline items-center p-2 first:rounded-t-md last:rounded-b-md gap-2",
                     {
                         "bg-tag-primary": active,
-                        "!text-accent-primary": selected || (active && !selected),
-                        "!text-text-muted-light dark:!text-text-muted-dark": !active && !selected,
+                        "text-accent-primary hover:text-accent-primary": selected || (active && !selected),
+                        "!t-muted": !active && !selected,
                     },
                 );
                 const checkIcon = <Check className={classNames("size-3", { invisible: !selected })} />;
