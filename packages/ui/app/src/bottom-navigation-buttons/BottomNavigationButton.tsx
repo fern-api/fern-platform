@@ -1,7 +1,7 @@
 import { type DocsNode } from "@fern-api/fdr-sdk";
 import { getFullSlugForNavigatable } from "@fern-ui/app-utils";
+import { ChevronRightIcon } from "@radix-ui/react-icons";
 import { useMemo } from "react";
-import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { FernLinkCard } from "../components/FernCard";
 import { useDocsContext } from "../docs-context/useDocsContext";
 
@@ -48,10 +48,7 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
             </div>
             <span className="border-border-default-light dark:border-border-default-dark t-muted ml-6 inline-flex items-center gap-2 border-l py-2.5 pl-6 text-sm">
                 <span className="leading-none">Up Next</span>
-                <RemoteFontAwesomeIcon
-                    icon="light chevron-right"
-                    className="bg-text-muted-light dark:bg-text-muted-dark size-3"
-                />
+                <ChevronRightIcon />
             </span>
         </FernLinkCard>
     );

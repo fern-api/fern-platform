@@ -1,6 +1,6 @@
-import { Collapse, Icon } from "@blueprintjs/core";
-import { IconNames } from "@blueprintjs/icons";
+import { Collapse } from "@blueprintjs/core";
 import { useBooleanState } from "@fern-ui/react-commons";
+import { Cross2Icon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import React, { ReactElement, useEffect, useState } from "react";
 import { Chip } from "../../../components/Chip";
@@ -73,11 +73,10 @@ export const EnumTypeDefinition = ({
                         }}
                     >
                         {isCollapsed && (
-                            <Icon
+                            <Cross2Icon
                                 className={classNames("transition", {
                                     "rotate-45": isCollapsed,
                                 })}
-                                icon={IconNames.CROSS}
                             />
                         )}
 
@@ -94,11 +93,10 @@ export const EnumTypeDefinition = ({
                                         autofocus={shouldAutoFocus.value}
                                     />
 
-                                    <Icon
+                                    <Cross2Icon
                                         className={classNames("transition", {
                                             "rotate-45": isCollapsed,
                                         })}
-                                        icon={IconNames.CROSS}
                                     />
                                 </div>
                             )}

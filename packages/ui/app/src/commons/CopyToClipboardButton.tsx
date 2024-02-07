@@ -1,8 +1,7 @@
 import { useCopyToClipboard } from "@fern-ui/react-commons";
+import { CheckIcon, CopyIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { FernButton } from "../components/FernButton";
-import { CheckIcon } from "./icons/CheckIcon";
-import { CopyIcon } from "./icons/CopyIcon";
 
 export declare namespace CopyToClipboardButton {
     export interface Props {

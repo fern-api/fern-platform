@@ -1,7 +1,7 @@
 import { Button } from "@blueprintjs/core";
-import { Cross, Plus } from "@blueprintjs/icons";
 import { ResolvedTypeReference } from "@fern-ui/app-utils";
 import { isPlainObject } from "@fern-ui/core-utils";
+import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
 import { FC, useCallback, useEffect, useState } from "react";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType, unknownToString } from "./utils";
@@ -98,13 +98,13 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ keyShape, valueS
                                 />
                             </div>
                             <div>
-                                <Button icon={<Cross />} onClick={() => handleRemoveItem(idx)} minimal={true} />
+                                <Button icon={<Cross1Icon />} onClick={() => handleRemoveItem(idx)} minimal={true} />
                             </div>
                         </li>
                     ))}
                     <li>
                         <Button
-                            icon={<Plus />}
+                            icon={<PlusIcon />}
                             text="Add new item"
                             onClick={handleAppendItem}
                             outlined={true}
@@ -114,7 +114,13 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ keyShape, valueS
                 </ul>
             )}
             {internalState.length === 0 && (
-                <Button icon={<Plus />} text="Add new item" onClick={handleAppendItem} outlined={true} fill={true} />
+                <Button
+                    icon={<PlusIcon />}
+                    text="Add new item"
+                    onClick={handleAppendItem}
+                    outlined={true}
+                    fill={true}
+                />
             )}
         </div>
     );

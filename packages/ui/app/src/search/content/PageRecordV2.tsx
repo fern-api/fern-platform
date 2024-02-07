@@ -1,5 +1,5 @@
+import { ArrowRightIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
-import { ArrowUTurnRightIcon } from "../../commons/icons/ArrowUTurnRightIcon";
 import type { PageSearchRecordV2 } from "../types";
 
 export declare namespace PageRecordV2 {
@@ -41,8 +41,8 @@ export const PageRecordV2: React.FC<PageRecordV2.Props> = ({ hit, isHovered }) =
                     {breadcrumbs}
                 </span>
 
-                <ArrowUTurnRightIcon
-                    className={classNames("size-3 rotate-180", {
+                <ArrowRightIcon
+                    className={classNames({
                         "text-white dark:text-black": isHovered,
                         "t-muted": !isHovered,
                     })}

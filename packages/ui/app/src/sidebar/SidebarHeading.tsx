@@ -1,7 +1,7 @@
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { range } from "lodash-es";
 import { FC, ReactNode } from "react";
-import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 
 interface SidebarHeadingProps {
     className?: string;

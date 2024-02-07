@@ -1,5 +1,4 @@
 import { Button, InputGroup } from "@blueprintjs/core";
-import { Cross, Search } from "@blueprintjs/icons";
 import {
     ResolvedApiDefinitionPackage,
     ResolvedEndpointDefinition,
@@ -8,9 +7,9 @@ import {
 import { isNonNullish } from "@fern-ui/core-utils";
 import { useBooleanState, useKeyboardPress } from "@fern-ui/react-commons";
 import { Transition } from "@headlessui/react";
+import { ChevronDownIcon, ChevronUpIcon, Cross1Icon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { FC, Fragment, ReactElement, useEffect, useRef, useState } from "react";
-import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { FernButton } from "../components/FernButton";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
@@ -133,6 +132,8 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
         .map((apiSection) => renderApiDefinitionPackage(apiSection, navigationItems.length === 1 ? -1 : 0))
         .filter(isNonNullish);
 
+    const RightIcon = popoverPlacement.startsWith("bottom") ? ChevronDownIcon : ChevronUpIcon;
+
     return (
         <div className="relative -ml-2 min-w-0 shrink">
             <FernButton
@@ -140,9 +141,8 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                 onClick={toggleDropdown}
                 active={showDropdown}
                 rightIcon={
-                    <RemoteFontAwesomeIcon
-                        icon={popoverPlacement.startsWith("bottom") ? "chevron-down" : "chevron-up"}
-                        className={classNames("transition-transform !h-3 !w-3", {
+                    <RightIcon
+                        className={classNames("transition-transform", {
                             "rotate-180": showDropdown,
                         })}
                     />
@@ -196,14 +196,18 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                         >
                             <InputGroup
                                 fill={true}
-                                leftIcon={<Search />}
+                                leftIcon={<MagnifyingGlassIcon />}
                                 data-1p-ignore="true"
                                 autoFocus={true}
                                 value={filterValue}
                                 onValueChange={setFilterValue}
                                 rightElement={
                                     filterValue.length > 0 && (
-                                        <Button icon={<Cross />} minimal={true} onClick={() => setFilterValue("")} />
+                                        <Button
+                                            icon={<Cross1Icon />}
+                                            minimal={true}
+                                            onClick={() => setFilterValue("")}
+                                        />
                                     )
                                 }
                             />
@@ -219,14 +223,18 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                         >
                             <InputGroup
                                 fill={true}
-                                leftIcon={<Search />}
+                                leftIcon={<MagnifyingGlassIcon />}
                                 data-1p-ignore="true"
                                 autoFocus={true}
                                 value={filterValue}
                                 onValueChange={setFilterValue}
                                 rightElement={
                                     filterValue.length > 0 && (
-                                        <Button icon={<Cross />} minimal={true} onClick={() => setFilterValue("")} />
+                                        <Button
+                                            icon={<Cross1Icon />}
+                                            minimal={true}
+                                            onClick={() => setFilterValue("")}
+                                        />
                                     )
                                 }
                             />

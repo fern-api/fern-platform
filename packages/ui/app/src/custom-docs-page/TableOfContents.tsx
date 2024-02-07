@@ -39,7 +39,7 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, re
                             {text.length > 0 && (
                                 <a
                                     className={classNames(
-                                        "hover:dark:text-text-default-dark hover:text-text-default-light block hyphens-auto break-words py-1.5 text-sm leading-5 no-underline transition hover:no-underline",
+                                        "hover:dark:text-text-default-dark hover:text-text-default-light block hyphens-auto break-words py-1.5 text-sm leading-5 no-underline hover:transition hover:no-underline",
                                         {
                                             "t-muted": anchorInView !== anchor,
                                             "t-primary": anchorInView === anchor,

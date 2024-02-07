@@ -1,12 +1,11 @@
 import { useCopyToClipboard, useMounted } from "@fern-ui/react-commons";
 import { Transition } from "@headlessui/react";
+import { CheckIcon, Link1Icon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
 import { Fragment } from "react";
 import "./AbsolutelyPositionedAnchor.scss";
-import { CheckIcon } from "./icons/CheckIcon";
-import { LinkIcon } from "./icons/LinkIcon";
 
 export declare namespace AbsolutelyPositionedAnchor {
     export interface Props {
@@ -58,7 +57,7 @@ export const AbsolutelyPositionedAnchor: React.FC<AbsolutelyPositionedAnchor.Pro
             >
                 {!wasJustCopied && (
                     <span className="fern-anchor-icon opacity-0 group-hover/anchor-container:opacity-100">
-                        <LinkIcon />
+                        <Link1Icon />
                     </span>
                 )}
                 {mounted && (

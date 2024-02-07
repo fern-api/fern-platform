@@ -1,7 +1,7 @@
 import { Button, Checkbox, Tooltip } from "@blueprintjs/core";
-import { ChevronDown, ChevronUp } from "@blueprintjs/icons";
 import { ResolvedObjectProperty } from "@fern-ui/app-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
+import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { isUndefined } from "lodash-es";
 import { ChangeEventHandler, FC, useCallback, useEffect, useState } from "react";
@@ -115,7 +115,7 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
 
                             {expandable && (property.valueShape.type === "optional" ? !isUndefined(value) : true) && (
                                 <Button
-                                    icon={expanded ? <ChevronDown /> : <ChevronUp />}
+                                    icon={expanded ? <ChevronDownIcon /> : <ChevronUpIcon />}
                                     minimal={true}
                                     small={true}
                                     className="-mx-1"

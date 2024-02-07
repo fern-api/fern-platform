@@ -1,11 +1,11 @@
 import { joinUrlSlugs } from "@fern-api/fdr-sdk";
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { range } from "lodash-es";
 import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
 import { FC, HTMLAttributeAnchorTarget, memo, PropsWithChildren, ReactNode, useEffect, useRef } from "react";
 import { ReactElement } from "react-markdown/lib/react-markdown";
-import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 
 interface SidebarSlugLinkProps {
@@ -95,20 +95,20 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
         <span
             className={classNames(
                 "relative",
-                "flex w-[44px] lg:w-6 justify-center items-center transition-colors rounded-none transition-transform lg:translate-x-1 group-hover/sidebar:translate-x-0 ease-out",
+                "flex w-[44px] lg:w-6 justify-center items-center transition-colors rounded-none transition-transform ease-out",
                 {
                     "lg:opacity-60 group-hover/sidebar:opacity-100 transition-opacity": toggleExpand != null,
                     "lg:bg-tag-primary lg:after:content-none after:content-[''] after:absolute after:inset-1 after:rounded-lg after:bg-tag-primary text-accent-primary !lg:text-inherit after:pointer-events-none":
                         showIndicator,
-                    "lg:hover:bg-tag-default-light/5 lg:dark:hover:bg-tag-default-dark/5":
-                        !showIndicator && toggleExpand != null,
+                    // "lg:hover:bg-tag-default-light/5 lg:dark:hover:bg-tag-default-dark/5":
+                    //     !showIndicator && toggleExpand != null,
                     "lg:rounded-lg dark:group-hover:rounded-r-none": depth === 0,
                     "lg:rounded-r-lg dark:group-hover:rounded-r-none": depth > 0,
                 },
             )}
         >
             <ChevronDownIcon
-                className={classNames("size-6 lg:size-5 transition-transform", {
+                className={classNames("transition-transform size-5 lg:size-icon", {
                     "-rotate-90": !expanded,
                     "rotate-0": expanded,
                 })}
@@ -117,8 +117,8 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
     );
 
     const titleSpanClassName = classNames("flex-1 text-base leading-6 lg:text-sm lg:leading-5", {
-        "ml-[12px]": toggleExpand != null || expanded,
-        "ml-[36px]": depth > 0 && toggleExpand == null && !expanded,
+        "ml-0": toggleExpand != null || expanded,
+        "ml-6": depth > 0 && toggleExpand == null && !expanded,
     });
 
     return (
@@ -136,7 +136,7 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
                                 key={i}
                                 className={classNames(
                                     "relative flex-0 w-[22px] lg:w-3 shrink-0 border-r",
-                                    "transition-transform group-hover/sidebar:translate-x-0 lg:translate-x-1 group-hover/sidebar:opacity-100 transition-opacity ease-out",
+                                    "transition-transform group-hover/sidebar:opacity-100 transition-opacity ease-out",
                                     {
                                         "border-accent-primary-light/60 dark:border-accent-primary-dark/60": selected,
                                         "border-border-default-light dark:border-border-default-dark lg:opacity-60":
