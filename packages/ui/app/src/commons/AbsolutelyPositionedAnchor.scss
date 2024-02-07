@@ -1,26 +1,32 @@
-.fern-anchor {
-    @apply absolute hidden md:block;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-    a {
-        @apply flex items-center border-0 relative h-6 rounded-md;
-    }
+@layer components {
+    .fern-anchor {
+        @apply absolute hidden md:block;
 
-    .fern-anchor-icon {
-        @apply absolute left-0 flex size-6 items-center justify-center rounded-md;
-    }
-
-    .fern-anchor-icon:not(.copied) {
-        @apply bg-white text-gray-400 ring-1 ring-gray-400/30 backdrop-blur hover:ring-gray-400/60 dark:bg-white/5;
-        @apply dark:ring-gray-700/25 dark:hover:ring-white/20;
-    }
-
-    .fern-anchor-icon.copied {
-        @apply bg-tag-primary ring-border-primary ring-1 backdrop-blur;
-
-        > svg {
-            @apply text-accent-primary size-4;
+        a {
+            @apply flex items-center border-0 relative h-6 rounded-md;
         }
 
-        @apply dark:ring-border-primary-dark;
+        .fern-anchor-icon {
+            @apply absolute left-0 flex size-6 items-center justify-center rounded-md;
+        }
+
+        .fern-anchor-icon:not(.copied) {
+            @apply bg-white text-gray-400 ring-1 ring-gray-400/30 backdrop-blur hover:ring-gray-400/60 dark:bg-white/5;
+            @apply dark:ring-gray-700/25 dark:hover:ring-white/20;
+        }
+
+        .fern-anchor-icon.copied {
+            @apply bg-tag-primary ring-border-primary ring-1 backdrop-blur;
+
+            > svg {
+                @apply text-accent-primary size-4;
+            }
+
+            @apply dark:ring-border-primary-dark;
+        }
     }
 }
