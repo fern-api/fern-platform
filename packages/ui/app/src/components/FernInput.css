@@ -3,17 +3,76 @@
 @tailwind utilities;
 
 @layer components {
+    .fern-input-focus {
+        @apply outline-tag-primary-light dark:outline-tag-primary-dark ring-accent-primary outline-none outline-4 outline-offset-0;
+    }
+
     .fern-input {
         @apply form-input;
+        @apply border-none !bg-transparent;
+        @apply !outline-none !ring-0;
+        @apply w-full;
     }
 
     .fern-textarea {
-        @apply form-textarea;
+        @apply form-textarea resize-none;
+        @apply focus-visible:fern-input-focus;
+    }
+
+    .fern-input-group,
+    .fern-numeric-input-group {
+        @apply flex items-center overflow-hidden;
+        @apply focus-within:fern-input-focus;
+    }
+
+    .fern-input-icon {
+        @apply flex items-center justify-center;
+        @apply w-10 h-full shrink-0;
+    }
+
+    .fern-input-icon + .fern-input {
+        @apply pl-10 -ml-10;
+    }
+
+    .fern-input-right-element {
+        @apply flex items-center justify-center;
+        @apply min-w-10 h-full shrink-0 px-1 -ml-2;
+    }
+
+    .fern-input-group,
+    .fern-textarea,
+    .fern-numeric-input-group {
+        @apply h-8 ring-default rounded-lg ring-1 ring-inset bg-white dark:bg-white/5 shadow-sm;
+    }
+
+    .fern-numeric-input-group .fern-numeric-input-step {
+        @apply h-full rounded-none;
+    }
+
+    .fern-numeric-input-group:focus-within .fern-numeric-input-step {
+        @apply ring-accent-primary hover:bg-tag-primary text-accent-primary hover:text-accent-primary;
+    }
+
+    .fern-numeric-input-group .fern-numeric-input-step:first-child {
+        @apply rounded-l-md border-r;
+    }
+
+    .fern-numeric-input-group .fern-numeric-input-step:last-child {
+        @apply rounded-r-md border-l;
     }
 
     .fern-input,
     .fern-textarea {
-        @apply border-default caret-accent-primary-light dark:caret-accent-primary-dark rounded-md border bg-white p-2 text-sm dark:bg-white/5 resize-none;
-        @apply focus-visible:ring-tag-primary-light focus-visible:dark:ring-tag-primary-dark focus-visible:border-accent-primary focus-visible:outline-none focus-visible:ring-4;
+        @apply caret-accent-primary-light dark:caret-accent-primary-dark py-2 px-2.5 text-sm;
+    }
+
+    input.fern-input::-webkit-outer-spin-button,
+    input.fern-input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input.fern-input[type="number"] {
+        -moz-appearance: textfield;
     }
 }

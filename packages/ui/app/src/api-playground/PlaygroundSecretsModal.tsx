@@ -1,8 +1,9 @@
-import { Button, ButtonGroup, mergeRefs, Tooltip } from "@blueprintjs/core";
+import { mergeRefs, Tooltip } from "@blueprintjs/core";
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 import { ArrowRightIcon, Cross1Icon, TrashIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { FC, useState } from "react";
+import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernModal } from "../components/FernModal";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { obfuscateSecret } from "./utils";
@@ -72,7 +73,12 @@ export const PlaygroundSecretsModal: FC<PlaygroundSecretsModalProps> = ({
     const [value, setValue] = useState<string>("");
     return (
         <FernModal isOpen={isOpen} onClose={onClose} className="relative w-96 rounded-lg p-4">
-            <Button className="absolute right-2 top-2" minimal icon={<Cross1Icon />} onClick={onClose} />
+            <FernButton
+                className="absolute right-2 top-2"
+                buttonStyle="minimal"
+                icon={<Cross1Icon />}
+                onClick={onClose}
+            />
             <h3 className="m-0 mb-2">Secrets</h3>
             <ul>
                 {secrets.map((secret, idx) => (
@@ -81,26 +87,27 @@ export const PlaygroundSecretsModal: FC<PlaygroundSecretsModalProps> = ({
                             <SecretSpan secret={secret.token} />
                         </span>
                         <span>
-                            <ButtonGroup minimal>
-                                <Button
+                            <FernButtonGroup>
+                                <FernButton
+                                    buttonStyle="minimal"
                                     icon={<TrashIcon />}
                                     onClick={() => {
                                         setSecrets([...secrets.slice(0, idx), ...secrets.slice(idx + 1)]);
                                     }}
                                 />
-                                <Button
+                                <FernButton
+                                    buttonStyle="minimal"
                                     icon={<ArrowRightIcon />}
                                     onClick={() => {
                                         selectSecret(secret);
                                     }}
                                 />
-                            </ButtonGroup>
+                            </FernButtonGroup>
                         </span>
                     </li>
                 ))}
                 <li className="flex gap-2">
                     <PasswordInputGroup
-                        fill={true}
                         onValueChange={setValue}
                         value={value}
                         autoComplete="off"

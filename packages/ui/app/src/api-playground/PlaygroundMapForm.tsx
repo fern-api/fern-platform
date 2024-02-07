@@ -1,8 +1,8 @@
-import { Button } from "@blueprintjs/core";
 import { ResolvedTypeReference } from "@fern-ui/app-utils";
 import { isPlainObject } from "@fern-ui/core-utils";
 import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
 import { FC, useCallback, useEffect, useState } from "react";
+import { FernButton } from "../components/FernButton";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType, unknownToString } from "./utils";
 
@@ -92,28 +92,32 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ keyShape, valueS
                                 />
                             </div>
                             <div>
-                                <Button icon={<Cross1Icon />} onClick={() => handleRemoveItem(idx)} minimal={true} />
+                                <FernButton
+                                    icon={<Cross1Icon />}
+                                    onClick={() => handleRemoveItem(idx)}
+                                    buttonStyle="minimal"
+                                />
                             </div>
                         </li>
                     ))}
                     <li className="py-2">
-                        <Button
+                        <FernButton
                             icon={<PlusIcon />}
                             text="Add new item"
                             onClick={handleAppendItem}
-                            outlined={true}
-                            fill={true}
+                            buttonStyle="outlined"
+                            className="w-full"
                         />
                     </li>
                 </ul>
             )}
             {internalState.length === 0 && (
-                <Button
+                <FernButton
                     icon={<PlusIcon />}
                     text="Add new item"
                     onClick={handleAppendItem}
-                    outlined={true}
-                    fill={true}
+                    buttonStyle="outlined"
+                    className="w-full"
                 />
             )}
         </div>

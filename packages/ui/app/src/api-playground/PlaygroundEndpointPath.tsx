@@ -5,16 +5,16 @@ import { isUndefined, omitBy } from "lodash-es";
 import { FC, Fragment } from "react";
 import { CopyToClipboardButton } from "../commons/CopyToClipboardButton";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
-import "./PlaygroundEndpointRender.css";
+import "./PlaygroundEndpointPath.css";
 import { PlaygroundRequestFormState } from "./types";
 import { buildEndpointUrl, unknownToString } from "./utils";
 
-interface PlaygroundEndpointRenderProps {
+interface PlaygroundEndpointPathProps {
     endpoint: ResolvedEndpointDefinition;
     formState: PlaygroundRequestFormState;
 }
 
-export const PlaygroundEndpointRender: FC<PlaygroundEndpointRenderProps> = ({ endpoint, formState }) => {
+export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({ endpoint, formState }) => {
     const environment = endpoint.defaultEnvironment ?? endpoint.environments[0];
     return (
         <div className="playground-endpoint">

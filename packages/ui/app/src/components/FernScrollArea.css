@@ -12,7 +12,7 @@
 }
 
 .fern-scroll-area-scrollbar {
-    @apply flex select-none touch-none my-1 mx-0.5 transition-all ease-out z-30 rounded-full;
+    @apply flex select-none touch-none my-1 mx-0.5 transition-all ease-out z-auto rounded-full;
     @apply bg-tag-default-light;
     @apply dark:bg-tag-default-dark;
 }

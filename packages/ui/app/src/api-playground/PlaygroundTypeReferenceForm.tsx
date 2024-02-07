@@ -1,12 +1,15 @@
-import { Button, NumericInput, Switch, TextArea } from "@blueprintjs/core";
+import { Switch } from "@blueprintjs/core";
 import { DateInput3 } from "@blueprintjs/datetime2";
-import { ResolvedTypeReference } from "@fern-ui/app-utils";
+import { ResolvedObjectProperty, ResolvedTypeReference } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { Transition } from "@headlessui/react";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import { FC, PropsWithChildren, useEffect } from "react";
+import { FernButton } from "../components/FernButton";
 import { FernInput } from "../components/FernInput";
+import { FernNumericInput } from "../components/FernNumericInput";
+import { FernTextarea } from "../components/FernTextarea";
 import { PlaygroundDiscriminatedUnionForm } from "./PlaygroundDescriminatedUnionForm";
 import { PlaygroundEnumForm } from "./PlaygroundEnumForm";
 import { PlaygroundListForm } from "./PlaygroundListForm";
@@ -79,7 +82,7 @@ const WithPanel: FC<PropsWithChildren<WithPanelProps>> = ({
                 className="bg-background dark:bg-background-dark scroll-contain absolute inset-0 z-30 overflow-y-auto overflow-x-hidden"
             >
                 <div className="bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark sticky top-0 z-30 flex h-10 items-center border-b px-2">
-                    <Button minimal icon={<ArrowLeftIcon />} text="Back" onClick={hidePanel} />
+                    <FernButton buttonStyle="minimal" icon={<ArrowLeftIcon />} text="Back" onClick={hidePanel} />
                 </div>
                 <div className="mx-auto my-10 flex w-full max-w-2xl flex-col gap-y-4 p-4 pb-10">{children}</div>
             </Transition>
@@ -181,20 +184,20 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
         ),
         integer: () => (
             <div className="flex min-w-0 flex-1 justify-end">
-                <NumericInput
-                    fill={true}
-                    minorStepSize={null}
+                <FernNumericInput
+                    className="w-full"
                     value={typeof value === "number" ? value : undefined}
                     onValueChange={onChange}
                     onFocus={onFocus}
                     onBlur={onBlur}
+                    disallowFloat={true}
                 />
             </div>
         ),
         double: () => (
             <div className="flex min-w-0 flex-1 justify-end">
-                <NumericInput
-                    fill={true}
+                <FernNumericInput
+                    className="w-full"
                     value={typeof value === "number" ? value : undefined}
                     onValueChange={onChange}
                     onFocus={onFocus}
@@ -204,13 +207,13 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
         ),
         long: () => (
             <div className="flex min-w-0 flex-1 justify-end">
-                <NumericInput
-                    fill={true}
-                    minorStepSize={null}
+                <FernNumericInput
+                    className="w-full"
                     value={typeof value === "number" ? value : undefined}
                     onValueChange={onChange}
                     onFocus={onFocus}
                     onBlur={onBlur}
+                    disallowFloat
                 />
             </div>
         ),
@@ -243,10 +246,10 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
         ),
         base64: () => (
             <div className="flex min-w-0 flex-1 py-2">
-                <TextArea
-                    fill={true}
+                <FernTextarea
+                    className="w-full"
                     value={typeof value === "string" ? value : ""}
-                    onChange={(e) => onChange(e.target.value)}
+                    onValueChange={onChange}
                     onFocus={onFocus}
                     onBlur={onBlur}
                 />
@@ -290,10 +293,10 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
         },
         unknown: () => (
             <div className="flex min-w-0 flex-1 py-2">
-                <TextArea
-                    fill={true}
+                <FernTextarea
+                    className="w-full"
                     value={typeof value === "string" ? value : ""}
-                    onChange={(e) => onChange(e.target.value)}
+                    onValueChange={onChange}
                 />
             </div>
         ),

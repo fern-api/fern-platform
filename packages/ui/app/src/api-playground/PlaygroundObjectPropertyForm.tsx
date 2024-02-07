@@ -1,4 +1,4 @@
-import { Button, Checkbox, Tooltip } from "@blueprintjs/core";
+import { Checkbox, Tooltip } from "@blueprintjs/core";
 import { ResolvedObjectProperty } from "@fern-ui/app-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
@@ -7,6 +7,7 @@ import { isUndefined, sortBy } from "lodash-es";
 import { ChangeEventHandler, FC, useCallback, useEffect, useMemo, useState } from "react";
 import { EndpointAvailabilityTag } from "../api-page/endpoints/EndpointAvailabilityTag";
 import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
+import { FernButton } from "../components/FernButton";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { castToRecord, getDefaultValueForType, isExpandable } from "./utils";
 
@@ -110,10 +111,10 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                         )}
 
                         {expandable && (property.valueShape.type === "optional" ? !isUndefined(value) : true) && (
-                            <Button
-                                icon={expanded ? <ChevronDown /> : <ChevronUp />}
-                                minimal={true}
-                                small={true}
+                            <FernButton
+                                icon={expanded ? <ChevronDownIcon /> : <ChevronUpIcon />}
+                                buttonStyle="minimal"
+                                size="small"
                                 className="-mx-1"
                                 onClick={toggleExpanded}
                             />

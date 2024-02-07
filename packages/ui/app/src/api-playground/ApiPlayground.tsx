@@ -6,7 +6,7 @@ import {
 } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
-import { Transition } from "@headlessui/react";
+import { Portal, Transition } from "@headlessui/react";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { Dispatch, FC, SetStateAction, useCallback, useEffect } from "react";
@@ -157,10 +157,10 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
     }
 
     return (
-        <>
+        <Portal>
             <Transition
                 show={isPlaygroundOpen}
-                className="bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark fixed inset-x-0 bottom-0 z-40 border-t"
+                className="bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark fixed inset-x-0 bottom-0  border-t"
                 style={{ height }}
                 enter="ease-out transition-transform duration-300 transform"
                 enterFrom="translate-y-full"
@@ -196,7 +196,7 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
                 onClose={closeSecretsModal}
                 selectSecret={handleSelectSecret}
             />
-        </>
+        </Portal>
     );
 };
 

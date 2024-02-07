@@ -1,9 +1,10 @@
-import { Button, MenuItem, SegmentedControl, Tooltip } from "@blueprintjs/core";
+import { MenuItem, SegmentedControl, Tooltip } from "@blueprintjs/core";
 import { Select } from "@blueprintjs/select";
 import { ResolvedUndiscriminatedUnionShape, ResolvedUndiscriminatedUnionShapeVariant } from "@fern-ui/app-utils";
 import { CaretDownIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import { isEqual } from "lodash-es";
 import { FC, useCallback, useState } from "react";
+import { FernButton } from "../components/FernButton";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType, matchesTypeReference } from "./utils";
 
@@ -90,7 +91,7 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
                     popoverProps={{ minimal: true, matchTargetWidth: true }}
                     fill={true}
                 >
-                    <Button
+                    <FernButton
                         text={
                             selectedVariant != null ? (
                                 <span className="font-mono">{selectedVariant.displayName}</span>
@@ -98,9 +99,8 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
                                 <span className="t-muted">Select a variant...</span>
                             )
                         }
-                        alignText="left"
                         rightIcon={<CaretDownIcon />}
-                        fill={true}
+                        className="w-full text-left"
                     />
                 </Select>
             )}

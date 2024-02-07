@@ -12,7 +12,7 @@ import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { ApiPlayroundContent } from "./ApiPlaygroundContent";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 import { ApiPlaygroundEndpointSelector } from "./ApiPlaygroundEndpointSelector";
-import { PlaygroundEndpointRender } from "./PlaygroundEndpointRender";
+import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 import { SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
 import { PlaygroundRequestFormState, ResponsePayload } from "./types";
@@ -116,7 +116,7 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
                     </div>
                 )}
                 {endpoint != null ? (
-                    <PlaygroundEndpointRender endpoint={endpoint} formState={formState} />
+                    <PlaygroundEndpointPath endpoint={endpoint} formState={formState} />
                 ) : (
                     <div className="flex items-center">
                         <span className="inline-flex items-baseline gap-2">

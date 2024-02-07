@@ -1,19 +1,20 @@
-import { Button, InputGroup, InputGroupProps } from "@blueprintjs/core";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { EyeOpenIcon, LockClosedIcon } from "@radix-ui/react-icons";
 import { FC } from "react";
+import { FernButton } from "../components/FernButton";
+import { FernInput, FernInputProps } from "../components/FernInput";
 
-export const PasswordInputGroup: FC<InputGroupProps> = (props) => {
+export const PasswordInputGroup: FC<FernInputProps> = ({ ref, ...props }) => {
     const showPassword = useBooleanState(false);
     return (
-        <InputGroup
+        <FernInput
             leftIcon={<LockClosedIcon />}
             {...props}
             type={showPassword.value ? "text" : "password"}
             rightElement={
                 props.value != null && props.value.length > 0 ? (
-                    <Button
-                        minimal={true}
+                    <FernButton
+                        buttonStyle="minimal"
                         icon={<EyeOpenIcon />}
                         onMouseDown={showPassword.setTrue}
                         onMouseUp={showPassword.setFalse}

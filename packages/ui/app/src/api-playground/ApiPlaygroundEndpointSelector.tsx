@@ -1,4 +1,3 @@
-import { Button, InputGroup } from "@blueprintjs/core";
 import {
     ResolvedApiDefinitionPackage,
     ResolvedEndpointDefinition,
@@ -12,6 +11,7 @@ import classNames from "classnames";
 import { FC, Fragment, ReactElement, useEffect, useRef, useState } from "react";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { FernButton } from "../components/FernButton";
+import { FernInput } from "../components/FernInput";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 
 export interface ApiPlaygroundEndpointSelectorProps {
@@ -194,8 +194,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                                 "pb-0": renderedListItems.length > 0,
                             })}
                         >
-                            <InputGroup
-                                fill={true}
+                            <FernInput
                                 leftIcon={<MagnifyingGlassIcon />}
                                 data-1p-ignore="true"
                                 autoFocus={true}
@@ -203,9 +202,9 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                                 onValueChange={setFilterValue}
                                 rightElement={
                                     filterValue.length > 0 && (
-                                        <Button
+                                        <FernButton
                                             icon={<Cross1Icon />}
-                                            minimal={true}
+                                            buttonStyle="minimal"
                                             onClick={() => setFilterValue("")}
                                         />
                                     )
@@ -221,8 +220,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                                 "pt-0": renderedListItems.length > 0,
                             })}
                         >
-                            <InputGroup
-                                fill={true}
+                            <FernInput
                                 leftIcon={<MagnifyingGlassIcon />}
                                 data-1p-ignore="true"
                                 autoFocus={true}
@@ -230,9 +228,9 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                                 onValueChange={setFilterValue}
                                 rightElement={
                                     filterValue.length > 0 && (
-                                        <Button
+                                        <FernButton
                                             icon={<Cross1Icon />}
-                                            minimal={true}
+                                            buttonStyle="minimal"
                                             onClick={() => setFilterValue("")}
                                         />
                                     )

@@ -26,6 +26,8 @@ interface FernButtonSharedProps {
     full?: boolean;
     disabled?: boolean;
     rounded?: boolean;
+    // children replaces text
+    text?: React.ReactNode;
 }
 
 interface FernButtonProps
@@ -48,6 +50,7 @@ export const FernLinkButton = forwardRef<HTMLAnchorElement, FernLinkButtonProps>
         disabled = false,
         rightIcon,
         className,
+        text,
         children,
         buttonStyle,
         size,
@@ -61,8 +64,10 @@ export const FernLinkButton = forwardRef<HTMLAnchorElement, FernLinkButtonProps>
     return (
         <Link
             ref={ref}
-            {...linkProps}
             aria-disabled={disabled}
+            aria-selected={active}
+            data-state={active ? "on" : "off"}
+            {...linkProps}
             className={getButtonClassName(props)}
             onClick={
                 props.onClick != null
@@ -89,6 +94,7 @@ export const FernButton: FC<FernButtonProps> = forwardRef<HTMLButtonElement, Fer
             disabled = false,
             rightIcon,
             className,
+            text,
             children,
             buttonStyle,
             size,
@@ -102,10 +108,11 @@ export const FernButton: FC<FernButtonProps> = forwardRef<HTMLButtonElement, Fer
         return (
             <button
                 ref={ref}
-                {...buttonProps}
                 disabled={disabled}
+                data-state={active ? "on" : "off"}
                 aria-disabled={disabled}
                 aria-selected={active}
+                {...buttonProps}
                 className={getButtonClassName(props)}
                 onClick={
                     props.onClick != null
@@ -141,14 +148,16 @@ function renderButtonContent({
     icon: leftIcon,
     rightIcon,
     mono = false,
+    text,
     children,
 }: PropsWithChildren<FernButtonSharedProps>) {
+    children = children ?? text;
     return (
         <span className="fern-button-content">
             {renderIcon(leftIcon)}
             {children && (
                 <span
-                    className={classNames("whitespace-nowrap", {
+                    className={classNames("fern-button-text", {
                         "font-mono tracking-tight": mono,
                     })}
                 >
@@ -171,8 +180,10 @@ function getButtonClassName({
     rounded = false,
     icon,
     rightIcon,
+    text,
     children,
 }: PropsWithChildren<FernButtonSharedProps>) {
+    children = children ?? text;
     return classNames(className, "fern-button", buttonStyle, {
         small: size === "small",
         normal: size === "normal",

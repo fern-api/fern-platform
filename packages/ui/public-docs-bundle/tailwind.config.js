@@ -200,6 +200,9 @@ module.exports = {
                 ".outline-accent-primary": {
                     "@apply outline-accent-primary-light dark:outline-accent-primary-dark": {},
                 },
+                ".ring-default": {
+                    "@apply ring-border-default-light dark:ring-border-default-dark": {},
+                },
                 ".ring-accent-primary": {
                     "@apply ring-accent-primary-light dark:ring-accent-primary-dark": {},
                 },
