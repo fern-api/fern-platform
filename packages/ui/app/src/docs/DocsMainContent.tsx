@@ -4,10 +4,20 @@ import {
     ResolvedNavigationItem,
     ResolvedNavigationItemApiSection,
 } from "@fern-ui/app-utils";
+import dynamic from "next/dynamic";
 import { useMemo } from "react";
-import { ApiPage } from "../api-page/ApiPage";
-import { CustomDocsPage } from "../custom-docs-page/CustomDocsPage";
 import { useNavigationContext } from "../navigation-context";
+
+const CustomDocsPage = dynamic(
+    () => import("../custom-docs-page/CustomDocsPage").then(({ CustomDocsPage }) => CustomDocsPage),
+    {
+        ssr: true,
+    },
+);
+
+const ApiPage = dynamic(() => import("../api-page/ApiPage").then(({ ApiPage }) => ApiPage), {
+    ssr: true,
+});
 
 export interface DocsMainContentProps {
     navigationItems: ResolvedNavigationItem[];
