@@ -254,6 +254,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                             icon={
                                 response.type === "notStartedLoading" ? (
                                     <FernButton
+                                        className="group"
                                         onClick={sendRequest}
                                         rightIcon={
                                             <PaperPlaneIcon className="transition-transform group-hover:translate-x-0.5" />
