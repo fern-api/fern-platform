@@ -5,6 +5,7 @@ import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
 import { Transition } from "@headlessui/react";
 import classNames from "classnames";
 import { useTheme } from "next-themes";
+import dynamic from "next/dynamic";
 import NextNProgress from "nextjs-progressbar";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import tinycolor from "tinycolor2";
@@ -12,7 +13,6 @@ import { ApiPlaygroundContextProvider } from "../api-playground/ApiPlaygroundCon
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
 import { useSearchContext } from "../search-context/useSearchContext";
-import { SearchDialog } from "../search/SearchDialog";
 import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { useSearchService } from "../services/useSearchService";
 import { Sidebar } from "../sidebar/Sidebar";
@@ -27,6 +27,10 @@ interface DocsProps {
     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>;
     algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
 }
+
+export const SearchDialog = dynamic(() => import("../search/SearchDialog").then(({ SearchDialog }) => SearchDialog), {
+    ssr: true,
+});
 
 export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs({
     config,

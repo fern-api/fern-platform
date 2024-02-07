@@ -2,7 +2,7 @@ import { Button, MenuItem, SegmentedControl, Tooltip } from "@blueprintjs/core";
 import { Select } from "@blueprintjs/select";
 import { ResolvedUndiscriminatedUnionShape, ResolvedUndiscriminatedUnionShapeVariant } from "@fern-ui/app-utils";
 import { CaretDownIcon, InfoCircledIcon } from "@radix-ui/react-icons";
-import { isEqual } from "instantsearch.js/es/lib/utils";
+import { isEqual } from "lodash-es";
 import { FC, useCallback, useState } from "react";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType, matchesTypeReference } from "./utils";
