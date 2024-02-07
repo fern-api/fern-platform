@@ -1,17 +1,17 @@
 import { joinUrlSlugs } from "@fern-api/fdr-sdk";
-import { ResolvedNavigationItem } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { isEqual } from "lodash-es";
-import { FC, Fragment, useCallback } from "react";
+import { Fragment, memo, useCallback } from "react";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { ExpandableSidebarApiSection, SidebarApiSection } from "./SidebarApiSection";
 import { SidebarHeading } from "./SidebarHeading";
 import { SidebarSlugLink } from "./SidebarLink";
+import { SidebarNode } from "./types";
 
 export interface SidebarSectionProps {
     className?: string;
-    navigationItems: ResolvedNavigationItem[];
+    navigationItems: SidebarNode[];
     slug: string[];
 
     registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
@@ -57,13 +57,13 @@ const ExpandableSidebarSection: React.FC<ExpandableSidebarSectionProps> = ({
     );
 };
 
-export const SidebarSection: FC<SidebarSectionProps> = ({
+export const SidebarSection = memo<SidebarSectionProps>(function SidebarSection({
     className,
     navigationItems,
     registerScrolledToPathListener,
     topLevel = false,
     depth,
-}) => {
+}) {
     const { selectedSlug } = useCollapseSidebar();
 
     if (navigationItems.length === 0) {
@@ -76,21 +76,19 @@ export const SidebarSection: FC<SidebarSectionProps> = ({
                 visitDiscriminatedUnion(navigationItem, "type")._visit({
                     pageGroup: ({ pages }) => (
                         <Fragment key={idx}>
-                            {pages.map((page, pageIdx) => {
-                                return (
-                                    <SidebarSlugLink
-                                        key={page.id}
-                                        className={classNames({
-                                            "mt-6": topLevel && pageIdx === 0,
-                                        })}
-                                        slug={page.slug}
-                                        depth={Math.max(depth - 1, 0)}
-                                        registerScrolledToPathListener={registerScrolledToPathListener}
-                                        title={page.title}
-                                        selected={isEqual(selectedSlug, page.slug)}
-                                    />
-                                );
-                            })}
+                            {pages.map((page, pageIdx) => (
+                                <SidebarSlugLink
+                                    key={page.id}
+                                    className={classNames({
+                                        "mt-6": topLevel && pageIdx === 0,
+                                    })}
+                                    slug={page.slug}
+                                    depth={Math.max(depth - 1, 0)}
+                                    registerScrolledToPathListener={registerScrolledToPathListener}
+                                    title={page.title}
+                                    selected={isEqual(selectedSlug, page.slug)}
+                                />
+                            ))}
                         </Fragment>
                     ),
                     section: (section) => {
@@ -129,9 +127,9 @@ export const SidebarSection: FC<SidebarSectionProps> = ({
                             );
                         }
                     },
-                    apiSection: (apiSection) => {
-                        return depth === 0 ? (
-                            <li key={apiSection.api}>
+                    apiSection: (apiSection) =>
+                        depth === 0 ? (
+                            <li key={apiSection.id}>
                                 <SidebarHeading
                                     className={classNames({
                                         "mt-6": topLevel,
@@ -153,13 +151,12 @@ export const SidebarSection: FC<SidebarSectionProps> = ({
                                 registerScrolledToPathListener={registerScrolledToPathListener}
                                 depth={depth}
                                 title={apiSection.title}
-                                apiDefinitionPackage={apiSection}
+                                artifacts={apiSection.artifacts}
                             />
-                        );
-                    },
+                        ),
                     _other: () => null,
                 }),
             )}
         </ul>
     );
-};
+});

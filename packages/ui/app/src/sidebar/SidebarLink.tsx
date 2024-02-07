@@ -25,31 +25,34 @@ interface SidebarSlugLinkProps {
     registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
 }
 
-export const SidebarLink = memo(function SidebarSlugLinkContent({
-    className,
-    linkClassName: linkClassNameProp,
-    title,
-    onClick,
-    shallow,
-    href,
-    selected,
-    showIndicator,
-    depth = 0,
-    toggleExpand,
-    expanded = false,
-    rightElement,
-    children,
-    elementRef,
-}: PropsWithChildren<
-    Omit<SidebarSlugLinkProps, "registerScrolledToPathListener" | "slug"> & {
-        // Link props
-        href?: Url;
-        rel?: string | undefined;
-        target?: HTMLAttributeAnchorTarget | undefined;
+export const SidebarLink = memo(function SidebarSlugLinkContent(
+    props: PropsWithChildren<
+        Omit<SidebarSlugLinkProps, "registerScrolledToPathListener" | "slug"> & {
+            // Link props
+            href?: Url;
+            rel?: string | undefined;
+            target?: HTMLAttributeAnchorTarget | undefined;
 
-        elementRef?: React.Ref<HTMLLIElement>;
-    }
->) {
+            elementRef?: React.Ref<HTMLLIElement>;
+        }
+    >,
+) {
+    const {
+        className,
+        linkClassName: linkClassNameProp,
+        title,
+        onClick,
+        shallow,
+        href,
+        selected,
+        showIndicator,
+        depth = 0,
+        toggleExpand,
+        expanded = false,
+        rightElement,
+        children,
+        elementRef,
+    } = props;
     const renderLink = (child: ReactElement) => {
         const linkClassName = classNames(linkClassNameProp, "fern-sidebar-link", {
             "!pl-0": toggleExpand != null || expanded || depth > 0,

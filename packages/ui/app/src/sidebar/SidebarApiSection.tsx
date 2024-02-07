@@ -1,18 +1,19 @@
-import { DocsV1Read, isApiNode, joinUrlSlugs } from "@fern-api/fdr-sdk";
-import { ResolvedApiDefinitionPackage, ResolvedNavigationItemApiSection } from "@fern-ui/app-utils";
+import { APIV1Read, DocsV1Read, isApiNode, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { isEqual } from "lodash-es";
-import { FC, useCallback } from "react";
+import { memo, useCallback } from "react";
+import { ReactElement } from "react-markdown/lib/react-markdown";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { API_ARTIFACTS_TITLE } from "../config";
 import { useNavigationContext } from "../navigation-context";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { SidebarSlugLink } from "./SidebarLink";
+import { SidebarNode } from "./types";
 
 export interface SidebarApiSectionProps {
     className?: string;
-    apiSection: ResolvedNavigationItemApiSection;
+    apiSection: SidebarNode.ApiSection;
     slug: string[];
     registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
     depth: number;
@@ -28,7 +29,6 @@ export const SidebarApiSection: React.FC<SidebarApiSectionProps> = ({
     return (
         <InnerSidebarApiSection
             className={className}
-            apiDefinitionPackage={apiSection}
             slug={slug}
             registerScrolledToPathListener={registerScrolledToPathListener}
             artifacts={apiSection.artifacts}
@@ -39,19 +39,25 @@ export const SidebarApiSection: React.FC<SidebarApiSectionProps> = ({
 };
 
 interface InnerSidebarApiSectionProps extends SidebarApiSectionProps {
-    apiDefinitionPackage: ResolvedApiDefinitionPackage;
-    artifacts?: DocsV1Read.ApiArtifacts;
+    artifacts: DocsV1Read.ApiArtifacts | null;
 }
 
-const InnerSidebarApiSection: FC<InnerSidebarApiSectionProps> = ({
+const HTTP_METHOD_TAGS: Record<APIV1Read.HttpMethod, ReactElement> = {
+    GET: <HttpMethodTag className="ml-2 font-normal" method={APIV1Read.HttpMethod.Get} small />,
+    POST: <HttpMethodTag className="ml-2 font-normal" method={APIV1Read.HttpMethod.Post} small />,
+    PUT: <HttpMethodTag className="ml-2 font-normal" method={APIV1Read.HttpMethod.Put} small />,
+    PATCH: <HttpMethodTag className="ml-2 font-normal" method={APIV1Read.HttpMethod.Patch} small />,
+    DELETE: <HttpMethodTag className="ml-2 font-normal" method={APIV1Read.HttpMethod.Delete} small />,
+};
+
+const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerSidebarApiSection({
     className,
-    apiDefinitionPackage,
     slug,
     registerScrolledToPathListener,
     artifacts,
     depth,
     apiSection,
-}) => {
+}) {
     const { selectedSlug } = useCollapseSidebar();
     const { activeNavigatable } = useNavigationContext();
     const shallow = isApiNode(activeNavigatable) && activeNavigatable.section.api === apiSection.api;
@@ -72,9 +78,9 @@ const InnerSidebarApiSection: FC<InnerSidebarApiSectionProps> = ({
     };
 
     if (
-        apiDefinitionPackage.endpoints.length === 0 &&
-        apiDefinitionPackage.webhooks.length === 0 &&
-        apiDefinitionPackage.subpackages.length === 0 &&
+        apiSection.endpoints.length === 0 &&
+        apiSection.webhooks.length === 0 &&
+        apiSection.subpackages.length === 0 &&
         (artifacts == null || areApiArtifactsNonEmpty(artifacts))
     ) {
         return null;
@@ -83,49 +89,43 @@ const InnerSidebarApiSection: FC<InnerSidebarApiSectionProps> = ({
     return (
         <ul className={classNames(className, "list-none")}>
             {renderArtifacts()}
-            {apiDefinitionPackage.endpoints.map((endpoint) => {
-                return (
-                    <SidebarSlugLink
-                        key={joinUrlSlugs(...endpoint.slug)}
-                        slug={endpoint.slug}
-                        shallow={shallow}
-                        title={endpoint.title}
-                        registerScrolledToPathListener={registerScrolledToPathListener}
-                        selected={isEqual(endpoint.slug, selectedSlug)}
-                        depth={Math.max(0, depth - 1)}
-                        rightElement={<HttpMethodTag className="ml-2 font-normal" method={endpoint.method} small />}
-                    />
-                );
-            })}
-            {apiDefinitionPackage.webhooks.map((webhook) => {
-                return (
-                    <SidebarSlugLink
-                        key={joinUrlSlugs(...webhook.slug)}
-                        slug={webhook.slug}
-                        shallow={shallow}
-                        title={webhook.name ?? "/" + webhook.path.join("/")}
-                        registerScrolledToPathListener={registerScrolledToPathListener}
-                        selected={isEqual(webhook.slug, selectedSlug)}
-                        depth={Math.max(0, depth - 1)}
-                    />
-                );
-            })}
-            {apiDefinitionPackage.subpackages.map((subpackage) => {
-                return (
-                    <ExpandableSidebarApiSection
-                        key={joinUrlSlugs(...subpackage.slug)}
-                        title={subpackage.title}
-                        slug={subpackage.slug}
-                        apiDefinitionPackage={subpackage}
-                        registerScrolledToPathListener={registerScrolledToPathListener}
-                        depth={depth}
-                        apiSection={apiSection}
-                    />
-                );
-            })}
+            {apiSection.endpoints.map((endpoint) => (
+                <SidebarSlugLink
+                    key={joinUrlSlugs(...endpoint.slug)}
+                    slug={endpoint.slug}
+                    shallow={shallow}
+                    title={endpoint.title}
+                    registerScrolledToPathListener={registerScrolledToPathListener}
+                    selected={isEqual(endpoint.slug, selectedSlug)}
+                    depth={Math.max(0, depth - 1)}
+                    rightElement={HTTP_METHOD_TAGS[endpoint.method]}
+                />
+            ))}
+            {apiSection.webhooks.map((webhook) => (
+                <SidebarSlugLink
+                    key={joinUrlSlugs(...webhook.slug)}
+                    slug={webhook.slug}
+                    shallow={shallow}
+                    title={webhook.title}
+                    registerScrolledToPathListener={registerScrolledToPathListener}
+                    selected={isEqual(webhook.slug, selectedSlug)}
+                    depth={Math.max(0, depth - 1)}
+                />
+            ))}
+            {apiSection.subpackages.map((subpackage) => (
+                <ExpandableSidebarApiSection
+                    key={joinUrlSlugs(...subpackage.slug)}
+                    title={subpackage.title}
+                    slug={subpackage.slug}
+                    apiSection={subpackage}
+                    registerScrolledToPathListener={registerScrolledToPathListener}
+                    depth={depth}
+                    artifacts={null}
+                />
+            ))}
         </ul>
     );
-};
+});
 
 interface ExpandableSidebarApiSectionProps extends InnerSidebarApiSectionProps {
     className?: string;
@@ -138,7 +138,6 @@ export const ExpandableSidebarApiSection: React.FC<ExpandableSidebarApiSectionPr
     slug,
     registerScrolledToPathListener,
     depth,
-    apiDefinitionPackage,
     artifacts,
     apiSection,
 }) => {
@@ -160,7 +159,6 @@ export const ExpandableSidebarApiSection: React.FC<ExpandableSidebarApiSectionPr
                 slug={slug}
                 registerScrolledToPathListener={registerScrolledToPathListener}
                 depth={depth + 1}
-                apiDefinitionPackage={apiDefinitionPackage}
                 artifacts={artifacts}
                 apiSection={apiSection}
             />

@@ -14,6 +14,7 @@ import { useNavigationContext } from "../navigation-context/useNavigationContext
 import { useSearchContext } from "../search-context/useSearchContext";
 import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { useSearchService } from "../services/useSearchService";
+import { SidebarNode } from "../sidebar/types";
 import { BgImageGradient } from "./BgImageGradient";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
@@ -24,6 +25,7 @@ interface DocsProps {
     config: DocsV1Read.DocsConfig;
     search: DocsV1Read.SearchInfo;
     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>;
+    navigation: SidebarNode[];
     algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
 }
 
@@ -35,6 +37,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     config,
     search,
     apis,
+    navigation,
     algoliaSearchIndex,
 }) {
     const { observeDocContent, activeNavigatable, registerScrolledToPathListener } = useNavigationContext();
@@ -156,7 +159,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                     <div className="max-w-page-width relative mx-auto flex min-h-0 w-full min-w-0 flex-1">
                         <Sidebar
                             className="w-sidebar-width mt-header-height top-header-height h-vh-minus-header sticky z-20 hidden lg:block"
-                            navigationItems={navigationItems}
+                            navigation={navigation}
                             currentSlug={currentSlug}
                             registerScrolledToPathListener={registerScrolledToPathListener}
                             searchInfo={search}

@@ -1,5 +1,4 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { ResolvedNavigationItem } from "@fern-ui/app-utils";
 import { Dialog, Transition } from "@headlessui/react";
 import { useRouter } from "next/router";
 import { Fragment, memo, useEffect } from "react";
@@ -11,10 +10,11 @@ import { CollapseSidebarProvider } from "./CollapseSidebarContext";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
 import { SidebarSection } from "./SidebarSection";
+import { SidebarNode } from "./types";
 
 export interface SidebarProps {
     currentSlug: string[];
-    navigationItems: ResolvedNavigationItem[];
+    navigation: SidebarNode[];
     registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
     searchInfo: DocsV1Read.SearchInfo;
     algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
@@ -22,7 +22,7 @@ export interface SidebarProps {
 }
 
 const SidebarInner = memo<SidebarProps>(function SidebarInner({
-    navigationItems,
+    navigation,
     currentSlug,
     registerScrolledToPathListener,
     searchInfo,
@@ -40,7 +40,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                 />
                 <CollapseSidebarProvider>
                     <SidebarSection
-                        navigationItems={navigationItems}
+                        navigationItems={navigation}
                         slug={currentSlug}
                         registerScrolledToPathListener={registerScrolledToPathListener}
                         depth={0}
