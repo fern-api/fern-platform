@@ -7,6 +7,7 @@ import Link from "next/link";
 import { FC, HTMLAttributeAnchorTarget, memo, PropsWithChildren, ReactNode, useEffect, useRef } from "react";
 import { ReactElement } from "react-markdown/lib/react-markdown";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
+import "./SidebarLink.css";
 
 interface SidebarSlugLinkProps {
     slug?: string[];
@@ -53,22 +54,14 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
     }
 >) {
     const renderLink = (child: ReactElement) => {
-        const linkClassName = classNames(
-            linkClassNameProp,
-            "!text-inherit text-left !hover:text-inherit relative inline-flex flex-1 content-between items-stretch px-4 lg:px-3 no-underline hover:no-underline rounded-lg ring-border-primary dark:ring-border-primary-dark ring-inset",
-            {
-                "bg-tag-primary ring-1 lg:ring-0": selected,
-                "lg:hover:bg-tag-default-light/5/10 lg:dark:hover:bg-tag-default-dark/5 ring-0": !selected,
-            },
-            {
-                "!pl-0": toggleExpand != null || expanded || depth > 0,
-            },
-        );
+        const linkClassName = classNames(linkClassNameProp, "fern-sidebar-link", {
+            "!pl-0": toggleExpand != null || expanded || depth > 0,
+        });
 
         return href != null ? (
             <Link
                 href={href}
-                className={linkClassName}
+                className={classNames(linkClassName, "!text-inherit")}
                 onClick={(e) => {
                     closeMobileSidebar?.();
                     onClick?.(e);
@@ -93,19 +86,8 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
 
     const expandButton = (toggleExpand != null || expanded) && (
         <span
-            className={classNames(
-                "relative",
-                "flex w-[44px] lg:w-6 justify-center items-center transition-colors rounded-none transition-transform ease-out",
-                {
-                    "lg:opacity-60 group-hover/sidebar:opacity-100 transition-opacity": toggleExpand != null,
-                    "lg:bg-tag-primary lg:after:content-none after:content-[''] after:absolute after:inset-1 after:rounded-lg after:bg-tag-primary text-accent-primary !lg:text-inherit after:pointer-events-none":
-                        showIndicator,
-                    // "lg:hover:bg-tag-default-light/5 lg:dark:hover:bg-tag-default-dark/5":
-                    //     !showIndicator && toggleExpand != null,
-                    "lg:rounded-lg dark:group-hover:rounded-r-none": depth === 0,
-                    "lg:rounded-r-lg dark:group-hover:rounded-r-none": depth > 0,
-                },
-            )}
+            className="fern-sidebar-link-expand transition-opacity group-hover/sidebar:opacity-100 lg:opacity-60"
+            data-state={showIndicator ? "active" : "inactive"}
         >
             <ChevronDownIcon
                 className={classNames("transition-transform size-5 lg:size-icon", {
@@ -116,18 +98,16 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
         </span>
     );
 
-    const titleSpanClassName = classNames("flex-1 text-base leading-6 lg:text-sm lg:leading-5", {
+    const titleSpanClassName = classNames("fern-sidebar-link-text", {
         "ml-0": toggleExpand != null || expanded,
         "ml-6": depth > 0 && toggleExpand == null && !expanded,
     });
 
     return (
-        <li ref={elementRef} className="scroll-my-32">
+        <li ref={elementRef} className="fern-sidebar-item">
             <div
-                className={classNames(className, "group items-stretch relative flex min-h-[44px] lg:min-h-[36px]", {
-                    "hover:text-accent-primary t-muted": !selected,
-                    "text-accent-primary": selected,
-                })}
+                className={classNames("fern-sidebar-link-container group", className)}
+                data-state={selected ? "active" : "inactive"}
             >
                 {renderLink(
                     <>
@@ -135,18 +115,13 @@ export const SidebarLink = memo(function SidebarSlugLinkContent({
                             <div
                                 key={i}
                                 className={classNames(
-                                    "relative flex-0 w-[22px] lg:w-3 shrink-0 border-r",
+                                    "fern-sidebar-link-indent",
                                     "transition-transform group-hover/sidebar:opacity-100 transition-opacity ease-out",
-                                    {
-                                        "border-accent-primary-light/60 dark:border-accent-primary-dark/60": selected,
-                                        "border-border-default-light dark:border-border-default-dark lg:opacity-60":
-                                            !selected,
-                                    },
                                 )}
                             />
                         ))}
                         {expandButton}
-                        <span className="inline-flex flex-1 items-center py-3 lg:py-2">
+                        <span className="fern-sidebar-link-content">
                             <span className={titleSpanClassName}>{title}</span>
                             {rightElement}
                         </span>

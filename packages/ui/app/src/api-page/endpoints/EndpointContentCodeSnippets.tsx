@@ -62,9 +62,9 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         <button
                             key={example.key}
                             className={classNames("h-6 px-3 rounded-xl shrink min-w-0", {
-                                "bg-background dark:bg-background-dark ring-1 ring-border-primary dark:ring-border-primary-dark":
+                                "bg-background ring-1 ring-border-primary dark:ring-border-primary-dark":
                                     example.key === selectedClient.key,
-                                "bg-background/50 dark:bg-background-dark/50 hover:bg-background dark:hover:bg-background-dark":
+                                "bg-background-light/50 dark:bg-background-dark/50 hover:bg-background dark:hover:bg-background-dark":
                                     example.key !== selectedClient.key,
                             })}
                             onClick={() => {

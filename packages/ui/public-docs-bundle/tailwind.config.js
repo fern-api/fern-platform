@@ -51,7 +51,7 @@ module.exports = {
                 "accent-primary-dark-contrast": withOpacity("--accent-primary-dark-contrast"),
                 "accent-highlight-light": "rgba(var(--accent-primary), 20%)",
                 "accent-highlight-dark": "rgba(var(--accent-primary-dark), 20%)",
-                background: withOpacity("--background"),
+                "background-light": withOpacity("--background"),
                 "background-dark": withOpacity("--background-dark"),
 
                 "method-get": "#49A68C",
@@ -153,6 +153,9 @@ module.exports = {
                     "@apply text-intent-danger-light dark:text-intent-danger-dark": {},
                 },
                 // Background
+                ".bg-background": {
+                    "@apply bg-background-light dark:bg-background-dark": {},
+                },
                 ".bg-accent-primary": {
                     "@apply bg-accent-primary-light dark:bg-accent-primary-dark": {},
                 },

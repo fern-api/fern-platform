@@ -2,7 +2,6 @@ import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { crawlResolvedNavigationItemApiSections, resolveNavigationItems } from "@fern-ui/app-utils";
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
-import { Transition } from "@headlessui/react";
 import classNames from "classnames";
 import { useTheme } from "next-themes";
 import dynamic from "next/dynamic";
@@ -15,11 +14,11 @@ import { useNavigationContext } from "../navigation-context/useNavigationContext
 import { useSearchContext } from "../search-context/useSearchContext";
 import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { useSearchService } from "../services/useSearchService";
-import { Sidebar } from "../sidebar/Sidebar";
-import { useViewportContext } from "../viewport-context/useViewportContext";
 import { BgImageGradient } from "./BgImageGradient";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
+
+const Sidebar = dynamic(() => import("../sidebar/Sidebar").then(({ Sidebar }) => Sidebar), { ssr: true });
 
 interface DocsProps {
     config: DocsV1Read.DocsConfig;
@@ -123,8 +122,6 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
 
     const apiSections = useMemo(() => crawlResolvedNavigationItemApiSections(navigationItems), [navigationItems]);
 
-    const { layoutBreakpoint: breakpoint } = useViewportContext();
-
     return (
         <>
             <NextNProgress color={accentColor} options={{ showSpinner: false }} showOnShallow={false} />
@@ -157,46 +154,14 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                     </div>
 
                     <div className="max-w-page-width relative mx-auto flex min-h-0 w-full min-w-0 flex-1">
-                        {isMobileSidebarOpen && (
-                            <div
-                                className="fixed inset-0 z-20 block bg-white/60 lg:hidden dark:bg-black/40"
-                                onClick={closeMobileSidebar}
-                            />
-                        )}
-
-                        {["lg", "xl", "2xl"].includes(breakpoint) ? (
-                            <div className="w-sidebar-width mt-header-height top-header-height h-vh-minus-header sticky z-20">
-                                <Sidebar
-                                    navigationItems={navigationItems}
-                                    currentSlug={currentSlug}
-                                    registerScrolledToPathListener={registerScrolledToPathListener}
-                                    searchInfo={search}
-                                    algoliaSearchIndex={algoliaSearchIndex}
-                                    navbarLinks={config.navbarLinks}
-                                />
-                            </div>
-                        ) : (
-                            <Transition
-                                className="border-border-concealed-light dark:border-border-concealed-dark top-header-height fixed inset-0 z-20 sm:w-72 sm:border-r"
-                                show={isMobileSidebarOpen}
-                                enter="transition ease-in-out duration-300 transform"
-                                enterFrom="-translate-x-full"
-                                enterTo="translate-x-0"
-                                leave="transition ease-in-out duration-300 transform"
-                                leaveFrom="translate-x-0"
-                                leaveTo="-translate-x-full"
-                            >
-                                {renderBackground("lg:hidden backdrop-blur-lg")}
-                                <Sidebar
-                                    navigationItems={navigationItems}
-                                    currentSlug={currentSlug}
-                                    registerScrolledToPathListener={registerScrolledToPathListener}
-                                    searchInfo={search}
-                                    algoliaSearchIndex={algoliaSearchIndex}
-                                    navbarLinks={config.navbarLinks}
-                                />
-                            </Transition>
-                        )}
+                        <Sidebar
+                            navigationItems={navigationItems}
+                            currentSlug={currentSlug}
+                            registerScrolledToPathListener={registerScrolledToPathListener}
+                            searchInfo={search}
+                            algoliaSearchIndex={algoliaSearchIndex}
+                            navbarLinks={config.navbarLinks}
+                        />
 
                         <main className={classNames("relative flex w-full min-w-0 flex-1 flex-col pt-header-height")}>
                             <DocsMainContent navigationItems={navigationItems} />
