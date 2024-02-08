@@ -63,7 +63,7 @@ export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemShape, onC
                                 <FernButton
                                     icon={<Cross1Icon />}
                                     onClick={() => handleRemoveItem(idx)}
-                                    buttonStyle="minimal"
+                                    variant="minimal"
                                     size="small"
                                     className="-mx-1"
                                 />
@@ -75,7 +75,7 @@ export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemShape, onC
                             icon={<PlusIcon />}
                             text="Add new item"
                             onClick={appendItem}
-                            buttonStyle="outlined"
+                            variant="outlined"
                             className="w-full"
                         />
                     </li>
@@ -87,7 +87,7 @@ export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemShape, onC
                     text="Add new item"
                     className="w-full"
                     onClick={appendItem}
-                    buttonStyle="outlined"
+                    variant="outlined"
                 />
             )}
         </>

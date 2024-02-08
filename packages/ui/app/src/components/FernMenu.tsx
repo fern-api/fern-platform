@@ -44,7 +44,7 @@ export const FernMenu: FC<FernMenu.Props> = ({
                                     })}
                                 />
                             }
-                            buttonStyle="outlined"
+                            variant="outlined"
                             intent="primary"
                             size={size}
                             mono={true}

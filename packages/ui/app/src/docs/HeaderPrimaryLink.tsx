@@ -16,7 +16,7 @@ export const HeaderPrimaryLink: React.FC<HeaderPrimaryLink.Props> = ({ navbarLin
             target="_blank"
             intent="primary"
             rightIcon={<ArrowRightIcon className="transition-transform group-hover:translate-x-0.5" />}
-            buttonStyle="outlined"
+            variant="outlined"
         >
             {navbarLink.text}
         </FernLinkButton>

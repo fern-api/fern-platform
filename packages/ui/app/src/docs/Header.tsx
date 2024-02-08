@@ -78,7 +78,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                             onClick={openSearchDialog}
                             icon={<MagnifyingGlassIcon className="size-6" />}
                             intent="none"
-                            buttonStyle="minimal"
+                            variant="minimal"
                             rounded={true}
                             size="large"
                             className="hidden sm:inline"

@@ -170,7 +170,7 @@ export const SearchMobileBox = forwardRef<HTMLInputElement, SearchBoxProps>(func
                     leftIcon={<MagnifyingGlassIcon className="t-muted" />}
                     rightElement={
                         <FernButton
-                            buttonStyle="minimal"
+                            variant="minimal"
                             icon={<Cross1Icon className="t-muted" />}
                             onClick={() => {
                                 setQuery("");

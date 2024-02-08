@@ -9,7 +9,8 @@
     "@radix-ui/colors",
     "autoprefixer",
     "postcss",
-    "postcss-import"
+    "postcss-import",
+    "cssnano"
   ],
   "ignore-patterns": ["lib"]
 }

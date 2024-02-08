@@ -9,7 +9,7 @@ export declare namespace HeaderSecondaryLink {
 
 export const HeaderSecondaryLink: React.FC<HeaderSecondaryLink.Props> = ({ navbarLink }) => {
     return (
-        <FernLinkButton href={navbarLink.url} target="_blank" buttonStyle="minimal">
+        <FernLinkButton href={navbarLink.url} target="_blank" variant="minimal">
             {navbarLink.text}
         </FernLinkButton>
     );

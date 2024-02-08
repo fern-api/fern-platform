@@ -108,7 +108,7 @@ export const EnumTypeDefinition = ({
                                                         })}
                                                     />
                                                 }
-                                                buttonStyle="minimal"
+                                                variant="minimal"
                                             />
                                         }
                                     />

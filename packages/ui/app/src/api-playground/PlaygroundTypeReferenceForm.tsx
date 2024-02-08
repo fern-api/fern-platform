@@ -81,7 +81,7 @@ const WithPanel: FC<PropsWithChildren<WithPanelProps>> = ({
                 className="bg-background dark:bg-background-dark scroll-contain absolute inset-0 z-30 overflow-y-auto overflow-x-hidden"
             >
                 <div className="bg-background dark:bg-background-dark border-default sticky top-0 z-30 flex h-10 items-center border-b px-2">
-                    <FernButton buttonStyle="minimal" icon={<ArrowLeftIcon />} text="Back" onClick={hidePanel} />
+                    <FernButton variant="minimal" icon={<ArrowLeftIcon />} text="Back" onClick={hidePanel} />
                 </div>
                 <div className="mx-auto my-10 flex w-full max-w-2xl flex-col gap-y-4 p-4 pb-10">{children}</div>
             </Transition>

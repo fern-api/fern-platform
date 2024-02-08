@@ -16,7 +16,7 @@ export const ApiPlaygroundButton: FC<ApiPlaygroundSelectionState> = ({ apiSectio
                 setSelectionStateAndOpen({ apiSection, apiDefinition, endpoint });
             }}
             rightIcon="play"
-            buttonStyle="outlined"
+            variant="outlined"
             intent="primary"
             size="small"
             mono={true}

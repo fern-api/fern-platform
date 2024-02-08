@@ -6,7 +6,8 @@
     "@types/react-dom",
     "autoprefixer",
     "postcss",
-    "postcss-import"
+    "postcss-import",
+    "cssnano"
   ],
   "ignore-patterns": ["lib"]
 }

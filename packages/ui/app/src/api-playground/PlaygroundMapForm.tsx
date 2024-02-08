@@ -95,7 +95,7 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ keyShape, valueS
                                 <FernButton
                                     icon={<Cross1Icon />}
                                     onClick={() => handleRemoveItem(idx)}
-                                    buttonStyle="minimal"
+                                    variant="minimal"
                                 />
                             </div>
                         </li>
@@ -105,7 +105,7 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ keyShape, valueS
                             icon={<PlusIcon />}
                             text="Add new item"
                             onClick={handleAppendItem}
-                            buttonStyle="outlined"
+                            variant="outlined"
                             className="w-full"
                         />
                     </li>
@@ -116,7 +116,7 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ keyShape, valueS
                     icon={<PlusIcon />}
                     text="Add new item"
                     onClick={handleAppendItem}
-                    buttonStyle="outlined"
+                    variant="outlined"
                     className="w-full"
                 />
             )}

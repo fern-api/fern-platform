@@ -39,10 +39,10 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
                 </h3>
                 {showExpandCollapse && (
                     <FernButtonGroup className="invisible group-hover/anchor-container:visible">
-                        <FernButton onClick={handleExpandAll} icon={<PlusIcon />} size="small" buttonStyle="minimal">
+                        <FernButton onClick={handleExpandAll} icon={<PlusIcon />} size="small" variant="minimal">
                             Expand all
                         </FernButton>
-                        <FernButton onClick={handleCollapseAll} icon={<MinusIcon />} size="small" buttonStyle="minimal">
+                        <FernButton onClick={handleCollapseAll} icon={<MinusIcon />} size="small" variant="minimal">
                             Collapse all
                         </FernButton>
                     </FernButtonGroup>

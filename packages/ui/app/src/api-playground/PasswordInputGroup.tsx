@@ -14,7 +14,7 @@ export const PasswordInputGroup: FC<FernInputProps> = ({ ref, ...props }) => {
             rightElement={
                 props.value != null && props.value.length > 0 ? (
                     <FernButton
-                        buttonStyle="minimal"
+                        variant="minimal"
                         icon={<EyeOpenIcon />}
                         onMouseDown={showPassword.setTrue}
                         onMouseUp={showPassword.setFalse}

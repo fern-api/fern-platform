@@ -17,7 +17,7 @@ interface FernButtonSharedProps {
     className?: string;
     icon?: string | ReactNode;
     rightIcon?: string | ReactNode;
-    buttonStyle?: "minimal" | "filled" | "outlined";
+    variant?: "minimal" | "filled" | "outlined";
     intent?: Intent;
     size?: "small" | "normal" | "large";
     mono?: boolean;
@@ -51,7 +51,7 @@ export const FernLinkButton = forwardRef<HTMLAnchorElement, FernLinkButtonProps>
         className,
         text,
         children,
-        buttonStyle,
+        variant,
         size,
         mono,
         intent,
@@ -95,7 +95,7 @@ export const FernButton: FC<FernButtonProps> = forwardRef<HTMLButtonElement, Fer
             className,
             text,
             children,
-            buttonStyle,
+            variant,
             size,
             mono,
             intent,
@@ -170,7 +170,7 @@ function renderButtonContent({
 
 function getButtonClassName({
     className,
-    buttonStyle = "filled",
+    variant = "filled",
     intent = "none",
     size = "normal",
     active = false,
@@ -183,7 +183,7 @@ function getButtonClassName({
     children,
 }: PropsWithChildren<FernButtonSharedProps>) {
     children = children ?? text;
-    return classNames(className, "fern-button", buttonStyle, {
+    return classNames(className, "fern-button", variant, {
         small: size === "small",
         normal: size === "normal",
         large: size === "large",

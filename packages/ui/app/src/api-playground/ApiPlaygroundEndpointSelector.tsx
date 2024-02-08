@@ -146,7 +146,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                         })}
                     />
                 }
-                buttonStyle="minimal"
+                variant="minimal"
             >
                 {apiDefinition != null && (
                     <span className="t-accent mr-2 shrink truncate whitespace-nowrap text-xs">
@@ -203,7 +203,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                                     filterValue.length > 0 && (
                                         <FernButton
                                             icon={<Cross1Icon />}
-                                            buttonStyle="minimal"
+                                            variant="minimal"
                                             onClick={() => setFilterValue("")}
                                         />
                                     )
@@ -229,7 +229,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                                     filterValue.length > 0 && (
                                         <FernButton
                                             icon={<Cross1Icon />}
-                                            buttonStyle="minimal"
+                                            variant="minimal"
                                             onClick={() => setFilterValue("")}
                                         />
                                     )

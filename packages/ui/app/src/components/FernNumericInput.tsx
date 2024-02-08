@@ -93,7 +93,7 @@ export const FernNumericInput = forwardRef<HTMLInputElement, FernNumericInputPro
                 <FernButton
                     className="fern-numeric-input-step"
                     icon={<MinusIcon />}
-                    buttonStyle="minimal"
+                    variant="minimal"
                     onClick={decrement}
                     onMouseDown={handleDecrementMouseDown}
                     onMouseUp={handleClearInterval}
@@ -115,7 +115,7 @@ export const FernNumericInput = forwardRef<HTMLInputElement, FernNumericInputPro
                 <FernButton
                     className="fern-numeric-input-step"
                     icon={<PlusIcon />}
-                    buttonStyle="minimal"
+                    variant="minimal"
                     onClick={increment}
                     onMouseDown={handleIncrementMouseDown}
                     onMouseUp={handleClearInterval}

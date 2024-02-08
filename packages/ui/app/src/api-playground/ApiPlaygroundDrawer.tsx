@@ -133,7 +133,7 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
                     <FernButtonGroup>
                         <PlaygroundSendRequestButton sendRequest={sendRequest} />
                         <FernButton
-                            buttonStyle="minimal"
+                            variant="minimal"
                             icon={<Cross1Icon className="size-4" />}
                             className="-mr-2"
                             onClick={collapseApiPlayground}

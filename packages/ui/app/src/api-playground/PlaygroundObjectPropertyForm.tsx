@@ -130,7 +130,7 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                     {/* {expandable && (property.valueShape.type === "optional" ? !isUndefined(value) : true) && (
                         <FernButton
                             icon={expanded ? <ChevronDownIcon /> : <ChevronUpIcon />}
-                            buttonStyle="minimal"
+                            variant="minimal"
                             size="small"
                             className="-mx-1"
                             onClick={toggleExpanded}

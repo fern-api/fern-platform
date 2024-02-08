@@ -83,7 +83,7 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
                     <span className="inline-flex items-center">
                         <FernButton
                             icon={<ThumbsUp />}
-                            buttonStyle="minimal"
+                            variant="minimal"
                             intent={feedback === "yes" ? "success" : "none"}
                             onClick={handleYes}
                             active={feedback === "yes"}
@@ -93,7 +93,7 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
                         </FernButton>
                         <FernButton
                             icon={<ThumbsDown />}
-                            buttonStyle="minimal"
+                            variant="minimal"
                             intent={feedback === "no" ? "danger" : "none"}
                             onClick={handleNo}
                             active={feedback === "no"}

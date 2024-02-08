@@ -39,7 +39,7 @@ export const PlaygroundAuthorizationForm: FC<PlaygroundAuthorizationFormProps> =
                                     <SecretSpan secret={value.token} className="text-sm" />
                                     <FernButton
                                         icon={<Cross1Icon className="size-4" />}
-                                        buttonStyle="minimal"
+                                        variant="minimal"
                                         size="small"
                                         onClick={() => {
                                             onChange({
@@ -65,7 +65,7 @@ export const PlaygroundAuthorizationForm: FC<PlaygroundAuthorizationFormProps> =
                                         <FernButton
                                             onClick={openSecretsModal}
                                             icon={<GlobeIcon className="size-4" />}
-                                            buttonStyle="minimal"
+                                            variant="minimal"
                                         />
                                     }
                                 />

@@ -1,22 +1,18 @@
-import { Checkbox } from "@blueprintjs/core";
 import { isApiNode, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import {
     ResolvedEndpointDefinition,
     ResolvedHttpRequestBodyShape,
     ResolvedNavigationItemApiSection,
-    ResolvedTypeReference,
-    titleCase,
     visitResolvedHttpRequestBodyShape,
 } from "@fern-ui/app-utils";
-import { isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
-import { isUndefined } from "lodash-es";
 import Link from "next/link";
-import { Dispatch, FC, SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Dispatch, FC, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 import { Markdown } from "../api-page/markdown/Markdown";
-import { FernCollapse } from "../components/FernCollapse";
+import { FernButton } from "../components/FernButton";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { useNavigationContext } from "../navigation-context";
 import { PlaygroundAuthorizationForm } from "./PlaygroundAuthorizationForm";
@@ -24,7 +20,6 @@ import { PlaygroundObjectPropertyForm } from "./PlaygroundObjectPropertyForm";
 import { SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { PlaygroundRequestFormAuth, PlaygroundRequestFormState } from "./types";
-import { getDefaultValueForType } from "./utils";
 
 interface PlaygroundEndpointFormProps {
     auth: ResolvedNavigationItemApiSection["auth"];
@@ -123,53 +118,6 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
         return undefined;
     }, [showFullDescription]);
 
-    const bodyObjectSections = useMemo(() => {
-        if (endpoint.requestBody == null) {
-            return [];
-        }
-
-        function getObject(
-            typeShape: ResolvedHttpRequestBodyShape,
-        ): { key: string; valueShape: ResolvedTypeReference }[] {
-            if (typeShape.type === "object") {
-                return typeShape.properties().filter((property) => property.valueShape.type === "object");
-            }
-
-            if (typeShape.type === "reference") {
-                return getObject(typeShape.shape());
-            }
-            return [];
-        }
-
-        return getObject(endpoint.requestBody.shape);
-    }, [endpoint.requestBody]);
-
-    const optionalBodyObjectSections = useMemo(() => {
-        if (endpoint.requestBody == null) {
-            return [];
-        }
-
-        function getObject(
-            typeShape: ResolvedHttpRequestBodyShape,
-        ): { key: string; valueShape: ResolvedTypeReference }[] {
-            if (typeShape.type === "object") {
-                return typeShape
-                    .properties()
-                    .filter(
-                        (property) =>
-                            property.valueShape.type === "optional" && property.valueShape.shape.type === "object",
-                    );
-            }
-
-            if (typeShape.type === "reference") {
-                return getObject(typeShape.shape());
-            }
-            return [];
-        }
-
-        return getObject(endpoint.requestBody.shape);
-    }, [endpoint.requestBody]);
-
     const scrollAreaRef = useRef<HTMLDivElement>(null);
     const [scrollAreaHeight, setScrollAreaHeight] = useState(0);
 
@@ -205,135 +153,107 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 )}
 
                 <div className="divide-border-default flex items-start divide-x">
-                    <aside className="sticky top-0 w-48 pr-4" style={{ maxHeight: scrollAreaHeight }}>
-                        {endpoint.headers.length > 0 && (
-                            <div className="mb-4">
-                                <h6 className="t-muted m-0 mb-2 text-xs">Headers</h6>
-                                <ul className="-mx-3 list-none">
-                                    {endpoint.headers.map((param) => (
-                                        <li key={param.key}>
-                                            <button className="hover:bg-tag-default h-8 w-full truncate rounded px-3 py-2 text-left font-mono text-sm leading-none">
-                                                {param.key}
-                                            </button>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-                        {endpoint.pathParameters.length > 0 && (
-                            <div className="mb-4">
-                                <h6 className="t-muted m-0 mb-2 text-xs">Path Parameters</h6>
-                                <ul className="-mx-3 list-none">
-                                    {endpoint.pathParameters.map((param) => (
-                                        <li key={param.key}>
-                                            <button className="hover:bg-tag-default h-8 w-full truncate rounded px-3 py-2 text-left font-mono text-sm leading-none">
-                                                {param.key}
-                                            </button>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-                        {endpoint.queryParameters.length > 0 && (
-                            <div className="mb-4">
-                                <h6 className="t-muted m-0 mb-2 text-xs">Query Parameters</h6>
-                                <ul className="-mx-3 list-none">
-                                    {endpoint.queryParameters.map((param) => (
-                                        <li key={param.key}>
-                                            <button className="hover:bg-tag-default h-8 w-full truncate rounded px-3 py-2 text-left font-mono text-sm leading-none">
-                                                {param.key}
-                                            </button>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-
-                        {bodyObjectSections.map((section) => (
-                            <div key={section.key} className="mb-4 px-3">
-                                <h6 className="t-muted m-0 mb-2">{titleCase(section.key)}</h6>
-                                <ul className="-mx-3 list-none">
-                                    {section.valueShape.type === "object" &&
-                                        section.valueShape.properties().map((param) => (
+                    <aside className="sticky top-0 w-48" style={{ maxHeight: scrollAreaHeight }}>
+                        <FernScrollArea>
+                            {endpoint.headers.length > 0 && (
+                                <div className="mb-4">
+                                    <h6 className="t-muted m-0 mx-3 mb-2">Headers</h6>
+                                    <ul className="list-none">
+                                        {endpoint.headers.map((param) => (
                                             <li key={param.key}>
-                                                <button className="hover:bg-tag-default h-8 w-full truncate rounded px-3 py-2 text-left font-mono text-sm leading-none">
+                                                <FernButton variant="minimal" mono={true} className="w-full text-left">
                                                     {param.key}
-                                                </button>
+                                                </FernButton>
                                             </li>
                                         ))}
-                                </ul>
-                            </div>
-                        ))}
-
-                        {endpoint.requestBody != null && hasRequiredFields(endpoint.requestBody.shape) && (
-                            <div className="mb-4">
-                                <h6 className="t-muted m-0 mb-2 text-xs">Required Body Parameters</h6>
-
-                                <ul className="-mx-3 list-none">
-                                    {visitResolvedHttpRequestBodyShape(endpoint.requestBody.shape, {
-                                        fileUpload: () => null,
-                                        typeReference: (shape) =>
-                                            shape.type === "object" ? (
-                                                shape.properties().map((param) =>
-                                                    param.valueShape.type !== "optional" ? (
-                                                        <li key={param.key}>
-                                                            <button className="hover:bg-tag-default h-8 w-full truncate rounded px-3 py-2 text-left font-mono text-sm leading-none">
-                                                                {param.key}
-                                                            </button>
-                                                        </li>
-                                                    ) : null,
-                                                )
-                                            ) : (
-                                                <li>
-                                                    <button className="hover:bg-tag-default h-8 w-full truncate rounded px-3 py-2 text-left font-mono text-sm leading-none">
-                                                        Value
-                                                    </button>
-                                                </li>
-                                            ),
-                                    })}
-                                </ul>
-                            </div>
-                        )}
-
-                        {optionalBodyObjectSections.map((section) => (
-                            <div key={section.key} className="mb-4">
-                                <h6 className="t-muted m-0 mb-2 text-xs">{titleCase(section.key)}</h6>
-                                <ul className="-mx-3 list-none">
-                                    {section.valueShape.type === "object" &&
-                                        section.valueShape.properties().map((param) => (
+                                    </ul>
+                                </div>
+                            )}
+                            {endpoint.pathParameters.length > 0 && (
+                                <div className="mb-4">
+                                    <h6 className="t-muted m-0 mx-3 mb-2">Path Parameters</h6>
+                                    <ul className="list-none">
+                                        {endpoint.pathParameters.map((param) => (
                                             <li key={param.key}>
-                                                <button className="hover:bg-tag-default h-8 w-full truncate rounded px-3 py-2 text-left font-mono text-sm leading-none">
+                                                <FernButton variant="minimal" mono={true} className="w-full text-left">
                                                     {param.key}
-                                                </button>
+                                                </FernButton>
                                             </li>
                                         ))}
-                                </ul>
-                            </div>
-                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                            {endpoint.queryParameters.length > 0 && (
+                                <div className="mb-4">
+                                    <h6 className="t-muted m-0 mx-3 mb-2">Query Parameters</h6>
+                                    <ul className="list-none">
+                                        {endpoint.queryParameters.map((param) => (
+                                            <li key={param.key}>
+                                                <FernButton variant="minimal" mono={true} className="w-full text-left">
+                                                    {param.key}
+                                                </FernButton>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
 
-                        {endpoint.requestBody != null && hasOptionalFields(endpoint.requestBody.shape) && (
-                            <div className="mb-4">
-                                <h6 className="t-muted m-0 mb-2 text-xs">Optional Body Parameters</h6>
+                            {endpoint.requestBody != null && hasRequiredFields(endpoint.requestBody.shape) && (
+                                <div className="mb-4">
+                                    <h6 className="t-muted m-0 mx-3 mb-2">Required Body Parameters</h6>
 
-                                <ul className="-mx-3 list-none">
-                                    {visitResolvedHttpRequestBodyShape(endpoint.requestBody.shape, {
-                                        fileUpload: () => null,
-                                        typeReference: (shape) =>
-                                            shape.type === "object"
-                                                ? shape.properties().map((param) =>
-                                                      param.valueShape.type === "optional" ? (
-                                                          <li key={param.key}>
-                                                              <button className="hover:bg-tag-default h-8 w-full truncate rounded px-3 py-2 text-left font-mono text-sm leading-none">
-                                                                  {param.key}
-                                                              </button>
-                                                          </li>
-                                                      ) : undefined,
-                                                  )
-                                                : null,
-                                    })}
-                                </ul>
-                            </div>
-                        )}
+                                    <ul className="list-none">
+                                        {visitResolvedHttpRequestBodyShape(endpoint.requestBody.shape, {
+                                            fileUpload: () => null,
+                                            typeReference: (shape) =>
+                                                shape.type === "object"
+                                                    ? shape.properties().map((param) =>
+                                                          param.valueShape.type !== "optional" ? (
+                                                              <li key={param.key}>
+                                                                  <FernButton
+                                                                      variant="minimal"
+                                                                      mono={true}
+                                                                      className="w-full text-left"
+                                                                  >
+                                                                      {param.key}
+                                                                  </FernButton>
+                                                              </li>
+                                                          ) : null,
+                                                      )
+                                                    : null,
+                                        })}
+                                    </ul>
+                                </div>
+                            )}
+
+                            {endpoint.requestBody != null && hasOptionalFields(endpoint.requestBody.shape) && (
+                                <div className="mb-4">
+                                    <h6 className="t-muted m-0 mx-3 mb-2">Optional Body Parameters</h6>
+
+                                    <ul className="list-none">
+                                        {visitResolvedHttpRequestBodyShape(endpoint.requestBody.shape, {
+                                            fileUpload: () => null,
+                                            typeReference: (shape) =>
+                                                shape.type === "object"
+                                                    ? shape.properties().map((param) =>
+                                                          param.valueShape.type === "optional" ? (
+                                                              <li key={param.key}>
+                                                                  <FernButton
+                                                                      variant="minimal"
+                                                                      mono={true}
+                                                                      className="w-full text-left"
+                                                                  >
+                                                                      {param.key}
+                                                                  </FernButton>
+                                                              </li>
+                                                          ) : undefined,
+                                                      )
+                                                    : null,
+                                        })}
+                                    </ul>
+                                </div>
+                            )}
+                        </FernScrollArea>
                     </aside>
                     <div className="min-w-0 flex-1 shrink pl-4">
                         {endpoint.description != null && endpoint.description.length > 0 && (
@@ -425,27 +345,6 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                             </section>
                         )}
 
-                        {bodyObjectSections.map((section) => (
-                            <section key={section.key} className="mb-8">
-                                <h6 className="t-muted m-0 mb-2">{titleCase(section.key)}</h6>
-                                <PlaygroundTypeReferenceForm
-                                    shape={section.valueShape}
-                                    onChange={(value) => {
-                                        setBody((oldBody: Record<string, unknown>) => ({
-                                            ...oldBody,
-                                            [section.key]:
-                                                typeof value === "function" ? value(oldBody[section.key]) : value,
-                                        }));
-                                    }}
-                                    value={
-                                        formState != null && isPlainObject(formState.body)
-                                            ? formState.body[section.key] ?? {}
-                                            : {}
-                                    }
-                                />
-                            </section>
-                        ))}
-
                         {endpoint.requestBody != null && hasRequiredFields(endpoint.requestBody.shape) && (
                             <section className="mb-8">
                                 <h6 className="t-muted m-0 mb-2">Required Body Parameters</h6>
@@ -458,57 +357,12 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                             onChange={setBody}
                                             value={formState?.body}
                                             onlyRequired
-                                            hideObjects
                                             sortProperties
                                         />
                                     ),
                                 })}
                             </section>
                         )}
-
-                        {optionalBodyObjectSections.map((section) => {
-                            const unwrappedShape =
-                                section.valueShape.type === "optional" ? section.valueShape.shape : section.valueShape;
-                            const value =
-                                formState != null && isPlainObject(formState.body)
-                                    ? formState.body[section.key]
-                                    : undefined;
-                            const handleChange = (value: unknown) => {
-                                setBody((oldBody: Record<string, unknown>) => ({
-                                    ...oldBody,
-                                    [section.key]: typeof value === "function" ? value(oldBody[section.key]) : value,
-                                }));
-                            };
-                            return (
-                                <section key={section.key} className="mb-8">
-                                    <div className="flex items-center justify-between">
-                                        <h6 className="t-muted m-0 mb-2">{titleCase(section.key)}</h6>
-                                        <Checkbox
-                                            checked={!isUndefined(value)}
-                                            onChange={(e) => {
-                                                handleChange(
-                                                    e.target.checked
-                                                        ? getDefaultValueForType(unwrappedShape)
-                                                        : undefined,
-                                                );
-                                            }}
-                                            className="!-my-2 !-mr-2"
-                                        />
-                                    </div>
-                                    <FernCollapse isOpen={!isUndefined(value)}>
-                                        <PlaygroundTypeReferenceForm
-                                            shape={unwrappedShape}
-                                            onChange={handleChange}
-                                            value={
-                                                formState != null && isPlainObject(formState.body)
-                                                    ? formState.body[section.key]
-                                                    : undefined
-                                            }
-                                        />
-                                    </FernCollapse>
-                                </section>
-                            );
-                        })}
 
                         {endpoint.requestBody != null && hasOptionalFields(endpoint.requestBody.shape) && (
                             <section className="mb-8">
@@ -522,7 +376,6 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                             onChange={setBody}
                                             value={formState?.body}
                                             onlyOptional
-                                            hideObjects
                                             sortProperties
                                         />
                                     ),

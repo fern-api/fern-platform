@@ -43,7 +43,7 @@ export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({ enumValues, on
                         <span className="t-muted">Select an enum...</span>
                     )
                 }
-                buttonStyle="outlined"
+                variant="outlined"
                 rightIcon={<CaretDownIcon />}
                 className="w-full text-left"
             />
