@@ -274,7 +274,7 @@ function resolveTypeShape(
             variants: undiscriminatedUnion.variants.map(({ type, ...variant }, idx) => ({
                 ...variant,
                 displayName:
-                    variant.displayName != null && variant.displayName.split(" ").length < 6
+                    variant.displayName != null && variant.displayName.split(" ").length <= 8
                         ? variant.displayName
                         : `Variant ${idx + 1}`,
                 shape: resolveTypeReference(type, types),

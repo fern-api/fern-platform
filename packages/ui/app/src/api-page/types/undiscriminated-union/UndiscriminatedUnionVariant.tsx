@@ -100,7 +100,7 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
                     {getIconForTypeReference(unionVariant.shape)}
                     {unionVariant.displayName == null ? null : (
                         <span className="t-default text-sm">
-                            {unionVariant.displayName.split(" ").length > 6
+                            {unionVariant.displayName.split(" ").length > 8
                                 ? `Variant ${idx + 1}`
                                 : unionVariant.displayName}
                         </span>
