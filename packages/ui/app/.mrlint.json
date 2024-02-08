@@ -3,14 +3,7 @@
   "private": true,
   "rules": {
     "depcheck": {
-      "ignores": [
-        "@types/react",
-        "@types/react-dom",
-        "@radix-ui/colors",
-        "autoprefixer",
-        "postcss",
-        "postcss-import"
-      ]
+      "ignores": ["@types/react", "@types/react-dom", "@radix-ui/colors", "autoprefixer", "postcss", "postcss-import"]
     }
   }
 }
