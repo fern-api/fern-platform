@@ -46,7 +46,12 @@ export const proxyApiHandler: NextApiHandler = async (req, res: NextApiResponse<
             headers: proxyRequest.headers,
             body: proxyRequest.body != null ? JSON.stringify(proxyRequest.body) : undefined,
         });
-        const body = await response.json();
+        let body = await response.text();
+        try {
+            body = JSON.parse(body);
+        } catch (_e) {
+            // Ignore
+        }
         const endTime = performance.now();
         const headers = response.headers;
 
