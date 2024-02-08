@@ -138,3 +138,31 @@ export const SearchHits: React.FC = () => {
         </FernScrollArea>
     );
 };
+
+export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
+    const { hits } = useInfiniteHits<SearchRecord>();
+    const search = useInstantSearch();
+
+    const refs = useRef(new Map<string, HTMLAnchorElement>());
+
+    if (hits.length === 0 || search.results.query.length === 0) {
+        // fallback to the default view if there are no hits
+        return <>{children}</>;
+    }
+
+    return (
+        <div className="mt-4">
+            {hits.map((hit) => (
+                <SearchHit
+                    setRef={(elem) => {
+                        if (elem != null) {
+                            refs.current.set(hit.objectID, elem);
+                        }
+                    }}
+                    key={hit.objectID}
+                    hit={hit}
+                />
+            ))}
+        </div>
+    );
+};

@@ -141,12 +141,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                 hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage}
             />
             {searchService.isAvailable && (
-                <SearchDialog
-                    isOpen={isSearchDialogOpen}
-                    onClose={closeSearchDialog}
-                    activeVersion={activeNavigatable.context.version?.info.id}
-                    searchService={searchService}
-                />
+                <SearchDialog isOpen={isSearchDialogOpen} onClose={closeSearchDialog} searchService={searchService} />
             )}
 
             <ApiPlaygroundContextProvider apiSections={apiSections}>
@@ -173,6 +168,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                             searchInfo={search}
                             algoliaSearchIndex={algoliaSearchIndex}
                             navbarLinks={config.navbarLinks}
+                            searchService={searchService}
                         />
 
                         <main className={classNames("relative flex w-full min-w-0 flex-1 flex-col pt-header-height")}>

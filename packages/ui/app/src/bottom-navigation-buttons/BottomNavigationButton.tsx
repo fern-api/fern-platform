@@ -46,8 +46,8 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
             <div className="flex-1">
                 <span className="text-base font-semibold">{text}</span>
             </div>
-            <span className="border-default t-muted ml-6 inline-flex items-center gap-2 border-l py-2.5 pl-6 text-sm">
-                <span className="leading-none">Up Next</span>
+            <span className="sm:border-default t-muted sm-4 inline-flex items-center gap-2 py-2.5 text-sm sm:ml-6 sm:border-l sm:pl-6">
+                <span className="hidden leading-none sm:inline">Up Next</span>
                 <ChevronRightIcon />
             </span>
         </FernLinkCard>

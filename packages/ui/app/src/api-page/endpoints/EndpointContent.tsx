@@ -220,7 +220,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     return (
         <div
-            className={"scroll-mt-header-height-padded mx-6 md:mx-8"}
+            className={"scroll-mt-header-height-padded mx-4 md:mx-6 lg:mx-8"}
             onClick={() => setSelectedError(undefined)}
             ref={containerRef}
         >

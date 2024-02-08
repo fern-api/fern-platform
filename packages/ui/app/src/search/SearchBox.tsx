@@ -1,7 +1,9 @@
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
+import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { forwardRef, ReactElement, useCallback, useImperativeHandle, useRef, useState } from "react";
 import { useSearchBox, UseSearchBoxProps } from "react-instantsearch-hooks-web";
+import { FernInput } from "../components/FernInput";
 
 interface SearchBoxProps extends UseSearchBoxProps {
     className?: string;
@@ -102,6 +104,69 @@ export const SearchBox = forwardRef<HTMLInputElement, SearchBoxProps>(function S
                         setQuery(event.currentTarget.value);
                     }}
                     autoFocus
+                />
+            </form>
+        </div>
+    );
+});
+
+export const SearchMobileBox = forwardRef<HTMLInputElement, SearchBoxProps>(function SearchBox(
+    { queryHook, className, inputClassName, placeholder },
+    ref,
+): ReactElement {
+    const { query, refine } = useSearchBox({ queryHook });
+    const [inputValue, setInputValue] = useState(query);
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    useImperativeHandle(ref, () => inputRef.current!);
+
+    const setQuery = useCallback(
+        (newQuery: string) => {
+            setInputValue(newQuery);
+            refine(newQuery);
+        },
+        [refine],
+    );
+
+    return (
+        <div className={className}>
+            <form
+                action=""
+                role="search"
+                noValidate
+                onSubmit={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    if (inputRef.current) {
+                        inputRef.current.blur();
+                    }
+                }}
+                onReset={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    setQuery("");
+
+                    if (inputRef.current) {
+                        inputRef.current.focus();
+                    }
+                }}
+            >
+                <FernInput
+                    ref={inputRef}
+                    className={inputClassName}
+                    autoComplete="off"
+                    autoCorrect="off"
+                    autoCapitalize="off"
+                    placeholder={placeholder}
+                    spellCheck={false}
+                    maxLength={512}
+                    type="search"
+                    value={inputValue}
+                    onValueChange={setQuery}
+                    leftIcon={<MagnifyingGlassIcon className="t-muted" />}
                 />
             </form>
         </div>

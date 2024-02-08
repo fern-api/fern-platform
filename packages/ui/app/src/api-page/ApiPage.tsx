@@ -23,7 +23,7 @@ export const ApiPage: React.FC<ApiPage.Props> = ({ apiSection }) => {
                 anchorIdParts={[]}
             />
 
-            <div className="px-6">{/* <BottomNavigationButtons /> */}</div>
+            <div className="px-4">{/* <BottomNavigationButtons /> */}</div>
         </div>
     );
 };

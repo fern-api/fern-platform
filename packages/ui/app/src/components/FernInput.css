@@ -2,7 +2,7 @@
 
 @layer components {
     .fern-input-focus {
-        @apply outline-tag-primary-light dark:outline-tag-primary-dark ring-accent-primary outline outline-4 outline-offset-0;
+        @apply outline-tag-primary-light dark:outline-tag-primary-dark ring-border-primary outline outline-4 outline-offset-0;
     }
 
     .fern-input {
@@ -27,16 +27,16 @@
 
     .fern-input-icon {
         @apply flex items-center justify-center;
-        @apply w-8 h-full shrink-0;
+        @apply w-10 md:w-8 h-full shrink-0;
     }
 
     .fern-input-icon + .fern-input {
-        @apply pl-8 -ml-8;
+        @apply pl-10 -ml-10 md:pl-8 md:-ml-8;
     }
 
     .fern-input-right-element {
         @apply flex items-center justify-center;
-        @apply min-w-8 h-full shrink-0 px-0 -ml-2;
+        @apply min-w-10 md:min-w-8 h-full shrink-0 px-0 -ml-2;
     }
 
     .fern-textarea-group,
@@ -47,7 +47,7 @@
 
     .fern-input-group,
     .fern-numeric-input-group {
-        @apply h-8;
+        @apply h-10 md:h-8;
     }
 
     .fern-numeric-input-group .fern-numeric-input-step {

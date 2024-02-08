@@ -40,8 +40,8 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
     const editThisPage = resolvedPath.serializedMdxContent.frontmatter.editThisPageUrl ?? resolvedPath?.editThisPageUrl;
     return (
         <TableOfContentsContextProvider>
-            <div className="flex justify-between px-6 sm:px-8 lg:pl-12 lg:pr-20 xl:pr-0">
-                <div className="w-full min-w-0 pt-8 lg:pr-6">
+            <div className="flex justify-between px-4 md:px-6 lg:pl-8 lg:pr-16 xl:pr-0">
+                <div className="w-full min-w-0 pt-8 lg:pr-8">
                     <article className="prose dark:prose-invert max-w-content-width mx-auto w-full break-words lg:ml-0 xl:mx-auto">
                         <CustomDocsPageHeader resolvedPath={resolvedPath} />
                         {mdxContent}
@@ -51,9 +51,9 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
                 </div>
                 <aside
                     id="right-sidebar"
-                    className="top-header-height h-vh-minus-header sticky hidden w-[19rem] shrink-0 pl-4 xl:block"
+                    className="top-header-height h-vh-minus-header sticky hidden w-[18rem] shrink-0  xl:block"
                 >
-                    <FernScrollArea viewportClassName="px-4 pb-12 pt-8">
+                    <FernScrollArea viewportClassName="px-4 lg:pr-8 pb-12 pt-8">
                         <TableOfContents renderedHtml={mdxString} />
                         {editThisPage != null && (
                             <Link

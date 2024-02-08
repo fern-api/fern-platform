@@ -311,6 +311,9 @@ module.exports = {
             });
         }),
     ],
+    future: {
+        hoverOnlyWhenSupported: true,
+    },
 };
 
 // https://stackoverflow.com/a/72831219/4238485

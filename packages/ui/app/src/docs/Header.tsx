@@ -57,7 +57,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
         <nav
             aria-label="primary"
             className={classNames(
-                "flex justify-between items-center shrink-0 px-6 sm:px-8",
+                "flex justify-between items-center shrink-0 px-4 md:px-6 lg:px-8",
                 // this matches with the calc() in the EndpointContent examples section
                 "h-full",
                 className,
@@ -73,7 +73,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                 {searchService.isAvailable && (
                     <button
                         onClick={openSearchDialog}
-                        className="t-muted hover:t-default flex h-[32px] w-[32px] items-center justify-center transition lg:hidden"
+                        className="t-muted hover:t-default mr-2 hidden h-[32px] w-[32px] items-center justify-center transition sm:flex lg:hidden"
                     >
                         <MagnifyingGlassIcon className="size-5" />
                     </button>

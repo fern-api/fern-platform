@@ -17,6 +17,7 @@ export const ApiPageDescription: React.FC<ApiPageDescription.Props> = ({ classNa
         return (
             <Markdown
                 className={classNames(
+                    className,
                     className?.includes("text-sm") ? "prose-sm dark:prose-invert-sm" : "prose dark:prose-invert",
                 )}
                 notProse

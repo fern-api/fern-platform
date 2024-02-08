@@ -16,18 +16,10 @@
     @apply bg-tag-default;
 }
 .fern-scroll-area-scrollbar[data-orientation="vertical"] {
-    @apply w-[6px];
-
-    &:hover {
-        @apply w-[10px];
-    }
+    @apply w-[4px] hover:w-[6px];
 }
 .fern-scroll-area-scrollbar[data-orientation="horizontal"] {
-    @apply flex-col h-[6px];
-
-    &:hover {
-        @apply h-[10px];
-    }
+    @apply flex-col h-[4px] hover:h-[6px];
 }
 
 .fern-scroll-area-thumb {

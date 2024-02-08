@@ -13,7 +13,7 @@ export declare namespace Card {
 }
 
 export const Card: React.FC<Card.Props> = ({ title, icon, iconPosition = "top", children, href }) => {
-    const className = classNames("text-sm flex items-start border p-4 mb-4 grow basis-1/4 not-prose rounded-lg", {
+    const className = classNames("text-sm flex items-start border p-4 grow basis-1/4 not-prose rounded-lg", {
         "space-y-3 flex-col": iconPosition === "top",
         "space-x-3 flex-row": iconPosition === "left",
     });

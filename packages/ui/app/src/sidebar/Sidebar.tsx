@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import { Fragment, memo, useEffect } from "react";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
+import { SearchSidebar } from "../search/SearchDialog";
+import { SearchService } from "../services/useSearchService";
 import { useViewportContext } from "../viewport-context/useViewportContext";
 import { BuiltWithFern } from "./BuiltWithFern";
 import { CollapseSidebarProvider } from "./CollapseSidebarContext";
@@ -19,6 +21,7 @@ export interface SidebarProps {
     searchInfo: DocsV1Read.SearchInfo;
     algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
     navbarLinks: DocsV1Read.NavbarLink[] | undefined;
+    searchService: SearchService;
 }
 
 const SidebarInner = memo<SidebarProps>(function SidebarInner({
@@ -28,25 +31,28 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
     searchInfo,
     algoliaSearchIndex,
     navbarLinks,
+    searchService,
 }) {
     return (
-        <nav className="h-full w-full" aria-label="secondary">
+        <nav className="h-full w-full lg:pl-1" aria-label="secondary">
             <FernScrollArea className="group/sidebar" viewportClassName="px-4 pb-12">
-                <MobileSidebarHeaderLinks navbarLinks={navbarLinks} />
-                <SidebarFixedItemsSection
-                    className="z-10 -mx-4 lg:sticky lg:top-0"
-                    searchInfo={searchInfo}
-                    algoliaSearchIndex={algoliaSearchIndex}
-                />
-                <CollapseSidebarProvider>
-                    <SidebarSection
-                        navigationItems={navigation}
-                        slug={currentSlug}
-                        registerScrolledToPathListener={registerScrolledToPathListener}
-                        depth={0}
-                        topLevel={true}
+                <SearchSidebar searchService={searchService}>
+                    <MobileSidebarHeaderLinks navbarLinks={navbarLinks} />
+                    <SidebarFixedItemsSection
+                        className="z-10 -mx-4 lg:sticky lg:top-0"
+                        searchInfo={searchInfo}
+                        algoliaSearchIndex={algoliaSearchIndex}
                     />
-                </CollapseSidebarProvider>
+                    <CollapseSidebarProvider>
+                        <SidebarSection
+                            navigationItems={navigation}
+                            slug={currentSlug}
+                            registerScrolledToPathListener={registerScrolledToPathListener}
+                            depth={0}
+                            topLevel={true}
+                        />
+                    </CollapseSidebarProvider>
+                </SearchSidebar>
                 <BuiltWithFern />
             </FernScrollArea>
         </nav>

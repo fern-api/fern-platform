@@ -17,13 +17,19 @@ export declare namespace SearchHit {
     export interface Props {
         setRef?: (elem: HTMLAnchorElement | null) => void;
         hit: SearchRecord;
-        isHovered: boolean;
+        isHovered?: boolean;
         onMouseEnter?: () => void;
         onMouseLeave?: () => void;
     }
 }
 
-export const SearchHit: React.FC<SearchHit.Props> = ({ setRef, hit, isHovered, onMouseEnter, onMouseLeave }) => {
+export const SearchHit: React.FC<SearchHit.Props> = ({
+    setRef,
+    hit,
+    isHovered = false,
+    onMouseEnter,
+    onMouseLeave,
+}) => {
     const { pathResolver } = useDocsContext();
     const { navigateToPath, basePath } = useNavigationContext();
     const { closeSearchDialog } = useSearchContext();
