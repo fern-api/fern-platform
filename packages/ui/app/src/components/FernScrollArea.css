@@ -12,7 +12,7 @@
 }
 
 .fern-scroll-area-scrollbar {
-    @apply flex select-none touch-none my-1 mx-0.5 transition-all ease-out z-auto rounded-full;
+    @apply flex select-none touch-none my-1 mx-0.5 transition-all ease-out z-auto rounded-full z-50;
     @apply bg-tag-default-light;
     @apply dark:bg-tag-default-dark;
 }
@@ -32,7 +32,7 @@
 }
 
 .fern-scroll-area-thumb {
-    @apply flex relative;
+    @apply flex relative z-auto;
     @apply bg-border-primary flex-1 rounded-full;
     @apply dark:bg-border-primary-dark;
 }

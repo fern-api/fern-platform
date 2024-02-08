@@ -34,7 +34,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
             <FernScrollArea className="group/sidebar" viewportClassName="px-4 pb-12">
                 <MobileSidebarHeaderLinks navbarLinks={navbarLinks} />
                 <SidebarFixedItemsSection
-                    className="-mx-4 lg:sticky lg:top-0"
+                    className="z-10 -mx-4 lg:sticky lg:top-0"
                     searchInfo={searchInfo}
                     algoliaSearchIndex={algoliaSearchIndex}
                 />
