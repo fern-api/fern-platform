@@ -42,7 +42,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
     const webhookExample = example ? <WebhookExample example={example} /> : null;
 
     return (
-        <ApiPageMargins className={"scroll-mt-header-height-padded mx-8"}>
+        <ApiPageMargins className={"scroll-mt-header-height-padded mx-6 md:mx-8"}>
             <div
                 className={classNames(
                     "scroll-mt-header-height max-w-content-width lg:max-w-endpoint-width mx-auto lg:grid lg:grid-cols-2 lg:gap-12",

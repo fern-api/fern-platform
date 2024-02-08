@@ -31,7 +31,12 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                     apiDefinition={apiDefinition}
                     endpoint={endpoint}
                     subpackageTitle={subpackageTitle}
-                    isLastInApi={isLastInParentPackage && idx === endpoints.length - 1}
+                    isLastInApi={
+                        isLastInParentPackage &&
+                        webhooks.length === 0 &&
+                        subpackages.length === 0 &&
+                        idx === endpoints.length - 1
+                    }
                 />
             ))}
             {webhooks.map((webhook, idx) => (
@@ -39,7 +44,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                     key={webhook.id}
                     webhook={webhook}
                     subpackageTitle={subpackageTitle}
-                    isLastInApi={isLastInParentPackage && idx === webhooks.length - 1}
+                    isLastInApi={isLastInParentPackage && subpackages.length === 0 && idx === webhooks.length - 1}
                 />
             ))}
             {subpackages.map((subpackage, idx) => (
