@@ -53,7 +53,7 @@
     }
 
     .fern-numeric-input-group .fern-numeric-input-step {
-        @apply h-full rounded-none;
+        @apply h-full rounded-none border-default;
     }
 
     .fern-numeric-input-group:focus-within .fern-numeric-input-step {

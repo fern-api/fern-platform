@@ -4,7 +4,7 @@
 
 @layer components {
     .fern-segmented-control {
-        @apply bg-white border border-gray-300 rounded-lg shadow-sm h-10;
+        @apply bg-white dark:bg-white/5 border border-default rounded-lg shadow-sm h-10;
         @apply space-x-0.5 p-1;
     }
 

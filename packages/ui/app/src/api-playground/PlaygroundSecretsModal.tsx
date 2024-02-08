@@ -110,5 +110,9 @@ export const PlaygroundSecretsModal: FC<PlaygroundSecretsModalProps> = ({
         </FernModal>
     );
 
-    return <FernTooltipProvider>{modal}</FernTooltipProvider>;
+    return (
+        <FernTooltipProvider skipDelayDuration={700} delayDuration={300}>
+            {modal}
+        </FernTooltipProvider>
+    );
 };
