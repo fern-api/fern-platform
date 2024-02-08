@@ -132,7 +132,6 @@ module.exports = {
                 },
                 sm: {
                     css: {
-                        lineHeight: "1.2em",
                         color: "var(--gray-a11)",
                     },
                 },
