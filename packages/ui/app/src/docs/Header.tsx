@@ -95,7 +95,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                             )
                         }
                         intent={isMobileSidebarOpen ? "primary" : "none"}
-                        buttonStyle={isMobileSidebarOpen ? "filled" : "minimal"}
+                        variant={isMobileSidebarOpen ? "filled" : "minimal"}
                         rounded={true}
                         size="large"
                     />

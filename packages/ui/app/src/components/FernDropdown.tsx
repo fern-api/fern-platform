@@ -42,7 +42,7 @@ export function FernDropdown({
                                 <DropdownMenu.RadioItem asChild={true} key={option.value} value={option.value}>
                                     <FernButton
                                         ref={option.value === value ? activeRef : undefined}
-                                        buttonStyle={option.value === value ? "outlined" : "minimal"}
+                                        variant={option.value === value ? "outlined" : "minimal"}
                                         className="w-full text-left"
                                         rightIcon={
                                             <DropdownMenu.ItemIndicator asChild={true}>

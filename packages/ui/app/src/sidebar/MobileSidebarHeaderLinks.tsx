@@ -50,7 +50,7 @@ export function MobileSidebarHeaderLinks({ navbarLinks }: MobileSidebarHeaderLin
                         text={navbarLink.text}
                         rightIcon={navbarLink.type === "primary" && <ArrowRightIcon className="size-5" />}
                         className="w-full text-left lg:hidden"
-                        buttonStyle={navbarLink.type === "primary" ? "outlined" : "minimal"}
+                        variant={navbarLink.type === "primary" ? "outlined" : "minimal"}
                         intent={navbarLink.type === "primary" ? "primary" : "none"}
                         size="large"
                     />

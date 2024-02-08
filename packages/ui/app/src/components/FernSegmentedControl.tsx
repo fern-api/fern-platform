@@ -38,7 +38,7 @@ export const FernSegmentedControl: FC<FernSegmentedControlProps> = ({
                 aria-label={option.label}
             >
                 <FernButton
-                    buttonStyle={option.value === value ? "outlined" : "minimal"}
+                    variant={option.value === value ? "outlined" : "minimal"}
                     intent={option.value === value ? "primary" : "none"}
                     size="small"
                 >
