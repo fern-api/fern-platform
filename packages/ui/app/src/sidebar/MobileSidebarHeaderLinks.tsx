@@ -13,7 +13,7 @@ export const HeaderSidebarSlugLink: React.FC<HeaderSidebarSlugLinkProps> = ({ na
     return (
         <Link
             className={classNames(
-                "text-sm group pl-4 pr-3 py-1.5 border border-border-primary dark:border-border-primary-dark hover:border-2 flex space-x-1.5 items-center no-underline hover:no-underline text-accent-primary hover:text-accent-primary dark:hover:text-accent-primary-dark transition rounded-lg hover:bg-tag-primary",
+                "text-sm group pl-4 pr-3 py-1.5 border border-border-accent-muted-light dark:border-border-accent-muted-dark hover:border-2 flex space-x-1.5 items-center no-underline hover:no-underline t-accent hover:t-accent transition rounded-lg hover:bg-tag-primary",
                 "hover:py-[calc(theme(spacing.1.5)-1px)] hover:pr-[calc(theme(spacing.3)-1px)] hover:pl-[calc(theme(spacing.4)-1px)]",
             )}
             href={navbarLink.url}
@@ -39,7 +39,7 @@ export function MobileSidebarHeaderLinks({ navbarLinks }: MobileSidebarHeaderLin
         return null;
     }
     return (
-        <ul className="border-border-concealed-light dark:border-border-concealed-dark -mx-4 list-none border-b p-4 lg:hidden">
+        <ul className="border-concealed -mx-4 list-none border-b p-4 lg:hidden">
             {navbarLinks?.map((navbarLink, idx) => (
                 <SidebarLink
                     key={idx}
@@ -55,7 +55,7 @@ export function MobileSidebarHeaderLinks({ navbarLinks }: MobileSidebarHeaderLin
                         )
                     }
                     linkClassName={classNames({
-                        "my-2 transition ring-inset ring-1 hover:ring-2 ring-border-primary dark:ring-border-primary-dark hover:bg-tag-primary !text-accent-primary !dark:text-accent-primary":
+                        "my-2 transition ring-inset ring-1 hover:ring-2 ring-border-accent-muted-light dark:ring-border-accent-muted-dark hover:bg-tag-primary !t-accent":
                             navbarLink.type === "primary",
                     })}
                 />

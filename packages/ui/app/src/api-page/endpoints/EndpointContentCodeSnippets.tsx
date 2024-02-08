@@ -62,7 +62,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         <button
                             key={example.key}
                             className={classNames("h-6 px-3 rounded-xl shrink min-w-0", {
-                                "bg-background ring-1 ring-border-primary dark:ring-border-primary-dark":
+                                "bg-background ring-1 ring-border-accent-muted-light dark:ring-border-accent-muted-dark":
                                     example.key === selectedClient.key,
                                 "bg-background-light/50 dark:bg-background-dark/50 hover:bg-background dark:hover:bg-background-dark":
                                     example.key !== selectedClient.key,
@@ -80,7 +80,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
             )}
             <TitledExample
                 title="Request"
-                // afterTitle={<span className="text-accent-primary mx-1 px-1 text-xs">{selectedClient.name}</span>}
+                // afterTitle={<span className="t-accent mx-1 px-1 text-xs">{selectedClient.name}</span>}
                 type="primary"
                 onClick={(e) => {
                     e.stopPropagation();

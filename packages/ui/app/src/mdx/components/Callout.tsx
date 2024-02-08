@@ -4,7 +4,7 @@ import classNames from "classnames";
 import React from "react";
 import styles from "./Callout.module.scss";
 
-type Intent = "info" | "warning" | "success";
+type Intent = "info" | "warning" | "success" | "danger";
 
 export declare namespace Callout {
     export interface Props {
@@ -21,6 +21,8 @@ function parseIntent(type: unknown): Intent {
         return "warning";
     } else if (type.toLowerCase() === "success") {
         return "success";
+    } else if (type.toLowerCase() === "danger") {
+        return "danger";
     } else {
         return "info";
     }
@@ -31,14 +33,12 @@ export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ inte
     return (
         <div
             className={classNames(
-                "flex space-x-3 p-4 pb-0 mb-4 border rounded-lg", // pb-0 to compensate for the ::after margin
+                "flex space-x-3 p-4 pb-0 mb-4 rounded-lg", // pb-0 to compensate for the ::after margin
                 visitDiscriminatedUnion({ intent }, "intent")._visit({
-                    info: () =>
-                        "bg-tag-default-light/5 dark:bg-tag-default-dark/5 border-border-default-light dark:border-border-default-dark",
-                    warning: () =>
-                        "bg-tag-warning-light/5 dark:bg-tag-warning-dark/5 border-border-warning-light dark:border-border-warning-dark",
-                    success: () =>
-                        "bg-tag-success-light/5 dark:bg-tag-success-dark/5 border-border-success-light dark:border-border-success-dark",
+                    info: () => "callout-outlined",
+                    warning: () => "callout-outlined-warning",
+                    success: () => "callout-outlined-success",
+                    danger: () => "callout-outlined-danger",
                     _other: () => "",
                 }),
             )}
@@ -48,12 +48,9 @@ export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ inte
                     info: () => (
                         <InfoCircledIcon className="text-intent-default dark:text-intent-default-dark size-5" />
                     ),
-                    warning: () => (
-                        <ExclamationTriangleIcon className="text-intent-warning-light dark:text-intent-warning-dark size-5" />
-                    ),
-                    success: () => (
-                        <CheckCircledIcon className="text-intent-success-light dark:text-intent-success-dark size-5" />
-                    ),
+                    warning: () => <ExclamationTriangleIcon className="text-intent-warning size-5" />,
+                    success: () => <CheckCircledIcon className="text-intent-success size-5" />,
+                    danger: () => <ExclamationTriangleIcon className="text-intent-danger size-5" />,
                     _other: () => null,
                 })}
             </div>
@@ -62,9 +59,10 @@ export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ inte
                 className={classNames(
                     "text-sm leading-5 w-full after:block after:mt-4", // ::after margin ensures that bottom padding overlaps with botttom margins of internal content
                     visitDiscriminatedUnion({ intent }, "intent")._visit({
-                        info: () => "text-text-muted-light dark:text-text-muted-dark",
-                        warning: () => "text-intent-warning-light dark:text-intent-warning-dark",
-                        success: () => "text-intent-success-light dark:text-intent-success-dark",
+                        info: () => "text-intent-default",
+                        warning: () => "text-intent-warning",
+                        success: () => "text-intent-success",
+                        danger: () => "text-intent-danger",
                         _other: () => "",
                     }),
                 )}

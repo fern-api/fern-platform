@@ -21,7 +21,7 @@ export function renderThemeStylesheet(
         ...layout,
     };
 
-    const bgColor = `#${tinycolor(`rgb(${colors[CSS_VARIABLES.BACKGROUND]})`).toHex()}`;
+    const bgColor = `#${tinycolor(`rgb(${colors[CSS_VARIABLES.BACKGROUND_LIGHT]})`).toHex()}`;
     const bgDarkColor = `#${tinycolor(`rgb(${colors[CSS_VARIABLES.BACKGROUND_DARK]})`).toHex()}`;
 
     const inlinedCss = config.css?.inline?.join("\n\n") ?? "";

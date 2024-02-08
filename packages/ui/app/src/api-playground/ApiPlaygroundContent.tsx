@@ -53,18 +53,18 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
     const handleResize = useHorizontalSplitPane(setWidth);
 
     return (
-        <div className="divide-border-default-light dark:divide-border-default-dark flex min-h-0 flex-1 shrink items-stretch divide-x">
+        <div className="divide-border-default flex min-h-0 flex-1 shrink items-stretch divide-x">
             <div
                 className={"relative flex min-w-0 shrink flex-col overflow-hidden"}
                 style={{ width: response.type !== "notStartedLoading" ? `${width * 100}%` : "100%" }}
             >
-                <div className="border-border-default-light dark:border-border-default-dark flex h-10 w-full shrink-0 items-center justify-between border-b px-4 py-2">
+                <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-4 py-2">
                     <span className="t-muted text-xs uppercase">Request</span>
 
                     <div className="flex items-center text-xs">
                         <button
-                            className={classNames("px-2 py-1 -my-1 rounded-lg hover:text-accent-primary", {
-                                "bg-tag-primary text-accent-primary": requestType === "form",
+                            className={classNames("px-2 py-1 -my-1 rounded-lg hover:t-accent", {
+                                "bg-tag-primary t-accent": requestType === "form",
                                 "t-muted": requestType !== "form",
                             })}
                             onClick={() => setRequestType("form")}
@@ -72,8 +72,8 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                             Form
                         </button>
                         <button
-                            className={classNames("px-2 py-1 -my-1 rounded-lg hover:text-accent-primary", {
-                                "bg-tag-primary text-accent-primary": requestType === "curl",
+                            className={classNames("px-2 py-1 -my-1 rounded-lg hover:t-accent", {
+                                "bg-tag-primary t-accent": requestType === "curl",
                                 "t-muted": requestType !== "curl",
                             })}
                             onClick={() => setRequestType("curl")}
@@ -81,8 +81,8 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                             CURL
                         </button>
                         <button
-                            className={classNames("px-2 py-1 -my-1 rounded-lg hover:text-accent-primary", {
-                                "bg-tag-primary text-accent-primary": requestType === "javascript",
+                            className={classNames("px-2 py-1 -my-1 rounded-lg hover:t-accent", {
+                                "bg-tag-primary t-accent": requestType === "javascript",
                                 "t-muted": requestType !== "javascript",
                             })}
                             onClick={() => setRequestType("javascript")}
@@ -90,8 +90,8 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                             JavaScript
                         </button>
                         <button
-                            className={classNames("px-2 py-1 -my-1 rounded-lg hover:text-accent-primary", {
-                                "bg-tag-primary text-accent-primary": requestType === "python",
+                            className={classNames("px-2 py-1 -my-1 rounded-lg hover:t-accent", {
+                                "bg-tag-primary t-accent": requestType === "python",
                                 "t-muted": requestType !== "python",
                             })}
                             onClick={() => setRequestType("python")}
@@ -99,16 +99,16 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                             Python
                         </button>
 
-                        <div className="bg-border-default-light dark:bg-border-default-dark mx-2 h-[40px] w-[1px] shrink-0" />
+                        <div className="bg-border-default mx-2 h-[40px] w-[1px] shrink-0" />
 
                         <button
-                            className={"hover:text-accent-primary t-muted -my-1 whitespace-nowrap rounded-lg px-2 py-1"}
+                            className={"hover:t-accent t-muted -my-1 whitespace-nowrap rounded-lg px-2 py-1"}
                             onClick={resetWithExample}
                         >
                             Use example
                         </button>
                         <button
-                            className={"hover:text-accent-primary t-muted -my-1 whitespace-nowrap rounded-lg px-2 py-1"}
+                            className={"hover:t-accent t-muted -my-1 whitespace-nowrap rounded-lg px-2 py-1"}
                             onClick={resetWithoutExample}
                         >
                             Clear form
@@ -148,10 +148,10 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                 )} */}
 
                     <div
-                        className="bg-accent-primary dark:bg-accent-primary-dark absolute inset-y-0 z-30 -ml-0.5 w-1 cursor-col-resize opacity-0 transition-opacity hover:opacity-100 active:opacity-100"
+                        className="bg-accent absolute inset-y-0 z-30 -ml-0.5 w-1 cursor-col-resize opacity-0 transition-opacity hover:opacity-100 active:opacity-100"
                         onMouseDown={handleResize}
                     />
-                    <div className="border-border-default-light dark:border-border-default-dark flex h-10 w-full shrink-0 items-center justify-between border-b px-4 py-2">
+                    <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-4 py-2">
                         <span className="t-muted text-xs uppercase">Response</span>
 
                         {response.type === "loaded" && (
@@ -167,16 +167,14 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                                     status: {response.value.status}
                                 </span>
                                 <span
-                                    className={
-                                        "bg-tag-default-light dark:bg-tag-default-dark flex h-5 items-center rounded-md px-1.5 py-1 font-mono"
-                                    }
+                                    className={"bg-tag-default flex h-5 items-center rounded-md px-1.5 py-1 font-mono"}
                                 >
                                     time: {round(response.value.time, 2)}ms
                                 </span>
                                 {!isEmpty(response.value.size) && (
                                     <span
                                         className={
-                                            "bg-tag-default-light dark:bg-tag-default-dark flex h-5 items-center rounded-md px-1.5 py-1 font-mono"
+                                            "bg-tag-default flex h-5 items-center rounded-md px-1.5 py-1 font-mono"
                                         }
                                     >
                                         size: {response.value.size}b

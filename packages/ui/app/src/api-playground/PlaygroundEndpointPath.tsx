@@ -30,9 +30,9 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({ endpoi
                                 <span
                                     key={idx}
                                     className={classNames({
-                                        "bg-accent-highlight text-accent-primary px-1 rounded before:content-[':']":
+                                        "bg-accent-highlight t-accent px-1 rounded before:content-[':']":
                                             stateValue.length === 0,
-                                        "text-accent-primary font-semibold": stateValue.length > 0,
+                                        "t-accent font-semibold": stateValue.length > 0,
                                     })}
                                 >
                                     {stateValue.length > 0 ? encodeURI(stateValue) : pathParameter.key}
@@ -61,7 +61,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({ endpoi
 
                                     <span>{queryParameter.key}</span>
                                     <span>{"="}</span>
-                                    <span className={"text-accent-primary font-semibold"}>{encodeURI(stateValue)}</span>
+                                    <span className={"t-accent font-semibold"}>{encodeURI(stateValue)}</span>
                                 </Fragment>
                             );
                         })}

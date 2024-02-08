@@ -1,6 +1,4 @@
-@tailwind base;
 @tailwind components;
-@tailwind utilities;
 
 @layer components {
     .fern-sidebar-item {
@@ -12,11 +10,11 @@
     }
 
     .fern-sidebar-link-container[data-state="active"] {
-        @apply text-accent-primary;
+        @apply t-accent-aaa;
     }
 
     .fern-sidebar-link-container[data-state="inactive"] {
-        @apply hover:text-accent-primary t-muted;
+        @apply hover:t-accent-aaa t-muted;
     }
 
     .fern-sidebar-link-indent {
@@ -24,18 +22,18 @@
     }
 
     .fern-sidebar-link-container[data-state="active"] .fern-sidebar-link-indent {
-        @apply border-accent-primary-light/60 dark:border-accent-primary-dark/60;
+        @apply border-border-accent-muted-light dark:border-border-accent-muted-dark;
     }
 
     .fern-sidebar-link-container[data-state="inactive"] .fern-sidebar-link-indent {
-        @apply border-border-default-light dark:border-border-default-dark lg:opacity-60;
+        @apply border-default lg:opacity-60;
     }
 
     .fern-sidebar-link {
         @apply text-left relative inline-flex flex-1 content-between items-stretch px-4 lg:px-3;
         @apply no-underline hover:no-underline;
         @apply rounded-xl lg:rounded-lg;
-        @apply ring-border-primary dark:ring-border-primary-dark ring-inset;
+        @apply ring-border-accent-muted-light dark:ring-border-accent-muted-dark ring-inset;
     }
 
     .fern-sidebar-link-container[data-state="active"] .fern-sidebar-link {
@@ -43,7 +41,7 @@
     }
 
     .fern-sidebar-link-container[data-state="inactive"] .fern-sidebar-link {
-        @apply lg:hover:bg-tag-default-light/5 lg:dark:hover:bg-tag-default-dark/5 ring-0;
+        @apply lg:hover:bg-tag-default-soft ring-0;
     }
 
     .fern-sidebar-link-content {
@@ -64,6 +62,6 @@
     }
 
     .fern-sidebar-link-expand[data-state="active"] {
-        @apply after:content-[''] after:absolute after:inset-1 after:rounded-xl lg:after:rounded-md after:bg-tag-primary text-accent-primary after:pointer-events-none;
+        @apply after:content-[''] after:absolute after:inset-1 after:rounded-xl lg:after:rounded-md after:bg-tag-primary t-accent after:pointer-events-none;
     }
 }

@@ -32,7 +32,7 @@ export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className }) => {
             <div
                 className={classNames("whitespace-nowrap text-xs transition", {
                     "t-muted": isHovering,
-                    "text-intent-default dark:text-text-disabled-dark": !isHovering,
+                    "text-text-disabled": !isHovering,
                 })}
             >
                 Built with Fern

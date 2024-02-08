@@ -176,7 +176,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                 <div
                     className={classNames(
                         styles.internalTypeDefinitionContent,
-                        "border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded border",
+                        "border-default flex flex-col overflow-visible rounded border",
                         {
                             "w-full": !isCollapsed,
                             "w-fit": isCollapsed,
@@ -189,10 +189,10 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                         <div
                             {...containerCallbacks}
                             className={classNames(
-                                "flex gap-1 items-center border-b hover:bg-tag-default-light dark:hover:bg-tag-default-dark cursor-pointer px-2 py-1 transition t-muted",
+                                "flex gap-1 items-center border-b hover:bg-tag-default cursor-pointer px-2 py-1 transition t-muted",
                                 {
                                     "border-transparent": isCollapsed,
-                                    "border-border-default-light dark:border-border-default-dark": !isCollapsed,
+                                    "border-default": !isCollapsed,
                                 },
                             )}
                             onClick={(e) => {

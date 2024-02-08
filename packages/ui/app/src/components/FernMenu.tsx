@@ -53,7 +53,7 @@ export const FernMenu: FC<FernMenu.Props> = ({
                         </HeadlessMenu.Button>
                         {clearSelection != null && (
                             <button
-                                className="hover:bg-tag-primary border-border-primary dark:border-border-primary-dark text-accent-primary -ml-px inline-flex w-fit items-center justify-center rounded-lg rounded-l-none border px-2 py-1 tracking-tight transition hover:border-2 hover:px-[calc(theme(spacing[2])-1px)]"
+                                className="hover:bg-tag-primary border-border-accent-muted-light dark:border-border-accent-muted-dark t-accent -ml-px inline-flex w-fit items-center justify-center rounded-lg rounded-l-none border px-2 py-1 tracking-tight transition hover:border-2 hover:px-[calc(theme(spacing[2])-1px)]"
                                 onClick={clearSelection}
                             >
                                 <Cross1Icon />
@@ -71,7 +71,7 @@ export const FernMenu: FC<FernMenu.Props> = ({
                     >
                         <HeadlessMenu.Items
                             className={classNames(
-                                "z-10 bg-background dark:bg-background-dark absolute mt-2 origin-top-right divide-y divide-border-primary dark:divide-border-primary-dark border-border-primary dark:border-border-primary-dark rounded-md border shadow-lg flex flex-col",
+                                "z-10 bg-background dark:bg-background-dark absolute mt-2 origin-top-right divide-y divide-border-accent-muted-light dark:divide-border-accent-muted-dark border-border-accent-muted-light dark:border-border-accent-muted-dark rounded-md border shadow-lg flex flex-col",
                                 {
                                     "left-0": align === "left",
                                     "right-0": align === "right",
@@ -105,7 +105,7 @@ export const FernMenuItem: FC<FernMenuItem.Props> = ({ href, onClick, selected =
                     "flex justify-between !no-underline items-center p-2 first:rounded-t-md last:rounded-b-md gap-2",
                     {
                         "bg-tag-primary": active,
-                        "text-accent-primary hover:text-accent-primary": selected || (active && !selected),
+                        "t-accent hover:t-accent": selected || (active && !selected),
                         "!t-muted": !active && !selected,
                     },
                 );

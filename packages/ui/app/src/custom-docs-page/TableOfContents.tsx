@@ -24,7 +24,7 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, re
                 className={classNames("list-none", {
                     "pl-4": indent,
                     [className ?? ""]: !indent,
-                    "pt-3 pb-4 border-b border-border-default-light dark:border-border-default-dark": !indent,
+                    "pt-3 pb-4 border-b border-default": !indent,
                 })}
                 style={style}
             >
@@ -42,7 +42,7 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, re
                                         "hover:dark:text-text-default-dark hover:text-text-default-light block hyphens-auto break-words py-1.5 text-sm leading-5 no-underline hover:transition hover:no-underline",
                                         {
                                             "t-muted": anchorInView !== anchor,
-                                            "t-primary": anchorInView === anchor,
+                                            "t-accent-aaa": anchorInView === anchor,
                                         },
                                     )}
                                     href={`#${getSlugFromText(text)}`}

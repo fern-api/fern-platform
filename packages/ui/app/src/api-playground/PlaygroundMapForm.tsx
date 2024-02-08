@@ -66,12 +66,12 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ keyShape, valueS
     return (
         <>
             {internalState.length > 0 && (
-                <ul className="divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark w-full max-w-full list-none divide-y divide-dashed border-t border-dashed">
+                <ul className="divide-border-default border-default w-full max-w-full list-none divide-y divide-dashed border-t border-dashed">
                     {internalState.map((item, idx) => (
                         <li key={idx} className="flex min-h-12 flex-row items-center gap-1 py-2">
                             <div className="flex min-w-0 shrink items-center justify-between gap-2">
                                 <label className="inline-flex flex-wrap items-baseline">
-                                    <span className="t-muted bg-tag-default-light dark:bg-tag-default-dark rounded p-1 text-xs uppercase">
+                                    <span className="t-muted bg-tag-default rounded p-1 text-xs uppercase">
                                         {idx + 1}
                                     </span>
                                 </label>

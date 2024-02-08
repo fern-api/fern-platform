@@ -34,7 +34,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
         // }
         parts.forEach((p, i) => {
             elements.push(
-                <div key={`separator-${i}`} className="text-text-disabled-light dark:text-text-disabled-dark">
+                <div key={`separator-${i}`} className="text-text-disabled">
                     /
                 </div>,
                 visitDiscriminatedUnion(p, "type")._visit({
@@ -48,7 +48,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                     pathParameter: (pathParameter) => (
                         <div
                             key={`part-${i}`}
-                            className="bg-accent-highlight text-accent-primary flex items-center justify-center whitespace-nowrap rounded px-1 font-mono text-xs"
+                            className="bg-accent-highlight t-accent flex items-center justify-center whitespace-nowrap rounded px-1 font-mono text-xs"
                         >
                             :{pathParameter.name}
                         </div>

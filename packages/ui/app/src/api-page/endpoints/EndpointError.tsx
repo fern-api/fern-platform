@@ -44,7 +44,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                     "bg-gray-100/90 dark:bg-background-primary-dark": isSelected,
                 },
                 {
-                    "border-border-default-light dark:border-border-default-dark border-b": !isLast,
+                    "border-default border-b": !isLast,
                 },
                 {
                     "rounded-t-md": isFirst,

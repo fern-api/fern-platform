@@ -1,6 +1,4 @@
-@tailwind base;
 @tailwind components;
-@tailwind utilities;
 
 @layer components {
     .fern-input-focus {
@@ -57,7 +55,7 @@
     }
 
     .fern-numeric-input-group:focus-within .fern-numeric-input-step {
-        @apply ring-accent-primary hover:bg-tag-primary text-accent-primary hover:text-accent-primary border-accent-primary;
+        @apply ring-accent-primary hover:bg-tag-primary t-accent hover:t-accent border-accent-primary;
     }
 
     .fern-numeric-input-group .fern-numeric-input-step:first-child {

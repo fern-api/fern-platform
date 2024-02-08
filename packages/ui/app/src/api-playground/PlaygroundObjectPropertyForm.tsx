@@ -176,11 +176,7 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
         return filteredProperties;
     }, [hideObjects, properties, sortProperties]);
     return (
-        <ul
-            className={
-                "divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark list-none divide-y border-y"
-            }
-        >
+        <ul className={"divide-border-default border-default list-none divide-y border-y"}>
             {propertiesToRender.map((property) => (
                 <PlaygroundObjectPropertyForm
                     key={property.key}

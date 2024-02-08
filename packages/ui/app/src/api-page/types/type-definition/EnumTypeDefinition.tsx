@@ -54,13 +54,10 @@ export const EnumTypeDefinition = ({
                 </div>
             ) : (
                 <div
-                    className={classNames(
-                        "border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded border",
-                        {
-                            "w-full": !isCollapsed,
-                            "w-fit": isCollapsed,
-                        },
-                    )}
+                    className={classNames("border-default flex flex-col overflow-visible rounded border", {
+                        "w-full": !isCollapsed,
+                        "w-fit": isCollapsed,
+                    })}
                     // ref={ref}
                 >
                     <div
@@ -68,7 +65,7 @@ export const EnumTypeDefinition = ({
                             "flex gap-1 items-center border-b hover:bg-tag-default focus-within:bg-tag-default cursor-pointer px-2 py-1 transition t-muted",
                             {
                                 "border-transparent": isCollapsed,
-                                "border-border-default-light dark:border-border-default-dark": !isCollapsed,
+                                "border-default": !isCollapsed,
                             },
                         )}
                         onClick={(e) => {

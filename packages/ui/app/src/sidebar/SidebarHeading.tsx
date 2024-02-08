@@ -23,12 +23,7 @@ export const SidebarHeading: FC<SidebarHeadingProps> = ({
 }) => (
     <div className={classNames(className, "flex min-h-[32px] lg:min-h-[36px]")}>
         {range(0, depth).map((i) => (
-            <div
-                key={i}
-                className={
-                    "flex-0 border-border-default-light dark:border-border-default-dark h-full w-3 shrink-0 border-r"
-                }
-            />
+            <div key={i} className={"flex-0 border-default h-full w-3 shrink-0 border-r"} />
         ))}
         {toggleExpand != null && (
             <button

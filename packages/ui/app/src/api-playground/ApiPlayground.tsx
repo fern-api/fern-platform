@@ -42,11 +42,8 @@ interface ApiPlaygroundProps {
 export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
     const { selectionState, hasPlayground } = useApiPlaygroundContext();
 
-    const [intermediateHeight, setHeight] = useAtom(playgroundHeightAtom);
+    const [height, setHeight] = useAtom(playgroundHeightAtom);
     const windowHeight = useWindowHeight();
-
-    const height =
-        windowHeight != null ? Math.max(Math.min(windowHeight - 64, intermediateHeight), 100) : intermediateHeight;
 
     const setOffset = useCallback(
         (offset: number) => {
@@ -160,7 +157,7 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
         <Portal>
             <Transition
                 show={isPlaygroundOpen}
-                className="bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark fixed inset-x-0 bottom-0  border-t"
+                className="bg-background dark:bg-background-dark border-default max-h-vh-minus-header fixed inset-x-0 bottom-0 border-t"
                 style={{ height }}
                 enter="ease-out transition-transform duration-300 transform"
                 enterFrom="translate-y-full"
@@ -173,8 +170,8 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
                     className="group absolute inset-x-0 -top-1 h-1 cursor-row-resize"
                     onMouseDown={handleVerticalResize}
                 >
-                    <div className="bg-accent-primary dark:bg-accent-primary-dark absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
-                    <div className="bg-accent-primary dark:bg-accent-primary-dark relative top-2 z-30 mx-auto h-1 w-10 rounded-sm" />
+                    <div className="bg-accent absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
+                    <div className="bg-accent relative top-2 z-30 mx-auto h-1 w-10 rounded-sm" />
                 </div>
                 <ApiPlaygroundDrawer
                     navigationItems={apiSections}

@@ -104,7 +104,7 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
     }, [auth, endpoint, formState]);
 
     const drawer = (
-        <div className="divide-border-default-light dark:divide-border-default-dark scroll-contain flex h-full flex-col divide-y overscroll-none rounded-lg">
+        <div className="divide-border-default scroll-contain flex h-full flex-col divide-y overscroll-none rounded-lg">
             <div className="flex h-10 items-stretch justify-between gap-2 px-4">
                 {endpoint != null && (
                     <div className="flex items-center">
@@ -121,8 +121,8 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
                 ) : (
                     <div className="flex items-center">
                         <span className="inline-flex items-baseline gap-2">
-                            <span className="text-accent-primary text-sm font-semibold">API Playground</span>
-                            <span className="bg-tag-primary text-accent-primary flex h-5 items-center rounded-md px-1.5 py-1 font-mono text-xs uppercase">
+                            <span className="t-accent text-sm font-semibold">API Playground</span>
+                            <span className="bg-tag-primary t-accent flex h-5 items-center rounded-md px-1.5 py-1 font-mono text-xs uppercase">
                                 BETA
                             </span>
                         </span>

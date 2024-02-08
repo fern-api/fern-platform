@@ -1,6 +1,4 @@
-@tailwind base;
 @tailwind components;
-@tailwind utilities;
 
 @layer components {
     .fern-anchor {
@@ -20,13 +18,13 @@
         }
 
         .fern-anchor-icon.copied {
-            @apply bg-tag-primary ring-border-primary ring-1 backdrop-blur;
+            @apply bg-tag-primary ring-border-accent-muted-light ring-1 backdrop-blur;
 
             > svg {
-                @apply text-accent-primary size-4;
+                @apply t-accent size-4;
             }
 
-            @apply dark:ring-border-primary-dark;
+            @apply dark:ring-border-accent-muted-dark;
         }
     }
 }

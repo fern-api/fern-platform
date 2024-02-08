@@ -15,14 +15,14 @@ export const EndpointRecord: React.FC<EndpointRecord.Props> = ({ hit, isHovered 
         <>
             <div
                 className={classNames("flex flex-col items-center justify-center rounded-md border p-1", {
-                    "border-border-default-light dark:border-border-default-dark": !isHovered,
+                    "border-default": !isHovered,
                     "border-white bg-white text-black": isHovered,
                 })}
             >
                 <CodeIcon
                     className={classNames("size-4", {
-                        "text-text-muted-light dark:text-text-muted-dark": !isHovered,
-                        "text-accent-primary": isHovered,
+                        "t-muted": !isHovered,
+                        "t-accent": isHovered,
                     })}
                 />
             </div>
@@ -40,7 +40,7 @@ export const EndpointRecord: React.FC<EndpointRecord.Props> = ({ hit, isHovered 
                     />
                     <div
                         className={classNames("text-sm uppercase tracking-widest", {
-                            "text-text-disabled-light dark:text-text-disabled-dark": !isHovered,
+                            "text-text-disabled": !isHovered,
                             "text-white dark:text-black": isHovered,
                         })}
                     >

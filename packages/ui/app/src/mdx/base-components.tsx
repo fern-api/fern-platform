@@ -16,7 +16,7 @@ export const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({ className, .
             {...rest}
             className={classNames(
                 className,
-                "not-prose inline-code font-mono border border-border-concealed-light dark:border-border-concealed-dark rounded bg-background-light/75 dark:bg-background-dark/75 py-0.5 px-1",
+                "not-prose inline-code font-mono border border-concealed rounded bg-background-light/75 dark:bg-background-dark/75 py-0.5 px-1",
             )}
         />
     );
@@ -48,7 +48,7 @@ export const Th: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
             {...rest}
             className={classNames(
                 className,
-                "text-left truncate px-3 py-1 leading-7 border-b border-border-default-light dark:border-border-default-dark first:pl-0 last:pr-0",
+                "text-left truncate px-3 py-1 leading-7 border-b border-default first:pl-0 last:pr-0",
             )}
         />
     );
@@ -59,16 +59,12 @@ export const Td: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
     return (
         <td
             {...rest}
-            className={classNames(
-                className,
-                "border-b border-border-default-light dark:border-border-default-dark px-3 py-1 leading-7 first:pl-0 last:pr-0",
-                {
-                    // if the table has many columns, do not collapse short string content into multi-line:
-                    "whitespace-nowrap": childrenAsString.length < 100,
-                    // prevent table's auto sizing from collapsing a paragraph into a tall-skinny column of broken sentences:
-                    "min-w-sm": childrenAsString.length > 200,
-                },
-            )}
+            className={classNames(className, "border-b border-default px-3 py-1 leading-7 first:pl-0 last:pr-0", {
+                // if the table has many columns, do not collapse short string content into multi-line:
+                "whitespace-nowrap": childrenAsString.length < 100,
+                // prevent table's auto sizing from collapsing a paragraph into a tall-skinny column of broken sentences:
+                "min-w-sm": childrenAsString.length > 200,
+            })}
         >
             {children}
         </td>

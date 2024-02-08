@@ -25,7 +25,8 @@ export const PlaygroundResponsePreview: FC<PlaygroundResponsePreviewProps> = ({ 
                         position: "sticky",
                         left: 0,
                         // paddingLeft: 8,
-                        backgroundColor: theme === "dark" ? "rgb(var(--background-dark))" : "rgb(var(--background))",
+                        backgroundColor:
+                            theme === "dark" ? "rgb(var(--background-dark))" : "rgb(var(--background-light))",
                     }}
                 >
                     {responseJson}

@@ -56,7 +56,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ setRef, hit, isHovered, o
         <Link
             ref={(elem) => setRef?.(elem)}
             className={classNames("flex w-full items-center space-x-4 space-y-1 rounded-md px-3 py-2 !no-underline", {
-                "bg-accent-primary text-accent-primary-contrast-contrast": isHovered,
+                "bg-accent t-accent-contrast": isHovered,
             })}
             onClick={handleClick}
             href={`/${fullPath}`}

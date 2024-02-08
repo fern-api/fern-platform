@@ -20,7 +20,7 @@ export const JsonExampleLine = React.forwardRef<HTMLDivElement, PropsWithChildre
             )}
             ref={ref}
         >
-            {isSelected && <div className="bg-accent-primary absolute inset-y-0 left-0 w-1" />}
+            {isSelected && <div className="bg-accent absolute inset-y-0 left-0 w-1" />}
             {" ".repeat(depth * TAB_WIDTH)}
             {children}
         </div>

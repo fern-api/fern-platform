@@ -48,9 +48,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
         <>
             <div className="space-y-2.5 pb-2 pt-8">
                 {subpackageTitle != null && (
-                    <div className="text-accent-primary text-xs font-semibold uppercase tracking-wider">
-                        {subpackageTitle}
-                    </div>
+                    <div className="t-accent text-xs font-semibold uppercase tracking-wider">{subpackageTitle}</div>
                 )}
                 <div>
                     <h2 className="mt-0 inline-block text-2xl sm:text-3xl">{endpoint.title}</h2>
@@ -177,7 +175,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                             collapseAll={errorExpandAll.setFalse}
                             showExpandCollapse={false}
                         >
-                            <div className="border-border-default-light dark:border-border-default-dark flex flex-col overflow-visible rounded-md border">
+                            <div className="border-default flex flex-col overflow-visible rounded-md border">
                                 {sortBy(
                                     endpoint.errors,
                                     (e) => e.statusCode,

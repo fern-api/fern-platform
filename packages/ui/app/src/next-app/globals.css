@@ -1,3 +1,12 @@
+@import "@radix-ui/colors/gray-alpha.css";
+@import "@radix-ui/colors/green-alpha.css";
+@import "@radix-ui/colors/red-alpha.css";
+@import "@radix-ui/colors/amber-alpha.css";
+@import "@radix-ui/colors/gray-dark-alpha.css";
+@import "@radix-ui/colors/green-dark-alpha.css";
+@import "@radix-ui/colors/red-dark-alpha.css";
+@import "@radix-ui/colors/amber-dark-alpha.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,8 +15,6 @@
     html {
         box-sizing: border-box;
         -webkit-tap-highlight-color: transparent;
-
-        /* background-color: var(--accent-primary); */
     }
 
     /* 

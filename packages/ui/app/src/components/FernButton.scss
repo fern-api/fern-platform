@@ -1,6 +1,4 @@
-@tailwind base;
 @tailwind components;
-@tailwind utilities;
 
 @layer components {
     a.fern-button {
@@ -149,7 +147,7 @@
                 }
 
                 &.primary {
-                    @apply t-primary hover:t-primary;
+                    @apply t-accent hover:t-accent;
 
                     &:hover,
                     &[data-state="on"],
@@ -158,7 +156,7 @@
                     }
 
                     .fa-icon {
-                        @apply bg-accent-primary;
+                        @apply bg-accent-aa;
                     }
                 }
 
@@ -172,7 +170,7 @@
                     }
 
                     .fa-icon {
-                        @apply bg-intent-success-light dark:bg-intent-success-dark;
+                        @apply bg-intent-success;
                     }
                 }
 
@@ -186,7 +184,7 @@
                     }
 
                     .fa-icon {
-                        @apply bg-intent-warning-light dark:bg-intent-warning-dark;
+                        @apply bg-intent-warning;
                     }
                 }
 
@@ -200,7 +198,7 @@
                     }
 
                     .fa-icon {
-                        @apply bg-intent-danger-light dark:bg-intent-danger-dark;
+                        @apply bg-intent-danger;
                     }
                 }
             }
@@ -222,31 +220,26 @@
                 }
 
                 &.primary {
-                    @apply bg-accent-primary hover:bg-accent-primary text-accent-primary-contrast;
-                    @apply dark:text-accent-primary-dark-contrast;
+                    @apply bg-accent hover:bg-accent t-accent-contrast;
 
                     &:hover,
                     &[data-state="on"],
                     &[data-state="checked"] {
-                        @apply bg-accent-primary-darkened text-accent-primary-contrast;
-                        @apply dark:bg-accent-primary-dark-lightened dark:text-accent-primary-dark-contrast;
+                        @apply bg-accent-tinted t-accent-contrast;
                     }
 
                     .fa-icon {
-                        @apply bg-accent-primary-contrast;
-                        @apply dark:bg-accent-primary-dark-contrast;
+                        @apply bg-accent-contrast;
                     }
                 }
 
                 &.success {
-                    @apply bg-intent-success-light text-white;
-                    @apply dark:bg-intent-success-dark dark:text-black;
+                    @apply bg-intent-success text-white dark:text-black;
 
                     &:hover,
                     &[data-state="on"],
                     &[data-state="checked"] {
-                        @apply bg-intent-success-light-darkened text-white;
-                        @apply dark:bg-intent-success-dark-lightened dark:text-black;
+                        @apply bg-intent-success-lightened text-white dark:text-black;
                     }
 
                     .fa-icon {
@@ -256,14 +249,12 @@
                 }
 
                 &.warning {
-                    @apply bg-intent-warning-light text-white;
-                    @apply dark:bg-intent-warning-dark dark:text-black;
+                    @apply bg-intent-warning text-white dark:text-black;
 
                     &:hover,
                     &[data-state="on"],
                     &[data-state="checked"] {
-                        @apply bg-intent-warning-light-darkened text-white;
-                        @apply dark:bg-intent-warning-dark-lightened dark:text-black;
+                        @apply bg-intent-warning-lightened text-white dark:text-black;
                     }
 
                     .fa-icon {
@@ -273,14 +264,12 @@
                 }
 
                 &.danger {
-                    @apply bg-intent-danger-light text-white;
-                    @apply dark:bg-intent-danger-dark dark:text-black;
+                    @apply bg-intent-danger text-white dark:text-black;
 
                     &:hover,
                     &[data-state="on"],
                     &[data-state="checked"] {
-                        @apply bg-intent-danger-light-darkened text-white;
-                        @apply dark:bg-intent-danger-dark-lightened dark:text-black;
+                        @apply bg-intent-danger-lightened text-white dark:text-black;
                     }
 
                     .fa-icon {
@@ -306,68 +295,62 @@
                 }
 
                 &.primary {
-                    @apply ring-border-primary text-accent-primary;
-                    @apply dark:ring-border-primary-dark;
+                    @apply ring-border-primary t-accent;
+
+                    .fa-icon {
+                        @apply bg-accent-aa;
+                    }
 
                     &:hover,
                     &[data-state="on"],
                     &[data-state="checked"] {
-                        @apply bg-tag-primary text-accent-primary;
-                    }
+                        @apply bg-tag-primary t-accent-aaa;
 
-                    .fa-icon {
-                        @apply bg-accent-primary;
+                        .fa-icon {
+                            @apply bg-accent-aaa;
+                        }
                     }
                 }
 
                 &.success {
-                    @apply ring-border-success-light text-intent-success-light;
-                    @apply dark:ring-border-success-dark dark:text-intent-success-dark;
+                    @apply ring-border-success text-intent-success;
 
                     &:hover,
                     &[data-state="on"],
                     &[data-state="checked"] {
-                        @apply bg-tag-success text-intent-success-light;
-                        @apply dark:text-intent-success-dark;
+                        @apply bg-tag-success text-intent-success;
                     }
 
                     .fa-icon {
-                        @apply bg-intent-success-light;
-                        @apply dark:bg-intent-success-dark;
+                        @apply bg-intent-success;
                     }
                 }
 
                 &.warning {
-                    @apply ring-border-warning-light text-intent-warning-light;
-                    @apply dark:ring-border-warning-dark dark:text-intent-warning-dark;
+                    @apply ring-border-warning text-intent-warning;
 
                     &:hover,
                     &[data-state="on"],
                     &[data-state="checked"] {
-                        @apply bg-tag-warning text-intent-warning-light;
-                        @apply dark:text-intent-warning-dark;
+                        @apply bg-tag-warning text-intent-warning;
                     }
 
                     .fa-icon {
-                        @apply bg-intent-warning-light;
-                        @apply dark:bg-intent-warning-dark;
+                        @apply bg-intent-warning;
                     }
                 }
 
                 &.danger {
-                    @apply ring-border-danger-light text-intent-danger-light;
-                    @apply dark:ring-border-danger-dark dark:text-intent-danger-dark;
+                    @apply ring-border-danger text-intent-danger;
 
                     &:hover,
                     &[data-state="on"],
                     &[data-state="checked"] {
-                        @apply bg-tag-danger text-intent-danger-light;
-                        @apply dark:text-intent-danger-dark;
+                        @apply bg-tag-danger text-intent-danger;
                     }
 
                     .fa-icon {
-                        @apply bg-intent-danger-light;
-                        @apply dark:bg-intent-danger-dark;
+                        @apply bg-intent-danger;
                     }
                 }
             }

@@ -77,7 +77,7 @@ function MobileSidebar(props: SidebarProps) {
                 />
                 <Transition.Child
                     as={Dialog.Panel}
-                    className="border-border-concealed-light dark:border-border-concealed-dark bg-background-light/70 dark:bg-background-dark/70 absolute inset-0 backdrop-blur sm:w-72 sm:border-r"
+                    className="border-concealed bg-background-light/70 dark:bg-background-dark/70 absolute inset-0 backdrop-blur sm:w-72 sm:border-r"
                     enter="transition ease-in-out duration-300 transform"
                     enterFrom="-translate-y-full sm:translate-y-0 sm:-translate-x-full"
                     enterTo="translate-x-0 translate-y-0"

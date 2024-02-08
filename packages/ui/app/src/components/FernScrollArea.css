@@ -13,8 +13,7 @@
 
 .fern-scroll-area-scrollbar {
     @apply flex select-none touch-none my-1 mx-0.5 transition-all ease-out z-auto rounded-full z-50;
-    @apply bg-tag-default-light;
-    @apply dark:bg-tag-default-dark;
+    @apply bg-tag-default;
 }
 .fern-scroll-area-scrollbar[data-orientation="vertical"] {
     @apply w-[6px];
@@ -33,8 +32,8 @@
 
 .fern-scroll-area-thumb {
     @apply flex relative z-auto;
-    @apply bg-border-primary flex-1 rounded-full;
-    @apply dark:bg-border-primary-dark;
+    @apply bg-border-accent-muted-light flex-1 rounded-full;
+    @apply dark:bg-border-accent-muted-dark;
 }
 /* increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html */
 .fern-scroll-area-thumb::before {

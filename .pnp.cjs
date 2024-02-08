@@ -4900,6 +4900,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/react-commons", "workspace:packages/commons/react/react-commons"],\
             ["@fontsource/ibm-plex-mono", "npm:4.5.13"],\
             ["@headlessui/react", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.7.18"],\
+            ["@radix-ui/colors", "npm:3.0.0"],\
             ["@radix-ui/react-dropdown-menu", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.0.6"],\
             ["@radix-ui/react-icons", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.3.0"],\
             ["@radix-ui/react-radio-group", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.1.3"],\
@@ -5856,6 +5857,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@popperjs-core-npm-2.11.8-f1692e11a0-e5c69fdebf.zip/node_modules/@popperjs/core/",\
           "packageDependencies": [\
             ["@popperjs/core", "npm:2.11.8"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@radix-ui/colors", [\
+        ["npm:3.0.0", {\
+          "packageLocation": "./.yarn/cache/@radix-ui-colors-npm-3.0.0-a7484539fd-5ac1b69df7.zip/node_modules/@radix-ui/colors/",\
+          "packageDependencies": [\
+            ["@radix-ui/colors", "npm:3.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\

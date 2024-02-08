@@ -79,12 +79,12 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
             <li key={apiDefinition.type === "apiSection" ? apiDefinition.api : apiDefinition.id} className="gap-2">
                 {depth >= 0 && (
                     <div
-                        className="bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark sticky z-10 flex h-[30px] items-center gap-2 border-b px-3 py-1"
+                        className="bg-background dark:bg-background-dark border-default sticky z-10 flex h-[30px] items-center gap-2 border-b px-3 py-1"
                         style={{
                             top: depth * 30,
                         }}
                     >
-                        <span className="text-accent-primary shrink truncate whitespace-nowrap text-xs">
+                        <span className="t-accent shrink truncate whitespace-nowrap text-xs">
                             {apiDefinition.title}
                         </span>
                     </div>
@@ -97,9 +97,8 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                             className={classNames(
                                 "gap-4 scroll-m-2 mx-1 flex h-8 cursor-pointer items-center rounded px-2 py-1 text-sm justify-between",
                                 {
-                                    "bg-tag-primary text-accent-primary": endpointItem.id === endpoint?.id,
-                                    "hover:bg-tag-default-light dark:hover:bg-tag-default-dark hover:text-accent-primary dark:hover:text-accent-primary-dark":
-                                        endpointItem.id !== endpoint?.id,
+                                    "bg-tag-primary t-accent": endpointItem.id === endpoint?.id,
+                                    "hover:bg-tag-default hover:t-accent": endpointItem.id !== endpoint?.id,
                                 },
                             )}
                             onClick={() => {
@@ -150,7 +149,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                 buttonStyle="minimal"
             >
                 {apiDefinition != null && (
-                    <span className="text-accent-primary mr-2 shrink truncate whitespace-nowrap text-xs">
+                    <span className="t-accent mr-2 shrink truncate whitespace-nowrap text-xs">
                         {apiDefinition.title}
                     </span>
                 )}
@@ -176,7 +175,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                 <div
                     ref={dropdownRef}
                     className={classNames(
-                        "overflow-hidden bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark absolute z-10 flex max-h-96 min-h-4 w-fit flex-col rounded border shadow-xl max-w-[calc(100vw-16px)]",
+                        "overflow-hidden bg-background dark:bg-background-dark border-default absolute z-10 flex max-h-96 min-h-4 w-fit flex-col rounded border shadow-xl max-w-[calc(100vw-16px)]",
                         {
                             "origin-top-left left-0 top-full mt-2": popoverPlacement === "bottom-start",
                             "origin-top -translate-x-[50%] left-[50%] top-full mt-2": popoverPlacement === "bottom",

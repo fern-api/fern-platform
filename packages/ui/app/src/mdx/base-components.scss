@@ -1,5 +1,6 @@
 .fern-mdx-link {
-    @apply text-text-default-light hover:text-accent-primary underline underline-offset-4 decoration-1 hover:decoration-2 decoration-accent-primary;
+    @apply t-default hover:t-accent underline underline-offset-4 decoration-1 hover:decoration-2 decoration-accent-primary-aa-light;
+    @apply dark:decoration-accent-primary-aa-dark;
     @apply font-semibold;
 
     h1 &,
@@ -17,11 +18,9 @@
 
     &:hover {
         svg.external-link-icon {
-            @apply t-primary;
+            @apply t-accent;
         }
     }
-
-    @apply dark:text-text-default-dark dark:hover:text-accent-primary-dark dark:decoration-accent-primary-dark;
 }
 
 [data-rmiz] {

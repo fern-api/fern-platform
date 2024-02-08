@@ -25,12 +25,12 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                         className={classNames(
                             "flex font-mono shrink-0 items-center justify-center rounded-lg px-2 py-0.5 text-sm uppercase",
                             {
-                                "bg-tag-default-light dark:bg-tag-default-dark": !isHovered,
-                                "bg-tag-default-dark dark:bg-tag-default-light": isHovered,
+                                "bg-tag-default": !isHovered,
+                                "bg-white/20 dark:bg-black/20": isHovered,
                             },
                             {
                                 "t-muted": !isHovered,
-                                "text-accent-primary-contrast-contrast": isHovered,
+                                "t-accent-contrast": isHovered,
                             },
                         )}
                     >
@@ -47,12 +47,12 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                                             className={classNames(
                                                 "items-center justify-center mx-0.5 rounded px-1 py-0.5 text-sm",
                                                 {
-                                                    "bg-tag-default-light dark:bg-tag-default-dark": !isHovered,
-                                                    "bg-tag-default-dark dark:bg-tag-default-light": isHovered,
+                                                    "bg-tag-default": !isHovered,
+                                                    "bg-white/20 dark:bg-black/20": isHovered,
                                                 },
                                                 {
                                                     "t-muted": !isHovered,
-                                                    "text-accent-primary-contrast-contrast": isHovered,
+                                                    "t-accent-contrast": isHovered,
                                                 },
                                             )}
                                             key={idx}

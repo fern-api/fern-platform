@@ -84,7 +84,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                     className={classNames(
                         "t-muted hover:t-default flex h-[32px] w-[32px] items-center justify-center transition lg:hidden rounded-lg",
                         {
-                            "t-primary bg-tag-primary ring-inset ring-1 ring-border-primary dark:ring-border-primary-dark":
+                            "t-accent bg-tag-primary ring-inset ring-1 ring-border-accent-muted-light dark:ring-border-accent-muted-dark":
                                 isMobileSidebarOpen,
                         },
                     )}

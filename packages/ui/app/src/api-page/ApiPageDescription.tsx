@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { Markdown } from "../api-page/markdown/Markdown";
 
 export declare namespace ApiPageDescription {
@@ -13,7 +14,16 @@ export const ApiPageDescription: React.FC<ApiPageDescription.Props> = ({ classNa
         return null;
     }
     if (isMarkdown) {
-        return <Markdown className={className}>{description}</Markdown>;
+        return (
+            <Markdown
+                className={classNames(
+                    className?.includes("text-sm") ? "prose-sm dark:prose-invert-sm" : "prose dark:prose-invert",
+                )}
+                notProse
+            >
+                {description}
+            </Markdown>
+        );
     }
     return <div className={className}>{description}</div>;
 };

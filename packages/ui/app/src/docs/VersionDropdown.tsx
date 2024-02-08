@@ -42,7 +42,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
                                             {
                                                 "bg-accent-highlight border-transparent":
                                                     slug === selectedVersionSlug && !active,
-                                                "bg-tag-default-light dark:bg-tag-default-dark border-transparent":
+                                                "bg-tag-default border-transparent":
                                                     slug !== selectedVersionSlug && !active,
                                             },
                                             {

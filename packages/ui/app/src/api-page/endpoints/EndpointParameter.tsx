@@ -45,7 +45,7 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
                     {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
                 </span>
             </div>
-            <ApiPageDescription isMarkdown={true} description={description} className="text-sm" />
+            <ApiPageDescription isMarkdown={true} description={description} className="!t-muted text-sm" />
             <TypeReferenceDefinitions
                 shape={shape}
                 isCollapsible

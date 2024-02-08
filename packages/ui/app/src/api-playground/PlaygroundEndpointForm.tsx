@@ -12,6 +12,7 @@ import classNames from "classnames";
 import Link from "next/link";
 import { Dispatch, FC, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 import { Markdown } from "../api-page/markdown/Markdown";
+import { FernScrollArea } from "../components/FernScrollArea";
 import { useNavigationContext } from "../navigation-context";
 import { PlaygroundAuthorizationForm } from "./PlaygroundAuthorizationForm";
 import { PlaygroundObjectPropertyForm } from "./PlaygroundObjectPropertyForm";
@@ -164,10 +165,10 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
     // }, [endpoint.requestBody]);
 
     return (
-        <div className="min-h-0 flex-1 shrink overflow-y-auto overflow-x-hidden">
+        <FernScrollArea>
             <div className="mx-auto my-10 w-full max-w-3xl gap-y-4 p-4 pb-10">
                 {endpoint.authed && auth != null && (
-                    <section className="bg-tag-danger-light/5 dark:bg-tag-danger-dark/5 border-border-danger-light dark:border-border-danger-dark mb-8 rounded-xl border p-3">
+                    <section className="callout-outlined-danger mb-8 rounded-xl p-3">
                         <h6 className="t-muted m-0 mb-2">Authorization</h6>
                         <PlaygroundAuthorizationForm
                             auth={auth}
@@ -179,7 +180,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                     </section>
                 )}
 
-                <div className="divide-border-default-light dark:divide-border-default-dark flex divide-x">
+                <div className="divide-border-default flex divide-x">
                     {/* <aside className="w-48 pr-4">
                         {endpoint.headers.length > 0 && (
                             <div className="mb-4">
@@ -187,7 +188,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                 <ul className="-mx-3 list-none">
                                     {endpoint.headers.map((param) => (
                                         <li key={param.key}>
-                                            <button className="hover:bg-tag-default-light dark:hover:bg-tag-default-dark h-8 w-full truncate rounded px-3 py-2 text-left font-mono text-sm leading-none">
+                                            <button className="hover:bg-tag-default h-8 w-full truncate rounded px-3 py-2 text-left font-mono text-sm leading-none">
                                                 {param.key}
                                             </button>
                                         </li>
@@ -201,7 +202,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                 <ul className="-mx-3 list-none">
                                     {endpoint.pathParameters.map((param) => (
                                         <li key={param.key}>
-                                            <button className="hover:bg-tag-default-light dark:hover:bg-tag-default-dark h-8 w-full truncate rounded px-3 py-2 text-left font-mono text-sm leading-none">
+                                            <button className="hover:bg-tag-default h-8 w-full truncate rounded px-3 py-2 text-left font-mono text-sm leading-none">
                                                 {param.key}
                                             </button>
                                         </li>
@@ -215,7 +216,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                 <ul className="-mx-3 list-none">
                                     {endpoint.queryParameters.map((param) => (
                                         <li key={param.key}>
-                                            <button className="hover:bg-tag-default-light dark:hover:bg-tag-default-dark h-8 w-full truncate rounded px-3 py-2 text-left font-mono text-sm leading-none">
+                                            <button className="hover:bg-tag-default h-8 w-full truncate rounded px-3 py-2 text-left font-mono text-sm leading-none">
                                                 {param.key}
                                             </button>
                                         </li>
@@ -231,7 +232,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                     {section.valueShape.type === "object" &&
                                         section.valueShape.properties().map((param) => (
                                             <li key={param.key}>
-                                                <button className="hover:bg-tag-default-light dark:hover:bg-tag-default-dark h-8 w-full truncate rounded px-3 py-2 text-left font-mono text-sm leading-none">
+                                                <button className="hover:bg-tag-default h-8 w-full truncate rounded px-3 py-2 text-left font-mono text-sm leading-none">
                                                     {param.key}
                                                 </button>
                                             </li>
@@ -252,7 +253,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                                 shape.properties().map((param) =>
                                                     param.valueShape.type !== "optional" ? (
                                                         <li key={param.key}>
-                                                            <button className="hover:bg-tag-default-light dark:hover:bg-tag-default-dark h-8 w-full truncate rounded px-3 py-2 text-left font-mono text-sm leading-none">
+                                                            <button className="hover:bg-tag-default h-8 w-full truncate rounded px-3 py-2 text-left font-mono text-sm leading-none">
                                                                 {param.key}
                                                             </button>
                                                         </li>
@@ -260,7 +261,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                                 )
                                             ) : (
                                                 <li>
-                                                    <button className="hover:bg-tag-default-light dark:hover:bg-tag-default-dark h-8 w-full truncate rounded px-3 py-2 text-left font-mono text-sm leading-none">
+                                                    <button className="hover:bg-tag-default h-8 w-full truncate rounded px-3 py-2 text-left font-mono text-sm leading-none">
                                                         Value
                                                     </button>
                                                 </li>
@@ -277,7 +278,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                     {section.valueShape.type === "object" &&
                                         section.valueShape.properties().map((param) => (
                                             <li key={param.key}>
-                                                <button className="hover:bg-tag-default-light dark:hover:bg-tag-default-dark h-8 w-full truncate rounded px-3 py-2 text-left font-mono text-sm leading-none">
+                                                <button className="hover:bg-tag-default h-8 w-full truncate rounded px-3 py-2 text-left font-mono text-sm leading-none">
                                                     {param.key}
                                                 </button>
                                             </li>
@@ -298,7 +299,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                                 ? shape.properties().map((param) =>
                                                       param.valueShape.type === "optional" ? (
                                                           <li key={param.key}>
-                                                              <button className="hover:bg-tag-default-light dark:hover:bg-tag-default-dark h-8 w-full truncate rounded px-3 py-2 text-left font-mono text-sm leading-none">
+                                                              <button className="hover:bg-tag-default h-8 w-full truncate rounded px-3 py-2 text-left font-mono text-sm leading-none">
                                                                   {param.key}
                                                               </button>
                                                           </li>
@@ -323,7 +324,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                 </div>
                                 {descriptionIsClamped && (
                                     <div>
-                                        <a className="text-accent-primary dark:text-accent-primary-dark text-xs">
+                                        <a className="t-accent text-xs">
                                             {showFullDescription ? "Show less" : "Show more"}
                                         </a>
                                     </div>
@@ -334,7 +335,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                         {endpoint.headers.length > 0 && (
                             <section className="mb-8">
                                 <h6 className="t-muted m-0 mb-2">Headers</h6>
-                                <ul className="divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark list-none divide-y border-y">
+                                <ul className="divide-border-default border-default list-none divide-y border-y">
                                     {endpoint.headers.map((header) => (
                                         <PlaygroundObjectPropertyForm
                                             key={header.key}
@@ -357,7 +358,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                         {endpoint.pathParameters.length > 0 && (
                             <section className="mb-8">
                                 <h6 className="t-muted m-0 mb-2">Path Parameters</h6>
-                                <ul className="divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark list-none divide-y border-y">
+                                <ul className="divide-border-default border-default list-none divide-y border-y">
                                     {endpoint.pathParameters.map((pathParameter) => (
                                         <PlaygroundObjectPropertyForm
                                             key={pathParameter.key}
@@ -380,7 +381,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                         {endpoint.queryParameters.length > 0 && (
                             <section className="mb-8">
                                 <h6 className="t-muted m-0 mb-2">Query Parameters</h6>
-                                <ul className="divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark list-none divide-y border-y">
+                                <ul className="divide-border-default border-default list-none divide-y border-y">
                                     {endpoint.queryParameters.map((queryParameter) => (
                                         <PlaygroundObjectPropertyForm
                                             key={queryParameter.key}
@@ -510,7 +511,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                             shallow={
                                 isApiNode(activeNavigatable) && activeNavigatable.section.api === endpoint.apiSectionId
                             }
-                            className="t-muted hover:text-accent-primary hover:dark:text-accent-primary-dark inline-flex items-center gap-1 text-sm font-semibold underline decoration-1 underline-offset-4 hover:decoration-2"
+                            className="t-muted hover:t-accent inline-flex items-center gap-1 text-sm font-semibold underline decoration-1 underline-offset-4 hover:decoration-2"
                         >
                             <span>View in API Reference</span>
                             <ArrowTopRightIcon className="size-4" />
@@ -518,7 +519,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                     </div>
                 </div>
             </div>
-        </div>
+        </FernScrollArea>
     );
 };
 

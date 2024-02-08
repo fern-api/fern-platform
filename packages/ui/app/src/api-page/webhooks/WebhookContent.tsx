@@ -44,7 +44,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
     return (
         <ApiPageMargins
             className={classNames("pb-20 pl-6 md:pl-12 pr-4", {
-                "border-border-default-light dark:border-border-default-dark border-b": !hideBottomSeparator,
+                "border-default border-b": !hideBottomSeparator,
             })}
         >
             <div
@@ -55,7 +55,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                 <div className="max-w-content-width flex min-w-0 flex-1 flex-col">
                     <div className="space-y-2.5 py-8">
                         {subpackageTitle != null && (
-                            <div className="text-accent-primary text-xs font-semibold uppercase tracking-wider">
+                            <div className="t-accent text-xs font-semibold uppercase tracking-wider">
                                 {subpackageTitle}
                             </div>
                         )}

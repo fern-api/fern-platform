@@ -34,7 +34,7 @@ module.exports = {
                 "8xl": "88rem",
             },
             boxShadow: {
-                header: "0px 4px 24px 0px rgba(var(--accent-primary), 10%)",
+                header: "0px 4px 24px 0px rgba(var(--accent-primary-light), 10%)",
                 "header-dark": "0px 4px 24px 0px rgba(var(--accent-primary-dark), 10%)",
                 "card-light": "0 1px 2px rgba(17,20,24,.06)",
                 "card-light-elevated": "0 1px 2px rgba(17,20,24,.1), 0 3px 6px rgba(17,20,24,.06)",
@@ -43,15 +43,19 @@ module.exports = {
             },
 
             colors: {
-                "accent-primary-light": withOpacity("--accent-primary"),
-                "accent-primary-darkened": withOpacity("--accent-primary-darkened"),
+                "accent-primary-light": withOpacity("--accent-primary-light"),
                 "accent-primary-dark": withOpacity("--accent-primary-dark"),
-                "accent-primary-dark-lightened": withOpacity("--accent-primary-dark-lightened"),
-                "accent-primary-contrast": withOpacity("--accent-primary-contrast"),
+                "accent-primary-aa-light": withOpacity("--accent-primary-aa-light"),
+                "accent-primary-aa-dark": withOpacity("--accent-primary-aa-dark"),
+                "accent-primary-aaa-light": withOpacity("--accent-primary-aaa-light"),
+                "accent-primary-aaa-dark": withOpacity("--accent-primary-aaa-dark"),
+                "accent-primary-light-tinted": withOpacity("--accent-primary-light-tinted"),
+                "accent-primary-dark-tinted": withOpacity("--accent-primary-dark-tinted"),
+                "accent-primary-light-contrast": withOpacity("--accent-primary-light-contrast"),
                 "accent-primary-dark-contrast": withOpacity("--accent-primary-dark-contrast"),
-                "accent-highlight-light": "rgba(var(--accent-primary), 20%)",
+                "accent-highlight-light": "rgba(var(--accent-primary-light), 20%)",
                 "accent-highlight-dark": "rgba(var(--accent-primary-dark), 20%)",
-                background: withOpacity("--background"),
+                "background-light": withOpacity("--background-light"),
                 "background-dark": withOpacity("--background-dark"),
 
                 "method-get": "#49A68C",
@@ -65,20 +69,14 @@ module.exports = {
                 "method-put-dark": "#FDBA74",
                 "method-patch-dark": "#FDBA74",
 
-                "intent-default": "rgba(0, 0, 0, 0.5)",
-                "intent-default-dark": "rgba(255, 255, 255, 0.6)",
-                "intent-warning-dark": "#F8D26F",
-                "intent-warning-dark-lightened": "#F8D476",
-                "intent-warning-light": "#D97706",
-                "intent-warning-light-darkened": "#CE7106",
-                "intent-success-dark": "#4ADE80",
-                "intent-success-dark-lightened": "#53E186",
-                "intent-success-light": "#16A34A",
-                "intent-success-light-darkened": "#159B46",
-                "intent-danger-dark": "#F87171",
-                "intent-danger-dark-lightened": "#F87878",
-                "intent-danger-light": "#DC2626",
-                "intent-danger-light-darkened": "#D12424",
+                "intent-default": "var(--gray-a11)",
+                "intent-default-lightened": "var(--gray-a12)",
+                "intent-warning": "var(--amber-a11)",
+                "intent-warning-lightened": "var(--amber-a12)",
+                "intent-success": "var(--green-a11)",
+                "intent-success-lightened": "var(--green-a12)",
+                "intent-danger": "var(--red-a11)",
+                "intent-danger-lightened": "var(--red-a12)",
 
                 "background-primary-dark": "rgb(3, 7, 18)",
                 "background-primary-light": "rgb(255, 255, 255)",
@@ -90,18 +88,14 @@ module.exports = {
                 "background-hover-dark": "rgba(151, 90, 90, 0.05)",
                 "background-hover-light": "rgba(3, 7, 18, 0.05)",
 
-                "border-default-dark": "rgba(221, 243, 255, 0.18)",
-                "border-default-light": "rgba(2, 2, 44, 0.15)",
+                "border-default": "var(--gray-a8)",
                 "border-concealed-dark": "rgba(156, 163, 175, 0.15)",
                 "border-concealed-light": "rgba(72, 72, 72, 0.10)",
-                "border-primary": "rgba(var(--accent-primary), 0.30)",
-                "border-primary-dark": "rgba(var(--accent-primary-dark), 0.30)",
-                "border-warning-dark": "rgba(251, 191, 36, 0.30)",
-                "border-warning-light": "rgba(217, 119, 6, 0.30)",
-                "border-success-dark": "rgba(74, 222, 128, 0.30)",
-                "border-success-light": "rgba(22, 163, 74, 0.30)",
-                "border-danger-dark": "rgba(248, 113, 113, 0.30)",
-                "border-danger-light": "rgba(220, 38, 38, 0.30)",
+                "border-accent-muted-light": "rgba(var(--accent-primary-light), 0.50)",
+                "border-accent-muted-dark": "rgba(var(--accent-primary-dark), 0.50)",
+                "border-warning": "var(--amber-a8)",
+                "border-success": "var(--green-a8)",
+                "border-danger": "var(--red-a8)",
 
                 "text-default-dark": "rgb(255, 255, 255)",
                 "text-default-light": "rgb(3,7,18)",
@@ -110,21 +104,73 @@ module.exports = {
                 "text-disabled-light": "rgb(209, 213, 219)",
                 "text-disabled-dark": "rgb(107, 114, 128)",
 
-                "tag-default-dark": "rgba(255, 255, 255, 10%)",
-                "tag-default-light": "rgba(3, 7, 18, 5%)",
-                "tag-primary-light": "rgba(var(--accent-primary), 15%)",
+                "tag-default-soft": "var(--gray-a2)",
+                "tag-primary-soft-light": "rgba(var(--accent-primary-light), 10%)",
+                "tag-primary-soft-dark": "rgba(var(--accent-primary-dark), 10%)",
+                "tag-warning-soft": "var(--amber-a2)",
+                "tag-success-soft": "var(--green-a2)",
+                "tag-danger-soft": "var(--red-a2)",
+
+                "tag-default": "var(--gray-a3)",
+                "tag-primary-light": "rgba(var(--accent-primary-light), 15%)",
                 "tag-primary-dark": "rgba(var(--accent-primary-dark), 15%)",
-                "tag-warning-dark": "rgba(251, 190, 36, 0.15)",
-                "tag-warning-light": "rgba(217, 119, 6, 0.10)",
-                "tag-success-dark": "rgba(74, 222, 128, 0.15)",
-                "tag-success-light": "rgba(22, 163, 74, 0.15)",
-                "tag-danger-light": "rgba(220, 38, 38, 0.10)",
-                "tag-danger-dark": "rgba(248, 113, 113, 0.15)",
+                "tag-warning": "var(--amber-a3)",
+                "tag-success": "var(--green-a3)",
+                "tag-danger": "var(--red-a3)",
+
+                "tag-default-tinted": "var(--gray-a6)",
+                "tag-primary-light-tinted": "rgba(var(--accent-primary-light), 30%)",
+                "tag-primary-dark-tinted": "rgba(var(--accent-primary-dark), 30%)",
+                "tag-warning-tinted": "var(--amber-a6)",
+                "tag-success-tinted": "var(--green-a6)",
+                "tag-danger-tinted": "var(--red-a6)",
+            },
+            typography: {
+                DEFAULT: {
+                    css: {
+                        color: "#000000",
+                    },
+                },
+                sm: {
+                    css: {
+                        lineHeight: "1.2em",
+                    },
+                },
+                invert: {
+                    css: {
+                        color: "#ffffff",
+                    },
+                },
+            },
+            keyframes: {
+                "slide-down-and-fade": {
+                    from: { opacity: 0, transform: "translateY(-2px)" },
+                    to: { opacity: 1, transform: "translateY(0)" },
+                },
+                "slide-left-and-fade": {
+                    from: { opacity: 0, transform: "translateX(2px)" },
+                    to: { opacity: 1, transform: "translateX(0)" },
+                },
+                "slide-up-and-fade": {
+                    from: { opacity: 0, transform: "translateY(2px)" },
+                    to: { opacity: 1, transform: "translateY(0)" },
+                },
+                "slide-right-and-fade": {
+                    from: { opacity: 0, transform: "translateX(-2px)" },
+                    to: { opacity: 1, transform: "translateX(0)" },
+                },
+            },
+            animation: {
+                "slide-down-and-fade": "slide-down-and-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
+                "slide-left-and-fade": "slide-left-and-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
+                "slide-up-and-fade": "slide-up-and-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
+                "slide-right-and-fade": "slide-right-and-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
             },
         },
     },
     plugins: [
         require("@tailwindcss/typography"),
+        require("@tailwindcss/forms"),
         // Defining the classes here to get proper intellisense
         // https://github.com/tailwindlabs/tailwindcss-intellisense/issues/227#issuecomment-1269592872
         plugin(({ addComponents }) => {
@@ -140,40 +186,61 @@ module.exports = {
                 ".text-accent-primary": {
                     "@apply text-accent-primary-light dark:text-accent-primary-dark": {},
                 },
-                ".t-primary": {
-                    "@apply text-accent-primary-light dark:text-accent-primary-dark": {},
+                ".t-accent": {
+                    "@apply text-accent-primary-aa-light dark:text-accent-primary-aa-dark": {},
+                },
+                ".t-accent-aaa": {
+                    "@apply text-accent-primary-aaa-light dark:text-accent-primary-aaa-dark": {},
+                },
+                ".t-accent-contrast": {
+                    "@apply text-accent-primary-light-contrast dark:text-accent-primary-dark-contrast": {},
                 },
                 ".t-success": {
-                    "@apply text-intent-success-light dark:text-intent-success-dark": {},
+                    "@apply text-intent-success": {},
                 },
                 ".t-warning": {
-                    "@apply text-intent-warning-light dark:text-intent-warning-dark": {},
+                    "@apply text-intent-warning": {},
                 },
                 ".t-danger": {
-                    "@apply text-intent-danger-light dark:text-intent-danger-dark": {},
+                    "@apply text-intent-danger": {},
                 },
                 // Background
-                ".bg-accent-primary": {
+                ".bg-background": {
+                    "@apply bg-background-light dark:bg-background-dark": {},
+                },
+                ".bg-accent": {
                     "@apply bg-accent-primary-light dark:bg-accent-primary-dark": {},
+                },
+                ".bg-accent-aa": {
+                    "@apply bg-accent-primary-aa-light dark:bg-accent-primary-aa-dark": {},
+                },
+                ".bg-accent-aaa": {
+                    "@apply bg-accent-primary-aaa-light dark:bg-accent-primary-aaa-dark": {},
+                },
+                ".bg-accent-contrast": {
+                    "@apply bg-accent-primary-light-contrast dark:bg-accent-primary-dark-contrast": {},
+                },
+                ".bg-accent-tinted": {
+                    "@apply bg-accent-primary-light-tinted dark:bg-accent-primary-dark-tinted": {},
                 },
                 ".bg-accent-highlight": {
                     "@apply bg-accent-highlight-light dark:bg-accent-highlight-dark": {},
                 },
-                ".bg-tag-default": {
-                    "@apply bg-tag-default-light dark:bg-tag-default-dark": {},
-                },
+                // ".bg-tag-default": {
+                //     "@apply bg-tag-default": {},
+                // },
                 ".bg-tag-primary": {
                     "@apply bg-tag-primary-light dark:bg-tag-primary-dark": {},
                 },
-                ".bg-tag-success": {
-                    "@apply bg-tag-success-light dark:bg-tag-success-dark": {},
-                },
-                ".bg-tag-warning": {
-                    "@apply bg-tag-warning-light dark:bg-tag-warning-dark": {},
-                },
-                ".bg-tag-danger": {
-                    "@apply bg-tag-danger-light dark:bg-tag-danger-dark": {},
-                },
+                // ".bg-tag-success": {
+                //     "@apply bg-tag-success-light dark:bg-tag-success-dark": {},
+                // },
+                // ".bg-tag-warning": {
+                //     "@apply bg-tag-warning-light dark:bg-tag-warning-dark": {},
+                // },
+                // ".bg-tag-danger": {
+                //     "@apply bg-tag-danger-light dark:bg-tag-danger-dark": {},
+                // },
                 // Border
                 ".border-accent-primary": {
                     "@apply border-accent-primary-light dark:border-accent-primary-dark": {},
@@ -182,25 +249,35 @@ module.exports = {
                     "@apply border-border-concealed-light dark:border-border-concealed-dark": {},
                 },
                 ".border-default": {
-                    "@apply border-border-default-light dark:border-border-default-dark": {},
+                    "@apply border-border-default": {},
                 },
                 ".border-success": {
-                    "@apply border-border-success-light dark:border-border-success-dark": {},
+                    "@apply border-border-success": {},
                 },
                 ".border-warning": {
-                    "@apply border-border-warning-light dark:border-border-warning-dark": {},
+                    "@apply border-border-warning": {},
                 },
                 ".border-danger": {
-                    "@apply border-border-danger-light dark:border-border-danger-dark": {},
+                    "@apply border-border-danger": {},
                 },
                 ".outline-accent-primary": {
                     "@apply outline-accent-primary-light dark:outline-accent-primary-dark": {},
                 },
+                ".ring-default": {
+                    "@apply ring-border-default": {},
+                },
                 ".ring-accent-primary": {
                     "@apply ring-accent-primary-light dark:ring-accent-primary-dark": {},
                 },
+                ".ring-border-primary": {
+                    "@apply ring-border-accent-muted-light dark:ring-border-accent-muted-dark": {},
+                },
                 ".decoration-accent-primary": {
                     "@apply decoration-accent-primary-light dark:decoration-accent-primary-dark": {},
+                },
+                ".animate-popover": {
+                    "@apply data-[side=top]:animate-slide-down-and-fade data-[side=right]:animate-slide-left-and-fade data-[side=bottom]:animate-slide-up-and-fade data-[side=left]:animate-slide-right-and-fade":
+                        {},
                 },
             });
         }),

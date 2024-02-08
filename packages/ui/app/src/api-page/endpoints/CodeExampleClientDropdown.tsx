@@ -20,12 +20,7 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
         <div className="flex justify-end">
             <FernMenu
                 text={selectedClientGroup?.languageDisplayName ?? selectedClient.language}
-                icon={
-                    <RemoteFontAwesomeIcon
-                        className="bg-accent-primary dark:bg-accent-primary-dark size-4"
-                        icon={selectedClientGroup?.icon}
-                    />
-                }
+                icon={<RemoteFontAwesomeIcon className="bg-accent size-4" icon={selectedClientGroup?.icon} />}
                 align="right"
                 menuClassName="overflow-hidden"
                 size="small"
@@ -44,10 +39,7 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                             }
                         }}
                     >
-                        <RemoteFontAwesomeIcon
-                            className="bg-accent-primary dark:bg-accent-primary-dark size-4"
-                            icon={client.icon}
-                        />
+                        <RemoteFontAwesomeIcon className="bg-accent size-4" icon={client.icon} />
                         <div className="flex items-center whitespace-nowrap">
                             <span className="font-mono text-xs font-normal">{client.languageDisplayName}</span>
                         </div>
@@ -60,7 +52,7 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
 
 /*
 {selectedClientGroup != null && selectedClientGroup.examples.length > 1 && (
-    <div className="divide-border-primary dark:divide-border-primary-dark flex flex-col items-stretch divide-y overflow-hidden rounded-md bg-white shadow">
+    <div className="divide-border-accent-muted-light dark:divide-border-accent-muted-dark flex flex-col items-stretch divide-y overflow-hidden rounded-md bg-white shadow">
         {selectedClientGroup?.examples.map((example) => (
             <FernMenuItem
                 key={example.key}

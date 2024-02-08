@@ -62,7 +62,7 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
             className={classNames(
                 "flex flex-col px-4 lg:pt-4 lg:backdrop-blur",
                 {
-                    "border-b border-border-concealed-light dark:border-border-concealed-dark": tabs != null,
+                    "border-b border-concealed": tabs != null,
                 },
                 {
                     "py-4 lg:pb-2": tabs != null,

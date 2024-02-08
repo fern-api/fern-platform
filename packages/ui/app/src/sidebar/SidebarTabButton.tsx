@@ -18,9 +18,9 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, sel
             <Link
                 className={classNames(
                     "no-underline hover:no-underline min-h-[32px] lg:min-h-[36px]",
-                    "text-base lg:text-sm flex flex-1 py-2 px-3 group/tab-button group-hover/tab-button:transition rounded-lg justify-start items-center select-none min-w-0 hover:text-accent-primary",
+                    "text-base lg:text-sm flex flex-1 py-2 px-3 group/tab-button group-hover/tab-button:transition rounded-lg justify-start items-center select-none min-w-0 hover:t-accent",
                     {
-                        "text-accent-primary": selected,
+                        "t-accent": selected,
                         "t-muted": !selected,
                     },
                 )}
@@ -30,17 +30,18 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, sel
                     <div className="min-w-fit">
                         <div
                             className={classNames(
-                                "flex size-6 items-center border border-border-default-light dark:border-border-default-dark justify-center rounded-md group-hover/tab-button:bg-tag-primary group-hover/tab-button:border-border-primary group-hover/tab-button:dark:border-border-primary-dark",
+                                "flex size-6 items-center border border-default justify-center rounded-md group-hover/tab-button:bg-tag-primary group-hover/tab-button:border-border-accent-muted-light group-hover/tab-button:dark:border-border-accent-muted-dark",
                                 {
-                                    "bg-tag-primary border-border-primary dark:border-border-primary-dark": selected,
-                                    "bg-tag-default-light/5 dark:bg-tag-default-dark/5": !selected,
+                                    "bg-tag-primary border-border-accent-muted-light dark:border-border-accent-muted-dark":
+                                        selected,
+                                    "bg-tag-default": !selected,
                                 },
                             )}
                         >
                             <RemoteFontAwesomeIcon
-                                className={classNames("size-3.5 group-hover/tab-button:bg-accent-primary", {
-                                    "bg-accent-primary": selected,
-                                    "bg-text-muted-light dark:bg-text-muted-dark": !selected,
+                                className={classNames("size-3.5 group-hover/tab-button:bg-accent", {
+                                    "bg-accent": selected,
+                                    "bg-text-muted": !selected,
                                 })}
                                 icon={tab.icon}
                             />
