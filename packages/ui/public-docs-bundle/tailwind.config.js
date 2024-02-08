@@ -311,6 +311,19 @@ module.exports = {
                 ".callout-outlined-danger": {
                     "@apply bg-tag-danger-soft ring-1 ring-inset ring-border-danger-soft": {},
                 },
+
+                ".callout-outlined-ghost": {
+                    "@apply ring-1 ring-inset ring-border-default-soft": {},
+                },
+                ".callout-outlined-ghost-success": {
+                    "@apply ring-1 ring-inset ring-border-success-soft": {},
+                },
+                ".callout-outlined-ghost-warning": {
+                    "@apply ring-1 ring-inset ring-border-warning-soft": {},
+                },
+                ".callout-outlined-ghost-danger": {
+                    "@apply ring-1 ring-inset ring-border-danger-soft": {},
+                },
             });
         }),
     ],

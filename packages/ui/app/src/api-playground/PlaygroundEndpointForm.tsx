@@ -170,11 +170,29 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
         return getObject(endpoint.requestBody.shape);
     }, [endpoint.requestBody]);
 
+    const scrollAreaRef = useRef<HTMLDivElement>(null);
+    const [scrollAreaHeight, setScrollAreaHeight] = useState(0);
+
+    useEffect(() => {
+        if (typeof window === "undefined" || scrollAreaRef.current == null) {
+            return;
+        }
+        const resizeObserver = new window.ResizeObserver(([size]) => {
+            if (size != null) {
+                setScrollAreaHeight(size.contentRect.height);
+            }
+        });
+        resizeObserver.observe(scrollAreaRef.current);
+        return () => {
+            resizeObserver.disconnect();
+        };
+    }, []);
+
     return (
-        <FernScrollArea>
+        <FernScrollArea ref={scrollAreaRef}>
             <div className="mx-auto my-10 w-full max-w-3xl gap-y-4 p-4 pb-10">
                 {endpoint.authed && auth != null && (
-                    <section className="callout-soft-danger mb-8 rounded-xl p-3">
+                    <section className="callout-outlined-ghost-danger mb-8 rounded-xl p-3">
                         <h6 className="t-muted m-0 mb-2">Authorization</h6>
                         <PlaygroundAuthorizationForm
                             auth={auth}
@@ -186,8 +204,8 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                     </section>
                 )}
 
-                <div className="divide-border-default flex divide-x">
-                    <aside className="sticky top-0 w-48 pr-4">
+                <div className="divide-border-default flex items-start divide-x">
+                    <aside className="sticky top-0 w-48 pr-4" style={{ maxHeight: scrollAreaHeight }}>
                         {endpoint.headers.length > 0 && (
                             <div className="mb-4">
                                 <h6 className="t-muted m-0 mb-2 text-xs">Headers</h6>
@@ -317,7 +335,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                             </div>
                         )}
                     </aside>
-                    <div className="min-w-0 flex-1 shrink">
+                    <div className="min-w-0 flex-1 shrink pl-4">
                         {endpoint.description != null && endpoint.description.length > 0 && (
                             <section className="pb-8" onClick={toggleShowFullDescription}>
                                 <div

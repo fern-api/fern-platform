@@ -15,6 +15,7 @@ module.exports = {
             spacing: {
                 "page-width": "var(--spacing-page-width)",
                 "content-width": "var(--spacing-content-width)",
+                "endpoint-width": "calc(var(--spacing-content-width) * 2 + 3rem)",
                 "sidebar-width": "var(--spacing-sidebar-width)",
                 "header-height": "var(--spacing-header-height)",
                 "header-height-padded": "calc(var(--spacing-header-height) + 1rem)",
@@ -131,7 +132,6 @@ module.exports = {
                 },
                 sm: {
                     css: {
-                        lineHeight: "1.2em",
                         color: "var(--gray-a11)",
                     },
                 },
@@ -211,6 +211,9 @@ module.exports = {
                 ".bg-background": {
                     "@apply bg-background-light dark:bg-background-dark": {},
                 },
+                ".bg-background-translucent": {
+                    "@apply bg-background-light/70 dark:bg-background-dark/70": {},
+                },
                 ".bg-accent": {
                     "@apply bg-accent-primary-light dark:bg-accent-primary-dark": {},
                 },
@@ -283,6 +286,19 @@ module.exports = {
                         {},
                 },
 
+                ".callout-soft": {
+                    "@apply bg-tag-default ring-0": {},
+                },
+                ".callout-soft-success": {
+                    "@apply bg-tag-success ring-0": {},
+                },
+                ".callout-soft-warning": {
+                    "@apply bg-tag-warning ring-0": {},
+                },
+                ".callout-soft-danger": {
+                    "@apply bg-tag-danger ring-0": {},
+                },
+
                 ".callout-outlined": {
                     "@apply bg-tag-default-soft ring-1 ring-inset ring-border-default-soft": {},
                 },
@@ -295,9 +311,25 @@ module.exports = {
                 ".callout-outlined-danger": {
                     "@apply bg-tag-danger-soft ring-1 ring-inset ring-border-danger-soft": {},
                 },
+
+                ".callout-outlined-ghost": {
+                    "@apply ring-1 ring-inset ring-border-default-soft": {},
+                },
+                ".callout-outlined-ghost-success": {
+                    "@apply ring-1 ring-inset ring-border-success-soft": {},
+                },
+                ".callout-outlined-ghost-warning": {
+                    "@apply ring-1 ring-inset ring-border-warning-soft": {},
+                },
+                ".callout-outlined-ghost-danger": {
+                    "@apply ring-1 ring-inset ring-border-danger-soft": {},
+                },
             });
         }),
     ],
+    future: {
+        hoverOnlyWhenSupported: true,
+    },
 };
 
 // https://stackoverflow.com/a/72831219/4238485
