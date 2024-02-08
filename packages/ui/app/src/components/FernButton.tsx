@@ -30,7 +30,7 @@ interface FernButtonSharedProps {
     text?: React.ReactNode;
 }
 
-interface FernButtonProps
+export interface FernButtonProps
     extends Omit<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, "ref">,
         PropsWithChildren<FernButtonSharedProps> {}
 

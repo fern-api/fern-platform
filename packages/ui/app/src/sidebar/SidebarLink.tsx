@@ -6,7 +6,7 @@ import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
 import { FC, HTMLAttributeAnchorTarget, memo, PropsWithChildren, ReactNode, useEffect, useRef } from "react";
 import { ReactElement } from "react-markdown/lib/react-markdown";
-import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
+import { useIsMobileSidebarOpen } from "./atom";
 import "./SidebarLink.css";
 
 interface SidebarSlugLinkProps {
@@ -138,7 +138,7 @@ export const SidebarSlugLink: FC<PropsWithChildren<SidebarSlugLinkProps>> = ({
     ...props
 }) => {
     const ref = useRef<HTMLLIElement>(null);
-    const { isMobileSidebarOpen } = useMobileSidebarContext();
+    const isMobileSidebarOpen = useIsMobileSidebarOpen();
 
     useEffect(() => {
         if (slug == null) {

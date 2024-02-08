@@ -3,7 +3,7 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { Cross1Icon, HamburgerMenuIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { CSSProperties, forwardRef, memo, PropsWithChildren } from "react";
-import { FernButtonGroup } from "../components/FernButton";
+import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { SearchService } from "../services/useSearchService";
 import { HeaderLogoSection } from "./HeaderLogoSection";
 import { HeaderPrimaryLink } from "./HeaderPrimaryLink";
@@ -70,27 +70,36 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
             <div className="-mr-2 ml-auto flex items-center space-x-0 md:mr-0 lg:space-x-4">
                 {navbarLinksSection}
 
-                {searchService.isAvailable && (
-                    <button
-                        onClick={openSearchDialog}
-                        className="t-muted hover:t-default mr-2 hidden h-[32px] w-[32px] items-center justify-center transition sm:flex lg:hidden"
-                    >
-                        <MagnifyingGlassIcon className="size-5" />
-                    </button>
-                )}
+                <div className="flex lg:hidden">
+                    {colorsV3?.type === "darkAndLight" && <ThemeButton size="large" />}
 
-                <button
-                    onClick={isMobileSidebarOpen ? closeMobileSidebar : openMobileSidebar}
-                    className={classNames(
-                        "t-muted hover:t-default flex h-[32px] w-[32px] items-center justify-center transition lg:hidden rounded-lg",
-                        {
-                            "t-accent bg-tag-primary ring-inset ring-1 ring-border-accent-muted-light dark:ring-border-accent-muted-dark":
-                                isMobileSidebarOpen,
-                        },
+                    {searchService.isAvailable && (
+                        <FernButton
+                            onClick={openSearchDialog}
+                            icon={<MagnifyingGlassIcon className="size-6" />}
+                            intent="none"
+                            buttonStyle="minimal"
+                            rounded={true}
+                            size="large"
+                            className="hidden sm:inline"
+                        />
                     )}
-                >
-                    {isMobileSidebarOpen ? <Cross1Icon className="size-5" /> : <HamburgerMenuIcon className="size-5" />}
-                </button>
+
+                    <FernButton
+                        onClick={isMobileSidebarOpen ? closeMobileSidebar : openMobileSidebar}
+                        icon={
+                            isMobileSidebarOpen ? (
+                                <Cross1Icon className="size-6" />
+                            ) : (
+                                <HamburgerMenuIcon className="size-6" />
+                            )
+                        }
+                        intent={isMobileSidebarOpen ? "primary" : "none"}
+                        buttonStyle={isMobileSidebarOpen ? "filled" : "minimal"}
+                        rounded={true}
+                        size="large"
+                    />
+                </div>
             </div>
         </nav>
     );

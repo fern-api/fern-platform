@@ -2,15 +2,15 @@ import { useMounted } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { useTheme } from "next-themes";
 import { Moon as MoonIcon, Sun as SunIcon } from "react-feather";
-import { FernButton } from "../components/FernButton";
+import { FernButton, FernButtonProps } from "../components/FernButton";
 
 export declare namespace ThemeButton {
-    export interface Props {
+    export interface Props extends FernButtonProps {
         className?: string;
     }
 }
 
-export const ThemeButton: React.FC<ThemeButton.Props> = ({ className }) => {
+export const ThemeButton: React.FC<ThemeButton.Props> = ({ className, ...props }) => {
     const { resolvedTheme, setTheme } = useTheme();
     const mounted = useMounted();
 
@@ -18,6 +18,7 @@ export const ThemeButton: React.FC<ThemeButton.Props> = ({ className }) => {
 
     return (
         <FernButton
+            {...props}
             className={classNames("group !ml-3", className)}
             onClick={() => {
                 setTheme(resolvedTheme === "dark" ? "light" : "dark");

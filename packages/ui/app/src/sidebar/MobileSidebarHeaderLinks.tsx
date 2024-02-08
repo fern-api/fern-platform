@@ -3,7 +3,7 @@ import { ArrowRightIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import Link from "next/link";
 import { ReactElement } from "react";
-import { SidebarLink } from "./SidebarLink";
+import { FernButtonGroup, FernLinkButton } from "../components/FernButton";
 
 interface HeaderSidebarSlugLinkProps {
     navbarLink: DocsV1Read.NavbarLink;
@@ -39,27 +39,23 @@ export function MobileSidebarHeaderLinks({ navbarLinks }: MobileSidebarHeaderLin
         return null;
     }
     return (
-        <ul className="border-concealed -mx-4 list-none border-b p-4 lg:hidden">
-            {navbarLinks?.map((navbarLink, idx) => (
-                <SidebarLink
-                    key={idx}
-                    href={navbarLink.url}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    title={navbarLink.text}
-                    rightElement={
-                        navbarLink.type === "primary" && (
-                            <div className="flex size-5 items-center">
-                                <ArrowRightIcon className="size-5" />
-                            </div>
-                        )
-                    }
-                    linkClassName={classNames({
-                        "my-2 transition ring-inset ring-1 hover:ring-2 ring-border-accent-muted-light dark:ring-border-accent-muted-dark hover:bg-tag-primary !t-accent":
-                            navbarLink.type === "primary",
-                    })}
-                />
-            ))}
-        </ul>
+        <div className="border-concealed -mx-4 list-none border-b p-4 lg:hidden">
+            <FernButtonGroup className="w-full">
+                {navbarLinks?.map((navbarLink, idx) => (
+                    <FernLinkButton
+                        key={idx}
+                        href={navbarLink.url}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        text={navbarLink.text}
+                        rightIcon={navbarLink.type === "primary" && <ArrowRightIcon className="size-5" />}
+                        className="w-full text-left lg:hidden"
+                        buttonStyle={navbarLink.type === "primary" ? "outlined" : "minimal"}
+                        intent={navbarLink.type === "primary" ? "primary" : "none"}
+                        size="large"
+                    />
+                ))}
+            </FernButtonGroup>
+        </div>
     );
 }

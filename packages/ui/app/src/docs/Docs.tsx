@@ -9,11 +9,11 @@ import NextNProgress from "nextjs-progressbar";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import tinycolor from "tinycolor2";
 import { ApiPlaygroundContextProvider } from "../api-playground/ApiPlaygroundContext";
-import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
 import { useSearchContext } from "../search-context/useSearchContext";
 import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { useSearchService } from "../services/useSearchService";
+import { useCloseMobileSidebar, useIsMobileSidebarOpen, useOpenMobileSidebar } from "../sidebar/atom";
 import { SidebarNode } from "../sidebar/types";
 import { BgImageGradient } from "./BgImageGradient";
 import { DocsMainContent } from "./DocsMainContent";
@@ -68,7 +68,9 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
         }
     }, [setTheme, theme, themes]);
 
-    const { isMobileSidebarOpen, openMobileSidebar, closeMobileSidebar } = useMobileSidebarContext();
+    const isMobileSidebarOpen = useIsMobileSidebarOpen();
+    const openMobileSidebar = useOpenMobileSidebar();
+    const closeMobileSidebar = useCloseMobileSidebar();
 
     const hasSpecifiedBackgroundImage = !!config.backgroundImage;
 

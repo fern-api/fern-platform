@@ -1,7 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import algolia from "algoliasearch/lite";
-import classNames from "classnames";
 import { Fragment, PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
 import { InstantSearch } from "react-instantsearch-hooks-web";
 import { useNavigationContext } from "../navigation-context";
@@ -54,23 +52,22 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
                 >
                     <Transition.Child
                         as="div"
-                        className="bg-background-light/40 dark:bg-background-dark/40 fixed inset-0 z-0 backdrop-blur-sm"
-                        enter="transition-all ease-linear duration-200"
-                        enterFrom="backdrop-blur-0 opacity-0"
-                        enterTo="backdrop-blur-sm opacity-100"
+                        className="bg-background-light/50 dark:bg-background-dark/50 fixed inset-0 z-0"
+                        enter="transition-opacity ease-linear duration-200"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
                     />
-                    <Dialog.Panel className="border-default bg-background-primary-light dark:bg-background-primary-dark fle relative z-10 mx-6 my-10 h-auto max-h-96 flex-col overflow-hidden rounded-md border text-left align-middle shadow-2xl md:mx-auto md:max-w-2xl">
-                        <div className={classNames(styles.searchBox, "flex items-center space-x-3 px-5")}>
-                            <MagnifyingGlassIcon className="t-muted size-5" />
+                    <Dialog.Panel className="border-default bg-background-translucent relative z-10 mx-6 my-10 flex h-auto max-h-96 flex-col overflow-hidden rounded-xl border text-left align-middle shadow-2xl backdrop-blur-lg md:mx-auto md:max-w-2xl">
+                        <div className={styles.searchBox}>
                             <SearchBox
                                 ref={inputRef}
                                 placeholder={
                                     activeNavigatable.context.version?.info.id != null
-                                        ? `Search across version ${activeNavigatable.context.version?.info.id}`
-                                        : "Find something..."
+                                        ? `Search across ${activeNavigatable.context.version.info.id}...`
+                                        : "Search for guides and endpoints..."
                                 }
                                 className="flex-1"
-                                inputClassName="form-input w-full text-base t-muted placeholder:t-muted !py-5 form-input !border-none !bg-transparent !outline-none !ring-0"
+                                inputClassName="form-input w-full text-base t-muted placeholder:t-muted !p-5 form-input !border-none !bg-transparent !outline-none !ring-0"
                             />
                         </div>
                         <SearchHits />
@@ -117,10 +114,11 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
                 ref={inputRef}
                 placeholder={
                     activeNavigatable.context.version?.info.id != null
-                        ? `Search across version ${activeNavigatable.context.version?.info.id}`
-                        : "Find something..."
+                        ? `Search across ${activeNavigatable.context.version.info.id}...`
+                        : "Search for guides and endpoints..."
                 }
                 className="mt-4 flex-1"
+                inputClassName={styles.searchBox}
             />
             <SearchMobileHits>{children}</SearchMobileHits>
         </InstantSearch>

@@ -3,10 +3,10 @@ import { Dialog, Transition } from "@headlessui/react";
 import { useRouter } from "next/router";
 import { Fragment, memo, useEffect } from "react";
 import { FernScrollArea } from "../components/FernScrollArea";
-import { useMobileSidebarContext } from "../mobile-sidebar-context/useMobileSidebarContext";
 import { SearchSidebar } from "../search/SearchDialog";
 import { SearchService } from "../services/useSearchService";
 import { useViewportContext } from "../viewport-context/useViewportContext";
+import { useCloseMobileSidebar, useIsMobileSidebarOpen } from "./atom";
 import { BuiltWithFern } from "./BuiltWithFern";
 import { CollapseSidebarProvider } from "./CollapseSidebarContext";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
@@ -35,7 +35,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
 }) {
     return (
         <nav className="h-full w-full lg:pl-1" aria-label="secondary">
-            <FernScrollArea className="group/sidebar" viewportClassName="px-4 pb-12">
+            <FernScrollArea className="group/sidebar" viewportClassName="px-4 pb-12" aria-orientation="vertical">
                 <SearchSidebar searchService={searchService}>
                     <MobileSidebarHeaderLinks navbarLinks={navbarLinks} />
                     <SidebarFixedItemsSection
@@ -61,7 +61,9 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
 
 function MobileSidebar(props: SidebarProps) {
     const router = useRouter();
-    const { isMobileSidebarOpen, closeMobileSidebar } = useMobileSidebarContext();
+
+    const isMobileSidebarOpen = useIsMobileSidebarOpen();
+    const closeMobileSidebar = useCloseMobileSidebar();
 
     // close the mobile sidebar when the route changes
     useEffect(() => {
@@ -76,20 +78,20 @@ function MobileSidebar(props: SidebarProps) {
             <Dialog onClose={closeMobileSidebar} className="top-header-height fixed inset-0">
                 <Transition.Child
                     as="div"
-                    className="bg-background-light/40 dark:bg-background-dark/40 fixed inset-0 z-0"
-                    enter="transition-all ease-linear duration-200"
-                    enterFrom="backdrop-blur-0 opacity-0"
-                    enterTo="backdrop-blur-sm opacity-100"
+                    className="bg-background-light/50 dark:bg-background-dark/50 top-header-height fixed inset-0 z-auto"
+                    enter="transition-opacity ease-linear duration-200"
+                    enterFrom="opacity-0"
+                    enterTo="opacity-100"
                 />
                 <Transition.Child
                     as={Dialog.Panel}
-                    className="border-concealed bg-background-light/70 dark:bg-background-dark/70 absolute inset-0 backdrop-blur sm:w-72 sm:border-r"
+                    className="border-concealed bg-background-translucent absolute inset-0 backdrop-blur-lg sm:w-72 sm:border-r"
                     enter="transition ease-in-out duration-300 transform"
-                    enterFrom="-translate-y-full sm:translate-y-0 sm:-translate-x-full"
-                    enterTo="translate-x-0 translate-y-0"
+                    enterFrom="opacity-0 sm:opacity-100 sm:translate-y-0 sm:-translate-x-full"
+                    enterTo="opacity-100 translate-x-0 translate-y-0"
                     leave="transition ease-in-out duration-300 transform"
-                    leaveFrom="translate-x-0 translate-y-0"
-                    leaveTo="-translate-y-full sm:translate-y-0 sm:-translate-x-full"
+                    leaveFrom="opacity-100 translate-x-0 translate-y-0"
+                    leaveTo="opacity-0 sm:opacity-100 sm:translate-y-0 sm:-translate-x-full"
                 >
                     <SidebarInner {...props} />
                 </Transition.Child>

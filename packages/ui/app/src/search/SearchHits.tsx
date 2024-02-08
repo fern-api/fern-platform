@@ -145,9 +145,13 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
 
     const refs = useRef(new Map<string, HTMLAnchorElement>());
 
-    if (hits.length === 0 || search.results.query.length === 0) {
-        // fallback to the default view if there are no hits
+    if (search.results.query.length === 0) {
+        // fallback to the default view
         return <>{children}</>;
+    }
+
+    if (hits.length === 0) {
+        return <div className="t-muted justify flex w-full flex-col items-center py-3">No results found</div>;
     }
 
     return (

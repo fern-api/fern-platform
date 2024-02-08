@@ -1,17 +1,22 @@
+import { Checkbox } from "@blueprintjs/core";
 import { isApiNode, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import {
     ResolvedEndpointDefinition,
     ResolvedHttpRequestBodyShape,
     ResolvedNavigationItemApiSection,
+    ResolvedTypeReference,
+    titleCase,
     visitResolvedHttpRequestBodyShape,
 } from "@fern-ui/app-utils";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
+import { isUndefined } from "lodash-es";
 import Link from "next/link";
-import { Dispatch, FC, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
+import { Dispatch, FC, SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Markdown } from "../api-page/markdown/Markdown";
+import { FernCollapse } from "../components/FernCollapse";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { useNavigationContext } from "../navigation-context";
 import { PlaygroundAuthorizationForm } from "./PlaygroundAuthorizationForm";
@@ -19,6 +24,7 @@ import { PlaygroundObjectPropertyForm } from "./PlaygroundObjectPropertyForm";
 import { SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { PlaygroundRequestFormAuth, PlaygroundRequestFormState } from "./types";
+import { getDefaultValueForType } from "./utils";
 
 interface PlaygroundEndpointFormProps {
     auth: ResolvedNavigationItemApiSection["auth"];
@@ -117,52 +123,52 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
         return undefined;
     }, [showFullDescription]);
 
-    // const bodyObjectSections = useMemo(() => {
-    //     if (endpoint.requestBody == null) {
-    //         return [];
-    //     }
+    const bodyObjectSections = useMemo(() => {
+        if (endpoint.requestBody == null) {
+            return [];
+        }
 
-    //     function getObject(
-    //         typeShape: ResolvedHttpRequestBodyShape,
-    //     ): { key: string; valueShape: ResolvedTypeReference }[] {
-    //         if (typeShape.type === "object") {
-    //             return typeShape.properties().filter((property) => property.valueShape.type === "object");
-    //         }
+        function getObject(
+            typeShape: ResolvedHttpRequestBodyShape,
+        ): { key: string; valueShape: ResolvedTypeReference }[] {
+            if (typeShape.type === "object") {
+                return typeShape.properties().filter((property) => property.valueShape.type === "object");
+            }
 
-    //         if (typeShape.type === "reference") {
-    //             return getObject(typeShape.shape());
-    //         }
-    //         return [];
-    //     }
+            if (typeShape.type === "reference") {
+                return getObject(typeShape.shape());
+            }
+            return [];
+        }
 
-    //     return getObject(endpoint.requestBody.shape);
-    // }, [endpoint.requestBody]);
+        return getObject(endpoint.requestBody.shape);
+    }, [endpoint.requestBody]);
 
-    // const optionalBodyObjectSections = useMemo(() => {
-    //     if (endpoint.requestBody == null) {
-    //         return [];
-    //     }
+    const optionalBodyObjectSections = useMemo(() => {
+        if (endpoint.requestBody == null) {
+            return [];
+        }
 
-    //     function getObject(
-    //         typeShape: ResolvedHttpRequestBodyShape,
-    //     ): { key: string; valueShape: ResolvedTypeReference }[] {
-    //         if (typeShape.type === "object") {
-    //             return typeShape
-    //                 .properties()
-    //                 .filter(
-    //                     (property) =>
-    //                         property.valueShape.type === "optional" && property.valueShape.shape.type === "object",
-    //                 );
-    //         }
+        function getObject(
+            typeShape: ResolvedHttpRequestBodyShape,
+        ): { key: string; valueShape: ResolvedTypeReference }[] {
+            if (typeShape.type === "object") {
+                return typeShape
+                    .properties()
+                    .filter(
+                        (property) =>
+                            property.valueShape.type === "optional" && property.valueShape.shape.type === "object",
+                    );
+            }
 
-    //         if (typeShape.type === "reference") {
-    //             return getObject(typeShape.shape());
-    //         }
-    //         return [];
-    //     }
+            if (typeShape.type === "reference") {
+                return getObject(typeShape.shape());
+            }
+            return [];
+        }
 
-    //     return getObject(endpoint.requestBody.shape);
-    // }, [endpoint.requestBody]);
+        return getObject(endpoint.requestBody.shape);
+    }, [endpoint.requestBody]);
 
     return (
         <FernScrollArea>
@@ -181,7 +187,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 )}
 
                 <div className="divide-border-default flex divide-x">
-                    {/* <aside className="w-48 pr-4">
+                    <aside className="sticky top-0 w-48 pr-4">
                         {endpoint.headers.length > 0 && (
                             <div className="mb-4">
                                 <h6 className="t-muted m-0 mb-2 text-xs">Headers</h6>
@@ -310,7 +316,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                 </ul>
                             </div>
                         )}
-                    </aside> */}
+                    </aside>
                     <div className="min-w-0 flex-1 shrink">
                         {endpoint.description != null && endpoint.description.length > 0 && (
                             <section className="pb-8" onClick={toggleShowFullDescription}>
@@ -401,7 +407,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                             </section>
                         )}
 
-                        {/* {bodyObjectSections.map((section) => (
+                        {bodyObjectSections.map((section) => (
                             <section key={section.key} className="mb-8">
                                 <h6 className="t-muted m-0 mb-2">{titleCase(section.key)}</h6>
                                 <PlaygroundTypeReferenceForm
@@ -420,7 +426,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                     }
                                 />
                             </section>
-                        ))} */}
+                        ))}
 
                         {endpoint.requestBody != null && hasRequiredFields(endpoint.requestBody.shape) && (
                             <section className="mb-8">
@@ -434,7 +440,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                             onChange={setBody}
                                             value={formState?.body}
                                             onlyRequired
-                                            // hideObjects
+                                            hideObjects
                                             sortProperties
                                         />
                                     ),
@@ -442,7 +448,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                             </section>
                         )}
 
-                        {/* {optionalBodyObjectSections.map((section) => {
+                        {optionalBodyObjectSections.map((section) => {
                             const unwrappedShape =
                                 section.valueShape.type === "optional" ? section.valueShape.shape : section.valueShape;
                             const value =
@@ -484,7 +490,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                     </FernCollapse>
                                 </section>
                             );
-                        })} */}
+                        })}
 
                         {endpoint.requestBody != null && hasOptionalFields(endpoint.requestBody.shape) && (
                             <section className="mb-8">
@@ -498,7 +504,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                             onChange={setBody}
                                             value={formState?.body}
                                             onlyOptional
-                                            // hideObjects
+                                            hideObjects
                                             sortProperties
                                         />
                                     ),

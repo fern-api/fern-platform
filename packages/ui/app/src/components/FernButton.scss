@@ -1,4 +1,6 @@
+@tailwind base;
 @tailwind components;
+@tailwind utilities;
 
 @layer components {
     a.fern-button {
@@ -115,7 +117,7 @@
                 @apply px-2;
 
                 > .fern-button-content {
-                    @apply w-10;
+                    @apply w-6;
                 }
             }
         }

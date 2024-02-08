@@ -211,6 +211,9 @@ module.exports = {
                 ".bg-background": {
                     "@apply bg-background-light dark:bg-background-dark": {},
                 },
+                ".bg-background-translucent": {
+                    "@apply bg-background-light/70 dark:bg-background-dark/70": {},
+                },
                 ".bg-accent": {
                     "@apply bg-accent-primary-light dark:bg-accent-primary-dark": {},
                 },
