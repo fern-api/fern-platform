@@ -5,7 +5,6 @@ import { ApiPageDescription } from "../ApiPageDescription";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
 import { EndpointSection } from "../endpoints/EndpointSection";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
-import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { useWebhookContext } from "./webhook-context/useWebhookContext";
 import { WebhookExample } from "./webhook-examples/WebhookExample";
@@ -42,7 +41,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
     const webhookExample = example ? <WebhookExample example={example} /> : null;
 
     return (
-        <ApiPageMargins className={"scroll-mt-header-height-padded mx-4 md:mx-6 lg:mx-8"}>
+        <div className={"scroll-mt-header-height-padded mx-4 md:mx-6 lg:mx-8"}>
             <div
                 className={classNames(
                     "scroll-mt-header-height max-w-content-width lg:max-w-endpoint-width mx-auto lg:grid lg:grid-cols-2 lg:gap-12",
@@ -63,9 +62,9 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                         <h1 className="my-0 inline-block">{webhook.name}</h1>
                     </div>
                     <ApiPageDescription
+                        className="text-base leading-6"
                         description={webhook.description}
                         isMarkdown={true}
-                        className="text-sm leading-6"
                     />
                     {webhook.headers.length > 0 && (
                         <div className="mt-8 flex">
@@ -132,6 +131,6 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
 
                 <div className="mt-10 flex max-h-[150vh] lg:mt-0 lg:hidden">{webhookExample}</div>
             </div>
-        </ApiPageMargins>
+        </div>
     );
 });
