@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import { DetailedHTMLProps, forwardRef, InputHTMLAttributes } from "react";
-import "./FernInput.css";
 
 export interface FernInputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
     inputClassName?: string;

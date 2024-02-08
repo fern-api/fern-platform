@@ -15,7 +15,6 @@ import { DocsContextProvider } from "../docs-context/DocsContextProvider";
 import { Docs } from "../docs/Docs";
 import { NavigationContextProvider } from "../navigation-context/NavigationContextProvider";
 import { SidebarNode } from "../sidebar/types";
-import "./globals.css";
 
 FocusStyleManager.onlyShowFocusOnTabs();
 

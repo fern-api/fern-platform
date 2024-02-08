@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import Link, { LinkProps } from "next/link";
 import { DetailedHTMLProps, forwardRef, HTMLAttributes, PropsWithChildren } from "react";
-import "./FernCard.scss";
 
 interface FernCardProps {
     className?: string;

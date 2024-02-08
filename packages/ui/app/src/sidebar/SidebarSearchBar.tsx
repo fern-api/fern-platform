@@ -1,7 +1,6 @@
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { memo, type MouseEventHandler } from "react";
-import "./SidebarSearchBar.scss";
 
 export declare namespace SidebarSearchBar {
     export interface Props {

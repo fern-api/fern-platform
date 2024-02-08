@@ -5,7 +5,7 @@ import { Router } from "next/router";
 import { ReactElement, useEffect } from "react";
 import { ThemeProvider } from "../docs/ThemeProvider";
 import { DocsPage } from "./DocsPage";
-import "./globals.css";
+import "./globals.scss";
 
 export function NextApp({ Component, pageProps, router }: AppProps<Partial<DocsPage.Props>>): ReactElement {
     const theme = pageProps.config?.colorsV3?.type;

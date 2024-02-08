@@ -1,8 +1,258 @@
+@import "@radix-ui/colors/gray-alpha.css";
+@import "@radix-ui/colors/green-alpha.css";
+@import "@radix-ui/colors/red-alpha.css";
+@import "@radix-ui/colors/amber-alpha.css";
+@import "@radix-ui/colors/gray-dark-alpha.css";
+@import "@radix-ui/colors/green-dark-alpha.css";
+@import "@radix-ui/colors/red-dark-alpha.css";
+@import "@radix-ui/colors/amber-dark-alpha.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    html {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* 
+    html.dark {
+        background-color: var(--accent-primary-dark);
+    } */
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: inherit;
+
+        @apply focus:outline-accent-primary dark:focus:outline-accent-primary-dark;
+    }
+
+    ::selection {
+        @apply bg-accent-highlight;
+    }
+
+    html,
+    body {
+        @apply text-text-default-light dark:text-text-default-dark;
+
+        font-family: var(--typography-body-font-family) !important;
+        font-size: 16px !important;
+    }
+
+    code,
+    pre,
+    .font-mono {
+        font-family: var(--typography-code-font-family);
+    }
+
+    code.inline-code {
+        @apply text-[0.875em];
+    }
+
+    /* provides comfortable padding above anchor links, to avoid intersecting with header */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply scroll-mt-header-height-padded tracking-tight mt-8;
+
+        font-family: var(--typography-heading-font-family);
+    }
+
+    h1 {
+        @apply text-[2.25rem] font-extrabold;
+    }
+
+    h2 {
+        @apply text-[1.5rem] font-bold;
+    }
+
+    h3 {
+        @apply text-[1.25rem] font-semibold;
+    }
+
+    h4 {
+        @apply text-[1.125rem] font-semibold;
+    }
+
+    h5 {
+        @apply text-[1rem] font-semibold;
+    }
+
+    h6 {
+        @apply text-[0.875rem] font-semibold;
+    }
+
+    .clipped-background {
+        @apply pointer-events-none absolute -z-10 h-full w-full overflow-hidden;
+
+        clip-path: inset(0);
+    }
+
+    .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .bp5-dark .bp5-control .bp5-control-indicator {
+        @apply ring-1 ring-accent-primary-dark #{!important};
+    }
+
+    .light .bp5-control input:checked ~ .bp5-control-indicator {
+        @apply bg-accent-primary-light #{!important};
+    }
+
+    .bp5-dark .bp5-control input:checked ~ .bp5-control-indicator {
+        @apply bg-accent-primary-dark #{!important};
+    }
+
+    .light input.bp5-input:focus {
+        @apply ring-1 ring-accent-primary #{!important};
+    }
+
+    .bp5-dark .bp5-input:focus {
+        @apply ring-1 ring-accent-primary-dark #{!important};
+    }
+
+    .bp5-dark .bp5-segmented-control {
+        @apply bg-tag-primary-dark #{!important};
+    }
+
+    .light .bp5-segmented-control {
+        @apply bg-tag-primary-light #{!important};
+    }
+
+    .description-mask {
+        @apply overflow-hidden;
+
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        text-overflow: -o-ellipsis-lastline;
+    }
+}
+
 @layer components {
+    .playground-endpoint {
+        @apply flex min-w-0 flex-1 shrink items-start gap-2;
+        @apply bg-background border-default relative z-10 px-3 py-2 border-x;
+        @apply hover:self-start hover:overflow-visible hover:border-b hover:rounded-b-lg;
+    }
+
+    .playground-endpoint-url {
+        @apply truncate break-all font-mono text-xs hover:whitespace-normal;
+        @apply py-1;
+    }
+
+    .playground-endpoint:hover .playground-endpoint-url {
+        @apply whitespace-normal;
+    }
+
+    .playground-endpoint-copy-button {
+        @apply hidden -mt-1;
+    }
+
+    .playground-endpoint:hover .playground-endpoint-copy-button {
+        @apply inline-block;
+    }
+
+    .fern-dropdown {
+        @apply animate-popover;
+        @apply w-[var(--radix-dropdown-menu-trigger-width)];
+        @apply border-default flex max-h-[300px] min-w-[220px] flex-col rounded-lg border bg-background will-change-[opacity,transform];
+        @apply shadow-lg;
+    }
+
+    .fern-search-bar {
+        @apply text-sm border-default flex items-center rounded-lg border px-2.5 py-2 t-muted;
+        @apply bg-background-primary-light hover:bg-background-hover-light;
+        @apply dark:bg-background-primary-dark dark:hover:bg-background-hover-dark;
+
+        .search-placeholder {
+            @apply inline-flex flex-1 items-center space-x-3;
+        }
+
+        .keyboard-shortcut-hint {
+            @apply t-muted border-default shadow-card-light inline-flex size-5 items-center justify-center rounded border bg-white font-mono text-xs leading-none;
+            @apply dark:shadow-card-dark dark:bg-white/5;
+        }
+    }
+
+    .fern-sidebar-item {
+        @apply scroll-my-32;
+    }
+
+    .fern-sidebar-link-container {
+        @apply items-stretch relative flex min-h-[36px];
+    }
+
+    .fern-sidebar-link-container[data-state="active"] {
+        @apply t-accent-aaa;
+    }
+
+    .fern-sidebar-link-container[data-state="inactive"] {
+        @apply hover:t-accent-aaa t-muted;
+    }
+
+    .fern-sidebar-link-indent {
+        @apply relative flex-none w-5 lg:w-3 shrink-0 border-r;
+    }
+
+    .fern-sidebar-link-container[data-state="active"] .fern-sidebar-link-indent {
+        @apply border-border-accent-muted-light dark:border-border-accent-muted-dark;
+    }
+
+    .fern-sidebar-link-container[data-state="inactive"] .fern-sidebar-link-indent {
+        @apply border-default lg:opacity-60;
+    }
+
+    .fern-sidebar-link {
+        @apply text-left relative inline-flex flex-1 content-between items-stretch px-3;
+        @apply no-underline hover:no-underline;
+        @apply rounded-lg;
+    }
+
+    .fern-sidebar-link-container[data-state="active"] .fern-sidebar-link {
+        @apply bg-tag-primary;
+    }
+
+    .fern-sidebar-link-container[data-state="inactive"] .fern-sidebar-link {
+        @apply hover:bg-tag-default hover:transition-colors;
+    }
+
+    .fern-sidebar-link-content {
+        @apply inline-flex flex-1 items-center py-2.5 sm:py-2;
+    }
+
+    .fern-sidebar-link-text {
+        @apply flex-1 text-base leading-6 lg:text-sm lg:leading-5;
+    }
+
+    .fern-sidebar-link-expand {
+        @apply relative flex w-10 lg:w-6 justify-center items-center transition-colors rounded-none transition-transform ease-out;
+        @apply lg:rounded-lg;
+    }
+
+    .fern-sidebar-link-indent + .fern-sidebar-link-expand {
+        @apply lg:rounded-l-none;
+    }
+
+    .fern-sidebar-link-expand[data-state="active"] {
+        @apply after:content-[''] after:absolute after:inset-1 after:rounded-xl lg:after:rounded-md after:bg-tag-primary t-accent after:pointer-events-none;
+    }
+
+    .fern-segmented-control {
+        @apply bg-white dark:bg-white/5 ring-1 ring-inset ring-border-default rounded-lg shadow-sm h-8;
+        @apply space-x-0 p-1 flex items-center;
+    }
+
+    .fern-segmented-control > .fern-button {
+        @apply rounded-md;
+    }
+
     a.fern-button {
         @apply no-underline hover:no-underline;
     }
@@ -388,6 +638,119 @@
             + .fern-button.minimal {
                 @apply ml-2;
             }
+        }
+    }
+
+    .fern-card {
+        @apply border-default t-default hover:t-default border bg-white dark:bg-tag-default-soft;
+
+        &.interactive {
+            @apply cursor-pointer shadow-card-light hover:shadow-card-light-elevated hover:border-border-accent-muted-light hover:transition-all;
+            @apply dark:hover:border-border-accent-muted-dark dark:shadow-none dark:hover:shadow-card-dark-elevated;
+        }
+    }
+
+    a.fern-card {
+        @apply no-underline hover:no-underline;
+    }
+
+    .fern-input-focus {
+        @apply outline-tag-primary-light dark:outline-tag-primary-dark ring-border-primary outline outline-4 outline-offset-0;
+    }
+
+    .fern-input {
+        @apply form-input w-full;
+        @apply border-none bg-transparent #{!important};
+        @apply outline-none ring-0 #{!important};
+    }
+
+    .fern-textarea {
+        @apply form-textarea resize-none w-full;
+        @apply outline-none ring-0 bg-transparent border-none #{!important};
+    }
+
+    .fern-textarea-group,
+    .fern-input-group,
+    .fern-numeric-input-group {
+        @apply flex items-center overflow-hidden;
+        @apply focus-within:fern-input-focus;
+        @apply ring-default rounded-lg ring-1 ring-inset bg-white dark:bg-white/5 shadow-sm;
+    }
+
+    .fern-input-icon {
+        @apply flex items-center justify-center;
+        @apply w-10 md:w-8 h-full shrink-0;
+    }
+
+    .fern-input-icon + .fern-input {
+        @apply pl-10 -ml-10 md:pl-8 md:-ml-8;
+    }
+
+    .fern-input-right-element {
+        @apply flex items-center justify-center;
+        @apply min-w-10 md:min-w-8 h-full shrink-0 px-0 -ml-2;
+    }
+
+    .fern-input-group,
+    .fern-numeric-input-group {
+        @apply h-10 md:h-8;
+    }
+
+    .fern-numeric-input-group .fern-numeric-input-step {
+        @apply h-full rounded-none border-default;
+    }
+
+    .fern-numeric-input-group:focus-within .fern-numeric-input-step {
+        @apply ring-accent-primary hover:bg-tag-primary t-accent hover:t-accent border-accent-primary;
+    }
+
+    .fern-numeric-input-group .fern-numeric-input-step:first-child {
+        @apply rounded-l-md border-r;
+    }
+
+    .fern-numeric-input-group .fern-numeric-input-step:last-child {
+        @apply rounded-r-md border-l;
+    }
+
+    .fern-input,
+    .fern-textarea {
+        @apply caret-accent-primary-light dark:caret-accent-primary-dark py-2 px-2.5 text-sm;
+    }
+
+    input.fern-input::-webkit-outer-spin-button,
+    input.fern-input::-webkit-inner-spin-button {
+        appearance: none;
+        margin: 0;
+    }
+
+    input.fern-input[type="number"] {
+        appearance: textfield;
+    }
+
+    .fern-anchor {
+        @apply absolute hidden md:block;
+
+        a {
+            @apply flex items-center border-0 relative h-6 rounded-md;
+        }
+
+        .fern-anchor-icon {
+            @apply absolute left-0 flex size-6 items-center justify-center rounded-md;
+        }
+
+        .fern-anchor-icon:not(.copied) {
+            @apply bg-white text-gray-400 ring-1 ring-gray-400/30 backdrop-blur hover:ring-gray-400/60 dark:bg-white/5;
+            @apply dark:ring-gray-700/25 dark:hover:ring-white/20;
+        }
+
+        .fern-anchor-icon.copied {
+            @apply bg-tag-primary ring-border-accent-muted-light ring-1 backdrop-blur;
+
+            > svg {
+                @apply t-accent size-4;
+            }
+
+            @apply dark:ring-border-accent-muted-dark;
         }
     }
 }

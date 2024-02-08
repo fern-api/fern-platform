@@ -2,7 +2,6 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { PropsWithChildren, ReactElement, useRef, useState } from "react";
 import { Check } from "react-feather";
 import { FernButton } from "./FernButton";
-import "./FernDropdown.css";
 import { FernScrollArea } from "./FernScrollArea";
 
 interface FernDropdownOption {

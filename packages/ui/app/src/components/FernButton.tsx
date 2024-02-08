@@ -10,7 +10,6 @@ import {
     ReactNode,
 } from "react";
 import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
-import "./FernButton.scss";
 
 type Intent = "none" | "primary" | "success" | "warning" | "danger";
 

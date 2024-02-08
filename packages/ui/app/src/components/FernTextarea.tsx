@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import { DetailedHTMLProps, forwardRef, InputHTMLAttributes, useEffect, useImperativeHandle, useRef } from "react";
-import "./FernInput.css";
 
 interface FernTextareaProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement> {
     onValueChange?: (value: string) => void;

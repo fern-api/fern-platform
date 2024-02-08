@@ -5,7 +5,6 @@ import { isUndefined, omitBy } from "lodash-es";
 import { FC, Fragment } from "react";
 import { CopyToClipboardButton } from "../commons/CopyToClipboardButton";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
-import "./PlaygroundEndpointPath.css";
 import { PlaygroundRequestFormState } from "./types";
 import { buildEndpointUrl, unknownToString } from "./utils";
 

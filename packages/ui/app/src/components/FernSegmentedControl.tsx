@@ -2,8 +2,6 @@ import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import classNames from "classnames";
 import { FC } from "react";
 import { FernButton } from "./FernButton";
-import "./FernButton.scss";
-import "./FernSegmentedControl.css";
 
 interface FernSegmentedControlOption {
     label?: string;

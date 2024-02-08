@@ -12,7 +12,6 @@ import {
     useState,
 } from "react";
 import { FernButton } from "./FernButton";
-import "./FernInput.css";
 
 export interface FernNumericInputProps
     extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {

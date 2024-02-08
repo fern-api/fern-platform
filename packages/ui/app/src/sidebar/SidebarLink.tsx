@@ -7,7 +7,6 @@ import Link from "next/link";
 import { FC, HTMLAttributeAnchorTarget, memo, PropsWithChildren, ReactNode, useEffect, useRef } from "react";
 import { ReactElement } from "react-markdown/lib/react-markdown";
 import { useIsMobileSidebarOpen } from "./atom";
-import "./SidebarLink.css";
 
 interface SidebarSlugLinkProps {
     slug?: string[];
