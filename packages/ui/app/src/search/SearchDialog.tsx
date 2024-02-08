@@ -62,7 +62,7 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
                                         : "Find something..."
                                 }
                                 className="flex-1"
-                                inputClassName="w-full text-base t-muted placeholder:text-text-muted-light placeholder:dark:text-text-muted-dark bg-transparent py-5 focus:outline-none"
+                                inputClassName="form-input border-none w-full text-base t-muted placeholder:text-text-muted-light placeholder:dark:text-text-muted-dark bg-transparent py-5 focus:outline-none focus:ring-0"
                             />
                         </div>
                         <SearchHits />

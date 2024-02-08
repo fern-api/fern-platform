@@ -3,8 +3,11 @@ import { useBooleanState } from "@fern-ui/react-commons";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import React, { ReactElement, useEffect, useState } from "react";
+import { Search } from "react-feather";
 import { Chip } from "../../../components/Chip";
-import { SearchInput } from "../../../components/SearchInput";
+import { FernButton } from "../../../components/FernButton";
+import { FernInput } from "../../../components/FernInput";
+import { FernTooltipProvider } from "../../../components/FernTooltip";
 import { useNavigationContext } from "../../../navigation-context";
 import { TypeDefinitionContext, TypeDefinitionContextValue } from "../context/TypeDefinitionContext";
 import { EnumDefinitionDetails } from "./EnumDefinitionDetails";
@@ -41,11 +44,13 @@ export const EnumTypeDefinition = ({
             {elements.length < 4 ? (
                 <div className="t-muted flex flex-row gap-2 ">
                     <div className="shrink-0 text-sm"> Allowed values: </div>
-                    <div className="t-muted flex flex-row flex-wrap gap-2">
-                        {elements.map((item) => (
-                            <Chip key={item.key} name={item.props.name} description={item.props.description} />
-                        ))}
-                    </div>
+                    <FernTooltipProvider>
+                        <div className="t-muted flex flex-row flex-wrap gap-2">
+                            {elements.map((item) => (
+                                <Chip key={item.key} name={item.props.name} description={item.props.description} />
+                            ))}
+                        </div>
+                    </FernTooltipProvider>
                 </div>
             ) : (
                 <div
@@ -60,7 +65,7 @@ export const EnumTypeDefinition = ({
                 >
                     <div
                         className={classNames(
-                            "flex gap-1 items-center border-b hover:bg-tag-default-light dark:hover:bg-tag-default-dark cursor-pointer px-2 py-1 transition t-muted",
+                            "flex gap-1 items-center border-b hover:bg-tag-default focus-within:bg-tag-default cursor-pointer px-2 py-1 transition t-muted",
                             {
                                 "border-transparent": isCollapsed,
                                 "border-border-default-light dark:border-border-default-dark": !isCollapsed,
@@ -84,19 +89,31 @@ export const EnumTypeDefinition = ({
                             {isCollapsed ? (
                                 showText
                             ) : (
-                                <div className="flex flex-row items-center justify-between">
-                                    <SearchInput
-                                        searchInput={searchInput}
-                                        handleSearchInput={setSearchInput}
-                                        border={false}
-                                        clear={false}
-                                        autofocus={shouldAutoFocus.value}
-                                    />
-
-                                    <Cross2Icon
-                                        className={classNames("transition", {
-                                            "rotate-45": isCollapsed,
-                                        })}
+                                <div className="flex flex-row items-center justify-between gap-1 py-1">
+                                    <FernInput
+                                        autoFocus={shouldAutoFocus.value}
+                                        type="search"
+                                        placeholder="Search..."
+                                        value={searchInput}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                        }}
+                                        onValueChange={setSearchInput}
+                                        className="w-full"
+                                        style={{ flex: 1, backgroundColor: "transparent" }}
+                                        leftIcon={<Search className="t-muted size-4" />}
+                                        rightElement={
+                                            <FernButton
+                                                icon={
+                                                    <Cross2Icon
+                                                        className={classNames("transition", {
+                                                            "rotate-45": isCollapsed,
+                                                        })}
+                                                    />
+                                                }
+                                                buttonStyle="minimal"
+                                            />
+                                        }
                                     />
                                 </div>
                             )}

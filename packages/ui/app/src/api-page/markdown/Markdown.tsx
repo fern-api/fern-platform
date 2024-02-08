@@ -30,19 +30,22 @@ export declare namespace Markdown {
     export interface Props {
         children?: string;
         className?: string;
+        notProse?: boolean;
     }
 }
 
 const REMARK_PLUGINS = [remarkGfm];
 const REHYPE_PLUGINS = [rehypeRaw];
 
-export const Markdown = React.memo<Markdown.Props>(function Markdown({ children, className }) {
+export const Markdown = React.memo<Markdown.Props>(function Markdown({ children, notProse, className }) {
     if (children == null) {
         return null;
     }
     return (
         <ReactMarkdown
-            className={classNames(className, styles.container, "prose dark:prose-invert break-words max-w-none")}
+            className={classNames(className, styles.container, "break-words max-w-none", {
+                ["prose dark:prose-invert"]: !notProse,
+            })}
             remarkPlugins={REMARK_PLUGINS}
             rehypePlugins={REHYPE_PLUGINS}
             components={{

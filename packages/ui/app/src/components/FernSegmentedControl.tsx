@@ -6,7 +6,7 @@ import "./FernButton.scss";
 import "./FernSegmentedControl.css";
 
 interface FernSegmentedControlOption {
-    label: string;
+    label?: string;
     value: string;
 }
 
@@ -44,7 +44,7 @@ export const FernSegmentedControl: FC<FernSegmentedControlProps> = ({
                     intent={option.value === value ? "primary" : "none"}
                     size="small"
                 >
-                    {option.label}
+                    {option.label ?? option.value}
                 </FernButton>
             </ToggleGroup.Item>
         ))}

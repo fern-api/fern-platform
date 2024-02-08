@@ -17,13 +17,13 @@
             @apply rounded-full;
         }
 
-        &:has(> .fern-button-content > .fa-icon:first-child),
-        &:has(> .fern-button-content > svg:first-child) {
+        &:not(.square):has(> .fern-button-content > .fa-icon:first-child),
+        &:not(.square):has(> .fern-button-content > svg:first-child) {
             @apply pl-2;
         }
 
-        &:has(> .fern-button-content > .fa-icon:last-child),
-        &:has(> .fern-button-content > svg:last-child) {
+        &:not(.square):has(> .fern-button-content > .fa-icon:last-child),
+        &:not(.square):has(> .fern-button-content > svg:last-child) {
             @apply pr-2;
         }
 
@@ -64,13 +64,13 @@
         &.small {
             @apply px-2 py-1 text-xs h-6;
 
-            &:has(> .fern-button-content > .fa-icon:first-child),
-            &:has(> .fern-button-content > svg:first-child) {
+            &:not(.square):has(> .fern-button-content > .fa-icon:first-child),
+            &:not(.square):has(> .fern-button-content > svg:first-child) {
                 @apply pl-1.5;
             }
 
-            &:has(> .fern-button-content > .fa-icon:last-child),
-            &:has(> .fern-button-content > svg:last-child) {
+            &:not(.square):has(> .fern-button-content > .fa-icon:last-child),
+            &:not(.square):has(> .fern-button-content > svg:last-child) {
                 @apply pr-1.5;
             }
 
@@ -95,13 +95,13 @@
         &.large {
             @apply px-4 py-2 text-base h-10;
 
-            &:has(> .fern-button-content > .fa-icon:first-child),
-            &:has(> .fern-button-content > svg:first-child) {
+            &:not(.square):has(> .fern-button-content > .fa-icon:first-child),
+            &:not(.square):has(> .fern-button-content > svg:first-child) {
                 @apply pl-2;
             }
 
-            &:has(> .fern-button-content > .fa-icon:last-child),
-            &:has(> .fern-button-content > svg:last-child) {
+            &:not(.square):has(> .fern-button-content > .fa-icon:last-child),
+            &:not(.square):has(> .fern-button-content > svg:last-child) {
                 @apply pr-2;
             }
 
@@ -109,7 +109,7 @@
                 @apply gap-2 h-6;
 
                 > .fern-button-icon {
-                    @apply w-5 h-5;
+                    @apply size-5;
                 }
             }
 
@@ -130,10 +130,11 @@
         &:not(.disabled) {
             &.minimal {
                 @apply bg-transparent;
-                @apply t-default hover:t-default;
+                @apply t-muted hover:t-default;
 
                 &:hover,
-                &[data-state="on"] {
+                &[data-state="on"],
+                &[data-state="checked"] {
                     @apply bg-tag-default;
                 }
 
@@ -151,7 +152,8 @@
                     @apply t-primary hover:t-primary;
 
                     &:hover,
-                    &[data-state="on"] {
+                    &[data-state="on"],
+                    &[data-state="checked"] {
                         @apply bg-tag-primary;
                     }
 
@@ -164,7 +166,8 @@
                     @apply t-success hover:t-success;
 
                     &:hover,
-                    &[data-state="on"] {
+                    &[data-state="on"],
+                    &[data-state="checked"] {
                         @apply bg-tag-success;
                     }
 
@@ -177,7 +180,8 @@
                     @apply t-warning hover:t-warning;
 
                     &:hover,
-                    &[data-state="on"] {
+                    &[data-state="on"],
+                    &[data-state="checked"] {
                         @apply bg-tag-warning;
                     }
 
@@ -190,7 +194,8 @@
                     @apply t-danger hover:t-danger;
 
                     &:hover,
-                    &[data-state="on"] {
+                    &[data-state="on"],
+                    &[data-state="checked"] {
                         @apply bg-tag-danger;
                     }
 
@@ -205,7 +210,8 @@
                 @apply dark:bg-text-default-dark/60 dark:text-black;
 
                 &:hover,
-                &[data-state="on"] {
+                &[data-state="on"],
+                &[data-state="checked"] {
                     @apply bg-text-default-light/60 text-white;
                     @apply dark:bg-text-default-dark/60 dark:text-black;
                 }
@@ -220,7 +226,8 @@
                     @apply dark:text-accent-primary-dark-contrast;
 
                     &:hover,
-                    &[data-state="on"] {
+                    &[data-state="on"],
+                    &[data-state="checked"] {
                         @apply bg-accent-primary-darkened text-accent-primary-contrast;
                         @apply dark:bg-accent-primary-dark-lightened dark:text-accent-primary-dark-contrast;
                     }
@@ -236,7 +243,8 @@
                     @apply dark:bg-intent-success-dark dark:text-black;
 
                     &:hover,
-                    &[data-state="on"] {
+                    &[data-state="on"],
+                    &[data-state="checked"] {
                         @apply bg-intent-success-light-darkened text-white;
                         @apply dark:bg-intent-success-dark-lightened dark:text-black;
                     }
@@ -252,7 +260,8 @@
                     @apply dark:bg-intent-warning-dark dark:text-black;
 
                     &:hover,
-                    &[data-state="on"] {
+                    &[data-state="on"],
+                    &[data-state="checked"] {
                         @apply bg-intent-warning-light-darkened text-white;
                         @apply dark:bg-intent-warning-dark-lightened dark:text-black;
                     }
@@ -268,7 +277,8 @@
                     @apply dark:bg-intent-danger-dark dark:text-black;
 
                     &:hover,
-                    &[data-state="on"] {
+                    &[data-state="on"],
+                    &[data-state="checked"] {
                         @apply bg-intent-danger-light-darkened text-white;
                         @apply dark:bg-intent-danger-dark-lightened dark:text-black;
                     }
@@ -285,7 +295,8 @@
                 @apply ring-default t-default;
 
                 &:hover,
-                &[data-state="on"] {
+                &[data-state="on"],
+                &[data-state="checked"] {
                     @apply bg-tag-default t-default;
                 }
 
@@ -299,7 +310,8 @@
                     @apply dark:ring-border-primary-dark;
 
                     &:hover,
-                    &[data-state="on"] {
+                    &[data-state="on"],
+                    &[data-state="checked"] {
                         @apply bg-tag-primary text-accent-primary;
                     }
 
@@ -313,7 +325,8 @@
                     @apply dark:ring-border-success-dark dark:text-intent-success-dark;
 
                     &:hover,
-                    &[data-state="on"] {
+                    &[data-state="on"],
+                    &[data-state="checked"] {
                         @apply bg-tag-success text-intent-success-light;
                         @apply dark:text-intent-success-dark;
                     }
@@ -329,7 +342,8 @@
                     @apply dark:ring-border-warning-dark dark:text-intent-warning-dark;
 
                     &:hover,
-                    &[data-state="on"] {
+                    &[data-state="on"],
+                    &[data-state="checked"] {
                         @apply bg-tag-warning text-intent-warning-light;
                         @apply dark:text-intent-warning-dark;
                     }
@@ -345,7 +359,8 @@
                     @apply dark:ring-border-danger-dark dark:text-intent-danger-dark;
 
                     &:hover,
-                    &[data-state="on"] {
+                    &[data-state="on"],
+                    &[data-state="checked"] {
                         @apply bg-tag-danger text-intent-danger-light;
                         @apply dark:text-intent-danger-dark;
                     }

@@ -16,7 +16,7 @@
 
     .fern-textarea {
         @apply form-textarea resize-none;
-        @apply focus-visible:fern-input-focus;
+        @apply focus-visible:fern-input-focus focus:outline-4;
     }
 
     .fern-input-group,
@@ -27,16 +27,16 @@
 
     .fern-input-icon {
         @apply flex items-center justify-center;
-        @apply w-10 h-full shrink-0;
+        @apply w-8 h-full shrink-0;
     }
 
     .fern-input-icon + .fern-input {
-        @apply pl-10 -ml-10;
+        @apply pl-8 -ml-8;
     }
 
     .fern-input-right-element {
         @apply flex items-center justify-center;
-        @apply min-w-10 h-full shrink-0 px-1 -ml-2;
+        @apply min-w-8 h-full shrink-0 px-0 -ml-2;
     }
 
     .fern-input-group,
@@ -50,7 +50,7 @@
     }
 
     .fern-numeric-input-group:focus-within .fern-numeric-input-step {
-        @apply ring-accent-primary hover:bg-tag-primary text-accent-primary hover:text-accent-primary;
+        @apply ring-accent-primary hover:bg-tag-primary text-accent-primary hover:text-accent-primary border-accent-primary;
     }
 
     .fern-numeric-input-group .fern-numeric-input-step:first-child {

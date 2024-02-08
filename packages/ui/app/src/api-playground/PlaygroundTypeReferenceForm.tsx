@@ -4,7 +4,7 @@ import { ResolvedObjectProperty, ResolvedTypeReference } from "@fern-ui/app-util
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { Transition } from "@headlessui/react";
-import { ArrowLeftIcon } from "@radix-ui/react-icons";
+import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import { FC, PropsWithChildren, useEffect } from "react";
 import { FernButton } from "../components/FernButton";
 import { FernInput } from "../components/FernInput";
@@ -61,13 +61,12 @@ const WithPanel: FC<PropsWithChildren<WithPanelProps>> = ({
         <>
             <div
                 onClick={showPanel}
-                className="group flex h-full min-h-8 w-full min-w-0 shrink cursor-pointer items-center"
+                className="bg-tag-default ring-default group relative w-full cursor-pointer whitespace-pre-wrap break-all rounded p-1 font-mono text-xs leading-tight hover:ring-1"
             >
-                <span className="inline-flex flex-1 shrink items-baseline justify-between gap-2 overflow-hidden">
-                    <span className="group-hover:bg-tag-default-light dark:group-hover:bg-tag-default-dark -mx-0.5 min-w-0 shrink truncate whitespace-nowrap rounded px-0.5 font-mono text-xs">
-                        {JSON.stringify(value)}
-                    </span>
-                </span>
+                {JSON.stringify(value, undefined, 1)}
+                <div className="t-muted absolute inset-y-0 right-2 flex items-center">
+                    <ArrowRightIcon className="transition-transform group-hover:translate-x-1" />
+                </div>
             </div>
             <Transition
                 as="div"
@@ -277,19 +276,11 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
         ),
         stringLiteral: (literal) => {
             onChange(literal.value);
-            return (
-                <div>
-                    <span>{literal.value ? "TRUE" : "FALSE"}</span>
-                </div>
-            );
+            return <span>{literal.value ? "TRUE" : "FALSE"}</span>;
         },
         booleanLiteral: (literal) => {
             onChange(literal.value);
-            return (
-                <div>
-                    <span>{literal.value}</span>
-                </div>
-            );
+            return <span>{literal.value}</span>;
         },
         unknown: () => (
             <div className="flex min-w-0 flex-1 py-2">

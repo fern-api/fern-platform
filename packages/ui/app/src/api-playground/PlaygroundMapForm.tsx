@@ -64,9 +64,9 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ keyShape, valueS
         setInternalState((oldArray) => [...oldArray.slice(0, idx), ...oldArray.slice(idx + 1)]);
     }, []);
     return (
-        <div>
+        <>
             {internalState.length > 0 && (
-                <ul className="divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark max-w-full list-none divide-y divide-dashed border-t border-dashed">
+                <ul className="divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark w-full max-w-full list-none divide-y divide-dashed border-t border-dashed">
                     {internalState.map((item, idx) => (
                         <li key={idx} className="flex min-h-12 flex-row items-center gap-1 py-2">
                             <div className="flex min-w-0 shrink items-center justify-between gap-2">
@@ -120,6 +120,6 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ keyShape, valueS
                     className="w-full"
                 />
             )}
-        </div>
+        </>
     );
 };

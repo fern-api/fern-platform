@@ -9,6 +9,7 @@ import { Cross1Icon } from "@radix-ui/react-icons";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
+import { FernTooltipProvider } from "../components/FernTooltip";
 import { ApiPlayroundContent } from "./ApiPlaygroundContent";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 import { ApiPlaygroundEndpointSelector } from "./ApiPlaygroundEndpointSelector";
@@ -102,7 +103,7 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
         }
     }, [auth, endpoint, formState]);
 
-    return (
+    const drawer = (
         <div className="divide-border-default-light dark:divide-border-default-dark scroll-contain flex h-full flex-col divide-y overscroll-none rounded-lg">
             <div className="flex h-10 items-stretch justify-between gap-2 px-4">
                 {endpoint != null && (
@@ -129,11 +130,6 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
                 )}
 
                 <div className="bg-background dark:bg-background-dark -mr-2 flex items-center px-2">
-                    {/* <Tooltip content="Coming soon" popoverClassName="text-xs">
-                        <a className="text-text-primary-light hover:text-accent-primary decoration-accent-primary dark:text-text-primary-dark dark:hover:text-accent-primary-dark dark:decoration-accent-primary-dark whitespace-nowrap text-sm font-semibold underline decoration-1 underline-offset-4 hover:decoration-2">
-                            Sign in to use your API keys
-                        </a>
-                    </Tooltip> */}
                     <FernButtonGroup>
                         <PlaygroundSendRequestButton sendRequest={sendRequest} />
                         <FernButton
@@ -172,4 +168,6 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({
             )}
         </div>
     );
+
+    return <FernTooltipProvider>{drawer}</FernTooltipProvider>;
 };

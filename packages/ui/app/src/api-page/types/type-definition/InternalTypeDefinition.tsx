@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
 import { Chip } from "../../../components/Chip";
 import { FernCollapse } from "../../../components/FernCollapse";
+import { FernTooltipProvider } from "../../../components/FernTooltip";
 import { getAnchorId } from "../../../util/anchor";
 import {
     TypeDefinitionContext,
@@ -143,10 +144,12 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
 
     if (!isCollapsible) {
         return (
-            <TypeDefinitionDetails
-                elements={collapsableContent.elements}
-                separatorText={collapsableContent.separatorText}
-            />
+            <FernTooltipProvider>
+                <TypeDefinitionDetails
+                    elements={collapsableContent.elements}
+                    separatorText={collapsableContent.separatorText}
+                />
+            </FernTooltipProvider>
         );
     }
 
@@ -159,7 +162,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
             ? `Hide ${collapsableContent.elementNameSingular}`
             : `Hide ${collapsableContent.elements.length} ${collapsableContent.elementNamePlural}`;
 
-    return (
+    const toRet = (
         <div
             className={classNames(
                 "text-sm",
@@ -229,4 +232,6 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
             )}
         </div>
     );
+
+    return <FernTooltipProvider>{toRet}</FernTooltipProvider>;
 };

@@ -1,4 +1,4 @@
-import { Icon } from "@blueprintjs/core";
+import { ActivityLogIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { Snippet } from "react-instantsearch-hooks-web";
 import type { SearchRecord } from "../types";
@@ -19,13 +19,11 @@ export const PageRecord: React.FC<PageRecord.Props> = ({ hit, isHovered }) => {
                     "border-white dark:border-black bg-white dark:bg-black text-black": isHovered,
                 })}
             >
-                <Icon
-                    className={classNames({
+                <ActivityLogIcon
+                    className={classNames("size-4", {
                         "!text-text-muted-light dark:!text-text-muted-dark": !isHovered,
                         "!text-accent-primary": isHovered,
                     })}
-                    size={14}
-                    icon="document"
                 />
             </div>
 

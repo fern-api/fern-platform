@@ -1,10 +1,12 @@
-import { MenuItem, SegmentedControl, Tooltip } from "@blueprintjs/core";
+import { MenuItem } from "@blueprintjs/core";
 import { Select } from "@blueprintjs/select";
 import { ResolvedUndiscriminatedUnionShape, ResolvedUndiscriminatedUnionShapeVariant } from "@fern-ui/app-utils";
 import { CaretDownIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import { isEqual } from "lodash-es";
 import { FC, useCallback, useState } from "react";
 import { FernButton } from "../components/FernButton";
+import { FernSegmentedControl } from "../components/FernSegmentedControl";
+import { FernTooltip } from "../components/FernTooltip";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType, matchesTypeReference } from "./utils";
 
@@ -43,15 +45,14 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
     return (
         <div className="w-full">
             {undiscriminatedUnion.variants.length < 4 ? (
-                <SegmentedControl
+                <FernSegmentedControl
                     options={undiscriminatedUnion.variants.map((variant, idx) => ({
                         label: variant.displayName,
                         value: idx.toString(),
                     }))}
                     value={internalSelectedVariant.toString()}
                     onValueChange={setSelectedVariant}
-                    small={true}
-                    fill={true}
+                    className="w-full"
                 />
             ) : (
                 <Select<ResolvedUndiscriminatedUnionShapeVariant>
@@ -68,13 +69,9 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
                                 onFocus={handleFocus}
                                 roleStructure="listoption"
                                 labelElement={
-                                    <Tooltip
-                                        content={variant.description}
-                                        compact={true}
-                                        popoverClassName="max-w-xs text-xs"
-                                    >
+                                    <FernTooltip content={variant.description}>
                                         <InfoCircledIcon />
-                                    </Tooltip>
+                                    </FernTooltip>
                                 }
                             />
                         )

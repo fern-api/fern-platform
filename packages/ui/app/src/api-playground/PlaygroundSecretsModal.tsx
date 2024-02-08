@@ -1,10 +1,10 @@
-import { mergeRefs, Tooltip } from "@blueprintjs/core";
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 import { ArrowRightIcon, Cross1Icon, TrashIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { FC, useState } from "react";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernModal } from "../components/FernModal";
+import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { obfuscateSecret } from "./utils";
 
@@ -28,38 +28,21 @@ export const SecretSpan: FC<{ secret: string } & React.HTMLAttributes<HTMLSpanEl
 }) => {
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(secret);
     return (
-        <Tooltip
-            isOpen={wasJustCopied}
-            content={"Copied!"}
-            minimal={true}
-            compact={true}
-            placement="top"
-            renderTarget={({ ref: refOuter, isOpen: copiedIsOpen, ...propsOuter }) => (
-                <Tooltip
-                    disabled={copiedIsOpen}
-                    content={"Click to copy secret"}
-                    minimal={true}
-                    compact={true}
-                    placement="top"
-                    targetProps={propsOuter}
-                    renderTarget={({ ref: refInner, isOpen, className, ...propsInner }) => (
-                        <span
-                            ref={mergeRefs(refOuter, refInner)}
-                            {...propsInner}
-                            className={classNames(
-                                parentClassName,
-                                className,
-                                "bg-tag-default-light dark:bg-tag-default-dark hover:bg-tag-primary -mx-0.5 cursor-pointer rounded px-0.5 font-mono",
-                            )}
-                            onClick={copyToClipboard}
-                            {...props}
-                        >
-                            {obfuscateSecret(secret)}
-                        </span>
-                    )}
-                />
-            )}
-        />
+        <FernTooltip
+            open={wasJustCopied ? wasJustCopied : undefined}
+            content={wasJustCopied ? "Copied!" : "Click to copy secret"}
+        >
+            <span
+                className={classNames(
+                    parentClassName,
+                    "bg-tag-default-light dark:bg-tag-default-dark hover:bg-tag-primary -mx-0.5 cursor-pointer rounded px-0.5 font-mono",
+                )}
+                onClick={copyToClipboard}
+                {...props}
+            >
+                {obfuscateSecret(secret)}
+            </span>
+        </FernTooltip>
     );
 };
 
@@ -71,7 +54,7 @@ export const PlaygroundSecretsModal: FC<PlaygroundSecretsModalProps> = ({
     isOpen,
 }) => {
     const [value, setValue] = useState<string>("");
-    return (
+    const modal = (
         <FernModal isOpen={isOpen} onClose={onClose} className="relative w-96 rounded-lg p-4">
             <FernButton
                 className="absolute right-2 top-2"
@@ -126,4 +109,6 @@ export const PlaygroundSecretsModal: FC<PlaygroundSecretsModalProps> = ({
             </ul>
         </FernModal>
     );
+
+    return <FernTooltipProvider>{modal}</FernTooltipProvider>;
 };

@@ -1,6 +1,6 @@
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import classNames from "classnames";
 import { ReactElement } from "react";
+import { FernInput } from "./FernInput";
 
 type SearchProps = {
     searchInput: string;
@@ -13,29 +13,22 @@ type SearchProps = {
 export const SearchInput = ({
     searchInput,
     handleSearchInput,
-    border = true,
     clear = true,
     autofocus = false,
 }: SearchProps): ReactElement => {
     return (
-        <div
-            className={classNames("border-default rounded-md w-full flex gap-2 p-1.5 items-center", {
-                border,
-            })}
-        >
-            <MagnifyingGlassIcon className="t-muted" />
-            <input
-                autoFocus={autofocus}
-                type={clear ? "search" : "text"}
-                placeholder="Search..."
-                value={searchInput}
-                onClick={(e) => {
-                    e.stopPropagation();
-                }}
-                onChange={(e) => handleSearchInput(e.target.value)}
-                className="t-muted"
-                style={{ flex: 1, backgroundColor: "transparent" }}
-            />
-        </div>
+        <FernInput
+            autoFocus={autofocus}
+            type={clear ? "search" : "text"}
+            placeholder="Search..."
+            value={searchInput}
+            onClick={(e) => {
+                e.stopPropagation();
+            }}
+            onChange={(e) => handleSearchInput(e.target.value)}
+            className="w-full"
+            style={{ flex: 1, backgroundColor: "transparent" }}
+            leftIcon={<MagnifyingGlassIcon className="t-muted" />}
+        />
     );
 };

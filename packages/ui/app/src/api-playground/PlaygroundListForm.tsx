@@ -82,7 +82,13 @@ export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemShape, onC
                 </ul>
             )}
             {valueAsList.length === 0 && (
-                <FernButton icon={<PlusIcon />} text="Add new item" onClick={appendItem} buttonStyle="outlined" />
+                <FernButton
+                    icon={<PlusIcon />}
+                    text="Add new item"
+                    className="w-full"
+                    onClick={appendItem}
+                    buttonStyle="outlined"
+                />
             )}
         </>
     );

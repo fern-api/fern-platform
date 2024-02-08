@@ -1,4 +1,4 @@
-import { NonIdealState, Spinner } from "@blueprintjs/core";
+import { Spinner } from "@blueprintjs/core";
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import { Loadable, visitLoadable } from "@fern-ui/loadable";
@@ -186,7 +186,11 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                         )}
                     </div>
                     {visitLoadable(response, {
-                        loading: () => <NonIdealState className="flex-1" icon={<Spinner />} />,
+                        loading: () => (
+                            <div className="flex size-full flex-1 items-center justify-center">
+                                <Spinner />
+                            </div>
+                        ),
                         loaded: (response) => <PlaygroundResponsePreview responseBody={response.body} />,
                         failed: () => <span>Failed</span>,
                     })}

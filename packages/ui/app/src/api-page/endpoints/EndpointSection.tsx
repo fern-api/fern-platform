@@ -1,6 +1,7 @@
-import { Icon } from "@blueprintjs/core";
+import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
 import { useRef } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
+import { FernButton, FernButtonGroup } from "../../components/FernButton";
 import { getAnchorId } from "../../util/anchor";
 import { Markdown } from "../markdown/Markdown";
 
@@ -31,22 +32,20 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
     const anchorRoute = `${route}#${anchorId}`;
     return (
         <div ref={ref} data-route={anchorRoute.toLowerCase()} className="scroll-mt-header-height-padded flex flex-col">
-            <div className="group/anchor-container relative flex items-baseline gap-4 pb-3">
+            <div className="group/anchor-container relative flex items-baseline justify-between gap-4 pb-3">
                 <h3 className="relative mt-0 flex items-center">
                     <AbsolutelyPositionedAnchor href={anchorRoute} />
                     <span>{title}</span>
                 </h3>
                 {showExpandCollapse && (
-                    <div className="t-muted invisible flex gap-2 text-xs group-hover/anchor-container:visible">
-                        <button className="hover:underline" onClick={handleExpandAll}>
-                            <Icon icon="plus" size={14} className="mr-0.5" />
+                    <FernButtonGroup className="invisible group-hover/anchor-container:visible">
+                        <FernButton onClick={handleExpandAll} icon={<PlusIcon />} size="small" buttonStyle="minimal">
                             Expand all
-                        </button>
-                        <button className="hover:underline" onClick={handleCollapseAll}>
-                            <Icon icon="minus" size={14} className="mr-0.5" />
+                        </FernButton>
+                        <FernButton onClick={handleCollapseAll} icon={<MinusIcon />} size="small" buttonStyle="minimal">
                             Collapse all
-                        </button>
-                    </div>
+                        </FernButton>
+                    </FernButtonGroup>
                 )}
             </div>
             {description != null && (

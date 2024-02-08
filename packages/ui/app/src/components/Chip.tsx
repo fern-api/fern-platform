@@ -1,5 +1,5 @@
-import { Tooltip } from "@blueprintjs/core";
 import { ReactElement } from "react";
+import { FernTooltip } from "./FernTooltip";
 
 type ChipProps = {
     name: string;
@@ -11,9 +11,9 @@ type ChipProps = {
 export const Chip = ({ name, description = undefined }: ChipProps): ReactElement => {
     return (
         <span className="border-default t-default bg-tag-default rounded border px-1.5 py-0.5 text-xs">
-            <Tooltip disabled={description == null} content={description}>
-                {name}
-            </Tooltip>
+            <FernTooltip open={description == null ? false : undefined} content={description}>
+                <span>{name}</span>
+            </FernTooltip>
         </span>
     );
 };
