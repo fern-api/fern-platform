@@ -1,5 +1,5 @@
 import { noop } from "lodash-es";
-import { createContext, PropsWithChildren, useContext, useState } from "react";
+import { createContext, PropsWithChildren, useCallback, useContext, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 interface TableOfContentsContextValue {
@@ -16,17 +16,38 @@ export function useAnchorInView(anchor: string | undefined): (node?: Element | n
     const { ref } = useInView({
         rootMargin: "0px 0px -50% 0px",
         threshold: 0.5,
-        onChange: (inView) => {
-            if (inView) {
-                setAnchorInView(anchor);
-            }
-        },
+        onChange: useCallback(
+            (inView: boolean) => {
+                if (inView) {
+                    setAnchorInView(anchor);
+                }
+            },
+            [setAnchorInView, anchor],
+        ),
     });
     return ref;
 }
 
 export const TableOfContentsContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const [anchorInView, setAnchorInView] = useState<string | undefined>(undefined);
+
+    useEffect(() => {
+        if (typeof window === "undefined") {
+            return;
+        }
+        const observeHashChange = () => {
+            const hash = window.location.hash;
+            if (hash.length > 1) {
+                setAnchorInView(hash.slice(1));
+            }
+        };
+
+        observeHashChange();
+        window.addEventListener("hashchange", observeHashChange);
+        return () => {
+            window.removeEventListener("hashchange", observeHashChange);
+        };
+    }, []);
     return (
         <TableOfContentsContext.Provider value={{ setAnchorInView, anchorInView }}>
             {children}
