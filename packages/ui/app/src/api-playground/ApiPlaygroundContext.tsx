@@ -51,9 +51,11 @@ interface ApiPlaygroundProps {
     apiSections: ResolvedNavigationItemApiSection[];
 }
 
+const CUSTOMERS = ["cloudflare", "assemblyai", "cohere", "shipbob"];
+
 function isApiPlaygroundEnabled(domain: string) {
     domain = domain.toLowerCase();
-    if (domain.includes("cloudflare") || domain.includes("assemblyai") || domain.includes("cohere")) {
+    if (CUSTOMERS.some((customer) => domain.includes(customer))) {
         return true;
     }
 
