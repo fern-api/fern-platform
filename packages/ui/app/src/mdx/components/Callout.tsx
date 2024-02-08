@@ -33,7 +33,7 @@ export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ inte
     return (
         <div
             className={classNames(
-                "flex space-x-3 p-4 pb-0 mb-4 rounded-xl", // pb-0 to compensate for the ::after margin
+                "flex space-x-3 p-4 pb-0 mb-4 rounded-lg", // pb-0 to compensate for the ::after margin
                 visitDiscriminatedUnion({ intent }, "intent")._visit({
                     info: () => "callout-outlined",
                     warning: () => "callout-outlined-warning",
