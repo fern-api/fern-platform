@@ -1,8 +1,11 @@
-import { Button, MenuItem, SegmentedControl, Tooltip } from "@blueprintjs/core";
+import { MenuItem } from "@blueprintjs/core";
 import { Select } from "@blueprintjs/select";
 import { ResolvedDiscriminatedUnionShape, ResolvedDiscriminatedUnionShapeVariant, titleCase } from "@fern-ui/app-utils";
 import { CaretDownIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import { FC, useCallback } from "react";
+import { FernButton } from "../components/FernButton";
+import { FernSegmentedControl } from "../components/FernSegmentedControl";
+import { FernTooltip } from "../components/FernTooltip";
 import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
 import { castToRecord, getDefaultValueForObjectProperties } from "./utils";
 
@@ -49,15 +52,14 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
     return (
         <div className="w-full">
             {discriminatedUnion.variants.length < 4 ? (
-                <SegmentedControl
+                <FernSegmentedControl
                     options={discriminatedUnion.variants.map((variant) => ({
                         label: titleCase(variant.discriminantValue),
                         value: variant.discriminantValue,
                     }))}
                     value={selectedVariant}
                     onValueChange={setSelectedVariant}
-                    small={true}
-                    fill={true}
+                    className="w-full"
                 />
             ) : (
                 <Select<ResolvedDiscriminatedUnionShapeVariant>
@@ -74,13 +76,9 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                                 onFocus={handleFocus}
                                 roleStructure="listoption"
                                 labelElement={
-                                    <Tooltip
-                                        content={variant.description}
-                                        compact={true}
-                                        popoverClassName="max-w-xs text-xs"
-                                    >
+                                    <FernTooltip content={variant.description}>
                                         <InfoCircledIcon />
-                                    </Tooltip>
+                                    </FernTooltip>
                                 }
                             />
                         )
@@ -93,7 +91,7 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                     popoverProps={{ minimal: true, matchTargetWidth: true }}
                     fill={true}
                 >
-                    <Button
+                    <FernButton
                         text={
                             activeVariant != null ? (
                                 <span className="font-mono">{activeVariant.discriminantValue}</span>
@@ -101,9 +99,8 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                                 <span className="t-muted">Select a variant...</span>
                             )
                         }
-                        alignText="left"
                         rightIcon={<CaretDownIcon />}
-                        fill={true}
+                        className="w-full text-left"
                     />
                 </Select>
             )}
@@ -112,6 +109,8 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                     properties={activeVariant.additionalProperties}
                     value={value}
                     onChange={onChange}
+                    hideObjects={false}
+                    sortProperties={false}
                 />
             )}
         </div>

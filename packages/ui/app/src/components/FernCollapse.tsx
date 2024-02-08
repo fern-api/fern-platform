@@ -19,6 +19,7 @@ export const FernCollapse: FC<PropsWithChildren<FernCollapseProps>> = ({ childre
         <Transition
             show={isOpen}
             style={{ height }}
+            className="will-change-auto"
             enter="transition-[height] ease-out overflow-y-hidden"
             enterFrom="h-0"
             leave="transition-[height] ease-in overflow-y-hidden"

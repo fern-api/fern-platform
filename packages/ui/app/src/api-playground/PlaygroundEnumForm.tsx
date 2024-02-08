@@ -1,8 +1,9 @@
-import { Button, MenuItem, SegmentedControl, Tooltip } from "@blueprintjs/core";
-import { Select } from "@blueprintjs/select";
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { CaretDownIcon, InfoCircledIcon } from "@radix-ui/react-icons";
-import { FC, useCallback } from "react";
+import { CaretDownIcon } from "@radix-ui/react-icons";
+import { FC } from "react";
+import { FernButton } from "../components/FernButton";
+import { FernDropdown } from "../components/FernDropdown";
+import { FernSegmentedControl } from "../components/FernSegmentedControl";
 
 interface PlaygroundEnumFormProps {
     enumValues: APIV1Read.EnumValue[];
@@ -11,13 +12,6 @@ interface PlaygroundEnumFormProps {
 }
 
 export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({ enumValues, onChange, value }) => {
-    const setSelectedValue = useCallback(
-        (enumValue: APIV1Read.EnumValue) => {
-            onChange(enumValue.value);
-        },
-        [onChange],
-    );
-
     if (enumValues.length === 0) {
         return null;
     }
@@ -25,15 +19,13 @@ export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({ enumValues, on
     if (enumValues.length < 3) {
         return (
             <div className="w-full">
-                <SegmentedControl
+                <FernSegmentedControl
                     options={enumValues.map((enumValue) => ({
                         label: enumValue.value,
                         value: enumValue.value,
                     }))}
                     value={typeof value === "string" ? value : undefined}
                     onValueChange={onChange}
-                    small={true}
-                    fill={true}
                 />
             </div>
         );
@@ -42,34 +34,8 @@ export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({ enumValues, on
     const activeItem = enumValues.find((enumValue) => enumValue.value === value);
 
     return (
-        <Select<APIV1Read.EnumValue>
-            items={enumValues}
-            itemRenderer={({ value, description }, { ref, handleClick, handleFocus, modifiers }) =>
-                modifiers.matchesPredicate && (
-                    <MenuItem
-                        ref={ref}
-                        active={modifiers.active}
-                        disabled={modifiers.disabled}
-                        key={value}
-                        text={<span className="font-mono text-sm">{value}</span>}
-                        onClick={handleClick}
-                        onFocus={handleFocus}
-                        roleStructure="listoption"
-                        labelElement={
-                            <Tooltip content={description} compact={true} popoverClassName="max-w-xs text-xs">
-                                <InfoCircledIcon />
-                            </Tooltip>
-                        }
-                    />
-                )
-            }
-            itemPredicate={(query, { value }) => value.toLowerCase().includes(query.toLowerCase())}
-            onItemSelect={setSelectedValue}
-            activeItem={activeItem}
-            popoverProps={{ minimal: true, matchTargetWidth: true }}
-            fill={true}
-        >
-            <Button
+        <FernDropdown options={enumValues} onValueChange={onChange} value={activeItem?.value}>
+            <FernButton
                 text={
                     activeItem != null ? (
                         <span className="font-mono">{activeItem.value}</span>
@@ -77,10 +43,10 @@ export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({ enumValues, on
                         <span className="t-muted">Select an enum...</span>
                     )
                 }
-                alignText="left"
+                buttonStyle="outlined"
                 rightIcon={<CaretDownIcon />}
-                fill={true}
+                className="w-full text-left"
             />
-        </Select>
+        </FernDropdown>
     );
 };

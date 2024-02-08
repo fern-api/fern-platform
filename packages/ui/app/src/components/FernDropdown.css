@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .fern-dropdown {
+        @apply animate-popover;
+        @apply w-[var(--radix-dropdown-menu-trigger-width)];
+        @apply border-default flex max-h-[300px] min-w-[220px] flex-col rounded-lg border bg-background will-change-[opacity,transform];
+    }
+}

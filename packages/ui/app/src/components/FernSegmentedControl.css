@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .fern-segmented-control {
+        @apply bg-white border border-gray-300 rounded-lg shadow-sm h-10;
+        @apply space-x-0.5 p-1;
+    }
+
+    .fern-segmented-control > .fern-button {
+        @apply rounded-md h-[30px];
+    }
+}

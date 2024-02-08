@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { DetailedHTMLProps, forwardRef, InputHTMLAttributes, useEffect, useImperativeHandle, useRef } from "react";
+import "./FernInput.css";
 
 interface FernTextareaProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement> {
     onValueChange?: (value: string) => void;
@@ -20,21 +21,15 @@ export const FernTextarea = forwardRef<HTMLTextAreaElement, FernTextareaProps>(f
     };
     useAutosizeTextArea(inputRef.current, props.value ?? "", minLines);
     return (
-        <textarea
-            {...props}
-            ref={inputRef}
-            className={classNames(
-                className,
-                "border-border-default-light dark:border-border-default-dark focus-visible:ring-tag-primary-light focus-visible:dark:ring-tag-primary-dark focus-visible:border-accent-primary caret-accent-primary-light dark:caret-accent-primary-dark rounded-md border bg-white p-2 text-sm focus:outline-none focus-visible:ring-4 dark:bg-white/10 resize-none",
-            )}
-            onChange={handleChange}
-        />
+        <div className={classNames("fern-textarea-group", className)}>
+            <textarea {...props} ref={inputRef} className="fern-textarea" onChange={handleChange} />
+        </div>
     );
 });
 
 // Updates the height of a <textarea> when the value changes.
 function useAutosizeTextArea(textAreaRef: HTMLTextAreaElement | null, value: string, minLines: number): void {
-    const minHeight = minLines * 20 + 18;
+    const minHeight = minLines * 20 + 16;
     useEffect(() => {
         if (textAreaRef) {
             // We need to reset the height momentarily to get the correct scrollHeight for the textarea

@@ -1,12 +1,13 @@
-import { Button, Checkbox, Tooltip } from "@blueprintjs/core";
+import { Checkbox } from "@blueprintjs/core";
 import { ResolvedObjectProperty } from "@fern-ui/app-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
-import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
-import { isUndefined } from "lodash-es";
-import { ChangeEventHandler, FC, useCallback, useEffect, useState } from "react";
+import { isUndefined, sortBy } from "lodash-es";
+import { ChangeEventHandler, FC, useCallback, useEffect, useMemo, useState } from "react";
 import { EndpointAvailabilityTag } from "../api-page/endpoints/EndpointAvailabilityTag";
+import { Markdown } from "../api-page/markdown/Markdown";
 import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
+import { FernTooltip } from "../components/FernTooltip";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { castToRecord, getDefaultValueForType, isExpandable } from "./utils";
 
@@ -32,9 +33,9 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
 
     const expandable = isExpandable(property.valueShape, value);
     const {
-        value: expanded,
+        // value: expanded,
         setTrue: setExpanded,
-        toggleValue: toggleExpanded,
+        // toggleValue: toggleExpanded,
     } = useBooleanState(!expandable || expandByDefault);
 
     const handleChangeOptional = useCallback<ChangeEventHandler<HTMLInputElement>>(
@@ -64,97 +65,80 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
     const handleCloseStack = useCallback(() => setIsUnderStack(false), []);
 
     return (
-        <Tooltip
-            isOpen={focused === true ? true : undefined}
-            content={property.description}
-            popoverClassName="max-w-xs text-xs"
-            disabled={property.description == null || property.description.length === 0 || isUnderStack}
-            placement="right"
-            renderTarget={({ ref, isOpen, className, ...targetProps }) => (
-                <li ref={ref} className={className} {...targetProps}>
-                    <div
-                        className={classNames(
-                            "divide-border-default-light dark:divide-border-default-dark flex min-h-12 flex-row items-stretch divide-x px-4",
-                            {
-                                "divide-x-0": expanded && expandable,
-                            },
-                        )}
-                    >
-                        <div className="flex min-w-0 max-w-full flex-1 shrink items-center justify-between gap-2 py-2 pr-2">
-                            <label className="inline-flex w-full items-baseline gap-2">
-                                <span className={classNames("font-mono text-sm truncate")}>{property.key}</span>
+        <li className="py-1" tabIndex={-1}>
+            <div className="flex items-center justify-between gap-2 pb-1 pt-3">
+                <label className="inline-flex w-full items-baseline gap-2">
+                    <span className={classNames("font-mono text-sm truncate")}>{property.key}</span>
 
-                                {property.availability != null && (
-                                    <EndpointAvailabilityTag availability={property.availability} minimal={true} />
-                                )}
-                            </label>
-                        </div>
-                        <div className="flex min-w-0 max-w-full flex-1 shrink items-center justify-end gap-2 pl-2">
-                            {!isUndefined(value) && !expandable && (
-                                <PlaygroundTypeReferenceForm
-                                    shape={
-                                        property.valueShape.type === "optional"
-                                            ? property.valueShape.shape
-                                            : property.valueShape
-                                    }
-                                    onChange={handleChange}
-                                    value={value}
-                                    onFocus={handleFocus}
-                                    onBlur={handleBlur}
-                                    renderAsPanel={true}
-                                    onOpenStack={handleOpenStack}
-                                    onCloseStack={handleCloseStack}
-                                />
-                            )}
-
-                            {((property.valueShape.type === "optional" && isUndefined(value)) || expandable) && (
-                                <span className="t-muted whitespace-nowrap text-xs">
-                                    {renderTypeShorthand(property.valueShape)}
-                                </span>
-                            )}
-
-                            {expandable && (property.valueShape.type === "optional" ? !isUndefined(value) : true) && (
-                                <Button
-                                    icon={expanded ? <ChevronDownIcon /> : <ChevronUpIcon />}
-                                    minimal={true}
-                                    small={true}
-                                    className="-mx-1"
-                                    onClick={toggleExpanded}
-                                />
-                            )}
-
-                            {property.valueShape.type === "optional" && (
-                                <span className="inline-flex items-center">
-                                    <Checkbox
-                                        checked={!isUndefined(value)}
-                                        onChange={handleChangeOptional}
-                                        className="!-my-2 !-mr-2"
-                                    />
-                                </span>
-                            )}
-                        </div>
-                    </div>
-                    {!isUndefined(value) && expandable && expanded && (
-                        <div className="px-4">
-                            <PlaygroundTypeReferenceForm
-                                shape={
-                                    property.valueShape.type === "optional"
-                                        ? property.valueShape.shape
-                                        : property.valueShape
-                                }
-                                onChange={handleChange}
-                                value={value}
-                                onFocus={handleFocus}
-                                onBlur={handleBlur}
-                                renderAsPanel={true}
-                                onOpenStack={handleOpenStack}
-                                onCloseStack={handleCloseStack}
-                            />
-                        </div>
+                    {property.availability != null && (
+                        <EndpointAvailabilityTag availability={property.availability} minimal={true} />
                     )}
-                </li>
-            )}
-        />
+                </label>
+
+                <span className="t-muted whitespace-nowrap text-xs">
+                    {renderTypeShorthand(property.valueShape)}
+
+                    {property.valueShape.type === "optional" && (
+                        <span className="ml-2 inline-flex items-center">
+                            <Checkbox
+                                checked={!isUndefined(value)}
+                                onChange={handleChangeOptional}
+                                className="!-my-2 !-mr-2"
+                            />
+                        </span>
+                    )}
+                </span>
+            </div>
+            <FernTooltip
+                open={
+                    property.description == null || property.description.length === 0 || isUnderStack
+                        ? false
+                        : focused === true
+                          ? true
+                          : undefined
+                }
+                content={
+                    <Markdown notProse className="prose-sm dark:prose-invert">
+                        {property.description}
+                    </Markdown>
+                }
+            >
+                <div className="flex items-center justify-between gap-2 pb-3">
+                    {!isUndefined(value) && (
+                        <PlaygroundTypeReferenceForm
+                            shape={
+                                property.valueShape.type === "optional"
+                                    ? property.valueShape.shape
+                                    : property.valueShape
+                            }
+                            onChange={handleChange}
+                            value={value}
+                            onFocus={handleFocus}
+                            onBlur={handleBlur}
+                            renderAsPanel={true}
+                            onOpenStack={handleOpenStack}
+                            onCloseStack={handleCloseStack}
+                        />
+                    )}
+
+                    {property.valueShape.type === "list" && Array.isArray(value) && (
+                        <span className="t-muted whitespace-nowrap text-xs">
+                            {value.length} {value.length === 1 ? "item" : "items"}
+                        </span>
+                    )}
+
+                    {/* {expandable && (property.valueShape.type === "optional" ? !isUndefined(value) : true) && (
+                        <FernButton
+                            icon={expanded ? <ChevronDownIcon /> : <ChevronUpIcon />}
+                            buttonStyle="minimal"
+                            size="small"
+                            className="-mx-1"
+                            onClick={toggleExpanded}
+                        />
+                    )} */}
+                </div>
+            </FernTooltip>
+        </li>
     );
 };
 
@@ -162,12 +146,16 @@ interface PlaygroundObjectPropertiesFormProps {
     properties: ResolvedObjectProperty[];
     onChange: (value: unknown) => void;
     value: unknown;
+    hideObjects: boolean;
+    sortProperties: boolean;
 }
 
 export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormProps> = ({
     properties,
     onChange,
     value,
+    hideObjects,
+    sortProperties,
 }) => {
     const onChangeObjectProperty = useCallback(
         (key: string, newValue: unknown) => {
@@ -178,13 +166,22 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
         },
         [onChange],
     );
+    const propertiesToRender: ResolvedObjectProperty[] = useMemo(() => {
+        const filteredProperties = properties.filter((property) =>
+            hideObjects ? !isObjectOrOptionalObject(property.valueShape) : true,
+        );
+        if (sortProperties) {
+            return sortBy(filteredProperties, (property) => property.key);
+        }
+        return filteredProperties;
+    }, [hideObjects, properties, sortProperties]);
     return (
         <ul
             className={
-                "divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark -mx-4 mb-4 list-none divide-y border-y"
+                "divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark list-none divide-y border-y"
             }
         >
-            {properties.map((property) => (
+            {propertiesToRender.map((property) => (
                 <PlaygroundObjectPropertyForm
                     key={property.key}
                     property={property}
@@ -195,3 +192,7 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
         </ul>
     );
 };
+
+function isObjectOrOptionalObject(shape: ResolvedObjectProperty["valueShape"]): boolean {
+    return shape.type === "object" || (shape.type === "optional" && shape.shape.type === "object");
+}

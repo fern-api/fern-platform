@@ -6,10 +6,10 @@ import {
 } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
-import { Transition } from "@headlessui/react";
+import { Portal, Transition } from "@headlessui/react";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
-import { Dispatch, FC, Fragment, SetStateAction, useCallback, useEffect } from "react";
+import { Dispatch, FC, SetStateAction, useCallback, useEffect } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, useApiPlaygroundContext } from "./ApiPlaygroundContext";
 import { ApiPlaygroundDrawer } from "./ApiPlaygroundDrawer";
@@ -157,39 +157,37 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
     }
 
     return (
-        <>
-            <Transition show={isPlaygroundOpen} as={Fragment}>
-                <Transition.Child
-                    as={Fragment}
-                    enter="ease-out transition-all duration-300"
-                    enterFrom="opacity-0 translate-y-full"
-                    enterTo="opacity-100 translate-y-0"
-                    leave="ease-in transition-all duration-200"
-                    leaveFrom="opacity-100 translate-y-0"
-                    leaveTo="opacity-0 translate-y-full"
+        <Portal>
+            <Transition
+                show={isPlaygroundOpen}
+                className="bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark fixed inset-x-0 bottom-0  border-t"
+                style={{ height }}
+                enter="ease-out transition-transform duration-300 transform"
+                enterFrom="translate-y-full"
+                enterTo="translate-y-0"
+                leave="ease-in transition-transform duration-200 transform"
+                leaveFrom="translate-y-0"
+                leaveTo="translate-y-full"
+            >
+                <div
+                    className="group absolute inset-x-0 -top-1 h-1 cursor-row-resize"
+                    onMouseDown={handleVerticalResize}
                 >
-                    <div
-                        className="bg-background dark:bg-background-dark border-border-default-light dark:border-border-default-dark fixed inset-x-0 bottom-0 z-20 border-t"
-                        style={{ height }}
-                    >
-                        <div
-                            className="bg-accent-primary absolute inset-x-0 -top-1 h-1 cursor-row-resize opacity-0 transition-opacity hover:opacity-100 active:opacity-100"
-                            onMouseDown={handleVerticalResize}
-                        />
-                        <ApiPlaygroundDrawer
-                            navigationItems={apiSections}
-                            auth={selectionState?.apiSection.auth}
-                            apiDefinition={selectionState?.apiDefinition}
-                            endpoint={selectionState?.endpoint}
-                            formState={playgroundFormState}
-                            setFormState={setPlaygroundFormState}
-                            resetWithExample={resetWithExample}
-                            resetWithoutExample={resetWithoutExample}
-                            openSecretsModal={openSecretsModal}
-                            secrets={globalFormSecrets}
-                        />
-                    </div>
-                </Transition.Child>
+                    <div className="bg-accent-primary dark:bg-accent-primary-dark absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
+                    <div className="bg-accent-primary dark:bg-accent-primary-dark relative top-2 z-30 mx-auto h-1 w-10 rounded-sm" />
+                </div>
+                <ApiPlaygroundDrawer
+                    navigationItems={apiSections}
+                    auth={selectionState?.apiSection.auth}
+                    apiDefinition={selectionState?.apiDefinition}
+                    endpoint={selectionState?.endpoint}
+                    formState={playgroundFormState}
+                    setFormState={setPlaygroundFormState}
+                    resetWithExample={resetWithExample}
+                    resetWithoutExample={resetWithoutExample}
+                    openSecretsModal={openSecretsModal}
+                    secrets={globalFormSecrets}
+                />
             </Transition>
             <PlaygroundSecretsModal
                 secrets={globalFormSecrets}
@@ -198,7 +196,7 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
                 onClose={closeSecretsModal}
                 selectSecret={handleSelectSecret}
             />
-        </>
+        </Portal>
     );
 };
 

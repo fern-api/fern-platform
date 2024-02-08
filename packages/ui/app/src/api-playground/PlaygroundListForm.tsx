@@ -1,7 +1,7 @@
-import { Button } from "@blueprintjs/core";
 import { ResolvedTypeReference } from "@fern-ui/app-utils";
 import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
 import { FC, useCallback } from "react";
+import { FernButton } from "../components/FernButton";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType } from "./utils";
 
@@ -60,29 +60,35 @@ export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemShape, onC
                                     }
                                     renderAsPanel={true}
                                 />
-                                <Button
+                                <FernButton
                                     icon={<Cross1Icon />}
                                     onClick={() => handleRemoveItem(idx)}
-                                    minimal={true}
-                                    small={true}
+                                    buttonStyle="minimal"
+                                    size="small"
                                     className="-mx-1"
                                 />
                             </div>
                         </li>
                     ))}
                     <li className="py-2">
-                        <Button
+                        <FernButton
                             icon={<PlusIcon />}
                             text="Add new item"
                             onClick={appendItem}
-                            outlined={true}
-                            fill={true}
+                            buttonStyle="outlined"
+                            className="w-full"
                         />
                     </li>
                 </ul>
             )}
             {valueAsList.length === 0 && (
-                <Button icon={<PlusIcon />} text="Add new item" onClick={appendItem} outlined={true} fill={true} />
+                <FernButton
+                    icon={<PlusIcon />}
+                    text="Add new item"
+                    className="w-full"
+                    onClick={appendItem}
+                    buttonStyle="outlined"
+                />
             )}
         </>
     );

@@ -34,7 +34,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
             <FernScrollArea className="group/sidebar" viewportClassName="px-4 pb-12">
                 <MobileSidebarHeaderLinks navbarLinks={navbarLinks} />
                 <SidebarFixedItemsSection
-                    className="-mx-4 lg:sticky lg:top-0 lg:z-20"
+                    className="-mx-4 lg:sticky lg:top-0"
                     searchInfo={searchInfo}
                     algoliaSearchIndex={algoliaSearchIndex}
                 />
@@ -67,7 +67,7 @@ function MobileSidebar(props: SidebarProps) {
 
     return (
         <Transition as={Fragment} show={isMobileSidebarOpen}>
-            <Dialog onClose={closeMobileSidebar} className="top-header-height fixed inset-0 z-20">
+            <Dialog onClose={closeMobileSidebar} className="top-header-height fixed inset-0">
                 <Transition.Child
                     as="div"
                     className="bg-background-light/40 dark:bg-background-dark/40 fixed inset-0 z-0"

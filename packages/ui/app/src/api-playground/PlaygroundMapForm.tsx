@@ -1,8 +1,8 @@
-import { Button } from "@blueprintjs/core";
 import { ResolvedTypeReference } from "@fern-ui/app-utils";
 import { isPlainObject } from "@fern-ui/core-utils";
 import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
 import { FC, useCallback, useEffect, useState } from "react";
+import { FernButton } from "../components/FernButton";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType, unknownToString } from "./utils";
 
@@ -60,19 +60,13 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ keyShape, valueS
             return [...oldState.slice(0, idx), { ...oldState[idx]!, value: newValue }, ...oldState.slice(idx + 1)];
         });
     }, []);
-    const handleRemoveItem = useCallback(
-        (idx: number) => {
-            onChange((oldValue: unknown) => {
-                const oldArray = Array.isArray(oldValue) ? oldValue : [];
-                return [...oldArray.slice(0, idx), ...oldArray.slice(idx + 1)];
-            });
-        },
-        [onChange],
-    );
+    const handleRemoveItem = useCallback((idx: number) => {
+        setInternalState((oldArray) => [...oldArray.slice(0, idx), ...oldArray.slice(idx + 1)]);
+    }, []);
     return (
-        <div>
+        <>
             {internalState.length > 0 && (
-                <ul className="divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark max-w-full list-none divide-y divide-dashed border-t border-dashed">
+                <ul className="divide-border-default-dark dark:divide-border-default-dark border-border-default-light dark:border-border-default-dark w-full max-w-full list-none divide-y divide-dashed border-t border-dashed">
                     {internalState.map((item, idx) => (
                         <li key={idx} className="flex min-h-12 flex-row items-center gap-1 py-2">
                             <div className="flex min-w-0 shrink items-center justify-between gap-2">
@@ -98,30 +92,34 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ keyShape, valueS
                                 />
                             </div>
                             <div>
-                                <Button icon={<Cross1Icon />} onClick={() => handleRemoveItem(idx)} minimal={true} />
+                                <FernButton
+                                    icon={<Cross1Icon />}
+                                    onClick={() => handleRemoveItem(idx)}
+                                    buttonStyle="minimal"
+                                />
                             </div>
                         </li>
                     ))}
-                    <li>
-                        <Button
+                    <li className="py-2">
+                        <FernButton
                             icon={<PlusIcon />}
                             text="Add new item"
                             onClick={handleAppendItem}
-                            outlined={true}
-                            fill={true}
+                            buttonStyle="outlined"
+                            className="w-full"
                         />
                     </li>
                 </ul>
             )}
             {internalState.length === 0 && (
-                <Button
+                <FernButton
                     icon={<PlusIcon />}
                     text="Add new item"
                     onClick={handleAppendItem}
-                    outlined={true}
-                    fill={true}
+                    buttonStyle="outlined"
+                    className="w-full"
                 />
             )}
-        </div>
+        </>
     );
 };

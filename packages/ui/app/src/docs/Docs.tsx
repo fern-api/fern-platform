@@ -50,7 +50,15 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
         document.body.className = theme === "dark" ? "antialiased bp5-dark" : "antialiased";
     });
     useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
-    useKeyboardPress({ key: "Slash", onPress: openSearchDialog });
+    useKeyboardPress({
+        key: "Slash",
+        onPress: () => {
+            const activeElementTag = document.activeElement?.tagName.toLowerCase();
+            if (activeElementTag !== "input" && activeElementTag !== "textarea" && activeElementTag !== "select") {
+                openSearchDialog();
+            }
+        },
+    });
 
     useEffect(() => {
         // this is a hack to ensure that the theme is always set to a valid value, even if localStorage is corrupted
@@ -158,7 +166,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
 
                     <div className="max-w-page-width relative mx-auto flex min-h-0 w-full min-w-0 flex-1">
                         <Sidebar
-                            className="w-sidebar-width mt-header-height top-header-height h-vh-minus-header sticky z-20 hidden lg:block"
+                            className="w-sidebar-width mt-header-height top-header-height h-vh-minus-header sticky hidden lg:block"
                             navigation={navigation}
                             currentSlug={currentSlug}
                             registerScrolledToPathListener={registerScrolledToPathListener}
