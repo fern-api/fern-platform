@@ -3,14 +3,7 @@
   "private": true,
   "rules": {
     "depcheck": {
-      "ignores": [
-        "@types/react",
-        "@types/react-dom",
-        "autoprefixer",
-        "postcss",
-        "postcss-import",
-        "cssnano"
-      ]
+      "ignores": ["@types/react", "@types/react-dom", "autoprefixer", "postcss", "postcss-import", "cssnano"]
     }
   }
 }
