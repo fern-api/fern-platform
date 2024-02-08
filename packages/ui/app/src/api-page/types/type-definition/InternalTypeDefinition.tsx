@@ -76,6 +76,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                             applyErrorStyles={false}
                             route={route}
                             defaultExpandAll={defaultExpandAll}
+                            idx={variantIdx}
                         />
                     )),
                     elementNameSingular: "variant",

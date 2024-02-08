@@ -71,6 +71,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                             anchorIdParts={anchorIdParts}
                             applyErrorStyles={false}
                             route={route}
+                            idx={variantIdx}
                         />
                     )),
                     elementNameSingular: "variant",

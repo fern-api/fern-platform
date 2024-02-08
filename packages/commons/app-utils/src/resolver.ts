@@ -271,9 +271,12 @@ function resolveTypeShape(
         enum: (enum_) => enum_,
         undiscriminatedUnion: (undiscriminatedUnion) => ({
             type: "undiscriminatedUnion",
-            variants: undiscriminatedUnion.variants.map(({ type, ...variant }) => ({
+            variants: undiscriminatedUnion.variants.map(({ type, ...variant }, idx) => ({
                 ...variant,
-                displayName: variant.displayName,
+                displayName:
+                    variant.displayName != null && variant.displayName.split(" ").length < 6
+                        ? variant.displayName
+                        : `Variant ${idx + 1}`,
                 shape: resolveTypeReference(type, types),
             })),
         }),

@@ -67,6 +67,7 @@ export declare namespace UndiscriminatedUnionVariant {
         applyErrorStyles: boolean;
         route: string;
         defaultExpandAll?: boolean;
+        idx: number;
     }
 }
 
@@ -76,6 +77,7 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
     applyErrorStyles,
     route,
     defaultExpandAll = false,
+    idx,
 }) => {
     const { isRootTypeDefinition } = useTypeDefinitionContext();
     const contextValue = useTypeDefinitionContext();
@@ -97,7 +99,11 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
                 <div className="t-muted flex items-center space-x-2.5">
                     {getIconForTypeReference(unionVariant.shape)}
                     {unionVariant.displayName == null ? null : (
-                        <span className="t-primary text-sm">{unionVariant.displayName}</span>
+                        <span className="t-default text-sm">
+                            {unionVariant.displayName.split(" ").length > 6
+                                ? `Variant ${idx + 1}`
+                                : unionVariant.displayName}
+                        </span>
                     )}
                     <span className="t-muted text-xs">{renderTypeShorthand(unionVariant.shape)}</span>
                     {unionVariant.availability != null && (
