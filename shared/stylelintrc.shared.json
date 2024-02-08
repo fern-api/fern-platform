@@ -1,24 +1,42 @@
 {
-  "plugins": ["stylelint-scss"],
-  "extends": ["stylelint-config-recommended", "stylelint-config-standard-scss", "stylelint-config-tailwindcss"],
+  "plugins": [
+    "stylelint-scss"
+  ],
+  "extends": [
+    "stylelint-config-recommended",
+    "stylelint-config-standard-scss",
+    "stylelint-config-tailwindcss"
+  ],
   "rules": {
     "at-rule-no-unknown": null,
-    "scss/at-rule-no-unknown": true,
     "selector-pseudo-class-no-unknown": [
       true,
       {
-        "ignorePseudoClasses": ["global", "export"]
+        "ignorePseudoClasses": [
+          "global",
+          "export"
+        ]
       }
     ],
     "property-no-unknown": [
       true,
       {
-        "ignoreSelectors": [":export"]
+        "ignoreSelectors": [
+          ":export"
+        ]
       }
     ],
     "font-family-no-missing-generic-family-keyword": null,
     "color-function-notation": null,
     "selector-class-pattern": null,
-    "no-descending-specificity": null
+    "no-descending-specificity": null,
+    "scss/at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": [
+          "tailwind"
+        ]
+      }
+    ]
   }
 }
