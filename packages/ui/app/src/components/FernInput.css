@@ -4,21 +4,23 @@
 
 @layer components {
     .fern-input-focus {
-        @apply outline-tag-primary-light dark:outline-tag-primary-dark ring-accent-primary outline-none outline-4 outline-offset-0;
+        @apply outline-tag-primary-light dark:outline-tag-primary-dark ring-accent-primary outline outline-4 outline-offset-0;
     }
 
     .fern-input {
         @apply form-input;
-        @apply border-none !bg-transparent;
+        @apply !border-none !bg-transparent;
         @apply !outline-none !ring-0;
         @apply w-full;
     }
 
     .fern-textarea {
-        @apply form-textarea resize-none;
-        @apply focus-visible:fern-input-focus focus:outline-4;
+        @apply form-textarea resize-none !border-none;
+        @apply !outline-none !ring-0 !bg-transparent;
+        @apply w-full;
     }
 
+    .fern-textarea-group,
     .fern-input-group,
     .fern-numeric-input-group {
         @apply flex items-center overflow-hidden;
@@ -39,10 +41,15 @@
         @apply min-w-8 h-full shrink-0 px-0 -ml-2;
     }
 
+    .fern-textarea-group,
     .fern-input-group,
-    .fern-textarea,
     .fern-numeric-input-group {
-        @apply h-8 ring-default rounded-lg ring-1 ring-inset bg-white dark:bg-white/5 shadow-sm;
+        @apply ring-default rounded-lg ring-1 ring-inset bg-white dark:bg-white/5 shadow-sm;
+    }
+
+    .fern-input-group,
+    .fern-numeric-input-group {
+        @apply h-8;
     }
 
     .fern-numeric-input-group .fern-numeric-input-step {

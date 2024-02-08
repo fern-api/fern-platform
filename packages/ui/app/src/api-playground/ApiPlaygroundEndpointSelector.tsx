@@ -150,7 +150,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                 buttonStyle="minimal"
             >
                 {apiDefinition != null && (
-                    <span className="text-accent-primary shrink truncate whitespace-nowrap text-xs">
+                    <span className="text-accent-primary mr-2 shrink truncate whitespace-nowrap text-xs">
                         {apiDefinition.title}
                     </span>
                 )}

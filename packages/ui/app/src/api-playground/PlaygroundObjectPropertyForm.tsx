@@ -33,9 +33,9 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
 
     const expandable = isExpandable(property.valueShape, value);
     const {
-        value: expanded,
+        // value: expanded,
         setTrue: setExpanded,
-        toggleValue: toggleExpanded,
+        // toggleValue: toggleExpanded,
     } = useBooleanState(!expandable || expandByDefault);
 
     const handleChangeOptional = useCallback<ChangeEventHandler<HTMLInputElement>>(
