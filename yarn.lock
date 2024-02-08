@@ -2755,6 +2755,7 @@ __metadata:
   dependencies:
     "@fern-ui/ui": "workspace:*"
     "@next/bundle-analyzer": ^14.0.3
+    "@tailwindcss/forms": ^0.5.7
     "@tailwindcss/typography": ^0.5.10
     "@types/jest": ^29.5.11
     "@types/lodash-es": ^4.17.12
@@ -2786,6 +2787,7 @@ __metadata:
   resolution: "@fern-ui/private-docs-bundle@workspace:packages/ui/private-docs-bundle"
   dependencies:
     "@fern-ui/ui": "workspace:*"
+    "@tailwindcss/forms": ^0.5.7
     "@tailwindcss/typography": ^0.5.10
     "@types/jest": ^29.5.11
     "@types/node": ^18.7.18

@@ -88,21 +88,25 @@ module.exports = {
                 "background-hover-dark": "rgba(151, 90, 90, 0.05)",
                 "background-hover-light": "rgba(3, 7, 18, 0.05)",
 
-                "border-default": "var(--gray-a8)",
-                "border-concealed-dark": "rgba(156, 163, 175, 0.15)",
-                "border-concealed-light": "rgba(72, 72, 72, 0.10)",
+                "border-default": "var(--gray-a5)",
+                "border-concealed": "var(--gray-a3)",
                 "border-accent-muted-light": "rgba(var(--accent-primary-light), 0.50)",
                 "border-accent-muted-dark": "rgba(var(--accent-primary-dark), 0.50)",
                 "border-warning": "var(--amber-a8)",
                 "border-success": "var(--green-a8)",
                 "border-danger": "var(--red-a8)",
 
-                "text-default-dark": "rgb(255, 255, 255)",
-                "text-default-light": "rgb(3,7,18)",
-                "text-muted-light": "rgb(0, 0, 0, 0.52)",
-                "text-muted-dark": "rgb(255, 255, 255, 0.68)",
-                "text-disabled-light": "rgb(209, 213, 219)",
-                "text-disabled-dark": "rgb(107, 114, 128)",
+                "border-default-soft": "var(--gray-a6)",
+                "border-primary-light-soft": "rgba(var(--accent-primary-light), 30%)",
+                "border-primary-dark-soft": "rgba(var(--accent-primary-dark), 30%)",
+                "border-warning-soft": "var(--amber-a6)",
+                "border-success-soft": "var(--green-a6)",
+                "border-danger-soft": "var(--red-a6)",
+
+                "text-default-dark": "#FFFFFF",
+                "text-default-light": "#000000",
+                "text-muted": "var(--gray-a11)",
+                "text-disabled": "var(--gray-a10)",
 
                 "tag-default-soft": "var(--gray-a2)",
                 "tag-primary-soft-light": "rgba(var(--accent-primary-light), 10%)",
@@ -117,28 +121,28 @@ module.exports = {
                 "tag-warning": "var(--amber-a3)",
                 "tag-success": "var(--green-a3)",
                 "tag-danger": "var(--red-a3)",
-
-                "tag-default-tinted": "var(--gray-a6)",
-                "tag-primary-light-tinted": "rgba(var(--accent-primary-light), 30%)",
-                "tag-primary-dark-tinted": "rgba(var(--accent-primary-dark), 30%)",
-                "tag-warning-tinted": "var(--amber-a6)",
-                "tag-success-tinted": "var(--green-a6)",
-                "tag-danger-tinted": "var(--red-a6)",
             },
             typography: {
                 DEFAULT: {
                     css: {
                         color: "#000000",
+                        maxWidth: "var(--spacing-content-width)",
                     },
                 },
                 sm: {
                     css: {
                         lineHeight: "1.2em",
+                        color: "var(--gray-a11)",
                     },
                 },
                 invert: {
                     css: {
                         color: "#ffffff",
+                    },
+                },
+                "invert-sm": {
+                    css: {
+                        color: "var(--gray-a11)",
                     },
                 },
             },
@@ -180,8 +184,7 @@ module.exports = {
                     "@apply text-text-default-light dark:text-text-default-dark": {},
                 },
                 ".t-muted": {
-                    "@apply text-text-muted-light dark:text-text-muted-dark dark:[text-shadow:_0_1px_3px_rgb(0_0_0_/_40%)]":
-                        {},
+                    "@apply text-text-muted dark:text-text-muted dark:[text-shadow:_0_1px_3px_rgb(0_0_0_/_40%)]": {},
                 },
                 ".text-accent-primary": {
                     "@apply text-accent-primary-light dark:text-accent-primary-dark": {},
@@ -246,7 +249,7 @@ module.exports = {
                     "@apply border-accent-primary-light dark:border-accent-primary-dark": {},
                 },
                 ".border-concealed": {
-                    "@apply border-border-concealed-light dark:border-border-concealed-dark": {},
+                    "@apply border-border-concealed": {},
                 },
                 ".border-default": {
                     "@apply border-border-default": {},
@@ -278,6 +281,19 @@ module.exports = {
                 ".animate-popover": {
                     "@apply data-[side=top]:animate-slide-down-and-fade data-[side=right]:animate-slide-left-and-fade data-[side=bottom]:animate-slide-up-and-fade data-[side=left]:animate-slide-right-and-fade":
                         {},
+                },
+
+                ".callout-outlined": {
+                    "@apply bg-tag-default-soft ring-1 ring-inset ring-border-default-soft": {},
+                },
+                ".callout-outlined-success": {
+                    "@apply bg-tag-success-soft ring-1 ring-inset ring-border-success-soft": {},
+                },
+                ".callout-outlined-warning": {
+                    "@apply bg-tag-warning-soft ring-1 ring-inset ring-border-warning-soft": {},
+                },
+                ".callout-outlined-danger": {
+                    "@apply bg-tag-danger-soft ring-1 ring-inset ring-border-danger-soft": {},
                 },
             });
         }),

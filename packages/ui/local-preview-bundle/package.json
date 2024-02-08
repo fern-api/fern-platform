@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@fern-ui/ui": "workspace:*",
+    "@tailwindcss/forms": "^0.5.7",
     "lodash-es": "^4.17.21",
     "next": "^14.0.4",
     "postcss-import": "^16.0.0",

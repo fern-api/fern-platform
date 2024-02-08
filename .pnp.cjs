@@ -4670,6 +4670,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/local-preview-bundle", "workspace:packages/ui/local-preview-bundle"],\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
             ["@next/bundle-analyzer", "npm:14.0.3"],\
+            ["@tailwindcss/forms", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:0.5.7"],\
             ["@tailwindcss/typography", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:0.5.10"],\
             ["@types/jest", "npm:29.5.11"],\
             ["@types/lodash-es", "npm:4.17.12"],\
@@ -4703,6 +4704,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-ui/private-docs-bundle", "workspace:packages/ui/private-docs-bundle"],\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
+            ["@tailwindcss/forms", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:0.5.7"],\
             ["@tailwindcss/typography", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:0.5.10"],\
             ["@types/jest", "npm:29.5.11"],\
             ["@types/node", "npm:18.18.13"],\
@@ -4729,7 +4731,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/public-docs-bundle", "workspace:packages/ui/public-docs-bundle"],\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
             ["@next/bundle-analyzer", "npm:14.0.3"],\
-            ["@tailwindcss/forms", "virtual:5468f8421a4cb12dc44b4e3a031a211209537278ecf2763e0286bc13fd7c6ba57c5b5a43e6f64f6416e367f53aef96012b48d928329edae13e27b89cbe83316c#npm:0.5.7"],\
+            ["@tailwindcss/forms", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:0.5.7"],\
             ["@tailwindcss/typography", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:0.5.10"],\
             ["@types/jest", "npm:29.5.11"],\
             ["@types/node", "npm:18.18.13"],\
@@ -7012,10 +7014,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:5468f8421a4cb12dc44b4e3a031a211209537278ecf2763e0286bc13fd7c6ba57c5b5a43e6f64f6416e367f53aef96012b48d928329edae13e27b89cbe83316c#npm:0.5.7", {\
-          "packageLocation": "./.yarn/__virtual__/@tailwindcss-forms-virtual-6677988fe0/0/cache/@tailwindcss-forms-npm-0.5.7-67f8a9f248-406fe102a4.zip/node_modules/@tailwindcss/forms/",\
+        ["virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:0.5.7", {\
+          "packageLocation": "./.yarn/__virtual__/@tailwindcss-forms-virtual-6056e5b552/0/cache/@tailwindcss-forms-npm-0.5.7-67f8a9f248-406fe102a4.zip/node_modules/@tailwindcss/forms/",\
           "packageDependencies": [\
-            ["@tailwindcss/forms", "virtual:5468f8421a4cb12dc44b4e3a031a211209537278ecf2763e0286bc13fd7c6ba57c5b5a43e6f64f6416e367f53aef96012b48d928329edae13e27b89cbe83316c#npm:0.5.7"],\
+            ["@tailwindcss/forms", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:0.5.7"],\
             ["@types/tailwindcss", null],\
             ["mini-svg-data-uri", "npm:1.4.4"],\
             ["tailwindcss", "npm:3.4.1"]\
