@@ -27,10 +27,10 @@ export const FernTooltip: FC<FernTooltipProps> = ({
             <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
             <Tooltip.Portal>
                 <Tooltip.Content
-                    sideOffset={4}
+                    sideOffset={6}
                     {...props}
                     className={classNames(
-                        "animate-popover border-default bg-background max-w-xs rounded-lg border p-2 text-xs leading-none will-change-[transform,opacity]",
+                        "animate-popover border-default bg-background max-w-xs rounded-lg border p-2 text-xs leading-none will-change-[transform,opacity] shadow-sm",
                         props.className,
                     )}
                 >

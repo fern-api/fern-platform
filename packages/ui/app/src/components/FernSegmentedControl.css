@@ -2,11 +2,11 @@
 
 @layer components {
     .fern-segmented-control {
-        @apply bg-white dark:bg-white/5 border border-default rounded-lg shadow-sm h-10;
-        @apply space-x-0.5 p-1;
+        @apply bg-white dark:bg-white/5 ring-1 ring-inset ring-border-default rounded-lg shadow-sm h-8;
+        @apply space-x-0 p-1 flex items-center;
     }
 
     .fern-segmented-control > .fern-button {
-        @apply rounded-md h-[30px];
+        @apply rounded-md;
     }
 }

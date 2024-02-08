@@ -59,7 +59,7 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                     }))}
                     value={selectedVariant}
                     onValueChange={setSelectedVariant}
-                    className="w-full"
+                    className="mb-4 w-full"
                 />
             ) : (
                 <Select<ResolvedDiscriminatedUnionShapeVariant>

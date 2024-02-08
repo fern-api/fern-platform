@@ -52,7 +52,7 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
                     }))}
                     value={internalSelectedVariant.toString()}
                     onValueChange={setSelectedVariant}
-                    className="w-full"
+                    className="mb-4 w-full"
                 />
             ) : (
                 <Select<ResolvedUndiscriminatedUnionShapeVariant>
