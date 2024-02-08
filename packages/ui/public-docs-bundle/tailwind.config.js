@@ -15,6 +15,7 @@ module.exports = {
             spacing: {
                 "page-width": "var(--spacing-page-width)",
                 "content-width": "var(--spacing-content-width)",
+                "endpoint-width": "calc(var(--spacing-content-width) * 2 + 3rem)",
                 "sidebar-width": "var(--spacing-sidebar-width)",
                 "header-height": "var(--spacing-header-height)",
                 "header-height-padded": "calc(var(--spacing-header-height) + 1rem)",
@@ -281,6 +282,19 @@ module.exports = {
                 ".animate-popover": {
                     "@apply data-[side=top]:animate-slide-down-and-fade data-[side=right]:animate-slide-left-and-fade data-[side=bottom]:animate-slide-up-and-fade data-[side=left]:animate-slide-right-and-fade":
                         {},
+                },
+
+                ".callout-soft": {
+                    "@apply bg-tag-default ring-0": {},
+                },
+                ".callout-soft-success": {
+                    "@apply bg-tag-success ring-0": {},
+                },
+                ".callout-soft-warning": {
+                    "@apply bg-tag-warning ring-0": {},
+                },
+                ".callout-soft-danger": {
+                    "@apply bg-tag-danger ring-0": {},
                 },
 
                 ".callout-outlined": {

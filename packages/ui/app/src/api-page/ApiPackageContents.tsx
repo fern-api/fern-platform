@@ -47,7 +47,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                     key={subpackage.id}
                     apiSection={apiSection}
                     apiDefinition={subpackage}
-                    isLastInParentPackage={idx === subpackages.length - 1}
+                    isLastInParentPackage={isLastInParentPackage && idx === subpackages.length - 1}
                     anchorIdParts={anchorIdParts}
                 />
             ))}

@@ -19,11 +19,11 @@ export const ApiPage: React.FC<ApiPage.Props> = ({ apiSection }) => {
             <ApiPackageContents
                 apiSection={apiSection}
                 apiDefinition={apiSection}
-                isLastInParentPackage={false}
+                isLastInParentPackage={true}
                 anchorIdParts={[]}
             />
 
-            <div className="pl-6 pr-4 md:pl-12">{/* <BottomNavigationButtons /> */}</div>
+            <div className="px-6">{/* <BottomNavigationButtons /> */}</div>
         </div>
     );
 };

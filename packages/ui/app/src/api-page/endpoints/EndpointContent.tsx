@@ -220,14 +220,17 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     return (
         <div
-            className={classNames("pb-20 pl-6 md:pl-12 pr-4 scroll-mt-header-height-padded", {
-                "border-default border-b": !hideBottomSeparator,
-            })}
+            className={"scroll-mt-header-height-padded mx-8"}
             onClick={() => setSelectedError(undefined)}
             ref={containerRef}
         >
             <div
-                className="scroll-mt-header-height flex min-w-0 flex-1 flex-col justify-between lg:flex-row lg:space-x-[4vw]"
+                className={classNames(
+                    "scroll-mt-header-height max-w-content-width lg:max-w-endpoint-width mx-auto lg:grid lg:grid-cols-2 lg:gap-12",
+                    {
+                        "border-default border-b mb-px pb-20": !hideBottomSeparator,
+                    },
+                )}
                 ref={setContainerRef}
                 data-route={route.toLowerCase()}
             >
@@ -253,7 +256,8 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
                 <div
                     className={classNames(
-                        "lg:flex-1 lg:sticky lg:self-start lg:min-w-sm lg:max-w-lg lg:ml-auto",
+                        "max-w-content-width",
+                        "lg:flex-1 lg:sticky lg:self-start",
                         "pb-10 pt-8",
                         // the 4rem is the same as the h-10 as the Header
                         "max-h-[150vh] lg:max-h-vh-minus-header",

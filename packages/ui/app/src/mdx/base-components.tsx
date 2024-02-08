@@ -217,11 +217,11 @@ export const Strong: React.FC<HTMLAttributes<unknown>> = ({ className, ...rest }
 };
 
 export const Ol: React.FC<HTMLAttributes<HTMLOListElement>> = ({ className, ...rest }) => {
-    return <ol {...rest} className={classNames(className, "list-outside list-decimal space-y-2 mb-3 ml-6")} />;
+    return <ol {...rest} className={classNames(className, "list-outside list-decimal space-y-2 mb-3")} />;
 };
 
 export const Ul: React.FC<HTMLAttributes<HTMLUListElement>> = ({ className, ...rest }) => {
-    return <ul {...rest} className={classNames(className, "list-outside space-y-2 mb-3")} />;
+    return <ul {...rest} className={classNames(className, "list-outside list-disc space-y-2 mb-3")} />;
 };
 
 export const Li: React.FC<HTMLAttributes<HTMLLIElement>> = ({ className, ...rest }) => {

@@ -168,7 +168,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
         <FernScrollArea>
             <div className="mx-auto my-10 w-full max-w-3xl gap-y-4 p-4 pb-10">
                 {endpoint.authed && auth != null && (
-                    <section className="callout-outlined-danger mb-8 rounded-xl p-3">
+                    <section className="callout-soft-danger mb-8 rounded-xl p-3">
                         <h6 className="t-muted m-0 mb-2">Authorization</h6>
                         <PlaygroundAuthorizationForm
                             auth={auth}
