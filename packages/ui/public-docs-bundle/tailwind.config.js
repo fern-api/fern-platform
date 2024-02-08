@@ -126,6 +126,7 @@ module.exports = {
                 DEFAULT: {
                     css: {
                         color: "#000000",
+                        maxWidth: "var(--spacing-content-width)",
                     },
                 },
                 sm: {

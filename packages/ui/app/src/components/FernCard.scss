@@ -2,7 +2,7 @@
 
 @layer components {
     .fern-card {
-        @apply border-default t-default hover:t-default border bg-white dark:bg-white/5;
+        @apply border-default t-default hover:t-default border bg-white dark:bg-tag-default-soft;
 
         &.interactive {
             @apply cursor-pointer shadow-card-light hover:shadow-card-light-elevated hover:border-border-accent-muted-light hover:transition-all;

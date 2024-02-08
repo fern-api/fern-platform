@@ -20,7 +20,7 @@ export declare namespace CustomDocsPage {
 
 export const CustomDocsPageHeader = ({ resolvedPath }: Pick<CustomDocsPage.Props, "resolvedPath">): ReactElement => {
     return (
-        <header className="my-8">
+        <header className="mb-8">
             <div className="space-y-2.5">
                 {resolvedPath.sectionTitle != null && (
                     <div className="t-accent text-xs font-semibold uppercase tracking-wider">
@@ -41,7 +41,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
     return (
         <TableOfContentsContextProvider>
             <div className="flex justify-between px-6 sm:px-8 lg:pl-12 lg:pr-20 xl:pr-0">
-                <div className="w-full min-w-0 lg:pr-6">
+                <div className="w-full min-w-0 pt-8 lg:pr-6">
                     <article className="prose dark:prose-invert max-w-content-width mx-auto w-full break-words lg:ml-0 xl:mx-auto">
                         <CustomDocsPageHeader resolvedPath={resolvedPath} />
                         {mdxContent}

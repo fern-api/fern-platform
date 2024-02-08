@@ -73,6 +73,12 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                     {property.availability != null && (
                         <EndpointAvailabilityTag availability={property.availability} minimal={true} />
                     )}
+
+                    {property.valueShape.type === "list" && Array.isArray(value) && (
+                        <span className="t-muted whitespace-nowrap text-xs">
+                            ({value.length} {value.length === 1 ? "item" : "items"})
+                        </span>
+                    )}
                 </label>
 
                 <span className="t-muted whitespace-nowrap text-xs">
@@ -119,12 +125,6 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                             onOpenStack={handleOpenStack}
                             onCloseStack={handleCloseStack}
                         />
-                    )}
-
-                    {property.valueShape.type === "list" && Array.isArray(value) && (
-                        <span className="t-muted whitespace-nowrap text-xs">
-                            {value.length} {value.length === 1 ? "item" : "items"}
-                        </span>
                     )}
 
                     {/* {expandable && (property.valueShape.type === "optional" ? !isUndefined(value) : true) && (
