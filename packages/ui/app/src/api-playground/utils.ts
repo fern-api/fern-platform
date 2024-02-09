@@ -6,6 +6,7 @@ import {
     ResolvedObjectProperty,
     ResolvedParameter,
     ResolvedTypeReference,
+    visitResolvedHttpRequestBodyShape,
 } from "@fern-ui/app-utils";
 import { isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isEmpty, noop } from "lodash-es";
@@ -444,5 +445,67 @@ export function isExpandable(valueShape: ResolvedTypeReference, currentValue: un
         booleanLiteral: () => false,
         stringLiteral: () => false,
         reference: (reference) => isExpandable(reference.shape(), currentValue),
+    });
+}
+
+export function hasRequiredFields(bodyShape: ResolvedHttpRequestBodyShape): boolean {
+    return visitResolvedHttpRequestBodyShape(bodyShape, {
+        fileUpload: () => true,
+        typeReference: (shape) =>
+            visitDiscriminatedUnion(shape, "type")._visit({
+                string: () => true,
+                boolean: () => true,
+                object: (object) => object.properties().some((property) => hasRequiredFields(property.valueShape)),
+                undiscriminatedUnion: () => true,
+                discriminatedUnion: () => true,
+                enum: () => true,
+                integer: () => true,
+                double: () => true,
+                long: () => true,
+                datetime: () => true,
+                uuid: () => true,
+                base64: () => true,
+                date: () => true,
+                optional: () => false,
+                list: () => true,
+                set: () => true,
+                map: () => true,
+                booleanLiteral: () => true,
+                stringLiteral: () => true,
+                unknown: () => true,
+                reference: (reference) => hasRequiredFields(reference.shape()),
+                _other: () => true,
+            }),
+    });
+}
+
+export function hasOptionalFields(bodyShape: ResolvedHttpRequestBodyShape): boolean {
+    return visitResolvedHttpRequestBodyShape(bodyShape, {
+        fileUpload: () => false,
+        typeReference: (shape) =>
+            visitDiscriminatedUnion(shape, "type")._visit({
+                string: () => false,
+                boolean: () => false,
+                object: (object) => object.properties().some((property) => hasOptionalFields(property.valueShape)),
+                undiscriminatedUnion: () => false,
+                discriminatedUnion: () => false,
+                enum: () => false,
+                integer: () => false,
+                double: () => false,
+                long: () => false,
+                datetime: () => false,
+                uuid: () => false,
+                base64: () => false,
+                date: () => false,
+                optional: () => true,
+                list: () => false,
+                set: () => false,
+                map: () => false,
+                booleanLiteral: () => false,
+                stringLiteral: () => false,
+                unknown: () => false,
+                reference: (reference) => hasOptionalFields(reference.shape()),
+                _other: () => false,
+            }),
     });
 }

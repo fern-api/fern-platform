@@ -1,12 +1,14 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { Cross1Icon, GlobeIcon, PersonIcon } from "@radix-ui/react-icons";
-import { FC } from "react";
+import { Dispatch, FC, ReactElement, SetStateAction, useCallback } from "react";
 import { FernButton } from "../components/FernButton";
+import { FernCard } from "../components/FernCard";
 import { FernInput } from "../components/FernInput";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { SecretBearer, SecretSpan } from "./PlaygroundSecretsModal";
-import { PlaygroundRequestFormAuth } from "./types";
+import { PlaygroundRequestFormAuth, PlaygroundRequestFormState } from "./types";
 
 interface PlaygroundAuthorizationFormProps {
     auth: APIV1Read.ApiAuth;
@@ -24,11 +26,11 @@ export const PlaygroundAuthorizationForm: FC<PlaygroundAuthorizationFormProps> =
     openSecretsModal,
 }) => {
     return (
-        <ul className="divide-border-default border-default list-none divide-y border-t">
+        <ul className="divide-border-default list-none divide-y px-4">
             {visitDiscriminatedUnion(auth, "type")._visit({
                 bearerAuth: (bearerAuth) => (
-                    <li>
-                        <label className="inline-flex flex-wrap items-baseline py-2">
+                    <li className="-mx-4 space-y-2 p-4">
+                        <label className="inline-flex flex-wrap items-baseline">
                             <span className="font-mono text-sm">{bearerAuth.tokenName ?? "Bearer token"}</span>
                         </label>
 
@@ -75,8 +77,8 @@ export const PlaygroundAuthorizationForm: FC<PlaygroundAuthorizationFormProps> =
                 ),
                 basicAuth: (basicAuth) => (
                     <>
-                        <li>
-                            <label className="inline-flex flex-wrap items-baseline py-2">
+                        <li className="-mx-4 space-y-2 p-4">
+                            <label className="inline-flex flex-wrap items-baseline">
                                 <span className="font-mono text-sm">{basicAuth.usernameName ?? "Username"}</span>
                             </label>
                             <div>
@@ -95,8 +97,8 @@ export const PlaygroundAuthorizationForm: FC<PlaygroundAuthorizationFormProps> =
                             </div>
                         </li>
 
-                        <li>
-                            <label className="inline-flex flex-wrap items-baseline py-2">
+                        <li className="-mx-4 space-y-2 p-4">
+                            <label className="inline-flex flex-wrap items-baseline">
                                 <span className="font-mono text-sm">{basicAuth.passwordName ?? "Password"}</span>
                             </label>
 
@@ -116,8 +118,8 @@ export const PlaygroundAuthorizationForm: FC<PlaygroundAuthorizationFormProps> =
                     </>
                 ),
                 header: (header) => (
-                    <li>
-                        <label className="inline-flex flex-wrap items-baseline py-2">
+                    <li className="-mx-4 space-y-2 p-4">
+                        <label className="inline-flex flex-wrap items-baseline">
                             <span className="font-mono text-sm">{header.nameOverride ?? header.headerWireValue}</span>
                         </label>
                         <div>
@@ -140,3 +142,46 @@ export const PlaygroundAuthorizationForm: FC<PlaygroundAuthorizationFormProps> =
         </ul>
     );
 };
+
+interface PlaygroundAuthorizationFormCardProps {
+    endpoint: ResolvedEndpointDefinition;
+    auth: APIV1Read.ApiAuth | undefined;
+    formState: PlaygroundRequestFormState | undefined;
+    setFormState: Dispatch<SetStateAction<PlaygroundRequestFormState>>;
+    openSecretsModal: () => void;
+    secrets: SecretBearer[];
+}
+
+export function PlaygroundAuthorizationFormCard({
+    endpoint,
+    auth,
+    formState,
+    setFormState,
+    openSecretsModal,
+    secrets,
+}: PlaygroundAuthorizationFormCardProps): ReactElement | null {
+    const setAuthorization = useCallback(
+        (newAuthValue: PlaygroundRequestFormAuth) => {
+            setFormState((state) => ({
+                ...state,
+                auth: newAuthValue,
+            }));
+        },
+        [setFormState],
+    );
+
+    if (!endpoint.authed || auth == null) {
+        return null;
+    }
+    return (
+        <FernCard className="border-border-danger-soft divide-border-default divide-y rounded-xl shadow-sm">
+            <PlaygroundAuthorizationForm
+                auth={auth}
+                value={formState?.auth}
+                onChange={setAuthorization}
+                openSecretsModal={openSecretsModal}
+                secrets={secrets}
+            />
+        </FernCard>
+    );
+}

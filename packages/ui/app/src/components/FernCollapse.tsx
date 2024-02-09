@@ -1,8 +1,10 @@
 import { Transition } from "@headlessui/react";
+import classNames from "classnames";
 import { FC, PropsWithChildren, useRef, useState } from "react";
 
 interface FernCollapseProps {
     isOpen?: boolean;
+    className?: string;
 }
 
 export enum AnimationStates {
@@ -12,14 +14,14 @@ export enum AnimationStates {
     CLOSED,
 }
 
-export const FernCollapse: FC<PropsWithChildren<FernCollapseProps>> = ({ children, isOpen }) => {
+export const FernCollapse: FC<PropsWithChildren<FernCollapseProps>> = ({ children, className, isOpen }) => {
     const ref = useRef<HTMLDivElement>(null);
     const [height, setHeight] = useState<number | undefined>(undefined);
     return (
         <Transition
             show={isOpen}
             style={{ height }}
-            className="will-change-auto"
+            className={classNames("will-change-[height]", className)}
             enter="transition-[height] ease-out overflow-y-hidden"
             enterFrom="h-0"
             leave="transition-[height] ease-in overflow-y-hidden"

@@ -251,6 +251,9 @@ module.exports = {
                 ".border-accent-primary": {
                     "@apply border-accent-primary-light dark:border-accent-primary-dark": {},
                 },
+                ".border-primary": {
+                    "@apply border-border-accent-muted-light dark:border-border-accent-muted-dark": {},
+                },
                 ".border-concealed": {
                     "@apply border-border-concealed": {},
                 },
@@ -268,6 +271,9 @@ module.exports = {
                 },
                 ".outline-accent-primary": {
                     "@apply outline-accent-primary-light dark:outline-accent-primary-dark": {},
+                },
+                ".outline-tag-primary": {
+                    "@apply outline-tag-primary-light dark:outline-tag-primary-dark": {},
                 },
                 ".ring-default": {
                     "@apply ring-border-default": {},
@@ -323,6 +329,12 @@ module.exports = {
                 },
                 ".callout-outlined-ghost-danger": {
                     "@apply ring-1 ring-inset ring-border-danger-soft": {},
+                },
+                ".shadow-tag-primary": {
+                    "@apply shadow-tag-primary-light dark:shadow-tag-primary-dark": {},
+                },
+                ".shadow-border-primary": {
+                    "@apply shadow-border-accent-muted-light dark:shadow-border-accent-muted-dark": {},
                 },
             });
         }),

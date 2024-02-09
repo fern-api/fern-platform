@@ -1,15 +1,12 @@
-import { Checkbox } from "@blueprintjs/core";
 import { ResolvedObjectProperty } from "@fern-ui/app-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import classNames from "classnames";
-import { isUndefined, sortBy } from "lodash-es";
-import { ChangeEventHandler, FC, useCallback, useEffect, useMemo, useState } from "react";
+import { sortBy } from "lodash-es";
+import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { EndpointAvailabilityTag } from "../api-page/endpoints/EndpointAvailabilityTag";
-import { Markdown } from "../api-page/markdown/Markdown";
 import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
-import { FernTooltip } from "../components/FernTooltip";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
-import { castToRecord, getDefaultValueForType, isExpandable } from "./utils";
+import { castToRecord, isExpandable } from "./utils";
 
 interface PlaygroundObjectPropertyFormProps {
     property: ResolvedObjectProperty;
@@ -38,35 +35,22 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
         // toggleValue: toggleExpanded,
     } = useBooleanState(!expandable || expandByDefault);
 
-    const handleChangeOptional = useCallback<ChangeEventHandler<HTMLInputElement>>(
-        (e) => {
-            if (property.valueShape.type === "optional") {
-                onChange(
-                    property.key,
-                    e.target.checked ? getDefaultValueForType(property.valueShape.shape) : undefined,
-                );
-                setExpanded();
-            }
-        },
-        [onChange, property.key, property.valueShape, setExpanded],
-    );
-
     useEffect(() => {
         if (!expandable) {
             setExpanded();
         }
     }, [expandable, setExpanded]);
 
-    const [focused, setFocused] = useState(false);
+    const [_focused, setFocused] = useState(false);
     const handleFocus = useCallback(() => setFocused(true), []);
     const handleBlur = useCallback(() => setFocused(false), []);
-    const [isUnderStack, setIsUnderStack] = useState(false);
+    const [_isUnderStack, setIsUnderStack] = useState(false);
     const handleOpenStack = useCallback(() => setIsUnderStack(true), []);
     const handleCloseStack = useCallback(() => setIsUnderStack(false), []);
 
     return (
-        <li className="py-1" tabIndex={-1}>
-            <div className="flex items-center justify-between gap-2 pb-1 pt-3">
+        <li className="relative -mx-4 space-y-2 p-4" tabIndex={-1}>
+            <div className="flex items-center justify-between gap-2">
                 <label className="inline-flex w-full items-baseline gap-2">
                     <span className={classNames("font-mono text-sm truncate")}>{property.key}</span>
 
@@ -81,21 +65,12 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                     )}
                 </label>
 
-                <span className="t-muted whitespace-nowrap text-xs">
-                    {renderTypeShorthand(property.valueShape)}
-
-                    {property.valueShape.type === "optional" && (
-                        <span className="ml-2 inline-flex items-center">
-                            <Checkbox
-                                checked={!isUndefined(value)}
-                                onChange={handleChangeOptional}
-                                className="!-my-2 !-mr-2"
-                            />
-                        </span>
-                    )}
+                <span className="whitespace-nowrap text-xs">
+                    {property.valueShape.type !== "optional" && <span className="t-danger">required </span>}
+                    <span className="t-muted">{renderTypeShorthand(property.valueShape)}</span>
                 </span>
             </div>
-            <FernTooltip
+            {/* <FernTooltip
                 open={
                     property.description == null || property.description.length === 0 || isUnderStack
                         ? false
@@ -108,36 +83,20 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                         {property.description}
                     </Markdown>
                 }
-            >
-                <div className="flex items-center justify-between gap-2 pb-3">
-                    {!isUndefined(value) && (
-                        <PlaygroundTypeReferenceForm
-                            shape={
-                                property.valueShape.type === "optional"
-                                    ? property.valueShape.shape
-                                    : property.valueShape
-                            }
-                            onChange={handleChange}
-                            value={value}
-                            onFocus={handleFocus}
-                            onBlur={handleBlur}
-                            renderAsPanel={true}
-                            onOpenStack={handleOpenStack}
-                            onCloseStack={handleCloseStack}
-                        />
-                    )}
-
-                    {/* {expandable && (property.valueShape.type === "optional" ? !isUndefined(value) : true) && (
-                        <FernButton
-                            icon={expanded ? <ChevronDownIcon /> : <ChevronUpIcon />}
-                            variant="minimal"
-                            size="small"
-                            className="-mx-1"
-                            onClick={toggleExpanded}
-                        />
-                    )} */}
-                </div>
-            </FernTooltip>
+            > */}
+            <div>
+                <PlaygroundTypeReferenceForm
+                    shape={property.valueShape.type === "optional" ? property.valueShape.shape : property.valueShape}
+                    onChange={handleChange}
+                    value={value}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    renderAsPanel={true}
+                    onOpenStack={handleOpenStack}
+                    onCloseStack={handleCloseStack}
+                />
+            </div>
+            {/* </FernTooltip> */}
         </li>
     );
 };
@@ -176,7 +135,7 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
         return filteredProperties;
     }, [hideObjects, properties, sortProperties]);
     return (
-        <ul className={"divide-border-default border-default list-none divide-y border-y"}>
+        <ul className="divide-border-default list-none divide-y px-4">
             {propertiesToRender.map((property) => (
                 <PlaygroundObjectPropertyForm
                     key={property.key}

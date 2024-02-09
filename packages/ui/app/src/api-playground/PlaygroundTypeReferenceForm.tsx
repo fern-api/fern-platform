@@ -1,14 +1,14 @@
-import { Switch } from "@blueprintjs/core";
 import { DateInput3 } from "@blueprintjs/datetime2";
 import { ResolvedObjectProperty, ResolvedTypeReference } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
-import { Transition } from "@headlessui/react";
-import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
+import { ArrowRightIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { FC, PropsWithChildren, useEffect } from "react";
 import { FernButton } from "../components/FernButton";
+import { FernCollapse } from "../components/FernCollapse";
 import { FernInput } from "../components/FernInput";
 import { FernNumericInput } from "../components/FernNumericInput";
+import { FernSwitch } from "../components/FernSwitch";
 import { FernTextarea } from "../components/FernTextarea";
 import { PlaygroundDiscriminatedUnionForm } from "./PlaygroundDescriminatedUnionForm";
 import { PlaygroundEnumForm } from "./PlaygroundEnumForm";
@@ -58,34 +58,27 @@ const WithPanel: FC<PropsWithChildren<WithPanelProps>> = ({
         return <>{children}</>;
     }
     return (
-        <>
-            <div
-                onClick={showPanel}
-                className="bg-tag-default ring-default group relative w-full cursor-pointer whitespace-pre-wrap break-all rounded p-1 font-mono text-xs leading-tight hover:ring-1"
-            >
-                {JSON.stringify(value, undefined, 1)}
-                <div className="t-muted absolute inset-y-0 right-2 flex items-center">
-                    <ArrowRightIcon className="transition-transform group-hover:translate-x-1" />
+        <div className="-mx-4 flex-1">
+            <FernCollapse isOpen={!isPanelOpen}>
+                <div className="px-4">
+                    <div
+                        onClick={showPanel}
+                        className="bg-tag-default ring-default group relative min-h-10 w-full cursor-pointer whitespace-pre-wrap break-all rounded p-1 font-mono text-xs leading-tight hover:ring-1"
+                    >
+                        {JSON.stringify(value, undefined, 1)}
+                        <div className="t-muted absolute inset-y-0 right-2 flex items-center">
+                            <ArrowRightIcon className="transition-transform group-hover:translate-x-1" />
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <Transition
-                as="div"
-                show={isPanelOpen}
-                appear={true}
-                enter="ease-out transition-all duration-200"
-                enterFrom="opacity-70 translate-x-full"
-                enterTo="opacity-100 translate-x-0"
-                leave="ease-in transition-all duration-200"
-                leaveFrom="opacity-100 translate-x-0"
-                leaveTo="opacity-70 translate-x-full"
-                className="bg-background dark:bg-background-dark scroll-contain absolute inset-0 z-30 overflow-y-auto overflow-x-hidden"
-            >
-                <div className="bg-background dark:bg-background-dark border-default sticky top-0 z-30 flex h-10 items-center border-b px-2">
-                    <FernButton variant="minimal" icon={<ArrowLeftIcon />} text="Back" onClick={hidePanel} />
+            </FernCollapse>
+            <FernCollapse isOpen={isPanelOpen} className="-mx-2">
+                <div className="-mt-8 flex w-full justify-center">
+                    <FernButton variant="outlined" icon={<Cross1Icon />} onClick={hidePanel} className="mb-2" rounded />
                 </div>
-                <div className="mx-auto my-10 flex w-full max-w-2xl flex-col gap-y-4 p-4 pb-10">{children}</div>
-            </Transition>
-        </>
+                <div className="border-default bg-background rounded-xl border shadow-md">{children}</div>
+            </FernCollapse>
+        </div>
     );
 };
 
@@ -171,16 +164,17 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                 onBlur={onBlur}
             />
         ),
-        boolean: () => (
-            <div className="flex min-w-0 flex-1 justify-end">
-                <Switch
-                    large={true}
-                    checked={typeof value === "boolean" ? value : undefined}
-                    onChange={(e) => onChange(e.target.checked)}
-                    className="-mb-1 -mr-2"
-                />
-            </div>
-        ),
+        boolean: () => {
+            const checked = typeof value === "boolean" ? value : undefined;
+            return (
+                <div className="callout-outlined-ghost flex items-center justify-end gap-3 rounded-md p-4 shadow-sm">
+                    <label className="t-muted font-mono text-sm leading-none">
+                        {checked == null ? "undefined" : checked ? "true" : "false"}
+                    </label>
+                    <FernSwitch checked={checked} onCheckedChange={onChange} />
+                </div>
+            );
+        },
         integer: () => (
             <div className="flex min-w-0 flex-1 justify-end">
                 <FernNumericInput

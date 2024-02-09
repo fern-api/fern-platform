@@ -8,6 +8,7 @@ import {
     MouseEventHandler,
     useCallback,
     useEffect,
+    useImperativeHandle,
     useRef,
     useState,
 } from "react";
@@ -25,6 +26,10 @@ export const FernNumericInput = forwardRef<HTMLInputElement, FernNumericInputPro
     { className, inputClassName, value, onChange, onValueChange, disallowFloat, ...props },
     ref,
 ) {
+    const inputRef = useRef<HTMLInputElement>(null);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    useImperativeHandle(ref, () => inputRef.current!);
+
     const [internalValue, setInternalValue] = useState<number>();
     const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
     const stepInterval = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -96,12 +101,16 @@ export const FernNumericInput = forwardRef<HTMLInputElement, FernNumericInputPro
                     variant="minimal"
                     onClick={decrement}
                     onMouseDown={handleDecrementMouseDown}
-                    onMouseUp={handleClearInterval}
+                    onMouseUp={() => {
+                        handleClearInterval();
+                        inputRef.current?.focus();
+                    }}
                     onMouseLeave={handleClearInterval}
+                    tabIndex={-1}
                 />
             )}
             <input
-                ref={ref}
+                ref={inputRef}
                 type="number"
                 className={classNames("fern-input", inputClassName)}
                 value={internalValue ?? value}
@@ -118,8 +127,12 @@ export const FernNumericInput = forwardRef<HTMLInputElement, FernNumericInputPro
                     variant="minimal"
                     onClick={increment}
                     onMouseDown={handleIncrementMouseDown}
-                    onMouseUp={handleClearInterval}
+                    onMouseUp={() => {
+                        handleClearInterval();
+                        inputRef.current?.focus();
+                    }}
                     onMouseLeave={handleClearInterval}
+                    tabIndex={-1}
                 />
             )}
         </div>
