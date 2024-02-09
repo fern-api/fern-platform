@@ -1,4 +1,5 @@
 import { ResolvedPubSubWebsocketDefinition } from "@fern-ui/app-utils";
+import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import React, { ReactElement } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
@@ -6,6 +7,7 @@ import { ApiPageDescription } from "../ApiPageDescription";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
 import { EndpointSection } from "../endpoints/EndpointSection";
 import { EndpointUrlWithOverflow } from "../endpoints/EndpointUrlWithOverflow";
+import { TitledExample } from "../examples/TitledExample";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
@@ -168,89 +170,83 @@ export function WebSocket(): ReactElement {
                                 </div>
                             }
                         >
-                            <div className="space-y-6">
-                                {websocket.pathParameters.length > 0 && (
-                                    <EndpointSection
-                                        title="Path parameters"
-                                        anchorIdParts={["request", "path"]}
-                                        route={route}
-                                    >
-                                        <div className="flex flex-col">
-                                            {websocket.pathParameters.map((parameter) => (
-                                                <div className="flex flex-col" key={parameter.key}>
-                                                    <TypeComponentSeparator />
-                                                    <EndpointParameter
-                                                        name={parameter.key}
-                                                        shape={parameter.shape}
-                                                        anchorIdParts={["request", "path", parameter.key]}
-                                                        route={route}
-                                                        description={parameter.description}
-                                                        descriptionContainsMarkdown={
-                                                            parameter.descriptionContainsMarkdown ?? true
-                                                        }
-                                                        availability={parameter.availability}
-                                                    />
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </EndpointSection>
-                                )}
-                                {websocket.headers.length > 0 && (
-                                    <EndpointSection
-                                        title="Headers"
-                                        anchorIdParts={["request", "header"]}
-                                        route={route}
-                                    >
-                                        <div className="flex flex-col">
-                                            {websocket.headers.map((parameter) => (
-                                                <div className="flex flex-col" key={parameter.key}>
-                                                    <TypeComponentSeparator />
-                                                    <EndpointParameter
-                                                        name={parameter.key}
-                                                        shape={parameter.shape}
-                                                        anchorIdParts={["request", "header", parameter.key]}
-                                                        route={route}
-                                                        description={parameter.description}
-                                                        descriptionContainsMarkdown={
-                                                            parameter.descriptionContainsMarkdown ?? false
-                                                        }
-                                                        availability={parameter.availability}
-                                                    />
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </EndpointSection>
-                                )}
-                                {websocket.queryParameters.length > 0 && (
-                                    <EndpointSection
-                                        title="Query parameters"
-                                        anchorIdParts={["request", "query"]}
-                                        route={route}
-                                    >
-                                        <div className="flex flex-col">
-                                            {websocket.queryParameters.map((parameter) => (
-                                                <div className="flex flex-col" key={parameter.key}>
-                                                    <TypeComponentSeparator />
-                                                    <EndpointParameter
-                                                        name={parameter.key}
-                                                        shape={parameter.shape}
-                                                        anchorIdParts={["request", "query", parameter.key]}
-                                                        route={route}
-                                                        description={parameter.description}
-                                                        descriptionContainsMarkdown={
-                                                            parameter.descriptionContainsMarkdown ?? false
-                                                        }
-                                                        availability={parameter.availability}
-                                                    />
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </EndpointSection>
-                                )}
-                            </div>
+                            {websocket.pathParameters.length > 0 && (
+                                <EndpointSection
+                                    title="Path parameters"
+                                    anchorIdParts={["request", "path"]}
+                                    route={route}
+                                >
+                                    <div className="flex flex-col">
+                                        {websocket.pathParameters.map((parameter) => (
+                                            <div className="flex flex-col" key={parameter.key}>
+                                                <TypeComponentSeparator />
+                                                <EndpointParameter
+                                                    name={parameter.key}
+                                                    shape={parameter.shape}
+                                                    anchorIdParts={["request", "path", parameter.key]}
+                                                    route={route}
+                                                    description={parameter.description}
+                                                    descriptionContainsMarkdown={
+                                                        parameter.descriptionContainsMarkdown ?? true
+                                                    }
+                                                    availability={parameter.availability}
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </EndpointSection>
+                            )}
+                            {websocket.headers.length > 0 && (
+                                <EndpointSection title="Headers" anchorIdParts={["request", "header"]} route={route}>
+                                    <div className="flex flex-col">
+                                        {websocket.headers.map((parameter) => (
+                                            <div className="flex flex-col" key={parameter.key}>
+                                                <TypeComponentSeparator />
+                                                <EndpointParameter
+                                                    name={parameter.key}
+                                                    shape={parameter.shape}
+                                                    anchorIdParts={["request", "header", parameter.key]}
+                                                    route={route}
+                                                    description={parameter.description}
+                                                    descriptionContainsMarkdown={
+                                                        parameter.descriptionContainsMarkdown ?? false
+                                                    }
+                                                    availability={parameter.availability}
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </EndpointSection>
+                            )}
+                            {websocket.queryParameters.length > 0 && (
+                                <EndpointSection
+                                    title="Query parameters"
+                                    anchorIdParts={["request", "query"]}
+                                    route={route}
+                                >
+                                    <div className="flex flex-col">
+                                        {websocket.queryParameters.map((parameter) => (
+                                            <div className="flex flex-col" key={parameter.key}>
+                                                <TypeComponentSeparator />
+                                                <EndpointParameter
+                                                    name={parameter.key}
+                                                    shape={parameter.shape}
+                                                    anchorIdParts={["request", "query", parameter.key]}
+                                                    route={route}
+                                                    description={parameter.description}
+                                                    descriptionContainsMarkdown={
+                                                        parameter.descriptionContainsMarkdown ?? false
+                                                    }
+                                                    availability={parameter.availability}
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </EndpointSection>
+                            )}
                         </CardedSection>
                         {websocket.publish != null && (
-                            <CardedSection number={2} title="Publish" route={route}>
+                            <EndpointSection title="Publish" anchorIdParts={["publish"]} route={route} headerType="h2">
                                 <div className="t-muted border-default border-b pb-5 text-sm leading-6">
                                     <ApiPageDescription
                                         className="text-sm"
@@ -269,10 +265,15 @@ export function WebSocket(): ReactElement {
                                     route={route}
                                     applyErrorStyles={false}
                                 />
-                            </CardedSection>
+                            </EndpointSection>
                         )}
                         {websocket.subscribe != null && (
-                            <CardedSection number={3} title="Subscribe" route={route}>
+                            <EndpointSection
+                                title="Subscribe"
+                                anchorIdParts={["subscribe"]}
+                                route={route}
+                                headerType="h2"
+                            >
                                 <div className="t-muted border-default border-b pb-5 text-sm leading-6">
                                     <ApiPageDescription
                                         className="text-sm"
@@ -291,11 +292,32 @@ export function WebSocket(): ReactElement {
                                     route={route}
                                     applyErrorStyles={false}
                                 />
-                            </CardedSection>
+                            </EndpointSection>
                         )}
                     </main>
                 </section>
-                <aside className="max-w-content-width top-header-height max-h-vh-minus-header sticky py-8">Test</aside>
+                <aside className="max-w-content-width top-header-height max-h-vh-minus-header sticky py-8">
+                    <TitledExample title={"Example"} type={"primary"}>
+                        <div className="divide-border-default -my-3 divide-y">
+                            <div className="flex items-center gap-2 p-3">
+                                <ArrowUpIcon className="text-intent-default" />
+                                <span>Testing...</span>
+                            </div>
+                            <div className="flex items-center gap-2 p-3">
+                                <ArrowDownIcon className="text-intent-success" />
+                                <span>Testing...</span>
+                            </div>
+                            <div className="flex items-center gap-2 p-3">
+                                <ArrowUpIcon className="text-intent-default" />
+                                <span>Testing...</span>
+                            </div>
+                            <div className="flex items-center gap-2 p-3">
+                                <ArrowDownIcon className="text-intent-success" />
+                                <span>Testing...</span>
+                            </div>
+                        </div>
+                    </TitledExample>
+                </aside>
             </article>
         </div>
     );
@@ -311,7 +333,7 @@ function CardedSection({
 }: {
     number: number;
     title: string;
-    headingElement?: React.ReactNode;
+    headingElement: React.ReactNode;
     children: React.ReactNode;
     route: string;
 } & React.HTMLAttributes<HTMLDivElement>) {
@@ -325,14 +347,14 @@ function CardedSection({
             <div className="space-y-4 rounded-t-2xl bg-black/[0.03] p-6 dark:bg-white/5">
                 <h2 className="relative mt-0 flex items-center">
                     <AbsolutelyPositionedAnchor href={anchorRoute} />
-                    <div className="bg-tag-default mr-2 inline-flex size-7 items-center justify-center rounded-full font-mono text-base">
+                    {/* <div className="bg-tag-default mr-2 inline-flex size-7 items-center justify-center rounded-full font-mono text-base">
                         {num}
-                    </div>
+                    </div> */}
                     <span>{title}</span>
                 </h2>
                 {headingElement}
             </div>
-            <div className="p-6">{children}</div>
+            <div className="space-y-12 p-6">{children}</div>
         </section>
     );
 }

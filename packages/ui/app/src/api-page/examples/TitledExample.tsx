@@ -35,7 +35,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
     return (
         <div
             className={classNames(
-                "flex flex-col rounded-xl border border-black/20 dark:border-white/20 overflow-visible basis-full bg-background-primary-light dark:bg-background-primary-dark",
+                "flex flex-col rounded-xl border border-black/20 dark:border-white/20 overflow-visible basis-full bg-background",
                 className,
             )}
             onClick={onClick}
