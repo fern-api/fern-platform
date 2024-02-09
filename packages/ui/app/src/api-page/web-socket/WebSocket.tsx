@@ -1,6 +1,6 @@
 import { ResolvedPubSubWebsocketDefinition } from "@fern-ui/app-utils";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
-import React, { ReactElement } from "react";
+import React, { ReactElement, ReactNode } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
 import { ApiPageDescription } from "../ApiPageDescription";
@@ -246,7 +246,19 @@ export function WebSocket(): ReactElement {
                             )}
                         </CardedSection>
                         {websocket.publish != null && (
-                            <EndpointSection title="Publish" anchorIdParts={["publish"]} route={route} headerType="h2">
+                            <EndpointSection
+                                title={
+                                    <span className="inline-flex items-center gap-2">
+                                        {"Send"}
+                                        <span>
+                                            <ArrowUpIcon className="t-muted" width={20} height={20} />
+                                        </span>
+                                    </span>
+                                }
+                                anchorIdParts={["publish"]}
+                                route={route}
+                                headerType="h2"
+                            >
                                 <div className="t-muted border-default border-b pb-5 text-sm leading-6">
                                     <ApiPageDescription
                                         className="text-sm"
@@ -269,7 +281,14 @@ export function WebSocket(): ReactElement {
                         )}
                         {websocket.subscribe != null && (
                             <EndpointSection
-                                title="Subscribe"
+                                title={
+                                    <span className="inline-flex items-center gap-2">
+                                        {"Receive"}
+                                        <span>
+                                            <ArrowDownIcon className="t-success" width={20} height={20} />
+                                        </span>
+                                    </span>
+                                }
                                 anchorIdParts={["subscribe"]}
                                 route={route}
                                 headerType="h2"
@@ -297,7 +316,7 @@ export function WebSocket(): ReactElement {
                     </main>
                 </section>
                 <aside className="max-w-content-width top-header-height max-h-vh-minus-header sticky py-8">
-                    <TitledExample title={"Example"} type={"primary"}>
+                    <TitledExample title={"Example Events"} type={"primary"}>
                         <div className="divide-border-default -my-3 divide-y">
                             <div className="flex items-center gap-2 p-3">
                                 <ArrowUpIcon className="text-intent-default" />
@@ -332,7 +351,7 @@ function CardedSection({
     ...props
 }: {
     number: number;
-    title: string;
+    title: ReactNode;
     headingElement: React.ReactNode;
     children: React.ReactNode;
     route: string;

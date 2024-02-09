@@ -1,5 +1,5 @@
 import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
-import { createElement, useRef } from "react";
+import { createElement, ReactNode, useRef } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
 import { getAnchorId } from "../../util/anchor";
@@ -8,7 +8,7 @@ import { Markdown } from "../markdown/Markdown";
 export declare namespace EndpointSection {
     export type Props = React.PropsWithChildren<{
         headerType?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-        title: string;
+        title: ReactNode;
         description?: string;
         anchorIdParts: string[];
         route: string;
