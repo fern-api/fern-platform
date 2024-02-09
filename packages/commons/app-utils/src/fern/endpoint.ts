@@ -1,6 +1,6 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { ResolvedEndpointDefinition } from "../resolver";
+import { ResolvedEndpointDefinition, ResolvedEndpointPathParts } from "../resolver";
 
 export type EndpointPathPart =
     | {
@@ -25,9 +25,9 @@ export function getEndpointAvailabilityLabel(availability: APIV1Read.Availabilit
     }
 }
 
-export function divideEndpointPathToParts(endpoint: ResolvedEndpointDefinition): EndpointPathPart[] {
+export function divideEndpointPathToParts(path: ResolvedEndpointPathParts[]): EndpointPathPart[] {
     const parts: EndpointPathPart[] = [];
-    endpoint.path.forEach((part) => {
+    path.forEach((part) => {
         if (part.type === "literal") {
             const subparts = part.value.split("/");
             subparts.forEach((subpart) => {
@@ -62,7 +62,7 @@ export function getEndpointPathAsString(endpoint: APIV1Read.EndpointDefinition):
                     literal: (literal) => literal.value,
                     pathParameter: (pathParameter) => getPathParameterAsString(pathParameter.value),
                     _other: () => "",
-                })
+                }),
             )
             .join("")
     );

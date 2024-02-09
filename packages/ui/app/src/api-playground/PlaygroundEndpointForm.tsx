@@ -386,7 +386,9 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                         <Link
                             href={`/${joinUrlSlugs(...endpoint.slug)}`}
                             shallow={
-                                isApiNode(activeNavigatable) && activeNavigatable.section.api === endpoint.apiSectionId
+                                activeNavigatable != null &&
+                                isApiNode(activeNavigatable) &&
+                                activeNavigatable.section.api === endpoint.apiSectionId
                             }
                             className="t-muted hover:t-accent inline-flex items-center gap-1 text-sm font-semibold underline decoration-1 underline-offset-4 hover:decoration-2"
                         >

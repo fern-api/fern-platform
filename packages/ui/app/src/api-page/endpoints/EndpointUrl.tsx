@@ -1,4 +1,5 @@
-import { divideEndpointPathToParts, ResolvedEndpointDefinition, type EndpointPathPart } from "@fern-ui/app-utils";
+import { APIV1Read } from "@fern-api/fdr-sdk";
+import { divideEndpointPathToParts, ResolvedEndpointPathParts, type EndpointPathPart } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import React, { PropsWithChildren, ReactElement, useCallback, useMemo } from "react";
@@ -8,16 +9,18 @@ import styles from "./EndpointUrl.module.scss";
 export declare namespace EndpointUrl {
     export type Props = React.PropsWithChildren<{
         urlStyle: "default" | "overflow";
-        endpoint: ResolvedEndpointDefinition;
+        path: ResolvedEndpointPathParts[];
+        method: APIV1Read.HttpMethod;
+        environment?: string;
         className?: string;
     }>;
 }
 
 export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<EndpointUrl.Props>>(function EndpointUrl(
-    { endpoint, className, urlStyle },
+    { path, method, environment, className, urlStyle },
     ref,
 ) {
-    const endpointPathParts = useMemo(() => divideEndpointPathToParts(endpoint), [endpoint]);
+    const endpointPathParts = useMemo(() => divideEndpointPathToParts(path), [path]);
 
     const renderPathParts = useCallback((parts: EndpointPathPart[]) => {
         const elements: (ReactElement | null)[] = [];
@@ -62,12 +65,13 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
 
     return (
         <div ref={ref} className={classNames("flex h-8 overflow-x-hidden items-center", className)}>
-            <HttpMethodTag method={endpoint.method} />
+            <HttpMethodTag method={method} />
             <div
                 className={classNames("ml-3 flex shrink grow items-center space-x-1 overflow-x-hidden", {
                     [styles.urlOverflowContainer ?? ""]: urlStyle === "overflow",
                 })}
             >
+                {environment != null && <span className="t-muted font-mono text-xs">{environment}</span>}
                 {renderPathParts(endpointPathParts)}
             </div>
         </div>

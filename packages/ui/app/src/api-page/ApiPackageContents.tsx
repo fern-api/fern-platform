@@ -1,6 +1,7 @@
 import { ResolvedApiDefinitionPackage, ResolvedNavigationItemApiSection } from "@fern-ui/app-utils";
 import { Endpoint } from "./endpoints/Endpoint";
 import { ApiSubpackage } from "./subpackages/ApiSubpackage";
+import { WebSocket } from "./web-socket/WebSocket";
 import { Webhook } from "./webhooks/Webhook";
 
 export declare namespace ApiPackageContents {
@@ -18,7 +19,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
     isLastInParentPackage,
     anchorIdParts,
 }) => {
-    const { endpoints, webhooks, subpackages } = apiDefinition;
+    const { endpoints, websockets, webhooks, subpackages } = apiDefinition;
 
     const subpackageTitle = apiDefinition.type === "subpackage" ? apiDefinition.title : undefined;
 
@@ -38,6 +39,9 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                         idx === endpoints.length - 1
                     }
                 />
+            ))}
+            {websockets.map((websocket) => (
+                <WebSocket key={websocket.id} />
             ))}
             {webhooks.map((webhook, idx) => (
                 <Webhook

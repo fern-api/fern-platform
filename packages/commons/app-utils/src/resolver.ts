@@ -50,6 +50,7 @@ export function resolveNavigationItems(
                                 definitionSlug,
                             ),
                         ),
+                        websockets: [],
                         webhooks: definition.rootPackage.webhooks.map((webhook) =>
                             resolveWebhookDefinition(webhook, definition.types, definitionSlug),
                         ),
@@ -114,6 +115,7 @@ function resolveSubpackage(
         id: subpackageId,
         slug,
         endpoints,
+        websockets: [],
         webhooks,
         subpackages,
         pointsTo: subpackage.pointsTo,
@@ -198,6 +200,7 @@ function resolveWebhookDefinition(
     parentSlugs: string[],
 ): ResolvedWebhookDefinition {
     return {
+        name: webhook.name != null ? webhook.name : webhook.urlSlug,
         slug: [...parentSlugs, webhook.urlSlug],
         ...webhook,
         headers: webhook.headers.map((header) => ({
@@ -405,6 +408,7 @@ export function isResolvedNavigationItemSection(item: ResolvedNavigationItem): i
 
 export interface ResolvedWithApiDefinition {
     endpoints: ResolvedEndpointDefinition[];
+    websockets: ResolvedPubSubWebsocketDefinition[];
     webhooks: ResolvedWebhookDefinition[];
     subpackages: ResolvedSubpackage[];
     pointsTo: APIV1Read.SubpackageId | undefined;
@@ -484,19 +488,76 @@ export function stringifyResolvedEndpointPathParts(pathParts: ResolvedEndpointPa
     return pathParts.map((part) => (part.type === "literal" ? part.value : `:${part.key}`)).join("");
 }
 
+export interface ResolvedPubSubWebsocketDefinition extends APIV1Read.WithDescription {
+    type: "pubSub";
+    id: string;
+    slug: string[];
+    name: string | undefined;
+    path: ResolvedEndpointPathParts[];
+    pathParameters: ResolvedParameter[];
+    queryParameters: ResolvedParameter[];
+    headers: ResolvedParameter[];
+    publish: ResolvedPayload | undefined;
+    subscribe: ResolvedPayload | undefined;
+    examples: ResolvedWebsocketExample[];
+
+    // these will start with ws:// or wss://
+    defaultEnvironment: APIV1Read.Environment | undefined;
+    environments: APIV1Read.Environment[];
+}
+
+export interface ResolvedWebsocketExample {
+    name: string | undefined;
+    description: string | undefined;
+    connect: unknown | undefined;
+    events: ResolvedWebsocketExampleEvent[];
+}
+
+export declare namespace ResolvedWebsocketExampleEvent {
+    interface Send {
+        action: "send";
+        variant: string | undefined;
+        payload: unknown;
+    }
+
+    interface Receive {
+        action: "receive";
+        variant: string | undefined;
+        payload: unknown;
+    }
+}
+
+export type ResolvedWebsocketExampleEvent = ResolvedWebsocketExampleEvent.Send | ResolvedWebsocketExampleEvent.Receive;
+
+interface ResolvedWebsocketExampleEventVisitor<T> {
+    send: (event: ResolvedWebsocketExampleEvent.Send) => T;
+    receive: (event: ResolvedWebsocketExampleEvent.Receive) => T;
+}
+
+export function visitWebsocketExampleEvent<T>(
+    event: ResolvedWebsocketExampleEvent,
+    visitor: ResolvedWebsocketExampleEventVisitor<T>,
+): T {
+    if (event.action === "send") {
+        return visitor.send(event);
+    } else {
+        return visitor.receive(event);
+    }
+}
+
 export interface ResolvedWebhookDefinition extends APIV1Read.WithDescription {
     id: APIV1Read.WebhookId;
     slug: string[];
 
     method: APIV1Read.WebhookHttpMethod;
-    name?: string;
+    name: string | undefined;
     path: string[];
     headers: ResolvedParameter[];
-    payload: ResolvedWebhookPayload;
+    payload: ResolvedPayload;
     examples: APIV1Read.ExampleWebhookPayload[];
 }
 
-export interface ResolvedWebhookPayload extends APIV1Read.WithDescription {
+export interface ResolvedPayload extends APIV1Read.WithDescription {
     shape: ResolvedTypeReference;
 }
 

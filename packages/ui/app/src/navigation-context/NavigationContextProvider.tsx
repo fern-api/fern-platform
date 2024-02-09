@@ -5,7 +5,7 @@ import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { PropsWithChildren, useCallback, useEffect, useRef, useState } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { getRouteNode } from "../util/anchor";
 import { getRouteForResolvedPath } from "./getRouteForResolvedPath";
@@ -33,21 +33,9 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     });
     const justNavigatedTo = useRef<string | undefined>(resolvedRoute);
 
-    const resolvedNavigatable = useMemo(() => {
-        const node = pathResolver.resolveNavigatable(resolvedPath.fullSlug);
-        if (node == null) {
-            throw new Error(
-                `Implementation Error. Cannot resolve navigatable for resolved path ${resolvedPath.fullSlug}`,
-            );
-        }
-        return node;
-    }, [pathResolver, resolvedPath.fullSlug]);
-
-    const [activeNavigatable, setActiveNavigatable] = useState(resolvedNavigatable);
-
-    const activeNavigatableNeighbors = useMemo(() => {
-        return pathResolver.getNeighborsForNavigatable(activeNavigatable);
-    }, [pathResolver, activeNavigatable]);
+    const [activeNavigatable, setActiveNavigatable] = useState(() => {
+        return pathResolver.resolveNavigatable(resolvedPath.fullSlug);
+    });
 
     const selectedSlug = getFullSlugForNavigatable(activeNavigatable, { omitDefault: true, basePath });
 
@@ -202,7 +190,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 onScrollToPath,
                 observeDocContent,
                 registerScrolledToPathListener: scrollToPathListeners.registerListener,
-                activeNavigatableNeighbors,
                 resolvedPath,
                 hydrated: hydrated.value,
             }}
@@ -225,9 +212,12 @@ function getFrontmatter(resolvedPath: ResolvedPath): FernDocsFrontmatter | undef
 }
 
 function convertToTitle(
-    navigatable: NavigatableDocsNode,
+    navigatable: NavigatableDocsNode | undefined,
     frontmatter: FernDocsFrontmatter | undefined,
 ): string | undefined {
+    if (navigatable == null) {
+        return undefined;
+    }
     return visitDiscriminatedUnion(navigatable, "type")._visit({
         page: (page) => frontmatter?.title ?? page.page.title,
         "top-level-endpoint": (endpoint) => endpoint.endpoint.name,
@@ -239,9 +229,12 @@ function convertToTitle(
 }
 
 function convertToDescription(
-    navigatable: NavigatableDocsNode,
+    navigatable: NavigatableDocsNode | undefined,
     frontmatter: FernDocsFrontmatter | undefined,
 ): string | undefined {
+    if (navigatable == null) {
+        return undefined;
+    }
     return visitDiscriminatedUnion(navigatable, "type")._visit({
         page: () => frontmatter?.description,
         "top-level-endpoint": (endpoint) => endpoint.endpoint.description,

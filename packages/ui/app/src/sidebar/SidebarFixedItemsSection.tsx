@@ -24,7 +24,7 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
     const { activeNavigatable } = useNavigationContext();
     const { activeNavigationConfigContext, withVersionSlug } = useDocsSelectors();
     const { openSearchDialog } = useSearchContext();
-    const showTabs = activeNavigationConfigContext.type === "tabbed";
+    const showTabs = activeNavigationConfigContext?.type === "tabbed";
 
     const showSearchBar = useSearchService(searchInfo, algoliaSearchIndex).isAvailable;
     const searchBar = useMemo(() => {
@@ -45,13 +45,13 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
                     <SidebarTabButton
                         key={idx}
                         tab={tab}
-                        selected={idx === activeNavigatable.context.tab?.index}
+                        selected={idx === activeNavigatable?.context.tab?.index}
                         slug={withVersionSlug(tab.urlSlug, { omitDefault: true })}
                     />
                 ))}
             </ul>
         );
-    }, [showTabs, activeNavigationConfigContext, activeNavigatable, withVersionSlug]);
+    }, [showTabs, activeNavigationConfigContext, activeNavigatable?.context.tab?.index, withVersionSlug]);
 
     if (!showSearchBar && !showTabs) {
         return null;

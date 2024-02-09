@@ -121,14 +121,14 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
 
     const navigationItems = useMemo(() => {
         const unresolvedNavigationItems =
-            activeNavigationConfigContext.type === "tabbed"
-                ? activeNavigatable.context.tab?.items
-                : activeNavigationConfigContext.config.items;
+            activeNavigationConfigContext?.type === "tabbed"
+                ? activeNavigatable?.context.tab?.items
+                : activeNavigationConfigContext?.config.items;
         return resolveNavigationItems(unresolvedNavigationItems ?? [], apis, currentSlug);
     }, [
-        activeNavigatable.context.tab?.items,
-        activeNavigationConfigContext.config,
-        activeNavigationConfigContext.type,
+        activeNavigatable?.context.tab?.items,
+        activeNavigationConfigContext?.config,
+        activeNavigationConfigContext?.type,
         apis,
         currentSlug,
     ]);

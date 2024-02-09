@@ -62,7 +62,7 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
                             <SearchBox
                                 ref={inputRef}
                                 placeholder={
-                                    activeNavigatable.context.version?.info.id != null
+                                    activeNavigatable?.context.version?.info.id != null
                                         ? `Search across ${activeNavigatable.context.version.info.id}...`
                                         : "Search for guides and endpoints..."
                                 }
@@ -113,7 +113,7 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
             <SearchMobileBox
                 ref={inputRef}
                 placeholder={
-                    activeNavigatable.context.version?.info.id != null
+                    activeNavigatable?.context.version?.info.id != null
                         ? `Search across ${activeNavigatable.context.version.info.id}...`
                         : "Search for guides and endpoints..."
                 }

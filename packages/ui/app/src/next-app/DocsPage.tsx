@@ -1,4 +1,4 @@
-import { APIV1Read, DocsV1Read, DocsV2Read, FdrAPI, PathResolver } from "@fern-api/fdr-sdk";
+import { APIV1Read, DocsV1Read, DocsV2Read, FdrAPI, NavigatableDocsNode, PathResolver } from "@fern-api/fdr-sdk";
 import { convertNavigatableToResolvedPath, type ResolvedPath } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { compact } from "lodash-es";
@@ -122,6 +122,63 @@ export const getDocsPageProps = async (
             basePath,
         },
     });
+
+    if (pathname === "fern-test/websocket-example") {
+        const navigatable = resolver.resolveNavigatable("");
+        if (navigatable != null) {
+            const navigation = getNavigation(basePath, docs.body.definition.apis, navigatable);
+
+            navigation.push({
+                type: "apiSection",
+                api: "fern-test",
+                id: "fern-test",
+                title: "Fern Test",
+                slug: ["fern-test"],
+                endpoints: [],
+                webhooks: [],
+                websockets: [
+                    {
+                        id: "websocket-example",
+                        title: "Websocket Example",
+                        slug: ["fern-test", "websocket-example"],
+                    },
+                ],
+                subpackages: [],
+                artifacts: null,
+            });
+
+            return {
+                type: "props",
+                props: {
+                    // docs: docs.body,
+                    baseUrl: docs.body.baseUrl,
+                    config: docs.body.definition.config,
+                    search: docs.body.definition.search,
+                    algoliaSearchIndex: docs.body.definition.algoliaSearchIndex ?? null,
+                    files: docs.body.definition.files,
+                    apis: docs.body.definition.apis,
+                    resolvedPath: {
+                        type: "api-page",
+                        fullSlug: "fern-websocket-example",
+                        apiSection: {
+                            api: "fern-websocket-example",
+                            title: "Fern Websocket Example",
+                            urlSlug: "fern-websocket-example",
+                            skipUrlSlug: false,
+                            showErrors: false,
+                        },
+                        neighbors: {
+                            next: null,
+                            prev: null,
+                        },
+                    },
+                    navigation,
+                },
+                revalidate: 60 * 60, // 1 hour
+            };
+        }
+    }
+
     const navigatable = resolver.resolveNavigatable(pathname);
 
     if (navigatable == null) {
@@ -135,30 +192,13 @@ export const getDocsPageProps = async (
     }
 
     const resolvedPath = await convertNavigatableToResolvedPath({
+        resolver,
         navigatable,
         docsDefinition,
         basePath,
     });
 
-    const versionAndTabSlug = [];
-    if (basePath != null) {
-        versionAndTabSlug.push(...basePath.split("/").filter((s) => s.length > 0));
-    }
-    if (navigatable.context.type === "versioned-tabbed" || navigatable.context.type === "versioned-untabbed") {
-        if (navigatable.context.version.info.index !== 0) {
-            versionAndTabSlug.push(navigatable.context.version.slug);
-        }
-    }
-    if (navigatable.context.type === "versioned-tabbed" || navigatable.context.type === "unversioned-tabbed") {
-        versionAndTabSlug.push(navigatable.context.tab.slug);
-    }
-
-    const currentNavigationItems =
-        navigatable.context.type === "versioned-tabbed" || navigatable.context.type === "unversioned-tabbed"
-            ? navigatable.context.tab?.items
-            : navigatable.context.navigationConfig.items;
-
-    const navigation = resolveSidebarNodes(currentNavigationItems, docs.body.definition.apis, versionAndTabSlug);
+    const navigation = getNavigation(basePath, docs.body.definition.apis, navigatable);
 
     return {
         type: "props",
@@ -190,3 +230,33 @@ export const getDocsPageStaticProps: GetStaticProps<DocsPage.Props> = async ({ p
         _other: () => ({ notFound: true }),
     });
 };
+
+function getVersionAndTabSlug(basePath: string | undefined, navigatable: NavigatableDocsNode) {
+    const versionAndTabSlug = [];
+    if (basePath != null) {
+        versionAndTabSlug.push(...basePath.split("/").filter((s) => s.length > 0));
+    }
+    if (navigatable.context.type === "versioned-tabbed" || navigatable.context.type === "versioned-untabbed") {
+        if (navigatable.context.version.info.index !== 0) {
+            versionAndTabSlug.push(navigatable.context.version.slug);
+        }
+    }
+    if (navigatable.context.type === "versioned-tabbed" || navigatable.context.type === "unversioned-tabbed") {
+        versionAndTabSlug.push(navigatable.context.tab.slug);
+    }
+    return versionAndTabSlug;
+}
+function getNavigation(
+    basePath: string | undefined,
+    apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
+    navigatable: NavigatableDocsNode,
+) {
+    const versionAndTabSlug = getVersionAndTabSlug(basePath, navigatable);
+
+    const currentNavigationItems =
+        navigatable.context.type === "versioned-tabbed" || navigatable.context.type === "unversioned-tabbed"
+            ? navigatable.context.tab?.items
+            : navigatable.context.navigationConfig.items;
+
+    return resolveSidebarNodes(currentNavigationItems, apis, versionAndTabSlug);
+}
