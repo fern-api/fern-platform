@@ -449,7 +449,7 @@ it("snippets dao", async () => {
     expect(snippet.async_client).toEqual("client = AsyncAcme(api_key='YOUR_API_KEY')");
     expect(snippet.sync_client).toEqual("client = Acme(api_key='YOUR_API_KEY')");
 
-    const sdkId = await serverApp?.dao.sdks().getLatestSdkIdForPackage("acme");
+    const sdkId = await serverApp?.dao.sdks().getLatestSdkIdForPackage({ sdkPackage: "acme", language: "PYTHON" });
     expect(sdkId).toEqual("python|acme|0.0.1");
 
     const snippetsForSdkId = await serverApp?.dao.snippets().loadAllSnippetsForSdkIds(sdkId != null ? [sdkId] : []);

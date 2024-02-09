@@ -1,6 +1,6 @@
 import { SDKSnippetHolder, convertAPIDefinitionToDb } from "@fern-api/fdr-sdk";
 import { v4 as uuidv4 } from "uuid";
-import { APIV1Write, APIV1WriteService } from "../../api";
+import { APIV1WriteService } from "../../api";
 import type { FdrApplication } from "../../app";
 import { writeBuffer } from "../../util";
 
@@ -18,14 +18,27 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
                 orgId: req.body.orgId,
             });
             const snippetsConfiguration = req.body.definition.snippetsConfiguration ?? {};
-            const packagesForSnippets = getPackagesAsArrayFromSnippetsConfig(snippetsConfiguration);
-            const packageToSdkId = await app.dao.sdks().getLatestSdkIdsForPackages(packagesForSnippets);
-            const snippetsBySdkId = await app.dao.snippets().loadAllSnippetsForSdkIds(Object.values(packageToSdkId));
+            const snippetsConfigurationWithSdkIds = await app.dao
+                .sdks()
+                .getLatestSdkIdsForPackages(snippetsConfiguration);
+            const sdkIds = [];
+            if (snippetsConfigurationWithSdkIds.typescriptSdk != null) {
+                sdkIds.push(snippetsConfigurationWithSdkIds.typescriptSdk.sdkId);
+            }
+            if (snippetsConfigurationWithSdkIds.pythonSdk != null) {
+                sdkIds.push(snippetsConfigurationWithSdkIds.pythonSdk.sdkId);
+            }
+            if (snippetsConfigurationWithSdkIds.javaSdk != null) {
+                sdkIds.push(snippetsConfigurationWithSdkIds.javaSdk.sdkId);
+            }
+            if (snippetsConfigurationWithSdkIds.goSdk != null) {
+                sdkIds.push(snippetsConfigurationWithSdkIds.goSdk.sdkId);
+            }
+            const snippetsBySdkId = await app.dao.snippets().loadAllSnippetsForSdkIds(sdkIds);
             const apiDefinitionId = uuidv4();
             const snippetHolder = new SDKSnippetHolder({
                 snippetsBySdkId,
-                packageToSdkId,
-                snippetsConfiguration,
+                snippetsConfigWithSdkId: snippetsConfigurationWithSdkIds,
             });
             const transformedApiDefinition = convertAPIDefinitionToDb(
                 req.body.definition,
@@ -50,21 +63,4 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
             });
         },
     });
-}
-
-function getPackagesAsArrayFromSnippetsConfig(snippetsConfig: APIV1Write.SnippetsConfig): string[] {
-    const packages: string[] = [];
-    if (snippetsConfig.goSdk != null) {
-        packages.push(snippetsConfig.goSdk.githubRepo);
-    }
-    if (snippetsConfig.typescriptSdk != null) {
-        packages.push(snippetsConfig.typescriptSdk.package);
-    }
-    if (snippetsConfig.javaSdk != null) {
-        packages.push(snippetsConfig.javaSdk.coordinate);
-    }
-    if (snippetsConfig.pythonSdk != null) {
-        packages.push(snippetsConfig.pythonSdk.package);
-    }
-    return packages;
 }

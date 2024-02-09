@@ -21,10 +21,10 @@ describe("SDK Snippet Holder", () => {
                     },
                 },
             },
-            packageToSdkId: { acme: "python|acme|0.0.1" },
-            snippetsConfiguration: {
+            snippetsConfigWithSdkId: {
                 pythonSdk: {
                     package: "acme",
+                    sdkId: "python|acme|0.0.1",
                 },
             },
         });

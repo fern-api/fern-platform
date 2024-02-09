@@ -1,20 +1,24 @@
 import { APIV1Read, APIV1Write, FdrAPI } from "../../../client";
 
+export interface SnippetsConfigWithSdkId {
+    typescriptSdk?: APIV1Write.TypescriptPackage & { sdkId: string };
+    pythonSdk?: APIV1Write.PythonPackage & { sdkId: string };
+    goSdk?: APIV1Write.GoModule & { sdkId: string };
+    javaSdk?: APIV1Write.JavaCoordinate & { sdkId: string };
+}
+
 export interface SdkSnippetHolderArgs {
     snippetsBySdkId: Record<string, Record<FdrAPI.EndpointPath, FdrAPI.SnippetsByEndpointMethod>>;
-    packageToSdkId: Record<string, string>;
-    snippetsConfiguration: APIV1Write.SnippetsConfig;
+    snippetsConfigWithSdkId: SnippetsConfigWithSdkId;
 }
 
 export class SDKSnippetHolder {
-    private snippetsConfiguration: APIV1Write.SnippetsConfig;
     private snippetsBySdkId: Record<string, Record<FdrAPI.EndpointPath, FdrAPI.SnippetsByEndpointMethod>>;
-    private packageToSdkId: Record<string, string>;
+    private snippetsConfigWithSdkId: SnippetsConfigWithSdkId;
 
-    constructor({ snippetsBySdkId, packageToSdkId, snippetsConfiguration }: SdkSnippetHolderArgs) {
+    constructor({ snippetsBySdkId, snippetsConfigWithSdkId }: SdkSnippetHolderArgs) {
         this.snippetsBySdkId = snippetsBySdkId;
-        this.packageToSdkId = packageToSdkId;
-        this.snippetsConfiguration = snippetsConfiguration;
+        this.snippetsConfigWithSdkId = snippetsConfigWithSdkId;
     }
 
     public getPythonCodeSnippetForEndpoint({
@@ -24,13 +28,10 @@ export class SDKSnippetHolder {
         endpointPath: string;
         endpointMethod: FdrAPI.EndpointMethod;
     }): APIV1Read.PythonSnippet | undefined {
-        if (this.snippetsConfiguration.pythonSdk == null) {
+        if (this.snippetsConfigWithSdkId.pythonSdk == null) {
             return undefined;
         }
-        const sdkId = this.packageToSdkId[this.snippetsConfiguration.pythonSdk.package];
-        if (sdkId == null) {
-            return undefined;
-        }
+        const sdkId = this.snippetsConfigWithSdkId.pythonSdk.sdkId;
         const snippetsForEndpoint = this.snippetsBySdkId[sdkId]?.[endpointPath]?.[endpointMethod];
         // if no snippets for this endpoint or multiple snippets just return undefined
         if (snippetsForEndpoint == null || snippetsForEndpoint.length > 1) {
@@ -52,13 +53,10 @@ export class SDKSnippetHolder {
         endpointPath: string;
         endpointMethod: FdrAPI.EndpointMethod;
     }): APIV1Read.TypescriptSnippet | undefined {
-        if (this.snippetsConfiguration.typescriptSdk == null) {
+        if (this.snippetsConfigWithSdkId.typescriptSdk == null) {
             return undefined;
         }
-        const sdkId = this.packageToSdkId[this.snippetsConfiguration.typescriptSdk.package];
-        if (sdkId == null) {
-            return undefined;
-        }
+        const sdkId = this.snippetsConfigWithSdkId.typescriptSdk.sdkId;
         const snippetsForEndpoint = this.snippetsBySdkId[sdkId]?.[endpointPath]?.[endpointMethod];
         // if no snippets for this endpoint or multiple snippets just return undefined
         if (snippetsForEndpoint == null || snippetsForEndpoint.length > 1) {

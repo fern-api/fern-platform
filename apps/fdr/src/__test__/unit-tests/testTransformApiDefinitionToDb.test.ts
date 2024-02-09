@@ -3,8 +3,7 @@ import { APIV1Write } from "../../api";
 
 const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
     snippetsBySdkId: {},
-    packageToSdkId: {},
-    snippetsConfiguration: {},
+    snippetsConfigWithSdkId: {},
 });
 
 it("api register", async () => {
