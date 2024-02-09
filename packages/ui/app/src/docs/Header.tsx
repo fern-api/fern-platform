@@ -67,7 +67,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
         >
             <HeaderLogoSection config={config} />
 
-            <div className="-mr-2 ml-auto flex items-center space-x-0 md:mr-0 lg:space-x-4">
+            <div className="-mr-1 ml-auto flex items-center space-x-0 md:mr-0 lg:space-x-4">
                 {navbarLinksSection}
 
                 <div className="flex lg:hidden">
@@ -76,7 +76,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                     {searchService.isAvailable && (
                         <FernButton
                             onClick={openSearchDialog}
-                            icon={<MagnifyingGlassIcon className="size-6" />}
+                            icon={<MagnifyingGlassIcon className="!size-5" />}
                             intent="none"
                             variant="minimal"
                             rounded={true}
@@ -89,9 +89,9 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                         onClick={isMobileSidebarOpen ? closeMobileSidebar : openMobileSidebar}
                         icon={
                             isMobileSidebarOpen ? (
-                                <Cross1Icon className="size-6" />
+                                <Cross1Icon className="!size-5" />
                             ) : (
-                                <HamburgerMenuIcon className="size-6" />
+                                <HamburgerMenuIcon className="!size-5" />
                             )
                         }
                         intent={isMobileSidebarOpen ? "primary" : "none"}

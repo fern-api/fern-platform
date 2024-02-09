@@ -343,7 +343,7 @@
         }
 
         &.large {
-            @apply px-4 py-2 text-base h-10;
+            @apply px-3 lg:px-4 py-2 text-base h-10;
 
             &:not(.square):has(> .fern-button-content > .fa-icon:first-child),
             &:not(.square):has(> .fern-button-content > svg:first-child) {
