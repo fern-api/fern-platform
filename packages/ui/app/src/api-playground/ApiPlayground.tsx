@@ -157,7 +157,7 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
         <Portal>
             <Transition
                 show={isPlaygroundOpen}
-                className="bg-background dark:bg-background-dark border-default max-h-vh-minus-header fixed inset-x-0 bottom-0 border-t"
+                className="bg-background-translucent border-default max-h-vh-minus-header fixed inset-x-0 bottom-0 border-t backdrop-blur-xl"
                 style={{ height }}
                 enter="ease-out transition-transform duration-300 transform"
                 enterFrom="translate-y-full"

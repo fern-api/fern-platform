@@ -41,6 +41,8 @@ export const FernSegmentedControl: FC<FernSegmentedControlProps> = ({
                     variant={option.value === value ? "outlined" : "minimal"}
                     intent={option.value === value ? "primary" : "none"}
                     size="small"
+                    className="flex-1"
+                    mono={true}
                 >
                     {option.label ?? option.value}
                 </FernButton>

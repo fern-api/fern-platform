@@ -50,6 +50,7 @@ export function FernDropdown({
                                             </DropdownMenu.ItemIndicator>
                                         }
                                         intent={option.value === value ? "primary" : "none"}
+                                        mono={true}
                                     >
                                         {option.label ?? option.value}
                                     </FernButton>
