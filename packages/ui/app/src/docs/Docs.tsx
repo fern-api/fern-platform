@@ -148,18 +148,20 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
 
             <ApiPlaygroundContextProvider apiSections={apiSections}>
                 <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
-                    <div className="border-concealed dark:shadow-header-dark h-header-height fixed inset-x-0 top-0 z-30 overflow-visible border-b backdrop-blur-lg lg:backdrop-blur">
-                        {renderBackground()}
-                        <Header
-                            className="max-w-page-width mx-auto"
-                            config={config}
-                            openSearchDialog={openSearchDialog}
-                            isMobileSidebarOpen={isMobileSidebarOpen}
-                            openMobileSidebar={openMobileSidebar}
-                            closeMobileSidebar={closeMobileSidebar}
-                            searchService={searchService}
-                        />
-                    </div>
+                    <header id="fern-header">
+                        <div className="border-concealed dark:shadow-header-dark h-header-height fixed inset-x-0 top-0 z-30 overflow-visible border-b backdrop-blur-lg lg:backdrop-blur">
+                            {renderBackground()}
+                            <Header
+                                className="max-w-page-width mx-auto"
+                                config={config}
+                                openSearchDialog={openSearchDialog}
+                                isMobileSidebarOpen={isMobileSidebarOpen}
+                                openMobileSidebar={openMobileSidebar}
+                                closeMobileSidebar={closeMobileSidebar}
+                                searchService={searchService}
+                            />
+                        </div>
+                    </header>
 
                     <div className="max-w-page-width relative mx-auto flex min-h-0 w-full min-w-0 flex-1">
                         <Sidebar
@@ -177,6 +179,9 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                             <DocsMainContent navigationItems={navigationItems} />
                         </main>
                     </div>
+
+                    {/* Enables footer DOM injection */}
+                    <footer id="fern-footer" />
                 </div>
             </ApiPlaygroundContextProvider>
         </>
