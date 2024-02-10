@@ -4,7 +4,7 @@ import React from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import * as prism from "react-syntax-highlighter/dist/cjs/styles/prism";
 
-type CodeBlockSkeletonProps = {
+export type CodeBlockSkeletonProps = {
     className?: string;
     language: string;
     content: string;
@@ -24,7 +24,7 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
     return (
         <div
             className={classNames(
-                "bg-gray-100/90 dark:bg-gray-950/90",
+                // "bg-gray-100/90 dark:bg-gray-950/90",
                 "font-mono",
                 {
                     "w-full border-l border-r border-b rounded-bl-lg rounded-br-lg border-default": !usePlainStyles,

@@ -13,6 +13,7 @@ export declare namespace TitledExample {
         onClick?: MouseEventHandler<HTMLDivElement>;
         containerRef?: MutableRefObject<HTMLDivElement | null>;
         disablePadding?: boolean;
+        disableClipboard?: boolean;
     }
 }
 
@@ -26,6 +27,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
     onClick,
     containerRef,
     disablePadding = false,
+    disableClipboard = false,
 }) => {
     const [contentRef, setContentRef] = useState<HTMLElement | null>(null);
 
@@ -62,7 +64,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                 </div>
                 <div className="flex gap-2">
                     {actions}
-                    <CopyToClipboardButton content={copyToClipboardContent} className="-m-1" />
+                    {!disableClipboard && <CopyToClipboardButton content={copyToClipboardContent} className="-m-1" />}
                 </div>
             </div>
             <div className="flex min-h-0 flex-1">

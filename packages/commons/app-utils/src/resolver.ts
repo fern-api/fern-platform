@@ -496,7 +496,6 @@ export interface ResolvedPubSubWebsocketDefinition extends APIV1Read.WithDescrip
     path: ResolvedEndpointPathParts[];
     pathParameters: ResolvedParameter[];
     queryParameters: ResolvedParameter[];
-    headers: ResolvedParameter[];
     publish: ResolvedPayload | undefined;
     subscribe: ResolvedPayload | undefined;
     examples: ResolvedWebsocketExample[];
@@ -509,7 +508,8 @@ export interface ResolvedPubSubWebsocketDefinition extends APIV1Read.WithDescrip
 export interface ResolvedWebsocketExample {
     name: string | undefined;
     description: string | undefined;
-    connect: unknown | undefined;
+    pathParameters: Record<string, unknown>;
+    queryParameters: Record<string, unknown>;
     events: ResolvedWebsocketExampleEvent[];
 }
 

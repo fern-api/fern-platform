@@ -1,7 +1,12 @@
 import { ResolvedPubSubWebsocketDefinition } from "@fern-ui/app-utils";
-import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
-import React, { ReactElement, ReactNode } from "react";
+import * as Accordion from "@radix-ui/react-accordion";
+import { ArrowDownIcon, ArrowUpIcon, ChevronDownIcon } from "@radix-ui/react-icons";
+import classNames from "classnames";
+import { HTMLAttributes, ReactElement, ReactNode } from "react";
+import { Wifi } from "react-feather";
+import { buildRequestUrl } from "../../api-playground/utils";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
+import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
@@ -46,7 +51,6 @@ const WEBSOCKET_MOCK: ResolvedPubSubWebsocketDefinition = {
                 "Authenticate using a [generated temporary token](https://www.assemblyai.com/docs/guides/real-time-streaming-transcription#creating-temporary-authentication-tokens)",
         },
     ],
-    headers: [],
     publish: {
         description: "Send audio data to the server",
         shape: {
@@ -113,7 +117,50 @@ const WEBSOCKET_MOCK: ResolvedPubSubWebsocketDefinition = {
             ],
         },
     },
-    examples: [],
+    examples: [
+        {
+            name: "Example",
+            description: "Example of a WebSocket connection",
+            queryParameters: {
+                sample_rate: 16000,
+                word_boost: "[]",
+                encoding: "pcm_s16le",
+            },
+            pathParameters: {},
+            events: [
+                {
+                    action: "receive",
+                    variant: "SessionBegins",
+                    payload: {
+                        session_id: "abcdsafdsfadsfasdfasdfasdfasdfasdf",
+                        expires_at: "2022-12-31T23:59:59Z",
+                    },
+                },
+                {
+                    action: "send",
+                    variant: "Send Audio",
+                    payload: "abcdsafdsfadsfasdfasdfasdfasdfasdf",
+                },
+                {
+                    action: "receive",
+                    variant: "PartialTranscript",
+                    payload: "Hello, World!",
+                },
+                {
+                    action: "receive",
+                    variant: "FinalTranscript",
+                    payload: "Hello, World!",
+                },
+                {
+                    action: "send",
+                    variant: "Terminate Session",
+                    payload: {
+                        message_type: "SessionTerminated",
+                    },
+                },
+            ],
+        },
+    ],
     defaultEnvironment: {
         id: "test",
         baseUrl: "wss://test.buildwithfern.com/v2/realtime/ws",
@@ -129,6 +176,7 @@ const WEBSOCKET_MOCK: ResolvedPubSubWebsocketDefinition = {
 export function WebSocket(): ReactElement {
     const websocket = WEBSOCKET_MOCK;
     const route = "/fern-test/websocket-example";
+
     return (
         <div className={"scroll-mt-header-height-padded mx-4 md:mx-6 lg:mx-8"}>
             <article className="scroll-mt-header-height max-w-content-width lg:max-w-endpoint-width mx-auto lg:grid lg:grid-cols-2 lg:gap-12">
@@ -140,6 +188,7 @@ export function WebSocket(): ReactElement {
                                         {subpackageTitle}
                                     </div>
                                 )} */}
+                            <div className="t-accent text-xs font-semibold uppercase tracking-wider">WebSocket</div>
                             <h1 className="my-0 inline-block">{websocket.name}</h1>
                         </div>
 
@@ -152,7 +201,14 @@ export function WebSocket(): ReactElement {
                     <main className="space-y-12">
                         <CardedSection
                             number={1}
-                            title="Handshake"
+                            title={
+                                <span className="inline-flex items-center gap-2">
+                                    {"Handshake"}
+                                    <span className="bg-tag-default inline-block rounded-full p-1">
+                                        <Wifi className="t-muted size-[15px]" strokeWidth={1.5} />
+                                    </span>
+                                </span>
+                            }
                             route={route}
                             headingElement={
                                 <div className="border-default hover:bg-tag-default -mx-2 flex items-center justify-between rounded-xl border px-2 py-1 hover:transition-[background]">
@@ -160,6 +216,7 @@ export function WebSocket(): ReactElement {
                                         path={websocket.path}
                                         method="GET"
                                         environment={websocket.defaultEnvironment?.baseUrl}
+                                        className="flex-1"
                                     />
                                     <CopyToClipboardButton
                                         className="-mr-1"
@@ -188,28 +245,6 @@ export function WebSocket(): ReactElement {
                                                     description={parameter.description}
                                                     descriptionContainsMarkdown={
                                                         parameter.descriptionContainsMarkdown ?? true
-                                                    }
-                                                    availability={parameter.availability}
-                                                />
-                                            </div>
-                                        ))}
-                                    </div>
-                                </EndpointSection>
-                            )}
-                            {websocket.headers.length > 0 && (
-                                <EndpointSection title="Headers" anchorIdParts={["request", "header"]} route={route}>
-                                    <div className="flex flex-col">
-                                        {websocket.headers.map((parameter) => (
-                                            <div className="flex flex-col" key={parameter.key}>
-                                                <TypeComponentSeparator />
-                                                <EndpointParameter
-                                                    name={parameter.key}
-                                                    shape={parameter.shape}
-                                                    anchorIdParts={["request", "header", parameter.key]}
-                                                    route={route}
-                                                    description={parameter.description}
-                                                    descriptionContainsMarkdown={
-                                                        parameter.descriptionContainsMarkdown ?? false
                                                     }
                                                     availability={parameter.availability}
                                                 />
@@ -250,8 +285,8 @@ export function WebSocket(): ReactElement {
                                 title={
                                     <span className="inline-flex items-center gap-2">
                                         {"Send"}
-                                        <span>
-                                            <ArrowUpIcon className="t-muted" width={20} height={20} />
+                                        <span className="bg-tag-success t-success inline-block rounded-full p-1">
+                                            <ArrowUpIcon />
                                         </span>
                                     </span>
                                 }
@@ -284,8 +319,8 @@ export function WebSocket(): ReactElement {
                                 title={
                                     <span className="inline-flex items-center gap-2">
                                         {"Receive"}
-                                        <span>
-                                            <ArrowDownIcon className="t-success" width={20} height={20} />
+                                        <span className="bg-tag-primary t-accent-aaa inline-block rounded-full p-1">
+                                            <ArrowDownIcon />
                                         </span>
                                     </span>
                                 }
@@ -315,26 +350,105 @@ export function WebSocket(): ReactElement {
                         )}
                     </main>
                 </section>
-                <aside className="max-w-content-width top-header-height max-h-vh-minus-header sticky py-8">
-                    <TitledExample title={"Example Events"} type={"primary"}>
-                        <div className="divide-border-default -my-3 divide-y">
-                            <div className="flex items-center gap-2 p-3">
-                                <ArrowUpIcon className="text-intent-default" />
-                                <span>Testing...</span>
-                            </div>
-                            <div className="flex items-center gap-2 p-3">
-                                <ArrowDownIcon className="text-intent-success" />
-                                <span>Testing...</span>
-                            </div>
-                            <div className="flex items-center gap-2 p-3">
-                                <ArrowUpIcon className="text-intent-default" />
-                                <span>Testing...</span>
-                            </div>
-                            <div className="flex items-center gap-2 p-3">
-                                <ArrowDownIcon className="text-intent-success" />
-                                <span>Testing...</span>
-                            </div>
+                <aside className="max-w-content-width top-header-height max-h-vh-minus-header sticky space-y-6 py-8">
+                    <TitledExample title={"Handshake"} type={"primary"} disablePadding={true} disableClipboard={true}>
+                        <div className="flex px-1 py-3">
+                            <table className="min-w-0 flex-1 shrink table-fixed border-separate border-spacing-x-2 whitespace-normal break-words">
+                                <tbody>
+                                    <tr>
+                                        <td className="text-left align-top">URL</td>
+                                        <td className="text-left align-top">
+                                            {buildRequestUrl(
+                                                websocket.defaultEnvironment?.baseUrl,
+                                                websocket.path,
+                                                websocket.examples[0]?.pathParameters,
+                                                websocket.examples[0]?.queryParameters,
+                                            )}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="text-left align-top">Method</td>
+                                        <td className="text-left align-top">GET</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="text-left align-top">Status</td>
+                                        <td className="text-left align-top">101 Switching Protocols</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
+                    </TitledExample>
+                    <TitledExample title={"Messages"} type={"primary"} disablePadding={true} disableClipboard={true}>
+                        <Accordion.Root type="multiple" className="divide-border-default divide-y">
+                            {websocket.examples[0]?.events.map((event, index) => (
+                                <Accordion.Item
+                                    value={index.toString()}
+                                    key={index}
+                                    className={classNames(
+                                        "divide-border-default group divide-y focus-within:ring-1 ring-inset last:rounded-b-xl",
+                                        {
+                                            "focus-within:ring-border-success": event.action === "send",
+                                            "focus-within:ring-border-primary": event.action === "receive",
+                                        },
+                                    )}
+                                >
+                                    <Accordion.Trigger
+                                        className={classNames(
+                                            "w-full flex items-center gap-2 px-3 py-2 hover:data-[state=closed]:bg-tag-default cursor-default transition-background",
+                                            {
+                                                "data-[state=open]:bg-tag-success": event.action === "send",
+                                                "data-[state=open]:bg-tag-primary": event.action === "receive",
+                                            },
+                                        )}
+                                    >
+                                        {event.action === "send" ? (
+                                            <span className="bg-tag-success t-success inline-block shrink-0 rounded-full p-0.5">
+                                                <ArrowUpIcon />
+                                            </span>
+                                        ) : (
+                                            <span className="bg-tag-primary t-accent-aaa inline-block shrink-0 rounded-full p-0.5">
+                                                <ArrowDownIcon />
+                                            </span>
+                                        )}
+                                        <span className="min-w-0 shrink truncate text-xs">
+                                            {JSON.stringify(event.payload)}
+                                        </span>
+                                        <span
+                                            className={classNames("flex-1 inline-flex justify-end", {
+                                                // "justify-start": event.action === "send",
+                                                // "justify-end": event.action === "receive",
+                                            })}
+                                        >
+                                            <span className="bg-tag-default t-muted h-5 rounded-md px-1.5 py-1 text-xs leading-none">
+                                                {event.variant}
+                                            </span>
+                                        </span>
+
+                                        <ChevronDownIcon
+                                            className="t-muted shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.87,_0,_0.13,_1)] group-data-[state=open]:rotate-180"
+                                            aria-hidden
+                                        />
+                                    </Accordion.Trigger>
+                                    <Accordion.Content className="data-[state=open]:animate-slide-down data-[state=closed]:animate-slide-up overflow-hidden">
+                                        <div className="group/cb-container relative">
+                                            <CopyToClipboardButton
+                                                className={
+                                                    "absolute right-1 top-1 opacity-0 transition group-hover/cb-container:opacity-100"
+                                                }
+                                                content={() => JSON.stringify(event.payload, null, 2)}
+                                            />
+                                            <CodeBlockSkeleton
+                                                className="max-h-[200px] w-0 min-w-full overflow-y-auto py-1"
+                                                content={JSON.stringify(event.payload, null, 2)}
+                                                language="json"
+                                                usePlainStyles
+                                                fontSize="sm"
+                                            />
+                                        </div>
+                                    </Accordion.Content>
+                                </Accordion.Item>
+                            ))}
+                        </Accordion.Root>
                     </TitledExample>
                 </aside>
             </article>
@@ -352,10 +466,10 @@ function CardedSection({
 }: {
     number: number;
     title: ReactNode;
-    headingElement: React.ReactNode;
-    children: React.ReactNode;
+    headingElement: ReactNode;
+    children: ReactNode;
     route: string;
-} & React.HTMLAttributes<HTMLDivElement>) {
+} & Omit<HTMLAttributes<HTMLDivElement>, "title">) {
     const anchorRoute = `${route}#${title}`.toLowerCase();
     return (
         <section
