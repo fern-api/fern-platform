@@ -7,7 +7,7 @@ export function FernSwitch(props: Switch.SwitchProps): ReactElement {
         <Switch.Root
             {...props}
             className={classNames(
-                "relative h-[25px] w-[42px] cursor-default rounded-full bg-tag-primary ring-1 ring-inset ring-border-primary data-[state=checked]:bg-accent focus:outline-4 !outline-offset-0 focus:outline-tag-primary",
+                "relative h-[25px] w-[42px] cursor-default rounded-full bg-tag-default ring-1 ring-inset ring-border-default data-[state=checked]:bg-accent focus:outline-4 !outline-offset-0 focus:outline-tag-primary",
                 props.className,
             )}
             style={{ WebkitTapHighlightColor: "rgba(0, 0, 0, 0)", ...props.style }}

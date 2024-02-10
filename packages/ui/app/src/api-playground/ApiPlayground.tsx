@@ -122,7 +122,7 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({
                                 apiDefinition={apiDefinition}
                                 endpoint={endpoint}
                                 navigationItems={navigationItems}
-                                popoverPlacement="bottom-start"
+                                popoverPlacement="bottom"
                             />
                         )}
                     </div>
@@ -131,9 +131,10 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({
                         <FernButtonGroup>
                             <FernButton
                                 variant="minimal"
-                                icon={<Cross1Icon className="size-4" />}
                                 className="-mr-2"
+                                icon={<Cross1Icon />}
                                 onClick={collapseApiPlayground}
+                                rounded
                             />
                         </FernButtonGroup>
                     </div>

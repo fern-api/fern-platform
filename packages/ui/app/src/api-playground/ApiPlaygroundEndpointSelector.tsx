@@ -6,7 +6,7 @@ import {
 import { isNonNullish } from "@fern-ui/core-utils";
 import { useBooleanState, useKeyboardPress } from "@fern-ui/react-commons";
 import { Transition } from "@headlessui/react";
-import { ChevronDownIcon, ChevronUpIcon, Cross1Icon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import { ChevronDownIcon, ChevronUpIcon, Cross1Icon, MagnifyingGlassIcon, SlashIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { FC, Fragment, ReactElement, useEffect, useRef, useState } from "react";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
@@ -148,13 +148,18 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                 }
                 variant="minimal"
             >
-                {apiDefinition != null && (
-                    <span className="t-accent mr-2 shrink truncate whitespace-nowrap text-xs">
-                        {apiDefinition.title}
-                    </span>
-                )}
+                <span className="inline-flex items-center gap-1">
+                    {apiDefinition != null && (
+                        <>
+                            <span className="t-accent shrink truncate whitespace-nowrap">{apiDefinition.title}</span>
+                            <SlashIcon className="text-faded" />
+                        </>
+                    )}
 
-                <span className="whitespace-nowrap">{endpoint?.name ?? placeholderText ?? "Select an endpoint"}</span>
+                    <span className="whitespace-nowrap font-semibold">
+                        {endpoint?.name ?? placeholderText ?? "Select an endpoint"}
+                    </span>
+                </span>
             </FernButton>
             <Transition
                 show={showDropdown}

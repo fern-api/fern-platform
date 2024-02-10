@@ -223,11 +223,11 @@
 
     .fern-segmented-control {
         @apply bg-white dark:bg-white/5 ring-1 ring-inset ring-border-default rounded-lg shadow-sm h-8;
-        @apply space-x-0 p-1 flex items-center;
-    }
+        @apply space-x-px p-0 flex items-center;
 
-    .fern-segmented-control > .fern-button {
-        @apply rounded-md;
+        > .fern-button {
+            @apply rounded-lg;
+        }
     }
 
     a.fern-button {

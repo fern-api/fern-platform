@@ -9,7 +9,7 @@ interface PlaygroundSendRequestButtonProps {
 export const PlaygroundSendRequestButton: FC<PlaygroundSendRequestButtonProps> = ({ sendRequest }) => {
     return (
         <FernButton
-            className="group font-semibold"
+            className="after:animate-shine group relative overflow-hidden font-semibold after:absolute after:inset-y-0 after:w-8 after:bg-white/50 after:blur after:content-['']"
             rightIcon={
                 <RemoteFontAwesomeIcon
                     icon="paper-plane-top"

@@ -108,6 +108,7 @@ module.exports = {
                 "text-default-light": "#000000",
                 "text-muted": "var(--gray-a11)",
                 "text-disabled": "var(--gray-a10)",
+                faded: "var(--gray-a7)",
 
                 "tag-default-soft": "var(--gray-a2)",
                 "tag-primary-soft-light": "rgba(var(--accent-primary-light), 10%)",
@@ -163,12 +164,18 @@ module.exports = {
                     from: { opacity: 0, transform: "translateX(-2px)" },
                     to: { opacity: 1, transform: "translateX(0)" },
                 },
+                shine: {
+                    "0%": { opacity: "0.5", transform: "translateX(-100px) skewX(-15deg)" },
+                    "33%": { opacity: "0.6", transform: "translateX(300px) skewX(-15deg)" },
+                    "100%": { opacity: "0.6", transform: "translateX(300px) skewX(-15deg)" },
+                },
             },
             animation: {
                 "slide-down-and-fade": "slide-down-and-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
                 "slide-left-and-fade": "slide-left-and-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
                 "slide-up-and-fade": "slide-up-and-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
                 "slide-right-and-fade": "slide-right-and-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
+                shine: "shine 5s ease-in-out infinite",
             },
         },
     },
