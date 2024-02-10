@@ -8,8 +8,10 @@ import {
     forwardRef,
     PropsWithChildren,
     ReactNode,
+    useRef,
 } from "react";
 import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
+import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
 
 type Intent = "none" | "primary" | "success" | "warning" | "danger";
 
@@ -104,7 +106,13 @@ export const FernButton: FC<FernButtonProps> = forwardRef<HTMLButtonElement, Fer
             rounded,
             ...buttonProps
         } = props;
-        return (
+        const buttonTextRef = useRef<HTMLSpanElement>(null);
+        function isEllipsisActive() {
+            return (
+                buttonTextRef.current != null && buttonTextRef.current.scrollWidth > buttonTextRef.current.clientWidth
+            );
+        }
+        const button = (
             <button
                 ref={ref}
                 disabled={disabled}
@@ -126,9 +134,15 @@ export const FernButton: FC<FernButtonProps> = forwardRef<HTMLButtonElement, Fer
                         : undefined
                 }
             >
-                {renderButtonContent(props)}
+                {renderButtonContent(props, buttonTextRef)}
             </button>
         );
+
+        if (isEllipsisActive()) {
+            return <FernTooltip content={children ?? text}>{button}</FernTooltip>;
+        } else {
+            return button;
+        }
     },
 );
 
@@ -137,25 +151,25 @@ export const FernButtonGroup = forwardRef<HTMLSpanElement, ComponentProps<"div">
     ref,
 ) {
     return (
-        <span ref={ref} className={classNames(className, "fern-button-group")} {...props}>
-            {children}
-        </span>
+        <FernTooltipProvider>
+            <span ref={ref} className={classNames(className, "fern-button-group")} {...props}>
+                {children}
+            </span>
+        </FernTooltipProvider>
     );
 });
 
-function renderButtonContent({
-    icon: leftIcon,
-    rightIcon,
-    mono = false,
-    text,
-    children,
-}: PropsWithChildren<FernButtonSharedProps>) {
+function renderButtonContent(
+    { icon: leftIcon, rightIcon, mono = false, text, children }: PropsWithChildren<FernButtonSharedProps>,
+    buttonTextRef?: React.RefObject<HTMLSpanElement>,
+) {
     children = children ?? text;
     return (
         <span className="fern-button-content">
             {renderIcon(leftIcon)}
             {children && (
                 <span
+                    ref={buttonTextRef}
                     className={classNames("fern-button-text", {
                         "font-mono tracking-tight": mono,
                     })}

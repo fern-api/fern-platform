@@ -108,7 +108,7 @@ module.exports = {
                 "text-default-light": "#000000",
                 "text-muted": "var(--gray-a11)",
                 "text-disabled": "var(--gray-a10)",
-                faded: "var(--gray-a7)",
+                faded: "var(--gray-a8)",
 
                 "tag-default-soft": "var(--gray-a2)",
                 "tag-primary-soft-light": "rgba(var(--accent-primary-light), 10%)",

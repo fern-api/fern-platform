@@ -1,7 +1,6 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import { CheckIcon } from "@radix-ui/react-icons";
 import { PropsWithChildren, ReactElement, useRef, useState } from "react";
-import { Check } from "react-feather";
-import { FernButton } from "./FernButton";
 import { FernScrollArea } from "./FernScrollArea";
 
 interface FernDropdownOption {
@@ -40,20 +39,17 @@ export function FernDropdown({
                         <DropdownMenu.RadioGroup value={value} onValueChange={onValueChange}>
                             {options.map((option) => (
                                 <DropdownMenu.RadioItem asChild={true} key={option.value} value={option.value}>
-                                    <FernButton
+                                    <button
                                         ref={option.value === value ? activeRef : undefined}
-                                        variant={option.value === value ? "outlined" : "minimal"}
-                                        className="w-full text-left"
-                                        rightIcon={
-                                            <DropdownMenu.ItemIndicator asChild={true}>
-                                                <Check className="size-4" />
-                                            </DropdownMenu.ItemIndicator>
-                                        }
-                                        intent={option.value === value ? "primary" : "none"}
-                                        mono={true}
+                                        className="fern-dropdown-item"
                                     >
-                                        {option.label ?? option.value}
-                                    </FernButton>
+                                        <span className="fern-dropdown-item-indicator">
+                                            <DropdownMenu.ItemIndicator asChild={true}>
+                                                <CheckIcon />
+                                            </DropdownMenu.ItemIndicator>
+                                        </span>
+                                        <span>{option.label ?? option.value}</span>
+                                    </button>
                                 </DropdownMenu.RadioItem>
                             ))}
                         </DropdownMenu.RadioGroup>

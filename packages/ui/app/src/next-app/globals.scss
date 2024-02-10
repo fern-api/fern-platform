@@ -139,8 +139,17 @@
     .fern-dropdown {
         @apply animate-popover;
         @apply w-[var(--radix-dropdown-menu-trigger-width)];
-        @apply border-default flex max-h-[300px] min-w-[220px] flex-col rounded-lg border bg-background will-change-[opacity,transform];
-        @apply shadow-lg;
+        @apply border-default flex max-h-[300px] min-w-[220px] flex-col rounded-md border bg-background will-change-[opacity,transform];
+        @apply shadow-xl;
+
+        .fern-dropdown-item {
+            @apply flex justify-start p-1 font-mono rounded text-xs w-full;
+            @apply data-[highlighted]:bg-accent data-[highlighted]:t-accent-contrast will-change-[background-color,color];
+
+            .fern-dropdown-item-indicator {
+                @apply flex-none w-4 h-full flex items-center justify-center mr-1;
+            }
+        }
     }
 
     .fern-search-bar {
@@ -226,7 +235,7 @@
         @apply space-x-px p-0 flex items-center;
 
         > .fern-button {
-            @apply rounded-lg;
+            @apply rounded-lg shrink min-w-0;
         }
     }
 
@@ -256,7 +265,7 @@
 
         > .fern-button-content {
             @apply items-center inline-flex;
-            @apply gap-1.5 h-6;
+            @apply gap-1.5 h-6 shrink min-w-0;
 
             > .fa-icon,
             > svg {

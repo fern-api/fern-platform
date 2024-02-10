@@ -22,7 +22,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({ endpoi
             <div className="bg-tag-default flex h-10 flex-1 gap-2 rounded-full px-4 py-2">
                 {endpoint != null && <HttpMethodTag method={endpoint.method} className="playground-endpoint-method" />}
                 <span className="playground-endpoint-url">
-                    <span className="t-muted">{environment?.baseUrl}</span>
+                    <span className="playground-endpoint-baseurl">{environment?.baseUrl}</span>
                     {endpoint?.path.map((part, idx) => {
                         return visitDiscriminatedUnion(part, "type")._visit({
                             literal: (literal) => <span key={idx}>{literal.value}</span>,

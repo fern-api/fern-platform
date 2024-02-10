@@ -66,7 +66,7 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                     className="mb-4 w-full"
                 />
             ) : (
-                <FernDropdown options={options}>
+                <FernDropdown options={options} onValueChange={setSelectedVariant} value={selectedVariant}>
                     <FernButton
                         text={
                             activeVariant != null ? (
