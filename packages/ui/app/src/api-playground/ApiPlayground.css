@@ -1,0 +1,22 @@
+.playground-endpoint {
+    @apply flex min-w-0 flex-1 shrink items-center gap-2;
+    @apply px-2 w-full;
+    @apply hover:overflow-visible;
+}
+
+.playground-endpoint-url {
+    @apply truncate break-all font-mono text-xs hover:whitespace-normal;
+    @apply py-1;
+}
+
+.playground-endpoint:hover .playground-endpoint-url {
+    @apply whitespace-normal;
+}
+
+.playground-endpoint-copy-button {
+    @apply hidden -mt-1;
+}
+
+.playground-endpoint:hover .playground-endpoint-copy-button {
+    @apply inline-block;
+}

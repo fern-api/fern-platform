@@ -65,11 +65,11 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
     return (
         <div className="col-span-2 space-y-8 pb-20">
             {endpoint.headers.length > 0 && (
-                <FernCard className="divide-border-default divide-y rounded-xl shadow-sm">
+                <FernCard className="rounded-xl shadow-sm">
                     <div className="p-4">
                         <h5 className="t-muted m-0">Headers</h5>
                     </div>
-                    <ul className="divide-border-default list-none divide-y px-4">
+                    <ul className="list-none px-4">
                         {endpoint.headers.map((header) => (
                             <PlaygroundObjectPropertyForm
                                 key={header.key}
@@ -90,11 +90,11 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
             )}
 
             {endpoint.pathParameters.length > 0 && (
-                <FernCard className="divide-border-default divide-y rounded-xl shadow-sm">
+                <FernCard className="rounded-xl shadow-sm">
                     <div className="p-4">
                         <h5 className="t-muted m-0">Path Parameters</h5>
                     </div>
-                    <ul className="divide-border-default list-none divide-y px-4">
+                    <ul className="list-none px-4">
                         {endpoint.pathParameters.map((pathParameter) => (
                             <PlaygroundObjectPropertyForm
                                 key={pathParameter.key}
@@ -115,11 +115,11 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
             )}
 
             {endpoint.queryParameters.length > 0 && (
-                <FernCard className="divide-border-default divide-y rounded-xl shadow-sm">
+                <FernCard className="rounded-xl shadow-sm">
                     <div className="p-4">
                         <h5 className="t-muted m-0">Query Parameters</h5>
                     </div>
-                    <ul className="divide-border-default list-none divide-y px-4">
+                    <ul className="list-none px-4">
                         {endpoint.queryParameters.map((queryParameter) => (
                             <PlaygroundObjectPropertyForm
                                 key={queryParameter.key}
@@ -140,7 +140,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
             )}
 
             {endpoint.requestBody != null && hasRequiredFields(endpoint.requestBody.shape) && (
-                <FernCard className="divide-border-default divide-y rounded-xl shadow-sm">
+                <FernCard className="rounded-xl shadow-sm">
                     <div className="p-4">
                         <h5 className="t-muted m-0">Body Parameters</h5>
                     </div>
@@ -161,7 +161,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
             )}
 
             {endpoint.requestBody != null && hasOptionalFields(endpoint.requestBody.shape) && (
-                <FernCard className="divide-border-default divide-y rounded-xl shadow-sm">
+                <FernCard className="rounded-xl shadow-sm">
                     <div className="p-4">
                         <h5 className="t-muted m-0">Additional Body Parameters</h5>
                     </div>

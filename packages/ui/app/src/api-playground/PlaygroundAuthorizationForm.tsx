@@ -26,7 +26,7 @@ export const PlaygroundAuthorizationForm: FC<PlaygroundAuthorizationFormProps> =
     openSecretsModal,
 }) => {
     return (
-        <ul className="divide-border-default list-none divide-y px-4">
+        <ul className="list-none px-4">
             {visitDiscriminatedUnion(auth, "type")._visit({
                 bearerAuth: (bearerAuth) => (
                     <li className="-mx-4 space-y-2 p-4">
@@ -174,7 +174,7 @@ export function PlaygroundAuthorizationFormCard({
         return null;
     }
     return (
-        <FernCard className="border-border-danger-soft divide-border-default divide-y rounded-xl shadow-sm">
+        <FernCard className="border-border-danger-soft rounded-xl shadow-sm">
             <PlaygroundAuthorizationForm
                 auth={auth}
                 value={formState?.auth}

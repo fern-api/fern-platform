@@ -175,7 +175,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                 <div
                     ref={dropdownRef}
                     className={classNames(
-                        "overflow-hidden bg-background dark:bg-background-dark border-default absolute z-10 flex max-h-96 min-h-4 w-fit flex-col rounded border shadow-xl max-w-[calc(100vw-16px)]",
+                        "overflow-hidden bg-background dark:bg-background-dark border-default absolute z-20 flex max-h-96 min-h-4 w-fit flex-col rounded border shadow-xl max-w-[calc(100vw-16px)]",
                         {
                             "origin-top-left left-0 top-full mt-2": popoverPlacement === "bottom-start",
                             "origin-top -translate-x-[50%] left-[50%] top-full mt-2": popoverPlacement === "bottom",

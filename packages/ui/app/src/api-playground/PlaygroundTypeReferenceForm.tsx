@@ -237,7 +237,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                 />
             </div>
         ),
-        base64: () => (
+        base60: () => (
             <div className="flex min-w-0 flex-1 py-2">
                 <FernTextarea
                     className="w-full"

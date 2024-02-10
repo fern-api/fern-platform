@@ -135,7 +135,7 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
         return filteredProperties;
     }, [hideObjects, properties, sortProperties]);
     return (
-        <ul className="divide-border-default list-none divide-y px-4">
+        <ul className="list-none px-4">
             {propertiesToRender.map((property) => (
                 <PlaygroundObjectPropertyForm
                     key={property.key}

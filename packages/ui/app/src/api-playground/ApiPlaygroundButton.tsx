@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { FernButton } from "../components/FernButton";
-import { ApiPlaygroundSelectionState } from "./ApiPlayground";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
+import { ApiPlaygroundSelectionState } from "./ApiPlaygroundDrawer";
 
 export const ApiPlaygroundButton: FC<ApiPlaygroundSelectionState> = ({ apiSection, apiDefinition, endpoint }) => {
     const { hasPlayground, setSelectionStateAndOpen } = useApiPlaygroundContext();

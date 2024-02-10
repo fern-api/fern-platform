@@ -15,7 +15,7 @@ import { useDocsContext } from "../docs-context/useDocsContext";
 import { PlaygroundRequestFormAuth, PlaygroundRequestFormState } from "./types";
 import { getDefaultValueForTypes, getDefaultValuesForBody } from "./utils";
 
-const ApiPlayground = dynamic(() => import("../api-playground/ApiPlayground").then((m) => m.ApiPlayground), {
+const ApiPlaygroundDrawer = dynamic(() => import("./ApiPlaygroundDrawer").then((m) => m.ApiPlaygroundDrawer), {
     ssr: false,
 });
 
@@ -118,7 +118,7 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundPro
             }}
         >
             {children}
-            <ApiPlayground apiSections={apiSections} />
+            <ApiPlaygroundDrawer apiSections={apiSections} />
         </ApiPlaygroundContext.Provider>
     );
 };

@@ -65,7 +65,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
     }, []);
 
     return (
-        <div className="divide-border-default flex min-h-0 flex-1 shrink items-stretch divide-x">
+        <div className="flex min-h-0 flex-1 shrink items-stretch divide-x">
             {/* <div
                 className={"relative flex min-w-0 shrink flex-col overflow-hidden"}
                 style={{ width: `${width * 100}%` }}
@@ -91,8 +91,12 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                     auth={auth}
                 /> */}
             {/* </div> */}
-            <FernScrollArea ref={scrollAreaRef} className="bg-black/[0.025] dark:bg-black/10">
-                <HorizontalSplitPane rizeBarHeight={scrollAreaHeight} leftClassName="pl-6 pr-1" rightClassName="pl-1">
+            <FernScrollArea ref={scrollAreaRef} viewportClassName="overscroll-contain">
+                <HorizontalSplitPane
+                    rizeBarHeight={scrollAreaHeight}
+                    leftClassName="pl-6 pr-1 mt"
+                    rightClassName="pl-1"
+                >
                     <div className="mx-auto w-full max-w-4xl space-y-6 pt-6">
                         <PlaygroundAuthorizationFormCard
                             endpoint={endpoint}
@@ -118,7 +122,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                     </div>
 
                     <VerticalSplitPane
-                        className="sticky top-0 w-full pr-6"
+                        className="sticky inset-0 pr-6"
                         style={{ height: scrollAreaHeight }}
                         aboveClassName={
                             response.type === "notStartedLoading"
