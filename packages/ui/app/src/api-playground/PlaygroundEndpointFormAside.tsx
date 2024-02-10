@@ -23,7 +23,7 @@ export function PlaygroundEndpointFormAside({
     const { activeNavigatable } = useNavigationContext();
     return (
         <aside className={classNames("sticky top-0 flex flex-col", className)} style={{ maxHeight: scrollAreaHeight }}>
-            <FernScrollArea className="min-h-0 shrink" viewportClassName="py-6 pr-2">
+            <FernScrollArea className="min-h-0 shrink" viewportClassName="py-6 pr-2 mask-grad-top">
                 <div className="space-y-6">
                     {endpoint.headers.length > 0 && (
                         <div>

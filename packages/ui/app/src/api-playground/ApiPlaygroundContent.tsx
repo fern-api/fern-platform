@@ -91,7 +91,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                     auth={auth}
                 /> */}
             {/* </div> */}
-            <FernScrollArea ref={scrollAreaRef} viewportClassName="overscroll-contain">
+            <FernScrollArea ref={scrollAreaRef} viewportClassName="overscroll-contain mask-grad-top">
                 <HorizontalSplitPane
                     rizeBarHeight={scrollAreaHeight}
                     leftClassName="pl-6 pr-1 mt"
