@@ -3,7 +3,7 @@ import { ResolvedObjectProperty, ResolvedTypeReference } from "@fern-ui/app-util
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { ArrowRightIcon, Cross1Icon } from "@radix-ui/react-icons";
-import { FC, PropsWithChildren, useEffect } from "react";
+import { FC, PropsWithChildren, ReactElement, useEffect } from "react";
 import { FernButton } from "../components/FernButton";
 import { FernCollapse } from "../components/FernCollapse";
 import { FernInput } from "../components/FernInput";
@@ -109,7 +109,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
     hideObjects = false,
     sortProperties = false,
 }) => {
-    return visitDiscriminatedUnion(shape, "type")._visit({
+    return visitDiscriminatedUnion(shape, "type")._visit<ReactElement | null>({
         object: (object) => (
             <WithPanel
                 value={value}
@@ -237,7 +237,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                 />
             </div>
         ),
-        base60: () => (
+        base64: () => (
             <div className="flex min-w-0 flex-1 py-2">
                 <FernTextarea
                     className="w-full"
