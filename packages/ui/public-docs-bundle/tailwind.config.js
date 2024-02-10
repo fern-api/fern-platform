@@ -238,6 +238,9 @@ module.exports = {
                 ".bg-tag-primary": {
                     "@apply bg-tag-primary-light dark:bg-tag-primary-dark": {},
                 },
+                ".bg-border-primary": {
+                    "@apply bg-border-accent-muted-light dark:bg-border-accent-muted-dark": {},
+                },
                 // ".bg-tag-success": {
                 //     "@apply bg-tag-success-light dark:bg-tag-success-dark": {},
                 // },

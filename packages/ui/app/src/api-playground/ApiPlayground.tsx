@@ -167,11 +167,13 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
                 leaveTo="translate-y-full"
             >
                 <div
-                    className="group absolute inset-x-0 -top-1 h-1 cursor-row-resize"
+                    className="group absolute inset-x-0 -top-1 h-0.5 cursor-row-resize after:absolute after:inset-x-0 after:-top-3 after:h-4 after:content-['']"
                     onMouseDown={handleVerticalResize}
                 >
                     <div className="bg-accent absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
-                    <div className="bg-accent relative top-2 z-30 mx-auto h-1 w-10 rounded-sm" />
+                    <div className="relative -top-2 z-30 mx-auto w-fit p-4">
+                        <div className="bg-accent h-1 w-10 rounded-sm" />
+                    </div>
                 </div>
                 <ApiPlaygroundDrawer
                     navigationItems={apiSections}

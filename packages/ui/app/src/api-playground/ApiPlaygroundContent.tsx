@@ -70,7 +70,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                 className={"relative flex min-w-0 shrink flex-col overflow-hidden"}
                 style={{ width: `${width * 100}%` }}
             > */}
-            {/* <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-4 py-2">
+            {/* <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-6 py-2">
                     <span className="t-muted text-xs uppercase">Request</span>
 
                     <FernButtonGroup>
@@ -92,8 +92,8 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                 /> */}
             {/* </div> */}
             <FernScrollArea ref={scrollAreaRef} className="bg-black/[0.025] dark:bg-black/10">
-                <HorizontalSplitPane rizeBarHeight={scrollAreaHeight} leftClassName="pl-4">
-                    <div className="mx-auto w-full max-w-4xl space-y-6 pt-4">
+                <HorizontalSplitPane rizeBarHeight={scrollAreaHeight} leftClassName="pl-6 pr-1" rightClassName="pl-1">
+                    <div className="mx-auto w-full max-w-4xl space-y-6 pt-6">
                         <PlaygroundAuthorizationFormCard
                             endpoint={endpoint}
                             auth={auth}
@@ -103,7 +103,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                             secrets={secrets}
                         />
 
-                        <div className="grid grid-cols-3 gap-4">
+                        <div className="grid grid-cols-3 gap-6">
                             <PlaygroundEndpointFormAside
                                 className="col-span-1"
                                 endpoint={endpoint}
@@ -118,14 +118,14 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                     </div>
 
                     <VerticalSplitPane
-                        className="sticky top-0 w-full pr-4"
+                        className="sticky top-0 w-full pr-6"
                         style={{ height: scrollAreaHeight }}
                         aboveClassName={
                             response.type === "notStartedLoading"
-                                ? "py-4 flex items-stretch justify-stretch"
-                                : "pt-4 flex items-stretch justify-stretch"
+                                ? "py-6 flex items-stretch justify-stretch"
+                                : "pt-6 pb-1 flex items-stretch justify-stretch"
                         }
-                        belowClassName="pb-4 flex items-stretch justify-stretch"
+                        belowClassName="pb-6 pt-1 flex items-stretch justify-stretch"
                     >
                         <FernCard className="min-w-0 flex-1 shrink overflow-hidden rounded-xl shadow-sm">
                             <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">

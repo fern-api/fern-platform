@@ -61,7 +61,7 @@ export function VerticalSplitPane({
                 className="shink-0 group relative flex h-3 flex-none cursor-row-resize items-center px-3 opacity-0 transition-opacity after:absolute after:inset-x-0 after:-top-3 after:h-10 after:content-[''] hover:opacity-100 hover:delay-300"
                 onMouseDown={handleVerticalResize}
             >
-                <div className="bg-accent relative z-30 mx-auto h-1 w-10 rounded-sm" />
+                <div className="bg-border-primary group-active:bg-accent relative z-30 mx-auto h-0.5 w-full rounded-full group-active:transition-[background]" />
             </div>
             <div className={classNames(belowClassName, "flex-1")}>{below}</div>
         </div>
@@ -117,11 +117,11 @@ export function HorizontalSplitPane({
                 {left}
             </div>
             <div
-                className="shink-0 after: sticky top-0 z-10 flex w-3 flex-none cursor-col-resize items-center justify-center py-3 opacity-0 transition-opacity after:absolute after:inset-y-0 after:-left-3 after:w-10 after:content-[''] hover:opacity-100 hover:delay-300"
+                className="shink-0 group sticky top-0 z-10 flex w-3 flex-none cursor-col-resize items-center justify-center py-8 opacity-0 transition-opacity after:absolute after:inset-y-0 after:-left-3 after:w-10 after:content-[''] hover:opacity-100 hover:delay-300"
                 onMouseDown={handleVerticalResize}
                 style={{ height: rizeBarHeight }}
             >
-                <div className="bg-accent relative z-30 h-10 w-1 rounded-sm" />
+                <div className="bg-border-primary group-active:bg-accent relative z-30 h-full w-0.5 rounded-full group-active:transition-[background]" />
             </div>
             <div className={classNames(rightClassName, "flex-1 shrink min-w-0")}>{right}</div>
         </div>
