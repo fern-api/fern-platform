@@ -167,10 +167,10 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
         boolean: () => {
             const checked = typeof value === "boolean" ? value : undefined;
             return (
-                <div className="callout-outlined-ghost flex items-center justify-end gap-3 rounded-md p-4 shadow-sm">
-                    <label className="t-muted font-mono text-sm leading-none">
+                <div className="flex items-center justify-end gap-3">
+                    {/* <label className="t-muted font-mono text-sm leading-none">
                         {checked == null ? "undefined" : checked ? "true" : "false"}
-                    </label>
+                    </label> */}
                     <FernSwitch checked={checked} onCheckedChange={onChange} />
                 </div>
             );

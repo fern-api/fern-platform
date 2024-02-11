@@ -11,6 +11,8 @@ import { castToRecord, isExpandable } from "./utils";
 interface PlaygroundObjectPropertyFormProps {
     property: ResolvedObjectProperty;
     onChange: (key: string, value: unknown) => void;
+    onBlur?: () => void;
+    onFocus?: () => void;
     value: unknown;
     expandByDefault?: boolean;
 }
@@ -18,6 +20,8 @@ interface PlaygroundObjectPropertyFormProps {
 export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps> = ({
     property,
     onChange,
+    onBlur,
+    onFocus,
     value,
     expandByDefault = true,
 }) => {
@@ -41,9 +45,6 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
         }
     }, [expandable, setExpanded]);
 
-    const [_focused, setFocused] = useState(false);
-    const handleFocus = useCallback(() => setFocused(true), []);
-    const handleBlur = useCallback(() => setFocused(false), []);
     const [_isUnderStack, setIsUnderStack] = useState(false);
     const handleOpenStack = useCallback(() => setIsUnderStack(true), []);
     const handleCloseStack = useCallback(() => setIsUnderStack(false), []);
@@ -89,8 +90,8 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
                     shape={property.valueShape.type === "optional" ? property.valueShape.shape : property.valueShape}
                     onChange={handleChange}
                     value={value}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
                     renderAsPanel={true}
                     onOpenStack={handleOpenStack}
                     onCloseStack={handleCloseStack}

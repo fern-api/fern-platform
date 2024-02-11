@@ -1,6 +1,8 @@
 import { ResolvedEndpointDefinition, visitResolvedHttpRequestBodyShape } from "@fern-ui/app-utils";
+import { useSetAtom } from "jotai";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { FernCard } from "../components/FernCard";
+import { FOCUSED_PARAMETER_ATOM } from "./PlaygroundEndpointFormAside";
 import { PlaygroundObjectPropertyForm } from "./PlaygroundObjectPropertyForm";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { PlaygroundRequestFormState } from "./types";
@@ -13,6 +15,8 @@ interface PlaygroundEndpointFormProps {
 }
 
 export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoint, formState, setFormState }) => {
+    const setFocusedParameter = useSetAtom(FOCUSED_PARAMETER_ATOM);
+
     const setHeader = useCallback(
         (key: string, value: unknown) => {
             setFormState((state) => ({
@@ -83,6 +87,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
                                 }}
                                 onChange={setHeader}
                                 value={formState?.headers[header.key]}
+                                onFocus={() => setFocusedParameter({ type: "header", key: header.key })}
                             />
                         ))}
                     </ul>
@@ -108,6 +113,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
                                 }}
                                 onChange={setPathParameter}
                                 value={formState?.pathParameters[pathParameter.key]}
+                                onFocus={() => setFocusedParameter({ type: "path", key: pathParameter.key })}
                             />
                         ))}
                     </ul>
@@ -132,6 +138,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
                                     availability: queryParameter.availability,
                                 }}
                                 onChange={setQueryParameter}
+                                onFocus={() => setFocusedParameter({ type: "query", key: queryParameter.key })}
                                 value={formState?.queryParameters[queryParameter.key]}
                             />
                         ))}

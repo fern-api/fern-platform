@@ -1,6 +1,5 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
-import { useTheme } from "next-themes";
 import { FC } from "react";
 import { FernSyntaxHighlighter } from "../commons/CodeBlockSkeleton";
 import { CopyToClipboardButton } from "../commons/CopyToClipboardButton";
@@ -20,7 +19,6 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({
     formState,
     requestType,
 }) => {
-    const { resolvedTheme: theme } = useTheme();
     return (
         <div className="group relative h-full flex-1">
             <CopyToClipboardButton
@@ -38,15 +36,8 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({
             <div className="h-full overflow-auto font-mono text-xs">
                 <FernSyntaxHighlighter
                     language={requestType === "curl" ? "shell" : requestType}
-                    customStyle={{ height: "100%", paddingLeft: 0 }}
                     showLineNumbers={true}
-                    lineNumberStyle={{
-                        position: "sticky",
-                        left: 0,
-                        // paddingLeft: 8,
-                        backgroundColor:
-                            theme === "dark" ? "rgb(var(--background-dark))" : "rgb(var(--background-light))",
-                    }}
+                    customStyle={{ padding: 0 }}
                 >
                     {requestType === "curl"
                         ? stringifyCurl(auth, endpoint, formState)

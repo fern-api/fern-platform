@@ -139,11 +139,11 @@
     .fern-dropdown {
         @apply animate-popover;
         @apply w-[var(--radix-dropdown-menu-trigger-width)];
-        @apply border-default flex max-h-[300px] min-w-[220px] flex-col rounded-md border bg-background will-change-[opacity,transform];
+        @apply border-default flex max-h-[300px] min-w-[220px] flex-col rounded-md border bg-background-translucent backdrop-blur-xl will-change-[opacity,transform];
         @apply shadow-xl;
 
         .fern-dropdown-item {
-            @apply flex justify-start p-1 font-mono rounded text-xs w-full;
+            @apply flex justify-start p-1 font-mono rounded text-xs w-full cursor-default;
             @apply data-[highlighted]:bg-accent data-[highlighted]:t-accent-contrast will-change-[background-color,color];
 
             .fern-dropdown-item-indicator {
@@ -367,12 +367,7 @@
             &.minimal {
                 @apply bg-transparent;
                 @apply t-muted hover:t-default;
-
-                &:hover,
-                &[data-state="on"],
-                &[data-state="checked"] {
-                    @apply bg-tag-default;
-                }
+                @apply hover:bg-tag-default data-[state=on]:bg-tag-default data-[state=checked]:bg-tag-default data-[state=open]:bg-tag-default;
 
                 .fa-icon {
                     @apply bg-text-default-light/60;
@@ -386,12 +381,7 @@
 
                 &.primary {
                     @apply t-accent hover:t-accent;
-
-                    &:hover,
-                    &[data-state="on"],
-                    &[data-state="checked"] {
-                        @apply bg-tag-primary;
-                    }
+                    @apply hover:bg-tag-primary data-[state=on]:bg-tag-primary data-[state=checked]:bg-tag-primary data-[state=open]:bg-tag-primary;
 
                     .fa-icon {
                         @apply bg-accent-aa;
@@ -400,12 +390,7 @@
 
                 &.success {
                     @apply t-success hover:t-success;
-
-                    &:hover,
-                    &[data-state="on"],
-                    &[data-state="checked"] {
-                        @apply bg-tag-success;
-                    }
+                    @apply hover:bg-tag-success data-[state=on]:bg-tag-success data-[state=checked]:bg-tag-success data-[state=open]:bg-tag-success;
 
                     .fa-icon {
                         @apply bg-intent-success;
@@ -414,12 +399,7 @@
 
                 &.warning {
                     @apply t-warning hover:t-warning;
-
-                    &:hover,
-                    &[data-state="on"],
-                    &[data-state="checked"] {
-                        @apply bg-tag-warning;
-                    }
+                    @apply hover:bg-tag-warning data-[state=on]:bg-tag-warning data-[state=checked]:bg-tag-warning data-[state=open]:bg-tag-warning;
 
                     .fa-icon {
                         @apply bg-intent-warning;
@@ -428,12 +408,7 @@
 
                 &.danger {
                     @apply t-danger hover:t-danger;
-
-                    &:hover,
-                    &[data-state="on"],
-                    &[data-state="checked"] {
-                        @apply bg-tag-danger;
-                    }
+                    @apply hover:bg-tag-danger data-[state=on]:bg-tag-danger data-[state=checked]:bg-tag-danger data-[state=open]:bg-tag-danger;
 
                     .fa-icon {
                         @apply bg-intent-danger;
@@ -447,7 +422,8 @@
 
                 &:hover,
                 &[data-state="on"],
-                &[data-state="checked"] {
+                &[data-state="checked"],
+                &[data-state="open"] {
                     @apply bg-text-default-light/60 text-white;
                     @apply dark:bg-text-default-dark/60 dark:text-black;
                 }
@@ -462,7 +438,8 @@
 
                     &:hover,
                     &[data-state="on"],
-                    &[data-state="checked"] {
+                    &[data-state="checked"],
+                    &[data-state="open"] {
                         @apply bg-accent-tinted t-accent-contrast;
                     }
 
@@ -476,7 +453,8 @@
 
                     &:hover,
                     &[data-state="on"],
-                    &[data-state="checked"] {
+                    &[data-state="checked"],
+                    &[data-state="open"] {
                         @apply bg-intent-success-lightened text-white dark:text-black;
                     }
 
@@ -491,7 +469,8 @@
 
                     &:hover,
                     &[data-state="on"],
-                    &[data-state="checked"] {
+                    &[data-state="checked"],
+                    &[data-state="open"] {
                         @apply bg-intent-warning-lightened text-white dark:text-black;
                     }
 
@@ -506,7 +485,8 @@
 
                     &:hover,
                     &[data-state="on"],
-                    &[data-state="checked"] {
+                    &[data-state="checked"],
+                    &[data-state="open"] {
                         @apply bg-intent-danger-lightened text-white dark:text-black;
                     }
 
@@ -523,7 +503,8 @@
 
                 &:hover,
                 &[data-state="on"],
-                &[data-state="checked"] {
+                &[data-state="checked"],
+                &[data-state="open"] {
                     @apply bg-tag-default t-default;
                 }
 
@@ -541,7 +522,8 @@
 
                     &:hover,
                     &[data-state="on"],
-                    &[data-state="checked"] {
+                    &[data-state="checked"],
+                    &[data-state="open"] {
                         @apply bg-tag-primary t-accent-aaa;
 
                         .fa-icon {
@@ -555,7 +537,8 @@
 
                     &:hover,
                     &[data-state="on"],
-                    &[data-state="checked"] {
+                    &[data-state="checked"],
+                    &[data-state="open"] {
                         @apply bg-tag-success text-intent-success;
                     }
 
@@ -569,7 +552,8 @@
 
                     &:hover,
                     &[data-state="on"],
-                    &[data-state="checked"] {
+                    &[data-state="checked"],
+                    &[data-state="open"] {
                         @apply bg-tag-warning text-intent-warning;
                     }
 
@@ -583,7 +567,8 @@
 
                     &:hover,
                     &[data-state="on"],
-                    &[data-state="checked"] {
+                    &[data-state="checked"],
+                    &[data-state="open"] {
                         @apply bg-tag-danger text-intent-danger;
                     }
 

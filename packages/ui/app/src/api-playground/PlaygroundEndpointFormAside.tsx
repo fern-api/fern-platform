@@ -2,6 +2,7 @@ import { isApiNode } from "@fern-api/fdr-sdk";
 import { joinUrlSlugs, ResolvedEndpointDefinition, visitResolvedHttpRequestBodyShape } from "@fern-ui/app-utils";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
+import { atom, useAtomValue } from "jotai";
 import Link from "next/link";
 import { ReactElement } from "react";
 import { FernButton } from "../components/FernButton";
@@ -15,12 +16,20 @@ interface PlaygroundEndpointFormAsideProps {
     scrollAreaHeight: number;
 }
 
+interface FocusedParameterState {
+    type: "header" | "path" | "query" | "body";
+    key: string;
+}
+
+export const FOCUSED_PARAMETER_ATOM = atom<FocusedParameterState | undefined>(undefined);
+
 export function PlaygroundEndpointFormAside({
     className,
     endpoint,
     scrollAreaHeight,
 }: PlaygroundEndpointFormAsideProps): ReactElement {
     const { activeNavigatable } = useNavigationContext();
+    const focusedParameter = useAtomValue(FOCUSED_PARAMETER_ATOM);
     return (
         <aside className={classNames("sticky top-0 flex flex-col", className)} style={{ maxHeight: scrollAreaHeight }}>
             <FernScrollArea className="min-h-0 shrink" viewportClassName="py-6 pr-2 mask-grad-top">
@@ -31,7 +40,15 @@ export function PlaygroundEndpointFormAside({
                             <ul className="list-none">
                                 {endpoint.headers.map((param) => (
                                     <li key={param.key}>
-                                        <FernButton variant="minimal" mono={true} className="w-full text-left">
+                                        <FernButton
+                                            variant="minimal"
+                                            mono={true}
+                                            className="w-full text-left"
+                                            active={
+                                                focusedParameter?.type === "header" &&
+                                                focusedParameter.key === param.key
+                                            }
+                                        >
                                             {param.key}
                                         </FernButton>
                                     </li>
@@ -45,7 +62,14 @@ export function PlaygroundEndpointFormAside({
                             <ul className="list-none">
                                 {endpoint.pathParameters.map((param) => (
                                     <li key={param.key}>
-                                        <FernButton variant="minimal" mono={true} className="w-full text-left">
+                                        <FernButton
+                                            variant="minimal"
+                                            mono={true}
+                                            className="w-full text-left"
+                                            active={
+                                                focusedParameter?.type === "path" && focusedParameter.key === param.key
+                                            }
+                                        >
                                             {param.key}
                                         </FernButton>
                                     </li>
@@ -59,7 +83,14 @@ export function PlaygroundEndpointFormAside({
                             <ul className="list-none">
                                 {endpoint.queryParameters.map((param) => (
                                     <li key={param.key}>
-                                        <FernButton variant="minimal" mono={true} className="w-full text-left">
+                                        <FernButton
+                                            variant="minimal"
+                                            mono={true}
+                                            className="w-full text-left"
+                                            active={
+                                                focusedParameter?.type === "query" && focusedParameter.key === param.key
+                                            }
+                                        >
                                             {param.key}
                                         </FernButton>
                                     </li>
@@ -84,6 +115,10 @@ export function PlaygroundEndpointFormAside({
                                                               variant="minimal"
                                                               mono={true}
                                                               className="w-full text-left"
+                                                              active={
+                                                                  focusedParameter?.type === "body" &&
+                                                                  focusedParameter.key === param.key
+                                                              }
                                                           >
                                                               {param.key}
                                                           </FernButton>
@@ -112,6 +147,10 @@ export function PlaygroundEndpointFormAside({
                                                               variant="minimal"
                                                               mono={true}
                                                               className="w-full text-left"
+                                                              active={
+                                                                  focusedParameter?.type === "body" &&
+                                                                  focusedParameter.key === param.key
+                                                              }
                                                           >
                                                               {param.key}
                                                           </FernButton>
