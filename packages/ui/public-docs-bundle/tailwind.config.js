@@ -266,6 +266,9 @@ module.exports = {
                 ".border-danger": {
                     "@apply border-border-danger": {},
                 },
+                ".shadow-accent": {
+                    "@apply shadow-accent-primary-light dark:shadow-accent-primary-dark": {},
+                },
                 ".outline-accent-primary": {
                     "@apply outline-accent-primary-light dark:outline-accent-primary-dark": {},
                 },
