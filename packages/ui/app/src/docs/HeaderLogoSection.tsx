@@ -1,5 +1,6 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
+import { useTheme } from "next-themes";
 import Link from "next/link";
 import { FernImage } from "../components/FernImage";
 import { DEFAULT_LOGO_HEIGHT } from "../config";
@@ -14,6 +15,7 @@ export interface HeaderLogoSectionProps {
 export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
     config: { logo, logoV2, logoHeight, logoHref },
 }) => {
+    const { resolvedTheme: theme } = useTheme();
     const { resolveFile } = useDocsContext();
     const { definitionInfo, activeVersionContext } = useDocsSelectors();
     const logoImageHeight = logoHeight ?? DEFAULT_LOGO_HEIGHT;
@@ -35,6 +37,9 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
                         className={imageClassName}
                         height={logoImageHeight}
                         style={{ height: logoImageHeight }}
+                        priority={true}
+                        loading="eager"
+                        quality={100}
                     />
                 );
             }
@@ -48,6 +53,9 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
                             className={classNames(imageClassName, "block dark:hidden")}
                             height={logoImageHeight}
                             style={{ height: logoImageHeight }}
+                            priority={theme === "light"}
+                            loading="eager"
+                            quality={100}
                         />
                     )}
                     {logoV2["dark"] != null && (
@@ -56,6 +64,9 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
                             className={classNames(imageClassName, "hidden dark:block")}
                             height={logoImageHeight}
                             style={{ height: logoImageHeight }}
+                            priority={theme === "dark"}
+                            loading="eager"
+                            quality={100}
                         />
                     )}
                 </>
