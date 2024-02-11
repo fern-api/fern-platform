@@ -60,7 +60,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ curlLines, selectedPr
                             isSelected ? "bg-accent-highlight" : "bg-transparent",
                         )}
                     >
-                        {isSelected && <div className="bg-accent absolute inset-y-0 left-0 w-1" />}
+                        {isSelected && <div className="bg-accent absolute inset-y-0 left-0 w-0.5" />}
                         {renderJsonLine(part.line)}
                     </div>
                 );
