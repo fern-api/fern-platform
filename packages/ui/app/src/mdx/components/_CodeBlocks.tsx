@@ -6,7 +6,7 @@ import type { CodeBlockItem } from "./common/types";
 
 const CodeBlockSkeleton = dynamic(
     () => import("../../commons/CodeBlockSkeleton").then(({ CodeBlockSkeleton }) => CodeBlockSkeleton),
-    { ssr: false },
+    { ssr: true },
 );
 
 export declare namespace _CodeBlocks {
@@ -23,18 +23,18 @@ export const _CodeBlocks: React.FC<React.PropsWithChildren<_CodeBlocks.Props>> =
     }
     return (
         <Tabs.Root
-            className="after:ring-border-default relative mb-5 w-full min-w-0 max-w-full after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:ring-1 after:ring-inset after:content-['']"
+            className="after:ring-border-default dark:bg-tag-default-soft relative mb-5 w-full min-w-0 max-w-full rounded-lg bg-white/70 shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-['']"
             onValueChange={(value) => setSelectedTabIndex(parseInt(value, 10))}
             defaultValue="0"
         >
-            <div className="bg-tag-default rounded-t-lg">
+            <div className="bg-tag-default-soft rounded-t-lg">
                 <div className="shadow-border-default mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0_rgba(0,0,0,0.1)]">
                     <Tabs.List className="flex min-h-10 overflow-x-auto">
                         {items.map((item, idx) => (
                             <Tabs.Trigger
                                 key={idx}
                                 value={idx.toString()}
-                                className="data-[state=active]:shadow-accent group min-h-10 px-2 py-1.5 data-[state=active]:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)]"
+                                className="data-[state=active]:shadow-accent-primary-light dark:data-[state=active]:shadow-accent-primary-dark group min-h-10 px-2 py-1.5 data-[state=active]:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)]"
                             >
                                 <span className="t-muted group-data-[state=active]:t-default group-hover:bg-tag-default rounded px-2 py-1 text-sm group-data-[state=active]:font-semibold">
                                     {item.title}
@@ -49,7 +49,7 @@ export const _CodeBlocks: React.FC<React.PropsWithChildren<_CodeBlocks.Props>> =
             {items.map((item, idx) => (
                 <Tabs.Content value={idx.toString()} key={idx}>
                     <CodeBlockSkeleton
-                        className="bg-tag-default-soft max-h-[350px] overflow-y-auto"
+                        className="max-h-[350px] overflow-y-auto"
                         language={item.language}
                         content={item.content}
                         highlightLines={item.highlightLines}
