@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useCallback, useMemo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useNavigationContext } from "../navigation-context";
-import { useSearchContext } from "../search-context/useSearchContext";
+import { useCloseSearchDialog } from "../sidebar/atom";
 import { EndpointRecord } from "./content/EndpointRecord";
 import { EndpointRecordV2 } from "./content/EndpointRecordV2";
 import { PageRecord } from "./content/PageRecord";
@@ -32,7 +32,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({
 }) => {
     const { pathResolver } = useDocsContext();
     const { navigateToPath, basePath } = useNavigationContext();
-    const { closeSearchDialog } = useSearchContext();
+    const closeSearchDialog = useCloseSearchDialog();
 
     const fullPath = useMemo(() => {
         const path = getFullPathForSearchRecord(hit, basePath);
