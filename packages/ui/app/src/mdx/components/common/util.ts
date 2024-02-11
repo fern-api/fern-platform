@@ -72,7 +72,12 @@ const fallbackItemForBadlyFormattedCodeBlock: CodeBlockItem = {
 /**
  * Transforms the user-provided `CodeBlock` to a `CodeBlockItem` with a cleaner interface
  */
-export function transformCodeBlockChildrenToCodeBlockItem(title: string | undefined, children: unknown): CodeBlockItem {
+export function transformCodeBlockChildrenToCodeBlockItem(
+    title: string | undefined,
+    children: unknown,
+    highlightLines?: (number | [number, number])[],
+    highlightStyle?: "highlight" | "focus",
+): CodeBlockItem {
     if (!isExpectedCodeBlockChildren(children)) {
         return fallbackItemForBadlyFormattedCodeBlock;
     }
@@ -81,6 +86,8 @@ export function transformCodeBlockChildrenToCodeBlockItem(title: string | undefi
         language,
         title: title ?? language,
         content: children?.props?.children?.props?.children ?? DEFAULT_CODE_BLOCK_CONTENT,
+        highlightLines,
+        highlightStyle,
     };
 }
 

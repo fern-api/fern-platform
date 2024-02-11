@@ -1,8 +1,11 @@
 import classNames from "classnames";
 import { useTheme } from "next-themes";
-import React from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import React, { CSSProperties } from "react";
+import { createElement, Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import * as prism from "react-syntax-highlighter/dist/cjs/styles/prism";
+
+// [number, number] is a range of lines to highlight
+type HighlightLine = number | [number, number];
 
 type CodeBlockSkeletonProps = {
     className?: string;
@@ -11,6 +14,8 @@ type CodeBlockSkeletonProps = {
     usePlainStyles?: boolean;
     fontSize: "sm" | "lg";
     style?: React.CSSProperties;
+    highlightLines?: HighlightLine[];
+    highlightStyle?: "highlight" | "focus";
 };
 
 export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
@@ -20,14 +25,16 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
     usePlainStyles = false,
     fontSize,
     style,
+    highlightLines,
+    highlightStyle,
 }) => {
+    const { resolvedTheme: theme } = useTheme();
     return (
         <div
             className={classNames(
-                "bg-gray-100/90 dark:bg-gray-950/90",
                 "font-mono",
                 {
-                    "w-full border-l border-r border-b rounded-bl-lg rounded-br-lg border-default": !usePlainStyles,
+                    "w-full rounded-bl-lg rounded-br-lg": !usePlainStyles,
                 },
                 className,
             )}
@@ -40,12 +47,78 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
                     fontSize: fontSize === "sm" ? 12 : 14,
                     lineHeight: fontSize === "sm" ? "20px" : "24px",
                 }}
+                renderer={createHighlightRenderer(highlightLines, highlightStyle, theme as "light" | "dark")}
             >
                 {content}
             </FernSyntaxHighlighter>
         </div>
     );
 };
+
+function flattenHighlightLines(highlightLines: HighlightLine[]): number[] {
+    return highlightLines.flatMap((line) => {
+        if (Array.isArray(line)) {
+            const [start, end] = line;
+            return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+        }
+        return [line];
+    });
+}
+
+function createHighlightRenderer(
+    highlightLines: HighlightLine[] | undefined,
+    highlightStyle: "highlight" | "focus" = "highlight",
+    theme: "light" | "dark",
+) {
+    if (highlightLines == null || highlightLines.length === 0) {
+        return undefined;
+    }
+    const flattenedLines = flattenHighlightLines(highlightLines);
+    return function renderer({ rows, stylesheet, useInlineStyles }: rendererProps) {
+        return (
+            <>
+                {rows.map((row, i) =>
+                    createElement({
+                        node: row,
+                        stylesheet,
+                        style: createStyle(flattenedLines.includes(i), highlightStyle, theme),
+                        useInlineStyles,
+                        key: i,
+                    }),
+                )}
+            </>
+        );
+    };
+}
+
+function createStyle(
+    isHighlighted: boolean,
+    highlightStyle: "highlight" | "focus",
+    theme: "light" | "dark",
+): CSSProperties {
+    if (highlightStyle === "highlight") {
+        return {
+            display: "block",
+            marginLeft: "-16px",
+            marginRight: "-16px",
+            paddingLeft: "14px",
+            paddingRight: "16px",
+            borderLeft: isHighlighted
+                ? theme === "light"
+                    ? "2px solid rgb(var(--accent-primary-light))"
+                    : "2px solid rgb(var(--accent-primary-dark))"
+                : "2px solid transparent",
+            backgroundColor: isHighlighted
+                ? theme === "light"
+                    ? "rgba(var(--accent-primary-light), 20%)"
+                    : "rgba(var(--accent-primary-dark), 20%)"
+                : "unset",
+        };
+    }
+    return {
+        opacity: isHighlighted ? 1 : 0.33,
+    };
+}
 
 export const FernSyntaxHighlighter: React.FC<React.ComponentProps<typeof SyntaxHighlighter>> = (props) => {
     const { resolvedTheme: theme } = useTheme();

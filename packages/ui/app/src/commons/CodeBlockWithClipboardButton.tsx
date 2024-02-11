@@ -20,7 +20,7 @@ export const CodeBlockWithClipboardButton: React.FC<CodeBlockWithClipboardButton
     content,
 }) => {
     return (
-        <div className="group/cb-container border-default relative mb-5 flex w-full rounded-t-lg border-t">
+        <div className="group/cb-container bg-tag-default-soft after:ring-border-default relative mb-5 flex w-full rounded-lg after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:ring-1 after:ring-inset after:content-['']">
             <CopyToClipboardButton
                 className={classNames("absolute", "transition opacity-0 group-hover/cb-container:opacity-100", {
                     "right-0.5 top-0.5": variant === "sm",
