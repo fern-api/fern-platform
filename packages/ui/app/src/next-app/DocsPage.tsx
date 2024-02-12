@@ -20,7 +20,7 @@ export declare namespace DocsPage {
         config: DocsV1Read.DocsConfig;
         search: DocsV1Read.SearchInfo;
         algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
-        files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
+        files: Record<DocsV1Read.FileId, DocsV1Read.Url>;
         apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>;
         resolvedPath: ResolvedPath;
     }
@@ -56,7 +56,7 @@ export function DocsPage({
                     content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
                 />
                 {config.title != null && <title>{config.title}</title>}
-                {config.favicon != null && <link rel="icon" id="favicon" href={files[config.favicon]?.url} />}
+                {config.favicon != null && <link rel="icon" id="favicon" href={files[config.favicon]} />}
             </Head>
             <DocsApp
                 baseUrl={baseUrl}
@@ -74,7 +74,7 @@ export function DocsPage({
                 </Script>
             ))}
             {config.js?.files.map((file) => (
-                <Script key={file.fileId} src={files[file.fileId]?.url} strategy={file.strategy} />
+                <Script key={file.fileId} src={files[file.fileId]} strategy={file.strategy} />
             ))}
             {config.js?.remote?.map((remote) => (
                 <Script key={remote.url} src={remote.url} strategy={remote.strategy} />
@@ -168,7 +168,7 @@ export const getDocsPageProps = async (
             config: docs.body.definition.config,
             search: docs.body.definition.search,
             algoliaSearchIndex: docs.body.definition.algoliaSearchIndex ?? null,
-            files: docs.body.definition.filesV2,
+            files: docs.body.definition.files,
             apis: docs.body.definition.apis,
             resolvedPath,
             navigation,

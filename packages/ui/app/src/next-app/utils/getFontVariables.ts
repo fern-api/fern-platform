@@ -22,7 +22,7 @@ const MONO_FONT_FALLBACK = "Menlo, Monaco, monospace";
 function generateFontFace(
     variant: DocsV1Read.CustomFontConfigVariant,
     fontConfig: DocsV1Read.FontConfigV2,
-    files: Record<DocsV1Read.FileId, DocsV1Read.File_>,
+    files: Record<DocsV1Read.FileId, DocsV1Read.Url>,
 ): string | undefined {
     const file = files[variant.fontFile];
     if (file == null) {
@@ -30,7 +30,7 @@ function generateFontFace(
     }
     const lines: string[] = [
         `font-family: '${fontConfig.name}'`,
-        `src: url('${file.url}') format('${getFontExtension(new URL(file.url).pathname)}')`,
+        `src: url('${file}') format('${getFontExtension(new URL(file).pathname)}')`,
         `font-weight: ${variant.weight?.join(" ") ?? "100 900"}`,
         `font-style: ${variant.style?.[0] ?? "normal"}`,
         `font-display: ${fontConfig.display ?? "swap"}`,
@@ -47,7 +47,7 @@ interface TypographyResult {
 
 export function getFontVariables(
     typography: DocsV1Read.DocsTypographyConfigV2 | undefined,
-    files: Record<DocsV1Read.FileId, DocsV1Read.File_>,
+    files: Record<DocsV1Read.FileId, DocsV1Read.Url>,
 ): TypographyResult {
     const fontFaces: string[] = [];
     const cssVariables: Record<string, string> = {

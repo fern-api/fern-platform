@@ -1,8 +1,6 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
-import { useTheme } from "next-themes";
 import Link from "next/link";
-import { FernImage } from "../components/FernImage";
 import { DEFAULT_LOGO_HEIGHT } from "../config";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useDocsSelectors } from "../selectors/useDocsSelectors";
@@ -15,7 +13,6 @@ export interface HeaderLogoSectionProps {
 export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
     config: { logo, logoV2, logoHeight, logoHref },
 }) => {
-    const { resolvedTheme: theme } = useTheme();
     const { resolveFile } = useDocsContext();
     const { definitionInfo, activeVersionContext } = useDocsSelectors();
     const logoImageHeight = logoHeight ?? DEFAULT_LOGO_HEIGHT;
@@ -31,42 +28,24 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
     const renderLogoContent = () => {
         if (logoV2 == null) {
             if (logo != null) {
-                return (
-                    <FernImage
-                        src={resolveFile(logo)}
-                        className={imageClassName}
-                        height={logoImageHeight}
-                        style={{ height: logoImageHeight }}
-                        priority={true}
-                        loading="eager"
-                        quality={100}
-                    />
-                );
+                return <img src={resolveFile(logo)} className={imageClassName} style={{ height: logoImageHeight }} />;
             }
             return null;
         } else {
             return (
                 <>
                     {logoV2["light"] != null && (
-                        <FernImage
+                        <img
                             src={resolveFile(logoV2["light"])}
                             className={classNames(imageClassName, "block dark:hidden")}
-                            height={logoImageHeight}
                             style={{ height: logoImageHeight }}
-                            priority={theme === "light"}
-                            loading="eager"
-                            quality={100}
                         />
                     )}
                     {logoV2["dark"] != null && (
-                        <FernImage
+                        <img
                             src={resolveFile(logoV2["dark"])}
                             className={classNames(imageClassName, "hidden dark:block")}
-                            height={logoImageHeight}
                             style={{ height: logoImageHeight }}
-                            priority={theme === "dark"}
-                            loading="eager"
-                            quality={100}
                         />
                     )}
                 </>

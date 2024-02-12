@@ -25,7 +25,7 @@ export declare namespace App {
         config: DocsV1Read.DocsConfig;
         search: DocsV1Read.SearchInfo;
         algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
-        files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
+        files: Record<DocsV1Read.FileId, DocsV1Read.Url>;
         apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>;
         resolvedPath: ResolvedPath;
     }
