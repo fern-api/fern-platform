@@ -20,6 +20,7 @@ export const FernScrollArea = forwardRef<HTMLDivElement, PropsWithChildren<FernS
                 <ScrollArea.Scrollbar orientation="horizontal" className="fern-scroll-area-scrollbar">
                     <ScrollArea.Thumb className="fern-scroll-area-thumb" />
                 </ScrollArea.Scrollbar>
+                <ScrollArea.Corner className="fern-scroll-area-corner" />
             </ScrollArea.Root>
         );
     },

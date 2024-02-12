@@ -278,7 +278,7 @@
         }
 
         > .fern-button-content {
-            @apply items-center inline-flex;
+            @apply items-center inline-flex shrink min-w-0;
             @apply gap-1.5 h-6;
 
             > .fa-icon,
@@ -287,7 +287,7 @@
             }
 
             .fern-button-text {
-                @apply truncate;
+                @apply truncate shrink min-w-0;
             }
         }
 

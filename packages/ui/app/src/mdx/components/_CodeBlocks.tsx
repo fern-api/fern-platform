@@ -2,6 +2,7 @@ import * as Tabs from "@radix-ui/react-tabs";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
+import { FernScrollArea } from "../../components/FernScrollArea";
 import type { CodeBlockItem } from "./common/types";
 
 const CodeBlockSkeleton = dynamic(
@@ -46,18 +47,19 @@ export const _CodeBlocks: React.FC<React.PropsWithChildren<_CodeBlocks.Props>> =
                     <CopyToClipboardButton className="ml-2 mr-1" content={codeBlockItem.content} />
                 </div>
             </div>
-            {items.map((item, idx) => (
-                <Tabs.Content value={idx.toString()} key={idx}>
-                    <CodeBlockSkeleton
-                        className="max-h-[350px] overflow-y-auto"
-                        language={item.language}
-                        content={item.content}
-                        highlightLines={item.highlightLines}
-                        highlightStyle={item.highlightStyle}
-                        fontSize="lg"
-                    />
-                </Tabs.Content>
-            ))}
+            <FernScrollArea className="max-h-[350px]">
+                {items.map((item, idx) => (
+                    <Tabs.Content value={idx.toString()} key={idx}>
+                        <CodeBlockSkeleton
+                            language={item.language}
+                            content={item.content}
+                            highlightLines={item.highlightLines}
+                            highlightStyle={item.highlightStyle}
+                            fontSize="lg"
+                        />
+                    </Tabs.Content>
+                ))}
+            </FernScrollArea>
         </Tabs.Root>
     );
 };
