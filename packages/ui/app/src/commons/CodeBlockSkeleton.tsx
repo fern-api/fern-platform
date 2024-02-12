@@ -116,6 +116,7 @@ export const FernSyntaxHighlighter: React.FC<React.ComponentProps<typeof SyntaxH
             {...props}
             style={theme === "dark" ? vscDarkPlus : prism}
             customStyle={{
+                color: "inherit",
                 margin: 0,
                 background: "unset",
                 backgroundColor: "unset",
