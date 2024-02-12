@@ -22,5 +22,5 @@ export interface DocsContextValue {
     pathResolver: PathResolver;
     config: DocsV1Read.DocsConfig;
 
-    resolveFile: (fileId: DocsV1Read.FileId) => DocsV1Read.File_ | undefined;
+    resolveFile: (fileId: DocsV1Read.FileId) => DocsV1Read.Url | undefined;
 }

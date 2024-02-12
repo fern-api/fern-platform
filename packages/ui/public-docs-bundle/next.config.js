@@ -42,20 +42,6 @@ const nextConfig = {
             },
         ],
     }),
-    images: {
-        remotePatterns: [
-            {
-                protocol: "https",
-                hostname: "fdr-prod-docs-files.s3.us-east-1.amazonaws.com",
-                port: "",
-            },
-            {
-                protocol: "https",
-                hostname: "fdr-dev2-docs-files.s3.us-east-1.amazonaws.com",
-                port: "",
-            },
-        ],
-    },
 };
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({

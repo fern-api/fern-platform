@@ -7,7 +7,7 @@ import { getLayoutVariables } from "./getLayoutVariables";
 
 export function renderThemeStylesheet(
     config: DocsV1Read.DocsConfig,
-    files: Record<DocsV1Read.FileId, DocsV1Read.File_>,
+    files: Record<DocsV1Read.FileId, DocsV1Read.Url>,
 ): string {
     const bg = getBgVariables(config, files);
     const { fontFaces, cssVariables: fonts, additionalCss } = getFontVariables(config.typographyV2, files);
