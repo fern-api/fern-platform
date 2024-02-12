@@ -1,8 +1,5 @@
-import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
-import dynamic from "next/dynamic";
 import React, { useMemo } from "react";
-
-const NonIdealState = dynamic(() => import("@blueprintjs/core").then(({ NonIdealState }) => NonIdealState));
+import { Callout } from "./components/Callout";
 
 export declare namespace MdxErrorBoundaryContent {
     export interface Props {
@@ -22,11 +19,9 @@ export const MdxErrorBoundaryContent: React.FC<MdxErrorBoundaryContent.Props> = 
     }, [error]);
 
     return (
-        <div className="flex flex-col items-center">
-            <NonIdealState icon={<ExclamationTriangleIcon />} title="Failed to render" />
-            <pre className="pre t-muted mt-6 max-w-[500px] whitespace-normal rounded bg-black/30 p-5">
-                {stringifiedError}
-            </pre>
-        </div>
+        <Callout intent="warn">
+            <h4>Failed to render</h4>
+            <pre className="pre t-muted mt-6 whitespace-normal rounded bg-black/30 p-5">{stringifiedError}</pre>
+        </Callout>
     );
 };

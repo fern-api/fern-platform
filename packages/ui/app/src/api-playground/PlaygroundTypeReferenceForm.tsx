@@ -1,4 +1,3 @@
-import { DateInput3 } from "@blueprintjs/datetime2";
 import { ResolvedObjectProperty, ResolvedTypeReference } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
@@ -16,8 +15,10 @@ import { PlaygroundListForm } from "./PlaygroundListForm";
 import { PlaygroundMapForm } from "./PlaygroundMapForm";
 import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
 import { PlaygroundUniscriminatedUnionForm } from "./PlaygroundUniscriminatedUnionForm";
+import { WithLabel } from "./WithLabel";
 
 interface PlaygroundTypeReferenceFormProps {
+    property?: ResolvedObjectProperty;
     shape: ResolvedTypeReference;
     onChange: (value: unknown) => void;
     value?: unknown;
@@ -96,6 +97,7 @@ const createFilter = (onlyRequired: boolean, onlyOptional: boolean) => {
 };
 
 export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> = ({
+    property,
     shape,
     onChange,
     value,
@@ -117,13 +119,15 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                 onOpenStack={onOpenStack}
                 onCloseStack={onCloseStack}
             >
-                <PlaygroundObjectPropertiesForm
-                    properties={object.properties().filter(createFilter(onlyRequired, onlyOptional))}
-                    onChange={onChange}
-                    value={value}
-                    hideObjects={hideObjects}
-                    sortProperties={sortProperties}
-                />
+                <WithLabel property={property} value={value}>
+                    <PlaygroundObjectPropertiesForm
+                        properties={object.properties().filter(createFilter(onlyRequired, onlyOptional))}
+                        onChange={onChange}
+                        value={value}
+                        hideObjects={hideObjects}
+                        sortProperties={sortProperties}
+                    />
+                </WithLabel>
             </WithPanel>
         ),
         enum: ({ values }) => <PlaygroundEnumForm enumValues={values} onChange={onChange} value={value} />,
@@ -134,11 +138,13 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                 onOpenStack={onOpenStack}
                 onCloseStack={onCloseStack}
             >
-                <PlaygroundUniscriminatedUnionForm
-                    undiscriminatedUnion={undiscriminatedUnion}
-                    onChange={onChange}
-                    value={value}
-                />
+                <WithLabel property={property} value={value}>
+                    <PlaygroundUniscriminatedUnionForm
+                        undiscriminatedUnion={undiscriminatedUnion}
+                        onChange={onChange}
+                        value={value}
+                    />
+                </WithLabel>
             </WithPanel>
         ),
         discriminatedUnion: (discriminatedUnion) => (
@@ -148,35 +154,41 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                 onOpenStack={onOpenStack}
                 onCloseStack={onCloseStack}
             >
-                <PlaygroundDiscriminatedUnionForm
-                    discriminatedUnion={discriminatedUnion}
-                    onChange={onChange}
-                    value={value}
-                />
+                <WithLabel property={property} value={value}>
+                    <PlaygroundDiscriminatedUnionForm
+                        discriminatedUnion={discriminatedUnion}
+                        onChange={onChange}
+                        value={value}
+                    />
+                </WithLabel>
             </WithPanel>
         ),
         string: () => (
-            <FernInput
-                className="w-full"
-                value={typeof value === "string" ? value : ""}
-                onValueChange={onChange}
-                onFocus={onFocus}
-                onBlur={onBlur}
-            />
+            <WithLabel property={property} value={value}>
+                <FernInput
+                    className="w-full"
+                    value={typeof value === "string" ? value : ""}
+                    onValueChange={onChange}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
+                />
+            </WithLabel>
         ),
         boolean: () => {
             const checked = typeof value === "boolean" ? value : undefined;
             return (
-                <div className="flex items-center justify-end gap-3">
-                    {/* <label className="t-muted font-mono text-sm leading-none">
+                <WithLabel property={property} value={value}>
+                    <div className="flex items-center justify-end gap-3">
+                        {/* <label className="t-muted font-mono text-sm leading-none">
                         {checked == null ? "undefined" : checked ? "true" : "false"}
                     </label> */}
-                    <FernSwitch checked={checked} onCheckedChange={onChange} />
-                </div>
+                        <FernSwitch checked={checked} onCheckedChange={onChange} />
+                    </div>
+                </WithLabel>
             );
         },
         integer: () => (
-            <div className="flex min-w-0 flex-1 justify-end">
+            <WithLabel property={property} value={value}>
                 <FernNumericInput
                     className="w-full"
                     value={typeof value === "number" ? value : undefined}
@@ -185,10 +197,10 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     onBlur={onBlur}
                     disallowFloat={true}
                 />
-            </div>
+            </WithLabel>
         ),
         double: () => (
-            <div className="flex min-w-0 flex-1 justify-end">
+            <WithLabel property={property} value={value}>
                 <FernNumericInput
                     className="w-full"
                     value={typeof value === "number" ? value : undefined}
@@ -196,10 +208,10 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     onFocus={onFocus}
                     onBlur={onBlur}
                 />
-            </div>
+            </WithLabel>
         ),
         long: () => (
-            <div className="flex min-w-0 flex-1 justify-end">
+            <WithLabel property={property} value={value}>
                 <FernNumericInput
                     className="w-full"
                     value={typeof value === "number" ? value : undefined}
@@ -208,25 +220,23 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     onBlur={onBlur}
                     disallowFloat
                 />
-            </div>
+            </WithLabel>
         ),
         datetime: () => (
-            <div className="flex min-w-0 flex-1 justify-end">
-                <DateInput3
-                    fill={true}
-                    placeholder="MM/DD/YYYY"
-                    timePrecision="millisecond"
+            <WithLabel property={property} value={value}>
+                <FernInput
+                    type="datetime-local"
+                    className="w-full"
+                    placeholder="MM/DD/YYYY HH:MM"
                     value={typeof value === "string" ? value : undefined}
                     onChange={onChange}
-                    inputProps={{
-                        onFocus,
-                        onBlur,
-                    }}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
                 />
-            </div>
+            </WithLabel>
         ),
         uuid: () => (
-            <div className="flex min-w-0 flex-1 justify-end">
+            <WithLabel property={property} value={value}>
                 <FernInput
                     className="w-full"
                     value={typeof value === "string" ? value : ""}
@@ -235,10 +245,10 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     onFocus={onFocus}
                     onBlur={onBlur}
                 />
-            </div>
+            </WithLabel>
         ),
         base64: () => (
-            <div className="flex min-w-0 flex-1 py-2">
+            <WithLabel property={property} value={value}>
                 <FernTextarea
                     className="w-full"
                     value={typeof value === "string" ? value : ""}
@@ -246,48 +256,71 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     onFocus={onFocus}
                     onBlur={onBlur}
                 />
-            </div>
+            </WithLabel>
         ),
         date: () => (
-            <div className="flex min-w-0 flex-1 justify-end">
-                <DateInput3
-                    fill={true}
+            <WithLabel property={property} value={value}>
+                <FernInput
+                    type="date"
+                    className="w-full"
                     placeholder="MM/DD/YYYY"
                     value={typeof value === "string" ? value : undefined}
                     onChange={onChange}
-                    inputProps={{
-                        onFocus,
-                        onBlur,
-                    }}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
                 />
-            </div>
+            </WithLabel>
         ),
         optional: () => null, // should be handled by the parent
-        list: (list) => <PlaygroundListForm itemShape={list.shape} onChange={onChange} value={value} />,
-        set: (set) => <PlaygroundListForm itemShape={set.shape} onChange={onChange} value={value} />,
+        list: (list) => (
+            <WithLabel property={property} value={value}>
+                <PlaygroundListForm itemShape={list.shape} onChange={onChange} value={value} />
+            </WithLabel>
+        ),
+        set: (set) => (
+            <WithLabel property={property} value={value}>
+                <PlaygroundListForm itemShape={set.shape} onChange={onChange} value={value} />
+            </WithLabel>
+        ),
         map: (map) => (
-            <PlaygroundMapForm keyShape={map.keyShape} valueShape={map.valueShape} onChange={onChange} value={value} />
+            <WithLabel property={property} value={value}>
+                <PlaygroundMapForm
+                    keyShape={map.keyShape}
+                    valueShape={map.valueShape}
+                    onChange={onChange}
+                    value={value}
+                />
+            </WithLabel>
         ),
         stringLiteral: (literal) => {
             onChange(literal.value);
-            return <span>{literal.value ? "TRUE" : "FALSE"}</span>;
+            return (
+                <WithLabel property={property} value={value}>
+                    <span>{literal.value ? "TRUE" : "FALSE"}</span>
+                </WithLabel>
+            );
         },
         booleanLiteral: (literal) => {
             onChange(literal.value);
-            return <span>{literal.value}</span>;
+            return (
+                <WithLabel property={property} value={value}>
+                    <span>{literal.value}</span>
+                </WithLabel>
+            );
         },
         unknown: () => (
-            <div className="flex min-w-0 flex-1 py-2">
+            <WithLabel property={property} value={value}>
                 <FernTextarea
                     className="w-full"
                     value={typeof value === "string" ? value : ""}
                     onValueChange={onChange}
                 />
-            </div>
+            </WithLabel>
         ),
         _other: () => null,
         reference: (reference) => (
             <PlaygroundTypeReferenceForm
+                property={property}
                 shape={reference.shape()}
                 onChange={onChange}
                 value={value}

@@ -50,7 +50,7 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
 
     return (
         <div className="w-full">
-            {undiscriminatedUnion.variants.length < 4 ? (
+            {undiscriminatedUnion.variants.length < 5 ? (
                 <FernSegmentedControl
                     options={options}
                     value={internalSelectedVariant.toString()}

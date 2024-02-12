@@ -1,4 +1,3 @@
-import { Spinner } from "@blueprintjs/core";
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import { Loadable, visitLoadable } from "@fern-ui/loadable";
@@ -214,7 +213,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                                 {visitLoadable(response, {
                                     loading: () => (
                                         <div className="flex size-full flex-1 items-center justify-center">
-                                            <Spinner />
+                                            Loading...
                                         </div>
                                     ),
                                     loaded: (response) => <PlaygroundResponsePreview responseBody={response.body} />,

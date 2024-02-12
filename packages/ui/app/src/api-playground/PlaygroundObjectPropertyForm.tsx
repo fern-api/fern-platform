@@ -1,10 +1,7 @@
 import { ResolvedObjectProperty } from "@fern-ui/app-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
-import classNames from "classnames";
 import { sortBy } from "lodash-es";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
-import { EndpointAvailabilityTag } from "../api-page/endpoints/EndpointAvailabilityTag";
-import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { castToRecord, isExpandable } from "./utils";
 
@@ -50,55 +47,17 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
     const handleCloseStack = useCallback(() => setIsUnderStack(false), []);
 
     return (
-        <li className="relative -mx-4 space-y-2 p-4" tabIndex={-1}>
-            <div className="flex items-center justify-between gap-2">
-                <label className="inline-flex w-full items-baseline gap-2">
-                    <span className={classNames("font-mono text-sm truncate")}>{property.key}</span>
-
-                    {property.availability != null && (
-                        <EndpointAvailabilityTag availability={property.availability} minimal={true} />
-                    )}
-
-                    {property.valueShape.type === "list" && Array.isArray(value) && (
-                        <span className="t-muted whitespace-nowrap text-xs">
-                            ({value.length} {value.length === 1 ? "item" : "items"})
-                        </span>
-                    )}
-                </label>
-
-                <span className="whitespace-nowrap text-xs">
-                    {property.valueShape.type !== "optional" && <span className="t-danger">required </span>}
-                    <span className="t-muted">{renderTypeShorthand(property.valueShape)}</span>
-                </span>
-            </div>
-            {/* <FernTooltip
-                open={
-                    property.description == null || property.description.length === 0 || isUnderStack
-                        ? false
-                        : focused === true
-                          ? true
-                          : undefined
-                }
-                content={
-                    <Markdown notProse className="prose-sm dark:prose-invert">
-                        {property.description}
-                    </Markdown>
-                }
-            > */}
-            <div>
-                <PlaygroundTypeReferenceForm
-                    shape={property.valueShape.type === "optional" ? property.valueShape.shape : property.valueShape}
-                    onChange={handleChange}
-                    value={value}
-                    onFocus={onFocus}
-                    onBlur={onBlur}
-                    renderAsPanel={true}
-                    onOpenStack={handleOpenStack}
-                    onCloseStack={handleCloseStack}
-                />
-            </div>
-            {/* </FernTooltip> */}
-        </li>
+        <PlaygroundTypeReferenceForm
+            property={property}
+            shape={property.valueShape.type === "optional" ? property.valueShape.shape : property.valueShape}
+            onChange={handleChange}
+            value={value}
+            onFocus={onFocus}
+            onBlur={onBlur}
+            renderAsPanel={true}
+            onOpenStack={handleOpenStack}
+            onCloseStack={handleCloseStack}
+        />
     );
 };
 
@@ -138,12 +97,14 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
     return (
         <ul className="list-none px-4">
             {propertiesToRender.map((property) => (
-                <PlaygroundObjectPropertyForm
-                    key={property.key}
-                    property={property}
-                    onChange={onChangeObjectProperty}
-                    value={castToRecord(value)[property.key]}
-                />
+                <li key={property.key} className="relative -mx-4 p-4" tabIndex={-1}>
+                    <PlaygroundObjectPropertyForm
+                        key={property.key}
+                        property={property}
+                        onChange={onChangeObjectProperty}
+                        value={castToRecord(value)[property.key]}
+                    />
+                </li>
             ))}
         </ul>
     );

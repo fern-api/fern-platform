@@ -58,7 +58,7 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
 
     return (
         <div className="w-full">
-            {discriminatedUnion.variants.length < 4 ? (
+            {discriminatedUnion.variants.length < 5 ? (
                 <FernSegmentedControl
                     options={options}
                     value={selectedVariant}
