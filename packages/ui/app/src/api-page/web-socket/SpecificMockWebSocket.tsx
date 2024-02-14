@@ -1,8 +1,8 @@
 import { ResolvedPubSubWebsocketDefinition } from "@fern-ui/app-utils";
 
 export const SPECIFIC_WEBSOCKET_MOCK: ResolvedPubSubWebsocketDefinition = {
-    id: "websocket",
-    slug: ["humewss", "chat"],
+    id: "hume-websocket",
+    slug: ["wss", "chat"],
     name: "Real-time Chat API",
     description: "Chat with empathic AI Assistants.",
     path: [{ type: "literal", value: "/chat" }],

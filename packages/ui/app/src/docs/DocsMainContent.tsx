@@ -60,7 +60,7 @@ export const DocsMainContent: React.FC<DocsMainContentProps> = ({ navigationItem
                 <WebSocket websocket={WEBSOCKET_MOCK} />
             </div>
         );
-    } else if (isWebsocketExampleEnabled(domain) && resolvedPath.fullSlug === "websocket") {
+    } else if (isWebsocketExampleEnabled(domain) && resolvedPath.fullSlug === "wss-chat") {
         // backdoor for websocket example for demo
         return (
             <div className="min-h-0 pb-36">
