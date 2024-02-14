@@ -10,10 +10,15 @@ import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import tinycolor from "tinycolor2";
 import { ApiPlaygroundContextProvider } from "../api-playground/ApiPlaygroundContext";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
-import { useSearchContext } from "../search-context/useSearchContext";
 import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { useSearchService } from "../services/useSearchService";
-import { useCloseMobileSidebar, useIsMobileSidebarOpen, useOpenMobileSidebar } from "../sidebar/atom";
+import {
+    useCloseMobileSidebar,
+    useIsMobileSidebarOpen,
+    useMessageHandler,
+    useOpenMobileSidebar,
+    useOpenSearchDialog,
+} from "../sidebar/atom";
 import { SidebarNode } from "../sidebar/types";
 import { BgImageGradient } from "./BgImageGradient";
 import { DocsMainContent } from "./DocsMainContent";
@@ -42,7 +47,10 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
 }) {
     const { observeDocContent, activeNavigatable, registerScrolledToPathListener } = useNavigationContext();
     const { activeNavigationConfigContext, withVersionAndTabSlugs } = useDocsSelectors();
-    const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = useSearchContext();
+    const openSearchDialog = useOpenSearchDialog();
+
+    // set up message handler to listen for messages from custom scripts
+    useMessageHandler();
 
     const searchService = useSearchService(search, algoliaSearchIndex);
     const { resolvedTheme: theme, themes, setTheme } = useTheme();
@@ -142,24 +150,24 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                 backgroundType={backgroundType}
                 hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage}
             />
-            {searchService.isAvailable && (
-                <SearchDialog isOpen={isSearchDialogOpen} onClose={closeSearchDialog} searchService={searchService} />
-            )}
+            {searchService.isAvailable && <SearchDialog searchService={searchService} />}
 
             <ApiPlaygroundContextProvider apiSections={apiSections}>
                 <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
-                    <div className="border-concealed dark:shadow-header-dark h-header-height fixed inset-x-0 top-0 z-30 overflow-visible border-b backdrop-blur-lg lg:backdrop-blur">
-                        {renderBackground()}
-                        <Header
-                            className="max-w-page-width mx-auto"
-                            config={config}
-                            openSearchDialog={openSearchDialog}
-                            isMobileSidebarOpen={isMobileSidebarOpen}
-                            openMobileSidebar={openMobileSidebar}
-                            closeMobileSidebar={closeMobileSidebar}
-                            searchService={searchService}
-                        />
-                    </div>
+                    <header id="fern-header">
+                        <div className="border-concealed dark:shadow-header-dark h-header-height fixed inset-x-0 top-0 z-30 overflow-visible border-b backdrop-blur-lg lg:backdrop-blur">
+                            {renderBackground()}
+                            <Header
+                                className="max-w-page-width mx-auto"
+                                config={config}
+                                openSearchDialog={openSearchDialog}
+                                isMobileSidebarOpen={isMobileSidebarOpen}
+                                openMobileSidebar={openMobileSidebar}
+                                closeMobileSidebar={closeMobileSidebar}
+                                searchService={searchService}
+                            />
+                        </div>
+                    </header>
 
                     <div className="max-w-page-width relative mx-auto flex min-h-0 w-full min-w-0 flex-1">
                         <Sidebar
@@ -177,6 +185,9 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                             <DocsMainContent navigationItems={navigationItems} />
                         </main>
                     </div>
+
+                    {/* Enables footer DOM injection */}
+                    <footer id="fern-footer" />
                 </div>
             </ApiPlaygroundContextProvider>
         </>

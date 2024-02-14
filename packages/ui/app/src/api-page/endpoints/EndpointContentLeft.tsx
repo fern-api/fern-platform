@@ -51,7 +51,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     <div className="t-accent text-xs font-semibold uppercase tracking-wider">{subpackageTitle}</div>
                 )}
                 <div>
-                    <h1 className="my-0 inline-block">{endpoint.title}</h1>
+                    <h1 className="my-0 inline">{endpoint.title}</h1>
                     {endpoint.availability != null && (
                         <span className="relative">
                             <EndpointAvailabilityTag

@@ -75,7 +75,10 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
 
                     {searchService.isAvailable && (
                         <FernButton
-                            onClick={openSearchDialog}
+                            onClickCapture={(e) => {
+                                e.stopPropagation();
+                                openSearchDialog();
+                            }}
                             icon={<MagnifyingGlassIcon className="!size-5" />}
                             intent="none"
                             variant="minimal"
@@ -86,7 +89,14 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                     )}
 
                     <FernButton
-                        onClick={isMobileSidebarOpen ? closeMobileSidebar : openMobileSidebar}
+                        onClickCapture={(e) => {
+                            e.stopPropagation();
+                            if (isMobileSidebarOpen) {
+                                closeMobileSidebar();
+                            } else {
+                                openMobileSidebar();
+                            }
+                        }}
                         icon={
                             isMobileSidebarOpen ? (
                                 <Cross1Icon className="!size-5" />

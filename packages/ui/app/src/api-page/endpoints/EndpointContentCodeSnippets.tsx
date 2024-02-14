@@ -5,10 +5,11 @@ import {
     ResolvedEndpointDefinition,
     ResolvedNavigationItemApiSection,
 } from "@fern-ui/app-utils";
-import classNames from "classnames";
 import { memo } from "react";
 import { ApiPlaygroundButton } from "../../api-playground/ApiPlaygroundButton";
 import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";
+import { FernButton, FernButtonGroup } from "../../components/FernButton";
+import { FernScrollArea } from "../../components/FernScrollArea";
 import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 import { CurlExample } from "../examples/curl-example/CurlExample";
 import { CurlLine, curlLinesToString } from "../examples/curl-example/curlUtils";
@@ -57,26 +58,24 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     return (
         <div className="flex min-h-0 min-w-0 flex-1 shrink flex-col gap-6">
             {selectedClientGroup != null && selectedClientGroup.examples.length > 1 && (
-                <div className="flex min-w-0 shrink gap-2">
+                <FernButtonGroup className="min-w-0 shrink">
                     {selectedClientGroup?.examples.map((example) => (
-                        <button
+                        <FernButton
                             key={example.key}
-                            className={classNames("h-6 px-3 rounded-xl shrink min-w-0", {
-                                "bg-background ring-1 ring-border-accent-muted-light dark:ring-border-accent-muted-dark":
-                                    example.key === selectedClient.key,
-                                "bg-background-light/50 dark:bg-background-dark/50 hover:bg-background dark:hover:bg-background-dark":
-                                    example.key !== selectedClient.key,
-                            })}
+                            rounded={true}
                             onClick={() => {
                                 onClickClient(example);
                             }}
+                            className="min-w-0 shrink truncate"
+                            mono
+                            size="small"
+                            variant={example === selectedClient ? "outlined" : "minimal"}
+                            intent={example === selectedClient ? "primary" : "none"}
                         >
-                            <span className="block overflow-hidden truncate font-mono text-xs font-normal">
-                                {example.name}
-                            </span>
-                        </button>
+                            {example.name}
+                        </FernButton>
                     ))}
-                </div>
+                </FernButtonGroup>
             )}
             <TitledExample
                 title="Request"
@@ -116,14 +115,13 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         height={requestHeight - TITLED_EXAMPLE_PADDING}
                     />
                 ) : (
-                    <CodeBlockSkeleton
-                        className="rounded-b-x w-0 min-w-full overflow-y-auto pt-1.5"
-                        content={selectedClient.code}
-                        language={selectedClient.language}
-                        usePlainStyles
-                        fontSize="sm"
-                        style={{ maxHeight: requestHeight - TITLED_EXAMPLE_PADDING }}
-                    />
+                    <FernScrollArea style={{ maxHeight: requestHeight - TITLED_EXAMPLE_PADDING }}>
+                        <CodeBlockSkeleton
+                            content={selectedClient.code}
+                            language={selectedClient.language}
+                            fontSize="sm"
+                        />
+                    </FernScrollArea>
                 )}
             </TitledExample>
             {example.responseBodyV3 != null && (

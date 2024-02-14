@@ -37,24 +37,21 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
     return (
         <div
             className={classNames(
-                "flex flex-col rounded-xl border border-black/20 dark:border-white/20 overflow-visible basis-full bg-background",
+                "rounded-xl flex flex-col bg:white dark:bg-tag-default-soft after:ring-border-default after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-[''] relative shadow-sm",
                 className,
             )}
             onClick={onClick}
             ref={containerRef}
         >
             <div
-                className={classNames(
-                    "border-black/20 rounded-t-xl dark:border-white/20 flex h-10 items-center justify-between border-b py-1 pl-3 pr-2",
-                    {
-                        "bg-black/5 dark:bg-white/5": type === "primary",
-                        "bg-red-500/20": type === "warning",
-                    },
-                )}
+                className={classNames("rounded-t-xl h-10", {
+                    "bg-tag-default-soft": type === "primary",
+                    "bg-tag-danger-soft": type === "warning",
+                })}
             >
-                <div className="flex items-center">
+                <div className="shadow-border-default mx-px flex min-h-10 items-center justify-between rounded-t-xl px-1 shadow-[inset_0_-1px_0_0_rgba(0,0,0,0.1)]">
                     <div
-                        className={classNames("text-xs uppercase tracking-wide", {
+                        className={classNames("text-xs uppercase px-2", {
                             "t-muted": type === "primary",
                             "t-danger": type === "warning",
                         })}

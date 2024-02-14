@@ -7,7 +7,7 @@ import { useInfiniteHits, useInstantSearch } from "react-instantsearch-hooks-web
 import { FernScrollArea } from "../components/FernScrollArea";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useNavigationContext } from "../navigation-context";
-import { useSearchContext } from "../search-context/useSearchContext";
+import { useCloseSearchDialog } from "../sidebar/atom";
 import { SearchHit } from "./SearchHit";
 import type { SearchRecord } from "./types";
 import { getFullPathForSearchRecord } from "./util";
@@ -19,7 +19,7 @@ export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {
 export const SearchHits: React.FC = () => {
     const { pathResolver, basePath } = useDocsContext();
     const { navigateToPath } = useNavigationContext();
-    const { closeSearchDialog } = useSearchContext();
+    const closeSearchDialog = useCloseSearchDialog();
     const { hits } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
     const [hoveredSearchHitId, setHoveredSearchHitId] = useState<string | null>(null);

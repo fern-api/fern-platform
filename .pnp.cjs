@@ -4912,6 +4912,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@radix-ui/react-radio-group", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.1.3"],\
             ["@radix-ui/react-scroll-area", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.0.5"],\
             ["@radix-ui/react-select", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.0.0"],\
+            ["@radix-ui/react-tabs", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.0.4"],\
             ["@radix-ui/react-toggle-group", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.0.4"],\
             ["@radix-ui/react-tooltip", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.0.7"],\
             ["@react-hook/size", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.1.2"],\
@@ -6603,6 +6604,41 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "packagePeers": [\
             "@types/react",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@radix-ui/react-tabs", [\
+        ["npm:1.0.4", {\
+          "packageLocation": "./.yarn/cache/@radix-ui-react-tabs-npm-1.0.4-1659110354-1daf0550da.zip/node_modules/@radix-ui/react-tabs/",\
+          "packageDependencies": [\
+            ["@radix-ui/react-tabs", "npm:1.0.4"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.0.4", {\
+          "packageLocation": "./.yarn/__virtual__/@radix-ui-react-tabs-virtual-c23f9e6a22/0/cache/@radix-ui-react-tabs-npm-1.0.4-1659110354-1daf0550da.zip/node_modules/@radix-ui/react-tabs/",\
+          "packageDependencies": [\
+            ["@radix-ui/react-tabs", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.0.4"],\
+            ["@babel/runtime", "npm:7.23.9"],\
+            ["@radix-ui/primitive", "npm:1.0.1"],\
+            ["@radix-ui/react-context", "virtual:7e400fd3411b91dd46b8a0226a35a9f1800250a42594c7ea709cbd337629e399a26b13d8129d62ae08a72d3892283ef91b760606ff28e1448614959542e67d6a#npm:1.0.1"],\
+            ["@radix-ui/react-direction", "virtual:54fa00643e66b78d201aaed8187a6740a2a777f554187c87ef4f721546135fe875c1a24f111fe2cb5657f07f1d8e20a78e0a22eb9d51211ee24b8857afbcaaaf#npm:1.0.1"],\
+            ["@radix-ui/react-id", "virtual:7e400fd3411b91dd46b8a0226a35a9f1800250a42594c7ea709cbd337629e399a26b13d8129d62ae08a72d3892283ef91b760606ff28e1448614959542e67d6a#npm:1.0.1"],\
+            ["@radix-ui/react-presence", "virtual:54fa00643e66b78d201aaed8187a6740a2a777f554187c87ef4f721546135fe875c1a24f111fe2cb5657f07f1d8e20a78e0a22eb9d51211ee24b8857afbcaaaf#npm:1.0.1"],\
+            ["@radix-ui/react-primitive", "virtual:7e400fd3411b91dd46b8a0226a35a9f1800250a42594c7ea709cbd337629e399a26b13d8129d62ae08a72d3892283ef91b760606ff28e1448614959542e67d6a#npm:1.0.3"],\
+            ["@radix-ui/react-roving-focus", "virtual:54fa00643e66b78d201aaed8187a6740a2a777f554187c87ef4f721546135fe875c1a24f111fe2cb5657f07f1d8e20a78e0a22eb9d51211ee24b8857afbcaaaf#npm:1.0.4"],\
+            ["@radix-ui/react-use-controllable-state", "virtual:7e400fd3411b91dd46b8a0226a35a9f1800250a42594c7ea709cbd337629e399a26b13d8129d62ae08a72d3892283ef91b760606ff28e1448614959542e67d6a#npm:1.0.1"],\
+            ["@types/react", "npm:18.0.20"],\
+            ["@types/react-dom", "npm:18.2.18"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:83226786336e3ec1d65bc4d7ab2fe8e410a92ae0faa428c376517262a7687f8c564f714ddc7188c47ae46ee441f6c920894158bd24f5245f2836019a45954fca#npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
             "react"\
           ],\
           "linkType": "HARD"\
