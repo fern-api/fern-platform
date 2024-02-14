@@ -2,7 +2,7 @@ import { isApiNode } from "@fern-api/fdr-sdk";
 import {
     crawlResolvedNavigationItemApiSections,
     ResolvedNavigationItem,
-    ResolvedNavigationItemApiSection,
+    ResolvedNavigationItemApiSection
 } from "@fern-ui/app-utils";
 import dynamic from "next/dynamic";
 import { useMemo } from "react";

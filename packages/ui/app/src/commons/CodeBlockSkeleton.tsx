@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { useTheme } from "next-themes";
 import React, { CSSProperties, DetailedHTMLProps, HTMLAttributes } from "react";
-import { PrismAsyncLight as SyntaxHighlighter, createElement } from "react-syntax-highlighter";
+import { createElement, PrismAsyncLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import prism from "react-syntax-highlighter/dist/cjs/styles/prism/prism";
 import vscDarkPlus from "react-syntax-highlighter/dist/cjs/styles/prism/vsc-dark-plus";
 

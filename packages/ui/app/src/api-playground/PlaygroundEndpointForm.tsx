@@ -3,7 +3,7 @@ import {
     ResolvedEndpointDefinition,
     ResolvedHttpRequestBodyShape,
     ResolvedNavigationItemApiSection,
-    visitResolvedHttpRequestBodyShape,
+    visitResolvedHttpRequestBodyShape
 } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";

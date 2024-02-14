@@ -2,7 +2,7 @@ import { joinUrlSlugs } from "@fern-api/fdr-sdk";
 import {
     ResolvedApiDefinitionPackage,
     ResolvedEndpointDefinition,
-    ResolvedNavigationItemApiSection,
+    ResolvedNavigationItemApiSection
 } from "@fern-ui/app-utils";
 import { useShouldHideFromSsg } from "../../navigation-context/useNavigationContext";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";

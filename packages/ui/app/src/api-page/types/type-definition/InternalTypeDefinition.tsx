@@ -12,7 +12,7 @@ import { getAnchorId } from "../../../util/anchor";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
-    useTypeDefinitionContext,
+    useTypeDefinitionContext
 } from "../context/TypeDefinitionContext";
 import { DiscriminatedUnionVariant } from "../discriminated-union/DiscriminatedUnionVariant";
 import { ObjectProperty } from "../object/ObjectProperty";

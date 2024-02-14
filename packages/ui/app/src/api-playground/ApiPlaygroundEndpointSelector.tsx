@@ -1,7 +1,7 @@
 import {
     ResolvedApiDefinitionPackage,
     ResolvedEndpointDefinition,
-    ResolvedNavigationItemApiSection,
+    ResolvedNavigationItemApiSection
 } from "@fern-ui/app-utils";
 import { isNonNullish } from "@fern-ui/core-utils";
 import { useBooleanState, useKeyboardPress } from "@fern-ui/react-commons";

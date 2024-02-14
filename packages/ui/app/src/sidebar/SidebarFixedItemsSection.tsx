@@ -4,9 +4,9 @@ import { useMemo } from "react";
 import { useNavigationContext } from "../navigation-context";
 import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { useSearchService } from "../services/useSearchService";
+import { useOpenSearchDialog } from "./atom";
 import { SidebarSearchBar } from "./SidebarSearchBar";
 import { SidebarTabButton } from "./SidebarTabButton";
-import { useOpenSearchDialog } from "./atom";
 
 export declare namespace SidebarFixedItemsSection {
     export interface Props {

@@ -22,7 +22,7 @@ import {
     Th,
     Thead,
     Tr,
-    Ul,
+    Ul
 } from "../../mdx/base-components";
 import styles from "./Markdown.module.scss";
 

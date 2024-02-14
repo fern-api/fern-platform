@@ -2,7 +2,7 @@ import { APIV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import {
     ResolvedApiDefinitionPackage,
     ResolvedEndpointDefinition,
-    ResolvedNavigationItemApiSection,
+    ResolvedNavigationItemApiSection
 } from "@fern-ui/app-utils";
 import { failed, Loadable, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { Cross1Icon } from "@radix-ui/react-icons";
