@@ -5,6 +5,7 @@ import { memo, useCallback } from "react";
 import { ReactElement } from "react-markdown/lib/react-markdown";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
+import { FernTooltip } from "../components/FernTooltip";
 import { API_ARTIFACTS_TITLE } from "../config";
 import { useNavigationContext } from "../navigation-context";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
@@ -60,7 +61,8 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
 }) {
     const { selectedSlug } = useCollapseSidebar();
     const { activeNavigatable } = useNavigationContext();
-    const shallow = isApiNode(activeNavigatable) && activeNavigatable.section.api === apiSection.api;
+    const shallow =
+        activeNavigatable != null && isApiNode(activeNavigatable) && activeNavigatable.section.api === apiSection.api;
     const renderArtifacts = () => {
         if (artifacts == null || !areApiArtifactsNonEmpty(artifacts)) {
             return null;
@@ -80,6 +82,7 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
     if (
         apiSection.endpoints.length === 0 &&
         apiSection.webhooks.length === 0 &&
+        apiSection.websockets.length === 0 &&
         apiSection.subpackages.length === 0 &&
         (artifacts == null || areApiArtifactsNonEmpty(artifacts))
     ) {
@@ -99,6 +102,22 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
                     selected={isEqual(endpoint.slug, selectedSlug)}
                     depth={Math.max(0, depth - 1)}
                     rightElement={HTTP_METHOD_TAGS[endpoint.method]}
+                />
+            ))}
+            {apiSection.websockets.map((websockets) => (
+                <SidebarSlugLink
+                    key={joinUrlSlugs(...websockets.slug)}
+                    slug={websockets.slug}
+                    shallow={shallow}
+                    title={websockets.title}
+                    registerScrolledToPathListener={registerScrolledToPathListener}
+                    selected={true}
+                    depth={Math.max(0, depth - 1)}
+                    rightElement={
+                        <FernTooltip content="Pub/Sub">
+                            <span className="rounded-md font-mono text-xs uppercase leading-none">wss</span>
+                        </FernTooltip>
+                    }
                 />
             ))}
             {apiSection.webhooks.map((webhook) => (

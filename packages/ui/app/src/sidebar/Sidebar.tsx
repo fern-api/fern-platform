@@ -3,6 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { useRouter } from "next/router";
 import { Fragment, memo, useEffect } from "react";
 import { FernScrollArea } from "../components/FernScrollArea";
+import { FernTooltipProvider } from "../components/FernTooltip";
 import { SearchSidebar } from "../search/SearchDialog";
 import { SearchService } from "../services/useSearchService";
 import { useViewportContext } from "../viewport-context/useViewportContext";
@@ -44,13 +45,15 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                         algoliaSearchIndex={algoliaSearchIndex}
                     />
                     <CollapseSidebarProvider>
-                        <SidebarSection
-                            navigationItems={navigation}
-                            slug={currentSlug}
-                            registerScrolledToPathListener={registerScrolledToPathListener}
-                            depth={0}
-                            topLevel={true}
-                        />
+                        <FernTooltipProvider>
+                            <SidebarSection
+                                navigationItems={navigation}
+                                slug={currentSlug}
+                                registerScrolledToPathListener={registerScrolledToPathListener}
+                                depth={0}
+                                topLevel={true}
+                            />
+                        </FernTooltipProvider>
                     </CollapseSidebarProvider>
                 </SearchSidebar>
                 <BuiltWithFern />

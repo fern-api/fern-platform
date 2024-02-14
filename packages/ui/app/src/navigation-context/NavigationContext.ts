@@ -1,4 +1,4 @@
-import { type NavigatableDocsNode, type NodeNeighbors } from "@fern-api/fdr-sdk";
+import { type NavigatableDocsNode } from "@fern-api/fdr-sdk";
 import { type ResolvedPath } from "@fern-ui/app-utils";
 import { noop } from "@fern-ui/core-utils";
 import React from "react";
@@ -6,12 +6,7 @@ import React from "react";
 export const NavigationContext = React.createContext<NavigationContextValue>({
     basePath: undefined,
     justNavigated: false,
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    activeNavigatable: undefined!,
-    activeNavigatableNeighbors: {
-        previous: null,
-        next: null,
-    },
+    activeNavigatable: undefined,
     navigateToPath: noop,
     userIsScrolling: () => false,
     onScrollToPath: noop,
@@ -28,6 +23,10 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
         sectionTitle: "",
         serializedMdxContent: { compiledSource: "", frontmatter: {}, scope: {} },
         editThisPageUrl: null,
+        neighbors: {
+            prev: null,
+            next: null,
+        },
     },
     hydrated: false,
 });
@@ -35,8 +34,7 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
 export interface NavigationContextValue {
     basePath: string | undefined;
     justNavigated: boolean;
-    activeNavigatable: NavigatableDocsNode;
-    activeNavigatableNeighbors: NodeNeighbors;
+    activeNavigatable: NavigatableDocsNode | undefined;
     navigateToPath: (slugWithoutVersion: string) => void;
     userIsScrolling: () => boolean;
     onScrollToPath: (slug: string) => void;

@@ -8,39 +8,51 @@ import vscDarkPlus from "react-syntax-highlighter/dist/cjs/styles/prism/vsc-dark
 // [number, number] is a range of lines to highlight
 type HighlightLine = number | [number, number];
 
-type CodeBlockSkeletonProps = {
-    // className?: string;
+export type CodeBlockSkeletonProps = {
+    className?: string;
     language: string;
     content: string;
-    // usePlainStyles?: boolean;
+    usePlainStyles?: boolean;
     fontSize: "sm" | "lg";
-    // style?: React.CSSProperties;
+    style?: React.CSSProperties;
     highlightLines?: HighlightLine[];
     highlightStyle?: "highlight" | "focus";
 };
 
 export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
-    // className,
+    className,
     language,
     content,
-    // usePlainStyles = false,
+    usePlainStyles = false,
     fontSize,
-    // style,
+    style,
     highlightLines,
     highlightStyle,
 }) => {
     const { resolvedTheme: theme } = useTheme();
     return (
-        <FernSyntaxHighlighter
-            language={language}
-            customStyle={{
-                fontSize: fontSize === "sm" ? "12px" : "14px",
-                lineHeight: fontSize === "sm" ? "20px" : "24px",
-            }}
-            renderer={createHighlightRenderer(highlightLines, highlightStyle, theme as "light" | "dark")}
+        <div
+            className={classNames(
+                // "bg-gray-100/90 dark:bg-gray-950/90",
+                "font-mono",
+                {
+                    "w-full border-l border-r border-b rounded-bl-lg rounded-br-lg border-default": !usePlainStyles,
+                },
+                className,
+            )}
+            style={style}
         >
-            {content}
-        </FernSyntaxHighlighter>
+            <FernSyntaxHighlighter
+                language={language}
+                customStyle={{
+                    fontSize: fontSize === "sm" ? "12px" : "14px",
+                    lineHeight: fontSize === "sm" ? "20px" : "24px",
+                }}
+                renderer={createHighlightRenderer(highlightLines, highlightStyle, theme as "light" | "dark")}
+            >
+                {content}
+            </FernSyntaxHighlighter>
+        </div>
     );
 };
 

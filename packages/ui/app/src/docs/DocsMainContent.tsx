@@ -6,6 +6,9 @@ import {
 } from "@fern-ui/app-utils";
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
+import { WEBSOCKET_MOCK } from "../api-page/web-socket/GenericMockWebSocket";
+import { SPECIFIC_WEBSOCKET_MOCK } from "../api-page/web-socket/SpecificMockWebSocket";
+import { WebSocket } from "../api-page/web-socket/WebSocket";
 import { useNavigationContext } from "../navigation-context";
 
 const CustomDocsPage = dynamic(
@@ -34,7 +37,7 @@ export const DocsMainContent: React.FC<DocsMainContentProps> = ({ navigationItem
         return toRet;
     }, [navigationItems]);
 
-    if (activeNavigatable.type === "page" && resolvedPath.type === "custom-markdown-page") {
+    if (activeNavigatable?.type === "page" && resolvedPath.type === "custom-markdown-page") {
         return (
             <CustomDocsPage
                 serializedMdxContent={resolvedPath.serializedMdxContent}
@@ -42,12 +45,26 @@ export const DocsMainContent: React.FC<DocsMainContentProps> = ({ navigationItem
                 resolvedPath={resolvedPath}
             />
         );
-    } else if (isApiNode(activeNavigatable)) {
+    } else if (activeNavigatable != null && isApiNode(activeNavigatable)) {
         const apiSection = apiSectionsById.get(activeNavigatable.section.api);
         if (apiSection == null) {
             return null;
         }
         return <ApiPage apiSection={apiSection} />;
+    } else if (resolvedPath.type === "api-page" && resolvedPath.fullSlug === "fern-websocket-example") {
+        // backdoor for websocket example
+        return (
+            <div className="min-h-0 pb-36">
+                <WebSocket websocket={WEBSOCKET_MOCK} />
+            </div>
+        );
+    } else if (resolvedPath.type === "api-page" && resolvedPath.fullSlug === "wss-chat") {
+        // backdoor for websocket example for demo
+        return (
+            <div className="min-h-0 pb-36">
+                <WebSocket websocket={SPECIFIC_WEBSOCKET_MOCK} />
+            </div>
+        );
     } else {
         return null;
     }

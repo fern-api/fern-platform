@@ -2,8 +2,8 @@ import { useNavigationContext } from "../navigation-context";
 import { BottomNavigationButton } from "./BottomNavigationButton";
 
 export const BottomNavigationButtons: React.FC = () => {
-    const { activeNavigatableNeighbors } = useNavigationContext();
-    const { previous: leftNeighbor, next: rightNeighbor } = activeNavigatableNeighbors;
+    const { resolvedPath } = useNavigationContext();
+    const { prev: leftNeighbor, next: rightNeighbor } = resolvedPath.neighbors;
 
     if (leftNeighbor == null && rightNeighbor == null) {
         return null;
@@ -19,7 +19,7 @@ export const BottomNavigationButtons: React.FC = () => {
                 )}
                 {rightNeighbor != null ? <BottomNavigationButton docsNode={rightNeighbor} direction="next" /> : <div />}
             </div> */}
-            {rightNeighbor != null && <BottomNavigationButton docsNode={rightNeighbor} />}
+            {rightNeighbor != null && <BottomNavigationButton neighbor={rightNeighbor} />}
         </div>
     );
 };
