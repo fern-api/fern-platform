@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { useTheme } from "next-themes";
 import React, { CSSProperties, DetailedHTMLProps, HTMLAttributes } from "react";
-import { createElement, PrismAsyncLight as SyntaxHighlighter } from "react-syntax-highlighter";
+import { PrismAsyncLight as SyntaxHighlighter, createElement } from "react-syntax-highlighter";
 import prism from "react-syntax-highlighter/dist/cjs/styles/prism/prism";
 import vscDarkPlus from "react-syntax-highlighter/dist/cjs/styles/prism/vsc-dark-plus";
 
@@ -12,20 +12,20 @@ export type CodeBlockSkeletonProps = {
     className?: string;
     language: string;
     content: string;
-    // usePlainStyles?: boolean;
+    usePlainStyles?: boolean;
     fontSize: "sm" | "lg";
-    // style?: React.CSSProperties;
+    style?: React.CSSProperties;
     highlightLines?: HighlightLine[];
     highlightStyle?: "highlight" | "focus";
 };
 
 export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
-    // className,
+    className,
     language,
     content,
-    // usePlainStyles = false,
+    usePlainStyles = false,
     fontSize,
-    // style,
+    style,
     highlightLines,
     highlightStyle,
 }) => {
@@ -40,17 +40,18 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
                 },
                 className,
             )}
-            style={style} >
-        <FernSyntaxHighlighter
-            language={language}
-            customStyle={{
-                fontSize: fontSize === "sm" ? "12px" : "14px",
-                lineHeight: fontSize === "sm" ? "20px" : "24px",
-            }}
-            renderer={createHighlightRenderer(highlightLines, highlightStyle, theme as "light" | "dark")}
+            style={style}
         >
-            {content}
-        </FernSyntaxHighlighter>
+            <FernSyntaxHighlighter
+                language={language}
+                customStyle={{
+                    fontSize: fontSize === "sm" ? "12px" : "14px",
+                    lineHeight: fontSize === "sm" ? "20px" : "24px",
+                }}
+                renderer={createHighlightRenderer(highlightLines, highlightStyle, theme as "light" | "dark")}
+            >
+                {content}
+            </FernSyntaxHighlighter>
         </div>
     );
 };
