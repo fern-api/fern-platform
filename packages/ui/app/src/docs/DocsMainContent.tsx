@@ -6,6 +6,7 @@ import {
 } from "@fern-ui/app-utils";
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
+import { WebSocket, WEBSOCKET_MOCK } from "../api-page/web-socket/WebSocket";
 import { useNavigationContext } from "../navigation-context";
 
 const CustomDocsPage = dynamic(
@@ -48,6 +49,13 @@ export const DocsMainContent: React.FC<DocsMainContentProps> = ({ navigationItem
             return null;
         }
         return <ApiPage apiSection={apiSection} />;
+    } else if (resolvedPath.type === "api-page" && resolvedPath.fullSlug === "fern-websocket-example") {
+        // backdoor for websocket example
+        return (
+            <div className="min-h-0 pb-36">
+                <WebSocket websocket={WEBSOCKET_MOCK} />
+            </div>
+        );
     } else {
         return null;
     }
