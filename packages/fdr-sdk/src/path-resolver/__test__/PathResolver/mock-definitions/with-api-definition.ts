@@ -33,6 +33,7 @@ const API_DEF_1: APIV1Read.ApiDefinition = {
         subpackages: ["sub-1"],
         types: [],
         webhooks: [],
+        websockets: [],
     },
     subpackages: {
         ["sub-1"]: {
@@ -42,6 +43,7 @@ const API_DEF_1: APIV1Read.ApiDefinition = {
             types: [],
             urlSlug: "agents",
             webhooks: [],
+            websockets: [],
             endpoints: [
                 {
                     id: "ep_1",

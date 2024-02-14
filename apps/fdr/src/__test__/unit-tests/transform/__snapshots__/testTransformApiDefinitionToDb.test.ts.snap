@@ -730,6 +730,7 @@ current organization_id, then a response code of <code>403</code> will be return
       ],
       "urlSlug": "adjustments",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_auth": Object {
       "description": undefined,
@@ -746,6 +747,7 @@ current organization_id, then a response code of <code>403</code> will be return
       "types": Array [],
       "urlSlug": "auth",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_auth/v2": Object {
       "description": undefined,
@@ -949,6 +951,7 @@ current organization_id, then a response code of <code>403</code> will be return
       ],
       "urlSlug": "v-2",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_billing-notes": Object {
       "description": undefined,
@@ -1172,6 +1175,7 @@ current organization_id, then a response code of <code>403</code> will be return
       ],
       "urlSlug": "billing-notes",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_bulk-claim-actions": Object {
       "description": undefined,
@@ -1188,6 +1192,7 @@ current organization_id, then a response code of <code>403</code> will be return
       "types": Array [],
       "urlSlug": "bulk-claim-actions",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_bulk-claim-actions/v1": Object {
       "description": undefined,
@@ -1535,6 +1540,7 @@ current organization_id, then a response code of <code>403</code> will be return
       ],
       "urlSlug": "v-1",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_chargemasters": Object {
       "description": undefined,
@@ -1551,6 +1557,7 @@ current organization_id, then a response code of <code>403</code> will be return
       "types": Array [],
       "urlSlug": "chargemasters",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_chargemasters/v2": Object {
       "description": undefined,
@@ -1745,6 +1752,7 @@ current organization_id, then a response code of <code>403</code> will be return
       ],
       "urlSlug": "v-2",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_claim": Object {
       "description": undefined,
@@ -1761,6 +1769,7 @@ current organization_id, then a response code of <code>403</code> will be return
       "types": Array [],
       "urlSlug": "claim",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_claim-submission": Object {
       "description": undefined,
@@ -2748,6 +2757,7 @@ current organization_id, then a response code of <code>403</code> will be return
       ],
       "urlSlug": "claim-submission",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_claim/v2": Object {
       "description": undefined,
@@ -3290,6 +3300,7 @@ current organization_id, then a response code of <code>403</code> will be return
       ],
       "urlSlug": "v-2",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_claims": Object {
       "description": undefined,
@@ -3307,6 +3318,7 @@ current organization_id, then a response code of <code>403</code> will be return
       ],
       "urlSlug": "claims",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_cms-1500": Object {
       "description": undefined,
@@ -3352,6 +3364,7 @@ current organization_id, then a response code of <code>403</code> will be return
       ],
       "urlSlug": "cms-1500",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_commons": Object {
       "description": undefined,
@@ -3417,6 +3430,7 @@ current organization_id, then a response code of <code>403</code> will be return
       ],
       "urlSlug": "commons",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_configurable-rules": Object {
       "description": undefined,
@@ -5999,6 +6013,7 @@ current organization_id, then a response code of <code>403</code> will be return
       ],
       "urlSlug": "configurable-rules",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_configurable-rules-types": Object {
       "description": undefined,
@@ -6069,6 +6084,7 @@ current organization_id, then a response code of <code>403</code> will be return
       ],
       "urlSlug": "configurable-rules-types",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_configurable-rules-variables": Object {
       "description": undefined,
@@ -7779,6 +7795,7 @@ current organization_id, then a response code of <code>403</code> will be return
       ],
       "urlSlug": "configurable-rules-variables",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_contracts": Object {
       "description": undefined,
@@ -9186,6 +9203,7 @@ value, overriding what was set before.
       ],
       "urlSlug": "contracts",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_credentialing": Object {
       "description": undefined,
@@ -9210,6 +9228,7 @@ value, overriding what was set before.
       ],
       "urlSlug": "credentialing",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_dashboards": Object {
       "description": undefined,
@@ -9342,6 +9361,7 @@ value, overriding what was set before.
       ],
       "urlSlug": "dashboards",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_diagnoses": Object {
       "description": undefined,
@@ -9731,6 +9751,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
       ],
       "urlSlug": "diagnoses",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_encounter-providers": Object {
       "description": undefined,
@@ -9747,6 +9768,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
       "types": Array [],
       "urlSlug": "encounter-providers",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_encounter-providers/v2": Object {
       "description": undefined,
@@ -9982,6 +10004,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
       ],
       "urlSlug": "v-2",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_encounter-summaries": Object {
       "description": undefined,
@@ -9998,6 +10021,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
       "types": Array [],
       "urlSlug": "encounter-summaries",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_encounter-summaries/v1": Object {
       "description": undefined,
@@ -10994,6 +11018,7 @@ or encounter external id.
       ],
       "urlSlug": "v-1",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_encounter_timeline": Object {
       "description": undefined,
@@ -11270,6 +11295,7 @@ or encounter external id.
       ],
       "urlSlug": "encounter-timeline",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_encounters": Object {
       "description": undefined,
@@ -11286,6 +11312,7 @@ or encounter external id.
       "types": Array [],
       "urlSlug": "encounters",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_encounters-internal": Object {
       "description": undefined,
@@ -11302,6 +11329,7 @@ or encounter external id.
       "types": Array [],
       "urlSlug": "encounters-internal",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_encounters-internal/v1": Object {
       "description": undefined,
@@ -11788,6 +11816,7 @@ or encounter external id.
       ],
       "urlSlug": "v-1",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_encounters/v4": Object {
       "description": undefined,
@@ -17883,6 +17912,7 @@ submitted to the payor.
       ],
       "urlSlug": "v-4",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_enrollments": Object {
       "description": undefined,
@@ -19460,6 +19490,7 @@ submitted to the payor.
       ],
       "urlSlug": "enrollments",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_era": Object {
       "description": undefined,
@@ -19478,6 +19509,7 @@ submitted to the payor.
       ],
       "urlSlug": "era",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_expected-network-status": Object {
       "description": undefined,
@@ -19494,6 +19526,7 @@ submitted to the payor.
       "types": Array [],
       "urlSlug": "expected-network-status",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_expected-network-status-tia": Object {
       "description": undefined,
@@ -19510,6 +19543,7 @@ submitted to the payor.
       "types": Array [],
       "urlSlug": "expected-network-status-tia",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_expected-network-status-tia/v1": Object {
       "description": undefined,
@@ -19945,6 +19979,7 @@ submitted to the payor.
       ],
       "urlSlug": "v-1",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_expected-network-status/v1": Object {
       "description": undefined,
@@ -20172,6 +20207,7 @@ submitted to the payor.
       ],
       "urlSlug": "v-1",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_exports": Object {
       "description": undefined,
@@ -20188,6 +20224,7 @@ submitted to the payor.
       "types": Array [],
       "urlSlug": "exports",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_exports/v3": Object {
       "description": undefined,
@@ -20672,6 +20709,7 @@ Must be within 30 days of start_date.
       ],
       "urlSlug": "v-3",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_fee-schedules": Object {
       "description": undefined,
@@ -20689,6 +20727,7 @@ Must be within 30 days of start_date.
       "types": Array [],
       "urlSlug": "fee-schedules",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_fee-schedules/v1": Object {
       "description": undefined,
@@ -21023,6 +21062,7 @@ Must be within 30 days of start_date.
       ],
       "urlSlug": "v-1",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_fee-schedules/v2": Object {
       "description": undefined,
@@ -21619,6 +21659,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
       ],
       "urlSlug": "v-2",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_guarantor": Object {
       "description": undefined,
@@ -21635,6 +21676,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
       "types": Array [],
       "urlSlug": "guarantor",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_guarantor/v1": Object {
       "description": undefined,
@@ -22301,6 +22343,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
       ],
       "urlSlug": "v-1",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_identifiers": Object {
       "description": undefined,
@@ -22326,6 +22369,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
       ],
       "urlSlug": "identifiers",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_individual": Object {
       "description": undefined,
@@ -22615,6 +22659,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
       ],
       "urlSlug": "individual",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_insurance-adjustments": Object {
       "description": undefined,
@@ -22631,6 +22676,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
       "types": Array [],
       "urlSlug": "insurance-adjustments",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_insurance-adjustments/v1": Object {
       "description": undefined,
@@ -23445,6 +23491,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
       ],
       "urlSlug": "v-1",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_insurance-card": Object {
       "description": undefined,
@@ -23738,6 +23785,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
       ],
       "urlSlug": "insurance-card",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_internal-api-testing": Object {
       "description": undefined,
@@ -23754,6 +23802,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
       "types": Array [],
       "urlSlug": "internal-api-testing",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_internal-api-testing/v1": Object {
       "description": undefined,
@@ -24153,6 +24202,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
       ],
       "urlSlug": "v-1",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_invoices": Object {
       "description": undefined,
@@ -25033,6 +25083,7 @@ upon creation of the invoice.</p>
       ],
       "urlSlug": "invoices",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_managed-emr-configs": Object {
       "description": undefined,
@@ -25049,6 +25100,7 @@ upon creation of the invoice.</p>
       "types": Array [],
       "urlSlug": "managed-emr-configs",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_managed-emr-configs/v1": Object {
       "description": undefined,
@@ -26109,6 +26161,7 @@ upon creation of the invoice.</p>
       ],
       "urlSlug": "v-1",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_organization-payers": Object {
       "description": undefined,
@@ -26508,6 +26561,7 @@ upon creation of the invoice.</p>
       ],
       "urlSlug": "organization-payers",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_organization-providers": Object {
       "description": undefined,
@@ -26525,6 +26579,7 @@ upon creation of the invoice.</p>
       "types": Array [],
       "urlSlug": "organization-providers",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_organization-providers/v2": Object {
       "description": undefined,
@@ -27543,6 +27598,7 @@ upon creation of the invoice.</p>
       ],
       "urlSlug": "v-2",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_organization-providers/v3": Object {
       "description": undefined,
@@ -28593,6 +28649,7 @@ upon creation of the invoice.</p>
       ],
       "urlSlug": "v-3",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_organization-tags": Object {
       "description": undefined,
@@ -29305,6 +29362,7 @@ upon creation of the invoice.</p>
       ],
       "urlSlug": "organization-tags",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_page-sessions": Object {
       "description": undefined,
@@ -29419,6 +29477,7 @@ upon creation of the invoice.</p>
       ],
       "urlSlug": "page-sessions",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_patient-payment-configs": Object {
       "description": undefined,
@@ -30588,6 +30647,7 @@ by the id, then 403 will be returned</p>
       ],
       "urlSlug": "patient-payment-configs",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_patient-payments": Object {
       "description": undefined,
@@ -30605,6 +30665,7 @@ by the id, then 403 will be returned</p>
       "types": Array [],
       "urlSlug": "patient-payments",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_patient-payments/v2": Object {
       "description": undefined,
@@ -32088,6 +32149,7 @@ by the id, then 403 will be returned</p>
       ],
       "urlSlug": "v-2",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_patient-payments/v3": Object {
       "description": undefined,
@@ -33813,6 +33875,7 @@ current organization_id, then a response code of <code>403</code> will be return
       ],
       "urlSlug": "v-3",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_patients": Object {
       "description": undefined,
@@ -34491,6 +34554,7 @@ slashes.
       ],
       "urlSlug": "patients",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_payers": Object {
       "description": undefined,
@@ -34754,6 +34818,7 @@ slashes.
       ],
       "urlSlug": "payers",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_payment-account-configs": Object {
       "description": "PaymentAccountConfig reprents a configuration record for integration with third party payment processors.
@@ -36702,6 +36767,7 @@ as the billing_provider_npis should suffice.</p>
       ],
       "urlSlug": "payment-account-configs",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_permissions": Object {
       "description": undefined,
@@ -36718,6 +36784,7 @@ as the billing_provider_npis should suffice.</p>
       ],
       "urlSlug": "permissions",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_pipeline-commons": Object {
       "description": undefined,
@@ -36738,6 +36805,7 @@ as the billing_provider_npis should suffice.</p>
       ],
       "urlSlug": "pipeline-commons",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_pipeline-configuration": Object {
       "description": undefined,
@@ -36899,6 +36967,7 @@ as the billing_provider_npis should suffice.</p>
       ],
       "urlSlug": "pipeline-configuration",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_remits": Object {
       "description": undefined,
@@ -36915,6 +36984,7 @@ as the billing_provider_npis should suffice.</p>
       "types": Array [],
       "urlSlug": "remits",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_remits/v1": Object {
       "description": undefined,
@@ -37918,6 +37988,7 @@ as the billing_provider_npis should suffice.</p>
       ],
       "urlSlug": "v-1",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_rules_engine_types": Object {
       "description": undefined,
@@ -37942,6 +38013,7 @@ as the billing_provider_npis should suffice.</p>
       ],
       "urlSlug": "rules-engine-types",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_secondary-submission": Object {
       "description": undefined,
@@ -37958,6 +38030,7 @@ as the billing_provider_npis should suffice.</p>
       "types": Array [],
       "urlSlug": "secondary-submission",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_secondary-submission/v1": Object {
       "description": undefined,
@@ -38586,6 +38659,7 @@ as the billing_provider_npis should suffice.</p>
       ],
       "urlSlug": "v-1",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_service-facility": Object {
       "description": undefined,
@@ -38757,6 +38831,7 @@ as the billing_provider_npis should suffice.</p>
       ],
       "urlSlug": "service-facility",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_service-line-ledgers": Object {
       "description": undefined,
@@ -38773,6 +38848,7 @@ as the billing_provider_npis should suffice.</p>
       "types": Array [],
       "urlSlug": "service-line-ledgers",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_service-line-ledgers/v1": Object {
       "description": undefined,
@@ -39077,6 +39153,7 @@ as the billing_provider_npis should suffice.</p>
       ],
       "urlSlug": "v-1",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_service-lines": Object {
       "description": undefined,
@@ -39093,6 +39170,7 @@ as the billing_provider_npis should suffice.</p>
       "types": Array [],
       "urlSlug": "service-lines",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_service-lines/v2": Object {
       "description": undefined,
@@ -39335,6 +39413,7 @@ as the billing_provider_npis should suffice.</p>
       ],
       "urlSlug": "v-2",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_tags": Object {
       "description": undefined,
@@ -39557,6 +39636,7 @@ as the billing_provider_npis should suffice.</p>
       ],
       "urlSlug": "tags",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_tasks": Object {
       "description": undefined,
@@ -39574,6 +39654,7 @@ as the billing_provider_npis should suffice.</p>
       "types": Array [],
       "urlSlug": "tasks",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_tasks/commons": Object {
       "description": undefined,
@@ -39591,6 +39672,7 @@ as the billing_provider_npis should suffice.</p>
       ],
       "urlSlug": "commons",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_tasks/v3": Object {
       "description": undefined,
@@ -39722,6 +39804,7 @@ as the billing_provider_npis should suffice.</p>
       ],
       "urlSlug": "v-3",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_test-fern": Object {
       "description": undefined,
@@ -39740,6 +39823,7 @@ as the billing_provider_npis should suffice.</p>
       ],
       "urlSlug": "test-fern",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_upload-validation": Object {
       "description": undefined,
@@ -39760,6 +39844,7 @@ as the billing_provider_npis should suffice.</p>
       ],
       "urlSlug": "upload-validation",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_users": Object {
       "description": undefined,
@@ -39776,6 +39861,7 @@ as the billing_provider_npis should suffice.</p>
       "types": Array [],
       "urlSlug": "users",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_users/v2": Object {
       "description": undefined,
@@ -40658,6 +40744,7 @@ as the billing_provider_npis should suffice.</p>
       ],
       "urlSlug": "v-2",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_work-queues": Object {
       "description": undefined,
@@ -40674,6 +40761,7 @@ as the billing_provider_npis should suffice.</p>
       "types": Array [],
       "urlSlug": "work-queues",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_work-queues/v1": Object {
       "description": undefined,
@@ -41011,6 +41099,7 @@ as the billing_provider_npis should suffice.</p>
       ],
       "urlSlug": "v-1",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_x12": Object {
       "description": undefined,
@@ -41027,6 +41116,7 @@ as the billing_provider_npis should suffice.</p>
       "types": Array [],
       "urlSlug": "x-12",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_x12/v1": Object {
       "description": undefined,
@@ -41045,6 +41135,7 @@ as the billing_provider_npis should suffice.</p>
       ],
       "urlSlug": "v-1",
       "webhooks": Array [],
+      "websockets": undefined,
     },
   },
   "types": Object {
@@ -89533,6 +89624,7 @@ Object {
       ],
       "urlSlug": "transactions",
       "webhooks": Array [],
+      "websockets": undefined,
     },
   },
   "types": Object {
@@ -89858,6 +89950,7 @@ Object {
       ],
       "urlSlug": "lcf",
       "webhooks": Array [],
+      "websockets": undefined,
     },
   },
   "types": Object {
@@ -92768,6 +92861,7 @@ Object {
       "types": Array [],
       "urlSlug": "deployments",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_documentIndexes": Object {
       "description": undefined,
@@ -92980,6 +93074,7 @@ Object {
       "types": Array [],
       "urlSlug": "document-indexes",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_documents": Object {
       "description": undefined,
@@ -93677,6 +93772,7 @@ Object {
       "types": Array [],
       "urlSlug": "documents",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_modelVersions": Object {
       "description": undefined,
@@ -94056,6 +94152,7 @@ Object {
       "types": Array [],
       "urlSlug": "model-versions",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_registeredPrompts": Object {
       "description": undefined,
@@ -94454,6 +94551,7 @@ partners, not directly by Vellum users.</p>
       "types": Array [],
       "urlSlug": "registered-prompts",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_sandboxes": Object {
       "description": undefined,
@@ -94789,6 +94887,7 @@ or overwritten with default values.</p>
       "types": Array [],
       "urlSlug": "sandboxes",
       "webhooks": Array [],
+      "websockets": undefined,
     },
     "subpackage_testSuites": Object {
       "description": undefined,
@@ -95103,6 +95202,7 @@ or overwritten with default values.</p>
       "types": Array [],
       "urlSlug": "test-suites",
       "webhooks": Array [],
+      "websockets": undefined,
     },
   },
   "types": Object {

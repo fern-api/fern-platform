@@ -8,6 +8,7 @@ const API_DEF_1: APIV1Read.ApiDefinition = {
         subpackages: ["new-sub"],
         types: [],
         webhooks: [],
+        websockets: [],
     },
     subpackages: {
         ["new-sub"]: {
@@ -17,6 +18,7 @@ const API_DEF_1: APIV1Read.ApiDefinition = {
             types: [],
             urlSlug: "new-sub",
             webhooks: [],
+            websockets: [],
             endpoints: [],
             pointsTo: "old-sub",
         },
@@ -27,6 +29,7 @@ const API_DEF_1: APIV1Read.ApiDefinition = {
             types: [],
             urlSlug: "old-sub",
             webhooks: [],
+            websockets: [],
             endpoints: [
                 {
                     id: "ep_1",

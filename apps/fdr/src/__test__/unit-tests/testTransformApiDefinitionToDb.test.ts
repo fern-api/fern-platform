@@ -43,6 +43,7 @@ it("api register", async () => {
         subpackages: {},
         types: {
             type_User: {
+                availability: undefined,
                 description: "This is some ```markdown```",
                 htmlDescription: "<p>This is some <code>markdown</code></p>\n",
                 descriptionContainsMarkdown: true,

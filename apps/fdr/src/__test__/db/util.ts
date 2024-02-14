@@ -26,6 +26,7 @@ export function createApiDefinition({
             ],
             types: [],
             subpackages: [],
+            websockets: [],
         },
         subpackages: {},
         types: {},

@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  type: type.yml
+  commons: commons.yml
+  endpoint: endpoint.yml
+
+types:
+  WebSocketId: string
+
+  WebSocketDefinition:
+    extends: commons.WithDescription
+    properties:
+      urlSlug: string
+      id: WebSocketId
+      name: optional<string>
+      # environments (should match to wss://)
+      defaultEnvironment: optional<endpoint.EnvironmentId>
+      environments: list<endpoint.Environment>
+      path: endpoint.EndpointPath
+      queryParameters: list<endpoint.QueryParameter>
+      publish: WebSocketPayload
+      subscribe: WebSocketPayload
+      examples: list<WebSocketExample>
+
+  WebSocketPayload:
+    extends: commons.WithDescription
+    properties:
+      type: WebSocketPayloadShape
+
+  WebSocketPayloadShape:
+    union:
+      object: type.ObjectType
+      reference: type.TypeReference
+
+  WebSocketExample:
+    properties:
+      name: optional<string>
+      description: optional<string>
+      pathParameters: map<endpoint.PathParameterKey, unknown>
+      queryParameters: map<string, unknown>
+      events: list<ExampleWebSocketEvent>
+
+  ExampleWebSocketEvent:
+    properties:
+      action: WebSocketAction
+      variant: optional<string>
+      payload: unknown
+
+  WebSocketAction:
+    enum:
+      - send
+      - recieve

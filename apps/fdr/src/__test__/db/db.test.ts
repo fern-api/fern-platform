@@ -76,6 +76,7 @@ const EMPTY_REGISTER_API_DEFINITION: APIV1Write.ApiDefinition = {
     rootPackage: {
         endpoints: [],
         webhooks: [],
+        websockets: [],
         types: [],
         subpackages: [],
     },

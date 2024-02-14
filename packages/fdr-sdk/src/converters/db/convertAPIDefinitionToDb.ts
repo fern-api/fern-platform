@@ -86,12 +86,14 @@ function transformSubpackage({
         transformEndpoint({ writeShape: endpoint, apiDefinition, context, snippets }),
     );
     const webhooks = writeShape.webhooks?.map((webhook) => transformWebhook({ writeShape: webhook, apiDefinition }));
+    const websockets = writeShape.websockets?.map((websocket) => transformWebsocket({ writeShape: websocket }));
     const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         subpackageId: id,
         parent: parent,
         name: writeShape.name,
         endpoints: endpoints,
+        websockets: websockets,
         types: writeShape.types,
         subpackages: writeShape.subpackages,
         pointsTo: writeShape.pointsTo,
@@ -100,6 +102,30 @@ function transformSubpackage({
         htmlDescription,
         descriptionContainsMarkdown: true,
         webhooks: webhooks ?? [],
+    };
+}
+
+function transformWebsocket({
+    writeShape,
+}: {
+    writeShape: APIV1Write.WebSocketDefinition;
+}): WithoutQuestionMarks<FdrAPI.api.v1.read.WebSocketDefinition> {
+    const htmlDescription = getHtmlDescription(writeShape.description);
+    const urlSlug = kebabCase(writeShape.id);
+    return {
+        urlSlug,
+        defaultEnvironment: writeShape.defaultEnvironment,
+        environments: writeShape.environments,
+        publish: writeShape.publish,
+        subscribe: writeShape.subscribe,
+        description: writeShape.description,
+        htmlDescription,
+        descriptionContainsMarkdown: true,
+        id: writeShape.id,
+        name: writeShape.name,
+        path: writeShape.path,
+        queryParameters: writeShape.queryParameters,
+        examples: writeShape.examples.length > 0 ? writeShape.examples : [],
     };
 }
 

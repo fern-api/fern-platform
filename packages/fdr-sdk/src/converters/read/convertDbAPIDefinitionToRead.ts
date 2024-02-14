@@ -21,6 +21,7 @@ export function convertDbAPIDefinitionToRead(
             subpackages: dbShape.rootPackage.subpackages,
             types: dbShape.rootPackage.types,
             webhooks: dbShape.rootPackage.webhooks ?? [],
+            websockets: dbShape.rootPackage.websockets ?? [],
         },
         types: dbShape.types,
         subpackages: Object.fromEntries(
@@ -50,6 +51,7 @@ function transformSubpackage({
         description: dbShape.description,
         htmlDescription: dbShape.htmlDescription,
         webhooks: dbShape.webhooks ?? [],
+        websockets: dbShape.websockets ?? [],
         descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
     };
 }
