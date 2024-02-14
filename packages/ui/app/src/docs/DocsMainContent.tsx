@@ -9,7 +9,6 @@ import { useMemo } from "react";
 import { WEBSOCKET_MOCK } from "../api-page/web-socket/GenericMockWebSocket";
 import { SPECIFIC_WEBSOCKET_MOCK } from "../api-page/web-socket/SpecificMockWebSocket";
 import { WebSocket } from "../api-page/web-socket/WebSocket";
-import { useDocsContext } from "../docs-context/useDocsContext";
 import { useNavigationContext } from "../navigation-context";
 
 const CustomDocsPage = dynamic(
@@ -29,7 +28,6 @@ export interface DocsMainContentProps {
 
 export const DocsMainContent: React.FC<DocsMainContentProps> = ({ navigationItems }) => {
     const { activeNavigatable, resolvedPath } = useNavigationContext();
-    const { domain } = useDocsContext();
 
     const apiSectionsById = useMemo(() => {
         const toRet = new Map<string, ResolvedNavigationItemApiSection>();
