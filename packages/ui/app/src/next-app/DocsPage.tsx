@@ -7,7 +7,7 @@ import Head from "next/head";
 import Script from "next/script";
 import { ReactElement } from "react";
 import { REGISTRY_SERVICE } from "../services/registry";
-import { SidebarNode, resolveSidebarNodes } from "../sidebar/types";
+import { resolveSidebarNodes, SidebarNode } from "../sidebar/types";
 import { buildUrl } from "../util/buildUrl";
 import { DocsApp } from "./DocsApp";
 import { renderThemeStylesheet } from "./utils/renderThemeStylesheet";
@@ -132,7 +132,7 @@ export const getDocsPageProps = async (
                 type: "apiSection",
                 api: "wss",
                 id: "wss",
-                title: "Websockets",
+                title: "Streaming",
                 slug: ["wss"],
                 endpoints: [],
                 webhooks: [],

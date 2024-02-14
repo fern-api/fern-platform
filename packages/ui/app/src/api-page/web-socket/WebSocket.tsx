@@ -336,7 +336,7 @@ function CardedSection({
                 </h2>
                 {headingElement}
             </div>
-            {children && <div className="space-y-12 p-6">{children}</div>}
+            {/* {children && <div className="space-y-12 p-6">{children}</div>} */}
         </section>
     );
 }
