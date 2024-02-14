@@ -51,7 +51,7 @@ interface ApiPlaygroundProps {
     apiSections: ResolvedNavigationItemApiSection[];
 }
 
-const CUSTOMERS = ["cloudflare", "assemblyai", "cohere", "shipbob"];
+const CUSTOMERS = ["cloudflare", "assemblyai", "cohere", "shipbob", "hume"];
 
 function isApiPlaygroundEnabled(domain: string) {
     domain = domain.toLowerCase();
