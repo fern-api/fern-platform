@@ -1,7 +1,8 @@
 import { ResolvedApiDefinitionPackage, ResolvedNavigationItemApiSection } from "@fern-ui/app-utils";
 import { Endpoint } from "./endpoints/Endpoint";
 import { ApiSubpackage } from "./subpackages/ApiSubpackage";
-import { WebSocket, WEBSOCKET_MOCK } from "./web-socket/WebSocket";
+import { WEBSOCKET_MOCK } from "./web-socket/GenericMockWebSocket";
+import { WebSocket } from "./web-socket/WebSocket";
 import { Webhook } from "./webhooks/Webhook";
 
 export declare namespace ApiPackageContents {
