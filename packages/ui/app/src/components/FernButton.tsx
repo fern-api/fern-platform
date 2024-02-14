@@ -7,7 +7,7 @@ import {
     FC,
     forwardRef,
     PropsWithChildren,
-    ReactNode
+    ReactNode,
 } from "react";
 import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 

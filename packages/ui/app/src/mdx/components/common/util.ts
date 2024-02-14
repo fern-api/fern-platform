@@ -3,7 +3,7 @@ import {
     BADLY_FORMATTED_CODE_BLOCK_CONTENT,
     BADLY_FORMATTED_CODE_BLOCK_LANGUAGE,
     BADLY_FORMATTED_CODE_BLOCK_TITLE,
-    DEFAULT_CODE_BLOCK_CONTENT
+    DEFAULT_CODE_BLOCK_CONTENT,
 } from "../../../config";
 import type { CodeBlockItem } from "./types";
 

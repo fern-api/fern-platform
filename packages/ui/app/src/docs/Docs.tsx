@@ -17,7 +17,7 @@ import {
     useIsMobileSidebarOpen,
     useMessageHandler,
     useOpenMobileSidebar,
-    useOpenSearchDialog
+    useOpenSearchDialog,
 } from "../sidebar/atom";
 import { SidebarNode } from "../sidebar/types";
 import { BgImageGradient } from "./BgImageGradient";

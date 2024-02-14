@@ -2,7 +2,7 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import {
     ResolvedApiDefinitionPackage,
     ResolvedEndpointDefinition,
-    ResolvedNavigationItemApiSection
+    ResolvedNavigationItemApiSection,
 } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";

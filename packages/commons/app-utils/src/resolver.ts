@@ -50,7 +50,9 @@ export function resolveNavigationItems(
                                 definitionSlug,
                             ),
                         ),
-                        websockets: [],
+                        websockets: definition.rootPackage.websockets.map((websocket) =>
+                            resolveWebsocketDefinition(websocket, definition.types, definitionSlug),
+                        ),
                         webhooks: definition.rootPackage.webhooks.map((webhook) =>
                             resolveWebhookDefinition(webhook, definition.types, definitionSlug),
                         ),
@@ -99,12 +101,13 @@ function resolveSubpackage(
     const endpoints = subpackage.endpoints.map((endpoint) =>
         resolveEndpointDefinition(apiSectionId, subpackageId, endpoint, types, slug),
     );
+    const websockets = subpackage.websockets.map((websocket) => resolveWebsocketDefinition(websocket, types, slug));
     const webhooks = subpackage.webhooks.map((webhook) => resolveWebhookDefinition(webhook, types, slug));
     const subpackages = subpackage.subpackages
         .map((subpackageId) => resolveSubpackage(apiSectionId, subpackageId, subpackagesMap, types, slug))
         .filter(isNonNullish);
 
-    if (endpoints.length === 0 && webhooks.length === 0 && subpackages.length === 0) {
+    if (endpoints.length === 0 && webhooks.length === 0 && subpackages.length === 0 && websockets.length === 0) {
         return undefined;
     }
     return {
@@ -115,7 +118,7 @@ function resolveSubpackage(
         id: subpackageId,
         slug,
         endpoints,
-        websockets: [],
+        websockets,
         webhooks,
         subpackages,
         pointsTo: subpackage.pointsTo,
@@ -194,6 +197,76 @@ function resolveEndpointDefinition(
     };
 }
 
+function resolveWebsocketDefinition(
+    websocket: APIV1Read.WebSocketDefinition,
+    types: Record<string, APIV1Read.TypeDefinition>,
+    parentSlugs: string[],
+): ResolvedPubSubWebsocketDefinition {
+    const pathParameters = websocket.path.pathParameters.map(
+        (parameter): ResolvedParameter => ({
+            ...parameter,
+            shape: resolveTypeReference(parameter.type, types),
+        }),
+    );
+    return {
+        ...websocket,
+        id: websocket.id,
+        slug: [...parentSlugs, websocket.urlSlug],
+        name: websocket.name != null ? websocket.name : websocket.urlSlug,
+        path: websocket.path.parts
+            .map((pathPart): ResolvedEndpointPathParts | undefined => {
+                if (pathPart.type === "literal") {
+                    return { ...pathPart };
+                } else {
+                    const correspondingParameter = pathParameters.find((param) => param.key === pathPart.value);
+                    if (correspondingParameter === undefined) {
+                        console.error(
+                            "Path parameter contained within path.parts not found within websocket.path.pathParameters",
+                        );
+                        return;
+                    } else {
+                        return { ...pathPart, ...correspondingParameter };
+                    }
+                }
+            })
+            .filter((param) => param !== undefined) as ResolvedEndpointPathParts[],
+        pathParameters,
+        queryParameters: websocket.queryParameters.map(
+            (parameter): ResolvedParameter => ({
+                ...parameter,
+                shape: resolveTypeReference(parameter.type, types),
+            }),
+        ),
+        publish: {
+            ...websocket.publish,
+            shape: resolvePayloadShape(websocket.publish.type, types),
+        },
+        subscribe: {
+            ...websocket.publish,
+            shape: resolvePayloadShape(websocket.subscribe.type, types),
+        },
+        examples: resolveWebsocketExample(websocket.examples),
+        defaultEnvironment: websocket.environments.find((env) => env.id === websocket.defaultEnvironment),
+    };
+}
+
+function resolveWebsocketExample(examples: APIV1Read.WebSocketExample[]): ResolvedWebsocketExample[] {
+    return examples.map(
+        (example): ResolvedWebsocketExample => ({
+            ...example,
+            name: example.name,
+            description: example.description,
+            events: example.events.map(
+                (event): ResolvedWebsocketExampleEvent => ({
+                    action: event.action,
+                    variant: event.variant,
+                    payload: event.payload,
+                }),
+            ),
+        }),
+    );
+}
+
 function resolveWebhookDefinition(
     webhook: APIV1Read.WebhookDefinition,
     types: Record<string, APIV1Read.TypeDefinition>,
@@ -209,13 +282,13 @@ function resolveWebhookDefinition(
         })),
         payload: {
             ...webhook.payload,
-            shape: resolveWebhookPayloadShape(webhook.payload.type, types),
+            shape: resolvePayloadShape(webhook.payload.type, types),
         },
     };
 }
 
-function resolveWebhookPayloadShape(
-    payloadShape: APIV1Read.WebhookPayloadShape,
+function resolvePayloadShape(
+    payloadShape: APIV1Read.WebhookPayloadShape | APIV1Read.WebSocketPayloadShape,
     types: Record<string, APIV1Read.TypeDefinition>,
 ): ResolvedTypeReference {
     return visitDiscriminatedUnion(payloadShape, "type")._visit<ResolvedTypeReference>({
@@ -489,7 +562,6 @@ export function stringifyResolvedEndpointPathParts(pathParts: ResolvedEndpointPa
 }
 
 export interface ResolvedPubSubWebsocketDefinition extends APIV1Read.WithDescription {
-    type: "pubSub";
     id: string;
     slug: string[];
     name: string | undefined;
@@ -521,7 +593,7 @@ export declare namespace ResolvedWebsocketExampleEvent {
     }
 
     interface Receive {
-        action: "receive";
+        action: "recieve";
         variant: string | undefined;
         payload: unknown;
     }

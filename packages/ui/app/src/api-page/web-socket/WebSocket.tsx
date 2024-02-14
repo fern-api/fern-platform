@@ -1,8 +1,8 @@
-import { ResolvedPubSubWebsocketDefinition } from "@fern-ui/app-utils";
+import { joinUrlSlugs, ResolvedPubSubWebsocketDefinition } from "@fern-ui/app-utils";
 import * as Accordion from "@radix-ui/react-accordion";
 import { ArrowDownIcon, ArrowUpIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
-import { HTMLAttributes, ReactElement, ReactNode } from "react";
+import { HTMLAttributes, ReactNode } from "react";
 import { Wifi } from "react-feather";
 import { buildRequestUrl } from "../../api-playground/utils";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
@@ -17,8 +17,7 @@ import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceD
 import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 
-const WEBSOCKET_MOCK: ResolvedPubSubWebsocketDefinition = {
-    type: "pubSub",
+export const WEBSOCKET_MOCK: ResolvedPubSubWebsocketDefinition = {
     id: "websocket",
     slug: ["fern-test", "websocket-example"],
     name: "Real-time API",
@@ -38,8 +37,8 @@ const WEBSOCKET_MOCK: ResolvedPubSubWebsocketDefinition = {
             shape: {
                 type: "enum",
                 values: [
-                    { value: "pcm_s16le", description: "PCM signed 16-bit little-endian" },
-                    { value: "pcm_mulaw", description: "PCM mu-law" },
+                    { value: "format_1", description: "Encode data as format_1" },
+                    { value: "format_2", description: "Encode data as format_2" },
                 ],
             },
             description: "The encoding of the audio data",
@@ -124,30 +123,30 @@ const WEBSOCKET_MOCK: ResolvedPubSubWebsocketDefinition = {
             queryParameters: {
                 sample_rate: 16000,
                 word_boost: "[]",
-                encoding: "pcm_s16le",
+                encoding: "format_1",
             },
             pathParameters: {},
             events: [
                 {
-                    action: "receive",
+                    action: "recieve",
                     variant: "SessionBegins",
                     payload: {
-                        session_id: "abcdsafdsfadsfasdfasdfasdfasdfasdf",
+                        session_id: "Test data test data test data test data",
                         expires_at: "2022-12-31T23:59:59Z",
                     },
                 },
                 {
                     action: "send",
                     variant: "Send Audio",
-                    payload: "abcdsafdsfadsfasdfasdfasdfasdfasdf",
+                    payload: "Test data test data test data test data",
                 },
                 {
-                    action: "receive",
+                    action: "recieve",
                     variant: "PartialTranscript",
                     payload: "Hello, World!",
                 },
                 {
-                    action: "receive",
+                    action: "recieve",
                     variant: "FinalTranscript",
                     payload: "Hello, World!",
                 },
@@ -173,9 +172,14 @@ const WEBSOCKET_MOCK: ResolvedPubSubWebsocketDefinition = {
     ],
 };
 
-export function WebSocket(): ReactElement {
-    const websocket = WEBSOCKET_MOCK;
-    const route = "/fern-test/websocket-example";
+export declare namespace WebSocket {
+    export interface Props {
+        websocket: ResolvedPubSubWebsocketDefinition;
+    }
+}
+export const WebSocket: React.FC<WebSocket.Props> = ({ websocket }: WebSocket.Props) => {
+    const fullSlug = joinUrlSlugs(...websocket.slug);
+    const route = `/${fullSlug}`;
 
     return (
         <div className={"scroll-mt-header-height-padded mx-4 md:mx-6 lg:mx-8"}>
@@ -388,7 +392,7 @@ export function WebSocket(): ReactElement {
                                         "divide-border-default group divide-y focus-within:ring-1 ring-inset last:rounded-b-xl",
                                         {
                                             "focus-within:ring-border-success": event.action === "send",
-                                            "focus-within:ring-border-primary": event.action === "receive",
+                                            "focus-within:ring-border-primary": event.action === "recieve",
                                         },
                                     )}
                                 >
@@ -397,7 +401,7 @@ export function WebSocket(): ReactElement {
                                             "w-full flex items-center gap-2 px-3 py-2 hover:data-[state=closed]:bg-tag-default cursor-default transition-background",
                                             {
                                                 "data-[state=open]:bg-tag-success": event.action === "send",
-                                                "data-[state=open]:bg-tag-primary": event.action === "receive",
+                                                "data-[state=open]:bg-tag-primary": event.action === "recieve",
                                             },
                                         )}
                                     >
@@ -416,7 +420,7 @@ export function WebSocket(): ReactElement {
                                         <span
                                             className={classNames("flex-1 inline-flex justify-end", {
                                                 // "justify-start": event.action === "send",
-                                                // "justify-end": event.action === "receive",
+                                                // "justify-end": event.action === "recieve",
                                             })}
                                         >
                                             <span className="bg-tag-default t-muted h-5 rounded-md px-1.5 py-1 text-xs leading-none">
@@ -454,7 +458,7 @@ export function WebSocket(): ReactElement {
             </article>
         </div>
     );
-}
+};
 
 function CardedSection({
     number: num,

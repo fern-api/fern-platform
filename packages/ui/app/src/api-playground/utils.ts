@@ -5,7 +5,7 @@ import {
     ResolvedHttpRequestBodyShape,
     ResolvedObjectProperty,
     ResolvedParameter,
-    ResolvedTypeReference
+    ResolvedTypeReference,
 } from "@fern-ui/app-utils";
 import { isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isEmpty, noop } from "lodash-es";

@@ -3,7 +3,7 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import {
     ResolvedApiDefinitionPackage,
     ResolvedEndpointDefinition,
-    ResolvedNavigationItemApiSection
+    ResolvedNavigationItemApiSection,
 } from "@fern-ui/app-utils";
 import { memo } from "react";
 import { ApiPlaygroundButton } from "../../api-playground/ApiPlaygroundButton";

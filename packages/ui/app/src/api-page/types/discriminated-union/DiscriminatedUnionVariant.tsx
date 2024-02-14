@@ -8,7 +8,7 @@ import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
-    useTypeDefinitionContext
+    useTypeDefinitionContext,
 } from "../context/TypeDefinitionContext";
 import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
 
