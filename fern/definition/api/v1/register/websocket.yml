@@ -49,4 +49,4 @@ types:
   WebSocketAction:
     enum:
       - send
-      - recieve
+      - receive
