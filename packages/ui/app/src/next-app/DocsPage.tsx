@@ -123,6 +123,62 @@ export const getDocsPageProps = async (
         },
     });
 
+    if (pathname === "wss/transcribe") {
+        const navigatable = resolver.resolveNavigatable("");
+        if (navigatable != null) {
+            const navigation = getNavigation(basePath, docs.body.definition.apis, navigatable);
+
+            navigation.push({
+                type: "apiSection",
+                api: "wss",
+                id: "wss",
+                title: "Real-time",
+                slug: ["wss"],
+                endpoints: [],
+                webhooks: [],
+                websockets: [
+                    {
+                        id: "assembly-websocket",
+                        title: "Transcription",
+                        slug: ["wss", "transcribe"],
+                    },
+                ],
+                subpackages: [],
+                artifacts: null,
+            });
+
+            return {
+                type: "props",
+                props: {
+                    // docs: docs.body,
+                    baseUrl: docs.body.baseUrl,
+                    config: docs.body.definition.config,
+                    search: docs.body.definition.search,
+                    algoliaSearchIndex: docs.body.definition.algoliaSearchIndex ?? null,
+                    files: docs.body.definition.files,
+                    apis: docs.body.definition.apis,
+                    resolvedPath: {
+                        type: "api-page",
+                        fullSlug: "wss-transcribe",
+                        apiSection: {
+                            api: "wss-transcribe",
+                            title: "Real-time transcription",
+                            urlSlug: "wss-transcribe",
+                            skipUrlSlug: false,
+                            showErrors: false,
+                        },
+                        neighbors: {
+                            next: null,
+                            prev: null,
+                        },
+                    },
+                    navigation,
+                },
+                revalidate: 60 * 60, // 1 hour
+            };
+        }
+    }
+
     if (pathname === "wss/chat") {
         const navigatable = resolver.resolveNavigatable("");
         if (navigatable != null) {
