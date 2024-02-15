@@ -193,7 +193,7 @@ export const SPECIFIC_WEBSOCKET_MOCK_2: ResolvedPubSubWebsocketDefinition = {
                 {
                     action: "send",
                     variant: "Send Audio",
-                    payload: "Test data test data test data test data",
+                    payload: "UklGRuy3AABXQVZFZm10IBAAAAABAAEAIlYAACJWAAABAAgAZGF0Yci3AACIhISCgH5",
                 },
                 {
                     action: "recieve",
@@ -231,12 +231,14 @@ export const SPECIFIC_WEBSOCKET_MOCK_2: ResolvedPubSubWebsocketDefinition = {
                 {
                     action: "send",
                     variant: "Send Audio",
-                    payload: "Test data test data test data test data",
+                    payload:
+                        "iIqIhoaIhoaOjIqOlJSQkpSQjo6KjI6MjIyOioaEhIKAgoKEgoB+fHp6dnRycHB0cnBwcG5ubGxoZmhoaGZoZmRkZmZkYmRgYGRqbGpubmxsbm5wcHR0dHh+foCChIJ+fn58fH5+enp6fHp4eHZydHR6enx+fH5+gHx+fnp+fH5+foKCfoKAfoCAgH6EhoSGhoiIiIaEhISEhICCgoB+foB6dG5qaGRmZGRgYFhSUFJWWFpcWlhYWl5cXFxaWlxiZGJmamhqam5ucHZ0dHp+goKEhoSGjIyOjpSSlJSSlpiYlpacnJqenqCipqSgoKKenJyenqCgnpycmpSQkI6OkJKUlpaWko6QjIiIhIKAfHhwcG5wbGxsaGZmZGJiYGJkYmZoZmZmZGZmamxscnB0cnZ2dnZ2eHh4fn6AgoaEhIKGiIiKiIaIhoaGiIyOkJCOkJCSlJaYmJaUlJKWlpqYmJaalpSWmJaYmJiWlpqampqYmJaWmpiWlpaSkIyMiIiGgoB6fnp6enh0cHJwbGhmZGRgYF5YWFpaWFhaWlhYWlhYWlpaXGJkZmRmYmRkZmhqbG5ucHJ0cnRwbm5ycG5wcHBudHRydnR0dnZ6enh8fnx+fn6AgoaIjpKWnJqcnp6anJyanJyeoJqYlpiYlpqYmJiWmpqanpyYlpSQkJKWmJiWmJSUko6MioaEfn58eHZ2dHBwbm5wdHR2cnZ2eHh6enp4eHh8fH6ChISGhoSGhoaEhISChoaGhoiIhoaIiIqOkJCSkIyIhoqMkJCUlJiamp6gnJqYmJqampaWkpSQjIyIgoB8fn5",
                 },
                 {
                     action: "send",
                     variant: "Send Audio",
-                    payload: "Test data test data test data test data",
+                    payload:
+                        "hIiWpqCUiIR6eH6KkJKepKCQgHp2dn6anqCclpCAdnZ6foaOmJCIgHhwam50cnJ6foSAcm5iYm50en6AgHRqXlxaXmhqcGhgWlhSTlBWXF5iamhcWlpYVFhcWlhicnZwaGRgVlxmbnqGkpKIgHh4dn6OpKqooJiKgHqEjpquvLSimJiQkp62wsbO1Mi2rqympq6+wLq2uLSurq6onqKqsLC0tKygoKCgmJygnJSQkIyEgICAdHBubm50foJ4aGBWTk5ebnZ4dnZoVk5WXF5ufIBwZmpkWl5qcHB6foSAcHRwaGhueHh6hoiAdHBwbG5",
                 },
                 {
                     action: "recieve",

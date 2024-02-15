@@ -316,7 +316,7 @@ function CardedSection({
     number: number;
     title: ReactNode;
     headingElement: ReactNode;
-    children: ReactNode;
+    children: ReactNode | undefined;
     route: string;
 } & Omit<HTMLAttributes<HTMLDivElement>, "title">) {
     const anchorRoute = `${route}#${title}`.toLowerCase();
@@ -336,7 +336,7 @@ function CardedSection({
                 </h2>
                 {headingElement}
             </div>
-            {/* {children && <div className="space-y-12 p-6">{children}</div>} */}
+            {children && <div className="space-y-12 p-6">{children}</div>}
         </section>
     );
 }
