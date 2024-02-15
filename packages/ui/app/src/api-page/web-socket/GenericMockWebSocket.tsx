@@ -2,7 +2,7 @@ import { ResolvedPubSubWebsocketDefinition } from "@fern-ui/app-utils";
 
 export const WEBSOCKET_MOCK: ResolvedPubSubWebsocketDefinition = {
     id: "websocket",
-    slug: ["fern-test", "websocket-example"],
+    slug: ["wss", "example"],
     name: "Real-time API",
     description: "Example of websocket usage",
     path: [{ type: "literal", value: "/" }],

@@ -52,14 +52,14 @@ export const DocsMainContent: React.FC<DocsMainContentProps> = ({ navigationItem
             return null;
         }
         return <ApiPage apiSection={apiSection} />;
-    } else if (resolvedPath.type === "api-page" && resolvedPath.fullSlug === "fern-websocket-example") {
+    } else if (resolvedPath.type === "api-page" && resolvedPath.fullSlug === "wss/example") {
         // backdoor for websocket example
         return (
             <div className="min-h-0 pb-36">
                 <WebSocket websocket={WEBSOCKET_MOCK} />
             </div>
         );
-    } else if (resolvedPath.type === "api-page" && resolvedPath.fullSlug === "wss-chat") {
+    } else if (resolvedPath.type === "api-page" && resolvedPath.fullSlug === "wss/chat") {
         // backdoor for websocket example for demo
         return (
             <div className="min-h-0 pb-36">

@@ -60,7 +60,7 @@ export const WebSocket: React.FC<WebSocket.Props> = ({ websocket }: WebSocket.Pr
                             }
                             route={route}
                             headingElement={
-                                <div className="border-default hover:bg-tag-default -mx-2 flex items-center justify-between rounded-xl border px-2 py-1 hover:transition-[background]">
+                                <div className="border-default -mx-2 flex items-center justify-between rounded-xl border px-2 py-1 hover:transition-[background]">
                                     <EndpointUrlWithOverflow
                                         path={websocket.path}
                                         method="GET"
@@ -326,7 +326,7 @@ function CardedSection({
             data-route={anchorRoute}
             className="border-default divide-border-default -mx-6 divide-y rounded-2xl border shadow-xl shadow-black/5 dark:shadow-white/[0.03]"
         >
-            <div className="space-y-4 rounded-t-2xl bg-black/[0.03] p-6 dark:bg-white/5">
+            <div className="space-y-4 rounded-t-[inherit] bg-black/[0.03] p-6 last:rounded-b-[inherit] dark:bg-white/5">
                 <h2 className="relative mt-0 flex items-center">
                     <AbsolutelyPositionedAnchor href={anchorRoute} />
                     {/* <div className="bg-tag-default mr-2 inline-flex size-7 items-center justify-center rounded-full font-mono text-base">

@@ -215,11 +215,11 @@ export const getDocsPageProps = async (
                     apis: docs.body.definition.apis,
                     resolvedPath: {
                         type: "api-page",
-                        fullSlug: "wss-chat",
+                        fullSlug: "wss/chat",
                         apiSection: {
-                            api: "wss-chat",
+                            api: "wss/chat",
                             title: "Real-time Chat API",
-                            urlSlug: "wss-chat",
+                            urlSlug: "wss/chat",
                             skipUrlSlug: false,
                             showErrors: false,
                         },
@@ -235,7 +235,7 @@ export const getDocsPageProps = async (
         }
     }
 
-    if (pathname === "fern-test/websocket-example") {
+    if (pathname === "wss/example") {
         const navigatable = resolver.resolveNavigatable("");
         if (navigatable != null) {
             const navigation = getNavigation(basePath, docs.body.definition.apis, navigatable);
@@ -252,7 +252,7 @@ export const getDocsPageProps = async (
                     {
                         id: "websocket-example",
                         title: "Websocket Example",
-                        slug: ["fern-test", "websocket-example"],
+                        slug: ["wss", "example"],
                     },
                 ],
                 subpackages: [],
@@ -271,11 +271,11 @@ export const getDocsPageProps = async (
                     apis: docs.body.definition.apis,
                     resolvedPath: {
                         type: "api-page",
-                        fullSlug: "fern-websocket-example",
+                        fullSlug: "wss/example",
                         apiSection: {
-                            api: "fern-websocket-example",
+                            api: "wss/example",
                             title: "Fern Websocket Example",
-                            urlSlug: "fern-websocket-example",
+                            urlSlug: "wss/example",
                             skipUrlSlug: false,
                             showErrors: false,
                         },
