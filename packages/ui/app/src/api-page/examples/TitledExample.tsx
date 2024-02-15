@@ -49,19 +49,21 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                     "bg-tag-danger-soft": type === "warning",
                 })}
             >
-                <div className="shadow-border-default mx-px flex min-h-10 items-center justify-between rounded-t-xl px-1 shadow-[inset_0_-1px_0_0_rgba(0,0,0,0.1)]">
+                <div className="shadow-border-default mx-px flex min-h-10 items-center justify-between rounded-t-xl px-2 shadow-[inset_0_-1px_0_0_rgba(0,0,0,0.1)]">
                     <div
-                        className={classNames("text-xs uppercase px-2", {
+                        className={classNames("text-xs uppercase px-1", {
                             "t-muted": type === "primary",
                             "t-danger": type === "warning",
                         })}
                     >
                         {title}
                     </div>
-                </div>
-                <div className="flex gap-2">
-                    {actions}
-                    {!disableClipboard && <CopyToClipboardButton content={copyToClipboardContent} className="-m-1" />}
+                    <div className="flex gap-2">
+                        {actions}
+                        {!disableClipboard && (
+                            <CopyToClipboardButton content={copyToClipboardContent} className="-m-1" />
+                        )}
+                    </div>
                 </div>
             </div>
             <div className="flex min-h-0 flex-1">
