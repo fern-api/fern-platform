@@ -2,7 +2,7 @@ import { joinUrlSlugs, ResolvedPubSubWebsocketDefinition } from "@fern-ui/app-ut
 import * as Accordion from "@radix-ui/react-accordion";
 import { ArrowDownIcon, ArrowUpIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
-import { HTMLAttributes, ReactNode } from "react";
+import React, { Children, HTMLAttributes, ReactNode } from "react";
 import { Wifi } from "react-feather";
 import { buildRequestUrl } from "../../api-playground/utils";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
@@ -336,7 +336,7 @@ function CardedSection({
                 </h2>
                 {headingElement}
             </div>
-            {children && <div className="space-y-12 p-6">{children}</div>}
+            {Children.toArray(children).some((child) => child) && <div className="space-y-12 p-6">{children}</div>}
         </section>
     );
 }
