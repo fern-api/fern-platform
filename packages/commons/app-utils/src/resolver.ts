@@ -220,6 +220,7 @@ function resolveWebsocketDefinition(
                 } else {
                     const correspondingParameter = pathParameters.find((param) => param.key === pathPart.value);
                     if (correspondingParameter === undefined) {
+                        // eslint-disable-next-line no-console
                         console.error(
                             "Path parameter contained within path.parts not found within websocket.path.pathParameters",
                         );
