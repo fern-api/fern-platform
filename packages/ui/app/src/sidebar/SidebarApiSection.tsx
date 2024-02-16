@@ -90,7 +90,7 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
     }
 
     return (
-        <ul className={classNames(className, "list-none")}>
+        <ul className={classNames(className, "fern-sidebar-group")}>
             {renderArtifacts()}
             {apiSection.endpoints.map((endpoint) => (
                 <SidebarSlugLink
@@ -174,7 +174,7 @@ export const ExpandableSidebarApiSection: React.FC<ExpandableSidebarApiSectionPr
             showIndicator={selectedSlug != null && checkSlugStartsWith(selectedSlug, slug) && !expanded}
         >
             <InnerSidebarApiSection
-                className={classNames({ hidden: !expanded })}
+                className={classNames("expandable", { hidden: !expanded })}
                 slug={slug}
                 registerScrolledToPathListener={registerScrolledToPathListener}
                 depth={depth + 1}

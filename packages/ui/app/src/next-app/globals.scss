@@ -167,6 +167,17 @@
         }
     }
 
+    .fern-sidebar-group {
+        @apply list-none;
+
+        &:not(.expandable) {
+            > .fern-sidebar-item {
+                @apply max-lg:overflow-hidden;
+                @apply max-lg:bg-tag-default-soft max-lg:first:rounded-t-xl max-lg:last:rounded-b-xl;
+            }
+        }
+    }
+
     .fern-sidebar-item {
         @apply scroll-my-32;
     }
@@ -184,21 +195,21 @@
     }
 
     .fern-sidebar-link-indent {
-        @apply relative flex-none w-5 lg:w-3 shrink-0 border-r;
+        @apply relative flex-none w-4 lg:w-3 shrink-0 border-l;
     }
 
     .fern-sidebar-link-container[data-state="active"] .fern-sidebar-link-indent {
-        @apply border-border-accent-muted-light dark:border-border-accent-muted-dark;
+        @apply border-border-concealed md:border-border-accent-muted-light md:dark:border-border-accent-muted-dark;
     }
 
     .fern-sidebar-link-container[data-state="inactive"] .fern-sidebar-link-indent {
-        @apply border-default lg:opacity-60;
+        @apply border-border-concealed md:border-default lg:opacity-60;
     }
 
     .fern-sidebar-link {
         @apply text-left relative inline-flex flex-1 content-between items-stretch px-3;
         @apply no-underline hover:no-underline;
-        @apply rounded-lg;
+        @apply max-lg:rounded-none lg:rounded-lg;
     }
 
     .fern-sidebar-link-container[data-state="active"] .fern-sidebar-link {
@@ -220,6 +231,14 @@
     .fern-sidebar-link-expand {
         @apply relative flex w-10 lg:w-6 justify-center items-center transition-colors rounded-none transition-transform ease-out;
         @apply lg:rounded-lg;
+
+        &:last-child {
+            @apply flex lg:hidden -mr-3;
+        }
+
+        &:not(:last-child) {
+            @apply hidden lg:flex -ml-3;
+        }
     }
 
     .fern-sidebar-link-indent + .fern-sidebar-link-expand {
@@ -246,7 +265,7 @@
     .fern-button {
         @apply hover:transition-[background];
         @apply inline-flex items-center justify-center;
-        @apply rounded-lg px-3 py-1 text-sm h-8;
+        @apply rounded-xl lg:rounded-lg px-3 py-1 text-sm h-9 sm:h-8;
         @apply focus:outline-accent-primary dark:focus:outline-accent-primary-dark;
 
         &.rounded {
@@ -293,12 +312,12 @@
             @apply px-1;
 
             > .fern-button-content {
-                @apply w-6;
+                @apply w-7 sm:w-6;
             }
         }
 
         &.small {
-            @apply px-2 py-1 text-xs h-6;
+            @apply px-2 py-1 text-xs h-7 sm:h-6;
 
             &:not(.square):has(> .fern-button-content > .fa-icon:first-child),
             &:not(.square):has(> .fern-button-content > svg:first-child) {
@@ -323,13 +342,13 @@
                 @apply px-1;
 
                 > .fern-button-content {
-                    @apply w-4;
+                    @apply w-6 sm:w-4;
                 }
             }
         }
 
         &.large {
-            @apply px-3 lg:px-4 py-2 text-base h-10;
+            @apply px-3 lg:px-4 py-2 text-base h-11 sm:h-10;
 
             &:not(.square):has(> .fern-button-content > .fa-icon:first-child),
             &:not(.square):has(> .fern-button-content > svg:first-child) {
@@ -353,7 +372,7 @@
                 @apply px-2;
 
                 > .fern-button-content {
-                    @apply w-6;
+                    @apply w-7 sm:w-6;
                 }
             }
         }
@@ -645,26 +664,26 @@
     .fern-numeric-input-group {
         @apply flex items-center overflow-hidden;
         @apply focus-within:fern-input-focus;
-        @apply ring-default rounded-lg ring-1 ring-inset bg-white dark:bg-white/5 shadow-sm;
+        @apply ring-default rounded-[10px] md:rounded-lg ring-1 ring-inset bg-white dark:bg-white/5 shadow-sm;
     }
 
     .fern-input-icon {
         @apply flex items-center justify-center;
-        @apply w-10 md:w-8 h-full shrink-0;
+        @apply w-8 h-full shrink-0;
     }
 
     .fern-input-icon + .fern-input {
-        @apply pl-10 -ml-10 md:pl-8 md:-ml-8;
+        @apply pl-8 -ml-8;
     }
 
     .fern-input-right-element {
         @apply flex items-center justify-center;
-        @apply min-w-10 md:min-w-8 h-full shrink-0 px-0 -ml-2;
+        @apply min-w-8 h-full shrink-0 px-0 -ml-2;
     }
 
     .fern-input-group,
     .fern-numeric-input-group {
-        @apply h-10 md:h-8;
+        @apply h-9 md:h-8;
     }
 
     .fern-numeric-input-group .fern-numeric-input-step {

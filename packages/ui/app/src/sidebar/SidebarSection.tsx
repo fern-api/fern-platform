@@ -47,7 +47,7 @@ const ExpandableSidebarSection: React.FC<ExpandableSidebarSectionProps> = ({
             showIndicator={selectedSlug != null && checkSlugStartsWith(selectedSlug, slug) && !expanded}
         >
             <SidebarSection
-                className={classNames({ hidden: !expanded })}
+                className={classNames("expandable", { hidden: !expanded })}
                 slug={slug}
                 navigationItems={navigationItems}
                 registerScrolledToPathListener={registerScrolledToPathListener}
@@ -71,7 +71,7 @@ export const SidebarSection = memo<SidebarSectionProps>(function SidebarSection(
     }
 
     return (
-        <ul className={classNames(className, "list-none")}>
+        <ul className={classNames(className, "fern-sidebar-group")}>
             {navigationItems.map((navigationItem, idx) =>
                 visitDiscriminatedUnion(navigationItem, "type")._visit({
                     pageGroup: ({ pages }) => (
