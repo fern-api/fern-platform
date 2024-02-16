@@ -53,9 +53,7 @@ export const SidebarLink = memo(function SidebarSlugLinkContent(
         elementRef,
     } = props;
     const renderLink = (child: ReactElement) => {
-        const linkClassName = classNames(linkClassNameProp, "fern-sidebar-link", {
-            "!pl-0": toggleExpand != null || expanded || depth > 0,
-        });
+        const linkClassName = classNames(linkClassNameProp, "fern-sidebar-link");
 
         return href != null ? (
             <Link
@@ -84,7 +82,7 @@ export const SidebarLink = memo(function SidebarSlugLinkContent(
 
     const expandButton = (toggleExpand != null || expanded) && (
         <span
-            className="fern-sidebar-link-expand transition-opacity group-hover/sidebar:opacity-100 lg:opacity-60"
+            className="fern-sidebar-link-expand opacity-60 transition-opacity group-hover:opacity-100 lg:group-hover/sidebar:opacity-100"
             data-state={showIndicator ? "active" : "inactive"}
         >
             <ChevronDownIcon
@@ -95,11 +93,6 @@ export const SidebarLink = memo(function SidebarSlugLinkContent(
             />
         </span>
     );
-
-    const titleSpanClassName = classNames("fern-sidebar-link-text", {
-        "ml-0": toggleExpand != null || expanded,
-        "ml-6": depth > 0 && toggleExpand == null && !expanded,
-    });
 
     return (
         <li ref={elementRef} className="fern-sidebar-item">
@@ -120,9 +113,10 @@ export const SidebarLink = memo(function SidebarSlugLinkContent(
                         ))}
                         {expandButton}
                         <span className="fern-sidebar-link-content">
-                            <span className={titleSpanClassName}>{title}</span>
+                            <span className="fern-sidebar-link-text">{title}</span>
                             {rightElement}
                         </span>
+                        {expandButton}
                     </>,
                 )}
             </div>
