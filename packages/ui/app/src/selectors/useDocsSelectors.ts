@@ -1,4 +1,4 @@
-import { DocsV1Read, type DefinitionInfo, type DocsNode } from "@fern-api/fdr-sdk";
+import { DocsV1Read, type DocsNode } from "@fern-api/fdr-sdk";
 import { getFullSlugForNavigatable, joinUrlSlugs } from "@fern-ui/app-utils";
 import { useCallback, useMemo } from "react";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
@@ -8,9 +8,8 @@ type WithVersionSlugOpts = {
 };
 
 interface DocsSelectors {
-    definitionInfo: DefinitionInfo;
     activeVersionContext: ActiveVersionContext;
-    activeNavigationConfigContext: ActiveNavigationConfigContext;
+    activeNavigationConfigContext: ActiveNavigationConfigContext | undefined;
     selectedSlug: string;
     /** Prefixes a given slug with the currently active version and tab slugs. */
     withVersionAndTabSlugs: (slug: string, opts?: WithVersionSlugOpts) => string;
@@ -45,21 +44,22 @@ export type ActiveNavigationConfigContext = ActiveNavigationConfigContextUntabbe
 
 export function useDocsSelectors(): DocsSelectors {
     const { basePath, activeNavigatable } = useNavigationContext();
-    const { context: navigationContext } = activeNavigatable;
+    const navigationContext = activeNavigatable?.context;
 
     const prefix = basePath != null && basePath.trim().length > 1 ? basePath.trim().slice(1) + "/" : "";
 
-    const definitionInfo = navigationContext.root.info;
-
     const activeVersionContext = useMemo<ActiveVersionContext>(() => {
-        if (navigationContext.type === "versioned-tabbed" || navigationContext.type === "versioned-untabbed") {
-            return { type: "versioned", version: navigationContext.version };
+        if (navigationContext?.type === "versioned-tabbed" || navigationContext?.type === "versioned-untabbed") {
+            return { type: "versioned", version: navigationContext?.version };
         } else {
             return { type: "unversioned" };
         }
     }, [navigationContext]);
 
-    const activeNavigationConfigContext = useMemo<ActiveNavigationConfigContext>(() => {
+    const activeNavigationConfigContext = useMemo<ActiveNavigationConfigContext | undefined>(() => {
+        if (navigationContext == null) {
+            return undefined;
+        }
         if (navigationContext.type === "versioned-tabbed" || navigationContext.type === "unversioned-tabbed") {
             return { type: "tabbed", config: navigationContext.navigationConfig };
         } else {
@@ -72,8 +72,8 @@ export function useDocsSelectors(): DocsSelectors {
     const withTabSlug = useCallback(
         (slug: string) => {
             const c = navigationContext;
-            if (c.type === "unversioned-tabbed" || c.type === "versioned-tabbed") {
-                return joinUrlSlugs(c.tab.slug, slug);
+            if (c?.type === "unversioned-tabbed" || c?.type === "versioned-tabbed") {
+                return joinUrlSlugs(c?.tab.slug, slug);
             }
             return slug;
         },
@@ -84,8 +84,8 @@ export function useDocsSelectors(): DocsSelectors {
         (slug: string, opts?: WithVersionSlugOpts) => {
             const { omitDefault = false } = opts ?? {};
             const c = navigationContext;
-            if (c.type === "versioned-tabbed" || c.type === "versioned-untabbed") {
-                return omitDefault && c.version.info.index === 0 ? slug : joinUrlSlugs(c.version.slug, slug);
+            if (c?.type === "versioned-tabbed" || c?.type === "versioned-untabbed") {
+                return omitDefault && c?.version.info.index === 0 ? slug : joinUrlSlugs(c.version.slug, slug);
             }
             return slug;
         },
@@ -98,7 +98,6 @@ export function useDocsSelectors(): DocsSelectors {
     );
 
     return {
-        definitionInfo,
         activeVersionContext,
         activeNavigationConfigContext,
         selectedSlug,

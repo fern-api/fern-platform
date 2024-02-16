@@ -3,6 +3,7 @@ import classNames from "classnames";
 import Link from "next/link";
 import { DEFAULT_LOGO_HEIGHT } from "../config";
 import { useDocsContext } from "../docs-context/useDocsContext";
+import { useNavigationContext } from "../navigation-context";
 import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { VersionDropdown } from "./VersionDropdown";
 
@@ -14,10 +15,12 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
     config: { logo, logoV2, logoHeight, logoHref },
 }) => {
     const { resolveFile } = useDocsContext();
-    const { definitionInfo, activeVersionContext } = useDocsSelectors();
+    const { activeNavigatable } = useNavigationContext();
+    const { activeVersionContext } = useDocsSelectors();
     const logoImageHeight = logoHeight ?? DEFAULT_LOGO_HEIGHT;
 
-    const hasMultipleVersions = definitionInfo.type === "versioned";
+    const definitionInfo = activeNavigatable?.context.root.info;
+    const hasMultipleVersions = definitionInfo?.type === "versioned";
     const activeVersionId =
         activeVersionContext.type === "versioned" ? activeVersionContext.version.info.id : undefined;
     const activeVersionSlug =

@@ -22,9 +22,9 @@ export const FernCollapse: FC<PropsWithChildren<FernCollapseProps>> = ({ childre
             show={isOpen}
             style={{ height }}
             className={classNames("will-change-[height]", className)}
-            enter="transition-[height] ease-out overflow-y-hidden"
-            enterFrom="h-0"
-            leave="transition-[height] ease-in overflow-y-hidden"
+            enter="transition-[height] ease-[cubic-bezier(0.87,0,0.13,1)] overflow-y-hidden duration-[400ms]"
+            enterFrom="!h-0"
+            leave="transition-[height] ease-[cubic-bezier(0.87,0,0.13,1)] overflow-y-hidden duration-[400ms]"
             leaveTo="!h-0"
             beforeEnter={() => setHeight(ref.current?.scrollHeight)}
             afterEnter={() => setHeight(undefined)}
@@ -33,10 +33,10 @@ export const FernCollapse: FC<PropsWithChildren<FernCollapseProps>> = ({ childre
         >
             <Transition.Child
                 ref={ref}
-                enter="transition ease-out transform"
+                enter="transition ease-[cubic-bezier(0.87,0,0.13,1)] transform duration-[400ms]"
                 enterFrom="-translate-y-full"
                 enterTo="translate-y-0"
-                leave="transition ease-in transform"
+                leave="transition ease-[cubic-bezier(0.87,0,0.13,1)] transform duration-[400ms]"
                 leaveFrom="translate-y-0 opacity-100"
                 leaveTo="-translate-y-full opacity-0"
             >

@@ -3,7 +3,7 @@ import { ArrowRightIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import Link from "next/link";
 import { ReactElement } from "react";
-import { FernButtonGroup, FernLinkButton } from "../components/FernButton";
+import { FernLinkButton } from "../components/FernButton";
 
 interface HeaderSidebarSlugLinkProps {
     navbarLink: DocsV1Read.NavbarLink;
@@ -23,7 +23,7 @@ export const HeaderSidebarSlugLink: React.FC<HeaderSidebarSlugLinkProps> = ({ na
             <span className="whitespace-nowrap">{navbarLink.text}</span>
             {navbarLink.type === "primary" && (
                 <div className="flex size-5 items-center">
-                    <ArrowRightIcon className="size-5" />
+                    <ArrowRightIcon />
                 </div>
             )}
         </Link>
@@ -40,22 +40,20 @@ export function MobileSidebarHeaderLinks({ navbarLinks }: MobileSidebarHeaderLin
     }
     return (
         <div className="border-concealed -mx-4 list-none border-b p-4 lg:hidden">
-            <FernButtonGroup className="w-full">
-                {navbarLinks?.map((navbarLink, idx) => (
-                    <FernLinkButton
-                        key={idx}
-                        href={navbarLink.url}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        text={navbarLink.text}
-                        rightIcon={navbarLink.type === "primary" && <ArrowRightIcon className="size-5" />}
-                        className="w-full text-left lg:hidden"
-                        variant={navbarLink.type === "primary" ? "outlined" : "minimal"}
-                        intent={navbarLink.type === "primary" ? "primary" : "none"}
-                        size="large"
-                    />
-                ))}
-            </FernButtonGroup>
+            {navbarLinks?.map((navbarLink, idx) => (
+                <FernLinkButton
+                    key={idx}
+                    href={navbarLink.url}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    text={navbarLink.text}
+                    rightIcon={navbarLink.type === "primary" && <ArrowRightIcon className="!size-5" />}
+                    className="w-full text-left lg:hidden"
+                    variant={navbarLink.type === "primary" ? "outlined" : "minimal"}
+                    intent={navbarLink.type === "primary" ? "primary" : "none"}
+                    size="large"
+                />
+            ))}
         </div>
     );
 }

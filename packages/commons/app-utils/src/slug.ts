@@ -23,7 +23,13 @@ type GetFullSlugForNavigatableOpts = {
     basePath: string | undefined;
 };
 
-export function getFullSlugForNavigatable(node: NavigatableDocsNode, opts: GetFullSlugForNavigatableOpts): string {
+export function getFullSlugForNavigatable(
+    node: NavigatableDocsNode | undefined,
+    opts: GetFullSlugForNavigatableOpts,
+): string {
+    if (node == null) {
+        return "";
+    }
     const { omitDefault = false, basePath } = opts ?? {};
     const basePathSlug = basePath != null && basePath.trim().length > 1 ? basePath.trim().slice(1) : undefined;
     const parts: string[] = basePathSlug != null ? [basePathSlug] : [];

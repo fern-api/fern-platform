@@ -1,11 +1,11 @@
-import { ResolvedWebhookPayload } from "@fern-ui/app-utils";
+import { ResolvedPayload } from "@fern-ui/app-utils";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
 
 export declare namespace WebhookPayloadSection {
     export interface Props {
-        payload: ResolvedWebhookPayload;
+        payload: ResolvedPayload;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: string[];
         route: string;

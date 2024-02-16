@@ -46,11 +46,11 @@ export function buildQueryParams(queryParameters: Record<string, unknown> | unde
     return queryParams.size > 0 ? "?" + queryParams.toString() : "";
 }
 
-function buildPath(path: ResolvedEndpointPathParts[], formState?: PlaygroundRequestFormState): string {
+function buildPath(path: ResolvedEndpointPathParts[], pathParameters?: Record<string, unknown>): string {
     return path
         .map((part) => {
             if (part.type === "pathParameter") {
-                const stateValue = unknownToString(formState?.pathParameters[part.key]);
+                const stateValue = unknownToString(pathParameters?.[part.key]);
                 return stateValue.length > 0 ? encodeURI(stateValue) : ":" + part.key;
             }
             return part.value;
@@ -58,17 +58,24 @@ function buildPath(path: ResolvedEndpointPathParts[], formState?: PlaygroundRequ
         .join("");
 }
 
+export function buildRequestUrl(
+    baseUrl: string = "",
+    path: ResolvedEndpointPathParts[] = [],
+    pathParameters: Record<string, unknown> = {},
+    queryParameters: Record<string, unknown> = {},
+): string {
+    return baseUrl + buildPath(path, pathParameters) + buildQueryParams(queryParameters);
+}
+
 export function buildEndpointUrl(
     endpoint: ResolvedEndpointDefinition | undefined,
     formState: PlaygroundRequestFormState | undefined,
 ): string {
-    if (endpoint == null) {
-        return "";
-    }
-    return (
-        endpoint.defaultEnvironment?.baseUrl +
-        buildPath(endpoint.path, formState) +
-        buildQueryParams(formState?.queryParameters)
+    return buildRequestUrl(
+        endpoint?.defaultEnvironment?.baseUrl,
+        endpoint?.path,
+        formState?.pathParameters,
+        formState?.queryParameters,
     );
 }
 

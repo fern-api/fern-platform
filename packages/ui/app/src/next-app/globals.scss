@@ -264,8 +264,8 @@
         }
 
         > .fern-button-content {
-            @apply items-center inline-flex;
-            @apply gap-1.5 h-6 shrink min-w-0;
+            @apply items-center inline-flex shrink min-w-0;
+            @apply gap-1.5 h-6;
 
             > .fa-icon,
             > svg {
@@ -273,7 +273,7 @@
             }
 
             .fern-button-text {
-                @apply truncate;
+                @apply truncate shrink min-w-0;
             }
         }
 
@@ -329,7 +329,7 @@
         }
 
         &.large {
-            @apply px-4 py-2 text-base h-10;
+            @apply px-3 lg:px-4 py-2 text-base h-10;
 
             &:not(.square):has(> .fern-button-content > .fa-icon:first-child),
             &:not(.square):has(> .fern-button-content > svg:first-child) {

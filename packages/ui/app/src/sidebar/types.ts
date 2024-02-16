@@ -19,6 +19,7 @@ export declare namespace SidebarNode {
         slug: string[];
         endpoints: SidebarNode.EndpointPage[];
         webhooks: SidebarNode.Page[];
+        websockets: SidebarNode.Page[];
         subpackages: SidebarNode.ApiSection[];
         artifacts: DocsV1Read.ApiArtifacts | null;
     }
@@ -79,6 +80,7 @@ function resolveSidebarNodeApiSection(
         slug,
         endpoints,
         webhooks,
+        websockets: [],
         subpackages,
         artifacts: null,
     };
@@ -137,6 +139,7 @@ export function resolveSidebarNodes(
                             slug: [...definitionSlug, webhook.urlSlug],
                             title: webhook.name != null ? webhook.name : "/" + webhook.path.join("/"),
                         })),
+                        websockets: [],
                         subpackages: definition.rootPackage.subpackages
                             .map((subpackageId) =>
                                 resolveSidebarNodeApiSection(

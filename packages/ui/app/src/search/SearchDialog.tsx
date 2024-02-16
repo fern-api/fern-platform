@@ -4,6 +4,7 @@ import { Fragment, PropsWithChildren, useEffect, useMemo, useRef, useState } fro
 import { InstantSearch } from "react-instantsearch-hooks-web";
 import { useNavigationContext } from "../navigation-context";
 import { type SearchCredentials, type SearchService } from "../services/useSearchService";
+import { useCloseSearchDialog, useIsSearchDialogOpen } from "../sidebar/atom";
 import { useViewportContext } from "../viewport-context/useViewportContext";
 import { SearchBox, SearchMobileBox } from "./SearchBox";
 import styles from "./SearchDialog.module.scss";
@@ -11,18 +12,19 @@ import { SearchHits, SearchMobileHits } from "./SearchHits";
 
 export declare namespace SearchDialog {
     export interface Props {
-        isOpen: boolean;
-        onClose: () => void;
         searchService: SearchService;
     }
 }
 
 export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
     const { activeNavigatable } = useNavigationContext();
-    const { isOpen, onClose, searchService } = providedProps;
+    const { searchService } = providedProps;
     const [credentials, setSearchCredentials] = useState<SearchCredentials | undefined>(undefined);
     const inputRef = useRef<HTMLInputElement>(null);
     const { layoutBreakpoint } = useViewportContext();
+
+    const isSearchDialogOpen = useIsSearchDialogOpen();
+    const closeSearchDialog = useCloseSearchDialog();
 
     useEffect(() => {
         if (searchService.isAvailable) {
@@ -43,11 +45,11 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
 
     return (
         <InstantSearch searchClient={searchClient} indexName={searchService.index}>
-            <Transition show={isOpen} as={Fragment} appear={true}>
+            <Transition show={isSearchDialogOpen} as={Fragment} appear={true}>
                 <Dialog
                     as="div"
                     className="fixed inset-0 z-30 hidden sm:block"
-                    onClose={onClose}
+                    onClose={closeSearchDialog}
                     initialFocus={inputRef}
                 >
                     <Transition.Child
@@ -62,7 +64,7 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
                             <SearchBox
                                 ref={inputRef}
                                 placeholder={
-                                    activeNavigatable.context.version?.info.id != null
+                                    activeNavigatable?.context.version?.info.id != null
                                         ? `Search across ${activeNavigatable.context.version.info.id}...`
                                         : "Search for guides and endpoints..."
                                 }
@@ -113,7 +115,7 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
             <SearchMobileBox
                 ref={inputRef}
                 placeholder={
-                    activeNavigatable.context.version?.info.id != null
+                    activeNavigatable?.context.version?.info.id != null
                         ? `Search across ${activeNavigatable.context.version.info.id}...`
                         : "Search for guides and endpoints..."
                 }

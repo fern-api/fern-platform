@@ -12,14 +12,14 @@
 }
 
 .fern-scroll-area-scrollbar {
-    @apply flex select-none touch-none my-1 mx-0.5 transition-all ease-out z-auto rounded-full z-50;
+    @apply flex select-none touch-none m-1 transition-all ease-out z-10 rounded-full;
     @apply bg-tag-default;
 }
 .fern-scroll-area-scrollbar[data-orientation="vertical"] {
-    @apply w-[4px] hover:w-[6px];
+    @apply w-[4px] hover:w-[6px] my-[5px];
 }
 .fern-scroll-area-scrollbar[data-orientation="horizontal"] {
-    @apply flex-col h-[4px] hover:h-[6px];
+    @apply flex-col h-[4px] hover:h-[6px] mx-[5px];
 }
 
 .fern-scroll-area-thumb {
@@ -38,4 +38,8 @@
     height: 100%;
     min-width: 44px;
     min-height: 44px;
+}
+
+.fern-scroll-area-corner {
+    @apply bg-transparent;
 }

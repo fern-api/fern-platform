@@ -169,6 +169,14 @@ module.exports = {
                     "33%": { opacity: "0.6", transform: "translateX(300px) skewX(-15deg)" },
                     "100%": { opacity: "0.6", transform: "translateX(300px) skewX(-15deg)" },
                 },
+                "slide-down": {
+                    from: { height: 0 },
+                    to: { height: "var(--radix-accordion-content-height)" },
+                },
+                "slide-up": {
+                    from: { height: "var(--radix-accordion-content-height)" },
+                    to: { height: 0 },
+                },
             },
             animation: {
                 "slide-down-and-fade": "slide-down-and-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
@@ -176,6 +184,8 @@ module.exports = {
                 "slide-up-and-fade": "slide-up-and-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
                 "slide-right-and-fade": "slide-right-and-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
                 shine: "shine 5s ease-in-out infinite",
+                "slide-down": "slide-down 400ms cubic-bezier(0.87, 0, 0.13, 1)",
+                "slide-up": "slide-up 400ms cubic-bezier(0.87, 0, 0.13, 1)",
             },
         },
     },

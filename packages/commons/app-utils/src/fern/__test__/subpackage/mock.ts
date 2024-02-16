@@ -36,6 +36,7 @@ export const SUBPACKAGE_EMPTY: APIV1Read.ApiDefinitionSubpackage = {
     types: [],
     urlSlug: "sub_1",
     webhooks: [],
+    websockets: [],
 };
 
 export const SUBPACKAGE_WITH_2_ENDPOINTS: APIV1Read.ApiDefinitionSubpackage = {
@@ -46,6 +47,7 @@ export const SUBPACKAGE_WITH_2_ENDPOINTS: APIV1Read.ApiDefinitionSubpackage = {
     types: [],
     urlSlug: "sub_2",
     webhooks: [],
+    websockets: [],
 };
 
 export const SUBPACKAGE_WITH_NESTED_SUBPACKAGES: APIV1Read.ApiDefinitionSubpackage = {
@@ -56,6 +58,7 @@ export const SUBPACKAGE_WITH_NESTED_SUBPACKAGES: APIV1Read.ApiDefinitionSubpacka
     types: [],
     urlSlug: "sub_3",
     webhooks: [],
+    websockets: [],
 };
 
 export const DEFINITION: APIV1Read.ApiDefinition = {
@@ -65,6 +68,7 @@ export const DEFINITION: APIV1Read.ApiDefinition = {
         subpackages: [],
         types: [],
         webhooks: [],
+        websockets: [],
     },
     subpackages: {
         [SUBPACKAGE_EMPTY.subpackageId]: SUBPACKAGE_EMPTY,

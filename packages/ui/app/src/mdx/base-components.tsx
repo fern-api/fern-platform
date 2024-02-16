@@ -202,14 +202,7 @@ export const P: React.FC<{ variant: "api" | "markdown" } & HTMLAttributes<HTMLPa
     className,
     ...rest
 }) => {
-    return (
-        <p
-            {...rest}
-            className={classNames(className, {
-                "mb-3": variant === "markdown",
-            })}
-        />
-    );
+    return <p {...rest} />;
 };
 
 export const Strong: React.FC<HTMLAttributes<unknown>> = ({ className, ...rest }) => {
