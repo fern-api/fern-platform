@@ -138,8 +138,8 @@
 @layer components {
     .fern-dropdown {
         @apply animate-popover;
-        @apply w-[var(--radix-dropdown-menu-trigger-width)];
-        @apply border-default flex max-h-[300px] min-w-[220px] flex-col rounded-md border bg-background-translucent backdrop-blur-xl will-change-[opacity,transform];
+        @apply min-w-[var(--radix-dropdown-menu-trigger-width)];
+        @apply border-default flex max-h-[300px] flex-col rounded-lg border bg-background-translucent backdrop-blur-xl will-change-[opacity,transform];
         @apply shadow-xl;
 
         .fern-dropdown-item {
@@ -664,7 +664,7 @@
     .fern-numeric-input-group {
         @apply flex items-center overflow-hidden;
         @apply focus-within:fern-input-focus;
-        @apply ring-default rounded-[10px] md:rounded-lg ring-1 ring-inset bg-white dark:bg-white/5 shadow-sm;
+        @apply ring-default rounded-[10px] md:rounded-lg ring-1 ring-inset bg-white dark:bg-tag-default-soft shadow-sm;
     }
 
     .fern-input-icon {

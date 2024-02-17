@@ -1,11 +1,12 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { CheckIcon } from "@radix-ui/react-icons";
-import { PropsWithChildren, ReactElement, useRef, useState } from "react";
+import { PropsWithChildren, ReactElement, ReactNode, useRef, useState } from "react";
 import { FernScrollArea } from "./FernScrollArea";
 
 interface FernDropdownOption {
-    label?: string;
+    label?: ReactNode;
     value: string;
+    rightElement?: ReactNode;
 }
 
 interface FernDropdown {
@@ -23,7 +24,7 @@ export function FernDropdown({
     const activeRef = useRef<HTMLButtonElement>(null);
     const [isOpen, setOpen] = useState(false);
     return (
-        <DropdownMenu.Root onOpenChange={setOpen}>
+        <DropdownMenu.Root onOpenChange={setOpen} open={isOpen} modal={true}>
             <DropdownMenu.Trigger asChild={true}>{children}</DropdownMenu.Trigger>
             <DropdownMenu.Portal>
                 <DropdownMenu.Content
@@ -43,12 +44,15 @@ export function FernDropdown({
                                         ref={option.value === value ? activeRef : undefined}
                                         className="fern-dropdown-item"
                                     >
-                                        <span className="fern-dropdown-item-indicator">
-                                            <DropdownMenu.ItemIndicator asChild={true}>
-                                                <CheckIcon />
-                                            </DropdownMenu.ItemIndicator>
-                                        </span>
+                                        {value != null && (
+                                            <span className="fern-dropdown-item-indicator">
+                                                <DropdownMenu.ItemIndicator asChild={true}>
+                                                    <CheckIcon />
+                                                </DropdownMenu.ItemIndicator>
+                                            </span>
+                                        )}
                                         <span>{option.label ?? option.value}</span>
+                                        {option.rightElement && <span className="ml-auto">{option.rightElement}</span>}
                                     </button>
                                 </DropdownMenu.RadioItem>
                             ))}

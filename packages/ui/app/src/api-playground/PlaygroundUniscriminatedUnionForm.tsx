@@ -79,9 +79,7 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
                 </FernDropdown>
             )}
             {selectedVariant != null && (
-                <div className="mt-2">
-                    <PlaygroundTypeReferenceForm shape={selectedVariant.shape} onChange={onChange} value={value} />
-                </div>
+                <PlaygroundTypeReferenceForm shape={selectedVariant.shape} onChange={onChange} value={value} />
             )}
         </div>
     );

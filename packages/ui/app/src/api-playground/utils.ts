@@ -4,7 +4,6 @@ import {
     ResolvedEndpointPathParts,
     ResolvedHttpRequestBodyShape,
     ResolvedObjectProperty,
-    ResolvedParameter,
     ResolvedTypeReference,
     visitResolvedHttpRequestBodyShape,
 } from "@fern-ui/app-utils";
@@ -279,7 +278,7 @@ export function stringifyCurl(
 `;
 }
 
-export function getDefaultValueForObjectProperties(properties: ResolvedObjectProperty[]): Record<string, unknown> {
+export function getDefaultValueForObjectProperties(properties: ResolvedObjectProperty[] = []): Record<string, unknown> {
     return properties.reduce<Record<string, unknown>>((acc, property) => {
         acc[property.key] = getDefaultValueForType(property.valueShape);
         return acc;
@@ -359,16 +358,6 @@ export function matchesTypeReference(shape: ResolvedTypeReference, value: unknow
         _other: () => value == null,
         reference: (reference) => matchesTypeReference(reference.shape(), value),
     });
-}
-
-export function getDefaultValueForTypes(types: ResolvedParameter[] = []): Record<string, unknown> {
-    if (types == null) {
-        return {};
-    }
-    return types.reduce<Record<string, unknown>>((acc, { key, shape }) => {
-        acc[key] = getDefaultValueForType(shape);
-        return acc;
-    }, {});
 }
 
 export function getDefaultValuesForBody(requestShape: ResolvedHttpRequestBodyShape | undefined): unknown {

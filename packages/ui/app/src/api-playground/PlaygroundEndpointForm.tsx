@@ -1,12 +1,10 @@
 import { ResolvedEndpointDefinition, visitResolvedHttpRequestBodyShape } from "@fern-ui/app-utils";
-import { useSetAtom } from "jotai";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { FernCard } from "../components/FernCard";
-import { FOCUSED_PARAMETER_ATOM } from "./PlaygroundEndpointFormAside";
-import { PlaygroundObjectPropertyForm } from "./PlaygroundObjectPropertyForm";
+import { Callout } from "../mdx/components/Callout";
+import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { PlaygroundRequestFormState } from "./types";
-import { hasOptionalFields, hasRequiredFields } from "./utils";
 
 interface PlaygroundEndpointFormProps {
     endpoint: ResolvedEndpointDefinition;
@@ -15,42 +13,33 @@ interface PlaygroundEndpointFormProps {
 }
 
 export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoint, formState, setFormState }) => {
-    const setFocusedParameter = useSetAtom(FOCUSED_PARAMETER_ATOM);
+    // const setFocusedParameter = useSetAtom(FOCUSED_PARAMETER_ATOM);
 
-    const setHeader = useCallback(
-        (key: string, value: unknown) => {
+    const setHeaders = useCallback(
+        (value: ((old: unknown) => unknown) | unknown) => {
             setFormState((state) => ({
                 ...state,
-                headers: {
-                    ...state.headers,
-                    [key]: typeof value === "function" ? value(state.headers[key]) : value,
-                },
+                headers: typeof value === "function" ? value(state.headers) : value,
             }));
         },
         [setFormState],
     );
 
-    const setPathParameter = useCallback(
-        (key: string, value: unknown) => {
+    const setPathParameters = useCallback(
+        (value: ((old: unknown) => unknown) | unknown) => {
             setFormState((state) => ({
                 ...state,
-                pathParameters: {
-                    ...state.pathParameters,
-                    [key]: typeof value === "function" ? value(state.pathParameters[key]) : value,
-                },
+                pathParameters: typeof value === "function" ? value(state.pathParameters) : value,
             }));
         },
         [setFormState],
     );
 
-    const setQueryParameter = useCallback(
-        (key: string, value: unknown) => {
+    const setQueryParameters = useCallback(
+        (value: ((old: unknown) => unknown) | unknown) => {
             setFormState((state) => ({
                 ...state,
-                queryParameters: {
-                    ...state.queryParameters,
-                    [key]: typeof value === "function" ? value(state.queryParameters[key]) : value,
-                },
+                queryParameters: typeof value === "function" ? value(state.queryParameters) : value,
             }));
         },
         [setFormState],
@@ -69,124 +58,101 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
     return (
         <div className="col-span-2 space-y-8 pb-20">
             {endpoint.headers.length > 0 && (
-                <FernCard className="rounded-xl shadow-sm">
-                    <div className="p-4">
+                <FernCard className="rounded-xl p-4 shadow-sm">
+                    <div className="mb-4">
                         <h5 className="t-muted m-0">Headers</h5>
                     </div>
-                    <ul className="list-none px-4">
-                        {endpoint.headers.map((header) => (
-                            <PlaygroundObjectPropertyForm
-                                key={header.key}
-                                property={{
-                                    key: header.key,
-                                    valueShape: header.shape,
-                                    description: header.description,
-                                    descriptionContainsMarkdown: header.descriptionContainsMarkdown,
-                                    htmlDescription: header.htmlDescription,
-                                    availability: header.availability,
-                                }}
-                                onChange={setHeader}
-                                value={formState?.headers[header.key]}
-                                onFocus={() => setFocusedParameter({ type: "header", key: header.key })}
-                            />
-                        ))}
-                    </ul>
+                    <PlaygroundObjectPropertiesForm
+                        properties={endpoint.headers}
+                        onChange={setHeaders}
+                        value={formState?.headers}
+                    />
                 </FernCard>
             )}
 
             {endpoint.pathParameters.length > 0 && (
-                <FernCard className="rounded-xl shadow-sm">
-                    <div className="p-4">
+                <FernCard className="rounded-xl p-4 shadow-sm">
+                    <div className="mb-4">
                         <h5 className="t-muted m-0">Path Parameters</h5>
                     </div>
-                    <ul className="list-none px-4">
-                        {endpoint.pathParameters.map((pathParameter) => (
-                            <PlaygroundObjectPropertyForm
-                                key={pathParameter.key}
-                                property={{
-                                    key: pathParameter.key,
-                                    valueShape: pathParameter.shape,
-                                    description: pathParameter.description,
-                                    descriptionContainsMarkdown: pathParameter.descriptionContainsMarkdown,
-                                    htmlDescription: pathParameter.htmlDescription,
-                                    availability: pathParameter.availability,
-                                }}
-                                onChange={setPathParameter}
-                                value={formState?.pathParameters[pathParameter.key]}
-                                onFocus={() => setFocusedParameter({ type: "path", key: pathParameter.key })}
-                            />
-                        ))}
-                    </ul>
+                    <PlaygroundObjectPropertiesForm
+                        properties={endpoint.pathParameters}
+                        onChange={setPathParameters}
+                        value={formState?.pathParameters}
+                    />
                 </FernCard>
             )}
 
             {endpoint.queryParameters.length > 0 && (
-                <FernCard className="rounded-xl shadow-sm">
-                    <div className="p-4">
+                <FernCard className="rounded-xl p-4 shadow-sm">
+                    <div className="mb-4">
                         <h5 className="t-muted m-0">Query Parameters</h5>
                     </div>
-                    <ul className="list-none px-4">
-                        {endpoint.queryParameters.map((queryParameter) => (
-                            <PlaygroundObjectPropertyForm
-                                key={queryParameter.key}
-                                property={{
-                                    key: queryParameter.key,
-                                    valueShape: queryParameter.shape,
-                                    description: queryParameter.description,
-                                    descriptionContainsMarkdown: queryParameter.descriptionContainsMarkdown,
-                                    htmlDescription: queryParameter.htmlDescription,
-                                    availability: queryParameter.availability,
-                                }}
-                                onChange={setQueryParameter}
-                                onFocus={() => setFocusedParameter({ type: "query", key: queryParameter.key })}
-                                value={formState?.queryParameters[queryParameter.key]}
-                            />
-                        ))}
-                    </ul>
+                    <PlaygroundObjectPropertiesForm
+                        properties={endpoint.queryParameters}
+                        onChange={setQueryParameters}
+                        value={formState?.queryParameters}
+                    />
                 </FernCard>
             )}
 
-            {endpoint.requestBody != null && hasRequiredFields(endpoint.requestBody.shape) && (
-                <FernCard className="rounded-xl shadow-sm">
-                    <div className="p-4">
-                        <h5 className="t-muted m-0">Body Parameters</h5>
-                    </div>
+            {endpoint.requestBody != null &&
+                visitResolvedHttpRequestBodyShape(endpoint.requestBody.shape, {
+                    fileUpload: () => (
+                        <FernCard className="rounded-xl p-4 shadow-sm">
+                            <div className="mb-4">
+                                <h5 className="t-muted m-0">Body</h5>
+                            </div>
+                            <Callout intent="warn">File upload is not yet supported.</Callout>
+                        </FernCard>
+                    ),
+                    typeReference: (shape) => {
+                        shape = shape.type === "reference" ? shape.shape() : shape;
 
-                    {visitResolvedHttpRequestBodyShape(endpoint.requestBody.shape, {
-                        fileUpload: () => <span>fileUpload</span>,
-                        typeReference: (shape) => (
-                            <PlaygroundTypeReferenceForm
-                                shape={shape}
-                                onChange={setBody}
-                                value={formState?.body}
-                                onlyRequired
-                                sortProperties
-                            />
-                        ),
-                    })}
-                </FernCard>
-            )}
+                        if (shape.type === "object") {
+                            return (
+                                <FernCard className="rounded-xl p-4 shadow-sm">
+                                    <div className="mb-4">
+                                        <h5 className="t-muted m-0">Body Parameters</h5>
+                                    </div>
+                                    <PlaygroundObjectPropertiesForm
+                                        properties={shape.properties()}
+                                        onChange={setBody}
+                                        value={formState?.body}
+                                    />
+                                </FernCard>
+                            );
+                        } else if (shape.type === "optional") {
+                            return (
+                                <FernCard className="rounded-xl p-4 shadow-sm">
+                                    <div className="mb-4">
+                                        <h5 className="t-muted m-0">Optional Body</h5>
+                                    </div>
+                                    <PlaygroundTypeReferenceForm
+                                        shape={shape.shape}
+                                        onChange={setBody}
+                                        value={formState?.body}
+                                        onlyRequired
+                                    />
+                                </FernCard>
+                            );
+                        }
 
-            {endpoint.requestBody != null && hasOptionalFields(endpoint.requestBody.shape) && (
-                <FernCard className="rounded-xl shadow-sm">
-                    <div className="p-4">
-                        <h5 className="t-muted m-0">Additional Body Parameters</h5>
-                    </div>
-
-                    {visitResolvedHttpRequestBodyShape(endpoint.requestBody.shape, {
-                        fileUpload: () => <span>fileUpload</span>,
-                        typeReference: (shape) => (
-                            <PlaygroundTypeReferenceForm
-                                shape={shape}
-                                onChange={setBody}
-                                value={formState?.body}
-                                onlyOptional
-                                sortProperties
-                            />
-                        ),
-                    })}
-                </FernCard>
-            )}
+                        return (
+                            <FernCard className="rounded-xl p-4 shadow-sm">
+                                <div className="mb-4">
+                                    <h5 className="t-muted m-0">Body</h5>
+                                </div>
+                                <PlaygroundTypeReferenceForm
+                                    shape={shape}
+                                    onChange={setBody}
+                                    value={formState?.body}
+                                    onlyRequired
+                                />
+                            </FernCard>
+                        );
+                    },
+                })}
         </div>
     );
 };

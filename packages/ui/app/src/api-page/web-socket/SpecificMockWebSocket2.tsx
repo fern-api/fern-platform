@@ -8,16 +8,16 @@ export const SPECIFIC_WEBSOCKET_MOCK_2: ResolvedPubSubWebsocketDefinition = {
     path: [{ type: "literal", value: "/" }],
     pathParameters: [],
     queryParameters: [
-        { key: "sample_rate", shape: { type: "integer" }, description: "The sample rate of the streamed audio" },
+        { key: "sample_rate", valueShape: { type: "integer" }, description: "The sample rate of the streamed audio" },
         {
             key: "word_boost",
-            shape: { type: "string" },
+            valueShape: { type: "string" },
             description:
                 "Add up to 2500 characters of custom vocabulary.\nThe parameter value must be a JSON encoded array of strings.",
         },
         {
             key: "encoding",
-            shape: {
+            valueShape: {
                 type: "enum",
                 values: [
                     { value: "pcm_s16le", description: "PCM signed 16-bit little-endian" },
@@ -28,7 +28,7 @@ export const SPECIFIC_WEBSOCKET_MOCK_2: ResolvedPubSubWebsocketDefinition = {
         },
         {
             key: "token",
-            shape: { type: "string" },
+            valueShape: { type: "string" },
             description:
                 "Authenticate using a [generated temporary token](https://www.assemblyai.com/docs/guides/real-time-streaming-transcription#creating-temporary-authentication-tokens)",
         },

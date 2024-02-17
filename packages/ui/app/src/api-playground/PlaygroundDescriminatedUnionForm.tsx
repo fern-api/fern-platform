@@ -87,8 +87,6 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                     properties={activeVariant.additionalProperties}
                     value={value}
                     onChange={onChange}
-                    hideObjects={false}
-                    sortProperties={false}
                 />
             )}
         </div>

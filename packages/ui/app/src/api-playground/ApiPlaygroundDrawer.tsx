@@ -16,7 +16,7 @@ import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, useApiPlaygroundConte
 import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundRequestFormAuth, PlaygroundRequestFormState } from "./types";
 import { useVerticalSplitPane, useWindowHeight } from "./useSplitPlane";
-import { getDefaultValueForTypes, getDefaultValuesForBody } from "./utils";
+import { getDefaultValueForObjectProperties, getDefaultValuesForBody } from "./utils";
 
 export interface ApiPlaygroundSelectionState {
     apiSection: ResolvedNavigationItemApiSection;
@@ -205,9 +205,9 @@ function getInitialModalFormState(
 ): PlaygroundRequestFormState {
     return {
         auth: getInitialAuthState(auth),
-        headers: getDefaultValueForTypes(endpoint?.headers),
-        pathParameters: getDefaultValueForTypes(endpoint?.pathParameters),
-        queryParameters: getDefaultValueForTypes(endpoint?.queryParameters),
+        headers: getDefaultValueForObjectProperties(endpoint?.headers),
+        pathParameters: getDefaultValueForObjectProperties(endpoint?.pathParameters),
+        queryParameters: getDefaultValueForObjectProperties(endpoint?.queryParameters),
         body: getDefaultValuesForBody(endpoint?.requestBody?.shape),
     };
 }
@@ -224,7 +224,7 @@ function getInitialAuthState(auth: APIV1Read.ApiAuth | undefined): PlaygroundReq
     });
 }
 
-function getInitialModalFormStateWithExample(
+export function getInitialModalFormStateWithExample(
     auth: APIV1Read.ApiAuth | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
     exampleCall: APIV1Read.ExampleEndpointCall | undefined,

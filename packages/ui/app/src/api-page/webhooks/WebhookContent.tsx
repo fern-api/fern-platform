@@ -76,7 +76,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                                                 <TypeComponentSeparator />
                                                 <EndpointParameter
                                                     name={parameter.key}
-                                                    shape={parameter.shape}
+                                                    shape={parameter.valueShape}
                                                     anchorIdParts={["payload", "header", parameter.key]}
                                                     route={route}
                                                     description={parameter.description}

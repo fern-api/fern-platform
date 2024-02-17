@@ -1,9 +1,11 @@
-import { ResolvedObjectProperty } from "@fern-ui/app-utils";
+import { ResolvedObjectProperty, unwrapOptional } from "@fern-ui/app-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
-import { sortBy } from "lodash-es";
+import { PlusCircledIcon } from "@radix-ui/react-icons";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { FernButton } from "../components/FernButton";
+import { FernDropdown } from "../components/FernDropdown";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
-import { castToRecord, isExpandable } from "./utils";
+import { castToRecord, getDefaultValueForType, isExpandable } from "./utils";
 
 interface PlaygroundObjectPropertyFormProps {
     property: ResolvedObjectProperty;
@@ -65,16 +67,12 @@ interface PlaygroundObjectPropertiesFormProps {
     properties: ResolvedObjectProperty[];
     onChange: (value: unknown) => void;
     value: unknown;
-    hideObjects: boolean;
-    sortProperties: boolean;
 }
 
 export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormProps> = ({
     properties,
     onChange,
     value,
-    hideObjects,
-    sortProperties,
 }) => {
     const onChangeObjectProperty = useCallback(
         (key: string, newValue: unknown) => {
@@ -85,31 +83,66 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
         },
         [onChange],
     );
-    const propertiesToRender: ResolvedObjectProperty[] = useMemo(() => {
-        const filteredProperties = properties.filter((property) =>
-            hideObjects ? !isObjectOrOptionalObject(property.valueShape) : true,
+    const shownProperties = useMemo(() => {
+        return properties.filter((property) =>
+            shouldShowProperty(property.valueShape, castToRecord(value)[property.key]),
         );
-        if (sortProperties) {
-            return sortBy(filteredProperties, (property) => property.key);
-        }
-        return filteredProperties;
-    }, [hideObjects, properties, sortProperties]);
+    }, [properties, value]);
+    const hiddenProperties = useMemo(() => {
+        return properties.filter(
+            (property) => !shouldShowProperty(property.valueShape, castToRecord(value)[property.key]),
+        );
+    }, [properties, value]);
     return (
-        <ul className="list-none px-4">
-            {propertiesToRender.map((property) => (
-                <li key={property.key} className="relative -mx-4 p-4" tabIndex={-1}>
-                    <PlaygroundObjectPropertyForm
-                        key={property.key}
-                        property={property}
-                        onChange={onChangeObjectProperty}
-                        value={castToRecord(value)[property.key]}
+        <>
+            {shownProperties.length > 0 && (
+                <ul className="list-none">
+                    {shownProperties.map((property) => (
+                        <li key={property.key} className="relative -mx-4 p-4" tabIndex={-1}>
+                            <PlaygroundObjectPropertyForm
+                                key={property.key}
+                                property={property}
+                                onChange={onChangeObjectProperty}
+                                value={castToRecord(value)[property.key]}
+                            />
+                        </li>
+                    ))}
+                </ul>
+            )}
+
+            {hiddenProperties.length > 0 && (
+                <FernDropdown
+                    options={hiddenProperties.map((property) => ({ value: property.key }))}
+                    onValueChange={(key) => {
+                        const property = hiddenProperties.find((p) => p.key === key);
+                        if (!property) {
+                            return;
+                        }
+                        onChangeObjectProperty(
+                            property.key,
+                            getDefaultValueForType(unwrapOptional(property.valueShape)),
+                        );
+                    }}
+                >
+                    <FernButton
+                        text={
+                            <span>
+                                {`${hiddenProperties.length} ${shownProperties.length > 0 ? "more " : ""}optional propert${hiddenProperties.length > 1 ? "ies" : "y"}`}
+                                <span className="t-muted ml-2 font-mono text-xs opacity-50">
+                                    {hiddenProperties.map((property) => property.key).join(", ")}
+                                </span>
+                            </span>
+                        }
+                        variant="outlined"
+                        rightIcon={<PlusCircledIcon />}
+                        className="mt-4 w-full text-left"
                     />
-                </li>
-            ))}
-        </ul>
+                </FernDropdown>
+            )}
+        </>
     );
 };
 
-function isObjectOrOptionalObject(shape: ResolvedObjectProperty["valueShape"]): boolean {
-    return shape.type === "object" || (shape.type === "optional" && shape.shape.type === "object");
+function shouldShowProperty(shape: ResolvedObjectProperty["valueShape"], value: unknown): boolean {
+    return shape.type !== "optional" || value !== undefined;
 }

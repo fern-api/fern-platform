@@ -50,7 +50,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({ endpoi
                         endpoint.queryParameters
                             .filter((queryParameter) => {
                                 const stateValue = formState?.queryParameters[queryParameter.key];
-                                if (stateValue == null && queryParameter.shape.type === "optional") {
+                                if (stateValue == null && queryParameter.valueShape.type === "optional") {
                                     return false;
                                 }
                                 return true;

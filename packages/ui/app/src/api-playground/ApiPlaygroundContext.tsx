@@ -1,10 +1,8 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
 import {
     ResolvedApiDefinitionPackage,
     ResolvedEndpointDefinition,
     ResolvedNavigationItemApiSection,
 } from "@fern-ui/app-utils";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { noop } from "lodash-es";
@@ -12,8 +10,8 @@ import dynamic from "next/dynamic";
 import { createContext, FC, PropsWithChildren, useCallback, useContext, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { useDocsContext } from "../docs-context/useDocsContext";
-import { PlaygroundRequestFormAuth, PlaygroundRequestFormState } from "./types";
-import { getDefaultValueForTypes, getDefaultValuesForBody } from "./utils";
+import { getInitialModalFormStateWithExample } from "./ApiPlaygroundDrawer";
+import { PlaygroundRequestFormState } from "./types";
 
 const ApiPlaygroundDrawer = dynamic(() => import("./ApiPlaygroundDrawer").then((m) => m.ApiPlaygroundDrawer), {
     ssr: false,
@@ -127,47 +125,6 @@ export function useApiPlaygroundContext(): ApiPlaygroundContextValue {
     return useContext(ApiPlaygroundContext);
 }
 
-function getInitialModalFormState(
-    auth: APIV1Read.ApiAuth | undefined,
-    endpoint: ResolvedEndpointDefinition | undefined,
-): PlaygroundRequestFormState {
-    return {
-        auth: getInitialAuthState(auth),
-        headers: getDefaultValueForTypes(endpoint?.headers),
-        pathParameters: getDefaultValueForTypes(endpoint?.pathParameters),
-        queryParameters: getDefaultValueForTypes(endpoint?.queryParameters),
-        body: getDefaultValuesForBody(endpoint?.requestBody?.shape),
-    };
-}
-
-function getInitialAuthState(auth: APIV1Read.ApiAuth | undefined): PlaygroundRequestFormAuth | undefined {
-    if (auth == null) {
-        return undefined;
-    }
-    return visitDiscriminatedUnion(auth, "type")._visit<PlaygroundRequestFormAuth | undefined>({
-        header: (header) => ({ type: "header", headers: { [header.headerWireValue]: "" } }),
-        bearerAuth: () => ({ type: "bearerAuth", token: "" }),
-        basicAuth: () => ({ type: "basicAuth", username: "", password: "" }),
-        _other: () => undefined,
-    });
-}
-
-function getInitialModalFormStateWithExample(
-    auth: APIV1Read.ApiAuth | undefined,
-    endpoint: ResolvedEndpointDefinition | undefined,
-    exampleCall: APIV1Read.ExampleEndpointCall | undefined,
-): PlaygroundRequestFormState {
-    if (exampleCall == null) {
-        return getInitialModalFormState(auth, endpoint);
-    }
-    return {
-        auth: getInitialAuthState(auth),
-        headers: exampleCall.headers,
-        pathParameters: exampleCall.pathParameters,
-        queryParameters: exampleCall.queryParameters,
-        body: exampleCall.requestBody,
-    };
-}
 function createFormStateKey({ apiDefinition, endpoint }: ApiPlaygroundSelectionState) {
     const packageId =
         apiDefinition.type === "apiSection" ? apiDefinition.api : `${apiDefinition.apiSectionId}/${apiDefinition.id}`;

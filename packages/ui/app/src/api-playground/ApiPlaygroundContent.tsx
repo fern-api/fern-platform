@@ -6,6 +6,7 @@ import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
+import { CopyToClipboardButton } from "../commons/CopyToClipboardButton";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernCard } from "../components/FernCard";
 import { FernScrollArea } from "../components/FernScrollArea";
@@ -16,6 +17,7 @@ import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
 import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
 import { SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundRequestFormState, ResponsePayload } from "./types";
+import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils";
 import { HorizontalSplitPane, VerticalSplitPane } from "./VerticalSplitPane";
 
 interface ApiPlayroundContentProps {
@@ -130,7 +132,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                         }
                         belowClassName="pb-6 pt-1 flex items-stretch justify-stretch"
                     >
-                        <FernCard className="min-w-0 flex-1 shrink overflow-hidden rounded-xl shadow-sm">
+                        <FernCard className="flex min-w-0 flex-1 shrink flex-col overflow-hidden rounded-xl shadow-sm">
                             <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">
                                 <span className="t-muted text-xs uppercase">Request</span>
 
@@ -163,6 +165,19 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                                         Python
                                     </FernButton>
                                 </FernButtonGroup>
+
+                                <CopyToClipboardButton
+                                    content={() =>
+                                        requestType === "curl"
+                                            ? stringifyCurl(auth, endpoint, formState, false)
+                                            : requestType === "javascript"
+                                              ? stringifyFetch(auth, endpoint, formState, false)
+                                              : requestType === "python"
+                                                ? stringifyPythonRequests(auth, endpoint, formState, false)
+                                                : ""
+                                    }
+                                    className="-mr-2"
+                                />
                             </div>
                             <PlaygroundRequestPreview
                                 auth={auth}

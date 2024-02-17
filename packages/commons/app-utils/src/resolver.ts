@@ -133,9 +133,9 @@ function resolveEndpointDefinition(
     parentSlugs: string[],
 ): ResolvedEndpointDefinition {
     const pathParameters = endpoint.path.pathParameters.map(
-        (parameter): ResolvedParameter => ({
+        (parameter): ResolvedObjectProperty => ({
             ...parameter,
-            shape: resolveTypeReference(parameter.type, types),
+            valueShape: resolveTypeReference(parameter.type, types),
         }),
     );
     const path = endpoint.path.parts.map((pathPart): ResolvedEndpointPathParts => {
@@ -147,7 +147,7 @@ function resolveEndpointDefinition(
                 return {
                     type: "pathParameter",
                     key: pathPart.value,
-                    shape: { type: "unknown" },
+                    valueShape: { type: "unknown" },
                 };
             }
             return {
@@ -167,11 +167,11 @@ function resolveEndpointDefinition(
         pathParameters,
         queryParameters: endpoint.queryParameters.map((parameter) => ({
             ...parameter,
-            shape: resolveTypeReference(parameter.type, types),
+            valueShape: resolveTypeReference(parameter.type, types),
         })),
         headers: endpoint.headers.map((header) => ({
             ...header,
-            shape: resolveTypeReference(header.type, types),
+            valueShape: resolveTypeReference(header.type, types),
         })),
         requestBody:
             endpoint.request != null
@@ -203,9 +203,9 @@ function resolveWebsocketDefinition(
     parentSlugs: string[],
 ): ResolvedPubSubWebsocketDefinition {
     const pathParameters = websocket.path.pathParameters.map(
-        (parameter): ResolvedParameter => ({
+        (parameter): ResolvedObjectProperty => ({
             ...parameter,
-            shape: resolveTypeReference(parameter.type, types),
+            valueShape: resolveTypeReference(parameter.type, types),
         }),
     );
     return {
@@ -233,9 +233,9 @@ function resolveWebsocketDefinition(
             .filter((param) => param !== undefined) as ResolvedEndpointPathParts[],
         pathParameters,
         queryParameters: websocket.queryParameters.map(
-            (parameter): ResolvedParameter => ({
+            (parameter): ResolvedObjectProperty => ({
                 ...parameter,
-                shape: resolveTypeReference(parameter.type, types),
+                valueShape: resolveTypeReference(parameter.type, types),
             }),
         ),
         publish: {
@@ -279,7 +279,7 @@ function resolveWebhookDefinition(
         ...webhook,
         headers: webhook.headers.map((header) => ({
             ...header,
-            shape: resolveTypeReference(header.type, types),
+            valueShape: resolveTypeReference(header.type, types),
         })),
         payload: {
             ...webhook.payload,
@@ -338,7 +338,6 @@ function resolveResponseBodyShape(
 function resolveTypeShape(
     typeShape: APIV1Read.TypeShape,
     types: Record<string, APIV1Read.TypeDefinition>,
-    unwrapOptional: boolean = false,
 ): ResolvedTypeReference {
     return visitDiscriminatedUnion(typeShape, "type")._visit<ResolvedTypeReference>({
         object: (object) => ({
@@ -354,7 +353,7 @@ function resolveTypeShape(
                 shape: resolveTypeReference(type, types),
             })),
         }),
-        alias: (alias) => resolveTypeReference(alias.value, types, unwrapOptional),
+        alias: (alias) => resolveTypeReference(alias.value, types),
         discriminatedUnion: (discriminatedUnion) => ({
             type: "discriminatedUnion",
             discriminant: discriminatedUnion.discriminant,
@@ -370,15 +369,16 @@ function resolveTypeShape(
 function resolveTypeReference(
     typeReference: APIV1Read.TypeReference,
     types: Record<string, APIV1Read.TypeDefinition>,
-    unwrapOptional: boolean = false,
-): ResolvedTypeReference {
-    return visitDiscriminatedUnion(typeReference, "type")._visit<ResolvedTypeReference>({
+): Exclude<ResolvedTypeReference, ResolvedReferenceShape> {
+    return visitDiscriminatedUnion(typeReference, "type")._visit<
+        Exclude<ResolvedTypeReference, ResolvedReferenceShape>
+    >({
         literal: (literal) => literal.value,
         unknown: (unknown) => unknown,
-        optional: (optional) =>
-            unwrapOptional
-                ? resolveTypeReference(optional.itemType, types, true)
-                : { type: "optional", shape: resolveTypeReference(optional.itemType, types, true) },
+        optional: (optional) => ({
+            type: "optional",
+            shape: unwrapOptional(resolveTypeReference(optional.itemType, types)),
+        }),
         list: (list) => ({ type: "list", shape: resolveTypeReference(list.itemType, types) }),
         set: (set) => ({ type: "set", shape: resolveTypeReference(set.itemType, types) }),
         map: (map) => ({
@@ -391,7 +391,7 @@ function resolveTypeReference(
             if (typeDefinition == null) {
                 return { type: "unknown" };
             }
-            return resolveTypeShape(typeDefinition.shape, types, unwrapOptional);
+            return unwrapReference(resolveTypeShape(typeDefinition.shape, types));
         },
         primitive: (primitive) => primitive.value,
         _other: () => ({ type: "unknown" }),
@@ -512,9 +512,9 @@ export interface ResolvedEndpointDefinition extends APIV1Read.WithDescription {
     name?: string;
     title: string;
     path: ResolvedEndpointPathParts[];
-    pathParameters: ResolvedParameter[];
-    queryParameters: ResolvedParameter[];
-    headers: ResolvedParameter[];
+    pathParameters: ResolvedObjectProperty[];
+    queryParameters: ResolvedObjectProperty[];
+    headers: ResolvedObjectProperty[];
     requestBody: ResolvedRequestBody | undefined;
     responseBody: ResolvedResponseBody | undefined;
     errors: ResolvedError[];
@@ -541,11 +541,6 @@ export interface ResolvedResponseBody extends APIV1Read.WithDescription {
     shape: ResolvedHttpResponseBodyShape;
 }
 
-export interface ResolvedParameter extends APIV1Read.WithDescription, APIV1Read.WithAvailability {
-    key: string;
-    shape: ResolvedTypeReference;
-}
-
 export type ResolvedEndpointPathParts = ResolvedEndpointPathParts.Literal | ResolvedEndpointPathParts.PathParameter;
 export declare namespace ResolvedEndpointPathParts {
     interface Literal {
@@ -553,7 +548,7 @@ export declare namespace ResolvedEndpointPathParts {
         value: string;
     }
 
-    interface PathParameter extends ResolvedParameter {
+    interface PathParameter extends ResolvedObjectProperty {
         type: "pathParameter";
     }
 }
@@ -567,8 +562,8 @@ export interface ResolvedPubSubWebsocketDefinition extends APIV1Read.WithDescrip
     slug: string[];
     name: string | undefined;
     path: ResolvedEndpointPathParts[];
-    pathParameters: ResolvedParameter[];
-    queryParameters: ResolvedParameter[];
+    pathParameters: ResolvedObjectProperty[];
+    queryParameters: ResolvedObjectProperty[];
     publish: ResolvedPayload | undefined;
     subscribe: ResolvedPayload | undefined;
     examples: ResolvedWebsocketExample[];
@@ -625,7 +620,7 @@ export interface ResolvedWebhookDefinition extends APIV1Read.WithDescription {
     method: APIV1Read.WebhookHttpMethod;
     name: string | undefined;
     path: string[];
-    headers: ResolvedParameter[];
+    headers: ResolvedObjectProperty[];
     payload: ResolvedPayload;
     examples: APIV1Read.ExampleWebhookPayload[];
 }
@@ -664,7 +659,7 @@ export interface ResolvedDiscriminatedUnionShape {
 
 export interface ResolvedOptionalShape {
     type: "optional";
-    shape: ResolvedTypeReference;
+    shape: Exclude<ResolvedTypeReference, ResolvedOptionalShape>;
 }
 
 export interface ResolvedListShape {
@@ -702,7 +697,7 @@ export type ResolvedTypeReference =
 
 export interface ResolvedReferenceShape {
     type: "reference";
-    shape: () => ResolvedTypeReference;
+    shape: () => Exclude<ResolvedTypeReference, ResolvedReferenceShape>;
 }
 
 export type ResolvedHttpRequestBodyShape = APIV1Read.HttpRequestBodyShape.FileUpload | ResolvedTypeReference;
@@ -750,4 +745,19 @@ export function visitResolvedHttpResponseBodyShape<T>(
         default:
             return visitor.typeReference(shape);
     }
+}
+
+export function unwrapReference(shape: ResolvedTypeReference): Exclude<ResolvedTypeReference, ResolvedReferenceShape> {
+    if (shape.type === "reference") {
+        return unwrapReference(shape.shape());
+    }
+    return shape;
+}
+
+export function unwrapOptional(shape: ResolvedTypeReference): Exclude<ResolvedTypeReference, ResolvedOptionalShape> {
+    shape = unwrapReference(shape);
+    if (shape.type === "optional") {
+        return unwrapOptional(shape.shape);
+    }
+    return shape;
 }
