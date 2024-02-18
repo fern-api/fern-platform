@@ -92,7 +92,9 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
                 </FernDropdown>
             )}
             {selectedVariant != null && (
-                <PlaygroundTypeReferenceForm shape={selectedVariant.shape} onChange={onChange} value={value} />
+                <div className="border-border-default-soft border-l pl-4">
+                    <PlaygroundTypeReferenceForm shape={selectedVariant.shape} onChange={onChange} value={value} />
+                </div>
             )}
         </div>
     );

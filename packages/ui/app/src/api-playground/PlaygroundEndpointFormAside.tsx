@@ -52,8 +52,8 @@ export function PlaygroundEndpointFormAside({
                     document.getElementById(id)?.focus();
                 }}
             >
-                <div className="font-mono">
-                    <span>{property.key}</span>
+                <div>
+                    <span className="truncate font-mono">{property.key}</span>
                 </div>
                 <FernCollapse isOpen={isFocused}>
                     <Markdown className="pt-2 text-xs">{property.description}</Markdown>

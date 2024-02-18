@@ -96,11 +96,13 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                 </FernDropdown>
             )}
             {activeVariant != null && (
-                <PlaygroundObjectPropertiesForm
-                    properties={activeVariant.additionalProperties}
-                    value={value}
-                    onChange={onChange}
-                />
+                <div className="border-border-default-soft border-l pl-4">
+                    <PlaygroundObjectPropertiesForm
+                        properties={activeVariant.additionalProperties}
+                        value={value}
+                        onChange={onChange}
+                    />
+                </div>
             )}
         </div>
     );

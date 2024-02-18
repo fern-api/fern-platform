@@ -145,11 +145,11 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
     return (
         <>
             {shownProperties.length > 0 && (
-                <ul className="list-none">
+                <ul className="list-none space-y-8">
                     {shownProperties.map((property) => {
                         const id = prefix != null ? `${prefix}.${property.key}` : property.key;
                         return (
-                            <li key={property.key} className="relative -mx-4 p-4" tabIndex={-1}>
+                            <li key={property.key} className="relative -mx-4 px-4" tabIndex={-1}>
                                 <PlaygroundObjectPropertyForm
                                     key={id}
                                     id={id}

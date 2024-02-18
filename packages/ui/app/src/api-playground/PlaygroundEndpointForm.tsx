@@ -56,102 +56,116 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
     return (
         <div className="col-span-2 space-y-8 pb-20">
             {endpoint.headers.length > 0 && (
-                <FernCard className="rounded-xl p-4 shadow-sm">
-                    <div className="mb-4">
+                <div>
+                    <div className="mb-4 px-4">
                         <h5 className="t-muted m-0">Headers</h5>
                     </div>
-                    <PlaygroundObjectPropertiesForm
-                        prefix="header"
-                        properties={endpoint.headers}
-                        onChange={setHeaders}
-                        value={formState?.headers}
-                    />
-                </FernCard>
+                    <FernCard className="rounded-xl p-4 shadow-sm">
+                        <PlaygroundObjectPropertiesForm
+                            prefix="header"
+                            properties={endpoint.headers}
+                            onChange={setHeaders}
+                            value={formState?.headers}
+                        />
+                    </FernCard>
+                </div>
             )}
 
             {endpoint.pathParameters.length > 0 && (
-                <FernCard className="rounded-xl p-4 shadow-sm">
-                    <div className="mb-4">
+                <div>
+                    <div className="mb-4 px-4">
                         <h5 className="t-muted m-0">Path Parameters</h5>
                     </div>
-                    <PlaygroundObjectPropertiesForm
-                        prefix="path"
-                        properties={endpoint.pathParameters}
-                        onChange={setPathParameters}
-                        value={formState?.pathParameters}
-                    />
-                </FernCard>
+                    <FernCard className="rounded-xl p-4 shadow-sm">
+                        <PlaygroundObjectPropertiesForm
+                            prefix="path"
+                            properties={endpoint.pathParameters}
+                            onChange={setPathParameters}
+                            value={formState?.pathParameters}
+                        />
+                    </FernCard>
+                </div>
             )}
 
             {endpoint.queryParameters.length > 0 && (
-                <FernCard className="rounded-xl p-4 shadow-sm">
-                    <div className="mb-4">
+                <div>
+                    <div className="mb-4 px-4">
                         <h5 className="t-muted m-0">Query Parameters</h5>
                     </div>
-                    <PlaygroundObjectPropertiesForm
-                        prefix="query"
-                        properties={endpoint.queryParameters}
-                        onChange={setQueryParameters}
-                        value={formState?.queryParameters}
-                    />
-                </FernCard>
+                    <FernCard className="rounded-xl p-4 shadow-sm">
+                        <PlaygroundObjectPropertiesForm
+                            prefix="query"
+                            properties={endpoint.queryParameters}
+                            onChange={setQueryParameters}
+                            value={formState?.queryParameters}
+                        />
+                    </FernCard>
+                </div>
             )}
 
             {endpoint.requestBody != null &&
                 visitResolvedHttpRequestBodyShape(endpoint.requestBody.shape, {
                     fileUpload: () => (
-                        <FernCard className="rounded-xl p-4 shadow-sm">
-                            <div className="mb-4">
+                        <div>
+                            <div className="mb-4 px-4">
                                 <h5 className="t-muted m-0">Body</h5>
                             </div>
-                            <Callout intent="warn">File upload is not yet supported.</Callout>
-                        </FernCard>
+                            <FernCard className="rounded-xl p-4 shadow-sm">
+                                <Callout intent="warn">File upload is not yet supported.</Callout>
+                            </FernCard>
+                        </div>
                     ),
                     typeReference: (shape) => {
                         shape = shape.type === "reference" ? shape.shape() : shape;
 
                         if (shape.type === "object") {
                             return (
-                                <FernCard className="rounded-xl p-4 shadow-sm">
-                                    <div className="mb-4">
+                                <div>
+                                    <div className="mb-4 px-4">
                                         <h5 className="t-muted m-0">Body Parameters</h5>
                                     </div>
-                                    <PlaygroundObjectPropertiesForm
-                                        prefix="body"
-                                        properties={shape.properties()}
-                                        onChange={setBody}
-                                        value={formState?.body}
-                                    />
-                                </FernCard>
+                                    <FernCard className="rounded-xl p-4 shadow-sm">
+                                        <PlaygroundObjectPropertiesForm
+                                            prefix="body"
+                                            properties={shape.properties()}
+                                            onChange={setBody}
+                                            value={formState?.body}
+                                        />
+                                    </FernCard>
+                                </div>
                             );
                         } else if (shape.type === "optional") {
                             return (
-                                <FernCard className="rounded-xl p-4 shadow-sm">
-                                    <div className="mb-4">
+                                <div>
+                                    <div className="mb-4 px-4">
                                         <h5 className="t-muted m-0">Optional Body</h5>
                                     </div>
+                                    <FernCard className="rounded-xl p-4 shadow-sm">
+                                        <PlaygroundTypeReferenceForm
+                                            shape={shape.shape}
+                                            onChange={setBody}
+                                            value={formState?.body}
+                                            onlyRequired
+                                        />
+                                    </FernCard>
+                                </div>
+                            );
+                        }
+
+                        return (
+                            <div>
+                                <FernCard className="rounded-xl p-4 shadow-sm">
+                                    <div className="mb-4">
+                                        <h5 className="t-muted m-0">Body</h5>
+                                    </div>
                                     <PlaygroundTypeReferenceForm
-                                        shape={shape.shape}
+                                        shape={shape}
                                         onChange={setBody}
                                         value={formState?.body}
                                         onlyRequired
                                     />
                                 </FernCard>
-                            );
-                        }
-
-                        return (
-                            <FernCard className="rounded-xl p-4 shadow-sm">
-                                <div className="mb-4">
-                                    <h5 className="t-muted m-0">Body</h5>
-                                </div>
-                                <PlaygroundTypeReferenceForm
-                                    shape={shape}
-                                    onChange={setBody}
-                                    value={formState?.body}
-                                    onlyRequired
-                                />
-                            </FernCard>
+                            </div>
                         );
                     },
                 })}
