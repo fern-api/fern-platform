@@ -2,9 +2,10 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { Cross1Icon, GlobeIcon, PersonIcon } from "@radix-ui/react-icons";
-import { Dispatch, FC, ReactElement, SetStateAction, useCallback } from "react";
+import { isEmpty } from "lodash-es";
+import { Dispatch, FC, ReactElement, SetStateAction } from "react";
+import { Key } from "react-feather";
 import { FernButton } from "../components/FernButton";
-import { FernCard } from "../components/FernCard";
 import { FernInput } from "../components/FernInput";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { SecretBearer, SecretSpan } from "./PlaygroundSecretsModal";
@@ -156,32 +157,65 @@ export function PlaygroundAuthorizationFormCard({
     endpoint,
     auth,
     formState,
-    setFormState,
-    openSecretsModal,
-    secrets,
+    // setFormState,
+    // openSecretsModal,
+    // secrets,
 }: PlaygroundAuthorizationFormCardProps): ReactElement | null {
-    const setAuthorization = useCallback(
-        (newAuthValue: PlaygroundRequestFormAuth) => {
-            setFormState((state) => ({
-                ...state,
-                auth: newAuthValue,
-            }));
-        },
-        [setFormState],
-    );
+    // const setAuthorization = useCallback(
+    //     (newAuthValue: PlaygroundRequestFormAuth) => {
+    //         setFormState((state) => ({
+    //             ...state,
+    //             auth: newAuthValue,
+    //         }));
+    //     },
+    //     [setFormState],
+    // );
 
-    if (!endpoint.authed || auth == null) {
+    if (!endpoint.authed || auth == null || isAuthed(auth, formState?.auth)) {
         return null;
     }
+
+    // return (
+    //     <FernCard className="border-border-danger-soft rounded-xl shadow-sm">
+    //         <PlaygroundAuthorizationForm
+    //             auth={auth}
+    //             value={formState?.auth}
+    //             onChange={setAuthorization}
+    //             openSecretsModal={openSecretsModal}
+    //             secrets={secrets}
+    //         />
+    //     </FernCard>
+    // );
+
     return (
-        <FernCard className="border-border-danger-soft rounded-xl shadow-sm">
-            <PlaygroundAuthorizationForm
-                auth={auth}
-                value={formState?.auth}
-                onChange={setAuthorization}
-                openSecretsModal={openSecretsModal}
-                secrets={secrets}
-            />
-        </FernCard>
+        <FernButton
+            className="w-full text-left"
+            size="large"
+            intent="danger"
+            variant="outlined"
+            text="Authenticate with your API key to send a real request"
+            icon={<Key />}
+            rightIcon={
+                <span className="bg-tag-danger text-intent-danger flex items-center rounded-[4px] p-1 font-mono text-xs uppercase leading-none">
+                    Connect
+                </span>
+            }
+        />
     );
+}
+
+function isAuthed(auth: APIV1Read.ApiAuth, authState: PlaygroundRequestFormAuth | undefined): boolean {
+    if (authState == null) {
+        return false;
+    }
+
+    return visitDiscriminatedUnion(auth, "type")._visit({
+        bearerAuth: () => authState.type === "bearerAuth" && !isEmpty(authState.token.trim()),
+        basicAuth: () =>
+            authState.type === "basicAuth" &&
+            !isEmpty(authState.username.trim()) &&
+            !isEmpty(authState.password.trim()),
+        header: (header) => authState.type === "header" && !isEmpty(authState.headers[header.headerWireValue]?.trim()),
+        _other: () => false,
+    });
 }
