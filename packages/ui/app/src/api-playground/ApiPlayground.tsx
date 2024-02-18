@@ -1,15 +1,12 @@
 import { APIV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
-import {
-    ResolvedApiDefinitionPackage,
-    ResolvedEndpointDefinition,
-    ResolvedNavigationItemApiSection,
-} from "@fern-ui/app-utils";
+import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import { failed, Loadable, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernTooltipProvider } from "../components/FernTooltip";
+import { SidebarNode } from "../sidebar/types";
 import "./ApiPlayground.css";
 import { ApiPlayroundContent } from "./ApiPlaygroundContent";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
@@ -20,9 +17,8 @@ import { PlaygroundRequestFormState, ResponsePayload } from "./types";
 import { buildEndpointUrl, buildUnredactedHeaders } from "./utils";
 
 interface ApiPlaygroundProps {
-    navigationItems: ResolvedNavigationItemApiSection[];
+    navigation: SidebarNode[];
     auth: APIV1Read.ApiAuth | undefined;
-    apiDefinition: ResolvedApiDefinitionPackage | undefined;
     endpoint: ResolvedEndpointDefinition | undefined;
     formState: PlaygroundRequestFormState;
     setFormState: Dispatch<SetStateAction<PlaygroundRequestFormState>>;
@@ -33,9 +29,8 @@ interface ApiPlaygroundProps {
 }
 
 export const ApiPlayground: FC<ApiPlaygroundProps> = ({
-    navigationItems,
+    navigation,
     auth,
-    apiDefinition,
     endpoint,
     formState,
     setFormState,
@@ -117,14 +112,7 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({
                     </div>
 
                     <div className="flex items-center justify-center">
-                        {endpoint != null && (
-                            <ApiPlaygroundEndpointSelector
-                                apiDefinition={apiDefinition}
-                                endpoint={endpoint}
-                                navigationItems={navigationItems}
-                                popoverPlacement="bottom"
-                            />
-                        )}
+                        {endpoint != null && <ApiPlaygroundEndpointSelector navigation={navigation} />}
                     </div>
 
                     <div className="flex items-center justify-end">
@@ -160,12 +148,9 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({
             ) : (
                 <div className="flex flex-1 items-center justify-center">
                     <ApiPlaygroundEndpointSelector
-                        navigationItems={navigationItems}
-                        apiDefinition={apiDefinition}
-                        endpoint={endpoint}
+                        navigation={navigation}
                         placeholderText="Select an endpoint to get started"
                         buttonClassName="text-base"
-                        popoverPlacement="top"
                     />
                 </div>
             )}

@@ -112,6 +112,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                             <PlaygroundEndpointFormAside
                                 className="col-span-1"
                                 endpoint={endpoint}
+                                formState={formState}
                                 scrollAreaHeight={scrollAreaHeight}
                             />
                             <PlaygroundEndpointForm

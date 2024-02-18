@@ -143,7 +143,7 @@
         @apply shadow-xl;
 
         .fern-dropdown-item {
-            @apply flex justify-start p-1 font-mono rounded text-xs w-full cursor-default;
+            @apply flex justify-start py-1 px-2 font-mono rounded text-sm w-full cursor-default items-center;
             @apply data-[highlighted]:bg-accent data-[highlighted]:t-accent-contrast will-change-[background-color,color];
 
             .fern-dropdown-item-indicator {
@@ -250,8 +250,8 @@
     }
 
     .fern-segmented-control {
-        @apply bg-white dark:bg-white/5 ring-1 ring-inset ring-border-default rounded-lg shadow-sm h-8;
-        @apply space-x-px p-0 flex items-center;
+        @apply bg-white dark:bg-white/5 rounded-[10px] shadow-sm h-9;
+        @apply space-x-px p-0.5 flex items-center;
 
         > .fern-button {
             @apply rounded-lg shrink min-w-0;
@@ -267,6 +267,7 @@
         @apply inline-flex items-center justify-center;
         @apply rounded-xl lg:rounded-lg px-3 py-1 text-sm h-9 sm:h-8;
         @apply focus:outline-accent-primary dark:focus:outline-accent-primary-dark;
+        @apply cursor-default;
 
         &.rounded {
             @apply rounded-full;

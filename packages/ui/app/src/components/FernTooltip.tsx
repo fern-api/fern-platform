@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { FC, ReactNode } from "react";
 
 interface FernTooltipProps extends Tooltip.TooltipProps, Tooltip.TooltipContentProps {
-    content: ReactNode;
+    content: ReactNode | undefined;
 }
 
 export const FernTooltip: FC<FernTooltipProps> = ({
@@ -16,6 +16,9 @@ export const FernTooltip: FC<FernTooltipProps> = ({
     disableHoverableContent,
     ...props
 }) => {
+    if (content == null || content === "") {
+        return <>{children}</>;
+    }
     return (
         <Tooltip.Root
             open={open}

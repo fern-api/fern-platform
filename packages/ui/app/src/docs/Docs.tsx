@@ -152,7 +152,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
             />
             {searchService.isAvailable && <SearchDialog searchService={searchService} />}
 
-            <ApiPlaygroundContextProvider apiSections={apiSections}>
+            <ApiPlaygroundContextProvider navigation={navigation} apiSections={apiSections}>
                 <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
                     <header id="fern-header">
                         <div className="border-concealed dark:shadow-header-dark h-header-height fixed inset-x-0 top-0 z-30 overflow-visible border-b backdrop-blur-lg lg:backdrop-blur">

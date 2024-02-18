@@ -29,10 +29,6 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@blueprintjs/core": "^5.8.1",
-    "@blueprintjs/datetime": "^5.2.10",
-    "@blueprintjs/datetime2": "^2.2.10",
-    "@blueprintjs/select": "^5.0.22",
     "@fern-api/fdr-sdk": "0.48.0-1-ge4e5031",
     "@fern-ui/app-utils": "workspace:*",
     "@fern-ui/core-utils": "workspace:*",

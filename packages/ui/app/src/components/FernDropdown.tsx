@@ -1,18 +1,28 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { CheckIcon } from "@radix-ui/react-icons";
+import { CheckIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import { PropsWithChildren, ReactElement, ReactNode, useRef, useState } from "react";
 import { FernScrollArea } from "./FernScrollArea";
+import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
 
-interface FernDropdownOption {
-    label?: ReactNode;
-    value: string;
-    rightElement?: ReactNode;
-}
+export declare namespace FernDropdown {
+    export interface ValueOption {
+        type: "value";
+        label?: ReactNode;
+        value: string;
+        rightElement?: ReactNode;
+        tooltip?: ReactNode;
+    }
+    export interface SeparatorOption {
+        type: "separator";
+    }
 
-interface FernDropdown {
-    options: FernDropdownOption[];
-    onValueChange?: (value: string) => void;
-    value?: string;
+    export type Option = ValueOption | SeparatorOption;
+
+    export interface Props {
+        options: Option[];
+        onValueChange?: (value: string) => void;
+        value?: string;
+    }
 }
 
 export function FernDropdown({
@@ -20,7 +30,7 @@ export function FernDropdown({
     onValueChange,
     value,
     children,
-}: PropsWithChildren<FernDropdown>): ReactElement {
+}: PropsWithChildren<FernDropdown.Props>): ReactElement {
     const activeRef = useRef<HTMLButtonElement>(null);
     const [isOpen, setOpen] = useState(false);
     return (
@@ -37,26 +47,44 @@ export function FernDropdown({
                     sideOffset={4}
                 >
                     <FernScrollArea className="min-h-0 shrink" viewportClassName="p-1">
-                        <DropdownMenu.RadioGroup value={value} onValueChange={onValueChange}>
-                            {options.map((option) => (
-                                <DropdownMenu.RadioItem asChild={true} key={option.value} value={option.value}>
-                                    <button
-                                        ref={option.value === value ? activeRef : undefined}
-                                        className="fern-dropdown-item"
-                                    >
-                                        {value != null && (
-                                            <span className="fern-dropdown-item-indicator">
-                                                <DropdownMenu.ItemIndicator asChild={true}>
-                                                    <CheckIcon />
-                                                </DropdownMenu.ItemIndicator>
-                                            </span>
-                                        )}
-                                        <span>{option.label ?? option.value}</span>
-                                        {option.rightElement && <span className="ml-auto">{option.rightElement}</span>}
-                                    </button>
-                                </DropdownMenu.RadioItem>
-                            ))}
-                        </DropdownMenu.RadioGroup>
+                        <FernTooltipProvider>
+                            <DropdownMenu.RadioGroup value={value} onValueChange={onValueChange}>
+                                {options.map((option, idx) =>
+                                    option.type === "value" ? (
+                                        <FernTooltip
+                                            content={option.tooltip}
+                                            key={option.value}
+                                            side="right"
+                                            sideOffset={8}
+                                        >
+                                            <DropdownMenu.RadioItem asChild={true} value={option.value}>
+                                                <button
+                                                    ref={option.value === value ? activeRef : undefined}
+                                                    className="fern-dropdown-item"
+                                                >
+                                                    {value != null && (
+                                                        <span className="fern-dropdown-item-indicator">
+                                                            <DropdownMenu.ItemIndicator asChild={true}>
+                                                                <CheckIcon />
+                                                            </DropdownMenu.ItemIndicator>
+                                                        </span>
+                                                    )}
+                                                    <span>{option.label ?? option.value}</span>
+                                                    <span className="ml-auto space-x-1">
+                                                        {option.rightElement && <span>{option.rightElement}</span>}
+                                                        {option.tooltip != null && option.tooltip !== "" && (
+                                                            <InfoCircledIcon />
+                                                        )}
+                                                    </span>
+                                                </button>
+                                            </DropdownMenu.RadioItem>
+                                        </FernTooltip>
+                                    ) : (
+                                        <DropdownMenu.Separator key={idx} />
+                                    ),
+                                )}
+                            </DropdownMenu.RadioGroup>
+                        </FernTooltipProvider>
                     </FernScrollArea>
                 </DropdownMenu.Content>
             </DropdownMenu.Portal>

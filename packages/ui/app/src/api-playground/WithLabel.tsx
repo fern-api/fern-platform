@@ -8,19 +8,20 @@ import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
 
 interface WithLabelProps {
+    htmlFor?: string;
     property?: ResolvedObjectProperty;
     value: unknown;
     onRemove: () => void;
 }
 
-export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({ property, value, onRemove, children }) => {
+export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({ htmlFor, property, value, onRemove, children }) => {
     if (!property) {
         return <>{children}</>;
     }
     return (
         <div className="space-y-2">
             <div className="flex items-center justify-between gap-2">
-                <label className="inline-flex w-full items-baseline gap-2">
+                <label className="inline-flex w-full items-baseline gap-2" htmlFor={htmlFor}>
                     <span className={classNames("font-mono text-sm truncate")}>{property.key}</span>
 
                     {property.availability != null && (
@@ -40,12 +41,21 @@ export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({ property, val
                         <span className="t-muted">{renderTypeShorthand(property.valueShape)}</span>
                     </span>
 
-                    <FernDropdown
-                        options={[{ value: "remove", label: "Remove property", rightElement: <TrashIcon /> }]}
-                        onValueChange={(value) => value === "remove" && onRemove?.()}
-                    >
-                        <FernButton icon={<DotsHorizontalIcon />} size="small" variant="minimal" />
-                    </FernDropdown>
+                    {property.valueShape.type === "optional" && (
+                        <FernDropdown
+                            options={[
+                                {
+                                    type: "value",
+                                    value: "remove",
+                                    label: "Remove property",
+                                    rightElement: <TrashIcon />,
+                                },
+                            ]}
+                            onValueChange={(value) => value === "remove" && onRemove?.()}
+                        >
+                            <FernButton icon={<DotsHorizontalIcon />} size="small" variant="minimal" />
+                        </FernDropdown>
+                    )}
                 </span>
             </div>
 

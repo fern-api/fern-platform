@@ -39,6 +39,7 @@ export declare namespace SidebarNode {
 
     export interface EndpointPage extends Page {
         method: APIV1Read.HttpMethod;
+        stream?: boolean;
     }
 }
 
@@ -133,6 +134,7 @@ export function resolveSidebarNodes(
                             title:
                                 endpoint.name != null ? endpoint.name : stringifyEndpointPathParts(endpoint.path.parts),
                             method: endpoint.method,
+                            stream: endpoint.response?.type.type === "stream",
                         })),
                         webhooks: definition.rootPackage.webhooks.map((webhook) => ({
                             id: webhook.id,

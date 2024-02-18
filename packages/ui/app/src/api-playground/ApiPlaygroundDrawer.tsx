@@ -1,9 +1,5 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
-import {
-    ResolvedApiDefinitionPackage,
-    ResolvedEndpointDefinition,
-    ResolvedNavigationItemApiSection,
-} from "@fern-ui/app-utils";
+import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { FlattenedApiSection, isEndpoint, ResolvedApiDefinition, ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { Portal, Transition } from "@headlessui/react";
@@ -11,6 +7,7 @@ import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { Dispatch, FC, SetStateAction, useCallback, useEffect } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
+import { SidebarNode } from "../sidebar/types";
 import { ApiPlayground } from "./ApiPlayground";
 import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, useApiPlaygroundContext } from "./ApiPlaygroundContext";
 import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
@@ -19,9 +16,8 @@ import { useVerticalSplitPane, useWindowHeight } from "./useSplitPlane";
 import { getDefaultValueForObjectProperties, getDefaultValuesForBody } from "./utils";
 
 export interface ApiPlaygroundSelectionState {
-    apiSection: ResolvedNavigationItemApiSection;
-    apiDefinition: ResolvedApiDefinitionPackage;
-    endpoint: ResolvedEndpointDefinition;
+    api: FdrAPI.ApiId;
+    endpointId: APIV1Read.EndpointId;
 }
 
 const EMPTY_FORM_STATE: PlaygroundRequestFormState = {
@@ -36,11 +32,17 @@ const playgroundHeightAtom = atomWithStorage<number>("api-playground-height", 40
 const playgroundFormSecretsAtom = atomWithStorage<SecretBearer[]>("api-playground-secrets-alpha", []);
 
 interface ApiPlaygroundDrawerProps {
-    apiSections: ResolvedNavigationItemApiSection[];
+    navigation: SidebarNode[];
+    apiSections: FlattenedApiSection[];
 }
 
-export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ apiSections }) => {
+export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ navigation, apiSections }) => {
     const { selectionState, hasPlayground } = useApiPlaygroundContext();
+
+    const matchedSection = apiSections.find((section) => section.apiSection.api === selectionState?.api);
+    const matchedEndpoint = matchedSection?.apiDefinitions.find(
+        (definition) => isEndpoint(definition) && definition.slug.join("/") === selectionState?.endpointId,
+    ) as ResolvedApiDefinition.Endpoint | undefined;
 
     const [height, setHeight] = useAtom(playgroundHeightAtom);
     const windowHeight = useWindowHeight();
@@ -98,24 +100,18 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ apiSections 
         [setPlaygroundOpen],
     );
     const resetWithExample = useCallback(() => {
-        if (selectionState == null) {
-            return;
-        }
         setPlaygroundFormState(
             getInitialModalFormStateWithExample(
-                selectionState.apiSection.auth,
-                selectionState.endpoint,
-                selectionState.endpoint?.examples[0],
+                matchedSection?.apiSection.auth,
+                matchedEndpoint,
+                matchedEndpoint?.examples[0],
             ),
         );
-    }, [selectionState, setPlaygroundFormState]);
+    }, [matchedEndpoint, matchedSection?.apiSection.auth, setPlaygroundFormState]);
 
     const resetWithoutExample = useCallback(() => {
-        if (selectionState == null) {
-            return;
-        }
-        setPlaygroundFormState(getInitialModalFormState(selectionState.apiSection.auth, selectionState.endpoint));
-    }, [selectionState, setPlaygroundFormState]);
+        setPlaygroundFormState(getInitialModalFormState(matchedSection?.apiSection.auth, matchedEndpoint));
+    }, [matchedEndpoint, matchedSection?.apiSection.auth, setPlaygroundFormState]);
 
     useEffect(() => {
         // if keyboard press "ctrl + `", open playground
@@ -176,10 +172,9 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ apiSections 
                     </div>
                 </div>
                 <ApiPlayground
-                    navigationItems={apiSections}
-                    auth={selectionState?.apiSection.auth}
-                    apiDefinition={selectionState?.apiDefinition}
-                    endpoint={selectionState?.endpoint}
+                    navigation={navigation}
+                    auth={matchedSection?.apiSection.auth}
+                    endpoint={matchedEndpoint}
                     formState={playgroundFormState}
                     setFormState={setPlaygroundFormState}
                     resetWithExample={resetWithExample}
@@ -240,8 +235,6 @@ export function getInitialModalFormStateWithExample(
         body: exampleCall.requestBody,
     };
 }
-function createFormStateKey({ apiDefinition, endpoint }: ApiPlaygroundSelectionState) {
-    const packageId =
-        apiDefinition.type === "apiSection" ? apiDefinition.api : `${apiDefinition.apiSectionId}/${apiDefinition.id}`;
-    return `${packageId}/${endpoint.id}`;
+export function createFormStateKey({ api, endpointId }: ApiPlaygroundSelectionState): string {
+    return `${api}/${endpointId}`;
 }

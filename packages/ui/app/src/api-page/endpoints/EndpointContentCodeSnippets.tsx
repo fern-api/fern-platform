@@ -41,7 +41,6 @@ const TITLED_EXAMPLE_PADDING = 43;
 
 const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippets.Props> = ({
     apiSection,
-    apiDefinition,
     endpoint,
     example,
     clients,
@@ -93,9 +92,8 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 actions={
                     <>
                         <ApiPlaygroundButton
-                            endpoint={endpoint}
-                            apiSection={apiSection}
-                            apiDefinition={apiDefinition}
+                            api={apiSection.api}
+                            endpointId={endpoint.slug.join("/")}
                             // example={selectedClient.exampleCall}
                         />
                         {clients.length > 1 ? (

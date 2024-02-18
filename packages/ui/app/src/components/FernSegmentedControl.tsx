@@ -2,17 +2,13 @@ import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import classNames from "classnames";
 import { FC } from "react";
 import { FernButton } from "./FernButton";
-import { FernTooltipProvider } from "./FernTooltip";
-
-interface FernSegmentedControlOption {
-    label?: string;
-    value: string;
-}
+import { FernDropdown } from "./FernDropdown";
+import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
 
 interface FernSegmentedControlProps {
     className?: string;
     itemClassName?: string;
-    options: FernSegmentedControlOption[];
+    options: FernDropdown.Option[];
     value?: string;
     onValueChange: (value: string) => void;
 }
@@ -31,24 +27,22 @@ export const FernSegmentedControl: FC<FernSegmentedControlProps> = ({
             value={value}
             onValueChange={onValueChange}
         >
-            {options.map((option) => (
-                <ToggleGroup.Item
-                    asChild={true}
-                    key={option.value}
-                    className={itemClassName}
-                    value={option.value}
-                    aria-label={option.label}
-                >
-                    <FernButton
-                        variant={option.value === value ? "outlined" : "minimal"}
-                        intent={option.value === value ? "primary" : "none"}
-                        className="flex-1"
-                        mono={true}
-                    >
-                        {option.label ?? option.value}
-                    </FernButton>
-                </ToggleGroup.Item>
-            ))}
+            {options.map((option) =>
+                option.type === "value" ? (
+                    <FernTooltip key={option.value} content={option.tooltip}>
+                        <ToggleGroup.Item asChild={true} className={itemClassName} value={option.value}>
+                            <FernButton
+                                variant={option.value === value ? "filled" : "minimal"}
+                                intent={option.value === value ? "primary" : "none"}
+                                className="flex-1"
+                                mono={true}
+                            >
+                                {option.label ?? option.value}
+                            </FernButton>
+                        </ToggleGroup.Item>
+                    </FernTooltip>
+                ) : null,
+            )}
         </ToggleGroup.Root>
     </FernTooltipProvider>
 );

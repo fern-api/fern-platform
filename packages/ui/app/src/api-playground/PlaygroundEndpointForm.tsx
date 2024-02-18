@@ -13,8 +13,6 @@ interface PlaygroundEndpointFormProps {
 }
 
 export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoint, formState, setFormState }) => {
-    // const setFocusedParameter = useSetAtom(FOCUSED_PARAMETER_ATOM);
-
     const setHeaders = useCallback(
         (value: ((old: unknown) => unknown) | unknown) => {
             setFormState((state) => ({
@@ -63,6 +61,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
                         <h5 className="t-muted m-0">Headers</h5>
                     </div>
                     <PlaygroundObjectPropertiesForm
+                        prefix="header"
                         properties={endpoint.headers}
                         onChange={setHeaders}
                         value={formState?.headers}
@@ -76,6 +75,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
                         <h5 className="t-muted m-0">Path Parameters</h5>
                     </div>
                     <PlaygroundObjectPropertiesForm
+                        prefix="path"
                         properties={endpoint.pathParameters}
                         onChange={setPathParameters}
                         value={formState?.pathParameters}
@@ -89,6 +89,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
                         <h5 className="t-muted m-0">Query Parameters</h5>
                     </div>
                     <PlaygroundObjectPropertiesForm
+                        prefix="query"
                         properties={endpoint.queryParameters}
                         onChange={setQueryParameters}
                         value={formState?.queryParameters}
@@ -116,6 +117,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
                                         <h5 className="t-muted m-0">Body Parameters</h5>
                                     </div>
                                     <PlaygroundObjectPropertiesForm
+                                        prefix="body"
                                         properties={shape.properties()}
                                         onChange={setBody}
                                         value={formState?.body}

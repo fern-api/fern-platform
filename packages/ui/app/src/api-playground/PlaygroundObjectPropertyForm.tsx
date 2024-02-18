@@ -1,13 +1,23 @@
 import { ResolvedObjectProperty, unwrapOptional } from "@fern-ui/app-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
+import { useSetAtom } from "jotai";
+import dynamic from "next/dynamic";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
+import { FOCUSED_PARAMETER_ATOM } from "./PlaygroundEndpointFormAside";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { castToRecord, getDefaultValueForType, isExpandable } from "./utils";
 
+const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), {
+    ssr: true,
+});
+
+const ADD_ALL_KEY = "__FERN_ADD_ALL__" as const;
+
 interface PlaygroundObjectPropertyFormProps {
+    id?: string;
     property: ResolvedObjectProperty;
     onChange: (key: string, value: unknown) => void;
     onBlur?: () => void;
@@ -17,6 +27,7 @@ interface PlaygroundObjectPropertyFormProps {
 }
 
 export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps> = ({
+    id,
     property,
     onChange,
     onBlur,
@@ -50,6 +61,7 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
 
     return (
         <PlaygroundTypeReferenceForm
+            id={id}
             property={property}
             shape={property.valueShape.type === "optional" ? property.valueShape.shape : property.valueShape}
             onChange={handleChange}
@@ -64,16 +76,19 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
 };
 
 interface PlaygroundObjectPropertiesFormProps {
+    prefix?: string;
     properties: ResolvedObjectProperty[];
     onChange: (value: unknown) => void;
     value: unknown;
 }
 
 export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormProps> = ({
+    prefix,
     properties,
     onChange,
     value,
 }) => {
+    const setFocusedParameter = useSetAtom(FOCUSED_PARAMETER_ATOM);
     const onChangeObjectProperty = useCallback(
         (key: string, newValue: unknown) => {
             onChange((oldValue: unknown) => {
@@ -97,23 +112,55 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
         <>
             {shownProperties.length > 0 && (
                 <ul className="list-none">
-                    {shownProperties.map((property) => (
-                        <li key={property.key} className="relative -mx-4 p-4" tabIndex={-1}>
-                            <PlaygroundObjectPropertyForm
-                                key={property.key}
-                                property={property}
-                                onChange={onChangeObjectProperty}
-                                value={castToRecord(value)[property.key]}
-                            />
-                        </li>
-                    ))}
+                    {shownProperties.map((property) => {
+                        const id = prefix != null ? `${prefix}.${property.key}` : property.key;
+                        return (
+                            <li key={property.key} className="relative -mx-4 p-4" tabIndex={-1}>
+                                <PlaygroundObjectPropertyForm
+                                    key={id}
+                                    id={id}
+                                    property={property}
+                                    onChange={onChangeObjectProperty}
+                                    value={castToRecord(value)[property.key]}
+                                    onFocus={() => {
+                                        setFocusedParameter(id);
+                                    }}
+                                />
+                            </li>
+                        );
+                    })}
                 </ul>
             )}
 
             {hiddenProperties.length > 0 && (
                 <FernDropdown
-                    options={hiddenProperties.map((property) => ({ value: property.key }))}
+                    options={hiddenProperties
+                        .map(
+                            (property): FernDropdown.Option => ({
+                                type: "value",
+                                value: property.key,
+                                tooltip:
+                                    property.description != null ? (
+                                        <Markdown className="text-xs">{property.description}</Markdown>
+                                    ) : undefined,
+                            }),
+                        )
+                        .concat([
+                            { type: "separator" },
+                            { type: "value", value: ADD_ALL_KEY, label: "Add all optional properties" },
+                        ])}
                     onValueChange={(key) => {
+                        if (key === ADD_ALL_KEY) {
+                            onChange((oldValue: unknown) => {
+                                const oldObject = castToRecord(oldValue);
+                                return hiddenProperties.reduce((acc, property) => {
+                                    const newValue = getDefaultValueForType(unwrapOptional(property.valueShape));
+                                    return { ...acc, [property.key]: newValue };
+                                }, oldObject);
+                            });
+                            return;
+                        }
+
                         const property = hiddenProperties.find((p) => p.key === key);
                         if (!property) {
                             return;

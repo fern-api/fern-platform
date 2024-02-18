@@ -408,6 +408,7 @@ function resolveObjectProperties(
     }));
     const extendedProperties = object.extends.flatMap((typeId) => {
         const shape = resolveTypeReference({ type: "id", value: typeId }, types);
+        // TODO: should we be able to extend discriminated and undiscriminated unions?
         if (shape?.type !== "object") {
             // eslint-disable-next-line no-console
             console.error("Object extends non-object", typeId);
@@ -416,13 +417,23 @@ function resolveObjectProperties(
         return shape.properties();
     });
     if (extendedProperties.length === 0) {
-        return directProperties;
+        // if there are no extended properties, we can just return the direct properties
+        // required properties should come before optional properties
+        // however, we do NOT sort the properties by key because the initial order of properties may be significant
+        return sortBy([...directProperties], (property) => unwrapReference(property.valueShape).type === "optional");
     }
     const propertyKeys = new Set(object.properties.map((property) => property.key));
     const filteredExtendedProperties = extendedProperties.filter(
         (extendedProperty) => !propertyKeys.has(extendedProperty.key),
     );
-    return sortBy([...directProperties, ...filteredExtendedProperties], (property) => property.key);
+
+    // required properties should come before optional properties
+    // since there are extended properties, the initial order of properties are not significant, and we should sort by key
+    return sortBy(
+        [...directProperties, ...filteredExtendedProperties],
+        (property) => unwrapReference(property.valueShape).type === "optional",
+        (property) => property.key,
+    );
 }
 
 export type ResolvedNavigationItem =
@@ -448,6 +459,45 @@ export interface ResolvedNavigationItemApiSection
     auth: APIV1Read.ApiAuth | undefined;
     hasMultipleBaseUrls: boolean | undefined;
     slug: string[];
+}
+
+export interface FlattenedApiSection {
+    apiSection: ResolvedNavigationItemApiSection;
+    apiDefinitions: ResolvedApiDefinition[];
+}
+
+export function flattenApiSection(apiSection: ResolvedNavigationItemApiSection): FlattenedApiSection {
+    function getApiDefinitions(apiPackage: ResolvedApiDefinitionPackage): ResolvedApiDefinition[] {
+        return [
+            ...apiPackage.endpoints.map(
+                (endpoint): ResolvedApiDefinition.Endpoint => ({
+                    type: "endpoint" as const,
+                    ...endpoint,
+                    package: apiPackage,
+                }),
+            ),
+            ...apiPackage.websockets.map(
+                (websocket): ResolvedApiDefinition.WebSocket => ({
+                    type: "websocket" as const,
+                    ...websocket,
+                    package: apiPackage,
+                }),
+            ),
+            ...apiPackage.webhooks.map(
+                (webhook): ResolvedApiDefinition.Webhook => ({
+                    type: "webhook" as const,
+                    ...webhook,
+                    package: apiPackage,
+                }),
+            ),
+            ...apiPackage.subpackages.flatMap(getApiDefinitions),
+        ];
+    }
+
+    return {
+        apiSection,
+        apiDefinitions: getApiDefinitions(apiSection),
+    };
 }
 
 export function isResolvedNavigationItemApiSection(
@@ -486,6 +536,40 @@ export interface ResolvedWithApiDefinition {
     webhooks: ResolvedWebhookDefinition[];
     subpackages: ResolvedSubpackage[];
     pointsTo: APIV1Read.SubpackageId | undefined;
+}
+
+export type ResolvedApiDefinition =
+    | ResolvedApiDefinition.Endpoint
+    | ResolvedApiDefinition.Webhook
+    | ResolvedApiDefinition.WebSocket;
+
+export declare namespace ResolvedApiDefinition {
+    export interface Endpoint extends ResolvedEndpointDefinition {
+        type: "endpoint";
+        package: ResolvedApiDefinitionPackage;
+    }
+
+    export interface Webhook extends ResolvedWebhookDefinition {
+        type: "webhook";
+        package: ResolvedApiDefinitionPackage;
+    }
+
+    export interface WebSocket extends ResolvedPubSubWebsocketDefinition {
+        type: "websocket";
+        package: ResolvedApiDefinitionPackage;
+    }
+}
+
+export function isEndpoint(definition: ResolvedApiDefinition): definition is ResolvedApiDefinition.Endpoint {
+    return definition.type === "endpoint";
+}
+
+export function isWebhook(definition: ResolvedApiDefinition): definition is ResolvedApiDefinition.Webhook {
+    return definition.type === "webhook";
+}
+
+export function isWebSocket(definition: ResolvedApiDefinition): definition is ResolvedApiDefinition.WebSocket {
+    return definition.type === "websocket";
 }
 
 export interface ResolvedSubpackage extends APIV1Read.WithDescription, ResolvedWithApiDefinition {
@@ -754,7 +838,9 @@ export function unwrapReference(shape: ResolvedTypeReference): Exclude<ResolvedT
     return shape;
 }
 
-export function unwrapOptional(shape: ResolvedTypeReference): Exclude<ResolvedTypeReference, ResolvedOptionalShape> {
+export function unwrapOptional(
+    shape: ResolvedTypeReference,
+): Exclude<ResolvedTypeReference, ResolvedOptionalShape | ResolvedReferenceShape> {
     shape = unwrapReference(shape);
     if (shape.type === "optional") {
         return unwrapOptional(shape.shape);

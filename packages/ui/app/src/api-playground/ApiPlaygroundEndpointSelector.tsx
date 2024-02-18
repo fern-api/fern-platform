@@ -1,52 +1,107 @@
-import {
-    ResolvedApiDefinitionPackage,
-    ResolvedEndpointDefinition,
-    ResolvedNavigationItemApiSection,
-} from "@fern-ui/app-utils";
-import { isNonNullish } from "@fern-ui/core-utils";
+import { FdrAPI } from "@fern-api/fdr-sdk";
+import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useKeyboardPress } from "@fern-ui/react-commons";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { ChevronDownIcon, ChevronUpIcon, Cross1Icon, MagnifyingGlassIcon, SlashIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
-import { FC, ReactElement, useCallback, useRef, useState } from "react";
+import { noop } from "lodash-es";
+import { FC, Fragment, ReactElement, useCallback, useMemo, useRef, useState } from "react";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { FernButton } from "../components/FernButton";
 import { FernInput } from "../components/FernInput";
 import { FernScrollArea } from "../components/FernScrollArea";
+import { SidebarNode } from "../sidebar/types";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 
 export interface ApiPlaygroundEndpointSelectorProps {
-    apiDefinition: ResolvedApiDefinitionPackage | undefined;
-    endpoint: ResolvedEndpointDefinition | undefined;
-    navigationItems: ResolvedNavigationItemApiSection[];
-    popoverPlacement?: "bottom-start" | "bottom" | "bottom-end" | "top-start" | "top" | "top-end";
+    navigation: SidebarNode[];
     placeholderText?: string;
     buttonClassName?: string;
 }
 
-function matchesEndpoint(query: string, endpoint: ResolvedEndpointDefinition): boolean {
+interface ApiGroup {
+    api: FdrAPI.ApiId;
+    breadcrumbs: string[];
+    endpoints: SidebarNode.EndpointPage[];
+    webhooks: SidebarNode.Page[];
+    websockets: SidebarNode.Page[];
+}
+
+function isApiGroupNotEmpty(group: ApiGroup): boolean {
+    return group.endpoints.length > 0 || group.webhooks.length > 0 || group.websockets.length > 0;
+}
+
+function flattenApiSection(navigation: SidebarNode[]): ApiGroup[] {
+    const result: ApiGroup[] = [];
+    for (const node of navigation) {
+        visitDiscriminatedUnion(node, "type")._visit({
+            section: (section) => {
+                result.push(
+                    ...flattenApiSection(section.items).map((group) => ({
+                        ...group,
+                        breadcrumbs: [section.title, ...group.breadcrumbs],
+                    })),
+                );
+            },
+            apiSection: (apiSection) => {
+                result.push({
+                    api: apiSection.api,
+                    breadcrumbs: [apiSection.title],
+                    endpoints: apiSection.endpoints,
+                    webhooks: apiSection.webhooks,
+                    websockets: apiSection.websockets,
+                });
+
+                result.push(
+                    ...flattenApiSection(apiSection.subpackages).map((group) => ({
+                        ...group,
+                        breadcrumbs: [apiSection.title, ...group.breadcrumbs],
+                    })),
+                );
+            },
+            pageGroup: noop,
+            _other: noop,
+        });
+    }
+    return result.filter(isApiGroupNotEmpty);
+}
+
+function matchesEndpoint(query: string, group: ApiGroup, endpoint: SidebarNode.EndpointPage): boolean {
     return (
-        endpoint.name?.toLowerCase().includes(query.toLowerCase()) ||
-        endpoint.description?.toLowerCase().includes(query.toLowerCase()) ||
+        group.breadcrumbs.some((breadcrumb) => breadcrumb.toLowerCase().includes(query.toLowerCase())) ||
+        endpoint.title?.toLowerCase().includes(query.toLowerCase()) ||
         endpoint.method.toLowerCase().includes(query.toLowerCase())
     );
 }
 
 export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProps> = ({
-    apiDefinition,
-    endpoint,
-    navigationItems,
+    navigation,
     placeholderText,
     buttonClassName,
 }) => {
-    const { setSelectionStateAndOpen } = useApiPlaygroundContext();
-    const { value: showDropdown, toggleValue: toggleDropdown, setFalse: closeDropdown } = useBooleanState(false);
+    const { setSelectionStateAndOpen, selectionState } = useApiPlaygroundContext();
+    const { value: showDropdown, setFalse: closeDropdown, setValue: handleOpenChange } = useBooleanState(false);
 
     const [filterValue, setFilterValue] = useState<string>("");
 
     const selectedItemRef = useRef<HTMLLIElement>(null);
 
     useKeyboardPress({ key: "Escape", onPress: closeDropdown });
+
+    const apiGroups = useMemo(() => flattenApiSection(navigation), [navigation]);
+
+    const selectedGroup = apiGroups.find((group) => group.api === selectionState?.api);
+    const selectedEndpoint = selectedGroup?.endpoints.find(
+        (endpoint) => endpoint.slug.join("/") === selectionState?.endpointId,
+    );
+
+    const createClickHandler = (group: ApiGroup, endpoint: SidebarNode.EndpointPage) => () => {
+        setSelectionStateAndOpen({
+            api: group.api,
+            endpointId: endpoint.slug.join("/"),
+        });
+        closeDropdown();
+    };
 
     // // click anywhere outside the dropdown to close it
     // const dropdownRef = useRef<HTMLDivElement>(null);
@@ -67,62 +122,48 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
     //     };
     // }, [closeDropdown, showDropdown]);
 
-    function renderApiDefinitionPackage(apiDefinition: ResolvedApiDefinitionPackage, depth: number) {
-        const endpoints = apiDefinition.endpoints.filter((endpoint) => matchesEndpoint(filterValue, endpoint));
-        const subpackages = apiDefinition.subpackages
-            .map((subpackage) => renderApiDefinitionPackage(subpackage, depth + 1))
-            .filter(isNonNullish);
-        if (endpoints.length === 0 && subpackages.length === 0) {
+    function renderApiDefinitionPackage(apiGroup: ApiGroup) {
+        const endpoints = apiGroup.endpoints.filter((endpoint) => matchesEndpoint(filterValue, apiGroup, endpoint));
+        if (endpoints.length === 0) {
             return null;
         }
         return (
-            <li key={apiDefinition.type === "apiSection" ? apiDefinition.api : apiDefinition.id} className="gap-2">
-                {depth >= 0 && (
-                    <div
-                        className="bg-background sticky z-10 flex h-[30px] items-center gap-2 px-3 py-1"
-                        style={{
-                            top: depth * 30,
-                        }}
-                    >
-                        <span className="t-accent shrink truncate whitespace-nowrap text-xs">
-                            {apiDefinition.title}
-                        </span>
+            <li key={apiGroup.api} className="gap-2">
+                {apiGroup.breadcrumbs.length > 1 && (
+                    <div className="bg-background sticky top-0 z-10 flex h-[30px] items-center px-3 py-1">
+                        {apiGroup.breadcrumbs.slice(1).map((breadcrumb, idx) => (
+                            <Fragment key={idx}>
+                                {idx > 0 && <SlashIcon className="text-faded mx-0.5 size-3" />}
+                                <span className="t-accent shrink truncate whitespace-nowrap text-xs">{breadcrumb}</span>
+                            </Fragment>
+                        ))}
                     </div>
                 )}
                 <ul className="relative z-0 list-none">
                     {endpoints.map((endpointItem) => (
-                        <li ref={endpointItem.id === endpoint?.id ? selectedItemRef : undefined} key={endpointItem.id}>
+                        <li
+                            ref={
+                                endpointItem.slug.join("/") === selectedEndpoint?.slug.join("/")
+                                    ? selectedItemRef
+                                    : undefined
+                            }
+                            key={endpointItem.id}
+                        >
                             <FernButton
-                                text={renderTextWithHighlight(endpointItem.name ?? "", filterValue)}
+                                text={renderTextWithHighlight(endpointItem.title, filterValue)}
                                 className="w-full rounded-none text-left"
                                 variant="minimal"
-                                onClick={() => {
-                                    setSelectionStateAndOpen({
-                                        endpoint: endpointItem,
-                                        apiDefinition,
-                                        apiSection:
-                                            apiDefinition.type === "apiSection"
-                                                ? apiDefinition
-                                                : // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                                                  navigationItems.find(
-                                                      (item) => item.api === apiDefinition.apiSectionId,
-                                                  )!,
-                                    });
-                                    closeDropdown();
-                                }}
+                                onClick={createClickHandler(apiGroup, endpointItem)}
                                 rightIcon={<HttpMethodTag method={endpointItem.method} small={true} />}
                             />
                         </li>
                     ))}
-                    {subpackages}
                 </ul>
             </li>
         );
     }
 
-    const renderedListItems = navigationItems
-        .map((apiSection) => renderApiDefinitionPackage(apiSection, navigationItems.length === 1 ? -1 : 0))
-        .filter(isNonNullish);
+    const renderedListItems = apiGroups.map((group) => renderApiDefinitionPackage(group)).filter(isNonNullish);
 
     const [isPopoverBelow, setIsPopoverBelow] = useState(true);
 
@@ -130,7 +171,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
 
     const buttonRef = useRef<HTMLButtonElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
-    const handleOpen = useCallback(() => {
+    const determinePlacement = useCallback(() => {
         // check if menuref is below buttonref, if not, set isPopoverBelow to false
         if (buttonRef.current != null && menuRef.current != null) {
             const buttonRect = buttonRef.current.getBoundingClientRect();
@@ -140,12 +181,11 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
     }, []);
 
     return (
-        <DropdownMenu.Root onOpenChange={handleOpen}>
+        <DropdownMenu.Root onOpenChange={handleOpenChange} open={showDropdown}>
             <DropdownMenu.Trigger asChild={true}>
                 <FernButton
                     ref={buttonRef}
                     className={classNames(buttonClassName, "max-w-full -my-1 !text-left")}
-                    onClick={toggleDropdown}
                     active={showDropdown}
                     rightIcon={
                         <RightIcon
@@ -157,23 +197,23 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                     variant="minimal"
                 >
                     <span className="inline-flex items-center gap-1">
-                        {apiDefinition != null && (
-                            <>
-                                <span className="t-accent shrink truncate whitespace-nowrap">
-                                    {apiDefinition.title}
-                                </span>
-                                <SlashIcon className="text-faded" />
-                            </>
-                        )}
+                        {selectedGroup != null &&
+                            selectedGroup.breadcrumbs.length > 1 &&
+                            selectedGroup.breadcrumbs.slice(1).map((breadcrumb, idx) => (
+                                <Fragment key={idx}>
+                                    <span className="t-accent shrink truncate whitespace-nowrap">{breadcrumb}</span>
+                                    <SlashIcon className="text-faded" />
+                                </Fragment>
+                            ))}
 
                         <span className="whitespace-nowrap font-semibold">
-                            {endpoint?.name ?? placeholderText ?? "Select an endpoint"}
+                            {selectedEndpoint?.title ?? placeholderText ?? "Select an endpoint"}
                         </span>
                     </span>
                 </FernButton>
             </DropdownMenu.Trigger>
             <DropdownMenu.Portal>
-                <DropdownMenu.Content asChild={true} sideOffset={4} onAnimationStartCapture={handleOpen}>
+                <DropdownMenu.Content asChild={true} sideOffset={4} onAnimationStartCapture={determinePlacement}>
                     <div className="fern-dropdown overflow-hidden rounded-xl" ref={menuRef}>
                         {isPopoverBelow && (
                             <div
@@ -241,7 +281,7 @@ function renderTextWithHighlight(text: string, highlight: string): ReactElement[
     const parts = text.split(new RegExp(`(${highlight})`, "gi"));
     return parts.map((part, idx) =>
         part.toLowerCase() === highlight.toLowerCase() ? (
-            <mark className="bg-accent-highlight" key={idx}>
+            <mark className="bg-accent-highlight t-default" key={idx}>
                 {part}
             </mark>
         ) : (

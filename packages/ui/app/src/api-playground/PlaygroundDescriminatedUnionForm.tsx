@@ -1,11 +1,16 @@
 import { ResolvedDiscriminatedUnionShape, titleCase } from "@fern-ui/app-utils";
 import { CaretDownIcon } from "@radix-ui/react-icons";
+import dynamic from "next/dynamic";
 import { FC, useCallback, useMemo } from "react";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
 import { FernSegmentedControl } from "../components/FernSegmentedControl";
 import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
 import { castToRecord, getDefaultValueForObjectProperties } from "./utils";
+
+const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), {
+    ssr: true,
+});
 
 interface PlaygroundDiscriminatedUnionFormProps {
     discriminatedUnion: ResolvedDiscriminatedUnionShape;
@@ -49,10 +54,15 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
 
     const options = useMemo(
         () =>
-            discriminatedUnion.variants.map((variant) => ({
-                label: titleCase(variant.discriminantValue),
-                value: variant.discriminantValue,
-            })),
+            discriminatedUnion.variants.map(
+                (variant): FernDropdown.Option => ({
+                    type: "value",
+                    label: titleCase(variant.discriminantValue),
+                    value: variant.discriminantValue,
+                    // todo: handle availability
+                    tooltip: variant.description != null ? <Markdown>{variant.description}</Markdown> : undefined,
+                }),
+            ),
         [discriminatedUnion.variants],
     );
 

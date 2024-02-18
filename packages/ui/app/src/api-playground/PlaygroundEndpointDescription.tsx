@@ -1,8 +1,12 @@
 import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import classNames from "classnames";
+import dynamic from "next/dynamic";
 import { ReactElement, useEffect, useRef, useState } from "react";
-import { Markdown } from "../api-page/markdown/Markdown";
+
+const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), {
+    ssr: true,
+});
 
 interface PlaygroundEndpointDescriptionProps {
     endpoint: ResolvedEndpointDefinition;

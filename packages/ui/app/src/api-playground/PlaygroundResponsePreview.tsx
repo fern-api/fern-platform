@@ -1,6 +1,11 @@
+import dynamic from "next/dynamic";
 import { FC } from "react";
-import { FernSyntaxHighlighter } from "../commons/CodeBlockSkeleton";
 import { CopyToClipboardButton } from "../commons/CopyToClipboardButton";
+
+const FernSyntaxHighlighter = dynamic(
+    () => import("../commons/CodeBlockSkeleton").then(({ FernSyntaxHighlighter }) => FernSyntaxHighlighter),
+    { ssr: true },
+);
 
 interface PlaygroundResponsePreviewProps {
     responseBody: unknown;

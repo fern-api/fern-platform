@@ -3,7 +3,7 @@ import { FernButton } from "../components/FernButton";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 import { ApiPlaygroundSelectionState } from "./ApiPlaygroundDrawer";
 
-export const ApiPlaygroundButton: FC<ApiPlaygroundSelectionState> = ({ apiSection, apiDefinition, endpoint }) => {
+export const ApiPlaygroundButton: FC<ApiPlaygroundSelectionState> = ({ api, endpointId }) => {
     const { hasPlayground, setSelectionStateAndOpen } = useApiPlaygroundContext();
 
     if (!hasPlayground) {
@@ -13,7 +13,7 @@ export const ApiPlaygroundButton: FC<ApiPlaygroundSelectionState> = ({ apiSectio
     return (
         <FernButton
             onClick={() => {
-                setSelectionStateAndOpen({ apiSection, apiDefinition, endpoint });
+                setSelectionStateAndOpen({ api, endpointId });
             }}
             rightIcon="play"
             variant="outlined"

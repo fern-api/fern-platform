@@ -1,11 +1,16 @@
 import { ResolvedUndiscriminatedUnionShape } from "@fern-ui/app-utils";
 import { CaretDownIcon } from "@radix-ui/react-icons";
+import dynamic from "next/dynamic";
 import { FC, useCallback, useMemo, useState } from "react";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
 import { FernSegmentedControl } from "../components/FernSegmentedControl";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType, matchesTypeReference } from "./utils";
+
+const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), {
+    ssr: true,
+});
 
 interface PlaygroundUniscriminatedUnionFormProps {
     undiscriminatedUnion: ResolvedUndiscriminatedUnionShape;
@@ -41,10 +46,15 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
 
     const options = useMemo(
         () =>
-            undiscriminatedUnion.variants.map((variant, idx) => ({
-                label: variant.displayName,
-                value: idx.toString(),
-            })),
+            undiscriminatedUnion.variants.map(
+                (variant, idx): FernDropdown.Option => ({
+                    type: "value",
+                    label: variant.displayName,
+                    value: idx.toString(),
+                    // todo: handle availability
+                    tooltip: variant.description != null ? <Markdown>{variant.description}</Markdown> : undefined,
+                }),
+            ),
         [undiscriminatedUnion.variants],
     );
 

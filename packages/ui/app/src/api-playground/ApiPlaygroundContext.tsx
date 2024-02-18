@@ -1,27 +1,27 @@
 import {
-    ResolvedApiDefinitionPackage,
-    ResolvedEndpointDefinition,
+    flattenApiSection,
+    isEndpoint,
+    ResolvedApiDefinition,
     ResolvedNavigationItemApiSection,
 } from "@fern-ui/app-utils";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { noop } from "lodash-es";
 import dynamic from "next/dynamic";
-import { createContext, FC, PropsWithChildren, useCallback, useContext, useState } from "react";
+import { createContext, FC, PropsWithChildren, useCallback, useContext, useMemo, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { useDocsContext } from "../docs-context/useDocsContext";
-import { getInitialModalFormStateWithExample } from "./ApiPlaygroundDrawer";
+import { SidebarNode } from "../sidebar/types";
+import {
+    ApiPlaygroundSelectionState,
+    createFormStateKey,
+    getInitialModalFormStateWithExample,
+} from "./ApiPlaygroundDrawer";
 import { PlaygroundRequestFormState } from "./types";
 
 const ApiPlaygroundDrawer = dynamic(() => import("./ApiPlaygroundDrawer").then((m) => m.ApiPlaygroundDrawer), {
     ssr: false,
 });
-
-export interface ApiPlaygroundSelectionState {
-    apiSection: ResolvedNavigationItemApiSection;
-    apiDefinition: ResolvedApiDefinitionPackage;
-    endpoint: ResolvedEndpointDefinition;
-}
 
 interface ApiPlaygroundContextValue {
     hasPlayground: boolean;
@@ -46,6 +46,7 @@ export const PLAYGROUND_FORM_STATE_ATOM = atomWithStorage<Record<string, Playgro
 );
 
 interface ApiPlaygroundProps {
+    navigation: SidebarNode[];
     apiSections: ResolvedNavigationItemApiSection[];
 }
 
@@ -64,9 +65,15 @@ function isApiPlaygroundEnabled(domain: string) {
     return process.env.NODE_ENV !== "production";
 }
 
-export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundProps>> = ({ children, apiSections }) => {
+export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundProps>> = ({
+    children,
+    navigation,
+    apiSections,
+}) => {
     const { domain } = useDocsContext();
     const [selectionState, setSelectionState] = useState<ApiPlaygroundSelectionState | undefined>();
+
+    const flattenedApiSections = useMemo(() => apiSections.map(flattenApiSection), [apiSections]);
 
     const [, setPlaygroundOpen] = useAtom(PLAYGROUND_OPEN_ATOM);
     const [globalFormState, setGlobalFormState] = useAtom(PLAYGROUND_FORM_STATE_ATOM);
@@ -79,26 +86,39 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundPro
 
     const setSelectionStateAndOpen = useCallback(
         (newSelectionState: ApiPlaygroundSelectionState) => {
+            const matchedSection = flattenedApiSections.find(
+                (section) => section.apiSection.api === newSelectionState.api,
+            );
+            if (matchedSection == null) {
+                return;
+            }
+
+            const matchedEndpoint = matchedSection.apiDefinitions.find(
+                (definition) => isEndpoint(definition) && definition.slug.join("/") === newSelectionState.endpointId,
+            ) as ResolvedApiDefinition.Endpoint | undefined;
+            if (matchedEndpoint == null) {
+                return;
+            }
             setSelectionState(newSelectionState);
             expandApiPlayground();
             capturePosthogEvent("api_playground_opened", {
-                endpointId: newSelectionState.endpoint.id,
-                endpointName: newSelectionState.endpoint.name,
+                endpointId: newSelectionState.endpointId,
+                endpointName: matchedEndpoint.name,
             });
             if (globalFormState[createFormStateKey(newSelectionState)] == null) {
                 setGlobalFormState((currentFormState) => {
                     return {
                         ...currentFormState,
                         [createFormStateKey(newSelectionState)]: getInitialModalFormStateWithExample(
-                            selectionState?.apiSection.auth,
-                            newSelectionState.endpoint,
-                            newSelectionState.endpoint?.examples[0],
+                            matchedSection.apiSection.auth,
+                            matchedEndpoint,
+                            matchedEndpoint.examples[0],
                         ),
                     };
                 });
             }
         },
-        [expandApiPlayground, globalFormState, selectionState?.apiSection.auth, setGlobalFormState],
+        [expandApiPlayground, flattenedApiSections, globalFormState, setGlobalFormState],
     );
 
     if (!isApiPlaygroundEnabled(domain)) {
@@ -116,17 +136,11 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundPro
             }}
         >
             {children}
-            <ApiPlaygroundDrawer apiSections={apiSections} />
+            <ApiPlaygroundDrawer navigation={navigation} apiSections={flattenedApiSections} />
         </ApiPlaygroundContext.Provider>
     );
 };
 
 export function useApiPlaygroundContext(): ApiPlaygroundContextValue {
     return useContext(ApiPlaygroundContext);
-}
-
-function createFormStateKey({ apiDefinition, endpoint }: ApiPlaygroundSelectionState) {
-    const packageId =
-        apiDefinition.type === "apiSection" ? apiDefinition.api : `${apiDefinition.apiSectionId}/${apiDefinition.id}`;
-    return `${packageId}/${endpoint.id}`;
 }
