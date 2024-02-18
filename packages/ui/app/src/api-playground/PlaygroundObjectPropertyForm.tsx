@@ -202,7 +202,7 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
                         }
                         variant="outlined"
                         rightIcon={<PlusCircledIcon />}
-                        className="mt-4 w-full text-left"
+                        className="mt-8 w-full text-left first:mt-0"
                     />
                 </FernDropdown>
             )}

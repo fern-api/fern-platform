@@ -73,7 +73,7 @@ export function FernDropdown({
                                                             </span>
                                                         )}
                                                         <span>{option.label ?? option.value}</span>
-                                                        <span className="ml-auto space-x-1">
+                                                        <span className="ml-auto space-x-1 pl-2">
                                                             {option.rightElement && <span>{option.rightElement}</span>}
                                                             {option.tooltip != null && option.tooltip !== "" && (
                                                                 <InfoCircledIcon />
