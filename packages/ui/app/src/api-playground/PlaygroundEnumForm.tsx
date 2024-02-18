@@ -38,13 +38,14 @@ export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({ enumValues, on
         return null;
     }
 
-    if (enumValues.length < 3) {
+    if (enumValues.length < 4) {
         return (
             <div className="w-full">
                 <FernSegmentedControl
                     options={options}
                     value={typeof value === "string" ? value : undefined}
                     onValueChange={onChange}
+                    className="font-mono"
                 />
             </div>
         );

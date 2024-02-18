@@ -53,7 +53,12 @@ export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({ htmlFor, prop
                             ]}
                             onValueChange={(value) => value === "remove" && onRemove?.()}
                         >
-                            <FernButton icon={<DotsHorizontalIcon />} size="small" variant="minimal" />
+                            <FernButton
+                                icon={<DotsHorizontalIcon />}
+                                size="small"
+                                variant="minimal"
+                                className="-mr-1"
+                            />
                         </FernDropdown>
                     )}
                 </span>

@@ -1,11 +1,12 @@
 .playground-endpoint {
     @apply flex min-w-0 flex-1 shrink items-start gap-2;
     @apply px-2 w-full;
-    @apply hover:overflow-visible;
+    /* @apply hover:overflow-visible; */
 }
 
 .playground-endpoint-url {
-    @apply truncate break-all font-mono text-xs hover:whitespace-normal;
+    @apply truncate break-all font-mono text-xs;
+    /* @apply hover:whitespace-normal; */
     @apply py-1;
 }
 

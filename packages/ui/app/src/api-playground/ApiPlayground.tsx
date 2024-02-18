@@ -5,7 +5,7 @@ import { Cross1Icon } from "@radix-ui/react-icons";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
-import { FernTooltipProvider } from "../components/FernTooltip";
+import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
 import { SidebarNode } from "../sidebar/types";
 import "./ApiPlayground.css";
 import { ApiPlayroundContent } from "./ApiPlaygroundContent";
@@ -116,15 +116,26 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({
                     </div>
 
                     <div className="flex items-center justify-end">
-                        <FernButtonGroup>
-                            <FernButton
-                                variant="minimal"
-                                className="-mr-2"
-                                icon={<Cross1Icon />}
-                                onClick={collapseApiPlayground}
-                                rounded
-                            />
-                        </FernButtonGroup>
+                        <FernTooltipProvider>
+                            <FernButtonGroup>
+                                <FernTooltip
+                                    content={
+                                        <span className="space-x-4">
+                                            <span>Close API Playground</span>
+                                            <span className="text-faded font-mono">CTRL + `</span>
+                                        </span>
+                                    }
+                                >
+                                    <FernButton
+                                        variant="minimal"
+                                        className="-mr-2"
+                                        icon={<Cross1Icon />}
+                                        onClick={collapseApiPlayground}
+                                        rounded
+                                    />
+                                </FernTooltip>
+                            </FernButtonGroup>
+                        </FernTooltipProvider>
                     </div>
                 </div>
 

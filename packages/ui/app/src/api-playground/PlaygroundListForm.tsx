@@ -42,7 +42,7 @@ export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemShape, onC
             {valueAsList.length > 0 && (
                 <ul className="divide-border-default border-default w-full max-w-full list-none divide-y divide-dashed border-t border-dashed">
                     {valueAsList.map((item, idx) => (
-                        <li key={idx} className="min-h-12 w-full space-y-1 py-2">
+                        <li key={idx} className="min-h-12 w-full space-y-2 py-2">
                             <div className="flex min-w-0 shrink items-center justify-between gap-2">
                                 <label className="inline-flex flex-wrap items-baseline">
                                     <span className="t-muted bg-tag-default min-w-6 rounded-xl p-1 text-center text-xs font-semibold uppercase">
@@ -55,7 +55,7 @@ export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemShape, onC
                                     onClick={() => handleRemoveItem(idx)}
                                     variant="minimal"
                                     size="small"
-                                    className="-mr-2"
+                                    className="-mr-1"
                                 />
                             </div>
 
