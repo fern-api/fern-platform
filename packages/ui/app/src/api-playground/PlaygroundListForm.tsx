@@ -42,32 +42,31 @@ export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemShape, onC
             {valueAsList.length > 0 && (
                 <ul className="divide-border-default border-default w-full max-w-full list-none divide-y divide-dashed border-t border-dashed">
                     {valueAsList.map((item, idx) => (
-                        <li key={idx} className="flex min-h-12 w-full flex-row items-center gap-1 py-2">
+                        <li key={idx} className="min-h-12 w-full space-y-1 py-2">
                             <div className="flex min-w-0 shrink items-center justify-between gap-2">
                                 <label className="inline-flex flex-wrap items-baseline">
-                                    <span className="t-muted bg-tag-default rounded p-1 text-xs uppercase">
+                                    <span className="t-muted bg-tag-default min-w-6 rounded-xl p-1 text-center text-xs font-semibold uppercase">
                                         {idx + 1}
                                     </span>
                                 </label>
-                            </div>
 
-                            <div className="flex w-full min-w-0 flex-1 shrink items-center gap-2">
-                                <PlaygroundTypeReferenceForm
-                                    shape={itemShape}
-                                    value={item}
-                                    onChange={(newItem) =>
-                                        handleChangeItem(idx, typeof newItem === "function" ? newItem(item) : newItem)
-                                    }
-                                    renderAsPanel={true}
-                                />
                                 <FernButton
                                     icon={<Cross1Icon />}
                                     onClick={() => handleRemoveItem(idx)}
                                     variant="minimal"
                                     size="small"
-                                    className="-mx-1"
+                                    className="-mr-2"
                                 />
                             </div>
+
+                            <PlaygroundTypeReferenceForm
+                                shape={itemShape}
+                                value={item}
+                                onChange={(newItem) =>
+                                    handleChangeItem(idx, typeof newItem === "function" ? newItem(item) : newItem)
+                                }
+                                renderAsPanel={true}
+                            />
                         </li>
                     ))}
                     <li className="py-2">

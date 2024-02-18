@@ -68,7 +68,7 @@ const WithPanel: FC<PropsWithChildren<WithPanelProps>> = ({
                 <WithLabel property={property} value={value} onRemove={onRemove}>
                     <div
                         onClick={showPanel}
-                        className="bg-tag-default-soft group relative -mx-4 min-h-10 cursor-pointer whitespace-pre-wrap break-all font-mono text-xs leading-tight"
+                        className="bg-tag-default-soft group relative -mx-4 min-h-10 cursor-pointer whitespace-pre-wrap break-all p-1 font-mono text-xs leading-tight"
                     >
                         <FernSyntaxHighlighter language="json" customStyle={{ fontSize: "12px", lineHeight: "20px" }}>
                             {JSON.stringify(value, undefined, 2)}

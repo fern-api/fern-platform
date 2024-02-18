@@ -1,5 +1,5 @@
 .playground-endpoint {
-    @apply flex min-w-0 flex-1 shrink items-center gap-2;
+    @apply flex min-w-0 flex-1 shrink items-start gap-2;
     @apply px-2 w-full;
     @apply hover:overflow-visible;
 }

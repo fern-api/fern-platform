@@ -35,6 +35,7 @@ export declare namespace SidebarNode {
         id: string;
         slug: string[];
         title: string;
+        description?: string;
     }
 
     export interface EndpointPage extends Page {
@@ -135,11 +136,13 @@ export function resolveSidebarNodes(
                                 endpoint.name != null ? endpoint.name : stringifyEndpointPathParts(endpoint.path.parts),
                             method: endpoint.method,
                             stream: endpoint.response?.type.type === "stream",
+                            description: endpoint.description,
                         })),
                         webhooks: definition.rootPackage.webhooks.map((webhook) => ({
                             id: webhook.id,
                             slug: [...definitionSlug, webhook.urlSlug],
                             title: webhook.name != null ? webhook.name : "/" + webhook.path.join("/"),
+                            description: webhook.description,
                         })),
                         websockets: [],
                         subpackages: definition.rootPackage.subpackages

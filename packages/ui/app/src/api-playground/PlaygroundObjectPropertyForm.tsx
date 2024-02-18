@@ -1,9 +1,10 @@
 import { ResolvedObjectProperty, unwrapOptional } from "@fern-ui/app-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
-import { PlusCircledIcon } from "@radix-ui/react-icons";
+import { CardStackPlusIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import { useSetAtom } from "jotai";
 import dynamic from "next/dynamic";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
 import { FOCUSED_PARAMETER_ATOM } from "./PlaygroundEndpointFormAside";
@@ -108,6 +109,39 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
             (property) => !shouldShowProperty(property.valueShape, castToRecord(value)[property.key]),
         );
     }, [properties, value]);
+
+    const hiddenPropertiesOptions = useMemo(() => {
+        const options = hiddenProperties.map(
+            (property): FernDropdown.Option => ({
+                type: "value",
+                value: property.key,
+                label: (
+                    <>
+                        <span className="font-mono">{property.key}</span>{" "}
+                        <span className="ml-2 text-xs opacity-60">{renderTypeShorthand(property.valueShape)}</span>
+                    </>
+                ),
+                tooltip:
+                    property.description != null ? (
+                        <Markdown className="text-xs">{property.description}</Markdown>
+                    ) : undefined,
+            }),
+        );
+
+        if (options.length > 1) {
+            options.push(
+                { type: "separator" },
+                {
+                    type: "value",
+                    value: ADD_ALL_KEY,
+                    label: "Add all optional properties",
+                    rightElement: <CardStackPlusIcon />,
+                },
+            );
+        }
+        return options;
+    }, [hiddenProperties]);
+
     return (
         <>
             {shownProperties.length > 0 && (
@@ -134,21 +168,7 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
 
             {hiddenProperties.length > 0 && (
                 <FernDropdown
-                    options={hiddenProperties
-                        .map(
-                            (property): FernDropdown.Option => ({
-                                type: "value",
-                                value: property.key,
-                                tooltip:
-                                    property.description != null ? (
-                                        <Markdown className="text-xs">{property.description}</Markdown>
-                                    ) : undefined,
-                            }),
-                        )
-                        .concat([
-                            { type: "separator" },
-                            { type: "value", value: ADD_ALL_KEY, label: "Add all optional properties" },
-                        ])}
+                    options={hiddenPropertiesOptions}
                     onValueChange={(key) => {
                         if (key === ADD_ALL_KEY) {
                             onChange((oldValue: unknown) => {

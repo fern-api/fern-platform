@@ -44,7 +44,7 @@ export function PlaygroundEndpointFormAside({
         const isFocused = focusedParameter === id;
         return (
             <div
-                className={classNames("rounded-lg px-3 py-1.5 text-sm tracking-tight cursor-pointer", {
+                className={classNames("rounded-lg px-3 py-1.5 text-sm tracking-tight cursor-default", {
                     "bg-tag-primary": isFocused,
                     "bg-transparent hover:bg-tag-default": !isFocused,
                 })}

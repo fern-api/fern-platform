@@ -112,7 +112,7 @@ export function HorizontalSplitPane({
     }
 
     return (
-        <div ref={ref} className={classNames("flex justify-stretch", className)} {...props}>
+        <div ref={ref} className={classNames("flex justify-stretch shrink", className)} {...props}>
             <div style={{ width: `${leftHeightPercent * 100}%` }} className={classNames(leftClassName, "shrink-0")}>
                 {left}
             </div>

@@ -30,16 +30,17 @@ export const FernSegmentedControl: FC<FernSegmentedControlProps> = ({
             {options.map((option) =>
                 option.type === "value" ? (
                     <FernTooltip key={option.value} content={option.tooltip}>
-                        <ToggleGroup.Item asChild={true} className={itemClassName} value={option.value}>
-                            <FernButton
-                                variant={option.value === value ? "filled" : "minimal"}
-                                intent={option.value === value ? "primary" : "none"}
-                                className="flex-1"
-                                mono={true}
-                            >
-                                {option.label ?? option.value}
-                            </FernButton>
-                        </ToggleGroup.Item>
+                        <div className="flex-1">
+                            <ToggleGroup.Item asChild={true} className={itemClassName} value={option.value}>
+                                <FernButton
+                                    variant={"minimal"}
+                                    intent={option.value === value ? "primary" : "none"}
+                                    className="w-full"
+                                >
+                                    {option.label ?? option.value}
+                                </FernButton>
+                            </ToggleGroup.Item>
+                        </div>
                     </FernTooltip>
                 ) : null,
             )}

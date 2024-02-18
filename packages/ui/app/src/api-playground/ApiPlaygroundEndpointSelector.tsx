@@ -5,13 +5,17 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { ChevronDownIcon, ChevronUpIcon, Cross1Icon, MagnifyingGlassIcon, SlashIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { noop } from "lodash-es";
+import dynamic from "next/dynamic";
 import { FC, Fragment, ReactElement, useCallback, useMemo, useRef, useState } from "react";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { FernButton } from "../components/FernButton";
 import { FernInput } from "../components/FernInput";
 import { FernScrollArea } from "../components/FernScrollArea";
+import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
 import { SidebarNode } from "../sidebar/types";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
+
+const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
 
 export interface ApiPlaygroundEndpointSelectorProps {
     navigation: SidebarNode[];
@@ -90,10 +94,12 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
 
     const apiGroups = useMemo(() => flattenApiSection(navigation), [navigation]);
 
-    const selectedGroup = apiGroups.find((group) => group.api === selectionState?.api);
-    const selectedEndpoint = selectedGroup?.endpoints.find(
-        (endpoint) => endpoint.slug.join("/") === selectionState?.endpointId,
-    );
+    const { endpoint: selectedEndpoint, group: selectedGroup } = apiGroups
+        .flatMap((group) => group.endpoints.map((endpoint) => ({ group, endpoint })))
+        .find(({ endpoint }) => endpoint.slug.join("/") === selectionState?.endpointId) ?? {
+        endpoint: undefined,
+        group: undefined,
+    };
 
     const createClickHandler = (group: ApiGroup, endpoint: SidebarNode.EndpointPage) => () => {
         setSelectionStateAndOpen({
@@ -140,24 +146,32 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                     </div>
                 )}
                 <ul className="relative z-0 list-none">
-                    {endpoints.map((endpointItem) => (
-                        <li
-                            ref={
-                                endpointItem.slug.join("/") === selectedEndpoint?.slug.join("/")
-                                    ? selectedItemRef
-                                    : undefined
-                            }
-                            key={endpointItem.id}
-                        >
-                            <FernButton
-                                text={renderTextWithHighlight(endpointItem.title, filterValue)}
-                                className="w-full rounded-none text-left"
-                                variant="minimal"
-                                onClick={createClickHandler(apiGroup, endpointItem)}
-                                rightIcon={<HttpMethodTag method={endpointItem.method} small={true} />}
-                            />
-                        </li>
-                    ))}
+                    {endpoints.map((endpointItem) => {
+                        const active = endpointItem.slug.join("/") === selectedEndpoint?.slug.join("/");
+                        const text = renderTextWithHighlight(endpointItem.title, filterValue);
+                        return (
+                            <li ref={active ? selectedItemRef : undefined} key={endpointItem.id}>
+                                <FernTooltip
+                                    content={
+                                        endpointItem.description != null ? (
+                                            <Markdown>{endpointItem.description}</Markdown>
+                                        ) : undefined
+                                    }
+                                    side="right"
+                                >
+                                    <FernButton
+                                        text={endpointItem.stream ? withStream(text) : text}
+                                        className="w-full rounded-none text-left"
+                                        variant="minimal"
+                                        intent={active ? "primary" : "none"}
+                                        active={active}
+                                        onClick={createClickHandler(apiGroup, endpointItem)}
+                                        rightIcon={<HttpMethodTag method={endpointItem.method} small={true} />}
+                                    />
+                                </FernTooltip>
+                            </li>
+                        );
+                    })}
                 </ul>
             </li>
         );
@@ -241,7 +255,9 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                             </div>
                         )}
                         <FernScrollArea>
-                            <ul className="list-none">{renderedListItems}</ul>
+                            <FernTooltipProvider>
+                                <ul className="list-none">{renderedListItems}</ul>
+                            </FernTooltipProvider>
                         </FernScrollArea>
                         {!isPopoverBelow && (
                             <div
@@ -288,4 +304,16 @@ function renderTextWithHighlight(text: string, highlight: string): ReactElement[
             <span key={idx}>{part}</span>
         ),
     );
+}
+
+function withStream(text: ReactElement[]): ReactElement[] {
+    return [
+        ...text,
+        <span
+            key="stream"
+            className="bg-accent-primary/10 dark:bg-accent-primary-dark/10 text-accent-primary dark:text-accent-primary-dark flex items-center rounded-[4px] p-0.5 font-mono text-xs uppercase leading-none"
+        >
+            stream
+        </span>,
+    ];
 }

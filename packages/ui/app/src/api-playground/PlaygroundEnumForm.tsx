@@ -24,7 +24,11 @@ export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({ enumValues, on
                     type: "value",
                     label: enumValue.value,
                     value: enumValue.value,
-                    tooltip: enumValue.description != null ? <Markdown>{enumValue.description}</Markdown> : undefined,
+                    tooltip:
+                        enumValue.description != null ? (
+                            <Markdown className="text-xs">{enumValue.description}</Markdown>
+                        ) : undefined,
+                    className: "font-mono",
                 }),
             ),
         [enumValues],

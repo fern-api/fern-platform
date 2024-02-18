@@ -60,7 +60,10 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                     label: titleCase(variant.discriminantValue),
                     value: variant.discriminantValue,
                     // todo: handle availability
-                    tooltip: variant.description != null ? <Markdown>{variant.description}</Markdown> : undefined,
+                    tooltip:
+                        variant.description != null ? (
+                            <Markdown className="text-xs">{variant.description}</Markdown>
+                        ) : undefined,
                 }),
             ),
         [discriminatedUnion.variants],

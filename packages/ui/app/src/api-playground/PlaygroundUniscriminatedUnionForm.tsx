@@ -52,7 +52,10 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
                     label: variant.displayName,
                     value: idx.toString(),
                     // todo: handle availability
-                    tooltip: variant.description != null ? <Markdown>{variant.description}</Markdown> : undefined,
+                    tooltip:
+                        variant.description != null ? (
+                            <Markdown className="text-xs">{variant.description}</Markdown>
+                        ) : undefined,
                 }),
             ),
         [undiscriminatedUnion.variants],
