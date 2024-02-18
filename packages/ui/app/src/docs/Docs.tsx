@@ -54,9 +54,6 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
 
     const searchService = useSearchService(search, algoliaSearchIndex);
     const { resolvedTheme: theme, themes, setTheme } = useTheme();
-    useEffect(() => {
-        document.body.className = theme === "dark" ? "antialiased bp5-dark" : "antialiased";
-    });
     useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
     useKeyboardPress({
         key: "Slash",

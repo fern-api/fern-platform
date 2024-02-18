@@ -97,34 +97,6 @@
         display: none;
     }
 
-    .bp5-dark .bp5-control .bp5-control-indicator {
-        @apply ring-1 ring-accent-primary-dark #{!important};
-    }
-
-    .light .bp5-control input:checked ~ .bp5-control-indicator {
-        @apply bg-accent-primary-light #{!important};
-    }
-
-    .bp5-dark .bp5-control input:checked ~ .bp5-control-indicator {
-        @apply bg-accent-primary-dark #{!important};
-    }
-
-    .light input.bp5-input:focus {
-        @apply ring-1 ring-accent-primary #{!important};
-    }
-
-    .bp5-dark .bp5-input:focus {
-        @apply ring-1 ring-accent-primary-dark #{!important};
-    }
-
-    .bp5-dark .bp5-segmented-control {
-        @apply bg-tag-primary-dark #{!important};
-    }
-
-    .light .bp5-segmented-control {
-        @apply bg-tag-primary-light #{!important};
-    }
-
     .description-mask {
         @apply overflow-hidden;
 
