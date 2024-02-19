@@ -65,5 +65,5 @@ types:
 
   ExampleWebSocketMessage:
     properties:
-      type: string
+      type: WebSocketMessageId
       body: unknown
