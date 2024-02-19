@@ -21,8 +21,8 @@ export async function convertNavigatableToResolvedPath({
     });
     const { previous, next } = resolver.getNeighborsForNavigatable(navigatable);
     const neighbors = {
-        prev: getNeighbor(previous),
-        next: getNeighbor(next),
+        prev: getNeighbor(previous, resolver, basePath),
+        next: getNeighbor(next, resolver, basePath),
     };
 
     switch (serializedNavigatable.type) {
@@ -49,33 +49,17 @@ export async function convertNavigatableToResolvedPath({
     }
 }
 
-function getNeighbor(docsNode: DocsNode | null): ResolvedPath.Neighbor | null {
+function getNeighbor(
+    docsNode: DocsNode | null,
+    resolver: PathResolver,
+    basePath: string | undefined,
+): ResolvedPath.Neighbor | null {
     if (docsNode == null) {
         return null;
     }
-    const slug = getSlug(docsNode);
+    const slug = getFullSlugForNavigatable(resolver.resolveNavigatable(docsNode), { omitDefault: true, basePath });
     const title = getTitle(docsNode);
     return slug != null && title != null ? { fullSlug: slug, title } : null;
-}
-
-function getSlug(docsNode: DocsNode): string | null {
-    switch (docsNode.type) {
-        case "docs-section":
-        case "api-section":
-        case "api-subpackage":
-            docsNode.context.navigationConfig;
-            return docsNode.section.urlSlug;
-        case "page":
-            return docsNode.page.urlSlug;
-        case "top-level-endpoint":
-        case "endpoint":
-            return docsNode.endpoint.urlSlug;
-        case "top-level-webhook":
-        case "webhook":
-            return docsNode.webhook.urlSlug;
-        default:
-            return null;
-    }
 }
 
 function getTitle(docsNode: DocsNode): string | null {
