@@ -25,6 +25,7 @@ export interface ApiPlaygroundEndpointSelectorProps {
 
 interface ApiGroup {
     api: FdrAPI.ApiId;
+    id: string;
     breadcrumbs: string[];
     endpoints: SidebarNode.EndpointPage[];
     webhooks: SidebarNode.Page[];
@@ -50,6 +51,7 @@ function flattenApiSection(navigation: SidebarNode[]): ApiGroup[] {
             apiSection: (apiSection) => {
                 result.push({
                     api: apiSection.api,
+                    id: apiSection.id,
                     breadcrumbs: [apiSection.title],
                     endpoints: apiSection.endpoints,
                     webhooks: apiSection.webhooks,
@@ -134,7 +136,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
             return null;
         }
         return (
-            <li key={apiGroup.api} className="gap-2">
+            <li key={apiGroup.id} className="gap-2">
                 {apiGroup.breadcrumbs.length > 1 && (
                     <div className="bg-background sticky top-0 z-10 flex h-[30px] items-center px-3 py-1">
                         {apiGroup.breadcrumbs.slice(1).map((breadcrumb, idx) => (

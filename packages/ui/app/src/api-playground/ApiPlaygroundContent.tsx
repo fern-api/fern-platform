@@ -9,7 +9,6 @@ import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react
 import { CopyToClipboardButton } from "../commons/CopyToClipboardButton";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernCard } from "../components/FernCard";
-import { FernScrollArea } from "../components/FernScrollArea";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
 import { PlaygroundEndpointFormAside } from "./PlaygroundEndpointFormAside";
@@ -92,7 +91,10 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                     auth={auth}
                 /> */}
             {/* </div> */}
-            <FernScrollArea ref={scrollAreaRef} viewportClassName="overscroll-contain mask-grad-top">
+            <div
+                ref={scrollAreaRef}
+                className="mask-grad-top w-full overflow-x-hidden overflow-y-scroll overscroll-contain"
+            >
                 <HorizontalSplitPane
                     rizeBarHeight={scrollAreaHeight}
                     leftClassName="pl-6 pr-1 mt"
@@ -239,7 +241,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                         ) : null}
                     </VerticalSplitPane>
                 </HorizontalSplitPane>
-            </FernScrollArea>
+            </div>
         </div>
     );
 };
