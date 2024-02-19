@@ -29,7 +29,7 @@ types:
       queryParameters: list<http.QueryParameter>
       messages:
         docs: "The messages that can be sent and received on this channel"
-        type: map<WebSocketMessageId, WebSocketMessage>
+        type: list<WebSocketMessage>
       examples: list<ExampleWebSocketQueue>
 
   WebSocketMessage:
@@ -37,6 +37,7 @@ types:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
+      type: WebSocketMessageId
       displayName: optional<string>
       origin: WebSocketMessageOrigin
       body: WebSocketMessageBodyShape
