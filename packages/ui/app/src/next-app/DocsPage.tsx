@@ -114,14 +114,8 @@ export const getDocsPageProps = async (
     const docsDefinition = docs.body.definition;
     const basePath = docs.body.baseUrl.basePath;
 
-    type ApiDefinition = APIV1Read.ApiDefinition;
-    const resolver = new PathResolver({
-        definition: {
-            apis: docs.body.definition.apis as Record<ApiDefinition["id"], ApiDefinition>,
-            docsConfig: docs.body.definition.config,
-            basePath,
-        },
-    });
+    const { apis, config: docsConfig } = docsDefinition;
+    const resolver = new PathResolver({ definition: { apis, docsConfig, basePath } });
 
     if (pathname === "wss/transcribe") {
         const navigatable = resolver.resolveNavigatable("");
@@ -358,6 +352,7 @@ function getVersionAndTabSlug(basePath: string | undefined, navigatable: Navigat
     }
     return versionAndTabSlug;
 }
+
 function getNavigation(
     basePath: string | undefined,
     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,

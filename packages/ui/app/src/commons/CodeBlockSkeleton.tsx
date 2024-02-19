@@ -23,7 +23,7 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
     className,
     language,
     content,
-    usePlainStyles = false,
+    // usePlainStyles = false,
     fontSize,
     style,
     highlightLines,
@@ -35,9 +35,9 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
             className={classNames(
                 // "bg-gray-100/90 dark:bg-gray-950/90",
                 "font-mono",
-                {
-                    "w-full border-l border-r border-b rounded-bl-lg rounded-br-lg border-default": !usePlainStyles,
-                },
+                // {
+                //     "w-full border-l border-r border-b rounded-bl-lg rounded-br-lg border-default": !usePlainStyles,
+                // },
                 className,
             )}
             style={style}
