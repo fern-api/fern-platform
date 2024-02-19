@@ -42,7 +42,7 @@ types:
       auth: optional<ApiAuth>
       globalHeaders: optional<list<endpoint.Header>>
       snippetsConfiguration: optional<SnippetsConfig>
-  
+
   SnippetsConfig:
     properties:
       typescriptSdk: optional<TypescriptPackage>
@@ -61,15 +61,15 @@ types:
   GoModule:
     properties:
       githubRepo: string
-  
-  JavaCoordinate: 
-    properties: 
+
+  JavaCoordinate:
+    properties:
       coordinate: string
 
   ApiDefinitionPackage:
     properties:
       endpoints: list<endpoint.EndpointDefinition>
-      websockets: optional<list<websocket.WebSocketDefinition>>
+      websockets: optional<list<websocket.WebSocketChannel>>
       webhooks: optional<list<webhook.WebhookDefinition>>
       types: list<type.TypeId>
       subpackages: list<SubpackageId>

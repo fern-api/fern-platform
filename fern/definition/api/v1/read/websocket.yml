@@ -1,53 +1,68 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 imports:
-  type: type.yml
   commons: commons.yml
-  endpoint: endpoint.yml
+  type: type.yml
+  http: endpoint.yml
 
 types:
   WebSocketId: string
+  WebSocketMessageId: string
 
-  WebSocketDefinition:
-    extends: commons.WithDescription
+  WebSocketChannel:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
     properties:
       urlSlug: string
       id: WebSocketId
+      auth: boolean
       name: optional<string>
+
       # environments (should match to wss://)
-      defaultEnvironment: optional<endpoint.EnvironmentId>
-      environments: list<endpoint.Environment>
-      path: endpoint.EndpointPath
-      queryParameters: list<endpoint.QueryParameter>
-      publish: WebSocketPayload
-      subscribe: WebSocketPayload
-      examples: list<WebSocketExample>
+      defaultEnvironment: optional<http.EnvironmentId>
+      environments: list<http.Environment>
 
-  WebSocketPayload:
-    extends: commons.WithDescription
+      # mirror-ish of FDR-IR
+      path: http.EndpointPath
+      headers: list<http.Header>
+      queryParameters: list<http.QueryParameter>
+      messages:
+        docs: "The messages that can be sent and received on this channel"
+        type: map<WebSocketMessageId, WebSocketMessage>
+      examples: list<ExampleWebSocketQueue>
+
+  WebSocketMessage:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
     properties:
-      type: WebSocketPayloadShape
+      displayName: optional<string>
+      origin: WebSocketMessageOrigin
+      body: WebSocketMessageBodyShape
 
-  WebSocketPayloadShape:
+  WebSocketMessageOrigin:
+    enum:
+      - client
+      - server
+
+  # mirror of http.HttpRequestBodyShape without fileUpload
+  WebSocketMessageBodyShape:
     union:
       object: type.ObjectType
       reference: type.TypeReference
 
-  WebSocketExample:
+  ExampleWebSocketQueue:
+    extends: commons.WithDescription
     properties:
       name: optional<string>
-      description: optional<string>
-      pathParameters: map<endpoint.PathParameterKey, unknown>
+      path: string
+      pathParameters: map<http.PathParameterKey, unknown>
       queryParameters: map<string, unknown>
-      events: list<ExampleWebSocketEvent>
+      headers: map<string, unknown>
+      messages: list<ExampleWebSocketMessage>
 
-  ExampleWebSocketEvent:
+  ExampleWebSocketMessage:
     properties:
-      action: WebSocketAction
-      variant: optional<string>
-      payload: unknown
-
-  WebSocketAction:
-    enum:
-      - send
-      - receive
+      type: string
+      body: unknown

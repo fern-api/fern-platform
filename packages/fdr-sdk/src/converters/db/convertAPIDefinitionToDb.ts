@@ -108,16 +108,18 @@ function transformSubpackage({
 function transformWebsocket({
     writeShape,
 }: {
-    writeShape: APIV1Write.WebSocketDefinition;
-}): WithoutQuestionMarks<FdrAPI.api.v1.read.WebSocketDefinition> {
+    writeShape: APIV1Write.WebSocketChannel;
+}): WithoutQuestionMarks<FdrAPI.api.v1.read.WebSocketChannel> {
     const htmlDescription = getHtmlDescription(writeShape.description);
     const urlSlug = kebabCase(writeShape.id);
     return {
         urlSlug,
+        auth: writeShape.auth,
+        headers: writeShape.headers,
+        messages: writeShape.messages,
+        availability: writeShape.availability,
         defaultEnvironment: writeShape.defaultEnvironment,
         environments: writeShape.environments,
-        publish: writeShape.publish,
-        subscribe: writeShape.subscribe,
         description: writeShape.description,
         htmlDescription,
         descriptionContainsMarkdown: true,
@@ -125,7 +127,7 @@ function transformWebsocket({
         name: writeShape.name,
         path: writeShape.path,
         queryParameters: writeShape.queryParameters,
-        examples: writeShape.examples.length > 0 ? writeShape.examples : [],
+        examples: writeShape.examples,
     };
 }
 

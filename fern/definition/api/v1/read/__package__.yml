@@ -41,7 +41,7 @@ types:
   ApiDefinitionPackage:
     properties:
       endpoints: list<endpoint.EndpointDefinition>
-      websockets: list<websocket.WebSocketDefinition>
+      websockets: list<websocket.WebSocketChannel>
       webhooks: list<webhook.WebhookDefinition>
       types: list<type.TypeId>
       subpackages: list<SubpackageId>

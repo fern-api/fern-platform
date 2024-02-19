@@ -26,7 +26,7 @@ types:
   DbApiDefinitionPackage:
     properties:
       endpoints: list<endpoint.DbEndpointDefinition>
-      websockets: optional<list<readWebsocket.WebSocketDefinition>>
+      websockets: optional<list<readWebsocket.WebSocketChannel>>
       webhooks: optional<list<readWebhook.WebhookDefinition>>
       types: list<readType.TypeId>
       subpackages: list<readRoot.SubpackageId>
