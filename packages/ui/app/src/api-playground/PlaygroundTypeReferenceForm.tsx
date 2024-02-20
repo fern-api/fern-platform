@@ -1,11 +1,6 @@
 import { ResolvedObjectProperty, ResolvedTypeReference } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { useBooleanState } from "@fern-ui/react-commons";
-import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
-import classNames from "classnames";
-import { FC, PropsWithChildren, ReactElement, useCallback, useEffect } from "react";
-import { FernSyntaxHighlighter } from "../commons/CodeBlockSkeleton";
-import { FernButton } from "../components/FernButton";
+import { FC, ReactElement, useCallback } from "react";
 import { FernInput } from "../components/FernInput";
 import { FernNumericInput } from "../components/FernNumericInput";
 import { FernSwitch } from "../components/FernSwitch";
@@ -33,72 +28,72 @@ interface PlaygroundTypeReferenceFormProps {
     onlyOptional?: boolean;
 }
 
-interface WithPanelProps {
-    value: unknown;
-    renderAsPanel: boolean;
-    onRemove: () => void;
-    onOpenStack?: () => void;
-    onCloseStack?: () => void;
-    property?: ResolvedObjectProperty;
-}
+// interface WithPanelProps {
+//     value: unknown;
+//     renderAsPanel: boolean;
+//     onRemove: () => void;
+//     onOpenStack?: () => void;
+//     onCloseStack?: () => void;
+//     property?: ResolvedObjectProperty;
+// }
 
-const WithPanel: FC<PropsWithChildren<WithPanelProps>> = ({
-    children,
-    value,
-    renderAsPanel,
-    onRemove,
-    onOpenStack,
-    onCloseStack,
-    property,
-}) => {
-    const { value: isPanelOpen, setTrue: showPanel, setFalse: hidePanel } = useBooleanState(false);
-    useEffect(() => {
-        if (isPanelOpen && renderAsPanel) {
-            onOpenStack?.();
-        } else {
-            onCloseStack?.();
-        }
-    }, [isPanelOpen, onCloseStack, onOpenStack, renderAsPanel]);
-    if (!renderAsPanel) {
-        return <>{children}</>;
-    }
-    return (
-        <>
-            <div className={classNames({ hidden: isPanelOpen })}>
-                <WithLabel property={property} value={value} onRemove={onRemove}>
-                    <div
-                        onClick={showPanel}
-                        className="bg-tag-default-soft group relative -mx-4 min-h-10 cursor-pointer whitespace-pre-wrap break-all p-1 font-mono text-xs leading-tight"
-                    >
-                        <FernSyntaxHighlighter language="json" customStyle={{ fontSize: "12px", lineHeight: "20px" }}>
-                            {JSON.stringify(value, undefined, 2)}
-                        </FernSyntaxHighlighter>
-                        <div className="t-muted absolute inset-y-0 right-2 flex items-center">
-                            <ChevronDownIcon />
-                        </div>
-                    </div>
-                </WithLabel>
-            </div>
-            <div
-                className={classNames("-mx-4 p-4 border-default bg-background border-y shadow-md relative", {
-                    hidden: !isPanelOpen,
-                })}
-            >
-                <FernButton
-                    variant="minimal"
-                    icon={<ChevronUpIcon />}
-                    onClick={hidePanel}
-                    className="absolute right-1 top-1"
-                    rounded
-                />
-                <div className="mb-4">
-                    <h6 className="m-0 font-mono">{property?.key}</h6>
-                </div>
-                {children}
-            </div>
-        </>
-    );
-};
+// const WithPanel: FC<PropsWithChildren<WithPanelProps>> = ({
+//     children,
+//     value,
+//     renderAsPanel,
+//     onRemove,
+//     onOpenStack,
+//     onCloseStack,
+//     property,
+// }) => {
+//     const { value: isPanelOpen, setTrue: showPanel, setFalse: hidePanel } = useBooleanState(false);
+//     useEffect(() => {
+//         if (isPanelOpen && renderAsPanel) {
+//             onOpenStack?.();
+//         } else {
+//             onCloseStack?.();
+//         }
+//     }, [isPanelOpen, onCloseStack, onOpenStack, renderAsPanel]);
+//     if (!renderAsPanel) {
+//         return <>{children}</>;
+//     }
+//     return (
+//         <>
+//             <div className={classNames({ hidden: isPanelOpen })}>
+//                 <WithLabel property={property} value={value} onRemove={onRemove}>
+//                     <div
+//                         onClick={showPanel}
+//                         className="bg-tag-default-soft group relative -mx-4 min-h-10 cursor-pointer whitespace-pre-wrap break-all p-1 font-mono text-xs leading-tight"
+//                     >
+//                         <FernSyntaxHighlighter language="json" customStyle={{ fontSize: "12px", lineHeight: "20px" }}>
+//                             {JSON.stringify(value, undefined, 2)}
+//                         </FernSyntaxHighlighter>
+//                         <div className="t-muted absolute inset-y-0 right-2 flex items-center">
+//                             <ChevronDownIcon />
+//                         </div>
+//                     </div>
+//                 </WithLabel>
+//             </div>
+//             <div
+//                 className={classNames("-mx-4 p-4 border-default bg-background border-y shadow-md relative", {
+//                     hidden: !isPanelOpen,
+//                 })}
+//             >
+//                 <FernButton
+//                     variant="minimal"
+//                     icon={<ChevronUpIcon />}
+//                     onClick={hidePanel}
+//                     className="absolute right-1 top-1"
+//                     rounded
+//                 />
+//                 <div className="mb-4">
+//                     <h6 className="m-0 font-mono">{property?.key}</h6>
+//                 </div>
+//                 {children}
+//             </div>
+//         </>
+//     );
+// };
 
 const createFilter = (onlyRequired: boolean, onlyOptional: boolean) => {
     if (onlyRequired && onlyOptional) {
@@ -121,9 +116,9 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
     value,
     onBlur,
     onFocus,
-    onOpenStack,
-    onCloseStack,
-    renderAsPanel = false,
+    // onOpenStack,
+    // onCloseStack,
+    // renderAsPanel = false,
     onlyRequired = false,
     onlyOptional = false,
 }) => {
@@ -132,20 +127,12 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
     }, [onChange]);
     return visitDiscriminatedUnion(shape, "type")._visit<ReactElement | null>({
         object: (object) => (
-            <WithPanel
+            <PlaygroundObjectPropertiesForm
+                properties={object.properties().filter(createFilter(onlyRequired, onlyOptional))}
+                onChange={onChange}
                 value={value}
-                renderAsPanel={renderAsPanel}
-                onRemove={onRemove}
-                onOpenStack={onOpenStack}
-                onCloseStack={onCloseStack}
-                property={property}
-            >
-                <PlaygroundObjectPropertiesForm
-                    properties={object.properties().filter(createFilter(onlyRequired, onlyOptional))}
-                    onChange={onChange}
-                    value={value}
-                />
-            </WithPanel>
+                indent={true}
+            />
         ),
         enum: ({ values }) => (
             <WithLabel property={property} value={value} onRemove={onRemove}>
@@ -153,36 +140,18 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
             </WithLabel>
         ),
         undiscriminatedUnion: (undiscriminatedUnion) => (
-            <WithPanel
+            <PlaygroundUniscriminatedUnionForm
+                undiscriminatedUnion={undiscriminatedUnion}
+                onChange={onChange}
                 value={value}
-                renderAsPanel={renderAsPanel}
-                onRemove={onRemove}
-                onOpenStack={onOpenStack}
-                onCloseStack={onCloseStack}
-                property={property}
-            >
-                <PlaygroundUniscriminatedUnionForm
-                    undiscriminatedUnion={undiscriminatedUnion}
-                    onChange={onChange}
-                    value={value}
-                />
-            </WithPanel>
+            />
         ),
         discriminatedUnion: (discriminatedUnion) => (
-            <WithPanel
+            <PlaygroundDiscriminatedUnionForm
+                discriminatedUnion={discriminatedUnion}
+                onChange={onChange}
                 value={value}
-                renderAsPanel={renderAsPanel}
-                onRemove={onRemove}
-                onOpenStack={onOpenStack}
-                onCloseStack={onCloseStack}
-                property={property}
-            >
-                <PlaygroundDiscriminatedUnionForm
-                    discriminatedUnion={discriminatedUnion}
-                    onChange={onChange}
-                    value={value}
-                />
-            </WithPanel>
+            />
         ),
         string: () => (
             <WithLabel property={property} value={value} onRemove={onRemove} htmlFor={id}>

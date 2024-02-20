@@ -81,6 +81,7 @@ interface PlaygroundObjectPropertiesFormProps {
     properties: ResolvedObjectProperty[];
     onChange: (value: unknown) => void;
     value: unknown;
+    indent?: boolean;
 }
 
 export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormProps> = ({
@@ -88,6 +89,7 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
     properties,
     onChange,
     value,
+    indent = false,
 }) => {
     const setFocusedParameter = useSetAtom(FOCUSED_PARAMETER_ATOM);
     const onChangeObjectProperty = useCallback(
@@ -143,7 +145,7 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
     }, [hiddenProperties]);
 
     return (
-        <>
+        <div className={indent ? "border-border-default-soft border-l pl-4" : undefined}>
             {shownProperties.length > 0 && (
                 <ul className="list-none space-y-8">
                     {shownProperties.map((property) => {
@@ -206,7 +208,7 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
                     />
                 </FernDropdown>
             )}
-        </>
+        </div>
     );
 };
 

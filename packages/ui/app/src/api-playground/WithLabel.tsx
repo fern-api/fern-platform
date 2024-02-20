@@ -1,11 +1,10 @@
 import { ResolvedObjectProperty } from "@fern-ui/app-utils";
-import { DotsHorizontalIcon, TrashIcon } from "@radix-ui/react-icons";
+import { Cross1Icon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { FC, PropsWithChildren } from "react";
 import { EndpointAvailabilityTag } from "../api-page/endpoints/EndpointAvailabilityTag";
 import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
 import { FernButton } from "../components/FernButton";
-import { FernDropdown } from "../components/FernDropdown";
 
 interface WithLabelProps {
     htmlFor?: string;
@@ -42,24 +41,13 @@ export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({ htmlFor, prop
                     </span>
 
                     {property.valueShape.type === "optional" && (
-                        <FernDropdown
-                            options={[
-                                {
-                                    type: "value",
-                                    value: "remove",
-                                    label: "Remove property",
-                                    rightElement: <TrashIcon />,
-                                },
-                            ]}
-                            onValueChange={(value) => value === "remove" && onRemove?.()}
-                        >
-                            <FernButton
-                                icon={<DotsHorizontalIcon />}
-                                size="small"
-                                variant="minimal"
-                                className="-mr-1"
-                            />
-                        </FernDropdown>
+                        <FernButton
+                            icon={<Cross1Icon />}
+                            size="small"
+                            variant="minimal"
+                            className="-mr-1"
+                            onClick={onRemove}
+                        />
                     )}
                 </span>
             </div>

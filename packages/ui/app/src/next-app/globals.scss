@@ -235,7 +235,6 @@
         @apply text-left relative inline-flex flex-1 content-between items-stretch lg:px-3 max-lg:px-4;
         @apply no-underline hover:no-underline;
         @apply max-lg:rounded-none lg:rounded-lg;
-        @apply cursor-default;
     }
 
     .fern-sidebar-link-container[data-state="active"] .fern-sidebar-link {
