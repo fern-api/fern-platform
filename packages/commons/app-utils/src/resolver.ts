@@ -236,7 +236,7 @@ function resolveWebsocketChannel(
             .filter((param) => param !== undefined) as ResolvedEndpointPathParts[],
         headers: websocket.headers.map((header) => ({
             ...header,
-            shape: resolveTypeReference(header.type, types),
+            valueShape: resolveTypeReference(header.type, types),
         })),
         pathParameters,
         queryParameters: websocket.queryParameters.map(
@@ -537,7 +537,7 @@ export declare namespace ResolvedApiDefinition {
         package: ResolvedApiDefinitionPackage;
     }
 
-    export interface WebSocket extends ResolvedPubSubWebsocketDefinition {
+    export interface WebSocket extends ResolvedWebSocketChannel {
         type: "websocket";
         package: ResolvedApiDefinitionPackage;
     }
@@ -640,9 +640,9 @@ export interface ResolvedWebSocketChannel
     > {
     slug: string[];
     path: ResolvedEndpointPathParts[];
-    headers: ResolvedParameter[];
-    pathParameters: ResolvedParameter[];
-    queryParameters: ResolvedParameter[];
+    headers: ResolvedObjectProperty[];
+    pathParameters: ResolvedObjectProperty[];
+    queryParameters: ResolvedObjectProperty[];
     messages: ResolvedWebSocketMessage[];
     defaultEnvironment: APIV1Read.Environment | undefined;
 }
