@@ -46,7 +46,7 @@ export const SidebarHeading: FC<SidebarHeadingProps> = ({
         {toggleExpand == null && depth > 0 && <div className={"w-6"} />}
         <span
             className={classNames(
-                "inline-flex flex-1 content-between items-center px-3 text-inherit no-underline hover:text-inherit hover:no-underline",
+                "inline-flex flex-1 content-between items-center px-4 lg:px-3 text-inherit no-underline hover:text-inherit hover:no-underline",
                 {
                     pointer: toggleExpand != null,
                 },

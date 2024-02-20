@@ -40,10 +40,13 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const selectedSlug = getFullSlugForNavigatable(activeNavigatable, { omitDefault: true, basePath });
 
     const navigateToRoute = useRef((route: string, _disableSmooth = false) => {
-        const [routeWithoutAnchor, _anchor] = route.split("#");
+        const [routeWithoutAnchor, anchor] = route.split("#");
         if (!userIsScrolling.current && routeWithoutAnchor != null) {
             // fallback to "routeWithoutAnchor" if anchor is not detected (otherwise API reference will scroll to top)
-            const node = getRouteNode(route) ?? getRouteNode(routeWithoutAnchor);
+            const node =
+                getRouteNode(route) ??
+                getRouteNode(routeWithoutAnchor) ??
+                (anchor != null ? document.getElementById(anchor) : undefined);
             node?.scrollIntoView({
                 behavior: "auto",
             });
@@ -127,16 +130,14 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     const timeout = useRef<NodeJS.Timeout>();
 
-    const navigateToPath = useEventCallback((fullSlug: string, shallow = false) => {
+    const navigateToPath = useEventCallback((route: string, shallow = false) => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const fullSlug = route.substring(1).split("#")[0]!;
         justNavigated.current = true;
         const navigatable = pathResolver.resolveNavigatable(fullSlug);
-        navigateToRoute.current(`/${fullSlug}`, !shallow);
+        navigateToRoute.current(route, !shallow);
         if (navigatable != null) {
             setActiveNavigatable(navigatable);
-
-            if (navigatable.type === "page") {
-                window.scrollTo({ top: 0 });
-            }
         }
         // navigateToPathListeners.invokeListeners(slug);
         timeout.current != null && clearTimeout(timeout.current);
@@ -147,7 +148,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     useEffect(() => {
         const handleRouteChangeStart = (route: string, { shallow }: { shallow: boolean }) => {
-            navigateToPath(route.substring(1), shallow);
+            navigateToPath(route, shallow);
         };
         router.events.on("routeChangeComplete", handleRouteChangeStart);
         router.events.on("hashChangeComplete", handleRouteChangeStart);
@@ -159,7 +160,8 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     useEffect(() => {
         router.beforePopState(({ as }) => {
-            const slugCandidate = as.substring(1, as.length);
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            const slugCandidate = as.substring(1).split("#")[0]!;
             const previousNavigatable = pathResolver.resolveNavigatable(slugCandidate);
             if (previousNavigatable != null) {
                 const fullSlug = getFullSlugForNavigatable(previousNavigatable, { basePath });

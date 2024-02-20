@@ -27,7 +27,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/fdr-sdk": "0.48.0-1-ge4e5031",
+    "@fern-api/fdr-sdk": "0.50.1-1-g1f0f637",
     "@fern-ui/core-utils": "workspace:*",
     "@types/title": "^3.4.3",
     "lodash-es": "^4.17.21",

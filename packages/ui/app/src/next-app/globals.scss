@@ -58,7 +58,7 @@
     h4,
     h5,
     h6 {
-        @apply scroll-mt-header-height-padded tracking-tight mt-8;
+        @apply scroll-mt-header-height-padded tracking-tight;
 
         font-family: var(--typography-heading-font-family);
     }
@@ -108,6 +108,61 @@
 }
 
 @layer components {
+    .mask-grad-top-1 {
+        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 4px);
+    }
+
+    .mask-grad-top-2 {
+        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 8px);
+    }
+
+    .mask-grad-top-3 {
+        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 12px);
+    }
+
+    .mask-grad-top-4 {
+        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 16px);
+    }
+
+    .mask-grad-top-5 {
+        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 20px);
+    }
+
+    .mask-grad-top-6 {
+        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 24px);
+    }
+
+    .mask-grad-top-7 {
+        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 28px);
+    }
+
+    .mask-grad-top-8 {
+        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 32px);
+    }
+
+    .playground-endpoint {
+        @apply flex min-w-0 flex-1 shrink items-start gap-2;
+        @apply bg-background border-default relative z-10 px-3 py-2 border-x;
+        @apply hover:self-start hover:overflow-visible hover:border-b hover:rounded-b-lg;
+    }
+
+    .playground-endpoint-url {
+        @apply truncate break-all font-mono text-xs hover:whitespace-normal;
+        @apply py-1;
+    }
+
+    .playground-endpoint:hover .playground-endpoint-url {
+        @apply whitespace-normal;
+    }
+
+    .playground-endpoint-copy-button {
+        @apply hidden -mt-1;
+    }
+
+    .playground-endpoint:hover .playground-endpoint-copy-button {
+        @apply inline-block;
+    }
+
     .fern-dropdown {
         @apply animate-popover;
         @apply min-w-[var(--radix-dropdown-menu-trigger-width)];
@@ -141,12 +196,10 @@
 
     .fern-sidebar-group {
         @apply list-none;
+        @apply max-lg:-mx-4;
 
-        &:not(.expandable) {
-            > .fern-sidebar-item {
-                @apply max-lg:overflow-hidden;
-                @apply max-lg:bg-tag-default-soft max-lg:first:rounded-t-xl max-lg:last:rounded-b-xl;
-            }
+        .fern-sidebar-group {
+            @apply max-lg:mx-0;
         }
     }
 
@@ -179,7 +232,7 @@
     }
 
     .fern-sidebar-link {
-        @apply text-left relative inline-flex flex-1 content-between items-stretch px-3;
+        @apply text-left relative inline-flex flex-1 content-between items-stretch lg:px-3 max-lg:px-4;
         @apply no-underline hover:no-underline;
         @apply max-lg:rounded-none lg:rounded-lg;
         @apply cursor-default;

@@ -1,9 +1,10 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { Dialog, Transition } from "@headlessui/react";
 import { useRouter } from "next/router";
-import { Fragment, memo, useEffect } from "react";
+import { Fragment, memo, useEffect, useRef } from "react";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { FernTooltipProvider } from "../components/FernTooltip";
+import { useIsScrolled } from "../docs/useIsScrolled";
 import { SearchSidebar } from "../search/SearchDialog";
 import { SearchService } from "../services/useSearchService";
 import { useViewportContext } from "../viewport-context/useViewportContext";
@@ -34,15 +35,27 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
     navbarLinks,
     searchService,
 }) {
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const isScrolled = useIsScrolled(scrollRef);
+    const { layoutBreakpoint } = useViewportContext();
+    const isMobileSidebarOpen = useIsMobileSidebarOpen();
     return (
         <nav className="h-full w-full lg:pl-1" aria-label="secondary">
-            <FernScrollArea className="group/sidebar" viewportClassName="px-4 pb-12" aria-orientation="vertical">
+            <FernScrollArea
+                className="group/sidebar"
+                viewportClassName="px-4 pb-12"
+                aria-orientation="vertical"
+                viewportRef={scrollRef}
+            >
                 <SearchSidebar searchService={searchService}>
                     <MobileSidebarHeaderLinks navbarLinks={navbarLinks} />
                     <SidebarFixedItemsSection
                         className="z-10 -mx-4 lg:sticky lg:top-0"
                         searchInfo={searchInfo}
                         algoliaSearchIndex={algoliaSearchIndex}
+                        showBorder={
+                            isScrolled || (isMobileSidebarOpen && ["mobile", "sm", "md"].includes(layoutBreakpoint))
+                        }
                     />
                     <CollapseSidebarProvider>
                         <FernTooltipProvider>

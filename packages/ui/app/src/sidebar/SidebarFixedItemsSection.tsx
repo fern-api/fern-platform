@@ -13,6 +13,7 @@ export declare namespace SidebarFixedItemsSection {
         className?: string;
         searchInfo: DocsV1Read.SearchInfo;
         algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
+        showBorder?: boolean;
     }
 }
 
@@ -20,6 +21,7 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
     className,
     searchInfo,
     algoliaSearchIndex,
+    showBorder,
 }) => {
     const { activeNavigatable } = useNavigationContext();
     const { activeNavigationConfigContext, withVersionSlug } = useDocsSelectors();
@@ -29,7 +31,7 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
     const showSearchBar = useSearchService(searchInfo, algoliaSearchIndex).isAvailable;
     const searchBar = useMemo(() => {
         return showSearchBar ? (
-            <div className="hidden lg:block">
+            <div className="mb-3 hidden last:mb-0 lg:block">
                 <SidebarSearchBar onClick={openSearchDialog} className="w-full" />
             </div>
         ) : null;
@@ -40,7 +42,7 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
             return null;
         }
         return (
-            <ul className="mt-3 flex list-none flex-col">
+            <ul className="flex list-none flex-col">
                 {activeNavigationConfigContext.config.tabs.map((tab, idx) => (
                     <SidebarTabButton
                         key={idx}
@@ -62,13 +64,14 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
             className={classNames(
                 "flex flex-col px-4 lg:pt-4 lg:backdrop-blur",
                 {
-                    "border-b border-concealed": tabs != null,
+                    "border-b data-[border=show]:border-concealed data-[border=hide]:border-transparent": tabs != null,
                 },
                 {
                     "py-4 lg:pb-2": tabs != null,
                 },
                 className,
             )}
+            data-border={showBorder ? "show" : "hide"}
         >
             {searchBar}
             {tabs}

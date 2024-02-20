@@ -2,7 +2,6 @@ import { APIV1Read, DocsV1Read, DocsV2Read, FdrAPI } from "@fern-api/fdr-sdk";
 import type { ResolvedPath } from "@fern-ui/app-utils";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import "@fontsource/ibm-plex-mono";
-import "normalize.css";
 import { useEffect } from "react";
 import { initializePosthog } from "../analytics/posthog";
 import { CONTEXTS } from "../contexts";
