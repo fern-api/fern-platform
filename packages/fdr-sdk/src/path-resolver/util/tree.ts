@@ -7,7 +7,9 @@ export function isApiNode(node: DocsNode): node is ApiDocsNode {
         node.type === "top-level-endpoint" ||
         node.type === "endpoint" ||
         node.type === "top-level-webhook" ||
-        node.type === "webhook"
+        node.type === "webhook" ||
+        node.type === "top-level-websocket" ||
+        node.type === "websocket"
     );
 }
 
@@ -17,6 +19,8 @@ export function isNavigatableNode(node: DocsNode): node is NavigatableDocsNode {
         node.type === "endpoint" ||
         node.type === "top-level-webhook" ||
         node.type === "webhook" ||
+        node.type === "top-level-websocket" ||
+        node.type === "websocket" ||
         node.type === "page"
     );
 }
