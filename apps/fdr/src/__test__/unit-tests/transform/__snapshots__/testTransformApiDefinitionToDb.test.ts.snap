@@ -75,6 +75,7 @@ Object {
     ],
     "types": Array [],
     "webhooks": Array [],
+    "websockets": undefined,
   },
   "subpackages": Object {
     "subpackage_adjustments": Object {
@@ -89492,6 +89493,7 @@ Object {
     ],
     "types": Array [],
     "webhooks": Array [],
+    "websockets": undefined,
   },
   "subpackages": Object {
     "subpackage_transactions": Object {
@@ -89715,6 +89717,7 @@ Object {
     ],
     "types": Array [],
     "webhooks": Array [],
+    "websockets": undefined,
   },
   "subpackages": Object {
     "subpackage_lcf": Object {
@@ -92713,6 +92716,7 @@ Object {
       "type_:WorkflowStreamEvent",
     ],
     "webhooks": Array [],
+    "websockets": undefined,
   },
   "subpackages": Object {
     "subpackage_deployments": Object {
