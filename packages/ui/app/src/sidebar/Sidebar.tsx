@@ -37,6 +37,8 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
 }) {
     const scrollRef = useRef<HTMLDivElement>(null);
     const isScrolled = useIsScrolled(scrollRef);
+    const { layoutBreakpoint } = useViewportContext();
+    const isMobileSidebarOpen = useIsMobileSidebarOpen();
     return (
         <nav className="h-full w-full lg:pl-1" aria-label="secondary">
             <FernScrollArea
@@ -51,7 +53,9 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                         className="z-10 -mx-4 lg:sticky lg:top-0"
                         searchInfo={searchInfo}
                         algoliaSearchIndex={algoliaSearchIndex}
-                        showBorder={isScrolled}
+                        showBorder={
+                            isScrolled || (isMobileSidebarOpen && ["mobile", "sm", "md"].includes(layoutBreakpoint))
+                        }
                     />
                     <CollapseSidebarProvider>
                         <FernTooltipProvider>

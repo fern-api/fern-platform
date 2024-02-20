@@ -31,7 +31,7 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
     const showSearchBar = useSearchService(searchInfo, algoliaSearchIndex).isAvailable;
     const searchBar = useMemo(() => {
         return showSearchBar ? (
-            <div className="hidden lg:block">
+            <div className="mb-3 hidden last:mb-0 lg:block">
                 <SidebarSearchBar onClick={openSearchDialog} className="w-full" />
             </div>
         ) : null;
@@ -42,7 +42,7 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
             return null;
         }
         return (
-            <ul className="mt-3 flex list-none flex-col">
+            <ul className="flex list-none flex-col">
                 {activeNavigationConfigContext.config.tabs.map((tab, idx) => (
                     <SidebarTabButton
                         key={idx}
