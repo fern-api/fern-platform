@@ -23,7 +23,10 @@ export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className }) => {
     return (
         <Link
             href="https://buildwithfern.com"
-            className={classNames("flex cursor-pointer items-center space-x-2 pl-3 py-3 mt-4 !no-underline", className)}
+            className={classNames(
+                "flex cursor-pointer items-center space-x-2 lg:px-3 py-3 mt-4 !no-underline",
+                className,
+            )}
             {...containerCallbacks}
         >
             <div className="size-4">

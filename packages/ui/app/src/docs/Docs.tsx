@@ -20,6 +20,7 @@ import {
     useOpenSearchDialog,
 } from "../sidebar/atom";
 import { SidebarNode } from "../sidebar/types";
+import { useViewportContext } from "../viewport-context/useViewportContext";
 import { BgImageGradient } from "./BgImageGradient";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
@@ -49,6 +50,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     const { observeDocContent, activeNavigatable, registerScrolledToPathListener } = useNavigationContext();
     const { activeNavigationConfigContext, withVersionAndTabSlugs } = useDocsSelectors();
     const openSearchDialog = useOpenSearchDialog();
+    const { layoutBreakpoint } = useViewportContext();
 
     // set up message handler to listen for messages from custom scripts
     useMessageHandler();
@@ -160,7 +162,11 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                     <header id="fern-header">
                         <div
                             className="data-[border=show]:border-concealed data-[border=show]:dark:shadow-header-dark h-header-height fixed inset-x-0 top-0 z-30 overflow-visible border-b backdrop-blur-lg transition-[border,shadow] data-[border=hide]:border-transparent lg:backdrop-blur"
-                            data-border={isScrolled ? "show" : "hide"}
+                            data-border={
+                                isScrolled || (isMobileSidebarOpen && ["mobile", "sm", "md"].includes(layoutBreakpoint))
+                                    ? "show"
+                                    : "hide"
+                            }
                         >
                             {renderBackground()}
                             <Header

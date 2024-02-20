@@ -48,7 +48,9 @@ export function MobileSidebarHeaderLinks({ navbarLinks }: MobileSidebarHeaderLin
                     rel="noreferrer noopener"
                     text={navbarLink.text}
                     rightIcon={navbarLink.type === "primary" && <ArrowRightIcon className="!size-5" />}
-                    className="w-full text-left lg:hidden"
+                    className={classNames("w-full text-left lg:hidden", {
+                        "mt-1": navbarLink.type === "primary",
+                    })}
                     variant={navbarLink.type === "primary" ? "outlined" : "minimal"}
                     intent={navbarLink.type === "primary" ? "primary" : "none"}
                     size="large"
