@@ -40,6 +40,9 @@ export function convertAPIDefinitionToDb(
                 writeShape.rootPackage.webhooks?.map((webhook) =>
                     transformWebhook({ writeShape: webhook, apiDefinition: writeShape }),
                 ) ?? [],
+            websockets: writeShape.rootPackage.websockets?.map((websocket) =>
+                transformWebsocket({ writeShape: websocket }),
+            ),
             subpackages: writeShape.rootPackage.subpackages,
             types: writeShape.rootPackage.types,
         },
