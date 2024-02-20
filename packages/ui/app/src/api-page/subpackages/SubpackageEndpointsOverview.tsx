@@ -1,5 +1,4 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
-import { joinUrlSlugs } from "@fern-ui/app-utils";
+import { APIV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import { useCallback } from "react";
 import { useNavigationContext } from "../../navigation-context";
 import { EndpointDescriptor } from "./EndpointDescriptor";

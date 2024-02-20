@@ -1,12 +1,12 @@
 import { isApiNode } from "@fern-api/fdr-sdk";
+import dynamic from "next/dynamic";
+import { useMemo } from "react";
+import { useNavigationContext } from "../navigation-context";
 import {
     crawlResolvedNavigationItemApiSections,
     ResolvedNavigationItem,
     ResolvedNavigationItemApiSection,
-} from "@fern-ui/app-utils";
-import dynamic from "next/dynamic";
-import { useMemo } from "react";
-import { useNavigationContext } from "../navigation-context";
+} from "../util/resolver";
 
 const CustomDocsPage = dynamic(
     () => import("../custom-docs-page/CustomDocsPage").then(({ CustomDocsPage }) => CustomDocsPage),

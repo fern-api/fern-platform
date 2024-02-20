@@ -1,9 +1,4 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import {
-    ResolvedApiDefinitionPackage,
-    ResolvedEndpointDefinition,
-    ResolvedNavigationItemApiSection,
-} from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
@@ -12,6 +7,11 @@ import dynamic from "next/dynamic";
 import { createContext, FC, PropsWithChildren, useCallback, useContext, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { useDocsContext } from "../docs-context/useDocsContext";
+import {
+    ResolvedApiDefinitionPackage,
+    ResolvedEndpointDefinition,
+    ResolvedNavigationItemApiSection,
+} from "../util/resolver";
 import { PlaygroundRequestFormAuth, PlaygroundRequestFormState } from "./types";
 import { getDefaultValueForTypes, getDefaultValuesForBody } from "./utils";
 

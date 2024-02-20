@@ -1,5 +1,4 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
-import { joinUrlSlugs, ResolvedUndiscriminatedUnionShape, ResolvedWebSocketChannel } from "@fern-ui/app-utils";
+import { APIV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import * as Accordion from "@radix-ui/react-accordion";
 import { ArrowDownIcon, ArrowUpIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
@@ -9,6 +8,7 @@ import { buildRequestUrl } from "../../api-playground/utils";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
+import { ResolvedUndiscriminatedUnionShape, ResolvedWebSocketChannel } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
 import { EndpointSection } from "../endpoints/EndpointSection";

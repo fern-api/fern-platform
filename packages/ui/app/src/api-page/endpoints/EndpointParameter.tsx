@@ -1,8 +1,8 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { ResolvedTypeReference } from "@fern-ui/app-utils";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { getAnchorId } from "../../util/anchor";
+import { ResolvedTypeReference } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";

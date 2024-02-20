@@ -1,15 +1,15 @@
 "use client";
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import {
-    ResolvedApiDefinitionPackage,
-    ResolvedEndpointDefinition,
-    ResolvedNavigationItemApiSection,
-} from "@fern-ui/app-utils";
 import { memo } from "react";
 import { ApiPlaygroundButton } from "../../api-playground/ApiPlaygroundButton";
 import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
 import { FernScrollArea } from "../../components/FernScrollArea";
+import {
+    ResolvedApiDefinitionPackage,
+    ResolvedEndpointDefinition,
+    ResolvedNavigationItemApiSection,
+} from "../../util/resolver";
 import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 import { CurlExample } from "../examples/curl-example/CurlExample";
 import { CurlLine, curlLinesToString } from "../examples/curl-example/curlUtils";

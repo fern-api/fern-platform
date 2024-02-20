@@ -2963,6 +2963,7 @@ __metadata:
     "@types/react-syntax-highlighter": ^15.5.11
     "@types/react-test-renderer": ^18.0.7
     "@types/tinycolor2": ^1.4.6
+    "@types/title": ^3.4.3
     "@vercel/speed-insights": ^1.0.7
     algoliasearch: ^4.22.1
     classnames: ^2.5.1
@@ -2995,6 +2996,7 @@ __metadata:
     remark-gfm: ^3.0.1
     stylelint: ^16.1.0
     tinycolor2: ^1.6.0
+    title: ^3.5.3
     typescript: 4.9.4
     vite: ^4.5.2
   languageName: unknown

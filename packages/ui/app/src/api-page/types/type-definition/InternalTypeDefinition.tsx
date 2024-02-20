@@ -1,4 +1,3 @@
-import { ResolvedTypeShape } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import { Cross2Icon } from "@radix-ui/react-icons";
@@ -9,6 +8,7 @@ import { Chip } from "../../../components/Chip";
 import { FernCollapse } from "../../../components/FernCollapse";
 import { FernTooltipProvider } from "../../../components/FernTooltip";
 import { getAnchorId } from "../../../util/anchor";
+import { ResolvedTypeShape } from "../../../util/resolver";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,

@@ -1,4 +1,3 @@
-import { ResolvedTypeShape } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import { Cross2Icon } from "@radix-ui/react-icons";
@@ -7,6 +6,7 @@ import { useRouter } from "next/router";
 import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
 import { FernCollapse } from "../../../components/FernCollapse";
 import { getAnchorId } from "../../../util/anchor";
+import { ResolvedTypeShape } from "../../../util/resolver";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,

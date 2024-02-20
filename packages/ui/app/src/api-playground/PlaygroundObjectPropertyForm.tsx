@@ -1,5 +1,4 @@
 import { Checkbox } from "@blueprintjs/core";
-import { ResolvedObjectProperty } from "@fern-ui/app-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { isUndefined, sortBy } from "lodash-es";
@@ -8,6 +7,7 @@ import { EndpointAvailabilityTag } from "../api-page/endpoints/EndpointAvailabil
 import { Markdown } from "../api-page/markdown/Markdown";
 import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
 import { FernTooltip } from "../components/FernTooltip";
+import { ResolvedObjectProperty } from "../util/resolver";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { castToRecord, getDefaultValueForType, isExpandable } from "./utils";
 

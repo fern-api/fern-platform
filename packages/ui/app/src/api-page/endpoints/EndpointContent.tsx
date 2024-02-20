@@ -1,9 +1,4 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import {
-    ResolvedApiDefinitionPackage,
-    ResolvedEndpointDefinition,
-    ResolvedNavigationItemApiSection,
-} from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { useAtom } from "jotai";
@@ -13,6 +8,11 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useDocsContext } from "../../docs-context/useDocsContext";
 import { useNavigationContext } from "../../navigation-context";
+import {
+    ResolvedApiDefinitionPackage,
+    ResolvedEndpointDefinition,
+    ResolvedNavigationItemApiSection,
+} from "../../util/resolver";
 import { useViewportContext } from "../../viewport-context/useViewportContext";
 import { CodeExample, generateCodeExamples } from "../examples/code-example";
 import { getCurlLines } from "../examples/curl-example/curlUtils";

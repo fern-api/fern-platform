@@ -1,5 +1,5 @@
-import { ResolvedTypeReference } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { ResolvedTypeReference } from "../../../util/resolver";
 
 export interface TypeShorthandOptions {
     plural?: boolean;

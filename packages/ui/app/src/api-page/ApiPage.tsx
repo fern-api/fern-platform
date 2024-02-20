@@ -1,4 +1,4 @@
-import { ResolvedNavigationItemApiSection } from "@fern-ui/app-utils";
+import { ResolvedNavigationItemApiSection } from "../util/resolver";
 import { ApiPackageContents } from "./ApiPackageContents";
 import { ApiArtifacts } from "./artifacts/ApiArtifacts";
 import { areApiArtifactsNonEmpty } from "./artifacts/areApiArtifactsNonEmpty";

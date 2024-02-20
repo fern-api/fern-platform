@@ -1,9 +1,9 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import { useTheme } from "next-themes";
 import { FC } from "react";
 import { FernSyntaxHighlighter } from "../commons/CodeBlockSkeleton";
 import { CopyToClipboardButton } from "../commons/CopyToClipboardButton";
+import { ResolvedEndpointDefinition } from "../util/resolver";
 import { PlaygroundRequestFormState } from "./types";
 import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils";
 

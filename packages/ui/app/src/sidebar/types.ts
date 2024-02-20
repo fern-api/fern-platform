@@ -1,7 +1,7 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { titleCase } from "@fern-ui/app-utils";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { last, noop } from "lodash-es";
+import { titleCase } from "../util/titleCase";
 
 export type SidebarNode = SidebarNode.PageGroup | SidebarNode.ApiSection | SidebarNode.Section;
 

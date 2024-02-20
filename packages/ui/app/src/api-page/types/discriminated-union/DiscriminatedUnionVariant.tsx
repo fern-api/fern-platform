@@ -1,8 +1,8 @@
-import { ResolvedDiscriminatedUnionShapeVariant, ResolvedTypeShape } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { startCase } from "lodash-es";
 import { useCallback, useMemo } from "react";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
+import { ResolvedDiscriminatedUnionShapeVariant, ResolvedTypeShape } from "../../../util/resolver";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import {

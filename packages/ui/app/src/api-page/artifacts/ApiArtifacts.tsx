@@ -1,6 +1,6 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { joinUrlSlugs, ResolvedApiDefinitionPackage } from "@fern-ui/app-utils";
+import { DocsV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import { API_ARTIFACTS_TITLE } from "../../config";
+import { ResolvedApiDefinitionPackage } from "../../util/resolver";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { DotNetLogo } from "./sdk-logos/DotNetLogo";

@@ -1,12 +1,12 @@
 import { Spinner } from "@blueprintjs/core";
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import { Loadable, visitLoadable } from "@fern-ui/loadable";
 import classNames from "classnames";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useCallback, useState } from "react";
+import { ResolvedEndpointDefinition } from "../util/resolver";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
 import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
 import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";

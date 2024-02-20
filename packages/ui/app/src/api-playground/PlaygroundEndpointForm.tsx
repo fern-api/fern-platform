@@ -1,10 +1,4 @@
 import { isApiNode, joinUrlSlugs } from "@fern-api/fdr-sdk";
-import {
-    ResolvedEndpointDefinition,
-    ResolvedHttpRequestBodyShape,
-    ResolvedNavigationItemApiSection,
-    visitResolvedHttpRequestBodyShape,
-} from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
@@ -15,6 +9,12 @@ import { Markdown } from "../api-page/markdown/Markdown";
 import { FernButton } from "../components/FernButton";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { useNavigationContext } from "../navigation-context";
+import {
+    ResolvedEndpointDefinition,
+    ResolvedHttpRequestBodyShape,
+    ResolvedNavigationItemApiSection,
+    visitResolvedHttpRequestBodyShape,
+} from "../util/resolver";
 import { PlaygroundAuthorizationForm } from "./PlaygroundAuthorizationForm";
 import { PlaygroundObjectPropertyForm } from "./PlaygroundObjectPropertyForm";
 import { SecretBearer } from "./PlaygroundSecretsModal";

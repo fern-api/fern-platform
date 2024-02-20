@@ -1,8 +1,8 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { ResolvedEndpointPathParts } from "@fern-ui/app-utils";
 import useSize from "@react-hook/size";
 import classNames from "classnames";
 import { useRef } from "react";
+import { ResolvedEndpointPathParts } from "../../util/resolver";
 import { EndpointUrl } from "./EndpointUrl";
 
 export declare namespace EndpointUrlWithOverflow {

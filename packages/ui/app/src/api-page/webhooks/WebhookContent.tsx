@@ -1,6 +1,6 @@
-import { ResolvedWebhookDefinition } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import React, { useCallback } from "react";
+import { ResolvedWebhookDefinition } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
 import { EndpointSection } from "../endpoints/EndpointSection";

@@ -1,12 +1,12 @@
 import { MenuItem } from "@blueprintjs/core";
 import { Select } from "@blueprintjs/select";
-import { ResolvedUndiscriminatedUnionShape, ResolvedUndiscriminatedUnionShapeVariant } from "@fern-ui/app-utils";
 import { CaretDownIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import { isEqual } from "lodash-es";
 import { FC, useCallback, useState } from "react";
 import { FernButton } from "../components/FernButton";
 import { FernSegmentedControl } from "../components/FernSegmentedControl";
 import { FernTooltip } from "../components/FernTooltip";
+import { ResolvedUndiscriminatedUnionShape, ResolvedUndiscriminatedUnionShapeVariant } from "../util/resolver";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType, matchesTypeReference } from "./utils";
 

@@ -1,9 +1,9 @@
-import { ResolvedObjectProperty } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { useCallback, useMemo } from "react";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { getAnchorId } from "../../../util/anchor";
+import { ResolvedObjectProperty } from "../../../util/resolver";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";

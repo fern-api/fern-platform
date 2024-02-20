@@ -1,4 +1,4 @@
-import { ResolvedTypeReference } from "@fern-ui/app-utils";
+import { ResolvedTypeReference } from "../../../util/resolver";
 import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
 import { TypeDefinitionContextProvider } from "../context/TypeDefinitionContextProvider";
 import { InternalTypeReferenceDefinitions } from "./InternalTypeReferenceDefinitions";

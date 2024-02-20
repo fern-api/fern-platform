@@ -1,7 +1,7 @@
-import { ResolvedTypeReference, ResolvedUndiscriminatedUnionShapeVariant } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { ReactElement, useCallback } from "react";
+import { ResolvedTypeReference, ResolvedUndiscriminatedUnionShapeVariant } from "../../../util/resolver";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import {

@@ -1,6 +1,5 @@
 import { Switch } from "@blueprintjs/core";
 import { DateInput3 } from "@blueprintjs/datetime2";
-import { ResolvedObjectProperty, ResolvedTypeReference } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { Transition } from "@headlessui/react";
@@ -10,6 +9,7 @@ import { FernButton } from "../components/FernButton";
 import { FernInput } from "../components/FernInput";
 import { FernNumericInput } from "../components/FernNumericInput";
 import { FernTextarea } from "../components/FernTextarea";
+import { ResolvedObjectProperty, ResolvedTypeReference } from "../util/resolver";
 import { PlaygroundDiscriminatedUnionForm } from "./PlaygroundDescriminatedUnionForm";
 import { PlaygroundEnumForm } from "./PlaygroundEnumForm";
 import { PlaygroundListForm } from "./PlaygroundListForm";

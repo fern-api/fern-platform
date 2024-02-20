@@ -1,8 +1,3 @@
-import {
-    ResolvedApiDefinitionPackage,
-    ResolvedEndpointDefinition,
-    ResolvedNavigationItemApiSection,
-} from "@fern-ui/app-utils";
 import { isNonNullish } from "@fern-ui/core-utils";
 import { useBooleanState, useKeyboardPress } from "@fern-ui/react-commons";
 import { Transition } from "@headlessui/react";
@@ -12,6 +7,11 @@ import { FC, Fragment, ReactElement, useEffect, useRef, useState } from "react";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { FernButton } from "../components/FernButton";
 import { FernInput } from "../components/FernInput";
+import {
+    ResolvedApiDefinitionPackage,
+    ResolvedEndpointDefinition,
+    ResolvedNavigationItemApiSection,
+} from "../util/resolver";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 
 export interface ApiPlaygroundEndpointSelectorProps {

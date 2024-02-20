@@ -1,5 +1,4 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { crawlResolvedNavigationItemApiSections, resolveNavigationItems } from "@fern-ui/app-utils";
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
 import classNames from "classnames";
@@ -20,6 +19,7 @@ import {
     useOpenSearchDialog,
 } from "../sidebar/atom";
 import { SidebarNode } from "../sidebar/types";
+import { crawlResolvedNavigationItemApiSections, resolveNavigationItems } from "../util/resolver";
 import { useViewportContext } from "../viewport-context/useViewportContext";
 import { BgImageGradient } from "./BgImageGradient";
 import { DocsMainContent } from "./DocsMainContent";
