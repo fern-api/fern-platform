@@ -245,7 +245,10 @@ function resolveWebsocketChannel(
                 valueShape: resolveTypeReference(parameter.type, types),
             }),
         ),
-        messages: [],
+        messages: websocket.messages.map(({ body, ...message }) => ({
+            ...message,
+            body: resolvePayloadShape(body, types),
+        })),
         examples: websocket.examples,
         defaultEnvironment: websocket.environments.find((env) => env.id === websocket.defaultEnvironment),
     };
@@ -280,7 +283,10 @@ function resolvePayloadShape(
             type: "object",
             properties: () => resolveObjectProperties(object, types),
         }),
-        reference: (reference) => ({ type: "reference", shape: () => resolveTypeReference(reference.value, types) }),
+        reference: (reference) => ({
+            type: "reference",
+            shape: () => unwrapReference(resolveTypeReference(reference.value, types)),
+        }),
         _other: () => ({ type: "unknown" }),
     });
 }
@@ -295,7 +301,10 @@ function resolveRequestBodyShape(
             properties: () => resolveObjectProperties(object, types),
         }),
         fileUpload: (fileUpload) => fileUpload,
-        reference: (reference) => ({ type: "reference", shape: () => resolveTypeReference(reference.value, types) }),
+        reference: (reference) => ({
+            type: "reference",
+            shape: () => unwrapReference(resolveTypeReference(reference.value, types)),
+        }),
         _other: () => ({ type: "unknown" }),
     });
 }
@@ -312,7 +321,10 @@ function resolveResponseBodyShape(
         fileDownload: (fileDownload) => fileDownload,
         streamingText: (streamingText) => streamingText,
         streamCondition: (streamCondition) => streamCondition,
-        reference: (reference) => ({ type: "reference", shape: () => resolveTypeReference(reference.value, types) }),
+        reference: (reference) => ({
+            type: "reference",
+            shape: () => unwrapReference(resolveTypeReference(reference.value, types)),
+        }),
         stream: () => ({ type: "unknown" }), //TODO IMPLEMENT
         _other: () => ({ type: "unknown" }),
     });
@@ -352,10 +364,8 @@ function resolveTypeShape(
 function resolveTypeReference(
     typeReference: APIV1Read.TypeReference,
     types: Record<string, APIV1Read.TypeDefinition>,
-): Exclude<ResolvedTypeReference, ResolvedReferenceShape> {
-    return visitDiscriminatedUnion(typeReference, "type")._visit<
-        Exclude<ResolvedTypeReference, ResolvedReferenceShape>
-    >({
+): ResolvedTypeReference {
+    return visitDiscriminatedUnion(typeReference, "type")._visit<ResolvedTypeReference>({
         literal: (literal) => literal.value,
         unknown: (unknown) => unknown,
         optional: (optional) => ({
@@ -374,7 +384,7 @@ function resolveTypeReference(
             if (typeDefinition == null) {
                 return { type: "unknown" };
             }
-            return unwrapReference(resolveTypeShape(typeDefinition.shape, types));
+            return { type: "reference", shape: () => unwrapReference(resolveTypeShape(typeDefinition.shape, types)) };
         },
         primitive: (primitive) => primitive.value,
         _other: () => ({ type: "unknown" }),

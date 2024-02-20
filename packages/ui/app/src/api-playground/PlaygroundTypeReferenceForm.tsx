@@ -1,10 +1,10 @@
-import { ResolvedObjectProperty, ResolvedTypeReference } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { FC, ReactElement, useCallback } from "react";
 import { FernInput } from "../components/FernInput";
 import { FernNumericInput } from "../components/FernNumericInput";
 import { FernSwitch } from "../components/FernSwitch";
 import { FernTextarea } from "../components/FernTextarea";
+import { ResolvedObjectProperty, ResolvedTypeReference } from "../util/resolver";
 import { PlaygroundDiscriminatedUnionForm } from "./PlaygroundDescriminatedUnionForm";
 import { PlaygroundEnumForm } from "./PlaygroundEnumForm";
 import { PlaygroundListForm } from "./PlaygroundListForm";

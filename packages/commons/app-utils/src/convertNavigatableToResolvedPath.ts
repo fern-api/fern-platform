@@ -40,6 +40,8 @@ export async function convertNavigatableToResolvedPath({
         case "top-level-endpoint":
         case "webhook":
         case "top-level-webhook":
+        case "websocket":
+        case "top-level-websocket":
             return {
                 type: "api-page",
                 fullSlug,

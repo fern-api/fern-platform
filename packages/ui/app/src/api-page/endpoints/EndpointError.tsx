@@ -1,7 +1,7 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { ResolvedError } from "@fern-ui/app-utils";
 import classNames from "classnames";
 import { memo, MouseEventHandler } from "react";
+import { ResolvedError } from "../../util/resolver";
 import { toTitleCase } from "../../util/string";
 import { type JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";

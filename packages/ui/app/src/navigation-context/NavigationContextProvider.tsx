@@ -224,8 +224,10 @@ function convertToTitle(
         page: (page) => frontmatter?.title ?? page.page.title,
         "top-level-endpoint": (endpoint) => endpoint.endpoint.name,
         "top-level-webhook": (webhook) => webhook.webhook.name,
+        "top-level-websocket": (websocket) => websocket.websocket.name,
         webhook: (webhook) => webhook.webhook.name,
         endpoint: (endpoint) => endpoint.endpoint.name,
+        websocket: (websocket) => websocket.websocket.name,
         _other: () => undefined,
     });
 }
@@ -241,8 +243,10 @@ function convertToDescription(
         page: () => frontmatter?.description,
         "top-level-endpoint": (endpoint) => endpoint.endpoint.description,
         "top-level-webhook": (webhook) => webhook.webhook.description,
+        "top-level-websocket": (websocket) => websocket.websocket.description,
         webhook: (webhook) => webhook.webhook.description,
         endpoint: (endpoint) => endpoint.endpoint.description,
+        websocket: (websocket) => websocket.websocket.description,
         _other: () => undefined,
     });
 }

@@ -1,4 +1,3 @@
-import { ResolvedObjectProperty, unwrapOptional } from "@fern-ui/app-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { CardStackPlusIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import { useSetAtom } from "jotai";
@@ -7,6 +6,7 @@ import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
+import { ResolvedObjectProperty, unwrapOptional } from "../util/resolver";
 import { FOCUSED_PARAMETER_ATOM } from "./PlaygroundEndpointFormAside";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { castToRecord, getDefaultValueForType, isExpandable } from "./utils";

@@ -1,7 +1,7 @@
-import { ResolvedEndpointDefinition, visitResolvedHttpRequestBodyShape } from "@fern-ui/app-utils";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { FernCard } from "../components/FernCard";
 import { Callout } from "../mdx/components/Callout";
+import { ResolvedEndpointDefinition, visitResolvedHttpRequestBodyShape } from "../util/resolver";
 import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { PlaygroundRequestFormState } from "./types";

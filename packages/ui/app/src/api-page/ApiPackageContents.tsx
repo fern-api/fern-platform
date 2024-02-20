@@ -1,4 +1,4 @@
-import { ResolvedApiDefinitionPackage, ResolvedNavigationItemApiSection } from "@fern-ui/app-utils";
+import { ResolvedApiDefinitionPackage, ResolvedNavigationItemApiSection } from "../util/resolver";
 import { Endpoint } from "./endpoints/Endpoint";
 import { ApiSubpackage } from "./subpackages/ApiSubpackage";
 import { WebSocket } from "./web-socket/WebSocket";

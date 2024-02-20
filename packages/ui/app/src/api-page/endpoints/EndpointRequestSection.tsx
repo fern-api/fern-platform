@@ -1,4 +1,4 @@
-import { ResolvedRequestBody } from "@fern-ui/app-utils";
+import { ResolvedRequestBody } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";

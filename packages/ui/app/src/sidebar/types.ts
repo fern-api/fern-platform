@@ -1,7 +1,7 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { titleCase } from "@fern-ui/app-utils";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { last, noop } from "lodash-es";
+import { titleCase } from "../util/titleCase";
 
 export type SidebarNode = SidebarNode.PageGroup | SidebarNode.ApiSection | SidebarNode.Section;
 
@@ -61,6 +61,11 @@ function resolveSidebarNodeApiSection(
         title: endpoint.name != null ? endpoint.name : stringifyEndpointPathParts(endpoint.path.parts),
         method: endpoint.method,
     }));
+    const websockets = subpackage.websockets.map((websocket) => ({
+        id: websocket.id,
+        slug: [...slug, websocket.urlSlug],
+        title: websocket.name != null ? websocket.name : stringifyEndpointPathParts(websocket.path.parts),
+    }));
     const webhooks = subpackage.webhooks.map((webhook) => ({
         id: webhook.id,
         slug: [...slug, webhook.urlSlug],
@@ -70,7 +75,7 @@ function resolveSidebarNodeApiSection(
         .map((innerSubpackageId) => resolveSidebarNodeApiSection(api, innerSubpackageId, subpackagesMap, slug))
         .filter(isNonNullish);
 
-    if (endpoints.length === 0 && webhooks.length === 0 && subpackages.length === 0) {
+    if (endpoints.length === 0 && webhooks.length === 0 && websockets.length === 0 && subpackages.length === 0) {
         return;
     }
 
@@ -82,7 +87,7 @@ function resolveSidebarNodeApiSection(
         slug,
         endpoints,
         webhooks,
-        websockets: [],
+        websockets,
         subpackages,
         artifacts: null,
     };
@@ -144,7 +149,14 @@ export function resolveSidebarNodes(
                             title: webhook.name != null ? webhook.name : "/" + webhook.path.join("/"),
                             description: webhook.description,
                         })),
-                        websockets: [],
+                        websockets: definition.rootPackage.websockets.map((websocket) => ({
+                            id: websocket.id,
+                            slug: [...definitionSlug, websocket.urlSlug],
+                            title:
+                                websocket.name != null
+                                    ? websocket.name
+                                    : stringifyEndpointPathParts(websocket.path.parts),
+                        })),
                         subpackages: definition.rootPackage.subpackages
                             .map((subpackageId) =>
                                 resolveSidebarNodeApiSection(

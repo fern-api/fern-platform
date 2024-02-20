@@ -11,6 +11,8 @@ export type SerializedNavigatableNode =
     | DocsNode.Endpoint
     | DocsNode.TopLevelWebhook
     | DocsNode.Webhook
+    | DocsNode.TopLevelWebSocket
+    | DocsNode.WebSocket
     | SerializedPageNode;
 
 export async function serializePageNode({

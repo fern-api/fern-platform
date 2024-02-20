@@ -1,8 +1,8 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import dynamic from "next/dynamic";
 import { FC } from "react";
 import { FernScrollArea } from "../components/FernScrollArea";
+import { ResolvedEndpointDefinition } from "../util/resolver";
 import { PlaygroundRequestFormState } from "./types";
 import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils";
 

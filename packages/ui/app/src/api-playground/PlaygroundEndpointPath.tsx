@@ -1,10 +1,10 @@
-import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { isUndefined, omitBy } from "lodash-es";
 import { FC, Fragment } from "react";
 import { CopyToClipboardButton } from "../commons/CopyToClipboardButton";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
+import { ResolvedEndpointDefinition } from "../util/resolver";
 import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
 import { PlaygroundRequestFormState } from "./types";
 import { buildEndpointUrl, unknownToString } from "./utils";

@@ -1,8 +1,8 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { ResolvedEndpointDefinition, ResolvedNavigationItemApiSection } from "@fern-ui/app-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { camelCase, sortBy, upperFirst } from "lodash-es";
 import { memo } from "react";
+import { ResolvedEndpointDefinition, ResolvedNavigationItemApiSection } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";

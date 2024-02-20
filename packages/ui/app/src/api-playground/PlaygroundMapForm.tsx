@@ -1,8 +1,8 @@
-import { ResolvedTypeReference } from "@fern-ui/app-utils";
 import { isPlainObject } from "@fern-ui/core-utils";
 import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
 import { FC, useCallback, useEffect, useState } from "react";
 import { FernButton } from "../components/FernButton";
+import { ResolvedTypeReference } from "../util/resolver";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType, unknownToString } from "./utils";
 

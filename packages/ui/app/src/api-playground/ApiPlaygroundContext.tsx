@@ -1,9 +1,3 @@
-import {
-    flattenApiSection,
-    isEndpoint,
-    ResolvedApiDefinition,
-    ResolvedNavigationItemApiSection,
-} from "@fern-ui/app-utils";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { noop } from "lodash-es";
@@ -12,6 +6,12 @@ import { createContext, FC, PropsWithChildren, useCallback, useContext, useMemo,
 import { capturePosthogEvent } from "../analytics/posthog";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { SidebarNode } from "../sidebar/types";
+import {
+    flattenApiSection,
+    isEndpoint,
+    ResolvedApiDefinition,
+    ResolvedNavigationItemApiSection,
+} from "../util/resolver";
 import {
     ApiPlaygroundSelectionState,
     createFormStateKey,

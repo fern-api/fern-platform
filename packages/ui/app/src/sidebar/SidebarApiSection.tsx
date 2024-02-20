@@ -104,17 +104,17 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
                     rightElement={HTTP_METHOD_TAGS[endpoint.method]}
                 />
             ))}
-            {apiSection.websockets.map((websockets) => (
+            {apiSection.websockets.map((channel) => (
                 <SidebarSlugLink
-                    key={joinUrlSlugs(...websockets.slug)}
-                    slug={websockets.slug}
+                    key={joinUrlSlugs(...channel.slug)}
+                    slug={channel.slug}
                     shallow={shallow}
-                    title={websockets.title}
+                    title={channel.title}
                     registerScrolledToPathListener={registerScrolledToPathListener}
-                    selected={true}
+                    selected={isEqual(channel.slug, selectedSlug)}
                     depth={Math.max(0, depth - 1)}
                     rightElement={
-                        <FernTooltip content="Pub/Sub">
+                        <FernTooltip content="WebSocket Channel">
                             <span className="rounded-md font-mono text-xs uppercase leading-none">wss</span>
                         </FernTooltip>
                     }

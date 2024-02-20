@@ -1,5 +1,4 @@
 import { APIV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
-import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import { failed, Loadable, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
@@ -7,6 +6,7 @@ import { capturePosthogEvent } from "../analytics/posthog";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
 import { SidebarNode } from "../sidebar/types";
+import { ResolvedEndpointDefinition } from "../util/resolver";
 import "./ApiPlayground.css";
 import { ApiPlayroundContent } from "./ApiPlaygroundContent";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";

@@ -1,6 +1,6 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { ResolvedEndpointDefinition, ResolvedEndpointPathParts } from "../resolver";
+import { ResolvedEndpointDefinition, ResolvedEndpointPathParts } from "./resolver";
 
 export type EndpointPathPart =
     | {

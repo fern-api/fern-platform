@@ -1,4 +1,6 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import { isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { isEmpty, noop } from "lodash-es";
 import {
     ResolvedEndpointDefinition,
     ResolvedEndpointPathParts,
@@ -6,9 +8,7 @@ import {
     ResolvedObjectProperty,
     ResolvedTypeReference,
     visitResolvedHttpRequestBodyShape,
-} from "@fern-ui/app-utils";
-import { isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { isEmpty, noop } from "lodash-es";
+} from "../util/resolver";
 import { PlaygroundRequestFormState } from "./types";
 
 export function unknownToString(value: unknown): string {

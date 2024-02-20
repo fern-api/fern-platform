@@ -1,5 +1,4 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import { Loadable, visitLoadable } from "@fern-ui/loadable";
 import classNames from "classnames";
 import { useAtom } from "jotai";
@@ -9,6 +8,7 @@ import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react
 import { CopyToClipboardButton } from "../commons/CopyToClipboardButton";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernCard } from "../components/FernCard";
+import { ResolvedEndpointDefinition } from "../util/resolver";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
 import { PlaygroundEndpointFormAside } from "./PlaygroundEndpointFormAside";

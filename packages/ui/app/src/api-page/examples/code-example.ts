@@ -1,6 +1,6 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { titleCase } from "@fern-ui/app-utils";
 import { sortBy } from "lodash-es";
+import { titleCase } from "../../util/titleCase";
 
 export interface CodeExample {
     key: string;

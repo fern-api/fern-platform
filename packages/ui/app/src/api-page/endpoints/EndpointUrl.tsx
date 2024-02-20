@@ -1,9 +1,10 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { divideEndpointPathToParts, ResolvedEndpointPathParts, type EndpointPathPart } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import React, { PropsWithChildren, ReactElement, useCallback, useMemo } from "react";
 import { HttpMethodTag } from "../../commons/HttpMethodTag";
+import { divideEndpointPathToParts, type EndpointPathPart } from "../../util/endpoint";
+import { ResolvedEndpointPathParts } from "../../util/resolver";
 import styles from "./EndpointUrl.module.scss";
 
 export declare namespace EndpointUrl {

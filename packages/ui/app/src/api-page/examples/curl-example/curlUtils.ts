@@ -1,7 +1,8 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { getEndpointEnvironmentUrl, ResolvedEndpointDefinition, ResolvedResponseBody } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { noop } from "lodash-es";
+import { getEndpointEnvironmentUrl } from "../../../util/endpoint";
+import { ResolvedEndpointDefinition, ResolvedResponseBody } from "../../../util/resolver";
 import { JsonLine, jsonLineToString } from "../json-example/jsonLineUtils";
 
 interface CurlParamValuesSymbol {

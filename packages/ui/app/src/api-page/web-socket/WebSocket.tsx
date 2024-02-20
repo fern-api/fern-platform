@@ -1,14 +1,14 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
-import { joinUrlSlugs, ResolvedUndiscriminatedUnionShape, ResolvedWebSocketChannel } from "@fern-ui/app-utils";
+import { APIV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import * as Accordion from "@radix-ui/react-accordion";
 import { ArrowDownIcon, ArrowUpIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
-import React, { Children, HTMLAttributes, ReactNode, useMemo } from "react";
+import { Children, FC, HTMLAttributes, ReactNode, useMemo } from "react";
 import { Wifi } from "react-feather";
-import { buildRequestUrl } from "../../api-playground/utils";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
+import { useShouldHideFromSsg } from "../../navigation-context/useNavigationContext";
+import { ResolvedUndiscriminatedUnionShape, ResolvedWebSocketChannel } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
 import { EndpointSection } from "../endpoints/EndpointSection";
@@ -16,6 +16,7 @@ import { EndpointUrlWithOverflow } from "../endpoints/EndpointUrlWithOverflow";
 import { TitledExample } from "../examples/TitledExample";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
+import { useApiPageCenterElement } from "../useApiPageCenterElement";
 
 export declare namespace WebSocket {
     export interface Props {
@@ -23,9 +24,21 @@ export declare namespace WebSocket {
         isLastInApi: boolean;
     }
 }
-export const WebSocket: React.FC<WebSocket.Props> = ({ websocket, isLastInApi }: WebSocket.Props) => {
+export const WebSocket: FC<WebSocket.Props> = (props) => {
+    const fullSlug = joinUrlSlugs(...props.websocket.slug);
+
+    if (useShouldHideFromSsg(fullSlug)) {
+        return null;
+    }
+
+    return <WebhookContent {...props} />;
+};
+
+const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi }) => {
     const fullSlug = joinUrlSlugs(...websocket.slug);
     const route = `/${fullSlug}`;
+
+    const { setTargetRef } = useApiPageCenterElement({ slug: fullSlug });
 
     const publishMessages = useMemo(
         () => websocket.messages.filter((message) => message.origin === APIV1Read.WebSocketMessageOrigin.Client),
@@ -61,131 +74,133 @@ export const WebSocket: React.FC<WebSocket.Props> = ({ websocket, isLastInApi }:
     }, [subscribeMessages]);
 
     return (
-        <div className={"scroll-mt-header-height-padded mx-4 md:mx-6 lg:mx-8"}>
+        <div
+            className={"scroll-mt-header-height-padded mx-4 md:mx-6 lg:mx-8"}
+            ref={setTargetRef}
+            data-route={route.toLowerCase()}
+        >
             <article
-                className={classNames(
-                    "scroll-mt-header-height max-w-content-width lg:max-w-endpoint-width mx-auto lg:grid lg:grid-cols-2 lg:gap-12",
-                    {
-                        "border-default border-b mb-px pb-20": !isLastInApi,
-                    },
-                )}
+                className={classNames("scroll-mt-header-height max-w-content-width lg:max-w-endpoint-width mx-auto", {
+                    "border-default border-b mb-px pb-20": !isLastInApi,
+                })}
             >
-                <section className="max-w-content-width space-y-12 py-8">
-                    <header className="space-y-2.5">
-                        <div>
-                            {/* {subpackageTitle != null && (
+                <header className="space-y-2.5 pt-8">
+                    <div>
+                        {/* {subpackageTitle != null && (
                                     <div className="t-accent text-xs font-semibold uppercase tracking-wider">
                                         {subpackageTitle}
                                     </div>
                                 )} */}
-                            <div className="t-accent text-xs font-semibold uppercase tracking-wider">WebSocket</div>
-                            <h1 className="my-0 inline-block">{websocket.name}</h1>
-                        </div>
+                        <div className="t-accent text-xs font-semibold uppercase tracking-wider">WebSocket</div>
+                        <h1 className="my-0 inline-block">{websocket.name}</h1>
+                    </div>
 
-                        <ApiPageDescription
-                            className="mt-4 text-base leading-6"
-                            description={websocket.description}
-                            isMarkdown={true}
-                        />
-                    </header>
-                    <main className="space-y-12">
-                        <CardedSection
-                            number={1}
-                            title={
-                                <span className="inline-flex items-center gap-2">
-                                    {"Handshake"}
-                                    <span className="bg-tag-default inline-block rounded-full p-1">
-                                        <Wifi className="t-muted size-[15px]" strokeWidth={1.5} />
-                                    </span>
-                                </span>
-                            }
-                            route={route}
-                            headingElement={
-                                <div className="border-default -mx-2 flex items-center justify-between rounded-xl border px-2 py-1 hover:transition-[background]">
-                                    <EndpointUrlWithOverflow
-                                        path={websocket.path}
-                                        method="GET"
-                                        environment={websocket.defaultEnvironment?.baseUrl}
-                                        className="flex-1"
-                                    />
-                                    <CopyToClipboardButton
-                                        className="-mr-1"
-                                        content={() =>
-                                            `${websocket.defaultEnvironment?.baseUrl}${websocket.path.map((path) => (path.type === "literal" ? path.value : `:${path.key}`)).join("/")}`
-                                        }
-                                    />
-                                </div>
-                            }
-                        >
-                            {websocket.pathParameters.length > 0 && (
-                                <EndpointSection
-                                    title="Path parameters"
-                                    anchorIdParts={["request", "path"]}
-                                    route={route}
-                                >
-                                    <div className="flex flex-col">
-                                        {websocket.pathParameters.map((parameter) => (
-                                            <div className="flex flex-col" key={parameter.key}>
-                                                <TypeComponentSeparator />
-                                                <EndpointParameter
-                                                    name={parameter.key}
-                                                    shape={parameter.valueShape}
-                                                    anchorIdParts={["request", "path", parameter.key]}
-                                                    route={route}
-                                                    description={parameter.description}
-                                                    descriptionContainsMarkdown={
-                                                        parameter.descriptionContainsMarkdown ?? true
-                                                    }
-                                                    availability={parameter.availability}
-                                                />
-                                            </div>
-                                        ))}
-                                    </div>
-                                </EndpointSection>
-                            )}
-                            {websocket.queryParameters.length > 0 && (
-                                <EndpointSection
-                                    title="Query parameters"
-                                    anchorIdParts={["request", "query"]}
-                                    route={route}
-                                >
-                                    <div className="flex flex-col">
-                                        {websocket.queryParameters.map((parameter) => (
-                                            <div className="flex flex-col" key={parameter.key}>
-                                                <TypeComponentSeparator />
-                                                <EndpointParameter
-                                                    name={parameter.key}
-                                                    shape={parameter.valueShape}
-                                                    anchorIdParts={["request", "query", parameter.key]}
-                                                    route={route}
-                                                    description={parameter.description}
-                                                    descriptionContainsMarkdown={
-                                                        parameter.descriptionContainsMarkdown ?? false
-                                                    }
-                                                    availability={parameter.availability}
-                                                />
-                                            </div>
-                                        ))}
-                                    </div>
-                                </EndpointSection>
-                            )}
-                        </CardedSection>
-                        {publishMessages.length > 0 && (
-                            <EndpointSection
+                    <ApiPageDescription
+                        className="mt-4 text-base leading-6"
+                        description={websocket.description}
+                        isMarkdown={true}
+                    />
+                </header>
+                <div className="lg:grid lg:grid-cols-2 lg:gap-12">
+                    <section className="max-w-content-width space-y-12 py-8">
+                        <main className="space-y-12">
+                            <CardedSection
+                                number={1}
                                 title={
                                     <span className="inline-flex items-center gap-2">
-                                        {"Send"}
-                                        <span className="bg-tag-success t-success inline-block rounded-full p-1">
-                                            <ArrowUpIcon />
+                                        {"Handshake"}
+                                        <span className="bg-tag-default inline-block rounded-full p-1">
+                                            <Wifi className="t-muted size-[15px]" strokeWidth={1.5} />
                                         </span>
                                     </span>
                                 }
-                                anchorIdParts={["publish"]}
                                 route={route}
-                                headerType="h2"
+                                headingElement={
+                                    <div className="border-default -mx-2 flex items-center justify-between rounded-xl border px-2 py-1 hover:transition-[background]">
+                                        <EndpointUrlWithOverflow
+                                            path={websocket.path}
+                                            method="GET"
+                                            environment={websocket.defaultEnvironment?.baseUrl}
+                                            className="flex-1"
+                                        />
+                                        <CopyToClipboardButton
+                                            className="-mr-1"
+                                            content={() =>
+                                                `${websocket.defaultEnvironment?.baseUrl}${websocket.path.map((path) => (path.type === "literal" ? path.value : `:${path.key}`)).join("/")}`
+                                            }
+                                        />
+                                    </div>
+                                }
                             >
-                                {/* <div className="t-muted border-default border-b pb-5 text-sm leading-6">
-                                    <ApiPageDescription
+                                {websocket.pathParameters.length > 0 && (
+                                    <EndpointSection
+                                        title="Path parameters"
+                                        anchorIdParts={["request", "path"]}
+                                        route={route}
+                                    >
+                                        <div className="flex flex-col">
+                                            {websocket.pathParameters.map((parameter) => (
+                                                <div className="flex flex-col" key={parameter.key}>
+                                                    <TypeComponentSeparator />
+                                                    <EndpointParameter
+                                                        name={parameter.key}
+                                                        shape={parameter.shape}
+                                                        anchorIdParts={["request", "path", parameter.key]}
+                                                        route={route}
+                                                        description={parameter.description}
+                                                        descriptionContainsMarkdown={
+                                                            parameter.descriptionContainsMarkdown ?? true
+                                                        }
+                                                        availability={parameter.availability}
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </EndpointSection>
+                                )}
+                                {websocket.queryParameters.length > 0 && (
+                                    <EndpointSection
+                                        title="Query parameters"
+                                        anchorIdParts={["request", "query"]}
+                                        route={route}
+                                    >
+                                        <div className="flex flex-col">
+                                            {websocket.queryParameters.map((parameter) => (
+                                                <div className="flex flex-col" key={parameter.key}>
+                                                    <TypeComponentSeparator />
+                                                    <EndpointParameter
+                                                        name={parameter.key}
+                                                        shape={parameter.shape}
+                                                        anchorIdParts={["request", "query", parameter.key]}
+                                                        route={route}
+                                                        description={parameter.description}
+                                                        descriptionContainsMarkdown={
+                                                            parameter.descriptionContainsMarkdown ?? false
+                                                        }
+                                                        availability={parameter.availability}
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </EndpointSection>
+                                )}
+                            </CardedSection>
+                            {publishMessages.length > 0 && (
+                                <EndpointSection
+                                    title={
+                                        <span className="inline-flex items-center gap-2">
+                                            {"Send"}
+                                            <span className="bg-tag-success t-success inline-block rounded-full p-1">
+                                                <ArrowUpIcon />
+                                            </span>
+                                        </span>
+                                    }
+                                    anchorIdParts={["publish"]}
+                                    route={route}
+                                    headerType="h2"
+                                >
+                                    <div className="t-muted border-default border-b text-sm leading-6">
+                                        {/* <ApiPageDescription
                                         className="text-sm"
                                         description={websocket.publish.description}
                                         isMarkdown={true}
@@ -193,167 +208,176 @@ export const WebSocket: React.FC<WebSocket.Props> = ({ websocket, isLastInApi }:
                                     {websocket.publish.description == null &&
                                         `This channel expects ${renderTypeShorthand(websocket.publish.shape, {
                                             withArticle: true,
-                                        })}.`}
-                                </div> */}
-                                <TypeReferenceDefinitions
-                                    shape={publishMessageShape}
-                                    isCollapsible={false}
-                                    anchorIdParts={["publish", "payload"]}
-                                    route={route}
-                                    applyErrorStyles={false}
-                                />
-                            </EndpointSection>
-                        )}
-                        {subscribeMessages.length > 0 && (
-                            <EndpointSection
-                                title={
-                                    <span className="inline-flex items-center gap-2">
-                                        {"Receive"}
-                                        <span className="bg-tag-primary t-accent-aaa inline-block rounded-full p-1">
-                                            <ArrowDownIcon />
+                                        })}.`} */}
+                                    </div>
+                                    <TypeReferenceDefinitions
+                                        shape={publishMessageShape}
+                                        isCollapsible={false}
+                                        anchorIdParts={["publish", "payload"]}
+                                        route={route}
+                                        applyErrorStyles={false}
+                                    />
+                                </EndpointSection>
+                            )}
+                            {subscribeMessages.length > 0 && (
+                                <EndpointSection
+                                    title={
+                                        <span className="inline-flex items-center gap-2">
+                                            {"Receive"}
+                                            <span className="bg-tag-primary t-accent-aaa inline-block rounded-full p-1">
+                                                <ArrowDownIcon />
+                                            </span>
                                         </span>
-                                    </span>
-                                }
-                                anchorIdParts={["subscribe"]}
-                                route={route}
-                                headerType="h2"
-                            >
-                                {/* <div className="t-muted border-default border-b pb-5 text-sm leading-6">
-                                    <ApiPageDescription
+                                    }
+                                    anchorIdParts={["subscribe"]}
+                                    route={route}
+                                    headerType="h2"
+                                >
+                                    <div className="t-muted border-default border-b text-sm leading-6">
+                                        {/* <ApiPageDescription
                                         className="text-sm"
                                         description={websocket.subscribe.description}
                                         isMarkdown={true}
                                     />
                                     {`This channel emits ${renderTypeShorthand(websocket.subscribe.shape, {
                                         withArticle: true,
-                                    })}.`}
-                                </div> */}
-                                <TypeReferenceDefinitions
-                                    shape={subscribeMessageShape}
-                                    isCollapsible={false}
-                                    anchorIdParts={["publish", "payload"]}
-                                    route={route}
-                                    applyErrorStyles={false}
-                                />
-                            </EndpointSection>
-                        )}
-                    </main>
-                </section>
-                <aside className="max-w-content-width top-header-height max-h-vh-minus-header sticky space-y-6 py-8">
-                    <TitledExample title={"Handshake"} type={"primary"} disablePadding={true} disableClipboard={true}>
-                        <div className="flex px-1 py-3">
-                            <table className="min-w-0 flex-1 shrink table-fixed border-separate border-spacing-x-2 whitespace-normal break-words">
-                                <tbody>
-                                    <tr>
-                                        <td className="text-left align-top">URL</td>
-                                        <td className="text-left align-top">
-                                            {buildRequestUrl(
-                                                websocket.defaultEnvironment?.baseUrl,
-                                                websocket.path,
-                                                websocket.examples[0]?.pathParameters,
-                                                websocket.examples[0]?.queryParameters,
-                                            )}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="text-left align-top">Method</td>
-                                        <td className="text-left align-top">GET</td>
-                                    </tr>
-                                    <tr>
-                                        <td className="text-left align-top">Status</td>
-                                        <td className="text-left align-top">101 Switching Protocols</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </TitledExample>
-                    <TitledExample title={"Messages"} type={"primary"} disablePadding={true} disableClipboard={true}>
-                        <Accordion.Root type="multiple" className="divide-border-default divide-y">
-                            {websocket.examples[0]?.messages.map((message, index) => {
-                                const messageType = websocket.messages.find((m) => m.type === message.type);
-                                if (messageType == null) {
-                                    // eslint-disable-next-line no-console
-                                    console.error(
-                                        `Error: websocket (${websocket.name}) message type not found: ${message.type}`,
-                                    );
-                                    return null;
-                                }
-                                return (
-                                    <Accordion.Item
-                                        value={index.toString()}
-                                        key={index}
-                                        className={classNames(
-                                            "divide-border-default group divide-y focus-within:ring-1 ring-inset last:rounded-b-xl",
-                                            {
-                                                "focus-within:ring-border-success":
-                                                    messageType.origin === APIV1Read.WebSocketMessageOrigin.Client,
-                                                "focus-within:ring-border-primary":
-                                                    messageType.origin === APIV1Read.WebSocketMessageOrigin.Server,
-                                            },
-                                        )}
-                                    >
-                                        <Accordion.Trigger
+                                    })}.`} */}
+                                    </div>
+                                    <TypeReferenceDefinitions
+                                        shape={subscribeMessageShape}
+                                        isCollapsible={false}
+                                        anchorIdParts={["publish", "payload"]}
+                                        route={route}
+                                        applyErrorStyles={false}
+                                    />
+                                </EndpointSection>
+                            )}
+                        </main>
+                    </section>
+                    <aside className="max-w-content-width top-header-height max-h-vh-minus-header scroll-mt-header-height sticky mt-0 space-y-6 py-8">
+                        <TitledExample
+                            title={"Handshake"}
+                            type={"primary"}
+                            disablePadding={true}
+                            disableClipboard={true}
+                            className="sticky top-0"
+                        >
+                            <div className="flex px-1 py-3">
+                                <table className="min-w-0 flex-1 shrink table-fixed border-separate border-spacing-x-2 whitespace-normal break-words">
+                                    <tbody>
+                                        <tr>
+                                            <td className="text-left align-top">URL</td>
+                                            <td className="text-left align-top">
+                                                {`${websocket.defaultEnvironment?.baseUrl ?? ""}${websocket.examples[0]?.path}`}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="text-left align-top">Method</td>
+                                            <td className="text-left align-top">GET</td>
+                                        </tr>
+                                        <tr>
+                                            <td className="text-left align-top">Status</td>
+                                            <td className="text-left align-top">101 Switching Protocols</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </TitledExample>
+                        <TitledExample
+                            title={"Messages"}
+                            type={"primary"}
+                            disablePadding={true}
+                            disableClipboard={true}
+                        >
+                            <Accordion.Root type="multiple" className="divide-border-default divide-y">
+                                {websocket.examples[0]?.messages.map((message, index) => {
+                                    const messageType = websocket.messages.find((m) => m.type === message.type);
+                                    if (messageType == null) {
+                                        // eslint-disable-next-line no-console
+                                        console.error(
+                                            `Error: websocket (${websocket.name}) message type not found: ${message.type}`,
+                                        );
+                                        return null;
+                                    }
+                                    return (
+                                        <Accordion.Item
+                                            value={index.toString()}
+                                            key={index}
                                             className={classNames(
-                                                "w-full flex items-center gap-2 px-3 py-2 hover:data-[state=closed]:bg-tag-default cursor-default transition-background",
+                                                "divide-border-default group divide-y focus-within:ring-1 ring-inset last:rounded-b-xl",
                                                 {
-                                                    "data-[state=open]:bg-tag-success":
+                                                    "focus-within:ring-border-success":
                                                         messageType.origin === APIV1Read.WebSocketMessageOrigin.Client,
-                                                    "data-[state=open]:bg-tag-primary":
+                                                    "focus-within:ring-border-primary":
                                                         messageType.origin === APIV1Read.WebSocketMessageOrigin.Server,
                                                 },
                                             )}
                                         >
-                                            {messageType.origin === APIV1Read.WebSocketMessageOrigin.Client ? (
-                                                <span className="bg-tag-success t-success inline-block shrink-0 rounded-full p-0.5">
-                                                    <ArrowUpIcon />
-                                                </span>
-                                            ) : (
-                                                <span className="bg-tag-primary t-accent-aaa inline-block shrink-0 rounded-full p-0.5">
-                                                    <ArrowDownIcon />
-                                                </span>
-                                            )}
-                                            <span className="min-w-0 shrink truncate text-xs">
-                                                {JSON.stringify(message.body)}
-                                            </span>
-                                            <span
-                                                className={classNames("flex-1 inline-flex justify-end", {
-                                                    // "justify-start": event.action === "send",
-                                                    // "justify-end": event.action === "recieve",
-                                                })}
+                                            <Accordion.Trigger
+                                                className={classNames(
+                                                    "w-full flex items-center gap-2 px-3 py-2 hover:data-[state=closed]:bg-tag-default cursor-default transition-background",
+                                                    {
+                                                        "data-[state=open]:bg-tag-success":
+                                                            messageType.origin ===
+                                                            APIV1Read.WebSocketMessageOrigin.Client,
+                                                        "data-[state=open]:bg-tag-primary":
+                                                            messageType.origin ===
+                                                            APIV1Read.WebSocketMessageOrigin.Server,
+                                                    },
+                                                )}
                                             >
-                                                <span className="bg-tag-default t-muted h-5 rounded-md px-1.5 py-1 text-xs leading-none">
-                                                    {messageType.displayName ?? messageType.type}
+                                                {messageType.origin === APIV1Read.WebSocketMessageOrigin.Client ? (
+                                                    <span className="bg-tag-success t-success inline-block shrink-0 rounded-full p-0.5">
+                                                        <ArrowUpIcon />
+                                                    </span>
+                                                ) : (
+                                                    <span className="bg-tag-primary t-accent-aaa inline-block shrink-0 rounded-full p-0.5">
+                                                        <ArrowDownIcon />
+                                                    </span>
+                                                )}
+                                                <span className="min-w-0 shrink truncate text-xs">
+                                                    {JSON.stringify(message.body)}
                                                 </span>
-                                            </span>
+                                                <span
+                                                    className={classNames("flex-1 inline-flex justify-end", {
+                                                        // "justify-start": event.action === "send",
+                                                        // "justify-end": event.action === "recieve",
+                                                    })}
+                                                >
+                                                    <span className="bg-tag-default t-muted h-5 rounded-md px-1.5 py-1 text-xs leading-none">
+                                                        {messageType.displayName ?? messageType.type}
+                                                    </span>
+                                                </span>
 
-                                            <ChevronDownIcon
-                                                className="t-muted shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.87,_0,_0.13,_1)] group-data-[state=open]:rotate-180"
-                                                aria-hidden
-                                            />
-                                        </Accordion.Trigger>
-                                        <Accordion.Content className="data-[state=open]:animate-slide-down data-[state=closed]:animate-slide-up overflow-hidden">
-                                            <div className="group/cb-container relative">
-                                                <CopyToClipboardButton
-                                                    className={
-                                                        "absolute right-1 top-1 opacity-0 transition group-hover/cb-container:opacity-100"
-                                                    }
-                                                    content={() => JSON.stringify(message.body, null, 2)}
+                                                <ChevronDownIcon
+                                                    className="t-muted shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.87,_0,_0.13,_1)] group-data-[state=open]:rotate-180"
+                                                    aria-hidden
                                                 />
-                                                <CodeBlockSkeleton
-                                                    className="max-h-[200px] w-0 min-w-full overflow-y-auto py-1"
-                                                    content={JSON.stringify(message.body, null, 2)}
-                                                    language="json"
-                                                    usePlainStyles
-                                                    fontSize="sm"
-                                                />
-                                            </div>
-                                        </Accordion.Content>
-                                    </Accordion.Item>
-                                );
-                            })}
-                        </Accordion.Root>
-                    </TitledExample>
-                </aside>
+                                            </Accordion.Trigger>
+                                            <Accordion.Content className="data-[state=open]:animate-slide-down data-[state=closed]:animate-slide-up overflow-hidden">
+                                                <div className="group/cb-container relative">
+                                                    <CopyToClipboardButton
+                                                        className={
+                                                            "absolute right-1 top-1 opacity-0 transition group-hover/cb-container:opacity-100"
+                                                        }
+                                                        content={() => JSON.stringify(message.body, null, 2)}
+                                                    />
+                                                    <CodeBlockSkeleton
+                                                        className="max-h-[200px] w-0 min-w-full overflow-y-auto py-1"
+                                                        content={JSON.stringify(message.body, null, 2)}
+                                                        language="json"
+                                                        usePlainStyles
+                                                        fontSize="sm"
+                                                    />
+                                                </div>
+                                            </Accordion.Content>
+                                        </Accordion.Item>
+                                    );
+                                })}
+                            </Accordion.Root>
+                        </TitledExample>
+                    </aside>
+                </div>
             </article>
         </div>
     );

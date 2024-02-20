@@ -1,5 +1,4 @@
 import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { FlattenedApiSection, isEndpoint, ResolvedApiDefinition, ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { Portal, Transition } from "@headlessui/react";
@@ -8,6 +7,7 @@ import { atomWithStorage } from "jotai/utils";
 import { Dispatch, FC, SetStateAction, useCallback, useEffect } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { SidebarNode } from "../sidebar/types";
+import { FlattenedApiSection, isEndpoint, ResolvedApiDefinition, ResolvedEndpointDefinition } from "../util/resolver";
 import { ApiPlayground } from "./ApiPlayground";
 import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, useApiPlaygroundContext } from "./ApiPlaygroundContext";
 import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";

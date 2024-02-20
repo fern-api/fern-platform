@@ -1,10 +1,11 @@
-import { ResolvedDiscriminatedUnionShape, titleCase } from "@fern-ui/app-utils";
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import dynamic from "next/dynamic";
 import { FC, useCallback, useMemo } from "react";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
 import { FernSegmentedControl } from "../components/FernSegmentedControl";
+import { ResolvedDiscriminatedUnionShape } from "../util/resolver";
+import { titleCase } from "../util/titleCase";
 import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
 import { castToRecord, getDefaultValueForObjectProperties } from "./utils";
 

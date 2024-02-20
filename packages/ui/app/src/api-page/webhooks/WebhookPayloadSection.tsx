@@ -1,4 +1,4 @@
-import { ResolvedPayload } from "@fern-ui/app-utils";
+import { ResolvedPayload } from "../../util/resolver";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";

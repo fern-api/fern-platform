@@ -2345,9 +2345,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/fdr-sdk@npm:0.50.1-1-g1f0f637":
-  version: 0.50.1-1-g1f0f637
-  resolution: "@fern-api/fdr-sdk@npm:0.50.1-1-g1f0f637"
+"@fern-api/fdr-sdk@npm:0.50.6-1-gdf25388":
+  version: 0.50.6-1-gdf25388
+  resolution: "@fern-api/fdr-sdk@npm:0.50.6-1-gdf25388"
   dependencies:
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
@@ -2355,7 +2355,7 @@ __metadata:
     lodash: ^4.17.21
     marked: ^5.1.0
     url-join: 4.0.1
-  checksum: 32eb06bac67af64021cb208d300e557e60c04f77f1465b63aa41cc04956caf2a85f88edfce46cf3d0cb678166ba54241ad210597ab23451565f06ec7cb9125ea
+  checksum: a0c105bb122da9613589dc6ebe0e8cda9be2bdd0704ec13501b69d3c3c6629458b97f6ae5dd9b50e09798c334b285a776e8a5118e37e03ba8f007a83dd7ecfd2
   languageName: node
   linkType: hard
 
@@ -2376,12 +2376,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/app-utils@workspace:packages/commons/app-utils"
   dependencies:
-    "@fern-api/fdr-sdk": 0.50.1-1-g1f0f637
+    "@fern-api/fdr-sdk": 0.50.6-1-gdf25388
     "@fern-ui/core-utils": "workspace:*"
     "@types/jest": ^29.5.11
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
-    "@types/title": ^3.4.3
     depcheck: ^1.4.3
     eslint: ^8.56.0
     jest: ^29.7.0
@@ -2392,7 +2391,6 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     remark-gfm: ^3.0.1
-    title: ^3.5.3
     typescript: 4.9.4
   languageName: unknown
   linkType: soft
@@ -2707,7 +2705,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/ui@workspace:packages/ui/app"
   dependencies:
-    "@fern-api/fdr-sdk": 0.50.1-1-g1f0f637
+    "@fern-api/fdr-sdk": 0.50.6-1-gdf25388
     "@fern-ui/app-utils": "workspace:*"
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/loadable": "workspace:*"
@@ -2735,6 +2733,7 @@ __metadata:
     "@types/react-syntax-highlighter": ^15.5.11
     "@types/react-test-renderer": ^18.0.7
     "@types/tinycolor2": ^1.4.6
+    "@types/title": ^3.4.3
     "@vercel/speed-insights": ^1.0.7
     algoliasearch: ^4.22.1
     classnames: ^2.5.1
@@ -2767,6 +2766,7 @@ __metadata:
     remark-gfm: ^3.0.1
     stylelint: ^16.1.0
     tinycolor2: ^1.6.0
+    title: ^3.5.3
     typescript: 4.9.4
     vite: ^4.5.2
   languageName: unknown
