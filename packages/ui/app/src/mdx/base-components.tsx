@@ -2,7 +2,7 @@ import { useMounted } from "@fern-ui/react-commons";
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import Link from "next/link";
-import React, { AnchorHTMLAttributes, DetailedHTMLProps, HTMLAttributes, ReactNode } from "react";
+import React, { AnchorHTMLAttributes, DetailedHTMLProps, HTMLAttributes, LiHTMLAttributes, ReactNode } from "react";
 import Zoom from "react-medium-image-zoom";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
 import { useAnchorInView } from "../custom-docs-page/TableOfContentsContext";
@@ -213,11 +213,17 @@ export const Ol: React.FC<HTMLAttributes<HTMLOListElement>> = ({ className, ...r
     return <ol {...rest} className={classNames(className, "list-outside list-decimal space-y-2 mb-3")} />;
 };
 
-export const Ul: React.FC<HTMLAttributes<HTMLUListElement>> = ({ className, ...rest }) => {
+export const Ul: React.FC<DetailedHTMLProps<HTMLAttributes<HTMLUListElement>, HTMLUListElement>> = ({
+    className,
+    ...rest
+}) => {
     return <ul {...rest} className={classNames(className, "list-outside list-disc space-y-2 mb-3")} />;
 };
 
-export const Li: React.FC<HTMLAttributes<HTMLLIElement>> = ({ className, ...rest }) => {
+export const Li: React.FC<DetailedHTMLProps<LiHTMLAttributes<HTMLLIElement>, HTMLLIElement>> = ({
+    className,
+    ...rest
+}) => {
     return <li {...rest} className={classNames(className, "marker:text-inherit")} />;
 };
 

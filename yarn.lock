@@ -2977,7 +2977,6 @@ __metadata:
     next-themes: ^0.2.1
     nextjs-progressbar: ^0.0.16
     node-html-parser: ^6.1.12
-    normalize.css: ^8.0.1
     organize-imports-cli: ^0.10.0
     posthog-js: ^1.81.1
     prettier: ^3.2.4
