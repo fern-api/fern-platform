@@ -43,6 +43,8 @@ export type DocsNode =
     | DocsNode.Endpoint
     | DocsNode.TopLevelWebhook
     | DocsNode.Webhook
+    | DocsNode.TopLevelWebSocket
+    | DocsNode.WebSocket
     | DocsNode.Page;
 
 export type DocsNodeType = DocsNode["type"];
@@ -52,6 +54,8 @@ export type NavigatableDocsNode =
     | DocsNode.Endpoint
     | DocsNode.TopLevelWebhook
     | DocsNode.Webhook
+    | DocsNode.TopLevelWebSocket
+    | DocsNode.WebSocket
     | DocsNode.Page;
 export type ApiDocsNode =
     | DocsNode.ApiSection
@@ -59,7 +63,9 @@ export type ApiDocsNode =
     | DocsNode.TopLevelEndpoint
     | DocsNode.Endpoint
     | DocsNode.TopLevelWebhook
-    | DocsNode.Webhook;
+    | DocsNode.Webhook
+    | DocsNode.TopLevelWebSocket
+    | DocsNode.WebSocket;
 export type ChildDocsNode = Exclude<DocsNode, DocsNode.Root>;
 export type ParentDocsNode = Exclude<DocsNode, NavigatableDocsNode>;
 
@@ -212,6 +218,21 @@ export declare namespace DocsNode {
     export interface Webhook extends BaseNode, NavigatableNode {
         type: "webhook";
         webhook: APIV1Read.WebhookDefinition;
+        section: DocsV1Read.ApiSection;
+        subpackage: APIV1Read.ApiDefinitionSubpackage;
+        context: NodeDocsContext;
+    }
+
+    export interface TopLevelWebSocket extends BaseNode, NavigatableNode {
+        type: "top-level-websocket";
+        websocket: APIV1Read.WebSocketChannel;
+        section: DocsV1Read.ApiSection;
+        context: NodeDocsContext;
+    }
+
+    export interface WebSocket extends BaseNode, NavigatableNode {
+        type: "websocket";
+        websocket: APIV1Read.WebSocketChannel;
         section: DocsV1Read.ApiSection;
         subpackage: APIV1Read.ApiDefinitionSubpackage;
         context: NodeDocsContext;

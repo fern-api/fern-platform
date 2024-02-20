@@ -323,6 +323,15 @@ function buildNodeForApiSection({
         });
         addNodeChild(sectionNode, webhookNode);
     });
+    apiDefinition.rootPackage.websockets.forEach((websocket) => {
+        const websocketNode = buildNodeForTopLevelWebSocket({
+            websocket,
+            section,
+            parentSlugs: nextSectionParentSlugs(section, parentSlugs),
+            context,
+        });
+        addNodeChild(sectionNode, websocketNode);
+    });
     apiDefinition.rootPackage.subpackages.forEach((subpackageId) => {
         const subpackage = resolveSubpackage(apiDefinition, subpackageId);
         const subpackageNode = buildNodeForSubpackage({
@@ -431,6 +440,53 @@ function buildNodeForWebhook({
     return webhookNode;
 }
 
+function buildNodeForTopLevelWebSocket({
+    websocket,
+    section,
+    parentSlugs,
+    context,
+}: {
+    websocket: APIV1Read.WebSocketChannel;
+    section: DocsV1Read.ApiSection;
+    parentSlugs: ItemSlug[];
+    context: NodeDocsContext;
+}): DocsNode.TopLevelWebSocket {
+    const webhookNode = NodeFactory.createTopLevelWebSocket({
+        websocket,
+        section,
+        slug: websocket.urlSlug,
+        leadingSlug: joinUrlSlugs(...parentSlugs, websocket.urlSlug),
+        migratedSlugs: [],
+        context,
+    });
+    return webhookNode;
+}
+
+function buildNodeForWebSocket({
+    websocket,
+    section,
+    subpackage,
+    parentSlugs,
+    context,
+}: {
+    websocket: APIV1Read.WebSocketChannel;
+    section: DocsV1Read.ApiSection;
+    subpackage: APIV1Read.ApiDefinitionSubpackage;
+    parentSlugs: ItemSlug[];
+    context: NodeDocsContext;
+}): DocsNode.WebSocket {
+    const webhookNode = NodeFactory.createWebSocket({
+        websocket,
+        section,
+        subpackage,
+        slug: websocket.urlSlug,
+        leadingSlug: joinUrlSlugs(...parentSlugs, websocket.urlSlug),
+        migratedSlugs: [],
+        context,
+    });
+    return webhookNode;
+}
+
 function buildNodeForSubpackage({
     subpackage,
     section,
@@ -469,6 +525,16 @@ function buildNodeForSubpackage({
             context,
         });
         addNodeChild(subpackageNode, webhookNode);
+    });
+    subpackage.websockets.forEach((websocket) => {
+        const websocketNode = buildNodeForWebSocket({
+            websocket,
+            section,
+            subpackage,
+            parentSlugs: [...parentSlugs, subpackage.urlSlug],
+            context,
+        });
+        addNodeChild(subpackageNode, websocketNode);
     });
     subpackage.subpackages.forEach((subpackageId) => {
         const childSubpackage = resolveSubpackage(apiDefinition, subpackageId);

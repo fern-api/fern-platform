@@ -223,6 +223,61 @@ export class NodeFactory {
         };
     }
 
+    public static createTopLevelWebSocket({
+        slug,
+        leadingSlug,
+        migratedSlugs,
+        websocket,
+        section,
+        context,
+    }: {
+        slug: string;
+        leadingSlug: string;
+        migratedSlugs: string[];
+        websocket: APIV1Read.WebSocketChannel;
+        section: DocsV1Read.ApiSection;
+        context: NodeDocsContext;
+    }): DocsNode.TopLevelWebSocket {
+        return {
+            type: "top-level-websocket",
+            slug,
+            leadingSlug,
+            migratedSlugs,
+            websocket,
+            section,
+            context,
+        };
+    }
+
+    public static createWebSocket({
+        slug,
+        leadingSlug,
+        migratedSlugs,
+        websocket,
+        section,
+        subpackage,
+        context,
+    }: {
+        slug: string;
+        leadingSlug: string;
+        migratedSlugs: string[];
+        websocket: APIV1Read.WebSocketChannel;
+        section: DocsV1Read.ApiSection;
+        subpackage: APIV1Read.ApiDefinitionSubpackage;
+        context: NodeDocsContext;
+    }): DocsNode.WebSocket {
+        return {
+            type: "websocket",
+            slug,
+            leadingSlug,
+            migratedSlugs,
+            websocket,
+            section,
+            subpackage,
+            context,
+        };
+    }
+
     public static createPage({
         slug,
         leadingSlug,
