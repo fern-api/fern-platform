@@ -4416,10 +4416,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/fdr-sdk", [\
-        ["npm:0.48.0-1-ge4e5031", {\
-          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.48.0-1-ge4e5031-5044a1f822-8b8d33367e.zip/node_modules/@fern-api/fdr-sdk/",\
+        ["npm:0.50.1-1-g1f0f637", {\
+          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.50.1-1-g1f0f637-985a50f2f4-32eb06bac6.zip/node_modules/@fern-api/fdr-sdk/",\
           "packageDependencies": [\
-            ["@fern-api/fdr-sdk", "npm:0.48.0-1-ge4e5031"],\
+            ["@fern-api/fdr-sdk", "npm:0.50.1-1-g1f0f637"],\
             ["@ungap/url-search-params", "npm:0.2.2"],\
             ["axios", "npm:0.27.2"],\
             ["js-base64", "npm:3.7.2"],\
@@ -4449,7 +4449,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/commons/app-utils/",\
           "packageDependencies": [\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
-            ["@fern-api/fdr-sdk", "npm:0.48.0-1-ge4e5031"],\
+            ["@fern-api/fdr-sdk", "npm:0.50.1-1-g1f0f637"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@types/jest", "npm:29.5.11"],\
             ["@types/lodash-es", "npm:4.17.12"],\
@@ -4865,7 +4865,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@blueprintjs/datetime", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.2.11"],\
             ["@blueprintjs/datetime2", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.2.10"],\
             ["@blueprintjs/select", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.0.22"],\
-            ["@fern-api/fdr-sdk", "npm:0.48.0-1-ge4e5031"],\
+            ["@fern-api/fdr-sdk", "npm:0.50.1-1-g1f0f637"],\
             ["@fern-ui/app-utils", "workspace:packages/commons/app-utils"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/loadable", "workspace:packages/commons/loadable"],\
