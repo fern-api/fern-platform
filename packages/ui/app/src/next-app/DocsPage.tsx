@@ -135,7 +135,6 @@ export const getDocsPageProps = async (
         docsDefinition,
         basePath,
     });
-    console.log(resolvedPath);
 
     const navigation = getNavigation(basePath, docs.body.definition.apis, navigatable);
 

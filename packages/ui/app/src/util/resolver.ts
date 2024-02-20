@@ -245,7 +245,10 @@ function resolveWebsocketChannel(
                 shape: resolveTypeReference(parameter.type, types),
             }),
         ),
-        messages: [],
+        messages: websocket.messages.map(({ body, ...message }) => ({
+            ...message,
+            body: resolvePayloadShape(body, types),
+        })),
         examples: websocket.examples,
         defaultEnvironment: websocket.environments.find((env) => env.id === websocket.defaultEnvironment),
     };
@@ -374,7 +377,7 @@ function resolveTypeReference(
             if (typeDefinition == null) {
                 return { type: "unknown" };
             }
-            return resolveTypeShape(typeDefinition.shape, types, unwrapOptional);
+            return { type: "reference", shape: () => resolveTypeShape(typeDefinition.shape, types, unwrapOptional) };
         },
         primitive: (primitive) => primitive.value,
         _other: () => ({ type: "unknown" }),

@@ -2,12 +2,12 @@ import { APIV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import * as Accordion from "@radix-ui/react-accordion";
 import { ArrowDownIcon, ArrowUpIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
-import React, { Children, HTMLAttributes, ReactNode, useMemo } from "react";
+import { Children, FC, HTMLAttributes, ReactNode, useMemo } from "react";
 import { Wifi } from "react-feather";
-import { buildRequestUrl } from "../../api-playground/utils";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
+import { useShouldHideFromSsg } from "../../navigation-context/useNavigationContext";
 import { ResolvedUndiscriminatedUnionShape, ResolvedWebSocketChannel } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
@@ -16,6 +16,7 @@ import { EndpointUrlWithOverflow } from "../endpoints/EndpointUrlWithOverflow";
 import { TitledExample } from "../examples/TitledExample";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
+import { useApiPageCenterElement } from "../useApiPageCenterElement";
 
 export declare namespace WebSocket {
     export interface Props {
@@ -23,9 +24,21 @@ export declare namespace WebSocket {
         isLastInApi: boolean;
     }
 }
-export const WebSocket: React.FC<WebSocket.Props> = ({ websocket, isLastInApi }: WebSocket.Props) => {
+export const WebSocket: FC<WebSocket.Props> = (props) => {
+    const fullSlug = joinUrlSlugs(...props.websocket.slug);
+
+    if (useShouldHideFromSsg(fullSlug)) {
+        return null;
+    }
+
+    return <WebhookContent {...props} />;
+};
+
+const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi }) => {
     const fullSlug = joinUrlSlugs(...websocket.slug);
     const route = `/${fullSlug}`;
+
+    const { setTargetRef } = useApiPageCenterElement({ slug: fullSlug });
 
     const publishMessages = useMemo(
         () => websocket.messages.filter((message) => message.origin === APIV1Read.WebSocketMessageOrigin.Client),
@@ -61,7 +74,11 @@ export const WebSocket: React.FC<WebSocket.Props> = ({ websocket, isLastInApi }:
     }, [subscribeMessages]);
 
     return (
-        <div className={"scroll-mt-header-height-padded mx-4 md:mx-6 lg:mx-8"}>
+        <div
+            className={"scroll-mt-header-height-padded mx-4 md:mx-6 lg:mx-8"}
+            ref={setTargetRef}
+            data-route={route.toLowerCase()}
+        >
             <article
                 className={classNames(
                     "scroll-mt-header-height max-w-content-width lg:max-w-endpoint-width mx-auto lg:grid lg:grid-cols-2 lg:gap-12",
@@ -184,8 +201,8 @@ export const WebSocket: React.FC<WebSocket.Props> = ({ websocket, isLastInApi }:
                                 route={route}
                                 headerType="h2"
                             >
-                                {/* <div className="t-muted border-default border-b pb-5 text-sm leading-6">
-                                    <ApiPageDescription
+                                <div className="t-muted border-default border-b text-sm leading-6">
+                                    {/* <ApiPageDescription
                                         className="text-sm"
                                         description={websocket.publish.description}
                                         isMarkdown={true}
@@ -193,8 +210,8 @@ export const WebSocket: React.FC<WebSocket.Props> = ({ websocket, isLastInApi }:
                                     {websocket.publish.description == null &&
                                         `This channel expects ${renderTypeShorthand(websocket.publish.shape, {
                                             withArticle: true,
-                                        })}.`}
-                                </div> */}
+                                        })}.`} */}
+                                </div>
                                 <TypeReferenceDefinitions
                                     shape={publishMessageShape}
                                     isCollapsible={false}
@@ -218,16 +235,16 @@ export const WebSocket: React.FC<WebSocket.Props> = ({ websocket, isLastInApi }:
                                 route={route}
                                 headerType="h2"
                             >
-                                {/* <div className="t-muted border-default border-b pb-5 text-sm leading-6">
-                                    <ApiPageDescription
+                                <div className="t-muted border-default border-b text-sm leading-6">
+                                    {/* <ApiPageDescription
                                         className="text-sm"
                                         description={websocket.subscribe.description}
                                         isMarkdown={true}
                                     />
                                     {`This channel emits ${renderTypeShorthand(websocket.subscribe.shape, {
                                         withArticle: true,
-                                    })}.`}
-                                </div> */}
+                                    })}.`} */}
+                                </div>
                                 <TypeReferenceDefinitions
                                     shape={subscribeMessageShape}
                                     isCollapsible={false}
@@ -247,12 +264,7 @@ export const WebSocket: React.FC<WebSocket.Props> = ({ websocket, isLastInApi }:
                                     <tr>
                                         <td className="text-left align-top">URL</td>
                                         <td className="text-left align-top">
-                                            {buildRequestUrl(
-                                                websocket.defaultEnvironment?.baseUrl,
-                                                websocket.path,
-                                                websocket.examples[0]?.pathParameters,
-                                                websocket.examples[0]?.queryParameters,
-                                            )}
+                                            {`${websocket.defaultEnvironment?.baseUrl ?? ""}${websocket.examples[0]?.path}`}
                                         </td>
                                     </tr>
                                     <tr>
