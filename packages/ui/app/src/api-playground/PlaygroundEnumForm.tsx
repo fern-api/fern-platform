@@ -4,7 +4,9 @@ import dynamic from "next/dynamic";
 import { FC, useMemo } from "react";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
-import { FernSegmentedControl } from "../components/FernSegmentedControl";
+import { FernRadioGroup } from "../components/FernRadioGroup";
+
+const ENUM_RADIO_BREAKPOINT = 5;
 
 const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), {
     ssr: true,
@@ -23,12 +25,13 @@ export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({ enumValues, on
                 (enumValue): FernDropdown.Option => ({
                     type: "value",
                     label: enumValue.value,
+                    helperText: enumValue.description,
                     value: enumValue.value,
                     tooltip:
-                        enumValue.description != null ? (
+                        enumValue.description != null && enumValues.length >= ENUM_RADIO_BREAKPOINT ? (
                             <Markdown className="text-xs">{enumValue.description}</Markdown>
                         ) : undefined,
-                    className: "font-mono",
+                    labelClassName: "font-mono",
                 }),
             ),
         [enumValues],
@@ -38,14 +41,13 @@ export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({ enumValues, on
         return null;
     }
 
-    if (enumValues.length < 4) {
+    if (enumValues.length < ENUM_RADIO_BREAKPOINT) {
         return (
             <div className="w-full">
-                <FernSegmentedControl
+                <FernRadioGroup
                     options={options}
                     value={typeof value === "string" ? value : undefined}
                     onValueChange={onChange}
-                    className="font-mono"
                 />
             </div>
         );

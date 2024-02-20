@@ -18,7 +18,7 @@ interface PlaygroundEndpointPathProps {
 export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({ endpoint, formState, sendRequest }) => {
     const environment = endpoint.defaultEnvironment ?? endpoint.environments[0];
     return (
-        <div className="playground-endpoint h-10">
+        <div className="playground-endpoint">
             <div className="bg-tag-default flex h-10 min-w-0 flex-1 shrink gap-2 rounded-[20px] px-4 py-2">
                 {endpoint != null && <HttpMethodTag method={endpoint.method} className="playground-endpoint-method" />}
                 <span className="playground-endpoint-url">

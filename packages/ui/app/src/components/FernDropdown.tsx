@@ -9,10 +9,13 @@ export declare namespace FernDropdown {
     export interface ValueOption {
         type: "value";
         label?: ReactNode;
+        helperText?: ReactNode;
+        children?: ReactNode | ((active: boolean) => ReactNode);
         value: string;
         rightElement?: ReactNode;
         tooltip?: ReactNode;
         className?: string;
+        labelClassName?: string;
     }
     export interface SeparatorOption {
         type: "separator";
@@ -72,7 +75,17 @@ export function FernDropdown({
                                                                 </DropdownMenu.ItemIndicator>
                                                             </span>
                                                         )}
-                                                        <span>{option.label ?? option.value}</span>
+                                                        <span className={option.labelClassName}>
+                                                            {option.label ?? option.value}
+                                                        </span>
+                                                        <span className="inline-flex max-w-[calc(var(--radix-dropdown-menu-trigger-width)-2rem)] items-baseline">
+                                                            <span>{option.label ?? option.value}</span>
+                                                            {option.helperText != null && (
+                                                                <span className="ml-2 truncate text-xs opacity-60">
+                                                                    {option.helperText}
+                                                                </span>
+                                                            )}
+                                                        </span>
                                                         <span className="ml-auto space-x-1 pl-2">
                                                             {option.rightElement && <span>{option.rightElement}</span>}
                                                             {option.tooltip != null && option.tooltip !== "" && (

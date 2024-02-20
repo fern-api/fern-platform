@@ -142,8 +142,8 @@
 
     .playground-endpoint {
         @apply flex min-w-0 flex-1 shrink items-start gap-2;
-        @apply bg-background border-default relative z-10 px-3 py-2 border-x;
-        @apply hover:self-start hover:overflow-visible hover:border-b hover:rounded-b-lg;
+        @apply border-default relative z-10 px-3 py-2 border-x;
+        // @apply hover:self-start hover:overflow-visible hover:border-b hover:rounded-b-lg;
     }
 
     .playground-endpoint-url {
