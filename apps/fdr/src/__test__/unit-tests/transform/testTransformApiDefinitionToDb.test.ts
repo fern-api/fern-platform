@@ -20,6 +20,9 @@ const FIXTURES: Fixture[] = [
     {
         name: "candid",
     },
+    {
+        name: "realtime",
+    },
 ];
 
 function loadFdrApiDefinition(fixture: Fixture) {

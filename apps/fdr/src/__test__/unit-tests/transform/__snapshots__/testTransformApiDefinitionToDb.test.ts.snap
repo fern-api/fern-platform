@@ -89701,6 +89701,176 @@ Object {
 }
 `;
 
+exports[`transformApiDefinitionToDb {"name":"realtime"} 1`] = `
+Object {
+  "auth": Object {
+    "tokenName": "token",
+    "type": "bearerAuth",
+  },
+  "hasMultipleBaseUrls": false,
+  "id": "id",
+  "rootPackage": Object {
+    "endpoints": Array [],
+    "subpackages": Array [
+      "subpackage_realtime",
+    ],
+    "types": Array [],
+    "webhooks": Array [],
+    "websockets": Array [],
+  },
+  "subpackages": Object {
+    "subpackage_realtime": Object {
+      "description": undefined,
+      "descriptionContainsMarkdown": true,
+      "endpoints": Array [],
+      "htmlDescription": undefined,
+      "name": "realtime",
+      "parent": undefined,
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_realtime",
+      "subpackages": Array [],
+      "types": Array [],
+      "urlSlug": "realtime",
+      "webhooks": Array [],
+      "websockets": Array [
+        Object {
+          "auth": true,
+          "availability": undefined,
+          "defaultEnvironment": "Production",
+          "description": undefined,
+          "descriptionContainsMarkdown": true,
+          "environments": Array [
+            Object {
+              "baseUrl": "wss://api.buildwithfern.com",
+              "id": "Production",
+            },
+          ],
+          "examples": Array [
+            Object {
+              "headers": Object {},
+              "messages": Array [
+                Object {
+                  "body": "uvxcdv12344412b",
+                  "type": "send",
+                },
+                Object {
+                  "type": "receive",
+                },
+                Object {
+                  "body": "uvxcdv12344412b",
+                  "type": "send",
+                },
+              ],
+              "name": "Default example",
+              "path": "/realtime/doc_123",
+              "pathParameters": Object {
+                "id": "doc_123",
+              },
+              "queryParameters": Object {},
+            },
+          ],
+          "headers": Array [],
+          "htmlDescription": undefined,
+          "id": "realtime",
+          "messages": Array [
+            Object {
+              "body": Object {
+                "type": "reference",
+                "value": Object {
+                  "type": "primitive",
+                  "value": Object {
+                    "type": "string",
+                  },
+                },
+              },
+              "displayName": "Send",
+              "origin": "client",
+              "type": "send",
+            },
+            Object {
+              "body": Object {
+                "extends": Array [],
+                "properties": Array [],
+                "type": "object",
+              },
+              "displayName": "Receive",
+              "origin": "server",
+              "type": "receive",
+            },
+          ],
+          "name": "Realtime",
+          "path": Object {
+            "parts": Array [
+              Object {
+                "type": "literal",
+                "value": "/realtime/",
+              },
+              Object {
+                "type": "pathParameter",
+                "value": "id",
+              },
+              Object {
+                "type": "literal",
+                "value": "",
+              },
+              Object {
+                "type": "literal",
+                "value": "/realtime/",
+              },
+              Object {
+                "type": "pathParameter",
+                "value": "id",
+              },
+              Object {
+                "type": "literal",
+                "value": "",
+              },
+            ],
+            "pathParameters": Array [
+              Object {
+                "key": "id",
+                "type": Object {
+                  "type": "primitive",
+                  "value": Object {
+                    "type": "string",
+                  },
+                },
+              },
+            ],
+          },
+          "queryParameters": Array [
+            Object {
+              "key": "model",
+              "type": Object {
+                "itemType": Object {
+                  "type": "id",
+                  "value": "type_realtime:Model",
+                },
+                "type": "optional",
+              },
+            },
+            Object {
+              "key": "temperature",
+              "type": Object {
+                "itemType": Object {
+                  "type": "primitive",
+                  "value": Object {
+                    "type": "integer",
+                  },
+                },
+                "type": "optional",
+              },
+            },
+          ],
+          "urlSlug": "realtime",
+        },
+      ],
+    },
+  },
+  "types": Object {},
+}
+`;
+
 exports[`transformApiDefinitionToDb {"name":"string"} 1`] = `
 Object {
   "auth": Object {
