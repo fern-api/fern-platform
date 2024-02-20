@@ -59,6 +59,11 @@ function resolveSidebarNodeApiSection(
         title: endpoint.name != null ? endpoint.name : stringifyEndpointPathParts(endpoint.path.parts),
         method: endpoint.method,
     }));
+    const websockets = subpackage.websockets.map((websocket) => ({
+        id: websocket.id,
+        slug: [...slug, websocket.urlSlug],
+        title: websocket.name != null ? websocket.name : stringifyEndpointPathParts(websocket.path.parts),
+    }));
     const webhooks = subpackage.webhooks.map((webhook) => ({
         id: webhook.id,
         slug: [...slug, webhook.urlSlug],
@@ -68,7 +73,7 @@ function resolveSidebarNodeApiSection(
         .map((innerSubpackageId) => resolveSidebarNodeApiSection(api, innerSubpackageId, subpackagesMap, slug))
         .filter(isNonNullish);
 
-    if (endpoints.length === 0 && webhooks.length === 0 && subpackages.length === 0) {
+    if (endpoints.length === 0 && webhooks.length === 0 && websockets.length === 0 && subpackages.length === 0) {
         return;
     }
 
@@ -80,7 +85,7 @@ function resolveSidebarNodeApiSection(
         slug,
         endpoints,
         webhooks,
-        websockets: [],
+        websockets,
         subpackages,
         artifacts: null,
     };
@@ -139,7 +144,14 @@ export function resolveSidebarNodes(
                             slug: [...definitionSlug, webhook.urlSlug],
                             title: webhook.name != null ? webhook.name : "/" + webhook.path.join("/"),
                         })),
-                        websockets: [],
+                        websockets: definition.rootPackage.websockets.map((websocket) => ({
+                            id: websocket.id,
+                            slug: [...definitionSlug, websocket.urlSlug],
+                            title:
+                                websocket.name != null
+                                    ? websocket.name
+                                    : stringifyEndpointPathParts(websocket.path.parts),
+                        })),
                         subpackages: definition.rootPackage.subpackages
                             .map((subpackageId) =>
                                 resolveSidebarNodeApiSection(
