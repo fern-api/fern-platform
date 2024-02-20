@@ -1,4 +1,5 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { WithoutQuestionMarks } from "@fern-api/fdr-sdk/dist/converters/utils/WithoutQuestionMarks";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { last, noop, sortBy } from "lodash-es";
 import { titleCase } from "./titleCase";
@@ -51,7 +52,7 @@ export function resolveNavigationItems(
                             ),
                         ),
                         websockets: definition.rootPackage.websockets.map((websocket) =>
-                            resolveWebsocketDefinition(websocket, definition.types, definitionSlug),
+                            resolveWebsocketChannel(websocket, definition.types, definitionSlug),
                         ),
                         webhooks: definition.rootPackage.webhooks.map((webhook) =>
                             resolveWebhookDefinition(webhook, definition.types, definitionSlug),
@@ -101,7 +102,7 @@ function resolveSubpackage(
     const endpoints = subpackage.endpoints.map((endpoint) =>
         resolveEndpointDefinition(apiSectionId, subpackageId, endpoint, types, slug),
     );
-    const websockets = subpackage.websockets.map((websocket) => resolveWebsocketDefinition(websocket, types, slug));
+    const websockets = subpackage.websockets.map((websocket) => resolveWebsocketChannel(websocket, types, slug));
     const webhooks = subpackage.webhooks.map((webhook) => resolveWebhookDefinition(webhook, types, slug));
     const subpackages = subpackage.subpackages
         .map((subpackageId) => resolveSubpackage(apiSectionId, subpackageId, subpackagesMap, types, slug))
@@ -197,11 +198,11 @@ function resolveEndpointDefinition(
     };
 }
 
-function resolveWebsocketDefinition(
-    websocket: APIV1Read.WebSocketDefinition,
+function resolveWebsocketChannel(
+    websocket: APIV1Read.WebSocketChannel,
     types: Record<string, APIV1Read.TypeDefinition>,
     parentSlugs: string[],
-): ResolvedPubSubWebsocketDefinition {
+): ResolvedWebSocketChannel {
     const pathParameters = websocket.path.pathParameters.map(
         (parameter): ResolvedParameter => ({
             ...parameter,
@@ -211,6 +212,8 @@ function resolveWebsocketDefinition(
     return {
         ...websocket,
         id: websocket.id,
+        description: websocket.description,
+        availability: websocket.availability,
         slug: [...parentSlugs, websocket.urlSlug],
         name: websocket.name != null ? websocket.name : websocket.urlSlug,
         path: websocket.path.parts
@@ -231,6 +234,10 @@ function resolveWebsocketDefinition(
                 }
             })
             .filter((param) => param !== undefined) as ResolvedEndpointPathParts[],
+        headers: websocket.headers.map((header) => ({
+            ...header,
+            shape: resolveTypeReference(header.type, types),
+        })),
         pathParameters,
         queryParameters: websocket.queryParameters.map(
             (parameter): ResolvedParameter => ({
@@ -238,34 +245,10 @@ function resolveWebsocketDefinition(
                 shape: resolveTypeReference(parameter.type, types),
             }),
         ),
-        publish: {
-            ...websocket.publish,
-            shape: resolvePayloadShape(websocket.publish.type, types),
-        },
-        subscribe: {
-            ...websocket.publish,
-            shape: resolvePayloadShape(websocket.subscribe.type, types),
-        },
-        examples: resolveWebsocketExample(websocket.examples),
+        messages: [],
+        examples: websocket.examples,
         defaultEnvironment: websocket.environments.find((env) => env.id === websocket.defaultEnvironment),
     };
-}
-
-function resolveWebsocketExample(examples: APIV1Read.WebSocketExample[]): ResolvedWebsocketExample[] {
-    return examples.map(
-        (example): ResolvedWebsocketExample => ({
-            ...example,
-            name: example.name,
-            description: example.description,
-            events: example.events.map(
-                (event): ResolvedWebsocketExampleEvent => ({
-                    action: event.action,
-                    variant: event.variant,
-                    payload: event.payload,
-                }),
-            ),
-        }),
-    );
 }
 
 function resolveWebhookDefinition(
@@ -289,7 +272,7 @@ function resolveWebhookDefinition(
 }
 
 function resolvePayloadShape(
-    payloadShape: APIV1Read.WebhookPayloadShape | APIV1Read.WebSocketPayloadShape,
+    payloadShape: APIV1Read.WebhookPayloadShape | APIV1Read.WebSocketMessageBodyShape,
     types: Record<string, APIV1Read.TypeDefinition>,
 ): ResolvedTypeReference {
     return visitDiscriminatedUnion(payloadShape, "type")._visit<ResolvedTypeReference>({
@@ -482,7 +465,7 @@ export function isResolvedNavigationItemSection(item: ResolvedNavigationItem): i
 
 export interface ResolvedWithApiDefinition {
     endpoints: ResolvedEndpointDefinition[];
-    websockets: ResolvedPubSubWebsocketDefinition[];
+    websockets: ResolvedWebSocketChannel[];
     webhooks: ResolvedWebhookDefinition[];
     subpackages: ResolvedSubpackage[];
     pointsTo: APIV1Read.SubpackageId | undefined;
@@ -562,60 +545,31 @@ export function stringifyResolvedEndpointPathParts(pathParts: ResolvedEndpointPa
     return pathParts.map((part) => (part.type === "literal" ? part.value : `:${part.key}`)).join("");
 }
 
-export interface ResolvedPubSubWebsocketDefinition extends APIV1Read.WithDescription {
-    id: string;
+export interface ResolvedWebSocketChannel
+    extends WithoutQuestionMarks<
+        Omit<
+            APIV1Read.WebSocketChannel,
+            | "urlSlug"
+            | "path"
+            | "headers"
+            | "queryParameters"
+            | "messages"
+            | "defaultEnvironment"
+            | "htmlDescription"
+            | "descriptionContainsMarkdown"
+        >
+    > {
     slug: string[];
-    name: string | undefined;
     path: ResolvedEndpointPathParts[];
+    headers: ResolvedParameter[];
     pathParameters: ResolvedParameter[];
     queryParameters: ResolvedParameter[];
-    publish: ResolvedPayload | undefined;
-    subscribe: ResolvedPayload | undefined;
-    examples: ResolvedWebsocketExample[];
-
-    // these will start with ws:// or wss://
+    messages: ResolvedWebSocketMessage[];
     defaultEnvironment: APIV1Read.Environment | undefined;
-    environments: APIV1Read.Environment[];
 }
 
-export interface ResolvedWebsocketExample {
-    name: string | undefined;
-    description: string | undefined;
-    pathParameters: Record<string, unknown>;
-    queryParameters: Record<string, unknown>;
-    events: ResolvedWebsocketExampleEvent[];
-}
-
-export declare namespace ResolvedWebsocketExampleEvent {
-    interface Send {
-        action: "send";
-        variant: string | undefined;
-        payload: unknown;
-    }
-
-    interface Receive {
-        action: "recieve";
-        variant: string | undefined;
-        payload: unknown;
-    }
-}
-
-export type ResolvedWebsocketExampleEvent = ResolvedWebsocketExampleEvent.Send | ResolvedWebsocketExampleEvent.Receive;
-
-interface ResolvedWebsocketExampleEventVisitor<T> {
-    send: (event: ResolvedWebsocketExampleEvent.Send) => T;
-    receive: (event: ResolvedWebsocketExampleEvent.Receive) => T;
-}
-
-export function visitWebsocketExampleEvent<T>(
-    event: ResolvedWebsocketExampleEvent,
-    visitor: ResolvedWebsocketExampleEventVisitor<T>,
-): T {
-    if (event.action === "send") {
-        return visitor.send(event);
-    } else {
-        return visitor.receive(event);
-    }
+interface ResolvedWebSocketMessage extends Omit<APIV1Read.WebSocketMessage, "body"> {
+    body: ResolvedTypeReference;
 }
 
 export interface ResolvedWebhookDefinition extends APIV1Read.WithDescription {

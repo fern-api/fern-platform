@@ -1,7 +1,6 @@
 import { ResolvedApiDefinitionPackage, ResolvedNavigationItemApiSection } from "@fern-ui/app-utils";
 import { Endpoint } from "./endpoints/Endpoint";
 import { ApiSubpackage } from "./subpackages/ApiSubpackage";
-import { WEBSOCKET_MOCK } from "./web-socket/GenericMockWebSocket";
 import { WebSocket } from "./web-socket/WebSocket";
 import { Webhook } from "./webhooks/Webhook";
 
@@ -20,14 +19,9 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
     isLastInParentPackage,
     anchorIdParts,
 }) => {
-    const { endpoints, webhooks, subpackages } = apiDefinition;
-    let websockets = apiDefinition.websockets;
+    const { endpoints, webhooks, websockets, subpackages } = apiDefinition;
 
     const subpackageTitle = apiDefinition.type === "subpackage" ? apiDefinition.title : undefined;
-
-    if (websockets.length === 0) {
-        websockets = [WEBSOCKET_MOCK];
-    }
 
     return (
         <>
@@ -46,8 +40,12 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                     }
                 />
             ))}
-            {websockets.map((websocket) => (
-                <WebSocket key={websocket.id} websocket={websocket} />
+            {websockets.map((websocket, idx) => (
+                <WebSocket
+                    key={websocket.id}
+                    websocket={websocket}
+                    isLastInApi={isLastInParentPackage && subpackages.length === 0 && idx === websockets.length - 1}
+                />
             ))}
             {webhooks.map((webhook, idx) => (
                 <Webhook
