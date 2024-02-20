@@ -137,28 +137,35 @@
 
 @layer components {
     .mask-grad-top-1 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 1) 4px);
+        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 4px);
     }
+
     .mask-grad-top-2 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 1) 8px);
+        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 8px);
     }
+
     .mask-grad-top-3 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 1) 12px);
+        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 12px);
     }
+
     .mask-grad-top-4 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 1) 16px);
+        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 16px);
     }
+
     .mask-grad-top-5 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 1) 20px);
+        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 20px);
     }
+
     .mask-grad-top-6 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 1) 24px);
+        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 24px);
     }
+
     .mask-grad-top-7 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 1) 28px);
+        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 28px);
     }
+
     .mask-grad-top-8 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 1) 32px);
+        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 32px);
     }
 
     .playground-endpoint {
