@@ -1,8 +1,8 @@
-import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import dynamic from "next/dynamic";
 import { ReactElement, useEffect, useRef, useState } from "react";
+import { ResolvedEndpointDefinition } from "../util/resolver";
 
 const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), {
     ssr: true,

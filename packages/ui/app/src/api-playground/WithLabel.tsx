@@ -1,10 +1,10 @@
-import { ResolvedObjectProperty } from "@fern-ui/app-utils";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { FC, PropsWithChildren } from "react";
 import { EndpointAvailabilityTag } from "../api-page/endpoints/EndpointAvailabilityTag";
 import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
 import { FernButton } from "../components/FernButton";
+import { ResolvedObjectProperty } from "../util/resolver";
 
 interface WithLabelProps {
     htmlFor?: string;

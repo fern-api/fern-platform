@@ -1,5 +1,4 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { ResolvedEndpointDefinition } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { Cross1Icon, GlobeIcon, PersonIcon } from "@radix-ui/react-icons";
 import { isEmpty } from "lodash-es";
@@ -7,6 +6,7 @@ import { Dispatch, FC, ReactElement, SetStateAction } from "react";
 import { Key } from "react-feather";
 import { FernButton } from "../components/FernButton";
 import { FernInput } from "../components/FernInput";
+import { ResolvedEndpointDefinition } from "../util/resolver";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { SecretBearer, SecretSpan } from "./PlaygroundSecretsModal";
 import { PlaygroundRequestFormAuth, PlaygroundRequestFormState } from "./types";

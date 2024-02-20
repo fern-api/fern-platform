@@ -1,10 +1,4 @@
-import { isApiNode } from "@fern-api/fdr-sdk";
-import {
-    joinUrlSlugs,
-    ResolvedEndpointDefinition,
-    ResolvedObjectProperty,
-    visitResolvedHttpRequestBodyShape,
-} from "@fern-ui/app-utils";
+import { isApiNode, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import { isPlainObject } from "@fern-ui/core-utils";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
@@ -16,6 +10,11 @@ import { ReactElement } from "react";
 import { FernCollapse } from "../components/FernCollapse";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { useNavigationContext } from "../navigation-context";
+import {
+    ResolvedEndpointDefinition,
+    ResolvedObjectProperty,
+    visitResolvedHttpRequestBodyShape,
+} from "../util/resolver";
 import { PlaygroundRequestFormState } from "./types";
 
 const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), {
