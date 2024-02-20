@@ -127,12 +127,14 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
     }, [onChange]);
     return visitDiscriminatedUnion(shape, "type")._visit<ReactElement | null>({
         object: (object) => (
-            <PlaygroundObjectPropertiesForm
-                properties={object.properties().filter(createFilter(onlyRequired, onlyOptional))}
-                onChange={onChange}
-                value={value}
-                indent={true}
-            />
+            <WithLabel property={property} value={value} onRemove={onRemove}>
+                <PlaygroundObjectPropertiesForm
+                    properties={object.properties().filter(createFilter(onlyRequired, onlyOptional))}
+                    onChange={onChange}
+                    value={value}
+                    indent={true}
+                />
+            </WithLabel>
         ),
         enum: ({ values }) => (
             <WithLabel property={property} value={value} onRemove={onRemove}>
@@ -140,18 +142,22 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
             </WithLabel>
         ),
         undiscriminatedUnion: (undiscriminatedUnion) => (
-            <PlaygroundUniscriminatedUnionForm
-                undiscriminatedUnion={undiscriminatedUnion}
-                onChange={onChange}
-                value={value}
-            />
+            <WithLabel property={property} value={value} onRemove={onRemove}>
+                <PlaygroundUniscriminatedUnionForm
+                    undiscriminatedUnion={undiscriminatedUnion}
+                    onChange={onChange}
+                    value={value}
+                />
+            </WithLabel>
         ),
         discriminatedUnion: (discriminatedUnion) => (
-            <PlaygroundDiscriminatedUnionForm
-                discriminatedUnion={discriminatedUnion}
-                onChange={onChange}
-                value={value}
-            />
+            <WithLabel property={property} value={value} onRemove={onRemove}>
+                <PlaygroundDiscriminatedUnionForm
+                    discriminatedUnion={discriminatedUnion}
+                    onChange={onChange}
+                    value={value}
+                />
+            </WithLabel>
         ),
         string: () => (
             <WithLabel property={property} value={value} onRemove={onRemove} htmlFor={id}>
