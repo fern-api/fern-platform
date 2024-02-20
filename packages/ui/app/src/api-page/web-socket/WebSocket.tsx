@@ -394,18 +394,3 @@ function CardedSection({
         </section>
     );
 }
-
-const CUSTOMERS_WITH_WEBSOCKETS = ["hume"];
-
-export function isWebsocketExampleEnabled(domain: string): boolean {
-    domain = domain.toLowerCase();
-    if (CUSTOMERS_WITH_WEBSOCKETS.some((customer) => domain.includes(customer))) {
-        return true;
-    }
-
-    if (["docs.buildwithfern.com", "fern.docs.buildwithfern.com", "fern.docs.dev.buildwithfern.com"].includes(domain)) {
-        return true;
-    }
-
-    return process.env.NODE_ENV !== "production";
-}
