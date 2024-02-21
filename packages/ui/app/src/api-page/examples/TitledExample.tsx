@@ -37,7 +37,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
     return (
         <div
             className={classNames(
-                "rounded-xl flex flex-col bg:white dark:bg-tag-default-soft after:ring-border-default after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-[''] relative shadow-sm",
+                "rounded-xl flex flex-col bg-white/70 dark:bg-tag-default-soft after:ring-border-default after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-[''] relative shadow-sm",
                 className,
             )}
             onClick={onClick}
