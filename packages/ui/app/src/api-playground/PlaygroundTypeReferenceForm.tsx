@@ -133,6 +133,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     onChange={onChange}
                     value={value}
                     indent={true}
+                    prefix={id}
                 />
             </WithLabel>
         ),
@@ -175,7 +176,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
             const checked = typeof value === "boolean" ? value : undefined;
             return (
                 <WithLabel property={property} value={value} onRemove={onRemove} htmlFor={id}>
-                    <div className="flex items-center justify-end gap-3">
+                    <div className="flex items-center justify-start gap-3">
                         {/* <label className="t-muted font-mono text-sm leading-none">
                         {checked == null ? "undefined" : checked ? "true" : "false"}
                     </label> */}

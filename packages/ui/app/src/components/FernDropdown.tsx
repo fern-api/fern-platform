@@ -75,11 +75,10 @@ export function FernDropdown({
                                                                 </DropdownMenu.ItemIndicator>
                                                             </span>
                                                         )}
-                                                        <span className={option.labelClassName}>
-                                                            {option.label ?? option.value}
-                                                        </span>
                                                         <span className="inline-flex max-w-[calc(var(--radix-dropdown-menu-trigger-width)-2rem)] items-baseline">
-                                                            <span>{option.label ?? option.value}</span>
+                                                            <span className={option.labelClassName}>
+                                                                {option.label ?? option.value}
+                                                            </span>
                                                             {option.helperText != null && (
                                                                 <span className="ml-2 truncate text-xs opacity-60">
                                                                     {option.helperText}

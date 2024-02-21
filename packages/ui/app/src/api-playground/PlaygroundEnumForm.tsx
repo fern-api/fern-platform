@@ -6,7 +6,7 @@ import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
 import { FernRadioGroup } from "../components/FernRadioGroup";
 
-const ENUM_RADIO_BREAKPOINT = 5;
+export const ENUM_RADIO_BREAKPOINT = 5;
 
 const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), {
     ssr: true,

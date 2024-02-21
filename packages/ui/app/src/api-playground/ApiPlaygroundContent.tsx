@@ -14,7 +14,7 @@ import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
 import { PlaygroundEndpointFormAside } from "./PlaygroundEndpointFormAside";
 import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
 import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
-import { SecretBearer } from "./PlaygroundSecretsModal";
+import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
 import { PlaygroundRequestFormState, ResponsePayload } from "./types";
 import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils";
 import { HorizontalSplitPane, VerticalSplitPane } from "./VerticalSplitPane";
@@ -26,9 +26,8 @@ interface ApiPlayroundContentProps {
     setFormState: Dispatch<SetStateAction<PlaygroundRequestFormState>>;
     resetWithExample: () => void;
     resetWithoutExample: () => void;
-    openSecretsModal: () => void;
-    secrets: SecretBearer[];
     response: Loadable<ResponsePayload>;
+    sendRequest: () => void;
 }
 
 const requestTypeAtom = atomWithStorage<"curl" | "javascript" | "python">("api-playground-atom-alpha", "curl");
@@ -38,11 +37,10 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
     endpoint,
     formState,
     setFormState,
-    // resetWithExample,
-    // resetWithoutExample,
-    openSecretsModal,
-    secrets,
+    resetWithExample,
+    resetWithoutExample,
     response,
+    sendRequest,
 }) => {
     const [requestType, setRequestType] = useAtom(requestTypeAtom);
 
@@ -66,31 +64,6 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
 
     return (
         <div className="flex min-h-0 flex-1 shrink items-stretch divide-x">
-            {/* <div
-                className={"relative flex min-w-0 shrink flex-col overflow-hidden"}
-                style={{ width: `${width * 100}%` }}
-            > */}
-            {/* <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-6 py-2">
-                    <span className="t-muted text-xs uppercase">Request</span>
-
-                    <FernButtonGroup>
-                        <FernButton onClick={resetWithExample} size="small" variant="minimal">
-                            Use example
-                        </FernButton>
-                        <FernButton onClick={resetWithoutExample} size="small" variant="minimal">
-                            Clear form
-                        </FernButton>
-                    </FernButtonGroup>
-                </div> */}
-            {/* <PlaygroundEndpointForm
-                    endpoint={endpoint}
-                    formState={formState}
-                    setFormState={setFormState}
-                    openSecretsModal={openSecretsModal}
-                    secrets={secrets}
-                    auth={auth}
-                /> */}
-            {/* </div> */}
             <div
                 ref={scrollAreaRef}
                 className="mask-grad-top w-full overflow-x-hidden overflow-y-scroll overscroll-contain"
@@ -104,18 +77,18 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                         <PlaygroundAuthorizationFormCard
                             endpoint={endpoint}
                             auth={auth}
-                            formState={undefined}
+                            formState={formState}
                             setFormState={setFormState}
-                            openSecretsModal={openSecretsModal}
-                            secrets={secrets}
                         />
 
-                        <div className="grid grid-cols-3 gap-6">
+                        <div className="grid grid-cols-3 gap-4">
                             <PlaygroundEndpointFormAside
-                                className="col-span-1"
+                                className="col-span-1 -mt-6"
                                 endpoint={endpoint}
                                 formState={formState}
                                 scrollAreaHeight={scrollAreaHeight}
+                                resetWithExample={resetWithExample}
+                                resetWithoutExample={resetWithoutExample}
                             />
                             <PlaygroundEndpointForm
                                 endpoint={endpoint}
@@ -128,11 +101,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                     <VerticalSplitPane
                         className="sticky inset-0 pr-6"
                         style={{ height: scrollAreaHeight }}
-                        aboveClassName={
-                            response.type === "notStartedLoading"
-                                ? "py-6 flex items-stretch justify-stretch"
-                                : "pt-6 pb-1 flex items-stretch justify-stretch"
-                        }
+                        aboveClassName={"pt-6 pb-1 flex items-stretch justify-stretch"}
                         belowClassName="pb-6 pt-1 flex items-stretch justify-stretch"
                     >
                         <FernCard className="flex min-w-0 flex-1 shrink flex-col overflow-hidden rounded-xl shadow-sm">
@@ -189,56 +158,68 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                                 requestType={requestType}
                             />
                         </FernCard>
-                        {response.type !== "notStartedLoading" ? (
-                            <FernCard className="min-w-0 flex-1 shrink overflow-hidden rounded-xl shadow-sm">
-                                <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">
-                                    <span className="t-muted text-xs uppercase">Response</span>
+                        <FernCard className="flex min-w-0 flex-1 shrink flex-col overflow-hidden rounded-xl shadow-sm">
+                            <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">
+                                <span className="t-muted text-xs uppercase">Response</span>
 
-                                    {response.type === "loaded" && (
-                                        <div className="flex items-center gap-2 text-xs">
-                                            <span
-                                                className={classNames(
-                                                    "font-mono flex items-center py-1 px-1.5 rounded-md h-5",
-                                                    {
-                                                        ["bg-method-get/10 text-method-get dark:bg-method-get-dark/10 dark:text-method-get-dark"]:
-                                                            response.value.status >= 200 && response.value.status < 300,
-                                                        ["bg-method-delete/10 text-method-delete dark:bg-method-delete-dark/10 dark:text-method-delete-dark"]:
-                                                            response.value.status > 300,
-                                                    },
-                                                )}
-                                            >
-                                                status: {response.value.status}
-                                            </span>
+                                {response.type === "loaded" && (
+                                    <div className="flex items-center gap-2 text-xs">
+                                        <span
+                                            className={classNames(
+                                                "font-mono flex items-center py-1 px-1.5 rounded-md h-5",
+                                                {
+                                                    ["bg-method-get/10 text-method-get dark:bg-method-get-dark/10 dark:text-method-get-dark"]:
+                                                        response.value.status >= 200 && response.value.status < 300,
+                                                    ["bg-method-delete/10 text-method-delete dark:bg-method-delete-dark/10 dark:text-method-delete-dark"]:
+                                                        response.value.status > 300,
+                                                },
+                                            )}
+                                        >
+                                            status: {response.value.status}
+                                        </span>
+                                        <span
+                                            className={
+                                                "bg-tag-default flex h-5 items-center rounded-md px-1.5 py-1 font-mono"
+                                            }
+                                        >
+                                            time: {round(response.value.time, 2)}ms
+                                        </span>
+                                        {!isEmpty(response.value.size) && (
                                             <span
                                                 className={
                                                     "bg-tag-default flex h-5 items-center rounded-md px-1.5 py-1 font-mono"
                                                 }
                                             >
-                                                time: {round(response.value.time, 2)}ms
+                                                size: {response.value.size}b
                                             </span>
-                                            {!isEmpty(response.value.size) && (
-                                                <span
-                                                    className={
-                                                        "bg-tag-default flex h-5 items-center rounded-md px-1.5 py-1 font-mono"
-                                                    }
-                                                >
-                                                    size: {response.value.size}b
-                                                </span>
-                                            )}
-                                        </div>
-                                    )}
-                                </div>
+                                        )}
+                                    </div>
+                                )}
+
                                 {visitLoadable(response, {
-                                    loading: () => (
-                                        <div className="flex size-full flex-1 items-center justify-center">
-                                            Loading...
-                                        </div>
+                                    loading: () => <div />,
+                                    loaded: (response) => (
+                                        <CopyToClipboardButton
+                                            content={() => JSON.stringify(response.body, null, 2)}
+                                            className="-mr-2"
+                                        />
                                     ),
-                                    loaded: (response) => <PlaygroundResponsePreview responseBody={response.body} />,
-                                    failed: () => <span>Failed</span>,
+                                    failed: () => <div />,
                                 })}
-                            </FernCard>
-                        ) : null}
+                            </div>
+                            {visitLoadable(response, {
+                                loading: () =>
+                                    response.type === "notStartedLoading" ? (
+                                        <div className="flex flex-1 items-center justify-center">
+                                            <PlaygroundSendRequestButton sendRequest={sendRequest} />
+                                        </div>
+                                    ) : (
+                                        <div className="flex flex-1 items-center justify-center">Loading...</div>
+                                    ),
+                                loaded: (response) => <PlaygroundResponsePreview responseBody={response.body} />,
+                                failed: () => <span>Failed</span>,
+                            })}
+                        </FernCard>
                     </VerticalSplitPane>
                 </HorizontalSplitPane>
             </div>

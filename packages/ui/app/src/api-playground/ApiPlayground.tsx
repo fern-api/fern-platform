@@ -12,7 +12,6 @@ import { ApiPlayroundContent } from "./ApiPlaygroundContent";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 import { ApiPlaygroundEndpointSelector } from "./ApiPlaygroundEndpointSelector";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
-import { SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundRequestFormState, ResponsePayload } from "./types";
 import { buildEndpointUrl, buildUnredactedHeaders } from "./utils";
 
@@ -24,8 +23,6 @@ interface ApiPlaygroundProps {
     setFormState: Dispatch<SetStateAction<PlaygroundRequestFormState>>;
     resetWithExample: () => void;
     resetWithoutExample: () => void;
-    openSecretsModal: () => void;
-    secrets: SecretBearer[];
 }
 
 export const ApiPlayground: FC<ApiPlaygroundProps> = ({
@@ -36,8 +33,6 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({
     setFormState,
     resetWithExample,
     resetWithoutExample,
-    openSecretsModal,
-    secrets,
 }): ReactElement => {
     const { collapseApiPlayground } = useApiPlaygroundContext();
 
@@ -152,8 +147,6 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({
                     setFormState={setFormState}
                     resetWithExample={resetWithExample}
                     resetWithoutExample={resetWithoutExample}
-                    openSecretsModal={openSecretsModal}
-                    secrets={secrets}
                     response={response}
                 />
             ) : (

@@ -42,10 +42,7 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
         >
             <FernSyntaxHighlighter
                 language={language}
-                customStyle={{
-                    fontSize: fontSize === "sm" ? "12px" : "14px",
-                    lineHeight: fontSize === "sm" ? "20px" : "24px",
-                }}
+                fontSize={fontSize}
                 highlightLines={highlightLines}
                 highlightStyle={highlightStyle}
             >
@@ -123,11 +120,13 @@ function createStyle(
 interface FernSyntaxHighlighterProps extends React.ComponentProps<typeof SyntaxHighlighter> {
     highlightLines?: HighlightLine[];
     highlightStyle?: "highlight" | "focus";
+    fontSize?: "sm" | "lg";
 }
 
 export const FernSyntaxHighlighter: React.FC<FernSyntaxHighlighterProps> = ({
     highlightLines,
     highlightStyle,
+    fontSize = "sm",
     ...props
 }) => {
     const { resolvedTheme: theme } = useTheme();
@@ -136,6 +135,8 @@ export const FernSyntaxHighlighter: React.FC<FernSyntaxHighlighterProps> = ({
             {...props}
             style={theme === "dark" ? vscDarkPlus : prism}
             customStyle={{
+                fontSize: fontSize === "sm" ? "12px" : "14px",
+                lineHeight: fontSize === "sm" ? "20px" : "24px",
                 color: "inherit",
                 margin: 0,
                 background: "unset",

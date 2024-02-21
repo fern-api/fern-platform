@@ -117,12 +117,9 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
             (property): FernDropdown.Option => ({
                 type: "value",
                 value: property.key,
-                label: (
-                    <>
-                        <span className="font-mono">{property.key}</span>{" "}
-                        <span className="ml-2 text-xs opacity-60">{renderTypeShorthand(property.valueShape)}</span>
-                    </>
-                ),
+                label: property.key,
+                helperText: renderTypeShorthand(property.valueShape),
+                labelClassName: "font-mono",
                 tooltip:
                     property.description != null ? (
                         <Markdown className="text-xs">{property.description}</Markdown>

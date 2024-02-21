@@ -400,7 +400,7 @@ function resolveObjectProperties(
         valueShape: resolveTypeReference(property.valueType, types),
     }));
     const extendedProperties = object.extends.flatMap((typeId) => {
-        const shape = resolveTypeReference({ type: "id", value: typeId }, types);
+        const shape = unwrapReference(resolveTypeReference({ type: "id", value: typeId }, types));
         // TODO: should we be able to extend discriminated and undiscriminated unions?
         if (shape?.type !== "object") {
             // eslint-disable-next-line no-console

@@ -1,6 +1,5 @@
 import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { useBooleanState } from "@fern-ui/react-commons";
 import { Portal, Transition } from "@headlessui/react";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
@@ -10,7 +9,6 @@ import { SidebarNode } from "../sidebar/types";
 import { FlattenedApiSection, isEndpoint, ResolvedApiDefinition, ResolvedEndpointDefinition } from "../util/resolver";
 import { ApiPlayground } from "./ApiPlayground";
 import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, useApiPlaygroundContext } from "./ApiPlaygroundContext";
-import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundRequestFormAuth, PlaygroundRequestFormState } from "./types";
 import { useVerticalSplitPane, useWindowHeight } from "./useSplitPlane";
 import { getDefaultValueForObjectProperties, getDefaultValuesForBody } from "./utils";
@@ -29,7 +27,6 @@ const EMPTY_FORM_STATE: PlaygroundRequestFormState = {
 };
 
 const playgroundHeightAtom = atomWithStorage<number>("api-playground-height", 400);
-const playgroundFormSecretsAtom = atomWithStorage<SecretBearer[]>("api-playground-secrets-alpha", []);
 
 interface ApiPlaygroundDrawerProps {
     navigation: SidebarNode[];
@@ -58,12 +55,6 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ navigation, 
 
     const [isPlaygroundOpen, setPlaygroundOpen] = useAtom(PLAYGROUND_OPEN_ATOM);
     const [globalFormState, setGlobalFormState] = useAtom(PLAYGROUND_FORM_STATE_ATOM);
-    const [globalFormSecrets, setGlobalFormSecrets] = useAtom(playgroundFormSecretsAtom);
-    const {
-        value: isSecretsModalOpen,
-        setTrue: openSecretsModal,
-        setFalse: closeSecretsModal,
-    } = useBooleanState(false);
 
     const setPlaygroundFormState = useCallback<Dispatch<SetStateAction<PlaygroundRequestFormState>>>(
         (newFormState) => {
@@ -126,25 +117,6 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ navigation, 
         };
     }, [togglePlayground]);
 
-    const handleSelectSecret = useCallback(
-        (secret: SecretBearer) => {
-            closeSecretsModal();
-            setPlaygroundFormState((currentFormState) => {
-                if (currentFormState.auth?.type !== "bearerAuth") {
-                    return currentFormState;
-                }
-                return {
-                    ...currentFormState,
-                    auth: {
-                        ...currentFormState.auth,
-                        token: secret.token,
-                    },
-                };
-            });
-        },
-        [closeSecretsModal, setPlaygroundFormState],
-    );
-
     if (!hasPlayground) {
         return null;
     }
@@ -179,17 +151,8 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ navigation, 
                     setFormState={setPlaygroundFormState}
                     resetWithExample={resetWithExample}
                     resetWithoutExample={resetWithoutExample}
-                    openSecretsModal={openSecretsModal}
-                    secrets={globalFormSecrets}
                 />
             </Transition>
-            <PlaygroundSecretsModal
-                secrets={globalFormSecrets}
-                setSecrets={setGlobalFormSecrets}
-                isOpen={isSecretsModalOpen}
-                onClose={closeSecretsModal}
-                selectSecret={handleSelectSecret}
-            />
         </Portal>
     );
 };
