@@ -230,7 +230,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
             </DropdownMenu.Trigger>
             <DropdownMenu.Portal>
                 <DropdownMenu.Content asChild={true} sideOffset={4} onAnimationStartCapture={determinePlacement}>
-                    <div className="fern-dropdown overflow-hidden rounded-xl" ref={menuRef}>
+                    <div className="fern-dropdown min-w-[300px] overflow-hidden rounded-xl" ref={menuRef}>
                         {isPopoverBelow && (
                             <div
                                 className={classNames("relative z-20 px-1 pt-1", {

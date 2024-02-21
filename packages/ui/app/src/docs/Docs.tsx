@@ -84,17 +84,6 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
 
     const { colorsV3 } = config;
 
-    const backgroundType = useMemo(() => {
-        if (colorsV3?.type === "darkAndLight") {
-            if (theme === "dark" || theme === "light") {
-                return colorsV3?.[theme].background.type;
-            }
-            return undefined;
-        } else {
-            return colorsV3?.background.type;
-        }
-    }, [colorsV3, theme]);
-
     const [accentColor, setAccentColor] = useState<string>();
     useEffect(() => {
         if (colorsV3?.type === "darkAndLight") {
@@ -111,12 +100,12 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
             <div className={classNames(className, "clipped-background")}>
                 <BgImageGradient
                     className="h-screen opacity-60 dark:opacity-50"
-                    backgroundType={backgroundType}
+                    colors={colorsV3}
                     hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage}
                 />
             </div>
         ),
-        [backgroundType, hasSpecifiedBackgroundImage],
+        [colorsV3, hasSpecifiedBackgroundImage],
     );
 
     const currentSlug = useMemo(
@@ -148,10 +137,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     return (
         <>
             <NextNProgress color={accentColor} options={{ showSpinner: false }} showOnShallow={false} />
-            <BgImageGradient
-                backgroundType={backgroundType}
-                hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage}
-            />
+            <BgImageGradient colors={colorsV3} hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage} />
             {searchService.isAvailable && <SearchDialog searchService={searchService} />}
 
             <ApiPlaygroundContextProvider navigation={navigation} apiSections={apiSections}>

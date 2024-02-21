@@ -231,7 +231,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     className="w-full"
                     placeholder="MM/DD/YYYY HH:MM"
                     value={typeof value === "string" ? value : undefined}
-                    onChange={onChange}
+                    onValueChange={onChange}
                     onFocus={onFocus}
                     onBlur={onBlur}
                 />
@@ -270,7 +270,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     className="w-full"
                     placeholder="MM/DD/YYYY"
                     value={typeof value === "string" ? value : undefined}
-                    onChange={onChange}
+                    onValueChange={onChange}
                     onFocus={onFocus}
                     onBlur={onBlur}
                 />
