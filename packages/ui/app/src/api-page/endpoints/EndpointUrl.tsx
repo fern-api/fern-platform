@@ -66,7 +66,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
             <HttpMethodTag method={method} />
             <div
                 className={classNames("flex items-center overflow-hidden", {
-                    [styles.urlOverflowContainer]: urlStyle === "overflow",
+                    [styles.urlOverflowContainer ?? ""]: urlStyle === "overflow",
                 })}
             >
                 <CopyToClipboardButton content={buildRequestUrl(environment, path)}>
