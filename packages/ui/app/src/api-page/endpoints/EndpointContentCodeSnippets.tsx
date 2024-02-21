@@ -18,6 +18,7 @@ import { JsonExampleVirtualized } from "../examples/json-example/JsonExample";
 import { JsonLine } from "../examples/json-example/jsonLineUtils";
 import { TitledExample } from "../examples/TitledExample";
 import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
+import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 
 export declare namespace EndpointContentCodeSnippets {
     export interface Props {
@@ -77,7 +78,13 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 </FernButtonGroup>
             )}
             <TitledExample
-                title="Request"
+                title={
+                    <EndpointUrlWithOverflow
+                        path={endpoint.path}
+                        method={endpoint.method}
+                        environment={endpoint.defaultEnvironment?.baseUrl}
+                    />
+                }
                 // afterTitle={<span className="t-accent mx-1 px-1 text-xs">{selectedClient.name}</span>}
                 type="primary"
                 onClick={(e) => {

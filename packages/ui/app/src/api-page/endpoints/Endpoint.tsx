@@ -13,7 +13,7 @@ export declare namespace Endpoint {
         apiSection: ResolvedNavigationItemApiSection;
         apiDefinition: ResolvedApiDefinitionPackage;
         endpoint: ResolvedEndpointDefinition;
-        subpackageTitle: string | undefined;
+        breadcrumbs: string[];
         isLastInApi: boolean;
     }
 }
@@ -22,7 +22,7 @@ export const Endpoint: React.FC<Endpoint.Props> = ({
     apiSection,
     apiDefinition,
     endpoint,
-    subpackageTitle,
+    breadcrumbs,
     isLastInApi,
 }) => {
     const fullSlug = joinUrlSlugs(...endpoint.slug);
@@ -42,7 +42,7 @@ export const Endpoint: React.FC<Endpoint.Props> = ({
             apiSection={apiSection}
             apiDefinition={apiDefinition}
             endpoint={endpoint}
-            subpackageTitle={subpackageTitle}
+            breadcrumbs={breadcrumbs}
             setContainerRef={setTargetRef}
             hideBottomSeparator={isLastInApi}
             route={route}

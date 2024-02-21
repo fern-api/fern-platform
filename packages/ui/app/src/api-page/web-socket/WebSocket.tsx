@@ -121,6 +121,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi }) => {
                                             path={websocket.path}
                                             method="GET"
                                             environment={websocket.defaultEnvironment?.baseUrl}
+                                            showEnvironment={true}
                                             className="flex-1"
                                         />
                                         <CopyToClipboardButton

@@ -2,6 +2,7 @@ import classNames from "classnames";
 import React, { useCallback } from "react";
 import { ResolvedWebhookDefinition } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
+import { Breadcrumbs } from "../Breadcrumbs";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
 import { EndpointSection } from "../endpoints/EndpointSection";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
@@ -14,7 +15,7 @@ import { WebhookResponseSection } from "./WebhookResponseSection";
 export declare namespace WebhookContent {
     export interface Props {
         webhook: ResolvedWebhookDefinition;
-        subpackageTitle: string | undefined;
+        breadcrumbs: string[];
         hideBottomSeparator?: boolean;
         setContainerRef: (ref: HTMLElement | null) => void;
         route: string;
@@ -23,7 +24,7 @@ export declare namespace WebhookContent {
 
 export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookContent({
     webhook,
-    subpackageTitle,
+    breadcrumbs,
     hideBottomSeparator = false,
     setContainerRef,
     route,
@@ -53,12 +54,8 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                 data-route={route.toLowerCase()}
             >
                 <div className="max-w-content-width flex min-w-0 flex-1 flex-col">
-                    <div className="space-y-2.5 py-8">
-                        {subpackageTitle != null && (
-                            <div className="t-accent text-xs font-semibold uppercase tracking-wider">
-                                {subpackageTitle}
-                            </div>
-                        )}
+                    <div className="space-y-1 py-8">
+                        <Breadcrumbs breadcrumbs={breadcrumbs} />
                         <h1 className="my-0 inline-block">{webhook.name}</h1>
                     </div>
                     <ApiPageDescription

@@ -1,7 +1,9 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
-import React, { PropsWithChildren, ReactElement, useCallback, useMemo } from "react";
+import React, { PropsWithChildren, ReactElement, useMemo } from "react";
+import { buildRequestUrl } from "../../api-playground/utils";
+import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
 import { HttpMethodTag } from "../../commons/HttpMethodTag";
 import { divideEndpointPathToParts, type EndpointPathPart } from "../../util/endpoint";
 import { ResolvedEndpointPathParts } from "../../util/resolver";
@@ -13,67 +15,79 @@ export declare namespace EndpointUrl {
         path: ResolvedEndpointPathParts[];
         method: APIV1Read.HttpMethod;
         environment?: string;
+        showEnvironment?: boolean;
+        large?: boolean;
         className?: string;
     }>;
 }
 
 export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<EndpointUrl.Props>>(function EndpointUrl(
-    { path, method, environment, className, urlStyle },
+    { path, method, environment, showEnvironment, large, className, urlStyle },
     ref,
 ) {
     const endpointPathParts = useMemo(() => divideEndpointPathToParts(path), [path]);
 
-    const renderPathParts = useCallback((parts: EndpointPathPart[]) => {
+    const renderPathParts = (parts: EndpointPathPart[]) => {
         const elements: (ReactElement | null)[] = [];
-        // Temporarily hiding base url
-        // if (apiDefinition.hasMultipleBaseUrls === true) {
-        //     const url = getEndpointEnvironmentUrl(endpoint);
-        //     if (url != null) {
-        //         elements.push(
-        //             <div key="base-url" className="t-muted whitespace-nowrap font-light">
-        //                 {url}
-        //             </div>
-        //         );
-        //     }
-        // }
+        if (showEnvironment && environment != null) {
+            elements.push(
+                <span key="base-url" className="text-faded whitespace-nowrap">
+                    {environment}
+                </span>,
+            );
+        }
         parts.forEach((p, i) => {
             elements.push(
-                <div key={`separator-${i}`} className="text-text-disabled">
+                <span key={`separator-${i}`} className="text-faded">
                     /
-                </div>,
+                </span>,
                 visitDiscriminatedUnion(p, "type")._visit({
                     literal: (literal) => {
                         return (
-                            <div key={`part-${i}`} className="t-muted whitespace-nowrap font-mono text-xs">
+                            <span key={`part-${i}`} className="t-muted whitespace-nowrap">
                                 {literal.value}
-                            </div>
+                            </span>
                         );
                     },
                     pathParameter: (pathParameter) => (
-                        <div
-                            key={`part-${i}`}
-                            className="bg-accent-highlight t-accent flex items-center justify-center whitespace-nowrap rounded px-1 font-mono text-xs"
-                        >
+                        <span key={`part-${i}`} className="bg-accent-highlight t-accent whitespace-nowrap rounded px-1">
                             :{pathParameter.name}
-                        </div>
+                        </span>
                     ),
                     _other: () => null,
                 }),
             );
         });
         return elements;
-    }, []);
+    };
 
     return (
-        <div ref={ref} className={classNames("flex h-8 overflow-x-hidden items-center", className)}>
+        <div ref={ref} className={classNames("flex h-8 items-center gap-1", className)}>
             <HttpMethodTag method={method} />
             <div
-                className={classNames("ml-3 flex shrink grow items-center space-x-1 overflow-x-hidden", {
-                    [styles.urlOverflowContainer ?? ""]: urlStyle === "overflow",
+                className={classNames("flex items-center overflow-hidden", {
+                    [styles.urlOverflowContainer]: urlStyle === "overflow",
                 })}
             >
-                {environment != null && <span className="t-muted font-mono text-xs">{environment}</span>}
-                {renderPathParts(endpointPathParts)}
+                <CopyToClipboardButton content={buildRequestUrl(environment, path)}>
+                    {(onClick) => (
+                        <span
+                            className={classNames(
+                                "inline-flex shrink items-baseline hover:bg-tag-default py-0.5 px-1 rounded-md cursor-pointer",
+                            )}
+                            onClick={onClick}
+                        >
+                            <span
+                                className={classNames("font-mono", {
+                                    "text-xs": !large,
+                                    "text-sm": large,
+                                })}
+                            >
+                                {renderPathParts(endpointPathParts)}
+                            </span>
+                        </span>
+                    )}
+                </CopyToClipboardButton>
             </div>
         </div>
     );

@@ -33,6 +33,7 @@ export const FernCollapse: FC<PropsWithChildren<FernCollapseProps>> = ({ childre
         >
             <Transition.Child
                 ref={ref}
+                className="will-change-[transform]"
                 enter="transition ease-[cubic-bezier(0.87,0,0.13,1)] transform duration-[400ms]"
                 enterFrom="-translate-y-full"
                 enterTo="translate-y-0"
