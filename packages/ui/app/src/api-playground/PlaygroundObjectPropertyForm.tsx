@@ -1,13 +1,11 @@
 import { useBooleanState } from "@fern-ui/react-commons";
 import { CardStackPlusIcon, PlusCircledIcon } from "@radix-ui/react-icons";
-import { useSetAtom } from "jotai";
 import dynamic from "next/dynamic";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
 import { ResolvedObjectProperty, unwrapOptional } from "../util/resolver";
-import { FOCUSED_PARAMETER_ATOM } from "./PlaygroundEndpointFormAside";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { castToRecord, getDefaultValueForType, isExpandable } from "./utils";
 
@@ -21,8 +19,6 @@ interface PlaygroundObjectPropertyFormProps {
     id: string;
     property: ResolvedObjectProperty;
     onChange: (key: string, value: unknown) => void;
-    onBlur?: () => void;
-    onFocus?: () => void;
     value: unknown;
     expandByDefault?: boolean;
 }
@@ -31,8 +27,6 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
     id,
     property,
     onChange,
-    onBlur,
-    onFocus,
     value,
     expandByDefault = true,
 }) => {
@@ -67,8 +61,6 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
             shape={property.valueShape.type === "optional" ? property.valueShape.shape : property.valueShape}
             onChange={handleChange}
             value={value}
-            onFocus={onFocus}
-            onBlur={onBlur}
             renderAsPanel={true}
             onOpenStack={handleOpenStack}
             onCloseStack={handleCloseStack}
@@ -91,7 +83,6 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
     value,
     indent = false,
 }) => {
-    const setFocusedParameter = useSetAtom(FOCUSED_PARAMETER_ATOM);
     const onChangeObjectProperty = useCallback(
         (key: string, newValue: unknown) => {
             onChange((oldValue: unknown) => {
@@ -154,9 +145,6 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
                                     property={property}
                                     onChange={onChangeObjectProperty}
                                     value={castToRecord(value)[property.key]}
-                                    onFocus={() => {
-                                        setFocusedParameter(id);
-                                    }}
                                 />
                             </li>
                         );

@@ -78,6 +78,15 @@ export function PlaygroundEndpointFormAside({
         return () => observer.disconnect();
     });
 
+    useEffect(() => {
+        if (focusedParameter != null) {
+            const element = document.getElementById(`link-to/${focusedParameter}`);
+            if (element != null) {
+                element.scrollIntoView({ block: "center", inline: "nearest", behavior: "smooth" });
+            }
+        }
+    }, [focusedParameter]);
+
     function renderPropertyPreview(property: ResolvedObjectProperty, id: string, breadcrumbs: string[] = []) {
         const isFocused = focusedParameter === id;
         const shape = unwrapOptional(property.valueShape);
@@ -126,7 +135,12 @@ export function PlaygroundEndpointFormAside({
 
     return (
         <aside className={classNames("sticky top-0 flex flex-col", className)} style={{ maxHeight: scrollAreaHeight }}>
-            <FernScrollArea ref={scrollAreaRef} className="min-h-0 shrink" viewportClassName="py-6 pr-2 mask-grad-top">
+            <FernScrollArea
+                ref={scrollAreaRef}
+                className="min-h-0 shrink"
+                viewportClassName="py-6 pr-2 mask-grad-top"
+                type="scroll"
+            >
                 <FernButtonGroup className="mb-6 p-1">
                     <FernButton onClick={resetWithExample} size="small" variant="minimal">
                         Use example
@@ -142,7 +156,7 @@ export function PlaygroundEndpointFormAside({
                             <div className="t-muted m-0 mx-3 mb-2 text-xs">Headers</div>
                             <ul className="list-none">
                                 {headers.map((param) => (
-                                    <li key={param.key}>
+                                    <li key={param.key} id={`link-to/header.${param.key}`}>
                                         {renderPropertyPreview(param, `header.${param.key}`, ["headers"])}
                                     </li>
                                 ))}
@@ -154,7 +168,7 @@ export function PlaygroundEndpointFormAside({
                             <div className="t-muted m-0 mx-3 mb-2 text-xs">Path Parameters</div>
                             <ul className="list-none">
                                 {pathParameters.map((param) => (
-                                    <li key={param.key}>
+                                    <li key={param.key} id={`link-to/path.${param.key}`}>
                                         {renderPropertyPreview(param, `path.${param.key}`, ["pathParameters"])}
                                     </li>
                                 ))}
@@ -166,7 +180,7 @@ export function PlaygroundEndpointFormAside({
                             <div className="t-muted m-0 mx-3 mb-2 text-xs">Query Parameters</div>
                             <ul className="list-none">
                                 {queryParameters.map((param) => (
-                                    <li key={param.key}>
+                                    <li key={param.key} id={`link-to/query.${param.key}`}>
                                         {renderPropertyPreview(param, `query.${param.key}`, ["queryParameters"])}
                                     </li>
                                 ))}
@@ -193,7 +207,7 @@ export function PlaygroundEndpointFormAside({
                                                         !isUndefined(formState.body[property.key]),
                                                 )
                                                 .map((param) => (
-                                                    <li key={param.key}>
+                                                    <li key={param.key} id={`link-to/body.${param.key}`}>
                                                         {renderPropertyPreview(param, `body.${param.key}`, [
                                                             "body",
                                                             param.key,

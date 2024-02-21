@@ -75,7 +75,7 @@ export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({ htmlFor, prop
                                 icon={<Cross1Icon />}
                                 size="small"
                                 variant="minimal"
-                                className="-mr-1"
+                                className="-mr-3 ml-1"
                                 onClick={onRemove}
                             />
                         )}

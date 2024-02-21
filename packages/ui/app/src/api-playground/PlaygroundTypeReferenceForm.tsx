@@ -1,4 +1,5 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { useSetAtom } from "jotai";
 import { FC, ReactElement, useCallback } from "react";
 import { FernInput } from "../components/FernInput";
 import { FernNumericInput } from "../components/FernNumericInput";
@@ -6,6 +7,7 @@ import { FernSwitch } from "../components/FernSwitch";
 import { FernTextarea } from "../components/FernTextarea";
 import { ResolvedObjectProperty, ResolvedTypeReference } from "../util/resolver";
 import { PlaygroundDiscriminatedUnionForm } from "./PlaygroundDescriminatedUnionForm";
+import { FOCUSED_PARAMETER_ATOM } from "./PlaygroundEndpointFormAside";
 import { PlaygroundEnumForm } from "./PlaygroundEnumForm";
 import { PlaygroundListForm } from "./PlaygroundListForm";
 import { PlaygroundMapForm } from "./PlaygroundMapForm";
@@ -19,8 +21,8 @@ interface PlaygroundTypeReferenceFormProps {
     shape: ResolvedTypeReference;
     onChange: (value: unknown) => void;
     value?: unknown;
-    onFocus?: () => void;
-    onBlur?: () => void;
+    // onFocus?: () => void;
+    // onBlur?: () => void;
     onOpenStack?: () => void;
     onCloseStack?: () => void;
     renderAsPanel?: boolean;
@@ -114,14 +116,13 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
     shape,
     onChange,
     value,
-    onBlur,
-    onFocus,
     // onOpenStack,
     // onCloseStack,
     // renderAsPanel = false,
     onlyRequired = false,
     onlyOptional = false,
 }) => {
+    const setFocusedParameter = useSetAtom(FOCUSED_PARAMETER_ATOM);
     const onRemove = useCallback(() => {
         onChange(undefined);
     }, [onChange]);
@@ -139,7 +140,15 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
         ),
         enum: ({ values }) => (
             <WithLabel property={property} value={value} onRemove={onRemove}>
-                <PlaygroundEnumForm enumValues={values} onChange={onChange} value={value} id={id} />
+                <PlaygroundEnumForm
+                    enumValues={values}
+                    onChange={onChange}
+                    value={value}
+                    id={id}
+                    onFocus={() => {
+                        setFocusedParameter(id);
+                    }}
+                />
             </WithLabel>
         ),
         undiscriminatedUnion: (undiscriminatedUnion) => (
@@ -169,8 +178,9 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     className="w-full"
                     value={typeof value === "string" ? value : ""}
                     onValueChange={onChange}
-                    onFocus={onFocus}
-                    onBlur={onBlur}
+                    onFocus={() => {
+                        setFocusedParameter(id);
+                    }}
                 />
             </WithLabel>
         ),
@@ -194,8 +204,9 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     className="w-full"
                     value={typeof value === "number" ? value : undefined}
                     onValueChange={onChange}
-                    onFocus={onFocus}
-                    onBlur={onBlur}
+                    onFocus={() => {
+                        setFocusedParameter(id);
+                    }}
                     disallowFloat={true}
                 />
             </WithLabel>
@@ -207,8 +218,9 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     className="w-full"
                     value={typeof value === "number" ? value : undefined}
                     onValueChange={onChange}
-                    onFocus={onFocus}
-                    onBlur={onBlur}
+                    onFocus={() => {
+                        setFocusedParameter(id);
+                    }}
                 />
             </WithLabel>
         ),
@@ -219,9 +231,10 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     className="w-full"
                     value={typeof value === "number" ? value : undefined}
                     onValueChange={onChange}
-                    onFocus={onFocus}
-                    onBlur={onBlur}
-                    disallowFloat
+                    onFocus={() => {
+                        setFocusedParameter(id);
+                    }}
+                    disallowFloat={true}
                 />
             </WithLabel>
         ),
@@ -234,8 +247,9 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     placeholder="MM/DD/YYYY HH:MM"
                     value={typeof value === "string" ? value : undefined}
                     onValueChange={onChange}
-                    onFocus={onFocus}
-                    onBlur={onBlur}
+                    onFocus={() => {
+                        setFocusedParameter(id);
+                    }}
                 />
             </WithLabel>
         ),
@@ -247,8 +261,9 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     value={typeof value === "string" ? value : ""}
                     placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
                     onValueChange={onChange}
-                    onFocus={onFocus}
-                    onBlur={onBlur}
+                    onFocus={() => {
+                        setFocusedParameter(id);
+                    }}
                 />
             </WithLabel>
         ),
@@ -259,8 +274,9 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     className="w-full"
                     value={typeof value === "string" ? value : ""}
                     onValueChange={onChange}
-                    onFocus={onFocus}
-                    onBlur={onBlur}
+                    onFocus={() => {
+                        setFocusedParameter(id);
+                    }}
                 />
             </WithLabel>
         ),
@@ -273,8 +289,9 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     placeholder="MM/DD/YYYY"
                     value={typeof value === "string" ? value : undefined}
                     onValueChange={onChange}
-                    onFocus={onFocus}
-                    onBlur={onBlur}
+                    onFocus={() => {
+                        setFocusedParameter(id);
+                    }}
                 />
             </WithLabel>
         ),
@@ -334,8 +351,6 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                 shape={reference.shape()}
                 onChange={onChange}
                 value={value}
-                onFocus={onFocus}
-                onBlur={onBlur}
                 onlyRequired={onlyRequired}
                 onlyOptional={onlyOptional}
             />

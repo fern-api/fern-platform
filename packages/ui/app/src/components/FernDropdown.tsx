@@ -1,7 +1,7 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { CheckIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
-import { PropsWithChildren, ReactElement, ReactNode, useEffect, useRef, useState } from "react";
+import { PropsWithChildren, ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { FernScrollArea } from "./FernScrollArea";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
 
@@ -27,6 +27,7 @@ export declare namespace FernDropdown {
         options: Option[];
         onValueChange?: (value: string) => void;
         value?: string;
+        onOpen?: () => void;
     }
 }
 
@@ -35,10 +36,20 @@ export function FernDropdown({
     onValueChange,
     value,
     children,
+    onOpen,
 }: PropsWithChildren<FernDropdown.Props>): ReactElement {
     const [isOpen, setOpen] = useState(false);
+    const handleOpenChange = useCallback(
+        (toOpen: boolean) => {
+            setOpen(toOpen);
+            if (toOpen && onOpen != null) {
+                onOpen();
+            }
+        },
+        [onOpen],
+    );
     return (
-        <DropdownMenu.Root onOpenChange={setOpen} open={isOpen} modal={true}>
+        <DropdownMenu.Root onOpenChange={handleOpenChange} open={isOpen} modal={true}>
             <DropdownMenu.Trigger asChild={true}>{children}</DropdownMenu.Trigger>
             <DropdownMenu.Portal>
                 <DropdownMenu.Content className="fern-dropdown" sideOffset={4}>

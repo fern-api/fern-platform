@@ -13,9 +13,10 @@ interface PlaygroundEnumFormProps {
     onChange: (value: unknown) => void;
     value: unknown;
     id: string;
+    onFocus?: () => void;
 }
 
-export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({ enumValues, onChange, value, id }) => {
+export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({ enumValues, onChange, value, id, onFocus }) => {
     const options = useMemo(
         () =>
             enumValues.map(
@@ -54,7 +55,7 @@ export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({ enumValues, on
     const activeItem = enumValues.find((enumValue) => enumValue.value === value);
 
     return (
-        <FernDropdown options={options} onValueChange={onChange} value={activeItem?.value}>
+        <FernDropdown options={options} onValueChange={onChange} value={activeItem?.value} onOpen={onFocus}>
             <FernButton
                 id={id}
                 text={
