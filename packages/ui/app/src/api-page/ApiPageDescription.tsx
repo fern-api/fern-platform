@@ -14,7 +14,7 @@ export declare namespace ApiPageDescription {
 }
 
 export const ApiPageDescription: React.FC<ApiPageDescription.Props> = ({ className, isMarkdown, description }) => {
-    if (description == null) {
+    if (description == null || description.trim().length === 0) {
         return null;
     }
     if (isMarkdown) {

@@ -73,7 +73,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                     {(onClick) => (
                         <span
                             className={classNames(
-                                "inline-flex shrink items-baseline hover:bg-tag-default py-0.5 px-1 rounded-md cursor-pointer",
+                                "inline-flex shrink items-baseline hover:bg-tag-default py-0.5 px-1 rounded-md cursor-default",
                             )}
                             onClick={onClick}
                         >

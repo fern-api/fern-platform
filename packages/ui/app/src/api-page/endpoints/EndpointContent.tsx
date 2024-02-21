@@ -270,7 +270,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                         />
 
                         {apiSection && (
-                            <div className={endpoint.description == null ? "mt-8" : "mt-12"}>
+                            <div className="mt-12 first:mt-8">
                                 <EndpointContentLeft
                                     endpoint={endpoint}
                                     apiSection={apiSection}
