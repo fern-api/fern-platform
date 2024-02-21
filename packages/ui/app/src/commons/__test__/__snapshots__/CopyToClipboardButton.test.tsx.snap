@@ -13,6 +13,7 @@ exports[`CopyToClipboardButton renders correctly 1`] = `
   onPointerDown={[Function]}
   onPointerLeave={[Function]}
   onPointerMove={[Function]}
+  tabIndex={0}
 >
   <span
     className="fern-button-content"
