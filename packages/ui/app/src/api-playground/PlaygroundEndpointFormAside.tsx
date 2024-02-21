@@ -2,7 +2,7 @@ import { isApiNode, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import { isPlainObject } from "@fern-ui/core-utils";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
-import { atom, useAtomValue } from "jotai";
+import { atom, useAtom } from "jotai";
 import { isUndefined } from "lodash-es";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -61,7 +61,7 @@ export function PlaygroundEndpointFormAside({
     resetWithoutExample,
 }: PlaygroundEndpointFormAsideProps): ReactElement {
     const { activeNavigatable } = useNavigationContext();
-    const focusedParameter = useAtomValue(FOCUSED_PARAMETER_ATOM);
+    const [focusedParameter, setFocusedParameter] = useAtom(FOCUSED_PARAMETER_ATOM);
 
     const scrollAreaRef = useRef<HTMLDivElement>(null);
     const [scrollAreaWidth, setScrollAreaWidth] = useState(() => scrollAreaRef.current?.clientWidth ?? 0);
@@ -90,13 +90,14 @@ export function PlaygroundEndpointFormAside({
                     })}
                     onClick={() => {
                         document.getElementById(id)?.focus();
+                        setFocusedParameter(id);
                     }}
                 >
                     <div className="truncate">
                         <span className="font-mono">{property.key}</span>
                     </div>
                     <FernCollapse isOpen={isFocused}>
-                        <Markdown className="pt-2 text-xs">{property.description}</Markdown>
+                        <Markdown className="py-2 text-xs">{property.description}</Markdown>
                     </FernCollapse>
                 </div>
                 {shape.type === "object" && (

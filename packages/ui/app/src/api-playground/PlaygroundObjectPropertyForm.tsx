@@ -18,7 +18,7 @@ const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ M
 const ADD_ALL_KEY = "__FERN_ADD_ALL__" as const;
 
 interface PlaygroundObjectPropertyFormProps {
-    id?: string;
+    id: string;
     property: ResolvedObjectProperty;
     onChange: (key: string, value: unknown) => void;
     onBlur?: () => void;
@@ -77,7 +77,7 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
 };
 
 interface PlaygroundObjectPropertiesFormProps {
-    prefix?: string;
+    id: string;
     properties: ResolvedObjectProperty[];
     onChange: (value: unknown) => void;
     value: unknown;
@@ -85,7 +85,7 @@ interface PlaygroundObjectPropertiesFormProps {
 }
 
 export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormProps> = ({
-    prefix,
+    id,
     properties,
     onChange,
     value,
@@ -146,12 +146,11 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
             {shownProperties.length > 0 && (
                 <ul className="list-none space-y-8">
                     {shownProperties.map((property) => {
-                        const id = prefix != null ? `${prefix}.${property.key}` : property.key;
+                        const childId = id.length > 0 ? `${id}.${property.key}` : property.key;
                         return (
                             <li key={property.key} className="relative -mx-4 px-4" tabIndex={-1}>
                                 <PlaygroundObjectPropertyForm
-                                    key={id}
-                                    id={id}
+                                    id={childId}
                                     property={property}
                                     onChange={onChangeObjectProperty}
                                     value={castToRecord(value)[property.key]}

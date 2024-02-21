@@ -16,12 +16,14 @@ interface PlaygroundUniscriminatedUnionFormProps {
     undiscriminatedUnion: ResolvedUndiscriminatedUnionShape;
     onChange: (value: unknown) => void;
     value: unknown;
+    id: string;
 }
 
 export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnionFormProps> = ({
     undiscriminatedUnion,
     onChange,
     value,
+    id,
 }) => {
     const [internalSelectedVariant, setInternalSelectedVariant] = useState<number>(() => {
         return Math.max(
@@ -49,7 +51,7 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
             undiscriminatedUnion.variants.map(
                 (variant, idx): FernDropdown.Option => ({
                     type: "value",
-                    label: variant.displayName,
+                    label: variant.displayName ?? variant.shape.type,
                     value: idx.toString(),
                     // todo: handle availability
                     tooltip:
@@ -93,7 +95,12 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
             )}
             {selectedVariant != null && (
                 <div className="border-border-default-soft border-l pl-4">
-                    <PlaygroundTypeReferenceForm shape={selectedVariant.shape} onChange={onChange} value={value} />
+                    <PlaygroundTypeReferenceForm
+                        id={`${id}[${internalSelectedVariant}]`}
+                        shape={selectedVariant.shape}
+                        onChange={onChange}
+                        value={value}
+                    />
                 </div>
             )}
         </div>

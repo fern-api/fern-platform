@@ -194,6 +194,8 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
             const menuRect = menuRef.current.getBoundingClientRect();
             setIsPopoverBelow(buttonRect.bottom < menuRect.top);
         }
+
+        selectedItemRef.current?.scrollIntoView({ block: "center" });
     }, []);
 
     return (

@@ -276,7 +276,8 @@ export function PlaygroundAuthorizationFormCard({
                             Connect
                         </span>
                     }
-                    onClick={isOpen.setTrue}
+                    onClick={isOpen.toggleValue}
+                    active={isOpen.value}
                 />
             ) : (
                 <FernButton
@@ -291,7 +292,8 @@ export function PlaygroundAuthorizationFormCard({
                             Connect
                         </span>
                     }
-                    onClick={isOpen.setTrue}
+                    onClick={isOpen.toggleValue}
+                    active={isOpen.value}
                 />
             )}
             <FernCollapse isOpen={isOpen.value}>

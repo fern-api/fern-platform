@@ -73,7 +73,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                     leftClassName="pl-6 pr-1 mt"
                     rightClassName="pl-1"
                 >
-                    <div className="mx-auto w-full max-w-4xl space-y-6 pt-6">
+                    <div className="mx-auto w-full max-w-5xl space-y-6 pt-6">
                         <PlaygroundAuthorizationFormCard
                             endpoint={endpoint}
                             auth={auth}

@@ -65,6 +65,7 @@ export const FernLinkButton = forwardRef<HTMLAnchorElement, FernLinkButtonProps>
     return (
         <Link
             ref={ref}
+            tabIndex={0}
             aria-disabled={disabled}
             aria-selected={active}
             data-state={active ? "on" : "off"}
@@ -114,6 +115,7 @@ export const FernButton: FC<FernButtonProps> = forwardRef<HTMLButtonElement, Fer
         }
         const button = (
             <button
+                tabIndex={0}
                 ref={ref}
                 disabled={disabled}
                 data-state={active ? "on" : "off"}
@@ -139,7 +141,11 @@ export const FernButton: FC<FernButtonProps> = forwardRef<HTMLButtonElement, Fer
         );
 
         if (isEllipsisActive()) {
-            return <FernTooltip content={children ?? text}>{button}</FernTooltip>;
+            return (
+                <FernTooltip content={children ?? text} className="line-clamp-3">
+                    {button}
+                </FernTooltip>
+            );
         } else {
             return button;
         }

@@ -14,7 +14,7 @@ import { PlaygroundUniscriminatedUnionForm } from "./PlaygroundUniscriminatedUni
 import { WithLabel } from "./WithLabel";
 
 interface PlaygroundTypeReferenceFormProps {
-    id?: string;
+    id: string;
     property?: ResolvedObjectProperty;
     shape: ResolvedTypeReference;
     onChange: (value: unknown) => void;
@@ -133,13 +133,13 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     onChange={onChange}
                     value={value}
                     indent={true}
-                    prefix={id}
+                    id={id}
                 />
             </WithLabel>
         ),
         enum: ({ values }) => (
             <WithLabel property={property} value={value} onRemove={onRemove}>
-                <PlaygroundEnumForm enumValues={values} onChange={onChange} value={value} />
+                <PlaygroundEnumForm enumValues={values} onChange={onChange} value={value} id={id} />
             </WithLabel>
         ),
         undiscriminatedUnion: (undiscriminatedUnion) => (
@@ -148,6 +148,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     undiscriminatedUnion={undiscriminatedUnion}
                     onChange={onChange}
                     value={value}
+                    id={id}
                 />
             </WithLabel>
         ),
@@ -157,6 +158,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     discriminatedUnion={discriminatedUnion}
                     onChange={onChange}
                     value={value}
+                    id={id}
                 />
             </WithLabel>
         ),
@@ -279,17 +281,18 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
         optional: () => null, // should be handled by the parent
         list: (list) => (
             <WithLabel property={property} value={value} onRemove={onRemove} htmlFor={id}>
-                <PlaygroundListForm itemShape={list.shape} onChange={onChange} value={value} />
+                <PlaygroundListForm itemShape={list.shape} onChange={onChange} value={value} id={id} />
             </WithLabel>
         ),
         set: (set) => (
             <WithLabel property={property} value={value} onRemove={onRemove} htmlFor={id}>
-                <PlaygroundListForm itemShape={set.shape} onChange={onChange} value={value} />
+                <PlaygroundListForm itemShape={set.shape} onChange={onChange} value={value} id={id} />
             </WithLabel>
         ),
         map: (map) => (
             <WithLabel property={property} value={value} onRemove={onRemove} htmlFor={id}>
                 <PlaygroundMapForm
+                    id={id}
                     keyShape={map.keyShape}
                     valueShape={map.valueShape}
                     onChange={onChange}

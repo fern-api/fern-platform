@@ -7,6 +7,7 @@ import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType, unknownToString } from "./utils";
 
 interface PlaygroundMapFormProps {
+    id: string;
     keyShape: ResolvedTypeReference;
     valueShape: ResolvedTypeReference;
     onChange: (value: unknown) => void;
@@ -28,7 +29,7 @@ function fromKeyValuePairs(keyValuePairs: Array<{ key: unknown; value: unknown }
     }, {});
 }
 
-export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ keyShape, valueShape, onChange, value }) => {
+export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ id, keyShape, valueShape, onChange, value }) => {
     const [internalState, setInternalState] = useState<Array<{ key: unknown; value: unknown }>>(() =>
         toKeyValuePairs(value),
     );
@@ -68,24 +69,28 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ keyShape, valueS
             {internalState.length > 0 && (
                 <ul className="divide-border-default border-default w-full max-w-full list-none divide-y divide-dashed border-t border-dashed">
                     {internalState.map((item, idx) => (
-                        <li key={idx} className="flex min-h-12 flex-row items-center gap-1 py-2">
-                            <div className="flex min-w-0 shrink items-center justify-between gap-2">
+                        <li key={idx} className="flex min-h-12 flex-row items-start gap-1 py-2">
+                            {/* <div className="flex min-w-0 shrink items-center justify-between gap-2">
                                 <label className="inline-flex flex-wrap items-baseline">
-                                    <span className="t-muted bg-tag-default rounded p-1 text-xs uppercase">
+                                    <span className="t-muted bg-tag-default min-w-6 rounded-xl p-1 text-center text-xs font-semibold uppercase">
                                         {idx + 1}
                                     </span>
                                 </label>
-                            </div>
+                            </div> */}
 
                             <div className="min-w-0 flex-1 shrink">
+                                <span className="t-muted text-xs">{"key"}</span>
                                 <PlaygroundTypeReferenceForm
+                                    id={`${id}[${idx}].key`}
                                     shape={keyShape}
                                     value={item.key}
                                     onChange={(newKey) => handleChangeKey(idx, newKey)}
                                 />
                             </div>
                             <div className="min-w-0 flex-1 shrink">
+                                <span className="t-muted text-xs">{"value"}</span>
                                 <PlaygroundTypeReferenceForm
+                                    id={`${id}[${idx}].value`}
                                     shape={valueShape}
                                     value={item.value}
                                     onChange={(newValue) => handleChangeValue(idx, newValue)}
@@ -96,11 +101,13 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ keyShape, valueS
                                     icon={<Cross1Icon />}
                                     onClick={() => handleRemoveItem(idx)}
                                     variant="minimal"
+                                    size="small"
+                                    className="-mx-1"
                                 />
                             </div>
                         </li>
                     ))}
-                    <li className="py-2">
+                    <li className="pt-2">
                         <FernButton
                             icon={<PlusIcon />}
                             text="Add new item"

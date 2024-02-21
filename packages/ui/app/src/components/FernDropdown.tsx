@@ -1,7 +1,7 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { CheckIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
-import { PropsWithChildren, ReactElement, ReactNode, useRef, useState } from "react";
+import { PropsWithChildren, ReactElement, ReactNode, useEffect, useRef, useState } from "react";
 import { FernScrollArea } from "./FernScrollArea";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
 
@@ -36,65 +36,18 @@ export function FernDropdown({
     value,
     children,
 }: PropsWithChildren<FernDropdown.Props>): ReactElement {
-    const activeRef = useRef<HTMLButtonElement>(null);
     const [isOpen, setOpen] = useState(false);
     return (
         <DropdownMenu.Root onOpenChange={setOpen} open={isOpen} modal={true}>
             <DropdownMenu.Trigger asChild={true}>{children}</DropdownMenu.Trigger>
             <DropdownMenu.Portal>
-                <DropdownMenu.Content
-                    className="fern-dropdown"
-                    onAnimationStart={() => {
-                        if (isOpen) {
-                            activeRef.current?.scrollIntoView({ block: "center" });
-                        }
-                    }}
-                    sideOffset={4}
-                >
+                <DropdownMenu.Content className="fern-dropdown" sideOffset={4}>
                     <FernTooltipProvider>
                         <FernScrollArea className="min-h-0 shrink" viewportClassName="p-1">
                             <DropdownMenu.RadioGroup value={value} onValueChange={onValueChange}>
                                 {options.map((option, idx) =>
                                     option.type === "value" ? (
-                                        <FernTooltip
-                                            content={option.tooltip}
-                                            key={option.value}
-                                            side="right"
-                                            sideOffset={8}
-                                        >
-                                            <div>
-                                                <DropdownMenu.RadioItem asChild={true} value={option.value}>
-                                                    <button
-                                                        ref={option.value === value ? activeRef : undefined}
-                                                        className={classNames("fern-dropdown-item", option.className)}
-                                                    >
-                                                        {value != null && (
-                                                            <span className="fern-dropdown-item-indicator">
-                                                                <DropdownMenu.ItemIndicator asChild={true}>
-                                                                    <CheckIcon />
-                                                                </DropdownMenu.ItemIndicator>
-                                                            </span>
-                                                        )}
-                                                        <span className="inline-flex max-w-[calc(var(--radix-dropdown-menu-trigger-width)-2rem)] items-baseline">
-                                                            <span className={option.labelClassName}>
-                                                                {option.label ?? option.value}
-                                                            </span>
-                                                            {option.helperText != null && (
-                                                                <span className="ml-2 truncate text-xs opacity-60">
-                                                                    {option.helperText}
-                                                                </span>
-                                                            )}
-                                                        </span>
-                                                        <span className="ml-auto space-x-1 pl-2">
-                                                            {option.rightElement && <span>{option.rightElement}</span>}
-                                                            {option.tooltip != null && option.tooltip !== "" && (
-                                                                <InfoCircledIcon />
-                                                            )}
-                                                        </span>
-                                                    </button>
-                                                </DropdownMenu.RadioItem>
-                                            </div>
-                                        </FernTooltip>
+                                        <FernDropdownItemValue key={option.value} option={option} value={value} />
                                     ) : (
                                         <DropdownMenu.Separator
                                             key={idx}
@@ -108,5 +61,83 @@ export function FernDropdown({
                 </DropdownMenu.Content>
             </DropdownMenu.Portal>
         </DropdownMenu.Root>
+    );
+}
+
+function FernDropdownItemValue({ option, value }: { option: FernDropdown.ValueOption; value: string | undefined }) {
+    const helperTextRef = useRef<HTMLSpanElement>(null);
+    const activeRef = useRef<HTMLButtonElement>(null);
+    useEffect(() => {
+        if (option.value === value) {
+            activeRef.current?.scrollIntoView({ block: "center" });
+        }
+    }, [option.value, value]);
+
+    const [isEllipsisActive, setIsEllipsisActive] = useState(false);
+    useEffect(() => {
+        if (helperTextRef.current == null) {
+            return;
+        }
+
+        const observer = new ResizeObserver((entries) => {
+            for (const entry of entries) {
+                setIsEllipsisActive(entry.target.scrollWidth > entry.target.clientWidth);
+            }
+        });
+
+        observer.observe(helperTextRef.current);
+        return () => {
+            observer.disconnect();
+        };
+    });
+    return (
+        <FernTooltip
+            content={
+                !isEllipsisActive ? (
+                    option.tooltip
+                ) : (
+                    <div className="space-y-2">
+                        {option.helperText != null && <div>{option.helperText}</div>}
+                        {option.tooltip != null && <div>{option.tooltip}</div>}
+                    </div>
+                )
+            }
+            side="right"
+            sideOffset={8}
+        >
+            <div>
+                <DropdownMenu.RadioItem asChild={true} value={option.value}>
+                    <button
+                        ref={option.value === value ? activeRef : undefined}
+                        className={classNames("fern-dropdown-item", option.className)}
+                    >
+                        {value != null && (
+                            <span className="fern-dropdown-item-indicator">
+                                <DropdownMenu.ItemIndicator asChild={true}>
+                                    <CheckIcon />
+                                </DropdownMenu.ItemIndicator>
+                            </span>
+                        )}
+                        <span className="inline-flex items-baseline">
+                            <span className={option.labelClassName}>{option.label ?? option.value}</span>
+                            {option.helperText != null && (
+                                <span
+                                    className="ml-2 max-w-[300px] shrink truncate text-xs opacity-60"
+                                    ref={helperTextRef}
+                                >
+                                    {option.helperText}
+                                </span>
+                            )}
+                        </span>
+                        <span className="ml-auto space-x-1 pl-2">
+                            {option.rightElement && <span>{option.rightElement}</span>}
+                            {(isEllipsisActive || (option.tooltip != null && option.tooltip !== "")) && (
+                                <InfoCircledIcon />
+                            )}
+                        </span>
+                    </button>
+                </DropdownMenu.RadioItem>
+            </div>
+        </FernTooltip>
     );
 }

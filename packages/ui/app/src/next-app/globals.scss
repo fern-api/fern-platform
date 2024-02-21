@@ -98,11 +98,7 @@
     }
 
     .description-mask {
-        @apply overflow-hidden;
-
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
+        @apply overflow-hidden line-clamp-3;
         text-overflow: -o-ellipsis-lastline;
     }
 }

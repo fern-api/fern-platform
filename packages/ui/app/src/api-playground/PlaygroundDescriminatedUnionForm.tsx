@@ -17,12 +17,14 @@ interface PlaygroundDiscriminatedUnionFormProps {
     discriminatedUnion: ResolvedDiscriminatedUnionShape;
     onChange: (value: unknown) => void;
     value: unknown;
+    id: string;
 }
 
 export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFormProps> = ({
     discriminatedUnion,
     onChange,
     value,
+    id,
 }) => {
     const selectedVariant =
         value != null ? (castToRecord(value)[discriminatedUnion.discriminant] as string) : undefined;
@@ -102,6 +104,7 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                         properties={activeVariant.additionalProperties}
                         value={value}
                         onChange={onChange}
+                        id={id}
                     />
                 </div>
             )}

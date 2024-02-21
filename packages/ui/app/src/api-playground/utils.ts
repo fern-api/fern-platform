@@ -7,6 +7,7 @@ import {
     ResolvedHttpRequestBodyShape,
     ResolvedObjectProperty,
     ResolvedTypeReference,
+    unwrapReference,
     visitResolvedHttpRequestBodyShape,
 } from "../util/resolver";
 import { PlaygroundRequestFormState } from "./types";
@@ -503,5 +504,32 @@ export function hasOptionalFields(bodyShape: ResolvedHttpRequestBodyShape): bool
                 reference: (reference) => hasOptionalFields(reference.shape()),
                 _other: () => false,
             }),
+    });
+}
+
+export const ENUM_RADIO_BREAKPOINT = 5;
+export function shouldRenderInline(typeReference: ResolvedTypeReference): boolean {
+    return visitDiscriminatedUnion(unwrapReference(typeReference), "type")._visit({
+        string: () => true,
+        boolean: () => true,
+        object: () => false,
+        map: () => false,
+        undiscriminatedUnion: () => false,
+        discriminatedUnion: () => false,
+        enum: (_enum) => true,
+        integer: () => true,
+        double: () => true,
+        long: () => true,
+        datetime: () => true,
+        uuid: () => true,
+        base64: () => true,
+        date: () => true,
+        optional: () => false,
+        list: () => false,
+        set: () => false,
+        booleanLiteral: () => true,
+        stringLiteral: () => true,
+        unknown: () => false,
+        _other: () => false,
     });
 }

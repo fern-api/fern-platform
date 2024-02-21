@@ -27,7 +27,7 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({
     return (
         <div className="group relative min-h-0 flex-1 shrink">
             <FernScrollArea>
-                <FernSyntaxHighlighter language={requestType === "curl" ? "shell" : requestType}>
+                <FernSyntaxHighlighter language={requestType === "curl" ? "bash" : requestType}>
                     {requestType === "curl"
                         ? stringifyCurl(auth, endpoint, formState)
                         : requestType === "javascript"

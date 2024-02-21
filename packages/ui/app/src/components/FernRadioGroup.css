@@ -2,6 +2,10 @@
     @apply space-y-4;
 }
 
+.fern-radio-group.compact {
+    @apply space-y-2 text-sm;
+}
+
 .fern-radio-label {
     @apply flex cursor-pointer;
 }

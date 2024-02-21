@@ -62,7 +62,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
                     </div>
                     <FernCard className="rounded-xl p-4 shadow-sm">
                         <PlaygroundObjectPropertiesForm
-                            prefix="header"
+                            id="header"
                             properties={endpoint.headers}
                             onChange={setHeaders}
                             value={formState?.headers}
@@ -78,7 +78,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
                     </div>
                     <FernCard className="rounded-xl p-4 shadow-sm">
                         <PlaygroundObjectPropertiesForm
-                            prefix="path"
+                            id="path"
                             properties={endpoint.pathParameters}
                             onChange={setPathParameters}
                             value={formState?.pathParameters}
@@ -94,7 +94,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
                     </div>
                     <FernCard className="rounded-xl p-4 shadow-sm">
                         <PlaygroundObjectPropertiesForm
-                            prefix="query"
+                            id="query"
                             properties={endpoint.queryParameters}
                             onChange={setQueryParameters}
                             value={formState?.queryParameters}
@@ -126,7 +126,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
                                     </div>
                                     <FernCard className="rounded-xl p-4 shadow-sm">
                                         <PlaygroundObjectPropertiesForm
-                                            prefix="body"
+                                            id="body"
                                             properties={shape.properties()}
                                             onChange={setBody}
                                             value={formState?.body}
@@ -142,6 +142,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
                                     </div>
                                     <FernCard className="rounded-xl p-4 shadow-sm">
                                         <PlaygroundTypeReferenceForm
+                                            id="body"
                                             shape={shape.shape}
                                             onChange={setBody}
                                             value={formState?.body}
@@ -159,6 +160,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
                                         <h5 className="t-muted m-0">Body</h5>
                                     </div>
                                     <PlaygroundTypeReferenceForm
+                                        id="body"
                                         shape={shape}
                                         onChange={setBody}
                                         value={formState?.body}
