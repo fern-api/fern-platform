@@ -8,12 +8,12 @@ import { WebhookContent } from "./WebhookContent";
 export declare namespace Webhook {
     export interface Props {
         webhook: ResolvedWebhookDefinition;
-        subpackageTitle: string | undefined;
+        breadcrumbs: string[];
         isLastInApi: boolean;
     }
 }
 
-export const Webhook: React.FC<Webhook.Props> = ({ webhook, subpackageTitle, isLastInApi }) => {
+export const Webhook: React.FC<Webhook.Props> = ({ webhook, breadcrumbs, isLastInApi }) => {
     const fullSlug = joinUrlSlugs(...webhook.slug);
     const { setTargetRef } = useApiPageCenterElement({ slug: fullSlug });
     const route = `/${fullSlug}`;
@@ -27,7 +27,7 @@ export const Webhook: React.FC<Webhook.Props> = ({ webhook, subpackageTitle, isL
         <WebhookContextProvider>
             <WebhookContent
                 webhook={webhook}
-                subpackageTitle={subpackageTitle}
+                breadcrumbs={breadcrumbs}
                 setContainerRef={setTargetRef}
                 hideBottomSeparator={isLastInApi}
                 route={route}

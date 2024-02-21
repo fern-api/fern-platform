@@ -10,10 +10,16 @@ export declare namespace CopyToClipboardButton {
         className?: string;
         content?: string | (() => string);
         testId?: string;
+        children?: (onClick: (() => void) | undefined) => JSX.Element;
     }
 }
 
-export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({ className, content, testId }) => {
+export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({
+    className,
+    content,
+    testId,
+    children,
+}) => {
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(content);
 
     return (
@@ -22,16 +28,18 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({ c
                 content={wasJustCopied ? "Copied!" : "Copy to clipboard"}
                 open={wasJustCopied ? true : undefined}
             >
-                <FernButton
-                    className={classNames("group", className)}
-                    onClick={copyToClipboard}
-                    disabled={copyToClipboard == null}
-                    data-testid={testId}
-                    rounded={true}
-                    icon={wasJustCopied ? <Check className="size-4" /> : <CopyIcon className="size-4" />}
-                    variant="minimal"
-                    intent={wasJustCopied ? "success" : "none"}
-                />
+                {children?.(copyToClipboard) ?? (
+                    <FernButton
+                        className={classNames("group", className)}
+                        disabled={copyToClipboard == null}
+                        onClick={copyToClipboard}
+                        data-testid={testId}
+                        rounded={true}
+                        icon={wasJustCopied ? <Check className="size-4" /> : <CopyIcon className="size-4" />}
+                        variant="minimal"
+                        intent={wasJustCopied ? "success" : "none"}
+                    />
+                )}
             </FernTooltip>
         </FernTooltipProvider>
     );

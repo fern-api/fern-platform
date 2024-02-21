@@ -99,6 +99,7 @@
 
     .description-mask {
         @apply overflow-hidden line-clamp-3;
+
         text-overflow: -o-ellipsis-lastline;
     }
 }

@@ -1,10 +1,10 @@
 import classNames from "classnames";
-import { MouseEventHandler, MutableRefObject, ReactElement, useState } from "react";
+import { MouseEventHandler, MutableRefObject, ReactElement, ReactNode, useState } from "react";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
 
 export declare namespace TitledExample {
     export interface Props {
-        title: string;
+        title: ReactNode;
         type: "primary" | "warning";
         actions?: ReactElement;
         className?: string;
@@ -50,14 +50,18 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                 })}
             >
                 <div className="shadow-border-default mx-px flex min-h-10 items-center justify-between rounded-t-xl px-2 shadow-[inset_0_-1px_0_0_rgba(0,0,0,0.1)]">
-                    <div
-                        className={classNames("text-xs uppercase px-1", {
-                            "t-muted": type === "primary",
-                            "t-danger": type === "warning",
-                        })}
-                    >
-                        {title}
-                    </div>
+                    {typeof title === "string" ? (
+                        <div
+                            className={classNames("text-xs uppercase px-1", {
+                                "t-muted": type === "primary",
+                                "t-danger": type === "warning",
+                            })}
+                        >
+                            {title}
+                        </div>
+                    ) : (
+                        <div className="min-w-0 flex-1 shrink">{title}</div>
+                    )}
                     <div className="flex gap-2">
                         {actions}
                         {!disableClipboard && (

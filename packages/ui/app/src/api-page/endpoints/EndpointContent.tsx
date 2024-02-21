@@ -14,19 +14,23 @@ import {
     ResolvedNavigationItemApiSection,
 } from "../../util/resolver";
 import { useViewportContext } from "../../viewport-context/useViewportContext";
+import { ApiPageDescription } from "../ApiPageDescription";
+import { Breadcrumbs } from "../Breadcrumbs";
 import { CodeExample, generateCodeExamples } from "../examples/code-example";
 import { getCurlLines } from "../examples/curl-example/curlUtils";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { flattenJsonToLines } from "../examples/json-example/jsonLineUtils";
+import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 import { EndpointContentCodeSnippets } from "./EndpointContentCodeSnippets";
 import { convertNameToAnchorPart, EndpointContentLeft } from "./EndpointContentLeft";
+import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 
 export declare namespace EndpointContent {
     export interface Props {
         apiSection: ResolvedNavigationItemApiSection;
         apiDefinition: ResolvedApiDefinitionPackage;
         endpoint: ResolvedEndpointDefinition;
-        subpackageTitle: string | undefined;
+        breadcrumbs: string[];
         hideBottomSeparator?: boolean;
         setContainerRef: (ref: HTMLElement | null) => void;
         route: string;
@@ -66,7 +70,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     apiSection,
     apiDefinition,
     endpoint,
-    subpackageTitle,
+    breadcrumbs,
     hideBottomSeparator = false,
     setContainerRef,
     route,
@@ -225,65 +229,92 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
             ref={containerRef}
         >
             <div
-                className={classNames(
-                    "scroll-mt-header-height max-w-content-width lg:max-w-endpoint-width mx-auto lg:grid lg:grid-cols-2 lg:gap-12",
-                    {
-                        "border-default border-b mb-px pb-20": !hideBottomSeparator,
-                    },
-                )}
+                className={classNames("scroll-mt-header-height max-w-content-width lg:max-w-endpoint-width mx-auto", {
+                    "border-default border-b mb-px pb-20": !hideBottomSeparator,
+                })}
                 ref={setContainerRef}
                 data-route={route.toLowerCase()}
             >
-                <div
-                    className="max-w-content-width flex min-w-0 flex-1 flex-col"
-                    style={{
-                        minHeight: layoutBreakpoint === "lg" ? `${exampleHeight}px` : undefined,
-                    }}
-                >
-                    {apiSection && (
-                        <EndpointContentLeft
-                            endpoint={endpoint}
-                            subpackageTitle={subpackageTitle}
-                            apiSection={apiSection}
-                            onHoverRequestProperty={onHoverRequestProperty}
-                            onHoverResponseProperty={onHoverResponseProperty}
-                            selectedError={selectedError}
-                            setSelectedError={setSelectedError}
-                            route={route}
-                        />
-                    )}
+                <div className="space-y-1 pb-2 pt-8">
+                    <Breadcrumbs breadcrumbs={breadcrumbs} />
+                    <div>
+                        <h1 className="my-0 inline">{endpoint.title}</h1>
+                        {endpoint.availability != null && (
+                            <span className="relative">
+                                <EndpointAvailabilityTag
+                                    className="absolute -top-1.5 left-2.5 inline-block"
+                                    availability={endpoint.availability}
+                                />
+                            </span>
+                        )}
+                    </div>
+                    <EndpointUrlWithOverflow
+                        path={endpoint.path}
+                        method={endpoint.method}
+                        environment={endpoint.defaultEnvironment?.baseUrl}
+                        showEnvironment
+                        large
+                    />
                 </div>
-
-                <div
-                    className={classNames(
-                        "max-w-content-width",
-                        "lg:flex-1 lg:sticky lg:self-start",
-                        "pb-10 pt-8",
-                        // the 4rem is the same as the h-10 as the Header
-                        "max-h-[150vh] lg:max-h-vh-minus-header",
-                        "flex",
-                        // header offset
-                        "mt-10 lg:mt-0 lg:top-header-height",
-                    )}
-                    style={{ height: `${exampleHeight}px` }}
-                >
-                    {isInViewport && (
-                        <EndpointContentCodeSnippets
-                            apiSection={apiSection}
-                            apiDefinition={apiDefinition}
-                            endpoint={endpoint}
-                            example={selectedClient.exampleCall}
-                            clients={clients}
-                            selectedClient={selectedClient}
-                            onClickClient={setSelectedExampleClientAndScrollToTop}
-                            requestCurlLines={curlLines}
-                            responseJsonLines={jsonLines}
-                            hoveredRequestPropertyPath={hoveredRequestPropertyPath}
-                            hoveredResponsePropertyPath={hoveredResponsePropertyPath}
-                            requestHeight={requestHeight}
-                            responseHeight={responseHeight}
+                <div className="lg:grid lg:grid-cols-2 lg:gap-12">
+                    <div
+                        className="max-w-content-width flex min-w-0 flex-1 flex-col"
+                        style={{
+                            minHeight: layoutBreakpoint === "lg" ? `${exampleHeight}px` : undefined,
+                        }}
+                    >
+                        <ApiPageDescription
+                            className="mt-8 text-base leading-6"
+                            description={endpoint.description}
+                            isMarkdown={true}
                         />
-                    )}
+
+                        {apiSection && (
+                            <div className={endpoint.description == null ? "mt-8" : "mt-12"}>
+                                <EndpointContentLeft
+                                    endpoint={endpoint}
+                                    apiSection={apiSection}
+                                    onHoverRequestProperty={onHoverRequestProperty}
+                                    onHoverResponseProperty={onHoverResponseProperty}
+                                    selectedError={selectedError}
+                                    setSelectedError={setSelectedError}
+                                    route={route}
+                                />
+                            </div>
+                        )}
+                    </div>
+
+                    <div
+                        className={classNames(
+                            "max-w-content-width",
+                            "lg:flex-1 lg:sticky lg:self-start",
+                            "pb-10 pt-8",
+                            // the 4rem is the same as the h-10 as the Header
+                            "max-h-[150vh] lg:max-h-vh-minus-header",
+                            "flex",
+                            // header offset
+                            "mt-10 lg:mt-0 lg:top-header-height",
+                        )}
+                        style={{ height: `${exampleHeight}px` }}
+                    >
+                        {isInViewport && (
+                            <EndpointContentCodeSnippets
+                                apiSection={apiSection}
+                                apiDefinition={apiDefinition}
+                                endpoint={endpoint}
+                                example={selectedClient.exampleCall}
+                                clients={clients}
+                                selectedClient={selectedClient}
+                                onClickClient={setSelectedExampleClientAndScrollToTop}
+                                requestCurlLines={curlLines}
+                                responseJsonLines={jsonLines}
+                                hoveredRequestPropertyPath={hoveredRequestPropertyPath}
+                                hoveredResponsePropertyPath={hoveredResponsePropertyPath}
+                                requestHeight={requestHeight}
+                                responseHeight={responseHeight}
+                            />
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

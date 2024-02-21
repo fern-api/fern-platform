@@ -10,6 +10,7 @@ export declare namespace ApiPackageContents {
         apiDefinition: ResolvedApiDefinitionPackage;
         isLastInParentPackage: boolean;
         anchorIdParts: string[];
+        breadcrumbs?: string[];
     }
 }
 
@@ -18,10 +19,12 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
     apiDefinition,
     isLastInParentPackage,
     anchorIdParts,
+    breadcrumbs = [],
 }) => {
     const { endpoints, webhooks, websockets, subpackages } = apiDefinition;
 
     const subpackageTitle = apiDefinition.type === "subpackage" ? apiDefinition.title : undefined;
+    const currentBreadcrumbs = subpackageTitle != null ? [...breadcrumbs, subpackageTitle] : breadcrumbs;
 
     return (
         <>
@@ -31,7 +34,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                     apiSection={apiSection}
                     apiDefinition={apiDefinition}
                     endpoint={endpoint}
-                    subpackageTitle={subpackageTitle}
+                    breadcrumbs={currentBreadcrumbs}
                     isLastInApi={
                         isLastInParentPackage &&
                         webhooks.length === 0 &&
@@ -51,7 +54,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                 <Webhook
                     key={webhook.id}
                     webhook={webhook}
-                    subpackageTitle={subpackageTitle}
+                    breadcrumbs={breadcrumbs}
                     isLastInApi={isLastInParentPackage && subpackages.length === 0 && idx === webhooks.length - 1}
                 />
             ))}
@@ -62,6 +65,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                     apiDefinition={subpackage}
                     isLastInParentPackage={isLastInParentPackage && idx === subpackages.length - 1}
                     anchorIdParts={anchorIdParts}
+                    breadcrumbs={currentBreadcrumbs}
                 />
             ))}
         </>
