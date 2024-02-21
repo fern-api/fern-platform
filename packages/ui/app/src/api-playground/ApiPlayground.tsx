@@ -148,6 +148,7 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({
                     resetWithExample={resetWithExample}
                     resetWithoutExample={resetWithoutExample}
                     response={response}
+                    sendRequest={sendRequest}
                 />
             ) : (
                 <div className="flex flex-1 items-center justify-center">

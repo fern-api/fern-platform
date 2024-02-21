@@ -23,7 +23,7 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({ c
                 open={wasJustCopied ? true : undefined}
             >
                 <FernButton
-                    className={classNames("group cursor-pointer", className)}
+                    className={classNames("group", className)}
                     onClick={copyToClipboard}
                     disabled={copyToClipboard == null}
                     data-testid={testId}

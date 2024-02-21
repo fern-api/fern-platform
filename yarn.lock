@@ -2377,7 +2377,6 @@ __metadata:
   resolution: "@fern-ui/app-utils@workspace:packages/commons/app-utils"
   dependencies:
     "@fern-api/fdr-sdk": 0.50.6-1-gdf25388
-    "@fern-ui/core-utils": "workspace:*"
     "@types/jest": ^29.5.11
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
