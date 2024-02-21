@@ -1,14 +1,16 @@
-import { MenuItem } from "@blueprintjs/core";
-import { Select } from "@blueprintjs/select";
-import { CaretDownIcon, InfoCircledIcon } from "@radix-ui/react-icons";
-import { isEqual } from "lodash-es";
-import { FC, useCallback, useState } from "react";
+import { CaretDownIcon } from "@radix-ui/react-icons";
+import dynamic from "next/dynamic";
+import { FC, useCallback, useMemo, useState } from "react";
 import { FernButton } from "../components/FernButton";
+import { FernDropdown } from "../components/FernDropdown";
 import { FernSegmentedControl } from "../components/FernSegmentedControl";
-import { FernTooltip } from "../components/FernTooltip";
-import { ResolvedUndiscriminatedUnionShape, ResolvedUndiscriminatedUnionShapeVariant } from "../util/resolver";
+import { ResolvedUndiscriminatedUnionShape } from "../util/resolver";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType, matchesTypeReference } from "./utils";
+
+const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), {
+    ssr: true,
+});
 
 interface PlaygroundUniscriminatedUnionFormProps {
     undiscriminatedUnion: ResolvedUndiscriminatedUnionShape;
@@ -42,51 +44,37 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
         [internalSelectedVariant, onChange, undiscriminatedUnion.variants],
     );
 
+    const options = useMemo(
+        () =>
+            undiscriminatedUnion.variants.map(
+                (variant, idx): FernDropdown.Option => ({
+                    type: "value",
+                    label: variant.displayName,
+                    value: idx.toString(),
+                    // todo: handle availability
+                    tooltip:
+                        variant.description != null ? (
+                            <Markdown className="text-xs">{variant.description}</Markdown>
+                        ) : undefined,
+                }),
+            ),
+        [undiscriminatedUnion.variants],
+    );
+
     return (
         <div className="w-full">
-            {undiscriminatedUnion.variants.length < 4 ? (
+            {undiscriminatedUnion.variants.length < 5 ? (
                 <FernSegmentedControl
-                    options={undiscriminatedUnion.variants.map((variant, idx) => ({
-                        label: variant.displayName,
-                        value: idx.toString(),
-                    }))}
+                    options={options}
                     value={internalSelectedVariant.toString()}
                     onValueChange={setSelectedVariant}
                     className="mb-4 w-full"
                 />
             ) : (
-                <Select<ResolvedUndiscriminatedUnionShapeVariant>
-                    items={undiscriminatedUnion.variants}
-                    itemRenderer={(variant, { ref, handleClick, handleFocus, modifiers, index }) =>
-                        modifiers.matchesPredicate && (
-                            <MenuItem
-                                ref={ref}
-                                active={modifiers.active}
-                                disabled={modifiers.disabled}
-                                key={index}
-                                text={<span className="font-mono text-sm">{variant.displayName}</span>}
-                                onClick={handleClick}
-                                onFocus={handleFocus}
-                                roleStructure="listoption"
-                                labelElement={
-                                    <FernTooltip content={variant.description}>
-                                        <InfoCircledIcon />
-                                    </FernTooltip>
-                                }
-                            />
-                        )
-                    }
-                    itemPredicate={(query, variant) =>
-                        variant.displayName?.toLowerCase().includes(query.toLowerCase()) ?? false
-                    }
-                    onItemSelect={(variant) =>
-                        setSelectedVariant(
-                            undiscriminatedUnion.variants.findIndex((v) => isEqual(v, variant)).toString(10),
-                        )
-                    }
-                    activeItem={selectedVariant}
-                    popoverProps={{ minimal: true, matchTargetWidth: true }}
-                    fill={true}
+                <FernDropdown
+                    options={options}
+                    onValueChange={setSelectedVariant}
+                    value={internalSelectedVariant.toString()}
                 >
                     <FernButton
                         text={
@@ -98,11 +86,13 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
                         }
                         rightIcon={<CaretDownIcon />}
                         className="w-full text-left"
+                        variant="outlined"
+                        mono={true}
                     />
-                </Select>
+                </FernDropdown>
             )}
             {selectedVariant != null && (
-                <div className="mt-2">
+                <div className="border-border-default-soft border-l pl-4">
                     <PlaygroundTypeReferenceForm shape={selectedVariant.shape} onChange={onChange} value={value} />
                 </div>
             )}

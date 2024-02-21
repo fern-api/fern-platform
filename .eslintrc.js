@@ -5,14 +5,13 @@ module.exports = {
         browser: true,
         es2021: true,
     },
-    plugins: ["@typescript-eslint", "jest", "@blueprintjs", "deprecation", "import", "eslint-plugin-tailwindcss"],
+    plugins: ["@typescript-eslint", "jest", "deprecation", "import", "eslint-plugin-tailwindcss"],
     extends: [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/strict",
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:jest/recommended",
-        "plugin:@blueprintjs/recommended",
         "plugin:react/recommended",
         "plugin:react-hooks/recommended",
         "plugin:tailwindcss/recommended",
@@ -44,8 +43,6 @@ module.exports = {
     },
     ignorePatterns: ["*.js", "*.jsx"],
     rules: {
-        "@blueprintjs/classes-constants": "off",
-        "@blueprintjs/html-components": "off",
         "@typescript-eslint/no-unused-vars": [
             "error",
             {

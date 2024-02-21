@@ -1,9 +1,13 @@
 import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
+import dynamic from "next/dynamic";
 import { createElement, ReactNode, useRef } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
 import { getAnchorId } from "../../util/anchor";
-import { Markdown } from "../markdown/Markdown";
+
+const Markdown = dynamic(() => import("../markdown/Markdown").then(({ Markdown }) => Markdown), {
+    ssr: true,
+});
 
 export declare namespace EndpointSection {
     export type Props = React.PropsWithChildren<{

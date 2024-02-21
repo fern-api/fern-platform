@@ -11,7 +11,7 @@ export declare namespace HeaderPrimaryLink {
 export const HeaderPrimaryLink: React.FC<HeaderPrimaryLink.Props> = ({ navbarLink }) => {
     return (
         <FernLinkButton
-            className={"group"}
+            className="group cursor-pointer"
             href={navbarLink.url}
             target="_blank"
             intent="primary"

@@ -78,7 +78,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                         <TypeComponentSeparator />
                                         <EndpointParameter
                                             name={parameter.key}
-                                            shape={parameter.shape}
+                                            shape={parameter.valueShape}
                                             anchorIdParts={["request", "path", parameter.key]}
                                             route={route}
                                             description={parameter.description}
@@ -98,7 +98,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                         <TypeComponentSeparator />
                                         <EndpointParameter
                                             name={parameter.key}
-                                            shape={parameter.shape}
+                                            shape={parameter.valueShape}
                                             anchorIdParts={["request", "header", parameter.key]}
                                             route={route}
                                             description={parameter.description}
@@ -118,7 +118,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                         <TypeComponentSeparator />
                                         <EndpointParameter
                                             name={parameter.key}
-                                            shape={parameter.shape}
+                                            shape={parameter.valueShape}
                                             anchorIdParts={["request", "query", parameter.key]}
                                             route={route}
                                             description={parameter.description}

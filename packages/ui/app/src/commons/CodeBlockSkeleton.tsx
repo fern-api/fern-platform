@@ -29,11 +29,9 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
     highlightLines,
     highlightStyle,
 }) => {
-    const { resolvedTheme: theme } = useTheme();
     return (
         <div
             className={classNames(
-                // "bg-gray-100/90 dark:bg-gray-950/90",
                 "font-mono",
                 // {
                 //     "w-full border-l border-r border-b rounded-bl-lg rounded-br-lg border-default": !usePlainStyles,
@@ -44,11 +42,9 @@ export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
         >
             <FernSyntaxHighlighter
                 language={language}
-                customStyle={{
-                    fontSize: fontSize === "sm" ? "12px" : "14px",
-                    lineHeight: fontSize === "sm" ? "20px" : "24px",
-                }}
-                renderer={createHighlightRenderer(highlightLines, highlightStyle, theme as "light" | "dark")}
+                fontSize={fontSize}
+                highlightLines={highlightLines}
+                highlightStyle={highlightStyle}
             >
                 {content}
             </FernSyntaxHighlighter>
@@ -121,13 +117,26 @@ function createStyle(
     };
 }
 
-export const FernSyntaxHighlighter: React.FC<React.ComponentProps<typeof SyntaxHighlighter>> = (props) => {
+interface FernSyntaxHighlighterProps extends React.ComponentProps<typeof SyntaxHighlighter> {
+    highlightLines?: HighlightLine[];
+    highlightStyle?: "highlight" | "focus";
+    fontSize?: "sm" | "lg";
+}
+
+export const FernSyntaxHighlighter: React.FC<FernSyntaxHighlighterProps> = ({
+    highlightLines,
+    highlightStyle,
+    fontSize = "sm",
+    ...props
+}) => {
     const { resolvedTheme: theme } = useTheme();
     return (
         <SyntaxHighlighter
             {...props}
             style={theme === "dark" ? vscDarkPlus : prism}
             customStyle={{
+                fontSize: fontSize === "sm" ? "12px" : "14px",
+                lineHeight: fontSize === "sm" ? "20px" : "24px",
                 color: "inherit",
                 margin: 0,
                 background: "unset",
@@ -143,6 +152,7 @@ export const FernSyntaxHighlighter: React.FC<React.ComponentProps<typeof SyntaxH
             }}
             PreTag="pre"
             CodeTag={CodeTag}
+            renderer={createHighlightRenderer(highlightLines, highlightStyle, theme as "light" | "dark")}
         />
     );
 };

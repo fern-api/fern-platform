@@ -1,5 +1,9 @@
 import classNames from "classnames";
-import { Markdown } from "../api-page/markdown/Markdown";
+import dynamic from "next/dynamic";
+
+const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), {
+    ssr: true,
+});
 
 export declare namespace ApiPageDescription {
     export interface Props {

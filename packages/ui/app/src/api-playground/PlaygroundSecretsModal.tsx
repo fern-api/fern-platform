@@ -1,6 +1,8 @@
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 import { ArrowRightIcon, Cross1Icon, TrashIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
+import { useAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 import { FC, useState } from "react";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernModal } from "../components/FernModal";
@@ -14,8 +16,6 @@ export interface SecretBearer {
 }
 
 interface PlaygroundSecretsModalProps {
-    secrets: SecretBearer[];
-    setSecrets: (secrets: SecretBearer[]) => void;
     selectSecret: (secret: SecretBearer) => void;
     isOpen: boolean;
     onClose: () => void;
@@ -46,18 +46,15 @@ export const SecretSpan: FC<{ secret: string } & React.HTMLAttributes<HTMLSpanEl
     );
 };
 
-export const PlaygroundSecretsModal: FC<PlaygroundSecretsModalProps> = ({
-    secrets,
-    setSecrets,
-    onClose,
-    selectSecret,
-    isOpen,
-}) => {
+const playgroundFormSecretsAtom = atomWithStorage<SecretBearer[]>("api-playground-secrets-alpha", []);
+export const PlaygroundSecretsModal: FC<PlaygroundSecretsModalProps> = ({ onClose, selectSecret, isOpen }) => {
+    const [secrets, setSecrets] = useAtom(playgroundFormSecretsAtom);
+
     const [value, setValue] = useState<string>("");
     const modal = (
         <FernModal isOpen={isOpen} onClose={onClose} className="relative w-96 rounded-lg p-4">
             <FernButton className="absolute right-2 top-2" variant="minimal" icon={<Cross1Icon />} onClick={onClose} />
-            <h3 className="m-0 mb-2">Secrets</h3>
+            <h3 className="m-0 mb-4">Secrets</h3>
             <ul>
                 {secrets.map((secret, idx) => (
                     <li key={idx} className="mb-2 flex items-center justify-between gap-2">
@@ -90,16 +87,18 @@ export const PlaygroundSecretsModal: FC<PlaygroundSecretsModalProps> = ({
                         value={value}
                         autoComplete="off"
                         data-1p-ignore="true"
+                        className="flex-1"
                     />
-                    <button
+                    <FernButton
+                        variant="filled"
+                        intent="primary"
                         onClick={() => {
                             setSecrets([...secrets, { type: "bearer", token: value }]);
                             setValue("");
                         }}
-                        className="dark:text-dark bg-accent hover:bg-accent-primary-light/70 dark:hover:bg-accent-primary-dark/70 t-accent-contrast group flex h-[30px] items-center justify-center space-x-3 rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
                     >
                         Add
-                    </button>
+                    </FernButton>
                 </li>
             </ul>
         </FernModal>

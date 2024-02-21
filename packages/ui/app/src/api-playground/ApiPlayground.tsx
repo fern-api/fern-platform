@@ -1,245 +1,166 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { useBooleanState } from "@fern-ui/react-commons";
-import { Portal, Transition } from "@headlessui/react";
-import { useAtom } from "jotai";
-import { atomWithStorage } from "jotai/utils";
-import { Dispatch, FC, SetStateAction, useCallback, useEffect } from "react";
+import { APIV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
+import { failed, Loadable, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
+import { Cross1Icon } from "@radix-ui/react-icons";
+import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
-import {
-    ResolvedApiDefinitionPackage,
-    ResolvedEndpointDefinition,
-    ResolvedNavigationItemApiSection,
-} from "../util/resolver";
-import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, useApiPlaygroundContext } from "./ApiPlaygroundContext";
-import { ApiPlaygroundDrawer } from "./ApiPlaygroundDrawer";
-import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
-import { PlaygroundRequestFormAuth, PlaygroundRequestFormState } from "./types";
-import { useVerticalSplitPane, useWindowHeight } from "./useSplitPlane";
-import { getDefaultValueForTypes, getDefaultValuesForBody } from "./utils";
-
-export interface ApiPlaygroundSelectionState {
-    apiSection: ResolvedNavigationItemApiSection;
-    apiDefinition: ResolvedApiDefinitionPackage;
-    endpoint: ResolvedEndpointDefinition;
-}
-
-const EMPTY_FORM_STATE: PlaygroundRequestFormState = {
-    auth: undefined,
-    headers: {},
-    pathParameters: {},
-    queryParameters: {},
-    body: undefined,
-};
-
-const playgroundHeightAtom = atomWithStorage<number>("api-playground-height", 400);
-const playgroundFormSecretsAtom = atomWithStorage<SecretBearer[]>("api-playground-secrets-alpha", []);
+import { FernButton, FernButtonGroup } from "../components/FernButton";
+import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
+import { SidebarNode } from "../sidebar/types";
+import { ResolvedEndpointDefinition } from "../util/resolver";
+import "./ApiPlayground.css";
+import { ApiPlayroundContent } from "./ApiPlaygroundContent";
+import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
+import { ApiPlaygroundEndpointSelector } from "./ApiPlaygroundEndpointSelector";
+import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
+import { PlaygroundRequestFormState, ResponsePayload } from "./types";
+import { buildEndpointUrl, buildUnredactedHeaders } from "./utils";
 
 interface ApiPlaygroundProps {
-    apiSections: ResolvedNavigationItemApiSection[];
+    navigation: SidebarNode[];
+    auth: APIV1Read.ApiAuth | undefined;
+    endpoint: ResolvedEndpointDefinition | undefined;
+    formState: PlaygroundRequestFormState;
+    setFormState: Dispatch<SetStateAction<PlaygroundRequestFormState>>;
+    resetWithExample: () => void;
+    resetWithoutExample: () => void;
 }
 
-export const ApiPlayground: FC<ApiPlaygroundProps> = ({ apiSections }) => {
-    const { selectionState, hasPlayground } = useApiPlaygroundContext();
+export const ApiPlayground: FC<ApiPlaygroundProps> = ({
+    navigation,
+    auth,
+    endpoint,
+    formState,
+    setFormState,
+    resetWithExample,
+    resetWithoutExample,
+}): ReactElement => {
+    const { collapseApiPlayground } = useApiPlaygroundContext();
 
-    const [height, setHeight] = useAtom(playgroundHeightAtom);
-    const windowHeight = useWindowHeight();
+    const [response, setResponse] = useState<Loadable<ResponsePayload>>(notStartedLoading());
 
-    const setOffset = useCallback(
-        (offset: number) => {
-            windowHeight != null && setHeight(Math.min(windowHeight - 64, windowHeight - offset));
-        },
-        [setHeight, windowHeight],
-    );
-
-    const handleVerticalResize = useVerticalSplitPane(setOffset);
-
-    const [isPlaygroundOpen, setPlaygroundOpen] = useAtom(PLAYGROUND_OPEN_ATOM);
-    const [globalFormState, setGlobalFormState] = useAtom(PLAYGROUND_FORM_STATE_ATOM);
-    const [globalFormSecrets, setGlobalFormSecrets] = useAtom(playgroundFormSecretsAtom);
-    const {
-        value: isSecretsModalOpen,
-        setTrue: openSecretsModal,
-        setFalse: closeSecretsModal,
-    } = useBooleanState(false);
-
-    const setPlaygroundFormState = useCallback<Dispatch<SetStateAction<PlaygroundRequestFormState>>>(
-        (newFormState) => {
-            if (selectionState == null) {
-                return;
-            }
-            setGlobalFormState((currentFormState) => {
-                return {
-                    ...currentFormState,
-                    [createFormStateKey(selectionState)]:
-                        typeof newFormState === "function"
-                            ? newFormState(currentFormState[createFormStateKey(selectionState)] ?? EMPTY_FORM_STATE)
-                            : newFormState,
-                };
-            });
-        },
-        [selectionState, setGlobalFormState],
-    );
-
-    const playgroundFormState =
-        selectionState != null
-            ? globalFormState[createFormStateKey(selectionState)] ?? EMPTY_FORM_STATE
-            : EMPTY_FORM_STATE;
-
-    const togglePlayground = useCallback(
-        (usingKeyboardShortcut: boolean) => {
-            return setPlaygroundOpen((current) => {
-                if (!current) {
-                    capturePosthogEvent("api_playground_opened", { usingKeyboardShortcut });
-                }
-                return !current;
-            });
-        },
-        [setPlaygroundOpen],
-    );
-    const resetWithExample = useCallback(() => {
-        if (selectionState == null) {
+    const sendRequest = useCallback(async () => {
+        if (endpoint == null) {
             return;
         }
-        setPlaygroundFormState(
-            getInitialModalFormStateWithExample(
-                selectionState.apiSection.auth,
-                selectionState.endpoint,
-                selectionState.endpoint?.examples[0],
-            ),
-        );
-    }, [selectionState, setPlaygroundFormState]);
-
-    const resetWithoutExample = useCallback(() => {
-        if (selectionState == null) {
-            return;
-        }
-        setPlaygroundFormState(getInitialModalFormState(selectionState.apiSection.auth, selectionState.endpoint));
-    }, [selectionState, setPlaygroundFormState]);
-
-    useEffect(() => {
-        // if keyboard press "ctrl + `", open playground
-        const togglePlaygroundHandler = (e: KeyboardEvent) => {
-            if (e.ctrlKey && e.key === "`") {
-                togglePlayground(true);
-            }
-        };
-        document.addEventListener("keydown", togglePlaygroundHandler, false);
-        return () => {
-            document.removeEventListener("keydown", togglePlaygroundHandler, false);
-        };
-    }, [togglePlayground]);
-
-    const handleSelectSecret = useCallback(
-        (secret: SecretBearer) => {
-            closeSecretsModal();
-            setPlaygroundFormState((currentFormState) => {
-                if (currentFormState.auth?.type !== "bearerAuth") {
-                    return currentFormState;
-                }
-                return {
-                    ...currentFormState,
-                    auth: {
-                        ...currentFormState.auth,
-                        token: secret.token,
-                    },
-                };
+        const startTime = performance.now();
+        setResponse(loading());
+        try {
+            capturePosthogEvent("api_playground_request_sent", {
+                endpointId: endpoint.id,
+                endpointName: endpoint.name,
+                method: endpoint.method,
+                docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
             });
-        },
-        [closeSecretsModal, setPlaygroundFormState],
-    );
+            const response = await fetch("/api/proxy", {
+                method: "POST",
+                headers: buildUnredactedHeaders(auth, endpoint, formState),
+                body: JSON.stringify({
+                    url: buildEndpointUrl(endpoint, formState),
+                    method: endpoint.method,
+                    headers: buildUnredactedHeaders(auth, endpoint, formState),
+                    body: formState.body,
+                }),
+            });
+            const loadedResponse: ResponsePayload = await response.json();
+            setResponse(loaded(loadedResponse));
+            const proxyTime = performance.now() - startTime;
+            capturePosthogEvent("api_playground_request_received", {
+                endpointId: endpoint.id,
+                endpointName: endpoint.name,
+                method: endpoint.method,
+                docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
+                response: {
+                    status: loadedResponse.status,
+                    time: loadedResponse.time,
+                    size: loadedResponse.size,
+                },
+                proxy: {
+                    ok: response.ok,
+                    status: response.status,
+                    time: response.headers.get("x-response-time") ?? proxyTime,
+                },
+            });
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error(e);
+            setResponse(failed(e));
+            capturePosthogEvent("api_playground_request_failed", {
+                endpointId: endpoint.id,
+                endpointName: endpoint.name,
+                method: endpoint.method,
+                docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
+            });
+        }
+    }, [auth, endpoint, formState]);
 
-    if (!hasPlayground) {
-        return null;
-    }
+    const drawer = (
+        <div className="flex h-full flex-col rounded-lg">
+            <div>
+                <div className="grid h-10 grid-cols-3 gap-2 px-4">
+                    <div className="flex items-center">
+                        <span className="inline-flex items-baseline gap-2">
+                            <span className="t-accent text-sm font-semibold">API Playground</span>
+                            <span className="bg-tag-primary t-accent flex h-5 items-center rounded-md px-1.5 py-1 font-mono text-xs uppercase">
+                                BETA
+                            </span>
+                        </span>
+                    </div>
 
-    return (
-        <Portal>
-            <Transition
-                show={isPlaygroundOpen}
-                className="bg-background dark:bg-background-dark border-default max-h-vh-minus-header fixed inset-x-0 bottom-0 border-t"
-                style={{ height }}
-                enter="ease-out transition-transform duration-300 transform"
-                enterFrom="translate-y-full"
-                enterTo="translate-y-0"
-                leave="ease-in transition-transform duration-200 transform"
-                leaveFrom="translate-y-0"
-                leaveTo="translate-y-full"
-            >
-                <div
-                    className="group absolute inset-x-0 -top-1 h-1 cursor-row-resize"
-                    onMouseDown={handleVerticalResize}
-                >
-                    <div className="bg-accent absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
-                    <div className="bg-accent relative top-2 z-30 mx-auto h-1 w-10 rounded-sm" />
+                    <div className="flex items-center justify-center">
+                        {endpoint != null && <ApiPlaygroundEndpointSelector navigation={navigation} />}
+                    </div>
+
+                    <div className="flex items-center justify-end">
+                        <FernTooltipProvider>
+                            <FernButtonGroup>
+                                <FernTooltip
+                                    content={
+                                        <span className="space-x-4">
+                                            <span>Close API Playground</span>
+                                            <span className="text-faded font-mono">CTRL + `</span>
+                                        </span>
+                                    }
+                                >
+                                    <FernButton
+                                        variant="minimal"
+                                        className="-mr-2"
+                                        icon={<Cross1Icon />}
+                                        onClick={collapseApiPlayground}
+                                        rounded
+                                    />
+                                </FernTooltip>
+                            </FernButtonGroup>
+                        </FernTooltipProvider>
+                    </div>
                 </div>
-                <ApiPlaygroundDrawer
-                    navigationItems={apiSections}
-                    auth={selectionState?.apiSection.auth}
-                    apiDefinition={selectionState?.apiDefinition}
-                    endpoint={selectionState?.endpoint}
-                    formState={playgroundFormState}
-                    setFormState={setPlaygroundFormState}
+
+                {endpoint != null && (
+                    <PlaygroundEndpointPath endpoint={endpoint} formState={formState} sendRequest={sendRequest} />
+                )}
+            </div>
+
+            {endpoint != null ? (
+                <ApiPlayroundContent
+                    auth={auth}
+                    endpoint={endpoint}
+                    formState={formState}
+                    setFormState={setFormState}
                     resetWithExample={resetWithExample}
                     resetWithoutExample={resetWithoutExample}
-                    openSecretsModal={openSecretsModal}
-                    secrets={globalFormSecrets}
+                    response={response}
+                    sendRequest={sendRequest}
                 />
-            </Transition>
-            <PlaygroundSecretsModal
-                secrets={globalFormSecrets}
-                setSecrets={setGlobalFormSecrets}
-                isOpen={isSecretsModalOpen}
-                onClose={closeSecretsModal}
-                selectSecret={handleSelectSecret}
-            />
-        </Portal>
+            ) : (
+                <div className="flex flex-1 items-center justify-center">
+                    <ApiPlaygroundEndpointSelector
+                        navigation={navigation}
+                        placeholderText="Select an endpoint to get started"
+                        buttonClassName="text-base"
+                    />
+                </div>
+            )}
+        </div>
     );
+
+    return <FernTooltipProvider>{drawer}</FernTooltipProvider>;
 };
-
-function getInitialModalFormState(
-    auth: APIV1Read.ApiAuth | undefined,
-    endpoint: ResolvedEndpointDefinition | undefined,
-): PlaygroundRequestFormState {
-    return {
-        auth: getInitialAuthState(auth),
-        headers: getDefaultValueForTypes(endpoint?.headers),
-        pathParameters: getDefaultValueForTypes(endpoint?.pathParameters),
-        queryParameters: getDefaultValueForTypes(endpoint?.queryParameters),
-        body: getDefaultValuesForBody(endpoint?.requestBody?.shape),
-    };
-}
-
-function getInitialAuthState(auth: APIV1Read.ApiAuth | undefined): PlaygroundRequestFormAuth | undefined {
-    if (auth == null) {
-        return undefined;
-    }
-    return visitDiscriminatedUnion(auth, "type")._visit<PlaygroundRequestFormAuth | undefined>({
-        header: (header) => ({ type: "header", headers: { [header.headerWireValue]: "" } }),
-        bearerAuth: () => ({ type: "bearerAuth", token: "" }),
-        basicAuth: () => ({ type: "basicAuth", username: "", password: "" }),
-        _other: () => undefined,
-    });
-}
-
-function getInitialModalFormStateWithExample(
-    auth: APIV1Read.ApiAuth | undefined,
-    endpoint: ResolvedEndpointDefinition | undefined,
-    exampleCall: APIV1Read.ExampleEndpointCall | undefined,
-): PlaygroundRequestFormState {
-    if (exampleCall == null) {
-        return getInitialModalFormState(auth, endpoint);
-    }
-    return {
-        auth: getInitialAuthState(auth),
-        headers: exampleCall.headers,
-        pathParameters: exampleCall.pathParameters,
-        queryParameters: exampleCall.queryParameters,
-        body: exampleCall.requestBody,
-    };
-}
-function createFormStateKey({ apiDefinition, endpoint }: ApiPlaygroundSelectionState) {
-    const packageId =
-        apiDefinition.type === "apiSection" ? apiDefinition.api : `${apiDefinition.apiSectionId}/${apiDefinition.id}`;
-    return `${packageId}/${endpoint.id}`;
-}

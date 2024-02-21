@@ -1,4 +1,3 @@
-import { Collapse } from "@blueprintjs/core";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import classNames from "classnames";
@@ -6,9 +5,9 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { Search } from "react-feather";
 import { Chip } from "../../../components/Chip";
 import { FernButton } from "../../../components/FernButton";
+import { FernCollapse } from "../../../components/FernCollapse";
 import { FernInput } from "../../../components/FernInput";
 import { FernTooltipProvider } from "../../../components/FernTooltip";
-import { useNavigationContext } from "../../../navigation-context";
 import { TypeDefinitionContext, TypeDefinitionContextValue } from "../context/TypeDefinitionContext";
 import { EnumDefinitionDetails } from "./EnumDefinitionDetails";
 
@@ -29,7 +28,6 @@ export const EnumTypeDefinition = ({
     collapsibleContentContextValue,
     showText,
 }: EnumTypeDefinitionProps): ReactElement => {
-    const { hydrated, justNavigated } = useNavigationContext();
     const [searchInput, setSearchInput] = useState("");
     const shouldAutoFocus = useBooleanState(false);
 
@@ -116,16 +114,11 @@ export const EnumTypeDefinition = ({
                             )}
                         </div>
                     </div>
-                    <Collapse
-                        isOpen={!isCollapsed}
-                        keepChildrenMounted
-                        transitionDuration={!hydrated || justNavigated ? 0 : 200}
-                        className={classNames({ "w-0": isCollapsed })}
-                    >
+                    <FernCollapse isOpen={!isCollapsed}>
                         <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
                             <EnumDefinitionDetails elements={elements} searchInput={searchInput} />
                         </TypeDefinitionContext.Provider>
-                    </Collapse>
+                    </FernCollapse>
                 </div>
             )}
         </>

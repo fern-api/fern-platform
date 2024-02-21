@@ -57,9 +57,6 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
 
     const searchService = useSearchService(search, algoliaSearchIndex);
     const { resolvedTheme: theme, themes, setTheme } = useTheme();
-    useEffect(() => {
-        document.body.className = theme === "dark" ? "antialiased bp5-dark" : "antialiased";
-    });
     useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
     useKeyboardPress({
         key: "Slash",
@@ -157,7 +154,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
             />
             {searchService.isAvailable && <SearchDialog searchService={searchService} />}
 
-            <ApiPlaygroundContextProvider apiSections={apiSections}>
+            <ApiPlaygroundContextProvider navigation={navigation} apiSections={apiSections}>
                 <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
                     <header id="fern-header">
                         <div

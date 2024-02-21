@@ -35,10 +35,12 @@ export declare namespace SidebarNode {
         id: string;
         slug: string[];
         title: string;
+        description?: string;
     }
 
     export interface EndpointPage extends Page {
         method: APIV1Read.HttpMethod;
+        stream?: boolean;
     }
 }
 
@@ -138,11 +140,14 @@ export function resolveSidebarNodes(
                             title:
                                 endpoint.name != null ? endpoint.name : stringifyEndpointPathParts(endpoint.path.parts),
                             method: endpoint.method,
+                            stream: endpoint.response?.type.type === "stream",
+                            description: endpoint.description,
                         })),
                         webhooks: definition.rootPackage.webhooks.map((webhook) => ({
                             id: webhook.id,
                             slug: [...definitionSlug, webhook.urlSlug],
                             title: webhook.name != null ? webhook.name : "/" + webhook.path.join("/"),
+                            description: webhook.description,
                         })),
                         websockets: definition.rootPackage.websockets.map((websocket) => ({
                             id: websocket.id,

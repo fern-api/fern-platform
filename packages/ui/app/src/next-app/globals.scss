@@ -97,34 +97,6 @@
         display: none;
     }
 
-    .bp5-dark .bp5-control .bp5-control-indicator {
-        @apply ring-1 ring-accent-primary-dark #{!important};
-    }
-
-    .light .bp5-control input:checked ~ .bp5-control-indicator {
-        @apply bg-accent-primary-light #{!important};
-    }
-
-    .bp5-dark .bp5-control input:checked ~ .bp5-control-indicator {
-        @apply bg-accent-primary-dark #{!important};
-    }
-
-    .light input.bp5-input:focus {
-        @apply ring-1 ring-accent-primary #{!important};
-    }
-
-    .bp5-dark .bp5-input:focus {
-        @apply ring-1 ring-accent-primary-dark #{!important};
-    }
-
-    .bp5-dark .bp5-segmented-control {
-        @apply bg-tag-primary-dark #{!important};
-    }
-
-    .light .bp5-segmented-control {
-        @apply bg-tag-primary-light #{!important};
-    }
-
     .description-mask {
         @apply overflow-hidden;
 
@@ -170,8 +142,9 @@
 
     .playground-endpoint {
         @apply flex min-w-0 flex-1 shrink items-start gap-2;
-        @apply bg-background border-default relative z-10 px-3 py-2 border-x;
-        @apply hover:self-start hover:overflow-visible hover:border-b hover:rounded-b-lg;
+        @apply border-default relative z-10 px-3 py-2 border-x;
+
+        // @apply hover:self-start hover:overflow-visible hover:border-b hover:rounded-b-lg;
     }
 
     .playground-endpoint-url {
@@ -193,9 +166,18 @@
 
     .fern-dropdown {
         @apply animate-popover;
-        @apply w-[var(--radix-dropdown-menu-trigger-width)];
-        @apply border-default flex max-h-[300px] min-w-[220px] flex-col rounded-lg border bg-background will-change-[opacity,transform];
-        @apply shadow-lg;
+        @apply min-w-[var(--radix-dropdown-menu-trigger-width)];
+        @apply border-default flex max-h-[300px] flex-col rounded-lg border bg-background-translucent backdrop-blur-xl will-change-[opacity,transform];
+        @apply shadow-xl;
+
+        .fern-dropdown-item {
+            @apply flex justify-start py-1 px-2 rounded text-sm w-full cursor-default items-center;
+            @apply data-[highlighted]:bg-accent data-[highlighted]:t-accent-contrast will-change-[background-color,color];
+
+            .fern-dropdown-item-indicator {
+                @apply flex-none w-4 h-full flex items-center justify-center mr-1;
+            }
+        }
     }
 
     .fern-search-bar {
@@ -294,12 +276,12 @@
     }
 
     .fern-segmented-control {
-        @apply bg-white dark:bg-white/5 ring-1 ring-inset ring-border-default rounded-lg shadow-sm h-8;
-        @apply space-x-0 p-1 flex items-center;
-    }
+        @apply bg-white dark:bg-white/5 rounded-[10px] shadow-sm h-9;
+        @apply space-x-px p-0.5 flex items-center ring-1 ring-inset ring-border-concealed;
 
-    .fern-segmented-control > .fern-button {
-        @apply rounded-md;
+        > .fern-button {
+            @apply rounded-lg shrink min-w-0;
+        }
     }
 
     a.fern-button {
@@ -311,6 +293,7 @@
         @apply inline-flex items-center justify-center;
         @apply rounded-xl lg:rounded-lg px-3 py-1 text-sm h-9 sm:h-8;
         @apply focus:outline-accent-primary dark:focus:outline-accent-primary-dark;
+        @apply cursor-default;
 
         &.rounded {
             @apply rounded-full;
@@ -430,12 +413,7 @@
             &.minimal {
                 @apply bg-transparent;
                 @apply t-muted hover:t-default;
-
-                &:hover,
-                &[data-state="on"],
-                &[data-state="checked"] {
-                    @apply bg-tag-default;
-                }
+                @apply hover:bg-tag-default data-[state=on]:bg-tag-default data-[state=checked]:bg-tag-default data-[state=open]:bg-tag-default;
 
                 .fa-icon {
                     @apply bg-text-default-light/60;
@@ -449,12 +427,7 @@
 
                 &.primary {
                     @apply t-accent hover:t-accent;
-
-                    &:hover,
-                    &[data-state="on"],
-                    &[data-state="checked"] {
-                        @apply bg-tag-primary;
-                    }
+                    @apply hover:bg-tag-primary data-[state=on]:bg-tag-primary data-[state=checked]:bg-tag-primary data-[state=open]:bg-tag-primary;
 
                     .fa-icon {
                         @apply bg-accent-aa;
@@ -463,12 +436,7 @@
 
                 &.success {
                     @apply t-success hover:t-success;
-
-                    &:hover,
-                    &[data-state="on"],
-                    &[data-state="checked"] {
-                        @apply bg-tag-success;
-                    }
+                    @apply hover:bg-tag-success data-[state=on]:bg-tag-success data-[state=checked]:bg-tag-success data-[state=open]:bg-tag-success;
 
                     .fa-icon {
                         @apply bg-intent-success;
@@ -477,12 +445,7 @@
 
                 &.warning {
                     @apply t-warning hover:t-warning;
-
-                    &:hover,
-                    &[data-state="on"],
-                    &[data-state="checked"] {
-                        @apply bg-tag-warning;
-                    }
+                    @apply hover:bg-tag-warning data-[state=on]:bg-tag-warning data-[state=checked]:bg-tag-warning data-[state=open]:bg-tag-warning;
 
                     .fa-icon {
                         @apply bg-intent-warning;
@@ -491,12 +454,7 @@
 
                 &.danger {
                     @apply t-danger hover:t-danger;
-
-                    &:hover,
-                    &[data-state="on"],
-                    &[data-state="checked"] {
-                        @apply bg-tag-danger;
-                    }
+                    @apply hover:bg-tag-danger data-[state=on]:bg-tag-danger data-[state=checked]:bg-tag-danger data-[state=open]:bg-tag-danger;
 
                     .fa-icon {
                         @apply bg-intent-danger;
@@ -510,7 +468,8 @@
 
                 &:hover,
                 &[data-state="on"],
-                &[data-state="checked"] {
+                &[data-state="checked"],
+                &[data-state="open"] {
                     @apply bg-text-default-light/60 text-white;
                     @apply dark:bg-text-default-dark/60 dark:text-black;
                 }
@@ -525,7 +484,8 @@
 
                     &:hover,
                     &[data-state="on"],
-                    &[data-state="checked"] {
+                    &[data-state="checked"],
+                    &[data-state="open"] {
                         @apply bg-accent-tinted t-accent-contrast;
                     }
 
@@ -539,7 +499,8 @@
 
                     &:hover,
                     &[data-state="on"],
-                    &[data-state="checked"] {
+                    &[data-state="checked"],
+                    &[data-state="open"] {
                         @apply bg-intent-success-lightened text-white dark:text-black;
                     }
 
@@ -554,7 +515,8 @@
 
                     &:hover,
                     &[data-state="on"],
-                    &[data-state="checked"] {
+                    &[data-state="checked"],
+                    &[data-state="open"] {
                         @apply bg-intent-warning-lightened text-white dark:text-black;
                     }
 
@@ -569,7 +531,8 @@
 
                     &:hover,
                     &[data-state="on"],
-                    &[data-state="checked"] {
+                    &[data-state="checked"],
+                    &[data-state="open"] {
                         @apply bg-intent-danger-lightened text-white dark:text-black;
                     }
 
@@ -586,7 +549,8 @@
 
                 &:hover,
                 &[data-state="on"],
-                &[data-state="checked"] {
+                &[data-state="checked"],
+                &[data-state="open"] {
                     @apply bg-tag-default t-default;
                 }
 
@@ -604,7 +568,8 @@
 
                     &:hover,
                     &[data-state="on"],
-                    &[data-state="checked"] {
+                    &[data-state="checked"],
+                    &[data-state="open"] {
                         @apply bg-tag-primary t-accent-aaa;
 
                         .fa-icon {
@@ -618,7 +583,8 @@
 
                     &:hover,
                     &[data-state="on"],
-                    &[data-state="checked"] {
+                    &[data-state="checked"],
+                    &[data-state="open"] {
                         @apply bg-tag-success text-intent-success;
                     }
 
@@ -632,7 +598,8 @@
 
                     &:hover,
                     &[data-state="on"],
-                    &[data-state="checked"] {
+                    &[data-state="checked"],
+                    &[data-state="open"] {
                         @apply bg-tag-warning text-intent-warning;
                     }
 
@@ -646,7 +613,8 @@
 
                     &:hover,
                     &[data-state="on"],
-                    &[data-state="checked"] {
+                    &[data-state="checked"],
+                    &[data-state="open"] {
                         @apply bg-tag-danger text-intent-danger;
                     }
 
@@ -691,7 +659,7 @@
     }
 
     .fern-card {
-        @apply border-default t-default hover:t-default border bg-white dark:bg-tag-default-soft;
+        @apply border-default t-default hover:t-default border bg-white/70 dark:bg-tag-default-soft;
 
         &.interactive {
             @apply cursor-pointer shadow-card-light hover:shadow-card-light-elevated hover:border-border-accent-muted-light hover:transition-all;
@@ -723,7 +691,7 @@
     .fern-numeric-input-group {
         @apply flex items-center overflow-hidden;
         @apply focus-within:fern-input-focus;
-        @apply ring-default rounded-[10px] md:rounded-lg ring-1 ring-inset bg-white dark:bg-white/5 shadow-sm;
+        @apply ring-default rounded-[10px] md:rounded-lg ring-1 ring-inset bg-white dark:bg-tag-default-soft shadow-sm;
     }
 
     .fern-input-icon {
@@ -750,7 +718,7 @@
     }
 
     .fern-numeric-input-group:focus-within .fern-numeric-input-step {
-        @apply ring-accent-primary hover:bg-tag-primary t-accent hover:t-accent border-accent-primary;
+        @apply ring-accent-primary hover:bg-tag-primary t-accent hover:t-accent border-primary;
     }
 
     .fern-numeric-input-group .fern-numeric-input-step:first-child {

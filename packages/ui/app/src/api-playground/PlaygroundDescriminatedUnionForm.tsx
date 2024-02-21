@@ -1,14 +1,17 @@
-import { MenuItem } from "@blueprintjs/core";
-import { Select } from "@blueprintjs/select";
-import { CaretDownIcon, InfoCircledIcon } from "@radix-ui/react-icons";
-import { FC, useCallback } from "react";
+import { CaretDownIcon } from "@radix-ui/react-icons";
+import dynamic from "next/dynamic";
+import { FC, useCallback, useMemo } from "react";
 import { FernButton } from "../components/FernButton";
+import { FernDropdown } from "../components/FernDropdown";
 import { FernSegmentedControl } from "../components/FernSegmentedControl";
-import { FernTooltip } from "../components/FernTooltip";
-import { ResolvedDiscriminatedUnionShape, ResolvedDiscriminatedUnionShapeVariant } from "../util/resolver";
+import { ResolvedDiscriminatedUnionShape } from "../util/resolver";
 import { titleCase } from "../util/titleCase";
 import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
 import { castToRecord, getDefaultValueForObjectProperties } from "./utils";
+
+const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), {
+    ssr: true,
+});
 
 interface PlaygroundDiscriminatedUnionFormProps {
     discriminatedUnion: ResolvedDiscriminatedUnionShape;
@@ -50,48 +53,34 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
 
     const activeVariant = discriminatedUnion.variants.find((variant) => variant.discriminantValue === selectedVariant);
 
+    const options = useMemo(
+        () =>
+            discriminatedUnion.variants.map(
+                (variant): FernDropdown.Option => ({
+                    type: "value",
+                    label: titleCase(variant.discriminantValue),
+                    value: variant.discriminantValue,
+                    // todo: handle availability
+                    tooltip:
+                        variant.description != null ? (
+                            <Markdown className="text-xs">{variant.description}</Markdown>
+                        ) : undefined,
+                }),
+            ),
+        [discriminatedUnion.variants],
+    );
+
     return (
         <div className="w-full">
-            {discriminatedUnion.variants.length < 4 ? (
+            {discriminatedUnion.variants.length < 5 ? (
                 <FernSegmentedControl
-                    options={discriminatedUnion.variants.map((variant) => ({
-                        label: titleCase(variant.discriminantValue),
-                        value: variant.discriminantValue,
-                    }))}
+                    options={options}
                     value={selectedVariant}
                     onValueChange={setSelectedVariant}
                     className="mb-4 w-full"
                 />
             ) : (
-                <Select<ResolvedDiscriminatedUnionShapeVariant>
-                    items={discriminatedUnion.variants}
-                    itemRenderer={(variant, { ref, handleClick, handleFocus, modifiers }) =>
-                        modifiers.matchesPredicate && (
-                            <MenuItem
-                                ref={ref}
-                                active={modifiers.active}
-                                disabled={modifiers.disabled}
-                                key={variant.discriminantValue}
-                                text={<span className="font-mono text-sm">{variant.discriminantValue}</span>}
-                                onClick={handleClick}
-                                onFocus={handleFocus}
-                                roleStructure="listoption"
-                                labelElement={
-                                    <FernTooltip content={variant.description}>
-                                        <InfoCircledIcon />
-                                    </FernTooltip>
-                                }
-                            />
-                        )
-                    }
-                    itemPredicate={(query, variant) =>
-                        variant.discriminantValue.toLowerCase().includes(query.toLowerCase())
-                    }
-                    onItemSelect={(variant) => setSelectedVariant(variant.discriminantValue)}
-                    activeItem={activeVariant}
-                    popoverProps={{ minimal: true, matchTargetWidth: true }}
-                    fill={true}
-                >
+                <FernDropdown options={options} onValueChange={setSelectedVariant} value={selectedVariant}>
                     <FernButton
                         text={
                             activeVariant != null ? (
@@ -102,17 +91,19 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                         }
                         rightIcon={<CaretDownIcon />}
                         className="w-full text-left"
+                        variant="outlined"
+                        mono={true}
                     />
-                </Select>
+                </FernDropdown>
             )}
             {activeVariant != null && (
-                <PlaygroundObjectPropertiesForm
-                    properties={activeVariant.additionalProperties}
-                    value={value}
-                    onChange={onChange}
-                    hideObjects={false}
-                    sortProperties={false}
-                />
+                <div className="border-border-default-soft border-l pl-4">
+                    <PlaygroundObjectPropertiesForm
+                        properties={activeVariant.additionalProperties}
+                        value={value}
+                        onChange={onChange}
+                    />
+                </div>
             )}
         </div>
     );

@@ -1,0 +1,226 @@
+import { isApiNode, joinUrlSlugs } from "@fern-api/fdr-sdk";
+import { isPlainObject } from "@fern-ui/core-utils";
+import { ArrowTopRightIcon } from "@radix-ui/react-icons";
+import classNames from "classnames";
+import { atom, useAtomValue } from "jotai";
+import { isUndefined } from "lodash-es";
+import dynamic from "next/dynamic";
+import Link from "next/link";
+import { ReactElement, useEffect, useRef, useState } from "react";
+import { FernButton, FernButtonGroup } from "../components/FernButton";
+import { FernCollapse } from "../components/FernCollapse";
+import { FernScrollArea } from "../components/FernScrollArea";
+import { useNavigationContext } from "../navigation-context";
+import {
+    ResolvedEndpointDefinition,
+    ResolvedObjectProperty,
+    unwrapOptional,
+    visitResolvedHttpRequestBodyShape,
+} from "../util/resolver";
+import { PlaygroundRequestFormState } from "./types";
+
+const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), {
+    ssr: true,
+});
+
+interface PlaygroundEndpointFormAsideProps {
+    className?: string;
+    formState: PlaygroundRequestFormState | undefined;
+    endpoint: ResolvedEndpointDefinition;
+    scrollAreaHeight: number;
+    resetWithExample: () => void;
+    resetWithoutExample: () => void;
+}
+
+export const FOCUSED_PARAMETER_ATOM = atom<string | undefined>(undefined);
+
+function resolveBreadcrumbs(formState: PlaygroundRequestFormState | undefined, breadcrumbs: string[] = []): unknown {
+    if (formState == null) {
+        return undefined;
+    }
+
+    let value: unknown = formState;
+    for (const crumb of breadcrumbs) {
+        if (!isPlainObject(value)) {
+            return undefined;
+        }
+        value = value[crumb];
+        if (value == null) {
+            return undefined;
+        }
+    }
+    return value;
+}
+
+export function PlaygroundEndpointFormAside({
+    className,
+    formState,
+    endpoint,
+    scrollAreaHeight,
+    resetWithExample,
+    resetWithoutExample,
+}: PlaygroundEndpointFormAsideProps): ReactElement {
+    const { activeNavigatable } = useNavigationContext();
+    const focusedParameter = useAtomValue(FOCUSED_PARAMETER_ATOM);
+
+    const scrollAreaRef = useRef<HTMLDivElement>(null);
+    const [scrollAreaWidth, setScrollAreaWidth] = useState(() => scrollAreaRef.current?.clientWidth ?? 0);
+    useEffect(() => {
+        if (scrollAreaRef.current == null) {
+            return;
+        }
+        const observer = new ResizeObserver(([entry]) => {
+            if (entry != null) {
+                setScrollAreaWidth(entry.contentRect.width);
+            }
+        });
+        observer.observe(scrollAreaRef.current);
+        return () => observer.disconnect();
+    });
+
+    function renderPropertyPreview(property: ResolvedObjectProperty, id: string, breadcrumbs: string[] = []) {
+        const isFocused = focusedParameter === id;
+        const shape = unwrapOptional(property.valueShape);
+        return (
+            <>
+                <div
+                    className={classNames("rounded-lg px-3 py-1.5 text-sm tracking-tight cursor-default", {
+                        "bg-tag-primary": isFocused,
+                        "bg-transparent hover:bg-tag-default": !isFocused,
+                    })}
+                    onClick={() => {
+                        document.getElementById(id)?.focus();
+                    }}
+                >
+                    <div className="truncate">
+                        <span className="font-mono">{property.key}</span>
+                    </div>
+                    <FernCollapse isOpen={isFocused}>
+                        <Markdown className="pt-2 text-xs">{property.description}</Markdown>
+                    </FernCollapse>
+                </div>
+                {shape.type === "object" && (
+                    <ul className="list-none" style={{ paddingLeft: `${10 * (breadcrumbs.length - 1)}px` }}>
+                        {shape
+                            .properties()
+                            .filter((property) => resolveBreadcrumbs(formState, [...breadcrumbs, property.key]))
+                            .map((param) => (
+                                <li key={param.key}>
+                                    {renderPropertyPreview(param, `${id}.${param.key}`, [...breadcrumbs, property.key])}
+                                </li>
+                            ))}
+                    </ul>
+                )}
+            </>
+        );
+    }
+
+    const headers = endpoint.headers.filter((property) => !isUndefined(formState?.headers?.[property.key]));
+    const pathParameters = endpoint.pathParameters.filter(
+        (property) => !isUndefined(formState?.pathParameters?.[property.key]),
+    );
+    const queryParameters = endpoint.queryParameters.filter(
+        (property) => !isUndefined(formState?.queryParameters?.[property.key]),
+    );
+
+    return (
+        <aside className={classNames("sticky top-0 flex flex-col", className)} style={{ maxHeight: scrollAreaHeight }}>
+            <FernScrollArea ref={scrollAreaRef} className="min-h-0 shrink" viewportClassName="py-6 pr-2 mask-grad-top">
+                <FernButtonGroup className="mb-6 p-1">
+                    <FernButton onClick={resetWithExample} size="small" variant="minimal">
+                        Use example
+                    </FernButton>
+                    <FernButton onClick={resetWithoutExample} size="small" variant="minimal">
+                        Clear form
+                    </FernButton>
+                </FernButtonGroup>
+
+                <div className="space-y-6" style={{ width: `${scrollAreaWidth - 8}px` }}>
+                    {headers.length > 0 && (
+                        <div>
+                            <div className="t-muted m-0 mx-3 mb-2 text-xs">Headers</div>
+                            <ul className="list-none">
+                                {headers.map((param) => (
+                                    <li key={param.key}>
+                                        {renderPropertyPreview(param, `header.${param.key}`, ["headers"])}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+                    {pathParameters.length > 0 && (
+                        <div>
+                            <div className="t-muted m-0 mx-3 mb-2 text-xs">Path Parameters</div>
+                            <ul className="list-none">
+                                {pathParameters.map((param) => (
+                                    <li key={param.key}>
+                                        {renderPropertyPreview(param, `path.${param.key}`, ["pathParameters"])}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+                    {queryParameters.length > 0 && (
+                        <div>
+                            <div className="t-muted m-0 mx-3 mb-2 text-xs">Query Parameters</div>
+                            <ul className="list-none">
+                                {queryParameters.map((param) => (
+                                    <li key={param.key}>
+                                        {renderPropertyPreview(param, `query.${param.key}`, ["queryParameters"])}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+
+                    {endpoint.requestBody != null &&
+                        visitResolvedHttpRequestBodyShape(endpoint.requestBody.shape, {
+                            fileUpload: () => null,
+                            typeReference: (shape) => {
+                                shape = shape.type === "reference" ? shape.shape() : shape;
+
+                                return shape.type === "object" ? (
+                                    <div>
+                                        <div className="t-muted m-0 mx-3 mb-2 text-xs">Body Parameters</div>
+                                        <ul className="list-none">
+                                            {shape
+                                                .properties()
+                                                .filter(
+                                                    (property) =>
+                                                        formState != null &&
+                                                        isPlainObject(formState.body) &&
+                                                        !isUndefined(formState.body[property.key]),
+                                                )
+                                                .map((param) => (
+                                                    <li key={param.key}>
+                                                        {renderPropertyPreview(param, `body.${param.key}`, [
+                                                            "body",
+                                                            param.key,
+                                                        ])}
+                                                    </li>
+                                                ))}
+                                        </ul>
+                                    </div>
+                                ) : null;
+                            },
+                        })}
+
+                    <div className="mx-3">
+                        <Link
+                            href={`/${joinUrlSlugs(...endpoint.slug)}`}
+                            shallow={
+                                activeNavigatable != null &&
+                                isApiNode(activeNavigatable) &&
+                                activeNavigatable.section.api === endpoint.apiSectionId
+                            }
+                            className="t-muted hover:t-accent inline-flex items-center gap-1 text-sm font-semibold underline decoration-1 underline-offset-4 hover:decoration-2"
+                        >
+                            <span>View in API Reference</span>
+                            <ArrowTopRightIcon className="size-4" />
+                        </Link>
+                    </div>
+                </div>
+            </FernScrollArea>
+        </aside>
+    );
+}

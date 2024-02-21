@@ -1,7 +1,8 @@
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import { FC, useCallback, useMemo, useRef, useState } from "react";
 import { FernButton } from "../components/FernButton";
-import { FernRadioGroup, FernRadioItem } from "../components/FernRadioGroup";
+import { FernDropdown } from "../components/FernDropdown";
+import { FernRadioGroup } from "../components/FernRadioGroup";
 import { FernTextarea } from "../components/FernTextarea";
 
 interface FeedbackFormProps {
@@ -15,29 +16,33 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({ feedback, onSubmit }) => {
     const [feedbackMessage, setFeedbackMessage] = useState<string>("");
 
     const legend = feedback === "yes" ? "What did you like?" : feedback === "no" ? "What went wrong?" : "Feedback";
-    const feedbackOptions = useMemo<FernRadioItem[]>(() => {
+    const feedbackOptions = useMemo<FernDropdown.Option[]>(() => {
         const options = feedback === "yes" ? POSITIVE_FEEDBACK : feedback === "no" ? NEGATIVE_FEEDBACK : [];
-        const transformedOptions: FernRadioItem[] = options.map((option) => ({
-            value: option.feedbackId,
-            displayName: option.title,
-            description: option.description,
-            children: (active) =>
-                active ? (
-                    <FernTextarea
-                        ref={textareaRef}
-                        autoFocus={true}
-                        className="mt-2 w-full"
-                        placeholder="(Optional) Tell us more about your experience"
-                        onValueChange={setFeedbackMessage}
-                        value={feedbackMessage}
-                    />
-                ) : null,
-        }));
+        const transformedOptions: FernDropdown.Option[] = options.map(
+            (option): FernDropdown.Option => ({
+                type: "value",
+                value: option.feedbackId,
+                label: option.title,
+                helperText: option.description,
+                children: (active) =>
+                    active ? (
+                        <FernTextarea
+                            ref={textareaRef}
+                            autoFocus={true}
+                            className="mt-2 w-full"
+                            placeholder="(Optional) Tell us more about your experience"
+                            onValueChange={setFeedbackMessage}
+                            value={feedbackMessage}
+                        />
+                    ) : null,
+            }),
+        );
 
         if (transformedOptions.length > 0) {
             transformedOptions.push({
+                type: "value",
                 value: "other",
-                displayName: "Another reason",
+                label: "Another reason",
                 children: (active) =>
                     active ? (
                         <FernTextarea
@@ -81,7 +86,7 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({ feedback, onSubmit }) => {
                     className="mt-4"
                     value={feedbackId}
                     onValueChange={setFeedbackId}
-                    items={feedbackOptions}
+                    options={feedbackOptions}
                 />
             ) : (
                 <FernTextarea

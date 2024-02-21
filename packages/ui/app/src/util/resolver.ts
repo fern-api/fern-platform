@@ -134,9 +134,9 @@ function resolveEndpointDefinition(
     parentSlugs: string[],
 ): ResolvedEndpointDefinition {
     const pathParameters = endpoint.path.pathParameters.map(
-        (parameter): ResolvedParameter => ({
+        (parameter): ResolvedObjectProperty => ({
             ...parameter,
-            shape: resolveTypeReference(parameter.type, types),
+            valueShape: resolveTypeReference(parameter.type, types),
         }),
     );
     const path = endpoint.path.parts.map((pathPart): ResolvedEndpointPathParts => {
@@ -148,7 +148,7 @@ function resolveEndpointDefinition(
                 return {
                     type: "pathParameter",
                     key: pathPart.value,
-                    shape: { type: "unknown" },
+                    valueShape: { type: "unknown" },
                 };
             }
             return {
@@ -168,11 +168,11 @@ function resolveEndpointDefinition(
         pathParameters,
         queryParameters: endpoint.queryParameters.map((parameter) => ({
             ...parameter,
-            shape: resolveTypeReference(parameter.type, types),
+            valueShape: resolveTypeReference(parameter.type, types),
         })),
         headers: endpoint.headers.map((header) => ({
             ...header,
-            shape: resolveTypeReference(header.type, types),
+            valueShape: resolveTypeReference(header.type, types),
         })),
         requestBody:
             endpoint.request != null
@@ -204,9 +204,9 @@ function resolveWebsocketChannel(
     parentSlugs: string[],
 ): ResolvedWebSocketChannel {
     const pathParameters = websocket.path.pathParameters.map(
-        (parameter): ResolvedParameter => ({
+        (parameter): ResolvedObjectProperty => ({
             ...parameter,
-            shape: resolveTypeReference(parameter.type, types),
+            valueShape: resolveTypeReference(parameter.type, types),
         }),
     );
     return {
@@ -236,13 +236,13 @@ function resolveWebsocketChannel(
             .filter((param) => param !== undefined) as ResolvedEndpointPathParts[],
         headers: websocket.headers.map((header) => ({
             ...header,
-            shape: resolveTypeReference(header.type, types),
+            valueShape: resolveTypeReference(header.type, types),
         })),
         pathParameters,
         queryParameters: websocket.queryParameters.map(
-            (parameter): ResolvedParameter => ({
+            (parameter): ResolvedObjectProperty => ({
                 ...parameter,
-                shape: resolveTypeReference(parameter.type, types),
+                valueShape: resolveTypeReference(parameter.type, types),
             }),
         ),
         messages: websocket.messages.map(({ body, ...message }) => ({
@@ -265,7 +265,7 @@ function resolveWebhookDefinition(
         ...webhook,
         headers: webhook.headers.map((header) => ({
             ...header,
-            shape: resolveTypeReference(header.type, types),
+            valueShape: resolveTypeReference(header.type, types),
         })),
         payload: {
             ...webhook.payload,
@@ -283,7 +283,10 @@ function resolvePayloadShape(
             type: "object",
             properties: () => resolveObjectProperties(object, types),
         }),
-        reference: (reference) => ({ type: "reference", shape: () => resolveTypeReference(reference.value, types) }),
+        reference: (reference) => ({
+            type: "reference",
+            shape: () => unwrapReference(resolveTypeReference(reference.value, types)),
+        }),
         _other: () => ({ type: "unknown" }),
     });
 }
@@ -298,7 +301,10 @@ function resolveRequestBodyShape(
             properties: () => resolveObjectProperties(object, types),
         }),
         fileUpload: (fileUpload) => fileUpload,
-        reference: (reference) => ({ type: "reference", shape: () => resolveTypeReference(reference.value, types) }),
+        reference: (reference) => ({
+            type: "reference",
+            shape: () => unwrapReference(resolveTypeReference(reference.value, types)),
+        }),
         _other: () => ({ type: "unknown" }),
     });
 }
@@ -315,7 +321,10 @@ function resolveResponseBodyShape(
         fileDownload: (fileDownload) => fileDownload,
         streamingText: (streamingText) => streamingText,
         streamCondition: (streamCondition) => streamCondition,
-        reference: (reference) => ({ type: "reference", shape: () => resolveTypeReference(reference.value, types) }),
+        reference: (reference) => ({
+            type: "reference",
+            shape: () => unwrapReference(resolveTypeReference(reference.value, types)),
+        }),
         stream: () => ({ type: "unknown" }), //TODO IMPLEMENT
         _other: () => ({ type: "unknown" }),
     });
@@ -324,7 +333,6 @@ function resolveResponseBodyShape(
 function resolveTypeShape(
     typeShape: APIV1Read.TypeShape,
     types: Record<string, APIV1Read.TypeDefinition>,
-    unwrapOptional: boolean = false,
 ): ResolvedTypeReference {
     return visitDiscriminatedUnion(typeShape, "type")._visit<ResolvedTypeReference>({
         object: (object) => ({
@@ -340,7 +348,7 @@ function resolveTypeShape(
                 shape: resolveTypeReference(type, types),
             })),
         }),
-        alias: (alias) => resolveTypeReference(alias.value, types, unwrapOptional),
+        alias: (alias) => resolveTypeReference(alias.value, types),
         discriminatedUnion: (discriminatedUnion) => ({
             type: "discriminatedUnion",
             discriminant: discriminatedUnion.discriminant,
@@ -356,15 +364,14 @@ function resolveTypeShape(
 function resolveTypeReference(
     typeReference: APIV1Read.TypeReference,
     types: Record<string, APIV1Read.TypeDefinition>,
-    unwrapOptional: boolean = false,
 ): ResolvedTypeReference {
     return visitDiscriminatedUnion(typeReference, "type")._visit<ResolvedTypeReference>({
         literal: (literal) => literal.value,
         unknown: (unknown) => unknown,
-        optional: (optional) =>
-            unwrapOptional
-                ? resolveTypeReference(optional.itemType, types, true)
-                : { type: "optional", shape: resolveTypeReference(optional.itemType, types, true) },
+        optional: (optional) => ({
+            type: "optional",
+            shape: unwrapOptional(resolveTypeReference(optional.itemType, types)),
+        }),
         list: (list) => ({ type: "list", shape: resolveTypeReference(list.itemType, types) }),
         set: (set) => ({ type: "set", shape: resolveTypeReference(set.itemType, types) }),
         map: (map) => ({
@@ -377,7 +384,7 @@ function resolveTypeReference(
             if (typeDefinition == null) {
                 return { type: "unknown" };
             }
-            return { type: "reference", shape: () => resolveTypeShape(typeDefinition.shape, types, unwrapOptional) };
+            return { type: "reference", shape: () => unwrapReference(resolveTypeShape(typeDefinition.shape, types)) };
         },
         primitive: (primitive) => primitive.value,
         _other: () => ({ type: "unknown" }),
@@ -393,7 +400,8 @@ function resolveObjectProperties(
         valueShape: resolveTypeReference(property.valueType, types),
     }));
     const extendedProperties = object.extends.flatMap((typeId) => {
-        const shape = resolveTypeReference({ type: "id", value: typeId }, types);
+        const shape = unwrapReference(resolveTypeReference({ type: "id", value: typeId }, types));
+        // TODO: should we be able to extend discriminated and undiscriminated unions?
         if (shape?.type !== "object") {
             // eslint-disable-next-line no-console
             console.error("Object extends non-object", typeId);
@@ -402,13 +410,23 @@ function resolveObjectProperties(
         return shape.properties();
     });
     if (extendedProperties.length === 0) {
-        return directProperties;
+        // if there are no extended properties, we can just return the direct properties
+        // required properties should come before optional properties
+        // however, we do NOT sort the properties by key because the initial order of properties may be significant
+        return sortBy([...directProperties], (property) => unwrapReference(property.valueShape).type === "optional");
     }
     const propertyKeys = new Set(object.properties.map((property) => property.key));
     const filteredExtendedProperties = extendedProperties.filter(
         (extendedProperty) => !propertyKeys.has(extendedProperty.key),
     );
-    return sortBy([...directProperties, ...filteredExtendedProperties], (property) => property.key);
+
+    // required properties should come before optional properties
+    // since there are extended properties, the initial order of properties are not significant, and we should sort by key
+    return sortBy(
+        [...directProperties, ...filteredExtendedProperties],
+        (property) => unwrapReference(property.valueShape).type === "optional",
+        (property) => property.key,
+    );
 }
 
 export type ResolvedNavigationItem =
@@ -434,6 +452,45 @@ export interface ResolvedNavigationItemApiSection
     auth: APIV1Read.ApiAuth | undefined;
     hasMultipleBaseUrls: boolean | undefined;
     slug: string[];
+}
+
+export interface FlattenedApiSection {
+    apiSection: ResolvedNavigationItemApiSection;
+    apiDefinitions: ResolvedApiDefinition[];
+}
+
+export function flattenApiSection(apiSection: ResolvedNavigationItemApiSection): FlattenedApiSection {
+    function getApiDefinitions(apiPackage: ResolvedApiDefinitionPackage): ResolvedApiDefinition[] {
+        return [
+            ...apiPackage.endpoints.map(
+                (endpoint): ResolvedApiDefinition.Endpoint => ({
+                    type: "endpoint" as const,
+                    ...endpoint,
+                    package: apiPackage,
+                }),
+            ),
+            ...apiPackage.websockets.map(
+                (websocket): ResolvedApiDefinition.WebSocket => ({
+                    type: "websocket" as const,
+                    ...websocket,
+                    package: apiPackage,
+                }),
+            ),
+            ...apiPackage.webhooks.map(
+                (webhook): ResolvedApiDefinition.Webhook => ({
+                    type: "webhook" as const,
+                    ...webhook,
+                    package: apiPackage,
+                }),
+            ),
+            ...apiPackage.subpackages.flatMap(getApiDefinitions),
+        ];
+    }
+
+    return {
+        apiSection,
+        apiDefinitions: getApiDefinitions(apiSection),
+    };
 }
 
 export function isResolvedNavigationItemApiSection(
@@ -474,6 +531,40 @@ export interface ResolvedWithApiDefinition {
     pointsTo: APIV1Read.SubpackageId | undefined;
 }
 
+export type ResolvedApiDefinition =
+    | ResolvedApiDefinition.Endpoint
+    | ResolvedApiDefinition.Webhook
+    | ResolvedApiDefinition.WebSocket;
+
+export declare namespace ResolvedApiDefinition {
+    export interface Endpoint extends ResolvedEndpointDefinition {
+        type: "endpoint";
+        package: ResolvedApiDefinitionPackage;
+    }
+
+    export interface Webhook extends ResolvedWebhookDefinition {
+        type: "webhook";
+        package: ResolvedApiDefinitionPackage;
+    }
+
+    export interface WebSocket extends ResolvedWebSocketChannel {
+        type: "websocket";
+        package: ResolvedApiDefinitionPackage;
+    }
+}
+
+export function isEndpoint(definition: ResolvedApiDefinition): definition is ResolvedApiDefinition.Endpoint {
+    return definition.type === "endpoint";
+}
+
+export function isWebhook(definition: ResolvedApiDefinition): definition is ResolvedApiDefinition.Webhook {
+    return definition.type === "webhook";
+}
+
+export function isWebSocket(definition: ResolvedApiDefinition): definition is ResolvedApiDefinition.WebSocket {
+    return definition.type === "websocket";
+}
+
 export interface ResolvedSubpackage extends APIV1Read.WithDescription, ResolvedWithApiDefinition {
     type: "subpackage";
     apiSectionId: FdrAPI.ApiDefinitionId;
@@ -498,9 +589,9 @@ export interface ResolvedEndpointDefinition extends APIV1Read.WithDescription {
     name?: string;
     title: string;
     path: ResolvedEndpointPathParts[];
-    pathParameters: ResolvedParameter[];
-    queryParameters: ResolvedParameter[];
-    headers: ResolvedParameter[];
+    pathParameters: ResolvedObjectProperty[];
+    queryParameters: ResolvedObjectProperty[];
+    headers: ResolvedObjectProperty[];
     requestBody: ResolvedRequestBody | undefined;
     responseBody: ResolvedResponseBody | undefined;
     errors: ResolvedError[];
@@ -527,11 +618,6 @@ export interface ResolvedResponseBody extends APIV1Read.WithDescription {
     shape: ResolvedHttpResponseBodyShape;
 }
 
-export interface ResolvedParameter extends APIV1Read.WithDescription, APIV1Read.WithAvailability {
-    key: string;
-    shape: ResolvedTypeReference;
-}
-
 export type ResolvedEndpointPathParts = ResolvedEndpointPathParts.Literal | ResolvedEndpointPathParts.PathParameter;
 export declare namespace ResolvedEndpointPathParts {
     interface Literal {
@@ -539,7 +625,7 @@ export declare namespace ResolvedEndpointPathParts {
         value: string;
     }
 
-    interface PathParameter extends ResolvedParameter {
+    interface PathParameter extends ResolvedObjectProperty {
         type: "pathParameter";
     }
 }
@@ -564,9 +650,9 @@ export interface ResolvedWebSocketChannel
     > {
     slug: string[];
     path: ResolvedEndpointPathParts[];
-    headers: ResolvedParameter[];
-    pathParameters: ResolvedParameter[];
-    queryParameters: ResolvedParameter[];
+    headers: ResolvedObjectProperty[];
+    pathParameters: ResolvedObjectProperty[];
+    queryParameters: ResolvedObjectProperty[];
     messages: ResolvedWebSocketMessage[];
     defaultEnvironment: APIV1Read.Environment | undefined;
 }
@@ -582,7 +668,7 @@ export interface ResolvedWebhookDefinition extends APIV1Read.WithDescription {
     method: APIV1Read.WebhookHttpMethod;
     name: string | undefined;
     path: string[];
-    headers: ResolvedParameter[];
+    headers: ResolvedObjectProperty[];
     payload: ResolvedPayload;
     examples: APIV1Read.ExampleWebhookPayload[];
 }
@@ -621,7 +707,7 @@ export interface ResolvedDiscriminatedUnionShape {
 
 export interface ResolvedOptionalShape {
     type: "optional";
-    shape: ResolvedTypeReference;
+    shape: Exclude<ResolvedTypeReference, ResolvedOptionalShape>;
 }
 
 export interface ResolvedListShape {
@@ -659,7 +745,7 @@ export type ResolvedTypeReference =
 
 export interface ResolvedReferenceShape {
     type: "reference";
-    shape: () => ResolvedTypeReference;
+    shape: () => Exclude<ResolvedTypeReference, ResolvedReferenceShape>;
 }
 
 export type ResolvedHttpRequestBodyShape = APIV1Read.HttpRequestBodyShape.FileUpload | ResolvedTypeReference;
@@ -707,4 +793,21 @@ export function visitResolvedHttpResponseBodyShape<T>(
         default:
             return visitor.typeReference(shape);
     }
+}
+
+export function unwrapReference(shape: ResolvedTypeReference): Exclude<ResolvedTypeReference, ResolvedReferenceShape> {
+    if (shape.type === "reference") {
+        return unwrapReference(shape.shape());
+    }
+    return shape;
+}
+
+export function unwrapOptional(
+    shape: ResolvedTypeReference,
+): Exclude<ResolvedTypeReference, ResolvedOptionalShape | ResolvedReferenceShape> {
+    shape = unwrapReference(shape);
+    if (shape.type === "optional") {
+        return unwrapOptional(shape.shape);
+    }
+    return shape;
 }

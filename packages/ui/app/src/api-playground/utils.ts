@@ -6,8 +6,8 @@ import {
     ResolvedEndpointPathParts,
     ResolvedHttpRequestBodyShape,
     ResolvedObjectProperty,
-    ResolvedParameter,
     ResolvedTypeReference,
+    visitResolvedHttpRequestBodyShape,
 } from "../util/resolver";
 import { PlaygroundRequestFormState } from "./types";
 
@@ -278,7 +278,7 @@ export function stringifyCurl(
 `;
 }
 
-export function getDefaultValueForObjectProperties(properties: ResolvedObjectProperty[]): Record<string, unknown> {
+export function getDefaultValueForObjectProperties(properties: ResolvedObjectProperty[] = []): Record<string, unknown> {
     return properties.reduce<Record<string, unknown>>((acc, property) => {
         acc[property.key] = getDefaultValueForType(property.valueShape);
         return acc;
@@ -358,16 +358,6 @@ export function matchesTypeReference(shape: ResolvedTypeReference, value: unknow
         _other: () => value == null,
         reference: (reference) => matchesTypeReference(reference.shape(), value),
     });
-}
-
-export function getDefaultValueForTypes(types: ResolvedParameter[] = []): Record<string, unknown> {
-    if (types == null) {
-        return {};
-    }
-    return types.reduce<Record<string, unknown>>((acc, { key, shape }) => {
-        acc[key] = getDefaultValueForType(shape);
-        return acc;
-    }, {});
 }
 
 export function getDefaultValuesForBody(requestShape: ResolvedHttpRequestBodyShape | undefined): unknown {
@@ -451,5 +441,67 @@ export function isExpandable(valueShape: ResolvedTypeReference, currentValue: un
         booleanLiteral: () => false,
         stringLiteral: () => false,
         reference: (reference) => isExpandable(reference.shape(), currentValue),
+    });
+}
+
+export function hasRequiredFields(bodyShape: ResolvedHttpRequestBodyShape): boolean {
+    return visitResolvedHttpRequestBodyShape(bodyShape, {
+        fileUpload: () => true,
+        typeReference: (shape) =>
+            visitDiscriminatedUnion(shape, "type")._visit({
+                string: () => true,
+                boolean: () => true,
+                object: (object) => object.properties().some((property) => hasRequiredFields(property.valueShape)),
+                undiscriminatedUnion: () => true,
+                discriminatedUnion: () => true,
+                enum: () => true,
+                integer: () => true,
+                double: () => true,
+                long: () => true,
+                datetime: () => true,
+                uuid: () => true,
+                base64: () => true,
+                date: () => true,
+                optional: () => false,
+                list: () => true,
+                set: () => true,
+                map: () => true,
+                booleanLiteral: () => true,
+                stringLiteral: () => true,
+                unknown: () => true,
+                reference: (reference) => hasRequiredFields(reference.shape()),
+                _other: () => true,
+            }),
+    });
+}
+
+export function hasOptionalFields(bodyShape: ResolvedHttpRequestBodyShape): boolean {
+    return visitResolvedHttpRequestBodyShape(bodyShape, {
+        fileUpload: () => false,
+        typeReference: (shape) =>
+            visitDiscriminatedUnion(shape, "type")._visit({
+                string: () => false,
+                boolean: () => false,
+                object: (object) => object.properties().some((property) => hasOptionalFields(property.valueShape)),
+                undiscriminatedUnion: () => false,
+                discriminatedUnion: () => false,
+                enum: () => false,
+                integer: () => false,
+                double: () => false,
+                long: () => false,
+                datetime: () => false,
+                uuid: () => false,
+                base64: () => false,
+                date: () => false,
+                optional: () => true,
+                list: () => false,
+                set: () => false,
+                map: () => false,
+                booleanLiteral: () => false,
+                stringLiteral: () => false,
+                unknown: () => false,
+                reference: (reference) => hasOptionalFields(reference.shape()),
+                _other: () => false,
+            }),
     });
 }

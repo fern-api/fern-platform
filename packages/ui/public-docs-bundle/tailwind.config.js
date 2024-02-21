@@ -108,6 +108,7 @@ module.exports = {
                 "text-default-light": "#000000",
                 "text-muted": "var(--gray-a11)",
                 "text-disabled": "var(--gray-a10)",
+                faded: "var(--gray-a8)",
 
                 "tag-default-soft": "var(--gray-a2)",
                 "tag-primary-soft-light": "rgba(var(--accent-primary-light), 10%)",
@@ -163,6 +164,11 @@ module.exports = {
                     from: { opacity: 0, transform: "translateX(-2px)" },
                     to: { opacity: 1, transform: "translateX(0)" },
                 },
+                shine: {
+                    "0%": { opacity: "0.5", transform: "translateX(-100px) skewX(-15deg)" },
+                    "33%": { opacity: "0.6", transform: "translateX(300px) skewX(-15deg)" },
+                    "100%": { opacity: "0.6", transform: "translateX(300px) skewX(-15deg)" },
+                },
                 "slide-down": {
                     from: { height: 0 },
                     to: { height: "var(--radix-accordion-content-height)" },
@@ -177,6 +183,7 @@ module.exports = {
                 "slide-left-and-fade": "slide-left-and-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
                 "slide-up-and-fade": "slide-up-and-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
                 "slide-right-and-fade": "slide-right-and-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
+                shine: "shine 5s ease-in-out infinite",
                 "slide-down": "slide-down 400ms cubic-bezier(0.87, 0, 0.13, 1)",
                 "slide-up": "slide-up 400ms cubic-bezier(0.87, 0, 0.13, 1)",
             },
@@ -248,6 +255,9 @@ module.exports = {
                 ".bg-tag-primary": {
                     "@apply bg-tag-primary-light dark:bg-tag-primary-dark": {},
                 },
+                ".bg-border-primary": {
+                    "@apply bg-border-accent-muted-light dark:bg-border-accent-muted-dark": {},
+                },
                 // ".bg-tag-success": {
                 //     "@apply bg-tag-success-light dark:bg-tag-success-dark": {},
                 // },
@@ -260,6 +270,9 @@ module.exports = {
                 // Border
                 ".border-accent-primary": {
                     "@apply border-accent-primary-light dark:border-accent-primary-dark": {},
+                },
+                ".border-primary": {
+                    "@apply border-border-accent-muted-light dark:border-border-accent-muted-dark": {},
                 },
                 ".border-concealed": {
                     "@apply border-border-concealed": {},
@@ -278,6 +291,9 @@ module.exports = {
                 },
                 ".outline-accent-primary": {
                     "@apply outline-accent-primary-light dark:outline-accent-primary-dark": {},
+                },
+                ".outline-tag-primary": {
+                    "@apply outline-tag-primary-light dark:outline-tag-primary-dark": {},
                 },
                 ".ring-default": {
                     "@apply ring-border-default": {},
@@ -333,6 +349,12 @@ module.exports = {
                 },
                 ".callout-outlined-ghost-danger": {
                     "@apply ring-1 ring-inset ring-border-danger-soft": {},
+                },
+                ".shadow-tag-primary": {
+                    "@apply shadow-tag-primary-light dark:shadow-tag-primary-dark": {},
+                },
+                ".shadow-border-primary": {
+                    "@apply shadow-border-accent-muted-light dark:shadow-border-accent-muted-dark": {},
                 },
             });
         }),

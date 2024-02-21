@@ -1,8 +1,3 @@
-import { FocusStyleManager } from "@blueprintjs/core";
-import "@blueprintjs/core/lib/css/blueprint.css";
-import "@blueprintjs/datetime/lib/css/blueprint-datetime.css";
-import "@blueprintjs/datetime2/lib/css/blueprint-datetime2.css";
-import "@blueprintjs/select/lib/css/blueprint-select.css";
 import { APIV1Read, DocsV1Read, DocsV2Read, FdrAPI } from "@fern-api/fdr-sdk";
 import type { ResolvedPath } from "@fern-ui/app-utils";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
@@ -14,8 +9,6 @@ import { DocsContextProvider } from "../docs-context/DocsContextProvider";
 import { Docs } from "../docs/Docs";
 import { NavigationContextProvider } from "../navigation-context/NavigationContextProvider";
 import { SidebarNode } from "../sidebar/types";
-
-FocusStyleManager.onlyShowFocusOnTabs();
 
 export declare namespace App {
     export interface Props {

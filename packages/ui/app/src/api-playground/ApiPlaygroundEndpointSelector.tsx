@@ -1,46 +1,92 @@
-import { isNonNullish } from "@fern-ui/core-utils";
+import { FdrAPI } from "@fern-api/fdr-sdk";
+import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useKeyboardPress } from "@fern-ui/react-commons";
-import { Transition } from "@headlessui/react";
-import { ChevronDownIcon, ChevronUpIcon, Cross1Icon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import { ChevronDownIcon, ChevronUpIcon, Cross1Icon, MagnifyingGlassIcon, SlashIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
-import { FC, Fragment, ReactElement, useEffect, useRef, useState } from "react";
+import { noop } from "lodash-es";
+import dynamic from "next/dynamic";
+import { FC, Fragment, ReactElement, useCallback, useMemo, useRef, useState } from "react";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { FernButton } from "../components/FernButton";
 import { FernInput } from "../components/FernInput";
-import {
-    ResolvedApiDefinitionPackage,
-    ResolvedEndpointDefinition,
-    ResolvedNavigationItemApiSection,
-} from "../util/resolver";
+import { FernScrollArea } from "../components/FernScrollArea";
+import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
+import { SidebarNode } from "../sidebar/types";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 
+const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
+
 export interface ApiPlaygroundEndpointSelectorProps {
-    apiDefinition: ResolvedApiDefinitionPackage | undefined;
-    endpoint: ResolvedEndpointDefinition | undefined;
-    navigationItems: ResolvedNavigationItemApiSection[];
-    popoverPlacement?: "bottom-start" | "bottom" | "bottom-end" | "top-start" | "top" | "top-end";
+    navigation: SidebarNode[];
     placeholderText?: string;
     buttonClassName?: string;
 }
 
-function matchesEndpoint(query: string, endpoint: ResolvedEndpointDefinition): boolean {
+interface ApiGroup {
+    api: FdrAPI.ApiId;
+    id: string;
+    breadcrumbs: string[];
+    endpoints: SidebarNode.EndpointPage[];
+    webhooks: SidebarNode.Page[];
+    websockets: SidebarNode.Page[];
+}
+
+function isApiGroupNotEmpty(group: ApiGroup): boolean {
+    return group.endpoints.length > 0 || group.webhooks.length > 0 || group.websockets.length > 0;
+}
+
+function flattenApiSection(navigation: SidebarNode[]): ApiGroup[] {
+    const result: ApiGroup[] = [];
+    for (const node of navigation) {
+        visitDiscriminatedUnion(node, "type")._visit({
+            section: (section) => {
+                result.push(
+                    ...flattenApiSection(section.items).map((group) => ({
+                        ...group,
+                        breadcrumbs: [section.title, ...group.breadcrumbs],
+                    })),
+                );
+            },
+            apiSection: (apiSection) => {
+                result.push({
+                    api: apiSection.api,
+                    id: apiSection.id,
+                    breadcrumbs: [apiSection.title],
+                    endpoints: apiSection.endpoints,
+                    webhooks: apiSection.webhooks,
+                    websockets: apiSection.websockets,
+                });
+
+                result.push(
+                    ...flattenApiSection(apiSection.subpackages).map((group) => ({
+                        ...group,
+                        breadcrumbs: [apiSection.title, ...group.breadcrumbs],
+                    })),
+                );
+            },
+            pageGroup: noop,
+            _other: noop,
+        });
+    }
+    return result.filter(isApiGroupNotEmpty);
+}
+
+function matchesEndpoint(query: string, group: ApiGroup, endpoint: SidebarNode.EndpointPage): boolean {
     return (
-        endpoint.name?.toLowerCase().includes(query.toLowerCase()) ||
-        endpoint.description?.toLowerCase().includes(query.toLowerCase()) ||
+        group.breadcrumbs.some((breadcrumb) => breadcrumb.toLowerCase().includes(query.toLowerCase())) ||
+        endpoint.title?.toLowerCase().includes(query.toLowerCase()) ||
         endpoint.method.toLowerCase().includes(query.toLowerCase())
     );
 }
 
 export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProps> = ({
-    apiDefinition,
-    endpoint,
-    navigationItems,
-    popoverPlacement = "bottom",
+    navigation,
     placeholderText,
     buttonClassName,
 }) => {
-    const { setSelectionStateAndOpen } = useApiPlaygroundContext();
-    const { value: showDropdown, toggleValue: toggleDropdown, setFalse: closeDropdown } = useBooleanState(false);
+    const { setSelectionStateAndOpen, selectionState } = useApiPlaygroundContext();
+    const { value: showDropdown, setFalse: closeDropdown, setValue: handleOpenChange } = useBooleanState(false);
 
     const [filterValue, setFilterValue] = useState<string>("");
 
@@ -48,198 +94,202 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
 
     useKeyboardPress({ key: "Escape", onPress: closeDropdown });
 
-    // click anywhere outside the dropdown to close it
-    const dropdownRef = useRef<HTMLDivElement>(null);
-    useEffect(() => {
-        if (!showDropdown) {
-            return;
-        }
-        const listener = (e: MouseEvent) => {
-            if (dropdownRef.current != null && !dropdownRef.current.contains(e.target as Node)) {
-                closeDropdown();
-            }
-        };
+    const apiGroups = useMemo(() => flattenApiSection(navigation), [navigation]);
 
-        document.addEventListener("click", listener);
+    const { endpoint: selectedEndpoint, group: selectedGroup } = apiGroups
+        .flatMap((group) => group.endpoints.map((endpoint) => ({ group, endpoint })))
+        .find(({ endpoint }) => endpoint.slug.join("/") === selectionState?.endpointId) ?? {
+        endpoint: undefined,
+        group: undefined,
+    };
 
-        return () => {
-            document.removeEventListener("click", listener);
-        };
-    }, [closeDropdown, showDropdown]);
+    const createClickHandler = (group: ApiGroup, endpoint: SidebarNode.EndpointPage) => () => {
+        setSelectionStateAndOpen({
+            api: group.api,
+            endpointId: endpoint.slug.join("/"),
+        });
+        closeDropdown();
+    };
 
-    function renderApiDefinitionPackage(apiDefinition: ResolvedApiDefinitionPackage, depth: number) {
-        const endpoints = apiDefinition.endpoints.filter((endpoint) => matchesEndpoint(filterValue, endpoint));
-        const subpackages = apiDefinition.subpackages
-            .map((subpackage) => renderApiDefinitionPackage(subpackage, depth + 1))
-            .filter(isNonNullish);
-        if (endpoints.length === 0 && subpackages.length === 0) {
+    // // click anywhere outside the dropdown to close it
+    // const dropdownRef = useRef<HTMLDivElement>(null);
+    // useEffect(() => {
+    //     if (!showDropdown) {
+    //         return;
+    //     }
+    //     const listener = (e: MouseEvent) => {
+    //         if (dropdownRef.current != null && !dropdownRef.current.contains(e.target as Node)) {
+    //             closeDropdown();
+    //         }
+    //     };
+
+    //     document.addEventListener("click", listener);
+
+    //     return () => {
+    //         document.removeEventListener("click", listener);
+    //     };
+    // }, [closeDropdown, showDropdown]);
+
+    function renderApiDefinitionPackage(apiGroup: ApiGroup) {
+        const endpoints = apiGroup.endpoints.filter((endpoint) => matchesEndpoint(filterValue, apiGroup, endpoint));
+        if (endpoints.length === 0) {
             return null;
         }
         return (
-            <li key={apiDefinition.type === "apiSection" ? apiDefinition.api : apiDefinition.id} className="gap-2">
-                {depth >= 0 && (
-                    <div
-                        className="bg-background dark:bg-background-dark border-default sticky z-10 flex h-[30px] items-center gap-2 border-b px-3 py-1"
-                        style={{
-                            top: depth * 30,
-                        }}
-                    >
-                        <span className="t-accent shrink truncate whitespace-nowrap text-xs">
-                            {apiDefinition.title}
-                        </span>
+            <li key={apiGroup.id} className="gap-2">
+                {apiGroup.breadcrumbs.length > 1 && (
+                    <div className="bg-background sticky top-0 z-10 flex h-[30px] items-center px-3 py-1">
+                        {apiGroup.breadcrumbs.slice(1).map((breadcrumb, idx) => (
+                            <Fragment key={idx}>
+                                {idx > 0 && <SlashIcon className="text-faded mx-0.5 size-3" />}
+                                <span className="t-accent shrink truncate whitespace-nowrap text-xs">{breadcrumb}</span>
+                            </Fragment>
+                        ))}
                     </div>
                 )}
                 <ul className="relative z-0 list-none">
-                    {endpoints.map((endpointItem) => (
-                        <li
-                            ref={endpointItem.id === endpoint?.id ? selectedItemRef : undefined}
-                            key={endpointItem.id}
-                            className={classNames(
-                                "gap-4 scroll-m-2 mx-1 flex h-8 cursor-pointer items-center rounded px-2 py-1 text-sm justify-between",
-                                {
-                                    "bg-tag-primary t-accent": endpointItem.id === endpoint?.id,
-                                    "hover:bg-tag-default hover:t-accent": endpointItem.id !== endpoint?.id,
-                                },
-                            )}
-                            onClick={() => {
-                                setSelectionStateAndOpen({
-                                    endpoint: endpointItem,
-                                    apiDefinition,
-                                    apiSection:
-                                        apiDefinition.type === "apiSection"
-                                            ? apiDefinition
-                                            : // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                                              navigationItems.find((item) => item.api === apiDefinition.apiSectionId)!,
-                                });
-                                closeDropdown();
-                            }}
-                        >
-                            <span className="whitespace-nowrap">
-                                {renderTextWithHighlight(endpointItem.name ?? "", filterValue)}
-                            </span>
-
-                            <HttpMethodTag method={endpointItem.method} small={true} />
-                        </li>
-                    ))}
-                    {subpackages}
+                    {endpoints.map((endpointItem) => {
+                        const active = endpointItem.slug.join("/") === selectedEndpoint?.slug.join("/");
+                        const text = renderTextWithHighlight(endpointItem.title, filterValue);
+                        return (
+                            <li ref={active ? selectedItemRef : undefined} key={endpointItem.id}>
+                                <FernTooltip
+                                    content={
+                                        endpointItem.description != null ? (
+                                            <Markdown>{endpointItem.description}</Markdown>
+                                        ) : undefined
+                                    }
+                                    side="right"
+                                >
+                                    <FernButton
+                                        text={endpointItem.stream ? withStream(text) : text}
+                                        className="w-full rounded-none text-left"
+                                        variant="minimal"
+                                        intent={active ? "primary" : "none"}
+                                        active={active}
+                                        onClick={createClickHandler(apiGroup, endpointItem)}
+                                        rightIcon={<HttpMethodTag method={endpointItem.method} small={true} />}
+                                    />
+                                </FernTooltip>
+                            </li>
+                        );
+                    })}
                 </ul>
             </li>
         );
     }
 
-    const renderedListItems = navigationItems
-        .map((apiSection) => renderApiDefinitionPackage(apiSection, navigationItems.length === 1 ? -1 : 0))
-        .filter(isNonNullish);
+    const renderedListItems = apiGroups.map((group) => renderApiDefinitionPackage(group)).filter(isNonNullish);
 
-    const RightIcon = popoverPlacement.startsWith("bottom") ? ChevronDownIcon : ChevronUpIcon;
+    const [isPopoverBelow, setIsPopoverBelow] = useState(true);
+
+    const RightIcon = isPopoverBelow ? ChevronDownIcon : ChevronUpIcon;
+
+    const buttonRef = useRef<HTMLButtonElement>(null);
+    const menuRef = useRef<HTMLDivElement>(null);
+    const determinePlacement = useCallback(() => {
+        // check if menuref is below buttonref, if not, set isPopoverBelow to false
+        if (buttonRef.current != null && menuRef.current != null) {
+            const buttonRect = buttonRef.current.getBoundingClientRect();
+            const menuRect = menuRef.current.getBoundingClientRect();
+            setIsPopoverBelow(buttonRect.bottom < menuRect.top);
+        }
+    }, []);
 
     return (
-        <div className="relative -ml-2 min-w-0 shrink">
-            <FernButton
-                className={classNames(buttonClassName, "max-w-full -my-1 !text-left")}
-                onClick={toggleDropdown}
-                active={showDropdown}
-                rightIcon={
-                    <RightIcon
-                        className={classNames("transition-transform", {
-                            "rotate-180": showDropdown,
-                        })}
-                    />
-                }
-                variant="minimal"
-            >
-                {apiDefinition != null && (
-                    <span className="t-accent mr-2 shrink truncate whitespace-nowrap text-xs">
-                        {apiDefinition.title}
-                    </span>
-                )}
-
-                <span className="whitespace-nowrap">{endpoint?.name ?? placeholderText ?? "Select an endpoint"}</span>
-            </FernButton>
-            <Transition
-                show={showDropdown}
-                as={Fragment}
-                // enter="ease-out transition-transform"
-                // enterFrom="opacity-0 scale-95"
-                // enterTo="opacity-100 scale-100"
-                // leave="ease-in transition-transform"
-                // leaveFrom="opacity-100 scale-100"
-                // leaveTo="opacity-0 scale-95"
-                beforeEnter={() => {
-                    selectedItemRef.current?.scrollIntoView({
-                        block: "center",
-                        inline: "nearest",
-                    });
-                }}
-            >
-                <div
-                    ref={dropdownRef}
-                    className={classNames(
-                        "overflow-hidden bg-background dark:bg-background-dark border-default absolute z-10 flex max-h-96 min-h-4 w-fit flex-col rounded border shadow-xl max-w-[calc(100vw-16px)]",
-                        {
-                            "origin-top-left left-0 top-full mt-2": popoverPlacement === "bottom-start",
-                            "origin-top -translate-x-[50%] left-[50%] top-full mt-2": popoverPlacement === "bottom",
-                            "origin-top-right right-0 top-full mt-2": popoverPlacement === "bottom-end",
-                            "origin-bottom-left left-0 bottom-full mb-2": popoverPlacement === "top-start",
-                            "origin-bottom -translate-x-[50%] left-[50%] bottom-full mb-2": popoverPlacement === "top",
-                            "origin-bottom-right right-0 bottom-full mb-2": popoverPlacement === "top-end",
-                        },
-                    )}
+        <DropdownMenu.Root onOpenChange={handleOpenChange} open={showDropdown}>
+            <DropdownMenu.Trigger asChild={true}>
+                <FernButton
+                    ref={buttonRef}
+                    className={classNames(buttonClassName, "max-w-full -my-1 !text-left")}
+                    active={showDropdown}
+                    rightIcon={
+                        <RightIcon
+                            className={classNames("transition-transform", {
+                                "rotate-180": showDropdown,
+                            })}
+                        />
+                    }
+                    variant="minimal"
                 >
-                    {popoverPlacement.startsWith("bottom") && (
-                        <div
-                            className={classNames("relative z-20 px-1 pt-1", {
-                                "pb-1": renderedListItems.length === 0,
-                                "pb-0": renderedListItems.length > 0,
-                            })}
-                        >
-                            <FernInput
-                                leftIcon={<MagnifyingGlassIcon />}
-                                data-1p-ignore="true"
-                                autoFocus={true}
-                                value={filterValue}
-                                onValueChange={setFilterValue}
-                                rightElement={
-                                    filterValue.length > 0 && (
-                                        <FernButton
-                                            icon={<Cross1Icon />}
-                                            variant="minimal"
-                                            onClick={() => setFilterValue("")}
-                                        />
-                                    )
-                                }
-                            />
-                        </div>
-                    )}
-                    <ul className="scroll-contain list-none overflow-y-auto">{renderedListItems}</ul>
-                    {popoverPlacement.startsWith("top") && (
-                        <div
-                            className={classNames("relative z-20 px-1 pb-1", {
-                                "pt-1": renderedListItems.length === 0,
-                                "pt-0": renderedListItems.length > 0,
-                            })}
-                        >
-                            <FernInput
-                                leftIcon={<MagnifyingGlassIcon />}
-                                data-1p-ignore="true"
-                                autoFocus={true}
-                                value={filterValue}
-                                onValueChange={setFilterValue}
-                                rightElement={
-                                    filterValue.length > 0 && (
-                                        <FernButton
-                                            icon={<Cross1Icon />}
-                                            variant="minimal"
-                                            onClick={() => setFilterValue("")}
-                                        />
-                                    )
-                                }
-                            />
-                        </div>
-                    )}
-                </div>
-            </Transition>
-        </div>
+                    <span className="inline-flex items-center gap-1">
+                        {selectedGroup != null &&
+                            selectedGroup.breadcrumbs.length > 1 &&
+                            selectedGroup.breadcrumbs.slice(1).map((breadcrumb, idx) => (
+                                <Fragment key={idx}>
+                                    <span className="t-accent shrink truncate whitespace-nowrap">{breadcrumb}</span>
+                                    <SlashIcon className="text-faded" />
+                                </Fragment>
+                            ))}
+
+                        <span className="whitespace-nowrap font-semibold">
+                            {selectedEndpoint?.title ?? placeholderText ?? "Select an endpoint"}
+                        </span>
+                    </span>
+                </FernButton>
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Portal>
+                <DropdownMenu.Content asChild={true} sideOffset={4} onAnimationStartCapture={determinePlacement}>
+                    <div className="fern-dropdown overflow-hidden rounded-xl" ref={menuRef}>
+                        {isPopoverBelow && (
+                            <div
+                                className={classNames("relative z-20 px-1 pt-1", {
+                                    "pb-1": renderedListItems.length === 0,
+                                    "pb-0": renderedListItems.length > 0,
+                                })}
+                            >
+                                <FernInput
+                                    leftIcon={<MagnifyingGlassIcon />}
+                                    data-1p-ignore="true"
+                                    autoFocus={true}
+                                    value={filterValue}
+                                    onValueChange={setFilterValue}
+                                    rightElement={
+                                        filterValue.length > 0 && (
+                                            <FernButton
+                                                icon={<Cross1Icon />}
+                                                variant="minimal"
+                                                onClick={() => setFilterValue("")}
+                                            />
+                                        )
+                                    }
+                                />
+                            </div>
+                        )}
+                        <FernScrollArea>
+                            <FernTooltipProvider>
+                                <ul className="list-none">{renderedListItems}</ul>
+                            </FernTooltipProvider>
+                        </FernScrollArea>
+                        {!isPopoverBelow && (
+                            <div
+                                className={classNames("relative z-20 px-1 pb-1", {
+                                    "pt-1": renderedListItems.length === 0,
+                                    "pt-0": renderedListItems.length > 0,
+                                })}
+                            >
+                                <FernInput
+                                    leftIcon={<MagnifyingGlassIcon />}
+                                    data-1p-ignore="true"
+                                    autoFocus={true}
+                                    value={filterValue}
+                                    onValueChange={setFilterValue}
+                                    rightElement={
+                                        filterValue.length > 0 && (
+                                            <FernButton
+                                                icon={<Cross1Icon />}
+                                                variant="minimal"
+                                                onClick={() => setFilterValue("")}
+                                            />
+                                        )
+                                    }
+                                />
+                            </div>
+                        )}
+                    </div>
+                </DropdownMenu.Content>
+            </DropdownMenu.Portal>
+        </DropdownMenu.Root>
     );
 };
 
@@ -249,11 +299,23 @@ function renderTextWithHighlight(text: string, highlight: string): ReactElement[
     const parts = text.split(new RegExp(`(${highlight})`, "gi"));
     return parts.map((part, idx) =>
         part.toLowerCase() === highlight.toLowerCase() ? (
-            <mark className="bg-accent-highlight" key={idx}>
+            <mark className="bg-accent-highlight t-default" key={idx}>
                 {part}
             </mark>
         ) : (
             <span key={idx}>{part}</span>
         ),
     );
+}
+
+function withStream(text: ReactElement[]): ReactElement[] {
+    return [
+        ...text,
+        <span
+            key="stream"
+            className="bg-accent-primary/10 dark:bg-accent-primary-dark/10 text-accent-primary dark:text-accent-primary-dark flex items-center rounded-[4px] p-0.5 font-mono text-xs uppercase leading-none"
+        >
+            stream
+        </span>,
+    ];
 }

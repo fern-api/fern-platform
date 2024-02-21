@@ -1,9 +1,16 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { CaretDownIcon } from "@radix-ui/react-icons";
-import { FC } from "react";
+import dynamic from "next/dynamic";
+import { FC, useMemo } from "react";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
-import { FernSegmentedControl } from "../components/FernSegmentedControl";
+import { FernRadioGroup } from "../components/FernRadioGroup";
+
+export const ENUM_RADIO_BREAKPOINT = 5;
+
+const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), {
+    ssr: true,
+});
 
 interface PlaygroundEnumFormProps {
     enumValues: APIV1Read.EnumValue[];
@@ -12,18 +19,33 @@ interface PlaygroundEnumFormProps {
 }
 
 export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({ enumValues, onChange, value }) => {
+    const options = useMemo(
+        () =>
+            enumValues.map(
+                (enumValue): FernDropdown.Option => ({
+                    type: "value",
+                    label: enumValue.value,
+                    helperText: enumValue.description,
+                    value: enumValue.value,
+                    tooltip:
+                        enumValue.description != null && enumValues.length >= ENUM_RADIO_BREAKPOINT ? (
+                            <Markdown className="text-xs">{enumValue.description}</Markdown>
+                        ) : undefined,
+                    labelClassName: "font-mono",
+                }),
+            ),
+        [enumValues],
+    );
+
     if (enumValues.length === 0) {
         return null;
     }
 
-    if (enumValues.length < 3) {
+    if (enumValues.length < ENUM_RADIO_BREAKPOINT) {
         return (
             <div className="w-full">
-                <FernSegmentedControl
-                    options={enumValues.map((enumValue) => ({
-                        label: enumValue.value,
-                        value: enumValue.value,
-                    }))}
+                <FernRadioGroup
+                    options={options}
                     value={typeof value === "string" ? value : undefined}
                     onValueChange={onChange}
                 />
@@ -34,7 +56,7 @@ export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({ enumValues, on
     const activeItem = enumValues.find((enumValue) => enumValue.value === value);
 
     return (
-        <FernDropdown options={enumValues} onValueChange={onChange} value={activeItem?.value}>
+        <FernDropdown options={options} onValueChange={onChange} value={activeItem?.value}>
             <FernButton
                 text={
                     activeItem != null ? (

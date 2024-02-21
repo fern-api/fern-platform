@@ -144,7 +144,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi }) => {
                                                     <TypeComponentSeparator />
                                                     <EndpointParameter
                                                         name={parameter.key}
-                                                        shape={parameter.shape}
+                                                        shape={parameter.valueShape}
                                                         anchorIdParts={["request", "path", parameter.key]}
                                                         route={route}
                                                         description={parameter.description}
@@ -170,7 +170,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi }) => {
                                                     <TypeComponentSeparator />
                                                     <EndpointParameter
                                                         name={parameter.key}
-                                                        shape={parameter.shape}
+                                                        shape={parameter.valueShape}
                                                         anchorIdParts={["request", "query", parameter.key]}
                                                         route={route}
                                                         description={parameter.description}

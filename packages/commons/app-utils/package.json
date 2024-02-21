@@ -28,7 +28,6 @@
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "0.50.6-1-gdf25388",
-    "@fern-ui/core-utils": "workspace:*",
     "lodash-es": "^4.17.21",
     "next-mdx-remote": "^4.4.1",
     "react": "^18.2.0",
