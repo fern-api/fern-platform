@@ -103,15 +103,16 @@ export function stringifyFetch(
     const headers = redacted
         ? buildRedactedHeaders(auth, endpoint, formState)
         : buildUnredactedHeaders(auth, endpoint, formState);
+    const requestBody = endpoint.requestBody[0];
     return `// ${endpoint.name} (${endpoint.method} ${endpoint.path
         .map((part) => (part.type === "literal" ? part.value : `:${part.key}`))
         .join("")})
 const response = fetch("${buildEndpointUrl(endpoint, formState)}", {
   method: "${endpoint.method}",
   headers: ${indentAfter(JSON.stringify(headers, undefined, 2), 2, 0)},${
-      endpoint.requestBody?.contentType === "application/json" &&
+      requestBody?.contentType === "application/json" &&
       !isEmpty(formState.body) &&
-      endpoint.requestBody.shape.type !== "fileUpload"
+      requestBody.shape.type !== "fileUpload"
           ? `\n  body: JSON.stringify(${indentAfter(JSON.stringify(formState.body, undefined, 2), 2, 0)}),`
           : ""
   }
@@ -133,15 +134,16 @@ export function stringifyPythonRequests(
     const headers = redacted
         ? buildRedactedHeaders(auth, endpoint, formState)
         : buildUnredactedHeaders(auth, endpoint, formState);
+    const requestBody = endpoint.requestBody[0];
     return `import requests
 
 # ${endpoint.name} (${endpoint.method} ${buildPath(endpoint.path)})
 response = requests.${endpoint.method.toLowerCase()}(
   "${buildEndpointUrl(endpoint, formState)}",
   headers=${indentAfter(JSON.stringify(headers, undefined, 2), 2, 0)},${
-      endpoint.requestBody?.contentType === "application/json" &&
+      requestBody?.contentType === "application/json" &&
       !isEmpty(formState.body) &&
-      endpoint.requestBody.shape.type !== "fileUpload"
+      requestBody.shape.type !== "fileUpload"
           ? `\n  json=${indentAfter(JSON.stringify(formState.body, undefined, 2), 2, 0)},`
           : ""
   }
@@ -172,8 +174,9 @@ function buildRedactedHeaders(
         }
     });
 
-    if (endpoint.requestBody?.contentType != null) {
-        headers["Content-Type"] = endpoint.requestBody.contentType;
+    const requestBody = endpoint.requestBody[0];
+    if (requestBody?.contentType != null) {
+        headers["Content-Type"] = requestBody.contentType;
     }
 
     if (auth != null && endpoint.authed && formState.auth != null) {
@@ -220,8 +223,10 @@ export function buildUnredactedHeaders(
         }
     });
 
-    if (endpoint.requestBody?.contentType != null) {
-        headers["Content-Type"] = endpoint.requestBody.contentType;
+    const requestBody = endpoint.requestBody[0];
+
+    if (requestBody?.contentType != null) {
+        headers["Content-Type"] = requestBody.contentType;
     }
 
     if (auth != null && endpoint.authed && formState?.auth != null) {
@@ -256,6 +261,7 @@ export function stringifyCurl(
     endpoint: ResolvedEndpointDefinition | undefined,
     formState: PlaygroundRequestFormState,
     redacted = true,
+    contentType?: string,
 ): string {
     if (endpoint == null) {
         return "";
@@ -263,20 +269,39 @@ export function stringifyCurl(
     const headers = redacted
         ? buildRedactedHeaders(auth, endpoint, formState)
         : buildUnredactedHeaders(auth, endpoint, formState);
+
+    headers["Content-Type"] = contentType ?? "application/json";
+
+    const requestBody =
+        endpoint.requestBody.find((body) => body.contentType === contentType) ?? endpoint.requestBody[0];
     return `curl -X ${endpoint.method} "${buildEndpointUrl(endpoint, formState)}"${Object.entries(headers)
         .map(([key, value]) => ` \\\n     -H "${key}: ${value}"`)
         .join("")}${
-        endpoint.requestBody?.contentType === "application/json" &&
-        !isEmpty(formState.body) &&
-        endpoint.requestBody.shape.type !== "fileUpload"
-            ? ` \\\n     -d '${
-                  redacted
-                      ? JSON.stringify(formState.body, undefined, 2)
-                      : JSON.stringify(JSON.stringify(formState.body))
-              }'`
-            : ""
+        isEmpty(formState.body)
+            ? ""
+            : requestBody?.contentType.toLowerCase().includes("application/json")
+              ? requestBody.shape.type !== "fileUpload"
+                  ? ` \\\n     -d '${
+                        redacted
+                            ? JSON.stringify(formState.body, undefined, 2)
+                            : JSON.stringify(JSON.stringify(formState.body))
+                    }'`
+                  : ""
+              : requestBody?.contentType.toLowerCase().includes("multipart/form-data")
+                ? createMultipartFormData(formState.body)
+                : ""
     }
 `;
+}
+
+function createMultipartFormData(body: unknown): string {
+    return isPlainObject(body)
+        ? Array.from(Object.entries(body))
+              .map(([key, value]) =>
+                  key !== "file" ? ` \\\n     -F "${key}=${unknownToString(value)}"` : ` \\\n     -F ${key}=@file.zip`,
+              )
+              .join("")
+        : "";
 }
 
 export function getDefaultValueForObjectProperties(properties: ResolvedObjectProperty[] = []): Record<string, unknown> {

@@ -5,8 +5,8 @@ import { VirtualizedExample } from "../VirtualizedExample";
 import { JsonPropertyPath } from "./contexts/JsonPropertyPath";
 import { flattenJsonToLines, getIsSelectedArr, JsonLine, renderJsonLine } from "./jsonLineUtils";
 
-const LINE_HEIGHT = 21.5;
-const VERTICAL_PADDING = 20;
+const LINE_HEIGHT = 20;
+const VERTICAL_PADDING = 12;
 
 export declare namespace JsonExample {
     export interface Props {

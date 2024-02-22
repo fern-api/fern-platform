@@ -1,5 +1,8 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { sortBy } from "lodash-es";
+import { PlaygroundRequestFormState } from "../../api-playground/types";
+import { stringifyCurl } from "../../api-playground/utils";
+import { ResolvedEndpointDefinition } from "../../util/resolver";
 import { titleCase } from "../../util/titleCase";
 
 export interface CodeExample {
@@ -20,7 +23,11 @@ export interface CodeExampleGroup {
 }
 
 // key is the language
-export function generateCodeExamples(examples: APIV1Read.ExampleEndpointCall[]): CodeExampleGroup[] {
+export function generateCodeExamples(
+    endpoint: ResolvedEndpointDefinition,
+    examples: APIV1Read.ExampleEndpointCall[],
+    isMultipartForm: boolean,
+): CodeExampleGroup[] {
     const codeExamples = new Map<string, CodeExample[]>();
     examples.forEach((example, i) => {
         codeExamples.set("curl", [
@@ -30,7 +37,9 @@ export function generateCodeExamples(examples: APIV1Read.ExampleEndpointCall[]):
                 exampleIndex: i,
                 language: "curl",
                 name: example.name ?? "cURL Example",
-                code: "",
+                code: isMultipartForm
+                    ? stringifyCurl(undefined, endpoint, createFormState(example), true, "multipart/form-data")
+                    : "",
                 install: undefined,
                 exampleCall: example,
             },
@@ -158,6 +167,16 @@ function getIconForClient(clientId: string) {
         default:
             return "fa-solid fa-code";
     }
+}
+
+function createFormState(example: APIV1Read.ExampleEndpointCall): PlaygroundRequestFormState {
+    return {
+        auth: undefined,
+        headers: example.headers,
+        pathParameters: example.pathParameters,
+        queryParameters: example.queryParameters,
+        body: example.requestBodyV3?.value,
+    };
 }
 
 // export interface CodeExampleClientCurl {

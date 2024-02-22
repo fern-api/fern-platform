@@ -33,6 +33,7 @@ export interface CurlLineJson {
 export type CurlLine = CurlLineParam | CurlLineJson;
 
 export function getCurlLines(
+    contentType: string | undefined,
     auth: APIV1Read.ApiAuth | undefined,
     endpoint: ResolvedEndpointDefinition,
     example: APIV1Read.ExampleEndpointCall,
@@ -68,12 +69,11 @@ export function getCurlLines(
         }
     }
 
-    const requestContentType = endpoint.requestBody != null ? endpoint.requestBody.contentType : undefined;
-    if (requestContentType != null) {
+    if (contentType != null) {
         parts.push({
             type: "param",
             paramKey: "--header",
-            value: `Content-Type: ${requestContentType}`,
+            value: `Content-Type: ${contentType}`,
         });
     }
 
@@ -123,8 +123,10 @@ export function getCurlLines(
         });
     }
 
-    if (endpoint.requestBody != null) {
-        switch (endpoint.requestBody.shape.type) {
+    const requestBody = endpoint.requestBody.find((body) => body.contentType === contentType);
+
+    if (requestBody != null) {
+        switch (requestBody.shape.type) {
             case "fileUpload":
                 parts.push({
                     type: "param",

@@ -1,7 +1,9 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { useBooleanState } from "@fern-ui/react-commons";
+import * as Tabs from "@radix-ui/react-tabs";
 import { camelCase, sortBy, upperFirst } from "lodash-es";
 import { memo } from "react";
+import { FernCard } from "../../components/FernCard";
 import { ResolvedEndpointDefinition, ResolvedNavigationItemApiSection } from "../../util/resolver";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
@@ -24,6 +26,8 @@ export declare namespace EndpointContentLeft {
         selectedError: APIV1Read.ErrorDeclarationV2 | undefined;
         setSelectedError: (idx: APIV1Read.ErrorDeclarationV2 | undefined) => void;
         route: string;
+        contentType: string | undefined;
+        setContentType: (contentType: string) => void;
     }
 }
 
@@ -35,6 +39,8 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     selectedError,
     setSelectedError,
     route,
+    contentType,
+    setContentType,
 }) => {
     const requestExpandAll = useBooleanState(false);
     const responseExpandAll = useBooleanState(false);
@@ -101,8 +107,57 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     </div>
                 </EndpointSection>
             )}
-            {endpoint.requestBody != null && (
+            {endpoint.requestBody.length > 1 ? (
+                <Tabs.Root asChild={true} value={contentType} onValueChange={setContentType}>
+                    <FernCard className="-mx-4 rounded-2xl">
+                        <div className="bg-tag-default-soft rounded-t-lg">
+                            <div className="shadow-border-default mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0_rgba(0,0,0,0.1)]">
+                                <Tabs.List className="flex min-h-10 overflow-x-auto px-4 font-mono">
+                                    <div className="mr-2 flex items-center">
+                                        <span className="t-muted text-xs font-semibold">Content-Type:</span>
+                                    </div>
+                                    {endpoint.requestBody.map((requestBody) => (
+                                        <Tabs.Trigger
+                                            key={requestBody.contentType}
+                                            value={requestBody.contentType}
+                                            className="data-[state=active]:shadow-accent-primary-light dark:data-[state=active]:shadow-accent-primary-dark group flex min-h-10 cursor-default items-center px-0 py-2 data-[state=active]:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)]"
+                                        >
+                                            <span className="t-muted group-data-[state=active]:t-default group-hover:bg-tag-default rounded px-2 py-1 text-xs group-data-[state=active]:font-semibold">
+                                                {requestBody.contentType}
+                                            </span>
+                                        </Tabs.Trigger>
+                                    ))}
+                                </Tabs.List>
+                            </div>
+                        </div>
+                        <div className="p-4">
+                            {endpoint.requestBody.map((requestBody) => (
+                                <Tabs.Content key={requestBody.contentType} value={requestBody.contentType}>
+                                    <EndpointSection
+                                        key={requestBody.contentType}
+                                        title="Request"
+                                        anchorIdParts={["request"]}
+                                        route={route}
+                                        expandAll={requestExpandAll.setTrue}
+                                        collapseAll={requestExpandAll.setFalse}
+                                        showExpandCollapse={true}
+                                    >
+                                        <EndpointRequestSection
+                                            requestBody={requestBody}
+                                            onHoverProperty={onHoverRequestProperty}
+                                            anchorIdParts={["request", "body"]}
+                                            route={route}
+                                            defaultExpandAll={requestExpandAll.value}
+                                        />
+                                    </EndpointSection>
+                                </Tabs.Content>
+                            ))}
+                        </div>
+                    </FernCard>
+                </Tabs.Root>
+            ) : endpoint.requestBody[0] != null ? (
                 <EndpointSection
+                    key={endpoint.requestBody[0].contentType}
                     title="Request"
                     anchorIdParts={["request"]}
                     route={route}
@@ -111,14 +166,14 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     showExpandCollapse={true}
                 >
                     <EndpointRequestSection
-                        requestBody={endpoint.requestBody}
+                        requestBody={endpoint.requestBody[0]}
                         onHoverProperty={onHoverRequestProperty}
                         anchorIdParts={["request", "body"]}
                         route={route}
                         defaultExpandAll={requestExpandAll.value}
                     />
                 </EndpointSection>
-            )}
+            ) : null}
             {endpoint.responseBody != null && (
                 <EndpointSection
                     title="Response"

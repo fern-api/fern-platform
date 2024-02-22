@@ -103,8 +103,8 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
                 </div>
             )}
 
-            {endpoint.requestBody != null &&
-                visitResolvedHttpRequestBodyShape(endpoint.requestBody.shape, {
+            {endpoint.requestBody[0] != null &&
+                visitResolvedHttpRequestBodyShape(endpoint.requestBody[0].shape, {
                     fileUpload: () => (
                         <div>
                             <div className="mb-4 px-4">

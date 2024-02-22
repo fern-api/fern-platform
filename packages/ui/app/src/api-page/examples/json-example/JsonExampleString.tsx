@@ -13,7 +13,7 @@ export const JsonExampleString: React.FC<JsonExampleString.Props> = ({
 }) => {
     const isMultiline = value.split("\n").length > 1;
     return (
-        <span className="text-green-600 dark:text-green-300">
+        <span className="text-[rgb(102,153,0)] dark:text-[rgb(206,145,120)]">
             {isMultiline ? (
                 <>
                     {!doNotStringify && '"""'}

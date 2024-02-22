@@ -63,17 +63,19 @@ function resolveSidebarNodeApiSection(
     }
     const slug = [...parentSlugs, subpackage.urlSlug];
     const endpoints = sortBy(
-        subpackage.endpoints.map(
-            (endpoint): SidebarNode.EndpointPage => ({
-                type: "page",
-                id: endpoint.id,
-                slug: [...slug, endpoint.urlSlug],
-                title: endpoint.name != null ? endpoint.name : stringifyEndpointPathParts(endpoint.path.parts),
-                description: endpoint.description ?? null,
-                method: endpoint.method,
-                stream: endpoint.response?.type.type === "stream",
-            }),
-        ),
+        subpackage.endpoints
+            .filter((endpoint) => endpoint.request?.contentType !== "multipart/form-data")
+            .map(
+                (endpoint): SidebarNode.EndpointPage => ({
+                    type: "page",
+                    id: endpoint.id,
+                    slug: [...slug, endpoint.urlSlug],
+                    title: endpoint.name != null ? endpoint.name : stringifyEndpointPathParts(endpoint.path.parts),
+                    description: endpoint.description ?? null,
+                    method: endpoint.method,
+                    stream: endpoint.response?.type.type === "stream",
+                }),
+            ),
         "title",
     );
     const websockets = sortBy(
@@ -171,18 +173,22 @@ export function resolveSidebarNodes(
                         title: api.title,
                         slug: [...parentSlugs, api.urlSlug],
                         endpoints: sortBy(
-                            definition.rootPackage.endpoints.map((endpoint) => ({
-                                type: "page",
-                                id: endpoint.id,
-                                slug: [...definitionSlug, endpoint.urlSlug],
-                                title:
-                                    endpoint.name != null
-                                        ? endpoint.name
-                                        : stringifyEndpointPathParts(endpoint.path.parts),
-                                method: endpoint.method,
-                                stream: endpoint.response?.type.type === "stream",
-                                description: endpoint.description ?? null,
-                            })),
+                            definition.rootPackage.endpoints
+                                .filter((endpoint) => endpoint.request?.contentType !== "multipart/form-data")
+                                .map(
+                                    (endpoint): SidebarNode.EndpointPage => ({
+                                        type: "page",
+                                        id: endpoint.id,
+                                        slug: [...definitionSlug, endpoint.urlSlug],
+                                        title:
+                                            endpoint.name != null
+                                                ? endpoint.name
+                                                : stringifyEndpointPathParts(endpoint.path.parts),
+                                        method: endpoint.method,
+                                        stream: endpoint.response?.type.type === "stream",
+                                        description: endpoint.description ?? null,
+                                    }),
+                                ),
                             "title",
                         ),
                         webhooks: sortBy(
