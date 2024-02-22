@@ -41,7 +41,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     const { navbarLinks, colorsV3 } = config;
     const navbarLinksSection = (
         <div className="hidden lg:block">
-            <FernButtonGroup className="ml-2">
+            <FernButtonGroup>
                 {navbarLinks?.map((navbarLink, idx) => (
                     <FernLinkButton
                         key={idx}
@@ -88,7 +88,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
 
             {showSearchBar && searchService.isAvailable && (
                 <div
-                    className={classNames("max-w-content-width w-full max-lg:hidden shrink min-w-0", {
+                    className={classNames("max-w-content-width w-full max-lg:hidden shrink min-w-0 mx-2", {
                         invisible: isSearchDialogOpen,
                     })}
                 >
