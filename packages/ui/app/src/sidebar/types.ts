@@ -1,6 +1,6 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { last, noop } from "lodash-es";
+import { last, noop, sortBy } from "lodash-es";
 import { titleCase } from "../util/titleCase";
 
 export type SidebarNode = SidebarNode.PageGroup | SidebarNode.ApiSection | SidebarNode.Section;
@@ -156,42 +156,56 @@ export function resolveSidebarNodes(
                         id: api.api,
                         title: api.title,
                         slug: [...parentSlugs, api.urlSlug],
-                        endpoints: definition.rootPackage.endpoints.map((endpoint) => ({
-                            type: "page",
-                            id: endpoint.id,
-                            slug: [...definitionSlug, endpoint.urlSlug],
-                            title:
-                                endpoint.name != null ? endpoint.name : stringifyEndpointPathParts(endpoint.path.parts),
-                            method: endpoint.method,
-                            stream: endpoint.response?.type.type === "stream",
-                            description: endpoint.description,
-                        })),
-                        webhooks: definition.rootPackage.webhooks.map((webhook) => ({
-                            type: "page",
-                            id: webhook.id,
-                            slug: [...definitionSlug, webhook.urlSlug],
-                            title: webhook.name != null ? webhook.name : "/" + webhook.path.join("/"),
-                            description: webhook.description,
-                        })),
-                        websockets: definition.rootPackage.websockets.map((websocket) => ({
-                            type: "page",
-                            id: websocket.id,
-                            slug: [...definitionSlug, websocket.urlSlug],
-                            title:
-                                websocket.name != null
-                                    ? websocket.name
-                                    : stringifyEndpointPathParts(websocket.path.parts),
-                        })),
-                        subpackages: definition.rootPackage.subpackages
-                            .map((subpackageId) =>
-                                resolveSidebarNodeApiSection(
-                                    api.api,
-                                    subpackageId,
-                                    definition.subpackages,
-                                    definitionSlug,
-                                ),
-                            )
-                            .filter(isNonNullish),
+                        endpoints: sortBy(
+                            definition.rootPackage.endpoints.map((endpoint) => ({
+                                type: "page",
+                                id: endpoint.id,
+                                slug: [...definitionSlug, endpoint.urlSlug],
+                                title:
+                                    endpoint.name != null
+                                        ? endpoint.name
+                                        : stringifyEndpointPathParts(endpoint.path.parts),
+                                method: endpoint.method,
+                                stream: endpoint.response?.type.type === "stream",
+                                description: endpoint.description,
+                            })),
+                            "title",
+                        ),
+                        webhooks: sortBy(
+                            definition.rootPackage.webhooks.map((webhook) => ({
+                                type: "page",
+                                id: webhook.id,
+                                slug: [...definitionSlug, webhook.urlSlug],
+                                title: webhook.name != null ? webhook.name : "/" + webhook.path.join("/"),
+                                description: webhook.description,
+                            })),
+                            "title",
+                        ),
+                        websockets: sortBy(
+                            definition.rootPackage.websockets.map((websocket) => ({
+                                type: "page",
+                                id: websocket.id,
+                                slug: [...definitionSlug, websocket.urlSlug],
+                                title:
+                                    websocket.name != null
+                                        ? websocket.name
+                                        : stringifyEndpointPathParts(websocket.path.parts),
+                            })),
+                            "title",
+                        ),
+                        subpackages: sortBy(
+                            definition.rootPackage.subpackages
+                                .map((subpackageId) =>
+                                    resolveSidebarNodeApiSection(
+                                        api.api,
+                                        subpackageId,
+                                        definition.subpackages,
+                                        definitionSlug,
+                                    ),
+                                )
+                                .filter(isNonNullish),
+                            "title",
+                        ),
                         artifacts: api.artifacts ?? null,
                     });
                 }
