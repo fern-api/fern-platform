@@ -142,6 +142,8 @@ module.exports = {
                 invert: {
                     css: {
                         color: "#ffffff",
+                        "--tw-prose-bold": "inherit",
+                        "--tw-prose-links": "inherit",
                     },
                 },
                 "invert-sm": {
