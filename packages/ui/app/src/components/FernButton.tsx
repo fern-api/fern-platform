@@ -29,6 +29,7 @@ interface FernButtonSharedProps {
     rounded?: boolean;
     // children replaces text
     text?: React.ReactNode;
+    disableAutomaticTooltip?: boolean;
 }
 
 export interface FernButtonProps
@@ -60,6 +61,7 @@ export const FernLinkButton = forwardRef<HTMLAnchorElement, FernLinkButtonProps>
         active,
         full,
         rounded,
+        disableAutomaticTooltip,
         ...linkProps
     } = props;
     return (
@@ -105,6 +107,7 @@ export const FernButton: FC<FernButtonProps> = forwardRef<HTMLButtonElement, Fer
             active,
             full,
             rounded,
+            disableAutomaticTooltip,
             ...buttonProps
         } = props;
         const buttonTextRef = useRef<HTMLSpanElement>(null);
@@ -140,7 +143,7 @@ export const FernButton: FC<FernButtonProps> = forwardRef<HTMLButtonElement, Fer
             </button>
         );
 
-        if (isEllipsisActive()) {
+        if (isEllipsisActive() && !disableAutomaticTooltip) {
             return (
                 <FernTooltip content={children ?? text} className="line-clamp-3">
                     {button}

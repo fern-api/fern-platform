@@ -49,7 +49,12 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                         href={navbarLink.url}
                         target="_blank"
                         intent="primary"
-                        rightIcon={<ArrowRightIcon className="transition-transform group-hover:translate-x-0.5" />}
+                        rightIcon={
+                            navbarLink.type === "primary" ||
+                            (navbarLink.type === "filled" && idx === navbarLinks.length - 1) ? (
+                                <ArrowRightIcon className="transition-transform group-hover:translate-x-0.5" />
+                            ) : undefined
+                        }
                         variant={
                             navbarLink.type === "primary"
                                 ? "filled"

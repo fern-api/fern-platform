@@ -100,6 +100,7 @@ export const SidebarSection = memo<SidebarSectionProps>(function SidebarSection(
                                         title={page.title}
                                         rightElement={<ExternalLinkIcon />}
                                         href={page.url}
+                                        target={"_blank"}
                                     />
                                 ),
                             )}

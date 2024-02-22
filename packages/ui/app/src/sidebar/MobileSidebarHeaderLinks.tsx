@@ -45,7 +45,12 @@ export function MobileSidebarHeaderLinks({ navbarLinks }: MobileSidebarHeaderLin
                     href={navbarLink.url}
                     target="_blank"
                     text={navbarLink.text}
-                    rightIcon={navbarLink.type === "primary" && <ArrowRightIcon className="!size-5" />}
+                    rightIcon={
+                        navbarLink.type === "primary" ||
+                        (navbarLink.type === "filled" && idx === navbarLinks.length - 1) ? (
+                            <ArrowRightIcon className="!size-5" />
+                        ) : undefined
+                    }
                     className={classNames("w-full text-left lg:hidden", {
                         "mt-1":
                             navbarLink.type === "primary" ||

@@ -88,6 +88,7 @@ export const EnumTypeDefinition = ({
                     hideText={hideText}
                     buttonProps={{
                         className: !isCollapsed ? "multiline" : undefined,
+                        disableAutomaticTooltip: true,
                     }}
                 >
                     <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
