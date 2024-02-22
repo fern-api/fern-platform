@@ -80,6 +80,7 @@ export function resolveNavigationItems(
                     items: resolveNavigationItems(section.items, apis, section.skipUrlSlug ? parentSlugs : sectionSlug),
                 });
             },
+            link: noop,
             _other: noop,
         });
     }

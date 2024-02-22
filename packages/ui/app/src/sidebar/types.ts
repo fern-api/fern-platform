@@ -62,25 +62,35 @@ function resolveSidebarNodeApiSection(
         return;
     }
     const slug = [...parentSlugs, subpackage.urlSlug];
-    const endpoints = subpackage.endpoints.map((endpoint): SidebarNode.Page[] => ({
-        id: endpoint.id,
-        slug: [...slug, endpoint.urlSlug],
-        title: endpoint.name != null ? endpoint.name : stringifyEndpointPathParts(endpoint.path.parts),
-        method: endpoint.method,
-        type: "page",
-    }));
-    const websockets = subpackage.websockets.map((websocket): SidebarNode.Page[] => ({
-        type: "page",
-        id: websocket.id,
-        slug: [...slug, websocket.urlSlug],
-        title: websocket.name != null ? websocket.name : stringifyEndpointPathParts(websocket.path.parts),
-    }));
-    const webhooks = subpackage.webhooks.map((webhook): SidebarNode.Page[] => ({
-        id: webhook.id,
-        slug: [...slug, webhook.urlSlug],
-        title: webhook.name != null ? webhook.name : "/" + webhook.path.join("/"),
-        type: "page",
-    }));
+    const endpoints = subpackage.endpoints.map(
+        (endpoint): SidebarNode.EndpointPage => ({
+            type: "page",
+            id: endpoint.id,
+            slug: [...slug, endpoint.urlSlug],
+            title: endpoint.name != null ? endpoint.name : stringifyEndpointPathParts(endpoint.path.parts),
+            description: endpoint.description,
+            method: endpoint.method,
+            stream: endpoint.response?.type.type === "stream",
+        }),
+    );
+    const websockets = subpackage.websockets.map(
+        (websocket): SidebarNode.Page => ({
+            type: "page",
+            id: websocket.id,
+            slug: [...slug, websocket.urlSlug],
+            title: websocket.name != null ? websocket.name : stringifyEndpointPathParts(websocket.path.parts),
+            description: websocket.description,
+        }),
+    );
+    const webhooks = subpackage.webhooks.map(
+        (webhook): SidebarNode.Page => ({
+            type: "page",
+            id: webhook.id,
+            slug: [...slug, webhook.urlSlug],
+            title: webhook.name != null ? webhook.name : "/" + webhook.path.join("/"),
+            description: webhook.description,
+        }),
+    );
     const subpackages = subpackage.subpackages
         .map((innerSubpackageId) => resolveSidebarNodeApiSection(api, innerSubpackageId, subpackagesMap, slug))
         .filter(isNonNullish);
