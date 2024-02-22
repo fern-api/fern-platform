@@ -18,7 +18,6 @@ export const HeaderSidebarSlugLink: React.FC<HeaderSidebarSlugLinkProps> = ({ na
             )}
             href={navbarLink.url}
             target="_blank"
-            rel="noreferrer noopener"
         >
             <span className="whitespace-nowrap">{navbarLink.text}</span>
             {navbarLink.type === "primary" && (
@@ -45,14 +44,22 @@ export function MobileSidebarHeaderLinks({ navbarLinks }: MobileSidebarHeaderLin
                     key={idx}
                     href={navbarLink.url}
                     target="_blank"
-                    rel="noreferrer noopener"
                     text={navbarLink.text}
                     rightIcon={navbarLink.type === "primary" && <ArrowRightIcon className="!size-5" />}
                     className={classNames("w-full text-left lg:hidden", {
-                        "mt-1": navbarLink.type === "primary",
+                        "mt-1":
+                            navbarLink.type === "primary" ||
+                            navbarLink.type === "secondary" ||
+                            navbarLink.type === "filled",
                     })}
-                    variant={navbarLink.type === "primary" ? "outlined" : "minimal"}
-                    intent={navbarLink.type === "primary" ? "primary" : "none"}
+                    variant={
+                        navbarLink.type === "primary"
+                            ? "filled"
+                            : navbarLink.type === "secondary"
+                              ? "minimal"
+                              : navbarLink.type
+                    }
+                    intent={navbarLink.type === "primary" || navbarLink.type === "filled" ? "primary" : "none"}
                     size="large"
                 />
             ))}

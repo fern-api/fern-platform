@@ -1,15 +1,12 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { Cross1Icon, HamburgerMenuIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import { ArrowRightIcon, Cross1Icon, HamburgerMenuIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { CSSProperties, forwardRef, memo, PropsWithChildren } from "react";
-import { FernButton, FernButtonGroup } from "../components/FernButton";
+import { FernButton, FernButtonGroup, FernLinkButton } from "../components/FernButton";
 import { SearchService } from "../services/useSearchService";
 import { useIsSearchDialogOpen, useOpenSearchDialog } from "../sidebar/atom";
 import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
 import { HeaderLogoSection } from "./HeaderLogoSection";
-import { HeaderPrimaryLink } from "./HeaderPrimaryLink";
-import { HeaderSecondaryLink } from "./HeaderSecondaryLink";
 import { ThemeButton } from "./ThemeButton";
 
 export declare namespace Header {
@@ -45,13 +42,25 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     const navbarLinksSection = (
         <div className="hidden lg:block">
             <FernButtonGroup>
-                {navbarLinks?.map((navbarLink, idx) =>
-                    visitDiscriminatedUnion(navbarLink, "type")._visit({
-                        primary: (navbarLink) => <HeaderPrimaryLink key={idx} navbarLink={navbarLink} />,
-                        secondary: (navbarLink) => <HeaderSecondaryLink key={idx} navbarLink={navbarLink} />,
-                        _other: () => null,
-                    }),
-                )}
+                {navbarLinks?.map((navbarLink, idx) => (
+                    <FernLinkButton
+                        key={idx}
+                        className="group cursor-pointer"
+                        href={navbarLink.url}
+                        target="_blank"
+                        intent="primary"
+                        rightIcon={<ArrowRightIcon className="transition-transform group-hover:translate-x-0.5" />}
+                        variant={
+                            navbarLink.type === "primary"
+                                ? "filled"
+                                : navbarLink.type === "secondary"
+                                  ? "minimal"
+                                  : navbarLink.type
+                        }
+                    >
+                        {navbarLink.text}
+                    </FernLinkButton>
+                ))}
 
                 {colorsV3?.type === "darkAndLight" && <ThemeButton className="hidden lg:flex" />}
             </FernButtonGroup>
@@ -131,3 +140,9 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
 });
 
 export const Header = memo(UnmemoizedHeader);
+
+export declare namespace HeaderPrimaryLink {
+    export interface Props {
+        navbarLink: DocsV1Read.NavbarLink.Primary;
+    }
+}
