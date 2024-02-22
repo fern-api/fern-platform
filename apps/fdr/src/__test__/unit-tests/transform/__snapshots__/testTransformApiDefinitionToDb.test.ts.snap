@@ -105,6 +105,7 @@ the current organization_id of the authenticated user
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -293,6 +294,7 @@ authenticated user, then response code of 403 will be returned
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -405,6 +407,7 @@ the current organization_id of the auathenticated user. Otherwise, response code
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -522,6 +525,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -649,6 +653,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -811,6 +816,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -852,6 +858,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -979,6 +986,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -1100,6 +1108,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -1220,6 +1229,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -1370,6 +1380,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -1585,6 +1596,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -1670,6 +1682,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -1867,6 +1880,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -2625,6 +2639,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -2661,6 +2676,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -2855,6 +2871,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -2907,6 +2924,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -2943,6 +2961,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -3117,6 +3136,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -3157,6 +3177,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -3193,6 +3214,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -3596,6 +3618,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -3697,6 +3720,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -3778,6 +3802,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -3859,6 +3884,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -3940,6 +3966,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -4159,6 +4186,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -4317,6 +4345,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -4383,6 +4412,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -4659,6 +4689,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -4728,6 +4759,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -4767,6 +4799,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -4816,6 +4849,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -4865,6 +4899,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -4914,6 +4949,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -5152,6 +5188,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -5175,6 +5212,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -5375,6 +5413,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -5460,6 +5499,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -5521,6 +5561,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -5582,6 +5623,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -5749,6 +5791,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -5818,6 +5861,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -6182,6 +6226,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -6283,6 +6328,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -6378,6 +6424,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -6545,6 +6592,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -6692,6 +6740,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -6760,6 +6809,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -7002,6 +7052,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -7073,6 +7124,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -7138,6 +7190,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -7177,6 +7230,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -7248,6 +7302,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -7480,6 +7535,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -7503,6 +7559,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -7545,6 +7602,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -7641,6 +7699,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -7823,6 +7882,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -8093,6 +8153,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -8441,6 +8502,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -8768,6 +8830,7 @@ Max items is 100.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -8851,6 +8914,7 @@ Max items is 100.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -9256,6 +9320,7 @@ value, overriding what was set before.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -9389,6 +9454,7 @@ value, overriding what was set before.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -9504,6 +9570,7 @@ value, overriding what was set before.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -9674,6 +9741,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -9832,6 +9900,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -9889,6 +9958,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -10049,6 +10119,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -10759,6 +10830,7 @@ or encounter external id.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -10921,6 +10993,7 @@ or encounter external id.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -11116,6 +11189,7 @@ or encounter external id.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -11160,6 +11234,7 @@ or encounter external id.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -11196,6 +11271,7 @@ or encounter external id.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -11427,6 +11503,7 @@ or encounter external id.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -11458,6 +11535,7 @@ or encounter external id.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -11495,6 +11573,7 @@ or encounter external id.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -11651,6 +11730,7 @@ or encounter external id.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -11717,6 +11797,7 @@ or encounter external id.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -11844,6 +11925,7 @@ or encounter external id.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -12947,6 +13029,7 @@ or encounter external id.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -14049,6 +14132,7 @@ or encounter external id.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -14988,6 +15072,7 @@ or encounter external id.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -15109,6 +15194,7 @@ or encounter external id.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -15230,6 +15316,7 @@ or encounter external id.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -15355,6 +15442,7 @@ or encounter external id.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -15482,6 +15570,7 @@ or encounter external id.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -15980,6 +16069,7 @@ in bounds of the diagnoses list field
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -16837,6 +16927,7 @@ in bounds of the diagnoses list field
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -16876,6 +16967,7 @@ in bounds of the diagnoses list field
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -16915,6 +17007,7 @@ in bounds of the diagnoses list field
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -16954,6 +17047,7 @@ in bounds of the diagnoses list field
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -17269,6 +17363,7 @@ submitted to the payor.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -17386,6 +17481,7 @@ submitted to the payor.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -17488,6 +17584,7 @@ submitted to the payor.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -17775,6 +17872,7 @@ submitted to the payor.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -17940,6 +18038,7 @@ submitted to the payor.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -18108,6 +18207,7 @@ submitted to the payor.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -18388,6 +18488,7 @@ submitted to the payor.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -18471,6 +18572,7 @@ submitted to the payor.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -18731,6 +18833,7 @@ submitted to the payor.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -18842,6 +18945,7 @@ submitted to the payor.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -18980,6 +19084,7 @@ submitted to the payor.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -19060,6 +19165,7 @@ submitted to the payor.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -19174,6 +19280,7 @@ submitted to the payor.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -19285,6 +19392,7 @@ submitted to the payor.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -19379,6 +19487,7 @@ submitted to the payor.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -19641,6 +19750,7 @@ submitted to the payor.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -19704,6 +19814,7 @@ submitted to the payor.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -19761,6 +19872,7 @@ submitted to the payor.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -20007,6 +20119,7 @@ submitted to the payor.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -20430,6 +20543,7 @@ submitted to the payor.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -20467,6 +20581,7 @@ submitted to the payor.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -20510,6 +20625,7 @@ submitted to the payor.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -20543,6 +20659,7 @@ submitted to the payor.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -20576,6 +20693,7 @@ submitted to the payor.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -20609,6 +20727,7 @@ submitted to the payor.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -20791,6 +20910,7 @@ Must be within 30 days of start_date.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -20867,6 +20987,7 @@ Must be within 30 days of start_date.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -21090,6 +21211,7 @@ Must be within 30 days of start_date.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -21210,6 +21332,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -21313,6 +21436,7 @@ doesn't data wrangle the modeling into the presentation shape.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -21474,6 +21598,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -21740,6 +21865,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -21823,6 +21949,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -21950,6 +22077,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -22090,6 +22218,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -22397,6 +22526,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -22741,6 +22871,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -22818,6 +22949,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -23036,6 +23168,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -23109,6 +23242,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -23323,6 +23457,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -23350,6 +23485,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -23519,6 +23655,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -23691,6 +23828,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -23866,6 +24004,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -23917,6 +24056,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -24066,6 +24206,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -24104,6 +24245,7 @@ doesn&#39;t data wrangle the modeling into the presentation shape.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -24304,6 +24446,7 @@ identified by the id, then 403 response will be returned
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -24368,6 +24511,7 @@ identified by the id, then 403 response will be returned
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -24404,6 +24548,7 @@ identified by the id, then 403 response will be returned
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -24516,6 +24661,7 @@ will be limited to only those invoices that belong to the patient_external_id
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -24799,6 +24945,7 @@ upon creation of the invoice.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -24891,6 +25038,7 @@ upon creation of the invoice.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -25164,6 +25312,7 @@ upon creation of the invoice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -25218,6 +25367,7 @@ upon creation of the invoice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -25358,6 +25508,7 @@ upon creation of the invoice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -25426,6 +25577,7 @@ upon creation of the invoice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -25587,6 +25739,7 @@ upon creation of the invoice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -25664,6 +25817,7 @@ upon creation of the invoice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -25823,6 +25977,7 @@ upon creation of the invoice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -25880,6 +26035,7 @@ upon creation of the invoice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -26035,6 +26191,7 @@ upon creation of the invoice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -26058,6 +26215,7 @@ upon creation of the invoice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -26189,6 +26347,7 @@ upon creation of the invoice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -26300,6 +26459,7 @@ upon creation of the invoice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -26450,6 +26610,7 @@ upon creation of the invoice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -26607,6 +26768,7 @@ upon creation of the invoice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -26761,6 +26923,7 @@ upon creation of the invoice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -27005,6 +27168,7 @@ upon creation of the invoice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -27180,6 +27344,7 @@ upon creation of the invoice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -27516,6 +27681,7 @@ upon creation of the invoice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -27626,6 +27792,7 @@ upon creation of the invoice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -27804,6 +27971,7 @@ upon creation of the invoice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -28108,6 +28276,7 @@ upon creation of the invoice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -28251,6 +28420,7 @@ upon creation of the invoice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -28422,6 +28592,7 @@ upon creation of the invoice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -28535,6 +28706,7 @@ upon creation of the invoice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -28713,6 +28885,7 @@ upon creation of the invoice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -28762,6 +28935,7 @@ upon creation of the invoice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -28944,6 +29118,7 @@ upon creation of the invoice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -28989,6 +29164,7 @@ upon creation of the invoice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -29034,6 +29210,7 @@ upon creation of the invoice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -29213,6 +29390,7 @@ upon creation of the invoice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -29236,6 +29414,7 @@ upon creation of the invoice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -29272,6 +29451,7 @@ upon creation of the invoice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -29390,6 +29570,7 @@ upon creation of the invoice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -29579,6 +29760,7 @@ identified by the id, then 403 response will be returned
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -29621,6 +29803,7 @@ identified by the id, then 403 response will be returned
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -29657,6 +29840,7 @@ identified by the id, then 403 response will be returned
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -29766,6 +29950,7 @@ identified by the id, then 403 response will be returned</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -29968,6 +30153,7 @@ identified by the id, then 403 response will be returned</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -30023,6 +30209,7 @@ identified by the id, then 403 response will be returned</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -30210,6 +30397,7 @@ If the authenticated user does not have the permission to update the PatientPaym
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -30255,6 +30443,7 @@ If the authenticated user does not have the permission to update the PatientPaym
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -30294,6 +30483,7 @@ If the authenticated user does not have the permission to update the PatientPaym
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -30491,6 +30681,7 @@ by the id, then 403 will be returned
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -30514,6 +30705,7 @@ by the id, then 403 will be returned
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -30550,6 +30742,7 @@ by the id, then 403 will be returned
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -30730,6 +30923,7 @@ by the id, then 403 will be returned</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -30800,6 +30994,7 @@ by the id, then 403 will be returned</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -31042,6 +31237,7 @@ by the id, then 403 will be returned</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -31094,6 +31290,7 @@ by the id, then 403 will be returned</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -31130,6 +31327,7 @@ by the id, then 403 will be returned</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -31236,6 +31434,7 @@ by the id, then 403 will be returned</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -31547,6 +31746,7 @@ by the id, then 403 will be returned</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -31602,6 +31802,7 @@ by the id, then 403 will be returned</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -31641,6 +31842,7 @@ by the id, then 403 will be returned</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -31680,6 +31882,7 @@ by the id, then 403 will be returned</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -31962,6 +32165,7 @@ by the id, then 403 will be returned</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -31985,6 +32189,7 @@ by the id, then 403 will be returned</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -32021,6 +32226,7 @@ by the id, then 403 will be returned</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -32057,6 +32263,7 @@ by the id, then 403 will be returned</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -32215,6 +32422,7 @@ the current organization_id of the authenticated user.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -32287,6 +32495,7 @@ the current organization_id of the authenticated user.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -32554,6 +32763,7 @@ authenticated user, then response code of 403 will be returned.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -32606,6 +32816,7 @@ authenticated user, then response code of 403 will be returned.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -32642,6 +32853,7 @@ authenticated user, then response code of 403 will be returned.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -32827,6 +33039,7 @@ The order of specificity from the most specific to least specific is \`service_l
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -32884,6 +33097,7 @@ The order of specificity from the most specific to least specific is \`service_l
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -32925,6 +33139,7 @@ The order of specificity from the most specific to least specific is \`service_l
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -33233,6 +33448,7 @@ The order of specificity from the most specific to least specific is \`service_l
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -33288,6 +33504,7 @@ The order of specificity from the most specific to least specific is \`service_l
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -33327,6 +33544,7 @@ The order of specificity from the most specific to least specific is \`service_l
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -33366,6 +33584,7 @@ The order of specificity from the most specific to least specific is \`service_l
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -33686,6 +33905,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -33709,6 +33929,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -33745,6 +33966,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -33781,6 +34003,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -33903,6 +34126,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -34169,6 +34393,7 @@ current organization_id, then a response code of <code>403</code> will be return
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -34397,6 +34622,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -34435,6 +34661,7 @@ current organization_id, then a response code of <code>403</code> will be return
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -34582,6 +34809,7 @@ slashes.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -34686,6 +34914,7 @@ slashes.
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -34929,6 +35158,7 @@ identified by the id, then 403 response will be returned
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -34977,6 +35207,7 @@ identified by the id, then 403 response will be returned
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -35013,6 +35244,7 @@ identified by the id, then 403 response will be returned
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -35122,6 +35354,7 @@ identified by the id, then 403 response will be returned</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -35335,6 +35568,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -35400,6 +35634,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -35453,6 +35688,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -35506,6 +35742,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -35769,6 +36006,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -35824,6 +36062,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -35867,6 +36106,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -35910,6 +36150,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -35953,6 +36194,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -36156,6 +36398,7 @@ by the id, then 403 will be returned
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -36179,6 +36422,7 @@ by the id, then 403 will be returned
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -36215,6 +36459,7 @@ by the id, then 403 will be returned
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -36355,6 +36600,7 @@ and the third party payment processor's customer can be identified by the patien
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -36410,6 +36656,7 @@ and the third party payment processor's customer can be identified by the patien
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -36526,6 +36773,7 @@ Verification includes that the provided token has all of the appropriate permiss
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -36624,6 +36872,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -36833,6 +37082,7 @@ as the billing_provider_npis should suffice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -37083,6 +37333,7 @@ as the billing_provider_npis should suffice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -37183,6 +37434,7 @@ as the billing_provider_npis should suffice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -37221,6 +37473,7 @@ as the billing_provider_npis should suffice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -37346,6 +37599,7 @@ as the billing_provider_npis should suffice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -37712,6 +37966,7 @@ as the billing_provider_npis should suffice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -37810,6 +38065,7 @@ as the billing_provider_npis should suffice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -37846,6 +38102,7 @@ as the billing_provider_npis should suffice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -37882,6 +38139,7 @@ as the billing_provider_npis should suffice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -38094,6 +38352,7 @@ as the billing_provider_npis should suffice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -38157,6 +38416,7 @@ as the billing_provider_npis should suffice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -38336,6 +38596,7 @@ as the billing_provider_npis should suffice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -38370,6 +38631,7 @@ as the billing_provider_npis should suffice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -38510,6 +38772,7 @@ as the billing_provider_npis should suffice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -38558,6 +38821,7 @@ as the billing_provider_npis should suffice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -38687,6 +38951,7 @@ as the billing_provider_npis should suffice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -38946,6 +39211,7 @@ as the billing_provider_npis should suffice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -39008,6 +39274,7 @@ as the billing_provider_npis should suffice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -39044,6 +39311,7 @@ as the billing_provider_npis should suffice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -39234,6 +39502,7 @@ as the billing_provider_npis should suffice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -39306,6 +39575,7 @@ as the billing_provider_npis should suffice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -39441,6 +39711,7 @@ as the billing_provider_npis should suffice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -39534,6 +39805,7 @@ as the billing_provider_npis should suffice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -39700,6 +39972,7 @@ as the billing_provider_npis should suffice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -39889,6 +40162,7 @@ as the billing_provider_npis should suffice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -40027,6 +40301,7 @@ as the billing_provider_npis should suffice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -40098,6 +40373,7 @@ as the billing_provider_npis should suffice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -40246,6 +40522,7 @@ as the billing_provider_npis should suffice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -40317,6 +40594,7 @@ as the billing_provider_npis should suffice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -40429,6 +40707,7 @@ as the billing_provider_npis should suffice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -40580,6 +40859,7 @@ as the billing_provider_npis should suffice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -40638,6 +40918,7 @@ as the billing_provider_npis should suffice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -40825,6 +41106,7 @@ as the billing_provider_npis should suffice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -40883,6 +41165,7 @@ as the billing_provider_npis should suffice.</p>
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -40987,6 +41270,7 @@ as the billing_provider_npis should suffice.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -89521,6 +89805,7 @@ Object {
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -89920,6 +90205,7 @@ Object {
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -90878,6 +91164,7 @@ Object {
         "examples": Array [
           Object {
             "codeExamples": Object {
+              "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
               "typescriptSdk": undefined,
@@ -90918,6 +91205,7 @@ Object {
           },
           Object {
             "codeExamples": Object {
+              "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
               "typescriptSdk": undefined,
@@ -90961,6 +91249,7 @@ Object {
           },
           Object {
             "codeExamples": Object {
+              "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
               "typescriptSdk": undefined,
@@ -91004,6 +91293,7 @@ Object {
           },
           Object {
             "codeExamples": Object {
+              "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
               "typescriptSdk": undefined,
@@ -91245,6 +91535,7 @@ Object {
         "examples": Array [
           Object {
             "codeExamples": Object {
+              "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
               "typescriptSdk": undefined,
@@ -91354,6 +91645,7 @@ Object {
           },
           Object {
             "codeExamples": Object {
+              "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
               "typescriptSdk": undefined,
@@ -91397,6 +91689,7 @@ Object {
           },
           Object {
             "codeExamples": Object {
+              "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
               "typescriptSdk": undefined,
@@ -91444,6 +91737,7 @@ Object {
           },
           Object {
             "codeExamples": Object {
+              "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
               "typescriptSdk": undefined,
@@ -91487,6 +91781,7 @@ Object {
           },
           Object {
             "codeExamples": Object {
+              "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
               "typescriptSdk": undefined,
@@ -91709,6 +92004,7 @@ Object {
         "examples": Array [
           Object {
             "codeExamples": Object {
+              "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
               "typescriptSdk": undefined,
@@ -91749,6 +92045,7 @@ Object {
           },
           Object {
             "codeExamples": Object {
+              "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
               "typescriptSdk": undefined,
@@ -91792,6 +92089,7 @@ Object {
           },
           Object {
             "codeExamples": Object {
+              "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
               "typescriptSdk": undefined,
@@ -91839,6 +92137,7 @@ Object {
           },
           Object {
             "codeExamples": Object {
+              "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
               "typescriptSdk": undefined,
@@ -91882,6 +92181,7 @@ Object {
           },
           Object {
             "codeExamples": Object {
+              "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
               "typescriptSdk": undefined,
@@ -92078,6 +92378,7 @@ Object {
         "examples": Array [
           Object {
             "codeExamples": Object {
+              "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
               "typescriptSdk": undefined,
@@ -92145,6 +92446,7 @@ Object {
           },
           Object {
             "codeExamples": Object {
+              "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
               "typescriptSdk": undefined,
@@ -92176,6 +92478,7 @@ Object {
           },
           Object {
             "codeExamples": Object {
+              "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
               "typescriptSdk": undefined,
@@ -92207,6 +92510,7 @@ Object {
           },
           Object {
             "codeExamples": Object {
+              "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
               "typescriptSdk": undefined,
@@ -92398,6 +92702,7 @@ Object {
         "examples": Array [
           Object {
             "codeExamples": Object {
+              "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
               "typescriptSdk": undefined,
@@ -92430,6 +92735,7 @@ Object {
           },
           Object {
             "codeExamples": Object {
+              "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
               "typescriptSdk": undefined,
@@ -92465,6 +92771,7 @@ Object {
           },
           Object {
             "codeExamples": Object {
+              "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
               "typescriptSdk": undefined,
@@ -92500,6 +92807,7 @@ Object {
           },
           Object {
             "codeExamples": Object {
+              "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
               "typescriptSdk": undefined,
@@ -92627,6 +92935,7 @@ Object {
         "examples": Array [
           Object {
             "codeExamples": Object {
+              "goSdk": undefined,
               "nodeAxios": "",
               "pythonSdk": undefined,
               "typescriptSdk": undefined,
@@ -92910,6 +93219,7 @@ Object {
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -93058,6 +93368,7 @@ Object {
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -93271,6 +93582,7 @@ Object {
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -93458,6 +93770,7 @@ Object {
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -93649,6 +93962,7 @@ Object {
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -93783,6 +94097,7 @@ Object {
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -93814,6 +94129,7 @@ Object {
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -93841,6 +94157,7 @@ Object {
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -93868,6 +94185,7 @@ Object {
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -93969,6 +94287,7 @@ Object {
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -94191,6 +94510,7 @@ Object {
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -94372,6 +94692,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -94499,6 +94820,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
             },
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -94754,6 +95076,7 @@ or overwritten with default values.",
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -94966,6 +95289,7 @@ or overwritten with default values.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -95090,6 +95414,7 @@ or overwritten with default values.",
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,
@@ -95281,6 +95606,7 @@ or overwritten with default values.</p>
           "examples": Array [
             Object {
               "codeExamples": Object {
+                "goSdk": undefined,
                 "nodeAxios": "",
                 "pythonSdk": undefined,
                 "typescriptSdk": undefined,

@@ -69,4 +69,28 @@ export class SDKSnippetHolder {
             client: snippetsForEndpoint[0]?.client,
         };
     }
+
+    public getGoCodeSnippetForEndpoint({
+        endpointPath,
+        endpointMethod,
+    }: {
+        endpointPath: string;
+        endpointMethod: FdrAPI.EndpointMethod;
+    }): APIV1Read.TypescriptSnippet | undefined {
+        if (this.snippetsConfigWithSdkId.goSdk == null) {
+            return undefined;
+        }
+        const sdkId = this.snippetsConfigWithSdkId.goSdk.sdkId;
+        const snippetsForEndpoint = this.snippetsBySdkId[sdkId]?.[endpointPath]?.[endpointMethod];
+        // if no snippets for this endpoint or multiple snippets just return undefined
+        if (snippetsForEndpoint == null || snippetsForEndpoint.length > 1) {
+            return undefined;
+        }
+        if (snippetsForEndpoint[0]?.type !== "go") {
+            return undefined;
+        }
+        return {
+            client: snippetsForEndpoint[0]?.client,
+        };
+    }
 }

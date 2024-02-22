@@ -9,7 +9,15 @@ This repo contains the backend code for the Fern Definition Registry (FDR) as we
 - Make sure Node.js 18+ and Yarn are installed on your machine
 - Make sure you have fern-api installed: `npm install -g fern-api`
 
-Once you've cloned the repo to your favourite directory run `yarn` from project root. This will install the dependencies for all workspaces.
+Once you've cloned the repo to your favourite directory run the following:
+
+```bash
+yarn
+fern generate
+```
+
+This will install the dependencies for all workspaces, and generate the SDKs required by
+the FDR app.
 
 ### Directory Structure
 
@@ -32,7 +40,7 @@ Builds all apps and packages.
 yarn build
 ```
 
-To build specifically the `fdr` app run. To build the FDR app you first need to generate Fern SDKs by running `fern generate`.
+To build specifically the `fdr` app run.
 
 ```bash
 yarn build:fdr

@@ -491,10 +491,15 @@ function transformCodeExamples({
         endpointMethod: endpointDefinition.method,
         endpointPath: getEndpointPathAsString(endpointDefinition),
     });
+    const maybeGoSnippet = snippets.getGoCodeSnippetForEndpoint({
+        endpointMethod: endpointDefinition.method,
+        endpointPath: getEndpointPathAsString(endpointDefinition),
+    });
     return {
         nodeAxios: "",
         pythonSdk: maybePythonSnippet,
         typescriptSdk: maybeTypescriptSnippet,
+        goSdk: maybeGoSnippet,
     };
 }
 
