@@ -152,7 +152,7 @@ export function transformNavigationTabForDb(writeShape: DocsV1Write.NavigationTa
     return {
         ...writeShape,
         items: writeShape.items.map(transformNavigationItemForDb),
-        urlSlug: kebabCase(writeShape.title),
+        urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
     };
 }
 
@@ -182,6 +182,12 @@ export function transformNavigationItemForDb(writeShape: DocsV1Write.NavigationI
                 collapsed: writeShape.collapsed ?? false,
                 items: writeShape.items.map((item) => transformNavigationItemForDb(item)),
                 skipUrlSlug: writeShape.skipUrlSlug ?? false,
+            };
+        case "link":
+            return {
+                type: "link",
+                title: writeShape.title,
+                url: writeShape.url,
             };
     }
 }
@@ -220,6 +226,8 @@ function getReferencedApiDefinitionIdFromItem(item: DocsV1Db.NavigationItem): Fd
             return [];
         case "section":
             return item.items.flatMap((sectionItem) => getReferencedApiDefinitionIdFromItem(sectionItem));
+        case "link":
+            return [];
         default:
             assertNever(item);
     }

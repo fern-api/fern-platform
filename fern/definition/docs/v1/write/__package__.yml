@@ -196,15 +196,15 @@ types:
 
   NavbarLink:
     union:
-      primary: NavbarPrimaryLink
-      secondary: NavbarSecondaryLink
+      filled: NavbarLinkMetadata
+      outlined: NavbarLinkMetadata
+      minimal: NavbarLinkMetadata
 
-  NavbarPrimaryLink:
-    properties:
-      url: string
-      text: string
+      # deprecated
+      primary: NavbarLinkMetadata # -> outlined
+      secondary: NavbarLinkMetadata # -> minimal
 
-  NavbarSecondaryLink:
+  NavbarLinkMetadata:
     properties:
       url: string
       text: string
@@ -230,6 +230,7 @@ types:
       title: string
       icon: string
       items: list<NavigationItem>
+      urlSlugOverride: optional<string>
 
   UnversionedUntabbedNavigationConfig:
     properties:
@@ -283,12 +284,18 @@ types:
       page: PageMetadata
       api: ApiSection
       section: DocsSection
+      link: LinkMetadata
 
   PageMetadata:
     properties:
       title: string
       id: PageId
       urlSlugOverride: optional<string>
+
+  LinkMetadata:
+    properties:
+      title: string
+      url: string
 
   ApiSection:
     properties:

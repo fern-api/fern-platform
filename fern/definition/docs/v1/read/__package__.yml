@@ -315,6 +315,7 @@ types:
       page: PageMetadata
       api: ApiSection
       section: DocsSection
+      link: LinkMetadata
 
   PageMetadata:
     properties:
@@ -322,17 +323,22 @@ types:
       title: string
       urlSlug: string
 
+  LinkMetadata:
+    properties:
+      title: string
+      url: string
+
   NavbarLink:
     union:
-      primary: NavbarPrimaryLink
-      secondary: NavbarSecondaryLink
+      filled: NavbarLinkMetadata
+      outlined: NavbarLinkMetadata
+      minimal: NavbarLinkMetadata
 
-  NavbarPrimaryLink:
-    properties:
-      url: string
-      text: string
+      # deprecated
+      primary: NavbarLinkMetadata # -> outlined
+      secondary: NavbarLinkMetadata # -> minimal
 
-  NavbarSecondaryLink:
+  NavbarLinkMetadata:
     properties:
       url: string
       text: string
