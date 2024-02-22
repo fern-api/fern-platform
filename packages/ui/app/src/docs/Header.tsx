@@ -48,7 +48,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                         className="group cursor-pointer"
                         href={navbarLink.url}
                         target="_blank"
-                        intent="primary"
+                        intent={navbarLink.type === "primary" || navbarLink.type === "filled" ? "primary" : "none"}
                         rightIcon={
                             navbarLink.type === "primary" ||
                             (navbarLink.type === "filled" && idx === navbarLinks.length - 1) ? (
