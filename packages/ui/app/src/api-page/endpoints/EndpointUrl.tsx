@@ -31,7 +31,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
         const elements: (ReactElement | null)[] = [];
         if (showEnvironment && environment != null) {
             elements.push(
-                <span key="base-url" className="text-faded whitespace-nowrap">
+                <span key="base-url" className="text-faded whitespace-nowrap max-sm:hidden">
                     {environment}
                 </span>,
             );

@@ -41,7 +41,7 @@ const GAP_6 = 24;
 const TITLED_EXAMPLE_PADDING = 43;
 const PADDING_TOP = 32;
 const PADDING_BOTTOM = 40;
-const LINE_HEIGHT = 21.5;
+const LINE_HEIGHT = 20;
 const MOBILE_MAX_LINES = 20;
 const CONTENT_PADDING = 40 + TITLED_EXAMPLE_PADDING;
 
@@ -184,8 +184,8 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     const [requestHeight, responseHeight] = useMemo((): [number, number] => {
         if (!["lg", "xl", "2xl"].includes(layoutBreakpoint)) {
-            const requestLines = Math.min(MOBILE_MAX_LINES + 0.5, selectedExampleClientLineCount);
-            const responseLines = Math.min(MOBILE_MAX_LINES + 0.5, jsonLineLength);
+            const requestLines = Math.min(MOBILE_MAX_LINES + 1, selectedExampleClientLineCount);
+            const responseLines = Math.min(MOBILE_MAX_LINES + 1, jsonLineLength);
             const requestContainerHeight = requestLines * LINE_HEIGHT + CONTENT_PADDING;
             const responseContainerHeight = responseLines * LINE_HEIGHT + CONTENT_PADDING;
             return [requestContainerHeight, responseContainerHeight];
@@ -220,7 +220,9 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         selectedClient.exampleCall?.responseBody,
     ]);
 
-    const exampleHeight = requestHeight + responseHeight + GAP_6 + 70;
+    const padding = ["mobile", "sm", "md"].includes(layoutBreakpoint) ? 0 : 32;
+    const exampleHeight =
+        requestHeight + responseHeight + (responseHeight > 0 && requestHeight > 0 ? GAP_6 : 0) + padding;
 
     return (
         <div
@@ -288,12 +290,12 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                         className={classNames(
                             "max-w-content-width",
                             "lg:flex-1 lg:sticky lg:self-start",
-                            "pb-10 pt-8",
+                            "mt-12 lg:mt-8",
                             // the 4rem is the same as the h-10 as the Header
                             "max-h-[150vh] lg:max-h-vh-minus-header",
                             "flex",
                             // header offset
-                            "mt-10 lg:mt-0 lg:top-header-height",
+                            "lg:mt-0 lg:top-header-height",
                         )}
                         style={{ height: `${exampleHeight}px` }}
                     >
