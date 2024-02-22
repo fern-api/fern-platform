@@ -226,20 +226,14 @@ export const Li: React.FC<DetailedHTMLProps<LiHTMLAttributes<HTMLLIElement>, HTM
 };
 
 export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, children, href, ...rest }) => {
-    const isExternalUrl = href != null && href.includes("http");
+    const isExternalUrl = href != null && href.startsWith("http");
 
     const classNamesCombined = classNames("fern-mdx-link", className);
 
     const hideExternalLinkIcon = React.isValidElement(children) && (children.type === "img" || children.type === Img);
 
     return (
-        <Link
-            className={classNamesCombined}
-            href={href ?? "#"}
-            target={isExternalUrl ? "_blank" : undefined}
-            rel={isExternalUrl ? "noopener noreferrer" : undefined}
-            {...rest}
-        >
+        <Link className={classNamesCombined} href={href ?? "#"} target={isExternalUrl ? "_blank" : undefined} {...rest}>
             {React.isValidElement(children) && isImgElement(children)
                 ? React.cloneElement<ImgProps>(children, { disableZoom: true })
                 : children}

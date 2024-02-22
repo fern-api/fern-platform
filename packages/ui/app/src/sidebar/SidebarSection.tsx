@@ -1,12 +1,13 @@
 import { joinUrlSlugs } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { isEqual } from "lodash-es";
 import { Fragment, memo, useCallback } from "react";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { ExpandableSidebarApiSection, SidebarApiSection } from "./SidebarApiSection";
 import { SidebarHeading } from "./SidebarHeading";
-import { SidebarSlugLink } from "./SidebarLink";
+import { SidebarLink, SidebarSlugLink } from "./SidebarLink";
 import { SidebarNode } from "./types";
 
 export interface SidebarSectionProps {
@@ -76,19 +77,32 @@ export const SidebarSection = memo<SidebarSectionProps>(function SidebarSection(
                 visitDiscriminatedUnion(navigationItem, "type")._visit({
                     pageGroup: ({ pages }) => (
                         <Fragment key={idx}>
-                            {pages.map((page, pageIdx) => (
-                                <SidebarSlugLink
-                                    key={page.id}
-                                    className={classNames({
-                                        "mt-6": topLevel && pageIdx === 0,
-                                    })}
-                                    slug={page.slug}
-                                    depth={Math.max(depth - 1, 0)}
-                                    registerScrolledToPathListener={registerScrolledToPathListener}
-                                    title={page.title}
-                                    selected={isEqual(selectedSlug, page.slug)}
-                                />
-                            ))}
+                            {pages.map((page, pageIdx) =>
+                                page.type === "page" ? (
+                                    <SidebarSlugLink
+                                        key={page.id}
+                                        className={classNames({
+                                            "mt-6": topLevel && pageIdx === 0,
+                                        })}
+                                        slug={page.slug}
+                                        depth={Math.max(depth - 1, 0)}
+                                        registerScrolledToPathListener={registerScrolledToPathListener}
+                                        title={page.title}
+                                        selected={isEqual(selectedSlug, page.slug)}
+                                    />
+                                ) : (
+                                    <SidebarLink
+                                        key={pageIdx}
+                                        className={classNames({
+                                            "mt-6": topLevel && pageIdx === 0,
+                                        })}
+                                        depth={Math.max(depth - 1, 0)}
+                                        title={page.title}
+                                        rightElement={<ExternalLinkIcon />}
+                                        href={page.url}
+                                    />
+                                ),
+                            )}
                         </Fragment>
                     ),
                     section: (section) => {

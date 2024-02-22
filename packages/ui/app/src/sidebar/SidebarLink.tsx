@@ -63,6 +63,7 @@ export const SidebarLink = memo(function SidebarSlugLinkContent(
                     onClick?.(e);
                     toggleExpand?.();
                 }}
+                target={"_blank"}
                 shallow={shallow}
             >
                 {child}
