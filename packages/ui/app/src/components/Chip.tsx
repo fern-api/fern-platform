@@ -7,8 +7,6 @@ type ChipProps = {
     description: string | undefined;
 };
 
-//Consider using Tailwind/Flowbite to create custom tooltips
-//Docs: https://flowbite.com/docs/components/tooltips/
 export const Chip = ({ name, description = undefined }: ChipProps): ReactElement => {
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(name);
     return (
@@ -17,7 +15,7 @@ export const Chip = ({ name, description = undefined }: ChipProps): ReactElement
             content={wasJustCopied ? "Copied!" : description}
         >
             <span
-                className="t-default bg-tag-default hover:bg-tag-default-hover cursor-default rounded-md px-1.5 py-1 text-xs"
+                className="t-default bg-tag-default hover:bg-tag-default-hover cursor-default rounded-md px-1.5 py-1 font-mono text-xs"
                 onClick={copyToClipboard}
             >
                 <span>{name}</span>

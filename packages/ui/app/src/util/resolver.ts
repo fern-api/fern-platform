@@ -682,7 +682,7 @@ export interface ResolvedWebSocketChannel
     defaultEnvironment: APIV1Read.Environment | undefined;
 }
 
-interface ResolvedWebSocketMessage extends Omit<APIV1Read.WebSocketMessage, "body"> {
+export interface ResolvedWebSocketMessage extends Omit<APIV1Read.WebSocketMessage, "body"> {
     body: ResolvedTypeReference;
 }
 

@@ -1,22 +1,30 @@
-thead > tr {
-    @apply bg-tag-default;
+.fern-table {
+    @apply fern-card mb-3 overflow-x-auto rounded-lg;
 
-    > th {
-        @apply border-b border-default;
+    table {
+        @apply border-separate border-spacing-0 table-auto text-sm w-full break-normal;
     }
-}
 
-tbody > tr {
-    &:nth-child(even) {
-        @apply bg-tag-default-soft;
+    thead > tr {
+        @apply bg-tag-default;
 
-        > td {
-            @apply border-b border-t border-default;
+        > th {
+            @apply border-b border-default;
         }
     }
 
-    &:last-child > td {
-        border-bottom: none !important;
+    tbody > tr {
+        &:nth-child(even) {
+            @apply bg-tag-default-soft;
+
+            > td {
+                @apply border-b border-t border-default;
+            }
+        }
+
+        &:last-child > td {
+            border-bottom: none !important;
+        }
     }
 }
 

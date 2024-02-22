@@ -24,14 +24,8 @@ export const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({ className, .
 
 export const Table: React.FC<HTMLAttributes<HTMLTableElement>> = ({ className, ...rest }) => {
     return (
-        <div className="fern-card mb-3 overflow-x-auto rounded-lg">
-            <table
-                {...rest}
-                className={classNames(
-                    className,
-                    "border-separate border-spacing-0 table-auto text-sm w-full not-prose break-normal",
-                )}
-            />
+        <div className="fern-table not-prose">
+            <table {...rest} className={classNames(className)} />
         </div>
     );
 };
