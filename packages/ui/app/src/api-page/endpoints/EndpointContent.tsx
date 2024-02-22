@@ -290,12 +290,12 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                         className={classNames(
                             "max-w-content-width",
                             "lg:flex-1 lg:sticky lg:self-start",
-                            "mt-12 lg:mt-8",
+                            "mt-12",
                             // the 4rem is the same as the h-10 as the Header
                             "max-h-[150vh] lg:max-h-vh-minus-header",
                             "flex",
                             // header offset
-                            "lg:mt-0 lg:top-header-height",
+                            "lg:pt-8 lg:mt-0 lg:top-header-height",
                         )}
                         style={{ height: `${exampleHeight}px` }}
                     >

@@ -36,7 +36,7 @@ export declare namespace SidebarNode {
         id: string;
         slug: string[];
         title: string;
-        description?: string;
+        description: string | null;
     }
 
     export interface Link {
@@ -62,38 +62,50 @@ function resolveSidebarNodeApiSection(
         return;
     }
     const slug = [...parentSlugs, subpackage.urlSlug];
-    const endpoints = subpackage.endpoints.map(
-        (endpoint): SidebarNode.EndpointPage => ({
-            type: "page",
-            id: endpoint.id,
-            slug: [...slug, endpoint.urlSlug],
-            title: endpoint.name != null ? endpoint.name : stringifyEndpointPathParts(endpoint.path.parts),
-            description: endpoint.description,
-            method: endpoint.method,
-            stream: endpoint.response?.type.type === "stream",
-        }),
+    const endpoints = sortBy(
+        subpackage.endpoints.map(
+            (endpoint): SidebarNode.EndpointPage => ({
+                type: "page",
+                id: endpoint.id,
+                slug: [...slug, endpoint.urlSlug],
+                title: endpoint.name != null ? endpoint.name : stringifyEndpointPathParts(endpoint.path.parts),
+                description: endpoint.description ?? null,
+                method: endpoint.method,
+                stream: endpoint.response?.type.type === "stream",
+            }),
+        ),
+        "title",
     );
-    const websockets = subpackage.websockets.map(
-        (websocket): SidebarNode.Page => ({
-            type: "page",
-            id: websocket.id,
-            slug: [...slug, websocket.urlSlug],
-            title: websocket.name != null ? websocket.name : stringifyEndpointPathParts(websocket.path.parts),
-            description: websocket.description,
-        }),
+    const websockets = sortBy(
+        subpackage.websockets.map(
+            (websocket): SidebarNode.Page => ({
+                type: "page",
+                id: websocket.id,
+                slug: [...slug, websocket.urlSlug],
+                title: websocket.name != null ? websocket.name : stringifyEndpointPathParts(websocket.path.parts),
+                description: websocket.description ?? null,
+            }),
+        ),
+        "title",
     );
-    const webhooks = subpackage.webhooks.map(
-        (webhook): SidebarNode.Page => ({
-            type: "page",
-            id: webhook.id,
-            slug: [...slug, webhook.urlSlug],
-            title: webhook.name != null ? webhook.name : "/" + webhook.path.join("/"),
-            description: webhook.description,
-        }),
+    const webhooks = sortBy(
+        subpackage.webhooks.map(
+            (webhook): SidebarNode.Page => ({
+                type: "page",
+                id: webhook.id,
+                slug: [...slug, webhook.urlSlug],
+                title: webhook.name != null ? webhook.name : "/" + webhook.path.join("/"),
+                description: webhook.description ?? null,
+            }),
+        ),
+        "title",
     );
-    const subpackages = subpackage.subpackages
-        .map((innerSubpackageId) => resolveSidebarNodeApiSection(api, innerSubpackageId, subpackagesMap, slug))
-        .filter(isNonNullish);
+    const subpackages = sortBy(
+        subpackage.subpackages
+            .map((innerSubpackageId) => resolveSidebarNodeApiSection(api, innerSubpackageId, subpackagesMap, slug))
+            .filter(isNonNullish),
+        "title",
+    );
 
     if (endpoints.length === 0 && webhooks.length === 0 && websockets.length === 0 && subpackages.length === 0) {
         return;
@@ -132,6 +144,7 @@ export function resolveSidebarNodes(
                         ...page,
                         slug: [...parentSlugs, page.urlSlug],
                         type: "page",
+                        description: null,
                     });
                 } else {
                     sidebarNodes.push({
@@ -141,6 +154,7 @@ export function resolveSidebarNodes(
                                 ...page,
                                 slug: [...parentSlugs, page.urlSlug],
                                 type: "page",
+                                description: null,
                             },
                         ],
                     });
@@ -167,7 +181,7 @@ export function resolveSidebarNodes(
                                         : stringifyEndpointPathParts(endpoint.path.parts),
                                 method: endpoint.method,
                                 stream: endpoint.response?.type.type === "stream",
-                                description: endpoint.description,
+                                description: endpoint.description ?? null,
                             })),
                             "title",
                         ),
@@ -177,7 +191,7 @@ export function resolveSidebarNodes(
                                 id: webhook.id,
                                 slug: [...definitionSlug, webhook.urlSlug],
                                 title: webhook.name != null ? webhook.name : "/" + webhook.path.join("/"),
-                                description: webhook.description,
+                                description: webhook.description ?? null,
                             })),
                             "title",
                         ),
@@ -190,6 +204,7 @@ export function resolveSidebarNodes(
                                     websocket.name != null
                                         ? websocket.name
                                         : stringifyEndpointPathParts(websocket.path.parts),
+                                description: websocket.description ?? null,
                             })),
                             "title",
                         ),
