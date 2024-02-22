@@ -2,7 +2,7 @@ import { visitUnversionedDbNavigationConfig } from "@fern-api/fdr-sdk";
 import { v4 as uuid } from "uuid";
 import { APIV1Db, APIV1Read, DocsV1Db } from "../../api";
 import { LOGGER } from "../../app/FdrApplication";
-import { convertMarkdownToText, truncateToBytes } from "../../util";
+import { assertNever, convertMarkdownToText, truncateToBytes } from "../../util";
 import { compact } from "../../util/object";
 import type { AlgoliaSearchRecord, IndexSegment } from "./types";
 
@@ -140,7 +140,7 @@ export class AlgoliaSearchRecordGenerator {
                     }),
                 ),
             );
-        } else {
+        } else if (item.type === "page") {
             const page = item;
             const pageContent = this.config.docsDefinition.pages[page.id];
             if (pageContent == null) {
@@ -170,7 +170,10 @@ export class AlgoliaSearchRecordGenerator {
                     indexSegmentId: indexSegment.id,
                 }),
             ];
+        } else if (item.type === "link") {
+            return [];
         }
+        assertNever(item);
     }
 
     private generateAlgoliaSearchRecordsForApiDefinition(

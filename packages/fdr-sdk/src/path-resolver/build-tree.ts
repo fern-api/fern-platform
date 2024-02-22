@@ -8,6 +8,7 @@ import type {
     NodeDocsContext,
     ParentDocsNode,
 } from "./types";
+import { isNonNullish } from "./util/isNonNullish";
 import { joinUrlSlugs } from "./util/slug";
 
 type BuildContext =
@@ -210,14 +211,16 @@ function buildNodesForNavigationItems({
     section: DocsV1Read.DocsSection | null;
     context: NodeDocsContext;
 }): ChildDocsNode[] {
-    return items.map((childItem) =>
-        buildNodeForNavigationItem({
-            item: childItem,
-            parentSlugs: [...parentSlugs],
-            section,
-            context,
-        }),
-    ) as ChildDocsNode[];
+    return items
+        .map((childItem) =>
+            buildNodeForNavigationItem({
+                item: childItem,
+                parentSlugs: [...parentSlugs],
+                section,
+                context,
+            }),
+        )
+        .filter(isNonNullish);
 }
 
 function buildNodeForNavigationItem({
@@ -230,7 +233,7 @@ function buildNodeForNavigationItem({
     parentSlugs: string[];
     section: DocsV1Read.DocsSection | null;
     context: NodeDocsContext;
-}): DocsNode {
+}): ChildDocsNode | undefined {
     switch (item.type) {
         case "page": {
             const page = item;
@@ -258,6 +261,8 @@ function buildNodeForNavigationItem({
                 context,
             });
         }
+        case "link":
+            return undefined;
     }
 }
 
@@ -293,7 +298,7 @@ function buildNodeForApiSection({
     section: DocsV1Read.ApiSection;
     parentSlugs: string[];
     context: NodeDocsContext;
-}): DocsNode {
+}): ChildDocsNode {
     const { definition } = context.root.info;
     const sectionNode = NodeFactory.createApiSection({
         section,

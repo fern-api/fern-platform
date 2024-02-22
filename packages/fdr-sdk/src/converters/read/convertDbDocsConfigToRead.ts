@@ -138,6 +138,7 @@ export function transformNavigationItemForDb(dbShape: DocsV1Db.NavigationItem): 
                 showErrors: dbShape.showErrors ?? false,
             };
         case "page":
+        case "link":
             return dbShape;
         case "section":
             return {
