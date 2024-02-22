@@ -192,8 +192,12 @@ export function renderJsonLineValue(line: JsonLine): ReactNode {
         listStart: () => <span className="text-text-default-light dark:text-text-default-dark">{"["}</span>,
         listEnd: () => <span className="text-text-default-light dark:text-text-default-dark">{"]"}</span>,
         string: (line) => <JsonExampleString value={line.value} newLineColOffset={line.depth * TAB_WIDTH} />,
-        number: (line) => <span className="text-[#d67653]">{line.value}</span>,
-        boolean: (line) => <span className="font-medium text-[#738ee8]">{line.value.toString()}</span>,
+        number: (line) => <span className="text-[rgb(153,0,85)] dark:text-[rgb(181,206,168)]">{line.value}</span>,
+        boolean: (line) => (
+            <span className="font-medium text-[rgb(153,0,85)] dark:text-[rgb(86,156,214)]">
+                {line.value.toString()}
+            </span>
+        ),
         null: () => <span className="italic">null</span>,
     });
 }

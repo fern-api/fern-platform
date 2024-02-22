@@ -43,13 +43,15 @@ export function resolveNavigationItems(
                         hasMultipleBaseUrls: definition.hasMultipleBaseUrls,
                         slug: [...parentSlugs, api.urlSlug],
                         endpoints: sortBy(
-                            definition.rootPackage.endpoints.map((endpoint) =>
-                                resolveEndpointDefinition(
-                                    definition.id,
-                                    definition.id,
-                                    endpoint,
-                                    definition.types,
-                                    definitionSlug,
+                            mergeContentTypes(
+                                definition.rootPackage.endpoints.map((endpoint) =>
+                                    resolveEndpointDefinition(
+                                        definition.id,
+                                        definition.id,
+                                        endpoint,
+                                        definition.types,
+                                        definitionSlug,
+                                    ),
                                 ),
                             ),
                             "title",
@@ -113,8 +115,10 @@ function resolveSubpackage(
     }
     const slug = [...parentSlugs, subpackage.urlSlug];
     const endpoints = sortBy(
-        subpackage.endpoints.map((endpoint) =>
-            resolveEndpointDefinition(apiSectionId, subpackageId, endpoint, types, slug),
+        mergeContentTypes(
+            subpackage.endpoints.map((endpoint) =>
+                resolveEndpointDefinition(apiSectionId, subpackageId, endpoint, types, slug),
+            ),
         ),
         "title",
     );
@@ -201,11 +205,14 @@ function resolveEndpointDefinition(
         })),
         requestBody:
             endpoint.request != null
-                ? {
-                      ...endpoint.request,
-                      shape: resolveRequestBodyShape(endpoint.request.type, types),
-                  }
-                : undefined,
+                ? [
+                      {
+                          contentType: endpoint.request.contentType,
+                          shape: resolveRequestBodyShape(endpoint.request.type, types),
+                          description: endpoint.request.description,
+                      },
+                  ]
+                : [],
         responseBody:
             endpoint.response != null
                 ? {
@@ -617,7 +624,7 @@ export interface ResolvedEndpointDefinition extends APIV1Read.WithDescription {
     pathParameters: ResolvedObjectProperty[];
     queryParameters: ResolvedObjectProperty[];
     headers: ResolvedObjectProperty[];
-    requestBody: ResolvedRequestBody | undefined;
+    requestBody: ResolvedRequestBody[];
     responseBody: ResolvedResponseBody | undefined;
     errors: ResolvedError[];
     examples: APIV1Read.ExampleEndpointCall[];
@@ -835,4 +842,29 @@ export function unwrapOptional(
         return unwrapOptional(shape.shape);
     }
     return shape;
+}
+
+// HACK: remove this function when we have a proper way to merge content types
+function mergeContentTypes(definitions: ResolvedEndpointDefinition[]): ResolvedEndpointDefinition[] {
+    const toRet: ResolvedEndpointDefinition[] = [];
+
+    definitions.forEach((definition) => {
+        if (!definition.id.endsWith("_multipart")) {
+            toRet.push(definition);
+        }
+    });
+
+    definitions.forEach((definition) => {
+        if (definition.id.endsWith("_multipart")) {
+            const baseId = definition.id.replace("_multipart", "");
+            const baseDefinition = toRet.find((def) => def.id === baseId);
+            if (baseDefinition) {
+                baseDefinition.requestBody = [...baseDefinition.requestBody, ...definition.requestBody];
+            } else {
+                toRet.push(definition);
+            }
+        }
+    });
+
+    return toRet;
 }

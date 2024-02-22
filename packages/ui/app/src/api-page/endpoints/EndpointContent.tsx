@@ -124,7 +124,11 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         return endpoint.examples.filter((e) => e.responseStatusCode === selectedError.statusCode) ?? null;
     }, [endpoint.examples, selectedError]);
 
-    const clients = useMemo(() => generateCodeExamples(examples), [examples]);
+    const [contentType, setContentType] = useState<string | undefined>(endpoint.requestBody[0]?.contentType);
+    const clients = useMemo(
+        () => generateCodeExamples(endpoint, examples, contentType?.includes("multipart/") ?? false),
+        [contentType, endpoint, examples],
+    );
     const [selectedLanguage, setSelectedLanguage] = useAtom(fernLanguageAtom);
     const [selectedClient, setSelectedClient] = useState<CodeExample>(() => {
         const curlExample = clients[0]?.examples[0];
@@ -147,12 +151,13 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     const curlLines = useMemo(
         () =>
             getCurlLines(
+                contentType,
                 apiSection.auth,
                 endpoint,
                 selectedClient.exampleCall,
                 flattenJsonToLines(selectedClient.exampleCall.requestBody),
             ),
-        [apiSection.auth, endpoint, selectedClient.exampleCall],
+        [apiSection.auth, contentType, endpoint, selectedClient.exampleCall],
     );
 
     const selectedExampleClientLineCount = useMemo(() => {
@@ -281,6 +286,8 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                                     selectedError={selectedError}
                                     setSelectedError={setSelectedError}
                                     route={route}
+                                    contentType={contentType}
+                                    setContentType={setContentType}
                                 />
                             </div>
                         )}

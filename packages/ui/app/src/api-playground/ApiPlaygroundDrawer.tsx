@@ -166,7 +166,7 @@ function getInitialModalFormState(
         headers: getDefaultValueForObjectProperties(endpoint?.headers),
         pathParameters: getDefaultValueForObjectProperties(endpoint?.pathParameters),
         queryParameters: getDefaultValueForObjectProperties(endpoint?.queryParameters),
-        body: getDefaultValuesForBody(endpoint?.requestBody?.shape),
+        body: getDefaultValuesForBody(endpoint?.requestBody[0]?.shape),
     };
 }
 

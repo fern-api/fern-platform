@@ -29,7 +29,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ curlLines, selectedPr
 
     const firstSelectedIdx = firstJsonLine > -1 && topLineAnchorIdx > -1 ? firstJsonLine + topLineAnchorIdx : undefined;
 
-    const curlElement = <span className="text-yellow-600 dark:text-yellow-100">{CURL_PREFIX}</span>;
+    const curlElement = <span className="text-[rgb(221,74,104)] dark:text-[rgb(220,220,170)]">{CURL_PREFIX}</span>;
 
     const itemContent = (index: number, part: CurlLine) => {
         switch (part.type) {

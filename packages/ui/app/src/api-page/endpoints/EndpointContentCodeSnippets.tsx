@@ -123,7 +123,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     <FernScrollArea style={{ maxHeight: requestHeight - TITLED_EXAMPLE_PADDING }}>
                         <CodeBlockSkeleton
                             content={selectedClient.code}
-                            language={selectedClient.language}
+                            language={selectedClient.language === "curl" ? "bash" : selectedClient.language}
                             fontSize="sm"
                         />
                     </FernScrollArea>

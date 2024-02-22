@@ -11,7 +11,7 @@ export declare namespace VirtualizedExample {
 }
 
 const LINE_HEIGHT = 20;
-const VERTICAL_PADDING = 14;
+const VERTICAL_PADDING = 12;
 
 export function VirtualizedExample<T>({
     data,

@@ -188,8 +188,8 @@ export function PlaygroundEndpointFormAside({
                         </div>
                     )}
 
-                    {endpoint.requestBody != null &&
-                        visitResolvedHttpRequestBodyShape(endpoint.requestBody.shape, {
+                    {endpoint.requestBody[0] != null &&
+                        visitResolvedHttpRequestBodyShape(endpoint.requestBody[0].shape, {
                             fileUpload: () => null,
                             typeReference: (shape) => {
                                 shape = shape.type === "reference" ? shape.shape() : shape;
