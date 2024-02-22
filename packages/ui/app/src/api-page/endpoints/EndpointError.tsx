@@ -1,8 +1,9 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { memo, MouseEventHandler } from "react";
 import { FernCollapse } from "../../components/FernCollapse";
-import { ResolvedError } from "../../util/resolver";
+import { ResolvedError, ResolvedTypeReference } from "../../util/resolver";
 import { toTitleCase } from "../../util/string";
 import { type JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
@@ -40,9 +41,9 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
     return (
         <button
             className={classNames(
-                "space flex flex-col items-start px-3 hover:bg-white/70 hover:dark:bg-tag-default-soft hover:transition-[background] py-3",
+                "space flex flex-col items-start px-3 hover:bg-tag-default-soft hover:transition-[background] py-3",
                 {
-                    "bg-white/70 dark:bg-tag-default-soft": isSelected,
+                    "bg-tag-default-soft": isSelected,
                 },
                 {
                     "border-default border-b": !isLast,
@@ -68,20 +69,49 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                         <div className="t-muted w-full text-start text-sm leading-7">
                             {`This error return ${renderTypeShorthand(error.shape, { withArticle: true })}.`}
                         </div>
-                        <div className="w-full text-start">
-                            <TypeReferenceDefinitions
-                                isCollapsible
-                                applyErrorStyles
-                                shape={error.shape}
-                                onHoverProperty={onHoverProperty}
-                                anchorIdParts={anchorIdParts}
-                                route={route}
-                                defaultExpandAll={defaultExpandAll}
-                            />
-                        </div>
+                        {shouldHideShape(error.shape) ? null : (
+                            <div className="w-full text-start">
+                                <TypeReferenceDefinitions
+                                    isCollapsible
+                                    applyErrorStyles
+                                    shape={error.shape}
+                                    onHoverProperty={onHoverProperty}
+                                    anchorIdParts={anchorIdParts}
+                                    route={route}
+                                    defaultExpandAll={defaultExpandAll}
+                                />
+                            </div>
+                        )}
                     </div>
                 </FernCollapse>
             )}
         </button>
     );
 });
+
+function shouldHideShape(shape: ResolvedTypeReference): boolean {
+    return visitDiscriminatedUnion(shape, "type")._visit<boolean>({
+        string: () => true,
+        boolean: () => true,
+        object: () => true,
+        undiscriminatedUnion: () => false,
+        discriminatedUnion: () => false,
+        enum: () => false,
+        integer: () => true,
+        double: () => true,
+        long: () => true,
+        datetime: () => true,
+        uuid: () => true,
+        base64: () => true,
+        date: () => true,
+        optional: (value) => shouldHideShape(value.shape),
+        list: (value) => shouldHideShape(value.shape),
+        set: (value) => shouldHideShape(value.shape),
+        map: () => false,
+        booleanLiteral: () => true,
+        stringLiteral: () => true,
+        unknown: () => true,
+        reference: (value) => shouldHideShape(value.shape()),
+        _other: () => true,
+    });
+}
