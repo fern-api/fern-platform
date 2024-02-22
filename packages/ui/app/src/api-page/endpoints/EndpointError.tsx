@@ -1,6 +1,7 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { memo, MouseEventHandler } from "react";
+import { FernCollapse } from "../../components/FernCollapse";
 import { ResolvedError } from "../../util/resolver";
 import { toTitleCase } from "../../util/string";
 import { type JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
@@ -39,9 +40,9 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
     return (
         <button
             className={classNames(
-                "space flex hover:bg-gray-100/90 dark:hover:bg-background-primary-dark flex-col items-start px-3",
+                "space flex flex-col items-start px-3 hover:bg-white/70 hover:dark:bg-tag-default-soft hover:transition-[background] py-3",
                 {
-                    "bg-gray-100/90 dark:bg-background-primary-dark": isSelected,
+                    "bg-white/70 dark:bg-tag-default-soft": isSelected,
                 },
                 {
                     "border-default border-b": !isLast,
@@ -50,38 +51,36 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                     "rounded-t-md": isFirst,
                     "rounded-b-md": isLast,
                 },
-                {
-                    "py-3": !isSelected,
-                    "pt-3": isSelected,
-                },
             )}
             onClick={onClick}
         >
             <div className="flex items-baseline space-x-2">
-                <div className="rounded bg-red-500/20 px-2 py-1 text-xs text-red-400">{error.statusCode}</div>
+                <div className="bg-tag-danger text-intent-danger rounded-lg px-2 py-1 text-xs">{error.statusCode}</div>
                 <div className="t-muted text-xs">
                     {error.name != null ? toTitleCase(error.name) : getErrorNameForStatus(error.statusCode)}
                 </div>
                 {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
             </div>
 
-            {isSelected && error.shape != null && (
-                <div className="w-full pb-3">
-                    <div className="t-muted mt-3 w-full text-start text-sm leading-7">
-                        {`This error return ${renderTypeShorthand(error.shape, { withArticle: true })}.`}
+            {error.shape != null && (
+                <FernCollapse isOpen={isSelected} className="w-full">
+                    <div className="space-y-2 pt-2">
+                        <div className="t-muted w-full text-start text-sm leading-7">
+                            {`This error return ${renderTypeShorthand(error.shape, { withArticle: true })}.`}
+                        </div>
+                        <div className="w-full text-start">
+                            <TypeReferenceDefinitions
+                                isCollapsible
+                                applyErrorStyles
+                                shape={error.shape}
+                                onHoverProperty={onHoverProperty}
+                                anchorIdParts={anchorIdParts}
+                                route={route}
+                                defaultExpandAll={defaultExpandAll}
+                            />
+                        </div>
                     </div>
-                    <div className="w-full text-start">
-                        <TypeReferenceDefinitions
-                            isCollapsible
-                            applyErrorStyles
-                            shape={error.shape}
-                            onHoverProperty={onHoverProperty}
-                            anchorIdParts={anchorIdParts}
-                            route={route}
-                            defaultExpandAll={defaultExpandAll}
-                        />
-                    </div>
-                </div>
+                </FernCollapse>
             )}
         </button>
     );

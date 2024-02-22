@@ -1,11 +1,9 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
-import { Cross2Icon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
 import { Chip } from "../../../components/Chip";
-import { FernCollapse } from "../../../components/FernCollapse";
 import { FernTooltipProvider } from "../../../components/FernTooltip";
 import { getAnchorId } from "../../../util/anchor";
 import { ResolvedTypeShape } from "../../../util/resolver";
@@ -18,7 +16,7 @@ import { DiscriminatedUnionVariant } from "../discriminated-union/DiscriminatedU
 import { ObjectProperty } from "../object/ObjectProperty";
 import { UndiscriminatedUnionVariant } from "../undiscriminated-union/UndiscriminatedUnionVariant";
 import { EnumTypeDefinition } from "./EnumTypeDefinition";
-import styles from "./InternalTypeDefinition.module.scss";
+import { FernCollapseWithButton } from "./FernCollapseWithButton";
 import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 
 export declare namespace InternalTypeDefinition {
@@ -166,62 +164,27 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     const toRet = (
         <div
             className={classNames(
-                "text-sm",
-                styles.internalTypeDefinitionContainer,
-                collapsableContent.elementNameSingular === "enum value" ? styles.enumContainer : undefined,
+                "text-sm internal-type-definition-container",
+                collapsableContent.elementNameSingular === "enum value" ? "enum-container" : undefined,
             )}
-            data-expanded={!isCollapsed}
         >
             {collapsableContent.elementNameSingular !== "enum value" ? (
-                <div
-                    className={classNames(
-                        styles.internalTypeDefinitionContent,
-                        "border-default flex flex-col overflow-visible rounded border",
-                        {
-                            "w-full": !isCollapsed,
-                            "w-fit": isCollapsed,
-                            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                            [styles.expanded!]: !isCollapsed,
-                        },
-                    )}
-                >
-                    {collapsableContent.elements.length > 0 && (
-                        <div
-                            {...containerCallbacks}
-                            className={classNames(
-                                "flex gap-1 items-center border-b hover:bg-tag-default cursor-pointer px-2 py-1 transition t-muted",
-                                {
-                                    "border-transparent": isCollapsed,
-                                    "border-default": !isCollapsed,
-                                },
-                            )}
-                            onClick={(e) => {
-                                toggleIsCollapsed();
-                                e.stopPropagation();
-                            }}
-                        >
-                            <Cross2Icon
-                                className={classNames("transition", {
-                                    "rotate-45": isCollapsed,
-                                })}
-                            />
-                            <div
-                                className={classNames(styles.showPropertiesButton, "select-none whitespace-nowrap")}
-                                data-show-text={showText}
-                            >
-                                {isCollapsed ? showText : hideText}
-                            </div>
-                        </div>
-                    )}
-                    <FernCollapse isOpen={!isCollapsed}>
+                collapsableContent.elements.length === 0 ? null : (
+                    <FernCollapseWithButton
+                        isOpen={!isCollapsed}
+                        toggleIsOpen={toggleIsCollapsed}
+                        showText={showText}
+                        hideText={hideText}
+                        buttonProps={containerCallbacks}
+                    >
                         <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
                             <TypeDefinitionDetails
                                 elements={collapsableContent.elements}
                                 separatorText={collapsableContent.separatorText}
                             />
                         </TypeDefinitionContext.Provider>
-                    </FernCollapse>
-                </div>
+                    </FernCollapseWithButton>
+                )
             ) : (
                 <EnumTypeDefinition
                     elements={collapsableContent.elements}

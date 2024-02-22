@@ -118,6 +118,7 @@ module.exports = {
                 "tag-danger-soft": "var(--red-a2)",
 
                 "tag-default": "var(--gray-a3)",
+                "tag-default-hover": "var(--gray-a4)",
                 "tag-primary-light": "rgba(var(--accent-primary-light), 15%)",
                 "tag-primary-dark": "rgba(var(--accent-primary-dark), 15%)",
                 "tag-warning": "var(--amber-a3)",
@@ -177,6 +178,9 @@ module.exports = {
                     from: { height: "var(--radix-accordion-content-height)" },
                     to: { height: 0 },
                 },
+            },
+            transitionTimingFunction: {
+                shift: "cubic-bezier(0.16, 1, 0.3, 1)",
             },
             animation: {
                 "slide-down-and-fade": "slide-down-and-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)",

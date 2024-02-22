@@ -299,6 +299,11 @@
         @apply focus:outline-accent-primary dark:focus:outline-accent-primary-dark;
         @apply cursor-default;
 
+        &.multiline,
+        &.multiline > .fern-button-content {
+            height: auto !important;
+        }
+
         &.rounded {
             @apply rounded-full;
         }
@@ -323,7 +328,13 @@
             }
 
             .fern-button-text {
-                @apply truncate shrink min-w-0;
+                @apply shrink min-w-0;
+            }
+        }
+
+        &:not(.multiline) {
+            .fern-button-text {
+                @apply truncate;
             }
         }
 
@@ -417,7 +428,7 @@
             &.minimal {
                 @apply bg-transparent;
                 @apply t-muted hover:t-default;
-                @apply hover:bg-tag-default data-[state=on]:bg-tag-default data-[state=checked]:bg-tag-default data-[state=open]:bg-tag-default;
+                @apply hover:bg-tag-default data-[state=on]:bg-tag-default data-[state=checked]:bg-tag-default data-[state=open]:bg-tag-default data-[state=opening]:bg-tag-default;
 
                 .fa-icon {
                     @apply bg-text-default-light/60;
@@ -431,7 +442,7 @@
 
                 &.primary {
                     @apply t-accent hover:t-accent;
-                    @apply hover:bg-tag-primary data-[state=on]:bg-tag-primary data-[state=checked]:bg-tag-primary data-[state=open]:bg-tag-primary;
+                    @apply hover:bg-tag-primary data-[state=on]:bg-tag-primary data-[state=checked]:bg-tag-primary data-[state=open]:bg-tag-primary data-[state=opening]:bg-tag-primary;
 
                     .fa-icon {
                         @apply bg-accent-aa;
@@ -440,7 +451,7 @@
 
                 &.success {
                     @apply t-success hover:t-success;
-                    @apply hover:bg-tag-success data-[state=on]:bg-tag-success data-[state=checked]:bg-tag-success data-[state=open]:bg-tag-success;
+                    @apply hover:bg-tag-success data-[state=on]:bg-tag-success data-[state=checked]:bg-tag-success data-[state=open]:bg-tag-success data-[state=opening]:bg-tag-success;
 
                     .fa-icon {
                         @apply bg-intent-success;
@@ -449,7 +460,7 @@
 
                 &.warning {
                     @apply t-warning hover:t-warning;
-                    @apply hover:bg-tag-warning data-[state=on]:bg-tag-warning data-[state=checked]:bg-tag-warning data-[state=open]:bg-tag-warning;
+                    @apply hover:bg-tag-warning data-[state=on]:bg-tag-warning data-[state=checked]:bg-tag-warning data-[state=open]:bg-tag-warning data-[state=opening]:bg-tag-warning;
 
                     .fa-icon {
                         @apply bg-intent-warning;
@@ -458,7 +469,7 @@
 
                 &.danger {
                     @apply t-danger hover:t-danger;
-                    @apply hover:bg-tag-danger data-[state=on]:bg-tag-danger data-[state=checked]:bg-tag-danger data-[state=open]:bg-tag-danger;
+                    @apply hover:bg-tag-danger data-[state=on]:bg-tag-danger data-[state=checked]:bg-tag-danger data-[state=open]:bg-tag-danger data-[state=opening]:bg-tag-danger;
 
                     .fa-icon {
                         @apply bg-intent-danger;
@@ -473,7 +484,8 @@
                 &:hover,
                 &[data-state="on"],
                 &[data-state="checked"],
-                &[data-state="open"] {
+                &[data-state="open"],
+                &[data-state="opening"] {
                     @apply bg-text-default-light/60 text-white;
                     @apply dark:bg-text-default-dark/60 dark:text-black;
                 }
@@ -489,7 +501,8 @@
                     &:hover,
                     &[data-state="on"],
                     &[data-state="checked"],
-                    &[data-state="open"] {
+                    &[data-state="open"],
+                    &[data-state="opening"] {
                         @apply bg-accent-tinted t-accent-contrast;
                     }
 
@@ -504,7 +517,8 @@
                     &:hover,
                     &[data-state="on"],
                     &[data-state="checked"],
-                    &[data-state="open"] {
+                    &[data-state="open"],
+                    &[data-state="opening"] {
                         @apply bg-intent-success-lightened text-white dark:text-black;
                     }
 
@@ -520,7 +534,8 @@
                     &:hover,
                     &[data-state="on"],
                     &[data-state="checked"],
-                    &[data-state="open"] {
+                    &[data-state="open"],
+                    &[data-state="opening"] {
                         @apply bg-intent-warning-lightened text-white dark:text-black;
                     }
 
@@ -536,7 +551,8 @@
                     &:hover,
                     &[data-state="on"],
                     &[data-state="checked"],
-                    &[data-state="open"] {
+                    &[data-state="open"],
+                    &[data-state="opening"] {
                         @apply bg-intent-danger-lightened text-white dark:text-black;
                     }
 
@@ -554,7 +570,8 @@
                 &:hover,
                 &[data-state="on"],
                 &[data-state="checked"],
-                &[data-state="open"] {
+                &[data-state="open"],
+                &[data-state="opening"] {
                     @apply bg-tag-default t-default;
                 }
 
@@ -573,7 +590,8 @@
                     &:hover,
                     &[data-state="on"],
                     &[data-state="checked"],
-                    &[data-state="open"] {
+                    &[data-state="open"],
+                    &[data-state="opening"] {
                         @apply bg-tag-primary t-accent-aaa;
 
                         .fa-icon {
@@ -588,7 +606,8 @@
                     &:hover,
                     &[data-state="on"],
                     &[data-state="checked"],
-                    &[data-state="open"] {
+                    &[data-state="open"],
+                    &[data-state="opening"] {
                         @apply bg-tag-success text-intent-success;
                     }
 
@@ -603,7 +622,8 @@
                     &:hover,
                     &[data-state="on"],
                     &[data-state="checked"],
-                    &[data-state="open"] {
+                    &[data-state="open"],
+                    &[data-state="opening"] {
                         @apply bg-tag-warning text-intent-warning;
                     }
 
@@ -618,7 +638,8 @@
                     &:hover,
                     &[data-state="on"],
                     &[data-state="checked"],
-                    &[data-state="open"] {
+                    &[data-state="open"],
+                    &[data-state="opening"] {
                         @apply bg-tag-danger text-intent-danger;
                     }
 
@@ -668,6 +689,11 @@
         &.interactive {
             @apply cursor-pointer shadow-card-light hover:shadow-card-light-elevated hover:border-border-accent-muted-light hover:transition-all;
             @apply dark:hover:border-border-accent-muted-dark dark:shadow-none dark:hover:shadow-card-dark-elevated;
+
+            &.active {
+                @apply shadow-card-light-elevated border-border-accent-muted-light;
+                @apply dark:shadow-card-dark-elevated dark:border-border-accent-muted-dark;
+            }
         }
     }
 

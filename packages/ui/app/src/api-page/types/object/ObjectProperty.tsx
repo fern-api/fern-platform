@@ -99,21 +99,21 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
                     <EndpointAvailabilityTag availability={property.availability} minimal={true} />
                 )}
             </div>
-            {property.description || hasInternalTypeReference(property.valueShape) ? (
-                <div className="flex flex-col">
-                    <ApiPageDescription isMarkdown={true} description={property.description} className="text-sm" />
-                    <TypeDefinitionContext.Provider value={newContextValue}>
-                        <InternalTypeReferenceDefinitions
-                            shape={property.valueShape}
-                            isCollapsible
-                            applyErrorStyles={applyErrorStyles}
-                            anchorIdParts={anchorIdParts}
-                            route={route}
-                            defaultExpandAll={defaultExpandAll}
-                        />
-                    </TypeDefinitionContext.Provider>
-                </div>
-            ) : undefined}
+            {property.description && (
+                <ApiPageDescription isMarkdown={true} description={property.description} className="text-sm" />
+            )}
+            {hasInternalTypeReference(property.valueShape) && (
+                <TypeDefinitionContext.Provider value={newContextValue}>
+                    <InternalTypeReferenceDefinitions
+                        shape={property.valueShape}
+                        isCollapsible
+                        applyErrorStyles={applyErrorStyles}
+                        anchorIdParts={anchorIdParts}
+                        route={route}
+                        defaultExpandAll={defaultExpandAll}
+                    />
+                </TypeDefinitionContext.Provider>
+            )}
         </div>
     );
 };

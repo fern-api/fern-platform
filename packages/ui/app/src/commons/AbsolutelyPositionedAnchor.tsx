@@ -54,6 +54,7 @@ export const AbsolutelyPositionedAnchor: React.FC<AbsolutelyPositionedAnchor.Pro
                     "-ml-8": smallGap,
                 })}
                 onClick={copyToClipboard}
+                tabIndex={-1}
             >
                 {!wasJustCopied && (
                     <span className="fern-anchor-icon opacity-0 group-hover/anchor-container:opacity-100">

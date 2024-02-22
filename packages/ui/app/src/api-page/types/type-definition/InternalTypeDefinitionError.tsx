@@ -1,10 +1,7 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
-import { Cross2Icon } from "@radix-ui/react-icons";
-import classNames from "classnames";
 import { useRouter } from "next/router";
 import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
-import { FernCollapse } from "../../../components/FernCollapse";
 import { getAnchorId } from "../../../util/anchor";
 import { ResolvedTypeShape } from "../../../util/resolver";
 import {
@@ -16,7 +13,7 @@ import { DiscriminatedUnionVariant } from "../discriminated-union/DiscriminatedU
 import { EnumValue } from "../enum/EnumValue";
 import { ObjectProperty } from "../object/ObjectProperty";
 import { UndiscriminatedUnionVariant } from "../undiscriminated-union/UndiscriminatedUnionVariant";
-import styles from "./InternalTypeDefinitionError.module.scss";
+import { FernCollapseWithButton } from "./FernCollapseWithButton";
 import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 
 export declare namespace InternalTypeDefinitionError {
@@ -155,50 +152,19 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
             : `Hide ${collapsableContent.elements.length} ${collapsableContent.elementNamePlural}`;
 
     return (
-        <div className="mt-2 flex flex-col">
-            <div className="flex flex-col items-start">
-                <div
-                    className={classNames("border-default flex flex-col overflow-visible rounded border", {
-                        "w-full": !isCollapsed,
-                        "w-fit": isCollapsed,
-                    })}
-                >
-                    <div
-                        {...containerCallbacks}
-                        className={classNames(
-                            "text-sm flex gap-1 items-center rounded border-b hover:bg-tag-default cursor-pointer px-2 py-1 transition t-muted",
-                            {
-                                "border-transparent": isCollapsed,
-                                "border-concealed": !isCollapsed,
-                            },
-                        )}
-                        onClick={(e) => {
-                            toggleIsCollapsed();
-                            e.stopPropagation();
-                        }}
-                    >
-                        <Cross2Icon
-                            className={classNames("transition", {
-                                "rotate-45": isCollapsed,
-                            })}
-                        />
-                        <div
-                            className={classNames(styles.showPropertiesButton, "select-none whitespace-nowrap")}
-                            data-show-text={showText}
-                        >
-                            {isCollapsed ? showText : hideText}
-                        </div>
-                    </div>
-                    <FernCollapse isOpen={!isCollapsed}>
-                        <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
-                            <TypeDefinitionDetails
-                                elements={collapsableContent.elements}
-                                separatorText={collapsableContent.separatorText}
-                            />
-                        </TypeDefinitionContext.Provider>
-                    </FernCollapse>
-                </div>
-            </div>
-        </div>
+        <FernCollapseWithButton
+            isOpen={!isCollapsed}
+            toggleIsOpen={toggleIsCollapsed}
+            showText={showText}
+            hideText={hideText}
+            buttonProps={containerCallbacks}
+        >
+            <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
+                <TypeDefinitionDetails
+                    elements={collapsableContent.elements}
+                    separatorText={collapsableContent.separatorText}
+                />
+            </TypeDefinitionContext.Provider>
+        </FernCollapseWithButton>
     );
 };

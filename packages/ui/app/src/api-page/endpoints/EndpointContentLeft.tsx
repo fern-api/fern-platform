@@ -146,7 +146,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     collapseAll={errorExpandAll.setFalse}
                     showExpandCollapse={false}
                 >
-                    <div className="border-default flex flex-col overflow-visible rounded-md border">
+                    <div className="border-default flex flex-col overflow-visible rounded-lg border">
                         {sortBy(
                             endpoint.errors,
                             (e) => e.statusCode,

@@ -1,4 +1,3 @@
-import { CardStackIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 
 type EmptyProps = {
@@ -9,7 +8,6 @@ type EmptyProps = {
 export const Empty = ({ name, description }: EmptyProps): ReactElement => {
     return (
         <div className="flex flex-col items-center ">
-            <CardStackIcon className="t-accent mb-1" />
             <div className="t-accent"> {name} </div>
             <div className="t-muted"> {description} </div>
         </div>

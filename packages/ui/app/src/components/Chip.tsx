@@ -1,3 +1,4 @@
+import { useCopyToClipboard } from "@fern-ui/react-commons";
 import { ReactElement } from "react";
 import { FernTooltip } from "./FernTooltip";
 
@@ -9,11 +10,18 @@ type ChipProps = {
 //Consider using Tailwind/Flowbite to create custom tooltips
 //Docs: https://flowbite.com/docs/components/tooltips/
 export const Chip = ({ name, description = undefined }: ChipProps): ReactElement => {
+    const { copyToClipboard, wasJustCopied } = useCopyToClipboard(name);
     return (
-        <span className="border-default t-default bg-tag-default rounded border px-1.5 py-0.5 text-xs">
-            <FernTooltip open={description == null ? false : undefined} content={description}>
+        <FernTooltip
+            open={wasJustCopied ? true : description == null ? false : undefined}
+            content={wasJustCopied ? "Copied!" : description}
+        >
+            <span
+                className="t-default bg-tag-default hover:bg-tag-default-hover cursor-default rounded-md px-1.5 py-1 text-xs"
+                onClick={copyToClipboard}
+            >
                 <span>{name}</span>
-            </FernTooltip>
-        </span>
+            </span>
+        </FernTooltip>
     );
 };
