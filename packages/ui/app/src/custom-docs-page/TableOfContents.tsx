@@ -114,10 +114,7 @@ const makeTree = (
                 children: makeTree(headings, depth + 1),
             });
         } else {
-            tree.push({
-                simpleString: "",
-                children: makeTree(headings, depth + 1),
-            });
+            tree.push(...makeTree(headings, depth + 1));
         }
     }
 
