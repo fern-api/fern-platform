@@ -1,5 +1,6 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { CaretDownIcon } from "@radix-ui/react-icons";
+import { sortBy } from "lodash-es";
 import { FC, useMemo } from "react";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
@@ -19,7 +20,7 @@ interface PlaygroundEnumFormProps {
 export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({ enumValues, onChange, value, id, onFocus }) => {
     const options = useMemo(
         () =>
-            enumValues.map(
+            sortBy(enumValues, "value").map(
                 (enumValue): FernDropdown.Option => ({
                     type: "value",
                     label: enumValue.value,
