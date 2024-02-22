@@ -1,5 +1,6 @@
 import { useBooleanState } from "@fern-ui/react-commons";
 import { CardStackPlusIcon, PlusCircledIcon } from "@radix-ui/react-icons";
+import classNames from "classnames";
 import dynamic from "next/dynamic";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
@@ -58,7 +59,7 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
         <PlaygroundTypeReferenceForm
             id={id}
             property={property}
-            shape={property.valueShape.type === "optional" ? property.valueShape.shape : property.valueShape}
+            shape={unwrapOptional(property.valueShape)}
             onChange={handleChange}
             value={value}
             renderAsPanel={true}
@@ -133,7 +134,11 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
     }, [hiddenProperties]);
 
     return (
-        <div className={indent ? "border-border-default-soft border-l pl-4" : undefined}>
+        <div
+            className={classNames("flex-1 shrink min-w-0", {
+                "border-border-default-soft border-l pl-4": indent,
+            })}
+        >
             {shownProperties.length > 0 && (
                 <ul className="list-none space-y-8">
                     {shownProperties.map((property) => {

@@ -29,14 +29,14 @@ export const FernCollapseWithButton: FC<PropsWithChildren<FernCollapseWithButton
     return (
         <div
             className={classNames(
-                "fern-collapse-with-button",
+                "fern-collapse-with-button data-[state=opening]:overflow-hidden data-[state=closing]:overflow-hidden",
                 "ring-border-default flex flex-col rounded-lg ring-1 ring-inset divide-border-default divide-y",
                 {
                     "w-full": isFullWidth,
                     "w-fit max-sm:w-full": !isFullWidth,
                 },
             )}
-            data-state={isOpen ? "open" : "closed"}
+            data-state={transition}
         >
             <FernButton
                 {...buttonProps}

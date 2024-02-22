@@ -53,7 +53,7 @@ export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({ htmlFor, prop
                                 icon={<Cross1Icon />}
                                 size="small"
                                 variant="minimal"
-                                className="-mr-1"
+                                className="-mr-3 opacity-50 transition-opacity hover:opacity-100"
                                 onClick={onRemove}
                             />
                         )}
@@ -63,7 +63,7 @@ export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({ htmlFor, prop
 
             <div
                 className={classNames("flex", {
-                    "flex-1": valueShape.type !== "boolean",
+                    "flex-1 shrink min-w-0": valueShape.type !== "boolean",
                 })}
             >
                 {children}
@@ -75,7 +75,7 @@ export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({ htmlFor, prop
                                 icon={<Cross1Icon />}
                                 size="small"
                                 variant="minimal"
-                                className="-mr-3 ml-1"
+                                className="-mr-3 ml-1 opacity-50 transition-opacity hover:opacity-100"
                                 onClick={onRemove}
                             />
                         )}

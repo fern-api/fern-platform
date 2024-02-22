@@ -102,7 +102,7 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ id, keyShape, va
                                     onClick={() => handleRemoveItem(idx)}
                                     variant="minimal"
                                     size="small"
-                                    className="-mx-1"
+                                    className="-ml-1 -mr-3 opacity-50 transition-opacity hover:opacity-100"
                                 />
                             </div>
                         </li>

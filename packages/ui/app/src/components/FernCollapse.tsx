@@ -1,6 +1,6 @@
 import { Transition } from "@headlessui/react";
 import classNames from "classnames";
-import { FC, PropsWithChildren, useEffect, useRef, useState } from "react";
+import { FC, PropsWithChildren, useRef, useState } from "react";
 
 interface FernCollapseProps {
     isOpen?: boolean;
@@ -28,14 +28,7 @@ export const FernCollapse: FC<PropsWithChildren<FernCollapseProps>> = ({
     onCloseEnd,
 }) => {
     const ref = useRef<HTMLDivElement>(null);
-    const [height, setHeight] = useState<number | undefined>(undefined);
-
-    useEffect(() => {
-        setHeight(ref.current?.scrollHeight);
-        setTimeout(() => {
-            setHeight(undefined);
-        }, 400);
-    }, [isOpen]);
+    const [height, setHeight] = useState<number | undefined>(isOpen ? ref.current?.scrollHeight : 0);
 
     return (
         <Transition
@@ -57,6 +50,7 @@ export const FernCollapse: FC<PropsWithChildren<FernCollapseProps>> = ({
                 leaveFrom="translate-y-0 opacity-100"
                 leaveTo="-translate-y-full opacity-0"
                 beforeEnter={() => {
+                    setHeight(ref.current?.scrollHeight);
                     onOpenStart?.();
                 }}
                 afterEnter={() => {
@@ -64,6 +58,7 @@ export const FernCollapse: FC<PropsWithChildren<FernCollapseProps>> = ({
                     onOpenEnd?.();
                 }}
                 beforeLeave={() => {
+                    setHeight(ref.current?.scrollHeight);
                     onCloseStart?.();
                 }}
                 afterLeave={() => {

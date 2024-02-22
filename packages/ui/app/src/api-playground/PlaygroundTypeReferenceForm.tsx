@@ -97,30 +97,12 @@ interface PlaygroundTypeReferenceFormProps {
 //     );
 // };
 
-const createFilter = (onlyRequired: boolean, onlyOptional: boolean) => {
-    if (onlyRequired && onlyOptional) {
-        return () => true;
-    }
-    if (onlyRequired) {
-        return (property: ResolvedObjectProperty) => property.valueShape.type !== "optional";
-    }
-    if (onlyOptional) {
-        return (property: ResolvedObjectProperty) => property.valueShape.type === "optional";
-    }
-    return () => true;
-};
-
 export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> = ({
     id,
     property,
     shape,
     onChange,
     value,
-    // onOpenStack,
-    // onCloseStack,
-    // renderAsPanel = false,
-    onlyRequired = false,
-    onlyOptional = false,
 }) => {
     const setFocusedParameter = useSetAtom(FOCUSED_PARAMETER_ATOM);
     const onRemove = useCallback(() => {
@@ -130,7 +112,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
         object: (object) => (
             <WithLabel property={property} value={value} onRemove={onRemove}>
                 <PlaygroundObjectPropertiesForm
-                    properties={object.properties().filter(createFilter(onlyRequired, onlyOptional))}
+                    properties={object.properties()}
                     onChange={onChange}
                     value={value}
                     indent={true}
@@ -351,8 +333,6 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                 shape={reference.shape()}
                 onChange={onChange}
                 value={value}
-                onlyRequired={onlyRequired}
-                onlyOptional={onlyOptional}
             />
         ),
     });
