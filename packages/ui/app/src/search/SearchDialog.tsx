@@ -60,7 +60,7 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
                 />
                 <Dialog.Panel
                     className={classNames(
-                        "md:max-w-content-width my-header-height-padded relative z-10 mx-6 max-h-96 md:mx-auto",
+                        "md:max-w-content-width my-header-height-padded relative z-10 mx-6 max-h-[calc(100vh-var(--spacing-header-height)-var(--spacing-header-height)-2rem)] md:mx-auto flex flex-col",
                         {
                             "mt-4": fromHeader,
                         },
@@ -83,7 +83,7 @@ function FernInstantSearch({ searchClient, searchService, inputRef }: FernInstan
     const { activeNavigatable } = useNavigationContext();
     return (
         <InstantSearch searchClient={searchClient} indexName={searchService.index}>
-            <div className="border-default bg-background-translucent flex h-auto flex-col overflow-hidden rounded-xl border text-left align-middle shadow-2xl backdrop-blur-lg">
+            <div className="border-default bg-background-translucent flex h-auto min-h-0 shrink flex-col overflow-hidden rounded-xl border text-left align-middle shadow-2xl backdrop-blur-lg">
                 <SearchBox
                     ref={inputRef}
                     placeholder={

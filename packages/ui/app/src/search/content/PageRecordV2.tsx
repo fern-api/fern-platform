@@ -17,7 +17,7 @@ export const PageRecordV2: React.FC<PageRecordV2.Props> = ({ hit, isHovered }) =
                 <span
                     className={classNames("line-clamp-1 text-sm text-start", {
                         "text-text-default-light dark:text-text-default-dark": !isHovered,
-                        "text-white dark:text-black": isHovered,
+                        "t-accent-contrast": isHovered,
                     })}
                 >
                     {hit.title}
@@ -25,7 +25,7 @@ export const PageRecordV2: React.FC<PageRecordV2.Props> = ({ hit, isHovered }) =
                 <div
                     className={classNames("text-sm tracking-wide", {
                         "t-muted": !isHovered,
-                        "text-white dark:text-black": isHovered,
+                        "t-accent-contrast": isHovered,
                     })}
                 >
                     Page
@@ -34,7 +34,7 @@ export const PageRecordV2: React.FC<PageRecordV2.Props> = ({ hit, isHovered }) =
             <div className="flex items-center justify-between">
                 <span
                     className={classNames("line-clamp-1 text-start text-xs", {
-                        "text-white dark:text-black": isHovered,
+                        "t-accent-contrast": isHovered,
                         "t-muted": !isHovered,
                     })}
                 >
@@ -43,7 +43,7 @@ export const PageRecordV2: React.FC<PageRecordV2.Props> = ({ hit, isHovered }) =
 
                 <CornerDownLeft
                     className={classNames("size-3", {
-                        "text-white dark:text-black": isHovered,
+                        "t-accent-contrast": isHovered,
                         "t-muted": !isHovered,
                     })}
                 />
