@@ -30,7 +30,21 @@
     }
 
     ::selection {
-        @apply bg-accent-highlight;
+        @apply bg-accent-highlight-light;
+    }
+
+    ::-moz-selection {
+        @apply bg-accent-highlight-light;
+    }
+
+    :is(.dark) {
+        ::selection {
+            @apply bg-accent-highlight-dark;
+        }
+
+        ::-moz-selection {
+            @apply bg-accent-highlight-dark;
+        }
     }
 
     html,
