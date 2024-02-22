@@ -102,6 +102,10 @@
 
         text-overflow: -o-ellipsis-lastline;
     }
+
+    input[type="search"]::-webkit-search-cancel-button {
+        display: none;
+    }
 }
 
 @layer components {
@@ -178,9 +182,12 @@
     }
 
     .fern-search-bar {
+        @apply cursor-pointer;
         @apply text-sm border-default flex items-center rounded-lg border px-2.5 py-2 t-muted;
-        @apply bg-background-primary-light hover:bg-background-hover-light;
-        @apply dark:bg-background-primary-dark dark:hover:bg-background-hover-dark;
+        @apply bg-background;
+        @apply dark:bg-black/[0.25];
+        @apply shadow-card-light dark:shadow-none;
+        @apply hover:shadow-card-light-elevated hover:dark:shadow-card-dark transition-shadow;
 
         .search-placeholder {
             @apply inline-flex flex-1 items-center space-x-3;

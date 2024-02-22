@@ -5,6 +5,8 @@ import classNames from "classnames";
 import { CSSProperties, forwardRef, memo, PropsWithChildren } from "react";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { SearchService } from "../services/useSearchService";
+import { useIsSearchDialogOpen, useOpenSearchDialog } from "../sidebar/atom";
+import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
 import { HeaderLogoSection } from "./HeaderLogoSection";
 import { HeaderPrimaryLink } from "./HeaderPrimaryLink";
 import { HeaderSecondaryLink } from "./HeaderSecondaryLink";
@@ -15,11 +17,11 @@ export declare namespace Header {
         className?: string;
         style?: CSSProperties;
         config: DocsV1Read.DocsConfig;
-        openSearchDialog: () => void;
         isMobileSidebarOpen: boolean;
         openMobileSidebar: () => void;
         closeMobileSidebar: () => void;
         searchService: SearchService;
+        showSearchBar?: boolean;
     }
 }
 
@@ -28,14 +30,17 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
         className,
         style,
         config,
-        openSearchDialog,
         isMobileSidebarOpen,
         openMobileSidebar,
         closeMobileSidebar,
         searchService,
+        showSearchBar = true,
     },
     ref,
 ) {
+    const openSearchDialog = useOpenSearchDialog();
+    const isSearchDialogOpen = useIsSearchDialogOpen();
+
     const { navbarLinks, colorsV3 } = config;
     const navbarLinksSection = (
         <div className="hidden lg:block">
@@ -57,7 +62,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
         <nav
             aria-label="primary"
             className={classNames(
-                "flex justify-between items-center shrink-0 px-4 md:px-6 lg:px-8",
+                "flex justify-between items-center shrink-0 px-4 md:px-6 lg:px-8 shrink-0",
                 // this matches with the calc() in the EndpointContent examples section
                 "h-full",
                 className,
@@ -67,7 +72,17 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
         >
             <HeaderLogoSection config={config} />
 
-            <div className="-mr-1 ml-auto flex items-center space-x-0 md:mr-0 lg:space-x-4">
+            {showSearchBar && searchService.isAvailable && (
+                <div
+                    className={classNames("max-w-content-width w-full max-lg:hidden", {
+                        invisible: isSearchDialogOpen,
+                    })}
+                >
+                    <SidebarSearchBar onClick={openSearchDialog} className="w-full" />
+                </div>
+            )}
+
+            <div className="-mr-1 flex flex-1 items-center justify-end space-x-0 md:mr-0 lg:space-x-4">
                 {navbarLinksSection}
 
                 <div className="flex lg:hidden">

@@ -14,6 +14,7 @@ export declare namespace SidebarFixedItemsSection {
         searchInfo: DocsV1Read.SearchInfo;
         algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
         showBorder?: boolean;
+        showSearchBar?: boolean;
     }
 }
 
@@ -22,20 +23,21 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
     searchInfo,
     algoliaSearchIndex,
     showBorder,
+    showSearchBar,
 }) => {
     const { activeNavigatable } = useNavigationContext();
     const { activeNavigationConfigContext, withVersionSlug } = useDocsSelectors();
     const openSearchDialog = useOpenSearchDialog();
     const showTabs = activeNavigationConfigContext?.type === "tabbed";
 
-    const showSearchBar = useSearchService(searchInfo, algoliaSearchIndex).isAvailable;
+    const searchService = useSearchService(searchInfo, algoliaSearchIndex);
     const searchBar = useMemo(() => {
-        return showSearchBar ? (
+        return showSearchBar && searchService.isAvailable ? (
             <div className="mb-3 hidden last:mb-0 lg:block">
                 <SidebarSearchBar onClick={openSearchDialog} className="w-full" />
             </div>
         ) : null;
-    }, [showSearchBar, openSearchDialog]);
+    }, [showSearchBar, searchService.isAvailable, openSearchDialog]);
 
     const tabs = useMemo(() => {
         if (!showTabs) {

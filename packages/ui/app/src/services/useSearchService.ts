@@ -9,15 +9,19 @@ export type SearchCredentials = {
     searchApiKey: string;
 };
 
-export type SearchService =
-    | {
-          isAvailable: true;
-          loadCredentials: () => Promise<SearchCredentials | undefined>;
-          index: string;
-      }
-    | {
-          isAvailable: false;
-      };
+export declare namespace SearchService {
+    export interface Available {
+        isAvailable: true;
+        loadCredentials: () => Promise<SearchCredentials | undefined>;
+        index: string;
+    }
+
+    export interface Unavailable {
+        isAvailable: false;
+    }
+}
+
+export type SearchService = SearchService.Available | SearchService.Unavailable;
 
 function createSearchApiKeyLoader(envConfig: EnvironmentConfig, indexSegmentId: string) {
     return async () => {

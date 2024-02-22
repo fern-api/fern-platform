@@ -1,5 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
-import algolia from "algoliasearch/lite";
+import algolia, { SearchClient } from "algoliasearch";
+import classNames from "classnames";
 import { Fragment, PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
 import { InstantSearch } from "react-instantsearch-hooks-web";
 import { useNavigationContext } from "../navigation-context";
@@ -7,18 +8,17 @@ import { type SearchCredentials, type SearchService } from "../services/useSearc
 import { useCloseSearchDialog, useIsSearchDialogOpen } from "../sidebar/atom";
 import { useViewportContext } from "../viewport-context/useViewportContext";
 import { SearchBox, SearchMobileBox } from "./SearchBox";
-import styles from "./SearchDialog.module.scss";
 import { SearchHits, SearchMobileHits } from "./SearchHits";
 
 export declare namespace SearchDialog {
     export interface Props {
         searchService: SearchService;
+        fromHeader?: boolean;
     }
 }
 
 export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
-    const { activeNavigatable } = useNavigationContext();
-    const { searchService } = providedProps;
+    const { searchService, fromHeader } = providedProps;
     const [credentials, setSearchCredentials] = useState<SearchCredentials | undefined>(undefined);
     const inputRef = useRef<HTMLInputElement>(null);
     const { layoutBreakpoint } = useViewportContext();
@@ -44,41 +44,61 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
     }
 
     return (
-        <InstantSearch searchClient={searchClient} indexName={searchService.index}>
-            <Transition show={isSearchDialogOpen} as={Fragment} appear={true}>
-                <Dialog
+        <Transition show={isSearchDialogOpen} as={Fragment} appear={true}>
+            <Dialog
+                as="div"
+                className="fixed inset-0 z-30 hidden sm:block"
+                onClose={closeSearchDialog}
+                initialFocus={inputRef}
+            >
+                <Transition.Child
                     as="div"
-                    className="fixed inset-0 z-30 hidden sm:block"
-                    onClose={closeSearchDialog}
-                    initialFocus={inputRef}
+                    className="bg-background-light/50 dark:bg-background-dark/50 fixed inset-0 z-0 backdrop-blur-sm"
+                    enter="transition-opacity ease-linear duration-200"
+                    enterFrom="opacity-0 backdrop-blur-none"
+                    enterTo="opacity-100 backdrop-blur-sm"
+                />
+                <Dialog.Panel
+                    className={classNames(
+                        "md:max-w-content-width my-header-height-padded relative z-10 mx-6 max-h-96 md:mx-auto",
+                        {
+                            "mt-4": fromHeader,
+                        },
+                    )}
                 >
-                    <Transition.Child
-                        as="div"
-                        className="bg-background-light/50 dark:bg-background-dark/50 fixed inset-0 z-0"
-                        enter="transition-opacity ease-linear duration-200"
-                        enterFrom="opacity-0"
-                        enterTo="opacity-100"
-                    />
-                    <Dialog.Panel className="border-default bg-background-translucent relative z-10 mx-6 my-10 flex h-auto max-h-96 flex-col overflow-hidden rounded-xl border text-left align-middle shadow-2xl backdrop-blur-lg md:mx-auto md:max-w-2xl">
-                        <div className={styles.searchBox}>
-                            <SearchBox
-                                ref={inputRef}
-                                placeholder={
-                                    activeNavigatable?.context.version?.info.id != null
-                                        ? `Search across ${activeNavigatable.context.version.info.id}...`
-                                        : "Search for guides and endpoints..."
-                                }
-                                className="flex-1"
-                                inputClassName="form-input w-full text-base t-muted placeholder:t-muted !p-5 form-input !border-none !bg-transparent !outline-none !ring-0"
-                            />
-                        </div>
-                        <SearchHits />
-                    </Dialog.Panel>
-                </Dialog>
-            </Transition>
-        </InstantSearch>
+                    <FernInstantSearch searchClient={searchClient} searchService={searchService} inputRef={inputRef} />
+                </Dialog.Panel>
+            </Dialog>
+        </Transition>
     );
 };
+
+interface FernInstantSearchProps {
+    searchClient: SearchClient;
+    searchService: SearchService.Available;
+    inputRef: React.RefObject<HTMLInputElement>;
+}
+
+function FernInstantSearch({ searchClient, searchService, inputRef }: FernInstantSearchProps) {
+    const { activeNavigatable } = useNavigationContext();
+    return (
+        <InstantSearch searchClient={searchClient} indexName={searchService.index}>
+            <div className="border-default bg-background-translucent flex h-auto flex-col overflow-hidden rounded-xl border text-left align-middle shadow-2xl backdrop-blur-lg">
+                <SearchBox
+                    ref={inputRef}
+                    placeholder={
+                        activeNavigatable?.context.version?.info.id != null
+                            ? `Search across ${activeNavigatable.context.version.info.id}...`
+                            : "Search for guides and endpoints..."
+                    }
+                    className="flex-1"
+                    inputClassName="form-input w-full text-base t-muted placeholder:t-muted !p-5 form-input !border-none !bg-transparent !outline-none !ring-0"
+                />
+                <SearchHits />
+            </div>
+        </InstantSearch>
+    );
+}
 
 export declare namespace SearchSidebar {
     export interface Props {
@@ -120,7 +140,6 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
                         : "Search for guides and endpoints..."
                 }
                 className="mt-4 flex-1"
-                inputClassName={styles.searchBox}
             />
             <SearchMobileHits>{children}</SearchMobileHits>
         </InstantSearch>

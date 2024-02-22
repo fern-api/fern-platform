@@ -24,6 +24,7 @@ export interface SidebarProps {
     algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
     navbarLinks: DocsV1Read.NavbarLink[] | undefined;
     searchService: SearchService;
+    showSearchBar?: boolean;
 }
 
 const SidebarInner = memo<SidebarProps>(function SidebarInner({
@@ -34,6 +35,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
     algoliaSearchIndex,
     navbarLinks,
     searchService,
+    showSearchBar,
 }) {
     const scrollRef = useRef<HTMLDivElement>(null);
     const isScrolled = useIsScrolled(scrollRef);
@@ -56,6 +58,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                         showBorder={
                             isScrolled || (isMobileSidebarOpen && ["mobile", "sm", "md"].includes(layoutBreakpoint))
                         }
+                        showSearchBar={showSearchBar}
                     />
                     <CollapseSidebarProvider>
                         <FernTooltipProvider>

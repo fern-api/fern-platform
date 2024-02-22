@@ -10,6 +10,7 @@ interface SearchBoxProps extends UseSearchBoxProps {
     className?: string;
     inputClassName?: string;
     placeholder?: string;
+    onFocus?: () => void;
 }
 
 export const SearchBox = forwardRef<HTMLInputElement, SearchBoxProps>(function SearchBox(
@@ -112,7 +113,7 @@ export const SearchBox = forwardRef<HTMLInputElement, SearchBoxProps>(function S
 });
 
 export const SearchMobileBox = forwardRef<HTMLInputElement, SearchBoxProps>(function SearchBox(
-    { queryHook, className, inputClassName, placeholder },
+    { queryHook, className, inputClassName, placeholder, onFocus },
     ref,
 ): ReactElement {
     const { query, refine } = useSearchBox({ queryHook });
@@ -178,6 +179,7 @@ export const SearchMobileBox = forwardRef<HTMLInputElement, SearchBoxProps>(func
                             }}
                         />
                     }
+                    onFocus={onFocus}
                 />
             </form>
         </div>

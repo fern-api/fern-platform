@@ -82,7 +82,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
 
     const hasSpecifiedBackgroundImage = !!config.backgroundImage;
 
-    const { colorsV3 } = config;
+    const { colorsV3, layout } = config;
 
     const [accentColor, setAccentColor] = useState<string>();
     useEffect(() => {
@@ -99,7 +99,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
         (className?: string) => (
             <div className={classNames(className, "clipped-background")}>
                 <BgImageGradient
-                    className="h-screen opacity-60 dark:opacity-50"
+                    className="h-screen opacity-60 dark:opacity-80"
                     colors={colorsV3}
                     hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage}
                 />
@@ -138,7 +138,9 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
         <>
             <NextNProgress color={accentColor} options={{ showSpinner: false }} showOnShallow={false} />
             <BgImageGradient colors={colorsV3} hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage} />
-            {searchService.isAvailable && <SearchDialog searchService={searchService} />}
+            {searchService.isAvailable && (
+                <SearchDialog searchService={searchService} fromHeader={layout?.searchbarPlacement === "HEADER"} />
+            )}
 
             <ApiPlaygroundContextProvider navigation={navigation} apiSections={apiSections}>
                 <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
@@ -155,11 +157,11 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                             <Header
                                 className="max-w-page-width mx-auto"
                                 config={config}
-                                openSearchDialog={openSearchDialog}
                                 isMobileSidebarOpen={isMobileSidebarOpen}
                                 openMobileSidebar={openMobileSidebar}
                                 closeMobileSidebar={closeMobileSidebar}
                                 searchService={searchService}
+                                showSearchBar={layout?.searchbarPlacement === "HEADER"}
                             />
                         </div>
                     </header>
@@ -174,6 +176,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                             algoliaSearchIndex={algoliaSearchIndex}
                             navbarLinks={config.navbarLinks}
                             searchService={searchService}
+                            showSearchBar={layout?.searchbarPlacement !== "HEADER"}
                         />
 
                         <main className={classNames("relative flex w-full min-w-0 flex-1 flex-col pt-header-height")}>
