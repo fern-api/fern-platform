@@ -67,7 +67,7 @@ export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ inte
                     }),
                 )}
             >
-                <div className={classNames(styles.content, "not-prose")}>{children}</div>
+                <div className={classNames(styles.content)}>{children}</div>
             </div>
         </div>
     );
