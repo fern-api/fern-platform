@@ -33,7 +33,7 @@ export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ inte
     return (
         <div
             className={classNames(
-                "flex space-x-3 p-4 pb-0 mb-4 rounded-lg", // pb-0 to compensate for the ::after margin
+                "flex space-x-3 px-4 py-0 mb-4 rounded-lg", // pb-0 to compensate for the ::after margin
                 visitDiscriminatedUnion({ intent }, "intent")._visit({
                     info: () => "callout-outlined",
                     warning: () => "callout-outlined-warning",
@@ -43,7 +43,7 @@ export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ inte
                 }),
             )}
         >
-            <div className="min-w-fit">
+            <div className="min-w-fit py-4">
                 {visitDiscriminatedUnion({ intent }, "intent")._visit({
                     info: () => (
                         <InfoCircledIcon className="text-intent-default dark:text-intent-default-dark size-5" />
@@ -57,7 +57,7 @@ export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ inte
 
             <div
                 className={classNames(
-                    "text-sm leading-5 w-full after:block after:mt-4", // ::after margin ensures that bottom padding overlaps with botttom margins of internal content
+                    "text-sm leading-5 w-full after:block after:mt-4 before:block before:mb-4", // ::after margin ensures that bottom padding overlaps with botttom margins of internal content
                     visitDiscriminatedUnion({ intent }, "intent")._visit({
                         info: () => "text-intent-default",
                         warning: () => "text-intent-warning",

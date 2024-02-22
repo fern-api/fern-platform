@@ -24,13 +24,15 @@ export const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({ className, .
 
 export const Table: React.FC<HTMLAttributes<HTMLTableElement>> = ({ className, ...rest }) => {
     return (
-        <table
-            {...rest}
-            className={classNames(
-                className,
-                "block border-separate border-spacing-0 overflow-x-auto table-auto mb-3 text-sm max-w-full not-prose",
-            )}
-        />
+        <div className="fern-card mb-3 overflow-x-auto rounded-lg">
+            <table
+                {...rest}
+                className={classNames(
+                    className,
+                    "border-separate border-spacing-0 table-auto text-sm w-full not-prose break-normal",
+                )}
+            />
+        </div>
     );
 };
 
@@ -38,20 +40,16 @@ export const Thead: React.FC<HTMLAttributes<HTMLTableSectionElement>> = ({ class
     return <thead {...rest} className={classNames(className)} />;
 };
 
+export const Tbody: React.FC<HTMLAttributes<HTMLTableSectionElement>> = ({ className, ...rest }) => {
+    return <tbody {...rest} className={classNames(className)} />;
+};
+
 export const Tr: React.FC<HTMLAttributes<HTMLTableRowElement>> = ({ className, ...rest }) => {
     return <tr {...rest} className={classNames(className)} />;
 };
 
 export const Th: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, ...rest }) => {
-    return (
-        <th
-            {...rest}
-            className={classNames(
-                className,
-                "text-left truncate px-3 py-1 leading-7 border-b border-default first:pl-0 last:pr-0",
-            )}
-        />
-    );
+    return <th {...rest} className={classNames(className, "text-left truncate p-3")} />;
 };
 
 export const Td: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, children, ...rest }) => {
@@ -59,7 +57,7 @@ export const Td: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, 
     return (
         <td
             {...rest}
-            className={classNames(className, "border-b border-default px-3 py-1 leading-7 first:pl-0 last:pr-0", {
+            className={classNames(className, "p-3", {
                 // if the table has many columns, do not collapse short string content into multi-line:
                 "whitespace-nowrap": childrenAsString.length < 100,
                 // prevent table's auto sizing from collapsing a paragraph into a tall-skinny column of broken sentences:

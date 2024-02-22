@@ -1,5 +1,27 @@
+thead > tr {
+    @apply bg-tag-default;
+
+    > th {
+        @apply border-b border-default;
+    }
+}
+
+tbody > tr {
+    &:nth-child(even) {
+        @apply bg-tag-default-soft;
+
+        > td {
+            @apply border-b border-t border-default;
+        }
+    }
+
+    &:last-child > td {
+        border-bottom: none !important;
+    }
+}
+
 .fern-mdx-link {
-    @apply t-default hover:t-accent underline underline-offset-4 decoration-1 hover:decoration-2 decoration-accent-primary-aa-light;
+    @apply hover:t-accent underline underline-offset-4 decoration-1 hover:decoration-2 decoration-accent-primary-aa-light;
     @apply dark:decoration-accent-primary-aa-dark;
     @apply font-semibold;
 
