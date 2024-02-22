@@ -5,6 +5,7 @@ import Link from "next/link";
 import React, { AnchorHTMLAttributes, DetailedHTMLProps, HTMLAttributes, LiHTMLAttributes, ReactNode } from "react";
 import Zoom from "react-medium-image-zoom";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
+import { FernCard } from "../components/FernCard";
 import { useAnchorInView } from "../custom-docs-page/TableOfContentsContext";
 import { useNavigationContext } from "../navigation-context";
 import { onlyText } from "../util/onlyText";
@@ -24,9 +25,9 @@ export const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({ className, .
 
 export const Table: React.FC<HTMLAttributes<HTMLTableElement>> = ({ className, ...rest }) => {
     return (
-        <div className="fern-table not-prose">
+        <FernCard className="fern-table not-prose">
             <table {...rest} className={classNames(className)} />
-        </div>
+        </FernCard>
     );
 };
 
