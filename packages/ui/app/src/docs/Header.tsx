@@ -57,7 +57,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                         }
                         variant={
                             navbarLink.type === "primary"
-                                ? "filled"
+                                ? "outlined"
                                 : navbarLink.type === "secondary"
                                   ? "minimal"
                                   : navbarLink.type

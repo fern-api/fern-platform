@@ -59,7 +59,7 @@ export function MobileSidebarHeaderLinks({ navbarLinks }: MobileSidebarHeaderLin
                     })}
                     variant={
                         navbarLink.type === "primary"
-                            ? "filled"
+                            ? "outlined"
                             : navbarLink.type === "secondary"
                               ? "minimal"
                               : navbarLink.type
