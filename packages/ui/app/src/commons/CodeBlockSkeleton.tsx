@@ -153,6 +153,7 @@ export const FernSyntaxHighlighter: React.FC<FernSyntaxHighlighterProps> = ({
             PreTag="pre"
             CodeTag={CodeTag}
             renderer={createHighlightRenderer(highlightLines, highlightStyle, theme as "light" | "dark")}
+            showLineNumbers={true}
         />
     );
 };
