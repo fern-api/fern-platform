@@ -2,6 +2,7 @@ import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { RemoteFontAwesomeIcon } from "../../commons/FontAwesomeIcon";
 import { FernButton } from "../../components/FernButton";
 import { FernDropdown } from "../../components/FernDropdown";
+import { getRouteNode } from "../../util/anchor";
 import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 
 export declare namespace CodeExampleClientDropdown {
@@ -9,6 +10,7 @@ export declare namespace CodeExampleClientDropdown {
         clients: CodeExampleGroup[];
         selectedClient: CodeExample;
         onClickClient: (example: CodeExample) => void;
+        route: string;
     }
 }
 
@@ -16,6 +18,7 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
     clients,
     selectedClient,
     onClickClient,
+    route,
 }) => {
     const selectedClientGroup = clients.find((client) => client.language === selectedClient.language);
     return (
@@ -37,10 +40,16 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                 onValueChange={(value) => {
                     const client = clients.find((client) => client.language === value);
                     if (client?.examples[0] != null) {
+                        const currentTop = getRouteNode(route)?.clientTop;
+                        const scrollY = window.scrollY;
                         onClickClient(
                             client.examples.find((example) => example.exampleIndex === selectedClient.exampleIndex) ??
                                 client.examples[0],
                         );
+                        const newTop = getRouteNode(route)?.clientTop;
+                        if (currentTop != null && newTop != null) {
+                            window.scrollTo(0, scrollY + (newTop - currentTop));
+                        }
                     }
                 }}
             >
