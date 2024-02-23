@@ -2,10 +2,9 @@ import { getFullSlugForNavigatable } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import Link from "next/link";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useNavigationContext } from "../navigation-context";
-import { useCloseSearchDialog } from "../sidebar/atom";
 import { EndpointRecord } from "./content/EndpointRecord";
 import { EndpointRecordV2 } from "./content/EndpointRecordV2";
 import { PageRecord } from "./content/PageRecord";
@@ -31,8 +30,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({
     onMouseLeave,
 }) => {
     const { pathResolver } = useDocsContext();
-    const { navigateToPath, basePath } = useNavigationContext();
-    const closeSearchDialog = useCloseSearchDialog();
+    const { basePath } = useNavigationContext();
 
     const fullPath = useMemo(() => {
         const path = getFullPathForSearchRecord(hit, basePath);
@@ -42,11 +40,6 @@ export const SearchHit: React.FC<SearchHit.Props> = ({
         }
         return getFullSlugForNavigatable(navigatable, { omitDefault: true, basePath });
     }, [hit, pathResolver, basePath]);
-
-    const handleClick = useCallback(() => {
-        closeSearchDialog();
-        navigateToPath(fullPath);
-    }, [closeSearchDialog, navigateToPath, fullPath]);
 
     const content = useMemo(() => {
         return visitDiscriminatedUnion(hit, "type")._visit({
@@ -64,7 +57,6 @@ export const SearchHit: React.FC<SearchHit.Props> = ({
             className={classNames("flex w-full items-center space-x-4 space-y-1 rounded-md px-3 py-2 !no-underline", {
                 "bg-accent t-accent-contrast": isHovered,
             })}
-            onClick={handleClick}
             href={`/${fullPath}`}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}

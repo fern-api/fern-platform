@@ -1,7 +1,6 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { Dialog, Transition } from "@headlessui/react";
-import { useRouter } from "next/router";
-import { Fragment, memo, useEffect, useRef } from "react";
+import { Fragment, memo, useRef } from "react";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { FernTooltipProvider } from "../components/FernTooltip";
 import { useIsScrolled } from "../docs/useIsScrolled";
@@ -78,18 +77,8 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
 });
 
 function MobileSidebar(props: SidebarProps) {
-    const router = useRouter();
-
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
     const closeMobileSidebar = useCloseMobileSidebar();
-
-    // close the mobile sidebar when the route changes
-    useEffect(() => {
-        router.events.on("routeChangeComplete", closeMobileSidebar);
-        return () => {
-            router.events.off("routeChangeComplete", closeMobileSidebar);
-        };
-    }, [closeMobileSidebar, router.events]);
 
     return (
         <Transition as={Fragment} show={isMobileSidebarOpen}>

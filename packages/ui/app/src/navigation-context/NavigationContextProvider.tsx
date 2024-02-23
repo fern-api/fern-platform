@@ -7,6 +7,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useRef, useState } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
+import { useCloseMobileSidebar, useCloseSearchDialog } from "../sidebar/atom";
 import { getRouteNode } from "../util/anchor";
 import { getRouteForResolvedPath } from "./getRouteForResolvedPath";
 import { NavigationContext } from "./NavigationContext";
@@ -151,9 +152,14 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         }, 500);
     });
 
+    const closeMobileSidebar = useCloseMobileSidebar();
+    const closeSearchDialog = useCloseSearchDialog();
+
     useEffect(() => {
         const handleRouteChangeStart = (route: string, { shallow }: { shallow: boolean }) => {
             navigateToPath(route, shallow);
+            closeMobileSidebar();
+            closeSearchDialog();
         };
         router.events.on("routeChangeComplete", handleRouteChangeStart);
         router.events.on("hashChangeComplete", handleRouteChangeStart);
@@ -161,7 +167,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             router.events.off("routeChangeComplete", handleRouteChangeStart);
             router.events.off("hashChangeComplete", handleRouteChangeStart);
         };
-    }, [navigateToPath, router.events]);
+    }, [closeMobileSidebar, closeSearchDialog, navigateToPath, router.events]);
 
     useEffect(() => {
         router.beforePopState(({ as }) => {
@@ -192,7 +198,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 basePath,
                 justNavigated: justNavigatedTo.current != null,
                 activeNavigatable,
-                navigateToPath,
                 userIsScrolling: () => userIsScrolling.current,
                 onScrollToPath,
                 observeDocContent,

@@ -7,7 +7,6 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
     basePath: undefined,
     justNavigated: false,
     activeNavigatable: undefined,
-    navigateToPath: noop,
     userIsScrolling: () => false,
     onScrollToPath: noop,
     observeDocContent: noop,
@@ -35,7 +34,6 @@ export interface NavigationContextValue {
     basePath: string | undefined;
     justNavigated: boolean;
     activeNavigatable: NavigatableDocsNode | undefined;
-    navigateToPath: (slugWithoutVersion: string) => void;
     userIsScrolling: () => boolean;
     onScrollToPath: (slug: string) => void;
     observeDocContent: (element: HTMLDivElement) => void;
