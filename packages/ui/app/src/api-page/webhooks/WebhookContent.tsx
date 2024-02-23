@@ -45,7 +45,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
         <div className={"scroll-mt-header-height-padded mx-4 md:mx-6 lg:mx-8"}>
             <div
                 className={classNames(
-                    "scroll-mt-header-height max-w-content-width lg:max-w-endpoint-width mx-auto lg:grid lg:grid-cols-2 lg:gap-12",
+                    "scroll-mt-header-height max-w-content-width md:max-w-endpoint-width mx-auto md:grid md:grid-cols-2 md:gap-8 lg:gap-12",
                     {
                         "border-default border-b mb-px pb-20": !hideBottomSeparator,
                     },
@@ -120,13 +120,13 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                         // the 4rem is the same as the h-10 as the Header
                         "max-h-vh-minus-header",
                         // hide on mobile,
-                        "hidden lg:flex",
+                        "hidden md:flex",
                     )}
                 >
                     {webhookExample}
                 </div>
 
-                <div className="mt-10 flex max-h-[150vh] lg:mt-0 lg:hidden">{webhookExample}</div>
+                <div className="mt-10 flex max-h-[150vh] md:mt-0 md:hidden">{webhookExample}</div>
             </div>
         </div>
     );

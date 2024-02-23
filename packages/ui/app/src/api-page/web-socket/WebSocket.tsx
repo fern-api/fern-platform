@@ -77,7 +77,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi }) => {
             data-route={route.toLowerCase()}
         >
             <article
-                className={classNames("scroll-mt-header-height max-w-content-width lg:max-w-endpoint-width mx-auto", {
+                className={classNames("scroll-mt-header-height max-w-content-width md:max-w-endpoint-width mx-auto", {
                     "border-default border-b mb-px pb-20": !isLastInApi,
                 })}
             >
@@ -98,7 +98,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi }) => {
                         isMarkdown={true}
                     />
                 </header>
-                <div className="lg:grid lg:grid-cols-2 lg:gap-12">
+                <div className="md:grid md:grid-cols-2 md:gap-8 lg:gap-12">
                     <section className="max-w-content-width space-y-12 py-8">
                         <main className="space-y-12">
                             <CardedSection

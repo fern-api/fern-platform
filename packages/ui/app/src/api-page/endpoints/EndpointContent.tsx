@@ -236,7 +236,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
             ref={containerRef}
         >
             <div
-                className={classNames("scroll-mt-header-height max-w-content-width lg:max-w-endpoint-width mx-auto", {
+                className={classNames("scroll-mt-header-height max-w-content-width md:max-w-endpoint-width mx-auto", {
                     "border-default border-b mb-px pb-20": !hideBottomSeparator,
                 })}
                 ref={setContainerRef}
@@ -263,11 +263,11 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                         large
                     />
                 </div>
-                <div className="lg:grid lg:grid-cols-2 lg:gap-12">
+                <div className="md:grid md:grid-cols-2 md:gap-8 lg:gap-12">
                     <div
                         className="max-w-content-width flex min-w-0 flex-1 flex-col"
                         style={{
-                            minHeight: layoutBreakpoint === "lg" ? `${exampleHeight}px` : undefined,
+                            minHeight: layoutBreakpoint === "md" ? `${exampleHeight}px` : undefined,
                         }}
                     >
                         <ApiPageDescription
@@ -296,13 +296,13 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                     <div
                         className={classNames(
                             "max-w-content-width",
-                            "lg:flex-1 lg:sticky lg:self-start",
+                            "md:flex-1 md:sticky md:self-start",
                             "mt-12",
                             // the 4rem is the same as the h-10 as the Header
-                            "max-h-[150vh] lg:max-h-vh-minus-header",
+                            "max-h-[150vh] md:max-h-vh-minus-header",
                             "flex",
                             // header offset
-                            "lg:pt-8 lg:mt-0 lg:top-header-height",
+                            "md:pt-8 md:mt-0 md:top-header-height",
                         )}
                         style={{ height: `${exampleHeight}px` }}
                     >
