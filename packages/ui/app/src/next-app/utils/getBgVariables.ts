@@ -6,22 +6,22 @@ const CSS_VARIABLES = {
 
 export function getBgVariables(
     config: DocsV1Read.DocsConfig,
-    files: Record<DocsV1Read.FileId, DocsV1Read.Url>,
+    files: Record<DocsV1Read.FileId, DocsV1Read.File_>,
 ): Record<string, string> {
-    const backgroundImage = config.backgroundImage;
-    if (backgroundImage == null) {
+    const backgroundImageKey = config.backgroundImage;
+    if (backgroundImageKey == null) {
         return {};
     }
 
-    const backgroundImageUrl = files[backgroundImage];
+    const backgroundImage = files[backgroundImageKey];
 
-    if (backgroundImageUrl == null) {
+    if (backgroundImage == null) {
         // eslint-disable-next-line no-console
-        console.error(`Could not resolve background image file for type ${backgroundImageUrl}.`);
+        console.error(`Could not resolve background image file for type ${backgroundImage}.`);
         return {};
     }
 
     return {
-        [CSS_VARIABLES.BACKGROUND_IMAGE]: `url(${backgroundImageUrl})`,
+        [CSS_VARIABLES.BACKGROUND_IMAGE]: `url(${backgroundImage.url})`,
     };
 }
