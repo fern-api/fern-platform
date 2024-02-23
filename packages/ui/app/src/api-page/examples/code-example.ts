@@ -36,7 +36,7 @@ export function generateCodeExamples(
                 key: `curl-${i}`,
                 exampleIndex: i,
                 language: "curl",
-                name: example.name ?? "cURL Example",
+                name: example.name ?? `Example ${i + 1}`,
                 code: isMultipartForm
                     ? stringifyCurl(undefined, endpoint, createFormState(example), true, "multipart/form-data")
                     : "",
@@ -52,20 +52,20 @@ export function generateCodeExamples(
                     key: `python-sync-${i}`,
                     exampleIndex: i,
                     language: "python",
-                    name: example.name ?? "Python Example",
+                    name: example.name ?? `Example ${i + 1}`,
                     code: example.codeExamples.pythonSdk.sync_client,
                     install: example.codeExamples.pythonSdk.install,
                     exampleCall: example,
                 },
-                {
-                    key: `python-async-${i}`,
-                    exampleIndex: i,
-                    language: "python",
-                    name: `${example.name ?? "Python Example"} (Async)`,
-                    code: example.codeExamples.pythonSdk.async_client,
-                    install: example.codeExamples.pythonSdk.install,
-                    exampleCall: example,
-                },
+                // {
+                //     key: `python-async-${i}`,
+                //     exampleIndex: i,
+                //     language: "python",
+                //     name: `${example.name ?? `Example ${i + 1}`} (Async)`,
+                //     code: example.codeExamples.pythonSdk.async_client,
+                //     install: example.codeExamples.pythonSdk.install,
+                //     exampleCall: example,
+                // },
             ]);
         }
 
@@ -76,7 +76,7 @@ export function generateCodeExamples(
                     key: `typescript-${i}`,
                     exampleIndex: i,
                     language: "typescript",
-                    name: example.name ?? "Typescript Example",
+                    name: example.name ?? `Example ${i + 1}`,
                     code: example.codeExamples.typescriptSdk.client,
                     install: example.codeExamples.typescriptSdk.install,
                     exampleCall: example,

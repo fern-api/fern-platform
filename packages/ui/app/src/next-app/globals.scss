@@ -64,7 +64,7 @@
     h4,
     h5,
     h6 {
-        @apply scroll-mt-header-height-padded tracking-tight;
+        @apply scroll-mt-header-height-padded;
 
         font-family: var(--typography-heading-font-family);
     }
@@ -172,6 +172,7 @@
     }
 
     .fern-dropdown {
+        @apply relative z-50;
         @apply animate-popover;
         @apply min-w-[var(--radix-dropdown-menu-trigger-width)];
         @apply border-default flex max-h-[300px] flex-col rounded-lg border bg-background-translucent backdrop-blur-xl will-change-[opacity,transform];

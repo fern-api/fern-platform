@@ -1,6 +1,8 @@
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { RemoteFontAwesomeIcon } from "../../commons/FontAwesomeIcon";
-import { FernMenu, FernMenuItem } from "../../components/FernMenu";
-import type { CodeExample, CodeExampleGroup } from "../examples//code-example";
+import { FernButton } from "../../components/FernButton";
+import { FernDropdown } from "../../components/FernDropdown";
+import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 
 export declare namespace CodeExampleClientDropdown {
     export interface Props {
@@ -18,55 +20,39 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
     const selectedClientGroup = clients.find((client) => client.language === selectedClient.language);
     return (
         <div className="flex justify-end">
-            <FernMenu
-                text={selectedClientGroup?.languageDisplayName ?? selectedClient.language}
-                icon={<RemoteFontAwesomeIcon className="bg-accent size-4" icon={selectedClientGroup?.icon} />}
-                align="right"
-                menuClassName="overflow-hidden"
-                size="small"
+            <FernDropdown
+                value={selectedClient.language}
+                options={clients.map((client) => ({
+                    type: "value",
+                    label: client.languageDisplayName,
+                    value: client.language,
+                    className: "group/option",
+                    icon: (
+                        <RemoteFontAwesomeIcon
+                            className="bg-intent-default group-data-[highlighted]/option:bg-accent-contrast size-3"
+                            icon={client.icon}
+                        />
+                    ),
+                }))}
+                onValueChange={(value) => {
+                    const client = clients.find((client) => client.language === value);
+                    if (client?.examples[0] != null) {
+                        onClickClient(
+                            client.examples.find((example) => example.exampleIndex === selectedClient.exampleIndex) ??
+                                client.examples[0],
+                        );
+                    }
+                }}
             >
-                {clients.map((client) => (
-                    <FernMenuItem
-                        key={client.language}
-                        selected={client.language === selectedClient.language}
-                        onClick={() => {
-                            if (client.examples[0] != null) {
-                                onClickClient(
-                                    client.examples.find(
-                                        (example) => example.exampleIndex === selectedClient.exampleIndex,
-                                    ) ?? client.examples[0],
-                                );
-                            }
-                        }}
-                    >
-                        <RemoteFontAwesomeIcon className="bg-accent size-4" icon={client.icon} />
-                        <div className="flex items-center whitespace-nowrap">
-                            <span className="font-mono text-xs font-normal">{client.languageDisplayName}</span>
-                        </div>
-                    </FernMenuItem>
-                ))}
-            </FernMenu>
+                <FernButton
+                    icon={<RemoteFontAwesomeIcon className="bg-accent size-4" icon={selectedClientGroup?.icon} />}
+                    rightIcon={<ChevronDownIcon />}
+                    text={selectedClientGroup?.languageDisplayName ?? selectedClient.language}
+                    size="small"
+                    variant="outlined"
+                    mono={true}
+                />
+            </FernDropdown>
         </div>
     );
 };
-
-/*
-{selectedClientGroup != null && selectedClientGroup.examples.length > 1 && (
-    <div className="divide-border-accent-muted-light dark:divide-border-accent-muted-dark flex flex-col items-stretch divide-y overflow-hidden rounded-md bg-white shadow">
-        {selectedClientGroup?.examples.map((example) => (
-            <FernMenuItem
-                key={example.key}
-                selected={example.key === selectedClient.key}
-                onClick={() => {
-                    onClickClient(example);
-                }}
-                disableRoundCorners
-            >
-                <div className="flex items-center whitespace-nowrap">
-                    <span className="font-mono text-xs font-normal">{example.name}</span>
-                </div>
-            </FernMenuItem>
-        ))}
-    </div>
-)}
-*/

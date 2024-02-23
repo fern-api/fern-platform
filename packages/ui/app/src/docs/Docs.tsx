@@ -10,7 +10,7 @@ import tinycolor from "tinycolor2";
 import { ApiPlaygroundContextProvider } from "../api-playground/ApiPlaygroundContext";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
 import { useDocsSelectors } from "../selectors/useDocsSelectors";
-import { useSearchService } from "../services/useSearchService";
+import { useCreateSearchService, useSearchService } from "../services/useSearchService";
 import {
     useCloseMobileSidebar,
     useIsMobileSidebarOpen,
@@ -55,7 +55,10 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     // set up message handler to listen for messages from custom scripts
     useMessageHandler();
 
-    const searchService = useSearchService(search, algoliaSearchIndex);
+    // set up search service
+    useCreateSearchService(search, algoliaSearchIndex);
+    const searchService = useSearchService();
+
     const { resolvedTheme: theme, themes, setTheme } = useTheme();
     useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
     useKeyboardPress({
@@ -138,9 +141,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
         <>
             <NextNProgress color={accentColor} options={{ showSpinner: false }} showOnShallow={false} />
             <BgImageGradient colors={colorsV3} hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage} />
-            {searchService.isAvailable && (
-                <SearchDialog searchService={searchService} fromHeader={layout?.searchbarPlacement === "HEADER"} />
-            )}
+            {searchService.isAvailable && <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />}
 
             <ApiPlaygroundContextProvider navigation={navigation} apiSections={apiSections}>
                 <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
@@ -160,7 +161,6 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                                 isMobileSidebarOpen={isMobileSidebarOpen}
                                 openMobileSidebar={openMobileSidebar}
                                 closeMobileSidebar={closeMobileSidebar}
-                                searchService={searchService}
                                 showSearchBar={layout?.searchbarPlacement === "HEADER"}
                             />
                         </div>
@@ -175,7 +175,6 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                             searchInfo={search}
                             algoliaSearchIndex={algoliaSearchIndex}
                             navbarLinks={config.navbarLinks}
-                            searchService={searchService}
                             showSearchBar={layout?.searchbarPlacement !== "HEADER"}
                         />
 

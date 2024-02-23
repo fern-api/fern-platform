@@ -3,7 +3,7 @@ import { ArrowRightIcon, Cross1Icon, HamburgerMenuIcon, MagnifyingGlassIcon } fr
 import classNames from "classnames";
 import { CSSProperties, forwardRef, memo, PropsWithChildren } from "react";
 import { FernButton, FernButtonGroup, FernLinkButton } from "../components/FernButton";
-import { SearchService } from "../services/useSearchService";
+import { useSearchService } from "../services/useSearchService";
 import { useIsSearchDialogOpen, useOpenSearchDialog } from "../sidebar/atom";
 import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
 import { HeaderLogoSection } from "./HeaderLogoSection";
@@ -17,26 +17,17 @@ export declare namespace Header {
         isMobileSidebarOpen: boolean;
         openMobileSidebar: () => void;
         closeMobileSidebar: () => void;
-        searchService: SearchService;
         showSearchBar?: boolean;
     }
 }
 
 const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Props>>(function Header(
-    {
-        className,
-        style,
-        config,
-        isMobileSidebarOpen,
-        openMobileSidebar,
-        closeMobileSidebar,
-        searchService,
-        showSearchBar = true,
-    },
+    { className, style, config, isMobileSidebarOpen, openMobileSidebar, closeMobileSidebar, showSearchBar = true },
     ref,
 ) {
     const openSearchDialog = useOpenSearchDialog();
     const isSearchDialogOpen = useIsSearchDialogOpen();
+    const searchService = useSearchService();
 
     const { navbarLinks, colorsV3 } = config;
     const navbarLinksSection = (

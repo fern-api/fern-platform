@@ -6,7 +6,7 @@ import { FernScrollArea } from "../components/FernScrollArea";
 import { FernTooltipProvider } from "../components/FernTooltip";
 import { useIsScrolled } from "../docs/useIsScrolled";
 import { SearchSidebar } from "../search/SearchDialog";
-import { SearchService } from "../services/useSearchService";
+import { useSearchService } from "../services/useSearchService";
 import { useViewportContext } from "../viewport-context/useViewportContext";
 import { useCloseMobileSidebar, useIsMobileSidebarOpen } from "./atom";
 import { BuiltWithFern } from "./BuiltWithFern";
@@ -23,7 +23,6 @@ export interface SidebarProps {
     searchInfo: DocsV1Read.SearchInfo;
     algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
     navbarLinks: DocsV1Read.NavbarLink[] | undefined;
-    searchService: SearchService;
     showSearchBar?: boolean;
 }
 
@@ -34,13 +33,16 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
     searchInfo,
     algoliaSearchIndex,
     navbarLinks,
-    searchService,
     showSearchBar,
 }) {
     const scrollRef = useRef<HTMLDivElement>(null);
     const isScrolled = useIsScrolled(scrollRef);
     const { layoutBreakpoint } = useViewportContext();
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
+    const searchService = useSearchService();
+    if (!searchService.isAvailable) {
+        return null;
+    }
     return (
         <nav className="h-full w-full lg:pl-1" aria-label="secondary">
             <FernScrollArea
