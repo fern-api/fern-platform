@@ -3,7 +3,6 @@ import classNames from "classnames";
 import { useMemo } from "react";
 import { useNavigationContext } from "../navigation-context";
 import { useDocsSelectors } from "../selectors/useDocsSelectors";
-import { useSearchService } from "../services/useSearchService";
 import { useOpenSearchDialog } from "./atom";
 import { SidebarSearchBar } from "./SidebarSearchBar";
 import { SidebarTabButton } from "./SidebarTabButton";
@@ -28,14 +27,13 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
     const openSearchDialog = useOpenSearchDialog();
     const showTabs = activeNavigationConfigContext?.type === "tabbed";
 
-    const searchService = useSearchService();
     const searchBar = useMemo(() => {
-        return showSearchBar && searchService.isAvailable ? (
+        return showSearchBar ? (
             <div className="mb-3 hidden last:mb-0 lg:block">
                 <SidebarSearchBar onClick={openSearchDialog} className="w-full" />
             </div>
         ) : null;
-    }, [showSearchBar, searchService.isAvailable, openSearchDialog]);
+    }, [showSearchBar, openSearchDialog]);
 
     const tabs = useMemo(() => {
         if (!showTabs) {

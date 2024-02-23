@@ -204,6 +204,10 @@
             @apply t-muted border-default shadow-card-light inline-flex size-5 items-center justify-center rounded border bg-white font-mono text-xs leading-none;
             @apply dark:shadow-card-dark dark:bg-white/5;
         }
+
+        &:disabled {
+            @apply shadow-none bg-tag-default-soft cursor-default;
+        }
     }
 
     .fern-sidebar-group {

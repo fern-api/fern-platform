@@ -40,9 +40,6 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
     const { layoutBreakpoint } = useViewportContext();
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
     const searchService = useSearchService();
-    if (!searchService.isAvailable) {
-        return null;
-    }
     return (
         <nav className="h-full w-full lg:pl-1" aria-label="secondary">
             <FernScrollArea
