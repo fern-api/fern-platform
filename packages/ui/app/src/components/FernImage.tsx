@@ -24,6 +24,9 @@ export function FernImage({ src, ...props }: FernImage.Props): ReactElement | nu
         image: ({ url, width: realWidth, height: realHeight, blurDataUrl, alt }) => {
             const { width: layoutWidth, height: layoutHeight } = props;
             const { width, height } = getDimensions(layoutWidth, layoutHeight, realWidth, realHeight);
+            if (url.includes(".svg")) {
+                return <img {...props} src={url} width={width} height={height} alt={props.alt ?? alt ?? ""} />;
+            }
             return (
                 <Image
                     {...props}
