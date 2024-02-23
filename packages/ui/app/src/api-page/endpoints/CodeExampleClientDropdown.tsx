@@ -41,16 +41,18 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                     const client = clients.find((client) => client.language === value);
                     if (client?.examples[0] != null) {
                         const scrollY = window.scrollY;
-                        const currentTop = getRouteNode(route)?.clientTop;
+                        const currentTop = getRouteNode(route)?.getBoundingClientRect().top;
                         onClickClient(
                             client.examples.find((example) => example.exampleIndex === selectedClient.exampleIndex) ??
                                 client.examples[0],
                         );
-                        const newTop = getRouteNode(route)?.clientTop;
+
+                        const newTop = getRouteNode(route)?.getBoundingClientRect().top;
 
                         // when switching between clients, the scroll position should be maintained
                         if (currentTop != null && newTop != null) {
-                            window.scrollTo(0, scrollY + (newTop - currentTop));
+                            const offset = scrollY - currentTop;
+                            window.scrollTo(0, newTop + offset);
                         }
                     }
                 }}

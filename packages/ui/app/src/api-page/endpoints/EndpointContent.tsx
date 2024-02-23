@@ -142,10 +142,9 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     const setSelectedExampleClientAndScrollToTop = useCallback(
         (nextClient: CodeExample) => {
             setSelectedClient(nextClient);
-            navigateToPath(route.substring(1));
             setSelectedLanguage(nextClient.language);
         },
-        [navigateToPath, route, setSelectedLanguage],
+        [setSelectedLanguage],
     );
 
     const curlLines = useMemo(
