@@ -96,7 +96,11 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                 </div>
             )}
 
-            <div className="-mr-1 flex flex-1 items-center justify-end space-x-0 md:mr-0 lg:space-x-4">
+            <div
+                className={classNames("-mr-1 flex items-center justify-end space-x-0 md:mr-0 lg:space-x-4", {
+                    "flex-1": showSearchBar && searchService.isAvailable,
+                })}
+            >
                 {navbarLinksSection}
 
                 <div className="flex lg:hidden">
