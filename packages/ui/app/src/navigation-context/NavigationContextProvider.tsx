@@ -50,6 +50,11 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             node?.scrollIntoView({
                 behavior: "auto",
             });
+
+            // on mobile, the scrollToTop is not working, so we need to force it
+            if (node == null) {
+                window.scrollTo(0, 0);
+            }
         }
         justNavigatedTo.current = route;
     });

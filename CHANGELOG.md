@@ -13,3 +13,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # 2024-02-22
 
 Init changelog! 🙌
+
+- Added line numbers to code samples.
+- Added Content-Type toggle to endpoint that supports both application/json and multipart/form-data.
