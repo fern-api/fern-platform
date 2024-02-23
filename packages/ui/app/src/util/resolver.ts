@@ -42,46 +42,34 @@ export function resolveNavigationItems(
                         auth: definition.auth,
                         hasMultipleBaseUrls: definition.hasMultipleBaseUrls,
                         slug: [...parentSlugs, api.urlSlug],
-                        endpoints: sortBy(
-                            mergeContentTypes(
-                                definition.rootPackage.endpoints.map((endpoint) =>
-                                    resolveEndpointDefinition(
-                                        definition.id,
-                                        definition.id,
-                                        endpoint,
-                                        definition.types,
-                                        definitionSlug,
-                                    ),
+                        endpoints: mergeContentTypes(
+                            definition.rootPackage.endpoints.map((endpoint) =>
+                                resolveEndpointDefinition(
+                                    definition.id,
+                                    definition.id,
+                                    endpoint,
+                                    definition.types,
+                                    definitionSlug,
                                 ),
                             ),
-                            "title",
                         ),
-                        websockets: sortBy(
-                            definition.rootPackage.websockets.map((websocket) =>
-                                resolveWebsocketChannel(websocket, definition.types, definitionSlug),
-                            ),
-                            "title",
+                        websockets: definition.rootPackage.websockets.map((websocket) =>
+                            resolveWebsocketChannel(websocket, definition.types, definitionSlug),
                         ),
-                        webhooks: sortBy(
-                            definition.rootPackage.webhooks.map((webhook) =>
-                                resolveWebhookDefinition(webhook, definition.types, definitionSlug),
-                            ),
-                            "title",
+                        webhooks: definition.rootPackage.webhooks.map((webhook) =>
+                            resolveWebhookDefinition(webhook, definition.types, definitionSlug),
                         ),
-                        subpackages: sortBy(
-                            definition.rootPackage.subpackages
-                                .map((subpackageId) =>
-                                    resolveSubpackage(
-                                        api.api,
-                                        subpackageId,
-                                        definition.subpackages,
-                                        definition.types,
-                                        api.skipUrlSlug ? parentSlugs : [...parentSlugs, api.urlSlug],
-                                    ),
-                                )
-                                .filter(isNonNullish),
-                            "title",
-                        ),
+                        subpackages: definition.rootPackage.subpackages
+                            .map((subpackageId) =>
+                                resolveSubpackage(
+                                    api.api,
+                                    subpackageId,
+                                    definition.subpackages,
+                                    definition.types,
+                                    api.skipUrlSlug ? parentSlugs : [...parentSlugs, api.urlSlug],
+                                ),
+                            )
+                            .filter(isNonNullish),
                         pointsTo: definition.rootPackage.pointsTo,
                     });
                 }
@@ -114,28 +102,16 @@ function resolveSubpackage(
         return undefined;
     }
     const slug = [...parentSlugs, subpackage.urlSlug];
-    const endpoints = sortBy(
-        mergeContentTypes(
-            subpackage.endpoints.map((endpoint) =>
-                resolveEndpointDefinition(apiSectionId, subpackageId, endpoint, types, slug),
-            ),
+    const endpoints = mergeContentTypes(
+        subpackage.endpoints.map((endpoint) =>
+            resolveEndpointDefinition(apiSectionId, subpackageId, endpoint, types, slug),
         ),
-        "title",
     );
-    const websockets = sortBy(
-        subpackage.websockets.map((websocket) => resolveWebsocketChannel(websocket, types, slug)),
-        "title",
-    );
-    const webhooks = sortBy(
-        subpackage.webhooks.map((webhook) => resolveWebhookDefinition(webhook, types, slug)),
-        "title",
-    );
-    const subpackages = sortBy(
-        subpackage.subpackages
-            .map((subpackageId) => resolveSubpackage(apiSectionId, subpackageId, subpackagesMap, types, slug))
-            .filter(isNonNullish),
-        "title",
-    );
+    const websockets = subpackage.websockets.map((websocket) => resolveWebsocketChannel(websocket, types, slug));
+    const webhooks = subpackage.webhooks.map((webhook) => resolveWebhookDefinition(webhook, types, slug));
+    const subpackages = subpackage.subpackages
+        .map((subpackageId) => resolveSubpackage(apiSectionId, subpackageId, subpackagesMap, types, slug))
+        .filter(isNonNullish);
 
     if (endpoints.length === 0 && webhooks.length === 0 && subpackages.length === 0 && websockets.length === 0) {
         return undefined;
