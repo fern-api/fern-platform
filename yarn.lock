@@ -2345,9 +2345,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/fdr-sdk@npm:0.50.8-1-gace1ff5":
-  version: 0.50.8-1-gace1ff5
-  resolution: "@fern-api/fdr-sdk@npm:0.50.8-1-gace1ff5"
+"@fern-api/fdr-sdk@npm:0.50.9-1-gd87477b":
+  version: 0.50.9-1-gd87477b
+  resolution: "@fern-api/fdr-sdk@npm:0.50.9-1-gd87477b"
   dependencies:
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
@@ -2355,7 +2355,7 @@ __metadata:
     lodash: ^4.17.21
     marked: ^5.1.0
     url-join: 4.0.1
-  checksum: 32de6d37ef8116a59e94dfd053eb954f6f53e12fd40110974c7eb51dfdc3531b7dc445a2e435a68e2e16c889563c66bdbacbba8c8f3a510568e2d96536732971
+  checksum: d253f693d5b3f64c7d2a340cd3f3b4ec3ceac58331922125857edf3f407aa81cc58ba61132bcac1bea11549954ba784cc6e74b0447f49ec7421ba4ceaa063bc6
   languageName: node
   linkType: hard
 
@@ -2376,7 +2376,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/app-utils@workspace:packages/commons/app-utils"
   dependencies:
-    "@fern-api/fdr-sdk": 0.50.8-1-gace1ff5
+    "@fern-api/fdr-sdk": 0.50.9-1-gd87477b
     "@types/jest": ^29.5.11
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
@@ -2704,7 +2704,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/ui@workspace:packages/ui/app"
   dependencies:
-    "@fern-api/fdr-sdk": 0.50.8-1-gace1ff5
+    "@fern-api/fdr-sdk": 0.50.9-1-gd87477b
     "@fern-ui/app-utils": "workspace:*"
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/loadable": "workspace:*"

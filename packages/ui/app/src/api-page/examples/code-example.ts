@@ -84,6 +84,21 @@ export function generateCodeExamples(
             ]);
         }
 
+        if (example.codeExamples.goSdk != null) {
+            codeExamples.set("go", [
+                ...(codeExamples.get("go") ?? []),
+                {
+                    key: `go-${i}`,
+                    exampleIndex: i,
+                    language: "go",
+                    name: example.name ?? `Example ${i + 1}`,
+                    code: example.codeExamples.goSdk.client,
+                    install: example.codeExamples.goSdk.install,
+                    exampleCall: example,
+                },
+            ]);
+        }
+
         example.codeSamples.forEach((codeSample, j) => {
             const language = cleanLanguage(codeSample.language);
             codeExamples.set(language, [
