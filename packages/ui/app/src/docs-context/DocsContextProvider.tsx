@@ -4,7 +4,7 @@ import { DocsContext } from "./DocsContext";
 
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
-        files: Record<DocsV1Read.FileId, DocsV1Read.Url>;
+        files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
         apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>;
         config: DocsV1Read.DocsConfig;
         baseUrl: DocsV2Read.BaseUrl;
@@ -19,7 +19,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     children,
 }) => {
     const resolveFile = useCallback(
-        (fileId: DocsV1Read.FileId): DocsV1Read.Url | undefined => {
+        (fileId: DocsV1Read.FileId): DocsV1Read.File_ | undefined => {
             const file = files[fileId];
             if (file == null) {
                 // eslint-disable-next-line no-console
