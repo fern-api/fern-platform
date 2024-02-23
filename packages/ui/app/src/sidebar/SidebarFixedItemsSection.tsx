@@ -20,8 +20,6 @@ export declare namespace SidebarFixedItemsSection {
 
 export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> = ({
     className,
-    searchInfo,
-    algoliaSearchIndex,
     showBorder,
     showSearchBar,
 }) => {
@@ -30,7 +28,7 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
     const openSearchDialog = useOpenSearchDialog();
     const showTabs = activeNavigationConfigContext?.type === "tabbed";
 
-    const searchService = useSearchService(searchInfo, algoliaSearchIndex);
+    const searchService = useSearchService();
     const searchBar = useMemo(() => {
         return showSearchBar && searchService.isAvailable ? (
             <div className="mb-3 hidden last:mb-0 lg:block">

@@ -1,5 +1,6 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { useMemo } from "react";
+import { atom, useAtom, useAtomValue } from "jotai";
+import { useEffect, useMemo } from "react";
 import { getEnvConfig, type EnvironmentConfig } from "../env";
 import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { REGISTRY_SERVICE } from "./registry";
@@ -44,13 +45,20 @@ function createSearchApiKeyLoader(envConfig: EnvironmentConfig, indexSegmentId: 
     };
 }
 
-export function useSearchService(
+const SEARCH_SERVICE_ATOM = atom<SearchService>({ isAvailable: false });
+
+export function useSearchService(): SearchService {
+    return useAtomValue(SEARCH_SERVICE_ATOM);
+}
+
+export function useCreateSearchService(
     searchInfo: DocsV1Read.SearchInfo,
     algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null,
-): SearchService {
+): void {
     const { activeVersionContext } = useDocsSelectors();
+    const [, setSearchService] = useAtom(SEARCH_SERVICE_ATOM);
 
-    return useMemo<SearchService>(() => {
+    const searchService = useMemo<SearchService>(() => {
         try {
             const envConfig = getEnvConfig();
             if (typeof searchInfo !== "object") {
@@ -114,4 +122,8 @@ export function useSearchService(
             return { isAvailable: false };
         }
     }, [activeVersionContext, algoliaSearchIndex, searchInfo]);
+
+    useEffect(() => {
+        setSearchService(searchService);
+    });
 }

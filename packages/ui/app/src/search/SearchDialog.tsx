@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { Fragment, PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
 import { InstantSearch } from "react-instantsearch-hooks-web";
 import { useNavigationContext } from "../navigation-context";
-import { type SearchCredentials, type SearchService } from "../services/useSearchService";
+import { useSearchService, type SearchCredentials, type SearchService } from "../services/useSearchService";
 import { useCloseSearchDialog, useIsSearchDialogOpen } from "../sidebar/atom";
 import { useViewportContext } from "../viewport-context/useViewportContext";
 import { SearchBox, SearchMobileBox } from "./SearchBox";
@@ -12,17 +12,17 @@ import { SearchHits, SearchMobileHits } from "./SearchHits";
 
 export declare namespace SearchDialog {
     export interface Props {
-        searchService: SearchService;
         fromHeader?: boolean;
     }
 }
 
 export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
-    const { searchService, fromHeader } = providedProps;
+    const { fromHeader } = providedProps;
     const [credentials, setSearchCredentials] = useState<SearchCredentials | undefined>(undefined);
     const inputRef = useRef<HTMLInputElement>(null);
     const { layoutBreakpoint } = useViewportContext();
 
+    const searchService = useSearchService();
     const isSearchDialogOpen = useIsSearchDialogOpen();
     const closeSearchDialog = useCloseSearchDialog();
 
@@ -88,7 +88,7 @@ function FernInstantSearch({ searchClient, searchService, inputRef }: FernInstan
                     ref={inputRef}
                     placeholder={
                         activeNavigatable?.context.version?.info.id != null
-                            ? `Search across ${activeNavigatable.context.version.info.id}...`
+                            ? `Search across ${activeNavigatable.context.version.info.id} for guides and endpoints...`
                             : "Search for guides and endpoints..."
                     }
                     className="flex-1"
