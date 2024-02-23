@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useDocsContext } from "../../docs-context/useDocsContext";
-import { useNavigationContext } from "../../navigation-context";
 import {
     ResolvedApiDefinitionPackage,
     ResolvedEndpointDefinition,
@@ -78,7 +77,6 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     const router = useRouter();
     const { config } = useDocsContext();
     const { layoutBreakpoint, viewportSize } = useViewportContext();
-    const { navigateToPath } = useNavigationContext();
     const [isInViewport, setIsInViewport] = useState(false);
     const { ref: containerRef } = useInView({
         onChange: setIsInViewport,
