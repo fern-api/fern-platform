@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
+import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
 
 export const WebhookContext = createContext<() => WebhookContextValue>(() => {
     throw new Error("WebhookContextProvider not found in tree");

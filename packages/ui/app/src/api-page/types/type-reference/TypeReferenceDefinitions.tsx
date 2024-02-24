@@ -1,5 +1,5 @@
 import { ResolvedTypeReference } from "../../../util/resolver";
-import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
+import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
 import { TypeDefinitionContextProvider } from "../context/TypeDefinitionContextProvider";
 import { InternalTypeReferenceDefinitions } from "./InternalTypeReferenceDefinitions";
 

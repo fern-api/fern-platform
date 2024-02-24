@@ -16,9 +16,8 @@ import { useViewportContext } from "../../viewport-context/useViewportContext";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { Breadcrumbs } from "../Breadcrumbs";
 import { CodeExample, generateCodeExamples } from "../examples/code-example";
-import { getCurlLines } from "../examples/curl-example/curlUtils";
-import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
-import { flattenJsonToLines } from "../examples/json-example/jsonLineUtils";
+import { JsonPropertyPath } from "../examples/JsonPropertyPath";
+import { endpointExampleToHttpRequestExample, stringifyHttpRequestExampleToCurl } from "../examples/types";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 import { EndpointContentCodeSnippets } from "./EndpointContentCodeSnippets";
 import { convertNameToAnchorPart, EndpointContentLeft } from "./EndpointContentLeft";
@@ -145,32 +144,24 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         [setSelectedLanguage],
     );
 
-    const curlLines = useMemo(
+    const curlString = useMemo(
         () =>
-            getCurlLines(
-                contentType,
-                apiSection.auth,
-                endpoint,
-                selectedClient.exampleCall,
-                flattenJsonToLines(selectedClient.exampleCall.requestBody),
+            stringifyHttpRequestExampleToCurl(
+                endpointExampleToHttpRequestExample(apiSection.auth, endpoint, selectedClient.exampleCall),
             ),
-        [apiSection.auth, contentType, endpoint, selectedClient.exampleCall],
+        [apiSection.auth, endpoint, selectedClient.exampleCall],
+    );
+
+    const responseJsonString = useMemo(
+        () => JSON.stringify(selectedClient.exampleCall.responseBodyV3?.value, undefined, 2),
+        [selectedClient.exampleCall.responseBodyV3?.value],
     );
 
     const selectedExampleClientLineCount = useMemo(() => {
         return selectedClient.language === "curl" && selectedClient.code === ""
-            ? curlLines.length
+            ? curlString.split("\n").length
             : selectedClient.code.split("\n").length;
-    }, [curlLines.length, selectedClient]);
-
-    const jsonLines = useMemo(
-        () => flattenJsonToLines(selectedClient.exampleCall.responseBody),
-        [selectedClient.exampleCall.responseBody],
-    );
-
-    const jsonLineLength = jsonLines
-        .map((jsonLine) => (jsonLine.type === "string" ? jsonLine.value.split("\n").length : 1))
-        .reduce((a, b) => a + b, 0);
+    }, [curlString, selectedClient.code, selectedClient.language]);
 
     const selectorHeight =
         (clients.find((c) => c.language === selectedClient.language)?.examples.length ?? 0) > 1 ? GAP_6 + 24 : 0;
@@ -184,6 +175,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                   _other: () => 64,
               });
 
+    const jsonLineLength = responseJsonString?.split("\n").length ?? 0;
     const [requestHeight, responseHeight] = useMemo((): [number, number] => {
         if (!["lg", "xl", "2xl"].includes(layoutBreakpoint)) {
             const requestLines = Math.min(MOBILE_MAX_LINES + 1, selectedExampleClientLineCount);
@@ -312,8 +304,10 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                                 clients={clients}
                                 selectedClient={selectedClient}
                                 onClickClient={setSelectedExampleClientAndScrollToTop}
-                                requestCurlLines={curlLines}
-                                responseJsonLines={jsonLines}
+                                requestCurlString={curlString}
+                                requestCurlJson={selectedClient.exampleCall.requestBodyV3?.value}
+                                responseJsonString={responseJsonString}
+                                responseJson={selectedClient.exampleCall.responseBodyV3?.value}
                                 hoveredRequestPropertyPath={hoveredRequestPropertyPath}
                                 hoveredResponsePropertyPath={hoveredResponsePropertyPath}
                                 requestHeight={requestHeight}

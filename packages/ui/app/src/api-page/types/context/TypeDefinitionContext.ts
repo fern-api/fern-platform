@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
+import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
 
 export const TypeDefinitionContext = createContext<() => TypeDefinitionContextValue>(() => {
     throw new Error("TypeDefinitionContext.Provider not found in tree");

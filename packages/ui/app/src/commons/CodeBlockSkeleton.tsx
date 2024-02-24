@@ -2,8 +2,8 @@ import classNames from "classnames";
 import { useTheme } from "next-themes";
 import React, { CSSProperties, DetailedHTMLProps, HTMLAttributes } from "react";
 import { createElement, PrismAsyncLight as SyntaxHighlighter } from "react-syntax-highlighter";
+import dark from "react-syntax-highlighter/dist/cjs/styles/prism/atom-dark";
 import prism from "react-syntax-highlighter/dist/cjs/styles/prism/prism";
-import vscDarkPlus from "react-syntax-highlighter/dist/cjs/styles/prism/vsc-dark-plus";
 
 // [number, number] is a range of lines to highlight
 type HighlightLine = number | [number, number];
@@ -133,7 +133,7 @@ export const FernSyntaxHighlighter: React.FC<FernSyntaxHighlighterProps> = ({
     return (
         <SyntaxHighlighter
             {...props}
-            style={theme === "dark" ? vscDarkPlus : prism}
+            style={theme === "dark" ? dark : prism}
             customStyle={{
                 fontSize: fontSize === "sm" ? "12px" : "14px",
                 lineHeight: fontSize === "sm" ? "20px" : "24px",

@@ -5,7 +5,7 @@ import { memo, MouseEventHandler } from "react";
 import { FernCollapse } from "../../components/FernCollapse";
 import { ResolvedError, ResolvedTypeReference } from "../../util/resolver";
 import { toTitleCase } from "../../util/string";
-import { type JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
+import { type JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
 import { getErrorNameForStatus } from "../utils/getErrorNameForStatus";
