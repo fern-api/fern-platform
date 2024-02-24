@@ -1,4 +1,4 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ResolvedEndpointDefinition, ResolvedEndpointPathParts } from "./resolver";
 
@@ -12,7 +12,9 @@ export type EndpointPathPart =
           name: string;
       };
 
-export function getEndpointAvailabilityLabel(availability: APIV1Read.Availability): string {
+export function getEndpointAvailabilityLabel(
+    availability: APIV1Read.Availability | DocsV1Read.VersionAvailability,
+): string {
     switch (availability) {
         case "Beta":
             return "Beta";
@@ -20,6 +22,8 @@ export function getEndpointAvailabilityLabel(availability: APIV1Read.Availabilit
             return "Deprecated";
         case "GenerallyAvailable":
             return "GA";
+        case "Stable":
+            return "Stable";
         default:
             return "Unknown";
     }

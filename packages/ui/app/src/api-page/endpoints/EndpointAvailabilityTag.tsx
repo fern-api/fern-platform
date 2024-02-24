@@ -1,11 +1,11 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import React, { memo } from "react";
 import { getEndpointAvailabilityLabel } from "../../util/endpoint";
 
 export declare namespace EndpointAvailabilityTag {
     export type Props = React.PropsWithChildren<{
-        availability: APIV1Read.Availability;
+        availability: APIV1Read.Availability | DocsV1Read.VersionAvailability;
         className?: string;
         minimal?: boolean;
     }>;
@@ -19,7 +19,7 @@ export const EndpointAvailabilityTag = memo<EndpointAvailabilityTag.Props>(funct
     return (
         <span
             className={classNames(
-                "rounded text-xs",
+                "rounded-full text-xs",
                 {
                     "border px-1.5 py-0.5": !minimal,
                     "bg-tag-default t-muted": false,

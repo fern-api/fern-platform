@@ -24,10 +24,7 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
 
     const definitionInfo = activeNavigatable?.context.root.info;
     const hasMultipleVersions = definitionInfo?.type === "versioned";
-    const activeVersionId =
-        activeVersionContext.type === "versioned" ? activeVersionContext.version.info.id : undefined;
-    const activeVersionSlug =
-        activeVersionContext.type === "versioned" ? activeVersionContext.version.info.slug : undefined;
+    const activeVersionInfo = activeVersionContext.type === "versioned" ? activeVersionContext.version.info : undefined;
 
     const imageClassName = "max-h-full object-contain";
 
@@ -90,8 +87,9 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
                 <div>
                     <VersionDropdown
                         versions={definitionInfo.versions}
-                        selectedVersionName={activeVersionId}
-                        selectedVersionSlug={activeVersionSlug}
+                        selectedVersionName={activeVersionInfo?.id}
+                        selectedVersionSlug={activeVersionInfo?.slug}
+                        selectedVersionAvailability={activeVersionInfo?.availability}
                     />
                 </div>
             )}

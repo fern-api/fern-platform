@@ -1,6 +1,7 @@
-import { type DocsNode } from "@fern-api/fdr-sdk";
+import { DocsV1Read, type DocsNode } from "@fern-api/fdr-sdk";
 import { getVersionAvailabilityLabel } from "@fern-ui/app-utils";
 import { CaretDownIcon } from "@radix-ui/react-icons";
+import { EndpointAvailabilityTag } from "../api-page/endpoints/EndpointAvailabilityTag";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
 import { useNavigationContext } from "../navigation-context";
@@ -10,6 +11,7 @@ export declare namespace VersionDropdown {
         versions: DocsNode.Version[];
         selectedVersionName: string | undefined;
         selectedVersionSlug: string | undefined;
+        selectedVersionAvailability: DocsV1Read.VersionAvailability | null | undefined;
     }
 }
 
@@ -22,6 +24,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
     versions,
     selectedVersionName,
     selectedVersionSlug,
+    selectedVersionAvailability,
 }) => {
     const { basePath } = useNavigationContext();
     return (
@@ -40,7 +43,18 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
                 <FernButton
                     intent="primary"
                     variant="outlined"
-                    text={selectedVersionName}
+                    text={
+                        selectedVersionAvailability != null &&
+                        selectedVersionAvailability !== "Stable" &&
+                        selectedVersionAvailability !== "GenerallyAvailable" ? (
+                            <span className="inline-flex items-center gap-2">
+                                {selectedVersionName}
+                                <EndpointAvailabilityTag availability={selectedVersionAvailability} />
+                            </span>
+                        ) : (
+                            selectedVersionName
+                        )
+                    }
                     rightIcon={<CaretDownIcon className="transition-transform data-[state=open]:rotate-180" />}
                 />
             </FernDropdown>
