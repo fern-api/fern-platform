@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { MouseEventHandler, MutableRefObject, ReactElement, ReactNode, useState } from "react";
+import { forwardRef, MouseEventHandler, PropsWithChildren, ReactElement, ReactNode } from "react";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
 
 export declare namespace TitledExample {
@@ -8,32 +8,29 @@ export declare namespace TitledExample {
         type: "primary" | "warning";
         actions?: ReactElement;
         className?: string;
-        children: ReactElement | ((parent: HTMLElement | undefined) => ReactElement);
         copyToClipboardText?: () => string; // use provider to lazily compute clipboard text
         onClick?: MouseEventHandler<HTMLDivElement>;
-        containerRef?: MutableRefObject<HTMLDivElement | null>;
         disablePadding?: boolean;
         disableClipboard?: boolean;
+        onMouseOver?: MouseEventHandler<HTMLDivElement>;
+        onMouseOut?: MouseEventHandler<HTMLDivElement>;
     }
 }
 
-export const TitledExample: React.FC<TitledExample.Props> = ({
-    title,
-    type,
-    className,
-    actions,
-    children,
-    copyToClipboardText,
-    onClick,
-    containerRef,
-    disablePadding = false,
-    disableClipboard = false,
-}) => {
-    const [contentRef, setContentRef] = useState<HTMLElement | null>(null);
-
-    // innerText will not be available if the content is virtualized
-    const copyToClipboardContent = copyToClipboardText ?? contentRef?.innerText;
-
+export const TitledExample = forwardRef<HTMLDivElement, PropsWithChildren<TitledExample.Props>>(function TitledExample(
+    {
+        title,
+        type,
+        className,
+        actions,
+        children,
+        copyToClipboardText,
+        onClick,
+        disablePadding = false,
+        disableClipboard = false,
+    },
+    ref,
+) {
     return (
         <div
             className={classNames(
@@ -41,7 +38,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                 className,
             )}
             onClick={onClick}
-            ref={containerRef}
+            ref={ref}
         >
             <div
                 className={classNames("rounded-t-xl h-10", {
@@ -64,24 +61,21 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                     )}
                     <div className="flex gap-2">
                         {actions}
-                        {!disableClipboard && (
-                            <CopyToClipboardButton content={copyToClipboardContent} className="-m-1" />
-                        )}
+                        {!disableClipboard && <CopyToClipboardButton content={copyToClipboardText} className="-m-1" />}
                     </div>
                 </div>
             </div>
             <div className="flex min-h-0 flex-1">
-                <div className={classNames(className, "flex flex-1 leading-relaxed text-xs min-w-0 font-mono")}>
+                <div className={classNames("flex flex-1 leading-relaxed text-xs min-w-0 font-mono")}>
                     <div
                         className={classNames("flex-1 overflow-hidden rounded-b-xl whitespace-pre", {
                             "py-4": !disablePadding,
                         })}
-                        ref={setContentRef}
                     >
-                        {typeof children === "function" ? children(contentRef ?? undefined) : children}
+                        {children}
                     </div>
                 </div>
             </div>
         </div>
     );
-};
+});

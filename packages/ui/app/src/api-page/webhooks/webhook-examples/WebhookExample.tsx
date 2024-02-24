@@ -1,9 +1,6 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { createRef, useEffect, useMemo } from "react";
-import { CodeBlockSkeleton } from "../../../commons/CodeBlockSkeleton";
-import { FernScrollArea } from "../../../components/FernScrollArea";
-import { getJsonLineNumbers, lineNumberOf } from "../../endpoints/EndpointContentCodeSnippets";
-import { TitledExample } from "../../examples/TitledExample";
+import { CodeSnippetExample, getJsonLineNumbers } from "../../examples/CodeSnippetExample";
 import { useWebhookContext } from "../webhook-context/useWebhookContext";
 
 export declare namespace WebhookExample {
@@ -21,11 +18,7 @@ export const WebhookExample: React.FC<WebhookExample.Props> = ({ example }) => {
         if (hoveredPayloadPropertyPath.length === 0) {
             return [];
         }
-        const startLine = lineNumberOf(payloadJsonString, "-d '{");
-        if (startLine === -1) {
-            return [];
-        }
-        return getJsonLineNumbers(payloadJsonString, hoveredPayloadPropertyPath, startLine);
+        return getJsonLineNumbers(payloadJsonString, hoveredPayloadPropertyPath);
     }, [hoveredPayloadPropertyPath, payloadJsonString]);
 
     const requestViewportRef = createRef<HTMLDivElement>();
@@ -45,23 +38,18 @@ export const WebhookExample: React.FC<WebhookExample.Props> = ({ example }) => {
             <div className="flex min-h-0 flex-1 flex-col">
                 <div className="grid min-h-0 flex-1 grid-rows-[repeat(auto-fit,_minmax(0,_min-content))] flex-col gap-6">
                     {example.payload != null && (
-                        <TitledExample
+                        <CodeSnippetExample
                             title="Payload"
                             type="primary"
                             onClick={(e) => {
                                 e.stopPropagation();
                             }}
                             copyToClipboardText={() => payloadJsonString}
-                        >
-                            <FernScrollArea viewportRef={requestViewportRef}>
-                                <CodeBlockSkeleton
-                                    content={payloadJsonString}
-                                    language="json"
-                                    fontSize="sm"
-                                    highlightLines={requestHighlightLines}
-                                />
-                            </FernScrollArea>
-                        </TitledExample>
+                            content={payloadJsonString}
+                            language="json"
+                            hoveredPropertyPath={hoveredPayloadPropertyPath}
+                            json={example.payload}
+                        />
                     )}
                 </div>
             </div>

@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { useTheme } from "next-themes";
-import React, { CSSProperties, DetailedHTMLProps, HTMLAttributes } from "react";
+import React, { CSSProperties, DetailedHTMLProps, forwardRef, HTMLAttributes } from "react";
 import { createElement, PrismAsyncLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import dark from "react-syntax-highlighter/dist/cjs/styles/prism/atom-dark";
 import prism from "react-syntax-highlighter/dist/cjs/styles/prism/prism";
@@ -19,38 +19,44 @@ export type CodeBlockSkeletonProps = {
     highlightStyle?: "highlight" | "focus";
 };
 
-export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = ({
-    className,
-    language,
-    content,
-    // usePlainStyles = false,
-    fontSize,
-    style,
-    highlightLines,
-    highlightStyle,
-}) => {
-    return (
-        <div
-            className={classNames(
-                "font-mono",
-                // {
-                //     "w-full border-l border-r border-b rounded-bl-lg rounded-br-lg border-default": !usePlainStyles,
-                // },
-                className,
-            )}
-            style={style}
-        >
-            <FernSyntaxHighlighter
-                language={language}
-                fontSize={fontSize}
-                highlightLines={highlightLines}
-                highlightStyle={highlightStyle}
+export const CodeBlockSkeleton: React.FC<CodeBlockSkeletonProps> = forwardRef<HTMLDivElement, CodeBlockSkeletonProps>(
+    function CodeBlockSkeleton(
+        {
+            className,
+            language,
+            content,
+            // usePlainStyles = false,
+            fontSize,
+            style,
+            highlightLines,
+            highlightStyle,
+        },
+        ref,
+    ) {
+        return (
+            <div
+                className={classNames(
+                    "font-mono",
+                    // {
+                    //     "w-full border-l border-r border-b rounded-bl-lg rounded-br-lg border-default": !usePlainStyles,
+                    // },
+                    className,
+                )}
+                style={style}
+                ref={ref}
             >
-                {content}
-            </FernSyntaxHighlighter>
-        </div>
-    );
-};
+                <FernSyntaxHighlighter
+                    language={language}
+                    fontSize={fontSize}
+                    highlightLines={highlightLines}
+                    highlightStyle={highlightStyle}
+                >
+                    {content}
+                </FernSyntaxHighlighter>
+            </div>
+        );
+    },
+);
 
 function flattenHighlightLines(highlightLines: HighlightLine[]): number[] {
     return highlightLines.flatMap((line) => {

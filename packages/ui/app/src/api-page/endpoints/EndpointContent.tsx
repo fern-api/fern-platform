@@ -32,6 +32,7 @@ export declare namespace EndpointContent {
         hideBottomSeparator?: boolean;
         setContainerRef: (ref: HTMLElement | null) => void;
         route: string;
+        isInViewport: boolean;
     }
 }
 
@@ -71,12 +72,13 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     breadcrumbs,
     hideBottomSeparator = false,
     setContainerRef,
+    isInViewport: initiallyInViewport,
     route,
 }) => {
     const router = useRouter();
     const { config } = useDocsContext();
     const { layoutBreakpoint, viewportSize } = useViewportContext();
-    const [isInViewport, setIsInViewport] = useState(false);
+    const [isInViewport, setIsInViewport] = useState(initiallyInViewport);
     const { ref: containerRef } = useInView({
         onChange: setIsInViewport,
         rootMargin: "100%",

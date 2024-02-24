@@ -1,5 +1,5 @@
 import { joinUrlSlugs } from "@fern-api/fdr-sdk";
-import { useShouldHideFromSsg } from "../../navigation-context/useNavigationContext";
+import { useNavigationContext, useShouldHideFromSsg } from "../../navigation-context/useNavigationContext";
 import {
     ResolvedApiDefinitionPackage,
     ResolvedEndpointDefinition,
@@ -25,6 +25,7 @@ export const Endpoint: React.FC<Endpoint.Props> = ({
     breadcrumbs,
     isLastInApi,
 }) => {
+    const { resolvedPath } = useNavigationContext();
     const fullSlug = joinUrlSlugs(...endpoint.slug);
     const route = `/${fullSlug}`;
 
@@ -46,6 +47,7 @@ export const Endpoint: React.FC<Endpoint.Props> = ({
             setContainerRef={setTargetRef}
             hideBottomSeparator={isLastInApi}
             route={route}
+            isInViewport={resolvedPath.fullSlug === fullSlug}
         />
     );
 };
