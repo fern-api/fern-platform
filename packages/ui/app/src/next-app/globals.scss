@@ -115,6 +115,10 @@
 }
 
 @layer components {
+    .fa-icon {
+        @apply size-4 inline-block bg-intent-default;
+    }
+
     .mask-grad-top-1 {
         mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 4px);
     }

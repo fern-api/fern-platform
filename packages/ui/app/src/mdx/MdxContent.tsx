@@ -2,6 +2,7 @@ import { MDXRemote, MDXRemoteProps, SerializedMdxContent } from "@fern-ui/app-ut
 import React, { HTMLAttributes, useCallback } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { CodeBlockWithClipboardButton } from "../commons/CodeBlockWithClipboardButton";
+import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { parseCodeBlockLanguageFromClassName } from "../commons/util";
 import {
     A,
@@ -81,6 +82,7 @@ const COMPONENTS: MDXRemoteProps["components"] = {
     CodeBlock,
     CodeBlocks,
     Callout,
+    Icon: RemoteFontAwesomeIcon,
 };
 
 export const MdxContent = React.memo<MdxContent.Props>(function MdxContent({ mdx }) {
