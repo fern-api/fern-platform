@@ -34,24 +34,23 @@ export const WebhookExample: React.FC<WebhookExample.Props> = ({ example }) => {
     }, [requestHighlightLines, requestViewportRef]);
 
     return (
-        <div className="flex min-h-0 flex-1 flex-col">
-            <div className="flex min-h-0 flex-1 flex-col">
-                <div className="grid min-h-0 flex-1 grid-rows-[repeat(auto-fit,_minmax(0,_min-content))] flex-col gap-6">
-                    {example.payload != null && (
-                        <CodeSnippetExample
-                            title="Payload"
-                            type="primary"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                            }}
-                            copyToClipboardText={() => payloadJsonString}
-                            content={payloadJsonString}
-                            language="json"
-                            hoveredPropertyPath={hoveredPayloadPropertyPath}
-                            json={example.payload}
-                        />
-                    )}
-                </div>
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+            <div className="flex min-h-0 min-w-0 flex-1 shrink flex-col">
+                {example.payload != null && (
+                    <CodeSnippetExample
+                        className="max-h-full"
+                        title="Payload"
+                        type="primary"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                        }}
+                        copyToClipboardText={() => payloadJsonString}
+                        content={payloadJsonString}
+                        language="json"
+                        hoveredPropertyPath={hoveredPayloadPropertyPath}
+                        json={example.payload}
+                    />
+                )}
             </div>
         </div>
     );
