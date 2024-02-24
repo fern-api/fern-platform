@@ -1,6 +1,7 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isEmpty, noop } from "lodash-es";
+import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/types";
 import {
     ResolvedEndpointDefinition,
     ResolvedEndpointPathParts,
@@ -195,6 +196,7 @@ function buildRedactedHeaders(
                 }
             },
             basicAuth: (basicAuth) => {
+                // is this right?
                 if (auth.type === "basicAuth") {
                     headers["Authorization"] = `Basic ${btoa(
                         `${basicAuth.username}:${obfuscateSecret(basicAuth.password)}`,
@@ -272,36 +274,13 @@ export function stringifyCurl(
 
     headers["Content-Type"] = contentType ?? "application/json";
 
-    const requestBody =
-        endpoint.requestBody.find((body) => body.contentType === contentType) ?? endpoint.requestBody[0];
-    return `curl -X ${endpoint.method} "${buildEndpointUrl(endpoint, formState)}"${Object.entries(headers)
-        .map(([key, value]) => ` \\\n     -H "${key}: ${value}"`)
-        .join("")}${
-        isEmpty(formState.body)
-            ? ""
-            : requestBody?.contentType.toLowerCase().includes("application/json")
-              ? requestBody.shape.type !== "fileUpload"
-                  ? ` \\\n     -d '${
-                        redacted
-                            ? JSON.stringify(formState.body, undefined, 2)
-                            : JSON.stringify(JSON.stringify(formState.body))
-                    }'`
-                  : ""
-              : requestBody?.contentType.toLowerCase().includes("multipart/form-data")
-                ? createMultipartFormData(formState.body)
-                : ""
-    }
-`;
-}
-
-function createMultipartFormData(body: unknown): string {
-    return isPlainObject(body)
-        ? Array.from(Object.entries(body))
-              .map(([key, value]) =>
-                  key !== "file" ? ` \\\n     -F "${key}=${unknownToString(value)}"` : ` \\\n     -F ${key}=@file.zip`,
-              )
-              .join("")
-        : "";
+    return stringifyHttpRequestExampleToCurl({
+        method: endpoint.method,
+        url: buildRequestUrl(endpoint?.defaultEnvironment?.baseUrl, endpoint?.path, formState?.pathParameters),
+        urlQueries: formState.queryParameters,
+        headers,
+        body: { type: "json", value: formState.body },
+    });
 }
 
 export function getDefaultValueForObjectProperties(properties: ResolvedObjectProperty[] = []): Record<string, unknown> {
