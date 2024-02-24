@@ -10,7 +10,6 @@ export declare namespace TitledExample {
         className?: string;
         copyToClipboardText?: () => string; // use provider to lazily compute clipboard text
         onClick?: MouseEventHandler<HTMLDivElement>;
-        disablePadding?: boolean;
         disableClipboard?: boolean;
         onMouseOver?: MouseEventHandler<HTMLDivElement>;
         onMouseOut?: MouseEventHandler<HTMLDivElement>;
@@ -18,17 +17,7 @@ export declare namespace TitledExample {
 }
 
 export const TitledExample = forwardRef<HTMLDivElement, PropsWithChildren<TitledExample.Props>>(function TitledExample(
-    {
-        title,
-        type,
-        className,
-        actions,
-        children,
-        copyToClipboardText,
-        onClick,
-        disablePadding = false,
-        disableClipboard = false,
-    },
+    { title, type, className, actions, children, copyToClipboardText, onClick, disableClipboard = false },
     ref,
 ) {
     return (
@@ -66,14 +55,8 @@ export const TitledExample = forwardRef<HTMLDivElement, PropsWithChildren<Titled
                 </div>
             </div>
             <div className="flex min-h-0 flex-1">
-                <div className={classNames("flex flex-1 leading-relaxed text-xs min-w-0 font-mono")}>
-                    <div
-                        className={classNames("flex-1 overflow-hidden rounded-b-xl whitespace-pre", {
-                            "py-4": !disablePadding,
-                        })}
-                    >
-                        {children}
-                    </div>
+                <div className="flex min-w-0 flex-1 font-mono text-xs leading-relaxed">
+                    <div className="flex-1 overflow-hidden whitespace-pre rounded-b-xl">{children}</div>
                 </div>
             </div>
         </div>

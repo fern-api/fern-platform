@@ -89,7 +89,6 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 onClick={(e) => {
                     e.stopPropagation();
                 }}
-                disablePadding={true}
                 copyToClipboardText={() => {
                     return selectedClient.language === "curl" && selectedClient.code === ""
                         ? requestCurlString
@@ -131,7 +130,6 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         e.stopPropagation();
                     }}
                     copyToClipboardText={() => responseJsonString}
-                    disablePadding={true}
                     content={responseJsonString}
                     language="json"
                     hoveredPropertyPath={hoveredResponsePropertyPath}

@@ -260,12 +260,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi }) => {
                     <aside className="max-w-content-width">
                         {example != null && example.messages.length > 0 && (
                             <div className="max-h-vh-minus-header scroll-mt-header-height top-header-height sticky space-y-6 py-8">
-                                <TitledExample
-                                    title={"Handshake"}
-                                    type={"primary"}
-                                    disablePadding={true}
-                                    disableClipboard={true}
-                                >
+                                <TitledExample title={"Handshake"} type={"primary"} disableClipboard={true}>
                                     <div className="flex px-1 py-3">
                                         <table className="min-w-0 flex-1 shrink table-fixed border-separate border-spacing-x-2 whitespace-normal break-words">
                                             <tbody>
@@ -287,7 +282,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi }) => {
                                         </table>
                                     </div>
                                 </TitledExample>
-                                <TitledExample title={"Messages"} type={"primary"} disablePadding={true}>
+                                <TitledExample title={"Messages"} type={"primary"}>
                                     <Accordion.Root type="multiple" className="divide-border-default divide-y">
                                         {websocket.examples[0]?.messages.map((message, index) => {
                                             const messageType = websocket.messages.find((m) => m.type === message.type);
