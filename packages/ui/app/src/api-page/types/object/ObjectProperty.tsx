@@ -6,7 +6,7 @@ import { getAnchorId } from "../../../util/anchor";
 import { ResolvedObjectProperty } from "../../../util/resolver";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
-import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
+import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,

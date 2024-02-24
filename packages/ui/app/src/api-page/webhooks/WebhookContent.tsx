@@ -5,7 +5,7 @@ import { ApiPageDescription } from "../ApiPageDescription";
 import { Breadcrumbs } from "../Breadcrumbs";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
 import { EndpointSection } from "../endpoints/EndpointSection";
-import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
+import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { useWebhookContext } from "./webhook-context/useWebhookContext";
 import { WebhookExample } from "./webhook-examples/WebhookExample";

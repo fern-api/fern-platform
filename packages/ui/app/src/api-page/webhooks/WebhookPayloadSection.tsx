@@ -1,5 +1,5 @@
 import { ResolvedPayload } from "../../util/resolver";
-import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
+import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
 

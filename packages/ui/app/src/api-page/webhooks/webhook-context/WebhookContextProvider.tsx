@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
+import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
 import { WebhookContext, WebhookContextValue } from "./WebhookContext";
 
 export const WebhookContextProvider: React.FC<React.PropsWithChildren> = ({ children }) => {

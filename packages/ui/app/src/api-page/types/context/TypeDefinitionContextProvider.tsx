@@ -1,5 +1,5 @@
 import { PropsWithChildren, useCallback } from "react";
-import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
+import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
 import { TypeDefinitionContext, TypeDefinitionContextValue } from "./TypeDefinitionContext";
 
 export declare namespace TypeReferenceDefinitions {
