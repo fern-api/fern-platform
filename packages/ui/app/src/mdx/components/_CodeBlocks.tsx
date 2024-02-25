@@ -1,14 +1,8 @@
 import * as Tabs from "@radix-ui/react-tabs";
-import dynamic from "next/dynamic";
 import { useState } from "react";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
-import { FernScrollArea } from "../../components/FernScrollArea";
+import { FernSyntaxHighlighter } from "../../commons/FernSyntaxHighlighter";
 import type { CodeBlockItem } from "./common/types";
-
-const CodeBlockSkeleton = dynamic(
-    () => import("../../commons/CodeBlockSkeleton").then(({ CodeBlockSkeleton }) => CodeBlockSkeleton),
-    { ssr: true },
-);
 
 export declare namespace _CodeBlocks {
     export interface Props {
@@ -24,7 +18,7 @@ export const _CodeBlocks: React.FC<React.PropsWithChildren<_CodeBlocks.Props>> =
     }
     return (
         <Tabs.Root
-            className="after:ring-border-default dark:bg-tag-default-soft relative mb-5 w-full min-w-0 max-w-full rounded-lg bg-white/70 shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-['']"
+            className="after:ring-border-default dark:bg-tag-default-soft relative mb-5 flex max-h-[400px] w-full min-w-0 max-w-full flex-col rounded-lg bg-white/70 shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-['']"
             onValueChange={(value) => setSelectedTabIndex(parseInt(value, 10))}
             defaultValue="0"
         >
@@ -47,19 +41,17 @@ export const _CodeBlocks: React.FC<React.PropsWithChildren<_CodeBlocks.Props>> =
                     <CopyToClipboardButton className="ml-2 mr-1" content={codeBlockItem.content} />
                 </div>
             </div>
-            <FernScrollArea className="max-h-[350px]">
-                {items.map((item, idx) => (
-                    <Tabs.Content value={idx.toString()} key={idx}>
-                        <CodeBlockSkeleton
-                            language={item.language}
-                            content={item.content}
-                            highlightLines={item.highlightLines}
-                            highlightStyle={item.highlightStyle}
-                            fontSize="lg"
-                        />
-                    </Tabs.Content>
-                ))}
-            </FernScrollArea>
+            {items.map((item, idx) => (
+                <Tabs.Content value={idx.toString()} key={idx} asChild>
+                    <FernSyntaxHighlighter
+                        className="not-prose min-h-0 shrink"
+                        language={item.language}
+                        code={item.content}
+                        highlightLines={item.highlightLines}
+                        highlightStyle={item.highlightStyle}
+                    />
+                </Tabs.Content>
+            ))}
         </Tabs.Root>
     );
 };

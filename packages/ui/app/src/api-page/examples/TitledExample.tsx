@@ -54,11 +54,7 @@ export const TitledExample = forwardRef<HTMLDivElement, PropsWithChildren<Titled
                     </div>
                 </div>
             </div>
-            <div className="flex min-h-0 flex-1">
-                <div className="flex min-w-0 flex-1 font-mono text-xs leading-relaxed">
-                    <div className="flex-1 overflow-hidden whitespace-pre rounded-b-xl">{children}</div>
-                </div>
-            </div>
+            {children}
         </div>
     );
 });

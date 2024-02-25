@@ -1,15 +1,12 @@
 import { isPlainObject } from "@fern-ui/core-utils";
 import jp from "jsonpath";
 import { createRef, FC, useEffect, useMemo } from "react";
-import { CodeBlockSkeleton } from "../../commons/CodeBlockSkeleton";
-import { FernScrollArea } from "../../components/FernScrollArea";
+import { FernSyntaxHighlighter } from "../../commons/FernSyntaxHighlighter";
 import { JsonPropertyPath, JsonPropertyPathPart } from "./JsonPropertyPath";
 import { TitledExample } from "./TitledExample";
 
 export declare namespace CodeSnippetExample {
     export interface Props extends TitledExample.Props {
-        // title: string;
-        // code: string;
         content: string;
         language: string;
         hoveredPropertyPath: JsonPropertyPath | undefined;
@@ -30,8 +27,8 @@ export const CodeSnippetExample: FC<CodeSnippetExample.Props> = ({
     measureHeight,
     ...props
 }) => {
-    const codeBlockRef = createRef<HTMLDivElement>();
-    const requestViewportRef = createRef<HTMLDivElement>();
+    const codeBlockRef = createRef<HTMLPreElement>();
+    const viewportRef = createRef<HTMLDivElement>();
 
     useEffect(() => {
         if (measureHeight == null || codeBlockRef.current == null) {
@@ -54,30 +51,32 @@ export const CodeSnippetExample: FC<CodeSnippetExample.Props> = ({
         if (hoveredPropertyPath == null || hoveredPropertyPath.length === 0 || jsonStartLine === -1) {
             return [];
         }
-        return getJsonLineNumbers(json, hoveredPropertyPath, jsonStartLine);
+        const startLine = jsonStartLine ?? 0;
+        return getJsonLineNumbers(json, hoveredPropertyPath, startLine + 1);
     }, [hoveredPropertyPath, jsonStartLine, json]);
 
     useEffect(() => {
-        if (requestViewportRef.current != null && requestHighlightLines[0] != null) {
+        if (viewportRef.current != null && requestHighlightLines[0] != null) {
             const lineNumber = Array.isArray(requestHighlightLines[0])
                 ? requestHighlightLines[0][0]
                 : requestHighlightLines[0];
-            const offsetTop = lineNumber * 20 - 14;
-            requestViewportRef.current.scrollTo({ top: offsetTop, behavior: "smooth" });
+            const offsetTop = (lineNumber - 2) * 20;
+            viewportRef.current.scrollTo({ top: offsetTop, behavior: "smooth" });
         }
-    }, [requestHighlightLines, requestViewportRef]);
+    }, [requestHighlightLines, viewportRef]);
 
     return (
         <TitledExample {...props}>
-            <FernScrollArea style={scrollAreaStyle} viewportRef={requestViewportRef}>
-                <CodeBlockSkeleton
-                    content={content}
-                    language={language}
-                    fontSize="sm"
-                    highlightLines={requestHighlightLines}
-                    ref={codeBlockRef}
-                />
-            </FernScrollArea>
+            <FernSyntaxHighlighter
+                className="rounded-b-[inherit]"
+                ref={codeBlockRef}
+                style={scrollAreaStyle}
+                viewportRef={viewportRef}
+                code={content}
+                language={language}
+                fontSize="sm"
+                highlightLines={requestHighlightLines}
+            />
         </TitledExample>
     );
 };
@@ -134,14 +133,14 @@ function jsonStringifyAndIndent(json: unknown, key: string | undefined, depth: n
     }
     return jsonString
         .split("\n")
-        .map((line) => "  ".repeat(depth) + line)
+        .map((line, idx) => (idx === 0 ? line : "  ".repeat(depth) + line))
         .join("\n");
 }
 
 function getQueryPart(path: JsonPropertyPathPart) {
     switch (path.type) {
         case "objectProperty":
-            return "." + path.propertyName;
+            return "." + (path.propertyName ?? "*");
         case "listItem":
             return "[*]";
         case "objectFilter":

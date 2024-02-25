@@ -17,7 +17,11 @@ import { ApiPageDescription } from "../ApiPageDescription";
 import { Breadcrumbs } from "../Breadcrumbs";
 import { CodeExample, generateCodeExamples } from "../examples/code-example";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
-import { endpointExampleToHttpRequestExample, stringifyHttpRequestExampleToCurl } from "../examples/types";
+import {
+    endpointExampleToHttpRequestExample,
+    sortKeysByShape,
+    stringifyHttpRequestExampleToCurl,
+} from "../examples/types";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 import { EndpointContentCodeSnippets } from "./EndpointContentCodeSnippets";
 import { convertNameToAnchorPart, EndpointContentLeft } from "./EndpointContentLeft";
@@ -40,9 +44,9 @@ const GAP_6 = 24;
 const TITLED_EXAMPLE_PADDING = 43;
 const PADDING_TOP = 32;
 const PADDING_BOTTOM = 40;
-const LINE_HEIGHT = 20;
+const LINE_HEIGHT = 19.5;
 const MOBILE_MAX_LINES = 20;
-const CONTENT_PADDING = 40 + TITLED_EXAMPLE_PADDING;
+const CONTENT_PADDING = 16 + TITLED_EXAMPLE_PADDING;
 
 const fernLanguageAtom = atomWithStorage<string>("fern-language-id", "curl");
 
@@ -146,18 +150,28 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         [setSelectedLanguage],
     );
 
+    const requestJson = useMemo(
+        () => sortKeysByShape(selectedClient.exampleCall.requestBodyV3?.value, endpoint.requestBody[0]?.shape),
+        [endpoint.requestBody, selectedClient.exampleCall.requestBodyV3?.value],
+    );
     const curlString = useMemo(
         () =>
             stringifyHttpRequestExampleToCurl(
-                endpointExampleToHttpRequestExample(apiSection.auth, endpoint, selectedClient.exampleCall),
+                endpointExampleToHttpRequestExample(
+                    apiSection.auth,
+                    endpoint,
+                    selectedClient.exampleCall,
+                    endpoint.requestBody[0]?.shape,
+                ),
             ),
         [apiSection.auth, endpoint, selectedClient.exampleCall],
     );
 
-    const responseJsonString = useMemo(
-        () => JSON.stringify(selectedClient.exampleCall.responseBodyV3?.value, undefined, 2),
-        [selectedClient.exampleCall.responseBodyV3?.value],
+    const responseJson = useMemo(
+        () => sortKeysByShape(selectedClient.exampleCall.responseBodyV3?.value, endpoint.responseBody?.shape),
+        [endpoint.responseBody, selectedClient.exampleCall.responseBodyV3?.value],
     );
+    const responseJsonString = useMemo(() => JSON.stringify(responseJson, undefined, 2), [responseJson]);
 
     const selectedExampleClientLineCount = useMemo(() => {
         return selectedClient.language === "curl" && selectedClient.code === ""
@@ -216,7 +230,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         selectedClient.exampleCall?.responseBody,
     ]);
 
-    const padding = ["mobile", "sm", "md"].includes(layoutBreakpoint) ? 0 : 32;
+    const padding = ["mobile", "sm", "md"].includes(layoutBreakpoint) ? 0 : 26;
     const exampleHeight =
         requestHeight + responseHeight + (responseHeight > 0 && requestHeight > 0 ? GAP_6 : 0) + padding;
 
@@ -307,9 +321,9 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                                 selectedClient={selectedClient}
                                 onClickClient={setSelectedExampleClientAndScrollToTop}
                                 requestCurlString={curlString}
-                                requestCurlJson={selectedClient.exampleCall.requestBodyV3?.value}
+                                requestCurlJson={requestJson}
                                 responseJsonString={responseJsonString}
-                                responseJson={selectedClient.exampleCall.responseBodyV3?.value}
+                                responseJson={responseJson}
                                 hoveredRequestPropertyPath={hoveredRequestPropertyPath}
                                 hoveredResponsePropertyPath={hoveredResponsePropertyPath}
                                 requestHeight={requestHeight}

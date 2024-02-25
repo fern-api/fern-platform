@@ -2,11 +2,11 @@ import { APIV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import * as Accordion from "@radix-ui/react-accordion";
 import { ArrowDownIcon, ArrowUpIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
-import dynamic from "next/dynamic";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo } from "react";
 import { Wifi } from "react-feather";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
+import { FernSyntaxHighlighter } from "../../commons/FernSyntaxHighlighter";
 import { useShouldHideFromSsg } from "../../navigation-context/useNavigationContext";
 import {
     ResolvedUndiscriminatedUnionShape,
@@ -22,11 +22,6 @@ import { TitledExample } from "../examples/TitledExample";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
-
-const CodeBlockSkeleton = dynamic(
-    () => import("../../commons/CodeBlockSkeleton").then(({ CodeBlockSkeleton }) => CodeBlockSkeleton),
-    { ssr: true },
-);
 
 export declare namespace WebSocket {
     export interface Props {
@@ -359,12 +354,10 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi }) => {
                                                                 }
                                                                 content={() => JSON.stringify(message.body, null, 2)}
                                                             />
-                                                            <CodeBlockSkeleton
+                                                            <FernSyntaxHighlighter
                                                                 className="max-h-[200px] w-0 min-w-full overflow-y-auto py-1"
-                                                                content={JSON.stringify(message.body, null, 2)}
+                                                                code={JSON.stringify(message.body, null, 2)}
                                                                 language="json"
-                                                                usePlainStyles
-                                                                fontSize="sm"
                                                             />
                                                         </div>
                                                     </Accordion.Content>

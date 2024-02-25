@@ -1,13 +1,13 @@
 import classNames from "classnames";
-import dynamic from "next/dynamic";
 import React from "react";
-import { FernScrollArea } from "../components/FernScrollArea";
+import type { BundledLanguage } from "shiki/langs";
 import { CopyToClipboardButton } from "./CopyToClipboardButton";
+import { FernSyntaxHighlighter } from "./FernSyntaxHighlighter";
 
-const CodeBlockSkeleton = dynamic(
-    () => import("./CodeBlockSkeleton").then(({ CodeBlockSkeleton }) => CodeBlockSkeleton),
-    { ssr: true },
-);
+// const CodeBlockSkeleton = dynamic(
+//     () => import("./CodeBlockSkeleton").then(({ CodeBlockSkeleton }) => CodeBlockSkeleton),
+//     { ssr: true },
+// );
 
 type CodeBlockWithClipboardButtonProps = {
     variant: "sm" | "lg";
@@ -21,8 +21,8 @@ export const CodeBlockWithClipboardButton: React.FC<CodeBlockWithClipboardButton
     content,
 }) => {
     return (
-        <FernScrollArea className="group/cb-container dark:bg-tag-default-soft after:ring-border-default relative mb-5 flex max-h-[350px] w-full rounded-lg bg-white/70 shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:ring-1 after:ring-inset after:content-['']">
-            <CodeBlockSkeleton language={language} content={content} fontSize={variant} />
+        <div className="not-prose group/cb-container dark:bg-tag-default-soft after:ring-border-default relative mb-5 flex max-h-[350px] w-full rounded-lg bg-white/70 shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:ring-1 after:ring-inset after:content-['']">
+            <FernSyntaxHighlighter language={language as BundledLanguage} code={content} />
             <CopyToClipboardButton
                 className={classNames(
                     "absolute z-20",
@@ -34,6 +34,6 @@ export const CodeBlockWithClipboardButton: React.FC<CodeBlockWithClipboardButton
                 )}
                 content={content}
             />
-        </FernScrollArea>
+        </div>
     );
 };

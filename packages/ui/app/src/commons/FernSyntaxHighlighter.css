@@ -1,0 +1,58 @@
+.code-block-root {
+    @apply overflow-hidden flex flex-col w-full;
+    counter-reset: code-block-line;
+}
+
+.code-block-root > .fern-scroll-area {
+    @apply shrink min-h-0;
+}
+
+.code-block {
+    @apply font-mono leading-relaxed;
+}
+
+.code-block-inner {
+    @apply py-3;
+}
+
+.code-block.text-xs > .code-block-inner {
+    @apply py-2;
+}
+
+.code-block-line-group {
+    @apply border-spacing-0 min-w-full;
+}
+
+.code-block-line-gutter {
+    @apply text-faded p-0 w-0 align-top;
+    counter-increment: code-block-line;
+}
+
+.code-block-line-gutter::before {
+    @apply pl-3;
+    content: counter(code-block-line);
+}
+
+.code-block-line-group.gutter-cli .code-block-line-gutter::before {
+    content: ">";
+}
+
+.code-block-line-group.gutter-cli .code-block-line:first-child .code-block-line-gutter::before {
+    content: "$";
+}
+
+.code-block-line-content {
+    @apply px-3 py-0;
+}
+
+.code-block-line-group.word-wrap .code-block-line-content {
+    @apply break-all whitespace-pre-wrap;
+}
+
+.code-block-line-group.highlight-focus .code-block-line:not(.highlight) {
+    opacity: 0.33;
+}
+
+.code-block-line-group:not(.highlight-focus) .code-block-line.highlight {
+    @apply bg-accent-highlight;
+}
