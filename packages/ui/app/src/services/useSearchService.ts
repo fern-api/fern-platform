@@ -2,7 +2,7 @@ import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { atom, useAtom, useAtomValue } from "jotai";
 import { useEffect, useMemo } from "react";
 import { getEnvConfig, type EnvironmentConfig } from "../env";
-import { useDocsSelectors } from "../selectors/useDocsSelectors";
+import { SidebarNavigation } from "../sidebar/types";
 import { REGISTRY_SERVICE } from "./registry";
 
 export type SearchCredentials = {
@@ -54,8 +54,8 @@ export function useSearchService(): SearchService {
 export function useCreateSearchService(
     searchInfo: DocsV1Read.SearchInfo,
     algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null,
+    navigation: SidebarNavigation,
 ): void {
-    const { activeVersionContext } = useDocsSelectors();
     const [, setSearchService] = useAtom(SEARCH_SERVICE_ATOM);
 
     const searchService = useMemo<SearchService>(() => {
@@ -96,10 +96,11 @@ export function useCreateSearchService(
                     index: envConfig.algoliaSearchIndex,
                 };
             } else {
-                if (activeVersionContext.type !== "versioned") {
+                const currentVersion = navigation.versions[navigation.currentVersionIndex ?? 0];
+                if (currentVersion == null) {
                     throw new Error("Inconsistent State: Received search info is versioned but docs are unversioned");
                 }
-                const versionId = activeVersionContext.version.info.id;
+                const versionId = currentVersion.id;
                 const { indexSegmentsByVersionId } = searchInfo.value;
                 const indexSegment = indexSegmentsByVersionId[versionId];
                 if (indexSegment == null) {
@@ -121,7 +122,7 @@ export function useCreateSearchService(
             console.error("Failed to initialize search service", e);
             return { isAvailable: false };
         }
-    }, [activeVersionContext, algoliaSearchIndex, searchInfo]);
+    }, [algoliaSearchIndex, navigation.currentVersionIndex, navigation.versions, searchInfo]);
 
     useEffect(() => {
         setSearchService(searchService);

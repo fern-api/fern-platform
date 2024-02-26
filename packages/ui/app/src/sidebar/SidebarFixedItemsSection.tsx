@@ -1,11 +1,10 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { useMemo } from "react";
-import { useNavigationContext } from "../navigation-context";
-import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { useOpenSearchDialog } from "./atom";
 import { SidebarSearchBar } from "./SidebarSearchBar";
 import { SidebarTabButton } from "./SidebarTabButton";
+import { SidebarNavigation } from "./types";
 
 export declare namespace SidebarFixedItemsSection {
     export interface Props {
@@ -14,6 +13,8 @@ export declare namespace SidebarFixedItemsSection {
         algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
         showBorder?: boolean;
         showSearchBar?: boolean;
+        currentTabIndex?: number | null;
+        tabs: SidebarNavigation["tabs"];
     }
 }
 
@@ -21,11 +22,10 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
     className,
     showBorder,
     showSearchBar,
+    currentTabIndex,
+    tabs,
 }) => {
-    const { activeNavigatable } = useNavigationContext();
-    const { activeNavigationConfigContext, withVersionSlug } = useDocsSelectors();
     const openSearchDialog = useOpenSearchDialog();
-    const showTabs = activeNavigationConfigContext?.type === "tabbed";
 
     const searchBar = useMemo(() => {
         return showSearchBar ? (
@@ -35,25 +35,20 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
         ) : null;
     }, [showSearchBar, openSearchDialog]);
 
-    const tabs = useMemo(() => {
-        if (!showTabs) {
+    const renderedTabs = useMemo(() => {
+        if (tabs.length === 0) {
             return null;
         }
         return (
             <ul className="flex list-none flex-col">
-                {activeNavigationConfigContext.config.tabs.map((tab, idx) => (
-                    <SidebarTabButton
-                        key={idx}
-                        tab={tab}
-                        selected={idx === activeNavigatable?.context.tab?.index}
-                        slug={withVersionSlug(tab.urlSlug, { omitDefault: true })}
-                    />
+                {tabs.map((tab, idx) => (
+                    <SidebarTabButton key={idx} tab={tab} selected={idx === currentTabIndex} slug={tab.urlSlug} />
                 ))}
             </ul>
         );
-    }, [showTabs, activeNavigationConfigContext, activeNavigatable?.context.tab?.index, withVersionSlug]);
+    }, [tabs, currentTabIndex]);
 
-    if (!showSearchBar && !showTabs) {
+    if (!showSearchBar && tabs.length === 0) {
         return null;
     }
 
@@ -72,7 +67,7 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
             data-border={showBorder ? "show" : "hide"}
         >
             {searchBar}
-            {tabs}
+            {renderedTabs}
 
             {/* <div className="from-background dark:from-background-dark absolute inset-x-0 top-full -ml-4 mt-px h-8 bg-gradient-to-b" /> */}
         </div>

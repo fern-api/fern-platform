@@ -1,11 +1,12 @@
-import { type NavigatableDocsNode } from "@fern-api/fdr-sdk";
 import { noop } from "@fern-ui/core-utils";
 import React from "react";
+import { SidebarNode } from "../sidebar/types";
 import { type ResolvedPath } from "../util/ResolvedPath";
 
 export const NavigationContext = React.createContext<NavigationContextValue>({
     basePath: undefined,
     justNavigated: false,
+    selectedSlug: "",
     activeNavigatable: undefined,
     userIsScrolling: () => false,
     onScrollToPath: noop,
@@ -33,7 +34,8 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
 export interface NavigationContextValue {
     basePath: string | undefined;
     justNavigated: boolean;
-    activeNavigatable: NavigatableDocsNode | undefined;
+    selectedSlug: string;
+    activeNavigatable: SidebarNode.Page | undefined;
     userIsScrolling: () => boolean;
     onScrollToPath: (slug: string) => void;
     observeDocContent: (element: HTMLDivElement) => void;

@@ -1,16 +1,13 @@
-import { NavigatableDocsNode } from "@fern-api/fdr-sdk";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useRef, useState } from "react";
-import { useDocsContext } from "../docs-context/useDocsContext";
 import { useCloseMobileSidebar, useCloseSearchDialog } from "../sidebar/atom";
+import { resolveActiveSidebarNode, SidebarNavigation, SidebarNode } from "../sidebar/types";
 import { getRouteNode } from "../util/anchor";
 import { FernDocsFrontmatter } from "../util/mdx";
 import { ResolvedPath } from "../util/ResolvedPath";
-import { getFullSlugForNavigatable } from "../util/slug";
 import { getRouteForResolvedPath } from "./getRouteForResolvedPath";
 import { NavigationContext } from "./NavigationContext";
 import { useSlugListeners } from "./useSlugListeners";
@@ -19,6 +16,7 @@ export declare namespace NavigationContextProvider {
     export type Props = PropsWithChildren<{
         resolvedPath: ResolvedPath;
         basePath: string | undefined;
+        navigation: SidebarNavigation;
     }>;
 }
 
@@ -26,8 +24,8 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     resolvedPath,
     children,
     basePath,
+    navigation,
 }) => {
-    const { pathResolver } = useDocsContext();
     const router = useRouter();
     const userIsScrolling = useRef(false);
     const resolvedRoute = getRouteForResolvedPath({
@@ -36,11 +34,11 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     });
     const justNavigatedTo = useRef<string | undefined>(resolvedRoute);
 
-    const [activeNavigatable, setActiveNavigatable] = useState(() => {
-        return pathResolver.resolveNavigatable(resolvedPath.fullSlug);
-    });
+    const [activeNavigatable, setActiveNavigatable] = useState(() =>
+        resolveActiveSidebarNode(navigation.sidebarNodes, resolvedPath.fullSlug.split("/")),
+    );
 
-    const selectedSlug = getFullSlugForNavigatable(activeNavigatable, { omitDefault: true, basePath });
+    const selectedSlug = activeNavigatable?.slug.join("/") ?? "";
 
     const navigateToRoute = useRef((route: string, _disableSmooth = false) => {
         const [routeWithoutAnchor, anchor] = route.split("#");
@@ -128,7 +126,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         if (justNavigated.current || fullSlug === selectedSlug) {
             return;
         }
-        const navigatable = pathResolver.resolveNavigatable(fullSlug);
+        const navigatable = resolveActiveSidebarNode(navigation.sidebarNodes, fullSlug.split("/"));
         if (navigatable != null) {
             setActiveNavigatable(navigatable);
         }
@@ -142,7 +140,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const fullSlug = route.substring(1).split("#")[0]!;
         justNavigated.current = true;
-        const navigatable = pathResolver.resolveNavigatable(fullSlug);
+        const navigatable = resolveActiveSidebarNode(navigation.sidebarNodes, fullSlug.split("/"));
         navigateToRoute.current(route, !shallow);
         if (navigatable != null) {
             setActiveNavigatable(navigatable);
@@ -175,14 +173,14 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         router.beforePopState(({ as }) => {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const slugCandidate = as.substring(1).split("#")[0]!;
-            const previousNavigatable = pathResolver.resolveNavigatable(slugCandidate);
+            const previousNavigatable = resolveActiveSidebarNode(navigation.sidebarNodes, slugCandidate.split("/"));
             if (previousNavigatable != null) {
-                const fullSlug = getFullSlugForNavigatable(previousNavigatable, { basePath });
+                const fullSlug = previousNavigatable.slug.join("/");
                 navigateToPath(fullSlug);
             }
             return true;
         });
-    }, [router, navigateToPath, pathResolver, basePath]);
+    }, [router, navigateToPath, basePath, navigation]);
 
     const hydrated = useBooleanState(false);
     useEffect(() => {
@@ -198,8 +196,9 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         <NavigationContext.Provider
             value={{
                 basePath,
-                justNavigated: justNavigatedTo.current != null,
+                selectedSlug,
                 activeNavigatable,
+                justNavigated: justNavigatedTo.current != null,
                 userIsScrolling: () => userIsScrolling.current,
                 onScrollToPath,
                 observeDocContent,
@@ -226,39 +225,15 @@ function getFrontmatter(resolvedPath: ResolvedPath): FernDocsFrontmatter | undef
 }
 
 function convertToTitle(
-    navigatable: NavigatableDocsNode | undefined,
+    page: SidebarNode.Page | undefined,
     frontmatter: FernDocsFrontmatter | undefined,
 ): string | undefined {
-    if (navigatable == null) {
-        return undefined;
-    }
-    return visitDiscriminatedUnion(navigatable, "type")._visit({
-        page: (page) => frontmatter?.title ?? page.page.title,
-        "top-level-endpoint": (endpoint) => endpoint.endpoint.name,
-        "top-level-webhook": (webhook) => webhook.webhook.name,
-        "top-level-websocket": (websocket) => websocket.websocket.name,
-        webhook: (webhook) => webhook.webhook.name,
-        endpoint: (endpoint) => endpoint.endpoint.name,
-        websocket: (websocket) => websocket.websocket.name,
-        _other: () => undefined,
-    });
+    return frontmatter?.title ?? page?.title;
 }
 
 function convertToDescription(
-    navigatable: NavigatableDocsNode | undefined,
+    page: SidebarNode.Page | undefined,
     frontmatter: FernDocsFrontmatter | undefined,
 ): string | undefined {
-    if (navigatable == null) {
-        return undefined;
-    }
-    return visitDiscriminatedUnion(navigatable, "type")._visit({
-        page: () => frontmatter?.description,
-        "top-level-endpoint": (endpoint) => endpoint.endpoint.description,
-        "top-level-webhook": (webhook) => webhook.webhook.description,
-        "top-level-websocket": (websocket) => websocket.websocket.description,
-        webhook: (webhook) => webhook.webhook.description,
-        endpoint: (endpoint) => endpoint.endpoint.description,
-        websocket: (websocket) => websocket.websocket.description,
-        _other: () => undefined,
-    });
+    return frontmatter?.description ?? page?.description ?? undefined;
 }

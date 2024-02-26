@@ -841,7 +841,7 @@ function resolveExampleEndpointRequest(
     return visitDiscriminatedUnion(requestBodyV3, "type")._visit<ResolvedExampleEndpointRequest | null>({
         json: (json) => ({
             type: "json",
-            value: json.value != null ? sortKeysByShape(json.value, shape, resolvedTypes) : null,
+            value: json.value != null ? stripUndefines(sortKeysByShape(json.value, shape, resolvedTypes)) : null,
         }),
         form: (form) => ({
             type: "form",
@@ -902,11 +902,18 @@ function resolveExampleEndpointResponse(
         return null;
     }
     return visitDiscriminatedUnion(responseBodyV3, "type")._visit<ResolvedExampleEndpointResponse | null>({
-        json: (json) => ({ type: "json", value: sortKeysByShape(json.value, shape, resolvedTypes) ?? null }),
+        json: (json) => ({
+            type: "json",
+            value: json.value != null ? stripUndefines(sortKeysByShape(json.value, shape, resolvedTypes)) : null,
+        }),
         filename: (filename) => ({ type: "filename", value: filename.value }),
         stream: (stream) => ({ type: "stream", value: stream.value }),
         _other: () => null,
     });
+}
+
+function stripUndefines(obj: unknown): unknown {
+    return JSON.parse(JSON.stringify(obj));
 }
 
 export interface ResolvedCodeSnippet {

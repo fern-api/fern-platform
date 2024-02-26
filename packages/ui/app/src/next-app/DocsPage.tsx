@@ -6,7 +6,7 @@ import Head from "next/head";
 import Script from "next/script";
 import { ReactElement } from "react";
 import { REGISTRY_SERVICE } from "../services/registry";
-import { resolveSidebarNodes, SidebarNode } from "../sidebar/types";
+import { resolveSidebarNodes, SidebarNavigation } from "../sidebar/types";
 import { buildUrl } from "../util/buildUrl";
 import { convertNavigatableToResolvedPath } from "../util/convertNavigatableToResolvedPath";
 import { type ResolvedPath } from "../util/ResolvedPath";
@@ -22,13 +22,12 @@ export declare namespace DocsPage {
     export interface Props {
         // docs: DocsV2Read.LoadDocsForUrlResponse;
         baseUrl: DocsV2Read.BaseUrl;
-        navigation: SidebarNode[];
+        navigation: SidebarNavigation;
         config: DocsV1Read.DocsConfig;
         search: DocsV1Read.SearchInfo;
         algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
         files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
         apis: ResolvedNavigationItemApiSection[];
-        legacyApis: Record<string, APIV1Read.ApiDefinition>;
         resolvedPath: ResolvedPath;
     }
 }
@@ -40,7 +39,6 @@ export function DocsPage({
     algoliaSearchIndex,
     files,
     apis,
-    legacyApis,
     resolvedPath,
     navigation,
 }: DocsPage.Props): ReactElement {
@@ -73,7 +71,6 @@ export function DocsPage({
                 algoliaSearchIndex={algoliaSearchIndex}
                 files={files}
                 apis={apis}
-                legacyApis={legacyApis}
                 resolvedPath={resolvedPath}
                 navigation={navigation}
             />
@@ -150,9 +147,12 @@ export const getDocsPageProps = async (
             ? navigatable.context.tab.items
             : navigatable.context.navigationConfig.items;
 
-    const apiSections = crawlResolvedNavigationItemApiSections(
-        await resolveNavigationItems(unresolvedNavigationItems ?? [], apis),
-    );
+    const apiSections =
+        navigatable.type === "page"
+            ? []
+            : crawlResolvedNavigationItemApiSections(
+                  await resolveNavigationItems(unresolvedNavigationItems ?? [], apis),
+              );
 
     const navigation = getNavigation(basePath, docs.body.definition.apis, navigatable);
 
@@ -166,7 +166,6 @@ export const getDocsPageProps = async (
             algoliaSearchIndex: docs.body.definition.algoliaSearchIndex ?? null,
             files: docs.body.definition.filesV2,
             apis: apiSections,
-            legacyApis: apis,
             resolvedPath,
             navigation,
         },
@@ -208,7 +207,7 @@ function getNavigation(
     basePath: string | undefined,
     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
     navigatable: NavigatableDocsNode,
-) {
+): SidebarNavigation {
     const versionAndTabSlug = getVersionAndTabSlug(basePath, navigatable);
 
     const currentNavigationItems =
@@ -216,5 +215,23 @@ function getNavigation(
             ? navigatable.context.tab?.items
             : navigatable.context.navigationConfig.items;
 
-    return resolveSidebarNodes(currentNavigationItems, apis, versionAndTabSlug);
+    const sidebarNodes = resolveSidebarNodes(currentNavigationItems, apis, versionAndTabSlug);
+
+    return {
+        currentTabIndex: navigatable.context.tab?.index ?? null,
+        tabs:
+            navigatable.context.type === "versioned-tabbed" || navigatable.context.type === "unversioned-tabbed"
+                ? navigatable.context.navigationConfig.tabs.map((tab) => ({
+                      title: tab.title,
+                      icon: tab.icon,
+                      urlSlug: tab.urlSlug,
+                  }))
+                : [],
+        currentVersionIndex: navigatable.context.version?.info.index ?? null,
+        versions:
+            navigatable.context.root.info.type === "versioned"
+                ? navigatable.context.root.info.versions.map((version) => version.info)
+                : [],
+        sidebarNodes,
+    };
 }

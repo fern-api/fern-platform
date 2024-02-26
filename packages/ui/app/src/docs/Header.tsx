@@ -6,6 +6,7 @@ import { FernButton, FernButtonGroup, FernLinkButton } from "../components/FernB
 import { useSearchService } from "../services/useSearchService";
 import { useIsSearchDialogOpen, useOpenSearchDialog } from "../sidebar/atom";
 import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
+import { SidebarNavigation } from "../sidebar/types";
 import { HeaderLogoSection } from "./HeaderLogoSection";
 import { ThemeButton } from "./ThemeButton";
 
@@ -18,11 +19,21 @@ export declare namespace Header {
         openMobileSidebar: () => void;
         closeMobileSidebar: () => void;
         showSearchBar?: boolean;
+        navigation: SidebarNavigation;
     }
 }
 
 const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Props>>(function Header(
-    { className, style, config, isMobileSidebarOpen, openMobileSidebar, closeMobileSidebar, showSearchBar = true },
+    {
+        className,
+        style,
+        config,
+        isMobileSidebarOpen,
+        openMobileSidebar,
+        closeMobileSidebar,
+        showSearchBar = true,
+        navigation,
+    },
     ref,
 ) {
     const openSearchDialog = useOpenSearchDialog();
@@ -75,7 +86,11 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
             ref={ref}
             style={style}
         >
-            <HeaderLogoSection config={config} />
+            <HeaderLogoSection
+                config={config}
+                versions={navigation.versions}
+                currentVersionIndex={navigation.currentVersionIndex}
+            />
 
             {showSearchBar && searchService.isAvailable && (
                 <div

@@ -1,7 +1,7 @@
-import { isApiNode } from "@fern-api/fdr-sdk";
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
 import { useNavigationContext } from "../navigation-context";
+import { isApiPage } from "../sidebar/types";
 import { ResolvedNavigationItemApiSection } from "../util/resolver";
 
 const CustomDocsPage = dynamic(
@@ -38,8 +38,8 @@ export const DocsMainContent: React.FC<DocsMainContentProps> = ({ apis }) => {
                 resolvedPath={resolvedPath}
             />
         );
-    } else if (activeNavigatable != null && isApiNode(activeNavigatable)) {
-        const apiSection = apiSectionsById.get(activeNavigatable.section.api);
+    } else if (activeNavigatable != null && isApiPage(activeNavigatable)) {
+        const apiSection = apiSectionsById.get(activeNavigatable.api);
         if (apiSection == null) {
             return null;
         }

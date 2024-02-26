@@ -6,7 +6,7 @@ import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 
 export declare namespace SidebarTabButton {
     export interface Props {
-        tab: DocsV1Read.NavigationTab;
+        tab: Omit<DocsV1Read.NavigationTab, "items">;
         selected: boolean;
         slug: string;
     }

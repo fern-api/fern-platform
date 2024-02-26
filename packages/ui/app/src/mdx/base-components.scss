@@ -1,5 +1,5 @@
 code:not(.code-block) {
-    @apply inline-code font-mono border border-concealed rounded bg-background-light/75 dark:bg-background-dark/75 py-0.5 px-1;
+    @apply font-mono border border-default rounded bg-white/70 dark:bg-tag-default-soft py-0.5 px-1;
     @apply before:content-none after:content-none;
 }
 

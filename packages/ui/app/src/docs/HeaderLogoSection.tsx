@@ -1,30 +1,27 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { DocsV1Read, VersionInfo } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { FernImage } from "../components/FernImage";
 import { DEFAULT_LOGO_HEIGHT } from "../config";
 import { useDocsContext } from "../docs-context/useDocsContext";
-import { useNavigationContext } from "../navigation-context";
-import { useDocsSelectors } from "../selectors/useDocsSelectors";
 import { VersionDropdown } from "./VersionDropdown";
 
 export interface HeaderLogoSectionProps {
     config: DocsV1Read.DocsConfig;
+
+    currentVersionIndex: number | null | undefined;
+    versions: VersionInfo[];
 }
 
 export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
     config: { logo, logoV2, logoHeight, logoHref },
+    currentVersionIndex,
+    versions,
 }) => {
     const { resolvedTheme: theme } = useTheme();
     const { resolveFile } = useDocsContext();
-    const { activeNavigatable } = useNavigationContext();
-    const { activeVersionContext } = useDocsSelectors();
     const logoImageHeight = logoHeight ?? DEFAULT_LOGO_HEIGHT;
-
-    const definitionInfo = activeNavigatable?.context.root.info;
-    const hasMultipleVersions = definitionInfo?.type === "versioned";
-    const activeVersionInfo = activeVersionContext.type === "versioned" ? activeVersionContext.version.info : undefined;
 
     const imageClassName = "max-h-full object-contain";
 
@@ -83,14 +80,9 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
             ) : (
                 <div className="flex shrink-0 items-center">{renderLogoContent()}</div>
             )}
-            {hasMultipleVersions && (
+            {versions.length > 1 && (
                 <div>
-                    <VersionDropdown
-                        versions={definitionInfo.versions}
-                        selectedVersionName={activeVersionInfo?.id}
-                        selectedVersionSlug={activeVersionInfo?.slug}
-                        selectedVersionAvailability={activeVersionInfo?.availability}
-                    />
+                    <VersionDropdown currentVersionIndex={currentVersionIndex} versions={versions} />
                 </div>
             )}
         </div>

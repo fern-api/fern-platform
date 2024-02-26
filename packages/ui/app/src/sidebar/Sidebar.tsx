@@ -13,11 +13,11 @@ import { CollapseSidebarProvider } from "./CollapseSidebarContext";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
 import { SidebarSection } from "./SidebarSection";
-import { SidebarNode } from "./types";
+import { SidebarNavigation } from "./types";
 
 export interface SidebarProps {
     currentSlug: string[];
-    navigation: SidebarNode[];
+    navigation: SidebarNavigation;
     registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
     searchInfo: DocsV1Read.SearchInfo;
     algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
@@ -57,11 +57,13 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                             isScrolled || (isMobileSidebarOpen && ["mobile", "sm", "md"].includes(layoutBreakpoint))
                         }
                         showSearchBar={showSearchBar}
+                        currentTabIndex={navigation.currentTabIndex}
+                        tabs={navigation.tabs}
                     />
                     <CollapseSidebarProvider>
                         <FernTooltipProvider>
                             <SidebarSection
-                                navigationItems={navigation}
+                                navigationItems={navigation.sidebarNodes}
                                 slug={currentSlug}
                                 registerScrolledToPathListener={registerScrolledToPathListener}
                                 depth={0}

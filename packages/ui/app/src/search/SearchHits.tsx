@@ -5,7 +5,6 @@ import React, { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useS
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch-hooks-web";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { useDocsContext } from "../docs-context/useDocsContext";
-import { getFullSlugForNavigatable } from "../util/slug";
 import { SearchHit } from "./SearchHit";
 import type { SearchRecord } from "./types";
 import { getFullPathForSearchRecord } from "./util";
@@ -15,7 +14,7 @@ export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {
 };
 
 export const SearchHits: React.FC = () => {
-    const { pathResolver, basePath } = useDocsContext();
+    const { basePath } = useDocsContext();
     const { hits } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
     const [hoveredSearchHitId, setHoveredSearchHitId] = useState<string | null>(null);
@@ -23,14 +22,9 @@ export const SearchHits: React.FC = () => {
 
     const getFullPathForHit = useCallback(
         (hit: Hit<SearchRecord>) => {
-            const path = getFullPathForSearchRecord(hit, basePath);
-            const navigatable = pathResolver.resolveNavigatable(path);
-            if (navigatable == null) {
-                return basePath?.slice(1) ?? "";
-            }
-            return getFullSlugForNavigatable(navigatable, { omitDefault: true, basePath });
+            return getFullPathForSearchRecord(hit, basePath);
         },
-        [basePath, pathResolver],
+        [basePath],
     );
 
     const refs = useRef(new Map<string, HTMLAnchorElement>());

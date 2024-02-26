@@ -1,13 +1,22 @@
-import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { APIV1Read, DocsV1Read, FdrAPI, VersionInfo } from "@fern-api/fdr-sdk";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { last, noop } from "lodash-es";
 import { titleCase } from "../util/titleCase";
+
+export interface SidebarNavigation {
+    currentTabIndex: number | null;
+    tabs: Omit<DocsV1Read.NavigationTab, "items">[];
+    currentVersionIndex: number | null;
+    versions: VersionInfo[];
+    sidebarNodes: SidebarNode[];
+}
 
 export type SidebarNode = SidebarNode.PageGroup | SidebarNode.ApiSection | SidebarNode.Section;
 
 export declare namespace SidebarNode {
     export interface PageGroup {
         type: "pageGroup";
+        slug: string[];
         pages: (SidebarNode.Page | SidebarNode.Link)[];
     }
 
@@ -18,8 +27,8 @@ export declare namespace SidebarNode {
         title: string;
         slug: string[];
         endpoints: SidebarNode.EndpointPage[];
-        webhooks: SidebarNode.Page[];
-        websockets: SidebarNode.Page[];
+        webhooks: SidebarNode.ApiPage[];
+        websockets: SidebarNode.ApiPage[];
         subpackages: SidebarNode.ApiSection[];
         artifacts: DocsV1Read.ApiArtifacts | null;
     }
@@ -45,7 +54,11 @@ export declare namespace SidebarNode {
         url: string;
     }
 
-    export interface EndpointPage extends Page {
+    export interface ApiPage extends Page {
+        api: FdrAPI.ApiId;
+    }
+
+    export interface EndpointPage extends ApiPage {
         method: APIV1Read.HttpMethod;
         stream?: boolean;
     }
@@ -67,6 +80,7 @@ function resolveSidebarNodeApiSection(
         .map(
             (endpoint): SidebarNode.EndpointPage => ({
                 type: "page",
+                api,
                 id: endpoint.id,
                 slug: [...slug, endpoint.urlSlug],
                 title: endpoint.name != null ? endpoint.name : stringifyEndpointPathParts(endpoint.path.parts),
@@ -76,8 +90,9 @@ function resolveSidebarNodeApiSection(
             }),
         );
     const websockets = subpackage.websockets.map(
-        (websocket): SidebarNode.Page => ({
+        (websocket): SidebarNode.ApiPage => ({
             type: "page",
+            api,
             id: websocket.id,
             slug: [...slug, websocket.urlSlug],
             title: websocket.name != null ? websocket.name : stringifyEndpointPathParts(websocket.path.parts),
@@ -85,8 +100,9 @@ function resolveSidebarNodeApiSection(
         }),
     );
     const webhooks = subpackage.webhooks.map(
-        (webhook): SidebarNode.Page => ({
+        (webhook): SidebarNode.ApiPage => ({
             type: "page",
+            api,
             id: webhook.id,
             slug: [...slug, webhook.urlSlug],
             title: webhook.name != null ? webhook.name : "/" + webhook.path.join("/"),
@@ -139,6 +155,7 @@ export function resolveSidebarNodes(
                 } else {
                     sidebarNodes.push({
                         type: "pageGroup",
+                        slug: parentSlugs,
                         pages: [
                             {
                                 ...page,
@@ -165,6 +182,7 @@ export function resolveSidebarNodes(
                             .map(
                                 (endpoint): SidebarNode.EndpointPage => ({
                                     type: "page",
+                                    api: api.api,
                                     id: endpoint.id,
                                     slug: [...definitionSlug, endpoint.urlSlug],
                                     title:
@@ -178,6 +196,7 @@ export function resolveSidebarNodes(
                             ),
                         webhooks: definition.rootPackage.webhooks.map((webhook) => ({
                             type: "page",
+                            api: api.api,
                             id: webhook.id,
                             slug: [...definitionSlug, webhook.urlSlug],
                             title: webhook.name != null ? webhook.name : "/" + webhook.path.join("/"),
@@ -185,6 +204,7 @@ export function resolveSidebarNodes(
                         })),
                         websockets: definition.rootPackage.websockets.map((websocket) => ({
                             type: "page",
+                            api: api.api,
                             id: websocket.id,
                             slug: [...definitionSlug, websocket.urlSlug],
                             title:
@@ -223,6 +243,7 @@ export function resolveSidebarNodes(
                 } else {
                     sidebarNodes.push({
                         type: "pageGroup",
+                        slug: parentSlugs,
                         pages: [link],
                     });
                 }
@@ -232,4 +253,78 @@ export function resolveSidebarNodes(
     }
 
     return sidebarNodes;
+}
+
+export function resolveActiveSidebarNode(
+    sidebarNodes: SidebarNode[],
+    fullSlug: string[],
+): SidebarNode.Page | undefined {
+    for (const node of sidebarNodes) {
+        const activeNode = resolveActiveSidebarNodeRecursive(node, fullSlug);
+        if (activeNode != null) {
+            return activeNode;
+        }
+    }
+    return undefined;
+}
+
+export function resolveActiveSidebarNodeRecursive(node: SidebarNode, fullSlug: string[]): SidebarNode.Page | undefined {
+    if (node.type === "section") {
+        if (fullSlug.join("/") === node.slug.join("/") && node.items[0] != null) {
+            // get the first page in the section
+            const firstPage = resolveActiveSidebarNodeRecursive(node.items[0], node.items[0].slug);
+            if (firstPage != null) {
+                return firstPage;
+            }
+        }
+        for (const item of node.items) {
+            const activeNode = resolveActiveSidebarNodeRecursive(item, fullSlug);
+            if (activeNode != null) {
+                return activeNode;
+            }
+        }
+    } else if (node.type === "apiSection") {
+        if (fullSlug.join("/") === node.slug.join("/")) {
+            return node.endpoints[0] ?? node.websockets[0] ?? node.webhooks[0];
+        } else {
+            for (const endpoint of node.endpoints) {
+                if (fullSlug.join("/") === endpoint.slug.join("/")) {
+                    return endpoint;
+                }
+            }
+            for (const websocket of node.websockets) {
+                if (fullSlug.join("/") === websocket.slug.join("/")) {
+                    return websocket;
+                }
+            }
+            for (const webhook of node.webhooks) {
+                if (fullSlug.join("/") === webhook.slug.join("/")) {
+                    return webhook;
+                }
+            }
+            for (const subpackage of node.subpackages) {
+                const activeNode = resolveActiveSidebarNodeRecursive(subpackage, fullSlug);
+                if (activeNode != null) {
+                    return activeNode;
+                }
+            }
+        }
+    } else if (node.type === "pageGroup") {
+        if (fullSlug.join("/") === node.slug.join("/")) {
+            const firstPage = node.pages.find((page) => page.type === "page") as SidebarNode.Page | undefined;
+            if (firstPage != null) {
+                return firstPage;
+            }
+        }
+        for (const page of node.pages) {
+            if (page.type === "page" && fullSlug.join("/") === page.slug.join("/")) {
+                return page;
+            }
+        }
+    }
+    return;
+}
+
+export function isApiPage(node: SidebarNode.Page): node is SidebarNode.ApiPage {
+    return node.type === "page" && "api" in node;
 }
