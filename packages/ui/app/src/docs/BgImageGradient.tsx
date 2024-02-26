@@ -14,25 +14,6 @@ export const BgImageGradient: FC<BgImageGradient.Props> = ({ className, colors, 
     const darkBackground = colors?.type === "darkAndLight" ? colors.dark.background : colors?.background;
     const lightBackground = colors?.type === "darkAndLight" ? colors.light.background : colors?.background;
 
-    // const getBackgroundType = useCallback(() => {
-    //     if (colors?.type === "darkAndLight") {
-    //         if (theme === "dark" || theme === "light") {
-    //             return colors?.[theme].background.type;
-    //         }
-    //         return undefined;
-    //     } else {
-    //         return colors?.background.type;
-    //     }
-    // }, [colors, theme]);
-
-    // const [backgroundType, setBackgroundType] = useState<"solid" | "gradient" | undefined>();
-
-    // useEffect(() => {
-    //     if (typeof window !== "undefined") {
-    //         setBackgroundType(getBackgroundType());
-    //     }
-    // }, [getBackgroundType]);
-
     return (
         <div
             className={classNames(
