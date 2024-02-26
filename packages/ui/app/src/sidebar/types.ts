@@ -75,20 +75,18 @@ function resolveSidebarNodeApiSection(
         return;
     }
     const slug = [...parentSlugs, subpackage.urlSlug];
-    const endpoints = subpackage.endpoints
-        .filter((endpoint) => endpoint.request?.contentType !== "multipart/form-data")
-        .map(
-            (endpoint): SidebarNode.EndpointPage => ({
-                type: "page",
-                api,
-                id: endpoint.id,
-                slug: [...slug, endpoint.urlSlug],
-                title: endpoint.name != null ? endpoint.name : stringifyEndpointPathParts(endpoint.path.parts),
-                description: endpoint.description ?? null,
-                method: endpoint.method,
-                stream: endpoint.response?.type.type === "stream",
-            }),
-        );
+    const endpoints = subpackage.endpoints.map(
+        (endpoint): SidebarNode.EndpointPage => ({
+            type: "page",
+            api,
+            id: endpoint.id,
+            slug: [...slug, endpoint.urlSlug],
+            title: endpoint.name != null ? endpoint.name : stringifyEndpointPathParts(endpoint.path.parts),
+            description: endpoint.description ?? null,
+            method: endpoint.method,
+            stream: endpoint.response?.type.type === "stream",
+        }),
+    );
     const websockets = subpackage.websockets.map(
         (websocket): SidebarNode.ApiPage => ({
             type: "page",
@@ -177,23 +175,21 @@ export function resolveSidebarNodes(
                         id: api.api,
                         title: api.title,
                         slug: [...parentSlugs, api.urlSlug],
-                        endpoints: definition.rootPackage.endpoints
-                            .filter((endpoint) => endpoint.request?.contentType !== "multipart/form-data")
-                            .map(
-                                (endpoint): SidebarNode.EndpointPage => ({
-                                    type: "page",
-                                    api: api.api,
-                                    id: endpoint.id,
-                                    slug: [...definitionSlug, endpoint.urlSlug],
-                                    title:
-                                        endpoint.name != null
-                                            ? endpoint.name
-                                            : stringifyEndpointPathParts(endpoint.path.parts),
-                                    method: endpoint.method,
-                                    stream: endpoint.response?.type.type === "stream",
-                                    description: endpoint.description ?? null,
-                                }),
-                            ),
+                        endpoints: definition.rootPackage.endpoints.map(
+                            (endpoint): SidebarNode.EndpointPage => ({
+                                type: "page",
+                                api: api.api,
+                                id: endpoint.id,
+                                slug: [...definitionSlug, endpoint.urlSlug],
+                                title:
+                                    endpoint.name != null
+                                        ? endpoint.name
+                                        : stringifyEndpointPathParts(endpoint.path.parts),
+                                method: endpoint.method,
+                                stream: endpoint.response?.type.type === "stream",
+                                description: endpoint.description ?? null,
+                            }),
+                        ),
                         webhooks: definition.rootPackage.webhooks.map((webhook) => ({
                             type: "page",
                             api: api.api,

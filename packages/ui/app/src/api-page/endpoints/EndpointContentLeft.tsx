@@ -1,11 +1,15 @@
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import * as Tabs from "@radix-ui/react-tabs";
 import { camelCase, sortBy, upperFirst } from "lodash-es";
 import { memo } from "react";
 import { FernCard } from "../../components/FernCard";
 import {
+    dereferenceObjectProperties,
     ResolvedEndpointDefinition,
     ResolvedError,
+    ResolvedHttpRequestBodyShape,
+    ResolvedHttpResponseBodyShape,
     ResolvedNavigationItemApiSection,
     ResolvedTypeDefinition,
 } from "../../util/resolver";
@@ -51,6 +55,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     const requestExpandAll = useBooleanState(false);
     const responseExpandAll = useBooleanState(false);
     const errorExpandAll = useBooleanState(false);
+
     return (
         <div className="flex max-w-full flex-1 flex-col  gap-12">
             {endpoint.pathParameters.length > 0 && (
@@ -146,7 +151,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                         route={route}
                                         expandAll={requestExpandAll.setTrue}
                                         collapseAll={requestExpandAll.setFalse}
-                                        showExpandCollapse={true}
+                                        showExpandCollapse={shouldShowExpandCollapse(requestBody.shape, types)}
                                     >
                                         <EndpointRequestSection
                                             requestBody={requestBody}
@@ -170,7 +175,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     route={route}
                     expandAll={requestExpandAll.setTrue}
                     collapseAll={requestExpandAll.setFalse}
-                    showExpandCollapse={true}
+                    showExpandCollapse={shouldShowExpandCollapse(endpoint.requestBody[0].shape, types)}
                 >
                     <EndpointRequestSection
                         requestBody={endpoint.requestBody[0]}
@@ -189,7 +194,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     route={route}
                     expandAll={responseExpandAll.setTrue}
                     collapseAll={responseExpandAll.setFalse}
-                    showExpandCollapse={true}
+                    showExpandCollapse={shouldShowExpandCollapse(endpoint.responseBody.shape, types)}
                 >
                     <EndpointResponseSection
                         responseBody={endpoint.responseBody}
@@ -261,4 +266,51 @@ export function convertNameToAnchorPart(name: string | null | undefined): string
         return undefined;
     }
     return upperFirst(camelCase(name));
+}
+
+function shouldShowExpandCollapse(
+    shape: ResolvedHttpRequestBodyShape | ResolvedHttpResponseBodyShape,
+    types: Record<string, ResolvedTypeDefinition>,
+    depth = 0,
+): boolean {
+    return visitDiscriminatedUnion(shape, "type")._visit({
+        string: () => false,
+        boolean: () => false,
+        object: (object) =>
+            depth > 1
+                ? true
+                : dereferenceObjectProperties(object, types).some(({ valueShape }) =>
+                      shouldShowExpandCollapse(valueShape, types, depth + 1),
+                  ),
+        map: () => true,
+        undiscriminatedUnion: () => true,
+        discriminatedUnion: () => true,
+        enum: () => false,
+        alias: ({ shape }) => shouldShowExpandCollapse(shape, types, depth),
+        unknown: () => false,
+        fileUpload: () => false,
+        integer: () => false,
+        double: () => false,
+        long: () => false,
+        datetime: () => false,
+        uuid: () => false,
+        base64: () => false,
+        date: () => false,
+        optional: ({ shape }) => shouldShowExpandCollapse(shape, types, depth),
+        list: ({ shape }) => shouldShowExpandCollapse(shape, types, depth),
+        set: ({ shape }) => shouldShowExpandCollapse(shape, types, depth),
+        booleanLiteral: () => false,
+        stringLiteral: () => false,
+        reference: ({ typeId }) => {
+            const referenceShape = types[typeId];
+            if (referenceShape == null) {
+                return false;
+            }
+            return shouldShowExpandCollapse(referenceShape, types, depth);
+        },
+        _other: () => false,
+        fileDownload: () => false,
+        streamingText: () => false,
+        streamCondition: () => false,
+    });
 }
