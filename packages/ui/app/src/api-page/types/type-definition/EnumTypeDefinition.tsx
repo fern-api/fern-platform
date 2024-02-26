@@ -69,11 +69,11 @@ export const EnumTypeDefinition = ({
 
     return (
         <>
-            {elements.length < 4 ? (
+            {elements.length < 6 ? (
                 <div className="t-muted flex items-baseline gap-2">
                     <span className="shrink-0 text-sm"> Allowed values: </span>
                     <FernTooltipProvider>
-                        <span className="inline-flex gap-2">
+                        <span className="inline-flex flex-wrap gap-2">
                             {elements.map((item) => (
                                 <Chip key={item.key} name={item.props.name} description={item.props.description} />
                             ))}
