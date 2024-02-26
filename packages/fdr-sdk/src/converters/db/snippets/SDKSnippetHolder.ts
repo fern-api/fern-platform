@@ -76,7 +76,7 @@ export class SDKSnippetHolder {
     }: {
         endpointPath: string;
         endpointMethod: FdrAPI.EndpointMethod;
-    }): APIV1Read.TypescriptSnippet | undefined {
+    }): APIV1Read.GoSnippet | undefined {
         if (this.snippetsConfigWithSdkId.goSdk == null) {
             return undefined;
         }
