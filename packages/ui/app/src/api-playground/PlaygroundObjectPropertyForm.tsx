@@ -136,7 +136,7 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
             );
         }
         return options;
-    }, [hiddenProperties]);
+    }, [hiddenProperties, types]);
 
     return (
         <div
