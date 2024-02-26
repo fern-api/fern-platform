@@ -4446,7 +4446,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@radix-ui/react-toggle-group", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.0.4"],\
             ["@radix-ui/react-tooltip", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.0.7"],\
             ["@react-hook/size", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.1.2"],\
-            ["@shikijs/rehype", "npm:1.1.7"],\
             ["@shikijs/transformers", "npm:1.1.7"],\
             ["@testing-library/react", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:14.2.1"],\
             ["@types/hast", "npm:3.0.4"],\
@@ -4459,7 +4458,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react-test-renderer", "npm:18.0.7"],\
             ["@types/tinycolor2", "npm:1.4.6"],\
             ["@types/title", "npm:3.4.3"],\
-            ["@types/unist", "npm:3.0.2"],\
             ["@vercel/speed-insights", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.0.7"],\
             ["algoliasearch", "npm:4.22.1"],\
             ["classnames", "npm:2.5.1"],\
@@ -4467,7 +4465,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["hast", "npm:1.0.0"],\
             ["hast-util-to-jsx-runtime", "npm:2.3.0"],\
-            ["hastscript", "npm:9.0.0"],\
             ["instantsearch.js", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.63.0"],\
             ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.7.0"],\
             ["jotai", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.6.0"],\
@@ -4501,7 +4498,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["tinycolor2", "npm:1.6.0"],\
             ["title", "npm:3.5.3"],\
             ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"],\
-            ["unified", "npm:11.0.4"],\
             ["unist-util-visit", "npm:5.0.0"],\
             ["vite", "virtual:365c5e55d4374302d83e985bf13cdc0e1b9981623dceff55d2afbcfc02ee37332be44cf95e9c81193f89ad56d1cfe060a8b59dd16c83a03bcf51abe82d13ecf2#npm:4.5.2"]\
           ],\
@@ -6633,21 +6629,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@shikijs-core-npm-1.1.7-6e75566b7c-120002e1bb.zip/node_modules/@shikijs/core/",\
           "packageDependencies": [\
             ["@shikijs/core", "npm:1.1.7"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@shikijs/rehype", [\
-        ["npm:1.1.7", {\
-          "packageLocation": "./.yarn/cache/@shikijs-rehype-npm-1.1.7-caa6340453-cae1ac2c8f.zip/node_modules/@shikijs/rehype/",\
-          "packageDependencies": [\
-            ["@shikijs/rehype", "npm:1.1.7"],\
-            ["@shikijs/transformers", "npm:1.1.7"],\
-            ["@types/hast", "npm:3.0.4"],\
-            ["hast-util-to-string", "npm:3.0.0"],\
-            ["shiki", "npm:1.1.7"],\
-            ["unified", "npm:11.0.4"],\
-            ["unist-util-visit", "npm:5.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -13263,16 +13244,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["hast-util-to-string", [\
-        ["npm:3.0.0", {\
-          "packageLocation": "./.yarn/cache/hast-util-to-string-npm-3.0.0-a75a0c1e27-64f7f4f2b7.zip/node_modules/hast-util-to-string/",\
-          "packageDependencies": [\
-            ["hast-util-to-string", "npm:3.0.0"],\
-            ["@types/hast", "npm:3.0.4"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["hast-util-whitespace", [\
         ["npm:3.0.0", {\
           "packageLocation": "./.yarn/cache/hast-util-whitespace-npm-3.0.0-215dd4954b-41d93ccce2.zip/node_modules/hast-util-whitespace/",\
@@ -13288,18 +13259,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/hastscript-npm-8.0.0-acde2e34a0-ae3c20223e.zip/node_modules/hastscript/",\
           "packageDependencies": [\
             ["hastscript", "npm:8.0.0"],\
-            ["@types/hast", "npm:3.0.4"],\
-            ["comma-separated-tokens", "npm:2.0.3"],\
-            ["hast-util-parse-selector", "npm:4.0.0"],\
-            ["property-information", "npm:6.2.0"],\
-            ["space-separated-tokens", "npm:2.0.2"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:9.0.0", {\
-          "packageLocation": "./.yarn/cache/hastscript-npm-9.0.0-86f664feba-de8daf7686.zip/node_modules/hastscript/",\
-          "packageDependencies": [\
-            ["hastscript", "npm:9.0.0"],\
             ["@types/hast", "npm:3.0.4"],\
             ["comma-separated-tokens", "npm:2.0.3"],\
             ["hast-util-parse-selector", "npm:4.0.0"],\
