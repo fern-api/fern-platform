@@ -3,7 +3,16 @@ import { transformerMetaHighlight } from "@shikijs/transformers";
 import classNames from "classnames";
 import type { Element, ElementContent, Root, RootContent, Text } from "hast";
 import { omit } from "lodash-es";
-import { Children, forwardRef, Fragment, isValidElement, PropsWithChildren, ReactElement, ReactNode, useMemo } from "react";
+import {
+    Children,
+    forwardRef,
+    Fragment,
+    isValidElement,
+    PropsWithChildren,
+    ReactElement,
+    ReactNode,
+    useMemo,
+} from "react";
 import { SpecialLanguage } from "shiki/core";
 import { getHighlighter, Highlighter } from "shiki/index.mjs";
 import { BundledLanguage } from "shiki/langs";
@@ -62,8 +71,9 @@ export const FernSyntaxHighlighterContent = forwardRef<HTMLPreElement, FernSynta
             return null;
         }
 
-        const lines = Children.toArray(code.props.children)
-            .filter((d) => isValidElement(d) && d.type === "span" && d.props.className === "line");
+        const lines = Children.toArray(code.props.children).filter(
+            (d) => isValidElement(d) && d.type === "span" && d.props.className === "line",
+        );
 
         function removeBackground(properties: Record<string, unknown>): Record<string, unknown> {
             return omit(properties, ["background", "backgroundColor", "--shiki-dark-bg"]);
@@ -82,7 +92,7 @@ export const FernSyntaxHighlighterContent = forwardRef<HTMLPreElement, FernSynta
                             "text-sm": fontSize === "base",
                             "text-base": fontSize === "lg",
                         })}
-                        style={...code.props.style}
+                        style={code.props.style}
                     >
                         <div className="code-block-inner">
                             <table
@@ -101,9 +111,7 @@ export const FernSyntaxHighlighterContent = forwardRef<HTMLPreElement, FernSynta
                                             key={lineNumber}
                                         >
                                             <td className="code-block-line-gutter" />
-                                            <td className="code-block-line-content">
-                                                {line}
-                                            </td>
+                                            <td className="code-block-line-content">{line}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -115,7 +123,6 @@ export const FernSyntaxHighlighterContent = forwardRef<HTMLPreElement, FernSynta
         );
     },
 );
-
 
 // remove leading and trailing newlines
 export function trimCode(code: string): string {
@@ -168,7 +175,7 @@ export async function getHighlighterInstance(): Promise<Highlighter> {
             themes: [LIGHT_THEME, DARK_THEME],
         });
     }
-     
+
     return highlighter;
 }
 
@@ -226,11 +233,12 @@ export function rehypeFernCode(): (tree: Root) => void {
                     let language = `${prefix}txt`;
 
                     if (Array.isArray(classes)) {
-                        language = classes.find((d) => typeof d === "string" && d.startsWith(prefix)) as string ?? language;
+                        language =
+                            (classes.find((d) => typeof d === "string" && d.startsWith(prefix)) as string) ?? language;
                     }
 
                     const lang = language.substring(prefix.length);
-                    const code =trimCode(text);
+                    const code = trimCode(text);
                     const hast = highlight(highlighter, code, lang).children;
 
                     // console.log(codeNode);
@@ -269,14 +277,17 @@ export function isText(value: ElementContent | Element | Root | RootContent | nu
 
 function findChild(children: ReactNode, type: string): ReactElement | undefined {
     const foundChild = Children.toArray(children).find(
-            (d) => isValidElement(d) && d.type === type,
-        ) as React.ReactElement | null;
+        (d) => isValidElement(d) && d.type === type,
+    ) as React.ReactElement | null;
 
     if (foundChild != null) {
         return foundChild;
     }
 
-    return Children.toArray(children).filter(isFragment).map((d) => findChild(d.props.children, type)).filter(isNonNullish)[0];
+    return Children.toArray(children)
+        .filter(isFragment)
+        .map((d) => findChild(d.props.children, type))
+        .filter(isNonNullish)[0];
 }
 
 function isFragment(value: ReactNode): value is ReactElement<PropsWithChildren> {

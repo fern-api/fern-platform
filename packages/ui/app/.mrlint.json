@@ -10,7 +10,9 @@
         "autoprefixer",
         "postcss",
         "postcss-import",
-        "cssnano"
+        "cssnano",
+        "unist-util-visit",
+        "@shikijs/transformers"
       ]
     }
   }

@@ -47,15 +47,12 @@
     "@radix-ui/react-toggle-group": "^1.0.4",
     "@radix-ui/react-tooltip": "^1.0.7",
     "@react-hook/size": "^2.1.2",
-    "@shikijs/rehype": "^1.1.7",
     "@shikijs/transformers": "^1.1.7",
-    "@types/unist": "^3.0.2",
     "@vercel/speed-insights": "^1.0.7",
     "algoliasearch": "^4.22.1",
     "classnames": "^2.5.1",
     "hast": "^1.0.0",
     "hast-util-to-jsx-runtime": "^2.3.0",
-    "hastscript": "^9.0.0",
     "instantsearch.js": "^4.63.0",
     "jotai": "^2.6.0",
     "jsonpath": "^1.1.1",
@@ -83,7 +80,6 @@
     "shiki": "^1.1.7",
     "tinycolor2": "^1.6.0",
     "title": "^3.5.3",
-    "unified": "^11.0.4",
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {

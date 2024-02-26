@@ -2,11 +2,11 @@
 
 exports[`CopyToClipboardButton renders correctly 1`] = `
 <button
-  aria-disabled={true}
-  className="group fern-button minimal disabled rounded square"
+  aria-disabled={false}
+  className="group fern-button minimal rounded square"
   data-state="closed"
   data-testid="copy-btn"
-  disabled={true}
+  disabled={false}
   onBlur={[Function]}
   onClick={[Function]}
   onFocus={[Function]}
