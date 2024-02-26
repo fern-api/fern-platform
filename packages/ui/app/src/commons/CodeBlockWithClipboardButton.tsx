@@ -2,11 +2,6 @@ import classNames from "classnames";
 import React, { PropsWithChildren } from "react";
 import { CopyToClipboardButton } from "./CopyToClipboardButton";
 
-// const CodeBlockSkeleton = dynamic(
-//     () => import("./CodeBlockSkeleton").then(({ CodeBlockSkeleton }) => CodeBlockSkeleton),
-//     { ssr: true },
-// );
-
 type CodeBlockWithClipboardButtonProps = {
     code: string;
 };
