@@ -4,7 +4,7 @@ import { FC, useCallback, useMemo } from "react";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
 import { FernSegmentedControl } from "../components/FernSegmentedControl";
-import { ResolvedDiscriminatedUnionShape } from "../util/resolver";
+import { dereferenceObjectProperties, ResolvedDiscriminatedUnionShape, ResolvedTypeDefinition } from "../util/resolver";
 import { titleCase } from "../util/titleCase";
 import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
 import { castToRecord, getDefaultValueForObjectProperties } from "./utils";
@@ -15,6 +15,7 @@ const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ M
 
 interface PlaygroundDiscriminatedUnionFormProps {
     discriminatedUnion: ResolvedDiscriminatedUnionShape;
+    types: Record<string, ResolvedTypeDefinition>;
     onChange: (value: unknown) => void;
     value: unknown;
     id: string;
@@ -22,11 +23,12 @@ interface PlaygroundDiscriminatedUnionFormProps {
 
 export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFormProps> = ({
     discriminatedUnion,
+    types,
     onChange,
     value,
     id,
 }) => {
-    const selectedVariant =
+    const selectedVariantKey =
         value != null ? (castToRecord(value)[discriminatedUnion.discriminant] as string) : undefined;
 
     const setSelectedVariant = useCallback(
@@ -36,6 +38,7 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                 if (currentVariantKey === variantKey) {
                     return oldValue;
                 }
+
                 const selectedVariant = discriminatedUnion.variants.find(
                     (variant) => variant.discriminantValue === variantKey,
                 );
@@ -46,14 +49,16 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                 }
                 return {
                     [discriminatedUnion.discriminant]: variantKey,
-                    ...getDefaultValueForObjectProperties(selectedVariant.additionalProperties),
+                    ...getDefaultValueForObjectProperties(dereferenceObjectProperties(selectedVariant, types), types),
                 };
             });
         },
-        [discriminatedUnion.discriminant, discriminatedUnion.variants, onChange],
+        [discriminatedUnion.discriminant, discriminatedUnion.variants, onChange, types],
     );
 
-    const activeVariant = discriminatedUnion.variants.find((variant) => variant.discriminantValue === selectedVariant);
+    const activeVariant = discriminatedUnion.variants.find(
+        (variant) => variant.discriminantValue === selectedVariantKey,
+    );
 
     const options = useMemo(
         () =>
@@ -72,17 +77,23 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
         [discriminatedUnion.variants],
     );
 
+    const selectedVariant = discriminatedUnion.variants.find(
+        (variant) => variant.discriminantValue === selectedVariantKey,
+    );
+
+    const properties = selectedVariant != null ? dereferenceObjectProperties(selectedVariant, types) : [];
+
     return (
         <div className="w-full">
             {discriminatedUnion.variants.length < 5 ? (
                 <FernSegmentedControl
                     options={options}
-                    value={selectedVariant}
+                    value={selectedVariantKey}
                     onValueChange={setSelectedVariant}
                     className="mb-4 w-full"
                 />
             ) : (
-                <FernDropdown options={options} onValueChange={setSelectedVariant} value={selectedVariant}>
+                <FernDropdown options={options} onValueChange={setSelectedVariant} value={selectedVariantKey}>
                     <FernButton
                         text={
                             activeVariant != null ? (
@@ -101,10 +112,11 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
             {activeVariant != null && (
                 <div className="border-border-default-soft border-l pl-4">
                     <PlaygroundObjectPropertiesForm
-                        properties={activeVariant.additionalProperties}
+                        properties={properties}
                         value={value}
                         onChange={onChange}
                         id={id}
+                        types={types}
                     />
                 </div>
             )}

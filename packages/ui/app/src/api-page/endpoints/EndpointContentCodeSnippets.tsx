@@ -1,11 +1,12 @@
 "use client";
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { Root } from "hast";
 import { memo } from "react";
 import { ApiPlaygroundButton } from "../../api-playground/ApiPlaygroundButton";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
 import {
     ResolvedApiDefinitionPackage,
     ResolvedEndpointDefinition,
+    ResolvedExampleEndpointCall,
     ResolvedNavigationItemApiSection,
 } from "../../util/resolver";
 import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
@@ -19,13 +20,15 @@ export declare namespace EndpointContentCodeSnippets {
         apiSection: ResolvedNavigationItemApiSection;
         apiDefinition: ResolvedApiDefinitionPackage;
         endpoint: ResolvedEndpointDefinition;
-        example: APIV1Read.ExampleEndpointCall;
+        example: ResolvedExampleEndpointCall;
         clients: CodeExampleGroup[];
         selectedClient: CodeExample;
         onClickClient: (example: CodeExample) => void;
-        requestCurlString: string;
+        requestCodeSnippet: string;
+        requestHast: Root;
         requestCurlJson: unknown;
-        responseJsonString: string;
+        responseCodeSnippet: string;
+        responseHast: Root | null;
         responseJson: unknown;
         hoveredRequestPropertyPath: JsonPropertyPath | undefined;
         hoveredResponsePropertyPath: JsonPropertyPath | undefined;
@@ -43,9 +46,11 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     clients,
     selectedClient,
     onClickClient,
-    requestCurlString,
+    requestCodeSnippet,
+    requestHast,
     requestCurlJson,
-    responseJsonString,
+    responseCodeSnippet,
+    responseHast,
     responseJson,
     hoveredRequestPropertyPath = [],
     hoveredResponsePropertyPath = [],
@@ -89,11 +94,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 onClick={(e) => {
                     e.stopPropagation();
                 }}
-                copyToClipboardText={() => {
-                    return selectedClient.language === "curl" && selectedClient.code === ""
-                        ? requestCurlString
-                        : selectedClient.code;
-                }}
+                copyToClipboardText={() => requestCodeSnippet}
                 actions={
                     <>
                         <ApiPlaygroundButton
@@ -111,30 +112,28 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         ) : undefined}
                     </>
                 }
-                content={
-                    selectedClient.language === "curl" && selectedClient.code === ""
-                        ? requestCurlString
-                        : selectedClient.code
-                }
+                hast={requestHast}
                 language={selectedClient.language === "curl" ? "bash" : selectedClient.language}
                 hoveredPropertyPath={selectedClient.language === "curl" ? hoveredRequestPropertyPath : undefined}
                 json={requestCurlJson}
-                jsonStartLine={lineNumberOf(requestCurlString, "-d '{")}
-                scrollAreaStyle={{ maxHeight: requestHeight - TITLED_EXAMPLE_PADDING }}
+                jsonStartLine={
+                    selectedClient.language === "curl" ? lineNumberOf(requestCodeSnippet, "-d '{") : undefined
+                }
+                scrollAreaStyle={{ height: requestHeight - TITLED_EXAMPLE_PADDING }}
             />
-            {example.responseBodyV3 != null && (
+            {example.responseBody != null && responseHast != null && (
                 <CodeSnippetExample
                     title={example.responseStatusCode >= 400 ? "Error Response" : "Response"}
                     type={example.responseStatusCode >= 400 ? "warning" : "primary"}
                     onClick={(e) => {
                         e.stopPropagation();
                     }}
-                    copyToClipboardText={() => responseJsonString}
-                    content={responseJsonString}
+                    copyToClipboardText={() => responseCodeSnippet}
+                    hast={responseHast}
                     language="json"
                     hoveredPropertyPath={hoveredResponsePropertyPath}
                     json={responseJson}
-                    scrollAreaStyle={{ maxHeight: responseHeight - TITLED_EXAMPLE_PADDING }}
+                    scrollAreaStyle={{ height: responseHeight - TITLED_EXAMPLE_PADDING }}
                 />
             )}
         </div>

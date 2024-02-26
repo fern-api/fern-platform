@@ -1,7 +1,12 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { ReactElement, useCallback } from "react";
-import { ResolvedTypeReference, ResolvedUndiscriminatedUnionShapeVariant } from "../../../util/resolver";
+import {
+    ResolvedTypeDefinition,
+    ResolvedTypeShape,
+    ResolvedUndiscriminatedUnionShapeVariant,
+    unwrapReference,
+} from "../../../util/resolver";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import {
@@ -17,8 +22,11 @@ type IconInfo = {
     size: number;
 };
 
-function getIconInfoForTypeReference(typeRef: ResolvedTypeReference): IconInfo | null {
-    return visitDiscriminatedUnion(typeRef, "type")._visit<IconInfo | null>({
+function getIconInfoForTypeReference(
+    typeRef: ResolvedTypeShape,
+    types: Record<string, ResolvedTypeDefinition>,
+): IconInfo | null {
+    return visitDiscriminatedUnion(unwrapReference(typeRef, types), "type")._visit<IconInfo | null>({
         string: () => ({ content: "abc", size: 6 }),
         boolean: () => ({ content: "true", size: 6 }),
         integer: () => ({ content: "123", size: 6 }),
@@ -32,20 +40,23 @@ function getIconInfoForTypeReference(typeRef: ResolvedTypeReference): IconInfo |
         undiscriminatedUnion: () => null,
         discriminatedUnion: () => null,
         enum: () => null,
-        optional: (optional) => getIconInfoForTypeReference(optional.shape),
-        list: (list) => getIconInfoForTypeReference(list.shape),
-        set: (set) => getIconInfoForTypeReference(set.shape),
+        optional: (optional) => getIconInfoForTypeReference(optional.shape, types),
+        list: (list) => getIconInfoForTypeReference(list.shape, types),
+        set: (set) => getIconInfoForTypeReference(set.shape, types),
         map: () => ({ content: "{}", size: 9 }),
         booleanLiteral: () => ({ content: "!", size: 6 }),
         stringLiteral: () => ({ content: "!", size: 6 }),
         unknown: () => ({ content: "{}", size: 6 }),
         _other: () => null,
-        reference: (reference) => getIconInfoForTypeReference(reference.shape()),
+        alias: (reference) => getIconInfoForTypeReference(reference.shape, types),
     });
 }
 
-function getIconForTypeReference(typeRef: ResolvedTypeReference): ReactElement | null {
-    const info = getIconInfoForTypeReference(typeRef);
+function getIconForTypeReference(
+    typeRef: ResolvedTypeShape,
+    types: Record<string, ResolvedTypeDefinition>,
+): ReactElement | null {
+    const info = getIconInfoForTypeReference(typeRef, types);
     if (info == null) {
         return null;
     }
@@ -68,6 +79,7 @@ export declare namespace UndiscriminatedUnionVariant {
         route: string;
         defaultExpandAll?: boolean;
         idx: number;
+        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
@@ -78,6 +90,7 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
     route,
     defaultExpandAll = false,
     idx,
+    types,
 }) => {
     const { isRootTypeDefinition } = useTypeDefinitionContext();
     const contextValue = useTypeDefinitionContext();
@@ -97,7 +110,7 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
         >
             <div className="flex flex-col gap-2">
                 <div className="t-muted flex items-center space-x-2.5">
-                    {getIconForTypeReference(unionVariant.shape)}
+                    {getIconForTypeReference(unionVariant.shape, types)}
                     {unionVariant.displayName == null ? null : (
                         <span className="t-default font-mono text-sm">
                             {unionVariant.displayName.split(" ").length > 6
@@ -105,7 +118,7 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
                                 : unionVariant.displayName}
                         </span>
                     )}
-                    <span className="t-muted text-xs">{renderTypeShorthand(unionVariant.shape)}</span>
+                    <span className="t-muted text-xs">{renderTypeShorthand(unionVariant.shape, undefined, types)}</span>
                     {unionVariant.availability != null && (
                         <EndpointAvailabilityTag availability={unionVariant.availability} minimal={true} />
                     )}
@@ -119,6 +132,7 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
                         applyErrorStyles={applyErrorStyles}
                         route={route}
                         defaultExpandAll={defaultExpandAll}
+                        types={types}
                     />
                 </TypeDefinitionContext.Provider>
             </div>

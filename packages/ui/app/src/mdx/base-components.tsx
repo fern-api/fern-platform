@@ -11,18 +11,6 @@ import { useNavigationContext } from "../navigation-context";
 import { onlyText } from "../util/onlyText";
 import "./base-components.scss";
 
-export const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({ className, ...rest }) => {
-    return (
-        <code
-            {...rest}
-            className={classNames(
-                className,
-                "not-prose inline-code font-mono border border-concealed rounded bg-background-light/75 dark:bg-background-dark/75 py-0.5 px-1",
-            )}
-        />
-    );
-};
-
 export const Table: React.FC<HTMLAttributes<HTMLTableElement>> = ({ className, ...rest }) => {
     return (
         <FernCard className="fern-table not-prose">

@@ -3,11 +3,13 @@ import { isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isEmpty, noop } from "lodash-es";
 import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/types";
 import {
+    dereferenceObjectProperties,
     ResolvedEndpointDefinition,
     ResolvedEndpointPathParts,
     ResolvedHttpRequestBodyShape,
     ResolvedObjectProperty,
-    ResolvedTypeReference,
+    ResolvedTypeDefinition,
+    ResolvedTypeShape,
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
 } from "../util/resolver";
@@ -93,7 +95,7 @@ export function indentAfter(str: string, indent: number, afterLine?: number): st
 }
 
 export function stringifyFetch(
-    auth: APIV1Read.ApiAuth | undefined,
+    auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
     formState: PlaygroundRequestFormState,
     redacted = true,
@@ -124,7 +126,7 @@ console.log(body);`;
 }
 
 export function stringifyPythonRequests(
-    auth: APIV1Read.ApiAuth | undefined,
+    auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
     formState: PlaygroundRequestFormState,
     redacted = true,
@@ -164,7 +166,7 @@ export function obfuscateSecret(secret: string): string {
 }
 
 function buildRedactedHeaders(
-    auth: APIV1Read.ApiAuth | undefined,
+    auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition,
     formState: PlaygroundRequestFormState,
 ): Record<string, string> {
@@ -211,7 +213,7 @@ function buildRedactedHeaders(
 }
 
 export function buildUnredactedHeaders(
-    auth: APIV1Read.ApiAuth | undefined,
+    auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
     formState: PlaygroundRequestFormState | undefined,
 ): Record<string, string> {
@@ -259,7 +261,7 @@ export function buildUnredactedHeaders(
 }
 
 export function stringifyCurl(
-    auth: APIV1Read.ApiAuth | undefined,
+    auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
     formState: PlaygroundRequestFormState,
     redacted = true,
@@ -283,27 +285,34 @@ export function stringifyCurl(
     });
 }
 
-export function getDefaultValueForObjectProperties(properties: ResolvedObjectProperty[] = []): Record<string, unknown> {
+export function getDefaultValueForObjectProperties(
+    properties: ResolvedObjectProperty[] = [],
+    types: Record<string, ResolvedTypeDefinition>,
+): Record<string, unknown> {
     return properties.reduce<Record<string, unknown>>((acc, property) => {
-        acc[property.key] = getDefaultValueForType(property.valueShape);
+        acc[property.key] = getDefaultValueForType(property.valueShape, types);
         return acc;
     }, {});
 }
 
-export function matchesTypeReference(shape: ResolvedTypeReference, value: unknown): boolean {
-    return visitDiscriminatedUnion(shape, "type")._visit<boolean>({
+export function matchesTypeReference(
+    shape: ResolvedTypeShape,
+    value: unknown,
+    types: Record<string, ResolvedTypeDefinition>,
+): boolean {
+    return visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit<boolean>({
         object: (object) => {
             if (!isPlainObject(value)) {
                 return false;
             }
             const propertyMap = new Map<string, ResolvedObjectProperty>();
-            object.properties().forEach((property) => propertyMap.set(property.key, property));
+            dereferenceObjectProperties(object, types).forEach((property) => propertyMap.set(property.key, property));
             return Object.keys(value).every((key) => {
                 const property = propertyMap.get(key);
                 if (property == null) {
                     return false;
                 }
-                return matchesTypeReference(property.valueShape, value[key]);
+                return matchesTypeReference(property.valueShape, value[key], types);
             });
         },
         discriminatedUnion: (discriminatedUnion) => {
@@ -321,7 +330,9 @@ export function matchesTypeReference(shape: ResolvedTypeReference, value: unknow
                 }
 
                 const propertyMap = new Map<string, ResolvedObjectProperty>();
-                variant.additionalProperties.forEach((property) => propertyMap.set(property.key, property));
+                dereferenceObjectProperties(variant, types).forEach((property) =>
+                    propertyMap.set(property.key, property),
+                );
                 return Object.keys(value).every((key) => {
                     if (key === discriminatedUnion.discriminant) {
                         return true;
@@ -330,12 +341,12 @@ export function matchesTypeReference(shape: ResolvedTypeReference, value: unknow
                     if (property == null) {
                         return false;
                     }
-                    return matchesTypeReference(property.valueShape, value[key]);
+                    return matchesTypeReference(property.valueShape, value[key], types);
                 });
             });
         },
         undiscriminatedUnion: (undiscriminatedUnion) =>
-            undiscriminatedUnion.variants.some((variant) => matchesTypeReference(variant.shape, value)),
+            undiscriminatedUnion.variants.some((variant) => matchesTypeReference(variant.shape, value, types)),
         enum: (enumType) => {
             if (typeof value !== "string") {
                 return false;
@@ -351,35 +362,45 @@ export function matchesTypeReference(shape: ResolvedTypeReference, value: unknow
         uuid: () => typeof value === "string",
         base64: () => typeof value === "string",
         date: () => value instanceof Date,
-        optional: (optionalType) => value == null || matchesTypeReference(optionalType.shape, value),
-        list: (listType) => Array.isArray(value) && value.every((item) => matchesTypeReference(listType.shape, item)),
-        set: (setType) => Array.isArray(value) && value.every((item) => matchesTypeReference(setType.shape, item)),
+        optional: (optionalType) => value == null || matchesTypeReference(optionalType.shape, value, types),
+        list: (listType) =>
+            Array.isArray(value) && value.every((item) => matchesTypeReference(listType.shape, item, types)),
+        set: (setType) =>
+            Array.isArray(value) && value.every((item) => matchesTypeReference(setType.shape, item, types)),
         map: (MapTypeContextProvider) =>
             isPlainObject(value) &&
-            Object.keys(value).every((key) => matchesTypeReference(MapTypeContextProvider.valueShape, value[key])),
+            Object.keys(value).every((key) =>
+                matchesTypeReference(MapTypeContextProvider.valueShape, value[key], types),
+            ),
         stringLiteral: (literalType) => value === literalType.value,
         booleanLiteral: (literalType) => value === literalType.value,
         unknown: () => value == null,
         _other: () => value == null,
-        reference: (reference) => matchesTypeReference(reference.shape(), value),
+        alias: (reference) => matchesTypeReference(reference.shape, value, types),
     });
 }
 
-export function getDefaultValuesForBody(requestShape: ResolvedHttpRequestBodyShape | undefined): unknown {
+export function getDefaultValuesForBody(
+    requestShape: ResolvedHttpRequestBodyShape | undefined,
+    types: Record<string, ResolvedTypeDefinition>,
+): unknown {
     if (requestShape == null) {
         return {};
     } else if (requestShape.type === "fileUpload") {
         return null;
     } else if (requestShape.type === "object") {
-        return getDefaultValueForObjectProperties(requestShape.properties());
+        return getDefaultValueForObjectProperties(dereferenceObjectProperties(requestShape, types), types);
     } else {
-        return getDefaultValueForType(requestShape);
+        return getDefaultValueForType(requestShape, types);
     }
 }
 
-export function getDefaultValueForType(shape: ResolvedTypeReference): unknown {
-    return visitDiscriminatedUnion(shape, "type")._visit<unknown>({
-        object: (object) => getDefaultValueForObjectProperties(object.properties()),
+export function getDefaultValueForType(
+    shape: ResolvedTypeShape,
+    types: Record<string, ResolvedTypeDefinition>,
+): unknown {
+    return visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit<unknown>({
+        object: (object) => getDefaultValueForObjectProperties(dereferenceObjectProperties(object, types), types),
         discriminatedUnion: (discriminatedUnion) => {
             const variant = discriminatedUnion.variants[0];
 
@@ -388,7 +409,7 @@ export function getDefaultValueForType(shape: ResolvedTypeReference): unknown {
             }
 
             return {
-                ...getDefaultValueForObjectProperties(variant.additionalProperties),
+                ...getDefaultValueForObjectProperties(dereferenceObjectProperties(variant, types), types),
                 [discriminatedUnion.discriminant]: variant.discriminantValue,
             };
         },
@@ -397,7 +418,7 @@ export function getDefaultValueForType(shape: ResolvedTypeReference): unknown {
             if (variant == null) {
                 return undefined;
             }
-            return getDefaultValueForType(variant.shape);
+            return getDefaultValueForType(variant.shape, types);
         },
         // if enum.length === 1, select it, otherwise, we don't presume to select an incorrect enum.
         enum: (value) => (value.values.length === 1 ? value.values[0]?.value : null),
@@ -418,17 +439,21 @@ export function getDefaultValueForType(shape: ResolvedTypeReference): unknown {
         booleanLiteral: (literal) => literal.value,
         unknown: () => undefined,
         _other: () => undefined,
-        reference: (reference) => getDefaultValueForType(reference.shape()),
+        alias: (alias) => getDefaultValueForType(alias.shape, types),
     });
 }
 
-export function isExpandable(valueShape: ResolvedTypeReference, currentValue: unknown): boolean {
-    return visitDiscriminatedUnion(valueShape, "type")._visit<boolean>({
+export function isExpandable(
+    valueShape: ResolvedTypeShape,
+    currentValue: unknown,
+    types: Record<string, ResolvedTypeDefinition>,
+): boolean {
+    return visitDiscriminatedUnion(unwrapReference(valueShape, types), "type")._visit<boolean>({
         object: () => false,
         discriminatedUnion: () => false,
         undiscriminatedUnion: () => false,
         enum: () => false,
-        optional: (optional) => isExpandable(optional.shape, currentValue),
+        optional: (optional) => isExpandable(optional.shape, currentValue, types),
         list: () => Array.isArray(currentValue) && currentValue.length > 0,
         set: () => Array.isArray(currentValue) && currentValue.length > 0,
         map: () => isPlainObject(currentValue) && Object.keys(currentValue).length > 0,
@@ -445,18 +470,24 @@ export function isExpandable(valueShape: ResolvedTypeReference, currentValue: un
         date: () => false,
         booleanLiteral: () => false,
         stringLiteral: () => false,
-        reference: (reference) => isExpandable(reference.shape(), currentValue),
+        alias: (alias) => isExpandable(alias.shape, currentValue, types),
     });
 }
 
-export function hasRequiredFields(bodyShape: ResolvedHttpRequestBodyShape): boolean {
+export function hasRequiredFields(
+    bodyShape: ResolvedHttpRequestBodyShape,
+    types: Record<string, ResolvedTypeDefinition>,
+): boolean {
     return visitResolvedHttpRequestBodyShape(bodyShape, {
         fileUpload: () => true,
-        typeReference: (shape) =>
-            visitDiscriminatedUnion(shape, "type")._visit({
+        typeShape: (shape) =>
+            visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit({
                 string: () => true,
                 boolean: () => true,
-                object: (object) => object.properties().some((property) => hasRequiredFields(property.valueShape)),
+                object: (object) =>
+                    dereferenceObjectProperties(object, types).some((property) =>
+                        hasRequiredFields(property.valueShape, types),
+                    ),
                 undiscriminatedUnion: () => true,
                 discriminatedUnion: () => true,
                 enum: () => true,
@@ -474,20 +505,26 @@ export function hasRequiredFields(bodyShape: ResolvedHttpRequestBodyShape): bool
                 booleanLiteral: () => true,
                 stringLiteral: () => true,
                 unknown: () => true,
-                reference: (reference) => hasRequiredFields(reference.shape()),
+                alias: (alias) => hasRequiredFields(alias.shape, types),
                 _other: () => true,
             }),
     });
 }
 
-export function hasOptionalFields(bodyShape: ResolvedHttpRequestBodyShape): boolean {
+export function hasOptionalFields(
+    bodyShape: ResolvedHttpRequestBodyShape,
+    types: Record<string, ResolvedTypeDefinition>,
+): boolean {
     return visitResolvedHttpRequestBodyShape(bodyShape, {
         fileUpload: () => false,
-        typeReference: (shape) =>
-            visitDiscriminatedUnion(shape, "type")._visit({
+        typeShape: (shape) =>
+            visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit({
                 string: () => false,
                 boolean: () => false,
-                object: (object) => object.properties().some((property) => hasOptionalFields(property.valueShape)),
+                object: (object) =>
+                    dereferenceObjectProperties(object, types).some((property) =>
+                        hasOptionalFields(property.valueShape, types),
+                    ),
                 undiscriminatedUnion: () => false,
                 discriminatedUnion: () => false,
                 enum: () => false,
@@ -505,15 +542,18 @@ export function hasOptionalFields(bodyShape: ResolvedHttpRequestBodyShape): bool
                 booleanLiteral: () => false,
                 stringLiteral: () => false,
                 unknown: () => false,
-                reference: (reference) => hasOptionalFields(reference.shape()),
+                alias: (alias) => hasOptionalFields(alias.shape, types),
                 _other: () => false,
             }),
     });
 }
 
 export const ENUM_RADIO_BREAKPOINT = 5;
-export function shouldRenderInline(typeReference: ResolvedTypeReference): boolean {
-    return visitDiscriminatedUnion(unwrapReference(typeReference), "type")._visit({
+export function shouldRenderInline(
+    typeReference: ResolvedTypeShape,
+    types: Record<string, ResolvedTypeDefinition>,
+): boolean {
+    return visitDiscriminatedUnion(unwrapReference(typeReference, types), "type")._visit({
         string: () => true,
         boolean: () => true,
         object: () => false,
@@ -534,6 +574,7 @@ export function shouldRenderInline(typeReference: ResolvedTypeReference): boolea
         booleanLiteral: () => true,
         stringLiteral: () => true,
         unknown: () => false,
+        alias: (alias) => shouldRenderInline(alias.shape, types),
         _other: () => false,
     });
 }

@@ -1,4 +1,4 @@
-import { ResolvedRequestBody } from "../../util/resolver";
+import { ResolvedRequestBody, ResolvedTypeDefinition } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
@@ -11,6 +11,7 @@ export declare namespace EndpointRequestSection {
         anchorIdParts: string[];
         route: string;
         defaultExpandAll?: boolean;
+        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
@@ -20,6 +21,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
     anchorIdParts,
     route,
     defaultExpandAll = false,
+    types,
 }) => {
     return (
         <div className="flex flex-col">
@@ -28,7 +30,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                 {`This endpoint expects ${
                     requestBody.shape.type === "fileUpload"
                         ? "a file"
-                        : renderTypeShorthand(requestBody.shape, { withArticle: true })
+                        : renderTypeShorthand(requestBody.shape, { withArticle: true }, types)
                 }.`}
             </div>
             {requestBody.shape.type === "fileUpload" ? null : (
@@ -40,6 +42,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                     route={route}
                     defaultExpandAll={defaultExpandAll}
                     applyErrorStyles={false}
+                    types={types}
                 />
             )}
         </div>

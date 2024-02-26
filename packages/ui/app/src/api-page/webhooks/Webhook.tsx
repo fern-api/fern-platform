@@ -1,6 +1,6 @@
 import { joinUrlSlugs } from "@fern-api/fdr-sdk";
 import { useShouldHideFromSsg } from "../../navigation-context/useNavigationContext";
-import { ResolvedWebhookDefinition } from "../../util/resolver";
+import { ResolvedTypeDefinition, ResolvedWebhookDefinition } from "../../util/resolver";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { WebhookContextProvider } from "./webhook-context/WebhookContextProvider";
 import { WebhookContent } from "./WebhookContent";
@@ -10,10 +10,11 @@ export declare namespace Webhook {
         webhook: ResolvedWebhookDefinition;
         breadcrumbs: string[];
         isLastInApi: boolean;
+        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
-export const Webhook: React.FC<Webhook.Props> = ({ webhook, breadcrumbs, isLastInApi }) => {
+export const Webhook: React.FC<Webhook.Props> = ({ webhook, breadcrumbs, isLastInApi, types }) => {
     const fullSlug = joinUrlSlugs(...webhook.slug);
     const { setTargetRef } = useApiPageCenterElement({ slug: fullSlug });
     const route = `/${fullSlug}`;
@@ -31,6 +32,7 @@ export const Webhook: React.FC<Webhook.Props> = ({ webhook, breadcrumbs, isLastI
                 setContainerRef={setTargetRef}
                 hideBottomSeparator={isLastInApi}
                 route={route}
+                types={types}
             />
         </WebhookContextProvider>
     );

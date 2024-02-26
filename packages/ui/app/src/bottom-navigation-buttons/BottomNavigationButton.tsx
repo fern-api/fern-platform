@@ -1,6 +1,6 @@
-import { ResolvedPath } from "@fern-ui/app-utils";
 import { ChevronRightIcon } from "@radix-ui/react-icons";
 import { FernLinkCard } from "../components/FernCard";
+import { ResolvedPath } from "../util/ResolvedPath";
 
 export declare namespace BottomNavigationButton {
     export interface Props {

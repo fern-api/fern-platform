@@ -1,12 +1,19 @@
 import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { Portal, Transition } from "@headlessui/react";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { Dispatch, FC, SetStateAction, useCallback, useEffect } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { SidebarNode } from "../sidebar/types";
-import { FlattenedApiSection, isEndpoint, ResolvedApiDefinition, ResolvedEndpointDefinition } from "../util/resolver";
+import {
+    FlattenedApiSection,
+    isEndpoint,
+    ResolvedApiDefinition,
+    ResolvedEndpointDefinition,
+    ResolvedExampleEndpointCall,
+    ResolvedTypeDefinition,
+} from "../util/resolver";
 import { ApiPlayground } from "./ApiPlayground";
 import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, useApiPlaygroundContext } from "./ApiPlaygroundContext";
 import { PlaygroundRequestFormAuth, PlaygroundRequestFormState } from "./types";
@@ -40,6 +47,8 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ navigation, 
     const matchedEndpoint = matchedSection?.apiDefinitions.find(
         (definition) => isEndpoint(definition) && definition.slug.join("/") === selectionState?.endpointId,
     ) as ResolvedApiDefinition.Endpoint | undefined;
+
+    const types = matchedSection?.apiSection.types ?? EMPTY_OBJECT;
 
     const [height, setHeight] = useAtom(playgroundHeightAtom);
     const windowHeight = useWindowHeight();
@@ -96,13 +105,14 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ navigation, 
                 matchedSection?.apiSection.auth,
                 matchedEndpoint,
                 matchedEndpoint?.examples[0],
+                types,
             ),
         );
-    }, [matchedEndpoint, matchedSection?.apiSection.auth, setPlaygroundFormState]);
+    }, [matchedEndpoint, matchedSection?.apiSection.auth, setPlaygroundFormState, types]);
 
     const resetWithoutExample = useCallback(() => {
-        setPlaygroundFormState(getInitialModalFormState(matchedSection?.apiSection.auth, matchedEndpoint));
-    }, [matchedEndpoint, matchedSection?.apiSection.auth, setPlaygroundFormState]);
+        setPlaygroundFormState(getInitialModalFormState(matchedSection?.apiSection.auth, matchedEndpoint, types));
+    }, [matchedEndpoint, matchedSection?.apiSection.auth, setPlaygroundFormState, types]);
 
     useEffect(() => {
         // if keyboard press "ctrl + `", open playground
@@ -151,6 +161,7 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ navigation, 
                     setFormState={setPlaygroundFormState}
                     resetWithExample={resetWithExample}
                     resetWithoutExample={resetWithoutExample}
+                    types={types}
                 />
             </Transition>
         </Portal>
@@ -158,19 +169,20 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ navigation, 
 };
 
 function getInitialModalFormState(
-    auth: APIV1Read.ApiAuth | undefined,
+    auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
+    types: Record<string, ResolvedTypeDefinition>,
 ): PlaygroundRequestFormState {
     return {
         auth: getInitialAuthState(auth),
-        headers: getDefaultValueForObjectProperties(endpoint?.headers),
-        pathParameters: getDefaultValueForObjectProperties(endpoint?.pathParameters),
-        queryParameters: getDefaultValueForObjectProperties(endpoint?.queryParameters),
-        body: getDefaultValuesForBody(endpoint?.requestBody[0]?.shape),
+        headers: getDefaultValueForObjectProperties(endpoint?.headers, types),
+        pathParameters: getDefaultValueForObjectProperties(endpoint?.pathParameters, types),
+        queryParameters: getDefaultValueForObjectProperties(endpoint?.queryParameters, types),
+        body: getDefaultValuesForBody(endpoint?.requestBody[0]?.shape, types),
     };
 }
 
-function getInitialAuthState(auth: APIV1Read.ApiAuth | undefined): PlaygroundRequestFormAuth | undefined {
+function getInitialAuthState(auth: APIV1Read.ApiAuth | null | undefined): PlaygroundRequestFormAuth | undefined {
     if (auth == null) {
         return undefined;
     }
@@ -183,12 +195,13 @@ function getInitialAuthState(auth: APIV1Read.ApiAuth | undefined): PlaygroundReq
 }
 
 export function getInitialModalFormStateWithExample(
-    auth: APIV1Read.ApiAuth | undefined,
+    auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
-    exampleCall: APIV1Read.ExampleEndpointCall | undefined,
+    exampleCall: ResolvedExampleEndpointCall | undefined,
+    types: Record<string, ResolvedTypeDefinition>,
 ): PlaygroundRequestFormState {
     if (exampleCall == null) {
-        return getInitialModalFormState(auth, endpoint);
+        return getInitialModalFormState(auth, endpoint, types);
     }
     return {
         auth: getInitialAuthState(auth),

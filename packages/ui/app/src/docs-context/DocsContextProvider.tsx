@@ -1,23 +1,16 @@
-import { APIV1Read, DocsV1Read, DocsV2Read, FdrAPI, PathResolver } from "@fern-api/fdr-sdk";
-import { PropsWithChildren, useCallback, useMemo } from "react";
+import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
+import { PropsWithChildren, useCallback } from "react";
 import { DocsContext } from "./DocsContext";
 
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
         files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
-        apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>;
         config: DocsV1Read.DocsConfig;
         baseUrl: DocsV2Read.BaseUrl;
     }>;
 }
 
-export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
-    baseUrl,
-    files,
-    apis,
-    config,
-    children,
-}) => {
+export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ baseUrl, files, config, children }) => {
     const resolveFile = useCallback(
         (fileId: DocsV1Read.FileId): DocsV1Read.File_ | undefined => {
             const file = files[fileId];
@@ -29,26 +22,12 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
         },
         [files],
     );
-
-    const pathResolver = useMemo(
-        () =>
-            new PathResolver({
-                definition: {
-                    apis,
-                    docsConfig: config,
-                    basePath: baseUrl.basePath,
-                },
-            }),
-        [apis, baseUrl.basePath, config],
-    );
-
     return (
         <DocsContext.Provider
             value={{
                 domain: baseUrl.domain,
                 basePath: baseUrl.basePath,
                 config,
-                pathResolver,
                 resolveFile,
             }}
         >

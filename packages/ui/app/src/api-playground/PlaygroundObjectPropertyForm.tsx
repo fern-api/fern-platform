@@ -6,7 +6,7 @@ import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
-import { ResolvedObjectProperty, unwrapOptional } from "../util/resolver";
+import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapOptional } from "../util/resolver";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { castToRecord, getDefaultValueForType, isExpandable } from "./utils";
 
@@ -22,6 +22,7 @@ interface PlaygroundObjectPropertyFormProps {
     onChange: (key: string, value: unknown) => void;
     value: unknown;
     expandByDefault?: boolean;
+    types: Record<string, ResolvedTypeDefinition>;
 }
 
 export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps> = ({
@@ -30,6 +31,7 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
     onChange,
     value,
     expandByDefault = true,
+    types,
 }) => {
     const handleChange = useCallback(
         (newValue: unknown) => {
@@ -38,7 +40,7 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
         [onChange, property.key],
     );
 
-    const expandable = isExpandable(property.valueShape, value);
+    const expandable = isExpandable(property.valueShape, value, types);
     const {
         // value: expanded,
         setTrue: setExpanded,
@@ -59,12 +61,13 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
         <PlaygroundTypeReferenceForm
             id={id}
             property={property}
-            shape={unwrapOptional(property.valueShape)}
+            shape={unwrapOptional(property.valueShape, types)}
             onChange={handleChange}
             value={value}
             renderAsPanel={true}
             onOpenStack={handleOpenStack}
             onCloseStack={handleCloseStack}
+            types={types}
         />
     );
 };
@@ -75,6 +78,7 @@ interface PlaygroundObjectPropertiesFormProps {
     onChange: (value: unknown) => void;
     value: unknown;
     indent?: boolean;
+    types: Record<string, ResolvedTypeDefinition>;
 }
 
 export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormProps> = ({
@@ -83,6 +87,7 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
     onChange,
     value,
     indent = false,
+    types,
 }) => {
     const onChangeObjectProperty = useCallback(
         (key: string, newValue: unknown) => {
@@ -110,7 +115,7 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
                 type: "value",
                 value: property.key,
                 label: property.key,
-                helperText: renderTypeShorthand(property.valueShape),
+                helperText: renderTypeShorthand(property.valueShape, undefined, types),
                 labelClassName: "font-mono",
                 tooltip:
                     property.description != null ? (
@@ -131,7 +136,7 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
             );
         }
         return options;
-    }, [hiddenProperties]);
+    }, [hiddenProperties, types]);
 
     return (
         <div
@@ -150,6 +155,7 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
                                     property={property}
                                     onChange={onChangeObjectProperty}
                                     value={castToRecord(value)[property.key]}
+                                    types={types}
                                 />
                             </li>
                         );
@@ -165,7 +171,10 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
                             onChange((oldValue: unknown) => {
                                 const oldObject = castToRecord(oldValue);
                                 return hiddenProperties.reduce((acc, property) => {
-                                    const newValue = getDefaultValueForType(unwrapOptional(property.valueShape));
+                                    const newValue = getDefaultValueForType(
+                                        unwrapOptional(property.valueShape, types),
+                                        types,
+                                    );
                                     return { ...acc, [property.key]: newValue };
                                 }, oldObject);
                             });
@@ -178,7 +187,7 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
                         }
                         onChangeObjectProperty(
                             property.key,
-                            getDefaultValueForType(unwrapOptional(property.valueShape)),
+                            getDefaultValueForType(unwrapOptional(property.valueShape, types), types),
                         );
                     }}
                 >

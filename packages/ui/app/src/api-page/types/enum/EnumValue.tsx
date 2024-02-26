@@ -1,12 +1,12 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
+import { ResolvedEnumValue } from "../../../util/resolver";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { useTypeDefinitionContext } from "../context/TypeDefinitionContext";
 
 export declare namespace EnumValue {
     export interface Props {
-        enumValue: APIV1Read.EnumValue;
+        enumValue: ResolvedEnumValue;
     }
 }
 

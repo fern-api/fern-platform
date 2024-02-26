@@ -1,14 +1,7 @@
 import * as Tabs from "@radix-ui/react-tabs";
-import dynamic from "next/dynamic";
 import { useState } from "react";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
-import { FernScrollArea } from "../../components/FernScrollArea";
 import type { CodeBlockItem } from "./common/types";
-
-const CodeBlockSkeleton = dynamic(
-    () => import("../../commons/CodeBlockSkeleton").then(({ CodeBlockSkeleton }) => CodeBlockSkeleton),
-    { ssr: true },
-);
 
 export declare namespace _CodeBlocks {
     export interface Props {
@@ -24,7 +17,7 @@ export const _CodeBlocks: React.FC<React.PropsWithChildren<_CodeBlocks.Props>> =
     }
     return (
         <Tabs.Root
-            className="after:ring-border-default dark:bg-tag-default-soft relative mb-5 w-full min-w-0 max-w-full rounded-lg bg-white/70 shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-['']"
+            className="after:ring-border-default dark:bg-tag-default-soft relative mb-5 flex max-h-[400px] w-full min-w-0 max-w-full flex-col rounded-lg bg-white/70 shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-['']"
             onValueChange={(value) => setSelectedTabIndex(parseInt(value, 10))}
             defaultValue="0"
         >
@@ -38,28 +31,20 @@ export const _CodeBlocks: React.FC<React.PropsWithChildren<_CodeBlocks.Props>> =
                                 className="data-[state=active]:shadow-accent-primary-light dark:data-[state=active]:shadow-accent-primary-dark group flex min-h-10 items-center px-2 py-1.5 data-[state=active]:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)]"
                             >
                                 <span className="t-muted group-data-[state=active]:t-default group-hover:bg-tag-default rounded px-2 py-1 text-sm group-data-[state=active]:font-semibold">
-                                    {item.title}
+                                    {item.title ?? `Untitled ${idx + 1}`}
                                 </span>
                             </Tabs.Trigger>
                         ))}
                     </Tabs.List>
 
-                    <CopyToClipboardButton className="ml-2 mr-1" content={codeBlockItem.content} />
+                    <CopyToClipboardButton className="ml-2 mr-1" content={codeBlockItem.code} />
                 </div>
             </div>
-            <FernScrollArea className="max-h-[350px]">
-                {items.map((item, idx) => (
-                    <Tabs.Content value={idx.toString()} key={idx}>
-                        <CodeBlockSkeleton
-                            language={item.language}
-                            content={item.content}
-                            highlightLines={item.highlightLines}
-                            highlightStyle={item.highlightStyle}
-                            fontSize="lg"
-                        />
-                    </Tabs.Content>
-                ))}
-            </FernScrollArea>
+            {items.map((item, idx) => (
+                <Tabs.Content value={idx.toString()} key={idx} className="rounded-t-0 rounded-b-[inherit]">
+                    {item.children}
+                </Tabs.Content>
+            ))}
         </Tabs.Root>
     );
 };

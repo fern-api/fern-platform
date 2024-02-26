@@ -1,11 +1,11 @@
-import { ResolvedTypeReference } from "../../../util/resolver";
+import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../../util/resolver";
 import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
 import { TypeDefinitionContextProvider } from "../context/TypeDefinitionContextProvider";
 import { InternalTypeReferenceDefinitions } from "./InternalTypeReferenceDefinitions";
 
 export declare namespace TypeReferenceDefinitions {
     export interface Props {
-        shape: ResolvedTypeReference;
+        shape: ResolvedTypeShape;
         applyErrorStyles: boolean;
         isCollapsible: boolean;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
@@ -13,6 +13,7 @@ export declare namespace TypeReferenceDefinitions {
         className?: string;
         route: string;
         defaultExpandAll?: boolean;
+        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
@@ -25,6 +26,7 @@ export const TypeReferenceDefinitions: React.FC<TypeReferenceDefinitions.Props> 
     className,
     route,
     defaultExpandAll = false,
+    types,
 }) => {
     return (
         <TypeDefinitionContextProvider onHoverProperty={onHoverProperty}>
@@ -36,6 +38,7 @@ export const TypeReferenceDefinitions: React.FC<TypeReferenceDefinitions.Props> 
                 anchorIdParts={anchorIdParts}
                 route={route}
                 defaultExpandAll={defaultExpandAll}
+                types={types}
             />
         </TypeDefinitionContextProvider>
     );

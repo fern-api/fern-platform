@@ -3,7 +3,7 @@ import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import { useRouter } from "next/router";
 import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
 import { getAnchorId } from "../../../util/anchor";
-import { ResolvedTypeShape } from "../../../util/resolver";
+import { dereferenceObjectProperties, ResolvedTypeDefinition } from "../../../util/resolver";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
@@ -18,11 +18,12 @@ import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 
 export declare namespace InternalTypeDefinitionError {
     export interface Props {
-        typeShape: ResolvedTypeShape;
+        typeShape: ResolvedTypeDefinition;
         isCollapsible: boolean;
         anchorIdParts: string[];
         route: string;
         defaultExpandAll?: boolean;
+        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
@@ -39,6 +40,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
     anchorIdParts,
     route,
     defaultExpandAll = false,
+    types,
 }) => {
     const router = useRouter();
 
@@ -46,17 +48,16 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
         () =>
             visitDiscriminatedUnion(typeShape, "type")._visit<CollapsibleContent | undefined>({
                 object: (object) => ({
-                    elements: object
-                        .properties()
-                        .map((property) => (
-                            <ObjectProperty
-                                key={property.key}
-                                property={property}
-                                anchorIdParts={[...anchorIdParts, property.key]}
-                                route={route}
-                                applyErrorStyles
-                            />
-                        )),
+                    elements: dereferenceObjectProperties(object, types).map((property) => (
+                        <ObjectProperty
+                            key={property.key}
+                            property={property}
+                            anchorIdParts={[...anchorIdParts, property.key]}
+                            route={route}
+                            applyErrorStyles
+                            types={types}
+                        />
+                    )),
                     elementNameSingular: "property",
                     elementNamePlural: "properties",
                 }),
@@ -69,6 +70,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                             applyErrorStyles={false}
                             route={route}
                             idx={variantIdx}
+                            types={types}
                         />
                     )),
                     elementNameSingular: "variant",
@@ -83,6 +85,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                             unionVariant={variant}
                             anchorIdParts={anchorIdParts}
                             route={route}
+                            types={types}
                         />
                     )),
                     elementNameSingular: "variant",
@@ -97,8 +100,10 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                     elementNamePlural: "enum values",
                 }),
                 _other: () => undefined,
+                alias: () => undefined,
+                unknown: () => undefined,
             }),
-        [typeShape, anchorIdParts, route],
+        [typeShape, types, anchorIdParts, route],
     );
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);

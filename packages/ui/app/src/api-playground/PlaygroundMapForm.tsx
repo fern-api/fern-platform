@@ -2,16 +2,17 @@ import { isPlainObject } from "@fern-ui/core-utils";
 import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
 import { FC, useCallback, useEffect, useState } from "react";
 import { FernButton } from "../components/FernButton";
-import { ResolvedTypeReference } from "../util/resolver";
+import { ResolvedTypeDefinition, ResolvedTypeShape } from "../util/resolver";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType, unknownToString } from "./utils";
 
 interface PlaygroundMapFormProps {
     id: string;
-    keyShape: ResolvedTypeReference;
-    valueShape: ResolvedTypeReference;
+    keyShape: ResolvedTypeShape;
+    valueShape: ResolvedTypeShape;
     onChange: (value: unknown) => void;
     value: unknown;
+    types: Record<string, ResolvedTypeDefinition>;
 }
 
 function toKeyValuePairs(value: unknown): Array<{ key: unknown; value: unknown }> {
@@ -29,7 +30,7 @@ function fromKeyValuePairs(keyValuePairs: Array<{ key: unknown; value: unknown }
     }, {});
 }
 
-export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ id, keyShape, valueShape, onChange, value }) => {
+export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ id, keyShape, valueShape, onChange, value, types }) => {
     const [internalState, setInternalState] = useState<Array<{ key: unknown; value: unknown }>>(() =>
         toKeyValuePairs(value),
     );
@@ -42,11 +43,11 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ id, keyShape, va
         setInternalState((oldState) => [
             ...oldState,
             {
-                key: getDefaultValueForType(keyShape),
-                value: getDefaultValueForType(valueShape),
+                key: getDefaultValueForType(keyShape, types),
+                value: getDefaultValueForType(valueShape, types),
             },
         ]);
-    }, [keyShape, valueShape]);
+    }, [keyShape, types, valueShape]);
 
     const handleChangeKey = useCallback((idx: number, newKey: unknown) => {
         setInternalState((oldState) => {
@@ -85,6 +86,7 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ id, keyShape, va
                                     shape={keyShape}
                                     value={item.key}
                                     onChange={(newKey) => handleChangeKey(idx, newKey)}
+                                    types={types}
                                 />
                             </div>
                             <div className="min-w-0 flex-1 shrink">
@@ -94,6 +96,7 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ id, keyShape, va
                                     shape={valueShape}
                                     value={item.value}
                                     onChange={(newValue) => handleChangeValue(idx, newValue)}
+                                    types={types}
                                 />
                             </div>
                             <div>

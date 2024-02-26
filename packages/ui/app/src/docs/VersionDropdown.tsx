@@ -1,17 +1,15 @@
-import { DocsV1Read, type DocsNode } from "@fern-api/fdr-sdk";
-import { getVersionAvailabilityLabel } from "@fern-ui/app-utils";
+import { VersionInfo } from "@fern-api/fdr-sdk";
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import { EndpointAvailabilityTag } from "../api-page/endpoints/EndpointAvailabilityTag";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
 import { useNavigationContext } from "../navigation-context";
+import { getVersionAvailabilityLabel } from "../util/fern";
 
 export declare namespace VersionDropdown {
     export interface Props {
-        versions: DocsNode.Version[];
-        selectedVersionName: string | undefined;
-        selectedVersionSlug: string | undefined;
-        selectedVersionAvailability: DocsV1Read.VersionAvailability | null | undefined;
+        currentVersionIndex: number | null | undefined;
+        versions: VersionInfo[];
     }
 }
 
@@ -20,39 +18,39 @@ function createSlugHref(basePath: string | undefined, slug: string) {
     return basePath != null && basePath.trim().length > 1 ? `${basePath.trim()}/${slug}` : `/${slug}`;
 }
 
-export const VersionDropdown: React.FC<VersionDropdown.Props> = ({
-    versions,
-    selectedVersionName,
-    selectedVersionSlug,
-    selectedVersionAvailability,
-}) => {
+export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ currentVersionIndex, versions }) => {
     const { basePath } = useNavigationContext();
+    if (versions.length <= 1) {
+        return null;
+    }
+    const currentVersion = versions[currentVersionIndex ?? 0];
     return (
         <div className="flex w-32">
             <FernDropdown
-                value={selectedVersionSlug}
-                options={versions.map(({ info: { id: versionName, availability, slug } }) => ({
+                value={currentVersion?.id}
+                options={versions.map(({ id: versionName, availability, slug, index }) => ({
                     type: "value",
                     label: versionName,
                     helperText: availability != null ? getVersionAvailabilityLabel(availability) : undefined,
                     value: slug,
                     disabled: availability == null,
-                    href: createSlugHref(basePath, slug),
+                    href: createSlugHref(basePath, index === 0 ? "" : slug),
                 }))}
             >
                 <FernButton
                     intent="primary"
                     variant="outlined"
                     text={
-                        selectedVersionAvailability != null &&
-                        selectedVersionAvailability !== "Stable" &&
-                        selectedVersionAvailability !== "GenerallyAvailable" ? (
+                        currentVersion?.availability != null &&
+                        currentVersion.availability !== "Stable" &&
+                        currentVersion.availability !== "GenerallyAvailable" &&
+                        !currentVersion.id.toLowerCase().includes(currentVersion.availability.toLowerCase()) ? (
                             <span className="inline-flex items-center gap-2">
-                                {selectedVersionName}
-                                <EndpointAvailabilityTag availability={selectedVersionAvailability} />
+                                {currentVersion.id}
+                                <EndpointAvailabilityTag availability={currentVersion.availability} />
                             </span>
                         ) : (
-                            selectedVersionName
+                            currentVersion?.id
                         )
                     }
                     rightIcon={<CaretDownIcon className="transition-transform data-[state=open]:rotate-180" />}

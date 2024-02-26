@@ -1,9 +1,7 @@
-import { getFullSlugForNavigatable } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import Link from "next/link";
 import { useMemo } from "react";
-import { useDocsContext } from "../docs-context/useDocsContext";
 import { useNavigationContext } from "../navigation-context";
 import { EndpointRecord } from "./content/EndpointRecord";
 import { EndpointRecordV2 } from "./content/EndpointRecordV2";
@@ -29,17 +27,11 @@ export const SearchHit: React.FC<SearchHit.Props> = ({
     onMouseEnter,
     onMouseLeave,
 }) => {
-    const { pathResolver } = useDocsContext();
     const { basePath } = useNavigationContext();
 
     const fullPath = useMemo(() => {
-        const path = getFullPathForSearchRecord(hit, basePath);
-        const navigatable = pathResolver.resolveNavigatable(path);
-        if (navigatable == null) {
-            return basePath?.slice(1) ?? "";
-        }
-        return getFullSlugForNavigatable(navigatable, { omitDefault: true, basePath });
-    }, [hit, pathResolver, basePath]);
+        return getFullPathForSearchRecord(hit, basePath);
+    }, [hit, basePath]);
 
     const content = useMemo(() => {
         return visitDiscriminatedUnion(hit, "type")._visit({

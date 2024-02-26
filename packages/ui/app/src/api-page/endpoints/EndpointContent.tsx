@@ -1,4 +1,3 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { useAtom } from "jotai";
@@ -10,14 +9,15 @@ import { useDocsContext } from "../../docs-context/useDocsContext";
 import {
     ResolvedApiDefinitionPackage,
     ResolvedEndpointDefinition,
+    ResolvedError,
     ResolvedNavigationItemApiSection,
+    ResolvedTypeDefinition,
 } from "../../util/resolver";
 import { useViewportContext } from "../../viewport-context/useViewportContext";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { Breadcrumbs } from "../Breadcrumbs";
 import { CodeExample, generateCodeExamples } from "../examples/code-example";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
-import { endpointExampleToHttpRequestExample, stringifyHttpRequestExampleToCurl } from "../examples/types";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 import { EndpointContentCodeSnippets } from "./EndpointContentCodeSnippets";
 import { convertNameToAnchorPart, EndpointContentLeft } from "./EndpointContentLeft";
@@ -33,6 +33,7 @@ export declare namespace EndpointContent {
         setContainerRef: (ref: HTMLElement | null) => void;
         route: string;
         isInViewport: boolean;
+        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
@@ -40,9 +41,9 @@ const GAP_6 = 24;
 const TITLED_EXAMPLE_PADDING = 43;
 const PADDING_TOP = 32;
 const PADDING_BOTTOM = 40;
-const LINE_HEIGHT = 20;
+const LINE_HEIGHT = 19.5;
 const MOBILE_MAX_LINES = 20;
-const CONTENT_PADDING = 40 + TITLED_EXAMPLE_PADDING;
+const CONTENT_PADDING = 16 + TITLED_EXAMPLE_PADDING;
 
 const fernLanguageAtom = atomWithStorage<string>("fern-language-id", "curl");
 
@@ -74,6 +75,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     setContainerRef,
     isInViewport: initiallyInViewport,
     route,
+    types,
 }) => {
     const router = useRouter();
     const { config } = useDocsContext();
@@ -98,7 +100,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         [setHoveredResponsePropertyPath],
     );
 
-    const [selectedError, setSelectedError] = useState<APIV1Read.ErrorDeclarationV2 | undefined>();
+    const [selectedError, setSelectedError] = useState<ResolvedError | undefined>();
 
     useEffect(() => {
         const statusCodeOrName = maybeGetErrorStatusCodeOrNameFromAnchor(router.asPath.split("#")[1]);
@@ -124,10 +126,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     }, [endpoint.examples, selectedError]);
 
     const [contentType, setContentType] = useState<string | undefined>(endpoint.requestBody[0]?.contentType);
-    const clients = useMemo(
-        () => generateCodeExamples(endpoint, examples, contentType?.includes("multipart/") ?? false),
-        [contentType, endpoint, examples],
-    );
+    const clients = useMemo(() => generateCodeExamples(examples), [examples]);
     const [selectedLanguage, setSelectedLanguage] = useAtom(fernLanguageAtom);
     const [selectedClient, setSelectedClient] = useState<CodeExample>(() => {
         const curlExample = clients[0]?.examples[0];
@@ -146,24 +145,13 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         [setSelectedLanguage],
     );
 
-    const curlString = useMemo(
-        () =>
-            stringifyHttpRequestExampleToCurl(
-                endpointExampleToHttpRequestExample(apiSection.auth, endpoint, selectedClient.exampleCall),
-            ),
-        [apiSection.auth, endpoint, selectedClient.exampleCall],
-    );
+    const requestJson = selectedClient.exampleCall.requestBody?.value;
+    const requestCodeSnippet = selectedClient.code;
+    const responseJson = selectedClient.exampleCall.responseBody?.value;
+    const responseHast = selectedClient.exampleCall.responseHast;
+    const responseCodeSnippet = useMemo(() => JSON.stringify(responseJson, undefined, 2), [responseJson]);
 
-    const responseJsonString = useMemo(
-        () => JSON.stringify(selectedClient.exampleCall.responseBodyV3?.value, undefined, 2),
-        [selectedClient.exampleCall.responseBodyV3?.value],
-    );
-
-    const selectedExampleClientLineCount = useMemo(() => {
-        return selectedClient.language === "curl" && selectedClient.code === ""
-            ? curlString.split("\n").length
-            : selectedClient.code.split("\n").length;
-    }, [curlString, selectedClient.code, selectedClient.language]);
+    const selectedExampleClientLineCount = requestCodeSnippet.split("\n").length;
 
     const selectorHeight =
         (clients.find((c) => c.language === selectedClient.language)?.examples.length ?? 0) > 1 ? GAP_6 + 24 : 0;
@@ -177,7 +165,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                   _other: () => 64,
               });
 
-    const jsonLineLength = responseJsonString?.split("\n").length ?? 0;
+    const jsonLineLength = responseCodeSnippet?.split("\n").length ?? 0;
     const [requestHeight, responseHeight] = useMemo((): [number, number] => {
         if (!["lg", "xl", "2xl"].includes(layoutBreakpoint)) {
             const requestLines = Math.min(MOBILE_MAX_LINES + 1, selectedExampleClientLineCount);
@@ -216,7 +204,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         selectedClient.exampleCall?.responseBody,
     ]);
 
-    const padding = ["mobile", "sm", "md"].includes(layoutBreakpoint) ? 0 : 32;
+    const padding = ["mobile", "sm", "md"].includes(layoutBreakpoint) ? 0 : 26;
     const exampleHeight =
         requestHeight + responseHeight + (responseHeight > 0 && requestHeight > 0 ? GAP_6 : 0) + padding;
 
@@ -279,6 +267,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                                     route={route}
                                     contentType={contentType}
                                     setContentType={setContentType}
+                                    types={types}
                                 />
                             </div>
                         )}
@@ -306,10 +295,12 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                                 clients={clients}
                                 selectedClient={selectedClient}
                                 onClickClient={setSelectedExampleClientAndScrollToTop}
-                                requestCurlString={curlString}
-                                requestCurlJson={selectedClient.exampleCall.requestBodyV3?.value}
-                                responseJsonString={responseJsonString}
-                                responseJson={selectedClient.exampleCall.responseBodyV3?.value}
+                                requestCodeSnippet={requestCodeSnippet}
+                                requestHast={selectedClient.hast}
+                                requestCurlJson={requestJson}
+                                responseCodeSnippet={responseCodeSnippet}
+                                responseHast={responseHast}
+                                responseJson={responseJson}
                                 hoveredRequestPropertyPath={hoveredRequestPropertyPath}
                                 hoveredResponsePropertyPath={hoveredResponsePropertyPath}
                                 requestHeight={requestHeight}

@@ -56,6 +56,8 @@ module.exports = {
                 "accent-primary-dark-contrast": withOpacity("--accent-primary-dark-contrast"),
                 "accent-highlight-light": "rgba(var(--accent-primary-light), 20%)",
                 "accent-highlight-dark": "rgba(var(--accent-primary-dark), 20%)",
+                "accent-highlight-faded-light": "rgba(var(--accent-primary-light), 10%)",
+                "accent-highlight-faded-dark": "rgba(var(--accent-primary-dark), 10%)",
                 "background-light": withOpacity("--background-light"),
                 "background-dark": withOpacity("--background-dark"),
 
@@ -256,6 +258,9 @@ module.exports = {
                 },
                 ".bg-accent-highlight": {
                     "@apply bg-accent-highlight-light dark:bg-accent-highlight-dark": {},
+                },
+                ".bg-accent-highlight-faded": {
+                    "@apply bg-accent-highlight-faded-light dark:bg-accent-highlight-faded-dark": {},
                 },
                 // ".bg-tag-default": {
                 //     "@apply bg-tag-default": {},

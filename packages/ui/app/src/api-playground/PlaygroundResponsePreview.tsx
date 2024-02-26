@@ -1,23 +1,18 @@
-import dynamic from "next/dynamic";
-import { FC } from "react";
-import { FernScrollArea } from "../components/FernScrollArea";
-
-const FernSyntaxHighlighter = dynamic(
-    () => import("../commons/CodeBlockSkeleton").then(({ FernSyntaxHighlighter }) => FernSyntaxHighlighter),
-    { ssr: true },
-);
+import { FC, useMemo } from "react";
+import { FernSyntaxHighlighter } from "../commons/FernSyntaxHighlighter";
 
 interface PlaygroundResponsePreviewProps {
     responseBody: unknown;
 }
 
 export const PlaygroundResponsePreview: FC<PlaygroundResponsePreviewProps> = ({ responseBody }) => {
-    const responseJson = JSON.stringify(responseBody, null, 2);
+    const responseJson = useMemo(() => JSON.stringify(responseBody, null, 2), [responseBody]);
     return (
-        <div className="group relative min-h-0 flex-1 shrink">
-            <FernScrollArea>
-                <FernSyntaxHighlighter language={"json"}>{responseJson}</FernSyntaxHighlighter>
-            </FernScrollArea>
-        </div>
+        <FernSyntaxHighlighter
+            className="relative min-h-0 flex-1 shrink"
+            language="json"
+            code={responseJson}
+            fontSize="sm"
+        />
     );
 };

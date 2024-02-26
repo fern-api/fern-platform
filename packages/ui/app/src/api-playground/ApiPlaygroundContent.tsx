@@ -8,7 +8,7 @@ import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react
 import { CopyToClipboardButton } from "../commons/CopyToClipboardButton";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernCard } from "../components/FernCard";
-import { ResolvedEndpointDefinition } from "../util/resolver";
+import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../util/resolver";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
 import { PlaygroundEndpointFormAside } from "./PlaygroundEndpointFormAside";
@@ -20,7 +20,7 @@ import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils"
 import { HorizontalSplitPane, VerticalSplitPane } from "./VerticalSplitPane";
 
 interface ApiPlayroundContentProps {
-    auth: APIV1Read.ApiAuth | undefined;
+    auth: APIV1Read.ApiAuth | null | undefined;
     endpoint: ResolvedEndpointDefinition;
     formState: PlaygroundRequestFormState;
     setFormState: Dispatch<SetStateAction<PlaygroundRequestFormState>>;
@@ -28,6 +28,7 @@ interface ApiPlayroundContentProps {
     resetWithoutExample: () => void;
     response: Loadable<ResponsePayload>;
     sendRequest: () => void;
+    types: Record<string, ResolvedTypeDefinition>;
 }
 
 const requestTypeAtom = atomWithStorage<"curl" | "javascript" | "python">("api-playground-atom-alpha", "curl");
@@ -41,6 +42,7 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
     resetWithoutExample,
     response,
     sendRequest,
+    types,
 }) => {
     const [requestType, setRequestType] = useAtom(requestTypeAtom);
 
@@ -89,11 +91,13 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                                 scrollAreaHeight={scrollAreaHeight}
                                 resetWithExample={resetWithExample}
                                 resetWithoutExample={resetWithoutExample}
+                                types={types}
                             />
                             <PlaygroundEndpointForm
                                 endpoint={endpoint}
                                 formState={formState}
                                 setFormState={setFormState}
+                                types={types}
                             />
                         </div>
                     </div>

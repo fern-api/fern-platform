@@ -80,15 +80,15 @@ interface FernInstantSearchProps {
 }
 
 function FernInstantSearch({ searchClient, searchService, inputRef }: FernInstantSearchProps) {
-    const { activeNavigatable } = useNavigationContext();
+    const { activeVersion } = useNavigationContext();
     return (
         <InstantSearch searchClient={searchClient} indexName={searchService.index}>
             <div className="border-default bg-background-translucent flex h-auto min-h-0 shrink flex-col overflow-hidden rounded-xl border text-left align-middle shadow-2xl backdrop-blur-lg">
                 <SearchBox
                     ref={inputRef}
                     placeholder={
-                        activeNavigatable?.context.version?.info.id != null
-                            ? `Search across ${activeNavigatable.context.version.info.id} for guides and endpoints...`
+                        activeVersion != null
+                            ? `Search across ${activeVersion.id} for guides and endpoints...`
                             : "Search for guides and endpoints..."
                     }
                     className="flex-1"
@@ -107,7 +107,7 @@ export declare namespace SearchSidebar {
 }
 
 export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (providedProps) => {
-    const { activeNavigatable } = useNavigationContext();
+    const { activeVersion } = useNavigationContext();
     const { searchService, children } = providedProps;
     const [credentials, setSearchCredentials] = useState<SearchCredentials | undefined>(undefined);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -135,8 +135,8 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
             <SearchMobileBox
                 ref={inputRef}
                 placeholder={
-                    activeNavigatable?.context.version?.info.id != null
-                        ? `Search across ${activeNavigatable.context.version.info.id}...`
+                    activeVersion != null
+                        ? `Search across ${activeVersion.id}...`
                         : "Search for guides and endpoints..."
                 }
                 className="mt-4 flex-1"

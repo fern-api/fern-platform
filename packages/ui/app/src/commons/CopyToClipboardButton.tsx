@@ -22,6 +22,10 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({
 }) => {
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(content);
 
+    if (content == null) {
+        return null;
+    }
+
     return (
         <FernTooltipProvider>
             <FernTooltip

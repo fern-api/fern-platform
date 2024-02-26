@@ -156,7 +156,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                                 <FernTooltip
                                     content={
                                         endpointItem.description != null ? (
-                                            <Markdown>{endpointItem.description}</Markdown>
+                                            <Markdown className="text-xs">{endpointItem.description}</Markdown>
                                         ) : undefined
                                     }
                                     side="right"

@@ -4,7 +4,7 @@ import { FC, useCallback, useMemo, useState } from "react";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
 import { FernSegmentedControl } from "../components/FernSegmentedControl";
-import { ResolvedUndiscriminatedUnionShape } from "../util/resolver";
+import { ResolvedTypeDefinition, ResolvedUndiscriminatedUnionShape } from "../util/resolver";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType, matchesTypeReference } from "./utils";
 
@@ -17,6 +17,7 @@ interface PlaygroundUniscriminatedUnionFormProps {
     onChange: (value: unknown) => void;
     value: unknown;
     id: string;
+    types: Record<string, ResolvedTypeDefinition>;
 }
 
 export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnionFormProps> = ({
@@ -24,10 +25,11 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
     onChange,
     value,
     id,
+    types,
 }) => {
     const [internalSelectedVariant, setInternalSelectedVariant] = useState<number>(() => {
         return Math.max(
-            undiscriminatedUnion.variants.findIndex((variant) => matchesTypeReference(variant.shape, value)),
+            undiscriminatedUnion.variants.findIndex((variant) => matchesTypeReference(variant.shape, value, types)),
             0,
         );
     });
@@ -40,10 +42,10 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
             const variant = undiscriminatedUnion.variants[variantIdx];
             if (variantIdx !== internalSelectedVariant && variant != null) {
                 setInternalSelectedVariant(variantIdx);
-                onChange(getDefaultValueForType(variant.shape));
+                onChange(getDefaultValueForType(variant.shape, types));
             }
         },
-        [internalSelectedVariant, onChange, undiscriminatedUnion.variants],
+        [internalSelectedVariant, onChange, types, undiscriminatedUnion.variants],
     );
 
     const options = useMemo(
@@ -100,6 +102,7 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
                         shape={selectedVariant.shape}
                         onChange={onChange}
                         value={value}
+                        types={types}
                     />
                 </div>
             )}

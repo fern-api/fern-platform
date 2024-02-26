@@ -3,7 +3,7 @@ import { useCallback, useMemo } from "react";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { getAnchorId } from "../../../util/anchor";
-import { ResolvedObjectProperty } from "../../../util/resolver";
+import { ResolvedObjectProperty, ResolvedTypeDefinition } from "../../../util/resolver";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
@@ -25,6 +25,7 @@ export declare namespace ObjectProperty {
         route: string;
         applyErrorStyles: boolean;
         defaultExpandAll?: boolean;
+        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
@@ -34,6 +35,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
     property,
     applyErrorStyles,
     defaultExpandAll,
+    types,
 }) => {
     const anchorId = getAnchorId(anchorIdParts);
 
@@ -94,7 +96,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
                         </MonospaceText>
                     </div>
                 </div>
-                <div className="t-muted text-xs">{renderTypeShorthand(property.valueShape)}</div>
+                <div className="t-muted text-xs">{renderTypeShorthand(property.valueShape, undefined, types)}</div>
                 {property.availability != null && (
                     <EndpointAvailabilityTag availability={property.availability} minimal={true} />
                 )}
@@ -102,7 +104,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
             {property.description && (
                 <ApiPageDescription isMarkdown={true} description={property.description} className="text-sm" />
             )}
-            {hasInternalTypeReference(property.valueShape) && (
+            {hasInternalTypeReference(property.valueShape, types) && (
                 <TypeDefinitionContext.Provider value={newContextValue}>
                     <InternalTypeReferenceDefinitions
                         shape={property.valueShape}
@@ -111,6 +113,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
                         anchorIdParts={anchorIdParts}
                         route={route}
                         defaultExpandAll={defaultExpandAll}
+                        types={types}
                     />
                 </TypeDefinitionContext.Provider>
             )}

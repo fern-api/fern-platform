@@ -1,6 +1,6 @@
 import { noop } from "lodash-es";
 import { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { useDocsSelectors } from "../selectors/useDocsSelectors";
+import { useNavigationContext } from "../navigation-context/useNavigationContext";
 
 interface CollapseSidebarContextValue {
     expanded: string[][]; // true = expand all, string[] = expand only these slugs
@@ -38,7 +38,7 @@ function expandArray(arr: string[]): string[][] {
 }
 
 export const CollapseSidebarProvider: FC<PropsWithChildren> = ({ children }) => {
-    const { selectedSlug: selectedSlugString } = useDocsSelectors();
+    const { selectedSlug: selectedSlugString } = useNavigationContext();
 
     const selectedSlug = useMemo(() => selectedSlugString.split("/"), [selectedSlugString]);
     const [expanded, setExpanded] = useState<string[][]>(() => expandArray(selectedSlug));

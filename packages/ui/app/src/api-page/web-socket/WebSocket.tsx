@@ -2,14 +2,16 @@ import { APIV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import * as Accordion from "@radix-ui/react-accordion";
 import { ArrowDownIcon, ArrowUpIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
-import dynamic from "next/dynamic";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo } from "react";
 import { Wifi } from "react-feather";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
+import { FernSyntaxHighlighter } from "../../commons/FernSyntaxHighlighter";
 import { useShouldHideFromSsg } from "../../navigation-context/useNavigationContext";
 import {
+    ResolvedTypeDefinition,
     ResolvedUndiscriminatedUnionShape,
+    ResolvedUndiscriminatedUnionShapeVariant,
     ResolvedWebSocketChannel,
     ResolvedWebSocketMessage,
     unwrapReference,
@@ -23,15 +25,11 @@ import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceD
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 
-const CodeBlockSkeleton = dynamic(
-    () => import("../../commons/CodeBlockSkeleton").then(({ CodeBlockSkeleton }) => CodeBlockSkeleton),
-    { ssr: true },
-);
-
 export declare namespace WebSocket {
     export interface Props {
         websocket: ResolvedWebSocketChannel;
         isLastInApi: boolean;
+        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 export const WebSocket: FC<WebSocket.Props> = (props) => {
@@ -44,7 +42,7 @@ export const WebSocket: FC<WebSocket.Props> = (props) => {
     return <WebhookContent {...props} />;
 };
 
-const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi }) => {
+const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) => {
     const fullSlug = joinUrlSlugs(...websocket.slug);
     const route = `/${fullSlug}`;
 
@@ -62,16 +60,22 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi }) => {
     const publishMessageShape = useMemo((): ResolvedUndiscriminatedUnionShape => {
         return {
             type: "undiscriminatedUnion",
-            variants: flattenWebSocketShape(publishMessages),
+            variants: flattenWebSocketShape(publishMessages, types),
+            name: null,
+            description: null,
+            availability: null,
         };
-    }, [publishMessages]);
+    }, [publishMessages, types]);
 
     const subscribeMessageShape = useMemo((): ResolvedUndiscriminatedUnionShape => {
         return {
             type: "undiscriminatedUnion",
-            variants: flattenWebSocketShape(subscribeMessages),
+            variants: flattenWebSocketShape(subscribeMessages, types),
+            name: null,
+            description: null,
+            availability: null,
         };
-    }, [subscribeMessages]);
+    }, [subscribeMessages, types]);
 
     const example = websocket.examples[0];
 
@@ -151,10 +155,8 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi }) => {
                                                         anchorIdParts={["request", "path", parameter.key]}
                                                         route={route}
                                                         description={parameter.description}
-                                                        descriptionContainsMarkdown={
-                                                            parameter.descriptionContainsMarkdown ?? true
-                                                        }
                                                         availability={parameter.availability}
+                                                        types={types}
                                                     />
                                                 </div>
                                             ))}
@@ -177,10 +179,8 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi }) => {
                                                         anchorIdParts={["request", "query", parameter.key]}
                                                         route={route}
                                                         description={parameter.description}
-                                                        descriptionContainsMarkdown={
-                                                            parameter.descriptionContainsMarkdown ?? false
-                                                        }
                                                         availability={parameter.availability}
+                                                        types={types}
                                                     />
                                                 </div>
                                             ))}
@@ -219,6 +219,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi }) => {
                                         anchorIdParts={["send"]}
                                         route={route}
                                         applyErrorStyles={false}
+                                        types={types}
                                     />
                                 </EndpointSection>
                             )}
@@ -252,6 +253,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi }) => {
                                         anchorIdParts={["receive"]}
                                         route={route}
                                         applyErrorStyles={false}
+                                        types={types}
                                     />
                                 </EndpointSection>
                             )}
@@ -332,7 +334,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi }) => {
                                                                 <ArrowDownIcon />
                                                             </span>
                                                         )}
-                                                        <span className="min-w-0 shrink truncate text-xs">
+                                                        <span className="min-w-0 shrink truncate font-mono text-xs">
                                                             {JSON.stringify(message.body)}
                                                         </span>
                                                         <span
@@ -359,11 +361,10 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi }) => {
                                                                 }
                                                                 content={() => JSON.stringify(message.body, null, 2)}
                                                             />
-                                                            <CodeBlockSkeleton
-                                                                className="max-h-[200px] w-0 min-w-full overflow-y-auto py-1"
-                                                                content={JSON.stringify(message.body, null, 2)}
+                                                            <FernSyntaxHighlighter
+                                                                className="max-h-[200px] w-0 min-w-full overflow-y-auto"
+                                                                code={JSON.stringify(message.body, null, 2)}
                                                                 language="json"
-                                                                usePlainStyles
                                                                 fontSize="sm"
                                                             />
                                                         </div>
@@ -417,17 +418,20 @@ function CardedSection({
         </section>
     );
 }
-function flattenWebSocketShape(subscribeMessages: ResolvedWebSocketMessage[]) {
+function flattenWebSocketShape(
+    subscribeMessages: ResolvedWebSocketMessage[],
+    types: Record<string, ResolvedTypeDefinition>,
+) {
     return subscribeMessages
-        .map((message) => ({ ...message, body: unwrapReference(message.body) }))
-        .flatMap((message) => {
+        .map((message) => ({ ...message, body: unwrapReference(message.body, types) }))
+        .flatMap((message): ResolvedUndiscriminatedUnionShapeVariant[] => {
             if (message.body.type === "undiscriminatedUnion") {
                 return message.body.variants;
             }
             return [
                 {
-                    description: message.description,
-                    availability: message.availability,
+                    description: message.description ?? null,
+                    availability: message.availability ?? null,
                     displayName: message.displayName ?? message.type,
                     shape: message.body,
                 },

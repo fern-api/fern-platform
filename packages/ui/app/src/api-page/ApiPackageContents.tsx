@@ -41,6 +41,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                         subpackages.length === 0 &&
                         idx === endpoints.length - 1
                     }
+                    types={apiSection.types}
                 />
             ))}
             {websockets.map((websocket, idx) => (
@@ -48,6 +49,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                     key={websocket.id}
                     websocket={websocket}
                     isLastInApi={isLastInParentPackage && subpackages.length === 0 && idx === websockets.length - 1}
+                    types={apiSection.types}
                 />
             ))}
             {webhooks.map((webhook, idx) => (
@@ -56,6 +58,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                     webhook={webhook}
                     breadcrumbs={breadcrumbs}
                     isLastInApi={isLastInParentPackage && subpackages.length === 0 && idx === webhooks.length - 1}
+                    types={apiSection.types}
                 />
             ))}
             {subpackages.map((subpackage, idx) => (

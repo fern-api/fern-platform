@@ -1,12 +1,8 @@
-import { isApiNode } from "@fern-api/fdr-sdk";
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
 import { useNavigationContext } from "../navigation-context";
-import {
-    crawlResolvedNavigationItemApiSections,
-    ResolvedNavigationItem,
-    ResolvedNavigationItemApiSection,
-} from "../util/resolver";
+import { isApiPage } from "../sidebar/types";
+import { ResolvedNavigationItemApiSection } from "../util/resolver";
 
 const CustomDocsPage = dynamic(
     () => import("../custom-docs-page/CustomDocsPage").then(({ CustomDocsPage }) => CustomDocsPage),
@@ -20,19 +16,19 @@ const ApiPage = dynamic(() => import("../api-page/ApiPage").then(({ ApiPage }) =
 });
 
 export interface DocsMainContentProps {
-    navigationItems: ResolvedNavigationItem[];
+    apis: ResolvedNavigationItemApiSection[];
 }
 
-export const DocsMainContent: React.FC<DocsMainContentProps> = ({ navigationItems }) => {
+export const DocsMainContent: React.FC<DocsMainContentProps> = ({ apis }) => {
     const { activeNavigatable, resolvedPath } = useNavigationContext();
 
     const apiSectionsById = useMemo(() => {
         const toRet = new Map<string, ResolvedNavigationItemApiSection>();
-        crawlResolvedNavigationItemApiSections(navigationItems).forEach((item) => {
+        apis.forEach((item) => {
             toRet.set(item.api, item);
         });
         return toRet;
-    }, [navigationItems]);
+    }, [apis]);
 
     if (activeNavigatable?.type === "page" && resolvedPath.type === "custom-markdown-page") {
         return (
@@ -42,8 +38,8 @@ export const DocsMainContent: React.FC<DocsMainContentProps> = ({ navigationItem
                 resolvedPath={resolvedPath}
             />
         );
-    } else if (activeNavigatable != null && isApiNode(activeNavigatable)) {
-        const apiSection = apiSectionsById.get(activeNavigatable.section.api);
+    } else if (activeNavigatable != null && isApiPage(activeNavigatable)) {
+        const apiSection = apiSectionsById.get(activeNavigatable.api);
         if (apiSection == null) {
             return null;
         }

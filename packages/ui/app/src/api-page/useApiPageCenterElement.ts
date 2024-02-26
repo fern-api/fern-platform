@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
-import { useDocsSelectors } from "../selectors/useDocsSelectors";
 
 export declare namespace useApiPageCenterElement {
     export interface Args {
@@ -14,8 +13,7 @@ export declare namespace useApiPageCenterElement {
 }
 
 export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args): useApiPageCenterElement.Return {
-    const { userIsScrolling, onScrollToPath } = useNavigationContext();
-    const { selectedSlug } = useDocsSelectors();
+    const { selectedSlug, userIsScrolling, onScrollToPath } = useNavigationContext();
 
     const onChangeIsInVerticalCenter = useRef((newIsInVerticalCenter: boolean) => {
         if (newIsInVerticalCenter && userIsScrolling()) {

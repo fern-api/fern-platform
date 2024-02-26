@@ -1,11 +1,11 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
 import { createRef, useEffect, useMemo } from "react";
+import { ResolvedExampleWebhookPayload } from "../../../util/resolver";
 import { CodeSnippetExample, getJsonLineNumbers } from "../../examples/CodeSnippetExample";
 import { useWebhookContext } from "../webhook-context/useWebhookContext";
 
 export declare namespace WebhookExample {
     export interface Props {
-        example: APIV1Read.ExampleWebhookPayload;
+        example: ResolvedExampleWebhookPayload;
     }
 }
 
@@ -18,8 +18,8 @@ export const WebhookExample: React.FC<WebhookExample.Props> = ({ example }) => {
         if (hoveredPayloadPropertyPath.length === 0) {
             return [];
         }
-        return getJsonLineNumbers(payloadJsonString, hoveredPayloadPropertyPath);
-    }, [hoveredPayloadPropertyPath, payloadJsonString]);
+        return getJsonLineNumbers(example.payload, hoveredPayloadPropertyPath);
+    }, [example.payload, hoveredPayloadPropertyPath]);
 
     const requestViewportRef = createRef<HTMLDivElement>();
 
@@ -45,7 +45,7 @@ export const WebhookExample: React.FC<WebhookExample.Props> = ({ example }) => {
                             e.stopPropagation();
                         }}
                         copyToClipboardText={() => payloadJsonString}
-                        content={payloadJsonString}
+                        hast={example.hast}
                         language="json"
                         hoveredPropertyPath={hoveredPayloadPropertyPath}
                         json={example.payload}

@@ -1,4 +1,3 @@
-import { getFullSlugForNavigatable } from "@fern-ui/app-utils";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import { Hit } from "instantsearch.js";
 import { useRouter } from "next/router";
@@ -15,7 +14,7 @@ export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {
 };
 
 export const SearchHits: React.FC = () => {
-    const { pathResolver, basePath } = useDocsContext();
+    const { basePath } = useDocsContext();
     const { hits } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
     const [hoveredSearchHitId, setHoveredSearchHitId] = useState<string | null>(null);
@@ -23,14 +22,9 @@ export const SearchHits: React.FC = () => {
 
     const getFullPathForHit = useCallback(
         (hit: Hit<SearchRecord>) => {
-            const path = getFullPathForSearchRecord(hit, basePath);
-            const navigatable = pathResolver.resolveNavigatable(path);
-            if (navigatable == null) {
-                return basePath?.slice(1) ?? "";
-            }
-            return getFullSlugForNavigatable(navigatable, { omitDefault: true, basePath });
+            return getFullPathForSearchRecord(hit, basePath);
         },
-        [basePath, pathResolver],
+        [basePath],
     );
 
     const refs = useRef(new Map<string, HTMLAnchorElement>());
