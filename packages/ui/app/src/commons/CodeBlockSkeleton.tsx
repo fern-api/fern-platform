@@ -2,8 +2,8 @@ import classNames from "classnames";
 import { useTheme } from "next-themes";
 import React, { CSSProperties, DetailedHTMLProps, forwardRef, HTMLAttributes } from "react";
 import { createElement, PrismAsyncLight as SyntaxHighlighter } from "react-syntax-highlighter";
-import dark from "react-syntax-highlighter/dist/cjs/styles/prism/atom-dark";
 import prism from "react-syntax-highlighter/dist/cjs/styles/prism/prism";
+import dark from "react-syntax-highlighter/dist/cjs/styles/prism/vsc-dark-plus";
 
 // [number, number] is a range of lines to highlight
 type HighlightLine = number | [number, number];
