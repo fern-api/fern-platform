@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# 2024-02-26
+
+- Replaced `react-syntax-highlighter` with [`shiki`](https://shiki.style/) for better performance syntax highlighting. See [#463](https://github.com/fern-api/fern-ui/pull/463) for more details.
+
 # 2024-02-23
 
 - Replaced FernMenu with FernDropdown for better accessibility and cleaner/consistent visual style. This affects the version dropdown and code sample dropdown.
