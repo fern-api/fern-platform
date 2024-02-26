@@ -1,6 +1,8 @@
 code:not(.code-block) {
     @apply font-mono border border-default rounded bg-white/70 dark:bg-tag-default-soft py-0.5 px-1;
     @apply before:content-none after:content-none;
+    @apply text-[0.875em];
+    font-weight: inherit;
 }
 
 .fern-table {
