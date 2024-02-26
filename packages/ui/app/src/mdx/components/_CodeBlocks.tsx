@@ -41,7 +41,7 @@ export const _CodeBlocks: React.FC<React.PropsWithChildren<_CodeBlocks.Props>> =
                 </div>
             </div>
             {items.map((item, idx) => (
-                <Tabs.Content value={idx.toString()} key={idx} asChild>
+                <Tabs.Content value={idx.toString()} key={idx} className="rounded-t-0 rounded-b-[inherit]">
                     {item.children}
                 </Tabs.Content>
             ))}

@@ -147,11 +147,12 @@ export const getDocsPageProps = async (
             ? navigatable.context.tab.items
             : navigatable.context.navigationConfig.items;
 
+    const versionAndTabSlug = getVersionAndTabSlug(basePath, navigatable);
     const apiSections =
         navigatable.type === "page"
             ? []
             : crawlResolvedNavigationItemApiSections(
-                  await resolveNavigationItems(unresolvedNavigationItems ?? [], apis),
+                  await resolveNavigationItems(unresolvedNavigationItems ?? [], apis, versionAndTabSlug),
               );
 
     const navigation = getNavigation(basePath, docs.body.definition.apis, navigatable);

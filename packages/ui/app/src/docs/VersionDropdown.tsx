@@ -28,13 +28,13 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ currentVersio
         <div className="flex w-32">
             <FernDropdown
                 value={currentVersion?.id}
-                options={versions.map(({ id: versionName, availability, slug }) => ({
+                options={versions.map(({ id: versionName, availability, slug, index }) => ({
                     type: "value",
                     label: versionName,
                     helperText: availability != null ? getVersionAvailabilityLabel(availability) : undefined,
                     value: slug,
                     disabled: availability == null,
-                    href: createSlugHref(basePath, slug),
+                    href: createSlugHref(basePath, index === 0 ? "" : slug),
                 }))}
             >
                 <FernButton

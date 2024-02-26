@@ -265,6 +265,9 @@ export function resolveActiveSidebarNode(
             return activeNode;
         }
     }
+    if (sidebarNodes[0] != null) {
+        return resolveActiveSidebarNodeRecursive(sidebarNodes[0], sidebarNodes[0].slug);
+    }
     return undefined;
 }
 

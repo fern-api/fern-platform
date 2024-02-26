@@ -19,9 +19,10 @@ type WithAvailability = { availability: APIV1Read.Availability | null };
 export async function resolveNavigationItems(
     navigationItems: DocsV1Read.NavigationItem[],
     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
+    parentSlugs: string[] = [],
 ): Promise<ResolvedNavigationItem[]> {
     const highlighter = await getHighlighterInstance();
-    return resolveNavigationItemsInternal(navigationItems, apis, highlighter);
+    return resolveNavigationItemsInternal(navigationItems, apis, highlighter, parentSlugs);
 }
 
 function resolveNavigationItemsInternal(
@@ -88,7 +89,13 @@ function resolveNavigationItemsInternal(
                             resolveWebsocketChannel(websocket, definition.types, definitionSlug),
                         ),
                         webhooks: definition.rootPackage.webhooks.map((webhook) =>
-                            resolveWebhookDefinition(webhook, definition.types, definitionSlug),
+                            resolveWebhookDefinition(
+                                webhook,
+                                definition.types,
+                                resolvedTypes,
+                                definitionSlug,
+                                highlighter,
+                            ),
                         ),
                         subpackages: definition.rootPackage.subpackages
                             .map((subpackageId) =>
@@ -160,7 +167,9 @@ function resolveSubpackage(
         ),
     );
     const websockets = subpackage.websockets.map((websocket) => resolveWebsocketChannel(websocket, types, slug));
-    const webhooks = subpackage.webhooks.map((webhook) => resolveWebhookDefinition(webhook, types, slug));
+    const webhooks = subpackage.webhooks.map((webhook) =>
+        resolveWebhookDefinition(webhook, types, resolvedTypes, slug, highlighter),
+    );
     const subpackages = subpackage.subpackages
         .map((subpackageId) =>
             resolveSubpackage(
@@ -388,8 +397,11 @@ function resolveWebsocketChannel(
 function resolveWebhookDefinition(
     webhook: APIV1Read.WebhookDefinition,
     types: Record<string, APIV1Read.TypeDefinition>,
+    resolvedTypes: Record<string, ResolvedTypeDefinition>,
     parentSlugs: string[],
+    highlighter: Highlighter,
 ): ResolvedWebhookDefinition {
+    const payloadShape = resolvePayloadShape(webhook.payload.type, types);
     return {
         name: webhook.name != null ? webhook.name : webhook.urlSlug,
         description: webhook.description ?? null,
@@ -404,10 +416,16 @@ function resolveWebhookDefinition(
             availability: header.availability ?? null,
         })),
         payload: {
-            shape: resolvePayloadShape(webhook.payload.type, types),
+            shape: payloadShape,
             description: webhook.payload.description ?? null,
         },
-        examples: webhook.examples,
+        examples: webhook.examples.map((example) => {
+            const sortedPayload = stripUndefines(sortKeysByShape(example.payload, payloadShape, resolvedTypes));
+            return {
+                payload: sortedPayload ?? null,
+                hast: highlight(highlighter, JSON.stringify(sortedPayload, undefined, 2), "json"),
+            };
+        }),
     };
 }
 
@@ -1094,7 +1112,11 @@ export interface ResolvedWebhookDefinition extends WithDescription {
     path: string[];
     headers: ResolvedObjectProperty[];
     payload: ResolvedPayload;
-    examples: APIV1Read.ExampleWebhookPayload[];
+    examples: ResolvedExampleWebhookPayload[];
+}
+export interface ResolvedExampleWebhookPayload {
+    payload: unknown;
+    hast: Root;
 }
 
 export interface ResolvedPayload extends WithDescription {

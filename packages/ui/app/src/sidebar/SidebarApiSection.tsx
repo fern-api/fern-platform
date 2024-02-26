@@ -1,4 +1,4 @@
-import { APIV1Read, DocsV1Read, isApiNode, joinUrlSlugs } from "@fern-api/fdr-sdk";
+import { APIV1Read, DocsV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { isEqual } from "lodash-es";
 import { memo, ReactElement, useCallback } from "react";
@@ -9,7 +9,7 @@ import { API_ARTIFACTS_TITLE } from "../config";
 import { useNavigationContext } from "../navigation-context";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { SidebarSlugLink } from "./SidebarLink";
-import { SidebarNode } from "./types";
+import { isApiPage, SidebarNode } from "./types";
 
 export interface SidebarApiSectionProps {
     className?: string;
@@ -61,7 +61,7 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
     const { selectedSlug } = useCollapseSidebar();
     const { activeNavigatable } = useNavigationContext();
     const shallow =
-        activeNavigatable != null && isApiNode(activeNavigatable) && activeNavigatable.section.api === apiSection.api;
+        activeNavigatable != null && isApiPage(activeNavigatable) && activeNavigatable.api === apiSection.api;
     const renderArtifacts = () => {
         if (artifacts == null || !areApiArtifactsNonEmpty(artifacts)) {
             return null;

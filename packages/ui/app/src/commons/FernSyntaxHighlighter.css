@@ -1,5 +1,5 @@
 .code-block-root {
-    @apply overflow-hidden flex flex-col w-full rounded-[inherit];
+    @apply overflow-hidden flex flex-col w-full;
     counter-reset: code-block-line;
 }
 

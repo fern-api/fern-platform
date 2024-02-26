@@ -61,7 +61,7 @@ export const CodeSnippetExample: FC<CodeSnippetExample.Props> = ({
             const lineNumber = Array.isArray(requestHighlightLines[0])
                 ? requestHighlightLines[0][0]
                 : requestHighlightLines[0];
-            const offsetTop = (lineNumber - 2) * 20;
+            const offsetTop = (lineNumber - 1) * 19.5 - viewportRef.current.clientHeight / 4;
             viewportRef.current.scrollTo({ top: offsetTop, behavior: "smooth" });
         }
     }, [requestHighlightLines, viewportRef]);
@@ -69,7 +69,7 @@ export const CodeSnippetExample: FC<CodeSnippetExample.Props> = ({
     return (
         <TitledExample {...props}>
             <FernSyntaxHighlighterHast
-                className="rounded-b-[inherit]"
+                className="rounded-t-0 rounded-b-[inherit]"
                 ref={codeBlockRef}
                 style={scrollAreaStyle}
                 viewportRef={viewportRef}
