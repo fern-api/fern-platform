@@ -1,4 +1,4 @@
-import { isApiNode, joinUrlSlugs } from "@fern-api/fdr-sdk";
+import { joinUrlSlugs } from "@fern-api/fdr-sdk";
 import { isPlainObject } from "@fern-ui/core-utils";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
@@ -11,6 +11,7 @@ import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernCollapse } from "../components/FernCollapse";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { useNavigationContext } from "../navigation-context";
+import { isApiPage } from "../sidebar/types";
 import {
     dereferenceObjectProperties,
     ResolvedEndpointDefinition,
@@ -228,8 +229,8 @@ export function PlaygroundEndpointFormAside({
                             href={`/${joinUrlSlugs(...endpoint.slug)}`}
                             shallow={
                                 activeNavigatable != null &&
-                                isApiNode(activeNavigatable) &&
-                                activeNavigatable.section.api === endpoint.apiSectionId
+                                isApiPage(activeNavigatable) &&
+                                activeNavigatable.api === endpoint.apiSectionId
                             }
                             className="t-muted hover:t-accent inline-flex items-center gap-1 text-sm font-semibold underline decoration-1 underline-offset-4 hover:decoration-2"
                         >
