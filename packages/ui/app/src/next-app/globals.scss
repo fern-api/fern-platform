@@ -41,7 +41,7 @@
 
     html,
     body {
-        @apply text-text-default-light dark:text-text-default-dark;
+        @apply t-default;
 
         font-family: var(--typography-body-font-family) !important;
         font-size: 16px !important;

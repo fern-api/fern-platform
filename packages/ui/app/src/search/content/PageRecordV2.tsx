@@ -16,7 +16,7 @@ export const PageRecordV2: React.FC<PageRecordV2.Props> = ({ hit, isHovered }) =
             <div className="flex justify-between">
                 <span
                     className={classNames("line-clamp-1 text-sm text-start", {
-                        "text-text-default-light dark:text-text-default-dark": !isHovered,
+                        "t-default": !isHovered,
                         "t-accent-contrast": isHovered,
                     })}
                 >

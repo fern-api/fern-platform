@@ -19,7 +19,7 @@ export const EnumValue: React.FC<EnumValue.Props> = ({ enumValue }) => {
                 "px-2": !isRootTypeDefinition,
             })}
         >
-            <MonospaceText className="text-text-default-light dark:text-text-default-dark text-sm">{`"${enumValue.value}"`}</MonospaceText>
+            <MonospaceText className="t-default text-sm">{`"${enumValue.value}"`}</MonospaceText>
             <ApiPageDescription className="text-sm" description={enumValue.description} isMarkdown={true} />
         </div>
     );

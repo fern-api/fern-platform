@@ -91,9 +91,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
                 <div className="group/anchor-container relative flex items-center">
                     <AbsolutelyPositionedAnchor href={anchorRoute} smallGap />
                     <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName}>
-                        <MonospaceText className="text-text-default-light dark:text-text-default-dark text-sm">
-                            {property.key}
-                        </MonospaceText>
+                        <MonospaceText className="t-default text-sm">{property.key}</MonospaceText>
                     </div>
                 </div>
                 <div className="t-muted text-xs">{renderTypeShorthand(property.valueShape, undefined, types)}</div>

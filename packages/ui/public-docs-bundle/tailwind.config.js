@@ -244,6 +244,9 @@ module.exports = {
                 ".bg-accent": {
                     "@apply bg-accent-primary-light dark:bg-accent-primary-dark": {},
                 },
+                ".bg-accent-muted": {
+                    "@apply bg-accent-primary-light/70 dark:bg-accent-primary-dark/70": {},
+                },
                 ".bg-accent-aa": {
                     "@apply bg-accent-primary-aa-light dark:bg-accent-primary-aa-dark": {},
                 },
@@ -257,10 +260,10 @@ module.exports = {
                     "@apply bg-accent-primary-light-tinted dark:bg-accent-primary-dark-tinted": {},
                 },
                 ".bg-accent-highlight": {
-                    "@apply bg-accent-highlight-light dark:bg-accent-highlight-dark": {},
+                    "@apply bg-accent-primary-light/20 dark:bg-accent-primary-dark/20": {},
                 },
                 ".bg-accent-highlight-faded": {
-                    "@apply bg-accent-highlight-faded-light dark:bg-accent-highlight-faded-dark": {},
+                    "@apply bg-accent-primary-light/10 dark:bg-accent-primary-dark/10": {},
                 },
                 // ".bg-tag-default": {
                 //     "@apply bg-tag-default": {},

@@ -39,9 +39,7 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
             <div className="group/anchor-container flex items-center">
                 <AbsolutelyPositionedAnchor href={anchorRoute} />
                 <span className="inline-flex items-baseline gap-1">
-                    <MonospaceText className="text-text-default-light dark:text-text-default-dark text-sm">
-                        {name}
-                    </MonospaceText>
+                    <MonospaceText className="t-default text-sm">{name}</MonospaceText>
                     <div className="t-muted text-xs">{renderTypeShorthand(shape, undefined, types)}</div>
                     {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
                 </span>

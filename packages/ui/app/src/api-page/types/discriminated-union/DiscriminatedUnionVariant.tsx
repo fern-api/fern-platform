@@ -81,9 +81,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                 "px-3": !isRootTypeDefinition,
             })}
         >
-            <MonospaceText className="text-text-default-light dark:text-text-default-dark text-sm">
-                {startCase(unionVariant.discriminantValue)}
-            </MonospaceText>
+            <MonospaceText className="t-default text-sm">{startCase(unionVariant.discriminantValue)}</MonospaceText>
             {unionVariant.availability != null && (
                 <EndpointAvailabilityTag availability={unionVariant.availability} minimal={true} />
             )}

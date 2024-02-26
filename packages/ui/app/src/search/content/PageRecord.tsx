@@ -31,7 +31,7 @@ export const PageRecord: React.FC<PageRecord.Props> = ({ hit, isHovered }) => {
                 <div className="flex justify-between">
                     <Snippet
                         className={classNames("line-clamp-1 text-start", {
-                            "text-text-default-light dark:text-text-default-dark": !isHovered,
+                            "t-default": !isHovered,
                             "text-white dark:text-black": isHovered,
                         })}
                         attribute="title"
