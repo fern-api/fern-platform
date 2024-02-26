@@ -4,7 +4,7 @@ import { FC, PropsWithChildren } from "react";
 import { EndpointAvailabilityTag } from "../api-page/endpoints/EndpointAvailabilityTag";
 import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
 import { FernButton } from "../components/FernButton";
-import { ResolvedObjectProperty, unwrapOptional } from "../util/resolver";
+import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapOptional } from "../util/resolver";
 import { shouldRenderInline } from "./utils";
 
 interface WithLabelProps {
@@ -12,14 +12,22 @@ interface WithLabelProps {
     property?: ResolvedObjectProperty;
     value: unknown;
     onRemove: () => void;
+    types: Record<string, ResolvedTypeDefinition>;
 }
 
-export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({ htmlFor, property, value, onRemove, children }) => {
+export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({
+    htmlFor,
+    property,
+    value,
+    onRemove,
+    children,
+    types,
+}) => {
     if (!property) {
         return <>{children}</>;
     }
-    const valueShape = unwrapOptional(property.valueShape);
-    const renderInline = shouldRenderInline(valueShape);
+    const valueShape = unwrapOptional(property.valueShape, types);
+    const renderInline = shouldRenderInline(valueShape, types);
     return (
         <div
             className={classNames({
@@ -36,7 +44,7 @@ export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({ htmlFor, prop
                     )}
                     <span className="whitespace-nowrap text-xs">
                         {property.valueShape.type !== "optional" && <span className="t-danger">required </span>}
-                        <span className="t-muted">{renderTypeShorthand(property.valueShape)}</span>
+                        <span className="t-muted">{renderTypeShorthand(property.valueShape, undefined, types)}</span>
                     </span>
 
                     {valueShape.type === "list" && Array.isArray(value) && value.length > 0 && (

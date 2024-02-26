@@ -53,7 +53,7 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
                             className={classNames(imageClassName, "block dark:hidden")}
                             height={logoImageHeight}
                             style={{ height: logoImageHeight }}
-                            priority={theme === "light"}
+                            priority={theme === "light" ? true : undefined}
                             loading="eager"
                             quality={100}
                         />
@@ -64,7 +64,7 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
                             className={classNames(imageClassName, "hidden dark:block")}
                             height={logoImageHeight}
                             style={{ height: logoImageHeight }}
-                            priority={theme === "dark"}
+                            priority={theme === "dark" ? true : undefined}
                             loading="eager"
                             quality={100}
                         />

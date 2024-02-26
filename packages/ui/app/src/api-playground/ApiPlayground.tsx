@@ -6,7 +6,7 @@ import { capturePosthogEvent } from "../analytics/posthog";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
 import { SidebarNode } from "../sidebar/types";
-import { ResolvedEndpointDefinition } from "../util/resolver";
+import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../util/resolver";
 import "./ApiPlayground.css";
 import { ApiPlayroundContent } from "./ApiPlaygroundContent";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
@@ -17,12 +17,13 @@ import { buildEndpointUrl, buildUnredactedHeaders } from "./utils";
 
 interface ApiPlaygroundProps {
     navigation: SidebarNode[];
-    auth: APIV1Read.ApiAuth | undefined;
+    auth: APIV1Read.ApiAuth | null | undefined;
     endpoint: ResolvedEndpointDefinition | undefined;
     formState: PlaygroundRequestFormState;
     setFormState: Dispatch<SetStateAction<PlaygroundRequestFormState>>;
     resetWithExample: () => void;
     resetWithoutExample: () => void;
+    types: Record<string, ResolvedTypeDefinition>;
 }
 
 export const ApiPlayground: FC<ApiPlaygroundProps> = ({
@@ -33,6 +34,7 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({
     setFormState,
     resetWithExample,
     resetWithoutExample,
+    types,
 }): ReactElement => {
     const { collapseApiPlayground } = useApiPlaygroundContext();
 
@@ -149,6 +151,7 @@ export const ApiPlayground: FC<ApiPlaygroundProps> = ({
                     resetWithoutExample={resetWithoutExample}
                     response={response}
                     sendRequest={sendRequest}
+                    types={types}
                 />
             ) : (
                 <div className="flex flex-1 items-center justify-center">

@@ -1,5 +1,4 @@
 import { NavigatableDocsNode } from "@fern-api/fdr-sdk";
-import { FernDocsFrontmatter, getFullSlugForNavigatable, type ResolvedPath } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
@@ -9,6 +8,9 @@ import { PropsWithChildren, useCallback, useEffect, useRef, useState } from "rea
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useCloseMobileSidebar, useCloseSearchDialog } from "../sidebar/atom";
 import { getRouteNode } from "../util/anchor";
+import { FernDocsFrontmatter } from "../util/mdx";
+import { ResolvedPath } from "../util/ResolvedPath";
+import { getFullSlugForNavigatable } from "../util/slug";
 import { getRouteForResolvedPath } from "./getRouteForResolvedPath";
 import { NavigationContext } from "./NavigationContext";
 import { useSlugListeners } from "./useSlugListeners";

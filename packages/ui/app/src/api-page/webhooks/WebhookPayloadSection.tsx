@@ -1,4 +1,4 @@
-import { ResolvedPayload } from "../../util/resolver";
+import { ResolvedPayload, ResolvedTypeDefinition } from "../../util/resolver";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
@@ -9,6 +9,7 @@ export declare namespace WebhookPayloadSection {
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: string[];
         route: string;
+        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
@@ -17,11 +18,12 @@ export const WebhookPayloadSection: React.FC<WebhookPayloadSection.Props> = ({
     onHoverProperty,
     anchorIdParts,
     route,
+    types,
 }) => {
     return (
         <div className="flex flex-col">
             <div className="t-muted border-default border-b pb-5 text-sm leading-6">
-                {`The payload of this webhook request is ${renderTypeShorthand(payload.shape, { withArticle: true })}.`}
+                {`The payload of this webhook request is ${renderTypeShorthand(payload.shape, { withArticle: true }, types)}.`}
             </div>
             <TypeReferenceDefinitions
                 shape={payload.shape}
@@ -30,6 +32,7 @@ export const WebhookPayloadSection: React.FC<WebhookPayloadSection.Props> = ({
                 anchorIdParts={anchorIdParts}
                 applyErrorStyles={false}
                 route={route}
+                types={types}
             />
         </div>
     );

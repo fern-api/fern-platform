@@ -5,7 +5,13 @@ import { FernInput } from "../components/FernInput";
 import { FernNumericInput } from "../components/FernNumericInput";
 import { FernSwitch } from "../components/FernSwitch";
 import { FernTextarea } from "../components/FernTextarea";
-import { ResolvedObjectProperty, ResolvedTypeReference } from "../util/resolver";
+import {
+    dereferenceObjectProperties,
+    ResolvedObjectProperty,
+    ResolvedTypeDefinition,
+    ResolvedTypeShape,
+    unwrapReference,
+} from "../util/resolver";
 import { PlaygroundDiscriminatedUnionForm } from "./PlaygroundDescriminatedUnionForm";
 import { FOCUSED_PARAMETER_ATOM } from "./PlaygroundEndpointFormAside";
 import { PlaygroundEnumForm } from "./PlaygroundEnumForm";
@@ -18,7 +24,7 @@ import { WithLabel } from "./WithLabel";
 interface PlaygroundTypeReferenceFormProps {
     id: string;
     property?: ResolvedObjectProperty;
-    shape: ResolvedTypeReference;
+    shape: ResolvedTypeShape;
     onChange: (value: unknown) => void;
     value?: unknown;
     // onFocus?: () => void;
@@ -28,6 +34,7 @@ interface PlaygroundTypeReferenceFormProps {
     renderAsPanel?: boolean;
     onlyRequired?: boolean;
     onlyOptional?: boolean;
+    types: Record<string, ResolvedTypeDefinition>;
 }
 
 // interface WithPanelProps {
@@ -103,25 +110,27 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
     shape,
     onChange,
     value,
+    types,
 }) => {
     const setFocusedParameter = useSetAtom(FOCUSED_PARAMETER_ATOM);
     const onRemove = useCallback(() => {
         onChange(undefined);
     }, [onChange]);
-    return visitDiscriminatedUnion(shape, "type")._visit<ReactElement | null>({
+    return visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit<ReactElement | null>({
         object: (object) => (
-            <WithLabel property={property} value={value} onRemove={onRemove}>
+            <WithLabel property={property} value={value} onRemove={onRemove} types={types}>
                 <PlaygroundObjectPropertiesForm
-                    properties={object.properties()}
+                    properties={dereferenceObjectProperties(object, types)}
                     onChange={onChange}
                     value={value}
                     indent={true}
                     id={id}
+                    types={types}
                 />
             </WithLabel>
         ),
         enum: ({ values }) => (
-            <WithLabel property={property} value={value} onRemove={onRemove}>
+            <WithLabel property={property} value={value} onRemove={onRemove} types={types}>
                 <PlaygroundEnumForm
                     enumValues={values}
                     onChange={onChange}
@@ -134,27 +143,29 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
             </WithLabel>
         ),
         undiscriminatedUnion: (undiscriminatedUnion) => (
-            <WithLabel property={property} value={value} onRemove={onRemove}>
+            <WithLabel property={property} value={value} onRemove={onRemove} types={types}>
                 <PlaygroundUniscriminatedUnionForm
                     undiscriminatedUnion={undiscriminatedUnion}
                     onChange={onChange}
                     value={value}
                     id={id}
+                    types={types}
                 />
             </WithLabel>
         ),
         discriminatedUnion: (discriminatedUnion) => (
-            <WithLabel property={property} value={value} onRemove={onRemove}>
+            <WithLabel property={property} value={value} onRemove={onRemove} types={types}>
                 <PlaygroundDiscriminatedUnionForm
                     discriminatedUnion={discriminatedUnion}
                     onChange={onChange}
                     value={value}
                     id={id}
+                    types={types}
                 />
             </WithLabel>
         ),
         string: () => (
-            <WithLabel property={property} value={value} onRemove={onRemove} htmlFor={id}>
+            <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
                 <FernInput
                     id={id}
                     className="w-full"
@@ -169,7 +180,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
         boolean: () => {
             const checked = typeof value === "boolean" ? value : undefined;
             return (
-                <WithLabel property={property} value={value} onRemove={onRemove} htmlFor={id}>
+                <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
                     <div className="flex items-center justify-start gap-3">
                         {/* <label className="t-muted font-mono text-sm leading-none">
                         {checked == null ? "undefined" : checked ? "true" : "false"}
@@ -180,7 +191,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
             );
         },
         integer: () => (
-            <WithLabel property={property} value={value} onRemove={onRemove} htmlFor={id}>
+            <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
                 <FernNumericInput
                     id={id}
                     className="w-full"
@@ -194,7 +205,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
             </WithLabel>
         ),
         double: () => (
-            <WithLabel property={property} value={value} onRemove={onRemove} htmlFor={id}>
+            <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
                 <FernNumericInput
                     id={id}
                     className="w-full"
@@ -207,7 +218,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
             </WithLabel>
         ),
         long: () => (
-            <WithLabel property={property} value={value} onRemove={onRemove} htmlFor={id}>
+            <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
                 <FernNumericInput
                     id={id}
                     className="w-full"
@@ -221,7 +232,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
             </WithLabel>
         ),
         datetime: () => (
-            <WithLabel property={property} value={value} onRemove={onRemove} htmlFor={id}>
+            <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
                 <FernInput
                     id={id}
                     type="datetime-local"
@@ -236,7 +247,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
             </WithLabel>
         ),
         uuid: () => (
-            <WithLabel property={property} value={value} onRemove={onRemove} htmlFor={id}>
+            <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
                 <FernInput
                     id={id}
                     className="w-full"
@@ -250,7 +261,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
             </WithLabel>
         ),
         base64: () => (
-            <WithLabel property={property} value={value} onRemove={onRemove} htmlFor={id}>
+            <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
                 <FernTextarea
                     id={id}
                     className="w-full"
@@ -263,7 +274,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
             </WithLabel>
         ),
         date: () => (
-            <WithLabel property={property} value={value} onRemove={onRemove} htmlFor={id}>
+            <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
                 <FernInput
                     id={id}
                     type="date"
@@ -279,30 +290,31 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
         ),
         optional: () => null, // should be handled by the parent
         list: (list) => (
-            <WithLabel property={property} value={value} onRemove={onRemove} htmlFor={id}>
-                <PlaygroundListForm itemShape={list.shape} onChange={onChange} value={value} id={id} />
+            <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
+                <PlaygroundListForm itemShape={list.shape} onChange={onChange} value={value} id={id} types={types} />
             </WithLabel>
         ),
         set: (set) => (
-            <WithLabel property={property} value={value} onRemove={onRemove} htmlFor={id}>
-                <PlaygroundListForm itemShape={set.shape} onChange={onChange} value={value} id={id} />
+            <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
+                <PlaygroundListForm itemShape={set.shape} onChange={onChange} value={value} id={id} types={types} />
             </WithLabel>
         ),
         map: (map) => (
-            <WithLabel property={property} value={value} onRemove={onRemove} htmlFor={id}>
+            <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
                 <PlaygroundMapForm
                     id={id}
                     keyShape={map.keyShape}
                     valueShape={map.valueShape}
                     onChange={onChange}
                     value={value}
+                    types={types}
                 />
             </WithLabel>
         ),
         stringLiteral: (literal) => {
             onChange(literal.value);
             return (
-                <WithLabel property={property} value={value} onRemove={onRemove} htmlFor={id}>
+                <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
                     <span>{literal.value ? "TRUE" : "FALSE"}</span>
                 </WithLabel>
             );
@@ -310,13 +322,13 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
         booleanLiteral: (literal) => {
             onChange(literal.value);
             return (
-                <WithLabel property={property} value={value} onRemove={onRemove} htmlFor={id}>
+                <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
                     <span>{literal.value}</span>
                 </WithLabel>
             );
         },
         unknown: () => (
-            <WithLabel property={property} value={value} onRemove={onRemove} htmlFor={id}>
+            <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
                 <FernTextarea
                     id={id}
                     className="w-full"
@@ -326,13 +338,14 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
             </WithLabel>
         ),
         _other: () => null,
-        reference: (reference) => (
+        alias: (alias) => (
             <PlaygroundTypeReferenceForm
                 id={id}
                 property={property}
-                shape={reference.shape()}
+                shape={alias.shape}
                 onChange={onChange}
                 value={value}
+                types={types}
             />
         ),
     });

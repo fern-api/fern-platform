@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React, { useCallback } from "react";
-import { ResolvedWebhookDefinition } from "../../util/resolver";
+import { ResolvedTypeDefinition, ResolvedWebhookDefinition } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { Breadcrumbs } from "../Breadcrumbs";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
@@ -19,6 +19,7 @@ export declare namespace WebhookContent {
         hideBottomSeparator?: boolean;
         setContainerRef: (ref: HTMLElement | null) => void;
         route: string;
+        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
@@ -28,6 +29,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
     hideBottomSeparator = false,
     setContainerRef,
     route,
+    types,
 }) {
     const { setHoveredPayloadPropertyPath } = useWebhookContext();
     const onHoverPayloadProperty = useCallback(
@@ -77,10 +79,8 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                                                     anchorIdParts={["payload", "header", parameter.key]}
                                                     route={route}
                                                     description={parameter.description}
-                                                    descriptionContainsMarkdown={
-                                                        parameter.descriptionContainsMarkdown ?? false
-                                                    }
                                                     availability={parameter.availability}
+                                                    types={types}
                                                 />
                                             </div>
                                         ))}
@@ -98,6 +98,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                                     onHoverProperty={onHoverPayloadProperty}
                                     anchorIdParts={["payload", "body"]}
                                     route={route}
+                                    types={types}
                                 />
                             </EndpointSection>
                         </div>

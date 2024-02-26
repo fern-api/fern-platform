@@ -1,6 +1,6 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import React, { ReactElement } from "react";
-import { ResolvedTypeReference } from "../../../util/resolver";
+import { ResolvedTypeDefinition, ResolvedTypeShape, unwrapReference } from "../../../util/resolver";
 import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
 import { InternalTypeDefinitionError } from "../type-definition/InternalTypeDefinitionError";
 import { ListTypeContextProvider } from "./ListTypeContextProvider";
@@ -8,17 +8,21 @@ import { MapTypeContextProvider } from "./MapTypeContextProvider";
 
 export declare namespace InternalTypeReferenceDefinitions {
     export interface Props {
-        shape: ResolvedTypeReference;
+        shape: ResolvedTypeShape;
         applyErrorStyles: boolean;
         isCollapsible: boolean;
         className?: string;
         anchorIdParts: string[];
         route: string;
         defaultExpandAll?: boolean;
+        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
-export function hasInternalTypeReference(shape: ResolvedTypeReference): boolean {
+export function hasInternalTypeReference(
+    shape: ResolvedTypeShape,
+    types: Record<string, ResolvedTypeDefinition>,
+): boolean {
     return visitDiscriminatedUnion(shape, "type")._visit<boolean>({
         object: () => true,
         enum: () => true,
@@ -26,8 +30,8 @@ export function hasInternalTypeReference(shape: ResolvedTypeReference): boolean 
         discriminatedUnion: () => true,
         list: () => true,
         set: () => true,
-        optional: (optional) => hasInternalTypeReference(optional.shape),
-        map: (map) => hasInternalTypeReference(map.keyShape) || hasInternalTypeReference(map.valueShape),
+        optional: (optional) => hasInternalTypeReference(optional.shape, types),
+        map: (map) => hasInternalTypeReference(map.keyShape, types) || hasInternalTypeReference(map.valueShape, types),
         string: () => false,
         boolean: () => false,
         integer: () => false,
@@ -41,7 +45,8 @@ export function hasInternalTypeReference(shape: ResolvedTypeReference): boolean 
         stringLiteral: () => false,
         unknown: () => false,
         _other: () => false,
-        reference: (reference) => hasInternalTypeReference(reference.shape()),
+        reference: (reference) => hasInternalTypeReference(types[reference.typeId] ?? { type: "unknown" }, types),
+        alias: (alias) => hasInternalTypeReference(alias.shape, types),
     });
 }
 
@@ -53,9 +58,10 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
     anchorIdParts,
     route,
     defaultExpandAll = false,
+    types,
 }) => {
     const InternalShapeRenderer = applyErrorStyles ? InternalTypeDefinitionError : InternalTypeDefinition;
-    return visitDiscriminatedUnion(shape, "type")._visit<ReactElement | null>({
+    return visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit<ReactElement | null>({
         object: (object) => (
             <InternalShapeRenderer
                 typeShape={object}
@@ -63,6 +69,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 anchorIdParts={anchorIdParts}
                 route={route}
                 defaultExpandAll={defaultExpandAll}
+                types={types}
             />
         ),
         enum: (enum_) => (
@@ -72,6 +79,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 anchorIdParts={anchorIdParts}
                 route={route}
                 defaultExpandAll={defaultExpandAll}
+                types={types}
             />
         ),
         undiscriminatedUnion: (undiscriminatedUnion) => (
@@ -81,6 +89,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 anchorIdParts={anchorIdParts}
                 route={route}
                 defaultExpandAll={defaultExpandAll}
+                types={types}
             />
         ),
         discriminatedUnion: (discriminatedUnion) => (
@@ -90,6 +99,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 anchorIdParts={anchorIdParts}
                 route={route}
                 defaultExpandAll={defaultExpandAll}
+                types={types}
             />
         ),
 
@@ -103,6 +113,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     anchorIdParts={anchorIdParts}
                     route={route}
                     defaultExpandAll={defaultExpandAll}
+                    types={types}
                 />
             </ListTypeContextProvider>
         ),
@@ -116,6 +127,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     anchorIdParts={anchorIdParts}
                     route={route}
                     defaultExpandAll={defaultExpandAll}
+                    types={types}
                 />
             </ListTypeContextProvider>
         ),
@@ -128,6 +140,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 anchorIdParts={anchorIdParts}
                 route={route}
                 defaultExpandAll={defaultExpandAll}
+                types={types}
             />
         ),
         map: (map) => (
@@ -140,6 +153,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     anchorIdParts={anchorIdParts}
                     route={route}
                     defaultExpandAll={defaultExpandAll}
+                    types={types}
                 />
                 <InternalTypeReferenceDefinitions
                     shape={map.valueShape}
@@ -149,6 +163,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     anchorIdParts={anchorIdParts}
                     route={route}
                     defaultExpandAll={defaultExpandAll}
+                    types={types}
                 />
             </MapTypeContextProvider>
         ),
@@ -165,15 +180,16 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
         stringLiteral: () => null,
         unknown: () => null,
         _other: () => null,
-        reference: (reference) => (
+        alias: (alias) => (
             <InternalTypeReferenceDefinitions
-                shape={reference.shape()}
+                shape={alias.shape}
                 isCollapsible={isCollapsible}
                 applyErrorStyles={applyErrorStyles}
                 className={className}
                 anchorIdParts={anchorIdParts}
                 route={route}
                 defaultExpandAll={defaultExpandAll}
+                types={types}
             />
         ),
     });

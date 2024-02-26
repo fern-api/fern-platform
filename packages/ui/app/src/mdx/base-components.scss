@@ -1,3 +1,8 @@
+code:not(.code-block) {
+    @apply inline-code font-mono border border-concealed rounded bg-background-light/75 dark:bg-background-dark/75 py-0.5 px-1;
+    @apply before:content-none after:content-none;
+}
+
 .fern-table {
     @apply mb-3 overflow-x-auto rounded-lg;
 

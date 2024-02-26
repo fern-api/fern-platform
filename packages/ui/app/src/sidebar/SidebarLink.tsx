@@ -4,8 +4,16 @@ import classNames from "classnames";
 import { range } from "lodash-es";
 import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
-import { FC, HTMLAttributeAnchorTarget, memo, PropsWithChildren, ReactNode, useEffect, useRef } from "react";
-import { ReactElement } from "react-markdown/lib/react-markdown";
+import {
+    FC,
+    HTMLAttributeAnchorTarget,
+    memo,
+    PropsWithChildren,
+    ReactElement,
+    ReactNode,
+    useEffect,
+    useRef,
+} from "react";
 import { useIsMobileSidebarOpen } from "./atom";
 
 interface SidebarSlugLinkProps {

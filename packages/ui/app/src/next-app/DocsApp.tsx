@@ -1,5 +1,4 @@
-import { APIV1Read, DocsV1Read, DocsV2Read, FdrAPI } from "@fern-api/fdr-sdk";
-import type { ResolvedPath } from "@fern-ui/app-utils";
+import { APIV1Read, DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import "@fontsource/ibm-plex-mono";
 import { useEffect } from "react";
@@ -9,6 +8,8 @@ import { DocsContextProvider } from "../docs-context/DocsContextProvider";
 import { Docs } from "../docs/Docs";
 import { NavigationContextProvider } from "../navigation-context/NavigationContextProvider";
 import { SidebarNode } from "../sidebar/types";
+import type { ResolvedPath } from "../util/ResolvedPath";
+import { ResolvedNavigationItemApiSection } from "../util/resolver";
 
 export declare namespace App {
     export interface Props {
@@ -18,7 +19,8 @@ export declare namespace App {
         search: DocsV1Read.SearchInfo;
         algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
         files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
-        apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>;
+        apis: ResolvedNavigationItemApiSection[];
+        legacyApis: Record<string, APIV1Read.ApiDefinition>;
         resolvedPath: ResolvedPath;
     }
 }
@@ -31,6 +33,7 @@ export const DocsApp: React.FC<App.Props> = ({
     algoliaSearchIndex,
     files,
     apis: unmemoizedApis,
+    legacyApis,
     resolvedPath,
 }) => {
     const search = useDeepCompareMemoize(unmemoizedSearch);
@@ -49,7 +52,7 @@ export const DocsApp: React.FC<App.Props> = ({
                     (children, Context) => (
                         <Context>{children}</Context>
                     ),
-                    <DocsContextProvider files={files} config={config} apis={apis} baseUrl={baseUrl}>
+                    <DocsContextProvider files={files} config={config} apis={legacyApis} baseUrl={baseUrl}>
                         <NavigationContextProvider resolvedPath={resolvedPath} basePath={baseUrl.basePath}>
                             <Docs
                                 config={config}

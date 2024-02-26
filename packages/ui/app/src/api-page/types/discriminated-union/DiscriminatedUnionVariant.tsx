@@ -2,7 +2,11 @@ import classNames from "classnames";
 import { startCase } from "lodash-es";
 import { useCallback, useMemo } from "react";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
-import { ResolvedDiscriminatedUnionShapeVariant, ResolvedTypeShape } from "../../../util/resolver";
+import {
+    dereferenceObjectProperties,
+    ResolvedDiscriminatedUnionShapeVariant,
+    ResolvedTypeDefinition,
+} from "../../../util/resolver";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import {
@@ -19,6 +23,7 @@ export declare namespace DiscriminatedUnionVariant {
         anchorIdParts: string[];
         route: string;
         defaultExpandAll?: boolean;
+        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
@@ -28,24 +33,31 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
     anchorIdParts,
     route,
     defaultExpandAll = false,
+    types,
 }) => {
     const { isRootTypeDefinition } = useTypeDefinitionContext();
 
-    const shape = useMemo((): ResolvedTypeShape => {
+    const shape = useMemo((): ResolvedTypeDefinition => {
         return {
             type: "object",
-            properties: () => [
+            properties: [
                 {
                     key: discriminant,
                     valueShape: {
                         type: "stringLiteral",
                         value: unionVariant.discriminantValue,
                     },
+                    description: null,
+                    availability: null,
                 },
-                ...unionVariant.additionalProperties,
+                ...dereferenceObjectProperties(unionVariant, types),
             ],
+            name: null,
+            description: null,
+            availability: null,
+            extends: [],
         };
-    }, [discriminant, unionVariant.additionalProperties, unionVariant.discriminantValue]);
+    }, [discriminant, types, unionVariant]);
 
     const contextValue = useTypeDefinitionContext();
     const newContextValue = useCallback(
@@ -84,6 +96,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                         anchorIdParts={anchorIdParts}
                         route={route}
                         defaultExpandAll={defaultExpandAll}
+                        types={types}
                     />
                 </TypeDefinitionContext.Provider>
             </div>

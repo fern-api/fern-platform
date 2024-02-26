@@ -1,9 +1,8 @@
-import { MDXRemote, MDXRemoteProps, SerializedMdxContent } from "@fern-ui/app-utils";
+import { MDXRemote, MDXRemoteProps } from "next-mdx-remote";
 import React, { HTMLAttributes, useCallback } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { CodeBlockWithClipboardButton } from "../commons/CodeBlockWithClipboardButton";
 import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
-import { parseCodeBlockLanguageFromClassName } from "../commons/util";
+import { SerializedMdxContent } from "../util/mdx";
 import {
     A,
     H1,
@@ -13,7 +12,6 @@ import {
     H5,
     H6,
     Img,
-    InlineCode,
     Li,
     Ol,
     P,
@@ -32,6 +30,7 @@ import { Card } from "./components/Card";
 import { Cards } from "./components/Cards";
 import { CodeBlock } from "./components/CodeBlock";
 import { CodeBlocks } from "./components/CodeBlocks";
+import { SyntaxHighlighter } from "./components/SyntaxHighlighter";
 import { MdxErrorBoundaryContent } from "./MdxErrorBoundaryContent";
 
 export declare namespace MdxContent {
@@ -41,21 +40,23 @@ export declare namespace MdxContent {
 }
 
 const COMPONENTS: MDXRemoteProps["components"] = {
-    pre: ({ children }: HTMLAttributes<HTMLPreElement>) => {
-        type PreElemChildren = {
-            props?: {
-                className?: string;
-                children?: string;
-            };
-        };
-        const { children: content, className } = (children as PreElemChildren)?.props ?? {};
-        const language = parseCodeBlockLanguageFromClassName(className);
-        if (typeof content !== "string") {
-            return null;
-        }
-        return <CodeBlockWithClipboardButton language={language} variant="lg" content={content} />;
-    },
-    code: (props: HTMLAttributes<HTMLElement>) => <InlineCode {...props} />,
+    // pre: ({ children }: HTMLAttributes<HTMLPreElement>) => {
+    //     type PreElemChildren = {
+    //         props?: {
+    //             className?: string;
+    //             children?: string;
+    //         };
+    //     };
+    //     const { children: content, className } = (children as PreElemChildren)?.props ?? {};
+    //     const language = parseCodeBlockLanguageFromClassName(className);
+    //     if (typeof content !== "string") {
+    //         return null;
+    //     }
+    //     return <CodeBlockWithClipboardButton language={language} variant="lg" content={content} />;
+    // },
+    // code: ({ className, ...rest }) => {
+    //     return <code {...rest} className={classNames(className, "not-prose")} />;
+    // },
     table: Table,
     thead: Thead,
     tbody: Tbody,
@@ -83,6 +84,7 @@ const COMPONENTS: MDXRemoteProps["components"] = {
     CodeBlocks,
     Callout,
     Icon: RemoteFontAwesomeIcon,
+    SyntaxHighlighter,
 };
 
 export const MdxContent = React.memo<MdxContent.Props>(function MdxContent({ mdx }) {

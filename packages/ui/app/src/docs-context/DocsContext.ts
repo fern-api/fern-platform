@@ -1,6 +1,6 @@
 import { DocsDefinitionSummary, DocsV1Read, PathResolver } from "@fern-api/fdr-sdk";
-import { DefinitionObjectFactory } from "@fern-ui/app-utils";
 import React from "react";
+import { DefinitionObjectFactory } from "../util/fern";
 
 const EMPTY_DEFINITION = DefinitionObjectFactory.createDocsDefinition();
 const EMPTY_DEFINITION_SUMMARY: DocsDefinitionSummary = {

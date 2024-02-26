@@ -3,33 +3,12 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
-import { CodeBlockWithClipboardButton } from "../../commons/CodeBlockWithClipboardButton";
-import { parseCodeBlockLanguageFromClassName } from "../../commons/util";
-import {
-    A,
-    H1,
-    H2,
-    H3,
-    H4,
-    H5,
-    H6,
-    InlineCode,
-    Li,
-    Ol,
-    P,
-    Table,
-    Tbody,
-    Td,
-    Th,
-    Thead,
-    Tr,
-    Ul,
-} from "../../mdx/base-components";
+import { A, H1, H2, H3, H4, H5, H6, Li, Ol, P, Table, Tbody, Td, Th, Thead, Tr, Ul } from "../../mdx/base-components";
 import styles from "./Markdown.module.scss";
 
 export declare namespace Markdown {
     export interface Props {
-        children?: string;
+        children?: string | null;
         className?: string;
         notProse?: boolean;
     }
@@ -56,17 +35,6 @@ export const Markdown = React.memo<Markdown.Props>(function Markdown({ children,
                     // If other elements are affected, we need to determine whether we're dealing with a code
                     // block or some other component in this block and return the default value (whatever that is)
                     return <>{children}</>;
-                },
-                code({ node, inline = false, className, children, ...props }) {
-                    if (!inline && className != null) {
-                        const content = Array.isArray(children) ? children[0] : undefined;
-                        if (typeof content !== "string") {
-                            return null;
-                        }
-                        const language = parseCodeBlockLanguageFromClassName(className);
-                        return <CodeBlockWithClipboardButton language={language} variant="sm" content={content} />;
-                    }
-                    return <InlineCode {...props}>{children}</InlineCode>;
                 },
                 table: (props) => <Table {...props} />,
                 thead: (props) => <Thead {...props} />,

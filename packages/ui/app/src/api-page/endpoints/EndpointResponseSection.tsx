@@ -1,4 +1,4 @@
-import { ResolvedResponseBody } from "../../util/resolver";
+import { ResolvedResponseBody, ResolvedTypeDefinition } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
@@ -11,6 +11,7 @@ export declare namespace EndpointResponseSection {
         anchorIdParts: string[];
         route: string;
         defaultExpandAll?: boolean;
+        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
@@ -20,6 +21,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
     anchorIdParts,
     route,
     defaultExpandAll = false,
+    types,
 }) => {
     return (
         <div className="flex flex-col">
@@ -32,7 +34,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                           ? "sends text responses over a long-lived HTTP connection"
                           : responseBody.shape.type === "streamCondition"
                             ? "return a stream"
-                            : `return ${renderTypeShorthand(responseBody.shape, { withArticle: true })}`
+                            : `return ${renderTypeShorthand(responseBody.shape, { withArticle: true }, types)}`
                 }.`}
             </div>
             {responseBody.shape.type === "fileDownload" ||
@@ -46,6 +48,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                     route={route}
                     defaultExpandAll={defaultExpandAll}
                     applyErrorStyles={false}
+                    types={types}
                 />
             )}
         </div>

@@ -234,7 +234,7 @@ export const PlaygroundAuthorizationForm: FC<PlaygroundAuthorizationFormProps> =
 
 interface PlaygroundAuthorizationFormCardProps {
     endpoint: ResolvedEndpointDefinition;
-    auth: APIV1Read.ApiAuth | undefined;
+    auth: APIV1Read.ApiAuth | null | undefined;
     formState: PlaygroundRequestFormState | undefined;
     setFormState: Dispatch<SetStateAction<PlaygroundRequestFormState>>;
 }

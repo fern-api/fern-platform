@@ -12,9 +12,12 @@ import { FernCollapse } from "../components/FernCollapse";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { useNavigationContext } from "../navigation-context";
 import {
+    dereferenceObjectProperties,
     ResolvedEndpointDefinition,
     ResolvedObjectProperty,
+    ResolvedTypeDefinition,
     unwrapOptional,
+    unwrapReference,
     visitResolvedHttpRequestBodyShape,
 } from "../util/resolver";
 import { PlaygroundRequestFormState } from "./types";
@@ -30,6 +33,7 @@ interface PlaygroundEndpointFormAsideProps {
     scrollAreaHeight: number;
     resetWithExample: () => void;
     resetWithoutExample: () => void;
+    types: Record<string, ResolvedTypeDefinition>;
 }
 
 export const FOCUSED_PARAMETER_ATOM = atom<string | undefined>(undefined);
@@ -59,6 +63,7 @@ export function PlaygroundEndpointFormAside({
     scrollAreaHeight,
     resetWithExample,
     resetWithoutExample,
+    types,
 }: PlaygroundEndpointFormAsideProps): ReactElement {
     const { activeNavigatable } = useNavigationContext();
     const [focusedParameter, setFocusedParameter] = useAtom(FOCUSED_PARAMETER_ATOM);
@@ -89,7 +94,7 @@ export function PlaygroundEndpointFormAside({
 
     function renderPropertyPreview(property: ResolvedObjectProperty, id: string, breadcrumbs: string[] = []) {
         const isFocused = focusedParameter === id;
-        const shape = unwrapOptional(property.valueShape);
+        const shape = unwrapOptional(property.valueShape, types);
         return (
             <>
                 <div
@@ -111,8 +116,7 @@ export function PlaygroundEndpointFormAside({
                 </div>
                 {shape.type === "object" && (
                     <ul className="list-none" style={{ paddingLeft: `${10 * (breadcrumbs.length - 1)}px` }}>
-                        {shape
-                            .properties()
+                        {dereferenceObjectProperties(shape, types)
                             .filter((property) => resolveBreadcrumbs(formState, [...breadcrumbs, property.key]))
                             .map((param) => (
                                 <li key={param.key}>
@@ -191,15 +195,14 @@ export function PlaygroundEndpointFormAside({
                     {endpoint.requestBody[0] != null &&
                         visitResolvedHttpRequestBodyShape(endpoint.requestBody[0].shape, {
                             fileUpload: () => null,
-                            typeReference: (shape) => {
-                                shape = shape.type === "reference" ? shape.shape() : shape;
+                            typeShape: (shape) => {
+                                shape = unwrapReference(shape, types);
 
                                 return shape.type === "object" ? (
                                     <div>
                                         <div className="t-muted m-0 mx-3 mb-2 text-xs">Body Parameters</div>
                                         <ul className="list-none">
-                                            {shape
-                                                .properties()
+                                            {dereferenceObjectProperties(shape, types)
                                                 .filter(
                                                     (property) =>
                                                         formState != null &&

@@ -1,7 +1,7 @@
 import { DocsV1Read, type DocsNode } from "@fern-api/fdr-sdk";
-import { getFullSlugForNavigatable, joinUrlSlugs } from "@fern-ui/app-utils";
 import { useCallback, useMemo } from "react";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
+import { getFullSlugForNavigatable, joinUrlSlugs } from "../util/slug";
 
 type WithVersionSlugOpts = {
     omitDefault?: boolean;

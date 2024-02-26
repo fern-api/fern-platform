@@ -2,24 +2,25 @@ import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { FC, useCallback } from "react";
 import { FernButton } from "../components/FernButton";
-import { ResolvedTypeReference } from "../util/resolver";
+import { ResolvedTypeDefinition, ResolvedTypeShape } from "../util/resolver";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { getDefaultValueForType, shouldRenderInline } from "./utils";
 
 interface PlaygroundListFormProps {
-    itemShape: ResolvedTypeReference;
+    itemShape: ResolvedTypeShape;
     onChange: (value: unknown) => void;
     value: unknown;
     id: string;
+    types: Record<string, ResolvedTypeDefinition>;
 }
 
-export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemShape, onChange, value, id }) => {
+export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemShape, onChange, value, id, types }) => {
     const appendItem = useCallback(() => {
         onChange((oldValue: unknown) => {
             const oldArray = Array.isArray(oldValue) ? oldValue : [];
-            return [...oldArray, getDefaultValueForType(itemShape)];
+            return [...oldArray, getDefaultValueForType(itemShape, types)];
         });
-    }, [itemShape, onChange]);
+    }, [itemShape, onChange, types]);
     const valueAsList = Array.isArray(value) ? value : [];
     const handleChangeItem = useCallback(
         (idx: number, newValue: unknown) => {
@@ -40,7 +41,7 @@ export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemShape, onC
         [onChange],
     );
 
-    const renderInline = shouldRenderInline(itemShape);
+    const renderInline = shouldRenderInline(itemShape, types);
     return (
         <>
             {valueAsList.length > 0 && (
@@ -72,6 +73,7 @@ export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemShape, onC
                                         }
                                         renderAsPanel={true}
                                         id={`${id}[${idx}]`}
+                                        types={types}
                                     />
                                 )}
 
@@ -93,6 +95,7 @@ export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemShape, onC
                                     }
                                     renderAsPanel={true}
                                     id={`${id}[${idx}]`}
+                                    types={types}
                                 />
                             )}
                         </li>

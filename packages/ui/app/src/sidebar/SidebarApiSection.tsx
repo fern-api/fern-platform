@@ -1,8 +1,7 @@
 import { APIV1Read, DocsV1Read, isApiNode, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { isEqual } from "lodash-es";
-import { memo, useCallback } from "react";
-import { ReactElement } from "react-markdown/lib/react-markdown";
+import { memo, ReactElement, useCallback } from "react";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { FernTooltip } from "../components/FernTooltip";

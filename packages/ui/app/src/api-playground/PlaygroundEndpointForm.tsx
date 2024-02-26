@@ -1,7 +1,13 @@
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { FernCard } from "../components/FernCard";
 import { Callout } from "../mdx/components/Callout";
-import { ResolvedEndpointDefinition, visitResolvedHttpRequestBodyShape } from "../util/resolver";
+import {
+    dereferenceObjectProperties,
+    ResolvedEndpointDefinition,
+    ResolvedTypeDefinition,
+    unwrapReference,
+    visitResolvedHttpRequestBodyShape,
+} from "../util/resolver";
 import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { PlaygroundRequestFormState } from "./types";
@@ -10,9 +16,15 @@ interface PlaygroundEndpointFormProps {
     endpoint: ResolvedEndpointDefinition;
     formState: PlaygroundRequestFormState | undefined;
     setFormState: Dispatch<SetStateAction<PlaygroundRequestFormState>>;
+    types: Record<string, ResolvedTypeDefinition>;
 }
 
-export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoint, formState, setFormState }) => {
+export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
+    endpoint,
+    formState,
+    setFormState,
+    types,
+}) => {
     const setHeaders = useCallback(
         (value: ((old: unknown) => unknown) | unknown) => {
             setFormState((state) => ({
@@ -66,6 +78,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
                             properties={endpoint.headers}
                             onChange={setHeaders}
                             value={formState?.headers}
+                            types={types}
                         />
                     </FernCard>
                 </div>
@@ -82,6 +95,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
                             properties={endpoint.pathParameters}
                             onChange={setPathParameters}
                             value={formState?.pathParameters}
+                            types={types}
                         />
                     </FernCard>
                 </div>
@@ -98,6 +112,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
                             properties={endpoint.queryParameters}
                             onChange={setQueryParameters}
                             value={formState?.queryParameters}
+                            types={types}
                         />
                     </FernCard>
                 </div>
@@ -115,8 +130,8 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
                             </FernCard>
                         </div>
                     ),
-                    typeReference: (shape) => {
-                        shape = shape.type === "reference" ? shape.shape() : shape;
+                    typeShape: (shape) => {
+                        shape = unwrapReference(shape, types);
 
                         if (shape.type === "object") {
                             return (
@@ -127,9 +142,10 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
                                     <FernCard className="rounded-xl p-4 shadow-sm">
                                         <PlaygroundObjectPropertiesForm
                                             id="body"
-                                            properties={shape.properties()}
+                                            properties={dereferenceObjectProperties(shape, types)}
                                             onChange={setBody}
                                             value={formState?.body}
+                                            types={types}
                                         />
                                     </FernCard>
                                 </div>
@@ -147,6 +163,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
                                             onChange={setBody}
                                             value={formState?.body}
                                             onlyRequired
+                                            types={types}
                                         />
                                     </FernCard>
                                 </div>
@@ -165,6 +182,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({ endpoi
                                         onChange={setBody}
                                         value={formState?.body}
                                         onlyRequired
+                                        types={types}
                                     />
                                 </FernCard>
                             </div>

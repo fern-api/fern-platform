@@ -6,7 +6,7 @@ import { PlaygroundRequestFormState } from "./types";
 import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils";
 
 interface PlaygroundRequestPreviewProps {
-    auth: APIV1Read.ApiAuth | undefined;
+    auth: APIV1Read.ApiAuth | null | undefined;
     endpoint: ResolvedEndpointDefinition | undefined;
     formState: PlaygroundRequestFormState;
     requestType: "curl" | "javascript" | "python";

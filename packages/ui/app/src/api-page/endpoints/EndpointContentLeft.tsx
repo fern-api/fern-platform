@@ -1,10 +1,14 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
 import { useBooleanState } from "@fern-ui/react-commons";
 import * as Tabs from "@radix-ui/react-tabs";
 import { camelCase, sortBy, upperFirst } from "lodash-es";
 import { memo } from "react";
 import { FernCard } from "../../components/FernCard";
-import { ResolvedEndpointDefinition, ResolvedNavigationItemApiSection } from "../../util/resolver";
+import {
+    ResolvedEndpointDefinition,
+    ResolvedError,
+    ResolvedNavigationItemApiSection,
+    ResolvedTypeDefinition,
+} from "../../util/resolver";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { EndpointError } from "./EndpointError";
@@ -23,11 +27,12 @@ export declare namespace EndpointContentLeft {
         apiSection: ResolvedNavigationItemApiSection;
         onHoverRequestProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
         onHoverResponseProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
-        selectedError: APIV1Read.ErrorDeclarationV2 | undefined;
-        setSelectedError: (idx: APIV1Read.ErrorDeclarationV2 | undefined) => void;
+        selectedError: ResolvedError | undefined;
+        setSelectedError: (idx: ResolvedError | undefined) => void;
         route: string;
         contentType: string | undefined;
         setContentType: (contentType: string) => void;
+        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
@@ -41,6 +46,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     route,
     contentType,
     setContentType,
+    types,
 }) => {
     const requestExpandAll = useBooleanState(false);
     const responseExpandAll = useBooleanState(false);
@@ -59,8 +65,8 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     anchorIdParts={["request", "path", parameter.key]}
                                     route={route}
                                     description={parameter.description}
-                                    descriptionContainsMarkdown={parameter.descriptionContainsMarkdown ?? true}
                                     availability={parameter.availability}
+                                    types={types}
                                 />
                             </div>
                         ))}
@@ -79,8 +85,8 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     anchorIdParts={["request", "header", parameter.key]}
                                     route={route}
                                     description={parameter.description}
-                                    descriptionContainsMarkdown={parameter.descriptionContainsMarkdown ?? false}
                                     availability={parameter.availability}
+                                    types={types}
                                 />
                             </div>
                         ))}
@@ -99,8 +105,8 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     anchorIdParts={["request", "query", parameter.key]}
                                     route={route}
                                     description={parameter.description}
-                                    descriptionContainsMarkdown={parameter.descriptionContainsMarkdown ?? false}
                                     availability={parameter.availability}
+                                    types={types}
                                 />
                             </div>
                         ))}
@@ -148,6 +154,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                             anchorIdParts={["request", "body"]}
                                             route={route}
                                             defaultExpandAll={requestExpandAll.value}
+                                            types={types}
                                         />
                                     </EndpointSection>
                                 </Tabs.Content>
@@ -171,6 +178,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                         anchorIdParts={["request", "body"]}
                         route={route}
                         defaultExpandAll={requestExpandAll.value}
+                        types={types}
                     />
                 </EndpointSection>
             ) : null}
@@ -189,6 +197,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                         anchorIdParts={["response", "body"]}
                         route={route}
                         defaultExpandAll={responseExpandAll.value}
+                        types={types}
                     />
                 </EndpointSection>
             )}
@@ -227,6 +236,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     route={route}
                                     availability={error.availability}
                                     defaultExpandAll={errorExpandAll.value}
+                                    types={types}
                                 />
                             );
                         })}
@@ -239,14 +249,14 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
 
 export const EndpointContentLeft = memo(UnmemoizedEndpointContentLeft);
 
-function isErrorEqual(a: APIV1Read.ErrorDeclarationV2, b: APIV1Read.ErrorDeclarationV2): boolean {
+function isErrorEqual(a: ResolvedError, b: ResolvedError): boolean {
     return (
         a.statusCode === b.statusCode &&
         (a.name != null && b.name != null ? a.name === b.name : a.name == null && b.name == null)
     );
 }
 
-export function convertNameToAnchorPart(name: string | undefined): string | undefined {
+export function convertNameToAnchorPart(name: string | null | undefined): string | undefined {
     if (name == null) {
         return undefined;
     }

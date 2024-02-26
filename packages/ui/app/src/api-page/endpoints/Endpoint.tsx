@@ -4,6 +4,7 @@ import {
     ResolvedApiDefinitionPackage,
     ResolvedEndpointDefinition,
     ResolvedNavigationItemApiSection,
+    ResolvedTypeDefinition,
 } from "../../util/resolver";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContent } from "./EndpointContent";
@@ -15,6 +16,7 @@ export declare namespace Endpoint {
         endpoint: ResolvedEndpointDefinition;
         breadcrumbs: string[];
         isLastInApi: boolean;
+        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
@@ -24,6 +26,7 @@ export const Endpoint: React.FC<Endpoint.Props> = ({
     endpoint,
     breadcrumbs,
     isLastInApi,
+    types,
 }) => {
     const { resolvedPath } = useNavigationContext();
     const fullSlug = joinUrlSlugs(...endpoint.slug);
@@ -48,6 +51,7 @@ export const Endpoint: React.FC<Endpoint.Props> = ({
             hideBottomSeparator={isLastInApi}
             route={route}
             isInViewport={resolvedPath.fullSlug === fullSlug}
+            types={types}
         />
     );
 };

@@ -1,7 +1,6 @@
 import * as Tabs from "@radix-ui/react-tabs";
 import { useState } from "react";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
-import { FernSyntaxHighlighter } from "../../commons/FernSyntaxHighlighter";
 import type { CodeBlockItem } from "./common/types";
 
 export declare namespace _CodeBlocks {
@@ -32,24 +31,18 @@ export const _CodeBlocks: React.FC<React.PropsWithChildren<_CodeBlocks.Props>> =
                                 className="data-[state=active]:shadow-accent-primary-light dark:data-[state=active]:shadow-accent-primary-dark group flex min-h-10 items-center px-2 py-1.5 data-[state=active]:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)]"
                             >
                                 <span className="t-muted group-data-[state=active]:t-default group-hover:bg-tag-default rounded px-2 py-1 text-sm group-data-[state=active]:font-semibold">
-                                    {item.title}
+                                    {item.title ?? `Untitled ${idx + 1}`}
                                 </span>
                             </Tabs.Trigger>
                         ))}
                     </Tabs.List>
 
-                    <CopyToClipboardButton className="ml-2 mr-1" content={codeBlockItem.content} />
+                    <CopyToClipboardButton className="ml-2 mr-1" content={codeBlockItem.code} />
                 </div>
             </div>
             {items.map((item, idx) => (
                 <Tabs.Content value={idx.toString()} key={idx} asChild>
-                    <FernSyntaxHighlighter
-                        className="not-prose min-h-0 shrink"
-                        language={item.language}
-                        code={item.content}
-                        highlightLines={item.highlightLines}
-                        highlightStyle={item.highlightStyle}
-                    />
+                    {item.children}
                 </Tabs.Content>
             ))}
         </Tabs.Root>

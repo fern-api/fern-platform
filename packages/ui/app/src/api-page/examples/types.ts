@@ -4,10 +4,13 @@ import { keyBy, mapValues, noop } from "lodash-es";
 import { buildRequestUrl } from "../../api-playground/utils";
 import { getEndpointEnvironmentUrl } from "../../util/endpoint";
 import {
+    dereferenceObjectProperties,
     ResolvedEndpointDefinition,
+    ResolvedExampleEndpointRequest,
     ResolvedHttpRequestBodyShape,
     ResolvedHttpResponseBodyShape,
-    ResolvedTypeReference,
+    ResolvedTypeDefinition,
+    ResolvedTypeShape,
 } from "../../util/resolver";
 
 export interface HttpRequestExample {
@@ -19,16 +22,16 @@ export interface HttpRequestExample {
         username: string;
         password: string;
     };
-    body: APIV1Read.ExampleEndpointRequest | { type: "file" } | undefined;
+    body: ResolvedExampleEndpointRequest | { type: "file" } | null | undefined;
 }
 
 export function endpointExampleToHttpRequestExample(
-    auth: APIV1Read.ApiAuth | undefined,
+    auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition,
     example: APIV1Read.ExampleEndpointCall,
-    shape: ResolvedHttpRequestBodyShape | undefined,
+    requestBody: ResolvedExampleEndpointRequest | null | undefined,
 ): HttpRequestExample {
-    const environmentUrl = getEndpointEnvironmentUrl(endpoint) ?? "localhost:8000";
+    const environmentUrl = getEndpointEnvironmentUrl(endpoint) ?? "http://localhost:8000";
     const url = buildRequestUrl(environmentUrl, endpoint.path, example.pathParameters);
 
     const headers: Record<string, unknown> = { ...example.headers };
@@ -50,18 +53,12 @@ export function endpointExampleToHttpRequestExample(
         });
     }
 
-    let body: APIV1Read.ExampleEndpointRequest | { type: "file" } | undefined =
-        example.requestBodyV3?.type === "json"
-            ? {
-                  type: "json",
-                  value: sortKeysByShape(example.requestBodyV3?.value, shape),
-              }
-            : example.requestBodyV3;
+    let body: ResolvedExampleEndpointRequest | { type: "file" } | null | undefined = requestBody;
 
-    if (example.requestBodyV3 != null) {
-        if (example.requestBodyV3.type === "json") {
+    if (body != null) {
+        if (body.type === "json") {
             headers["Content-Type"] = "application/json";
-        } else if (example.requestBodyV3.type === "form") {
+        } else if (body.type === "form") {
             headers["Content-Type"] = "multipart/form-data";
         }
     } else {
@@ -83,14 +80,31 @@ export function endpointExampleToHttpRequestExample(
 export function stringifyHttpRequestExampleToCurl({
     method,
     url,
+    urlQueries,
     headers,
     basicAuth,
     body,
 }: HttpRequestExample): string {
-    return `curl ${method === "GET" ? "" : `-X ${method} `}"${url}"${Object.entries(headers)
+    const queryParams = toUrlEncoded(urlQueries)
+        .map(([key, value]) => `${key}=${encodeURIComponent(unknownToString(value))}`)
+        .join("&");
+    const httpRequest =
+        method === "GET" ? (queryParams.length > 0 ? `"${url}?${queryParams}"` : url) : `-X ${method} ${url}`;
+    const headersString = Object.entries(headers)
         .map(([key, value]) => ` \\\n     -H "${key}: ${value}"`)
-        .join("")}${basicAuth != null ? ` \\\n     -u "${basicAuth.username}:${basicAuth.password}"` : ""}${
-        body == null
+        .join("");
+    const basicAuthString = basicAuth != null ? ` \\\n     -u "${basicAuth.username}:${basicAuth.password}"` : "";
+
+    // GET requests don't have a body, so `-d` is used to pass query parameters
+    const urlQueriesGetString =
+        method === "GET"
+            ? toUrlEncoded(urlQueries).map(
+                  ([key, value]) => ` \\\n     -d ${key.includes("[") ? `"${key}"` : key}=${value}`,
+              )
+            : "";
+
+    const bodyDataString =
+        body == null || method === "GET"
             ? ""
             : visitDiscriminatedUnion(body, "type")._visit({
                   json: ({ value }) =>
@@ -108,8 +122,9 @@ export function stringifyHttpRequestExampleToCurl({
                           .join(""),
                   file: () => " \\\n     -d @filename",
                   _other: () => "",
-              })
-    }`;
+              });
+
+    return `curl ${httpRequest}${headersString}${basicAuthString}${urlQueriesGetString}${bodyDataString}`;
 }
 
 export function unknownToString(value: unknown): string {
@@ -143,16 +158,17 @@ function sortKeysBy(obj: Record<string, unknown>, order: string[]) {
 
 export function sortKeysByShape(
     obj: unknown,
-    shape: ResolvedTypeReference | ResolvedHttpRequestBodyShape | ResolvedHttpResponseBodyShape | undefined,
+    shape: ResolvedTypeShape | ResolvedHttpRequestBodyShape | ResolvedHttpResponseBodyShape | null | undefined,
+    types: Record<string, ResolvedTypeDefinition>,
 ): unknown {
     if ((!isPlainObject(obj) && !Array.isArray(obj)) || shape == null) {
         return obj;
     }
-    return visitDiscriminatedUnion(shape, "type")._visit({
+    return visitDiscriminatedUnion(shape, "type")._visit<unknown>({
         string: () => obj,
         boolean: () => obj,
-        object: ({ properties }) => {
-            const p = properties();
+        object: (object) => {
+            const p = dereferenceObjectProperties(object, types);
             return isPlainObject(obj)
                 ? mapValues(
                       sortKeysBy(
@@ -164,7 +180,7 @@ export function sortKeysByShape(
                           if (property == null) {
                               return value;
                           }
-                          return sortKeysByShape(value, property.valueShape);
+                          return sortKeysByShape(value, property.valueShape, types);
                       },
                   )
                 : obj;
@@ -178,10 +194,11 @@ export function sortKeysByShape(
             if (variant == null) {
                 return obj;
             }
-            const variantProperties = variants.find((v) => v.discriminantValue === variant)?.additionalProperties;
-            if (variantProperties == null) {
+            const variantShape = variants.find((v) => v.discriminantValue === variant);
+            if (variantShape == null) {
                 return obj;
             }
+            const variantProperties = dereferenceObjectProperties(variantShape, types);
             return mapValues(sortKeysBy(obj, [discriminant, ...variantProperties.map((p) => p.key)]), (value, key) => {
                 if (key === discriminant) {
                     return value;
@@ -190,7 +207,7 @@ export function sortKeysByShape(
                 if (property == null) {
                     return value;
                 }
-                return sortKeysByShape(value, property.valueShape);
+                return sortKeysByShape(value, property.valueShape, types);
             });
         },
         enum: () => obj,
@@ -201,19 +218,28 @@ export function sortKeysByShape(
         uuid: () => obj,
         base64: () => obj,
         date: () => obj,
-        optional: ({ shape }) => sortKeysByShape(obj, shape),
-        list: ({ shape }) => (Array.isArray(obj) ? obj.map((o) => sortKeysByShape(o, shape)) : obj),
-        set: ({ shape }) => (Array.isArray(obj) ? obj.map((o) => sortKeysByShape(o, shape)) : obj),
+        optional: ({ shape }) => sortKeysByShape(obj, shape, types),
+        list: ({ shape }) => (Array.isArray(obj) ? obj.map((o) => sortKeysByShape(o, shape, types)) : obj),
+        set: ({ shape }) => (Array.isArray(obj) ? obj.map((o) => sortKeysByShape(o, shape, types)) : obj),
         map: ({ valueShape }) =>
-            isPlainObject(obj) ? mapValues(obj, (value) => sortKeysByShape(value, valueShape)) : obj,
+            isPlainObject(obj) ? mapValues(obj, (value) => sortKeysByShape(value, valueShape, types)) : obj,
         booleanLiteral: () => obj,
         stringLiteral: () => obj,
         unknown: () => obj,
-        reference: ({ shape }) => sortKeysByShape(obj, shape()),
+        reference: ({ typeId }) => sortKeysByShape(obj, types[typeId], types),
         fileUpload: () => obj,
         fileDownload: () => obj,
         streamCondition: () => obj,
         streamingText: () => obj,
+        alias: ({ shape }) => sortKeysByShape(obj, shape, types),
         _other: () => obj,
+    });
+}
+function toUrlEncoded(urlQueries: Record<string, unknown>): Array<[string, string]> {
+    return Object.entries(urlQueries).flatMap(([key, value]): [string, string][] => {
+        if (Array.isArray(value)) {
+            return value.map((v) => [`${key}[]`, unknownToString(v)]);
+        }
+        return [[key, unknownToString(value)]];
     });
 }

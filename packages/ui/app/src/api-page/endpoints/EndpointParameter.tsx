@@ -2,7 +2,7 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { getAnchorId } from "../../util/anchor";
-import { ResolvedTypeReference } from "../../util/resolver";
+import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
@@ -11,12 +11,12 @@ import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 export declare namespace EndpointParameter {
     export interface Props {
         name: string;
-        description: string | undefined;
-        descriptionContainsMarkdown: boolean;
-        shape: ResolvedTypeReference;
+        description: string | null | undefined;
+        shape: ResolvedTypeShape;
         anchorIdParts: string[];
         route: string;
-        availability: APIV1Read.Availability | undefined;
+        availability: APIV1Read.Availability | null | undefined;
+        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
@@ -27,6 +27,7 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
     route,
     shape,
     availability,
+    types,
 }) => {
     const anchorId = getAnchorId(anchorIdParts);
     const anchorRoute = `${route}#${anchorId}`;
@@ -41,7 +42,7 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
                     <MonospaceText className="text-text-default-light dark:text-text-default-dark text-sm">
                         {name}
                     </MonospaceText>
-                    <div className="t-muted text-xs">{renderTypeShorthand(shape)}</div>
+                    <div className="t-muted text-xs">{renderTypeShorthand(shape, undefined, types)}</div>
                     {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
                 </span>
             </div>
@@ -52,6 +53,7 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
                 anchorIdParts={anchorIdParts}
                 applyErrorStyles={false}
                 route={route}
+                types={types}
             />
         </div>
     );

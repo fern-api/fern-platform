@@ -6,7 +6,7 @@ import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
 import { Chip } from "../../../components/Chip";
 import { FernTooltipProvider } from "../../../components/FernTooltip";
 import { getAnchorId } from "../../../util/anchor";
-import { ResolvedTypeShape } from "../../../util/resolver";
+import { dereferenceObjectProperties, ResolvedTypeDefinition } from "../../../util/resolver";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
@@ -21,11 +21,12 @@ import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 
 export declare namespace InternalTypeDefinition {
     export interface Props {
-        typeShape: ResolvedTypeShape;
+        typeShape: ResolvedTypeDefinition;
         isCollapsible: boolean;
         anchorIdParts: string[];
         route: string;
         defaultExpandAll?: boolean;
+        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
@@ -42,6 +43,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     anchorIdParts,
     route,
     defaultExpandAll = false,
+    types,
 }) => {
     // const { hydrated, justNavigated } = useNavigationContext();
     const router = useRouter();
@@ -50,18 +52,17 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
         () =>
             visitDiscriminatedUnion(typeShape, "type")._visit<CollapsibleContent | undefined>({
                 object: (object) => ({
-                    elements: object
-                        .properties()
-                        .map((property) => (
-                            <ObjectProperty
-                                key={property.key}
-                                property={property}
-                                anchorIdParts={[...anchorIdParts, property.key]}
-                                applyErrorStyles={false}
-                                route={route}
-                                defaultExpandAll={defaultExpandAll}
-                            />
-                        )),
+                    elements: dereferenceObjectProperties(object, types).map((property) => (
+                        <ObjectProperty
+                            key={property.key}
+                            property={property}
+                            anchorIdParts={[...anchorIdParts, property.key]}
+                            applyErrorStyles={false}
+                            route={route}
+                            defaultExpandAll={defaultExpandAll}
+                            types={types}
+                        />
+                    )),
                     elementNameSingular: "property",
                     elementNamePlural: "properties",
                 }),
@@ -75,6 +76,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                             route={route}
                             defaultExpandAll={defaultExpandAll}
                             idx={variantIdx}
+                            types={types}
                         />
                     )),
                     elementNameSingular: "variant",
@@ -90,6 +92,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                             anchorIdParts={[...anchorIdParts, variant.discriminantValue]}
                             route={route}
                             defaultExpandAll={defaultExpandAll}
+                            types={types}
                         />
                     )),
                     elementNameSingular: "variant",
@@ -104,9 +107,11 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                     elementNameSingular: "enum value",
                     elementNamePlural: "enum values",
                 }),
+                alias: () => undefined,
+                unknown: () => undefined,
                 _other: () => undefined,
             }),
-        [typeShape, anchorIdParts, route, defaultExpandAll],
+        [typeShape, types, anchorIdParts, route, defaultExpandAll],
     );
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);

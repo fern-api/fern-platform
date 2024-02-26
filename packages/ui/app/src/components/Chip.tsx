@@ -4,7 +4,7 @@ import { FernTooltip } from "./FernTooltip";
 
 type ChipProps = {
     name: string;
-    description: string | undefined;
+    description: string | null | undefined;
 };
 
 export const Chip = ({ name, description = undefined }: ChipProps): ReactElement => {

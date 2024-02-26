@@ -1,7 +1,7 @@
 import { type NavigatableDocsNode } from "@fern-api/fdr-sdk";
-import { type ResolvedPath } from "@fern-ui/app-utils";
 import { noop } from "@fern-ui/core-utils";
 import React from "react";
+import { type ResolvedPath } from "../util/ResolvedPath";
 
 export const NavigationContext = React.createContext<NavigationContextValue>({
     basePath: undefined,

@@ -1,5 +1,4 @@
 import { APIV1Read, DocsV1Read, DocsV2Read, FdrAPI, NavigatableDocsNode, PathResolver } from "@fern-api/fdr-sdk";
-import { convertNavigatableToResolvedPath, type ResolvedPath } from "@fern-ui/app-utils";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { compact } from "lodash-es";
 import { GetStaticProps, Redirect } from "next";
@@ -9,6 +8,13 @@ import { ReactElement } from "react";
 import { REGISTRY_SERVICE } from "../services/registry";
 import { resolveSidebarNodes, SidebarNode } from "../sidebar/types";
 import { buildUrl } from "../util/buildUrl";
+import { convertNavigatableToResolvedPath } from "../util/convertNavigatableToResolvedPath";
+import { type ResolvedPath } from "../util/ResolvedPath";
+import {
+    crawlResolvedNavigationItemApiSections,
+    ResolvedNavigationItemApiSection,
+    resolveNavigationItems,
+} from "../util/resolver";
 import { DocsApp } from "./DocsApp";
 import { renderThemeStylesheet } from "./utils/renderThemeStylesheet";
 
@@ -21,7 +27,8 @@ export declare namespace DocsPage {
         search: DocsV1Read.SearchInfo;
         algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
         files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
-        apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>;
+        apis: ResolvedNavigationItemApiSection[];
+        legacyApis: Record<string, APIV1Read.ApiDefinition>;
         resolvedPath: ResolvedPath;
     }
 }
@@ -33,6 +40,7 @@ export function DocsPage({
     algoliaSearchIndex,
     files,
     apis,
+    legacyApis,
     resolvedPath,
     navigation,
 }: DocsPage.Props): ReactElement {
@@ -65,6 +73,7 @@ export function DocsPage({
                 algoliaSearchIndex={algoliaSearchIndex}
                 files={files}
                 apis={apis}
+                legacyApis={legacyApis}
                 resolvedPath={resolvedPath}
                 navigation={navigation}
             />
@@ -136,6 +145,15 @@ export const getDocsPageProps = async (
         basePath,
     });
 
+    const unresolvedNavigationItems =
+        navigatable.context.type === "versioned-tabbed" || navigatable.context.type === "unversioned-tabbed"
+            ? navigatable.context.tab.items
+            : navigatable.context.navigationConfig.items;
+
+    const apiSections = crawlResolvedNavigationItemApiSections(
+        await resolveNavigationItems(unresolvedNavigationItems ?? [], apis),
+    );
+
     const navigation = getNavigation(basePath, docs.body.definition.apis, navigatable);
 
     return {
@@ -147,7 +165,8 @@ export const getDocsPageProps = async (
             search: docs.body.definition.search,
             algoliaSearchIndex: docs.body.definition.algoliaSearchIndex ?? null,
             files: docs.body.definition.filesV2,
-            apis: docs.body.definition.apis,
+            apis: apiSections,
+            legacyApis: apis,
             resolvedPath,
             navigation,
         },

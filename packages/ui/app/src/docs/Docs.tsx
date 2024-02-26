@@ -1,4 +1,4 @@
-import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
 import classNames from "classnames";
@@ -19,7 +19,7 @@ import {
     useOpenSearchDialog,
 } from "../sidebar/atom";
 import { SidebarNode } from "../sidebar/types";
-import { crawlResolvedNavigationItemApiSections, resolveNavigationItems } from "../util/resolver";
+import { ResolvedNavigationItemApiSection } from "../util/resolver";
 import { useViewportContext } from "../viewport-context/useViewportContext";
 import { BgImageGradient } from "./BgImageGradient";
 import { DocsMainContent } from "./DocsMainContent";
@@ -31,7 +31,7 @@ const Sidebar = dynamic(() => import("../sidebar/Sidebar").then(({ Sidebar }) =>
 interface DocsProps {
     config: DocsV1Read.DocsConfig;
     search: DocsV1Read.SearchInfo;
-    apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>;
+    apis: ResolvedNavigationItemApiSection[];
     navigation: SidebarNode[];
     algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
 }
@@ -47,8 +47,8 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     navigation,
     algoliaSearchIndex,
 }) {
-    const { observeDocContent, activeNavigatable, registerScrolledToPathListener } = useNavigationContext();
-    const { activeNavigationConfigContext, withVersionAndTabSlugs } = useDocsSelectors();
+    const { observeDocContent, registerScrolledToPathListener } = useNavigationContext();
+    const { withVersionAndTabSlugs } = useDocsSelectors();
     const openSearchDialog = useOpenSearchDialog();
     const { layoutBreakpoint } = useViewportContext();
 
@@ -119,22 +119,6 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
         [withVersionAndTabSlugs],
     );
 
-    const navigationItems = useMemo(() => {
-        const unresolvedNavigationItems =
-            activeNavigationConfigContext?.type === "tabbed"
-                ? activeNavigatable?.context.tab?.items
-                : activeNavigationConfigContext?.config.items;
-        return resolveNavigationItems(unresolvedNavigationItems ?? [], apis, currentSlug);
-    }, [
-        activeNavigatable?.context.tab?.items,
-        activeNavigationConfigContext?.config,
-        activeNavigationConfigContext?.type,
-        apis,
-        currentSlug,
-    ]);
-
-    const apiSections = useMemo(() => crawlResolvedNavigationItemApiSections(navigationItems), [navigationItems]);
-
     const isScrolled = useIsScrolled();
 
     return (
@@ -143,7 +127,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
             <BgImageGradient colors={colorsV3} hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage} />
             {searchService.isAvailable && <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />}
 
-            <ApiPlaygroundContextProvider navigation={navigation} apiSections={apiSections}>
+            <ApiPlaygroundContextProvider navigation={navigation} apiSections={apis}>
                 <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
                     <header id="fern-header">
                         <div
@@ -179,7 +163,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                         />
 
                         <main className={classNames("relative flex w-full min-w-0 flex-1 flex-col pt-header-height")}>
-                            <DocsMainContent navigationItems={navigationItems} />
+                            <DocsMainContent apis={apis} />
                         </main>
                     </div>
 

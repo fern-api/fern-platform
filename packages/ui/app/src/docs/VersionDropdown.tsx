@@ -1,10 +1,10 @@
 import { DocsV1Read, type DocsNode } from "@fern-api/fdr-sdk";
-import { getVersionAvailabilityLabel } from "@fern-ui/app-utils";
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import { EndpointAvailabilityTag } from "../api-page/endpoints/EndpointAvailabilityTag";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
 import { useNavigationContext } from "../navigation-context";
+import { getVersionAvailabilityLabel } from "../util/fern";
 
 export declare namespace VersionDropdown {
     export interface Props {

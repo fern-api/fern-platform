@@ -1,4 +1,3 @@
-import { getFullSlugForNavigatable } from "@fern-ui/app-utils";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import { Hit } from "instantsearch.js";
 import { useRouter } from "next/router";
@@ -6,6 +5,7 @@ import React, { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useS
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch-hooks-web";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { useDocsContext } from "../docs-context/useDocsContext";
+import { getFullSlugForNavigatable } from "../util/slug";
 import { SearchHit } from "./SearchHit";
 import type { SearchRecord } from "./types";
 import { getFullPathForSearchRecord } from "./util";

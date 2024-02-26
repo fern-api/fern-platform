@@ -113,6 +113,7 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundPro
                             matchedSection.apiSection.auth,
                             matchedEndpoint,
                             matchedEndpoint.examples[0],
+                            matchedSection.apiSection.types,
                         ),
                     };
                 });

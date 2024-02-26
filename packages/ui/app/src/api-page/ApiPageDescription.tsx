@@ -8,7 +8,7 @@ const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ M
 export declare namespace ApiPageDescription {
     export interface Props {
         className?: string;
-        description?: string;
+        description?: string | null;
         isMarkdown: boolean;
     }
 }

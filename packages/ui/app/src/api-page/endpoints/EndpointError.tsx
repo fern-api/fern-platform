@@ -3,7 +3,7 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { memo, MouseEventHandler } from "react";
 import { FernCollapse } from "../../components/FernCollapse";
-import { ResolvedError, ResolvedTypeReference } from "../../util/resolver";
+import { ResolvedError, ResolvedTypeDefinition, ResolvedTypeShape, unwrapReference } from "../../util/resolver";
 import { toTitleCase } from "../../util/string";
 import { type JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
@@ -21,8 +21,9 @@ export declare namespace EndpointError {
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: string[];
         route: string;
-        availability: APIV1Read.Availability | undefined;
+        availability: APIV1Read.Availability | null | undefined;
         defaultExpandAll?: boolean;
+        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
@@ -37,6 +38,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
     route,
     availability,
     defaultExpandAll = false,
+    types,
 }) {
     return (
         <button
@@ -67,9 +69,9 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                 <FernCollapse isOpen={isSelected} className="w-full">
                     <div className="space-y-2 pt-2">
                         <div className="t-muted w-full text-start text-sm leading-7">
-                            {`This error return ${renderTypeShorthand(error.shape, { withArticle: true })}.`}
+                            {`This error return ${renderTypeShorthand(error.shape, { withArticle: true }, types)}.`}
                         </div>
-                        {shouldHideShape(error.shape) ? null : (
+                        {shouldHideShape(error.shape, types) ? null : (
                             <div className="w-full text-start">
                                 <TypeReferenceDefinitions
                                     isCollapsible
@@ -79,6 +81,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                                     anchorIdParts={anchorIdParts}
                                     route={route}
                                     defaultExpandAll={defaultExpandAll}
+                                    types={types}
                                 />
                             </div>
                         )}
@@ -89,8 +92,8 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
     );
 });
 
-function shouldHideShape(shape: ResolvedTypeReference): boolean {
-    return visitDiscriminatedUnion(shape, "type")._visit<boolean>({
+function shouldHideShape(shape: ResolvedTypeShape, types: Record<string, ResolvedTypeDefinition>): boolean {
+    return visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit<boolean>({
         string: () => true,
         boolean: () => true,
         object: () => true,
@@ -104,14 +107,14 @@ function shouldHideShape(shape: ResolvedTypeReference): boolean {
         uuid: () => true,
         base64: () => true,
         date: () => true,
-        optional: (value) => shouldHideShape(value.shape),
-        list: (value) => shouldHideShape(value.shape),
-        set: (value) => shouldHideShape(value.shape),
+        optional: (value) => shouldHideShape(value.shape, types),
+        list: (value) => shouldHideShape(value.shape, types),
+        set: (value) => shouldHideShape(value.shape, types),
         map: () => false,
         booleanLiteral: () => true,
         stringLiteral: () => true,
         unknown: () => true,
-        reference: (value) => shouldHideShape(value.shape()),
+        alias: (value) => shouldHideShape(value.shape, types),
         _other: () => true,
     });
 }
