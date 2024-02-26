@@ -89,7 +89,13 @@ export function stringifyHttpRequestExampleToCurl({
         .map(([key, value]) => `${key}=${encodeURIComponent(unknownToString(value))}`)
         .join("&");
     const httpRequest =
-        method === "GET" ? (queryParams.length > 0 ? `"${url}?${queryParams}"` : url) : `-X ${method} ${url}`;
+        method !== "GET"
+            ? queryParams.length > 0
+                ? `-X ${method} "${url}?${queryParams}"`
+                : `-X ${method} ${url}`
+            : queryParams.length > 0
+              ? `-G ${url}`
+              : url;
     const headersString = Object.entries(headers)
         .map(([key, value]) => ` \\\n     -H "${key}: ${value}"`)
         .join("");
@@ -98,9 +104,9 @@ export function stringifyHttpRequestExampleToCurl({
     // GET requests don't have a body, so `-d` is used to pass query parameters
     const urlQueriesGetString =
         method === "GET"
-            ? toUrlEncoded(urlQueries).map(
-                  ([key, value]) => ` \\\n     -d ${key.includes("[") ? `"${key}"` : key}=${value}`,
-              )
+            ? toUrlEncoded(urlQueries)
+                  .map(([key, value]) => ` \\\n     -d ${key.includes("[") ? `"${key}"` : key}=${value}`)
+                  .join("")
             : "";
 
     const bodyDataString =

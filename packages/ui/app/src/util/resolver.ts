@@ -9,8 +9,8 @@ import {
     sortKeysByShape,
     stringifyHttpRequestExampleToCurl,
 } from "../api-page/examples/types";
+import { getHighlighterInstance, highlight } from "../commons/fernShiki";
 import { trimCode } from "../commons/FernSyntaxHighlighter";
-import { getHighlighterInstance, highlight } from "../commons/FernSyntaxHighlighterContent";
 import { titleCase } from "./titleCase";
 
 type WithDescription = { description: string | null };

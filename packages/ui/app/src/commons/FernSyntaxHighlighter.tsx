@@ -3,8 +3,9 @@ import { toJsxRuntime } from "hast-util-to-jsx-runtime";
 import { forwardRef, useEffect, useMemo, useState } from "react";
 // @ts-expect-error: the automatic react runtime is untyped.
 import { Fragment, jsx, jsxs } from "react/jsx-runtime";
+import { getHighlighterInstance, highlight } from "./fernShiki";
 import "./FernSyntaxHighlighter.css";
-import { FernSyntaxHighlighterContent, getHighlighterInstance, highlight } from "./FernSyntaxHighlighterContent";
+import { FernSyntaxHighlighterContent } from "./FernSyntaxHighlighterContent";
 
 // [number, number] is a range of lines to highlight
 type HighlightLine = number | [number, number];
