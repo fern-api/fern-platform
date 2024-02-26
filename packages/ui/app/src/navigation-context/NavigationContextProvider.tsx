@@ -196,6 +196,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         <NavigationContext.Provider
             value={{
                 basePath,
+                activeVersion: navigation.versions[navigation.currentVersionIndex ?? 0],
                 selectedSlug,
                 activeNavigatable,
                 justNavigated: justNavigatedTo.current != null,
