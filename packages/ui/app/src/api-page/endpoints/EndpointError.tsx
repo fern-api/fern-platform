@@ -3,7 +3,13 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { memo, MouseEventHandler } from "react";
 import { FernCollapse } from "../../components/FernCollapse";
-import { ResolvedError, ResolvedTypeDefinition, ResolvedTypeShape, unwrapReference } from "../../util/resolver";
+import {
+    dereferenceObjectProperties,
+    ResolvedError,
+    ResolvedTypeDefinition,
+    ResolvedTypeShape,
+    unwrapReference,
+} from "../../util/resolver";
 import { toTitleCase } from "../../util/string";
 import { type JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
@@ -96,7 +102,7 @@ function shouldHideShape(shape: ResolvedTypeShape, types: Record<string, Resolve
     return visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit<boolean>({
         string: () => true,
         boolean: () => true,
-        object: () => true,
+        object: (object) => dereferenceObjectProperties(object, types).length === 0,
         undiscriminatedUnion: () => false,
         discriminatedUnion: () => false,
         enum: () => false,
