@@ -13,6 +13,7 @@ import { CollapseSidebarProvider } from "./CollapseSidebarContext";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
 import { SidebarSection } from "./SidebarSection";
+import { SidebarTabButton } from "./SidebarTabButton";
 import { SidebarNavigation } from "./types";
 
 export interface SidebarProps {
@@ -39,6 +40,25 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
     const { layoutBreakpoint } = useViewportContext();
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
     const searchService = useSearchService();
+
+    const renderTabs = () => {
+        if (navigation.tabs.length === 0) {
+            return null;
+        }
+        return (
+            <ul className="mt-3 flex list-none flex-col">
+                {navigation.tabs.map((tab, idx) => (
+                    <SidebarTabButton
+                        key={idx}
+                        tab={tab}
+                        selected={idx === navigation.currentTabIndex}
+                        slug={tab.urlSlug}
+                    />
+                ))}
+            </ul>
+        );
+    };
+
     return (
         <nav className="h-full w-full lg:pl-1" aria-label="secondary">
             <FernScrollArea
@@ -57,9 +77,8 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                             isScrolled || (isMobileSidebarOpen && ["mobile", "sm", "md"].includes(layoutBreakpoint))
                         }
                         showSearchBar={showSearchBar}
-                        currentTabIndex={navigation.currentTabIndex}
-                        tabs={navigation.tabs}
                     />
+                    {renderTabs()}
                     <CollapseSidebarProvider>
                         <FernTooltipProvider>
                             <SidebarSection
