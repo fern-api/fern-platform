@@ -1,6 +1,5 @@
 import { VersionInfo } from "@fern-api/fdr-sdk";
 import { CaretDownIcon } from "@radix-ui/react-icons";
-import { EndpointAvailabilityTag } from "../api-page/endpoints/EndpointAvailabilityTag";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
 import { useNavigationContext } from "../navigation-context";
@@ -40,20 +39,9 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ currentVersio
                 <FernButton
                     intent="primary"
                     variant="outlined"
-                    text={
-                        currentVersion?.availability != null &&
-                        currentVersion.availability !== "Stable" &&
-                        currentVersion.availability !== "GenerallyAvailable" &&
-                        !currentVersion.id.toLowerCase().includes(currentVersion.availability.toLowerCase()) ? (
-                            <span className="inline-flex items-center gap-2">
-                                {currentVersion.id}
-                                <EndpointAvailabilityTag availability={currentVersion.availability} />
-                            </span>
-                        ) : (
-                            currentVersion?.id
-                        )
-                    }
+                    text={currentVersion?.id}
                     rightIcon={<CaretDownIcon className="transition-transform data-[state=open]:rotate-180" />}
+                    disableAutomaticTooltip
                 />
             </FernDropdown>
         </div>
