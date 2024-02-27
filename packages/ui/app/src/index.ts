@@ -1,4 +1,5 @@
 export { proxyApiHandler } from "./next-apis/proxy";
+export { resolveApiHandler } from "./next-apis/resolve-api";
 export { revalidateAllApiHandler } from "./next-apis/revalidate-all";
 export { revalidateV1ApiHandler } from "./next-apis/revalidate-v1";
 export { revalidateV2ApiHandler } from "./next-apis/revalidate-v2";

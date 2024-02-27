@@ -1,5 +1,6 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { type SerializedMdxContent } from "./mdx";
+import { ResolvedNavigationItemApiSection } from "./resolver";
 
 export declare namespace ResolvedPath {
     interface Neighbor {
@@ -25,7 +26,7 @@ export declare namespace ResolvedPath {
     interface ApiPage {
         type: "api-page";
         fullSlug: string;
-        apiSection: DocsV1Read.ApiSection;
+        apiSection: ResolvedNavigationItemApiSection;
         neighbors: Neighbors;
     }
 }

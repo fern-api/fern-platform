@@ -1,7 +1,7 @@
 import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import "@fontsource/ibm-plex-mono";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { initializePosthog } from "../analytics/posthog";
 import { CONTEXTS } from "../contexts";
 import { DocsContextProvider } from "../docs-context/DocsContextProvider";
@@ -19,7 +19,6 @@ export declare namespace App {
         search: DocsV1Read.SearchInfo;
         algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
         files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
-        apis: ResolvedNavigationItemApiSection[];
         resolvedPath: ResolvedPath;
     }
 }
@@ -31,17 +30,44 @@ export const DocsApp: React.FC<App.Props> = ({
     search: unmemoizedSearch,
     algoliaSearchIndex,
     files,
-    apis: unmemoizedApis,
-    resolvedPath,
+    resolvedPath: unmemoizedResolvedPath,
 }) => {
     const search = useDeepCompareMemoize(unmemoizedSearch);
-    const apis = useDeepCompareMemoize(unmemoizedApis);
+    const resolvedPath = useDeepCompareMemoize(unmemoizedResolvedPath);
     const config = useDeepCompareMemoize(unmemoizedConfig);
     const navigation = useDeepCompareMemoize(unmemoizedNavigation);
 
     useEffect(() => {
         initializePosthog();
     }, []);
+
+    const [storedApis, setApis] = useState<ResolvedNavigationItemApiSection[]>(() =>
+        resolvedPath.type === "api-page" ? [resolvedPath.apiSection] : [],
+    );
+
+    useEffect(() => {
+        if (resolvedPath.type === "api-page") {
+            setApis((prev) => {
+                if (prev.find((item) => item.api === resolvedPath.apiSection.api)) {
+                    return prev;
+                }
+                return prev.concat(resolvedPath.apiSection);
+            });
+        }
+    }, [resolvedPath, resolvedPath.fullSlug, resolvedPath.type]);
+
+    useEffect(() => {
+        if (resolvedPath.type === "api-page") {
+            void fetch(`/api/resolve-api?path=${resolvedPath.fullSlug}`).then(async (response) => {
+                if (response.ok) {
+                    const api = (await response.json()) as ResolvedNavigationItemApiSection;
+                    setApis((prev) => prev.filter((item) => item.api !== api.api).concat(api));
+                }
+            });
+        }
+    }, [resolvedPath]);
+
+    const apis = storedApis.length === 0 && resolvedPath.type === "api-page" ? [resolvedPath.apiSection] : storedApis;
 
     return (
         <div className="flex min-h-screen flex-1">

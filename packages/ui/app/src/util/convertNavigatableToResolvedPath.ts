@@ -1,5 +1,6 @@
 import type { DocsNode, FdrAPI, NavigatableDocsNode, PathResolver } from "@fern-api/fdr-sdk";
 import type { ResolvedPath } from "./ResolvedPath";
+import { ResolvedNavigationItemApiSection, ResolvedSubpackage } from "./resolver";
 import { serializeNavigatableNode } from "./serialize-node";
 import { getFullSlugForNavigatable } from "./slug";
 
@@ -8,11 +9,13 @@ export async function convertNavigatableToResolvedPath({
     navigatable,
     docsDefinition,
     basePath,
+    apiSections,
 }: {
     resolver: PathResolver;
     navigatable: NavigatableDocsNode;
     docsDefinition: FdrAPI.docs.v1.read.DocsDefinition;
     basePath: string | undefined;
+    apiSections: ResolvedNavigationItemApiSection[];
 }): Promise<ResolvedPath> {
     const fullSlug = getFullSlugForNavigatable(navigatable, { omitDefault: true, basePath });
     const serializedNavigatable = await serializeNavigatableNode({
@@ -41,14 +44,46 @@ export async function convertNavigatableToResolvedPath({
         case "webhook":
         case "top-level-webhook":
         case "websocket":
-        case "top-level-websocket":
+        case "top-level-websocket": {
+            const foundApiSection = apiSections.find(({ api }) => api === serializedNavigatable.section.api);
+            if (foundApiSection == null) {
+                throw new Error(`Could not find API section for API: ${serializedNavigatable.section.api}`);
+            }
             return {
                 type: "api-page",
                 fullSlug,
-                apiSection: serializedNavigatable.section,
+                apiSection: findAndPruneApiSection(fullSlug, foundApiSection),
                 neighbors,
             };
+        }
     }
+}
+
+function findAndPruneApiSection(
+    fullSlug: string,
+    apiSection: ResolvedNavigationItemApiSection,
+): ResolvedNavigationItemApiSection {
+    return {
+        ...apiSection,
+        endpoints: apiSection.endpoints.filter((endpoint) => endpoint.slug.join("/") === fullSlug),
+        websockets: apiSection.websockets.filter((websocket) => websocket.slug.join("/") === fullSlug),
+        webhooks: apiSection.webhooks.filter((webhook) => webhook.slug.join("/") === fullSlug),
+        subpackages: apiSection.subpackages
+            .filter((subpackage) => fullSlug.startsWith(subpackage.slug.join("/")))
+            .map((subpackage) => findAndPruneApiSubpackage(fullSlug, subpackage)),
+    };
+}
+
+function findAndPruneApiSubpackage(fullSlug: string, subpackage: ResolvedSubpackage): ResolvedSubpackage {
+    return {
+        ...subpackage,
+        endpoints: subpackage.endpoints.filter((endpoint) => endpoint.slug.join("/") === fullSlug),
+        websockets: subpackage.websockets.filter((websocket) => websocket.slug.join("/") === fullSlug),
+        webhooks: subpackage.webhooks.filter((webhook) => webhook.slug.join("/") === fullSlug),
+        subpackages: subpackage.subpackages
+            .filter((subpackage) => fullSlug.startsWith(subpackage.slug.join("/")))
+            .map((subpackage) => findAndPruneApiSubpackage(fullSlug, subpackage)),
+    };
 }
 
 function getNeighbor(

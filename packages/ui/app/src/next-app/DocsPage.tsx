@@ -10,11 +10,7 @@ import { resolveSidebarNodes, SidebarNavigation } from "../sidebar/types";
 import { buildUrl } from "../util/buildUrl";
 import { convertNavigatableToResolvedPath } from "../util/convertNavigatableToResolvedPath";
 import { type ResolvedPath } from "../util/ResolvedPath";
-import {
-    crawlResolvedNavigationItemApiSections,
-    ResolvedNavigationItemApiSection,
-    resolveNavigationItems,
-} from "../util/resolver";
+import { crawlResolvedNavigationItemApiSections, resolveNavigationItems } from "../util/resolver";
 import { DocsApp } from "./DocsApp";
 import { renderThemeStylesheet } from "./utils/renderThemeStylesheet";
 
@@ -27,7 +23,6 @@ export declare namespace DocsPage {
         search: DocsV1Read.SearchInfo;
         algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
         files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
-        apis: ResolvedNavigationItemApiSection[];
         resolvedPath: ResolvedPath;
     }
 }
@@ -38,7 +33,6 @@ export function DocsPage({
     search,
     algoliaSearchIndex,
     files,
-    apis,
     resolvedPath,
     navigation,
 }: DocsPage.Props): ReactElement {
@@ -70,7 +64,6 @@ export function DocsPage({
                 search={search}
                 algoliaSearchIndex={algoliaSearchIndex}
                 files={files}
-                apis={apis}
                 resolvedPath={resolvedPath}
                 navigation={navigation}
             />
@@ -135,13 +128,6 @@ export const getDocsPageProps = async (
         };
     }
 
-    const resolvedPath = await convertNavigatableToResolvedPath({
-        resolver,
-        navigatable,
-        docsDefinition,
-        basePath,
-    });
-
     const unresolvedNavigationItems =
         navigatable.context.type === "versioned-tabbed" || navigatable.context.type === "unversioned-tabbed"
             ? navigatable.context.tab.items
@@ -155,6 +141,14 @@ export const getDocsPageProps = async (
                   await resolveNavigationItems(unresolvedNavigationItems ?? [], apis, versionAndTabSlug),
               );
 
+    const resolvedPath = await convertNavigatableToResolvedPath({
+        resolver,
+        navigatable,
+        docsDefinition,
+        basePath,
+        apiSections,
+    });
+
     const navigation = getNavigation(basePath, docs.body.definition.apis, navigatable);
 
     return {
@@ -166,7 +160,6 @@ export const getDocsPageProps = async (
             search: docs.body.definition.search,
             algoliaSearchIndex: docs.body.definition.algoliaSearchIndex ?? null,
             files: docs.body.definition.filesV2,
-            apis: apiSections,
             resolvedPath,
             navigation,
         },
@@ -188,7 +181,7 @@ export const getDocsPageStaticProps: GetStaticProps<DocsPage.Props> = async ({ p
     });
 };
 
-function getVersionAndTabSlug(basePath: string | undefined, navigatable: NavigatableDocsNode) {
+export function getVersionAndTabSlug(basePath: string | undefined, navigatable: NavigatableDocsNode): string[] {
     const versionAndTabSlug = [];
     if (basePath != null) {
         versionAndTabSlug.push(...basePath.split("/").filter((s) => s.length > 0));

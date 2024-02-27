@@ -19,7 +19,15 @@ const nextConfig = {
                 source: "/_next/:path*",
                 destination: "/_next/:path*",
             },
-            ...["proxy", "revalidate-all", "revalidate-v2", "revalidate", "serialize-mdx", "sitemap"].map((prefix) => ({
+            ...[
+                "proxy",
+                "revalidate-all",
+                "revalidate-v2",
+                "revalidate",
+                "serialize-mdx",
+                "sitemap",
+                "resolve-api",
+            ].map((prefix) => ({
                 source: `/api/${prefix}`,
                 destination: `/api/${prefix}`,
             })),
