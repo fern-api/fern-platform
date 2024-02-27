@@ -1,7 +1,6 @@
-import { useBooleanState } from "@fern-ui/react-commons";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import classNames from "classnames";
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { Search } from "react-feather";
 import { Chip } from "../../../components/Chip";
 import { FernButton } from "../../../components/FernButton";
@@ -29,18 +28,10 @@ export const EnumTypeDefinition = ({
     showText,
 }: EnumTypeDefinitionProps): ReactElement => {
     const [searchInput, setSearchInput] = useState("");
-    const shouldAutoFocus = useBooleanState(false);
-
-    useEffect(() => {
-        if (isCollapsed) {
-            shouldAutoFocus.setFalse();
-        }
-    }, [isCollapsed, shouldAutoFocus]);
-
     const hideText = (
         <div className="-mx-1 py-1">
             <FernInput
-                autoFocus={shouldAutoFocus.value}
+                autoFocus={true}
                 type="search"
                 placeholder="Search..."
                 value={searchInput}

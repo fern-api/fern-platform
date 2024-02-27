@@ -30,7 +30,7 @@ export const FernCollapseWithButton: FC<PropsWithChildren<FernCollapseWithButton
         <div
             className={classNames(
                 "fern-collapse-with-button data-[state=opening]:overflow-hidden data-[state=closing]:overflow-hidden",
-                "ring-border-default flex flex-col rounded-lg ring-1 ring-inset divide-border-default divide-y",
+                "ring-border-default flex flex-col rounded-lg ring-1 ring-inset",
                 {
                     "w-full": isFullWidth,
                     "w-fit max-sm:w-full": !isFullWidth,
@@ -40,7 +40,10 @@ export const FernCollapseWithButton: FC<PropsWithChildren<FernCollapseWithButton
         >
             <FernButton
                 {...buttonProps}
-                className={classNames("fern-collapse-trigger text-left", buttonProps?.className)}
+                className={classNames(
+                    "fern-collapse-trigger text-left shadow-[inset_0_-1px] shadow-border-default data-[state=closed]:shadow-none",
+                    buttonProps?.className,
+                )}
                 onClick={(e) => {
                     toggleIsOpen();
                     e.stopPropagation();
