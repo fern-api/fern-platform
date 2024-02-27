@@ -1,6 +1,6 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { PrimitiveAtom, useAtom } from "jotai";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { FlattenedApiDefinition } from "../util/flattenApiDefinition";
 import { resolveApiDefinition, ResolvedRootPackage } from "../util/resolver";
 import { ApiPackageContents } from "./ApiPackageContents";
@@ -9,7 +9,7 @@ import { areApiArtifactsNonEmpty } from "./artifacts/areApiArtifactsNonEmpty";
 
 export declare namespace ApiPage {
     export interface Props {
-        apiDefinition: ResolvedRootPackage;
+        api: string;
         artifacts: DocsV1Read.ApiArtifacts | null;
         showErrors: boolean;
         fullSlug: string;
@@ -20,7 +20,7 @@ export declare namespace ApiPage {
 }
 
 export const ApiPage: React.FC<ApiPage.Props> = ({
-    apiDefinition,
+    api,
     artifacts,
     showErrors,
     fullSlug,
@@ -28,11 +28,11 @@ export const ApiPage: React.FC<ApiPage.Props> = ({
     skipUrlSlug,
     atomApi,
 }) => {
-    const [definition, setDefinition] = useState<ResolvedRootPackage>(apiDefinition);
-    const [, setDefinitions] = useAtom(atomApi);
+    const [definitions, setDefinitions] = useAtom(atomApi);
+    const definition = definitions[api];
 
     useEffect(() => {
-        let url = `/api/resolve-api?path=${fullSlug}&api=${apiDefinition.api}`;
+        let url = `/api/resolve-api?path=${fullSlug}&api=${api}`;
         if (!skipUrlSlug) {
             url += `&slug=${sectionUrlSlug}`;
         }
@@ -41,12 +41,15 @@ export const ApiPage: React.FC<ApiPage.Props> = ({
                 const api = (await response.json()) as FlattenedApiDefinition | null;
                 if (api != null) {
                     const resolvedApi = await resolveApiDefinition(api);
-                    setDefinition(resolvedApi);
                     setDefinitions((prev) => ({ ...prev, [resolvedApi.api]: resolvedApi }));
                 }
             }
         });
-    }, [apiDefinition.api, fullSlug, sectionUrlSlug, setDefinitions, skipUrlSlug]);
+    }, [api, fullSlug, sectionUrlSlug, setDefinitions, skipUrlSlug]);
+
+    if (definition == null) {
+        return null;
+    }
 
     return (
         <div className="min-h-0 pb-36">
@@ -55,7 +58,7 @@ export const ApiPage: React.FC<ApiPage.Props> = ({
             )}
 
             <ApiPackageContents
-                api={definition.api}
+                api={api}
                 types={definition.types}
                 showErrors={showErrors}
                 apiDefinition={definition}
