@@ -2,6 +2,7 @@ import type { DocsNode, FdrAPI, NavigatableDocsNode, PathResolver } from "@fern-
 import { flattenApiDefinition } from "./flattenApiDefinition";
 import { serializeMdxContent } from "./mdx";
 import type { ResolvedPath } from "./ResolvedPath";
+import { resolveApiDefinition } from "./resolver";
 import { getFullSlugForNavigatable } from "./slug";
 
 export async function convertNavigatableToResolvedPath({
@@ -59,13 +60,13 @@ export async function convertNavigatableToResolvedPath({
                 : [...parentSlugs, navigatable.section.urlSlug];
             const flattenedApiDefinition = flattenApiDefinition(api, apiDefinitionParentSlug);
             // const [prunedApiDefinition] = findAndPruneApiSection(fullSlug, flattenedApiDefinition);
-            // const apiDefinition = await resolveApiDefinition(prunedApiDefinition);
+            const apiDefinition = resolveApiDefinition(flattenedApiDefinition);
 
             return {
                 type: "api-page",
                 fullSlug,
                 api: navigatable.section.api,
-                apiDefinition: flattenedApiDefinition,
+                apiDefinition,
                 artifacts: navigatable.section.artifacts ?? null,
                 showErrors: navigatable.section.showErrors,
                 neighbors,

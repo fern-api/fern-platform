@@ -1,16 +1,15 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { useSetAtom } from "jotai";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { APIS } from "../sidebar/atom";
-import { FlattenedApiDefinition } from "../util/flattenApiDefinition";
-import { resolveApiDefinition } from "../util/resolver";
+import { ResolvedRootPackage } from "../util/resolver";
 import { ApiPackageContents } from "./ApiPackageContents";
 import { ApiArtifacts } from "./artifacts/ApiArtifacts";
 import { areApiArtifactsNonEmpty } from "./artifacts/areApiArtifactsNonEmpty";
 
 export declare namespace ApiPage {
     export interface Props {
-        initialApi: FlattenedApiDefinition;
+        initialApi: ResolvedRootPackage;
         artifacts: DocsV1Read.ApiArtifacts | null;
         showErrors: boolean;
         fullSlug: string;
@@ -30,10 +29,9 @@ export const ApiPage: React.FC<ApiPage.Props> = ({
     const setDefinitions = useSetAtom(APIS);
     // const definition = apis[initialApi.api];
 
-    const resolvedApi = useMemo(() => resolveApiDefinition(initialApi), [initialApi]);
     useEffect(() => {
-        setDefinitions((prev) => ({ ...prev, [resolvedApi.api]: resolvedApi }));
-    }, [resolvedApi, setDefinitions]);
+        setDefinitions((prev) => ({ ...prev, [initialApi.api]: initialApi }));
+    }, [initialApi, setDefinitions]);
 
     // useEffect(() => {
     //     void resolveApiDefinition(initialApi).then((resolvedApi) => {
@@ -65,14 +63,14 @@ export const ApiPage: React.FC<ApiPage.Props> = ({
     return (
         <div className="min-h-0 pb-36">
             {artifacts != null && areApiArtifactsNonEmpty(artifacts) && (
-                <ApiArtifacts apiArtifacts={artifacts} apiDefinition={resolvedApi} />
+                <ApiArtifacts apiArtifacts={artifacts} apiDefinition={initialApi} />
             )}
 
             <ApiPackageContents
                 api={initialApi.api}
-                types={resolvedApi.types}
+                types={initialApi.types}
                 showErrors={showErrors}
-                apiDefinition={resolvedApi}
+                apiDefinition={initialApi}
                 isLastInParentPackage={true}
                 anchorIdParts={[]}
             />
