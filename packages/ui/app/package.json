@@ -53,6 +53,7 @@
     "classnames": "^2.5.1",
     "hast": "^1.0.0",
     "hast-util-to-jsx-runtime": "^2.3.0",
+    "hastscript": "^9.0.0",
     "instantsearch.js": "^4.63.0",
     "jotai": "^2.6.0",
     "jsonpath": "^1.1.1",
