@@ -45,7 +45,7 @@ export const WebhookExample: React.FC<WebhookExample.Props> = ({ example }) => {
                             e.stopPropagation();
                         }}
                         copyToClipboardText={() => payloadJsonString}
-                        hast={example.hast}
+                        code={JSON.stringify(example.payload, null, 2)}
                         language="json"
                         hoveredPropertyPath={hoveredPayloadPropertyPath}
                         json={example.payload}
