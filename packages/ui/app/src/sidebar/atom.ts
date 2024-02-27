@@ -1,9 +1,11 @@
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { useTheme } from "next-themes";
 import { useCallback, useEffect } from "react";
+import { ResolvedRootPackage } from "../util/resolver";
 
 export const SEARCH_DIALOG_OPEN_ATOM = atom(false);
 export const MOBILE_SIDEBAR_OPEN_ATOM = atom(false);
+export const APIS = atom<Record<string, ResolvedRootPackage>>({});
 
 export function useMessageHandler(): void {
     const openSearchDialog = useOpenSearchDialog();

@@ -1,8 +1,7 @@
 import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import "@fontsource/ibm-plex-mono";
-import { atom } from "jotai";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect } from "react";
 import { initializePosthog } from "../analytics/posthog";
 import { CONTEXTS } from "../contexts";
 import { DocsContextProvider } from "../docs-context/DocsContextProvider";
@@ -41,15 +40,6 @@ export const DocsApp: React.FC<App.Props> = ({
         initializePosthog();
     }, []);
 
-    const apis = useMemo(() => {
-        if (resolvedPath.type === "api-page") {
-            return { [resolvedPath.api]: resolvedPath.apiDefinition };
-        } else {
-            return {};
-        }
-    }, [resolvedPath]);
-    const apisAtom = useRef(atom(apis));
-
     return (
         <div className="flex min-h-screen flex-1">
             <div className="w-full">
@@ -66,8 +56,6 @@ export const DocsApp: React.FC<App.Props> = ({
                             <Docs
                                 config={config}
                                 search={search}
-                                apis={apis}
-                                apisAtom={apisAtom.current}
                                 navigation={navigation}
                                 algoliaSearchIndex={algoliaSearchIndex}
                             />

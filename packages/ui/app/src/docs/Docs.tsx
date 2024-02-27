@@ -2,7 +2,6 @@ import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
 import classNames from "classnames";
-import { PrimitiveAtom } from "jotai";
 import { useTheme } from "next-themes";
 import dynamic from "next/dynamic";
 import NextNProgress from "nextjs-progressbar";
@@ -19,7 +18,6 @@ import {
     useOpenSearchDialog,
 } from "../sidebar/atom";
 import { SidebarNavigation } from "../sidebar/types";
-import { ResolvedRootPackage } from "../util/resolver";
 import { useViewportContext } from "../viewport-context/useViewportContext";
 import { BgImageGradient } from "./BgImageGradient";
 import { DocsMainContent } from "./DocsMainContent";
@@ -31,8 +29,6 @@ const Sidebar = dynamic(() => import("../sidebar/Sidebar").then(({ Sidebar }) =>
 interface DocsProps {
     config: DocsV1Read.DocsConfig;
     search: DocsV1Read.SearchInfo;
-    apis: Record<string, ResolvedRootPackage>;
-    apisAtom: PrimitiveAtom<Record<string, ResolvedRootPackage>>;
     navigation: SidebarNavigation;
     algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
 }
@@ -44,7 +40,6 @@ export const SearchDialog = dynamic(() => import("../search/SearchDialog").then(
 export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs({
     config,
     search,
-    apisAtom,
     navigation,
     algoliaSearchIndex,
 }) {
@@ -121,7 +116,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
             <BgImageGradient colors={colorsV3} hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage} />
             {searchService.isAvailable && <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />}
 
-            <ApiPlaygroundContextProvider navigation={navigation.sidebarNodes} apisAtom={apisAtom}>
+            <ApiPlaygroundContextProvider navigation={navigation.sidebarNodes}>
                 <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col">
                     <header id="fern-header">
                         <div
@@ -158,7 +153,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                         />
 
                         <main className={classNames("relative flex w-full min-w-0 flex-1 flex-col pt-header-height")}>
-                            <DocsMainContent apisAtom={apisAtom} />
+                            <DocsMainContent />
                         </main>
                     </div>
 

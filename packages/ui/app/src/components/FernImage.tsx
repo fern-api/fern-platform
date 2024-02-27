@@ -19,7 +19,7 @@ export function FernImage({ src, ...props }: FernImage.Props): ReactElement | nu
     return visitDiscriminatedUnion(src, "type")._visit({
         url: ({ url }) => {
             const { fill, loader, quality, priority, placeholder, blurDataURL, unoptimized, ...imgProps } = props;
-            return <img {...props} {...imgProps} src={url} />;
+            return <img {...imgProps} src={url} />;
         },
         image: ({ url, width: realWidth, height: realHeight, blurDataUrl, alt }) => {
             const { width: layoutWidth, height: layoutHeight } = props;

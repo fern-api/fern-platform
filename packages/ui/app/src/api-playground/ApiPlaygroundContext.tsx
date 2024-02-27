@@ -1,12 +1,13 @@
-import { PrimitiveAtom, useAtom } from "jotai";
+import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { mapValues, noop } from "lodash-es";
 import dynamic from "next/dynamic";
 import { createContext, FC, PropsWithChildren, useCallback, useContext, useMemo, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { useDocsContext } from "../docs-context/useDocsContext";
+import { APIS } from "../sidebar/atom";
 import { SidebarNode } from "../sidebar/types";
-import { flattenRootPackage, isEndpoint, ResolvedApiDefinition, ResolvedRootPackage } from "../util/resolver";
+import { flattenRootPackage, isEndpoint, ResolvedApiDefinition } from "../util/resolver";
 import {
     ApiPlaygroundSelectionState,
     createFormStateKey,
@@ -42,8 +43,6 @@ export const PLAYGROUND_FORM_STATE_ATOM = atomWithStorage<Record<string, Playgro
 
 interface ApiPlaygroundProps {
     navigation: SidebarNode[];
-    apisAtom: PrimitiveAtom<Record<string, ResolvedRootPackage>>;
-    // apis: Record<string, ResolvedRootPackage>;
 }
 
 const CUSTOMERS = ["cloudflare", "assemblyai", "cohere", "shipbob", "hume", "flagright", "sayari", "webflow", "dapi"];
@@ -61,12 +60,8 @@ function isApiPlaygroundEnabled(domain: string) {
     return process.env.NODE_ENV !== "production";
 }
 
-export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundProps>> = ({
-    children,
-    navigation,
-    apisAtom,
-}) => {
-    const [apis] = useAtom(apisAtom);
+export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundProps>> = ({ children, navigation }) => {
+    const [apis] = useAtom(APIS);
     const { domain } = useDocsContext();
     const [selectionState, setSelectionState] = useState<ApiPlaygroundSelectionState | undefined>();
 

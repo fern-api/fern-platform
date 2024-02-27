@@ -9,3 +9,15 @@ export function getRouteSelector(route: string): string {
 export function getRouteNode(route: string): HTMLElement | undefined {
     return document.querySelector<HTMLElement>(getRouteSelector(route)) ?? undefined;
 }
+
+export function getRouteAndAnchorNode(route: string): HTMLElement | undefined {
+    const [routeWithoutAnchor, anchor] = route.split("#");
+    if (routeWithoutAnchor != null) {
+        return (
+            getRouteNode(route) ??
+            getRouteNode(routeWithoutAnchor) ??
+            (anchor != null ? document.getElementById(anchor) ?? undefined : undefined)
+        );
+    }
+    return undefined;
+}

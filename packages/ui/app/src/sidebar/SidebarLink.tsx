@@ -72,6 +72,7 @@ export const SidebarLink = memo(function SidebarSlugLinkContent(
                     toggleExpand?.();
                 }}
                 shallow={shallow}
+                scroll={false}
             >
                 {child}
             </Link>

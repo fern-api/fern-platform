@@ -45,7 +45,6 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     defaultExpandAll = false,
     types,
 }) => {
-    // const { hydrated, justNavigated } = useNavigationContext();
     const router = useRouter();
 
     const collapsableContent = useMemo(

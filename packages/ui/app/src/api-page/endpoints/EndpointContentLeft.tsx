@@ -222,7 +222,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                         ).map((error, idx) => {
                             return (
                                 <EndpointError
-                                    key={error.name ?? error.statusCode}
+                                    key={idx}
                                     error={error}
                                     isFirst={idx === 0}
                                     isLast={idx === endpoint.errors.length - 1}

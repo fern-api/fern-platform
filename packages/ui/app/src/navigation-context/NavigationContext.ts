@@ -7,7 +7,6 @@ import { type ResolvedPath } from "../util/ResolvedPath";
 export const NavigationContext = React.createContext<NavigationContextValue>({
     basePath: undefined,
     activeVersion: undefined,
-    justNavigated: false,
     selectedSlug: "",
     activeNavigatable: undefined,
     onScrollToPath: noop,
@@ -34,7 +33,6 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
 export interface NavigationContextValue {
     basePath: string | undefined;
     activeVersion: VersionInfo | undefined;
-    justNavigated: boolean;
     selectedSlug: string;
     activeNavigatable: SidebarNode.Page | undefined;
     onScrollToPath: (slug: string) => void;
