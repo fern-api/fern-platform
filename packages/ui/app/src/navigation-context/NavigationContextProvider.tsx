@@ -1,8 +1,7 @@
 import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
-import { debounce } from "lodash-es";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { PropsWithChildren, useEffect, useRef, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { useCloseMobileSidebar, useCloseSearchDialog } from "../sidebar/atom";
 import { resolveActiveSidebarNode, SidebarNavigation, SidebarNode } from "../sidebar/types";
 import { getRouteNode } from "../util/anchor";
@@ -20,6 +19,32 @@ export declare namespace NavigationContextProvider {
     }>;
 }
 
+let userIsScrolling = false;
+let userIsScrollingTimeout: number;
+let justNavigated = false;
+let justNavigatedTimeout: number;
+let justNavigatedTo: string | undefined;
+
+function navigateToRoute(route: string, _disableSmooth = false) {
+    const [routeWithoutAnchor, anchor] = route.split("#");
+    if (!userIsScrolling && routeWithoutAnchor != null) {
+        // fallback to "routeWithoutAnchor" if anchor is not detected (otherwise API reference will scroll to top)
+        const node =
+            getRouteNode(route) ??
+            getRouteNode(routeWithoutAnchor) ??
+            (anchor != null ? document.getElementById(anchor) : undefined);
+        node?.scrollIntoView({
+            behavior: "auto",
+        });
+
+        // on mobile, the scrollToTop is not working, so we need to force it
+        if (node == null) {
+            window.scrollTo(0, 0);
+        }
+    }
+    justNavigatedTo = route;
+}
+
 export const NavigationContextProvider: React.FC<NavigationContextProvider.Props> = ({
     resolvedPath,
     children,
@@ -27,12 +52,10 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     navigation,
 }) => {
     const router = useRouter();
-    const userIsScrolling = useRef(false);
     const resolvedRoute = getRouteForResolvedPath({
         resolvedSlug: resolvedPath.fullSlug,
         asPath: router.asPath, // do not include basepath because it is already included
     });
-    const justNavigatedTo = useRef<string | undefined>(resolvedRoute);
 
     const [activeNavigatable, setActiveNavigatable] = useState(() =>
         resolveActiveSidebarNode(navigation.sidebarNodes, resolvedPath.fullSlug.split("/")),
@@ -40,30 +63,10 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     const selectedSlug = activeNavigatable?.slug.join("/") ?? "";
 
-    const navigateToRoute = useRef((route: string, _disableSmooth = false) => {
-        const [routeWithoutAnchor, anchor] = route.split("#");
-        if (!userIsScrolling.current && routeWithoutAnchor != null) {
-            // fallback to "routeWithoutAnchor" if anchor is not detected (otherwise API reference will scroll to top)
-            const node =
-                getRouteNode(route) ??
-                getRouteNode(routeWithoutAnchor) ??
-                (anchor != null ? document.getElementById(anchor) : undefined);
-            node?.scrollIntoView({
-                behavior: "auto",
-            });
-
-            // on mobile, the scrollToTop is not working, so we need to force it
-            if (node == null) {
-                window.scrollTo(0, 0);
-            }
-        }
-        justNavigatedTo.current = route;
-    });
-
     // on mount, scroll directly to routed element
     useEffect(() => {
         const handleInit = () => {
-            navigateToRoute.current(resolvedRoute);
+            navigateToRoute(resolvedRoute);
         };
         handleInit();
         window.addEventListener("DOMContentLoaded", handleInit);
@@ -73,31 +76,19 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const setUserIsScrollingFalse = useRef(
-        debounce(
-            () => {
-                userIsScrolling.current = false;
-            },
-            300,
-            { leading: false, trailing: true },
-        ),
-    );
-
-    const resizeObserver = useRef<ResizeObserver>();
-
     useEffect(() => {
         const handleNavigate = () => {
-            if (justNavigatedTo.current != null) {
-                navigateToRoute.current(justNavigatedTo.current, true);
+            if (justNavigatedTo != null) {
+                navigateToRoute(justNavigatedTo, true);
             }
         };
 
         handleNavigate();
-        resizeObserver.current = new window.ResizeObserver(handleNavigate);
-        resizeObserver.current.observe(document.body);
+        const resizeObserver = new window.ResizeObserver(handleNavigate);
+        resizeObserver.observe(document.body);
 
         return () => {
-            resizeObserver.current?.disconnect();
+            resizeObserver.disconnect();
         };
     }, []);
 
@@ -106,9 +97,12 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             return;
         }
         const handleScroll = () => {
-            userIsScrolling.current = true;
-            setUserIsScrollingFalse.current();
-            justNavigatedTo.current = undefined;
+            userIsScrolling = true;
+            justNavigatedTo = undefined;
+            clearTimeout(userIsScrollingTimeout);
+            userIsScrollingTimeout = window.setTimeout(() => {
+                userIsScrolling = false;
+            }, 150); // reaction time
         };
         window.addEventListener("wheel", handleScroll);
         window.addEventListener("touchmove", handleScroll);
@@ -119,13 +113,11 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         };
     }, []);
 
-    const justNavigated = useRef(false);
-
     // const navigateToPathListeners = useSlugListeners("navigateToPath", { selectedSlug });
     const scrollToPathListeners = useSlugListeners("scrollToPath", { selectedSlug });
 
     const onScrollToPath = useEventCallback((fullSlug: string) => {
-        if (justNavigated.current || fullSlug === selectedSlug) {
+        if (justNavigated || fullSlug === selectedSlug) {
             return;
         }
         setActiveNavigatable(resolveActiveSidebarNode(navigation.sidebarNodes, fullSlug.split("/")));
@@ -134,18 +126,16 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         scrollToPathListeners.invokeListeners(fullSlug);
     });
 
-    const timeout = useRef<NodeJS.Timeout>();
-
     const navigateToPath = useEventCallback((route: string, shallow = false) => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const fullSlug = route.substring(1).split("#")[0]!;
-        justNavigated.current = true;
-        navigateToRoute.current(route, !shallow);
+        justNavigated = true;
+        navigateToRoute(route, !shallow);
         setActiveNavigatable(resolveActiveSidebarNode(navigation.sidebarNodes, fullSlug.split("/")));
         // navigateToPathListeners.invokeListeners(slug);
-        timeout.current != null && clearTimeout(timeout.current);
-        timeout.current = setTimeout(() => {
-            justNavigated.current = false;
+        justNavigatedTimeout != null && clearTimeout(justNavigatedTimeout);
+        justNavigatedTimeout = window.setTimeout(() => {
+            justNavigated = false;
         }, 500);
     });
 
