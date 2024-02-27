@@ -3,12 +3,7 @@ import { Root } from "hast";
 import { memo } from "react";
 import { ApiPlaygroundButton } from "../../api-playground/ApiPlaygroundButton";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
-import {
-    ResolvedApiDefinitionPackage,
-    ResolvedEndpointDefinition,
-    ResolvedExampleEndpointCall,
-    ResolvedNavigationItemApiSection,
-} from "../../util/resolver";
+import { ResolvedEndpointDefinition, ResolvedExampleEndpointCall } from "../../util/resolver";
 import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 import { CodeSnippetExample, lineNumberOf } from "../examples/CodeSnippetExample";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
@@ -17,8 +12,7 @@ import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 
 export declare namespace EndpointContentCodeSnippets {
     export interface Props {
-        apiSection: ResolvedNavigationItemApiSection;
-        apiDefinition: ResolvedApiDefinitionPackage;
+        api: string;
         endpoint: ResolvedEndpointDefinition;
         example: ResolvedExampleEndpointCall;
         clients: CodeExampleGroup[];
@@ -40,7 +34,7 @@ export declare namespace EndpointContentCodeSnippets {
 const TITLED_EXAMPLE_PADDING = 43;
 
 const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippets.Props> = ({
-    apiSection,
+    api,
     endpoint,
     example,
     clients,
@@ -98,7 +92,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 actions={
                     <>
                         <ApiPlaygroundButton
-                            api={apiSection.api}
+                            api={api}
                             endpointId={endpoint.slug.join("/")}
                             // example={selectedClient.exampleCall}
                         />

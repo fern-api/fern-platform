@@ -1,6 +1,6 @@
 import { DocsV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import { API_ARTIFACTS_TITLE } from "../../config";
-import { ResolvedApiDefinitionPackage } from "../../util/resolver";
+import { ResolvedWithApiDefinition } from "../../util/resolver";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { DotNetLogo } from "./sdk-logos/DotNetLogo";
@@ -13,7 +13,7 @@ import { SdkCardLayout } from "./SdkCardLayout";
 
 export declare namespace ApiArtifacts {
     export interface Props {
-        apiDefinition: ResolvedApiDefinitionPackage;
+        apiDefinition: ResolvedWithApiDefinition;
         apiArtifacts: DocsV1Read.ApiArtifacts;
     }
 }

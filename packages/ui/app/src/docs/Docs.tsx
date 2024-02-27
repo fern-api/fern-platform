@@ -18,7 +18,7 @@ import {
     useOpenSearchDialog,
 } from "../sidebar/atom";
 import { SidebarNavigation } from "../sidebar/types";
-import { ResolvedNavigationItemApiSection } from "../util/resolver";
+import { ResolvedRootPackage } from "../util/resolver";
 import { useViewportContext } from "../viewport-context/useViewportContext";
 import { BgImageGradient } from "./BgImageGradient";
 import { DocsMainContent } from "./DocsMainContent";
@@ -30,7 +30,7 @@ const Sidebar = dynamic(() => import("../sidebar/Sidebar").then(({ Sidebar }) =>
 interface DocsProps {
     config: DocsV1Read.DocsConfig;
     search: DocsV1Read.SearchInfo;
-    apis: ResolvedNavigationItemApiSection[];
+    apis: Record<string, ResolvedRootPackage>;
     navigation: SidebarNavigation;
     algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
 }
@@ -119,7 +119,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
             <BgImageGradient colors={colorsV3} hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage} />
             {searchService.isAvailable && <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />}
 
-            <ApiPlaygroundContextProvider navigation={navigation.sidebarNodes} apiSections={apis}>
+            <ApiPlaygroundContextProvider navigation={navigation.sidebarNodes} apis={apis}>
                 <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
                     <header id="fern-header">
                         <div

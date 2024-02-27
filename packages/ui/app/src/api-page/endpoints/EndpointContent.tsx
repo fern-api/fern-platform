@@ -6,13 +6,7 @@ import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useDocsContext } from "../../docs-context/useDocsContext";
-import {
-    ResolvedApiDefinitionPackage,
-    ResolvedEndpointDefinition,
-    ResolvedError,
-    ResolvedNavigationItemApiSection,
-    ResolvedTypeDefinition,
-} from "../../util/resolver";
+import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../util/resolver";
 import { useViewportContext } from "../../viewport-context/useViewportContext";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { Breadcrumbs } from "../Breadcrumbs";
@@ -25,8 +19,8 @@ import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 
 export declare namespace EndpointContent {
     export interface Props {
-        apiSection: ResolvedNavigationItemApiSection;
-        apiDefinition: ResolvedApiDefinitionPackage;
+        api: string;
+        showErrors: boolean;
         endpoint: ResolvedEndpointDefinition;
         breadcrumbs: string[];
         hideBottomSeparator?: boolean;
@@ -67,8 +61,8 @@ function maybeGetErrorStatusCodeOrNameFromAnchor(anchor: string | undefined): nu
 }
 
 export const EndpointContent: React.FC<EndpointContent.Props> = ({
-    apiSection,
-    apiDefinition,
+    api,
+    showErrors,
     endpoint,
     breadcrumbs,
     hideBottomSeparator = false,
@@ -255,22 +249,20 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                             isMarkdown={true}
                         />
 
-                        {apiSection && (
-                            <div className="mt-12 first:mt-8">
-                                <EndpointContentLeft
-                                    endpoint={endpoint}
-                                    apiSection={apiSection}
-                                    onHoverRequestProperty={onHoverRequestProperty}
-                                    onHoverResponseProperty={onHoverResponseProperty}
-                                    selectedError={selectedError}
-                                    setSelectedError={setSelectedError}
-                                    route={route}
-                                    contentType={contentType}
-                                    setContentType={setContentType}
-                                    types={types}
-                                />
-                            </div>
-                        )}
+                        <div className="mt-12 first:mt-8">
+                            <EndpointContentLeft
+                                endpoint={endpoint}
+                                showErrors={showErrors}
+                                onHoverRequestProperty={onHoverRequestProperty}
+                                onHoverResponseProperty={onHoverResponseProperty}
+                                selectedError={selectedError}
+                                setSelectedError={setSelectedError}
+                                route={route}
+                                contentType={contentType}
+                                setContentType={setContentType}
+                                types={types}
+                            />
+                        </div>
                     </div>
 
                     <div
@@ -288,8 +280,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                     >
                         {isInViewport && (
                             <EndpointContentCodeSnippets
-                                apiSection={apiSection}
-                                apiDefinition={apiDefinition}
+                                api={api}
                                 endpoint={endpoint}
                                 example={selectedClient.exampleCall}
                                 clients={clients}

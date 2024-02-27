@@ -1,18 +1,13 @@
 import { joinUrlSlugs } from "@fern-api/fdr-sdk";
 import { useNavigationContext, useShouldHideFromSsg } from "../../navigation-context/useNavigationContext";
-import {
-    ResolvedApiDefinitionPackage,
-    ResolvedEndpointDefinition,
-    ResolvedNavigationItemApiSection,
-    ResolvedTypeDefinition,
-} from "../../util/resolver";
+import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../../util/resolver";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContent } from "./EndpointContent";
 
 export declare namespace Endpoint {
     export interface Props {
-        apiSection: ResolvedNavigationItemApiSection;
-        apiDefinition: ResolvedApiDefinitionPackage;
+        api: string;
+        showErrors: boolean;
         endpoint: ResolvedEndpointDefinition;
         breadcrumbs: string[];
         isLastInApi: boolean;
@@ -20,14 +15,7 @@ export declare namespace Endpoint {
     }
 }
 
-export const Endpoint: React.FC<Endpoint.Props> = ({
-    apiSection,
-    apiDefinition,
-    endpoint,
-    breadcrumbs,
-    isLastInApi,
-    types,
-}) => {
+export const Endpoint: React.FC<Endpoint.Props> = ({ api, showErrors, endpoint, breadcrumbs, isLastInApi, types }) => {
     const { resolvedPath } = useNavigationContext();
     const fullSlug = joinUrlSlugs(...endpoint.slug);
     const route = `/${fullSlug}`;
@@ -43,8 +31,8 @@ export const Endpoint: React.FC<Endpoint.Props> = ({
 
     return (
         <EndpointContent
-            apiSection={apiSection}
-            apiDefinition={apiDefinition}
+            api={api}
+            showErrors={showErrors}
             endpoint={endpoint}
             breadcrumbs={breadcrumbs}
             setContainerRef={setTargetRef}

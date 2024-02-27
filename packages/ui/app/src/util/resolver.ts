@@ -2,7 +2,7 @@ import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { WithoutQuestionMarks } from "@fern-api/fdr-sdk/dist/converters/utils/WithoutQuestionMarks";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { Root } from "hast";
-import { last, mapValues, noop, sortBy } from "lodash-es";
+import { mapValues, sortBy } from "lodash-es";
 import type { Highlighter } from "shiki/index.mjs";
 import {
     endpointExampleToHttpRequestExample,
@@ -11,160 +11,149 @@ import {
 } from "../api-page/examples/types";
 import { getHighlighterInstance, highlight } from "../commons/fernShiki";
 import { trimCode } from "../commons/FernSyntaxHighlighter";
-import { isSubpackage } from "./fern";
+import {
+    FlattenedApiDefinition,
+    FlattenedApiDefinitionPackage,
+    FlattenedEndpointDefinition,
+    FlattenedSubpackage,
+    FlattenedWebhookDefinition,
+    FlattenedWebSocketChannel,
+} from "./flattenApiDefinition";
 import { titleCase } from "./titleCase";
 
 type WithDescription = { description: string | null };
 type WithAvailability = { availability: APIV1Read.Availability | null };
 
-export async function resolveNavigationItems(
-    navigationItems: DocsV1Read.NavigationItem[],
-    apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
-    parentSlugs: string[] = [],
-): Promise<ResolvedNavigationItem[]> {
+// export async function resolveNavigationItems(
+//     navigationItems: DocsV1Read.NavigationItem[],
+//     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
+//     parentSlugs: string[] = [],
+// ): Promise<ResolvedNavigationItem[]> {
+//     const highlighter = await getHighlighterInstance();
+//     return resolveNavigationItemsInternal(navigationItems, apis, highlighter, parentSlugs);
+// }
+
+// function resolveNavigationItemsInternal(
+//     navigationItems: DocsV1Read.NavigationItem[],
+//     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
+//     highlighter: Highlighter,
+//     parentSlugs: string[] = [],
+// ): ResolvedNavigationItemApiSection[] {
+//     const resolvedNavigationItems: ResolvedNavigationItemApiSection[] = [];
+
+//     for (const navigationItem of navigationItems) {
+//         visitDiscriminatedUnion(navigationItem, "type")._visit({
+//             page: noop,
+//             api: (api) => {
+//                 const definition = apis[api.api];
+//                 if (definition != null) {
+//                     const definitionSlug = api.skipUrlSlug ? parentSlugs : [...parentSlugs, api.urlSlug];
+//                     const resolvedTypes = mapValues(definition.types, (type) =>
+//                         resolveTypeDefinition(type, definition.types),
+//                     );
+
+//                     const { endpoints, webhooks, subpackages, websockets } = resolveApiDefinitionPackage(
+//                         definition.auth,
+//                         api.api,
+//                         api.api,
+//                         definition.rootPackage,
+//                         definition.subpackages,
+//                         definition.types,
+//                         resolvedTypes,
+//                         definitionSlug,
+//                         highlighter,
+//                     );
+
+//                     resolvedNavigationItems.push({
+//                         api: api.api,
+//                         title: api.title,
+//                         skipUrlSlug: api.skipUrlSlug,
+//                         artifacts: api.artifacts ?? null,
+//                         showErrors: api.showErrors,
+//                         type: "apiSection",
+//                         auth: definition.auth ?? null,
+//                         hasMultipleBaseUrls: definition.hasMultipleBaseUrls ?? null,
+//                         slug: definitionSlug,
+//                         endpoints,
+//                         websockets,
+//                         webhooks,
+//                         subpackages,
+//                         types: resolvedTypes,
+//                     });
+//                 }
+//             },
+//             section: (section) => {
+//                 const sectionSlug = [...parentSlugs, section.urlSlug];
+//                 resolvedNavigationItems.push(
+//                     ...resolveNavigationItemsInternal(
+//                         section.items,
+//                         apis,
+//                         highlighter,
+//                         section.skipUrlSlug ? parentSlugs : sectionSlug,
+//                     ),
+//                 );
+//             },
+//             link: noop,
+//             _other: noop,
+//         });
+//     }
+
+//     return resolvedNavigationItems;
+// }
+
+export async function resolveApiDefinition(apiDefinition: FlattenedApiDefinition): Promise<ResolvedRootPackage> {
     const highlighter = await getHighlighterInstance();
-    return resolveNavigationItemsInternal(navigationItems, apis, highlighter, parentSlugs);
-}
 
-function resolveNavigationItemsInternal(
-    navigationItems: DocsV1Read.NavigationItem[],
-    apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
-    highlighter: Highlighter,
-    parentSlugs: string[] = [],
-): ResolvedNavigationItem[] {
-    const resolvedNavigationItems: ResolvedNavigationItem[] = [];
+    const resolvedTypes = mapValues(apiDefinition.types, (type) => resolveTypeDefinition(type, apiDefinition.types));
 
-    for (const navigationItem of navigationItems) {
-        visitDiscriminatedUnion(navigationItem, "type")._visit({
-            page: (page) => {
-                const lastResolvedNavigationItem = last(resolvedNavigationItems);
-                if (lastResolvedNavigationItem != null && lastResolvedNavigationItem.type === "pageGroup") {
-                    lastResolvedNavigationItem.pages.push({
-                        ...page,
-                        slug: [...parentSlugs, page.urlSlug],
-                    });
-                } else {
-                    resolvedNavigationItems.push({
-                        type: "pageGroup",
-                        pages: [
-                            {
-                                ...page,
-                                slug: [...parentSlugs, page.urlSlug],
-                            },
-                        ],
-                    });
-                }
-            },
-            api: (api) => {
-                const definition = apis[api.api];
-                if (definition != null) {
-                    const definitionSlug = api.skipUrlSlug ? parentSlugs : [...parentSlugs, api.urlSlug];
-                    const resolvedTypes = mapValues(definition.types, (type) =>
-                        resolveTypeDefinition(type, definition.types),
-                    );
-
-                    const { endpoints, webhooks, subpackages, websockets } = resolveApiDefinitionPackage(
-                        definition.auth,
-                        api.api,
-                        api.api,
-                        definition.rootPackage,
-                        definition.subpackages,
-                        definition.types,
-                        resolvedTypes,
-                        definitionSlug,
-                        highlighter,
-                    );
-
-                    resolvedNavigationItems.push({
-                        api: api.api,
-                        title: api.title,
-                        skipUrlSlug: api.skipUrlSlug,
-                        artifacts: api.artifacts ?? null,
-                        showErrors: api.showErrors,
-                        type: "apiSection",
-                        auth: definition.auth ?? null,
-                        hasMultipleBaseUrls: definition.hasMultipleBaseUrls ?? null,
-                        slug: definitionSlug,
-                        endpoints,
-                        websockets,
-                        webhooks,
-                        subpackages,
-                        types: resolvedTypes,
-                    });
-                }
-            },
-            section: (section) => {
-                const sectionSlug = [...parentSlugs, section.urlSlug];
-                resolvedNavigationItems.push({
-                    ...section,
-                    slug: sectionSlug,
-                    items: resolveNavigationItemsInternal(
-                        section.items,
-                        apis,
-                        highlighter,
-                        section.skipUrlSlug ? parentSlugs : sectionSlug,
-                    ),
-                });
-            },
-            link: noop,
-            _other: noop,
-        });
-    }
-
-    return resolvedNavigationItems;
+    const withPackage = resolveApiDefinitionPackage(
+        apiDefinition.auth,
+        apiDefinition.api,
+        apiDefinition.api,
+        apiDefinition,
+        apiDefinition.types,
+        resolvedTypes,
+        highlighter,
+    );
+    return {
+        type: "rootPackage",
+        ...withPackage,
+        api: apiDefinition.api,
+        auth: apiDefinition.auth,
+        types: resolvedTypes,
+    };
 }
 
 function resolveApiDefinitionPackage(
-    auth: APIV1Read.ApiAuth | undefined,
+    auth: APIV1Read.ApiAuth | null | undefined,
     apiSectionId: FdrAPI.ApiDefinitionId,
     id: APIV1Read.SubpackageId,
-    package_: APIV1Read.ApiDefinitionPackage | undefined,
-    subpackagesMap: Record<string, APIV1Read.ApiDefinitionSubpackage>,
+    package_: FlattenedApiDefinitionPackage | undefined,
     types: Record<string, APIV1Read.TypeDefinition>,
     resolvedTypes: Record<string, ResolvedTypeDefinition>,
-    parentSlugs: string[],
     highlighter: Highlighter,
-): ResolvedWithApiDefinition & { subpackage: APIV1Read.ApiDefinitionSubpackage | undefined; slug: string[] } {
-    let subpackage = package_;
-    while (subpackage?.pointsTo != null) {
-        subpackage = subpackagesMap[subpackage.pointsTo];
-    }
-
-    if (subpackage == null) {
+): ResolvedWithApiDefinition {
+    if (package_ == null) {
         return {
             endpoints: [],
             webhooks: [],
             websockets: [],
             subpackages: [],
-            subpackage: undefined,
             slug: [],
         };
     }
 
-    const slug = package_ != null && isSubpackage(package_) ? [...parentSlugs, package_.urlSlug] : parentSlugs;
-
     const endpoints = mergeContentTypes(
-        subpackage.endpoints.map((endpoint) =>
-            resolveEndpointDefinition(auth, apiSectionId, id, endpoint, types, resolvedTypes, slug, highlighter),
+        package_.endpoints.map((endpoint) =>
+            resolveEndpointDefinition(auth, apiSectionId, id, endpoint, types, resolvedTypes, highlighter),
         ),
     );
-    const websockets = subpackage.websockets.map((websocket) => resolveWebsocketChannel(websocket, types, slug));
-    const webhooks = subpackage.webhooks.map((webhook) =>
-        resolveWebhookDefinition(webhook, types, resolvedTypes, slug, highlighter),
+    const websockets = package_.websockets.map((websocket) => resolveWebsocketChannel(websocket, types));
+    const webhooks = package_.webhooks.map((webhook) =>
+        resolveWebhookDefinition(webhook, types, resolvedTypes, highlighter),
     );
-    const subpackages = subpackage.subpackages
-        .map((subpackageId) =>
-            resolveSubpackage(
-                auth,
-                apiSectionId,
-                subpackageId,
-                subpackagesMap,
-                types,
-                resolvedTypes,
-                slug,
-                highlighter,
-            ),
-        )
+    const subpackages = package_.subpackages
+        .map((subpackage) => resolveSubpackage(auth, apiSectionId, subpackage, types, resolvedTypes, highlighter))
         .filter(isNonNullish);
 
     return {
@@ -172,30 +161,25 @@ function resolveApiDefinitionPackage(
         webhooks,
         websockets,
         subpackages,
-        subpackage: isSubpackage(subpackage) ? subpackage : undefined,
-        slug,
+        slug: package_.slug,
     };
 }
 
 function resolveSubpackage(
-    auth: APIV1Read.ApiAuth | undefined,
+    auth: APIV1Read.ApiAuth | null | undefined,
     apiSectionId: FdrAPI.ApiDefinitionId,
-    subpackageId: APIV1Read.SubpackageId,
-    subpackagesMap: Record<string, APIV1Read.ApiDefinitionSubpackage>,
+    subpackage: FlattenedSubpackage,
     types: Record<string, APIV1Read.TypeDefinition>,
     resolvedTypes: Record<string, ResolvedTypeDefinition>,
-    parentSlugs: string[],
     highlighter: Highlighter,
 ): ResolvedSubpackage | undefined {
-    const { endpoints, webhooks, subpackages, websockets, subpackage, slug } = resolveApiDefinitionPackage(
+    const { endpoints, webhooks, subpackages, websockets } = resolveApiDefinitionPackage(
         auth,
         apiSectionId,
-        subpackageId,
-        subpackagesMap[subpackageId],
-        subpackagesMap,
+        subpackage.subpackageId,
+        subpackage,
         types,
         resolvedTypes,
-        parentSlugs,
         highlighter,
     );
 
@@ -211,8 +195,8 @@ function resolveSubpackage(
         title: titleCase(subpackage.name),
         type: "subpackage",
         apiSectionId,
-        id: subpackageId,
-        slug,
+        id: subpackage.subpackageId,
+        slug: subpackage.slug,
         endpoints,
         websockets,
         webhooks,
@@ -221,13 +205,12 @@ function resolveSubpackage(
 }
 
 function resolveEndpointDefinition(
-    auth: APIV1Read.ApiAuth | undefined,
+    auth: APIV1Read.ApiAuth | null | undefined,
     apiSectionId: FdrAPI.ApiDefinitionId,
     apiPackageId: FdrAPI.ApiDefinitionId,
-    endpoint: APIV1Read.EndpointDefinition,
+    endpoint: FlattenedEndpointDefinition,
     types: Record<string, APIV1Read.TypeDefinition>,
     resolvedTypes: Record<string, ResolvedTypeDefinition>,
-    parentSlugs: string[],
     highlighter: Highlighter,
 ): ResolvedEndpointDefinition {
     const pathParameters = endpoint.path.pathParameters.map(
@@ -261,7 +244,7 @@ function resolveEndpointDefinition(
     const toRet: ResolvedEndpointDefinition = {
         name: endpoint.name ?? null,
         id: endpoint.id,
-        slug: [...parentSlugs, endpoint.urlSlug],
+        slug: endpoint.slug,
         description: endpoint.description ?? null,
         authed: endpoint.authed,
         availability: endpoint.availability ?? null,
@@ -271,8 +254,7 @@ function resolveEndpointDefinition(
         method: endpoint.method,
         examples: [],
         title: endpoint.name != null ? endpoint.name : stringifyResolvedEndpointPathParts(path),
-        defaultEnvironment:
-            endpoint.environments.find((environment) => environment.id === endpoint.defaultEnvironment) ?? null,
+        defaultEnvironment: endpoint.defaultEnvironment,
         path,
         pathParameters,
         queryParameters: endpoint.queryParameters.map((parameter) => ({
@@ -304,7 +286,7 @@ function resolveEndpointDefinition(
                       description: endpoint.response.description ?? null,
                   }
                 : null,
-        errors: (endpoint.errorsV2 ?? []).map(
+        errors: endpoint.errors.map(
             (error): ResolvedError => ({
                 statusCode: error.statusCode,
                 name: error.name ?? null,
@@ -349,9 +331,8 @@ function resolveEndpointDefinition(
 }
 
 function resolveWebsocketChannel(
-    websocket: APIV1Read.WebSocketChannel,
+    websocket: FlattenedWebSocketChannel,
     types: Record<string, APIV1Read.TypeDefinition>,
-    parentSlugs: string[],
 ): ResolvedWebSocketChannel {
     const pathParameters = websocket.path.pathParameters.map(
         (parameter): ResolvedObjectProperty => ({
@@ -362,12 +343,13 @@ function resolveWebsocketChannel(
         }),
     );
     return {
-        ...websocket,
+        authed: websocket.authed,
+        environments: websocket.environments,
         id: websocket.id,
         description: websocket.description,
         availability: websocket.availability,
-        slug: [...parentSlugs, websocket.urlSlug],
-        name: websocket.name != null ? websocket.name : websocket.urlSlug,
+        slug: websocket.slug,
+        name: websocket.name,
         path: websocket.path.parts
             .map((pathPart): ResolvedEndpointPathParts | undefined => {
                 if (pathPart.type === "literal") {
@@ -406,22 +388,21 @@ function resolveWebsocketChannel(
             body: resolvePayloadShape(body, types),
         })),
         examples: websocket.examples,
-        defaultEnvironment: websocket.environments.find((env) => env.id === websocket.defaultEnvironment) ?? null,
+        defaultEnvironment: websocket.defaultEnvironment,
     };
 }
 
 function resolveWebhookDefinition(
-    webhook: APIV1Read.WebhookDefinition,
+    webhook: FlattenedWebhookDefinition,
     types: Record<string, APIV1Read.TypeDefinition>,
     resolvedTypes: Record<string, ResolvedTypeDefinition>,
-    parentSlugs: string[],
     highlighter: Highlighter,
 ): ResolvedWebhookDefinition {
     const payloadShape = resolvePayloadShape(webhook.payload.type, types);
     return {
-        name: webhook.name != null ? webhook.name : webhook.urlSlug,
-        description: webhook.description ?? null,
-        slug: [...parentSlugs, webhook.urlSlug],
+        name: webhook.name,
+        description: webhook.description,
+        slug: webhook.slug,
         method: webhook.method,
         id: webhook.id,
         path: webhook.path,
@@ -692,12 +673,13 @@ export interface ResolvedNavigationItemApiSection
     artifacts: DocsV1Read.ApiArtifacts | null;
 }
 
-export interface FlattenedApiSection {
-    apiSection: ResolvedNavigationItemApiSection;
+export interface FlattenedRootPackage {
+    auth: APIV1Read.ApiAuth | null;
+    types: Record<string, ResolvedTypeDefinition>;
     apiDefinitions: ResolvedApiDefinition[];
 }
 
-export function flattenApiSection(apiSection: ResolvedNavigationItemApiSection): FlattenedApiSection {
+export function flattenRootPackage(rootPackage: ResolvedRootPackage): FlattenedRootPackage {
     function getApiDefinitions(apiPackage: ResolvedApiDefinitionPackage): ResolvedApiDefinition[] {
         return [
             ...apiPackage.endpoints.map(
@@ -726,8 +708,9 @@ export function flattenApiSection(apiSection: ResolvedNavigationItemApiSection):
     }
 
     return {
-        apiSection,
-        apiDefinitions: getApiDefinitions(apiSection),
+        auth: rootPackage.auth,
+        types: rootPackage.types,
+        apiDefinitions: getApiDefinitions(rootPackage),
     };
 }
 
@@ -766,6 +749,7 @@ export interface ResolvedWithApiDefinition {
     websockets: ResolvedWebSocketChannel[];
     webhooks: ResolvedWebhookDefinition[];
     subpackages: ResolvedSubpackage[];
+    slug: string[];
 }
 
 export type ResolvedApiDefinition =
@@ -808,10 +792,20 @@ export interface ResolvedSubpackage extends WithDescription, ResolvedWithApiDefi
     id: APIV1Read.SubpackageId;
     name: string;
     title: string;
-    slug: string[];
 }
 
-export type ResolvedApiDefinitionPackage = ResolvedNavigationItemApiSection | ResolvedSubpackage;
+export function isResolvedSubpackage(item: ResolvedWithApiDefinition): item is ResolvedSubpackage {
+    return (item as ResolvedSubpackage).type === "subpackage";
+}
+
+export interface ResolvedRootPackage extends ResolvedWithApiDefinition {
+    type: "rootPackage";
+    api: FdrAPI.ApiDefinitionId;
+    auth: APIV1Read.ApiAuth | null;
+    types: Record<string, ResolvedTypeDefinition>;
+}
+
+export type ResolvedApiDefinitionPackage = ResolvedRootPackage | ResolvedSubpackage;
 
 export interface ResolvedEndpointDefinition extends WithDescription {
     id: APIV1Read.EndpointId;
@@ -959,7 +953,7 @@ export interface ResolvedCodeSnippet {
 }
 
 function resolveCodeSnippets(
-    auth: APIV1Read.ApiAuth | undefined,
+    auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition,
     example: APIV1Read.ExampleEndpointCall,
     requestBody: ResolvedExampleEndpointRequest | null,
@@ -1091,27 +1085,21 @@ export function stringifyResolvedEndpointPathParts(pathParts: ResolvedEndpointPa
     return pathParts.map((part) => (part.type === "literal" ? part.value : `:${part.key}`)).join("");
 }
 
-export interface ResolvedWebSocketChannel
-    extends WithoutQuestionMarks<
-        Omit<
-            APIV1Read.WebSocketChannel,
-            | "urlSlug"
-            | "path"
-            | "headers"
-            | "queryParameters"
-            | "messages"
-            | "defaultEnvironment"
-            | "htmlDescription"
-            | "descriptionContainsMarkdown"
-        >
-    > {
+export interface ResolvedWebSocketChannel {
+    id: string;
     slug: string[];
+    name: string | null;
+    description: string | null;
+    availability: APIV1Read.Availability | null;
+    authed: boolean;
+    defaultEnvironment: APIV1Read.Environment | null;
+    environments: APIV1Read.Environment[];
     path: ResolvedEndpointPathParts[];
     headers: ResolvedObjectProperty[];
     pathParameters: ResolvedObjectProperty[];
     queryParameters: ResolvedObjectProperty[];
     messages: ResolvedWebSocketMessage[];
-    defaultEnvironment: APIV1Read.Environment | null;
+    examples: APIV1Read.ExampleWebSocketSession[];
 }
 
 export interface ResolvedWebSocketMessage extends Omit<APIV1Read.WebSocketMessage, "body"> {

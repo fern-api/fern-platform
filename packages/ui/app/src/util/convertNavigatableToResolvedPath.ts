@@ -1,7 +1,8 @@
 import type { DocsNode, FdrAPI, NavigatableDocsNode, PathResolver } from "@fern-api/fdr-sdk";
+import { flattenApiDefinition, FlattenedApiDefinition, FlattenedSubpackage } from "./flattenApiDefinition";
+import { serializeMdxContent } from "./mdx";
 import type { ResolvedPath } from "./ResolvedPath";
-import { ResolvedNavigationItemApiSection, ResolvedSubpackage } from "./resolver";
-import { serializeNavigatableNode } from "./serialize-node";
+import { resolveApiDefinition } from "./resolver";
 import { getFullSlugForNavigatable } from "./slug";
 
 export async function convertNavigatableToResolvedPath({
@@ -9,60 +10,73 @@ export async function convertNavigatableToResolvedPath({
     navigatable,
     docsDefinition,
     basePath,
-    apiSections,
+    parentSlugs,
 }: {
     resolver: PathResolver;
     navigatable: NavigatableDocsNode;
     docsDefinition: FdrAPI.docs.v1.read.DocsDefinition;
     basePath: string | undefined;
-    apiSections: ResolvedNavigationItemApiSection[];
-}): Promise<ResolvedPath> {
+    parentSlugs: string[];
+}): Promise<ResolvedPath | undefined> {
     const fullSlug = getFullSlugForNavigatable(navigatable, { omitDefault: true, basePath });
-    const serializedNavigatable = await serializeNavigatableNode({
-        node: navigatable,
-        docsDefinition,
-    });
+    // const serializedNavigatable = await serializeNavigatableNode({
+    //     node: navigatable,
+    //     docsDefinition,
+    // });
     const { previous, next } = resolver.getNeighborsForNavigatable(navigatable);
     const neighbors = {
         prev: getNeighbor(previous, resolver, basePath),
         next: getNeighbor(next, resolver, basePath),
     };
 
-    switch (serializedNavigatable.type) {
-        case "page":
+    switch (navigatable.type) {
+        case "page": {
+            const pageContent = docsDefinition.pages[navigatable.page.id];
+            if (pageContent == null) {
+                return;
+            }
             return {
                 type: "custom-markdown-page",
                 fullSlug,
-                page: serializedNavigatable.page,
-                sectionTitle: serializedNavigatable.section?.title ?? null,
-                serializedMdxContent: serializedNavigatable.serializedMdxContent,
-                editThisPageUrl: serializedNavigatable.editThisPageUrl,
+                page: navigatable.page,
+                sectionTitle: navigatable.page.title,
+                serializedMdxContent: await serializeMdxContent(pageContent.markdown),
+                editThisPageUrl: pageContent.editThisPageUrl ?? null,
                 neighbors,
             };
+        }
         case "endpoint":
         case "top-level-endpoint":
         case "webhook":
         case "top-level-webhook":
         case "websocket":
         case "top-level-websocket": {
-            const foundApiSection = apiSections.find(({ api }) => api === serializedNavigatable.section.api);
-            if (foundApiSection == null) {
-                throw new Error(`Could not find API section for API: ${serializedNavigatable.section.api}`);
+            const api = docsDefinition.apis[navigatable.section.api];
+            if (api == null) {
+                return;
             }
+            const apiDefinitionParentSlug = navigatable.section.skipUrlSlug
+                ? parentSlugs
+                : [...parentSlugs, navigatable.section.urlSlug];
+            const flattenedApiDefinition = flattenApiDefinition(api, apiDefinitionParentSlug);
+            const prunedApiDefinition = findAndPruneApiSection(fullSlug, flattenedApiDefinition);
+
             return {
                 type: "api-page",
                 fullSlug,
-                apiSection: findAndPruneApiSection(fullSlug, foundApiSection),
+                api: navigatable.section.api,
+                apiDefinition: await resolveApiDefinition(prunedApiDefinition),
+                artifacts: navigatable.section.artifacts ?? null,
+                showErrors: navigatable.section.showErrors,
                 neighbors,
+                sectionUrlSlug: navigatable.section.urlSlug,
+                skipUrlSlug: navigatable.section.skipUrlSlug,
             };
         }
     }
 }
 
-function findAndPruneApiSection(
-    fullSlug: string,
-    apiSection: ResolvedNavigationItemApiSection,
-): ResolvedNavigationItemApiSection {
+function findAndPruneApiSection(fullSlug: string, apiSection: FlattenedApiDefinition): FlattenedApiDefinition {
     return {
         ...apiSection,
         endpoints: apiSection.endpoints.filter((endpoint) => endpoint.slug.join("/") === fullSlug),
@@ -74,7 +88,7 @@ function findAndPruneApiSection(
     };
 }
 
-function findAndPruneApiSubpackage(fullSlug: string, subpackage: ResolvedSubpackage): ResolvedSubpackage {
+function findAndPruneApiSubpackage(fullSlug: string, subpackage: FlattenedSubpackage): FlattenedSubpackage {
     return {
         ...subpackage,
         endpoints: subpackage.endpoints.filter((endpoint) => endpoint.slug.join("/") === fullSlug),

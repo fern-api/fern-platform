@@ -10,7 +10,6 @@ import {
     ResolvedError,
     ResolvedHttpRequestBodyShape,
     ResolvedHttpResponseBodyShape,
-    ResolvedNavigationItemApiSection,
     ResolvedTypeDefinition,
 } from "../../util/resolver";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
@@ -28,7 +27,7 @@ export interface HoveringProps {
 export declare namespace EndpointContentLeft {
     export interface Props {
         endpoint: ResolvedEndpointDefinition;
-        apiSection: ResolvedNavigationItemApiSection;
+        showErrors: boolean;
         onHoverRequestProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
         onHoverResponseProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
         selectedError: ResolvedError | undefined;
@@ -42,7 +41,7 @@ export declare namespace EndpointContentLeft {
 
 const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     endpoint,
-    apiSection,
+    showErrors,
     onHoverRequestProperty,
     onHoverResponseProperty,
     selectedError,
@@ -206,7 +205,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     />
                 </EndpointSection>
             )}
-            {apiSection.showErrors && endpoint.errors.length > 0 && (
+            {showErrors && endpoint.errors.length > 0 && (
                 <EndpointSection
                     title="Errors"
                     anchorIdParts={["response", "error"]}

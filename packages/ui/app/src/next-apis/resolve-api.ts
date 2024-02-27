@@ -2,19 +2,12 @@ import { PathResolver } from "@fern-api/fdr-sdk";
 import { NextApiHandler, NextApiResponse } from "next";
 import { getVersionAndTabSlug } from "../next-app/DocsPage";
 import { REGISTRY_SERVICE } from "../services/registry";
-import {
-    crawlResolvedNavigationItemApiSections,
-    ResolvedNavigationItemApiSection,
-    resolveNavigationItems,
-} from "../util/resolver";
+import { flattenApiDefinition, FlattenedApiDefinition } from "../util/flattenApiDefinition";
 
-export const resolveApiHandler: NextApiHandler = async (
-    req,
-    res: NextApiResponse<ResolvedNavigationItemApiSection[]>,
-) => {
+export const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<FlattenedApiDefinition | null>) => {
     try {
         if (req.method !== "GET") {
-            res.status(400).json([]);
+            res.status(400).json(null);
             return;
         }
 
@@ -23,14 +16,22 @@ export const resolveApiHandler: NextApiHandler = async (
             req.headers.host = xFernHost;
             res.setHeader("host", xFernHost);
         } else {
-            res.status(400).json([]);
+            res.status(400).json(null);
             return;
         }
         const hostWithoutTrailingSlash = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
         const maybePathName = req.query.path;
+        const api = req.query.api;
+        const apiSectionSlug = req.query.slug;
 
-        if (maybePathName == null || typeof maybePathName !== "string") {
-            return res.status(400).json([]);
+        if (
+            maybePathName == null ||
+            typeof maybePathName !== "string" ||
+            api == null ||
+            typeof api !== "string" ||
+            (apiSectionSlug != null && typeof apiSectionSlug !== "string")
+        ) {
+            return res.status(400).json(null);
         }
 
         const pathname = maybePathName.startsWith("/") ? maybePathName : `/${maybePathName}`;
@@ -40,12 +41,19 @@ export const resolveApiHandler: NextApiHandler = async (
         });
 
         if (!docs.ok) {
-            res.status(404).json([]);
+            res.status(404).json(null);
             return;
         }
 
         const docsDefinition = docs.body.definition;
         const basePath = docs.body.baseUrl.basePath;
+
+        const apiDefinition = docsDefinition.apis[api];
+
+        if (apiDefinition == null) {
+            res.status(404).json(null);
+            return;
+        }
 
         const { apis, config: docsConfig } = docsDefinition;
         const resolver = new PathResolver({ definition: { apis, docsConfig, basePath } });
@@ -53,24 +61,20 @@ export const resolveApiHandler: NextApiHandler = async (
         const navigatable = resolver.resolveNavigatable(pathname.slice(1));
 
         if (navigatable == null) {
-            res.status(404).json([]);
+            res.status(404).json(null);
             return;
         }
 
-        const unresolvedNavigationItems =
-            navigatable.context.type === "versioned-tabbed" || navigatable.context.type === "unversioned-tabbed"
-                ? navigatable.context.tab.items
-                : navigatable.context.navigationConfig.items;
-
         const versionAndTabSlug = getVersionAndTabSlug(basePath, navigatable);
-        const apiSections = crawlResolvedNavigationItemApiSections(
-            await resolveNavigationItems(unresolvedNavigationItems ?? [], apis, versionAndTabSlug),
-        );
 
-        res.status(200).json(apiSections);
+        if (apiSectionSlug != null) {
+            versionAndTabSlug.push(apiSectionSlug);
+        }
+
+        res.status(200).json(flattenApiDefinition(apiDefinition, versionAndTabSlug));
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
-        res.status(500).json([]);
+        res.status(500).json(null);
     }
 };

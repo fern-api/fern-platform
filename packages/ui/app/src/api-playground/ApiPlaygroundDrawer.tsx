@@ -7,7 +7,7 @@ import { Dispatch, FC, SetStateAction, useCallback, useEffect } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { SidebarNode } from "../sidebar/types";
 import {
-    FlattenedApiSection,
+    FlattenedRootPackage,
     isEndpoint,
     ResolvedApiDefinition,
     ResolvedEndpointDefinition,
@@ -37,18 +37,18 @@ const playgroundHeightAtom = atomWithStorage<number>("api-playground-height", 40
 
 interface ApiPlaygroundDrawerProps {
     navigation: SidebarNode[];
-    apiSections: FlattenedApiSection[];
+    apis: Record<string, FlattenedRootPackage>;
 }
 
-export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ navigation, apiSections }) => {
+export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ navigation, apis }) => {
     const { selectionState, hasPlayground } = useApiPlaygroundContext();
 
-    const matchedSection = apiSections.find((section) => section.apiSection.api === selectionState?.api);
+    const matchedSection = selectionState != null ? apis[selectionState.api] : undefined;
     const matchedEndpoint = matchedSection?.apiDefinitions.find(
         (definition) => isEndpoint(definition) && definition.slug.join("/") === selectionState?.endpointId,
     ) as ResolvedApiDefinition.Endpoint | undefined;
 
-    const types = matchedSection?.apiSection.types ?? EMPTY_OBJECT;
+    const types = matchedSection?.types ?? EMPTY_OBJECT;
 
     const [height, setHeight] = useAtom(playgroundHeightAtom);
     const windowHeight = useWindowHeight();
@@ -102,17 +102,17 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ navigation, 
     const resetWithExample = useCallback(() => {
         setPlaygroundFormState(
             getInitialModalFormStateWithExample(
-                matchedSection?.apiSection.auth,
+                matchedSection?.auth,
                 matchedEndpoint,
                 matchedEndpoint?.examples[0],
                 types,
             ),
         );
-    }, [matchedEndpoint, matchedSection?.apiSection.auth, setPlaygroundFormState, types]);
+    }, [matchedEndpoint, matchedSection?.auth, setPlaygroundFormState, types]);
 
     const resetWithoutExample = useCallback(() => {
-        setPlaygroundFormState(getInitialModalFormState(matchedSection?.apiSection.auth, matchedEndpoint, types));
-    }, [matchedEndpoint, matchedSection?.apiSection.auth, setPlaygroundFormState, types]);
+        setPlaygroundFormState(getInitialModalFormState(matchedSection?.auth, matchedEndpoint, types));
+    }, [matchedEndpoint, matchedSection?.auth, setPlaygroundFormState, types]);
 
     useEffect(() => {
         // if keyboard press "ctrl + `", open playground
@@ -155,7 +155,7 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ navigation, 
                 </div>
                 <ApiPlayground
                     navigation={navigation}
-                    auth={matchedSection?.apiSection.auth}
+                    auth={matchedSection?.auth}
                     endpoint={matchedEndpoint}
                     formState={playgroundFormState}
                     setFormState={setPlaygroundFormState}

@@ -4,7 +4,6 @@ import { renderToString } from "react-dom/server";
 import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { MdxContent } from "../mdx/MdxContent";
-import { SidebarNode } from "../sidebar/types";
 import { type SerializedMdxContent } from "../util/mdx";
 import { type ResolvedPath } from "../util/ResolvedPath";
 import { Feedback } from "./Feedback";
@@ -13,7 +12,6 @@ import { TableOfContentsContextProvider } from "./TableOfContentsContext";
 
 export declare namespace CustomDocsPage {
     export interface Props {
-        navigatable: SidebarNode.Page;
         serializedMdxContent: SerializedMdxContent | undefined;
         resolvedPath: ResolvedPath.CustomMarkdownPage;
     }

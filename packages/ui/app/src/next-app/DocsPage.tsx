@@ -10,7 +10,6 @@ import { resolveSidebarNodes, SidebarNavigation } from "../sidebar/types";
 import { buildUrl } from "../util/buildUrl";
 import { convertNavigatableToResolvedPath } from "../util/convertNavigatableToResolvedPath";
 import { type ResolvedPath } from "../util/ResolvedPath";
-import { crawlResolvedNavigationItemApiSections, resolveNavigationItems } from "../util/resolver";
 import { DocsApp } from "./DocsApp";
 import { renderThemeStylesheet } from "./utils/renderThemeStylesheet";
 
@@ -128,26 +127,25 @@ export const getDocsPageProps = async (
         };
     }
 
-    const unresolvedNavigationItems =
-        navigatable.context.type === "versioned-tabbed" || navigatable.context.type === "unversioned-tabbed"
-            ? navigatable.context.tab.items
-            : navigatable.context.navigationConfig.items;
-
     const versionAndTabSlug = getVersionAndTabSlug(basePath, navigatable);
-    const apiSections =
-        navigatable.type === "page"
-            ? []
-            : crawlResolvedNavigationItemApiSections(
-                  await resolveNavigationItems(unresolvedNavigationItems ?? [], apis, versionAndTabSlug),
-              );
 
     const resolvedPath = await convertNavigatableToResolvedPath({
         resolver,
         navigatable,
         docsDefinition,
         basePath,
-        apiSections,
+        parentSlugs: versionAndTabSlug,
     });
+
+    if (resolvedPath == null) {
+        // eslint-disable-next-line no-console
+        console.error(`Cannot convert navigatable to resolved path: "${pathname}"`);
+        return {
+            type: "notFound",
+            notFound: true,
+            revalidate: 60 * 60, // 1 hour
+        };
+    }
 
     const navigation = getNavigation(basePath, docs.body.definition.apis, navigatable);
 

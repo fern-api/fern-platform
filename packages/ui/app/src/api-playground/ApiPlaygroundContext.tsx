@@ -1,17 +1,12 @@
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
-import { noop } from "lodash-es";
+import { mapValues, noop } from "lodash-es";
 import dynamic from "next/dynamic";
 import { createContext, FC, PropsWithChildren, useCallback, useContext, useMemo, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { SidebarNode } from "../sidebar/types";
-import {
-    flattenApiSection,
-    isEndpoint,
-    ResolvedApiDefinition,
-    ResolvedNavigationItemApiSection,
-} from "../util/resolver";
+import { flattenRootPackage, isEndpoint, ResolvedApiDefinition, ResolvedRootPackage } from "../util/resolver";
 import {
     ApiPlaygroundSelectionState,
     createFormStateKey,
@@ -47,7 +42,7 @@ export const PLAYGROUND_FORM_STATE_ATOM = atomWithStorage<Record<string, Playgro
 
 interface ApiPlaygroundProps {
     navigation: SidebarNode[];
-    apiSections: ResolvedNavigationItemApiSection[];
+    apis: Record<string, ResolvedRootPackage>;
 }
 
 const CUSTOMERS = ["cloudflare", "assemblyai", "cohere", "shipbob", "hume", "flagright", "sayari", "webflow", "dapi"];
@@ -68,12 +63,12 @@ function isApiPlaygroundEnabled(domain: string) {
 export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundProps>> = ({
     children,
     navigation,
-    apiSections,
+    apis,
 }) => {
     const { domain } = useDocsContext();
     const [selectionState, setSelectionState] = useState<ApiPlaygroundSelectionState | undefined>();
 
-    const flattenedApiSections = useMemo(() => apiSections.map(flattenApiSection), [apiSections]);
+    const flattenedApis = useMemo(() => mapValues(apis, flattenRootPackage), [apis]);
 
     const [, setPlaygroundOpen] = useAtom(PLAYGROUND_OPEN_ATOM);
     const [globalFormState, setGlobalFormState] = useAtom(PLAYGROUND_FORM_STATE_ATOM);
@@ -86,14 +81,12 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundPro
 
     const setSelectionStateAndOpen = useCallback(
         (newSelectionState: ApiPlaygroundSelectionState) => {
-            const matchedSection = flattenedApiSections.find(
-                (section) => section.apiSection.api === newSelectionState.api,
-            );
-            if (matchedSection == null) {
+            const matchedPackage = flattenedApis[newSelectionState.api];
+            if (matchedPackage == null) {
                 return;
             }
 
-            const matchedEndpoint = matchedSection.apiDefinitions.find(
+            const matchedEndpoint = matchedPackage.apiDefinitions.find(
                 (definition) => isEndpoint(definition) && definition.slug.join("/") === newSelectionState.endpointId,
             ) as ResolvedApiDefinition.Endpoint | undefined;
             if (matchedEndpoint == null) {
@@ -110,16 +103,16 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundPro
                     return {
                         ...currentFormState,
                         [createFormStateKey(newSelectionState)]: getInitialModalFormStateWithExample(
-                            matchedSection.apiSection.auth,
+                            matchedPackage.auth,
                             matchedEndpoint,
                             matchedEndpoint.examples[0],
-                            matchedSection.apiSection.types,
+                            matchedPackage.types,
                         ),
                     };
                 });
             }
         },
-        [expandApiPlayground, flattenedApiSections, globalFormState, setGlobalFormState],
+        [expandApiPlayground, flattenedApis, globalFormState, setGlobalFormState],
     );
 
     if (!isApiPlaygroundEnabled(domain)) {
@@ -129,7 +122,7 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundPro
     return (
         <ApiPlaygroundContext.Provider
             value={{
-                hasPlayground: apiSections.length > 0,
+                hasPlayground: Object.keys(apis).length > 0,
                 selectionState,
                 setSelectionStateAndOpen,
                 expandApiPlayground,
@@ -137,7 +130,7 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundPro
             }}
         >
             {children}
-            <ApiPlaygroundDrawer navigation={navigation} apiSections={flattenedApiSections} />
+            <ApiPlaygroundDrawer navigation={navigation} apis={flattenedApis} />
         </ApiPlaygroundContext.Provider>
     );
 };

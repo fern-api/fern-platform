@@ -1,4 +1,5 @@
-import { ResolvedApiDefinitionPackage, ResolvedNavigationItemApiSection } from "../util/resolver";
+import { FdrAPI } from "@fern-api/fdr-sdk";
+import { isResolvedSubpackage, ResolvedTypeDefinition, ResolvedWithApiDefinition } from "../util/resolver";
 import { Endpoint } from "./endpoints/Endpoint";
 import { ApiSubpackage } from "./subpackages/ApiSubpackage";
 import { WebSocket } from "./web-socket/WebSocket";
@@ -6,8 +7,10 @@ import { Webhook } from "./webhooks/Webhook";
 
 export declare namespace ApiPackageContents {
     export interface Props {
-        apiSection: ResolvedNavigationItemApiSection;
-        apiDefinition: ResolvedApiDefinitionPackage;
+        api: FdrAPI.ApiDefinitionId;
+        types: Record<string, ResolvedTypeDefinition>;
+        showErrors: boolean;
+        apiDefinition: ResolvedWithApiDefinition;
         isLastInParentPackage: boolean;
         anchorIdParts: string[];
         breadcrumbs?: string[];
@@ -15,7 +18,9 @@ export declare namespace ApiPackageContents {
 }
 
 export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
-    apiSection,
+    api,
+    types,
+    showErrors,
     apiDefinition,
     isLastInParentPackage,
     anchorIdParts,
@@ -23,7 +28,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
 }) => {
     const { endpoints, webhooks, websockets, subpackages } = apiDefinition;
 
-    const subpackageTitle = apiDefinition.type === "subpackage" ? apiDefinition.title : undefined;
+    const subpackageTitle = isResolvedSubpackage(apiDefinition) ? apiDefinition.title : undefined;
     const currentBreadcrumbs = subpackageTitle != null ? [...breadcrumbs, subpackageTitle] : breadcrumbs;
 
     return (
@@ -31,8 +36,8 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
             {endpoints.map((endpoint, idx) => (
                 <Endpoint
                     key={endpoint.id}
-                    apiSection={apiSection}
-                    apiDefinition={apiDefinition}
+                    api={api}
+                    showErrors={showErrors}
                     endpoint={endpoint}
                     breadcrumbs={currentBreadcrumbs}
                     isLastInApi={
@@ -41,7 +46,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                         subpackages.length === 0 &&
                         idx === endpoints.length - 1
                     }
-                    types={apiSection.types}
+                    types={types}
                 />
             ))}
             {websockets.map((websocket, idx) => (
@@ -49,7 +54,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                     key={websocket.id}
                     websocket={websocket}
                     isLastInApi={isLastInParentPackage && subpackages.length === 0 && idx === websockets.length - 1}
-                    types={apiSection.types}
+                    types={types}
                 />
             ))}
             {webhooks.map((webhook, idx) => (
@@ -58,13 +63,15 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                     webhook={webhook}
                     breadcrumbs={breadcrumbs}
                     isLastInApi={isLastInParentPackage && subpackages.length === 0 && idx === webhooks.length - 1}
-                    types={apiSection.types}
+                    types={types}
                 />
             ))}
             {subpackages.map((subpackage, idx) => (
                 <ApiSubpackage
                     key={subpackage.id}
-                    apiSection={apiSection}
+                    api={api}
+                    types={types}
+                    showErrors={showErrors}
                     apiDefinition={subpackage}
                     isLastInParentPackage={isLastInParentPackage && idx === subpackages.length - 1}
                     anchorIdParts={anchorIdParts}

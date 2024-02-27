@@ -1,12 +1,14 @@
-import { joinUrlSlugs } from "@fern-api/fdr-sdk";
-import { ResolvedApiDefinitionPackage, ResolvedNavigationItemApiSection } from "../../util/resolver";
+import { FdrAPI, joinUrlSlugs } from "@fern-api/fdr-sdk";
+import { ResolvedApiDefinitionPackage, ResolvedTypeDefinition } from "../../util/resolver";
 import { ApiPackageContents } from "../ApiPackageContents";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 
 export declare namespace ApiSubpackage {
     export interface Props {
-        apiSection: ResolvedNavigationItemApiSection;
+        api: FdrAPI.ApiDefinitionId;
+        types: Record<string, ResolvedTypeDefinition>;
+        showErrors: boolean;
         apiDefinition: ResolvedApiDefinitionPackage;
         isLastInParentPackage: boolean;
         anchorIdParts: string[];
@@ -15,7 +17,9 @@ export declare namespace ApiSubpackage {
 }
 
 export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({
-    apiSection,
+    api,
+    types,
+    showErrors,
     apiDefinition,
     isLastInParentPackage,
     anchorIdParts,
@@ -32,15 +36,15 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({
                     className="scroll-mt-header-height"
                 />
             </ApiPageMargins>
-            {apiSection != null && (
-                <ApiPackageContents
-                    apiSection={apiSection}
-                    apiDefinition={apiDefinition}
-                    isLastInParentPackage={isLastInParentPackage}
-                    anchorIdParts={anchorIdParts}
-                    breadcrumbs={breadcrumbs}
-                />
-            )}
+            <ApiPackageContents
+                api={api}
+                types={types}
+                showErrors={showErrors}
+                apiDefinition={apiDefinition}
+                isLastInParentPackage={isLastInParentPackage}
+                anchorIdParts={anchorIdParts}
+                breadcrumbs={breadcrumbs}
+            />
         </>
     );
 };
