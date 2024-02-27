@@ -27,14 +27,17 @@ const cachedHighlights = new Map<string, Root>();
 
 export const FernSyntaxHighlighter = forwardRef<HTMLPreElement, FernSyntaxHighlighterProps>(
     function FernSyntaxHighlighter({ code, language, ...props }, ref) {
-        const [result, setResult] = useState<Root | undefined>(cachedHighlights.get(code));
+        const [, setNonce] = useState<number>(0);
+        const result = cachedHighlights.get(code);
         useEffect(() => {
             if (result != null) {
                 return;
             }
             void (async () => {
                 const highlighter = await getHighlighterInstance();
-                setResult(highlight(highlighter, code, language));
+                const newResult = highlight(highlighter, code, language);
+                cachedHighlights.set(code, newResult);
+                setNonce((nonce) => nonce + 1);
             })();
         }, [code, language, result]);
 
