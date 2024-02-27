@@ -1,6 +1,7 @@
 import { APIV1Read, DocsV1Read, FdrAPI, VersionInfo } from "@fern-api/fdr-sdk";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { last, noop } from "lodash-es";
+import { isSubpackage } from "../util/fern";
 import { titleCase } from "../util/titleCase";
 
 export interface SidebarNavigation {
@@ -66,15 +67,20 @@ export declare namespace SidebarNode {
 
 function resolveSidebarNodeApiSection(
     api: FdrAPI.ApiId,
-    subpackageId: APIV1Read.SubpackageId,
+    id: string,
+    package_: APIV1Read.ApiDefinitionPackage | undefined,
+    title: string,
     subpackagesMap: Record<string, APIV1Read.ApiDefinitionSubpackage>,
     parentSlugs: string[],
 ): SidebarNode.ApiSection | undefined {
-    const subpackage = subpackagesMap[subpackageId];
+    let subpackage: APIV1Read.ApiDefinitionPackage | undefined = package_;
+    while (subpackage?.pointsTo != null) {
+        subpackage = subpackagesMap[subpackage.pointsTo];
+    }
     if (subpackage == null) {
         return;
     }
-    const slug = [...parentSlugs, subpackage.urlSlug];
+    const slug = package_ != null && isSubpackage(package_) ? [...parentSlugs, package_.urlSlug] : parentSlugs;
     const endpoints = subpackage.endpoints.map(
         (endpoint): SidebarNode.EndpointPage => ({
             type: "page",
@@ -108,7 +114,16 @@ function resolveSidebarNodeApiSection(
         }),
     );
     const subpackages = subpackage.subpackages
-        .map((innerSubpackageId) => resolveSidebarNodeApiSection(api, innerSubpackageId, subpackagesMap, slug))
+        .map((innerSubpackageId) =>
+            resolveSidebarNodeApiSection(
+                api,
+                innerSubpackageId,
+                subpackagesMap[innerSubpackageId],
+                titleCase(subpackagesMap[innerSubpackageId]?.name ?? ""),
+                subpackagesMap,
+                slug,
+            ),
+        )
         .filter(isNonNullish);
 
     if (endpoints.length === 0 && webhooks.length === 0 && websockets.length === 0 && subpackages.length === 0) {
@@ -118,8 +133,8 @@ function resolveSidebarNodeApiSection(
     return {
         type: "apiSection",
         api,
-        id: subpackageId,
-        title: titleCase(subpackage.name),
+        id,
+        title,
         slug,
         endpoints,
         webhooks,
@@ -169,56 +184,24 @@ export function resolveSidebarNodes(
                 const definition = apis[api.api];
                 if (definition != null) {
                     const definitionSlug = api.skipUrlSlug ? parentSlugs : [...parentSlugs, api.urlSlug];
+                    const resolved = resolveSidebarNodeApiSection(
+                        api.api,
+                        api.api,
+                        definition.rootPackage,
+                        api.title,
+                        definition.subpackages,
+                        definitionSlug,
+                    );
                     sidebarNodes.push({
                         type: "apiSection",
                         api: api.api,
                         id: api.api,
                         title: api.title,
-                        slug: [...parentSlugs, api.urlSlug],
-                        endpoints: definition.rootPackage.endpoints.map(
-                            (endpoint): SidebarNode.EndpointPage => ({
-                                type: "page",
-                                api: api.api,
-                                id: endpoint.id,
-                                slug: [...definitionSlug, endpoint.urlSlug],
-                                title:
-                                    endpoint.name != null
-                                        ? endpoint.name
-                                        : stringifyEndpointPathParts(endpoint.path.parts),
-                                method: endpoint.method,
-                                stream: endpoint.response?.type.type === "stream",
-                                description: endpoint.description ?? null,
-                            }),
-                        ),
-                        webhooks: definition.rootPackage.webhooks.map((webhook) => ({
-                            type: "page",
-                            api: api.api,
-                            id: webhook.id,
-                            slug: [...definitionSlug, webhook.urlSlug],
-                            title: webhook.name != null ? webhook.name : "/" + webhook.path.join("/"),
-                            description: webhook.description ?? null,
-                        })),
-                        websockets: definition.rootPackage.websockets.map((websocket) => ({
-                            type: "page",
-                            api: api.api,
-                            id: websocket.id,
-                            slug: [...definitionSlug, websocket.urlSlug],
-                            title:
-                                websocket.name != null
-                                    ? websocket.name
-                                    : stringifyEndpointPathParts(websocket.path.parts),
-                            description: websocket.description ?? null,
-                        })),
-                        subpackages: definition.rootPackage.subpackages
-                            .map((subpackageId) =>
-                                resolveSidebarNodeApiSection(
-                                    api.api,
-                                    subpackageId,
-                                    definition.subpackages,
-                                    definitionSlug,
-                                ),
-                            )
-                            .filter(isNonNullish),
+                        slug: definitionSlug,
+                        endpoints: resolved?.endpoints ?? [],
+                        webhooks: resolved?.webhooks ?? [],
+                        websockets: resolved?.websockets ?? [],
+                        subpackages: resolved?.subpackages ?? [],
                         artifacts: api.artifacts ?? null,
                     });
                 }
@@ -229,7 +212,7 @@ export function resolveSidebarNodes(
                     type: "section",
                     title: section.title,
                     slug: sectionSlug,
-                    items: resolveSidebarNodes(section.items, apis, section.skipUrlSlug ? parentSlugs : sectionSlug),
+                    items: resolveSidebarNodes(section.items, apis, sectionSlug),
                 });
             },
             link: (link) => {

@@ -11,6 +11,7 @@ import {
 } from "../api-page/examples/types";
 import { getHighlighterInstance, highlight } from "../commons/fernShiki";
 import { trimCode } from "../commons/FernSyntaxHighlighter";
+import { isSubpackage } from "./fern";
 import { titleCase } from "./titleCase";
 
 type WithDescription = { description: string | null };
@@ -61,6 +62,19 @@ function resolveNavigationItemsInternal(
                     const resolvedTypes = mapValues(definition.types, (type) =>
                         resolveTypeDefinition(type, definition.types),
                     );
+
+                    const { endpoints, webhooks, subpackages, websockets } = resolveApiDefinitionPackage(
+                        definition.auth,
+                        api.api,
+                        api.api,
+                        definition.rootPackage,
+                        definition.subpackages,
+                        definition.types,
+                        resolvedTypes,
+                        definitionSlug,
+                        highlighter,
+                    );
+
                     resolvedNavigationItems.push({
                         api: api.api,
                         title: api.title,
@@ -70,48 +84,11 @@ function resolveNavigationItemsInternal(
                         type: "apiSection",
                         auth: definition.auth ?? null,
                         hasMultipleBaseUrls: definition.hasMultipleBaseUrls ?? null,
-                        slug: [...parentSlugs, api.urlSlug],
-                        endpoints: mergeContentTypes(
-                            definition.rootPackage.endpoints.map((endpoint) =>
-                                resolveEndpointDefinition(
-                                    definition.auth,
-                                    definition.id,
-                                    definition.id,
-                                    endpoint,
-                                    definition.types,
-                                    resolvedTypes,
-                                    definitionSlug,
-                                    highlighter,
-                                ),
-                            ),
-                        ),
-                        websockets: definition.rootPackage.websockets.map((websocket) =>
-                            resolveWebsocketChannel(websocket, definition.types, definitionSlug),
-                        ),
-                        webhooks: definition.rootPackage.webhooks.map((webhook) =>
-                            resolveWebhookDefinition(
-                                webhook,
-                                definition.types,
-                                resolvedTypes,
-                                definitionSlug,
-                                highlighter,
-                            ),
-                        ),
-                        subpackages: definition.rootPackage.subpackages
-                            .map((subpackageId) =>
-                                resolveSubpackage(
-                                    definition.auth,
-                                    api.api,
-                                    subpackageId,
-                                    definition.subpackages,
-                                    definition.types,
-                                    resolvedTypes,
-                                    api.skipUrlSlug ? parentSlugs : [...parentSlugs, api.urlSlug],
-                                    highlighter,
-                                ),
-                            )
-                            .filter(isNonNullish),
-                        pointsTo: definition.rootPackage.pointsTo ?? null,
+                        slug: definitionSlug,
+                        endpoints,
+                        websockets,
+                        webhooks,
+                        subpackages,
                         types: resolvedTypes,
                     });
                 }
@@ -137,33 +114,38 @@ function resolveNavigationItemsInternal(
     return resolvedNavigationItems;
 }
 
-function resolveSubpackage(
+function resolveApiDefinitionPackage(
     auth: APIV1Read.ApiAuth | undefined,
     apiSectionId: FdrAPI.ApiDefinitionId,
-    subpackageId: APIV1Read.SubpackageId,
+    id: APIV1Read.SubpackageId,
+    package_: APIV1Read.ApiDefinitionPackage | undefined,
     subpackagesMap: Record<string, APIV1Read.ApiDefinitionSubpackage>,
     types: Record<string, APIV1Read.TypeDefinition>,
     resolvedTypes: Record<string, ResolvedTypeDefinition>,
     parentSlugs: string[],
     highlighter: Highlighter,
-): ResolvedSubpackage | undefined {
-    const subpackage = subpackagesMap[subpackageId];
-    if (subpackage == null) {
-        return undefined;
+): ResolvedWithApiDefinition & { subpackage: APIV1Read.ApiDefinitionSubpackage | undefined; slug: string[] } {
+    let subpackage = package_;
+    while (subpackage?.pointsTo != null) {
+        subpackage = subpackagesMap[subpackage.pointsTo];
     }
-    const slug = [...parentSlugs, subpackage.urlSlug];
+
+    if (subpackage == null) {
+        return {
+            endpoints: [],
+            webhooks: [],
+            websockets: [],
+            subpackages: [],
+            subpackage: undefined,
+            slug: [],
+        };
+    }
+
+    const slug = package_ != null && isSubpackage(package_) ? [...parentSlugs, package_.urlSlug] : parentSlugs;
+
     const endpoints = mergeContentTypes(
         subpackage.endpoints.map((endpoint) =>
-            resolveEndpointDefinition(
-                auth,
-                apiSectionId,
-                subpackageId,
-                endpoint,
-                types,
-                resolvedTypes,
-                slug,
-                highlighter,
-            ),
+            resolveEndpointDefinition(auth, apiSectionId, id, endpoint, types, resolvedTypes, slug, highlighter),
         ),
     );
     const websockets = subpackage.websockets.map((websocket) => resolveWebsocketChannel(websocket, types, slug));
@@ -185,7 +167,42 @@ function resolveSubpackage(
         )
         .filter(isNonNullish);
 
-    if (endpoints.length === 0 && webhooks.length === 0 && subpackages.length === 0 && websockets.length === 0) {
+    return {
+        endpoints,
+        webhooks,
+        websockets,
+        subpackages,
+        subpackage: isSubpackage(subpackage) ? subpackage : undefined,
+        slug,
+    };
+}
+
+function resolveSubpackage(
+    auth: APIV1Read.ApiAuth | undefined,
+    apiSectionId: FdrAPI.ApiDefinitionId,
+    subpackageId: APIV1Read.SubpackageId,
+    subpackagesMap: Record<string, APIV1Read.ApiDefinitionSubpackage>,
+    types: Record<string, APIV1Read.TypeDefinition>,
+    resolvedTypes: Record<string, ResolvedTypeDefinition>,
+    parentSlugs: string[],
+    highlighter: Highlighter,
+): ResolvedSubpackage | undefined {
+    const { endpoints, webhooks, subpackages, websockets, subpackage, slug } = resolveApiDefinitionPackage(
+        auth,
+        apiSectionId,
+        subpackageId,
+        subpackagesMap[subpackageId],
+        subpackagesMap,
+        types,
+        resolvedTypes,
+        parentSlugs,
+        highlighter,
+    );
+
+    if (
+        subpackage == null ||
+        (endpoints.length === 0 && webhooks.length === 0 && subpackages.length === 0 && websockets.length === 0)
+    ) {
         return undefined;
     }
     return {
@@ -200,7 +217,6 @@ function resolveSubpackage(
         websockets,
         webhooks,
         subpackages,
-        pointsTo: subpackage.pointsTo ?? null,
     };
 }
 
@@ -750,7 +766,6 @@ export interface ResolvedWithApiDefinition {
     websockets: ResolvedWebSocketChannel[];
     webhooks: ResolvedWebhookDefinition[];
     subpackages: ResolvedSubpackage[];
-    pointsTo: APIV1Read.SubpackageId | null;
 }
 
 export type ResolvedApiDefinition =
