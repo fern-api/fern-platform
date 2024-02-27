@@ -1,4 +1,4 @@
-import { useAtom } from "jotai";
+import { PrimitiveAtom, useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { mapValues, noop } from "lodash-es";
 import dynamic from "next/dynamic";
@@ -42,7 +42,8 @@ export const PLAYGROUND_FORM_STATE_ATOM = atomWithStorage<Record<string, Playgro
 
 interface ApiPlaygroundProps {
     navigation: SidebarNode[];
-    apis: Record<string, ResolvedRootPackage>;
+    apisAtom: PrimitiveAtom<Record<string, ResolvedRootPackage>>;
+    // apis: Record<string, ResolvedRootPackage>;
 }
 
 const CUSTOMERS = ["cloudflare", "assemblyai", "cohere", "shipbob", "hume", "flagright", "sayari", "webflow", "dapi"];
@@ -63,8 +64,9 @@ function isApiPlaygroundEnabled(domain: string) {
 export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundProps>> = ({
     children,
     navigation,
-    apis,
+    apisAtom,
 }) => {
+    const [apis] = useAtom(apisAtom);
     const { domain } = useDocsContext();
     const [selectionState, setSelectionState] = useState<ApiPlaygroundSelectionState | undefined>();
 

@@ -1,3 +1,4 @@
+import { PrimitiveAtom, useAtom } from "jotai";
 import dynamic from "next/dynamic";
 import { useNavigationContext } from "../navigation-context";
 import { ResolvedRootPackage } from "../util/resolver";
@@ -14,11 +15,12 @@ const ApiPage = dynamic(() => import("../api-page/ApiPage").then(({ ApiPage }) =
 });
 
 export interface DocsMainContentProps {
-    apis: Record<string, ResolvedRootPackage>;
+    apisAtom: PrimitiveAtom<Record<string, ResolvedRootPackage>>;
 }
 
-export const DocsMainContent: React.FC<DocsMainContentProps> = ({ apis }) => {
+export const DocsMainContent: React.FC<DocsMainContentProps> = ({ apisAtom }) => {
     const { resolvedPath } = useNavigationContext();
+    const [apis] = useAtom(apisAtom);
 
     if (resolvedPath.type === "custom-markdown-page") {
         return <CustomDocsPage serializedMdxContent={resolvedPath.serializedMdxContent} resolvedPath={resolvedPath} />;
@@ -35,6 +37,7 @@ export const DocsMainContent: React.FC<DocsMainContentProps> = ({ apis }) => {
                 fullSlug={resolvedPath.fullSlug}
                 sectionUrlSlug={resolvedPath.sectionUrlSlug}
                 skipUrlSlug={resolvedPath.skipUrlSlug}
+                atomApi={apisAtom}
             />
         );
     } else {

@@ -1,4 +1,5 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { PrimitiveAtom, useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { FlattenedApiDefinition } from "../util/flattenApiDefinition";
 import { resolveApiDefinition, ResolvedRootPackage } from "../util/resolver";
@@ -14,6 +15,7 @@ export declare namespace ApiPage {
         fullSlug: string;
         sectionUrlSlug: string;
         skipUrlSlug: boolean;
+        atomApi: PrimitiveAtom<Record<string, ResolvedRootPackage>>;
     }
 }
 
@@ -24,8 +26,10 @@ export const ApiPage: React.FC<ApiPage.Props> = ({
     fullSlug,
     sectionUrlSlug,
     skipUrlSlug,
+    atomApi,
 }) => {
     const [definition, setDefinition] = useState<ResolvedRootPackage>(apiDefinition);
+    const [, setDefinitions] = useAtom(atomApi);
 
     useEffect(() => {
         let url = `/api/resolve-api?path=${fullSlug}&api=${apiDefinition.api}`;
@@ -38,10 +42,11 @@ export const ApiPage: React.FC<ApiPage.Props> = ({
                 if (api != null) {
                     const resolvedApi = await resolveApiDefinition(api);
                     setDefinition(resolvedApi);
+                    setDefinitions((prev) => ({ ...prev, [resolvedApi.api]: resolvedApi }));
                 }
             }
         });
-    }, [apiDefinition.api, fullSlug, sectionUrlSlug, skipUrlSlug]);
+    }, [apiDefinition.api, fullSlug, sectionUrlSlug, setDefinitions, skipUrlSlug]);
 
     return (
         <div className="min-h-0 pb-36">
