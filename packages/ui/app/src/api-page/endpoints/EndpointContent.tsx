@@ -246,7 +246,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                     <div
                         className="max-w-content-width flex min-w-0 flex-1 flex-col"
                         style={{
-                            minHeight: layoutBreakpoint === "md" ? `${exampleHeight}px` : undefined,
+                            minHeight: ["mobile", "sm"].includes(layoutBreakpoint) ? undefined : `${exampleHeight}px`,
                         }}
                     >
                         <ApiPageDescription
