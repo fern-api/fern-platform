@@ -5,6 +5,6 @@ export interface CodeBlockItem {
     title?: string;
     code: string | undefined;
     children: ReactNode | undefined;
-    highlightLines?: (number | [number, number])[];
-    highlightStyle?: "highlight" | "focus";
+    // highlightLines?: (number | [number, number])[];
+    // highlightStyle?: "highlight" | "focus";
 }

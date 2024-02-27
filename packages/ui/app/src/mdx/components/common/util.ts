@@ -77,24 +77,33 @@ export function transformCodeBlockChildrenToCodeBlockItem(
     highlightLines?: (number | [number, number])[],
     highlightStyle?: "highlight" | "focus",
 ): CodeBlockItem {
-    const [code, children] = unwrapCodeBlockChildren(rawChildren);
+    const [code, children] = unwrapCodeBlockChildren(rawChildren, highlightLines, highlightStyle);
     return {
         title,
         code,
         children,
-        highlightLines,
-        highlightStyle,
     };
 }
 
-function unwrapCodeBlockChildren(children: ReactNode): [string, ReactNode] {
+function unwrapCodeBlockChildren(
+    children: ReactNode,
+    highlightLines?: (number | [number, number])[],
+    highlightStyle?: "highlight" | "focus",
+): [string, ReactNode] {
     if (!isValidElement(children)) {
         return ["", children];
     }
 
     if (children.type === SyntaxHighlighter) {
         const { code, children: syntaxHighlighterChildren, ...rest } = children.props;
-        return [children.props.code, createElement(FernSyntaxHighlighterContent, rest, syntaxHighlighterChildren)];
+        return [
+            children.props.code,
+            createElement(
+                FernSyntaxHighlighterContent,
+                { ...rest, highlightLines, highlightStyle },
+                syntaxHighlighterChildren,
+            ),
+        ];
     }
 
     if (children.type === CodeBlockWithClipboardButton) {
